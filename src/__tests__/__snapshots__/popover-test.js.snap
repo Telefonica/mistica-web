@@ -1,0 +1,253 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`popover default(bottom) style 1`] = `
+<div>
+  <div
+    class="wrapper-0-2-3"
+  >
+    <div>
+      <span>
+        Press me!
+      </span>
+    </div>
+    <div
+      class="container-0-2-4"
+      style="width: 488px; top: 20px; left: 0px;"
+    >
+      <div
+        class="arrowWrapper-0-2-2"
+        style="bottom: 100%; left: 0px; transform: translateX(-50%) rotate(180deg);"
+      >
+        <div
+          class="arrow-0-2-1 arrow-d6-0-2-19"
+        />
+      </div>
+      <div
+        class="boxContainer-0-2-6"
+      >
+        <div
+          class="textContent-0-2-7"
+        >
+          <span
+            class="text-0-2-9"
+          >
+            Content
+          </span>
+        </div>
+        <div
+          class="closeButtonIcon-0-2-10"
+        >
+          <button
+            aria-label="Cerrar"
+            class="touchable-0-2-12"
+            style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
+            type="button"
+          >
+            <svg
+              height="24"
+              role="presentation"
+              viewBox="0 0 24 24"
+              width="24"
+            >
+              <path
+                d="M17.4 6.6a.849.849 0 0 0-1.2 0L12 10.8 7.8 6.6a.849.849 0 1 0-1.2 1.2l4.2 4.2-4.2 4.2a.849.849 0 0 0 1.2 1.2l4.2-4.2 4.2 4.2a.849.849 0 0 0 1.2-1.2L13.2 12l4.2-4.2a.849.849 0 0 0 0-1.2z"
+                fill="#313235"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`popover left style 1`] = `
+<div>
+  <div
+    class="wrapper-0-2-3"
+  >
+    <div>
+      <span>
+        Press me!
+      </span>
+    </div>
+    <div
+      class="container-0-2-4"
+      style="width: 488px; left: -508px; top: 0px; transform: translateY(-50%);"
+    >
+      <div
+        class="arrowWrapper-0-2-2"
+        style="left: 100%; top: 50%; transform: translateY(-100%) rotate(-90deg); transform-origin: bottom;"
+      >
+        <div
+          class="arrow-0-2-1 arrow-d9-0-2-22"
+        />
+      </div>
+      <div
+        class="boxContainer-0-2-6"
+      >
+        <div
+          class="textContent-0-2-7"
+        >
+          <span
+            class="text-0-2-9"
+          >
+            Content
+          </span>
+        </div>
+        <div
+          class="closeButtonIcon-0-2-10"
+        >
+          <button
+            aria-label="Cerrar"
+            class="touchable-0-2-12"
+            style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
+            type="button"
+          >
+            <svg
+              height="24"
+              role="presentation"
+              viewBox="0 0 24 24"
+              width="24"
+            >
+              <path
+                d="M17.4 6.6a.849.849 0 0 0-1.2 0L12 10.8 7.8 6.6a.849.849 0 1 0-1.2 1.2l4.2 4.2-4.2 4.2a.849.849 0 0 0 1.2 1.2l4.2-4.2 4.2 4.2a.849.849 0 0 0 1.2-1.2L13.2 12l4.2-4.2a.849.849 0 0 0 0-1.2z"
+                fill="#313235"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`popover right style 1`] = `
+<div>
+  <div
+    class="wrapper-0-2-3"
+  >
+    <div>
+      <span>
+        Press me!
+      </span>
+    </div>
+    <div
+      class="container-0-2-4"
+      style="width: 488px; left: 20px; top: 0px; transform: translateY(-50%);"
+    >
+      <div
+        class="arrowWrapper-0-2-2"
+        style="right: 100%; top: 50%; transform: translateY(-100%) rotate(90deg); transform-origin: bottom;"
+      >
+        <div
+          class="arrow-0-2-1 arrow-d8-0-2-21"
+        />
+      </div>
+      <div
+        class="boxContainer-0-2-6"
+      >
+        <div
+          class="textContent-0-2-7"
+        >
+          <span
+            class="text-0-2-9"
+          >
+            Content
+          </span>
+        </div>
+        <div
+          class="closeButtonIcon-0-2-10"
+        >
+          <button
+            aria-label="Cerrar"
+            class="touchable-0-2-12"
+            style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
+            type="button"
+          >
+            <svg
+              height="24"
+              role="presentation"
+              viewBox="0 0 24 24"
+              width="24"
+            >
+              <path
+                d="M17.4 6.6a.849.849 0 0 0-1.2 0L12 10.8 7.8 6.6a.849.849 0 1 0-1.2 1.2l4.2 4.2-4.2 4.2a.849.849 0 0 0 1.2 1.2l4.2-4.2 4.2 4.2a.849.849 0 0 0 1.2-1.2L13.2 12l4.2-4.2a.849.849 0 0 0 0-1.2z"
+                fill="#313235"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`popover top style 1`] = `
+<div>
+  <div
+    class="wrapper-0-2-3"
+  >
+    <div>
+      <span>
+        Press me!
+      </span>
+    </div>
+    <div
+      class="container-0-2-4"
+      style="width: 488px; transform: translateY(-100%); top: -20px; left: 0px;"
+    >
+      <div
+        class="arrowWrapper-0-2-2"
+        style="top: 100%; left: 0px; transform: translateX(-50%);"
+      >
+        <div
+          class="arrow-0-2-1 arrow-d7-0-2-20"
+        />
+      </div>
+      <div
+        class="boxContainer-0-2-6"
+      >
+        <div
+          class="textContent-0-2-7"
+        >
+          <span
+            class="text-0-2-9"
+          >
+            Content
+          </span>
+        </div>
+        <div
+          class="closeButtonIcon-0-2-10"
+        >
+          <button
+            aria-label="Cerrar"
+            class="touchable-0-2-12"
+            style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
+            type="button"
+          >
+            <svg
+              height="24"
+              role="presentation"
+              viewBox="0 0 24 24"
+              width="24"
+            >
+              <path
+                d="M17.4 6.6a.849.849 0 0 0-1.2 0L12 10.8 7.8 6.6a.849.849 0 1 0-1.2 1.2l4.2 4.2-4.2 4.2a.849.849 0 0 0 1.2 1.2l4.2-4.2 4.2 4.2a.849.849 0 0 0 1.2-1.2L13.2 12l4.2-4.2a.849.849 0 0 0 0-1.2z"
+                fill="#313235"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
