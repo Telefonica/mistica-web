@@ -15,9 +15,7 @@ const MyComponent = () => (
   <ThemeContextProvider
     theme={{skin: 'Movistar', i18n: {locale: 'es_ES', phoneNumberFormattingRegionCode: 'ES'}}}
   >
-    <ButtonPrimary href="/test">
-      test
-    </ButtonPrimary>
+    <ButtonPrimary href="/test">test</ButtonPrimary>
   </ThemeContextProvider>
 );
 ```
