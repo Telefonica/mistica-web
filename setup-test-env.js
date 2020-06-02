@@ -7,7 +7,7 @@ const getMediaQuerySize = (mediaFeature, mediaQuery, defaultSize) => {
 
 window.matchMedia =
     window.matchMedia ||
-    jest.fn(query => {
+    jest.fn((query) => {
         const minWidth = getMediaQuerySize('min-width', query, 0);
         const maxWidth = getMediaQuerySize('max-width', query, Infinity);
 
