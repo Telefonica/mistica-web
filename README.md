@@ -4,12 +4,12 @@ React components library for Telefonica design system (Mistica)
 
 ## Getting started
 
-Install this library with `yarn add @telefonica/mistica-web`. Before using any of our components you have to add
+Install this library with `yarn add @telefonica/mistica`. Before using any of our components you have to add
 `<ThemeContextProvider>` to your page (more info below). IE:
 
 ```javascript
 import React from 'react';
-import {ButtonPrimary, ThemeContextProvider} from '@telefonica/mistica-web';
+import {ButtonPrimary, ThemeContextProvider} from '@telefonica/mistica';
 
 const MyComponent = () => (
   <ThemeContextProvider

@@ -1,8 +1,7 @@
 {
-    "name": "@telefonica/mistica-web",
-    "version": "7.5.1",
-    "license": "MIT",
-    "module": "esm/index.js",
+    "name": "@telefonica/mistica",
+    "version": "1.0.0",
+    "license": "UNLICENSED",
     "main": "dist/index.js",
     "src": "src/index.js",
     "files": [

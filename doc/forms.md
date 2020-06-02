@@ -21,7 +21,7 @@ You can build complex forms with automatic state handling using the components p
 Let's see a quick example to see how it works
 
 ```js
-import {Form, FormTextField, ButtonPrimary} from '@telefonica/mistica-web';
+import {Form, FormTextField, ButtonPrimary} from '@telefonica/mistica';
 
 const validateName = (name) => (/^\w+$/.test(name) ? '' : 'bad username');
 

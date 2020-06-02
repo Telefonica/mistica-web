@@ -10,7 +10,7 @@ export const useTheme = (): Theme => {
     const theme = React.useContext(ThemeContext);
     if (!theme) {
         throw Error(
-            `To use @telefonica/mistica-web components you must instantiate <ThemeContextProvider> as their parent.`
+            `To use @telefonica/mistica components you must instantiate <ThemeContextProvider> as their parent.`
         );
     }
     return theme;

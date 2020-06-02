@@ -241,7 +241,7 @@ const ModalDialog = (props: ModalDialogProps) => {
     const classes = useStylesModalDialog();
     if (!context) {
         throw Error(
-            `To use @telefonica/mistica-web components you must instantiate <ThemeContextProvider> as their parent.`
+            `To use @telefonica/mistica components you must instantiate <ThemeContextProvider> as their parent.`
         );
     }
 
