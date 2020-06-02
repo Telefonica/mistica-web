@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import {formatAsYouType} from '@tuenti/libphonenumber';
+import {formatAsYouType} from '@telefonica/libphonenumber';
 import {useTheme} from './hooks';
 
 import type {RegionCode} from './utils/region-code';
