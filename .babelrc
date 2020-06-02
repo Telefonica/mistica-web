@@ -33,11 +33,7 @@
             ]
         },
         "production": {
-            "plugins": [
-                "lodash",
-                "transform-react-remove-prop-types",
-                "@babel/plugin-transform-property-literals"
-            ]
+            "plugins": ["lodash", "@babel/plugin-transform-property-literals"]
         }
     }
 }

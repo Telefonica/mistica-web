@@ -1,3 +1,4 @@
 flow-typed/
 dist/
 node_modules/
+!.storybook/
