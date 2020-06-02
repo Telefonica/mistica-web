@@ -60,7 +60,9 @@
         "@testing-library/user-event": "^10.3.4",
         "flow-bin": "^0.125.1",
         "flow-typed": "^3.1.0",
+        "husky": ">=4",
         "jest": "^26.0.1",
+        "lint-staged": ">=10",
         "prettier": "^2.0.5",
         "react": "16.11.0",
         "react-dom": "16.11.0",
@@ -94,5 +96,13 @@
     },
     "sideEffects": [
         "*.css"
-    ]
+    ],
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.{js,css,md}": "prettier --write"
+    }
 }
