@@ -22,7 +22,7 @@ plugins:
     - flowtype
     - import
 rules:
-    # Basic rules 
+    # Basic rules
     default-case: error
     dot-notation: error
     eqeqeq: error
