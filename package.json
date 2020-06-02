@@ -17,7 +17,7 @@
         "build": "babel src --out-dir dist --ignore \"**/__tests__/**\" --ignore \"**/__stories__/**\" --ignore \"**/__type_tests__/**\"",
         "watch": "yarn build --watch",
         "clean": "rimraf dist",
-        "ci": "yarn build && yarn prettier-check && yarn flow && yarn lint && yarn test",
+        "ci": "yarn build && yarn prettier-check && yarn flow check && yarn lint && yarn test --ci",
         "prepublishOnly": "yarn ci",
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook"
@@ -94,6 +94,7 @@
     "dependencies": {
         "@juggle/resize-observer": "^3.1.3",
         "@tef-novum/webview-bridge": "^2.14.6",
+        "@telefonica/libphonenumber": "^2.7.5",
         "classnames": "^2.2.6",
         "focus-trap-react": "^4.0.0",
         "jss": "^10.1.1",
