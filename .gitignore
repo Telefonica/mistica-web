@@ -1,0 +1,12 @@
+dist/
+.directory
+.DS_Store
+.idea/
+*.js.map
+*.orig
+*.rej
+jsconfig.json
+**/node_modules/
+yarn-debug.log*
+yarn-error.log*
+__diff_output__
