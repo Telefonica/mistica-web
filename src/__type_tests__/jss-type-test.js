@@ -1,5 +1,4 @@
 // @flow
-/* eslint-disable react/no-unused-prop-types */
 /* eslint-disable babel/no-unused-expressions */
 /* eslint-disable no-unused-vars */
 

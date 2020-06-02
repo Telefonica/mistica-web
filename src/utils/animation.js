@@ -42,11 +42,8 @@ export const animateShakeStyles = (): ShakeStyles =>
 
 type AnimationProps = {
     children?: React.Node,
-    // eslint-disable-next-line react/no-unused-prop-types
     strokeDasharray?: string,
-    // eslint-disable-next-line react/no-unused-prop-types
     strokeDashoffset?: string,
-    // eslint-disable-next-line react/no-unused-prop-types
     opacity?: number,
 };
 
