@@ -18,6 +18,7 @@ const ThemeSelectorAddon = ({active, channel}) => {
     return (
         <ThemeContextProvider theme={currentTheme}>
             <Select
+                required
                 options={themes.map((theme) => ({
                     text: theme.skin,
                     value: theme.skin,
