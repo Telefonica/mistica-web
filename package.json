@@ -11,12 +11,13 @@
     ],
     "scripts": {
         "test": "jest",
+        "prettier-check": "prettier --check '**/*.js' '**/*.json'",
         "lint": "eslint --report-unused-disable-directives .",
         "prebuild": "yarn clean",
         "build": "babel src --out-dir dist --ignore \"**/__tests__/**\" --ignore \"**/__stories__/**\" --ignore \"**/__type_tests__/**\"",
         "watch": "yarn build --watch",
         "clean": "rimraf dist",
-        "ci": "yarn build && yarn flow && yarn lint && yarn test",
+        "ci": "yarn build && yarn prettier-check && yarn flow && yarn lint && yarn test",
         "prepublishOnly": "yarn ci"
     },
     "browserslist": [
@@ -26,6 +27,27 @@
         "edge >= 17",
         "ios_saf >= 10"
     ],
+    "prettier": {
+        "printWidth": 110,
+        "tabWidth": 4,
+        "singleQuote": true,
+        "bracketSpacing": false,
+        "proseWrap": "always",
+        "overrides": [
+            {
+                "files": "package.json",
+                "options": {
+                    "printWidth": 250
+                }
+            },
+            {
+                "files": "*.md",
+                "options": {
+                    "tabWidth": 2
+                }
+            }
+        ]
+    },
     "devDependencies": {
         "@babel/cli": "^7.8.4",
         "@babel/core": "^7.8.4",
@@ -51,7 +73,10 @@
         "eslint-plugin-testing-library": "^3.1.4",
         "flow-bin": "^0.125.1",
         "flow-typed": "^3.1.0",
+        "husky": ">=4",
         "jest": "^26.0.1",
+        "lint-staged": ">=10",
+        "prettier": "^2.0.5",
         "react": "16.11.0",
         "react-dom": "16.11.0",
         "react-router-dom": "^5.1.2",
@@ -84,5 +109,13 @@
     },
     "sideEffects": [
         "*.css"
-    ]
+    ],
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.{js,css,md}": "prettier --write"
+    }
 }
