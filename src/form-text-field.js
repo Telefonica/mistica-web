@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 // @flow
 import * as React from 'react';
 import {useForm} from './form-context';
