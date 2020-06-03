@@ -21,7 +21,7 @@
         "prepublishOnly": "yarn ci",
         "storybook": "start-storybook -p 6006",
         "playroom": "playroom start",
-        "now-build": "rimraf public && yarn build-storybook -o public/storybook && yarn playroom build"
+        "now-build": "rimraf public && yarn build-storybook -o public/storybook && ./node_modules/.bin/playroom build"
     },
     "browserslist": [
         "chrome >= 36",
