@@ -15,7 +15,6 @@ const ThemeDecorator = ({children}) => {
     React.useEffect(() => {
         const channel = addons.getChannel();
         channel.on('theme-selected', (theme) => {
-            console.log('event received', theme);
             setCurrentTheme(theme);
             lastTheme = theme;
         });
