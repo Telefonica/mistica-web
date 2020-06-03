@@ -9,7 +9,7 @@ import themes from './theme-selector-addon/themes';
 
 let lastTheme = themes[0];
 
-const ThemeDecorator = ({children}) => {
+const ThemeDecorator = ({Story}) => {
     const [theme, setCurrentTheme] = React.useState(lastTheme);
 
     React.useEffect(() => {
@@ -20,7 +20,11 @@ const ThemeDecorator = ({children}) => {
         });
     }, []);
 
-    return <ThemeContextProvider theme={theme}>{children}</ThemeContextProvider>;
+    return (
+        <ThemeContextProvider theme={theme}>
+            <Story />
+        </ThemeContextProvider>
+    );
 };
 
-addDecorator((storyFn) => <ThemeDecorator>{storyFn()}</ThemeDecorator>);
+addDecorator((Story) => <ThemeDecorator Story={Story}></ThemeDecorator>);

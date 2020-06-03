@@ -13,6 +13,7 @@ const config /* : any */ = {
     title: 'Novum design system',
     components: './playroom/components',
     outputPath: './public/playroom',
+    baseUrl: '/playroom/',
     themes: './playroom/themes.js',
     snippets: './playroom/snippets.js',
     frameComponent: './playroom/frame-component.js',

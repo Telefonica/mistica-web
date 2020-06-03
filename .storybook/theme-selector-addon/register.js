@@ -4,16 +4,13 @@ import addonApi from '@storybook/addons';
 import {ThemeContextProvider, Select} from '../../src';
 import themes from './themes';
 
-const ThemeSelectorAddon = ({active, channel}) => {
+const ThemeSelectorAddon = () => {
+    const channel = addonApi.getChannel();
     const [currentTheme, setCurrentTheme] = React.useState(themes[0]);
 
     React.useEffect(() => {
         channel.emit('theme-selected', currentTheme);
     }, [channel, currentTheme]);
-
-    if (!active) {
-        return null;
-    }
 
     return (
         <ThemeContextProvider theme={currentTheme}>
@@ -35,12 +32,14 @@ const ThemeSelectorAddon = ({active, channel}) => {
     );
 };
 
-addonApi.register('theme-selector', (storybookAPI) => {
-    const channel = addonApi.getChannel();
+addonApi.register('theme-selector', () => {
     addonApi.addPanel('theme-selector/panel', {
         title: 'Theme',
-        render: ({active}: {active: boolean, ...}) => (
-            <ThemeSelectorAddon active={active} channel={channel} api={storybookAPI} />
-        ),
+        render: ({active}: {active: boolean}) => {
+            if (!active) {
+                return null;
+            }
+            return <ThemeSelectorAddon active={active} />;
+        },
     });
 });
