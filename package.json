@@ -20,7 +20,8 @@
         "ci": "yarn build && yarn prettier-check && yarn flow check && yarn lint && yarn test --ci",
         "prepublishOnly": "yarn ci",
         "storybook": "start-storybook -p 6006",
-        "build-storybook": "build-storybook"
+        "build-storybook": "build-storybook",
+        "now-build": "yarn build-storybook -o public"
     },
     "browserslist": [
         "chrome >= 36",

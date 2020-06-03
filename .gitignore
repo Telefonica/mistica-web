@@ -11,3 +11,5 @@ yarn-debug.log*
 yarn-error.log*
 __diff_output__
 storybook-static/
+public/
+.vercel
