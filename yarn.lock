@@ -1301,6 +1301,11 @@
   resolved "https://registry.yarnpkg.com/@tef-novum/webview-bridge/-/webview-bridge-2.14.6.tgz#a3ee1f62619d754a6290b55904972bc34ec2c039"
   integrity sha512-4KDfHmNw9vhghrF+G0YKoc71PxFY34Eb1CtCDaQpcUIy869iNNb22TNM8Na1KxgvZkmdy8AhNAik491t5WvKIg==
 
+"@telefonica/libphonenumber@^2.7.5":
+  version "2.7.5"
+  resolved "https://registry.yarnpkg.com/@telefonica/libphonenumber/-/libphonenumber-2.7.5.tgz#db47c87c11c86df6be3c8df34f25f7a46571c737"
+  integrity sha512-AgH4FAWh1wYf+JsETApCNdEwFDMZgX5NkNu6J8w4HAnUGJN/r77Sa5Z4ZZVFcVWiwucKbd7auH1tGshhYIebtg==
+
 "@testing-library/dom@^7.2.2":
   version "7.7.3"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.7.3.tgz#04fc0881f67ded05a017a2341c78d567c56aad0e"
