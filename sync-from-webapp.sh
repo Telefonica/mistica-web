@@ -6,6 +6,7 @@ cp -r ../webapp/packages/ui/src .
 cp -r ../webapp/packages/ui/doc .
 cp -r ../webapp/packages/playroom/src/* ./playroom
 rm ./playroom/roboto.css # we already have roboto.css in /css folder
+git checkout playroom/themes.js
 
 #  fix some imorts 
 find src -type f -exec sed -i -e 's/@tuenti\/ui/@telefonica\/mistica/g' {} \;
