@@ -1,14 +1,22 @@
 // @flow
 import * as React from 'react';
-import {Text, Stack, Box, ResponsiveLayout, useTheme, ButtonLink} from '../src';
+import {Text, Stack, Box, ResponsiveLayout, useTheme, ButtonLink, TextLink} from '../src';
 import logo from '../img/mistica-react-logo.svg';
 
 export default {
     title: 'Welcome|Welcome',
 };
 
-export const Mistica = (): React.Node => {
+const Paragraph = ({children}) => {
     const {colors} = useTheme();
+    return (
+        <Text as="p" size={14} lineHeight="20px" color={colors.textSecondary}>
+            {children}
+        </Text>
+    );
+};
+
+export const Mistica = (): React.Node => {
     return (
         <ResponsiveLayout>
             <Box paddingY={32}>
@@ -20,19 +28,27 @@ export const Mistica = (): React.Node => {
                         <img src={logo} alt="Mistica loves react" />
                     </Stack>
                     <Stack space={16}>
-                        <Text as="p" size={16} color={colors.textSecondary}>
+                        <Paragraph>
                             Browse the stories in the sidebar menu to know the different components in the
                             mistica-web catalog and see usage examples for every component.
-                        </Text>
-                        <Text as="p" size={16} color={colors.textSecondary}>
+                        </Paragraph>
+                        <Paragraph>
                             Looking for a specific component? You can use the search bar or just press '/' and
                             start typing.
-                        </Text>
-                        <Text as="p" size={16} color={colors.textSecondary}>
+                        </Paragraph>
+                        <Paragraph>
                             Mistica comes with builtin support for the different Telefonica brand color
                             schemes. Use the theme selector to switch between the supported themes (Movistar,
                             O2 and Vivo)
-                        </Text>
+                        </Paragraph>
+                        <Paragraph>
+                            For quick prototyping using Mistica components, use the{' '}
+                            <TextLink href="/playroom">Mistica Playroom</TextLink>. Using the Playroom you can
+                            simultaneously design across a variety of themes and screen sizes, powered by JSX
+                            and Mistica components library. It's the perfect tool to create quick mock-ups and
+                            interactive prototypes with real code. It also allows you to share your work with
+                            others by simply copying the URL.
+                        </Paragraph>
                     </Stack>
                     <nav style={{margin: '0 -8px'}}>
                         <ButtonLink href="https://github.com/Telefonica/mistica">About Mistica</ButtonLink>
