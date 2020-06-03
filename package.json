@@ -20,8 +20,8 @@
         "ci": "yarn build && yarn prettier-check && yarn flow check && yarn lint && yarn test --ci",
         "prepublishOnly": "yarn ci",
         "storybook": "start-storybook -p 6006",
-        "build-storybook": "build-storybook",
-        "now-build": "yarn build-storybook -o public"
+        "playroom": "playroom start",
+        "now-build": "rimraf public && yarn build-storybook -o public/storybook && yarn playroom build"
     },
     "browserslist": [
         "chrome >= 36",
@@ -70,6 +70,7 @@
         "@testing-library/user-event": "^10.3.4",
         "babel-eslint": "^10.1.0",
         "babel-loader": "^8.1.0",
+        "babel-plugin-flow-react-proptypes": "^26.0.0",
         "babel-plugin-lodash": "^3.3.4",
         "eslint": "^7.1.0",
         "eslint-plugin-babel": "^5.3.0",
@@ -86,7 +87,9 @@
         "husky": ">=4",
         "jest": "^26.0.1",
         "lint-staged": ">=10",
+        "playroom": "^0.21.1",
         "prettier": "^2.0.5",
+        "prop-types": "^15.7.2",
         "react": "16.11.0",
         "react-dom": "16.11.0",
         "react-router-dom": "^5.1.2",
