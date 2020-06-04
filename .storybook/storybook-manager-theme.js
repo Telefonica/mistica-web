@@ -3,7 +3,9 @@ import logo from '../img/mistica-react-logo.svg';
 import {getColors} from '../src';
 import {create} from '@storybook/theming/create';
 
-const createTheme = (skin: 'Movistar' | 'Vivo' | 'O2'): any => {
+import type {Skin} from '../src';
+
+const createTheme = (skin: Skin): any => {
     const colors = getColors(skin);
     return create({
         base: 'light',
