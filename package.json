@@ -18,7 +18,7 @@
         "watch": "yarn build --watch",
         "clean": "rimraf dist",
         "ci": "yarn build && yarn prettier-check && yarn flow check && yarn lint && yarn test --ci",
-        "prepublishOnly": "yarn ci"
+        "prepublishOnly": "node scrips/prepublish-only.js"
     },
     "browserslist": [
         "chrome >= 36",

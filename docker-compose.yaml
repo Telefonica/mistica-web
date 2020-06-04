@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+    node_mistica_builder:
+        image: node:lts
+        container_name: node_mistica_builder
+        working_dir: '/src'
+        volumes:
+            - './:/src'
+        environment:
+            - NPM_TOKEN
