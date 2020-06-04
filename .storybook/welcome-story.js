@@ -29,8 +29,8 @@ export const Mistica = (): React.Node => {
                     </Stack>
                     <Stack space={16}>
                         <Paragraph>
-                            Browse the stories in the sidebar menu to know the different components in the
-                            mistica-web catalog and see usage examples for every component.
+                            Browse the stories in the sidebar menu to know the different React components in
+                            the Mistica catalog and see usage examples for every component.
                         </Paragraph>
                         <Paragraph>
                             Looking for a specific component? You can use the search bar or just press '/' and
@@ -38,8 +38,8 @@ export const Mistica = (): React.Node => {
                         </Paragraph>
                         <Paragraph>
                             Mistica comes with builtin support for the different Telefonica brand color
-                            schemes. Use the theme selector to switch between the supported themes (Movistar,
-                            O2 and Vivo)
+                            schemes. Use the theme selector in the toolbar above to switch between the
+                            supported themes (Movistar, O2 and Vivo)
                         </Paragraph>
                         <Paragraph>
                             For quick prototyping using Mistica components, use the{' '}
