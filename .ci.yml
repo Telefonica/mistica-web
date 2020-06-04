@@ -2,13 +2,13 @@ version: 2
 
 defaults:
     platform: docker
-    # plugins:
-    #     vault:
-    #         enabled: True
-    #         secrets:
-    #             - path: secret/services/jenkins/npm/novum-publish
-    #         keys:
-    #             token: NPM_TOKEN
+    plugins:
+        vault:
+            enabled: True
+            secrets:
+                - path: secret/services/jenkins/npm/novum-publish
+                  keys:
+                      token: NPM_TOKEN
 
 workflows:
     npm_publish:
@@ -28,11 +28,10 @@ workflows:
 
 stages:
     assert_is_master_branch:
-        - 'echo 1'
-    # - bash -c 'if [[ ! $(git diff origin/master) ]]; then
-    # - echo "Not in master branch or outdated"
-    # - exit 1
-    # - fi'
+        - 'bash -c ''if [[ ! $(git diff origin/master) ]]; then
+            echo "Not in master branch or outdated"
+            exit 1
+        fi'''
 
     docker_pull:
         - 'docker-compose pull --ignore-pull-failures'
