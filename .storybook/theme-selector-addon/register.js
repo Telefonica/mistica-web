@@ -26,7 +26,7 @@ const ThemeSelectorAddon = ({api}) => {
 
         api.setOptions({theme: createManagerTheme(currentTheme.skin)});
 
-        // We need tis timeout because there could be some race condition between addon mount and storibook manager initialization on page load.
+        // We need this timeout because there could be some race condition between addon mount and storibook manager initialization on page load.
         const tid = setTimeout(() => {
             api.setOptions({theme: createManagerTheme(currentTheme.skin)});
         }, 100);
