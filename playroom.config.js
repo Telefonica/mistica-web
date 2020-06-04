@@ -1,6 +1,8 @@
 // @flow
 /* eslint-disable filenames/match-regex */
 
+const path = require('path');
+
 // Dont apply babel-plugin-flow-react-proptypes to these files because make the build break:
 const flowToPropTypesBlackList = [/src\/button/, /src\/form-text-field/];
 
@@ -43,7 +45,11 @@ const config /* : any */ = {
                 {
                     test: /\.(js|mjs)$/,
 
-                    // include: path.resolve(__dirname),
+                    include: [
+                        path.resolve(__dirname, 'src'),
+                        path.resolve(__dirname, 'playroom'),
+                        path.resolve(__dirname, '.storybook'),
+                    ],
                     oneOf: [
                         {
                             test: flowToPropTypesBlackList,
@@ -69,7 +75,6 @@ const config /* : any */ = {
                 },
             ],
         },
-        // resolve: {mainFields: ['src', 'browser', 'module', 'main']},
     }),
 };
 
