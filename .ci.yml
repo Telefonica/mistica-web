@@ -2,13 +2,13 @@ version: 2
 
 defaults:
     platform: docker
-    plugins:
-        vault:
-            enabled: True
-            secrets:
-                - path: secret/services/jenkins/npm/novum-publish
-            keys:
-                token: NPM_TOKEN
+    # plugins:
+    #     vault:
+    #         enabled: True
+    #         secrets:
+    #             - path: secret/services/jenkins/npm/novum-publish
+    #         keys:
+    #             token: NPM_TOKEN
 
 workflows:
     npm_publish:
