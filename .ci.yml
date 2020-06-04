@@ -12,7 +12,7 @@ defaults:
 
 workflows:
     npm_publish:
-        stages: 
+        stages:
             - assert_is_master_branch
             - docker_pull
             - yarn_install
@@ -20,28 +20,30 @@ workflows:
             - docker_down
 
     npm_publish_dry_run:
-        stages: 
+        stages:
             - docker_pull
             - yarn_install
             - build
             - docker_down
 
 stages:
-    assert_is_master_branch: 
-        - ' bash -c 'if [[ ! $(git diff origin/master) ]]; then echo "Not in master branch or not updated"; exit 1; fi' '
+    assert_is_master_branch:
+        - bash -c 'if [[ ! $(git diff origin/master) ]]; then
+        - echo "Not in master branch or outdated"
+        - exit 1
+        - fi'
 
-    docker_pull: 
-        - 'docker-compose pull --ignore-pull-failures'    
+    docker_pull:
+        - docker-compose pull --ignore-pull-failures
 
-    docker_down: 
-        - 'docker-compose down --remove-orphans'
+    docker_down:
+        - docker-compose down --remove-orphans
 
     yarn_install:
-        - 'docker-compose run node_mistica_builder yarn'
+        - docker-compose run node_mistica_builder yarn
 
-    build: 
-        - 'docker-compose run node_mistica_builder yarn build'
-
+    build:
+        - docker-compose run node_mistica_builder yarn build
     # build:
     #     # build libphonenumber library
     #     - 'docker-compose run builder ant -f $LIBRARY_ANT_FILE build'
@@ -49,29 +51,21 @@ stages:
     #     - 'docker-compose run builder ant -f $SERVICE_ANT_FILE build-live'
     #     # build service client
     #     - 'docker-compose run builder ant -f $SERVICE_CLIENT_ANT_FILE build'
-
     # build_libphonenumber_js:
     #     # build javascript wrapper client
     #     - 'docker-compose -f libphonenumber-js/docker-compose.yml run builder bash -c "npm install; npm run
     #       build; npm run test"'
-
     # build_docker:
     #     - 'cd service && sh generated/docker-build.sh'
-
     # test_library:
     #     - 'docker-compose run builder ant -f $LIBRARY_ANT_FILE run-tests'
-
     # test_service:
     #     - 'docker-compose run acceptance ant -f $SERVICE_ANT_FILE test-acceptance'
-
     # publish_client:
     #     - 'docker-compose run -w /source/client/php/v1 builder ant publish-minor'
-
     # publish_java_client:
     #     - 'docker-compose run builder-java mvn -B deploy -f client/java/v1/pom.xml'
-
     # publish_service:
     #     - 'cd service && sh generated/docker-push.sh'
-
     # publish_library:
     #     - 'docker-compose run builder ant -f $LIBRARY_ANT_FILE publish-minor'
