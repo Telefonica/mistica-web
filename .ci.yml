@@ -27,20 +27,21 @@ workflows:
             - docker_down
 
 stages:
-    assert_is_master_branch: []
+    assert_is_master_branch:
+        - 'echo 1'
     # - bash -c 'if [[ ! $(git diff origin/master) ]]; then
     # - echo "Not in master branch or outdated"
     # - exit 1
     # - fi'
 
     docker_pull:
-        - docker-compose pull --ignore-pull-failures
+        - 'docker-compose pull --ignore-pull-failures'
 
     docker_down:
-        - docker-compose down --remove-orphans
+        - 'docker-compose down --remove-orphans'
 
     yarn_install:
-        - docker-compose run node_mistica_builder yarn
+        - 'docker-compose run node_mistica_builder yarn'
 
     build:
-        - docker-compose run node_mistica_builder yarn build
+        - 'docker-compose run node_mistica_builder yarn build'
