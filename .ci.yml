@@ -17,6 +17,7 @@ workflows:
             - docker_pull
             - yarn_install
             - build
+            - set_npmrc
             - publish
             - docker_down
 
@@ -25,6 +26,7 @@ workflows:
             - docker_pull
             - yarn_install
             - build
+            - set_npmrc
             - publish_dry_run
             - docker_down
 
@@ -44,8 +46,11 @@ stages:
     build:
         - docker-compose run node_mistica_builder yarn build
 
+    set_npmrc:
+        - docker-compose run node_mistica_builder bash -c 'CI=1 node scripts/set-ci-npmrc.js'
+
     publish:
-        - docker-compose run node_mistica_builder bash -c 'CI=1 npm publish'
+        - docker-compose run node_mistica_builder bash -c 'CI=1 npm publish --access restricted'
 
     publish_dry_run:
-        - docker-compose run node_mistica_builder bash -c 'CI=1 npm publish --dry-run'
+        - docker-compose run node_mistica_builder bash -c 'CI=1 npm publish --access restricted --dry-run'

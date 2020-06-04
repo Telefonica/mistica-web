@@ -1,13 +1,16 @@
 // @flow
 if (!process.env.CI) {
-    console.error();
-    console.error('Cannot publish from this machine');
-    console.error();
-    console.error('Execute:');
-    console.error('    tu-ci npm_publish');
-    console.error();
-    console.error('Or for a dry-run:');
-    console.error('    tu-ci npm_publish_dry_run');
-    console.error();
+    const lines = [
+        '',
+        'Cannot publish from this machine',
+        '',
+        'To publish, execute:',
+        '    tu-ci npm_publish',
+        '',
+        'Or, for a dry-run:',
+        '    tu-ci npm_publish_dry_run',
+        '',
+    ];
+    console.error(lines.join('\n'));
     process.exit(1);
 }
