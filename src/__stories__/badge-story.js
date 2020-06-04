@@ -14,7 +14,7 @@ const IcnSettings = ({color = '#00a9e0'}: {color?: string}) => (
 );
 
 export default {
-    title: 'Core|Badge',
+    title: 'Components|Badge',
 };
 
 export const badge = (): React.Node => (

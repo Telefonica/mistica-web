@@ -5,7 +5,7 @@ import ButtonLayout from '../button-layout';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Core|ButtonLayout',
+    title: 'Components|ButtonLayout',
     component: ButtonLayout,
 };
 

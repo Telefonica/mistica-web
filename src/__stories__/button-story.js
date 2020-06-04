@@ -9,7 +9,7 @@ import {StorySection, useCheckbox} from './helpers';
 import {useTheme} from '../hooks';
 
 export default {
-    title: 'Core|Button',
+    title: 'Components|Button',
 };
 
 const IcnCamera = () => (

@@ -18,7 +18,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Core|Form',
+    title: 'Components|Form',
 };
 
 const fakeApiCall = (data) =>

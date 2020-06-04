@@ -6,7 +6,7 @@ import Select from '../select';
 import Placeholder from '../placeholder';
 
 export default {
-    title: 'Core|Layout',
+    title: 'Components|Layout',
 };
 
 const Row = ({children}: {children?: any}) =>

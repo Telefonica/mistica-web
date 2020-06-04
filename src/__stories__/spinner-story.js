@@ -4,7 +4,7 @@ import Spinner from '../spinner';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Core|Spinner',
+    title: 'Components|Spinner',
     component: Spinner,
 };
 

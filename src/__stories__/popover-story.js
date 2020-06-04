@@ -5,7 +5,7 @@ import Popover from '../popover';
 import IcnClose from '../icons/icn-close';
 
 export default {
-    title: 'Core|Popover',
+    title: 'Components|Popover',
     component: Popover,
 };
 

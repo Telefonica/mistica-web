@@ -8,7 +8,7 @@ import IcnVisa from '../icons/icn-visa';
 import IcnMastercard from '../icons/icn-mastercard';
 
 export default {
-    title: 'Core|Tooltip',
+    title: 'Components|Tooltip',
 };
 
 export const Default = (): React.Node => (

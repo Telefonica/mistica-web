@@ -4,7 +4,7 @@ import {Snackbar, Stack} from '..';
 import {StorySection, useTextField, useSelect} from './helpers';
 
 export default {
-    title: 'Core|Snackbar',
+    title: 'Components|Snackbar',
     component: Snackbar,
 };
 
