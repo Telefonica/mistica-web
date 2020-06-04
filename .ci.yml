@@ -17,6 +17,7 @@ workflows:
             - docker_pull
             - yarn_install
             - build
+            - publish
             - docker_down
 
     npm_publish_dry_run:
@@ -24,6 +25,7 @@ workflows:
             - docker_pull
             - yarn_install
             - build
+            - publish_dry_run
             - docker_down
 
 stages:
@@ -41,3 +43,9 @@ stages:
 
     build:
         - docker-compose run node_mistica_builder yarn build
+
+    publish:
+        - docker-compose run node_mistica_builder bash -c 'CI=1 npm publish'
+
+    publish_dry_run:
+        - docker-compose run node_mistica_builder bash -c 'CI=1 npm publish --dry-run'

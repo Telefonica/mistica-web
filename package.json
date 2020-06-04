@@ -5,7 +5,6 @@
     "main": "dist/index.js",
     "src": "src/index.js",
     "files": [
-        "esm/*",
         "dist/*",
         "css/*"
     ],
@@ -18,7 +17,7 @@
         "watch": "yarn build --watch",
         "clean": "rimraf dist",
         "ci": "yarn build && yarn prettier-check && yarn flow check && yarn lint && yarn test --ci",
-        "prepublishOnly": "node scrips/prepublish-only.js"
+        "prepublishOnly": "node scripts/prepublish-only.js"
     },
     "browserslist": [
         "chrome >= 36",
@@ -38,6 +37,12 @@
                 "files": "package.json",
                 "options": {
                     "printWidth": 250
+                }
+            },
+            {
+                "files": ".ci.yml",
+                "options": {
+                    "printWidth": 150
                 }
             },
             {
