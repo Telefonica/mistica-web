@@ -10,7 +10,7 @@ if (process.env.CI) {
 
     const lines = [
         // set npm auth token with publish permission from environment
-        `//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN ?? ''}`,
+        `//registry.npmjs.org/:_authToken=${process.env.NPM_TOKEN || ''}`,
 
         // this allows to execute npm lifecycle scripts by root
         'unsafe-perm = true',
