@@ -28,7 +28,7 @@ workflows:
 
 stages:
     assert_is_master_branch: 
-        - 'bash -c \'if [[ ! $(git diff origin/master) ]]; then echo "Not in master branch or not updated"; exit 1; fi\''
+        - ' bash -c 'if [[ ! $(git diff origin/master) ]]; then echo "Not in master branch or not updated"; exit 1; fi' '
 
     docker_pull: 
         - 'docker-compose pull --ignore-pull-failures'    
