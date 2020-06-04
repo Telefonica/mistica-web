@@ -7,8 +7,8 @@ defaults:
             enabled: True
             secrets:
                 - path: secret/services/jenkins/npm/novum-publish
-                    keys:
-                        token: NPM_TOKEN
+            keys:
+                token: NPM_TOKEN
 
 workflows:
     npm_publish:
