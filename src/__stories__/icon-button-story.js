@@ -5,7 +5,7 @@ import IcnClose from '../icons/icn-close';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Core|IconButton',
+    title: 'Components|IconButton',
 };
 
 export const Default = (): React.Node => (

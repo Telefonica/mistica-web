@@ -350,9 +350,6 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
     };
 
     componentDidMount() {
-        if (dialogInstance) {
-            throw Error('DialogRoot is already mounted. Only one instance is allowed.');
-        }
         dialogInstance = this;
         window.addEventListener('popstate', this.handleBack);
     }

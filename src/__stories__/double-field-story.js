@@ -4,7 +4,7 @@ import {StorySection, fruitEntries} from './helpers';
 import {TextField, Select, DoubleField, Stack} from '..';
 
 export default {
-    title: 'Core|DoubleField',
+    title: 'Components|DoubleField',
     component: DoubleField,
 };
 

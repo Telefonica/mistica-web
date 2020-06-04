@@ -4,7 +4,7 @@ import {PromoTag, Stack} from '..';
 import {useTextField} from './helpers';
 
 export default {
-    title: 'Core|PromoTag',
+    title: 'Components|PromoTag',
 };
 
 export const Default = (): React.Node => {

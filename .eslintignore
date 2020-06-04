@@ -1,3 +1,6 @@
 flow-typed/
 dist/
 node_modules/
+storybook-static/
+public/
+!.storybook/

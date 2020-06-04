@@ -4,7 +4,7 @@ import {StorySection, fruitEntries} from './helpers';
 import {Select} from '..';
 
 export default {
-    title: 'Core|Select',
+    title: 'Components|Select',
     component: Select,
 };
 

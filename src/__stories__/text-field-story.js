@@ -8,7 +8,7 @@ import Icon from '../icons/icn-visibility';
 import {StorySection, countriesList} from './helpers';
 
 export default {
-    title: 'Core|TextField',
+    title: 'Components|TextField',
     component: TextField,
 };
 
