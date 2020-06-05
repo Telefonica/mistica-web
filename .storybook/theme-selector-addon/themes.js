@@ -16,4 +16,18 @@ export const Vivo: ThemeConfig = {
     skin: 'Vivo',
 };
 
-export default [Movistar, O2, Vivo];
+export const AVAILABLE_BRAND_THEMES = [Movistar, O2, Vivo];
+
+export default (brandSkin, platform) => {
+    brandSkin = brandSkin || 'Movistar';
+    const brandConfig = AVAILABLE_BRAND_THEMES.find(({skin}) => skin === brandSkin);
+    return platform
+        ? {
+              ...brandConfig,
+              platformOverrides: {
+                  platform,
+                  insideNovumNativeApp: true,
+              },
+          }
+        : brandConfig;
+};
