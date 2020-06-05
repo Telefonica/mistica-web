@@ -16,7 +16,7 @@
         "postbuild": "flow-copy-source -v -i '**/__tests__/**' -i '**/__stories__/**' -i '**/__type_tests__/**' src dist",
         "watch": "yarn build --watch",
         "clean": "rimraf dist",
-        "ci": "yarn build && yarn prettier-check && yarn flow check && yarn lint && yarn test --ci",
+        "ci": "yarn build && yarn prettier-check && yarn flow check && yarn lint && yarn test --ci && yarn test-acceptance --ci && yarn test-screenshot --ci",
         "prepublishOnly": "node scripts/prepublish-only.js",
         "storybook": "start-storybook -p 6006",
         "playroom": "playroom start",
