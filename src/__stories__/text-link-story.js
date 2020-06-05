@@ -4,7 +4,7 @@ import TextLink from '../text-link';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Core|TextLink',
+    title: 'Components|TextLink',
     component: TextLink,
 };
 

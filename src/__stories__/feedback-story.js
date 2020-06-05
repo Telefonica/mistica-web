@@ -5,7 +5,7 @@ import {ThemeVariant} from '../theme-variant-context';
 import {StorySection, useCheckbox, useSelect, useTextField} from './helpers';
 
 export default {
-    title: 'Core|Feedbacks',
+    title: 'Components|Feedbacks',
 };
 
 export const Feedback = (): React.Node => {

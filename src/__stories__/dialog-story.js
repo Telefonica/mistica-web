@@ -6,7 +6,7 @@ import ButtonLayout from '../button-layout';
 import IcnInfo from '../icons/icn-info';
 
 export default {
-    title: 'Core|Dialogs',
+    title: 'Components|Dialogs',
 };
 
 export const Cases = (): React.Node => (

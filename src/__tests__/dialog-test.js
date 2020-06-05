@@ -14,18 +14,6 @@ test('does not render anything initially', () => {
     expect(asFragment()).toMatchInlineSnapshot(`<DocumentFragment />`);
 });
 
-test('throws if instance already exists', () => {
-    jest.spyOn(console, 'error').mockImplementation(() => {});
-    expect(() =>
-        render(
-            <div>
-                <ThemeContextProvider theme={overrideTheme({})}>cuca</ThemeContextProvider>
-                <ThemeContextProvider theme={overrideTheme({})}>cuco</ThemeContextProvider>
-            </div>
-        )
-    ).toThrow('Only one instance is allowed');
-});
-
 test('throws when we try to stack dialogs', async () => {
     render(<ThemeContextProvider theme={overrideTheme({})} />);
     alert(alertProps);

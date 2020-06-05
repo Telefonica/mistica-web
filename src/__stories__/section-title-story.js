@@ -5,7 +5,7 @@ import SectionTitle from '../section-title';
 import Placeholder from '../placeholder';
 
 export default {
-    title: 'Core|SectionTitle',
+    title: 'Components|SectionTitle',
 };
 
 export const Example = (): React.Node => (

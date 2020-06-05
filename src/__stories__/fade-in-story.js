@@ -4,7 +4,7 @@ import FadeIn from '../fade-in';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Core|FadeIn',
+    title: 'Components|FadeIn',
     component: FadeIn,
 };
 

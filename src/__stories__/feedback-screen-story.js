@@ -8,7 +8,7 @@ import {
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from '../button';
 
 export default {
-    title: 'Core|Feedbacks/Screens',
+    title: 'Components|Feedbacks/Screens',
 };
 
 const primaryButton = <ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>;

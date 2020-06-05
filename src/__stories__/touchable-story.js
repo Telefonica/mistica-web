@@ -4,7 +4,7 @@ import Touchable from '../touchable';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Core|Touchable',
+    title: 'Components|Touchable',
     component: Touchable,
 };
 

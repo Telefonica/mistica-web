@@ -6,7 +6,7 @@ import {RowList, Row, BoxedRowList, BoxedRow} from '../list';
 import {Box, Stack, AvatarPlaceholder} from '..';
 
 export default {
-    title: 'Core|List',
+    title: 'Components|List',
     parameters: {
         fullScreen: true,
     },

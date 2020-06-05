@@ -1,6 +1,8 @@
 # Mistica web
 
-React components library for Telefonica design system (Mistica)
+![Mistica loves React](./img/mistica-react-logo.svg)
+
+React components library for Telefonica Design System ([Mistica](https://github.com/Telefonica/mistica))
 
 ## Getting started
 
