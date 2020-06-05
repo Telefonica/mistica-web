@@ -16,6 +16,8 @@ find playroom -type f -exec sed -i -e 's/\.\/roboto\.css/\.\.\/css\/roboto\.css/
 find playroom -type f -exec sed -i -e 's/@tuenti\/ui\/css\/reset\.css/\.\.\/css\/reset\.css/g' {} \;
 find playroom -type f -exec sed -i -e 's/@tuenti\/ui/\.\.\/src/g' {} \;
 
+find src -type f -exec sed -i -e 's/Core|/Components|/g' {} \;
+
 # remove some eslint suppression comments for rules we don't have in this repo
 for f in $(grep -rl src -e 'no-unused-prop-types'); do
     sed -i '/no-unused-prop-types/d' $f

@@ -9,7 +9,7 @@ const useStyles = createUseStyles((theme) => ({
         display: 'inline-block',
     },
     badge: {
-        position: 'absolute',
+        position: ({hasChildren}) => (hasChildren ? 'absolute' : undefined),
         top: -2,
         right: -6,
         width: 8,
@@ -38,15 +38,20 @@ const useStyles = createUseStyles((theme) => ({
 }));
 
 type Props = {
-    children: React.Node,
+    children?: React.Node,
     value?: number,
 };
 
 const Badge = ({children, value}: Props): React.Node => {
-    const classes = useStyles();
+    const hasChildren = !!children;
+    const classes = useStyles({hasChildren});
+
+    if (children && value === 0) {
+        return children;
+    }
 
     if (value === 0) {
-        return children;
+        return null;
     }
 
     return (
