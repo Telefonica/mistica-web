@@ -25,7 +25,7 @@ const useStyles = createUseStyles((theme) => ({
         letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.15 : undefined,
         fontWeight: 500,
     },
-    container: {
+    bunContainer: {
         backgroundColor: theme.colors.background,
     },
     headerContainer: {
@@ -99,7 +99,7 @@ const Bun = ({children, title, trackingEvent, action}: BunProps): React.Node => 
 
     return (
         <ThemeVariant isInverse={false}>
-            <div className={classes.container}>
+            <div className={classes.bunContainer}>
                 <div className={classes.headerContainer}>
                     <h2 className={classes.title1}>{title}</h2>
                 </div>

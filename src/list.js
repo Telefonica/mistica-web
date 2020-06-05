@@ -6,6 +6,7 @@ import Touchable from './touchable';
 import Text from './text';
 import Box from './box';
 import Stack from './stack';
+import Badge from './badge';
 import {useTheme} from './hooks';
 import IcnChevron from './icons/icn-chevron';
 
@@ -35,11 +36,17 @@ const useStyles = createUseStyles((theme) => ({
     content: {
         display: 'flex',
         width: '100%',
+        minHeight: 72,
         borderBottom: `1px solid ${theme.colors.borderLight}`,
     },
     icon: {
         display: 'flex',
         alignItems: 'center',
+
+        '& img': {
+            display: 'flex',
+            width: '100%',
+        },
     },
     text: {
         display: 'flex',
@@ -47,17 +54,23 @@ const useStyles = createUseStyles((theme) => ({
         justifyContent: 'center',
         flex: 1,
     },
-    chevron: {
+    center: {
         display: 'flex',
         alignItems: 'center',
+    },
+    badge: {
+        justifyContent: 'center',
+        minWidth: 16,
+        height: '100%',
     },
 }));
 
 type CommonProps = {
     title: string,
-    description?: string,
-    icon?: React.Element<any>,
+    description?: string | null,
+    icon?: React.Element<any> | string | null,
     iconSize?: 24 | 40,
+    badge?: boolean | number,
 };
 
 type ContentProps = {
@@ -65,15 +78,33 @@ type ContentProps = {
     isClickable?: boolean,
 };
 
-const Content = ({title, description, icon, iconSize = 40, isClickable}: ContentProps) => {
+const Content = ({title, description, icon, iconSize = 40, isClickable, badge}: ContentProps) => {
     const classes = useStyles();
     const theme = useTheme();
     const getIconSize = description ? 40 : iconSize;
+    const renderBadge = () => {
+        const wrapper = (content) => (
+            <Box paddingLeft={16}>
+                <div className={classNames(classes.center, classes.badge)}>{content}</div>
+            </Box>
+        );
+        if (!badge) {
+            return null;
+        }
+        if (badge === true) {
+            return wrapper(<Badge />);
+        }
+        return wrapper(<Badge value={badge} />);
+    };
 
     return (
         <Box paddingY={16} className={classes.content}>
             {icon && (
-                <Box paddingRight={16} paddingY={description ? 4 : 0}>
+                <Box
+                    paddingRight={16}
+                    paddingY={description ? 4 : 0}
+                    className={classNames({[classes.center]: !description})}
+                >
                     <div className={classes.icon} style={{width: getIconSize, height: getIconSize}}>
                         {icon}
                     </div>
@@ -91,8 +122,9 @@ const Content = ({title, description, icon, iconSize = 40, isClickable}: Content
                     </Box>
                 )}
             </div>
+            {renderBadge()}
             {isClickable && (
-                <Box paddingLeft={16} className={classes.chevron}>
+                <Box paddingLeft={16} className={classes.center}>
                     <IcnChevron size={24} color={theme.colors.iconSecondary} direction="right" />
                 </Box>
             )}
@@ -123,7 +155,7 @@ type RowContentProps =
 
 const RowContent = (props: RowContentProps) => {
     const classes = useStyles();
-    const {icon, iconSize, title, description} = props;
+    const {icon, iconSize, title, description, badge} = props;
 
     if (props.onPress) {
         return (
@@ -138,6 +170,7 @@ const RowContent = (props: RowContentProps) => {
                         iconSize={iconSize}
                         title={title}
                         description={description}
+                        badge={badge}
                         isClickable
                     />
                 </Box>
@@ -159,6 +192,7 @@ const RowContent = (props: RowContentProps) => {
                         iconSize={iconSize}
                         title={title}
                         description={description}
+                        badge={badge}
                         isClickable
                     />
                 </Box>
@@ -180,6 +214,7 @@ const RowContent = (props: RowContentProps) => {
                         iconSize={iconSize}
                         title={title}
                         description={description}
+                        badge={badge}
                         isClickable
                     />
                 </Box>

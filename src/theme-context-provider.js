@@ -8,6 +8,8 @@ import getColors from './colors';
 import DialogRoot from './dialog';
 import ScreenSizeContextProvider from './screen-size-context-provider';
 import {createMediaQueries} from './utils/media-queries';
+// eslint-disable-next-line import/extensions
+import {version} from '../package.json';
 
 import type {Theme, ThemeConfig} from './theme';
 
@@ -16,7 +18,13 @@ type Props = {
     children?: React.Node,
 };
 
+let jssInstanceId = 0;
+
 const ThemeContextProvider = ({theme, children}: Props): React.Node => {
+    const classNamePrefix = React.useMemo(
+        () => `mistica-${version.replace(/\./g, '-')}-${jssInstanceId++}-`,
+        []
+    );
     const {skin, colorOverride} = theme;
     const c = getColors(skin, colorOverride);
 
@@ -114,7 +122,7 @@ const ThemeContextProvider = ({theme, children}: Props): React.Node => {
     };
 
     return (
-        <JssProvider jss={getJss()}>
+        <JssProvider jss={getJss()} classNamePrefix={classNamePrefix}>
             <ThemeContext.Provider value={contextTheme}>
                 <ScreenSizeContextProvider>
                     <DialogRoot>{children}</DialogRoot>
