@@ -12,11 +12,16 @@ export default {
     },
 };
 
+const url = 'https://www.google.com';
+const handleOnPress = () => window.alert('Button pressed!');
+
 export const RowListExample = (): React.Node => {
     const [title, titleTextField] = useTextField('title', 'Title', true);
     const [description, descriptionTextField] = useTextField('description', 'Description');
     const [iconSize, iconSizeSelectField] = useSelect('Icon Size', '40', ['40', '24 *', 'Without icon']);
     const [withLink, linkCheckbox] = useCheckbox('With link', true);
+    const [newTab, newTabCheckbox] = useCheckbox('Link newTab prop', false);
+    const [withBadge, badgeCheckbox] = useCheckbox('With badge', true);
 
     return (
         <MemoryRouter>
@@ -25,9 +30,11 @@ export const RowListExample = (): React.Node => {
                     <Box paddingTop={16}>
                         <p>List options:</p>
                     </Box>
+                    {linkCheckbox}
+                    {newTabCheckbox}
+                    {badgeCheckbox}
                     {titleTextField}
                     {descriptionTextField}
-                    {linkCheckbox}
                     {iconSizeSelectField}
                     <Box paddingX={16}>
                         <p style={{fontSize: 12}}>
@@ -44,21 +51,25 @@ export const RowListExample = (): React.Node => {
                             iconSize={iconSize === '40' ? 40 : 24}
                             title={title}
                             description={description}
-                            href={withLink ? 'url/url' : ''}
+                            href={withLink ? url : ''}
+                            newTab={newTab}
+                            badge={withBadge}
                         />
                         <Row
                             icon={iconSize !== 'Without icon' ? <AvatarPlaceholder size="100%" /> : undefined}
                             iconSize={iconSize === '40' ? 40 : 24}
                             title={title}
                             description={description}
-                            onPress={withLink ? () => {} : ''}
+                            onPress={withLink ? handleOnPress : ''}
+                            badge={withBadge ? 2 : undefined}
                         />
                         <Row
                             icon={iconSize !== 'Without icon' ? <AvatarPlaceholder size="100%" /> : undefined}
                             iconSize={iconSize === '40' ? 40 : 24}
                             title={title}
                             description={description}
-                            to={withLink ? 'url/url' : ''}
+                            to={withLink ? url : ''}
+                            badge={withBadge ? 22 : undefined}
                         />
                     </RowList>
                 </StorySection>
@@ -72,6 +83,8 @@ export const BoxedRowListExample = (): React.Node => {
     const [description, descriptionTextField] = useTextField('description', 'Description');
     const [iconSize, iconSizeSelectField] = useSelect('Icon Size', '40', ['40', '24 *', 'Without icon']);
     const [withLink, linkCheckbox] = useCheckbox('With link', true);
+    const [newTab, newTabCheckbox] = useCheckbox('Link newTab prop', false);
+    const [withBadge, badgeCheckbox] = useCheckbox('With badge', false);
 
     return (
         <MemoryRouter>
@@ -80,9 +93,11 @@ export const BoxedRowListExample = (): React.Node => {
                     <Box paddingTop={16}>
                         <p>List options:</p>
                     </Box>
+                    {linkCheckbox}
+                    {newTabCheckbox}
+                    {badgeCheckbox}
                     {titleTextField}
                     {descriptionTextField}
-                    {linkCheckbox}
                     {iconSizeSelectField}
                     <Box paddingX={16}>
                         <p style={{fontSize: 12}}>
@@ -99,21 +114,25 @@ export const BoxedRowListExample = (): React.Node => {
                             iconSize={iconSize === '40' ? 40 : 24}
                             title={title}
                             description={description}
-                            href={withLink ? 'url/url' : ''}
+                            href={withLink ? url : ''}
+                            newTab={newTab}
+                            badge={withBadge}
                         />
                         <BoxedRow
                             icon={iconSize !== 'Without icon' ? <AvatarPlaceholder size="100%" /> : undefined}
                             iconSize={iconSize === '40' ? 40 : 24}
                             title={title}
                             description={description}
-                            onPress={withLink ? () => {} : ''}
+                            onPress={withLink ? handleOnPress : ''}
+                            badge={withBadge ? 2 : undefined}
                         />
                         <BoxedRow
                             icon={iconSize !== 'Without icon' ? <AvatarPlaceholder size="100%" /> : undefined}
                             iconSize={iconSize === '40' ? 40 : 24}
                             title={title}
                             description={description}
-                            to={withLink ? 'url/url' : ''}
+                            to={withLink ? url : ''}
+                            badge={withBadge ? 22 : undefined}
                         />
                     </BoxedRowList>
                 </StorySection>
