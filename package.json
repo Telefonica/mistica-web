@@ -14,6 +14,7 @@
         "lint": "eslint --report-unused-disable-directives .",
         "prebuild": "yarn clean",
         "build": "babel src --out-dir dist --ignore \"**/__tests__/**\" --ignore \"**/__stories__/**\" --ignore \"**/__type_tests__/**\"",
+        "build-ts": "tsc --project tsconfig.production.json",
         "watch": "yarn build --watch",
         "clean": "rimraf dist",
         "ci": "yarn build && yarn prettier-check && yarn flow check && yarn lint && yarn test --ci",
@@ -101,7 +102,8 @@
         "react": "16.11.0",
         "react-dom": "16.11.0",
         "react-router-dom": "^5.1.2",
-        "rimraf": "^3.0.1"
+        "rimraf": "^3.0.1",
+        "typescript": "^3.9.5"
     },
     "dependencies": {
         "@juggle/resize-observer": "^3.1.3",
@@ -138,6 +140,6 @@
         }
     },
     "lint-staged": {
-        "*.{js,css,md,yml,yaml}": "prettier --write"
+        "*.{js,css,md,yml,yaml,ts,tsx}": "prettier --write"
     }
 }
