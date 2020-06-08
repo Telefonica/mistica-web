@@ -164,8 +164,13 @@ rules:
     '@typescript-eslint/no-unused-vars': [error, {vars: all, args: after-used, ignoreRestSiblings: true}]
     '@typescript-eslint/no-empty-function': off
 
-# overrides should be removed once fully migrated to TS
 overrides:
+    - files:
+          - '**/__type_tests__/*-type-test.tsx'
+          - '**/__type_tests__/*-type-test.js'
+      rules:
+          'babel/no-unused-expressions': off
+          '@typescript-eslint/no-unused-vars': off
     - files:
           - '*.tsx'
       rules:

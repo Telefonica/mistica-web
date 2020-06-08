@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react';
 import {ButtonPrimary} from '../button';
-/* eslint-disable babel/no-unused-expressions */
 
 // $ExpectError - no children
 <ButtonPrimary />;

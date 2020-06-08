@@ -1,6 +1,6 @@
-// @flow
+import * as React from 'react';
 import {create as createJss} from 'jss';
-import injectSheet, {createUseStyles as jssCreateUseStyles} from 'react-jss';
+import withStyles, {createUseStyles as jssCreateUseStyles} from 'react-jss';
 import camelCase from 'jss-plugin-camel-case';
 import defaultUnit from 'jss-plugin-default-unit';
 import ruleValueFunction from 'jss-plugin-rule-value-function';
@@ -38,32 +38,40 @@ type ObjValuesToStr<O> = {[k in keyof O]: string};
  *
  */
 export const createSheet = <S extends Sheet>(sheet: S): ObjValuesToStr<S> =>
-    // @ts-ignore
+    // @ts-expect-error - This function casts a value to an incompatible type
     sheet;
 
-export const withSheet = <S extends any>(sheet: S) => <C extends any>(Component: C) => {
-    const StyledComponent = injectSheet(sheet)(Component);
+export const withSheet = <S extends ObjValuesToStr<Sheet>>(sheet: S) => <P extends any>(
+    Component: React.ComponentType<P>
+): React.ComponentType<Omit<P, 'classes'>> & {WrappedComponent: typeof Component} => {
+    // @ts-expect-error - our types are fine
+    const StyledComponent = withStyles(sheet)(Component);
     if (process.env.STORYBOOK_BUILD) {
         StyledComponent.propTypes = Component.propTypes;
         if (StyledComponent.propTypes) {
-            // @ts-ignore - sheet does not exist in propTypes
+            // @ts-expect-error - sheet does not exist in propTypes
             delete StyledComponent.propTypes.sheet;
         }
         StyledComponent.defaultProps = Component.defaultProps;
         StyledComponent.displayName = Component.displayName || Component.name;
     }
-    // @ts-ignore
+
+    // @ts-expect-error
     StyledComponent.WrappedComponent = Component;
+    // @ts-expect-error
     return StyledComponent;
 };
 
-export const removeJssProps = <P extends any>(props: P): Pick<P, Exclude<keyof P, 'sheet' | 'classes'>> => {
+export const removeJssProps = <P extends {sheet?: any; classes?: any}>(
+    props: P
+): Pick<P, Exclude<keyof P, 'sheet' | 'classes'>> => {
     const {sheet, classes, ...withoutJssProps} = props;
     return withoutJssProps;
 };
 
 type CSSValue<P> = void | number | boolean | string | ((props: P) => void | string | number | boolean);
-type ClassDef<P> = {
+
+type ClassDefinition<P> = {
     [cssProp: string]:
         | CSSValue<P>
         | {
@@ -75,19 +83,18 @@ type ClassDef<P> = {
           };
 };
 
-type StylesDef<P> = {[className: string]: ClassDef<P>};
+type StylesDefinition<P> = {[className: string]: ClassDefinition<P>};
 
-type UseStyles<P, S extends StylesDef<any>> = (props: P) => ObjValuesToStr<S>;
+type UseStyles<P, S extends StylesDefinition<any>> = (props: P) => ObjValuesToStr<S>;
 
-export const createUseStyles = <P, S extends StylesDef<any>>(
+export const createUseStyles = <P, S extends StylesDefinition<P>>(
     styles: (theme: Theme) => S
 ): UseStyles<P, S> => {
-    // @ts-ignore
+    // @ts-expect-error
     const useStyles = jssCreateUseStyles(styles, {theming: {context: ThemeContext}});
     return (...args) => {
         try {
-            // @ts-ignore - useStyles returns Record<string, string> which is "incompatible" with {[string]: string}
-            return useStyles(...args);
+            return useStyles(...args) as any; // casted because useStyles returns Record<string, string>
         } catch (err) {
             err.message = `${err.message} (Did you forget to add <ThemeContextProvider>?)`;
             throw err;

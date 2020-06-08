@@ -1,7 +1,4 @@
-/* eslint-disable babel/no-unused-expressions */
-/* eslint-disable no-unused-vars */
-
-/**
+/*
  * This file is just to verify the types in jss module work fine when used to style components.
  * You may see warnings/errors in this file if you touch jss types. Those errors/warnings may
  * be indicative of a bad typing.
@@ -13,6 +10,12 @@ import {createSheet, withSheet, createUseStyles} from '../jss';
 const sheet = createSheet({
     a: {color: 'blue'},
 });
+// sheet.a type is mapped to string
+sheet.a.toLowerCase();
+// @ts-expect-error b doesn't exist
+sheet.b.toLowerCase();
+// @ts-expect-error a.color no longer accessible
+sheet.a.color;
 
 type Props = {
     n: number;
@@ -20,7 +23,7 @@ type Props = {
     classes: typeof sheet;
 };
 
-const C = ({n, s, classes}: Props) => (
+const C: React.FC<Props> = ({n, s, classes}) => (
     <div className={classes.a}>
         {n} and {s}
         <div
@@ -48,6 +51,13 @@ i = <SC n={1} s="a" />;
 i = <SC n={1} s={2} />;
 // @ts-expect-error n should be a number
 i = <SC n="1" s="a" />;
+
+// OK
+i = <SC.WrappedComponent classes={{a: 'c'}} n={1} s="a" />;
+// @ts-expect-error s should be a string
+i = <SC.WrappedComponent classes={{a: 'c'}} n={1} s={2} />;
+// @ts-expect-error n should be a number
+i = <SC.WrappedComponent classes={{a: 'c'}} n="1" s="a" />;
 
 const useStyles = createUseStyles(() => ({
     a: {color: 'blue'},

@@ -1,7 +1,4 @@
 // @flow
-/* eslint-disable babel/no-unused-expressions */
-/* eslint-disable no-unused-vars */
-
 /**
  * This file is just to verify the types in jss module work fine when used to style components.
  * You may see warnings/errors in this file if you touch jss types. Those errors/warnings may
