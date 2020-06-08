@@ -85,11 +85,13 @@ type ClassDefinition<P> = {
 
 type StylesDefinition<P> = {[className: string]: ClassDefinition<P>};
 
-type UseStyles<P> = (props?: P) => ObjValuesToStr<StylesDefinition<P>>;
+type UseStyles<P, S extends StylesDefinition<P>> = (props?: P) => ObjValuesToStr<S>;
 
 // https://github.com/Microsoft/TypeScript/issues/10571
 
-export const createUseStyles = <P,>(styles?: (theme: Theme) => StylesDefinition<P>): UseStyles<P> => {
+export const createUseStyles = <P, S extends StylesDefinition<P>>(
+    styles?: (theme: Theme) => S
+): UseStyles<P, S> => {
     // @ts-expect-error
     const useStyles = jssCreateUseStyles(styles, {theming: {context: ThemeContext}});
     return (...args) => {
