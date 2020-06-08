@@ -1,5 +1,3 @@
-// @flow
-
 import * as movistarColors from './colors-movistar';
 import * as vivoColors from './colors-vivo';
 import * as o2Colors from './colors-o2';
@@ -20,7 +18,7 @@ export default (skin: Skin, override?: string): Colors => {
         [VIVO_SKIN]: vivoColors,
     };
 
-    const brandedOverrides = {
+    const brandedOverrides: Record<Skin, {[override: string]: any} | null> = {
         [MOVISTAR_SKIN]: {
             prominent: movistarProminentColorOverrides,
         },
@@ -34,10 +32,10 @@ export default (skin: Skin, override?: string): Colors => {
         throw Error(`No colors configured for skin: "${skin}"`);
     }
 
-    if (override && brandedOverrides[skin] && brandedOverrides[skin][override]) {
+    if (override) {
         return {
             ...brandedPalette,
-            ...brandedOverrides[skin][override],
+            ...brandedOverrides[skin]?.[override],
         };
     }
 

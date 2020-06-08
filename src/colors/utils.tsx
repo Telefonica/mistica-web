@@ -1,4 +1,3 @@
-// @flow
 const fromHexToRgb = (hexColor: string): [number, number, number] => {
     if (hexColor.length === 4) {
         return [

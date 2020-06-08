@@ -1,4 +1,3 @@
-// @flow
 import {applyAlpha} from './utils';
 import c from './colors/vivo';
 

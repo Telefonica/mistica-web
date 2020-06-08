@@ -119,58 +119,58 @@ export type ThemeTexts = typeof texts;
 // This is the type expected by ThemeContextProvider theme prop.
 // This config is provided by the user of the lib
 export type ThemeConfig = {
-    skin: Skin,
-    colorOverride?: string,
+    skin: Skin;
+    colorOverride?: string;
     i18n: {
-        locale: Locale,
-        phoneNumberFormattingRegionCode: RegionCode,
-    },
+        locale: Locale;
+        phoneNumberFormattingRegionCode: RegionCode;
+    };
     platformOverrides?: {
-        platform?: 'ios' | 'android',
-        insideNovumNativeApp?: boolean,
-    },
-    texts?: $Shape<ThemeTexts>,
-    analytics?: {logEvent: (TrackingEvent) => Promise<void>},
-    dimensions?: {headerMobileHeight: number},
+        platform?: 'ios' | 'android';
+        insideNovumNativeApp?: boolean;
+    };
+    texts?: Partial<ThemeTexts>;
+    analytics?: {logEvent: (trackingEvent: TrackingEvent) => Promise<void>};
+    dimensions?: {headerMobileHeight: number};
     mediaQueries?: {
-        tabletMinWidth: number,
-        desktopMinWidth: number,
-        largeDesktopMinWidth: number,
-        desktopOrTabletMinHeight: number,
-    },
+        tabletMinWidth: number;
+        desktopMinWidth: number;
+        largeDesktopMinWidth: number;
+        desktopOrTabletMinHeight: number;
+    };
 };
 
 // This is the lib INTERNAL context
 export type Theme = {
-    skin: Skin,
-    colorOverride?: string,
+    skin: Skin;
+    colorOverride?: string;
     i18n: {
-        locale: Locale,
-        phoneNumberFormattingRegionCode: RegionCode,
-    },
+        locale: Locale;
+        phoneNumberFormattingRegionCode: RegionCode;
+    };
     platformOverrides: {
-        platform?: 'ios' | 'android',
-        insideNovumNativeApp?: boolean,
-    },
-    texts: ThemeTexts,
-    analytics: {logEvent: (TrackingEvent) => Promise<void>},
-    dimensions: {headerMobileHeight: number},
+        platform?: 'ios' | 'android';
+        insideNovumNativeApp?: boolean;
+    };
+    texts: ThemeTexts;
+    analytics: {logEvent: (trackingEvent: TrackingEvent) => Promise<void>};
+    dimensions: {headerMobileHeight: number};
     mq: {
-        mobile: string,
-        tablet: string,
-        desktop: string,
-        largeDesktop: string,
-        tabletOrBigger: string,
-        tabletOrSmaller: string,
-    },
-    colors: ThemeColors,
+        mobile: string;
+        tablet: string;
+        desktop: string;
+        largeDesktop: string;
+        tabletOrBigger: string;
+        tabletOrSmaller: string;
+    };
+    colors: ThemeColors;
 };
 
 export const baseTheme: Theme = {
     skin: MOVISTAR_SKIN,
     i18n: {
-        locale: ('es_ES': Locale),
-        phoneNumberFormattingRegionCode: ('ES': RegionCode),
+        locale: 'es_ES',
+        phoneNumberFormattingRegionCode: 'ES',
     },
     platformOverrides: {
         platform: getPlatform(),
@@ -179,7 +179,7 @@ export const baseTheme: Theme = {
     colors,
     texts,
     analytics: {
-        logEvent: () => Promise.resolve(),
+        logEvent: (): Promise<void> => Promise.resolve(),
     },
     mq: createMediaQueries(mediaQueriesConfig),
     dimensions,
