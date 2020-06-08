@@ -59,68 +59,62 @@ i = <SC.WrappedComponent classes={{a: 'c'}} n={1} s={2} />;
 // @ts-expect-error n should be a number
 i = <SC.WrappedComponent classes={{a: 'c'}} n="1" s="a" />;
 
-const useStyles = createUseStyles(() => ({
+const useStylesWithClassA = createUseStyles(() => ({
     a: {color: 'blue'},
 }));
 
-const C2 = () => {
-    const classes = useStyles();
+const ComponentUsesStylesWithClassA: React.FC = () => {
+    const classes = useStylesWithClassA();
     classes.a as string;
     return <div className={classes.a} />;
 };
 
-const useStylesWithoutA = createUseStyles(() => ({
+const useStylesWithClassB = createUseStyles(() => ({
     b: {color: 'blue'},
 }));
 
-const C3 = () => {
-    const classes = useStylesWithoutA();
+const ComponentUsesStylesWithClassB: React.FC = () => {
+    const classes = useStylesWithClassB();
     return (
         <>
-            {/* $ExpectError the 'a' class is missing */}
-            <div className={classes.a} />
+            <div
+                // @ts-expect-error - class "a" does not exist
+                className={classes.a}
+            />
             <div className={classes.b} />
         </>
     );
 };
 
-type C4Props = {color: string};
-
-const useStylesWithProps = createUseStyles(() => ({
-    a: {
-        // $ExpectError
-        color: ({color}) => color as string,
-        // $ExpectError unknownProp is missing in C4Props
-        background: ({unknownProp}) => unknownProp,
-    },
-}));
-
-const C4 = (props: C4Props) => {
-    useStylesWithProps();
-    useStylesWithProps({foo: 1});
-    const classes = useStylesWithProps(props);
-    return <div className={classes.a} />;
-};
-
-type C5Props = {color: string};
-type Theme = {white: string};
-
 const useStylesWithTheme = createUseStyles((theme) => ({
     a: {
-        // $ExpectError
-        color: ({color}) => color as string,
-        // $ExpectError unknownProp is missing in C5Props
-        background: ({unknownProp}) => unknownProp,
+        // OK
         backgroundColor: theme.colors.background,
-        // $ExpectError unknown is missing in theme.colors
+        // @ts-expect-error
         borderColor: theme.colors.unknown,
     },
 }));
 
-const C5 = (props: C5Props) => {
-    useStylesWithTheme();
-    useStylesWithTheme({foo: 1});
+const ComponentUsesStylesWithTeme: React.FC = () => {
+    const classes = useStylesWithTheme();
+    return <div className={classes.a} />;
+};
 
-    const classes = useStylesWithTheme(props);
+const useStylesWithProps = createUseStyles<{color: string}>(() => ({
+    a: {
+        color: ({color}) => color,
+    },
+}));
+
+const ComponentUsesStylesWithProps: React.FC = () => {
+    useStylesWithProps();
+
+    // @ts-expect-error
+    useStylesWithProps({foo: 'red'});
+
+    const classes = useStylesWithProps({color: 'red'});
+
+    <div className={classes.b} />;
+
     return <div className={classes.a} />;
 };

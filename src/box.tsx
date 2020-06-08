@@ -1,5 +1,5 @@
 // @flow
-import * as React from 'react';
+import React from 'react';
 import {createUseStyles} from './jss';
 import classnames from 'classnames';
 
@@ -13,18 +13,18 @@ const useStyles = createUseStyles(() => ({
 type PadSize = 0 | 2 | 4 | 8 | 12 | 16 | 24 | 32 | 40 | 48 | 56 | 64;
 
 type Props = {
-    width?: number | string,
-    padding?: PadSize,
-    paddingX?: PadSize,
-    paddingY?: PadSize,
-    paddingTop?: PadSize,
-    paddingBottom?: PadSize,
-    paddingLeft?: PadSize,
-    paddingRight?: PadSize,
-    children?: React.Node,
-    className?: string,
-    'data-testid'?: string,
-    'data-qsysid'?: string,
+    width?: number | string;
+    padding?: PadSize;
+    paddingX?: PadSize;
+    paddingY?: PadSize;
+    paddingTop?: PadSize;
+    paddingBottom?: PadSize;
+    paddingLeft?: PadSize;
+    paddingRight?: PadSize;
+    children?: React.ReactNode;
+    className?: string;
+    'data-testid'?: string;
+    'data-qsysid'?: string;
 };
 
 const Box = ({
@@ -39,7 +39,7 @@ const Box = ({
     paddingLeft = paddingX,
     paddingRight = paddingX,
     ...dataProps
-}: Props): React.Element<'div'> => {
+}: Props): React.ReactElement<'div'> => {
     const paddingStr = `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`;
 
     const classes = useStyles({

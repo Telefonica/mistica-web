@@ -14,6 +14,7 @@
         "prebuild": "yarn clean",
         "build": "babel src --out-dir dist --ignore '**/__tests__/**' --ignore '**/__stories__/**' --ignore '**/__type_tests__/**'",
         "build-ts": "tsc --project tsconfig.production.json",
+        "ts": "tsc --project tsconfig.json --noEmit",
         "postbuild": "flow-copy-source -v -i '**/__tests__/**' -i '**/__stories__/**' -i '**/__type_tests__/**' src dist",
         "watch": "yarn build --watch",
         "clean": "rimraf dist",
@@ -44,7 +45,10 @@
                 }
             },
             {
-                "files": ["*.yml", "*.yaml"],
+                "files": [
+                    "*.yml",
+                    "*.yaml"
+                ],
                 "options": {
                     "printWidth": 150
                 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {create as createJss} from 'jss';
+import {create as createJss, Styles} from 'jss';
 import withStyles, {createUseStyles as jssCreateUseStyles} from 'react-jss';
 import camelCase from 'jss-plugin-camel-case';
 import defaultUnit from 'jss-plugin-default-unit';
@@ -30,7 +30,7 @@ export const getJss = (): any => jss;
 type CssClass = {[K: string]: string | number | boolean | CssClass};
 type Sheet = {[K: string]: CssClass};
 
-type ObjValuesToStr<O> = {[k in keyof O]: string};
+type ObjValuesToStr<O> = {[Key in keyof O]: string};
 
 /**
  * This function does nothing, this is just used to make css-in-js autocomplete
@@ -85,11 +85,11 @@ type ClassDefinition<P> = {
 
 type StylesDefinition<P> = {[className: string]: ClassDefinition<P>};
 
-type UseStyles<P, S extends StylesDefinition<any>> = (props: P) => ObjValuesToStr<S>;
+type UseStyles<P> = (props?: P) => ObjValuesToStr<StylesDefinition<P>>;
 
-export const createUseStyles = <P, S extends StylesDefinition<P>>(
-    styles: (theme: Theme) => S
-): UseStyles<P, S> => {
+// https://github.com/Microsoft/TypeScript/issues/10571
+
+export const createUseStyles = <P,>(styles?: (theme: Theme) => StylesDefinition<P>): UseStyles<P> => {
     // @ts-expect-error
     const useStyles = jssCreateUseStyles(styles, {theming: {context: ThemeContext}});
     return (...args) => {
