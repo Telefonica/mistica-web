@@ -1,10 +1,9 @@
-// @flow
 import * as React from 'react';
 import {baseTheme} from './theme';
 
 import type {Theme} from './theme';
 
-const ThemeContext: React.Context<?Theme> = React.createContext(
+const ThemeContext: React.Context<Theme | null> = React.createContext(
     process.env.NODE_ENV === 'test' ? baseTheme : null
 );
 
