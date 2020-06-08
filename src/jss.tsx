@@ -115,6 +115,20 @@ type StylesDef<P> = {[className: string]: ClassDef<P>};
 // type UseStyles<P, S: StylesDef<any>> = (props: P) => $ObjMap<S, () => string>;
 type UseStyles<P, S extends StylesDef<any>> = (props: P) => ObjValuesToStr<S>;
 
+export const createUseStyles = <P, S extends StylesDef<any>>(
+    styles: (theme: Theme) => S
+): UseStyles<P, S> => {
+    const useStyles = jssCreateUseStyles(styles, {theming: {context: ThemeContext}});
+    return (...args) => {
+        try {
+            return useStyles(...args);
+        } catch (err) {
+            err.message = `${err.message} (Did you forget to add <ThemeContextProvider>?)`;
+            throw err;
+        }
+    };
+};
+
 // export const createUseStyles = <P, S: StylesDef<P>>(styles: (theme: Theme) => S): UseStyles<P, S> => {
 //     if (styles.length === 0) {
 //         // $FlowFixMe
