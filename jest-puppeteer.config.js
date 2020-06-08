@@ -26,11 +26,11 @@ const getConfig = async () => {
         process.platform !== 'linux' && process.env.SCREENSHOT && process.env.HEADLESS;
     if (needsChromiumDocker) {
         execSync('yarn up-chromium', {stdio: 'inherit', cwd: __dirname});
-        await poll('http://localhost:9222');
+        await poll('http://localhost:9223');
     }
 
     try {
-        const {webSocketDebuggerUrl} = await fetch('http://localhost:9222/json/version').then((r) =>
+        const {webSocketDebuggerUrl} = await fetch('http://localhost:9223/json/version').then((r) =>
             r.json()
         );
         connect = {

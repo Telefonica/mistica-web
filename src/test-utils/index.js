@@ -9,7 +9,7 @@ import type {Viewport} from 'puppeteer/DeviceDescriptors';
 const STORYBOOK_URL = ((): string => {
     if (global.browser) {
         const url = new URL(global.browser.wsEndpoint());
-        const isUsingDockerizedChromium = url.port === '9222';
+        const isUsingDockerizedChromium = url.port === '9223';
         if (isUsingDockerizedChromium) {
             return process.platform === 'linux'
                 ? 'http://172.17.0.1:6006/iframe.html'

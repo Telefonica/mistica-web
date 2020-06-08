@@ -24,7 +24,7 @@
         "storybook-static": "rimraf public && yarn build-storybook -o public --quiet",
         "test-acceptance": "cross-env SCREENSHOT=1 HEADLESS=1 yarn test-acceptance-ui",
         "test-acceptance-ui": "jest --config jest.acceptance.config.js",
-        "up-chromium": "docker start chromium"
+        "up-chromium": "docker-compose up -d chromium"
     },
     "browserslist": [
         "chrome >= 36",
