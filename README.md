@@ -8,7 +8,8 @@ React components library for Telefonica Design System ([Mistica](https://github.
 
 ### Install
 
-1. Create or edit your .npmrc file to include the telefonica npm read token:
+1. Create or edit your `.npmrc` file to include the telefonica npm token. This will allow you to install
+   packages from the npm `@telefonica` organization:
 
 ```
 //registry.npmjs.org/:_authToken=864bbe83-5a77-4d21-a87f-f56375f06845
@@ -63,7 +64,7 @@ const App = () => (
 
 ReactDOM.render(
   <ThemeContextProvider
-    theme={{skin: 'Movistar', i18n: {locale: 'es_ES', phoneNumberFormattingRegionCode: 'ES'}}}
+    theme={{skin: 'Movistar', i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}}}
   >
     <App />
   </ThemeContextProvider>,
@@ -72,12 +73,8 @@ ReactDOM.render(
 ```
 
 The `theme` prop in `ThemeContextProvider` is **mandatory**, and you can use it to configure some aspects of
-the library. There are multiple settings but the only two mandatory fields are `skin` and `i18n`.
-
-- `skin`: determines the color scheme used by the lib. It can be `Movistar`, `O2` or `Vivo`.
-- `i18n`: we use this to localize some messages or formatting dates phone numbers, etc.
-  - `locale`: a valid locale (language and country codes separated by `'_'`)
-  - `phoneNumberFormattingRegionCode`: region code used to format phone numbers.
+the library. There are multiple settings but the only two mandatory fields are `skin` and `i18n`. Read the
+[theme config doc](./doc/theme-config.md) for more info.
 
 ## Components
 
@@ -89,6 +86,11 @@ Start prototyping interfaces with Mistica components in the
 ## More docs
 
 - [Working with forms](./doc/forms.md)
+- [Theme config options](./doc/theme-config.md)
+- [Customize media query break points](./doc/media-queries.md)
+- [Customize default texts](./doc/texts.md)
+- [Analytics](./doc/analytics.md)
+- [Style your components](./doc/styles.md)
 
 ## Development
 
