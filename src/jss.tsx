@@ -1,6 +1,6 @@
 // @flow
 import {create as createJss} from 'jss';
-import injectSheet, {createUseStyles as jssCreateUseStyles, createTheming} from 'react-jss';
+import injectSheet, {createUseStyles as jssCreateUseStyles} from 'react-jss';
 import camelCase from 'jss-plugin-camel-case';
 import defaultUnit from 'jss-plugin-default-unit';
 import ruleValueFunction from 'jss-plugin-rule-value-function';

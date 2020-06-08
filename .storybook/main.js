@@ -9,7 +9,7 @@ const config /*: any*/ = {
             name: '@storybook/addon-storysource',
             options: {
                 rule: {
-                    test: [/\-story\.js/],
+                    test: [/-story\.js/],
                     include: [path.resolve(__dirname, '..', 'src'), __dirname],
                 },
                 loaderOptions: {

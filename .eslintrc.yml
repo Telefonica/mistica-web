@@ -1,6 +1,7 @@
 parser: babel-eslint
 env:
     es6: true
+    node: true
     browser: true
     jest/globals: true
 parserOptions: # http://eslint.org/docs/user-guide/configuring.html#specifying-parser-options
@@ -21,6 +22,10 @@ plugins:
     - testing-library
     - flowtype
     - import
+    - '@typescript-eslint'
+extends:
+    - 'eslint:recommended'
+    - 'plugin:@typescript-eslint/recommended'
 rules:
     # Basic rules
     default-case: error
@@ -60,7 +65,6 @@ rules:
     no-unneeded-ternary: error
     no-unreachable: error
     babel/no-unused-expressions: error
-    no-unused-vars: [error, {vars: all, args: after-used, ignoreRestSiblings: true}]
     no-use-before-define: error
     no-var: error
     no-with: error
@@ -154,3 +158,20 @@ rules:
     import/no-named-default: error
     import/no-useless-path-segments: error
     import/no-self-import: error
+
+    # typescript specific
+    no-unused-vars: off
+    '@typescript-eslint/no-unused-vars': [error, {vars: all, args: after-used, ignoreRestSiblings: true}]
+    '@typescript-eslint/no-empty-function': off
+
+# overrides should be removed once fully migrated to TS
+overrides:
+    - files:
+          - '*.tsx'
+      rules:
+          'flowtype/no-types-missing-file-annotation': off
+    - files:
+          - '*.js'
+      rules:
+          '@typescript-eslint/no-var-requires': off
+          '@typescript-eslint/explicit-module-boundary-types': off

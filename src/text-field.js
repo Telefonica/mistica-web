@@ -237,7 +237,7 @@ const MonthYearDateInput = ({inputRef, defaultValue, value, ...rest}: any) => {
      */
     const format = (s: string) => {
         // remove invalid characters
-        let value = s.replace(/[^\d\/]/g, '').replace(/\/+/g, '/');
+        let value = s.replace(/[^\d/]/g, '').replace(/\/+/g, '/');
 
         // remove extra slashes: "01/12/34" => "01/12"
         const [month, year] = value.split('/');

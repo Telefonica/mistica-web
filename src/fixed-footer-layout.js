@@ -19,6 +19,7 @@ try {
     const opts = Object.defineProperty({}, 'passive', {
         get() {
             supportsPassive = true;
+            return undefined;
         },
     });
     // $FlowFixMe

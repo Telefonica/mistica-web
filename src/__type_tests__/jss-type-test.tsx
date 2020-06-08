@@ -1,4 +1,3 @@
-// @flow
 /* eslint-disable babel/no-unused-expressions */
 /* eslint-disable no-unused-vars */
 
@@ -16,16 +15,20 @@ const sheet = createSheet({
 });
 
 type Props = {
-    n: number,
-    s: string,
-    classes: typeof sheet,
+    n: number;
+    s: string;
+    classes: typeof sheet;
 };
 
 const C = ({n, s, classes}: Props) => (
     <div className={classes.a}>
         {n} and {s}
-        {/* $ExpectError missing property 'missingClass' */}
-        <div className={classes.missingClass}>no</div>
+        <div
+            // @ts-expect-error
+            className={classes.missingClass}
+        >
+            no
+        </div>
     </div>
 );
 
@@ -33,17 +36,17 @@ let i;
 
 // OK
 i = <C classes={{a: 'c'}} n={1} s="a" />;
-// $ExpectError s should be a string
+// @ts-expect-error s should be a string
 i = <C classes={{a: 'c'}} n={1} s={2} />;
-// $ExpectError n should be a number
+// @ts-expect-error n should be a number
 i = <C classes={{a: 'c'}} n="1" s="a" />;
 
 const SC = withSheet(sheet)(C);
 // OK
 i = <SC n={1} s="a" />;
-// $ExpectError s should be a string
+// @ts-expect-error s should be a string
 i = <SC n={1} s={2} />;
-// $ExpectError n should be a number
+// @ts-expect-error n should be a number
 i = <SC n="1" s="a" />;
 
 const useStyles = createUseStyles(() => ({
@@ -52,7 +55,7 @@ const useStyles = createUseStyles(() => ({
 
 const C2 = () => {
     const classes = useStyles();
-    (classes.a: string);
+    classes.a as string;
     return <div className={classes.a} />;
 };
 
@@ -76,7 +79,7 @@ type C4Props = {color: string};
 const useStylesWithProps = createUseStyles(() => ({
     a: {
         // $ExpectError
-        color: ({color}) => (color: string),
+        color: ({color}) => color as string,
         // $ExpectError unknownProp is missing in C4Props
         background: ({unknownProp}) => unknownProp,
     },
@@ -95,7 +98,7 @@ type Theme = {white: string};
 const useStylesWithTheme = createUseStyles((theme) => ({
     a: {
         // $ExpectError
-        color: ({color}) => (color: string),
+        color: ({color}) => color as string,
         // $ExpectError unknownProp is missing in C5Props
         background: ({unknownProp}) => unknownProp,
         backgroundColor: theme.colors.background,

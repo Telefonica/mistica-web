@@ -67,9 +67,10 @@ const createNestableContext = <Value>(
         switch (action.type) {
             case 'add':
                 return [...values, action.value];
-            case 'remove':
+            case 'remove': {
                 const idx = values.indexOf(action.value);
                 return [...values.slice(0, idx), ...values.slice(idx + 1, values.length)];
+            }
             default:
                 throw new Error(`Unhandled action type ${(action.type: empty)}`);
         }
