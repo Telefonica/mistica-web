@@ -1,5 +1,3 @@
-// @flow
-
 export const createMediaQueries = ({
     desktopOrTabletMinHeight,
     tabletMinWidth,
