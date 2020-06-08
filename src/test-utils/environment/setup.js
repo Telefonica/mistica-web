@@ -1,13 +1,13 @@
 import puppeteerSetup from 'jest-environment-puppeteer/setup';
-import {exec, execSync} from 'child_process';
+import {exec} from 'child_process';
 import {join} from 'path';
 
 export default async (jestConfig = {}) => {
     if (process.argv.includes('--ci')) {
-        execSync('yarn storybook-static --quiet', {cwd: join(__dirname, '../../../'), stdio: 'inherit'});
         console.log('\nStarting storybook server on port 6006');
-        global.__STORYBOOK_SERVER__ = exec('http-server -p 6006', {
-            cwd: join(__dirname, '../../../public'),
+        global.__STORYBOOK_SERVER__ = exec('yarn storybook-serve', {
+            cwd: join(__dirname, '../../../'),
+            env: null,
         });
     }
     await puppeteerSetup(jestConfig);
