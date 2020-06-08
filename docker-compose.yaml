@@ -10,7 +10,9 @@ services:
         environment:
             - NPM_TOKEN
     chromium:
-        image: 'docker.tuenti.io/dev/chromium:72'
+        build:
+            context: .
+            dockerfile: chromium.Dockerfile
         container_name: chromium_mistica
         ports:
             - '9223:9222'
