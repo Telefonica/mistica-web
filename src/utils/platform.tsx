@@ -1,4 +1,3 @@
-// @flow
 import {isWebViewBridgeAvailable} from '@tef-novum/webview-bridge';
 
 const getUserAgent = (): string => self.navigator.userAgent || '';
