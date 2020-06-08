@@ -12,8 +12,8 @@ module.exports = {
     testTimeout: 30000,
 
     testMatch: [
-        // '**/__acceptance_tests__/*-acceptance-test.js',
-        '**/__screenshot_tests__/bun-screenshot-test.js',
+        '**/__acceptance_tests__/*-acceptance-test.js',
+        '**/__screenshot_tests__/*-screenshot-test.js',
     ],
 
     // $FlowFixMe
