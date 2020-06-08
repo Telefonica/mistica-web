@@ -1,4 +1,4 @@
-parser: babel-eslint
+parser: babel-eslint # typescript parser is used as an override (see overrides section)
 env:
     es6: true
     node: true
@@ -25,7 +25,6 @@ plugins:
     - '@typescript-eslint'
 extends:
     - 'eslint:recommended'
-    - 'plugin:@typescript-eslint/recommended'
 rules:
     # Basic rules
     default-case: error
@@ -160,23 +159,29 @@ rules:
     import/no-self-import: error
 
     # typescript specific
-    no-unused-vars: off
-    '@typescript-eslint/no-unused-vars': [error, {vars: all, args: after-used, ignoreRestSiblings: true}]
-    '@typescript-eslint/no-empty-function': off
+    'no-unused-vars': [error, {vars: all, args: after-used, ignoreRestSiblings: true}]
 
 overrides:
+    # overrides for TypeScript files
+    - files:
+          - '*.tsx'
+      parser: '@typescript-eslint/parser'
+      rules:
+          'flowtype/no-types-missing-file-annotation': off
+          no-unused-vars: off
+          '@typescript-eslint/no-unused-vars': [error, {vars: all, args: after-used, ignoreRestSiblings: true}]
+          '@typescript-eslint/no-empty-function': off
+          '@typescript-eslint/ban-ts-comment': off
+          '@typescript-eslint/no-explicit-any': off
+      extends:
+          - 'eslint:recommended'
+          - 'plugin:@typescript-eslint/recommended'
+
+    # overrides for Type Tests
     - files:
           - '**/__type_tests__/*-type-test.tsx'
           - '**/__type_tests__/*-type-test.js'
       rules:
+          'no-unused-vars': off
           'babel/no-unused-expressions': off
           '@typescript-eslint/no-unused-vars': off
-    - files:
-          - '*.tsx'
-      rules:
-          'flowtype/no-types-missing-file-annotation': off
-    - files:
-          - '*.js'
-      rules:
-          '@typescript-eslint/no-var-requires': off
-          '@typescript-eslint/explicit-module-boundary-types': off

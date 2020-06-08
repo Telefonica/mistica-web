@@ -44,7 +44,7 @@
                 }
             },
             {
-                "files": ".ci.yml",
+                "files": ["*.yml", "*.yaml"],
                 "options": {
                     "printWidth": 150
                 }
