@@ -3,11 +3,12 @@ import '../css/roboto.css';
 import '../css/reset.css';
 import * as React from 'react';
 import {addDecorator} from '@storybook/react';
-import {ThemeContextProvider, Box} from '../src';
+import {ThemeContextProvider, Box, MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN} from '../src';
 import addons from '@storybook/addons';
 import getTheme from './theme-selector-addon/themes';
 
 import type {Context} from '@storybook/react';
+import type {Skin} from '../src';
 
 const getUserAgent = (): string => self.navigator.userAgent || '';
 const isRunningAcceptanceTest = (): boolean => getUserAgent().includes('acceptance-test');
@@ -52,9 +53,19 @@ const LayoutDecorator = ({Story, context}: DecoratorProps) => {
     );
 };
 
+const getBrand = (searchParams): ?Skin => {
+    const qsBrand = searchParams.get('brand');
+    return [MOVISTAR_SKIN, O2_SKIN, VIVO_SKIN].find((brand) => brand === qsBrand);
+};
+
+const getPlatform = (searchParams): ?'ios' | 'android' => {
+    const qsPlatform = searchParams.get('platform');
+    return ['ios', 'android'].find((platform) => platform === qsPlatform);
+};
+
 const ThemeDecorator = ({Story}: DecoratorProps) => {
     const searchParams = new URLSearchParams(location.search);
-    const [brandSkin, setBrandSkin] = React.useState(searchParams.get('brand'));
+    const [brandSkin, setBrandSkin] = React.useState<?Skin>(getBrand(searchParams));
 
     React.useEffect(() => {
         const channel = addons.getChannel();
@@ -64,7 +75,7 @@ const ThemeDecorator = ({Story}: DecoratorProps) => {
     }, []);
 
     return (
-        <ThemeContextProvider theme={getTheme(brandSkin, searchParams.get('platform'))}>
+        <ThemeContextProvider theme={getTheme(brandSkin, getPlatform(searchParams))}>
             <Story />
         </ThemeContextProvider>
     );

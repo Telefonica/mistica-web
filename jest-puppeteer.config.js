@@ -15,7 +15,7 @@ const poll = async (url, attempt = 0) => {
     }
 };
 
-module.exports = (async () => {
+const getConfig = async () => {
     const baseConfig = {
         ignoreHTTPSErrors: true,
         headless: !!process.env.HEADLESS,
@@ -59,4 +59,6 @@ module.exports = (async () => {
         connect,
         browserContext: 'incognito',
     };
-})();
+};
+
+module.exports = (getConfig(): any);

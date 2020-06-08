@@ -1,4 +1,4 @@
-/* eslint-disable no-console, testing-library/prefer-screen-queries */
+/* eslint-disable testing-library/prefer-screen-queries */
 // @flow
 import {getDocument, queries} from 'pptr-testing-library';
 import jimp from 'jimp';
@@ -32,7 +32,7 @@ type Device =
 
 const DEVICES: {
     [name: Device]: {
-        userAgent?: string,
+        platform?: string,
         viewport: Viewport,
     },
     ...
@@ -136,16 +136,16 @@ const watermarkIfNeeded = async (bufferPromise: Promise<Buffer>): Promise<Buffer
     return image.getBufferAsync(jimp.MIME_PNG);
 };
 
-const buildStoryUrl = (section, name, extra) => {
+const buildStoryUrl = (section: string, name: string, brand: ?string, platform: ?string) => {
     const params = new URLSearchParams();
     params.set('selectedKind', section);
     params.set('selectedStory', name);
-    params.set('isScreenshot', 'true'); // this disables animations
-    Object.entries(extra).forEach(([key, value]) => {
-        if (value) {
-            params.set(key, value);
-        }
-    });
+    if (brand) {
+        params.set('brand', brand);
+    }
+    if (platform) {
+        params.set('platform', platform);
+    }
     return `${STORYBOOK_URL}?${params.toString()}`;
 };
 
@@ -215,24 +215,14 @@ const bindToDoc = (fn) => async (m: string) => {
 
 type Query = (m: string) => Promise<ElementHandle>;
 type AllQuery = (m: string) => Promise<Array<ElementHandle>>;
-type ByTokenQuery = (token: string, ...variables: Array<string | number>) => Promise<ElementHandle>;
-type AllByTokenQuery = (token: string, ...variables: Array<string | number>) => Promise<Array<ElementHandle>>;
 
 type Queries = {
-    getByPlaceholderToken: ByTokenQuery,
-    getAllByPlaceholderToken: AllByTokenQuery,
-    getByToken: ByTokenQuery,
-    getAllByToken: AllByTokenQuery,
     getByText: Query,
     getAllByText: AllQuery,
-    getByLabelToken: ByTokenQuery,
-    getAllByLabelToken: AllByTokenQuery,
-    getByAltToken: ByTokenQuery,
-    getAllByAltToken: AllByTokenQuery,
     getByTestId: Query,
     getAllByTestId: AllQuery,
-    getByTitle: ByTokenQuery,
-    getAllByTitle: AllByTokenQuery,
+    getByTitle: Query,
+    getAllByTitle: AllQuery,
     getByRole: Query,
     getAllByRole: AllQuery,
     getBySelector: Query,
@@ -307,9 +297,9 @@ export const openStoryPage = async ({
     await page.bringToFront();
     await page.setViewport(DEVICES[device].viewport);
     await page.setUserAgent(`${await browser.userAgent()} acceptance-test`);
-    await page.goto(buildStoryUrl(section, name, {brand, platform: DEVICES[device].platform}));
+    await page.goto(buildStoryUrl(section, name, brand, DEVICES[device].platform));
 
     return createPageApi(page);
 };
 
-export const screen = buildQueryMethods();
+export const screen: Queries = buildQueryMethods();

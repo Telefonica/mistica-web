@@ -1,5 +1,5 @@
 // @flow
-import type {ThemeConfig} from '../../src';
+import type {ThemeConfig, Skin} from '../../src';
 
 export const Movistar: ThemeConfig = {
     i18n: {locale: 'es_ES', phoneNumberFormattingRegionCode: 'ES'},
@@ -18,9 +18,8 @@ export const Vivo: ThemeConfig = {
 
 export const AVAILABLE_BRAND_THEMES = [Movistar, O2, Vivo];
 
-export default (brandSkin, platform) => {
-    brandSkin = brandSkin || 'Movistar';
-    const brandConfig = AVAILABLE_BRAND_THEMES.find(({skin}) => skin === brandSkin);
+export default (brandSkin: ?Skin, platform: ?'ios' | 'android'): ThemeConfig => {
+    const brandConfig: ThemeConfig = AVAILABLE_BRAND_THEMES.find(({skin}) => skin === brandSkin) || Movistar;
     return platform
         ? {
               ...brandConfig,
