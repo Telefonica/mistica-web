@@ -22,7 +22,6 @@
         "playroom": "playroom start",
         "now-build": "yarn storybook-static && ./node_modules/.bin/playroom build",
         "storybook-static": "rimraf public && yarn build-storybook -o public --quiet",
-        "storybook-serve": "http-server public -p 6006",
         "test-acceptance": "cross-env SCREENSHOT=1 HEADLESS=1 yarn test-acceptance-ui",
         "test-acceptance-ui": "jest --config jest.acceptance.config.js",
         "test-ci": "yarn storybook-static && yarn test-acceptance --ci",
@@ -100,7 +99,6 @@
         "flow-bin": "^0.125.1",
         "flow-copy-source": "^2.0.9",
         "flow-typed": "^3.1.0",
-        "http-server": "^0.12.3",
         "husky": ">=4",
         "jest": "^26.0.1",
         "jest-environment-puppeteer": "^4.4.0",
@@ -134,7 +132,8 @@
         "react-autosuggest": "^9.4.3",
         "react-jss": "^10.1.1",
         "react-transition-group": "^2.5.3",
-        "semver-compare": "^1.0.0"
+        "semver-compare": "^1.0.0",
+        "static-server": "^2.2.1"
     },
     "peerDependencies": {
         "react": ">=16.11",
