@@ -7,7 +7,6 @@ export default async (jestConfig = {}) => {
         console.log('\nStarting storybook server on port 6006');
         global.__STORYBOOK_SERVER__ = exec('yarn storybook-serve', {
             cwd: join(__dirname, '../../../'),
-            env: null,
         });
     }
     await puppeteerSetup(jestConfig);
