@@ -1,5 +1,4 @@
 /* eslint-disable filenames/match-regex */
-// @flow
 const fetch = require('node-fetch');
 const execSync = require('child_process').execSync;
 
@@ -61,4 +60,4 @@ const getConfig = async () => {
     };
 };
 
-module.exports = (getConfig(): any);
+module.exports = getConfig();
