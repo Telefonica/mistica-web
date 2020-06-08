@@ -5,13 +5,13 @@ import * as vivoColors from './colors-vivo';
 import * as o2Colors from './colors-o2';
 import * as movistarProminentColorOverrides from './colors-movistar-prominent';
 
-export const MOVISTAR_SKIN: 'Movistar' = 'Movistar';
-export const O2_SKIN: 'O2' = 'O2';
-export const VIVO_SKIN: 'Vivo' = 'Vivo';
+export const MOVISTAR_SKIN = 'Movistar';
+export const O2_SKIN = 'O2';
+export const VIVO_SKIN = 'Vivo';
 
 export type Skin = typeof MOVISTAR_SKIN | typeof O2_SKIN | typeof VIVO_SKIN;
 
-export type Colors = $Exact<typeof movistarColors | typeof vivoColors | typeof o2Colors>;
+export type Colors = typeof movistarColors | typeof vivoColors | typeof o2Colors;
 
 export default (skin: Skin, override?: string): Colors => {
     const brandedColors = {
