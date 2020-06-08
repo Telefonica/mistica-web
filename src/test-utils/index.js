@@ -282,9 +282,7 @@ const createPageApi = (page: Page): PageApi => {
     api.type = async (selector, text, options) => (await selector).type(text, options);
     api.click = async (selector, options) => (await selector).click(options);
     api.screenshot = async (options) => {
-        console.time('waitForPaintEnd');
         await waitForPaintEnd(page);
-        console.timeEnd('waitForPaintEnd');
         return watermarkIfNeeded(page.screenshot(options));
     };
 

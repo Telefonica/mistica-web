@@ -11,10 +11,13 @@ module.exports = {
     maxConcurrency: 1,
     testTimeout: 30000,
 
-    testMatch: ['**/__acceptance_tests__/*-acceptance-test.js'],
+    testMatch: [
+        '**/__acceptance_tests__/*-acceptance-test.js',
+        '**/__screenshot_tests__/*-screenshot-test.js',
+    ],
 
-    globalSetup: 'jest-environment-puppeteer/setup',
-    globalTeardown: 'jest-environment-puppeteer/teardown',
+    globalSetup: require.resolve('./src/test-utils/environment/setup.js'),
+    globalTeardown: require.resolve('./src/test-utils/environment/teardown.js'),
     testEnvironment: 'jest-environment-puppeteer',
-    setupFilesAfterEnv: [],
+    setupFilesAfterEnv: [require.resolve('./src/test-utils/setup-acceptance-test-env.js')],
 };
