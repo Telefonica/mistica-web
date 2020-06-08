@@ -98,3 +98,12 @@ Start prototyping interfaces with Mistica components in the
 - `yarn watch`: build package and watch for changes
 - `yarn storybook`: starts storybook
 - `yarn playroom`: starts playroom
+
+## More about Mistica
+
+- [Mistica, the Telefonica Design System](https://github.com/Telefonica/mistica)
+
+### Mistica in other platforms
+
+- [Android (WIP)](https://github.com/Telefonica/mistica-android)
+- [iOS (WIP)](https://github.com/Telefonica/mistica-ios)
