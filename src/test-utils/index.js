@@ -1,4 +1,3 @@
-/* eslint-disable testing-library/prefer-screen-queries */
 // @flow
 import {getDocument, queries} from 'pptr-testing-library';
 import jimp from 'jimp';
