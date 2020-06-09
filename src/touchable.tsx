@@ -1,17 +1,18 @@
-// @flow
 import * as React from 'react';
 import classnames from 'classnames';
+// @ts-expect-error - pending to migrate
 import ScreenReaderOnly from './screen-reader-only';
 import {createUseStyles} from './jss';
+// @ts-expect-error - pending to migrate
 import {useTheme} from './hooks';
 import {isInsideNovumNativeApp} from './utils/platform';
 import {Link} from 'react-router-dom';
 import {ENTER, SPACE} from './utils/key-codes';
 
-import type {CssStyle, TrackingEvent} from './utils/types';
-import type {LocationShape} from 'react-router-dom';
+import type {TrackingEvent} from './utils/types';
+import type {Location} from 'history';
 
-const redirect = (url: string, external: boolean = false): void => {
+const redirect = (url: string, external = false): void => {
     if (external) {
         window.open(url, '_blank');
     } else {
@@ -52,64 +53,80 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-export type PressHandler = (SyntheticMouseEvent<HTMLElement>) => void;
+export type PressHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
-type CommonProps = {
-    children: React.Node,
-    className?: string,
-    disabled?: boolean,
-    elementRef?: React.Ref<'button' | 'a' | 'div'>,
-    style?: CssStyle,
-    trackingEvent?: TrackingEvent,
-    label?: string,
-    'data-testid'?: string,
-    'aria-checked'?: 'true' | 'false',
-    'aria-controls'?: string,
-    'aria-expanded'?: 'true' | 'false',
-    'aria-hidden'?: 'true' | 'false',
-    role?: string,
-    type?: 'button' | 'submit',
-    tabIndex?: string,
-};
+interface CommonProps {
+    children: React.ReactNode;
+    className?: string;
+    disabled?: boolean;
+    elementRef?: React.RefObject<HTMLButtonElement | HTMLAnchorElement | HTMLDivElement>;
+    style?: React.CSSProperties;
+    trackingEvent?: TrackingEvent;
+    label?: string;
+    'data-testid'?: string;
+    'aria-checked'?: 'true' | 'false';
+    'aria-controls'?: string;
+    'aria-expanded'?: 'true' | 'false';
+    'aria-hidden'?: 'true' | 'false';
+    role?: string;
+    type?: 'button' | 'submit';
+    tabIndex?: number;
+}
 
-type Props =
-    | {
-          ...CommonProps,
-          href: string,
-          newTab?: boolean,
-      }
-    | {
-          ...CommonProps,
-          to: string | LocationShape,
-          fullPageOnWebView?: boolean,
-          replace?: boolean,
-      }
-    | {
-          ...CommonProps,
-          onPress: PressHandler,
-      }
-    | {
-          ...CommonProps,
-          maybe: true,
-          href?: string,
-          newTab?: boolean,
-      }
-    | {
-          ...CommonProps,
-          maybe: true,
-          to?: string | LocationShape,
-          fullPageOnWebView?: boolean,
-          replace?: boolean,
-      }
-    | {
-          ...CommonProps,
-          maybe: true,
-          onPress?: PressHandler,
-      };
+/*
+ * We are using "href", "to" and "onPress" as union discriminant.
+ * this way we can know the type of the union by checking that property
+ * See https://www.typescriptlang.org/docs/handbook/advanced-types.html#discriminated-unions
+ */
+interface PropsHref extends CommonProps {
+    href: string;
+    newTab?: boolean;
+    to?: undefined;
+    onPress?: undefined;
+}
+interface PropsOnPress extends CommonProps {
+    onPress: PressHandler;
+    href?: undefined;
+    to?: undefined;
+}
+interface PropsTo extends CommonProps {
+    to: string | Location;
+    fullPageOnWebView?: boolean;
+    replace?: boolean;
+    href?: undefined;
+    onPress?: undefined;
+}
+interface PropsMaybeHref extends CommonProps {
+    maybe: true;
+    href?: string;
+    newTab?: boolean;
+    to?: undefined;
+    onPress?: undefined;
+}
+interface PropsMaybeTo extends CommonProps {
+    maybe: true;
+    to?: string | Location;
+    fullPageOnWebView?: boolean;
+    replace?: boolean;
+    href?: undefined;
+    onPress?: undefined;
+}
+interface PropsMaybeOnPress extends CommonProps {
+    maybe: true;
+    onPress?: PressHandler;
+    href?: undefined;
+    to?: undefined;
+}
+
+type Props = PropsHref | PropsTo | PropsOnPress | PropsMaybeHref | PropsMaybeTo | PropsMaybeOnPress;
 
 const Touchable = (
     props: Props
-): React.Element<typeof Link> | React.Element<'a'> | React.Element<'button'> | React.Element<'div'> => {
+):
+    | React.ReactElement<typeof Link>
+    | React.ReactElement<'a'>
+    | React.ReactElement<'button'>
+    | React.ReactElement<'div'> => {
     const {texts, analytics, platformOverrides} = useTheme();
     const classes = useStyles();
     const isClicked = React.useRef(false);
@@ -131,9 +148,9 @@ const Touchable = (
 
     const type = props.type ? props.type : 'button';
 
-    const openNewTab = props.newTab ? props.newTab : false;
+    const openNewTab = !!props.href && !!props.newTab;
 
-    const onPress = (event: SyntheticMouseEvent<HTMLElement>) => {
+    const onPress = (event: React.MouseEvent<HTMLElement>) => {
         if (props.onPress) {
             props.onPress(event);
         }
@@ -143,7 +160,7 @@ const Touchable = (
         if (props.href) {
             return props.href;
         }
-        if (props.fullPageOnWebView && props.to) {
+        if (props.to && props.fullPageOnWebView) {
             if (typeof props.to === 'string') {
                 return props.to;
             }
@@ -165,7 +182,7 @@ const Touchable = (
         });
     };
 
-    const handleButtonClick = (event: SyntheticMouseEvent<HTMLElement>) => {
+    const handleButtonClick = (event: React.MouseEvent<HTMLElement>) => {
         // synchronously execute handler when no tracking is needed
         if (!props.trackingEvent) {
             onPress(event);
@@ -175,7 +192,7 @@ const Touchable = (
         trackOnce(() => onPress(event));
     };
 
-    const handleHrefClick = (event: SyntheticMouseEvent<HTMLElement>) => {
+    const handleHrefClick = (event: React.MouseEvent<HTMLElement>) => {
         if (!props.trackingEvent) {
             return; // leave the browser handle the href
         }
@@ -184,14 +201,14 @@ const Touchable = (
         trackOnce(() => redirect(getHref(), openNewTab));
     };
 
-    const handleKeyDown = (event: SyntheticKeyboardEvent<HTMLElement>) => {
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
         if (event.keyCode === ENTER || event.keyCode === SPACE) {
             event.preventDefault();
             event.currentTarget.click();
         }
     };
 
-    if (!!props.href || (props.fullPageOnWebView && isInsideNovumNativeApp(platformOverrides))) {
+    if (!!props.href || (props.to && props.fullPageOnWebView && isInsideNovumNativeApp(platformOverrides))) {
         return (
             <a
                 {...commonProps}
@@ -217,7 +234,7 @@ const Touchable = (
             <Link
                 {...commonProps}
                 aria-label={props.label}
-                innerRef={props.elementRef}
+                innerRef={props.elementRef as React.RefObject<HTMLAnchorElement>}
                 to={props.disabled ? '' : props.to}
                 replace={props.replace}
                 onClick={trackEvent}
@@ -234,7 +251,7 @@ const Touchable = (
                 {...commonProps}
                 aria-label={props.label}
                 type={type}
-                ref={props.elementRef}
+                ref={props.elementRef as React.RefObject<HTMLButtonElement>}
                 onClick={handleButtonClick}
             >
                 {children}
@@ -245,7 +262,7 @@ const Touchable = (
     return (
         <div
             {...commonProps}
-            ref={props.elementRef}
+            ref={props.elementRef as React.RefObject<HTMLDivElement>}
             className={classnames(commonProps.className, classes.notTouchable)}
         >
             {children}
