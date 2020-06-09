@@ -102,6 +102,7 @@
         "flow-bin": "^0.125.1",
         "flow-copy-source": "^2.0.9",
         "flow-typed": "^3.1.0",
+        "glob": "^7.1.6",
         "husky": ">=4",
         "jest": "^26.0.1",
         "lint-staged": ">=10",

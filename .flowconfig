@@ -1,7 +1,7 @@
 [ignore]
 .*/node_modules/.*
 !.*/node_modules/@tef-novum/.*
-<PROJECT_ROOT>/dist/.*
+; <PROJECT_ROOT>/dist/.*
 
 [include]
 
