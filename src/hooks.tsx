@@ -1,9 +1,7 @@
 import * as React from 'react';
 import ThemeContext from './theme-context';
-// @ts-expect-error
 import ScreenSizeContext from './screen-size-context';
 
-// @ts-expect-error
 import type {ScreenSizeContextType} from './screen-size-context';
 import type {Theme} from './theme';
 
