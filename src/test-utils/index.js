@@ -5,6 +5,7 @@ import jimp from 'jimp';
 
 import type {Page, ElementHandle, ClickOptions} from 'puppeteer';
 import type {Viewport} from 'puppeteer/DeviceDescriptors';
+import type {Skin} from '../colors';
 
 const STORYBOOK_URL = ((): string => {
     if (global.browser) {
@@ -136,12 +137,12 @@ const watermarkIfNeeded = async (bufferPromise: Promise<Buffer>): Promise<Buffer
     return image.getBufferAsync(jimp.MIME_PNG);
 };
 
-const buildStoryUrl = (section: string, name: string, brand: ?string, platform: ?string) => {
+const buildStoryUrl = (section: string, name: string, skin: ?string, platform: ?string) => {
     const params = new URLSearchParams();
     params.set('selectedKind', section);
     params.set('selectedStory', name);
-    if (brand) {
-        params.set('brand', brand);
+    if (skin) {
+        params.set('skin', skin);
     }
     if (platform) {
         params.set('platform', platform);
@@ -164,10 +165,6 @@ type PageApi = {
 
     // These are from prototype chain (inherited from Puppeteer.Page)
     screenshot: $Call<<T, P: {+screenshot: T, ...}>(P) => T, Page>,
-    url: $Call<<T, P: {+url: T, ...}>(P) => T, Page>,
-    title: $Call<<T, P: {+title: T, ...}>(P) => T, Page>,
-    close: $Call<<T, P: {+close: T, ...}>(P) => T, Page>,
-    goBack: $Call<<T, P: {+goBack: T, ...}>(P) => T, Page>,
 };
 
 const wait = <T>(
@@ -225,7 +222,6 @@ type Queries = {
     getAllByTitle: AllQuery,
     getByRole: Query,
     getAllByRole: AllQuery,
-    getBySelector: Query,
     getByPlaceholderText: Query,
     getAllByPlaceholderText: AllQuery,
     getByLabelText: Query,
@@ -234,35 +230,14 @@ type Queries = {
     getAllByAltText: AllQuery,
 };
 
-const buildQueryMethods = (): Queries => {
-    return {
-        getByText: bindToDoc(queries.getByText),
-        getAllByText: bindToDoc(queries.getAllByText),
-
-        getByTestId: bindToDoc(queries.getByTestId),
-        getAllByTestId: bindToDoc(queries.getAllByTestId),
-
-        getByTitle: bindToDoc(queries.getByTitle),
-        getAllByTitle: bindToDoc(queries.getAllByTitle),
-
-        getByRole: bindToDoc(queries.getByRole),
-        getAllByRole: bindToDoc(queries.getAllByRole),
-
-        getBySelector: (selector) =>
-            wait(
-                async () =>
-                    await global.page.waitForSelector(selector).catch(() => {
-                        throw Error(`No element found for selector ${selector} in the page`);
-                    })
-            ),
-
-        getByPlaceholderText: bindToDoc(queries.getByPlaceholderText),
-        getAllByPlaceholderText: bindToDoc(queries.getAllByPlaceholderText),
-        getByLabelText: bindToDoc(queries.getByLabelText),
-        getAllByLabelText: bindToDoc(queries.getAllByLabelText),
-        getByAltText: bindToDoc(queries.getByAltText),
-        getAllByAltText: bindToDoc(queries.getAllByAltText),
-    };
+const buildQueryMethods = (): any => {
+    return Object.entries(queries).reduce(
+        (bindedQueries, [queryName: $Keys<Queries>, queryFn]) => ({
+            ...bindedQueries,
+            [queryName]: bindToDoc(queryFn),
+        }),
+        {}
+    );
 };
 
 const createPageApi = (page: Page): PageApi => {
@@ -279,25 +254,23 @@ const createPageApi = (page: Page): PageApi => {
     return api;
 };
 
-type Skin = 'Movistar' | 'O2' | 'Vivo';
-
 export const openStoryPage = async ({
     section,
     name,
     device = TABLET_DEVICE,
-    brand = 'Movistar',
+    skin = 'Movistar',
 }: {
     section: string,
     name: string,
     device?: Device,
-    brand?: Skin,
+    skin?: Skin,
 }): Promise<PageApi> => {
     const page: Page = global.page;
     const browser = global.browser;
     await page.bringToFront();
     await page.setViewport(DEVICES[device].viewport);
     await page.setUserAgent(`${await browser.userAgent()} acceptance-test`);
-    await page.goto(buildStoryUrl(section, name, brand, DEVICES[device].platform));
+    await page.goto(buildStoryUrl(section, name, skin, DEVICES[device].platform));
 
     return createPageApi(page);
 };

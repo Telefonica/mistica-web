@@ -53,9 +53,9 @@ const LayoutDecorator = ({Story, context}: DecoratorProps) => {
     );
 };
 
-const getBrand = (searchParams): ?Skin => {
-    const qsBrand = searchParams.get('brand');
-    return [MOVISTAR_SKIN, O2_SKIN, VIVO_SKIN].find((brand) => brand === qsBrand);
+const getSkin = (searchParams): ?Skin => {
+    const qsSkin = searchParams.get('skin');
+    return [MOVISTAR_SKIN, O2_SKIN, VIVO_SKIN].find((skin) => skin === qsSkin);
 };
 
 const getPlatform = (searchParams): ?'ios' | 'android' => {
@@ -65,17 +65,17 @@ const getPlatform = (searchParams): ?'ios' | 'android' => {
 
 const ThemeDecorator = ({Story}: DecoratorProps) => {
     const searchParams = new URLSearchParams(location.search);
-    const [brandSkin, setBrandSkin] = React.useState<?Skin>(getBrand(searchParams));
+    const [skin, setSkin] = React.useState<?Skin>(getSkin(searchParams));
 
     React.useEffect(() => {
         const channel = addons.getChannel();
-        channel.on('brand-selected', (brandSkin) => {
-            setBrandSkin(brandSkin);
+        channel.on('skin-selected', (skin) => {
+            setSkin(skin);
         });
     }, []);
 
     return (
-        <ThemeContextProvider theme={getTheme(brandSkin, getPlatform(searchParams))}>
+        <ThemeContextProvider theme={getTheme(skin, getPlatform(searchParams))}>
             <Story />
         </ThemeContextProvider>
     );

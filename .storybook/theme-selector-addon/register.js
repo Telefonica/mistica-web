@@ -3,15 +3,15 @@ import * as React from 'react';
 import addonApi, {types} from '@storybook/addons';
 import {WithTooltip, IconButton, TooltipLinkList} from '@storybook/components';
 import {getColors} from '../../src';
-import {AVAILABLE_BRAND_THEMES} from './themes';
+import {AVAILABLE_THEMES} from './themes';
 import createManagerTheme from '../storybook-manager-theme';
 
-const renderPrimaryColorDot = (brand) => (
+const renderPrimaryColorDot = (skin) => (
     <div
         style={{
             width: 20,
             height: 20,
-            background: getColors(brand).PRIMARY,
+            background: getColors(skin).PRIMARY,
             borderRadius: '50%',
         }}
     />
@@ -19,22 +19,22 @@ const renderPrimaryColorDot = (brand) => (
 
 const ThemeSelectorAddon = ({api}) => {
     const channel = addonApi.getChannel();
-    const [currentBrand, setCurrentBrand] = React.useState(api.getQueryParam('brand') || 'Movistar');
+    const [currentSkin, setCurrentSkin] = React.useState(api.getQueryParam('skin') || 'Movistar');
 
     React.useEffect(() => {
-        channel.emit('brand-selected', currentBrand);
+        channel.emit('skin-selected', currentSkin);
 
-        api.setOptions({theme: createManagerTheme(currentBrand)});
+        api.setOptions({theme: createManagerTheme(currentSkin)});
 
         // We need this timeout because there could be some race condition between addon mount and storibook manager initialization on page load.
         const tid = setTimeout(() => {
-            api.setOptions({theme: createManagerTheme(currentBrand)});
+            api.setOptions({theme: createManagerTheme(currentSkin)});
         }, 100);
 
         return () => {
             clearTimeout(tid);
         };
-    }, [api, channel, currentBrand]);
+    }, [api, channel, currentSkin]);
 
     return (
         <WithTooltip
@@ -43,12 +43,12 @@ const ThemeSelectorAddon = ({api}) => {
             closeOnClick
             tooltip={({onHide}) => (
                 <TooltipLinkList
-                    links={AVAILABLE_BRAND_THEMES.map((theme) => ({
+                    links={AVAILABLE_THEMES.map((theme) => ({
                         id: theme.skin,
                         title: theme.skin,
                         right: renderPrimaryColorDot(theme.skin),
                         onClick: () => {
-                            setCurrentBrand(theme.skin);
+                            setCurrentSkin(theme.skin);
                             onHide();
                         },
                     }))}
@@ -57,8 +57,8 @@ const ThemeSelectorAddon = ({api}) => {
         >
             <IconButton title="Change theme">
                 <div style={{display: 'flex', alignItems: 'center'}}>
-                    {renderPrimaryColorDot(currentBrand)}
-                    <span style={{marginLeft: 8}}>{currentBrand}</span>
+                    {renderPrimaryColorDot(currentSkin)}
+                    <span style={{marginLeft: 8}}>{currentSkin}</span>
                 </div>
             </IconButton>
         </WithTooltip>

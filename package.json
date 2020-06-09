@@ -23,7 +23,7 @@
         "now-build": "yarn storybook-static && ./node_modules/.bin/playroom build",
         "storybook-static": "rimraf public && yarn build-storybook -o public --quiet",
         "test-acceptance": "cross-env SCREENSHOT=1 HEADLESS=1 yarn test-acceptance-ui",
-        "test-acceptance-ui": "jest --config jest.acceptance.config.js",
+        "test-acceptance-ui": "jest --config jest.acceptance.config.js --maxWorkers=50%",
         "up-chromium": "docker-compose up -d chromium"
     },
     "browserslist": [

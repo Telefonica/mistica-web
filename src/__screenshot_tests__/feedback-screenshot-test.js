@@ -18,7 +18,7 @@ test.each(cases)('Feedback %s screen appears properly on %s and %s', async (feed
     const page = await openStoryPage({
         section: 'Components|Feedbacks/Screens',
         name: `${feedbackType}-feedback-screen`,
-        brand,
+        skin: brand,
         device,
     });
 

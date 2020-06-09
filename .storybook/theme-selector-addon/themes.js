@@ -16,17 +16,17 @@ export const Vivo: ThemeConfig = {
     skin: 'Vivo',
 };
 
-export const AVAILABLE_BRAND_THEMES = [Movistar, O2, Vivo];
+export const AVAILABLE_THEMES = [Movistar, O2, Vivo];
 
-export default (brandSkin: ?Skin, platform: ?'ios' | 'android'): ThemeConfig => {
-    const brandConfig: ThemeConfig = AVAILABLE_BRAND_THEMES.find(({skin}) => skin === brandSkin) || Movistar;
-    return platform
+export default (selectedSkin: ?Skin, selectedPlatform: ?'ios' | 'android'): ThemeConfig => {
+    const themeConfig: ThemeConfig = AVAILABLE_THEMES.find(({skin}) => skin === selectedSkin) || Movistar;
+    return selectedPlatform
         ? {
-              ...brandConfig,
+              ...themeConfig,
               platformOverrides: {
-                  platform,
+                  platform: selectedPlatform,
                   insideNovumNativeApp: true,
               },
           }
-        : brandConfig;
+        : themeConfig;
 };

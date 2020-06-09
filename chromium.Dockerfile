@@ -26,6 +26,7 @@ CMD [ \
   "--password-store=basic", \
   "--use-mock-keychain", \
   "--headless", \
+  "--disable-dev-shm-usage", \
   # Disable sandbox mode
   "--no-sandbox", \
   # Avoids font rendering differences between headless/headfull
