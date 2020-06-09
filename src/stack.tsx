@@ -13,11 +13,11 @@ const useStyles = createUseStyles(() => ({
 
 type Props = {
     space: 0 | 4 | 8 | 12 | 16 | 24 | 32 | 40 | 48 | 56 | 64;
-    children: React.Node;
+    children: React.ReactNode;
     className?: string;
 };
 
-const Stack = ({space, className, children}: Props): React.Element<'div'> => {
+const Stack: React.FC<Props> = ({space, className, children}): React.ReactElement<'div'> => {
     const classes = useStyles({space});
 
     return (

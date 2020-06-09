@@ -102,7 +102,7 @@ const ComponentUsesStylesWithTeme: React.FC = () => {
 };
 
 /**
- * Note: style props are typed as "any"
+ * Note: style props are typed as a "Record<string, any>"
  *
  * This is not ideal but TS lacks some features to allow this (or at least I was unable to do it better)
  * We can review createUseStyles typings when any of these issues get resolved:
