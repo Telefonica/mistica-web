@@ -11,7 +11,7 @@ export const Default = (): React.Node => {
     const [text, textField] = useTextField('Text', 'promo');
 
     return (
-        <Stack space={32}>
+        <Stack space={16}>
             <div data-testid="promo-tag">
                 <PromoTag>{text}</PromoTag>
             </div>

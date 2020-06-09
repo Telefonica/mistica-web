@@ -13,7 +13,7 @@ export const Default = (): React.Node => {
     return (
         <>
             <StorySection title="Credit Card Form">
-                <Stack space={32}>
+                <Stack space={16}>
                     <TextField type="credit-card-number" label="Credit Card Number" />
                     <DoubleField>
                         <TextField type="credit-card-expiration" label="Expiration" />
@@ -23,7 +23,7 @@ export const Default = (): React.Node => {
             </StorySection>
 
             <StorySection title="Compositions">
-                <Stack space={32}>
+                <Stack space={16}>
                     <TextField label="Label" />
                     <Select
                         helperText="Helper text"
