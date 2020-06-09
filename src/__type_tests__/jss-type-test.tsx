@@ -104,7 +104,7 @@ const ComponentUsesStylesWithTeme: React.FC = () => {
 /**
  * Note: style props are typed as "any"
  *
- * This is not ideal but TS lacks some features to allow this
+ * This is not ideal but TS lacks some features to allow this (or at least I was unable to do it better)
  * We can review createUseStyles typings when any of these issues get resolved:
  *
  * - https://github.com/Microsoft/TypeScript/issues/10571
@@ -112,12 +112,12 @@ const ComponentUsesStylesWithTeme: React.FC = () => {
  */
 const useStylesWithProps = createUseStyles(() => ({
     a: {
-        // color should be inferred as string
+        // "color" should be inferred as "string" but it is "any"
         color: ({color}) => color,
     },
     b: {
         '& > div': {
-            // This should trigger an error because "unknown"
+            // This should trigger an error because "unknown" is not passed to "useStyles" function
             color: ({unknown}) => unknown,
         },
     },
@@ -136,4 +136,12 @@ const ComponentUsesStylesWithProps: React.FC = () => {
             />
         </>
     );
+};
+
+const ComponentUsesStylesWithWrongProps: React.FC = () => {
+    // @ts-expect-error
+    useStylesWithProps('error');
+    // @ts-expect-error
+    useStylesWithProps(null);
+    return <></>;
 };

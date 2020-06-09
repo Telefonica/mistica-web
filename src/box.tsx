@@ -27,7 +27,7 @@ type Props = {
     'data-qsysid'?: string;
 };
 
-const Box = ({
+const Box: React.FC<Props> = ({
     className,
     children,
     width,
@@ -39,11 +39,9 @@ const Box = ({
     paddingLeft = paddingX,
     paddingRight = paddingX,
     ...dataProps
-}: Props): React.ReactElement<'div'> => {
-    const paddingStr = `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`;
-
+}): React.ReactElement<'div'> => {
     const classes = useStyles({
-        padding: paddingStr,
+        padding: `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`,
         width,
     });
 
