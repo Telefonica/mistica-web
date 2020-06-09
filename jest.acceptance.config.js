@@ -10,6 +10,7 @@ module.exports = {
     displayName: 'acceptance',
     maxConcurrency: 1,
     testTimeout: 30000,
+    maxWorkers: process.platform === 'darwin' ? '50%' : '100%',
 
     testMatch: [
         '**/__acceptance_tests__/*-acceptance-test.js',
