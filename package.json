@@ -1,9 +1,8 @@
 {
     "name": "@telefonica/mistica",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "UNLICENSED",
     "main": "dist/index.js",
-    "src": "src/index.js",
     "files": [
         "dist/*",
         "css/*"
@@ -13,7 +12,8 @@
         "prettier-check": "prettier --check '**/*.js' '**/*.json'",
         "lint": "eslint --report-unused-disable-directives .",
         "prebuild": "yarn clean",
-        "build": "babel src --out-dir dist --ignore \"**/__tests__/**\" --ignore \"**/__stories__/**\" --ignore \"**/__type_tests__/**\"",
+        "build": "babel src --out-dir dist --ignore '**/__tests__/**' --ignore '**/__stories__/**' --ignore '**/__type_tests__/**'",
+        "postbuild": "flow-copy-source -v -i '**/__tests__/**' -i '**/__stories__/**' -i '**/__type_tests__/**' src dist",
         "watch": "yarn build --watch",
         "clean": "rimraf dist",
         "ci": "yarn build && yarn prettier-check && yarn flow check && yarn lint && yarn test --ci",
@@ -91,6 +91,7 @@
         "eslint-plugin-react-hooks": "^4.0.4",
         "eslint-plugin-testing-library": "^3.1.4",
         "flow-bin": "^0.125.1",
+        "flow-copy-source": "^2.0.9",
         "flow-typed": "^3.1.0",
         "husky": ">=4",
         "jest": "^26.0.1",
@@ -127,7 +128,7 @@
         "react-router-dom": ">=5.1"
     },
     "publishConfig": {
-        "registry": "https://npm.tuenti.io"
+        "registry": "https://registry.npmjs.org"
     },
     "sideEffects": [
         "*.css"
