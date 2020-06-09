@@ -10,6 +10,7 @@ import {createSheet, withSheet, createUseStyles} from '../jss';
 const sheet = createSheet({
     a: {color: 'blue'},
 });
+
 // sheet.a type is mapped to string
 sheet.a.toLowerCase();
 // @ts-expect-error b doesn't exist
@@ -100,21 +101,39 @@ const ComponentUsesStylesWithTeme: React.FC = () => {
     return <div className={classes.a} />;
 };
 
-const useStylesWithProps = createUseStyles<{color: string}>(() => ({
+/**
+ * Note: style props are typed as "any"
+ *
+ * This is not ideal but TS lacks some features to allow this
+ * We can review createUseStyles typings when any of these issues get resolved:
+ *
+ * - https://github.com/Microsoft/TypeScript/issues/10571
+ * - https://github.com/microsoft/TypeScript/issues/14400
+ */
+const useStylesWithProps = createUseStyles(() => ({
     a: {
+        // color should be inferred as string
         color: ({color}) => color,
+    },
+    b: {
+        '& > div': {
+            // This should trigger an error because "unknown"
+            color: ({unknown}) => unknown,
+        },
     },
 }));
 
 const ComponentUsesStylesWithProps: React.FC = () => {
-    useStylesWithProps();
-
-    // @ts-expect-error
-    useStylesWithProps({foo: 'red'});
-
     const classes = useStylesWithProps({color: 'red'});
 
-    <div className={classes.b} />;
-
-    return <div className={classes.a} />;
+    return (
+        <>
+            <div className={classes.a} />
+            <div className={classes.b} />
+            <div
+                // @ts-expect-error - class "c" does not exist
+                className={classes.c}
+            />
+        </>
+    );
 };

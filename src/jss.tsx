@@ -69,29 +69,27 @@ export const removeJssProps = <P extends {sheet?: any; classes?: any}>(
     return withoutJssProps;
 };
 
-type CSSValue<P> = void | number | boolean | string | ((props: P) => void | string | number | boolean);
+type Props = Record<string, any>;
 
-type ClassDefinition<P> = {
+type CSSValue = void | number | boolean | string | ((props: Props) => void | string | number | boolean);
+
+type ClassDefinition = {
     [cssProp: string]:
-        | CSSValue<P>
+        | CSSValue
         | {
               [cssProp: string]:
-                  | CSSValue<P>
+                  | CSSValue
                   | {
-                        [cssProp: string]: CSSValue<P>;
+                        [cssProp: string]: CSSValue;
                     };
           };
 };
 
-type StylesDefinition<P> = {[className: string]: ClassDefinition<P>};
+type StylesDefinition = {[className: string]: ClassDefinition};
 
-type UseStyles<P, S extends StylesDefinition<P>> = (props?: P) => ObjValuesToStr<S>;
+type UseStyles<S extends StylesDefinition> = (props?: Props) => ObjValuesToStr<S>;
 
-// https://github.com/Microsoft/TypeScript/issues/10571
-
-export const createUseStyles = <P, S extends StylesDefinition<P>>(
-    styles?: (theme: Theme) => S
-): UseStyles<P, S> => {
+export const createUseStyles = <S extends StylesDefinition>(styles?: (theme: Theme) => S): UseStyles<S> => {
     // @ts-expect-error
     const useStyles = jssCreateUseStyles(styles, {theming: {context: ThemeContext}});
     return (...args) => {
