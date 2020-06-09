@@ -9,7 +9,7 @@ module.exports = {
     displayName: 'acceptance',
     maxConcurrency: 1,
     testTimeout: 30000,
-    maxWorkers: process.platform === 'darwin' ? '50%' : '100%',
+    maxWorkers: process.platform === 'darwin' ? '50%' : '100%', // chromium docker crashes on mac when using 8 cores (taking 8 screenshots at once)
 
     testMatch: [
         '**/__acceptance_tests__/*-acceptance-test.js',
