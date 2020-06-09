@@ -4,7 +4,6 @@ import {join} from 'path';
 import StaticServer from 'static-server';
 
 export default async (jestConfig: any = {}): Promise<void> => {
-    console.log('Number of cores: ', require('os').cpus());
     if (process.argv.includes('--ci')) {
         console.log('\nStarting storybook server on port 6006');
         global.__STORYBOOK_SERVER__ = new StaticServer({
