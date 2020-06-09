@@ -170,7 +170,7 @@ export type Theme = {
 export const baseTheme: Theme = {
     skin: MOVISTAR_SKIN,
     i18n: {
-        locale: ('es_ES': Locale),
+        locale: ('es-ES': Locale),
         phoneNumberFormattingRegionCode: ('ES': RegionCode),
     },
     platformOverrides: {
