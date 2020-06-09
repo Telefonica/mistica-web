@@ -17,7 +17,7 @@ const fakeContentStyle = {
 };
 
 export default {
-    title: 'Components|Bun',
+    title: 'Components|Cards/Bun',
 };
 
 export const bun = (): React.Element<'div'> => (

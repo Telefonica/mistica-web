@@ -4,7 +4,7 @@ import {StorySection} from './helpers';
 import {useElementSize} from '../hooks';
 
 export default {
-    title: 'Components|Hooks',
+    title: 'Components|Hooks/useElementSize',
 };
 
 export const UseElementSize = (): React.Node => {

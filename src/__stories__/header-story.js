@@ -1,21 +1,11 @@
 // @flow
 import * as React from 'react';
 import {MemoryRouter} from 'react-router-dom';
-import {
-    Header,
-    HeaderLayout,
-    MainSectionHeader,
-    MainSectionHeaderLayout,
-    Box,
-    ButtonPrimary,
-    Stack,
-    NavigationBreadcrumbs,
-    ResponsiveLayout,
-} from '..';
+import {Header, HeaderLayout, Box, ButtonPrimary, Stack, NavigationBreadcrumbs, ResponsiveLayout} from '..';
 import {useTextField, useCheckbox} from './helpers';
 
 export default {
-    title: 'Components|Header',
+    title: 'Components|Headers/Header',
     parameters: {
         fullScreen: true,
     },
@@ -25,7 +15,7 @@ const FieldWithCheckbox = ({children}: {children: React.Node}) => (
     <div style={{display: 'flex', alignItems: 'center'}}>{children}</div>
 );
 
-export const HeaderExample = (): React.Node => {
+export const Default = (): React.Node => {
     const [pretitle, pretitleTextField] = useTextField('pretitle', 'Factura de diciembre');
     const [title, titleTextField] = useTextField(
         'title',
@@ -92,33 +82,4 @@ export const HeaderExample = (): React.Node => {
     );
 };
 
-export const MainSectionHeaderExample = (): React.Node => {
-    const [title, titleTextField] = useTextField('title', 'Soporte');
-    const [desciption, descriptionTextField] = useTextField('description', '¿En qué podemos ayudarte?');
-    const [buttonLabel, buttonLabelTextField] = useTextField('buttonLabel', 'Acción');
-    const [isInverse, inverseCheckbox] = useCheckbox('Inverse', true);
-
-    return (
-        <Stack space={16}>
-            <div data-testid="header-layout">
-                <MainSectionHeaderLayout isInverse={isInverse}>
-                    <MainSectionHeader
-                        title={title}
-                        description={desciption}
-                        button={
-                            buttonLabel ? <ButtonPrimary href="asdf">{buttonLabel}</ButtonPrimary> : undefined
-                        }
-                    />
-                </MainSectionHeaderLayout>
-            </div>
-            <ResponsiveLayout>
-                <Stack space={16}>
-                    {titleTextField}
-                    {descriptionTextField}
-                    {buttonLabelTextField}
-                    {inverseCheckbox}
-                </Stack>
-            </ResponsiveLayout>
-        </Stack>
-    );
-};
+Default.story = {name: 'Header'};

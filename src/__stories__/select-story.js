@@ -4,13 +4,13 @@ import {StorySection, fruitEntries} from './helpers';
 import {Select} from '..';
 
 export default {
-    title: 'Components|Select',
+    title: 'Components|Forms/Select',
     component: Select,
 };
 
 const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 
-export const Examples = (): React.Node => {
+export const Default = (): React.Node => {
     const [value, setValue] = React.useState('');
 
     return (
@@ -43,3 +43,5 @@ export const Examples = (): React.Node => {
         </StorySection>
     );
 };
+
+Default.story = {name: 'Select'};

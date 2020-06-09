@@ -4,11 +4,11 @@ import {StorySection, fruitEntries} from './helpers';
 import {TextField, Select, DoubleField, Stack} from '..';
 
 export default {
-    title: 'Components|DoubleField',
+    title: 'Components|Forms/DoubleField',
     component: DoubleField,
 };
 
-export const Examples = (): React.Node => {
+export const Default = (): React.Node => {
     const [selectValue, setSelectValue] = React.useState('');
     return (
         <>
@@ -65,3 +65,5 @@ export const Examples = (): React.Node => {
         </>
     );
 };
+
+Default.story = {name: 'DoubleField'};

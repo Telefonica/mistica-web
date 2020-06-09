@@ -6,7 +6,7 @@ import Select from '../select';
 import Placeholder from '../placeholder';
 
 export default {
-    title: 'Components|Layout',
+    title: 'Components|Layouts/Stack',
 };
 
 const Row = ({children}: {children?: any}) =>
@@ -28,7 +28,7 @@ const options = [
     {value: '64', text: '64px'},
 ];
 
-export const StackExample = (): React.Node => {
+export const Default = (): React.Node => {
     const [space, setSpace] = React.useState('32');
 
     return (
@@ -54,3 +54,5 @@ export const StackExample = (): React.Node => {
         </>
     );
 };
+
+Default.story = {name: 'Stack'};

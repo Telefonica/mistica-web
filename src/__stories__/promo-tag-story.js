@@ -4,7 +4,7 @@ import {PromoTag, Stack} from '..';
 import {useTextField} from './helpers';
 
 export default {
-    title: 'Components|PromoTag',
+    title: 'Components|Others/PromoTag',
 };
 
 export const Default = (): React.Node => {
@@ -19,3 +19,5 @@ export const Default = (): React.Node => {
         </Stack>
     );
 };
+
+Default.story = {name: 'PromoTag'};
