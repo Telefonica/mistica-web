@@ -1,6 +1,7 @@
 FROM zenika/alpine-chrome:83
 
 ENV TZ UTC
+ENV LANG es_ES.UTF-8
 
 ENTRYPOINT ["chromium-browser"]
 

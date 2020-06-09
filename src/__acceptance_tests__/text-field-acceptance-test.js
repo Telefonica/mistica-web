@@ -93,10 +93,7 @@ test('TextField of type password', async () => {
     await expect(getValue(textField)).resolves.toBe('patata123');
 });
 
-// Executing this test with or without UI produces different results
-// Skipped until: https://bugs.chromium.org/p/chromium/issues/detail?id=755338#c7
-// eslint-disable-next-line jest/no-disabled-tests
-test.skip('TextField of type date', async () => {
+test('TextField of type date', async () => {
     const page = await openStoryPage(STORY);
 
     const textField = await screen.getByLabelText('Date (opcional)');
