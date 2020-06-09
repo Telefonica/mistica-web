@@ -1,9 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
-// @ts-expect-error - pending to migrate
 import ScreenReaderOnly from './screen-reader-only';
 import {createUseStyles} from './jss';
-// @ts-expect-error - pending to migrate
 import {useTheme} from './hooks';
 import {isInsideNovumNativeApp} from './utils/platform';
 import {Link} from 'react-router-dom';

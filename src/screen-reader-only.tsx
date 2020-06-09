@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {createUseStyles} from './jss';
 
@@ -16,9 +15,9 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-type Props = {children: React.Node};
+type Props = {children: React.ReactNode};
 
-const ScreenReaderOnly = ({children}: Props): React.Element<'div'> => {
+const ScreenReaderOnly = ({children}: Props): React.ReactElement<HTMLDivElement> => {
     const classes = useStyles();
     if (React.Children.count(children) === 1) {
         const element = React.Children.only(children);
