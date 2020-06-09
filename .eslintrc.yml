@@ -64,6 +64,7 @@ rules:
     no-unneeded-ternary: error
     no-unreachable: error
     babel/no-unused-expressions: error
+    no-unused-vars: [error, {vars: all, args: after-used, ignoreRestSiblings: true}]
     no-use-before-define: error
     no-var: error
     no-with: error
@@ -157,9 +158,6 @@ rules:
     import/no-named-default: error
     import/no-useless-path-segments: error
     import/no-self-import: error
-
-    # typescript specific
-    'no-unused-vars': [error, {vars: all, args: after-used, ignoreRestSiblings: true}]
 
 overrides:
     # overrides for TypeScript files
