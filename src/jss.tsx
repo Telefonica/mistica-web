@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {create as createJss, Styles} from 'jss';
+import {create as createJss} from 'jss';
 import withStyles, {createUseStyles as jssCreateUseStyles} from 'react-jss';
 import camelCase from 'jss-plugin-camel-case';
 import defaultUnit from 'jss-plugin-default-unit';

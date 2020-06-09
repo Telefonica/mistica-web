@@ -1,8 +1,9 @@
-// @flow
 import * as React from 'react';
 import ThemeContext from './theme-context';
+// @ts-expect-error
 import ScreenSizeContext from './screen-size-context';
 
+// @ts-expect-error
 import type {ScreenSizeContextType} from './screen-size-context';
 import type {Theme} from './theme';
 
@@ -16,7 +17,7 @@ export const useTheme = (): Theme => {
     return theme;
 };
 
-export const useDisableBodyScroll = (disable: boolean) => {
+export const useDisableBodyScroll = (disable: boolean): void => {
     React.useEffect(() => {
         if (disable) {
             let bodyStyles = '';
@@ -56,13 +57,15 @@ export const useDisableBodyScroll = (disable: boolean) => {
 
 export const useScreenSize = (): ScreenSizeContextType => React.useContext(ScreenSizeContext);
 
-const resizeObserverPromise = window.ResizeObserver
+const resizeObserverPromise: Promise<typeof window.ResizeObserver> = window.ResizeObserver
     ? Promise.resolve(ResizeObserver)
     : import(/* webpackChunkName: "@juggle/resize-observer" */ '@juggle/resize-observer').then(
-          (m) => (m.ResizeObserver: typeof ResizeObserver)
+          (m: any) => m.ResizeObserver
       );
 
-export const useElementSize = (elementRef: {current: ?HTMLElement}): {height: number, width: number} => {
+export const useElementSize = (elementRef: {
+    current: HTMLElement | null;
+}): {height: number; width: number} => {
     const [size, setSize] = React.useState({width: 0, height: 0});
 
     // WARN: don't use a layout effect here, because it breaks page transitions (switch-transition.js)
@@ -102,7 +105,7 @@ let nextAriaId = 1;
 const getAriaId = (): string => `aria-id-hook-${nextAriaId++}`;
 export const useAriaId = (id?: string): string => React.useRef(id || getAriaId()).current;
 
-export const useWindowSize = (): {height: number, width: number} => {
+export const useWindowSize = (): {height: number; width: number} => {
     const [windowHeight, setWindowHeight] = React.useState(window.innerHeight);
     const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
 

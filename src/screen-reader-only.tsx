@@ -21,11 +21,13 @@ const ScreenReaderOnly = ({children}: Props): React.ReactElement<HTMLDivElement>
     const classes = useStyles();
     if (React.Children.count(children) === 1) {
         const element = React.Children.only(children);
-        return React.cloneElement(element, {
-            className: element.props.className
-                ? element.props.className + ' ' + classes.screenReaderOnly
-                : classes.screenReaderOnly,
-        });
+        if (React.isValidElement(element)) {
+            return React.cloneElement(element as React.ReactElement<any>, {
+                className: element.props.className
+                    ? element.props.className + ' ' + classes.screenReaderOnly
+                    : classes.screenReaderOnly,
+            });
+        }
     }
     return <div className={classes.screenReaderOnly}>{children}</div>;
 };
