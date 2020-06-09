@@ -125,11 +125,8 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     const onAcceptSpy = jest.fn();
     confirm({...confirmProps, onAccept: onAcceptSpy, onCancel: undefined});
 
-    await waitFor(() => {
-        expect(screen.getByText('Aceptar')).toBeInTheDocument();
-    });
-
-    fireEvent.click(screen.getByText('Aceptar'));
+    const acceptButton = await screen.findByText('Aceptar');
+    fireEvent.click(acceptButton);
 
     await waitFor(() => {
         expect(onAcceptSpy).toHaveBeenCalled();
@@ -140,10 +137,9 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
 
     confirm({...confirmProps, onAccept: onAcceptSpy, onCancel: undefined});
 
-    await waitFor(() => {
-        expect(screen.getByText('Cancelar')).toBeInTheDocument();
-    });
-    fireEvent.click(screen.getByText('Cancelar'));
+    const cancelButton = await screen.findByText('Cancelar');
+    fireEvent.click(cancelButton);
+
     await waitFor(() => {
         expect(screen.queryByText('Cancelar')).not.toBeInTheDocument();
     });
