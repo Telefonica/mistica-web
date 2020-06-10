@@ -3,7 +3,7 @@ import * as React from 'react';
 import {useScreenSize, useTheme, Stack, Text} from '..';
 
 export default {
-    title: 'Components|Hooks/useScreenSize',
+    title: 'Hooks|useScreenSize',
 };
 
 export const UseScreenSize = (): React.Node => {

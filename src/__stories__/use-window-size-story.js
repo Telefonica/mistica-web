@@ -3,7 +3,7 @@ import * as React from 'react';
 import {useWindowSize, useTheme, Stack, Text} from '..';
 
 export default {
-    title: 'Components|Hooks/useWindowSize',
+    title: 'Hooks|useWindowSize',
 };
 
 export const UseWindowSize = (): React.Node => {

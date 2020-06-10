@@ -3,7 +3,7 @@ import * as React from 'react';
 import {useAriaId, useTheme, Stack, Text} from '..';
 
 export default {
-    title: 'Components|Hooks/useAriaId',
+    title: 'Hooks|useAriaId',
 };
 
 export const UseAriaId = (): React.Node => {
