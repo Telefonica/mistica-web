@@ -389,6 +389,7 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
         the dialog is already performed, so we don't accidentally remove a handler navigation's event from the history */
         if (this.state.dialogProps) {
             this.callback?.();
+            this.callback = null;
             this.setState({
                 isClosing: true,
             });

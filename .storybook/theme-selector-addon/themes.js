@@ -1,5 +1,5 @@
 // @flow
-import type {ThemeConfig} from '../../src';
+import type {ThemeConfig, Skin} from '../../src';
 
 export const Movistar: ThemeConfig = {
     i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
@@ -16,4 +16,17 @@ export const Vivo: ThemeConfig = {
     skin: 'Vivo',
 };
 
-export default [Movistar, O2, Vivo];
+export const AVAILABLE_THEMES = [Movistar, O2, Vivo];
+
+export default (selectedSkin: ?Skin, selectedPlatform: ?'ios' | 'android'): ThemeConfig => {
+    const themeConfig: ThemeConfig = AVAILABLE_THEMES.find(({skin}) => skin === selectedSkin) || Movistar;
+    return selectedPlatform
+        ? {
+              ...themeConfig,
+              platformOverrides: {
+                  platform: selectedPlatform,
+                  insideNovumNativeApp: true,
+              },
+          }
+        : themeConfig;
+};
