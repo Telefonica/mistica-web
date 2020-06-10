@@ -1,35 +1,106 @@
+const {execSync} = require('child_process');
 const {join} = require('path');
 const {promisify} = require('util');
 const glob = promisify(require('glob'));
-const {readFileSync, writeFileSync} = require('fs');
+const {writeFileSync, readFileSync} = require('fs');
+const rimraf = require('rimraf');
+const {beautify} = require('flowgen');
+const cpx = require('cpx');
 
 const PATH_ROOT = join(__dirname, '..');
 const PATH_DIST = join(PATH_ROOT, 'dist');
 
-const convertToFlow = (dtsFilename) => {
-    console.log('read:', dtsFilename);
-    const flowFilename = dtsFilename.replace(/\.d\.ts$/, '.js.flow');
-    const dtsSource = readFileSync(dtsFilename, 'utf-8');
-    let flowSource = dtsSource;
+const fixFlowDefinition = (flowFilename) => {
+    let src = readFileSync(flowFilename, 'utf8');
 
-    flowSource = '// @flow\n' + flowSource;
-    flowSource = flowSource
-        .replace(/\bundefined\b/gm, 'void')
-        .replace(/\bReact\.ReactNode\b/gm, 'React.Node')
-        .replace(/\bReact\.ReactElement\b/gm, 'React.Element')
-        // export const isIos: () => boolean;
-        .replace(
-            /\bexport declare const (\w+): \((.*?)\) => ([^;]+);/gm,
-            'declare export function $1($2): $3;'
-        );
+    // fixes flow annotation to make flow lint rule happy
+    src = '// @flow\n' + src.replace(/\s*@flow\s*/, '');
+
+    // `declare export var PRIMARY: any; // "#0B2739"` => `declare export var PRIMARY: string;`
+    src = src.replace(/declare export var (\w+): any; \/\/ "([^"]+)"/g, 'declare export var $1: "$2";');
+
+    // `import React from "react";` => `import * as React from "react";`
+    src = src.replace(/import React from "react";/g, 'import * as React from "react";');
+
+    // `React.ReactNode` => `React.Node`
+    src = src.replace(/React.(React)(Node|Element)/g, 'React.$2');
+
+    // `React.RefObject` => `React.Ref`
+    src = src.replace(/React.RefObject/g, 'React.Ref');
+
+    // `React.FC` => `React.ComponentType`
+    src = src.replace(
+        /React.(FC|ComponentClass|FunctionComponent|FunctionComponent)/g,
+        'React.ComponentType'
+    );
+
+    // `React.CSSProperties` => `$Shape<CSSStyleDeclaration>`
+    src = src.replace(/React.CSSProperties/g, '$Shape<CSSStyleDeclaration>');
+
+    // `React.MouseEvent` => `React.SyntheticEvent`
+    src = src.replace(/React.(Mouse)Event/g, 'Synthetic$1Event');
+
+    // This patch isn't really needed. Flow marks the import as an error but seems to correctly use imported type
+    // `import { Locale }` => `import { type Locale}`
+    const types = [
+        'Locale',
+        'Location',
+        'RegionCode',
+        'ScreenSizeContextType',
+        'Skin',
+        'Theme',
+        'TrackingEvent',
+    ];
+    src = src.replace(new RegExp(`(import {.*?)(${types.join('|')})([\\s,].*?})`, 'gm'), '$1type $2$3');
+
+    // Fixes flowgen translation of TS translation of Omit<...> utility type
+    // `Pick<P, Exclude<$Keys<P>, "classes">>` => `$Diff<P, {foo: *}>`
+    // `Pick<P, Exclude<$Keys<P>, "foo" | "bar">` => `$Diff<P, {foo: *, bar: *}>`
+    src = src.replace(/Pick<(\w+), Exclude<\$Keys<(\w+)>, "(\w+)">>/g, '$$Diff<$1, {"$3": *}>');
+    src = src.replace(
+        /Pick<(\w+), Exclude<\$Keys<(\w+)>, "(\w+)" \| "(\w+)">>/g,
+        '$$Diff<$1, {"$3": *, "$4": *}>'
+    );
+
+    // Add Utility Types
+    if (src.match(/Pick</)) {
+        src += `\n\ntype Pick<Origin: Object, Keys: Object> = $ObjMapi<
+          Keys,
+          <Key>(k: Key) => $ElementType<Origin, Key>
+        >;`;
+    }
+
+    // File is written two times, one before applying beautify to be able to check problems if beautify fails
+    writeFileSync(flowFilename, src);
+    src = beautify(src);
 
     console.log('write:', flowFilename);
-    writeFileSync(flowFilename, flowSource);
+    writeFileSync(flowFilename, src);
 };
 
 const main = async () => {
-    const dtsFilenames = await glob(join(PATH_DIST, '**/*.d.ts'));
-    dtsFilenames.forEach(convertToFlow);
+    process.chdir(PATH_ROOT);
+
+    rimraf.sync(PATH_DIST);
+
+    // typescript build
+    execSync('yarn build-ts', {
+        stdio: 'inherit',
+    });
+
+    // generate .js.flow files
+    execSync('yarn flowgen --no-inexact --interface-records ./dist', {
+        stdio: 'inherit',
+    });
+
+    //  patch
+    const flowFilenames = await glob(join(PATH_DIST, '**/*.js.flow'));
+    flowFilenames.forEach(fixFlowDefinition);
+
+    cpx.copySync('./dist/**/*.js.flow', 'flowdefs');
+
+    // clean
+    rimraf.sync(join(PATH_DIST, '**/*.js.flow'));
 };
 
 main();

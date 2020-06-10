@@ -64,7 +64,7 @@ export const withSheet = <S extends ObjValuesToStr<Sheet>>(sheet: S) => <P exten
 
 export const removeJssProps = <P extends {sheet?: any; classes?: any}>(
     props: P
-): Pick<P, Exclude<keyof P, 'sheet' | 'classes'>> => {
+): Omit<P, 'sheet' | 'classes'> => {
     const {sheet, classes, ...withoutJssProps} = props;
     return withoutJssProps;
 };

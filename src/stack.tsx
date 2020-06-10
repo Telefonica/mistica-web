@@ -16,7 +16,7 @@ type Props = {
     className?: string;
 };
 
-const Stack: React.FC<Props> = ({space, className, children}): React.ReactElement<'div'> => {
+const Stack: React.FC<Props> = ({space, className, children}) => {
     const classes = useStyles({space});
 
     return (
