@@ -116,6 +116,36 @@ test('closes confirm dialog when clicking on any button', async () => {
     });
 });
 
+test('closing a previous accepted dialog does not trigger onAccept callback', async () => {
+    // We disable animations so dialogs get closed properly
+    jest.spyOn(window.navigator, 'userAgent', 'get').mockReturnValue('acceptance-test');
+
+    render(<ThemeContextProvider theme={overrideTheme({})} />);
+
+    const onAcceptSpy = jest.fn();
+    confirm({...confirmProps, onAccept: onAcceptSpy, onCancel: undefined});
+
+    const acceptButton = await screen.findByText('Aceptar');
+    fireEvent.click(acceptButton);
+
+    await waitFor(() => {
+        expect(onAcceptSpy).toHaveBeenCalled();
+    });
+    expect(screen.queryByText('Aceptar')).not.toBeInTheDocument();
+
+    onAcceptSpy.mockClear();
+
+    confirm({...confirmProps, onAccept: onAcceptSpy, onCancel: undefined});
+
+    const cancelButton = await screen.findByText('Cancelar');
+    fireEvent.click(cancelButton);
+
+    await waitFor(() => {
+        expect(screen.queryByText('Cancelar')).not.toBeInTheDocument();
+    });
+    expect(onAcceptSpy).not.toHaveBeenCalled();
+});
+
 test('when webview bridge is available nativeAlert is shown', async () => {
     jest.spyOn(webviewBridge, 'isWebViewBridgeAvailable').mockReturnValue(true);
     const nativeAlertSpy = jest.spyOn(webviewBridge, 'nativeAlert').mockResolvedValue(() => {});
