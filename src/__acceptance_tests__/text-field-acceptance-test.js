@@ -9,7 +9,7 @@ const clearAndType = async (page, element, text) => {
 const getValue = async (element) => (await element).getProperty('value').then((t) => t.jsonValue());
 
 const STORY = {
-    section: 'Components|TextField',
+    section: 'Components|Forms/TextField',
     name: 'Types (controlled)',
 };
 

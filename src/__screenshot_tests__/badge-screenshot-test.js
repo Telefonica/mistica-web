@@ -3,7 +3,7 @@ import {openStoryPage} from '../test-utils';
 
 test('Badge UI package', async () => {
     const page = await openStoryPage({
-        section: 'Components|Badge',
+        section: 'Components|Hints/Badge',
         name: 'badge',
         device: 'MOBILE_IOS',
     });

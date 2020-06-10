@@ -5,8 +5,8 @@ const DEVICES = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(DEVICES)('Header (%s)', async (device) => {
     await openStoryPage({
-        section: 'Components|Header',
-        name: 'Header example',
+        section: 'Components|Headers/Header',
+        name: 'Header',
         device,
     });
 
@@ -18,8 +18,8 @@ test.each(DEVICES)('Header (%s)', async (device) => {
 
 test.each(DEVICES)('Header', async (device) => {
     await openStoryPage({
-        section: 'Components|Header',
-        name: 'Main Section Header example',
+        section: 'Components|Headers/MainSectionHeader',
+        name: 'MainSectionHeader',
         device,
     });
 

@@ -3,7 +3,7 @@ import {openStoryPage, screen} from '../test-utils';
 
 test('Bun common component screenshot', async () => {
     await openStoryPage({
-        section: 'Components|Bun',
+        section: 'Components|Cards/Bun',
         name: 'bun',
     });
 

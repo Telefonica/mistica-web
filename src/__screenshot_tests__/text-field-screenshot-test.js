@@ -5,7 +5,7 @@ const TESTABLE_DEVICES = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('Default textfield appears properly on %s', async (device) => {
     const page = await openStoryPage({
-        section: 'Components|TextField',
+        section: 'Components|Forms/TextField',
         name: 'Variants',
         device,
     });
@@ -16,7 +16,7 @@ test.each(TESTABLE_DEVICES)('Default textfield appears properly on %s', async (d
 
 test.each(TESTABLE_DEVICES)('Default textfield appears properly (focus) on %s', async (device) => {
     const page = await openStoryPage({
-        section: 'Components|TextField',
+        section: 'Components|Forms/TextField',
         name: 'Variants',
         device,
     });
@@ -29,7 +29,7 @@ test.each(TESTABLE_DEVICES)('Default textfield appears properly (focus) on %s', 
 
 test.each(TESTABLE_DEVICES)('Default textfield appears properly (typing) on %s', async (device) => {
     const page = await openStoryPage({
-        section: 'Components|TextField',
+        section: 'Components|Forms/TextField',
         name: 'Variants',
         device,
     });
@@ -42,7 +42,7 @@ test.each(TESTABLE_DEVICES)('Default textfield appears properly (typing) on %s',
 
 test.each(TESTABLE_DEVICES)('Default textfield appears properly (typing and blur) on %s', async (device) => {
     const page = await openStoryPage({
-        section: 'Components|TextField',
+        section: 'Components|Forms/TextField',
         name: 'Variants',
         device,
     });

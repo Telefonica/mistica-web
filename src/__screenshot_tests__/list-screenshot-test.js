@@ -5,8 +5,8 @@ const testDevices = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(testDevices)('Row list - %s', async (device) => {
     await openStoryPage({
-        section: 'Components|List',
-        name: 'Row list example',
+        section: 'Components|Lists/RowList',
+        name: 'RowList',
         device,
     });
 
@@ -18,8 +18,8 @@ test.each(testDevices)('Row list - %s', async (device) => {
 
 test.each(testDevices)('Boxed row list - %s', async (device) => {
     await openStoryPage({
-        section: 'Components|List',
-        name: 'Boxed row list example',
+        section: 'Components|Lists/BoxedRowList',
+        name: 'BoxedRowList',
         device,
     });
 
