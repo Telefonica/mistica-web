@@ -19,6 +19,7 @@ jobs:
         runs-on: ${{ matrix.os }}
 
         steps:
+            - run: git config --global core.autocrlf false
             - uses: actions/checkout@v2
             - name: Use Node.js ${{ matrix.node-version }} in ${{ matrix.os }}
               uses: actions/setup-node@v1
