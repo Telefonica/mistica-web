@@ -15,8 +15,11 @@ const fixFlowDefinition = (flowFilename) => {
     // fixes flow annotation to make flow lint rule happy
     src = '// @flow\n' + src.replace(/\s*@flow\s*/, '');
 
-    // `declare export var PRIMARY: any; // "#0B2739"` => `declare export var PRIMARY: string;`
+    // `declare export var PRIMARY: any; // "#0B2739"` => `declare export var PRIMARY: "#0B2739"`
     src = src.replace(/declare export var (\w+): any; \/\/ "([^"]+)"/g, 'declare export var $1: "$2";');
+
+    // `declare export var PRIMARY: any; // 123` => `declare export var PRIMARY: 123;`
+    src = src.replace(/declare export var (\w+): any; \/\/ (\d+)/g, 'declare export var $1: $2;');
 
     // `import React from "react";` => `import * as React from "react";`
     src = src.replace(/import React from "react";/g, 'import * as React from "react";');

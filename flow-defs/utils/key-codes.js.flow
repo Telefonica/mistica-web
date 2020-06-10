@@ -5,9 +5,9 @@
  * Flowgen v1.10.0
  **/
 
-declare export var DOWN: any; // 40
-declare export var ENTER: any; // 13
-declare export var ESC: any; // 27
-declare export var SPACE: any; // 32
-declare export var UP: any; // 38
-declare export var TAB: any; // 9
+declare export var DOWN: 40;
+declare export var ENTER: 13;
+declare export var ESC: 27;
+declare export var SPACE: 32;
+declare export var UP: 38;
+declare export var TAB: 9;
