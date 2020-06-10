@@ -56,7 +56,7 @@ const fixFlowDefinition = (flowFilename) => {
     src = src.replace(new RegExp(`(import {.*?)(${types.join('|')})([\\s,].*?})`, 'gm'), '$1type $2$3');
 
     // Fixes flowgen translation of TS translation of Omit<...> utility type
-    // `Pick<P, Exclude<$Keys<P>, "classes">>` => `$Diff<P, {foo: *}>`
+    // `Pick<P, Exclude<$Keys<P>, "foo">>` => `$Diff<P, {foo: *}>`
     // `Pick<P, Exclude<$Keys<P>, "foo" | "bar">` => `$Diff<P, {foo: *, bar: *}>`
     src = src.replace(/Pick<(\w+), Exclude<\$Keys<(\w+)>, "(\w+)">>/g, '$$Diff<$1, {"$3": *}>');
     src = src.replace(
