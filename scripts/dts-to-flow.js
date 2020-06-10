@@ -8,7 +8,6 @@ const {beautify} = require('flowgen');
 const cpx = require('cpx');
 
 const PATH_ROOT = join(__dirname, '..');
-const PATH_DIST = join(PATH_ROOT, 'dist');
 
 const fixFlowDefinition = (flowFilename) => {
     let src = readFileSync(flowFilename, 'utf8');
@@ -81,7 +80,7 @@ const fixFlowDefinition = (flowFilename) => {
 const main = async () => {
     process.chdir(PATH_ROOT);
 
-    rimraf.sync(PATH_DIST);
+    rimraf.sync('dist');
 
     // typescript build
     execSync('yarn build-ts', {
@@ -94,13 +93,13 @@ const main = async () => {
     });
 
     //  patch
-    const flowFilenames = await glob(join(PATH_DIST, '**/*.js.flow'));
+    const flowFilenames = await glob(join('dist/**/*.js.flow'));
     flowFilenames.forEach(fixFlowDefinition);
 
-    cpx.copySync('./dist/**/*.js.flow', 'flowdefs');
+    cpx.copySync('./dist/**/*.js.flow', 'flow-defs');
 
     // clean
-    rimraf.sync(join(PATH_DIST, '**/*.js.flow'));
+    rimraf.sync('dist/**/*.js.flow');
 };
 
 main();
