@@ -49,6 +49,8 @@ const getConfig = async () => {
             env: {
                 ...process.env,
                 TZ: 'UTC',
+                LANG: 'es_ES',
+                LANGUAGE: 'es_ES',
             },
             args: [
                 '--no-sandbox', // probably not needed in ubuntu

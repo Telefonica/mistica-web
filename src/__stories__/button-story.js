@@ -9,7 +9,7 @@ import {StorySection, useCheckbox} from './helpers';
 import {useTheme} from '../hooks';
 
 export default {
-    title: 'Components|Button',
+    title: 'Components|Touchables/Button',
 };
 
 const IcnCamera = () => (
@@ -223,7 +223,7 @@ export const SubmitButton = (): React.Node => (
         </p>
         <form onSubmit={() => window.alert('form submitted')}>
             <Box paddingY={16}>
-                <Stack space={32}>
+                <Stack space={16}>
                     <TextField label="name" />
                     <ButtonPrimary submit>Submit</ButtonPrimary>
                 </Stack>

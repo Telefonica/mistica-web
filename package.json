@@ -22,7 +22,7 @@
         "prepublishOnly": "node scripts/prepublish-only.js",
         "storybook": "start-storybook -p 6006",
         "playroom": "playroom start",
-        "now-build": "yarn storybook-static && ./node_modules/.bin/playroom build",
+        "now-build": "yarn storybook-static && ./node_modules/.bin/playroom build && cp img/favicon.ico public/",
         "storybook-static": "rimraf public && yarn build-storybook -o public --quiet",
         "up-chromium": "docker-compose up -d chromium"
     },

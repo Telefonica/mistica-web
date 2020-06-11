@@ -30,7 +30,7 @@ const config /* : any */ = {
       }
     >
       <Box padding={16}>
-        <Stack space={32}>
+        <Stack space={16}>
           <FormTextField name="name" label="Name" />
           <FormEmailField name="email" label="e-mail" />
           <ButtonLayout>

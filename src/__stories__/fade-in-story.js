@@ -4,11 +4,11 @@ import FadeIn from '../fade-in';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components|FadeIn',
+    title: 'Components|Animations/FadeIn',
     component: FadeIn,
 };
 
-export const FadeInTransition = (): React.Node => (
+export const Default = (): React.Node => (
     <StorySection title="FadeIn transition">
         <FadeIn delay="1s">
             <p>
@@ -36,3 +36,5 @@ export const FadeInTransition = (): React.Node => (
         </FadeIn>
     </StorySection>
 );
+
+Default.story = {name: 'FadeIn'};

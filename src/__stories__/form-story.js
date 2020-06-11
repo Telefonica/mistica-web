@@ -18,7 +18,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components|Form',
+    title: 'Components|Forms/Form',
 };
 
 const fakeApiCall = (data) =>
@@ -34,7 +34,7 @@ const countryOptions = countriesList.map((text, i) => ({text, value: '' + i}));
 
 export const AutomaticForm = (): React.Node => (
     <Form initialValues={{email: 'john.doe@gmail.com', decimal: '123'}} onSubmit={fakeApiCall} autoJump>
-        <Stack space={32}>
+        <Stack space={16}>
             <FormEmailField name="email" label="email" />
 
             <FormPhoneNumberField name="phone" label="phone" />
@@ -79,7 +79,7 @@ export const ManualForm = (): React.Element<'form'> => {
                 );
             }}
         >
-            <Stack space={32}>
+            <Stack space={16}>
                 <Select
                     required
                     label="Select fruit"

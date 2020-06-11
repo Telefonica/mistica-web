@@ -4,7 +4,7 @@ import {Snackbar, Stack} from '..';
 import {StorySection, useTextField, useSelect} from './helpers';
 
 export default {
-    title: 'Components|Snackbar',
+    title: 'Components|Feedbacks/Snackbar',
     component: Snackbar,
 };
 
@@ -23,3 +23,5 @@ export const Default = (): React.Node => {
         </StorySection>
     );
 };
+
+Default.story = {name: 'Snackbar'};

@@ -5,11 +5,11 @@ import ButtonLayout from '../button-layout';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components|ButtonLayout',
+    title: 'Components|Layouts/ButtonLayout',
     component: ButtonLayout,
 };
 
-export const buttonLayout = (): React.Node => (
+export const Default = (): React.Node => (
     <>
         <StorySection title="ButtonLayout">
             <ButtonLayout>
@@ -69,3 +69,5 @@ export const buttonLayout = (): React.Node => (
         </StorySection>
     </>
 );
+
+Default.story = {name: 'ButtonLayout'};

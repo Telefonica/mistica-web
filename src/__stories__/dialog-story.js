@@ -6,10 +6,10 @@ import ButtonLayout from '../button-layout';
 import IcnInfo from '../icons/icn-info';
 
 export default {
-    title: 'Components|Dialogs',
+    title: 'Components|Feedbacks/Dialogs',
 };
 
-export const Cases = (): React.Node => (
+export const Default = (): React.Node => (
     <>
         <ButtonLayout>
             <ButtonPrimary onPress={() => alert({title: 'title', message: 'message'})}>
@@ -42,3 +42,5 @@ export const Cases = (): React.Node => (
         </ButtonLayout>
     </>
 );
+
+Default.story = {name: 'alert() and confirm()'};

@@ -4,11 +4,11 @@ import Spinner from '../spinner';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components|Spinner',
+    title: 'Components|Feedbacks/Spinner',
     component: Spinner,
 };
 
-export const LoadingSpinner = (): React.Node => {
+export const Default = (): React.Node => {
     const [size, setSize] = React.useState(24);
     return (
         <StorySection title="Spinner">
@@ -21,3 +21,5 @@ export const LoadingSpinner = (): React.Node => {
         </StorySection>
     );
 };
+
+Default.story = {name: 'Spinner'};

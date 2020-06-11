@@ -1,14 +1,10 @@
 // @flow
 import * as React from 'react';
-import {
-    ErrorFeedbackScreen as EFeedbackScreen,
-    InfoFeedbackScreen as IFeedbackScreen,
-    SuccessFeedbackScreen as SFeedbackScreen,
-} from '../feedback-screen';
+import {ErrorFeedbackScreen, InfoFeedbackScreen, SuccessFeedbackScreen} from '../feedback-screen';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from '../button';
 
 export default {
-    title: 'Components|Feedbacks/Screens',
+    title: 'Components|Feedbacks/FeedbackScreen',
 };
 
 const primaryButton = <ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>;
@@ -20,30 +16,33 @@ const linkButton = <ButtonLink onPress={() => {}}>Action2</ButtonLink>;
 const defaultTitle = "I'm the title",
     defaultDescription = "I'm the description";
 
-export const SuccessFeedbackScreen = (): React.Node => (
-    <SFeedbackScreen
+export const Success = (): React.Node => (
+    <SuccessFeedbackScreen
         title={defaultTitle}
         description={defaultDescription}
         primaryButton={primaryButton}
         secondaryButton={secondaryButton}
     />
 );
+Success.story = {name: 'SuccessFeedbackScreen'};
 
-export const ErrorFeedbackScreen = (): React.Node => (
-    <EFeedbackScreen
+export const Error = (): React.Node => (
+    <ErrorFeedbackScreen
         title={defaultTitle}
         description={defaultDescription}
         primaryButton={primaryButton}
         link={linkButton}
     />
 );
+Error.story = {name: 'ErrorFeedbackScreen'};
 
-export const InfoFeedbackScreen = (): React.Node => (
-    <IFeedbackScreen title={defaultTitle} description={defaultDescription} primaryButton={primaryButton} />
+export const Info = (): React.Node => (
+    <InfoFeedbackScreen title={defaultTitle} description={defaultDescription} primaryButton={primaryButton} />
 );
+Info.story = {name: 'InfoFeedbackScreen'};
 
-export const SuccessFeedbackScreenMultiparagraph = (): React.Node => (
-    <SFeedbackScreen
+export const multipleParagraphs = (): React.Node => (
+    <SuccessFeedbackScreen
         title={defaultTitle}
         description={[defaultDescription, "I'm the second paragraph"]}
         primaryButton={primaryButton}

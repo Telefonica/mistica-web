@@ -97,6 +97,8 @@ Start prototyping interfaces with Mistica components in the
 ## Development
 
 - `yarn test`: run tests
+- `yarn test-acceptance`: run acceptance tests headless (you need to start storybook first)
+- `yarn test-acceptance-ui`: run acceptance tests with ui (you need to start storybook first)
 - `yarn lint`: check codestyle
 - `yarn build`: build package
 - `yarn watch`: build package and watch for changes
