@@ -17,7 +17,7 @@ type Props = {
     className?: string;
 };
 
-const Portal: React.FC<Props> = ({children, className}): React.ReactPortal => {
+const Portal: React.FC<Props> = ({children, className}) => {
     const rootElemRef = React.useRef(document.createElement('div'));
     React.useEffect(() => {
         const divRef = rootElemRef.current;
