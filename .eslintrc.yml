@@ -180,6 +180,14 @@ overrides:
                 ts-ignore: true
                 ts-nocheck: true
                 ts-check: false
+          '@typescript-eslint/no-namespace':
+              - error
+              - allowDeclarations: false
+                allowDefinitionFiles: false
+          'no-restricted-syntax':
+              - error
+              - selector: TSEnumDeclaration
+                message: 'enums are not allowed'
       extends:
           - 'eslint:recommended'
           - 'plugin:@typescript-eslint/recommended'

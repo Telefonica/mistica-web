@@ -36,41 +36,56 @@ const Component: React.FC<Props> = ({n, s, classes}) => (
     </div>
 );
 
-let i;
-
 // OK
-i = <Component classes={{a: 'c'}} n={1} s="a" />;
-// @ts-expect-error s should be a string
-i = <Component classes={{a: 'c'}} n={1} s={2} />;
-// @ts-expect-error n should be a number
-i = <Component classes={{a: 'c'}} n="1" s="a" />;
+<Component classes={{a: 'c'}} n={1} s="a" />;
+
+<Component
+    classes={{a: 'c'}}
+    n={1}
+    // @ts-expect-error s should be a string
+    s={2}
+/>;
+
+<Component
+    classes={{a: 'c'}}
+    // @ts-expect-error n should be a number
+    n="1"
+    s="a"
+/>;
 
 const StyledComponent = withSheet(sheet)(Component);
-// OK
-i = <StyledComponent n={1} s="a" />;
-
-i = (
-    <StyledComponent
-        n={1}
-        // @ts-expect-error - s should be a string
-        s={2}
-    />
-);
-
-i = (
-    <StyledComponent
-        // @ts-expect-error - n should be a number
-        n="1"
-        s="a"
-    />
-);
 
 // OK
-i = <StyledComponent.WrappedComponent classes={{a: 'c'}} n={1} s="a" />;
-// @ts-expect-error s should be a string
-i = <StyledComponent.WrappedComponent classes={{a: 'c'}} n={1} s={2} />;
-// @ts-expect-error n should be a number
-i = <StyledComponent.WrappedComponent classes={{a: 'c'}} n="1" s="a" />;
+<StyledComponent n={1} s="a" />;
+
+<StyledComponent
+    n={1}
+    // @ts-expect-error - s should be a string
+    s={2}
+/>;
+
+<StyledComponent
+    // @ts-expect-error - n should be a number
+    n="1"
+    s="a"
+/>;
+
+// OK
+<StyledComponent.WrappedComponent classes={{a: 'c'}} n={1} s="a" />;
+
+<StyledComponent.WrappedComponent
+    classes={{a: 'c'}}
+    n={1}
+    // @ts-expect-error s should be a string
+    s={2}
+/>;
+
+<StyledComponent.WrappedComponent
+    classes={{a: 'c'}}
+    // @ts-expect-error n should be a number
+    n="1"
+    s="a"
+/>;
 
 const useStylesWithClassA = createUseStyles(() => ({
     a: {color: 'blue'},
