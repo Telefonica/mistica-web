@@ -36,15 +36,15 @@ const formSnippets = [
             }
         >
             <Box padding={16}>
-                <Stack space={32}>
-                <FormTextField name="name" label="Name" />
-                <FormEmailField
-                    name="email"
-                    label="e-mail"
-                />
-                <ButtonLayout>
-                    <ButtonPrimary submit>Send</ButtonPrimary>
-                </ButtonLayout>
+                <Stack space={16}>
+                    <FormTextField name="name" label="Name" />
+                    <FormEmailField
+                        name="email"
+                        label="e-mail"
+                    />
+                    <ButtonLayout>
+                        <ButtonPrimary submit>Send</ButtonPrimary>
+                    </ButtonLayout>
                 </Stack>
             </Box>
         </Form>`,

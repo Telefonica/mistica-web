@@ -8,7 +8,7 @@ import IcnVisa from '../icons/icn-visa';
 import IcnMastercard from '../icons/icn-mastercard';
 
 export default {
-    title: 'Components|Tooltip',
+    title: 'Components|Hints/Tooltip',
 };
 
 export const Default = (): React.Node => (
@@ -107,3 +107,5 @@ export const Default = (): React.Node => (
         </div>
     </StorySection>
 );
+
+Default.story = {name: 'Tooltip'};

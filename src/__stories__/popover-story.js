@@ -5,11 +5,11 @@ import Popover from '../popover';
 import IcnClose from '../icons/icn-close';
 
 export default {
-    title: 'Components|Popover',
+    title: 'Components|Hints/Popover',
     component: Popover,
 };
 
-export const Examples = (): React.Node => (
+export const Default = (): React.Node => (
     <StorySection title="Popover">
         <strong>Desktop examples:</strong>
         <div
@@ -91,3 +91,5 @@ export const Examples = (): React.Node => (
         </div>
     </StorySection>
 );
+
+Default.story = {name: 'Popover'};

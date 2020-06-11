@@ -4,14 +4,14 @@ import {PromoTag, Stack} from '..';
 import {useTextField} from './helpers';
 
 export default {
-    title: 'Components|PromoTag',
+    title: 'Components|Others/PromoTag',
 };
 
 export const Default = (): React.Node => {
     const [text, textField] = useTextField('Text', 'promo');
 
     return (
-        <Stack space={32}>
+        <Stack space={16}>
             <div data-testid="promo-tag">
                 <PromoTag>{text}</PromoTag>
             </div>
@@ -19,3 +19,5 @@ export const Default = (): React.Node => {
         </Stack>
     );
 };
+
+Default.story = {name: 'PromoTag'};

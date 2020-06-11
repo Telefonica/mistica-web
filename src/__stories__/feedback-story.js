@@ -1,14 +1,14 @@
 // @flow
 import * as React from 'react';
-import {Feedback as FeedbackComponent, Stack} from '..';
+import {Feedback, Stack} from '..';
 import {ThemeVariant} from '../theme-variant-context';
 import {StorySection, useCheckbox, useSelect, useTextField} from './helpers';
 
 export default {
-    title: 'Components|Feedbacks',
+    title: 'Components|Feedbacks/Feedback',
 };
 
-export const Feedback = (): React.Node => {
+export const Default = (): React.Node => {
     const [type, typeSelectField] = useSelect('Type', 'success', ['success', 'error', 'info']);
     const [title, titleTextField] = useTextField('Title', "I'm the title");
     const [description, descriptionTextField] = useTextField('Description', "I'm the description");
@@ -21,9 +21,11 @@ export const Feedback = (): React.Node => {
                     {titleTextField}
                     {descriptionTextField}
                     {isInverseStateCheckbox}
-                    <FeedbackComponent type={(type: any)} title={title} description={description} />
+                    <Feedback type={(type: any)} title={title} description={description} />
                 </Stack>
             </StorySection>
         </ThemeVariant>
     );
 };
+
+Default.story = {name: 'Feedback'};

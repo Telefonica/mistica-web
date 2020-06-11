@@ -8,7 +8,7 @@ import Icon from '../icons/icn-visibility';
 import {StorySection, countriesList} from './helpers';
 
 export default {
-    title: 'Components|TextField',
+    title: 'Components|Forms/TextField',
     component: TextField,
 };
 
@@ -70,7 +70,7 @@ export const Variants = (): React.Node => {
             </StorySection>
 
             <StorySection title="Multiline">
-                <Stack space={32}>
+                <Stack space={16}>
                     <TextField label="Multiline" multiline />
                     <TextField label="Multiline" multiline />
                 </Stack>

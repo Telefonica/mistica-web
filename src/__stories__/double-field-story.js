@@ -4,16 +4,16 @@ import {StorySection, fruitEntries} from './helpers';
 import {TextField, Select, DoubleField, Stack} from '..';
 
 export default {
-    title: 'Components|DoubleField',
+    title: 'Components|Forms/DoubleField',
     component: DoubleField,
 };
 
-export const Examples = (): React.Node => {
+export const Default = (): React.Node => {
     const [selectValue, setSelectValue] = React.useState('');
     return (
         <>
             <StorySection title="Credit Card Form">
-                <Stack space={32}>
+                <Stack space={16}>
                     <TextField type="credit-card-number" label="Credit Card Number" />
                     <DoubleField>
                         <TextField type="credit-card-expiration" label="Expiration" />
@@ -23,7 +23,7 @@ export const Examples = (): React.Node => {
             </StorySection>
 
             <StorySection title="Compositions">
-                <Stack space={32}>
+                <Stack space={16}>
                     <TextField label="Label" />
                     <Select
                         helperText="Helper text"
@@ -65,3 +65,5 @@ export const Examples = (): React.Node => {
         </>
     );
 };
+
+Default.story = {name: 'DoubleField'};
