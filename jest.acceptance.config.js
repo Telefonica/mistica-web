@@ -2,10 +2,8 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
 
-const jestConfigBase = require('./jest.config');
-
 module.exports = {
-    ...jestConfigBase,
+    ...require('./jest.base.config'),
     displayName: 'acceptance',
     maxConcurrency: 1,
     testTimeout: 30000,
