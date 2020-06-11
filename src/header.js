@@ -93,7 +93,7 @@ export const Header = ({
                                 truncate
                                 color={
                                     isErrorAmount && !isInverse
-                                        ? theme.colors.textError
+                                        ? theme.colors.textDanger
                                         : theme.colors.textPrimary
                                 }
                             >
