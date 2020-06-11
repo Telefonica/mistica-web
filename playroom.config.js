@@ -1,6 +1,4 @@
 // @flow
-/* eslint-disable filenames/match-regex */
-
 const path = require('path');
 
 // Dont apply babel-plugin-flow-react-proptypes to these files because make the build break:

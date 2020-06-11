@@ -151,7 +151,7 @@ test('click anchor does not close tooltip', async () => {
         <Tooltip targetLabel="help text" target={<span className="target">Press me!</span>}>
             <div className="content">
                 Content
-                <a tabIndex="-1" role="link" onClick={() => linkSpy()}>
+                <a tabIndex={-1} role="link" onClick={() => linkSpy()}>
                     Link
                 </a>
             </div>

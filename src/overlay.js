@@ -67,7 +67,7 @@ const Overlay = ({
             touch-action="auto" // Prop needed for Pointer Events Polyfill to work properly
             onContextMenu={handleContextMenu}
             role="button"
-            tabIndex="0"
+            tabIndex={0}
         >
             {showChildren && children}
         </div>

@@ -172,13 +172,13 @@ const Dialog = (props: DialogProps) => {
             <Box paddingTop={isMobile ? 24 : 32}>
                 <ButtonLayout>
                     {destructive ? (
-                        <ButtonDanger tabIndex="1" {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
+                        <ButtonDanger tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
                     ) : (
-                        <ButtonPrimary tabIndex="1" {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
+                        <ButtonPrimary tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
                     )}
                     {showCancel && handleCancel && (
                         <ButtonSecondary
-                            tabIndex="2" // eslint-disable-line jsx-a11y/tabindex-no-positive
+                            tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
                             onPress={handleCancel}
                             data-testid="dialog-cancel-button"
                         >

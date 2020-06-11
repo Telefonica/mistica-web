@@ -1,6 +1,4 @@
 // @flow
-/* eslint-disable filenames/match-regex */
-
 const config /* : any */ = {
     // Automatically restore mock state between every test
     restoreMocks: true,

@@ -67,9 +67,7 @@ export const removeJssProps = <P extends {sheet?: any; classes?: any}>(
     return withoutJssProps;
 };
 
-type Props = Record<string, any>;
-
-type CSSValue = void | number | boolean | string | ((props: Props) => void | string | number | boolean);
+type CSSValue = void | number | boolean | string | ((props: any) => void | string | number | boolean);
 
 type ClassDefinition = {
     [cssProp: string]:
@@ -85,7 +83,7 @@ type ClassDefinition = {
 
 type StylesDefinition = {[className: string]: ClassDefinition};
 
-type UseStyles<S extends StylesDefinition> = (props?: Props) => ObjValuesToStr<S>;
+type UseStyles<S extends StylesDefinition> = (props?: any) => ObjValuesToStr<S>;
 
 export const createUseStyles = <S extends StylesDefinition>(styles?: (theme: Theme) => S): UseStyles<S> => {
     // @ts-expect-error - jss styles could be better

@@ -69,7 +69,7 @@ type CommonProps = {
     'aria-hidden'?: 'true' | 'false',
     role?: string,
     type?: 'button' | 'submit',
-    tabIndex?: string,
+    tabIndex?: number,
 };
 
 type Props =

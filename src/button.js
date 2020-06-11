@@ -257,7 +257,7 @@ type CommonProps = {
     'data-testid'?: string,
     'aria-controls'?: string,
     'aria-expanded'?: 'true' | 'false',
-    tabIndex?: string,
+    tabIndex?: number,
 };
 
 type Props =
