@@ -13,6 +13,37 @@ import NavigationBreadcrumbs from './navigation-breadcrumbs';
 import {ButtonPrimary, ButtonSecondary} from './button';
 
 import type {TextProps} from './text';
+import ButtonLayout from './button-layout';
+
+const useButtonLayoutStyles = createUseStyles(() => ({
+    table: {
+        display: 'table',
+        '& > div:not(:first-child) > div': {
+            paddingTop: 16,
+        },
+    },
+    buttonCell: {
+        display: 'table-cell',
+        '& > *': {
+            width: '100%',
+        },
+    },
+}));
+
+const MobileHeaderButtonLayout = ({children}) => {
+    const classes = useButtonLayoutStyles();
+    return (
+        <div className={classes.table}>
+            {React.Children.toArray(children)
+                .filter(Boolean)
+                .map((button, idx) => (
+                    <div key={idx} style={{display: 'table-row'}}>
+                        <div className={classes.buttonCell}>{button}</div>
+                    </div>
+                ))}
+        </div>
+    );
+};
 
 type OverridableTextProps = {
     color?: $PropertyType<TextProps, 'color'>,
@@ -23,10 +54,11 @@ type RichText = string | {text: string, ...OverridableTextProps};
 
 type HeaderProps = {
     pretitle?: RichText,
-    title: string,
+    title?: string,
     preamount?: RichText,
     amount?: string,
-    button?: React.Element<typeof ButtonPrimary> | React.Element<typeof ButtonSecondary>,
+    button?: React.Element<typeof ButtonPrimary>,
+    secondaryButton?: React.Element<typeof ButtonSecondary>,
     subtitle?: RichText,
     isErrorAmount?: boolean,
 };
@@ -39,6 +71,7 @@ export const Header = ({
     button,
     subtitle,
     isErrorAmount,
+    secondaryButton,
 }: HeaderProps): React.Node => {
     const {isMobile} = useScreenSize();
     const theme = useTheme();
@@ -58,23 +91,25 @@ export const Header = ({
 
     return (
         <Stack space={isMobile ? 24 : 32}>
-            <Stack space={8}>
-                {pretitle &&
-                    renderRichText(pretitle, {
-                        size: 16,
-                        lineHeight: '24px',
-                        truncate: true,
-                        color: theme.colors.textPrimary,
-                    })}
-                <Text
-                    as="h2"
-                    size={isMobile ? 24 : 32}
-                    lineHeight={isMobile ? '32px' : '40px'}
-                    weight="light"
-                >
-                    {title}
-                </Text>
-            </Stack>
+            {(title || pretitle) && (
+                <Stack space={8}>
+                    {pretitle &&
+                        renderRichText(pretitle, {
+                            size: 16,
+                            lineHeight: '24px',
+                            truncate: true,
+                            color: theme.colors.textPrimary,
+                        })}
+                    <Text
+                        as="h2"
+                        size={isMobile ? 24 : 32}
+                        lineHeight={isMobile ? '32px' : '40px'}
+                        weight="light"
+                    >
+                        {title}
+                    </Text>
+                </Stack>
+            )}
             {(preamount || amount || button || subtitle) && (
                 <Stack space={16}>
                     {(preamount || amount) && (
@@ -101,7 +136,19 @@ export const Header = ({
                             </Text>
                         </Stack>
                     )}
-                    {button}
+                    {(button || secondaryButton) &&
+                        (isMobile ? (
+                            <MobileHeaderButtonLayout>
+                                {button}
+                                {secondaryButton}
+                            </MobileHeaderButtonLayout>
+                        ) : (
+                            // $FlowFixMe
+                            <ButtonLayout align="left">
+                                {button}
+                                {secondaryButton}
+                            </ButtonLayout>
+                        ))}
                     {subtitle && renderRichText(subtitle, {size: 16, lineHeight: '24px', truncate: true})}
                 </Stack>
             )}
@@ -155,8 +202,9 @@ const useHeaderLayoutStyles = createUseStyles((theme) => ({
 type HeaderLayoutProps = {
     isInverse?: boolean,
     breadcrumbs?: React.Element<typeof NavigationBreadcrumbs>,
-    header: React.Element<typeof Header>,
+    header: React.Node, // intentionally not forced to React.Element<typeof Header> to allow skeletons for example
     extra?: React.Node,
+    sideBySideExtraOnDesktop?: boolean,
 };
 
 export const HeaderLayout = ({
@@ -164,6 +212,7 @@ export const HeaderLayout = ({
     breadcrumbs,
     header,
     extra,
+    sideBySideExtraOnDesktop = false,
 }: HeaderLayoutProps): React.Node => {
     const classes = useHeaderLayoutStyles({isInverse});
     const {isTabletOrSmaller} = useScreenSize();
@@ -179,7 +228,7 @@ export const HeaderLayout = ({
                             {extra}
                         </Stack>
                     </Box>
-                ) : (
+                ) : sideBySideExtraOnDesktop ? (
                     <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
                         <GridLayout>
                             <div className={classes.gridItem}>
@@ -189,6 +238,20 @@ export const HeaderLayout = ({
                                 </Stack>
                             </div>
                             {extra && <div className={classes.gridItem}>{extra}</div>}
+                        </GridLayout>
+                    </Box>
+                ) : (
+                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
+                        <GridLayout>
+                            <div className={classes.gridItem}>
+                                <Stack space={24}>
+                                    <Stack space={32}>
+                                        {breadcrumbs}
+                                        {header}
+                                    </Stack>
+                                    {extra}
+                                </Stack>
+                            </div>
                         </GridLayout>
                     </Box>
                 )}
