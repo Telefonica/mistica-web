@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 import classnames from 'classnames';
 import Spinner from './spinner';
@@ -10,16 +8,17 @@ import {applyAlpha} from './utils/color';
 import {useForm} from './form-context';
 import {getPlatform} from './utils/platform';
 
-import type {CssStyle, TrackingEvent} from './utils/types';
-import type {LocationShape} from 'react-router-dom';
+import type {TrackingEvent} from './utils/types';
+import type {Location} from 'history';
+import type {Theme} from './theme';
 
 export const BUTTON_MIN_WIDTH = 156;
 
-const buttonTransition = (property) => `${property} 0.3s cubic-bezier(0.77, 0, 0.175, 1)`;
+const buttonTransition = (property: string) => `${property} 0.3s cubic-bezier(0.77, 0, 0.175, 1)`;
 
 const buttonBorderWidth = '1.5px';
 
-const commonClasses = (theme) => ({
+const commonClasses = (theme: Theme) => ({
     button: {
         display: 'inline-block',
         height: 48,
@@ -165,13 +164,13 @@ const usePrimaryButtonStyles = createUseStyles((theme) => ({
     },
 }));
 
-const buttonSecondaryLightStyle = (theme) => ({
+const buttonSecondaryLightStyle = (theme: Theme) => ({
     color: theme.colors.buttonSecondaryText,
     backgroundColor: theme.colors.buttonSecondaryBackground,
     borderColor: theme.colors.buttonSecondaryBorder,
 });
 
-const buttonSecondaryHoverLightStyle = (theme) => ({
+const buttonSecondaryHoverLightStyle = (theme: Theme) => ({
     color: theme.colors.buttonSecondaryTextSelected,
     borderColor: theme.colors.buttonSecondaryBorderSelected,
 });
@@ -219,7 +218,7 @@ const useSecondaryButtonStyles = createUseStyles((theme) => ({
     },
 }));
 
-const dangerButtonStyles = (theme) => ({
+const dangerButtonStyles = (theme: Theme) => ({
     color: theme.colors.buttonPrimaryText,
     backgroundColor: theme.colors.buttonDangerBackground,
 
@@ -245,52 +244,68 @@ const useDangerButtonStyles = createUseStyles((theme) => ({
     inverse: dangerButtonStyles(theme),
 }));
 
-type CommonProps = {
-    children: React.Node,
-    className?: string,
-    style?: CssStyle,
-    small?: boolean,
-    showSpinner?: boolean,
-    loadingText?: string,
-    disabled?: boolean,
-    trackingEvent?: TrackingEvent,
-    'data-testid'?: string,
-    'aria-controls'?: string,
-    'aria-expanded'?: 'true' | 'false',
-    tabIndex?: string,
-};
+interface CommonProps {
+    children: React.ReactNode;
+    className?: string;
+    style?: React.CSSProperties;
+    small?: boolean;
+    showSpinner?: boolean;
+    loadingText?: string;
+    disabled?: boolean;
+    trackingEvent?: TrackingEvent;
+    'data-testid'?: string;
+    'aria-controls'?: string;
+    'aria-expanded'?: 'true' | 'false';
+    tabIndex?: number;
+}
 
-type Props =
-    | {
-          ...CommonProps,
-          onPress: (SyntheticEvent<HTMLElement>) => void,
-      }
-    | {
-          ...CommonProps,
-          href: string,
-          newTab?: boolean,
-      }
-    | {
-          ...CommonProps,
-          to: string | LocationShape,
-          fullPageOnWebView?: boolean,
-      }
-    | {
-          ...CommonProps,
-          submit: true,
-      }
-    | {
-          ...CommonProps,
-          fake: true,
-      };
+interface ToButtonProps extends CommonProps {
+    to: string | Location;
+    fullPageOnWebView?: boolean;
+    submit?: undefined;
+    fake?: undefined;
+    onPress?: undefined;
+    href?: undefined;
+}
+interface OnPressButtonProps extends CommonProps {
+    onPress: (event: React.MouseEvent<HTMLElement>) => void;
+    submit?: undefined;
+    fake?: undefined;
+    to?: undefined;
+    href?: undefined;
+}
+interface HrefButtonProps extends CommonProps {
+    href: string;
+    newTab?: boolean;
+    submit?: undefined;
+    fake?: undefined;
+    onPress?: undefined;
+    to?: undefined;
+}
+interface FakeButtonProps extends CommonProps {
+    fake: true;
+    submit?: undefined;
+    onPress?: undefined;
+    to?: undefined;
+    href?: undefined;
+}
+interface SubmitButtonProps extends CommonProps {
+    submit: true;
+    to?: undefined;
+    fake?: undefined;
+    onPress?: undefined;
+    href?: undefined;
+}
 
-type ButtonClasses = $Call<typeof usePrimaryButtonStyles>;
+type Props = FakeButtonProps | SubmitButtonProps | ToButtonProps | OnPressButtonProps | HrefButtonProps;
 
-const Button = (props: {...Props, classes: ButtonClasses}) => {
+type ButtonClasses = ReturnType<typeof usePrimaryButtonStyles>;
+
+const Button: React.FC<Props & {classes: ButtonClasses}> = (props) => {
     const {formStatus} = useForm();
     const isInverse = useIsInverseVariant();
     const {classes, loadingText} = props;
-    const isSubmitButton = (props: any).submit; // cast to any to make flow happy
+    const isSubmitButton = !!props.submit;
     const isFormSending = formStatus === 'sending';
 
     const showSpinner = props.showSpinner || (isFormSending && isSubmitButton);
@@ -419,29 +434,32 @@ const useButtonLinkStyles = createUseStyles((theme) => ({
     },
 }));
 
-type ButtonLinkCommonProps = {
-    children: React.Node,
-    trackingEvent?: TrackingEvent,
-    'data-testid'?: string,
-};
+interface ButtonLinkCommonProps {
+    children: React.ReactNode;
+    trackingEvent?: TrackingEvent;
+    'data-testid'?: string;
+}
+interface ButtonLinkOnPressProps extends ButtonLinkCommonProps {
+    onPress: (event: React.MouseEvent<HTMLElement>) => void;
+    to?: undefined;
+    href?: undefined;
+}
+interface ButtonLinkHrefProps extends ButtonLinkCommonProps {
+    href: string;
+    newTab?: boolean;
+    onPress?: undefined;
+    to?: undefined;
+}
+interface ButtonLinkToProps extends ButtonLinkCommonProps {
+    to: string;
+    fullPageOnWebView?: boolean;
+    onPress?: undefined;
+    href?: undefined;
+}
 
-type ButtonLinkProps =
-    | {
-          ...ButtonLinkCommonProps,
-          onPress: (SyntheticEvent<HTMLElement>) => void,
-      }
-    | {
-          ...ButtonLinkCommonProps,
-          href: string,
-          newTab?: boolean,
-      }
-    | {
-          ...ButtonLinkCommonProps,
-          to: string,
-          fullPageOnWebView?: boolean,
-      };
+type ButtonLinkProps = ButtonLinkOnPressProps | ButtonLinkHrefProps | ButtonLinkToProps;
 
-export const ButtonLink = (props: ButtonLinkProps): React.Node => {
+export const ButtonLink = (props: ButtonLinkProps): React.ReactNode => {
     const classes = useButtonLinkStyles();
     const isInverse = useIsInverseVariant();
     const commonProps = {
@@ -469,17 +487,17 @@ export const ButtonLink = (props: ButtonLinkProps): React.Node => {
     throw Error('Bad button props');
 };
 
-export const ButtonPrimary = (props: Props): React.Node => {
+export const ButtonPrimary = (props: Props): React.ReactNode => {
     const classes = usePrimaryButtonStyles();
     return <Button {...props} classes={classes} />;
 };
 
-export const ButtonSecondary = (props: Props): React.Node => {
+export const ButtonSecondary = (props: Props): React.ReactNode => {
     const classes = useSecondaryButtonStyles();
     return <Button {...props} classes={classes} />;
 };
 
-export const ButtonDanger = (props: Props): React.Node => {
+export const ButtonDanger = (props: Props): React.ReactNode => {
     const classes = useDangerButtonStyles();
     return <Button {...props} classes={classes} />;
 };
