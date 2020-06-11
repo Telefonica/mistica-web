@@ -30,7 +30,7 @@ rules:
     default-case: error
     dot-notation: error
     eqeqeq: error
-    filenames/match-regex: [error, '^[a-z0-9]+(-[a-z0-9]+)*$']
+    filenames/match-regex: [error, '^[a-z0-9]+(-[a-z0-9]+)*(\.[a-z]+)?$']
     new-cap: [error, {newIsCap: true, capIsNew: false}]
     no-cond-assign: error
     no-debugger: error

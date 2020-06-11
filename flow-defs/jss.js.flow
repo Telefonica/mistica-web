@@ -20,17 +20,14 @@ declare type ObjValuesToStr<O> = $ObjMapi<O, <Key>(Key) => string>;
  * editor extensions work with JSS. @see https://github.com/ansumanshah/css-in-js
  */
 declare export var createSheet: <S: Sheet>(sheet: S) => ObjValuesToStr<S>;
+declare type WithSheetResult<P, C> = React.ComponentType<$Diff<P, {"classes": *}>> & {
+  WrappedComponent: C
+};
 declare export var withSheet: <S: ObjValuesToStr<Sheet>>(
   sheet: S
 ) => <P: mixed>(
   Component: React.ComponentType<P>
-) =>
-  | (React.ComponentType<$Diff<P, { classes: * }>, any> & {
-      WrappedComponent: React.ComponentType<P>
-    })
-  | (React.ComponentType<$Diff<P, { classes: * }>> & {
-      WrappedComponent: React.ComponentType<P>
-    });
+) => WithSheetResult<P, React.ComponentType<P>>;
 declare export var removeJssProps: <
   P: {
     sheet?: any,
@@ -38,7 +35,7 @@ declare export var removeJssProps: <
   }
 >(
   props: P
-) => $Diff<P, { sheet: *, classes: * }>;
+) => $Diff<P, {"classes": *, "sheet": *}>;
 declare type Props = { [key: string]: any };
 declare type CSSValue =
   | void

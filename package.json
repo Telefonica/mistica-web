@@ -23,7 +23,7 @@
         "storybook": "start-storybook -p 6006",
         "playroom": "playroom start",
         "now-build": "rimraf public && yarn build-storybook -o public && ./node_modules/.bin/playroom build",
-        "flowdefs": "node scripts/dts-to-flow"
+        "gen-flow-defs": "node scripts/dts-to-flow"
     },
     "browserslist": [
         "chrome >= 36",

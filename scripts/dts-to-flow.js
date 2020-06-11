@@ -52,7 +52,9 @@ const fixFlowDefinition = (flowFilename) => {
     ];
     src = src.replace(new RegExp(`(import {.*?)(${types.join('|')})([\\s,].*?})`, 'gm'), '$1type $2$3');
 
-    // Fixes flowgen translation of TS translation of Omit<...> utility type
+    // `Omit<T, K>` => `Pick<T, Exclude<$Keys<T>, K>>`
+    src = src.replace(/Omit<(\w+), ([^>]+)>/g, 'Pick<$1, Exclude<$$Keys<$1>, $2>>');
+
     // `Pick<P, Exclude<$Keys<P>, "foo">>` => `$Diff<P, {foo: *}>`
     // `Pick<P, Exclude<$Keys<P>, "foo" | "bar">` => `$Diff<P, {foo: *, bar: *}>`
     src = src.replace(/Pick<(\w+), Exclude<\$Keys<(\w+)>, "(\w+)">>/g, '$$Diff<$1, {"$3": *}>');
@@ -61,23 +63,15 @@ const fixFlowDefinition = (flowFilename) => {
         '$$Diff<$1, {"$3": *, "$4": *}>'
     );
 
-    // Add Utility Types
-    if (src.match(/Pick</)) {
-        src += `\n\ntype Pick<Origin: Object, Keys: Object> = $ObjMapi<
-          Keys,
-          <Key>(k: Key) => $ElementType<Origin, Key>
-        >;`;
-    }
-
     // File is written two times, one before applying beautify to be able to check problems if beautify fails
     writeFileSync(flowFilename, src);
-    writeFileSync(flowFilename, beautify(src));
+    //writeFileSync(flowFilename, beautify(src));
 };
 
 const main = async () => {
     process.chdir(PATH_ROOT);
 
-    if (process.argv.includes('--nobuild')) {
+    if (!process.argv.includes('--nobuild')) {
         rimraf.sync('dist');
 
         // typescript build
@@ -99,8 +93,10 @@ const main = async () => {
 
     cpx.copySync('./dist/**/*.js.flow', 'flow-defs');
 
-    // clean
-    rimraf.sync('dist/**/*.js.flow');
+    // check
+    execSync('yarn flow', {
+        stdio: 'inherit',
+    });
 };
 
 main();
