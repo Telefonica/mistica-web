@@ -18,18 +18,13 @@ const useStyles = createUseStyles(() => ({
 }));
 
 type Props = {
-    children?: React.Node;
+    children?: React.ReactNode;
     className?: string;
     delay?: string;
     duration?: string;
 };
 
-const FadeIn = ({
-    children,
-    className = '',
-    duration = defaultDuration,
-    delay = '0',
-}: Props): React.Element<'div'> => {
+const FadeIn: React.FC<Props> = ({children, className = '', duration = defaultDuration, delay = '0'}) => {
     const classes = useStyles();
 
     return (
