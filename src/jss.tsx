@@ -41,24 +41,22 @@ export const createSheet = <S extends Sheet>(sheet: S): ObjValuesToStr<S> =>
     // @ts-expect-error - This function casts a value to an incompatible type
     sheet;
 
+type WithSheetResult<P, C> = React.ComponentType<Omit<P, 'classes'>> & {WrappedComponent: C};
+
 export const withSheet = <S extends ObjValuesToStr<Sheet>>(sheet: S) => <P extends any>(
     Component: React.ComponentType<P>
-): React.ComponentType<Omit<P, 'classes'>> & {WrappedComponent: typeof Component} => {
+): WithSheetResult<P, typeof Component> => {
     // @ts-expect-error - our types are fine
-    const StyledComponent = withStyles(sheet)(Component);
+    const StyledComponent: WithSheetResult<typeof Component> = withStyles(sheet)(Component);
     if (process.env.STORYBOOK_BUILD) {
         StyledComponent.propTypes = Component.propTypes;
         if (StyledComponent.propTypes) {
-            // @ts-expect-error - sheet does not exist in propTypes
             delete StyledComponent.propTypes.sheet;
         }
         StyledComponent.defaultProps = Component.defaultProps;
         StyledComponent.displayName = Component.displayName || Component.name;
     }
-
-    // @ts-expect-error
     StyledComponent.WrappedComponent = Component;
-    // @ts-expect-error
     return StyledComponent;
 };
 
@@ -90,7 +88,7 @@ type StylesDefinition = {[className: string]: ClassDefinition};
 type UseStyles<S extends StylesDefinition> = (props?: Props) => ObjValuesToStr<S>;
 
 export const createUseStyles = <S extends StylesDefinition>(styles?: (theme: Theme) => S): UseStyles<S> => {
-    // @ts-expect-error
+    // @ts-expect-error - jss styles could be better
     const useStyles = jssCreateUseStyles(styles, {theming: {context: ThemeContext}});
     return (...args) => {
         try {

@@ -167,10 +167,19 @@ overrides:
       rules:
           'flowtype/no-types-missing-file-annotation': off
           no-unused-vars: off
-          '@typescript-eslint/no-unused-vars': [error, {vars: all, args: after-used, ignoreRestSiblings: true}]
+          '@typescript-eslint/no-unused-vars':
+              - error
+              - vars: all
+                args: after-used
+                ignoreRestSiblings: true
           '@typescript-eslint/no-empty-function': off
-          '@typescript-eslint/ban-ts-comment': off
           '@typescript-eslint/no-explicit-any': off
+          '@typescript-eslint/ban-ts-comment':
+              - error
+              - ts-expect-error: allow-with-description
+                ts-ignore: true
+                ts-nocheck: true
+                ts-check: false
       extends:
           - 'eslint:recommended'
           - 'plugin:@typescript-eslint/recommended'

@@ -24,11 +24,11 @@ type Props = {
     classes: typeof sheet;
 };
 
-const C: React.FC<Props> = ({n, s, classes}) => (
+const Component: React.FC<Props> = ({n, s, classes}) => (
     <div className={classes.a}>
         {n} and {s}
         <div
-            // @ts-expect-error
+            // @ts-expect-error - missingClass does not exist in classes
             className={classes.missingClass}
         >
             no
@@ -39,26 +39,38 @@ const C: React.FC<Props> = ({n, s, classes}) => (
 let i;
 
 // OK
-i = <C classes={{a: 'c'}} n={1} s="a" />;
+i = <Component classes={{a: 'c'}} n={1} s="a" />;
 // @ts-expect-error s should be a string
-i = <C classes={{a: 'c'}} n={1} s={2} />;
+i = <Component classes={{a: 'c'}} n={1} s={2} />;
 // @ts-expect-error n should be a number
-i = <C classes={{a: 'c'}} n="1" s="a" />;
+i = <Component classes={{a: 'c'}} n="1" s="a" />;
 
-const SC = withSheet(sheet)(C);
+const StyledComponent = withSheet(sheet)(Component);
 // OK
-i = <SC n={1} s="a" />;
-// @ts-expect-error s should be a string
-i = <SC n={1} s={2} />;
-// @ts-expect-error n should be a number
-i = <SC n="1" s="a" />;
+i = <StyledComponent n={1} s="a" />;
+
+i = (
+    <StyledComponent
+        n={1}
+        // @ts-expect-error - s should be a string
+        s={2}
+    />
+);
+
+i = (
+    <StyledComponent
+        // @ts-expect-error - n should be a number
+        n="1"
+        s="a"
+    />
+);
 
 // OK
-i = <SC.WrappedComponent classes={{a: 'c'}} n={1} s="a" />;
+i = <StyledComponent.WrappedComponent classes={{a: 'c'}} n={1} s="a" />;
 // @ts-expect-error s should be a string
-i = <SC.WrappedComponent classes={{a: 'c'}} n={1} s={2} />;
+i = <StyledComponent.WrappedComponent classes={{a: 'c'}} n={1} s={2} />;
 // @ts-expect-error n should be a number
-i = <SC.WrappedComponent classes={{a: 'c'}} n="1" s="a" />;
+i = <StyledComponent.WrappedComponent classes={{a: 'c'}} n="1" s="a" />;
 
 const useStylesWithClassA = createUseStyles(() => ({
     a: {color: 'blue'},
@@ -91,7 +103,7 @@ const useStylesWithTheme = createUseStyles((theme) => ({
     a: {
         // OK
         backgroundColor: theme.colors.background,
-        // @ts-expect-error
+        // @ts-expect-error - unknown property does not exist
         borderColor: theme.colors.unknown,
     },
 }));
@@ -139,9 +151,9 @@ const ComponentUsesStylesWithProps: React.FC = () => {
 };
 
 const ComponentUsesStylesWithWrongProps: React.FC = () => {
-    // @ts-expect-error
+    // @ts-expect-error - not an object
     useStylesWithProps('error');
-    // @ts-expect-error
+    // @ts-expect-error - not an object
     useStylesWithProps(null);
     return <></>;
 };

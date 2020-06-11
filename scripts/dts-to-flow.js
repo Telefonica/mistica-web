@@ -31,15 +31,12 @@ const fixFlowDefinition = (flowFilename) => {
     src = src.replace(/React.RefObject/g, 'React.Ref');
 
     // `React.FC` => `React.ComponentType`
-    src = src.replace(
-        /React.(FC|ComponentClass|FunctionComponent|FunctionComponent)/g,
-        'React.ComponentType'
-    );
+    src = src.replace(/React.(FC|ComponentClass|FunctionComponent)/g, 'React.ComponentType');
 
     // `React.CSSProperties` => `$Shape<CSSStyleDeclaration>`
     src = src.replace(/React.CSSProperties/g, '$Shape<CSSStyleDeclaration>');
 
-    // `React.MouseEvent` => `React.SyntheticEvent`
+    // `React.MouseEvent` => `React.SyntheticMouseEvent`
     src = src.replace(/React.(Mouse)Event/g, 'Synthetic$1Event');
 
     // This patch isn't really needed. Flow marks the import as an error but seems to correctly use imported type
@@ -80,12 +77,16 @@ const fixFlowDefinition = (flowFilename) => {
 const main = async () => {
     process.chdir(PATH_ROOT);
 
-    rimraf.sync('dist');
+    if (process.argv.includes('--nobuild')) {
+        rimraf.sync('dist');
 
-    // typescript build
-    execSync('yarn build-ts', {
-        stdio: 'inherit',
-    });
+        // typescript build
+        execSync('yarn build-ts', {
+            stdio: 'inherit',
+        });
+    } else {
+        rimraf.sync('dist/**/*.js.flow');
+    }
 
     // generate .js.flow files
     execSync('yarn flowgen --no-inexact --interface-records ./dist', {
