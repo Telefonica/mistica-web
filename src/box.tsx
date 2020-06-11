@@ -39,7 +39,7 @@ const Box: React.FC<Props> = ({
     paddingLeft = paddingX,
     paddingRight = paddingX,
     ...dataProps
-}): React.ReactElement<'div'> => {
+}) => {
     const classes = useStyles({
         padding: `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`,
         width,
