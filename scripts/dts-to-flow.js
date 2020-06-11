@@ -65,7 +65,7 @@ const fixFlowDefinition = (flowFilename) => {
 
     // File is written two times, one before applying beautify to be able to check problems if beautify fails
     writeFileSync(flowFilename, src);
-    //writeFileSync(flowFilename, beautify(src));
+    writeFileSync(flowFilename, beautify(src));
 };
 
 const main = async () => {
