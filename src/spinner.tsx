@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {getPlatform} from './utils/platform';
@@ -61,14 +60,14 @@ const useStyles = createUseStyles(() => ({
 }));
 
 type Props = {
-    color?: string,
-    delay?: string,
-    size?: number,
-    rolePresentation?: boolean,
-    style?: {...},
+    color?: string;
+    delay?: string;
+    size?: number;
+    rolePresentation?: boolean;
+    style?: React.CSSProperties;
 };
 
-const Spinner = ({color, delay = '500ms', size = 24, style, rolePresentation}: Props): React.Node => {
+const Spinner: React.FC<Props> = ({color, delay = '500ms', size = 24, style, rolePresentation}) => {
     const {texts, platformOverrides, colors, skin} = useTheme();
     color = color || (skin === MOVISTAR_SKIN ? colors.controlActive : colors.iconAccent);
     const classes = useStyles();
