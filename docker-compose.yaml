@@ -9,3 +9,10 @@ services:
             - './:/src'
         environment:
             - NPM_TOKEN
+    chromium:
+        build:
+            context: .
+            dockerfile: chromium.Dockerfile
+        container_name: chromium_mistica
+        ports:
+            - '9223:9222'
