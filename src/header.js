@@ -16,14 +16,13 @@ import type {TextProps} from './text';
 import ButtonLayout from './button-layout';
 
 const useButtonLayoutStyles = createUseStyles(() => ({
-    table: {
-        display: 'table',
-        '& > div:not(:first-child) > div': {
-            paddingTop: 16,
-        },
+    inlineBlockContainer: {
+        // this inline block makes the parent grow with the width of its bigger children
+        // this, toggether with applying width 100% to the buttons, allows us to have two
+        // sibling buttons with the same width (the width of the bigger one).
+        display: 'inline-block',
     },
-    buttonCell: {
-        display: 'table-cell',
+    button: {
         '& > *': {
             width: '100%',
         },
@@ -33,14 +32,16 @@ const useButtonLayoutStyles = createUseStyles(() => ({
 const MobileHeaderButtonLayout = ({children}) => {
     const classes = useButtonLayoutStyles();
     return (
-        <div className={classes.table}>
-            {React.Children.toArray(children)
-                .filter(Boolean)
-                .map((button, idx) => (
-                    <div key={idx} style={{display: 'table-row'}}>
-                        <div className={classes.buttonCell}>{button}</div>
-                    </div>
-                ))}
+        <div className={classes.inlineBlockContainer}>
+            <Stack space={16}>
+                {React.Children.toArray(children)
+                    .filter(Boolean)
+                    .map((button, idx) => (
+                        <div key={idx} className={classes.button}>
+                            {button}
+                        </div>
+                    ))}
+            </Stack>
         </div>
     );
 };
