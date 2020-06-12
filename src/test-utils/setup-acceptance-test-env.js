@@ -6,4 +6,8 @@ const toMatchImageSnapshot = configureToMatchImageSnapshot({
     failureThresholdType: 'percent',
 });
 
+const argv = process.execArgv.join();
+const isDebug = argv.includes('inspect') || argv.includes('debug');
+jest.setTimeout(isDebug ? 3600000 : 30000);
+
 expect.extend({toMatchImageSnapshot});

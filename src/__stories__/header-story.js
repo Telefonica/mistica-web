@@ -1,7 +1,16 @@
 // @flow
 import * as React from 'react';
 import {MemoryRouter} from 'react-router-dom';
-import {Header, HeaderLayout, Box, ButtonPrimary, Stack, NavigationBreadcrumbs, ResponsiveLayout} from '..';
+import {
+    Header,
+    HeaderLayout,
+    Box,
+    ButtonPrimary,
+    ButtonSecondary,
+    Stack,
+    NavigationBreadcrumbs,
+    ResponsiveLayout,
+} from '..';
 import {useTextField, useCheckbox} from './helpers';
 
 export default {
@@ -23,11 +32,19 @@ export const Default = (): React.Node => {
     );
     const [preamount, preamountTextField] = useTextField('preamount', 'Cuota mensual (IVA incluido)');
     const [amount, amountTextField] = useTextField('amount', '60,44 €');
-    const [buttonLabel, buttonLabelTextField] = useTextField('buttonLabel', 'Descargar factura');
+    const [buttonLabel, buttonLabelTextField] = useTextField('button', 'Descargar factura');
+    const [secondaryButtonLabel, secondaryButtonLabelTextField] = useTextField(
+        'secondaryButton',
+        'Pagar factura'
+    );
     const [subtitle, subtitleTextField] = useTextField('subtitle', 'Y esto es un subtitulo');
     const [isInverse, inverseCheckbox] = useCheckbox('Inverse', true);
     const [isErrorAmount, errorAmountCheckbox] = useCheckbox('Error amount', false);
-    const [withExtraContent, extraContentCheckbox] = useCheckbox('With secondary content', true);
+    const [withExtraContent, extraContentCheckbox] = useCheckbox('With extra content', true);
+    const [extraSideBySide, extraSideBySideCheckbox] = useCheckbox(
+        'Extra content placed on the right in desktop',
+        true
+    );
     const [withBreadcrumbs, breadcrumbsCheckbox] = useCheckbox('With breadcrumbs', true);
     return (
         <MemoryRouter>
@@ -35,6 +52,7 @@ export const Default = (): React.Node => {
                 <div data-testid="header-layout">
                     <HeaderLayout
                         isInverse={isInverse}
+                        sideBySideExtraOnDesktop={extraSideBySide}
                         breadcrumbs={
                             withBreadcrumbs ? (
                                 <NavigationBreadcrumbs
@@ -52,6 +70,11 @@ export const Default = (): React.Node => {
                                 button={
                                     buttonLabel ? (
                                         <ButtonPrimary href="asdf">{buttonLabel}</ButtonPrimary>
+                                    ) : undefined
+                                }
+                                secondaryButton={
+                                    secondaryButtonLabel ? (
+                                        <ButtonSecondary href="asdf">{secondaryButtonLabel}</ButtonSecondary>
                                     ) : undefined
                                 }
                                 subtitle={subtitle}
@@ -72,9 +95,11 @@ export const Default = (): React.Node => {
                             {errorAmountCheckbox}
                         </FieldWithCheckbox>
                         {buttonLabelTextField}
+                        {secondaryButtonLabelTextField}
                         {subtitleTextField}
                         {inverseCheckbox}
                         {extraContentCheckbox}
+                        {extraSideBySideCheckbox}
                     </Stack>
                 </ResponsiveLayout>
             </Stack>
