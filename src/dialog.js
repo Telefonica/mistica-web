@@ -319,7 +319,12 @@ const ModalDialog = (props: ModalDialogProps) => {
                                 className={classnames(classes.modalContent, {closed: isClosing})}
                             >
                                 <div className={classes.modalCloseButtonContainer}>
-                                    <IconButton onPress={handleClose} label={context.texts.modalClose}>
+                                    <IconButton
+                                        // to be fixed when moving to TS
+                                        // $FlowFixMe
+                                        onPress={(handleClose: SyntheticMouseEvent)}
+                                        label={context.texts.modalClose}
+                                    >
                                         <IcnClose color={context.colors.iconPrimary} />
                                     </IconButton>
                                 </div>

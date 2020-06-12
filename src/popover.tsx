@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {applyAlpha} from './utils/color';
@@ -7,7 +6,7 @@ import IconButton from './icon-button';
 import {useWindowSize, useTheme, useScreenSize} from './hooks';
 import {getPlatform} from './utils/platform';
 
-import type {CssStyle, TrackingEvent} from './utils/types';
+import type {TrackingEvent} from './utils/types';
 
 // Zeplin definition:
 // https://app.zeplin.io/project/5c9b6f097168bc065782b5c3/screen/5d15d87e46571573089f2863
@@ -105,19 +104,19 @@ const useStyles = createUseStyles((theme) => ({
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
 type TargetPosition = {
-    left: number,
-    top: number,
-    width: number,
-    height: number,
-    parentLeft: number,
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+    parentLeft: number;
 };
 
-const getWidthDesktop = (customWidth): number => (customWidth ? customWidth : maxWidthDesktop);
+const getWidthDesktop = (customWidth?: number): number => (customWidth ? customWidth : maxWidthDesktop);
 
 const getPosition = (position: Position = defaultPositionDesktop, isMobile: boolean) =>
     isMobile && (position === 'left' || position === 'right') ? defaultPositionMobile : position;
 
-const getWidth = (width?: number, isMobile: boolean): number =>
+const getWidth = (isMobile: boolean, width?: number): number =>
     isMobile ? window.innerWidth - marginLeftRightMobile * 2 : getWidthDesktop(width);
 
 const getPositionStyles = (
@@ -126,7 +125,7 @@ const getPositionStyles = (
     targetPosition: TargetPosition,
     isMobile: boolean
 ) => {
-    const containerStylesByPos: {[Position]: CssStyle, ...} = {
+    const containerStylesByPos: Record<Position, React.CSSProperties> = {
         right: {
             left: targetPosition.width + distanceToTarget,
             top: targetPosition.height / 2,
@@ -157,7 +156,7 @@ const getPositionStyles = (
 
     const containerStyles = containerStylesByPos[position];
 
-    const arrowStylesByPos: {[Position]: CssStyle, ...} = {
+    const arrowStylesByPos: Record<Position, React.CSSProperties> = {
         right: {
             right: '100%',
             top: '50%',
@@ -198,24 +197,24 @@ const getTargetPosition = (targetWrapper: HTMLDivElement | null): TargetPosition
               top: targetWrapper.offsetTop,
               width: targetWrapper.offsetWidth,
               height: targetWrapper.offsetHeight,
-              // $FlowFixMe
+              // @ts-expect-error - parentNode must exist
               parentLeft: targetWrapper.parentNode.offsetLeft,
           }
         : null;
 
 type Props = {
-    description: string,
-    target: React.Node,
-    title?: string,
-    asset?: React.Node,
-    onClose?: () => void,
-    position?: Position,
-    width?: number,
-    trackingEvent?: TrackingEvent,
-    isVisible?: boolean,
+    description: string;
+    target: React.ReactNode;
+    title?: string;
+    asset?: React.ReactNode;
+    onClose?: () => void;
+    position?: Position;
+    width?: number;
+    trackingEvent?: TrackingEvent;
+    isVisible?: boolean;
 };
 
-const Popover = ({
+const Popover: React.FC<Props> = ({
     description,
     title,
     onClose,
@@ -225,7 +224,7 @@ const Popover = ({
     target,
     asset,
     isVisible = true,
-}: Props): React.Element<'div'> => {
+}) => {
     const {texts, colors} = useTheme();
     const {isMobile} = useScreenSize();
     const windowSize = useWindowSize();
@@ -234,7 +233,7 @@ const Popover = ({
     const targetWrapperRef = React.useRef<HTMLDivElement | null>(null);
 
     position = getPosition(position, isMobile);
-    const innerWidth = getWidth(width, isMobile);
+    const innerWidth = getWidth(isMobile, width);
     const classes = useStyles({position});
 
     React.useEffect(() => {

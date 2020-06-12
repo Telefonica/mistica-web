@@ -2,16 +2,14 @@
 import * as React from 'react';
 import {useTheme} from '../hooks';
 
-import type {CssStyle} from '../utils/types';
-
 type Props = {
-    role?: string,
-    size?: number,
-    color?: string,
-    style?: CssStyle,
+    role?: string;
+    size?: number;
+    color?: string;
+    style?: React.CSSProperties;
 };
 
-const IcnArrowDown = ({role = 'presentation', size = 24, color, style}: Props): React.Element<'svg'> => {
+const IcnArrowDown: React.FC<Props> = ({role = 'presentation', size = 24, color, style}: Props) => {
     const {colors} = useTheme();
 
     return (

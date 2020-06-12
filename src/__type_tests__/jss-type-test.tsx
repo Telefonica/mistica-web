@@ -164,11 +164,3 @@ const ComponentUsesStylesWithProps: React.FC = () => {
         </>
     );
 };
-
-const ComponentUsesStylesWithWrongProps: React.FC = () => {
-    // @ts-expect-error - not an object
-    useStylesWithProps('error');
-    // @ts-expect-error - not an object
-    useStylesWithProps(null);
-    return <></>;
-};

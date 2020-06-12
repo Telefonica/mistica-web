@@ -1,10 +1,9 @@
-// @flow
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import Touchable from './touchable';
 import classnames from 'classnames';
 
-import type {CssStyle, TrackingEvent} from './utils/types';
+import type {TrackingEvent} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
     textLink: {
@@ -21,63 +20,42 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-type TouchableProps<T> =
-    | {
-          ...$Exact<T>,
-          href: string,
-      }
-    | {
-          ...$Exact<T>,
-          to: string,
-          fullPageOnWebView?: boolean,
-      }
-    | {
-          ...$Exact<T>,
-          onPress: (SyntheticEvent<HTMLElement>) => void | boolean,
-      };
+interface CommonProps {
+    children?: React.ReactNode;
+    className?: string;
+    style?: React.CSSProperties;
+    classes?: {[className: string]: string};
+    small?: boolean;
+    trackingEvent?: TrackingEvent;
+    'data-testid'?: string;
+}
 
-type Props = TouchableProps<{
-    children?: React.Node,
-    className?: string,
-    style?: CssStyle,
-    classes?: {...},
-    small?: boolean,
-    newTab?: boolean,
-    trackingEvent?: TrackingEvent,
-    'data-testid'?: string,
-}>;
+interface HrefProps extends CommonProps {
+    href: string;
+    newTab?: boolean;
+    onPress?: undefined;
+    to?: undefined;
+}
 
-const TextLink = ({
-    children,
-    style,
-    className = '',
-    small,
-    newTab,
-    trackingEvent,
-    // $FlowFixMe
-    href,
-    // $FlowFixMe
-    to,
-    // $FlowFixMe
-    onPress,
-    fullPageOnWebView = true,
-    'data-testid': dataTestId,
-}: Props): React.Node => {
+interface ToProps extends CommonProps {
+    to: string;
+    fullPageOnWebView?: boolean;
+    href?: undefined;
+    onPress?: undefined;
+}
+interface OnPressProps extends CommonProps {
+    onPress: (event: React.MouseEvent<HTMLElement>) => void | boolean;
+    href?: undefined;
+    to?: undefined;
+}
+
+type Props = HrefProps | ToProps | OnPressProps;
+
+const TextLink = ({children, className = '', small, ...props}: Props): React.ReactNode => {
     const classes = useStyles();
 
     return (
-        // $FlowFixMe
-        <Touchable
-            className={classnames(classes.textLink, className, {[classes.small]: small})}
-            style={style}
-            href={href}
-            to={to}
-            onPress={onPress}
-            newTab={newTab}
-            fullPageOnWebView={!!to && fullPageOnWebView}
-            trackingEvent={trackingEvent}
-            data-testid={dataTestId}
-        >
+        <Touchable {...props} className={classnames(classes.textLink, className, {[classes.small]: small})}>
             {children}
         </Touchable>
     );

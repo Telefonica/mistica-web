@@ -1,12 +1,17 @@
-// @flow
 import * as React from 'react';
 import Touchable from './touchable';
 
-import type {CssStyle, TrackingEvent} from './utils/types';
+import type {TrackingEvent} from './utils/types';
 
 const ICON_SIZE_1 = 24;
 
-const getButtonStyle = (backgroundUrl, size, backgroundColor, iconSize, disabled) => {
+const getButtonStyle = (
+    backgroundUrl: string | undefined,
+    size: string | number,
+    backgroundColor: string,
+    iconSize: number | undefined,
+    disabled: boolean | undefined
+): React.CSSProperties => {
     const normalizedIconSize = iconSize ? `${iconSize}px ${iconSize}px` : '100% 100%';
     return {
         display: 'inline-block',
@@ -24,39 +29,47 @@ const getButtonStyle = (backgroundUrl, size, backgroundColor, iconSize, disabled
     };
 };
 
-type CommonProps = {
-    children?: React.Node,
-    className?: string,
-    disabled?: boolean,
-    icon?: string,
-    iconSize?: number,
-    backgroundColor?: string,
-    size?: number | string,
-    style?: CssStyle,
-    label?: string,
-    trackingEvent?: TrackingEvent,
-    'data-testid'?: string,
-    newTab?: boolean,
-};
+interface CommonProps {
+    children?: React.ReactNode;
+    className?: string;
+    disabled?: boolean;
+    icon?: string;
+    iconSize?: number;
+    backgroundColor?: string;
+    size?: number | string;
+    style?: React.CSSProperties;
+    label?: string;
+    trackingEvent?: TrackingEvent;
+    'data-testid'?: string;
+    newTab?: boolean;
+}
 
-type Props =
-    | {
-          ...CommonProps,
-          label: string,
-          href: string,
-      }
-    | {
-          ...CommonProps,
-          to: string,
-          fullPageOnWebView?: boolean,
-          replace?: boolean,
-      }
-    | {
-          ...CommonProps,
-          label: string,
-          onPress: (SyntheticMouseEvent<HTMLElement>) => void,
-      }
-    | CommonProps;
+interface HrefProps extends CommonProps {
+    label: string;
+    href: string;
+    to?: undefined;
+    onPress?: undefined;
+}
+interface ToProps extends CommonProps {
+    to: string;
+    fullPageOnWebView?: boolean;
+    replace?: boolean;
+    href?: undefined;
+    onPress?: undefined;
+}
+interface OnClickProps extends CommonProps {
+    label: string;
+    onPress: (event: React.MouseEvent<HTMLElement>) => void;
+    href?: undefined;
+    to?: undefined;
+}
+interface MaybeProps extends CommonProps {
+    onPress?: undefined;
+    href?: undefined;
+    to?: undefined;
+}
+
+type Props = HrefProps | ToProps | OnClickProps | MaybeProps;
 
 /*
  * Examples:
@@ -70,7 +83,7 @@ type Props =
  *     <IconButton><MySvgIconComponent /></IconButton />
  *
  */
-const IconButton = (props: Props): React.Node => {
+const IconButton: React.FC<Props> = (props) => {
     const {icon, children, backgroundColor = 'transparent', iconSize, size = ICON_SIZE_1} = props;
     const commonProps = {
         className: props.className || '',

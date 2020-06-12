@@ -92,7 +92,7 @@ const Bun = ({children, title, trackingEvent, action}: BunProps): React.Node => 
                 {...navigationProps}
             >
                 <p className={classnames(classes.sub2, classes.footerText)}>{text}</p>
-                <IcnChevron.Right className={classes.chevron} color={colors.textLink} />
+                <IcnChevron className={classes.chevron} color={colors.textLink} direction="right" />
             </TextLink>
         );
     };

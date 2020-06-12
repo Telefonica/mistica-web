@@ -3,9 +3,7 @@ import * as React from 'react';
 import {isAndroid, isChrome} from './utils/platform';
 import {useDisableBodyScroll} from './hooks';
 
-import type {CssStyle} from './utils/types';
-
-const defaultStyle = {
+const defaultStyle: React.CSSProperties = {
     position: 'fixed',
     top: 0,
     right: 0,
@@ -16,11 +14,11 @@ const defaultStyle = {
 };
 
 type Props = {
-    children?: React.Node,
-    onPress?: (evt: SyntheticMouseEvent<HTMLDivElement>) => mixed,
-    style?: CssStyle,
-    className?: string,
-    disableScroll?: boolean,
+    children?: React.ReactNode;
+    onPress?: (evt: React.MouseEvent<HTMLDivElement>) => unknown;
+    style?: React.CSSProperties;
+    className?: string;
+    disableScroll?: boolean;
 };
 
 const Overlay = ({
@@ -29,12 +27,12 @@ const Overlay = ({
     className,
     style,
     disableScroll = false,
-}: Props): React.Element<'div'> => {
+}: Props): React.ReactElement<'div'> => {
     const [showChildren, setChildrenVisibility] = React.useState(true);
     useDisableBodyScroll(disableScroll);
 
     // In mobile browsers event.button === 0. This event does not need to be handled in mobile. In desktop event.button === 2
-    const handleContextMenu = (event: SyntheticMouseEvent<HTMLDivElement>) => {
+    const handleContextMenu = (event: React.MouseEvent<HTMLDivElement>) => {
         if (event.button === 2 && onPress) {
             onPress(event);
         }
@@ -45,10 +43,10 @@ const Overlay = ({
             data-overlay="true"
             style={{...defaultStyle, ...style}}
             className={className}
-            onPointerDown={(e: SyntheticMouseEvent<HTMLDivElement>) => {
+            onPointerDown={(e: React.MouseEvent<HTMLDivElement>) => {
                 // We use listen to and cancel pointerdown to close overlay if user scrolls on iOS.
                 // In Android with children we hide children and onPress later in onClick to ensure click event doesn't hit element below overlay.
-                if ((e.target: any).dataset.overlay && onPress) {
+                if ((e.target as any).dataset.overlay && onPress) {
                     if (children && isAndroid() && isChrome()) {
                         setChildrenVisibility(false);
                         e.stopPropagation();
@@ -57,9 +55,9 @@ const Overlay = ({
                     }
                 }
             }}
-            onClick={(e: SyntheticMouseEvent<HTMLDivElement>) => {
+            onClick={(e: React.MouseEvent<HTMLDivElement>) => {
                 // In Android we need to call onPress here in onClick to ensure click event doesn't hit element below overlay.
-                if ((e.target: any).dataset.overlay && onPress && children && isAndroid() && isChrome()) {
+                if ((e.target as any).dataset.overlay && onPress && children && isAndroid() && isChrome()) {
                     setChildrenVisibility(true);
                     onPress(e);
                 }

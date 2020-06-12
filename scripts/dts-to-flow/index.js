@@ -35,6 +35,9 @@ const fixFlowDefinition = (flowFilename) => {
     // `React.RefObject` => `React.Ref`
     src = src.replace(/React.RefObject/g, 'React.Ref');
 
+    // `<HTMLDivElement>` => `<'div'>`
+    src = src.replace(/React\.Ref<HTML(Div)Element>/g, (_, g1) => `React.Ref<'${g1.toLowerCase()}'>`);
+
     // `React.FC` => `React.ComponentType`
     src = src.replace(/React.(FC|ComponentClass|FunctionComponent)/g, 'React.ComponentType');
 

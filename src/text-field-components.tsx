@@ -3,7 +3,7 @@ import * as React from 'react';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 
-import type {CssStyle} from './utils/types';
+type InputState = 'focused' | 'filled' | 'default';
 
 const useLabelStyles = createUseStyles((theme) => ({
     label: {
@@ -14,7 +14,7 @@ const useLabelStyles = createUseStyles((theme) => ({
         fontSize: 16,
         transformOrigin: 0,
         height: 16,
-        transform: ({inputState, shrinkLabel}) =>
+        transform: ({inputState, shrinkLabel}: {inputState: InputState; shrinkLabel: boolean}) =>
             shrinkLabel
                 ? 'translateY(8px) scale(.75)'
                 : {
@@ -38,22 +38,15 @@ const useLabelStyles = createUseStyles((theme) => ({
 }));
 
 type LabelProps = {
-    shrinkLabel?: boolean,
-    forId: string,
-    inputState: 'focused' | 'filled' | 'default',
-    error?: boolean,
-    children: string,
-    disabled?: boolean,
+    shrinkLabel?: boolean;
+    forId: string;
+    inputState: InputState;
+    error?: boolean;
+    children: string;
+    disabled?: boolean;
 };
 
-export const Label = ({
-    shrinkLabel,
-    forId,
-    inputState,
-    error,
-    children,
-    disabled,
-}: LabelProps): React.Element<'label'> => {
+export const Label: React.FC<LabelProps> = ({shrinkLabel, forId, inputState, error, children, disabled}) => {
     const classes = useLabelStyles({shrinkLabel, inputState, error, disabled});
     const [style, setStyle] = React.useState({});
 
@@ -108,12 +101,12 @@ const useHelperTextStyles = createUseStyles((theme) => ({
 }));
 
 type HelperTextProps = {
-    leftText?: string,
-    rightText?: string,
-    error?: boolean,
+    leftText?: string;
+    rightText?: string;
+    error?: boolean;
 };
 
-export const HelperText = ({leftText, rightText, error}: HelperTextProps): React.Element<'div'> => {
+export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, error}) => {
     const isInverse = useIsInverseVariant();
     const classes = useHelperTextStyles({error, isInverse});
 
@@ -143,20 +136,20 @@ const useFieldContainerStyles = createUseStyles((theme) => ({
 }));
 
 type FieldContainerProps = {
-    multiline?: boolean,
-    children: React.Node,
-    helperText?: React.Node,
-    style?: CssStyle,
-    fieldRef?: React.Ref<'div'>,
+    multiline?: boolean;
+    children: React.ReactNode;
+    helperText?: React.ReactNode;
+    style?: React.CSSProperties;
+    fieldRef?: React.RefObject<HTMLDivElement>;
 };
 
-export const FieldContainer = ({
+export const FieldContainer: React.FC<FieldContainerProps> = ({
     multiline,
     children,
     helperText,
     style,
     fieldRef,
-}: FieldContainerProps): React.Element<'div'> => {
+}) => {
     const classes = useFieldContainerStyles({multiline});
 
     return (

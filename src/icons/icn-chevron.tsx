@@ -2,17 +2,21 @@
 import * as React from 'react';
 import {useTheme} from '../hooks';
 
-import type {CssStyle} from '../utils/types';
-
 type IcnChevronRightSvgProps = {
-    size: number,
-    color: string,
-    transform: string,
-    className?: string,
-    style?: CssStyle,
+    size: number;
+    color: string;
+    transform: string;
+    className?: string;
+    style?: React.CSSProperties;
 };
 
-const IcnChevronRightSvg = ({size, color, transform, className, style}: IcnChevronRightSvgProps) => (
+const IcnChevronRightSvg: React.FC<IcnChevronRightSvgProps> = ({
+    size,
+    color,
+    transform,
+    className,
+    style,
+}) => (
     <svg
         role="presentation"
         width={size}
@@ -31,27 +35,24 @@ const IcnChevronRightSvg = ({size, color, transform, className, style}: IcnChevr
     </svg>
 );
 
-const UP = 'up';
-const DOWN = 'down';
-const LEFT = 'left';
-const RIGHT = 'right';
+type Direction = 'up' | 'down' | 'left' | 'right';
 
-const rotateAngleByDirection = {
-    [UP]: -90,
-    [DOWN]: 90,
-    [LEFT]: 180,
-    [RIGHT]: 0,
+const rotateAngleByDirection: Record<Direction, number> = {
+    up: -90,
+    down: 90,
+    left: 180,
+    right: 0,
 };
 
 type Props = {
-    size?: number,
-    color?: string,
-    direction: typeof UP | typeof DOWN | typeof LEFT | typeof RIGHT,
-    className?: string,
-    style?: CssStyle,
+    size?: number;
+    color?: string;
+    className?: string;
+    style?: React.CSSProperties;
+    direction?: Direction;
 };
 
-const IcnChevron = ({size = 24, color, direction, className, style}: Props): React.Node => {
+const IcnChevron: React.FC<Props> = ({size = 24, color, className, style, direction = 'right'}) => {
     const {colors} = useTheme();
     const fillColor = color || colors.iconPrimary;
     const props = {
@@ -64,18 +65,5 @@ const IcnChevron = ({size = 24, color, direction, className, style}: Props): Rea
 
     return <IcnChevronRightSvg {...props} />;
 };
-
-IcnChevron.Up = (props: $Rest<Props, {direction: any}>): React.Node => (
-    <IcnChevron direction={UP} {...props} />
-);
-IcnChevron.Down = (props: $Rest<Props, {direction: any}>): React.Node => (
-    <IcnChevron direction={DOWN} {...props} />
-);
-IcnChevron.Left = (props: $Rest<Props, {direction: any}>): React.Node => (
-    <IcnChevron direction={LEFT} {...props} />
-);
-IcnChevron.Right = (props: $Rest<Props, {direction: any}>): React.Node => (
-    <IcnChevron direction={RIGHT} {...props} />
-);
 
 export default IcnChevron;
