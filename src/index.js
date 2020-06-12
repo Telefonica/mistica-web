@@ -72,3 +72,5 @@ export {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 
 export {default as getColors, MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN} from './colors';
 export type {Skin} from './colors';
+export type {Locale} from './utils/locale';
+export type {RegionCode} from './utils/region-code';
