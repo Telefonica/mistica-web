@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v.2.0.0 - 2020-06-12
+
+- Header improvements:
+  - Allow two buttons in header.
+  - **Breaking Change**: Allow extra content vertical in desktop. This is now the default behavior, to enable
+    the old horizontal behavior use `sideBySideExtraOnDesktop` prop in `HeaderLayout`.
+  - Make header title optional
+  - Allow any `React.Node` as `header` prop in `HeaderLayout` to support skeletons there.
+  - Change error color to pink
+- Grid layout now have 12 columns in tablet breakpoint too. It had 8 before.
+- Expose `Locale` and `RegionCode` types.
+
 ## v.1.1.0 - 2020-06-10
 
 - Fix [bug](https://github.com/Telefonica/mistica-web/pull/12) with cancel calback on Dialogs
