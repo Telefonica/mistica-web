@@ -31,7 +31,7 @@ type CommonProps = {
     icon?: string,
     iconSize?: number,
     backgroundColor?: string,
-    size?: number,
+    size?: number | string,
     style?: CssStyle,
     label?: string,
     trackingEvent?: TrackingEvent,

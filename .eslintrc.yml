@@ -200,3 +200,9 @@ overrides:
           'no-unused-vars': off
           'babel/no-unused-expressions': off
           '@typescript-eslint/no-unused-vars': off
+
+    # overrides for flow definitions
+    - files:
+          - '*.js.flow'
+      rules:
+          no-use-before-define: off

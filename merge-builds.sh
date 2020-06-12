@@ -1,7 +1,7 @@
 # clean
 rm -rf dist-ts
 rm -rf dist
-killall flow
+# killall flow
 
 # build typescript
 yarn gen-flow-defs
@@ -15,3 +15,6 @@ cp -r dist-ts/* dist
 
 # clean
 rm -rf dist-ts
+
+# check
+yarn flow
