@@ -10,7 +10,7 @@ test.each`
     ${'MOBILE_IOS'} | ${false}  | ${false}
     ${'DESKTOP'}    | ${true}   | ${true}
 `(
-    'Device ($device) isInverse ($isInverse) isErrorAmount($isErrorAmount)',
+    'Header in $device isInverse=$isInverse isErrorAmount=$isErrorAmount',
     async ({
         device,
         isInverse,
@@ -40,7 +40,21 @@ test.each`
     }
 );
 
-test.each(DEVICES)('Header', async (device) => {
+test('Header vertical extra in desktop', async () => {
+    const {click} = await openStoryPage({
+        section: 'Components|Headers/Header',
+        name: 'Header',
+        device: 'DESKTOP',
+    });
+
+    await click(screen.getByLabelText('Extra content placed on the right in desktop'));
+
+    const story = await screen.getByTestId('header-layout');
+    const image = await story.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(DEVICES)('MainSectionHeader', async (device) => {
     await openStoryPage({
         section: 'Components|Headers/MainSectionHeader',
         name: 'MainSectionHeader',
