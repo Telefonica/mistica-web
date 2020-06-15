@@ -6,7 +6,7 @@ import ButtonFixedFooterLayout from '../button-fixed-footer-layout';
 import {useCheckbox} from './helpers';
 
 export default {
-    title: 'Components|FixedFooterLayout',
+    title: 'Components|Layouts/FixedFooterLayout',
     component: FixedFooterLayout,
 };
 
@@ -38,6 +38,8 @@ export const FooterWithButtonsOnly = (): React.Node => {
         </ButtonFixedFooterLayout>
     );
 };
+
+FooterWithButtonsOnly.story = {name: 'ButtonFixedFooterLayout'};
 
 export const MoreComplexFooter = (): React.Node => {
     const [textLines, loadMoreText] = useTextLines();
@@ -74,3 +76,5 @@ export const MoreComplexFooter = (): React.Node => {
         </FixedFooterLayout>
     );
 };
+
+MoreComplexFooter.story = {name: 'FixedFooterLayout'};

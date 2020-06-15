@@ -4,7 +4,7 @@ import TextLink from '../text-link';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components|TextLink',
+    title: 'Components|Touchables/TextLink',
     component: TextLink,
 };
 
@@ -48,3 +48,5 @@ export const Default = (): React.Element<'div'> => {
         </div>
     );
 };
+
+Default.story = {name: 'TextLink'};

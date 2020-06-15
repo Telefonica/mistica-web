@@ -66,6 +66,7 @@ const colors = {
     divider: c.DIVIDER,
     border: c.BORDER,
     borderLight: c.BORDER_LIGHT,
+    textDanger: c.TEXT_DANGER,
     textError: c.TEXT_ERROR,
 
     feedbackErrorBackground: c.FEEDBACK_ERROR_BACKGROUND,

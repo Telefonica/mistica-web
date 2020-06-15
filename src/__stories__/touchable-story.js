@@ -4,7 +4,7 @@ import Touchable from '../touchable';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components|Touchable',
+    title: 'Components|Touchables/Touchable',
     component: Touchable,
 };
 
@@ -42,3 +42,5 @@ export const Default = (): React.Node => {
         </>
     );
 };
+
+Default.story = {name: 'Touchable'};

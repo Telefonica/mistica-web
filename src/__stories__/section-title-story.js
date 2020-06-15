@@ -5,13 +5,15 @@ import SectionTitle from '../section-title';
 import Placeholder from '../placeholder';
 
 export default {
-    title: 'Components|SectionTitle',
+    title: 'Components|Others/SectionTitle',
 };
 
-export const Example = (): React.Node => (
+export const Default = (): React.Node => (
     <StorySection title="SectionTitle example">
         <Placeholder />
         <SectionTitle>This is a section title</SectionTitle>
         <Placeholder />
     </StorySection>
 );
+
+Default.story = {name: 'SectionTitle'};

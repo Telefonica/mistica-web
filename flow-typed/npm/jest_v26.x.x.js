@@ -226,6 +226,64 @@ type EnzymeMatchersType = {
   ...
 };
 
+
+// types for toMatchImageSnapshot copied from https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/jest-image-snapshot/index.d.ts
+type PixelmatchOptions = {|
+  /** Matching threshold, ranges from 0 to 1. Smaller values make the comparison more sensitive. 0.1 by default. */
+  threshold?: number,
+  /** If true, disables detecting and ignoring anti-aliased pixels. false by default. */
+  includeAA?: boolean,
+|}
+
+type MatchImageSnapshotOptions = {|
+  /**
+   * Custom config passed to 'pixelmatch'
+   */
+  customDiffConfig?: PixelmatchOptions,
+  /**
+   * Custom snapshots directory.
+   * Absolute path of a directory to keep the snapshot in.
+   */
+  customSnapshotsDir?: string,
+  /**
+   * A custom absolute path of a directory to keep this diff in
+   */
+  customDiffDir?: string,
+  /**
+   * A custom name to give this snapshot. If not provided, one is computed automatically.
+   */
+  customSnapshotIdentifier?: string,
+  /**
+   * Changes diff image layout direction, default is horizontal.
+   */
+  diffDirection?: 'horizontal' | 'vertical',
+  /**
+   * Removes coloring from the console output, useful if storing the results to a file.
+   * Defaults to false.
+   */
+  noColors?: boolean,
+  /**
+   * Sets the threshold that would trigger a test failure based on the failureThresholdType selected. This is different
+   * to the customDiffConfig.threshold above - the customDiffConfig.threshold is the per pixel failure threshold, whereas
+   * this is the failure threshold for the entire comparison.
+   * Defaults to 0.
+   */
+  failureThreshold?: number,
+  /**
+   * Sets the type of threshold that would trigger a failure.
+   * Defaults to 'pixel'.
+   */
+  failureThresholdType?: 'pixel' | 'percent',
+  /**
+   * Updates a snapshot even if it passed the threshold against the existing one, defaults to false.
+   */
+  updatePassedSnapshot?: boolean,
+|}
+
+type JestImageSnapshotType = {|
+  toMatchImageSnapshot(config?: MatchImageSnapshotOptions): void,
+|};
+
 // DOM testing library extensions (jest-dom)
 // https://github.com/testing-library/jest-dom
 type DomTestingLibraryType = {
@@ -569,6 +627,7 @@ type SnapshotDiffType = {
 
 interface JestExpectType {
   not: JestExpectType &
+    JestImageSnapshotType &
     EnzymeMatchersType &
     DomTestingLibraryType &
     JestJQueryMatchersType &
@@ -1160,6 +1219,7 @@ declare var expect: {
   (
     value: any
   ): JestExpectType &
+    JestImageSnapshotType &
     JestPromiseType &
     EnzymeMatchersType &
     DomTestingLibraryType &

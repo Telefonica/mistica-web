@@ -17,7 +17,7 @@ const config /*: any*/ = {
                 },
             },
         },
-        require.resolve('./theme-selector-addon/register'),
+        './.storybook/theme-selector-addon/register',
     ],
 };
 

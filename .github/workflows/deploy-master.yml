@@ -1,0 +1,17 @@
+name: deploy-master
+on:
+    push:
+        branches: [master]
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: amondnet/vercel-action@v19.0.1+1
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }} # needed to allow comments on prs
+                  vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
+                  vercel-org-id: ${{ secrets.ORG_ID}} #Required
+                  vercel-project-id: ${{ secrets.PROJECT_ID}} #Required
+                  vercel-args: '--prod'
+                  working-directory: ./
