@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {O2_SKIN, VIVO_SKIN} from '../colors';
 import {

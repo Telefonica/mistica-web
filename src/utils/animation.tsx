@@ -1,10 +1,9 @@
-// @flow
 import * as React from 'react';
 import {isOldChrome, isRunningAcceptanceTest} from './platform';
 
 const animationsSupported = !isOldChrome() && !isRunningAcceptanceTest();
 
-type ShakeStyles = {outerAnimation: any, innerAnimation: any, '@keyframes shake'?: any};
+type ShakeStyles = {outerAnimation: any; innerAnimation: any; '@keyframes shake'?: any};
 
 export const animateShakeStyles = (): ShakeStyles =>
     animationsSupported
@@ -41,10 +40,10 @@ export const animateShakeStyles = (): ShakeStyles =>
         : {innerAnimation: {}, outerAnimation: {}};
 
 type AnimationProps = {
-    children?: React.Node,
-    strokeDasharray?: string,
-    strokeDashoffset?: string,
-    opacity?: number,
+    children?: React.ReactNode;
+    strokeDasharray?: string;
+    strokeDashoffset?: string;
+    opacity?: number;
 };
 
 export const getAnimateDrawLineProps = (from: string, begin: string): null | AnimationProps =>
@@ -183,7 +182,7 @@ export const getAnimateSweepInProps = (begin: string): null | AnimationProps =>
           }
         : null;
 
-const mergeChildren = ({children}: AnimationProps, nextChild?: React.Node) => (
+const mergeChildren = ({children}: AnimationProps, nextChild?: React.ReactNode) => (
     <>
         {children}
         {nextChild}
@@ -197,5 +196,5 @@ export const mergeProperties = (...props: Array<AnimationProps | null>): Animati
             ...(nextProps || {}),
             children: mergeChildren(allProps, nextProps ? nextProps.children : null),
         }),
-        {children: null}
+        {children: null} as any
     );

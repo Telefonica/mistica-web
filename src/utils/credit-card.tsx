@@ -1,11 +1,10 @@
-// @flow
 // See: https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)
 // Sample regexes: https://rgxdb.com/
 
 export type CardOptions = {
-    americanExpress?: boolean,
-    visa?: boolean,
-    masterCard?: boolean,
+    americanExpress?: boolean;
+    visa?: boolean;
+    masterCard?: boolean;
 };
 
 const getMatcher = (regex: RegExp) => (str?: string) => !!str && regex.test(str);
