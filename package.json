@@ -16,7 +16,7 @@
         "prebuild": "yarn clean",
         "build": "babel src --out-dir dist --ignore \"**/__acceptance_tests__/**\" --ignore \"**/__screenshot_tests__/**\" --ignore \"**/__tests__/**\" --ignore \"**/__stories__/**\" --ignore \"**/__type_tests__/**\"",
         "postbuild": "flow-copy-source -v -i \"**/__acceptance_tests__/**\" -i \"**/__screenshot_tests__/**\" -i \"**/__tests__/**\" -i \"**/__stories__/**\" -i \"**/__type_tests__/**\" src dist",
-        "watch": "yarn build --watch",
+        "watch": "node scripts/watch.js",
         "clean": "rimraf dist",
         "ci": "yarn build && yarn storybook-static && yarn prettier-check && yarn flow check && yarn lint && yarn test --ci && yarn test-acceptance --ci",
         "prepublishOnly": "node scripts/prepublish-only.js",
