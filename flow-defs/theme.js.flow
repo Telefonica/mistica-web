@@ -65,6 +65,7 @@ declare var colors: {
   divider: string,
   border: string,
   borderLight: string,
+  textDanger: string,
   textError: string,
   feedbackErrorBackground: string,
   feedbackInfoBackground: string,
