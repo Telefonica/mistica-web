@@ -1,4 +1,6 @@
 // @flow
+import packageJson from '../package';
+
 export {createSheet, withSheet, removeJssProps, createUseStyles, getJss} from './jss';
 export {default as ThemeContext} from './theme-context';
 export {default as ThemeContextProvider} from './theme-context-provider';
@@ -74,3 +76,12 @@ export {default as getColors, MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN} from './colors'
 export type {Skin} from './colors';
 export type {Locale} from './utils/locale';
 export type {RegionCode} from './utils/region-code';
+
+// Check there is only one version of mistica installed in the page.
+// $FlowFixMe
+if (window.__mistica_version__) {
+    throw new Error(`There are more than one version of ${packageJson.name} running on the same page`);
+} else {
+    // $FlowFixMe
+    window.__mistica_version__ = packageJson.version;
+}
