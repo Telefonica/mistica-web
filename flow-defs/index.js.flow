@@ -34,3 +34,5 @@ declare export {
   O2_SKIN
 } from "./colors";
 declare export { Skin } from "./colors";
+declare export { Locale } from "./utils/locale";
+declare export { TrackingEvent } from "./utils/types";

@@ -9,5 +9,5 @@ import * as React from "react";
 declare type Props = {
   children: React.Node
 };
-declare var ScreenReaderOnly: (x: Props) => React.Element<HTMLDivElement>;
+declare var ScreenReaderOnly: React.ComponentType<Props>;
 declare export default typeof ScreenReaderOnly;

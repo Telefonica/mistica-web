@@ -71,3 +71,6 @@ export type {ThemeConfig} from './theme';
 
 export {default as getColors, MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN} from './colors';
 export type {Skin} from './colors';
+
+export type {Locale} from './utils/locale';
+export type {TrackingEvent} from './utils/types';

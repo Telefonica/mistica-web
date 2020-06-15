@@ -17,7 +17,7 @@ const useStyles = createUseStyles(() => ({
 
 type Props = {children: React.ReactNode};
 
-const ScreenReaderOnly = ({children}: Props): React.ReactElement<HTMLDivElement> => {
+const ScreenReaderOnly: React.FC<Props> = ({children}) => {
     const classes = useStyles();
     if (React.Children.count(children) === 1) {
         const element = React.Children.only(children);
