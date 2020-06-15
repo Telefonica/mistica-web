@@ -1,5 +1,5 @@
 // @flow
-import packageJson from '../package';
+import packageJson from '../package.json';
 
 export {createSheet, withSheet, removeJssProps, createUseStyles, getJss} from './jss';
 export {default as ThemeContext} from './theme-context';
