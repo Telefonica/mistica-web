@@ -49,7 +49,6 @@ declare type OnClickProps = {
 declare type MaybeProps = {
   ...$Exact<CommonProps>,
 
-  label?: string,
   onPress?: void,
   href?: void,
   to?: void

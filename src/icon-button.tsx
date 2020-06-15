@@ -64,7 +64,6 @@ interface OnClickProps extends CommonProps {
     to?: undefined;
 }
 interface MaybeProps extends CommonProps {
-    label?: string;
     onPress?: undefined;
     href?: undefined;
     to?: undefined;
@@ -93,8 +92,7 @@ const IconButton: React.FC<Props> = (props) => {
             ...getButtonStyle(icon, size, backgroundColor, iconSize, props.disabled),
             ...props.style,
         },
-        trackingEvent: props.trackingEvent || undefined,
-        label: props.label || undefined,
+        trackingEvent: props.trackingEvent,
     };
 
     if (props.href) {
@@ -104,6 +102,7 @@ const IconButton: React.FC<Props> = (props) => {
                 {...commonProps}
                 href={props.href}
                 newTab={props.newTab}
+                label={props.label}
             >
                 {!icon && React.Children.only(children)}
             </Touchable>
@@ -117,6 +116,7 @@ const IconButton: React.FC<Props> = (props) => {
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
                 replace={props.replace}
+                label={props.label}
             >
                 {!icon && React.Children.only(children)}
             </Touchable>
@@ -125,7 +125,12 @@ const IconButton: React.FC<Props> = (props) => {
 
     if (props.onPress) {
         return (
-            <Touchable data-testid={props['data-testid']} {...commonProps} onPress={props.onPress}>
+            <Touchable
+                data-testid={props['data-testid']}
+                {...commonProps}
+                onPress={props.onPress}
+                label={props.label}
+            >
                 {!icon && React.Children.only(children)}
             </Touchable>
         );
