@@ -16,7 +16,6 @@ declare type CommonProps = {
   backgroundColor?: string,
   size?: number | string,
   style?: CssStyle,
-  label?: string,
   trackingEvent?: TrackingEvent,
   "data-testid"?: string,
   newTab?: boolean
@@ -32,6 +31,7 @@ declare type HrefProps = {
 declare type ToProps = {
   ...$Exact<CommonProps>,
 
+  label: string,
   to: string,
   fullPageOnWebView?: boolean,
   replace?: boolean,
@@ -49,6 +49,7 @@ declare type OnClickProps = {
 declare type MaybeProps = {
   ...$Exact<CommonProps>,
 
+  label?: string,
   onPress?: void,
   href?: void,
   to?: void

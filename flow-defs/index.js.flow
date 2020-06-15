@@ -12,11 +12,26 @@ declare export {
   createUseStyles,
   getJss
 } from "./jss";
+declare export { default as ThemeContext } from "./theme-context";
 declare export { default as ScreenReaderOnly } from "./screen-reader-only";
 declare export { default as Touchable } from "./touchable";
+declare export { default as Spinner } from "./spinner";
+declare export { default as FadeIn } from "./fade-in";
+declare export {
+  ButtonPrimary,
+  ButtonSecondary,
+  ButtonDanger,
+  ButtonLink
+} from "./button";
 declare export { default as Portal } from "./portal";
+declare export { default as IconButton } from "./icon-button";
+declare export { default as Popover } from "./popover";
+declare export { default as TextLink } from "./text-link";
 declare export { default as Stack } from "./stack";
 declare export { default as Box } from "./box";
+declare export { default as IcnClose } from "./icons/icn-close";
+declare export { default as IcnArrowDown } from "./icons/icn-arrow-down";
+declare export { default as IcnChevron } from "./icons/icn-chevron";
 declare export {
   useTheme,
   useScreenSize,
@@ -27,6 +42,10 @@ declare export {
   useWindowWidth
 } from "./hooks";
 declare export { ThemeConfig } from "./theme";
+declare export {
+  ThemeVariant,
+  useIsInverseVariant
+} from "./theme-variant-context";
 declare export {
   default as getColors,
   MOVISTAR_SKIN,

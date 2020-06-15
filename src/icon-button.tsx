@@ -38,7 +38,6 @@ interface CommonProps {
     backgroundColor?: string;
     size?: number | string;
     style?: React.CSSProperties;
-    label?: string;
     trackingEvent?: TrackingEvent;
     'data-testid'?: string;
     newTab?: boolean;
@@ -51,6 +50,7 @@ interface HrefProps extends CommonProps {
     onPress?: undefined;
 }
 interface ToProps extends CommonProps {
+    label: string;
     to: string;
     fullPageOnWebView?: boolean;
     replace?: boolean;
@@ -64,6 +64,7 @@ interface OnClickProps extends CommonProps {
     to?: undefined;
 }
 interface MaybeProps extends CommonProps {
+    label?: string;
     onPress?: undefined;
     href?: undefined;
     to?: undefined;

@@ -10,6 +10,7 @@ const cpx = require('cpx');
 const PATH_ROOT = join(__dirname, '..', '..');
 const PATH_DIST = join(PATH_ROOT, 'dist');
 const PATH_TRANSFORMS = join(__dirname, 'transforms');
+const PATH_OVERRIDES = join(__dirname, 'overrides');
 const PATH_EXTRA_TYPES = join(PATH_DIST, '__types__.js.flow');
 
 const fixFlowDefinition = (flowFilename) => {
@@ -95,6 +96,10 @@ const applyJscodeshift = () => {
     });
 };
 
+const applyOverrides = () => {
+    cpx.copySync(join(PATH_OVERRIDES, 'jss.js.flow'), join(PATH_DIST));
+};
+
 const main = async () => {
     process.chdir(PATH_ROOT);
 
@@ -123,6 +128,9 @@ const main = async () => {
 
     // codemods
     applyJscodeshift();
+
+    // overrides
+    applyOverrides();
 
     cpx.copySync('./dist/**/*.js.flow', 'flow-defs');
 
