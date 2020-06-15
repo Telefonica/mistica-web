@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {createUseStyles} from '../jss';
 import {useTheme} from '../hooks';
@@ -10,7 +9,7 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-const O2Icon = () => {
+const IconInfoO2: React.FC = () => {
     const classes = useStyles();
 
     return (
@@ -25,7 +24,7 @@ const O2Icon = () => {
     );
 };
 
-const DefaultIcon = () => {
+const IconInfoDefault: React.FC = () => {
     const classes = useStyles();
 
     return (
@@ -40,4 +39,6 @@ const DefaultIcon = () => {
     );
 };
 
-export default (): React.Element<'svg'> => (useTheme().skin === O2_SKIN ? O2Icon() : DefaultIcon());
+const IconInfo: React.FC = () => (useTheme().skin === O2_SKIN ? <IconInfoO2 /> : <IconInfoDefault />);
+
+export default IconInfo;

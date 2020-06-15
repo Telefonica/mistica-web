@@ -1,15 +1,15 @@
 // @flow
 import * as React from 'react';
-import Visibility from './icons/icn-visibility';
-import VisibilityOff from './icons/icn-visibility-off';
+import Visibility from './icons/icon-visibility';
+import VisibilityOff from './icons/icon-visibility-off';
 import {useAriaId, useTheme, useScreenSize} from './hooks';
 import {isRunningAcceptanceTest} from './utils/platform';
 import TextFieldBase from './text-field-base';
 import IconButton from './icon-button';
-import IcnCreditcard from './icons/icn-creditcard';
-import IcnVisa from './icons/icn-visa';
-import IcnMastercard from './icons/icn-mastercard';
-import IcnAmex from './icons/icn-amex';
+import IconCreditcard from './icons/icon-creditcard';
+import IconVisa from './icons/icon-visa';
+import IconMastercard from './icons/icon-mastercard';
+import IconAmex from './icons/icon-amex';
 import {createUseStyles} from './jss';
 import classNames from 'classnames';
 import {useForm} from './form-context';
@@ -351,20 +351,20 @@ const useStylesCCAdornment = createUseStyles(() => ({
 
 const getAnimationTarget = (value) => {
     if (isVisa(value)) {
-        return <IcnVisa />;
+        return <IconVisa />;
     }
     if (isMasterCard(value)) {
-        return <IcnMastercard />;
+        return <IconMastercard />;
     }
     if (isAmericanExpress(value)) {
-        return <IcnAmex />;
+        return <IconAmex />;
     }
     return null;
 };
 
 const initialState = {
     showBackface: false,
-    animationTarget: <IcnCreditcard />,
+    animationTarget: <IconCreditcard />,
     isAnimating: false,
 };
 
@@ -414,7 +414,7 @@ const CreditcardAdornment = ({value}: {value?: string}) => {
                 onTransitionEnd={() => isAnimating && dispatch({type: 'TRANSITION_END'})}
             >
                 <div className={classes.flipFront}>
-                    <IcnCreditcard />
+                    <IconCreditcard />
                 </div>
                 <div className={classes.flipBack}>{animationTarget}</div>
             </div>

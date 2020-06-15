@@ -1,12 +1,11 @@
-// @flow
 import * as React from 'react';
 
 type Props = {
-    role?: string,
-    size?: number,
+    role?: string;
+    size?: number;
 };
 
-const IcnVisibilityOff = ({role = 'presentation', size = 24}: Props): React.Element<'svg'> => (
+const IconVisibilityOff: React.FC<Props> = ({role = 'presentation', size = 24}: Props) => (
     <svg role={role} width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
         <path d="M0 0h24v24H0zm0 0h24v24H0zm0 0h24v24H0zm0 0h24v24H0z" fill="none" />
         <path
@@ -16,4 +15,4 @@ const IcnVisibilityOff = ({role = 'presentation', size = 24}: Props): React.Elem
     </svg>
 );
 
-export default IcnVisibilityOff;
+export default IconVisibilityOff;

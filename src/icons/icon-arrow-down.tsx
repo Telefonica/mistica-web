@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {useTheme} from '../hooks';
 
@@ -9,7 +8,7 @@ type Props = {
     style?: React.CSSProperties;
 };
 
-const IcnArrowDown: React.FC<Props> = ({role = 'presentation', size = 24, color, style}: Props) => {
+const IconArrowDown: React.FC<Props> = ({role = 'presentation', size = 24, color, style}) => {
     const {colors} = useTheme();
 
     return (
@@ -20,4 +19,4 @@ const IcnArrowDown: React.FC<Props> = ({role = 'presentation', size = 24, color,
     );
 };
 
-export default IcnArrowDown;
+export default IconArrowDown;

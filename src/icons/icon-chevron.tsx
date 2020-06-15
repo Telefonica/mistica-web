@@ -10,7 +10,7 @@ type IcnChevronRightSvgProps = {
     style?: React.CSSProperties;
 };
 
-const IcnChevronRightSvg: React.FC<IcnChevronRightSvgProps> = ({
+const IconChevronRightSvg: React.FC<IcnChevronRightSvgProps> = ({
     size,
     color,
     transform,
@@ -52,7 +52,7 @@ type Props = {
     direction?: Direction;
 };
 
-const IcnChevron: React.FC<Props> = ({size = 24, color, className, style, direction = 'right'}) => {
+const IconChevron: React.FC<Props> = ({size = 24, color, className, style, direction = 'right'}) => {
     const {colors} = useTheme();
     const fillColor = color || colors.iconPrimary;
     const props = {
@@ -63,7 +63,7 @@ const IcnChevron: React.FC<Props> = ({size = 24, color, className, style, direct
         style,
     };
 
-    return <IcnChevronRightSvg {...props} />;
+    return <IconChevronRightSvg {...props} />;
 };
 
-export default IcnChevron;
+export default IconChevron;

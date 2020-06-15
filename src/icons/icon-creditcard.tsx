@@ -1,12 +1,11 @@
-// @flow
 import * as React from 'react';
 
 type Props = {
-    role?: string,
-    size?: number,
+    role?: string;
+    size?: number;
 };
 
-const IcnCreditcard = ({role = 'presentation', size = 24}: Props): React.Element<'svg'> => {
+const IconCreditcard: React.FC<Props> = ({role = 'presentation', size = 24}) => {
     const originalSize = 32;
 
     return (
@@ -19,4 +18,4 @@ const IcnCreditcard = ({role = 'presentation', size = 24}: Props): React.Element
     );
 };
 
-export default IcnCreditcard;
+export default IconCreditcard;

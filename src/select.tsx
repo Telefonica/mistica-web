@@ -4,7 +4,7 @@ import {useAriaId, useTheme, useScreenSize} from './hooks';
 import {isAndroid, isIos} from './utils/platform';
 import {createUseStyles} from './jss';
 import TextFieldBase from './text-field-base';
-import IcnArrowDown from './icons/icn-arrow-down';
+import IconArrowDown from './icons/icon-arrow-down';
 import Overlay from './overlay';
 import classNames from 'classnames';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/key-codes';
@@ -377,7 +377,7 @@ const Select = ({
                     ))}
                 </select>
                 <div className={classes.arrowDown} aria-hidden>
-                    <IcnArrowDown />
+                    <IconArrowDown />
                 </div>
             </FieldContainer>
         </div>
@@ -412,7 +412,7 @@ const Select = ({
                     fieldStyle={{
                         width: isFullWidth ? undefined : DEFAULT_WIDTH,
                     }}
-                    endIcon={<IcnArrowDown />}
+                    endIcon={<IconArrowDown />}
                     focus={isFocused}
                     label={label}
                     value={value ?? valueState}

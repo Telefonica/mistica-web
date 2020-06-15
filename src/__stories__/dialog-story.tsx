@@ -3,7 +3,7 @@ import * as React from 'react';
 import {ButtonPrimary} from '../button';
 import {confirm, alert} from '../dialog';
 import ButtonLayout from '../button-layout';
-import IcnInfo from '../icons/icn-info';
+import IcnInfo from '../icons/icon-info';
 
 export default {
     title: 'Components|Feedbacks/Dialogs',

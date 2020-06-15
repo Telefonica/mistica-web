@@ -3,11 +3,11 @@ import * as React from 'react';
 import {createUseStyles} from './jss';
 import {getPlatform} from './utils/platform';
 import {useTheme} from './hooks';
-import IcnCvvVisaMc from './icons/icon-cvv-visa-mc';
-import IcnCvvAmex from './icons/icon-cvv-amex';
+import IconCvvVisaMc from './icons/icon-cvv-visa-mc';
+import IconCvvAmex from './icons/icon-cvv-amex';
 import Tooltip from './tooltip';
 import IconButton from './icon-button';
-import IcnInfo from './icons/icn-info-cvv';
+import IcnInfo from './icons/icon-info-cvv';
 import TextField from './text-field';
 import {useForm} from './form-context';
 
@@ -35,12 +35,12 @@ const TooltipContent = ({acceptedCards}: {acceptedCards: CardOptions}) => {
     return (
         <>
             <div className={classes.tooltipContainer}>
-                <IcnCvvVisaMc size={48} role="img" />
+                <IconCvvVisaMc size={48} role="img" />
                 <p className={classes.cvvText}>{texts.formCreditCardCvvTooltipVisaMc}</p>
             </div>
             {acceptedCards?.americanExpress && (
                 <div className={classes.tooltipContainer}>
-                    <IcnCvvAmex size={48} role="img" />
+                    <IconCvvAmex size={48} role="img" />
                     <p className={classes.cvvText}>{texts.formCreditCardCvvTooltipAmex}</p>
                 </div>
             )}

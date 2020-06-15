@@ -1,12 +1,11 @@
-// @flow
 import * as React from 'react';
 
 type Props = {
-    role?: string,
-    size?: number,
+    role?: string;
+    size?: number;
 };
 
-const IcnMastercard = ({role = 'presentation', size = 24}: Props): React.Element<'svg'> => (
+const IconMastercard: React.FC<Props> = ({role = 'presentation', size = 24}) => (
     <svg role={role} width={size} height={size} viewBox="0 0 32 32">
         <g fill="none" fillRule="evenodd">
             <rect width="32" height="32" fill="#FFF" fillRule="nonzero" rx="4" />
@@ -20,4 +19,4 @@ const IcnMastercard = ({role = 'presentation', size = 24}: Props): React.Element
     </svg>
 );
 
-export default IcnMastercard;
+export default IconMastercard;

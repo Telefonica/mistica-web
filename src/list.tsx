@@ -8,7 +8,7 @@ import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
 import {useTheme} from './hooks';
-import IcnChevron from './icons/icn-chevron';
+import IconChevron from './icons/icon-chevron';
 
 import type {TrackingEvent} from './utils/types';
 
@@ -125,7 +125,7 @@ const Content = ({title, description, icon, iconSize = 40, isClickable, badge}: 
             {renderBadge()}
             {isClickable && (
                 <Box paddingLeft={16} className={classes.center}>
-                    <IcnChevron size={24} color={theme.colors.iconSecondary} direction="right" />
+                    <IconChevron size={24} color={theme.colors.iconSecondary} direction="right" />
                 </Box>
             )}
         </Box>

@@ -1,11 +1,10 @@
-// @flow
 import * as React from 'react';
 import {getAnimateDrawLineProps, getAnimateFadeInProps, animateShakeStyles} from '../utils/animation';
 import {createUseStyles} from '../jss';
 import {useTheme} from '../hooks';
 import {O2_SKIN} from '../colors';
 
-const useStylesAnimateShake = createUseStyles((theme) => ({
+const useStyles = createUseStyles((theme) => ({
     iconContainerFill: {
         stroke: theme.colors.iconHighlight,
         fill: theme.colors.iconHighlight,
@@ -17,8 +16,8 @@ const useStylesAnimateShake = createUseStyles((theme) => ({
     ...animateShakeStyles(),
 }));
 
-const O2Icon = () => {
-    const classes = useStylesAnimateShake({delay: 0.8});
+const IconErrorO2: React.FC = () => {
+    const classes = useStyles({delay: 0.8});
 
     return (
         <svg width="72" height="64" viewBox="0 0 72 64">
@@ -54,8 +53,8 @@ const O2Icon = () => {
     );
 };
 
-const DefaultIcon = () => {
-    const classes = useStylesAnimateShake({delay: 0.8});
+const IconErrorDefault: React.FC = () => {
+    const classes = useStyles({delay: 0.8});
 
     return (
         <svg width="72" height="64" viewBox="0 0 72 64">
@@ -93,4 +92,6 @@ const DefaultIcon = () => {
     );
 };
 
-export default (): React.Element<'svg'> => (useTheme().skin === O2_SKIN ? O2Icon() : DefaultIcon());
+const IconError: React.FC = () => (useTheme().skin === O2_SKIN ? <IconErrorO2 /> : <IconErrorDefault />);
+
+export default IconError;

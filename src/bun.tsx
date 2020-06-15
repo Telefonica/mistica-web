@@ -3,7 +3,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import TextLink from './text-link';
-import IcnChevron from './icons/icn-chevron';
+import IconChevron from './icons/icon-chevron';
 import {ThemeVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
 import {getPlatform} from './utils/platform';
@@ -58,24 +58,24 @@ const useStyles = createUseStyles((theme) => ({
 type NavigationProps =
     | {href: string}
     | {
-          to: string,
-          fullPageOnWebView: boolean,
+          to: string;
+          fullPageOnWebView: boolean;
       };
 
 type BunProps = {
-    children: React.Node,
-    title: string,
-    trackingEvent?: TrackingEvent,
+    children: React.Node;
+    title: string;
+    trackingEvent?: TrackingEvent;
     action?:
         | {
-              text: string,
-              to: string,
-              fullPageOnWebView: boolean,
+              text: string;
+              to: string;
+              fullPageOnWebView: boolean;
           }
         | {
-              text: string,
-              href: string,
-          },
+              text: string;
+              href: string;
+          };
 };
 
 const Bun = ({children, title, trackingEvent, action}: BunProps): React.Node => {
@@ -92,7 +92,7 @@ const Bun = ({children, title, trackingEvent, action}: BunProps): React.Node => 
                 {...navigationProps}
             >
                 <p className={classnames(classes.sub2, classes.footerText)}>{text}</p>
-                <IcnChevron className={classes.chevron} color={colors.textLink} direction="right" />
+                <IconChevron className={classes.chevron} color={colors.textLink} direction="right" />
             </TextLink>
         );
     };

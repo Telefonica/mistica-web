@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {StorySection} from './helpers';
 import Popover from '../popover';
-import IcnClose from '../icons/icn-close';
+import IcnClose from '../icons/icon-close';
 
 export default {
     title: 'Components|Hints/Popover',

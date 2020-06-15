@@ -18,7 +18,8 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-const VIVOIcon = (isInverse) => {
+const IconSuccessVivo: React.FC = () => {
+    const isInverse = useIsInverseVariant();
     const classes = useStyles(isInverse);
 
     return (
@@ -34,7 +35,8 @@ const VIVOIcon = (isInverse) => {
     );
 };
 
-const O2Icon = (isInverse) => {
+const IconSuccessO2: React.FC = () => {
+    const isInverse = useIsInverseVariant();
     const classes = useStyles(isInverse);
 
     return (
@@ -56,7 +58,8 @@ const O2Icon = (isInverse) => {
     );
 };
 
-const DefaultIcon = (isInverse) => {
+const IconSuccessDefault: React.FC = () => {
+    const isInverse = useIsInverseVariant();
     const classes = useStyles(isInverse);
 
     return (
@@ -84,16 +87,17 @@ const DefaultIcon = (isInverse) => {
     );
 };
 
-export default (): React.Element<'svg'> => {
+const IconSuccess: React.FC = () => {
     const {skin} = useTheme();
-    const isInverse = useIsInverseVariant();
 
     switch (skin) {
         case VIVO_SKIN:
-            return VIVOIcon(isInverse);
+            return <IconSuccessVivo />;
         case O2_SKIN:
-            return O2Icon(isInverse);
+            return <IconSuccessO2 />;
         default:
-            return DefaultIcon(isInverse);
+            return <IconSuccessDefault />;
     }
 };
+
+export default IconSuccess;

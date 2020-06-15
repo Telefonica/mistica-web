@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import IconButton from '../icon-button';
-import IcnClose from '../icons/icn-close';
+import IcnClose from '../icons/icon-close';
 import {StorySection} from './helpers';
 
 export default {

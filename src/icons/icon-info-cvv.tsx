@@ -1,13 +1,12 @@
-// @flow
 import * as React from 'react';
 import {useTheme} from '../hooks';
 
 type Props = {
-    size?: number,
-    color?: string,
+    size?: number;
+    color?: string;
 };
 
-const IcnInfo = ({size = 24, color}: Props): React.Element<'svg'> => {
+const IcnInfo: React.FC<Props> = ({size = 24, color}) => {
     const {colors} = useTheme();
 
     return (

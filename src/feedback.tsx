@@ -3,9 +3,9 @@ import * as React from 'react';
 import {createUseStyles} from './jss';
 import {useTheme} from './hooks';
 import {useIsInverseVariant} from './theme-variant-context';
-import IcnError from './icons/icn-error';
-import IcnSuccess from './icons/icn-success';
-import IcnInfo from './icons/icn-info';
+import IcnError from './icons/icon-error';
+import IcnSuccess from './icons/icon-success';
+import IcnInfo from './icons/icon-info';
 import {VIVO_SKIN} from './colors';
 import {getPlatform, isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {
@@ -120,10 +120,10 @@ const useHapticFeedback = (type) => {
 };
 
 type FeedbackProps = {
-    title: string,
-    description?: string | $ReadOnlyArray<string>,
-    type: FeedbackType,
-    children?: React.Node,
+    title: string;
+    description?: string | $ReadOnlyArray<string>;
+    type: FeedbackType;
+    children?: React.Node;
 };
 
 const Feedback = (props: FeedbackProps): React.Element<'div'> => {

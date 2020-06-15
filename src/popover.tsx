@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {applyAlpha} from './utils/color';
-import IcnClose from './icons/icn-close';
+import IcnClose from './icons/icon-close';
 import IconButton from './icon-button';
 import {useWindowSize, useTheme, useScreenSize} from './hooks';
 import {getPlatform} from './utils/platform';

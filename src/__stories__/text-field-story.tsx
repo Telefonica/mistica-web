@@ -4,7 +4,7 @@ import {TextField, PhoneInput, ThemeVariant, useTheme} from '..';
 import Stack from '../stack';
 import Box from '../box';
 import {inspect} from 'util';
-import Icon from '../icons/icn-visibility';
+import Icon from '../icons/icon-visibility';
 import {StorySection, countriesList} from './helpers';
 
 export default {

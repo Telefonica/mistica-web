@@ -2,10 +2,10 @@
 import * as React from 'react';
 import Tooltip from '../tooltip';
 import {StorySection} from './helpers';
-import IcnClose from '../icons/icn-close';
-import IcnInfo from '../icons/icn-info-cvv';
-import IcnVisa from '../icons/icn-visa';
-import IcnMastercard from '../icons/icn-mastercard';
+import IcnClose from '../icons/icon-close';
+import IcnInfo from '../icons/icon-info-cvv';
+import IconVisa from '../icons/icon-visa';
+import IconMastercard from '../icons/icon-mastercard';
 
 export default {
     title: 'Components|Hints/Tooltip',
@@ -92,14 +92,14 @@ export const Default = (): React.Node => (
             />
             <Tooltip
                 targetLabel="help text"
-                target={<IcnVisa />}
+                target={<IconVisa />}
                 position="top"
                 description="When working on a project and the customer has not yet delivered the copy, something is missing... text."
                 width={100}
             />
             <Tooltip
                 targetLabel="help text"
-                target={<IcnMastercard />}
+                target={<IconMastercard />}
                 position="bottom"
                 description="When working on a project and the customer has not yet delivered the copy, something is missing... text."
                 width={100}

@@ -5,7 +5,7 @@ import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import {createUseStyles} from './jss';
 import Portal from './portal';
 import FocusTrap from './focus-trap';
-import IcnClose from './icons/icn-close';
+import IcnClose from './icons/icon-close';
 import IconButton from './icon-button';
 import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/webview-bridge';
 import ThemeContext from './theme-context';
