@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import classnames from 'classnames';
 import {createUseStyles} from './jss';
@@ -63,7 +62,7 @@ type NavigationProps =
       };
 
 type BunProps = {
-    children: React.Node;
+    children: React.ReactNode;
     title: string;
     trackingEvent?: TrackingEvent;
     action?:
@@ -78,11 +77,11 @@ type BunProps = {
           };
 };
 
-const Bun = ({children, title, trackingEvent, action}: BunProps): React.Node => {
+const Bun: React.FC<BunProps> = ({children, title, trackingEvent, action}) => {
     const classes = useStyles();
     const {colors} = useTheme();
 
-    const renderLink = (action) => {
+    const renderLink = (action: NonNullable<BunProps['action']>) => {
         const {text, ...rest} = action;
         const navigationProps: NavigationProps = rest;
         return (

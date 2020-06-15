@@ -51,7 +51,7 @@ interface OnPressProps extends CommonProps {
 
 type Props = HrefProps | ToProps | OnPressProps;
 
-const TextLink = ({children, className = '', small, ...props}: Props): React.ReactNode => {
+const TextLink: React.FC<Props> = ({children, className = '', small, ...props}) => {
     const classes = useStyles();
 
     return (

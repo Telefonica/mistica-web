@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import classnames from 'classnames';
 import {createUseStyles} from './jss';
@@ -38,16 +37,16 @@ const useStyles = createUseStyles((theme) => ({
 }));
 
 type Props = {
-    children?: React.Node,
-    value?: number,
+    children?: React.ReactNode;
+    value?: number;
 };
 
-const Badge = ({children, value}: Props): React.Node => {
+const Badge: React.FC<Props> = ({children, value}) => {
     const hasChildren = !!children;
     const classes = useStyles({hasChildren});
 
     if (children && value === 0) {
-        return children;
+        return <>children</>;
     }
 
     if (value === 0) {
