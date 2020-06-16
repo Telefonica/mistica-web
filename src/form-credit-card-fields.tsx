@@ -12,10 +12,10 @@ import FormCvvField from './form-cvv-field';
 import type {CardOptions} from './utils/credit-card';
 
 type FormCreditCardFieldsProps = {
-    numberFieldName?: string,
-    expirationFieldName?: string,
-    cvvFieldName?: string,
-    acceptedCards?: CardOptions,
+    numberFieldName?: string;
+    expirationFieldName?: string;
+    cvvFieldName?: string;
+    acceptedCards?: CardOptions;
 };
 
 const FormCreditCardFields = ({
@@ -23,7 +23,7 @@ const FormCreditCardFields = ({
     expirationFieldName = 'ccExp',
     cvvFieldName = 'ccCvv',
     acceptedCards,
-}: FormCreditCardFieldsProps): React.Node => {
+}: FormCreditCardFieldsProps): React.ReactNode => {
     const {values} = useForm();
     const {texts} = useTheme();
     const cvvLength = getCvvLength(String(values[numberFieldName]));

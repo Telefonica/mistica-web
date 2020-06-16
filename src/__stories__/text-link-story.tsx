@@ -8,7 +8,7 @@ export default {
     component: TextLink,
 };
 
-export const Default = (): React.Element<'div'> => {
+export const Default = (): React.ReactElement<'div'> => {
     const [count, setCount] = React.useState(0);
     return (
         <div data-testid="text-link">

@@ -15,7 +15,7 @@ export default {
 const url = 'https://www.google.com';
 const handleOnPress = () => window.alert('Button pressed!');
 
-export const Default = (): React.Node => {
+export const Default = (): React.ReactNode => {
     const [title, titleTextField] = useTextField('title', 'Title', true);
     const [description, descriptionTextField] = useTextField('description', 'Description');
     const [iconSize, iconSizeSelectField] = useSelect('Icon Size', '40', ['40', '24 *', 'Without icon']);

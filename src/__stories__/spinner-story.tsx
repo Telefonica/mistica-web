@@ -8,7 +8,7 @@ export default {
     component: Spinner,
 };
 
-export const Default = (): React.Node => {
+export const Default = (): React.ReactNode => {
     const [size, setSize] = React.useState(24);
     return (
         <StorySection title="Spinner">

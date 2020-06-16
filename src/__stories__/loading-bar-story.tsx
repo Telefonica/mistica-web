@@ -8,7 +8,7 @@ export default {
     title: 'Components|Feedbacks/LoadingBar',
 };
 
-const BackgroundTheme = ({children}: {children: React.Node}) => {
+const BackgroundTheme = ({children}: {children: React.ReactNode}) => {
     const [isInverseVariant, setIsInverseVariant] = React.useState(false);
     return (
         <ThemeVariant isInverse={isInverseVariant}>
@@ -27,7 +27,7 @@ const BackgroundTheme = ({children}: {children: React.Node}) => {
     );
 };
 
-export const LoadingBar = (): React.Node => (
+export const LoadingBar = (): React.ReactNode => (
     <BackgroundTheme>
         <StorySection title="Loading Bar">
             <LoadingBarComponent visible />

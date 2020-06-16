@@ -20,11 +20,11 @@ export default {
     },
 };
 
-const FieldWithCheckbox = ({children}: {children: React.Node}) => (
+const FieldWithCheckbox = ({children}: {children: React.ReactNode}) => (
     <div style={{display: 'flex', alignItems: 'center'}}>{children}</div>
 );
 
-export const Default = (): React.Node => {
+export const Default = (): React.ReactNode => {
     const [pretitle, pretitleTextField] = useTextField('pretitle', 'Factura de diciembre');
     const [title, titleTextField] = useTextField(
         'title',

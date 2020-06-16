@@ -22,7 +22,7 @@ const FormPhoneNumberField = ({
     prefix?: string,
     validate?: (value: string | void, rawValue: string | void) => string | void,
     onChangeValue?: (string, string) => void,
-}): React.Node => {
+}): React.ReactNode => {
     const {texts} = useTheme();
     const {
         rawValues,

@@ -9,7 +9,7 @@ export default {
     component: Popover,
 };
 
-export const Default = (): React.Node => (
+export const Default = (): React.ReactNode => (
     <StorySection title="Popover">
         <strong>Desktop examples:</strong>
         <div

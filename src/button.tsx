@@ -259,7 +259,7 @@ interface CommonProps {
     tabIndex?: number;
 }
 
-interface ToButtonProps extends CommonProps {
+export interface ToButtonProps extends CommonProps {
     to: string | Location;
     fullPageOnWebView?: boolean;
     submit?: undefined;
@@ -267,14 +267,14 @@ interface ToButtonProps extends CommonProps {
     onPress?: undefined;
     href?: undefined;
 }
-interface OnPressButtonProps extends CommonProps {
+export interface OnPressButtonProps extends CommonProps {
     onPress: (event: React.MouseEvent<HTMLElement>) => void;
     submit?: undefined;
     fake?: undefined;
     to?: undefined;
     href?: undefined;
 }
-interface HrefButtonProps extends CommonProps {
+export interface HrefButtonProps extends CommonProps {
     href: string;
     newTab?: boolean;
     submit?: undefined;
@@ -282,14 +282,14 @@ interface HrefButtonProps extends CommonProps {
     onPress?: undefined;
     to?: undefined;
 }
-interface FakeButtonProps extends CommonProps {
+export interface FakeButtonProps extends CommonProps {
     fake: true;
     submit?: undefined;
     onPress?: undefined;
     to?: undefined;
     href?: undefined;
 }
-interface SubmitButtonProps extends CommonProps {
+export interface SubmitButtonProps extends CommonProps {
     submit: true;
     to?: undefined;
     fake?: undefined;
@@ -297,11 +297,14 @@ interface SubmitButtonProps extends CommonProps {
     href?: undefined;
 }
 
-type Props = FakeButtonProps | SubmitButtonProps | ToButtonProps | OnPressButtonProps | HrefButtonProps;
+export type ButtonProps =
+    | FakeButtonProps
+    | SubmitButtonProps
+    | ToButtonProps
+    | OnPressButtonProps
+    | HrefButtonProps;
 
-type ButtonClasses = ReturnType<typeof usePrimaryButtonStyles>;
-
-const Button: React.FC<Props & {classes: ButtonClasses}> = (props) => {
+const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButtonStyles>}> = (props) => {
     const {formStatus} = useForm();
     const isInverse = useIsInverseVariant();
     const {classes, loadingText} = props;
@@ -457,9 +460,9 @@ interface ButtonLinkToProps extends ButtonLinkCommonProps {
     href?: undefined;
 }
 
-type ButtonLinkProps = ButtonLinkOnPressProps | ButtonLinkHrefProps | ButtonLinkToProps;
+export type ButtonLinkProps = ButtonLinkOnPressProps | ButtonLinkHrefProps | ButtonLinkToProps;
 
-export const ButtonLink = (props: ButtonLinkProps): React.ReactNode => {
+export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
     const classes = useButtonLinkStyles();
     const isInverse = useIsInverseVariant();
     const commonProps = {
@@ -487,17 +490,22 @@ export const ButtonLink = (props: ButtonLinkProps): React.ReactNode => {
     throw Error('Bad button props');
 };
 
-export const ButtonPrimary = (props: Props): React.ReactNode => {
+export const ButtonPrimary: React.FC<ButtonProps> = (props) => {
     const classes = usePrimaryButtonStyles();
     return <Button {...props} classes={classes} />;
 };
 
-export const ButtonSecondary = (props: Props): React.ReactNode => {
+export const ButtonSecondary: React.FC<ButtonProps> = (props) => {
     const classes = useSecondaryButtonStyles();
     return <Button {...props} classes={classes} />;
 };
 
-export const ButtonDanger = (props: Props): React.ReactNode => {
+export const ButtonDanger: React.FC<ButtonProps> = (props) => {
     const classes = useDangerButtonStyles();
     return <Button {...props} classes={classes} />;
 };
+
+export type ButtonElement =
+    | React.ReactElement<typeof ButtonPrimary>
+    | React.ReactElement<typeof ButtonSecondary>
+    | React.ReactElement<typeof ButtonDanger>;

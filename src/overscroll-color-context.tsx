@@ -9,7 +9,7 @@ const {Provider, Getter, useSetValue} = createContext<string>('');
 
 const shouldRender = getPlatform() === 'ios';
 
-type ProviderProps = {children: React.Node};
+type ProviderProps = {children: React.ReactNode};
 
 const OverscrollColorProviderNoOp = ({children}: ProviderProps) => children || null;
 
@@ -48,7 +48,7 @@ const OverscrollColorProviderComponent = ({children}: ProviderProps) => {
     );
 };
 
-export const OverscrollColorProvider: (ProviderProps) => React.Node = shouldRender
+export const OverscrollColorProvider: (ProviderProps) => React.ReactNode = shouldRender
     ? OverscrollColorProviderComponent
     : OverscrollColorProviderNoOp;
 

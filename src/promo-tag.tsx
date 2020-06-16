@@ -18,10 +18,10 @@ const useStyles = createUseStyles((theme) => ({
 }));
 
 type Props = {
-    children: string,
+    children: string;
 };
 
-const PromoTag = ({children}: Props): React.Element<'span'> => {
+const PromoTag = ({children}: Props): React.ReactElement<'span'> => {
     const classes = useStyles();
     const {colors} = useTheme();
     return (

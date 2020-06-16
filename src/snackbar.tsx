@@ -71,11 +71,11 @@ const useStyles = createUseStyles((theme) => ({
 }));
 
 type Props = {
-    buttonText?: string,
-    duration?: number,
-    message: string,
-    onClose?: () => mixed,
-    type?: SnackbarType,
+    buttonText?: string;
+    duration?: number;
+    message: string;
+    onClose?: () => mixed;
+    type?: SnackbarType;
 };
 
 const Snackbar = ({
@@ -130,7 +130,7 @@ const SnackbarContainer = ({
     duration = buttonText ? 10000 : 5000,
     onClose = () => {},
     type = 'INFORMATIVE',
-}: Props): React.Node => {
+}: Props): React.ReactNode => {
     const renderNative = isWebViewBridgeAvailable();
 
     React.useEffect(() => {

@@ -2,13 +2,13 @@
 import * as React from 'react';
 
 type AvatarPlaceholderProps = {size?: string | number};
-type PlaceholderProps = {width?: string | number, height?: string | number};
+type PlaceholderProps = {width?: string | number; height?: string | number};
 
-export const AvatarPlaceholder = ({size = 40}: AvatarPlaceholderProps): React.Element<'div'> => (
+export const AvatarPlaceholder = ({size = 40}: AvatarPlaceholderProps): React.ReactElement<'div'> => (
     <div style={{width: size, height: size, borderRadius: '50%', background: 'gray'}} />
 );
 
-const Placeholder = ({width = 'auto', height = 120}: PlaceholderProps): React.Element<'div'> => (
+const Placeholder = ({width = 'auto', height = 120}: PlaceholderProps): React.ReactElement<'div'> => (
     <div
         style={{
             height,

@@ -10,7 +10,7 @@ export default {
     },
 };
 
-export const Default = (): React.Node => {
+export const Default = (): React.ReactNode => {
     const [title, titleTextField] = useTextField('title', 'Soporte');
     const [desciption, descriptionTextField] = useTextField('description', '¿En qué podemos ayudarte?');
     const [buttonLabel, buttonLabelTextField] = useTextField('buttonLabel', 'Acción');

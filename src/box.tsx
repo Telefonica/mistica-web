@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import {createUseStyles} from './jss';
 import classnames from 'classnames';

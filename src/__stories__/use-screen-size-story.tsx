@@ -6,7 +6,7 @@ export default {
     title: 'Hooks|useScreenSize',
 };
 
-export const UseScreenSize = (): React.Node => {
+export const UseScreenSize = (): React.ReactNode => {
     const theme = useTheme();
     const screenSize = useScreenSize();
     return (

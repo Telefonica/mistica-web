@@ -6,7 +6,7 @@ export default {
     title: 'Hooks|useAriaId',
 };
 
-export const UseAriaId = (): React.Node => {
+export const UseAriaId = (): React.ReactNode => {
     const theme = useTheme();
     const id = useAriaId();
     return (

@@ -28,7 +28,7 @@ const options = [
     {value: '64', text: '64px'},
 ];
 
-export const Default = (): React.Node => {
+export const Default = (): React.ReactNode => {
     const [space, setSpace] = React.useState('32');
 
     return (

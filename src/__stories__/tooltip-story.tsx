@@ -11,7 +11,7 @@ export default {
     title: 'Components|Hints/Tooltip',
 };
 
-export const Default = (): React.Node => (
+export const Default = (): React.ReactNode => (
     <StorySection title="Tooltip">
         <strong>Desktop examples:</strong>
         <div

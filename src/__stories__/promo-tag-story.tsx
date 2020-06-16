@@ -7,7 +7,7 @@ export default {
     title: 'Components|Others/PromoTag',
 };
 
-export const Default = (): React.Node => {
+export const Default = (): React.ReactNode => {
     const [text, textField] = useTextField('Text', 'promo');
 
     return (

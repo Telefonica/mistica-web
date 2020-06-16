@@ -3,7 +3,7 @@ import * as React from 'react';
 import {useForm} from './form-context';
 import Select from './select';
 
-type FormSelectProps = {
+export type FormSelectProps = {
     disabled?: boolean,
     error?: boolean,
     helperText?: string,
@@ -32,7 +32,7 @@ const FormSelect = ({
     onChangeValue,
     value,
     ...rest
-}: FormSelectProps): React.Node => {
+}: FormSelectProps): React.ReactNode => {
     const {rawValues, setRawValue, setValue, formStatus, formErrors, setFormError, register} = useForm();
     const focusableRef = React.useRef<?HTMLDivElement | HTMLSelectElement>();
     const inputRef = React.useRef();

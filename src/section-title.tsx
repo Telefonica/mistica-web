@@ -4,9 +4,9 @@ import Box from './box';
 import Text from './text';
 import {useTheme, useScreenSize} from './hooks';
 
-type Props = {children: React.Node};
+type Props = {children: React.ReactNode};
 
-const SectionTitle = ({children}: Props): React.Node => {
+const SectionTitle = ({children}: Props): React.ReactNode => {
     const theme = useTheme();
     const {isTabletOrBigger} = useScreenSize();
     return (

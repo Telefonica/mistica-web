@@ -8,7 +8,7 @@ export default {
     component: Snackbar,
 };
 
-export const Default = (): React.Node => {
+export const Default = (): React.ReactNode => {
     const [buttonText, buttonTextField] = useTextField('buttonText', 'Action');
     const [message, messageTextField] = useTextField('message', 'Some message');
     const [type, select] = useSelect('type', 'INFORMATIVE', ['INFORMATIVE', 'CRITICAL']);

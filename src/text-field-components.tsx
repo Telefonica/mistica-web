@@ -3,7 +3,7 @@ import * as React from 'react';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 
-type InputState = 'focused' | 'filled' | 'default';
+export type InputState = 'focused' | 'filled' | 'default';
 
 const useLabelStyles = createUseStyles((theme) => ({
     label: {

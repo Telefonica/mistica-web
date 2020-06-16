@@ -104,16 +104,16 @@ const getWidthDesktop = (customWidth) => (customWidth ? customWidth : defaultWid
 const EVENT_THROTTLE_TIME = process.env.NODE_ENV === 'test' ? 0 : 200;
 
 type Props = {
-    children?: React.Node,
-    description?: string,
-    target: React.Element<any>,
-    title?: string,
-    position?: Position,
-    width?: number,
-    targetLabel: string,
+    children?: React.ReactNode;
+    description?: string;
+    target: React.ReactElement<any>;
+    title?: string;
+    position?: Position;
+    width?: number;
+    targetLabel: string;
 };
 
-const Tooltip = ({children, description, target, title, targetLabel, ...rest}: Props): React.Node => {
+const Tooltip = ({children, description, target, title, targetLabel, ...rest}: Props): React.ReactNode => {
     const [isVisible, setIsVisible] = React.useState();
     const {isMobile} = useScreenSize();
     const ariaId = useAriaId();

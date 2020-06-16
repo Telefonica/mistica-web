@@ -68,7 +68,7 @@ const useStyles = createUseStyles((theme) => ({
 type CommonProps = {
     title: string,
     description?: string | null,
-    icon?: React.Element<any> | string | null,
+    icon?: React.ReactElement<any> | string | null,
     iconSize?: 24 | 40,
     badge?: boolean | number,
 };
@@ -229,22 +229,22 @@ const RowContent = (props: RowContentProps) => {
     );
 };
 
-export const Row = (props: RowContentProps): React.Node => <RowContent {...props} />;
+export const Row = (props: RowContentProps): React.ReactNode => <RowContent {...props} />;
 
 type RowListProps = {
-    children: React.ChildrenArray<React.Element<typeof Row>>,
+    children: React.ChildrenArray<React.ReactElement<typeof Row>>,
 };
 
-export const RowList = ({children}: RowListProps): React.Node =>
+export const RowList = ({children}: RowListProps): React.ReactNode =>
     React.Children.map(children, (child) => child);
 
-export const BoxedRow = (props: RowContentProps): React.Node => <RowContent {...props} />;
+export const BoxedRow = (props: RowContentProps): React.ReactNode => <RowContent {...props} />;
 
 type BoxedRowListProps = {
-    children: React.ChildrenArray<React.Element<typeof BoxedRow>>,
+    children: React.ChildrenArray<React.ReactElement<typeof BoxedRow>>,
 };
 
-export const BoxedRowList = ({children}: BoxedRowListProps): React.Node => {
+export const BoxedRowList = ({children}: BoxedRowListProps): React.ReactNode => {
     const classes = useStyles();
 
     return (

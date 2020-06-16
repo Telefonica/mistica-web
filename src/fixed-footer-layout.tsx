@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import classnames from 'classnames';
 import debounce from 'lodash/debounce';
@@ -7,7 +6,6 @@ import {getIosVersion, isRunningAcceptanceTest} from './utils/platform';
 import compareVersion from 'semver-compare';
 import {useScreenSize} from './hooks';
 
-// $FlowFixMe
 const getScrollDistanceToBottom = () => document.body.scrollHeight - window.innerHeight - window.scrollY;
 
 /**
@@ -16,23 +14,22 @@ const getScrollDistanceToBottom = () => document.body.scrollHeight - window.inne
  */
 let supportsPassive = false;
 try {
-    const opts = Object.defineProperty({}, 'passive', {
+    const options = Object.defineProperty({}, 'passive', {
         get() {
             supportsPassive = true;
             return undefined;
         },
     });
-    // $FlowFixMe
-    window.addEventListener('test', null, opts);
+    window.addEventListener('test' as any, () => {}, options);
 } catch (e) {
     // does not support passive event listeners :(
 }
 
-const addPassiveEventListener = (el: EventTarget, eventName: string, listener: (any) => void): void =>
+const addPassiveEventListener = (el: EventTarget, eventName: string, listener: (e: any) => void): void =>
     el.addEventListener(eventName, listener, supportsPassive ? {passive: true} : false);
 
-const removePassiveEventListener = (el: EventTarget, eventName: string, listener: (any) => void): void =>
-    el.removeEventListener(eventName, listener, supportsPassive ? {passive: true} : false);
+const removePassiveEventListener = (el: EventTarget, eventName: string, listener: (e: any) => void): void =>
+    el.removeEventListener(eventName, listener, false);
 
 const waitForSwitchTransitionToStart = (fn: () => void) => {
     const timeoutId = setTimeout(fn, 0);
@@ -75,26 +72,26 @@ const useStyles = createUseStyles((theme) => ({
 }));
 
 type Props = {
-    isFooterVisible?: boolean,
-    footer: React.Node,
-    footerHeight?: number,
-    footerBgColor?: string,
-    containerBgColor?: string,
-    children: React.Node,
+    isFooterVisible?: boolean;
+    footer: React.ReactNode;
+    footerHeight?: number;
+    footerBgColor?: string;
+    containerBgColor?: string;
+    children: React.ReactNode;
 };
 
 const canHaveNotch = () => compareVersion(getIosVersion(), '11.4.0') >= 0; // https://caniuse.com/#search=env
 
-const FixedFooterLayout = ({
+const FixedFooterLayout: React.FC<Props> = ({
     isFooterVisible = true,
     footer,
     footerHeight = 80,
     footerBgColor,
     containerBgColor,
     children,
-}: Props): React.Node => {
+}) => {
     const [displayShadow, setDisplayShadow] = React.useState(false);
-    const childrenRef = React.useRef();
+    const childrenRef = React.useRef<HTMLDivElement>(null);
     const {isMobile} = useScreenSize();
 
     React.useEffect(() => {

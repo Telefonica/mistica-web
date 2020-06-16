@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import classnames from 'classnames';
 import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
@@ -16,7 +15,7 @@ import {ESC} from './utils/key-codes';
 import Box from './box';
 import {isOldChrome} from './utils/platform';
 
-const animationsSupported = () => !isOldChrome() && !process.env.NOVE_ENV === 'test';
+const animationsSupported = () => !isOldChrome() && process.env.NOVE_ENV !== 'test';
 
 const useStylesModalDialog = createUseStyles((theme) => ({
     wrapper: {
@@ -112,20 +111,20 @@ const useDialogStyles = createUseStyles((theme) => ({
     },
 }));
 
-type DialogProps = {
-    className?: string,
-    title?: string,
-    icon?: React.Element<any>,
-    message: string,
-    cancelText?: string,
-    acceptText?: string,
-    onCancel?: () => void,
-    onAccept?: () => void,
-    showCancel?: boolean,
-    destructive?: boolean,
-};
+interface DialogProps {
+    className?: string;
+    title?: string;
+    icon?: React.ReactElement<any>;
+    message: string;
+    cancelText?: string;
+    acceptText?: string;
+    onCancel?: () => void;
+    onAccept?: () => void;
+    showCancel?: boolean;
+    destructive?: boolean;
+}
 
-const Dialog = (props: DialogProps) => {
+const Dialog: React.FC<DialogProps> = (props) => {
     const {texts, colors} = useTheme();
     const {
         className,
@@ -176,7 +175,7 @@ const Dialog = (props: DialogProps) => {
                     ) : (
                         <ButtonPrimary tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
                     )}
-                    {showCancel && handleCancel && (
+                    {showCancel && !!handleCancel && (
                         <ButtonSecondary
                             tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
                             onPress={handleCancel}
@@ -191,23 +190,36 @@ const Dialog = (props: DialogProps) => {
     );
 };
 
-type HandlerFunction = (KeyboardEvent | SyntheticMouseEvent<> | void) => void;
-
-const showNativeDialog = ({showCancel, message, title, acceptText, cancelText, onAccept, onCancel}) =>
+const showNativeDialog = ({
+    showCancel,
+    message,
+    title,
+    acceptText,
+    cancelText,
+    onAccept,
+    onCancel,
+}: {
+    showCancel?: boolean;
+    message: string;
+    title?: string;
+    acceptText: string;
+    cancelText: string;
+    onAccept?: () => void;
+    onCancel?: () => void;
+}) =>
     showCancel
         ? nativeConfirm({message, title, cancelText, acceptText}).then((accepted) =>
-              accepted ? onAccept() : onCancel()
+              accepted ? onAccept?.() : onCancel?.()
           )
         : nativeAlert({message, title, buttonText: acceptText}).then(onAccept);
 
-type ModalDialogProps = {
-    ...DialogProps,
-    onCancel: HandlerFunction,
-    onAccept: HandlerFunction,
-    showCancel?: boolean,
-    isClosing: boolean,
-    onCloseTransitionEnd?: () => void,
-};
+interface ModalDialogProps extends DialogProps {
+    onCancel: () => void;
+    onAccept: () => void;
+    showCancel?: boolean;
+    isClosing: boolean;
+    onCloseTransitionEnd?: () => void;
+}
 
 const useNativeDialog = ({
     renderNative,
@@ -218,6 +230,15 @@ const useNativeDialog = ({
     showCancel,
     message,
     title,
+}: {
+    renderNative: boolean;
+    showCancel?: boolean;
+    message: string;
+    title?: string;
+    acceptText: string;
+    cancelText: string;
+    onAccept: () => void;
+    onCancel: () => void;
 }) => {
     const onAcceptRef = React.useRef(onAccept).current;
     const onCancelRef = React.useRef(onCancel).current;
@@ -247,23 +268,17 @@ const ModalDialog = (props: ModalDialogProps) => {
 
     const renderNative = isWebViewBridgeAvailable();
     const closeHandler = props.showCancel ? props.onCancel : props.onAccept;
-    const stopPropagation = (ev: SyntheticEvent<>) => {
-        ev.stopPropagation();
-    };
-    const handleClose = React.useCallback(
-        (ev: KeyboardEvent | SyntheticMouseEvent<>) => {
-            if (!props.isClosing) {
-                closeHandler(ev);
-            }
 
-            ev.stopPropagation();
-        },
-        [closeHandler, props.isClosing]
-    );
+    const handleClose = React.useCallback(() => {
+        if (!props.isClosing) {
+            closeHandler();
+        }
+    }, [closeHandler, props.isClosing]);
+
     const handleKeyDown = React.useCallback(
         (event: KeyboardEvent) => {
             if (event.keyCode === ESC) {
-                handleClose(event);
+                handleClose();
                 event.stopPropagation();
                 event.preventDefault();
             }
@@ -310,7 +325,7 @@ const ModalDialog = (props: ModalDialogProps) => {
                         className={classnames(classes.modalOpacityLayer, {closed: isClosing})}
                         role="dialog"
                     >
-                        <div onClick={stopPropagation}>
+                        <div onClick={(e) => e.stopPropagation()}>
                             <div
                                 onTransitionEnd={
                                     isClosing && onCloseTransitionEnd ? onCloseTransitionEnd : undefined
@@ -319,12 +334,7 @@ const ModalDialog = (props: ModalDialogProps) => {
                                 className={classnames(classes.modalContent, {closed: isClosing})}
                             >
                                 <div className={classes.modalCloseButtonContainer}>
-                                    <IconButton
-                                        // to be fixed when moving to TS
-                                        // $FlowFixMe
-                                        onPress={(handleClose: SyntheticMouseEvent)}
-                                        label={context.texts.modalClose}
-                                    >
+                                    <IconButton onPress={handleClose} label={context.texts.modalClose}>
                                         <IcnClose color={context.colors.iconPrimary} />
                                     </IconButton>
                                 </div>
@@ -339,13 +349,13 @@ const ModalDialog = (props: ModalDialogProps) => {
 };
 
 // eslint-disable-next-line no-use-before-define
-let dialogInstance: ?DialogRoot = null;
+let dialogInstance: DialogRoot | null = null;
 
-type DialogRootProps = {children?: React.Node};
+type DialogRootProps = {children?: React.ReactNode};
 
 type DialogRootState = {
-    dialogProps: DialogProps | null,
-    isClosing: boolean,
+    dialogProps: DialogProps | null;
+    isClosing: boolean;
 };
 
 export default class DialogRoot extends React.Component<DialogRootProps, DialogRootState> {
@@ -354,19 +364,19 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
         isClosing: false,
     };
 
-    componentDidMount() {
+    componentDidMount(): void {
         dialogInstance = this;
         window.addEventListener('popstate', this.handleBack);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         if (dialogInstance === this) {
             dialogInstance = null;
         }
         window.removeEventListener('popstate', this.handleBack);
     }
 
-    show(props: DialogProps) {
+    show(props: DialogProps): void {
         if (this.state.dialogProps) {
             throw Error(
                 'Tried to show a dialog on top of another dialog. This functionality is not currently supported.'
@@ -401,30 +411,30 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
         }
     };
 
-    close() {
+    close(): void {
         // Here we have to remove the additional entry added to history when we created the Dialog
         window.history.back();
     }
 
-    createCancelHandler(onCancel?: () => void): HandlerFunction {
-        return (...args: Array<mixed>) => {
+    createCancelHandler(onCancel?: () => void) {
+        return (): void => {
             if (onCancel) {
-                this.callback = () => onCancel(...args);
+                this.callback = () => onCancel();
             }
             this.close();
         };
     }
 
-    createAcceptHandler(onAccept?: () => void): HandlerFunction {
-        return (...args: Array<mixed>) => {
+    createAcceptHandler(onAccept?: () => void) {
+        return (): void => {
             if (onAccept) {
-                this.callback = () => onAccept(...args);
+                this.callback = () => onAccept();
             }
             this.close();
         };
     }
 
-    render(): React.Node {
+    render(): React.ReactNode {
         const {isClosing, dialogProps} = this.state;
 
         if (!dialogProps) {

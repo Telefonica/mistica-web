@@ -54,13 +54,6 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-type NavigationProps =
-    | {href: string}
-    | {
-          to: string;
-          fullPageOnWebView: boolean;
-      };
-
 type BunProps = {
     children: React.ReactNode;
     title: string;
@@ -83,7 +76,7 @@ const Bun: React.FC<BunProps> = ({children, title, trackingEvent, action}) => {
 
     const renderLink = (action: NonNullable<BunProps['action']>) => {
         const {text, ...rest} = action;
-        const navigationProps: NavigationProps = rest;
+        const navigationProps = rest;
         return (
             <TextLink
                 className={classnames(classes.textContainer)}

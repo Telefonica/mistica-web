@@ -8,7 +8,7 @@ export default {
     component: DoubleField,
 };
 
-export const Default = (): React.Node => {
+export const Default = (): React.ReactNode => {
     const [selectValue, setSelectValue] = React.useState('');
     return (
         <>

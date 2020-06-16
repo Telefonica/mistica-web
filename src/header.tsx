@@ -58,8 +58,8 @@ type HeaderProps = {
     title?: string,
     preamount?: RichText,
     amount?: string,
-    button?: React.Element<typeof ButtonPrimary>,
-    secondaryButton?: React.Element<typeof ButtonSecondary>,
+    button?: React.ReactElement<typeof ButtonPrimary>,
+    secondaryButton?: React.ReactElement<typeof ButtonSecondary>,
     subtitle?: RichText,
     isErrorAmount?: boolean,
 };
@@ -73,7 +73,7 @@ export const Header = ({
     subtitle,
     isErrorAmount,
     secondaryButton,
-}: HeaderProps): React.Node => {
+}: HeaderProps): React.ReactNode => {
     const {isMobile} = useScreenSize();
     const theme = useTheme();
     const isInverse = useIsInverseVariant();
@@ -160,10 +160,10 @@ export const Header = ({
 type MainSectionHeaderProps = {
     title: string,
     description?: string,
-    button?: React.Element<typeof ButtonPrimary> | React.Element<typeof ButtonSecondary>,
+    button?: React.ReactElement<typeof ButtonPrimary> | React.ReactElement<typeof ButtonSecondary>,
 };
 
-export const MainSectionHeader = ({title, description, button}: MainSectionHeaderProps): React.Node => {
+export const MainSectionHeader = ({title, description, button}: MainSectionHeaderProps): React.ReactNode => {
     const {isMobile} = useScreenSize();
 
     return (
@@ -202,9 +202,9 @@ const useHeaderLayoutStyles = createUseStyles((theme) => ({
 
 type HeaderLayoutProps = {
     isInverse?: boolean,
-    breadcrumbs?: React.Element<typeof NavigationBreadcrumbs>,
-    header: React.Node, // intentionally not forced to React.Element<typeof Header> to allow skeletons for example
-    extra?: React.Node,
+    breadcrumbs?: React.ReactElement<typeof NavigationBreadcrumbs>,
+    header: React.ReactNode, // intentionally not forced to React.ReactElement<typeof Header> to allow skeletons for example
+    extra?: React.ReactNode,
     sideBySideExtraOnDesktop?: boolean,
 };
 
@@ -214,7 +214,7 @@ export const HeaderLayout = ({
     header,
     extra,
     sideBySideExtraOnDesktop = false,
-}: HeaderLayoutProps): React.Node => {
+}: HeaderLayoutProps): React.ReactNode => {
     const classes = useHeaderLayoutStyles({isInverse});
     const {isTabletOrSmaller} = useScreenSize();
 
@@ -263,13 +263,13 @@ export const HeaderLayout = ({
 
 type MainSectionHeaderLayoutProps = {
     isInverse?: boolean,
-    children: React.Element<typeof MainSectionHeader>,
+    children: React.ReactElement<typeof MainSectionHeader>,
 };
 
 export const MainSectionHeaderLayout = ({
     isInverse = true,
     children,
-}: MainSectionHeaderLayoutProps): React.Node => {
+}: MainSectionHeaderLayoutProps): React.ReactNode => {
     const classes = useHeaderLayoutStyles({isInverse});
     const {isMobile} = useScreenSize();
 

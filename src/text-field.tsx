@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import Visibility from './icons/icon-visibility';
 import VisibilityOff from './icons/icon-visibility-off';
@@ -47,83 +46,92 @@ export type AutoComplete =
     | 'cc-exp' // A payment method expiration date, typically in the form "MM/YY" or "MM/YYYY"
     | 'cc-csc'; // The security code; on credit cards, this is the 3-digit verification number on the back of the card
 
-type CommonProps = {
-    id?: string,
-    autoComplete?: AutoComplete,
-    autoFocus?: boolean,
-    disabled?: boolean,
-    error?: boolean,
-    pattern?: string,
-    required?: boolean,
-    fullWidth?: boolean,
-    helperText?: string,
-    id?: string,
-    label: string,
-    placeholder?: string,
-    defaultValue?: string,
-    name?: string,
-    maxLength?: number,
-    prefix?: string,
-    endIcon?: React.Node,
-    style?: Object,
-    value?: string,
-    inputRef?: React.Ref<'input'>,
-    getSuggestions?: (value: string) => Array<string>,
-    onChange?: (event: SyntheticEvent<*>) => void,
-    onBlur?: (event: SyntheticEvent<*>) => void,
-    onFocus?: (event: SyntheticEvent<*>) => void,
-    onKeyDown?: (event: SyntheticKeyboardEvent<*>) => void,
+interface CommonTextFieldProps {
+    id?: string;
+    autoComplete?: AutoComplete;
+    autoFocus?: boolean;
+    disabled?: boolean;
+    error?: boolean;
+    pattern?: string;
+    required?: boolean;
+    fullWidth?: boolean;
+    helperText?: string;
+    label: string;
+    placeholder?: string;
+    defaultValue?: string;
+    name?: string;
+    maxLength?: number;
+    prefix?: string;
+    endIcon?: React.ReactNode;
+    style?: React.CSSProperties;
+    value?: string;
+    inputRef?: React.Ref<HTMLInputElement>;
+    getSuggestions?: (value: string) => Array<string>;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onBlur?: (event: React.FocusEvent) => void;
+    onFocus?: (event: React.FocusEvent) => void;
+    onKeyDown?: (event: React.KeyboardEvent) => void;
     // to pass custom props (eg: data attributes) to input element
-    inputProps?: {[string]: string | number, ...},
-};
+    inputProps?: {[prop: string]: string | number};
+}
 
-type Props =
-    | {
-          ...CommonProps,
-          onChangeValue?: (value: string, rawValue: string) => void,
-          multiline?: boolean,
-          type?: 'text',
-      }
-    | {
-          ...CommonProps,
-          onChangeValue?: (value: string, rawValue: string) => void,
-          type:
-              | 'email'
-              | 'password'
-              | 'credit-card-name'
-              | 'credit-card-number'
-              | 'credit-card-cvv'
-              | 'integer'
-              | 'decimal'
-              | 'date',
-      }
-    | {
-          ...CommonProps,
-          onChangeValue?: (value: string, rawValue: string) => void,
-          // Phone Input is defined in a different module
-          // this way libphonenumber is not imported for all inputs
-          Input: PhoneInputType,
-          type: 'phone',
-      }
-    | {
-          ...CommonProps,
-          onChangeValue?: (
-              value: {
-                  month: number,
-                  year: number,
-                  raw: string,
-              },
-              rawValue: string
-          ) => void,
-          type: 'credit-card-expiration',
-      };
+interface SimpleTextFieldProps extends CommonTextFieldProps {
+    onChangeValue?: (value: string, rawValue: string) => void;
+    multiline?: boolean;
+    type?: 'text';
+    Input?: undefined;
+}
+
+interface OtherTextFieldProps extends CommonTextFieldProps {
+    onChangeValue?: (value: string, rawValue: string) => void;
+    type:
+        | 'email'
+        | 'password'
+        | 'credit-card-name'
+        | 'credit-card-number'
+        | 'credit-card-cvv'
+        | 'integer'
+        | 'decimal'
+        | 'date';
+    Input?: undefined;
+    multiline?: undefined;
+}
+
+interface PhoneTextFieldProps extends CommonTextFieldProps {
+    onChangeValue?: (value: string, rawValue: string) => void;
+    // Phone Input is defined in a different module
+    // this way libphonenumber is not imported for all inputs
+    type: 'phone';
+    Input: PhoneInputType;
+    multiline?: undefined;
+}
+
+interface CreditCardExpirationTextFieldProps extends CommonTextFieldProps {
+    onChangeValue?: (
+        value: {
+            month: number;
+            year: number;
+            raw: string;
+        },
+        rawValue: string
+    ) => void;
+    type: 'credit-card-expiration';
+    Input?: undefined;
+    multiline?: undefined;
+}
+
+export type TextFieldProps =
+    | SimpleTextFieldProps
+    | OtherTextFieldProps
+    | PhoneTextFieldProps
+    | CreditCardExpirationTextFieldProps;
 
 const Autosuggest = React.lazy(() => import(/* webpackChunkName: "react-autosuggest" */ 'react-autosuggest'));
 
 const IntegerInput = ({inputRef, value, defaultValue, ...rest}: any) => {
-    const format = (v) => String(v ?? '').replace(/[^\d]/g, '');
+    const format = (v?: string) => String(v ?? '').replace(/[^\d]/g, '');
 
-    const handleInput = (e) => {
+    const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
         // strip all non numeric characters
         e.currentTarget.value = format(e.currentTarget.value);
     };
@@ -153,7 +161,7 @@ const DecimalInput = ({inputRef, value, defaultValue, ...rest}: any) => {
     const {i18n} = useTheme();
     const localDecimalChar = getLocalDecimalChar(i18n.locale);
 
-    const format = (value) => {
+    const format = (value?: string) => {
         const parts = String(value ?? '')
             .replace(/[^.,\d]/g, '') // remove non digits or decimal separator chars
             .replace(/[.,]/g, localDecimalChar) // use local decimal char
@@ -192,7 +200,7 @@ const DecimalInput = ({inputRef, value, defaultValue, ...rest}: any) => {
 
 const CreditCardInput = ({inputRef, defaultValue, value, maxLength, onInput, ...rest}: any) => {
     // Naive implementation, some issues in cursor position when editing
-    const format = (s) => {
+    const format = (s?: string) => {
         const chars = String(s ?? '')
             .replace(/[^\d]/g, '')
             .slice(0, 16)
@@ -294,15 +302,11 @@ const usePasswordAdornmentStyles = createUseStyles(() => ({
     },
 }));
 
-const PasswordAdornment = ({
-    isVisible,
-    setVisibility,
-    focus,
-}: {
-    isVisible: boolean,
-    setVisibility: (boolean) => void,
-    focus: () => void,
-}) => {
+const PasswordAdornment: React.FC<{
+    isVisible: boolean;
+    setVisibility: (isVisible: boolean) => void;
+    focus: () => void;
+}> = ({isVisible, setVisibility, focus}) => {
     const {texts} = useTheme();
     const classes = usePasswordAdornmentStyles();
     const style = {
@@ -349,7 +353,7 @@ const useStylesCCAdornment = createUseStyles(() => ({
     },
 }));
 
-const getAnimationTarget = (value) => {
+const getAnimationTarget = (value?: string) => {
     if (isVisa(value)) {
         return <IconVisa />;
     }
@@ -369,13 +373,13 @@ const initialState = {
 };
 
 const reducer = (
-    state,
+    state: typeof initialState,
     {
         type,
         value,
     }: {
-        type: string,
-        value?: string,
+        type: string;
+        value?: string;
     }
 ) => {
     if (type === 'INPUT') {
@@ -447,10 +451,9 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-const TextField = ({
+const TextField: React.FC<TextFieldProps> = ({
     onChange,
     onChangeValue,
-    // $FlowFixMe
     Input,
     type = 'text',
     style,
@@ -464,15 +467,14 @@ const TextField = ({
     required,
     disabled,
     ...props
-}: Props): React.Element<'div'> => {
+}) => {
     const {formStatus} = useForm();
     const [isPasswordVisible, setPasswordVisibility] = React.useState(false);
     const [suggestions, setSuggestions] = React.useState([]);
-    const inputRef = React.useRef();
+    const inputRef = React.useRef<HTMLInputElement>(null);
     const [currentInputValue, setCurrentInputValue] = React.useState(props.value || props.defaultValue);
     const {isMobile} = useScreenSize();
     const classes = useStyles();
-    const wrapperRef = React.createRef();
     const id = useAriaId(props.id);
     const {texts} = useTheme();
 
@@ -481,7 +483,7 @@ const TextField = ({
 
     let processValue = (v: string | number): any => v;
 
-    const focus = (goToEnd) => () => {
+    const focus = (goToEnd: boolean) => () => {
         const input = inputRef.current;
         if (input && input.focus) {
             input.focus();
@@ -498,19 +500,27 @@ const TextField = ({
         }
     };
 
-    const newProps = {
+    const newProps: Omit<TextFieldProps, 'type'> & {
+        inputMode?: string;
+        fieldStyle?: React.CSSProperties;
+        shrinkLabel?: boolean;
+        inputComponent?: React.ReactNode;
+        onInput?: React.FormEventHandler<HTMLInputElement>;
+        type: string;
+        multiline?: boolean;
+    } = {
         ...props,
-        disabled: disabled || formStatus === 'sending',
+        disabled: !!disabled || formStatus === 'sending',
         maxLength,
         id,
         type,
-        inputRef: (actualRef) => {
+        inputRef: (actualRef: HTMLInputElement) => {
             [externalInputRef, inputRef].forEach((currentRef) => {
                 if (currentRef) {
                     if (typeof currentRef === 'function') {
                         currentRef(actualRef);
                     } else {
-                        // $FlowFixMe
+                        // @ts-expect-error https://github.com/DefinitelyTyped/DefinitelyTyped/issues/31065
                         currentRef.current = actualRef;
                     }
                 }
@@ -518,12 +528,11 @@ const TextField = ({
         },
         inputMode: undefined,
         inputProps,
-        onChange: (e) => {
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
             if (onChange) {
                 onChange(e);
             }
             if (onChangeValue) {
-                // $FlowFixMe
                 onChangeValue(processValue(e.currentTarget.value), e.currentTarget.value);
             }
         },
@@ -566,7 +575,7 @@ const TextField = ({
 
         case 'phone':
             newProps.inputComponent = Input;
-            processValue = (s) => s.replace(/[^\d]/g, ''); // keep only digits
+            processValue = (s: any) => String(s).replace(/[^\d]/g, ''); // keep only digits
             break;
 
         case 'integer':
@@ -578,8 +587,8 @@ const TextField = ({
             // returns a string, this is intended.
             // you shouldn't handle money amounts using floats
             // 0.1 * 0.1 = 0.010000000000000002
-            processValue = (s) =>
-                s
+            processValue = (s: any) =>
+                String(s)
                     .replace(',', '.') // use dot as decimal separator
                     .replace(/^0+/, '') // remove leading zeros
                     .replace(/^\./, '0.') // append zero before dot
@@ -594,18 +603,21 @@ const TextField = ({
         case 'credit-card-number':
             newProps.inputComponent = CreditCardInput;
             newProps.autoComplete = newProps.autoComplete || 'cc-number';
-            newProps.onInput = (e) => {
-                setCurrentInputValue(e.target.value);
+            newProps.onInput = (e: React.FormEvent<HTMLInputElement>) => {
+                // @ts-expect-error TODO: check this case
+                setCurrentInputValue(e.currentTarget.value);
             };
-            processValue = (s) => s.replace(/\s/g, '');
+            processValue = (s: any) => String(s).replace(/\s/g, '');
             newProps.endIcon = <CreditcardAdornment value={currentInputValue} />;
             break;
 
         case 'credit-card-expiration':
             newProps.inputComponent = MonthYearDateInput;
             newProps.autoComplete = newProps.autoComplete || 'cc-exp';
-            processValue = (s) => {
-                const [month, year] = s.split('/').map((n) => parseInt(n));
+            processValue = (s: any) => {
+                const [month, year] = String(s)
+                    .split('/')
+                    .map((n) => parseInt(n));
                 const fullYear = Number.isNaN(year) ? null : 2000 + year;
                 return {month: month || null, year: fullYear, raw: s};
             };
@@ -620,7 +632,7 @@ const TextField = ({
 
         default:
             newProps.type = 'text';
-            newProps.multiline = props.multiline || undefined;
+            newProps.multiline = !!props.multiline;
             break;
     }
 
@@ -642,7 +654,7 @@ const TextField = ({
 
     /* eslint-disable jsx-a11y/no-static-element-interactions */
     return (
-        <div style={wrapperStyle} ref={wrapperRef}>
+        <div style={wrapperStyle}>
             <div
                 // workaround for iOS where tappable area is very small (just the input)
                 // so it is hard to gain focus by tapping the text-field
@@ -665,11 +677,11 @@ const TextField = ({
                             inputProps={{
                                 ...newProps,
                                 autoComplete: 'off',
-                                onChange: (e, {newValue}) => {
+                                onChange: (e: React.ChangeEvent<HTMLInputElement>, {newValue}) => {
                                     // hack to mutate event value
                                     e.target = {...e.target, value: newValue};
                                     e.currentTarget = {...e.currentTarget, value: newValue};
-                                    newProps.onChange(e);
+                                    newProps.onChange?.(e);
                                 },
                             }}
                             renderInputComponent={(inputProps) => (

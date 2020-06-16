@@ -20,7 +20,7 @@ export default {
     title: 'Components|Cards/Bun',
 };
 
-export const bun = (): React.Element<'div'> => (
+export const bun = (): React.ReactElement<'div'> => (
     <div data-testid="bun">
         <StorySection title="Bun without a description">
             <Bun title="Title" action={{href: 'whatever/url', text: 'Text link'}}>

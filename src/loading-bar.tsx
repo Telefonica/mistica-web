@@ -98,7 +98,7 @@ const useStyles = createUseStyles((theme) => ({
 
 type Props = {visible: boolean};
 
-const LoadingBar = ({visible}: Props): React.Node => {
+const LoadingBar = ({visible}: Props): React.ReactNode => {
     const classes = useStyles();
     const isInverseVariant = useIsInverseVariant();
 

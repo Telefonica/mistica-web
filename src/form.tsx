@@ -22,7 +22,7 @@ type FormProps = {
     onSubmit: (values: FormValues, rawValues: FormValues) => Promise<void> | void,
     initialValues?: FormValues,
     autoJump?: boolean,
-    children: React.Node,
+    children: React.ReactNode,
     className?: string,
 };
 
@@ -39,7 +39,7 @@ const Form = ({
     initialValues = {},
     autoJump = false,
     id,
-}: FormProps): React.Node => {
+}: FormProps): React.ReactNode => {
     const isMountedRef = React.useRef(true); // https://github.com/facebook/react/issues/14369#issuecomment-468305796
     const [values, setValues] = React.useState(initialValues);
     const [rawValues, setRawValues] = React.useState(initialValues);
@@ -187,7 +187,7 @@ const Form = ({
     );
 };
 
-export type CommonFormFieldProps = {
+export interface CommonFormFieldProps {
     autoFocus?: boolean,
     disabled?: boolean,
     error?: boolean,
@@ -198,13 +198,13 @@ export type CommonFormFieldProps = {
     optional?: boolean,
     maxLength?: number,
     // use `inputProps` to pass props (as attributes) to the input element, for example a data-testid
-    inputProps?: {[prop: string]: string | number, ...},
+    inputProps?: {[prop: string]: string | number},
     validate?: FieldValidator,
     autoComplete?: AutoComplete,
-    onFocus?: (event: SyntheticEvent<*>) => void,
-    onBlur?: (event: SyntheticEvent<*>) => void,
+    onFocus?: (event: React.FocusEvent) => void,
+    onBlur?: (event: React.FocusEvent) => void,
     fullWidth?: boolean,
-    getSuggestions?: (string) => Array<string>,
+    getSuggestions?: (text: string) => Array<string>,
     placeholder?: string,
 };
 

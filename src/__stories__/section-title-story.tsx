@@ -8,7 +8,7 @@ export default {
     title: 'Components|Others/SectionTitle',
 };
 
-export const Default = (): React.Node => (
+export const Default = (): React.ReactNode => (
     <StorySection title="SectionTitle example">
         <Placeholder />
         <SectionTitle>This is a section title</SectionTitle>

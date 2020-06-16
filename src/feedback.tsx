@@ -14,13 +14,15 @@ import {
 } from '@tef-novum/webview-bridge';
 
 const animationsSupported = !isOldChrome() && !isRunningAcceptanceTest();
-const animateText = ({isInfo}) =>
+
+const animateText = ({isInfo}: {isInfo: boolean}) =>
     !isInfo && animationsSupported
         ? '$sweepIn 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards'
         : undefined;
-const initialTextOpacity = ({isInfo}) => (!isInfo && animationsSupported ? 0 : 1);
 
-const requestVibration = (type) => {
+const initialTextOpacity = ({isInfo}: {isInfo: boolean}) => (!isInfo && animationsSupported ? 0 : 1);
+
+const requestVibration = (type: 'error' | 'success') => {
     if (isWebViewBridgeAvailable()) {
         requestVibrationNative(type).catch(() => {});
     }
@@ -102,9 +104,9 @@ const feedbackToIconComponent = {
     [FEEDBACK_INFO]: IcnInfo,
 };
 
-const useHapticFeedback = (type) => {
+const useHapticFeedback = (type: FeedbackType) => {
     React.useEffect(() => {
-        let timeoutId;
+        let timeoutId: NodeJS.Timeout;
         if (type === FEEDBACK_SUCCESS) {
             timeoutId = setTimeout(() => requestVibration('success'), 700);
         }
@@ -121,15 +123,14 @@ const useHapticFeedback = (type) => {
 
 type FeedbackProps = {
     title: string;
-    description?: string | $ReadOnlyArray<string>;
+    description?: string | Readonly<Array<string>>;
     type: FeedbackType;
-    children?: React.Node;
+    children?: React.ReactNode;
 };
 
-const Feedback = (props: FeedbackProps): React.Element<'div'> => {
+const Feedback: React.FC<FeedbackProps> = ({title, description, type, children}) => {
     const theme = useTheme();
-    const {title, description, type, children} = props;
-    useHapticFeedback();
+    useHapticFeedback(type);
     const isInverse = useIsInverseVariant();
     const hasNotIcon = theme.skin === VIVO_SKIN && type !== FEEDBACK_SUCCESS;
     const hasIcon = !hasNotIcon;

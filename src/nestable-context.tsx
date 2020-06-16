@@ -30,7 +30,7 @@ type Action<Value> =
       };
 type Dispatch<Value> = (Action<Value>) => void;
 
-type ProviderProps = {children: React.Node};
+type ProviderProps = {children: React.ReactNode};
 
 const isObject = (object: any): boolean %checks =>
     object !== null && typeof object === 'object' && !Array.isArray(object);
@@ -38,7 +38,7 @@ const isObject = (object: any): boolean %checks =>
 const createNestableContext = <Value>(
     defaultValue: Value
 ): ({
-    Getter: React.ComponentType<{children: (value: Value) => React.Node}>,
+    Getter: React.ComponentType<{children: (value: Value) => React.ReactNode}>,
     Provider: React.ComponentType<ProviderProps>,
     Setter: React.ComponentType<{value: Value}>,
     useValue: () => Value,
@@ -126,7 +126,7 @@ const createNestableContext = <Value>(
         return null;
     };
 
-    const Getter = ({children}: {children: (value: Value) => React.Node}) => children(useValue());
+    const Getter = ({children}: {children: (value: Value) => React.ReactNode}) => children(useValue());
 
     return {Setter, Provider, Getter, useSetValue, useValue};
 };

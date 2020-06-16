@@ -32,7 +32,7 @@ const fakeApiCall = (data) =>
 const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 const countryOptions = countriesList.map((text, i) => ({text, value: '' + i}));
 
-export const AutomaticForm = (): React.Node => (
+export const AutomaticForm = (): React.ReactNode => (
     <Form initialValues={{email: 'john.doe@gmail.com', decimal: '123'}} onSubmit={fakeApiCall} autoJump>
         <Stack space={16}>
             <FormEmailField name="email" label="email" />
@@ -59,7 +59,7 @@ export const AutomaticForm = (): React.Node => (
     </Form>
 );
 
-export const ManualForm = (): React.Element<'form'> => {
+export const ManualForm = (): React.ReactElement<'form'> => {
     const [fruit, setFruit] = React.useState('');
     const [quantity, setQuantity] = React.useState('');
     const [creditCardNumber, setCreditCardNumber] = React.useState('');

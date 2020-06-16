@@ -5,7 +5,7 @@ import TextField from './text-field';
 
 import type {CommonFormFieldProps} from './form';
 
-type FormTextFieldProps =
+export type FormTextFieldProps =
     | {
           ...CommonFormFieldProps,
           onChangeValue?: (value: string, rawValue: string) => void,
@@ -34,7 +34,7 @@ const FormTextField = ({
     ...FormTextFieldProps,
     value?: string,
     validate?: (value: string | void, rawValue: string | void) => string | void,
-}): React.Node => {
+}): React.ReactNode => {
     const {
         rawValues,
         setRawValue,

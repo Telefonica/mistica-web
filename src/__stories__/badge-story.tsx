@@ -17,7 +17,7 @@ export default {
     title: 'Components|Hints/Badge',
 };
 
-export const badge = (): React.Node => (
+export const badge = (): React.ReactNode => (
     <>
         <StorySection title="Badge (non numeric)">
             <Badge>

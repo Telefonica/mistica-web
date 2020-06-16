@@ -8,7 +8,7 @@ export default {
     component: Touchable,
 };
 
-export const Default = (): React.Node => {
+export const Default = (): React.ReactNode => {
     const [count, setCount] = React.useState(0);
 
     const styles = {

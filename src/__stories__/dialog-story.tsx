@@ -9,7 +9,7 @@ export default {
     title: 'Components|Feedbacks/Dialogs',
 };
 
-export const Default = (): React.Node => (
+export const Default = (): React.ReactNode => (
     <>
         <ButtonLayout>
             <ButtonPrimary onPress={() => alert({title: 'title', message: 'message'})}>

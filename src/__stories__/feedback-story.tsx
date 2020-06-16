@@ -8,7 +8,7 @@ export default {
     title: 'Components|Feedbacks/Feedback',
 };
 
-export const Default = (): React.Node => {
+export const Default = (): React.ReactNode => {
     const [type, typeSelectField] = useSelect('Type', 'success', ['success', 'error', 'info']);
     const [title, titleTextField] = useTextField('Title', "I'm the title");
     const [description, descriptionTextField] = useTextField('Description', "I'm the description");

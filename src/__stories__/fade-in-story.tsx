@@ -8,7 +8,7 @@ export default {
     component: FadeIn,
 };
 
-export const Default = (): React.Node => (
+export const Default = (): React.ReactNode => (
     <StorySection title="FadeIn transition">
         <FadeIn delay="1s">
             <p>

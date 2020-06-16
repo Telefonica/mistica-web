@@ -9,7 +9,7 @@ export default {
     },
 };
 
-export const Default = (): React.Node => {
+export const Default = (): React.ReactNode => {
     const theme = useTheme();
     return (
         <>

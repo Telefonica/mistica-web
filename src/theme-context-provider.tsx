@@ -14,13 +14,13 @@ import {version} from '../package.json';
 import type {Theme, ThemeConfig} from './theme';
 
 type Props = {
-    theme: ThemeConfig,
-    children?: React.Node,
+    theme: ThemeConfig;
+    children?: React.ReactNode;
 };
 
 let jssInstanceId = 0;
 
-const ThemeContextProvider = ({theme, children}: Props): React.Node => {
+const ThemeContextProvider = ({theme, children}: Props): React.ReactNode => {
     const classNamePrefix = React.useMemo(
         () => `mistica-${version.replace(/\./g, '-')}-${jssInstanceId++}-`,
         []

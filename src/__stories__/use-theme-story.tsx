@@ -12,7 +12,7 @@ const CodeText = ({children}) => (
     </Text>
 );
 
-export const UseTheme = (): React.Node => {
+export const UseTheme = (): React.ReactNode => {
     const theme = useTheme();
 
     return (

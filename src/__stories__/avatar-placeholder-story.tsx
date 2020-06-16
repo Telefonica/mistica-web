@@ -6,7 +6,7 @@ export default {
     title: 'Components|Placeholders/AvatarPlaceholder',
 };
 
-export const Default = (): React.Node => (
+export const Default = (): React.ReactNode => (
     <Stack space={16}>
         <AvatarPlaceholder />
         <AvatarPlaceholder size={80} />

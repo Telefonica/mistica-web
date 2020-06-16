@@ -44,12 +44,12 @@ const useStyles = createUseStyles((theme) => ({
 }));
 
 type Props = {
-    children: React.Node,
-    fullWidth?: boolean,
-    className?: string,
+    children: React.ReactNode;
+    fullWidth?: boolean;
+    className?: string;
 };
 
-const ResponsiveLayout = ({children, className, fullWidth}: Props): React.Element<'div'> => {
+const ResponsiveLayout = ({children, className, fullWidth}: Props): React.ReactElement<'div'> => {
     const classes = useStyles();
 
     return (

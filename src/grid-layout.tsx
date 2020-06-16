@@ -24,9 +24,9 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-type Props = {children: React.Node};
+type Props = {children: React.ReactNode};
 
-const GridLayout = ({children}: Props): React.Element<'div'> => {
+const GridLayout = ({children}: Props): React.ReactElement<'div'> => {
     const classes = useStyles();
 
     return <div className={classes.grid}>{children}</div>;

@@ -6,7 +6,7 @@ export default {
     title: 'Components|Layouts/Box',
 };
 
-export const Default = (): React.Node => (
+export const Default = (): React.ReactNode => (
     <div style={{width: 200}}>
         <Stack space={16}>
             <div style={{border: `1px solid red`}}>

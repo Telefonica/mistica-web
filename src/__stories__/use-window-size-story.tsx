@@ -6,7 +6,7 @@ export default {
     title: 'Hooks|useWindowSize',
 };
 
-export const UseWindowSize = (): React.Node => {
+export const UseWindowSize = (): React.ReactNode => {
     const theme = useTheme();
     const size = useWindowSize();
     return (

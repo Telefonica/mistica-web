@@ -14,7 +14,7 @@ type NavigationBreadcrumbsProps = {
     }>,
 };
 
-const NavigationBreadcrumbs = ({title, breadcrumbs}: NavigationBreadcrumbsProps): React.Element<'div'> => {
+const NavigationBreadcrumbs = ({title, breadcrumbs}: NavigationBreadcrumbsProps): React.ReactElement<'div'> => {
     const theme = useTheme();
 
     return (

@@ -57,7 +57,7 @@ const getSuggestions = (value) =>
         .filter((s) => String(s).toLocaleLowerCase().startsWith(value.toLocaleLowerCase()))
         .slice(0, 5);
 
-export const Variants = (): React.Node => {
+export const Variants = (): React.ReactNode => {
     const {colors} = useTheme();
     return (
         <>
@@ -135,7 +135,7 @@ export const Variants = (): React.Node => {
     );
 };
 
-export const TypesUncontrolled = (): React.Node => (
+export const TypesUncontrolled = (): React.ReactNode => (
     <>
         <Uncontrolled title="Type integer">
             {(handleChange, handleChangeValue) => (
@@ -240,7 +240,7 @@ export const TypesUncontrolled = (): React.Node => (
 
 TypesUncontrolled.story = {name: 'Types (uncontrolled)'};
 
-export const TypesControlled = (): React.Node => (
+export const TypesControlled = (): React.ReactNode => (
     <>
         <Controlled title="Type text + autocomplete" initialValue="">
             {(handleChange, handleChangeValue, value) => (

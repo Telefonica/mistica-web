@@ -48,7 +48,7 @@ const TooltipContent = ({acceptedCards}: {acceptedCards: CardOptions}) => {
     );
 };
 
-type FormCvvProps = {
+export type FormCvvFieldProps = {
     ...CommonFormFieldProps,
     acceptedCards?: CardOptions,
     onChangeValue?: (value: string, rawValue: string) => void,
@@ -67,7 +67,7 @@ const FormCvvField = ({
     acceptedCards = {americanExpress: true, visa: true, masterCard: true},
     maxLength,
     ...rest
-}: FormCvvProps): React.Node => {
+}: FormCvvFieldProps): React.ReactNode => {
     const {texts} = useTheme();
     const {
         rawValues,

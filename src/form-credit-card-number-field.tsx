@@ -30,7 +30,7 @@ const FormCreditCardNumberField = ({
     acceptedCards?: CardOptions,
     validate?: (value: string | void, rawValue: string | void) => string | void,
     onChangeValue?: (value: string, rawValue: string) => void,
-}): React.Node => {
+}): React.ReactNode => {
     const {texts} = useTheme();
     const {
         rawValues,

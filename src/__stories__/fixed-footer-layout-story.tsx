@@ -22,7 +22,7 @@ const useTextLines = () => {
     return [textLines, loadMoreText, loadLessText];
 };
 
-export const FooterWithButtonsOnly = (): React.Node => {
+export const FooterWithButtonsOnly = (): React.ReactNode => {
     const [isFooterVisible, isFooterVisibleCheckbox] = useCheckbox('isFooterVisible', true);
     const [textLines, loadMoreText, loadLessText] = useTextLines();
     return (
@@ -41,7 +41,7 @@ export const FooterWithButtonsOnly = (): React.Node => {
 
 FooterWithButtonsOnly.story = {name: 'ButtonFixedFooterLayout'};
 
-export const MoreComplexFooter = (): React.Node => {
+export const MoreComplexFooter = (): React.ReactNode => {
     const [textLines, loadMoreText] = useTextLines();
     const [isFooterVisible, isFooterVisibleCheckbox] = useCheckbox('isFooterVisible', true);
     return (

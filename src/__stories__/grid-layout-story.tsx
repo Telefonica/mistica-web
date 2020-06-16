@@ -10,7 +10,7 @@ export default {
     },
 };
 
-export const sixAndSix = (): React.Node => (
+export const sixAndSix = (): React.ReactNode => (
     <ResponsiveLayout>
         <GridLayout>
             <div style={{gridColumn: 'span 6'}}>
@@ -24,7 +24,7 @@ export const sixAndSix = (): React.Node => (
 );
 sixAndSix.story = {name: '6 + 6'};
 
-export const eightAndFour = (): React.Node => (
+export const eightAndFour = (): React.ReactNode => (
     <ResponsiveLayout>
         <GridLayout>
             <div style={{gridColumn: 'span 8'}}>

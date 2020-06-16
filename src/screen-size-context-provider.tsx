@@ -4,12 +4,12 @@ import ScreenSizeContext from './screen-size-context';
 import {useTheme} from './hooks';
 
 type Props = {
-    children: React.Node,
+    children: React.ReactNode;
 };
 
 const stripMedia = (s) => s.replace(/^@media /, '');
 
-const ScreenSizeContextProvider = ({children}: Props): React.Node => {
+const ScreenSizeContextProvider = ({children}: Props): React.ReactNode => {
     const theme = useTheme();
     const mediaQueries = React.useMemo(
         () => ({

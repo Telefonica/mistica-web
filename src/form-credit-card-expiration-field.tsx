@@ -7,10 +7,15 @@ import TextField from './text-field';
 import type {CommonFormFieldProps} from './form';
 
 type ExpirationDateValue = {
-    month: number,
-    year: number,
-    raw: string,
+    month: number;
+    year: number;
+    raw: string;
 };
+
+interface FormCreditCardExpirationFieldProps extends CommonFormFieldProps {
+    // validate?: (value: ExpirationDateValue | void, rawValue: string | void) => string | void;
+    onChangeValue?: (value: ExpirationDateValue) => void;
+}
 
 const FormCreditCardExpirationField = ({
     disabled,
@@ -22,11 +27,7 @@ const FormCreditCardExpirationField = ({
     onChangeValue,
     onBlur,
     ...rest
-}: {
-    ...CommonFormFieldProps,
-    validate?: (value: ExpirationDateValue | void, rawValue: string | void) => string | void,
-    onChangeValue?: (ExpirationDateValue) => void,
-}): React.Node => {
+}: FormCreditCardExpirationFieldProps): React.ReactNode => {
     const {texts} = useTheme();
     const {
         rawValues,
@@ -40,7 +41,7 @@ const FormCreditCardExpirationField = ({
         jumpToNext,
     } = useForm();
 
-    const validate = (value: ExpirationDateValue | void, rawValue) => {
+    const validate = (value: ExpirationDateValue, rawValue: string): string | undefined => {
         if (!value) {
             return optional ? '' : texts.formFieldErrorIsMandatory;
         }
@@ -64,14 +65,16 @@ const FormCreditCardExpirationField = ({
         <TextField
             {...rest}
             type="credit-card-expiration"
-            inputRef={(field) => register({name, field, validate})}
+            inputRef={(field: HTMLInputElement | null) => register({name, field, validate})}
             disabled={disabled || formStatus === 'sending'}
             error={error || !!formErrors[name]}
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
             value={rawValues[name] ?? ''}
-            onChange={(event) => setRawValue({name, value: event.currentTarget.value})}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setRawValue({name, value: event.currentTarget.value})
+            }
             onChangeValue={(value, rawValue) => {
                 setValue({name, value});
                 onChangeValue?.(value);
@@ -85,7 +88,7 @@ const FormCreditCardExpirationField = ({
                     }
                 }
             }}
-            onBlur={(e) => {
+            onBlur={(e: React.FocusEvent) => {
                 setFormError({name, error: validate?.(values[name], rawValues[name])});
                 onBlur?.(e);
             }}

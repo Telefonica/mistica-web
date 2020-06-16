@@ -10,7 +10,7 @@ export default {
 
 const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 
-export const Default = (): React.Node => {
+export const Default = (): React.ReactNode => {
     const [value, setValue] = React.useState('');
 
     return (

@@ -9,7 +9,7 @@ export default {
     component: ButtonLayout,
 };
 
-export const Default = (): React.Node => (
+export const Default = (): React.ReactNode => (
     <>
         <StorySection title="ButtonLayout">
             <ButtonLayout>

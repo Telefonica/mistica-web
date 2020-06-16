@@ -30,7 +30,7 @@ const IcnCamera = () => (
     </svg>
 );
 
-const BackgroundTheme = ({children}: {children: React.Node}) => {
+const BackgroundTheme = ({children}: {children: React.ReactNode}) => {
     const {colors} = useTheme();
     const [isInverseVariantState, setIsInverseVariantState] = React.useState(false);
     return (
@@ -58,7 +58,7 @@ const BackgroundTheme = ({children}: {children: React.Node}) => {
 
 const handleOnPress = () => window.alert('pressed!');
 
-export const TypeOfButtons = (): React.Node => {
+export const TypeOfButtons = (): React.ReactNode => {
     const [disabled, disabledCheckbox] = useCheckbox('disabled');
     const [showSpinner, showSpinnerCheckbox] = useCheckbox('showSpinner');
     const [small, smallCheckbox] = useCheckbox('small');
@@ -139,7 +139,7 @@ export const TypeOfButtons = (): React.Node => {
     );
 };
 
-export const withIcon = (): React.Node => (
+export const withIcon = (): React.ReactNode => (
     <StorySection title="Buttons can have an icon">
         <ButtonPrimary onPress={() => window.alert('photo!')}>
             <IcnCamera />
@@ -148,7 +148,7 @@ export const withIcon = (): React.Node => (
     </StorySection>
 );
 
-export const LoadingState = (): React.Node => {
+export const LoadingState = (): React.ReactNode => {
     const [isLoading, setIsLoading] = React.useState(false);
     const handlePress = () => {
         setIsLoading(true);
@@ -215,7 +215,7 @@ export const LoadingState = (): React.Node => {
     );
 };
 
-export const SubmitButton = (): React.Node => (
+export const SubmitButton = (): React.ReactNode => (
     <StorySection title="Submitbutton">
         <p>
             A button with submit attribute in a form doesn't need a onPress prop. And clicking on it will fire

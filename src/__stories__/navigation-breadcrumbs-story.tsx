@@ -7,7 +7,7 @@ export default {
     title: 'Components|Others/NavigationBreadcrumbs',
 };
 
-export const Default = (): React.Node => (
+export const Default = (): React.ReactNode => (
     <MemoryRouter>
         <NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: 'Cuenta', url: '/consumptions'}]} />
     </MemoryRouter>

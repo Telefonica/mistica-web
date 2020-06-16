@@ -105,7 +105,15 @@ test('when nesting, the innermost component wins', () => {
 
 // This component simulates what a transition component does.
 // First renders A, then A + B, then only B
-const Transition = ({a, b, onTransitionEnd}: {a: React.Node, b: React.Node, onTransitionEnd: () => void}) => {
+const Transition = ({
+    a,
+    b,
+    onTransitionEnd,
+}: {
+    a: React.ReactNode;
+    b: React.ReactNode;
+    onTransitionEnd: () => void;
+}) => {
     const [isAVisible, setAVisible] = React.useState(true);
     const [isBVisible, setBVisible] = React.useState(false);
     React.useEffect(() => {

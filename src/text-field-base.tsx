@@ -1,10 +1,11 @@
-// @flow
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {Label, HelperText, FieldContainer} from './text-field-components';
 import {isIos, isRunningAcceptanceTest} from './utils/platform';
 
 import type {PhoneInputType} from './phone-input';
+import type {Theme} from './theme';
+import type {InputState} from './text-field-components';
 
 /**
  * Incomplete list, add more if needed
@@ -27,89 +28,92 @@ type AutoComplete =
     | 'cc-exp' // A payment method expiration date, typically in the form "MM/YY" or "MM/YYYY"
     | 'cc-csc'; // The security code; on credit cards, this is the 3-digit verification number on the back of the card
 
-type CommonProps = {
-    id: string,
-    autoComplete?: AutoComplete,
-    autoFocus?: boolean,
-    disabled?: boolean,
-    error?: boolean,
-    pattern?: string,
-    required?: boolean,
-    fullWidth?: boolean,
-    helperText?: string,
-    label?: string,
-    placeholder?: string,
-    defaultValue?: string,
-    name?: string,
-    maxLength?: number,
-    prefix?: React.Node,
-    endIcon?: React.Node,
-    style?: Object,
-    value?: string,
-    inputRef?: React.Ref<'input'>,
-    getSuggestions?: (value: string) => Array<string>,
-    onChange?: (event: SyntheticInputEvent<*>) => void,
-    onBlur?: (event: SyntheticEvent<*>) => void,
-    onFocus?: (event: SyntheticEvent<*>) => void,
-    onKeyDown?: (event: SyntheticKeyboardEvent<*>) => void,
+interface TextFieldBaseProps {
+    id: string;
+    autoComplete?: AutoComplete;
+    autoFocus?: boolean;
+    disabled?: boolean;
+    error?: boolean;
+    pattern?: string;
+    required?: boolean;
+    fullWidth?: boolean;
+    helperText?: string;
+    label?: string;
+    placeholder?: string;
+    defaultValue?: string;
+    name?: string;
+    maxLength?: number;
+    prefix?: React.ReactNode;
+    endIcon?: React.ReactNode;
+    style?: React.CSSProperties;
+    value?: string;
+    inputRef?: React.Ref<HTMLInputElement>;
+    getSuggestions?: (value: string) => Array<string>;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onBlur?: (event: React.FocusEvent) => void;
+    onFocus?: (event: React.FocusEvent) => void;
+    onKeyDown?: (event: React.KeyboardEvent) => void;
     // to pass custom props (eg: data attributes) to input element,
-    inputProps?: {[string]: string, ...},
-    inputComponent?: React.ComponentType<any>,
-    shrinkLabel?: boolean,
-    focus?: boolean,
-    fieldStyle?: Object,
-    fieldRef?: React.Ref<'div'>,
-    children: React.Node,
-    onInput?: (event: SyntheticInputEvent<*>) => void,
-};
+    inputProps?: {[name: string]: string};
+    inputComponent?: React.ComponentType<any>;
+    shrinkLabel?: boolean;
+    focus?: boolean;
+    fieldStyle?: React.CSSProperties;
+    fieldRef?: React.RefObject<HTMLDivElement>;
+    children: React.ReactNode;
+    onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
+}
+
+interface SimpleTextFieldBaseProps extends TextFieldBaseProps {
+    onChangeValue?: (value: string) => void;
+    multiline?: boolean;
+    type?: 'text';
+}
+
+interface OtherTextFieldBaseProps extends TextFieldBaseProps {
+    onChangeValue?: (value: string) => void;
+    type:
+        | 'email'
+        | 'password'
+        | 'credit-card-name'
+        | 'credit-card-number'
+        | 'credit-card-cvv'
+        | 'integer'
+        | 'decimal'
+        | 'date';
+    multiline?: undefined;
+}
+
+interface PhoneTextFieldBaseProps extends TextFieldBaseProps {
+    onChangeValue?: (value: string) => void;
+    // Phone Input is defined in a different module
+    // this way libphonenumber is not imported for all inputs
+    Input: PhoneInputType;
+    type: 'phone';
+    multiline?: undefined;
+}
+
+interface CreditCardExpirationTextFieldBaseProps extends TextFieldBaseProps {
+    onChangeValue?: (value: {month: number; year: number; raw: string}) => void;
+    type: 'credit-card-expiration';
+    multiline?: undefined;
+}
 
 type Props =
-    | {
-          ...CommonProps,
-          onChangeValue?: (string) => void,
-          multiline?: boolean,
-          type?: 'text',
-      }
-    | {
-          ...CommonProps,
-          onChangeValue?: (string) => void,
-          type:
-              | 'email'
-              | 'password'
-              | 'credit-card-name'
-              | 'credit-card-number'
-              | 'credit-card-cvv'
-              | 'integer'
-              | 'decimal'
-              | 'date',
-      }
-    | {
-          ...CommonProps,
-          onChangeValue?: (string) => void,
-          // Phone Input is defined in a different module
-          // this way libphonenumber is not imported for all inputs
-          Input: PhoneInputType,
-          type: 'phone',
-      }
-    | {
-          ...CommonProps,
-          onChangeValue?: ({
-              month: number,
-              year: number,
-              raw: string,
-          }) => void,
-          type: 'credit-card-expiration',
-      };
+    | SimpleTextFieldBaseProps
+    | OtherTextFieldBaseProps
+    | PhoneTextFieldBaseProps
+    | CreditCardExpirationTextFieldBaseProps;
 
-const commonInputStyles = (theme) => ({
+const commonInputStyles = (theme: Theme) => ({
     background: 'none',
     border: 0,
     outline: 0,
     fontSize: 16,
-    paddingRight: ({endIcon}) => (endIcon ? 0 : 16),
-    paddingLeft: ({prefix}) => (prefix ? 0 : 12),
+    paddingRight: ({endIcon}: {endIcon: boolean}) => (endIcon ? 0 : 16),
+    paddingLeft: ({prefix}: {prefix: boolean}) => (prefix ? 0 : 12),
     /* Workaround to avoid huge bullets on ios devices (-apple-system font related) */
-    fontFamily: ({type}) =>
+    fontFamily: ({type}: {type: string}) =>
         type === 'password' && isIos() && !isRunningAcceptanceTest() ? 'arial' : 'inherit',
     color: theme.colors.textPrimary,
     caretColor: theme.colors.controlActive,
@@ -128,7 +132,7 @@ const commonInputStyles = (theme) => ({
         color: theme.colors.border,
     },
     '&::-webkit-calendar-picker-indicator': {
-        marginTop: ({label}) => (label ? -12 : undefined),
+        marginTop: ({label}: {label: string}) => (label ? -12 : undefined),
     },
 });
 
@@ -176,7 +180,7 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-const TextFieldBase: React.ComponentType<Props> = React.forwardRef(
+const TextFieldBase = React.forwardRef<any, Props>(
     (
         {
             error,
@@ -200,10 +204,10 @@ const TextFieldBase: React.ComponentType<Props> = React.forwardRef(
             children,
             maxLength,
             ...rest
-        }: Props,
+        },
         ref
     ) => {
-        const [inputState, setInputState] = React.useState(
+        const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
         );
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
@@ -245,13 +249,12 @@ const TextFieldBase: React.ComponentType<Props> = React.forwardRef(
 
         const inputRefProps = !inputComponent
             ? {
-                  ref: (actualRef) => {
+                  ref: (actualRef: HTMLInputElement) => {
                       [ref, inputRef].forEach((currentRef) => {
                           if (currentRef) {
                               if (typeof currentRef === 'function') {
                                   currentRef(actualRef);
                               } else {
-                                  // $FlowFixMe
                                   currentRef.current = actualRef;
                               }
                           }
@@ -263,7 +266,6 @@ const TextFieldBase: React.ComponentType<Props> = React.forwardRef(
               };
 
         const props = {
-            // $FlowFixMe
             ...rest,
             maxLength,
             ...inputProps,
@@ -288,11 +290,11 @@ const TextFieldBase: React.ComponentType<Props> = React.forwardRef(
                     ...props,
                     id,
                     className: multiline ? classes.textArea : classes.input,
-                    onFocus: (event) => {
+                    onFocus: (event: React.FocusEvent<HTMLInputElement>) => {
                         setInputState('focused');
                         onFocus?.(event);
                     },
-                    onBlur: (event) => {
+                    onBlur: (event: React.FocusEvent<HTMLInputElement>) => {
                         if (event.target.value.length > 0) {
                             setInputState('filled');
                         } else {
@@ -300,11 +302,11 @@ const TextFieldBase: React.ComponentType<Props> = React.forwardRef(
                         }
                         onBlur?.(event);
                     },
-                    onChange: (event) => {
+                    onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
                         // Workaround for systems where maxlength prop is applied onBlur (https://caniuse.com/#feat=maxlength)
                         if (maxLength === undefined || event.target.value.length <= maxLength) {
                             setCharacterCount(event.target.value.length);
-                            props.onChange(event);
+                            props.onChange?.(event);
                         } else {
                             event.stopPropagation();
                             event.preventDefault();

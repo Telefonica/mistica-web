@@ -29,7 +29,7 @@ const OtherComponent = () => {
     );
 };
 
-export const Default = (): React.Node => {
+export const Default = (): React.ReactNode => {
     const theme = useTheme();
     const [isInverse, inverseCheckbox] = useCheckbox('is inverse', false);
     return (

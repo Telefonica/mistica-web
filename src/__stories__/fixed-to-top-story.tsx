@@ -18,7 +18,7 @@ const OtherComponent = () => (
     </FixedToTop>
 );
 
-export const Default = (): React.Node => (
+export const Default = (): React.ReactNode => (
     <FixedToTop height={20}>
         {(topDistance) => (
             <>

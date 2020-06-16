@@ -8,7 +8,7 @@ export default {
     title: 'Components|Touchables/IconButton',
 };
 
-export const Default = (): React.Node => (
+export const Default = (): React.ReactNode => (
     <>
         <StorySection title="Icon Button Image URL">
             <IconButton

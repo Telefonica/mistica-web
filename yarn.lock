@@ -2601,6 +2601,13 @@
     "@types/history" "*"
     "@types/react" "*"
 
+"@types/react-autosuggest@^9.3.14":
+  version "9.3.14"
+  resolved "https://registry.yarnpkg.com/@types/react-autosuggest/-/react-autosuggest-9.3.14.tgz#0a759db913f28609f390605283747c497af7e931"
+  integrity sha512-cvGpKaQaNsFbDxTwP56VKVj2FO6SpJ9PsrQtlVzN7aVa/SsMZoQrBLEUx5HQKfIS4Zupb6K4tHmIyTjF7AEcow==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-dom@*", "@types/react-dom@^16.9.5":
   version "16.9.8"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.9.8.tgz#fe4c1e11dfc67155733dfa6aa65108b4971cb423"
@@ -2658,6 +2665,11 @@
   integrity sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==
   dependencies:
     "@types/node" "*"
+
+"@types/semver-compare@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@types/semver-compare/-/semver-compare-1.0.1.tgz#17d1dc62c516c133ab01efb7803a537ee6eaf3d5"
+  integrity sha512-wx2LQVvKlEkhXp/HoKIZ/aSL+TvfJdKco8i0xJS3aR877mg4qBHzNT6+B5a61vewZHo79EdZavskGnRXEC2H6A==
 
 "@types/source-list-map@*":
   version "0.1.2"

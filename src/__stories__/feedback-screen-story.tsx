@@ -16,7 +16,7 @@ const linkButton = <ButtonLink onPress={() => {}}>Action2</ButtonLink>;
 const defaultTitle = "I'm the title",
     defaultDescription = "I'm the description";
 
-export const Success = (): React.Node => (
+export const Success = (): React.ReactNode => (
     <SuccessFeedbackScreen
         title={defaultTitle}
         description={defaultDescription}
@@ -26,7 +26,7 @@ export const Success = (): React.Node => (
 );
 Success.story = {name: 'SuccessFeedbackScreen'};
 
-export const Error = (): React.Node => (
+export const Error = (): React.ReactNode => (
     <ErrorFeedbackScreen
         title={defaultTitle}
         description={defaultDescription}
@@ -36,12 +36,12 @@ export const Error = (): React.Node => (
 );
 Error.story = {name: 'ErrorFeedbackScreen'};
 
-export const Info = (): React.Node => (
+export const Info = (): React.ReactNode => (
     <InfoFeedbackScreen title={defaultTitle} description={defaultDescription} primaryButton={primaryButton} />
 );
 Info.story = {name: 'InfoFeedbackScreen'};
 
-export const multipleParagraphs = (): React.Node => (
+export const multipleParagraphs = (): React.ReactNode => (
     <SuccessFeedbackScreen
         title={defaultTitle}
         description={[defaultDescription, "I'm the second paragraph"]}

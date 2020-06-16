@@ -5,16 +5,17 @@ import {useTheme} from './hooks';
 
 import type {RegionCode} from './utils/region-code';
 
-const format = (regionCode: RegionCode, number?: string): ?string =>
-    number === undefined ? undefined : formatAsYouType(number.replace(/[^\d+*#]/g, ''), regionCode);
+const format = (regionCode: RegionCode, number?: string): string =>
+    number === undefined ? '' : formatAsYouType(number.replace(/[^\d+*#]/g, ''), regionCode);
 
-const PhoneInput = ({inputRef, value, defaultValue, ...other}: any): React.Element<'input'> => {
+// @ts-expect-error
+const PhoneInput: React.FC<any> = ({inputRef, value, defaultValue, ...other}) => {
     const {i18n} = useTheme();
     return (
         <input
             {...other}
             type="tel" // shows telephone keypad in Android and iOS
-            onInput={(e) => {
+            onInput={(e: React.FormEvent<HTMLInputElement>) => {
                 e.currentTarget.value = format(i18n.phoneNumberFormattingRegionCode, e.currentTarget.value);
             }}
             value={format(i18n.phoneNumberFormattingRegionCode, value)}

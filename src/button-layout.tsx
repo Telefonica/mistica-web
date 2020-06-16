@@ -1,17 +1,14 @@
-// @flow
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {useScreenSize} from './hooks';
 import {BUTTON_MIN_WIDTH, ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 
-export type ButtonElement =
-    | React.Element<typeof ButtonPrimary>
-    | React.Element<typeof ButtonSecondary>
-    | React.Element<typeof ButtonDanger>
-    | void
-    | false;
+import type {ButtonElement} from './button';
+
+type MaybeButtonElement = ButtonElement | void | false;
 
 const buttonLayoutSpacing = 16;
+
 const useStyles = createUseStyles((theme) => ({
     margins: {
         margin: '16px 0',
@@ -68,12 +65,10 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-const useOnFontsReadyEffect = (effect) => {
+const useOnFontsReadyEffect = (effect: () => void) => {
     React.useEffect(() => {
         let cancel = false;
-        // $FlowFixMe flow doesn't know document.fonts
-        if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
-            // $FlowFixMe
+        if (document.fonts?.ready?.then) {
             document.fonts.ready.then(() => {
                 if (!cancel) {
                     effect();
@@ -86,7 +81,7 @@ const useOnFontsReadyEffect = (effect) => {
     }, [effect]);
 };
 
-const useOnChildrenChangeEffect = (el, effect) => {
+const useOnChildrenChangeEffect = (el: HTMLElement | null, effect: MutationCallback) => {
     React.useEffect(() => {
         if (el) {
             const observer = new MutationObserver(effect);
@@ -100,33 +95,33 @@ const useOnChildrenChangeEffect = (el, effect) => {
 };
 
 type ButtonLayoutProps = {
-    children?: ButtonElement | [ButtonElement, ButtonElement],
-    align?: 'center' | 'left' | 'right' | 'full-width',
-    link?: ?React.Element<typeof ButtonLink>,
-    withMargins?: boolean,
+    children?: MaybeButtonElement | [MaybeButtonElement, MaybeButtonElement];
+    align?: 'center' | 'left' | 'right' | 'full-width';
+    link?: React.ReactElement<typeof ButtonLink> | null;
+    withMargins?: boolean;
 };
 
 const buttonsRange = [ButtonSecondary, ButtonDanger, ButtonPrimary];
 
-const ButtonLayout = ({
+const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     children,
     align = 'full-width',
     link,
     withMargins = false,
-}: ButtonLayoutProps): React.Element<'div'> => {
+}) => {
     const {isMobile} = useScreenSize();
     const [isMeasuring, setIsMeasuring] = React.useState(true);
     const childrenCount = React.Children.count(children);
 
     const [buttonWidth, setButtonWidth] = React.useState(0);
 
-    const updateButtonWidth = (buttonWidth) => {
+    const updateButtonWidth = (buttonWidth: number) => {
         if (process.env.NODE_ENV !== 'test') {
             setButtonWidth(buttonWidth);
         }
     };
 
-    const updateIsMeasuring = (isMeasuring) => {
+    const updateIsMeasuring = (isMeasuring: boolean) => {
         if (process.env.NODE_ENV !== 'test') {
             setIsMeasuring(isMeasuring);
         }
@@ -139,7 +134,7 @@ const ButtonLayout = ({
         if (isMeasuring) {
             const req = window.requestAnimationFrame(() => {
                 if (wrapperElRef.current) {
-                    const childrenWidths = [...wrapperElRef.current.children].map((el) =>
+                    const childrenWidths = Array.from(wrapperElRef.current.children).map((el) =>
                         el.classList.contains(classes.link) ? 0 : el.getBoundingClientRect().width
                     );
                     const maxChildWidth = Math.ceil(Math.max(...childrenWidths, BUTTON_MIN_WIDTH));
@@ -162,7 +157,7 @@ const ButtonLayout = ({
     useOnChildrenChangeEffect(wrapperElRef.current, calcLayout);
     useOnFontsReadyEffect(calcLayout);
 
-    const sortedButtons = React.Children.toArray(children).sort((b1, b2) => {
+    const sortedButtons = React.Children.toArray(children).sort((b1: any, b2: any) => {
         const range1 = buttonsRange.indexOf(b1.type);
         const range2 = buttonsRange.indexOf(b2.type);
         return range1 - range2;

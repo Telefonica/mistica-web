@@ -91,7 +91,7 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-type Props = {
+export type SelectProps = {
     id?: string,
     label?: string,
     helperText?: string,
@@ -134,7 +134,7 @@ const Select = ({
     onBlur,
     autoFocus = false,
     focusableRef: externalFocusableRef,
-}: Props): React.Node => {
+}: SelectProps): React.ReactNode => {
     const {isMobile} = useScreenSize();
     const focusableRef = React.useRef<?HTMLDivElement | HTMLSelectElement>();
     const fieldRef = React.useRef<?HTMLDivElement>();

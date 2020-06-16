@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {useTheme, useScreenSize, useWindowHeight} from './hooks';
@@ -45,27 +44,33 @@ const FEEDBACK_INFO: 'info' = 'info';
 
 type FeedbackType = typeof FEEDBACK_SUCCESS | typeof FEEDBACK_ERROR | typeof FEEDBACK_INFO;
 
-type Props = {
-    title: string,
-    primaryButton: React.Element<typeof ButtonPrimary>,
-    secondaryButton?: React.Element<typeof ButtonSecondary>,
-    link?: React.Element<typeof ButtonLink>,
-    description?: string | Array<string>,
-    children?: React.Node,
-};
+interface FeedbackProps {
+    title: string;
+    primaryButton: React.ReactElement<typeof ButtonPrimary>;
+    secondaryButton?: React.ReactElement<typeof ButtonSecondary>;
+    link?: React.ReactElement<typeof ButtonLink>;
+    description?: string | Array<string>;
+    children?: React.ReactNode;
+}
 
-type FeedbackProps = {
-    ...Props,
-    feedbackType: FeedbackType,
-};
+interface FeedbackScreenProps extends FeedbackProps {
+    feedbackType: FeedbackType;
+}
 
-const FeedbackScreen = (props: FeedbackProps) => {
-    const {title, description, feedbackType, children, primaryButton, secondaryButton, link} = props;
+const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
+    title,
+    description,
+    feedbackType,
+    children,
+    primaryButton,
+    secondaryButton,
+    link,
+}) => {
     const theme = useTheme();
     const windowHeight = useWindowHeight();
     const {isMobile} = useScreenSize();
     const topDistance = React.useContext(TopDistanceContext);
-    const footerHeight = getFooterHeight(link, secondaryButton, isMobile);
+    const footerHeight = getFooterHeight(isMobile, link, secondaryButton);
     const isInverse = feedbackType === FEEDBACK_SUCCESS && isMobile;
     const classes = useStyles({
         isInverse,
@@ -102,12 +107,12 @@ const FeedbackScreen = (props: FeedbackProps) => {
     );
 };
 
-export const SuccessFeedbackScreen = (props: Props): React.Node => (
+export const SuccessFeedbackScreen = (props: FeedbackProps): React.ReactNode => (
     <FeedbackScreen feedbackType={FEEDBACK_SUCCESS} {...props} />
 );
-export const ErrorFeedbackScreen = (props: Props): React.Node => (
+export const ErrorFeedbackScreen = (props: FeedbackProps): React.ReactNode => (
     <FeedbackScreen feedbackType={FEEDBACK_ERROR} {...props} />
 );
-export const InfoFeedbackScreen = (props: Props): React.Node => (
+export const InfoFeedbackScreen = (props: FeedbackProps): React.ReactNode => (
     <FeedbackScreen feedbackType={FEEDBACK_INFO} {...props} />
 );

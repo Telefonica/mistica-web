@@ -7,7 +7,7 @@ export default {
     title: 'Hooks|useElementSize',
 };
 
-export const UseElementSize = (): React.Node => {
+export const UseElementSize = (): React.ReactNode => {
     const elementRef = React.useRef();
     const {height, width} = useElementSize(elementRef);
 

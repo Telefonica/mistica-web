@@ -1,27 +1,26 @@
-// @flow
 import * as React from 'react';
 import FixedFooterLayout from './fixed-footer-layout';
 import ButtonLayout from './button-layout';
 import {useScreenSize} from './hooks';
 import {ButtonLink} from './button';
 
-import type {ButtonElement} from './button-layout';
+import type {ButtonElement} from './button';
 
 type Props = {
-    isFooterVisible?: boolean,
-    button: ButtonElement,
-    desktopButtonAlign?: 'left' | 'center',
-    secondaryButton?: ButtonElement,
-    link?: React.Element<typeof ButtonLink>,
-    footerBgColor?: string,
-    containerBgColor?: string,
-    children: React.Node,
+    isFooterVisible?: boolean;
+    button: ButtonElement;
+    desktopButtonAlign?: 'left' | 'center';
+    secondaryButton?: ButtonElement;
+    link?: React.ReactElement<typeof ButtonLink>;
+    footerBgColor?: string;
+    containerBgColor?: string;
+    children: React.ReactNode;
 };
 
 export const getFooterHeight = (
-    link?: React.Element<typeof ButtonLink>,
-    secondaryButton?: ButtonElement,
-    isMobile: boolean
+    isMobile: boolean,
+    link?: React.ReactElement<typeof ButtonLink>,
+    secondaryButton?: ButtonElement
 ): number => {
     if (link) {
         return 128;
@@ -32,7 +31,7 @@ export const getFooterHeight = (
     return 80; // 1 primary button or 2 non-link buttons on desktop or tablet.
 };
 
-const ButtonFixedFooterLayout = ({
+const ButtonFixedFooterLayout: React.FC<Props> = ({
     isFooterVisible = true,
     button,
     secondaryButton,
@@ -41,11 +40,11 @@ const ButtonFixedFooterLayout = ({
     desktopButtonAlign = 'left',
     footerBgColor,
     containerBgColor,
-}: Props): React.Node => {
+}) => {
     const {isMobile} = useScreenSize();
     return (
         <FixedFooterLayout
-            footerHeight={getFooterHeight(link, secondaryButton, isMobile)}
+            footerHeight={getFooterHeight(isMobile, link, secondaryButton)}
             isFooterVisible={!!button && isFooterVisible}
             footerBgColor={footerBgColor}
             containerBgColor={containerBgColor}

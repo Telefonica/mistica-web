@@ -51,7 +51,7 @@ export type TextProps = {
     lineHeight?: string | number,
     color?: string,
     textDecoration?: 'underline' | 'line-through',
-    children?: React.Node,
+    children?: React.ReactNode,
     weight?: FontWeight,
     truncate?: boolean,
     uppercase?: boolean,
@@ -68,7 +68,7 @@ const Text = ({
     uppercase,
     as = 'span',
     children,
-}: TextProps): React.Node => {
+}: TextProps): React.ReactNode => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({size, isInverse, weight, lineHeight, color, textDecoration, uppercase});
     if (!children) {
