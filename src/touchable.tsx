@@ -118,13 +118,7 @@ interface PropsMaybeOnPress extends CommonProps {
 
 type Props = PropsHref | PropsTo | PropsOnPress | PropsMaybeHref | PropsMaybeTo | PropsMaybeOnPress;
 
-const Touchable = (
-    props: Props
-):
-    | React.ReactElement<typeof Link>
-    | React.ReactElement<'a'>
-    | React.ReactElement<'button'>
-    | React.ReactElement<'div'> => {
+const Touchable: React.FC<Props> = (props) => {
     const {texts, analytics, platformOverrides} = useTheme();
     const classes = useStyles();
     const isClicked = React.useRef(false);

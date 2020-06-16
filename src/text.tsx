@@ -1,64 +1,55 @@
-// @flow
 import * as React from 'react';
 import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 
-const mapToWeight = {
-    light: 300,
-    regular: 400,
-    medium: 500,
-    bold: 700,
-};
+const useStyles = createUseStyles((theme) => {
+    const mapToWeight: Record<string, number> = {
+        light: 300,
+        regular: 400,
+        medium: 500,
+        bold: 700,
+    };
 
-const useStyles = createUseStyles((theme) => ({
-    text: {
-        lineHeight: ({lineHeight}) => lineHeight ?? 'initial',
-        textTransform: ({uppercase}) => (uppercase ? 'uppercase' : 'inherit'),
-        fontSize: ({size}) => size,
-        fontWeight: ({weight}) => {
-            if (!weight) {
-                return 'inherit';
-            }
+    const inverseColorsMap: Record<string, string> = {
+        [theme.colors.textPrimary]: theme.colors.textPrimaryInverse,
+        [theme.colors.textSecondary]: theme.colors.textButtonPrimaryInverseDisabled,
+    };
 
-            return mapToWeight[weight];
+    return {
+        text: {
+            lineHeight: ({lineHeight}) => lineHeight ?? 'initial',
+            textTransform: ({uppercase}) => (uppercase ? 'uppercase' : 'inherit'),
+            fontSize: ({size}) => size,
+            fontWeight: ({weight}) => (weight ? mapToWeight[weight] : 'inherit'),
+            color: ({isInverse, color = theme.colors.textPrimary}) =>
+                isInverse ? inverseColorsMap[color] ?? color : color,
+            textDecoration: (p) => p.textDecoration,
         },
-        color: ({isInverse, color = theme.colors.textPrimary}) => {
-            if (isInverse) {
-                const inverseColorsMap: {[string]: string, ...} = {
-                    [(theme.colors.textPrimary: string)]: theme.colors.textPrimaryInverse,
-                    [(theme.colors.textSecondary: string)]: theme.colors.textButtonPrimaryInverseDisabled,
-                };
-
-                return inverseColorsMap[color] ?? color;
-            }
-            return color;
+        truncate: {
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
+            display: 'block',
         },
-        textDecoration: (p) => p.textDecoration,
-    },
-    truncate: {
-        whiteSpace: 'nowrap',
-        textOverflow: 'ellipsis',
-        overflow: 'hidden',
-        display: 'block',
-    },
-}));
+    };
+});
 
 type FontWeight = 'light' | 'regular' | 'medium' | 'bold';
 
 export type TextProps = {
-    size: number,
-    lineHeight?: string | number,
-    color?: string,
-    textDecoration?: 'underline' | 'line-through',
-    children?: React.ReactNode,
-    weight?: FontWeight,
-    truncate?: boolean,
-    uppercase?: boolean,
-    as?: React.ComponentType<mixed> | string,
+    size: number;
+    lineHeight?: string | number;
+    color?: string;
+    textDecoration?: 'underline' | 'line-through';
+    children?: React.ReactNode;
+    weight?: FontWeight;
+    truncate?: boolean;
+    uppercase?: boolean;
+    as?: React.ComponentType<any> | string;
 };
 
-const Text = ({
+const Text: React.FC<TextProps> = ({
     size,
     weight,
     color,
@@ -68,7 +59,7 @@ const Text = ({
     uppercase,
     as = 'span',
     children,
-}: TextProps): React.ReactNode => {
+}) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({size, isInverse, weight, lineHeight, color, textDecoration, uppercase});
     if (!children) {

@@ -3,7 +3,6 @@ import {createUseStyles} from './jss';
 import {Label, HelperText, FieldContainer} from './text-field-components';
 import {isIos, isRunningAcceptanceTest} from './utils/platform';
 
-import type {PhoneInputType} from './phone-input';
 import type {Theme} from './theme';
 import type {InputState} from './text-field-components';
 
@@ -30,6 +29,7 @@ type AutoComplete =
 
 interface TextFieldBaseProps {
     id: string;
+    type: string;
     autoComplete?: AutoComplete;
     autoFocus?: boolean;
     disabled?: boolean;
@@ -54,56 +54,15 @@ interface TextFieldBaseProps {
     onFocus?: (event: React.FocusEvent) => void;
     onKeyDown?: (event: React.KeyboardEvent) => void;
     // to pass custom props (eg: data attributes) to input element,
-    inputProps?: {[name: string]: string};
+    inputProps?: {[name: string]: string | number};
     inputComponent?: React.ComponentType<any>;
     shrinkLabel?: boolean;
     focus?: boolean;
     fieldStyle?: React.CSSProperties;
     fieldRef?: React.RefObject<HTMLDivElement>;
-    children: React.ReactNode;
     onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
-}
-
-interface SimpleTextFieldBaseProps extends TextFieldBaseProps {
-    onChangeValue?: (value: string) => void;
     multiline?: boolean;
-    type?: 'text';
 }
-
-interface OtherTextFieldBaseProps extends TextFieldBaseProps {
-    onChangeValue?: (value: string) => void;
-    type:
-        | 'email'
-        | 'password'
-        | 'credit-card-name'
-        | 'credit-card-number'
-        | 'credit-card-cvv'
-        | 'integer'
-        | 'decimal'
-        | 'date';
-    multiline?: undefined;
-}
-
-interface PhoneTextFieldBaseProps extends TextFieldBaseProps {
-    onChangeValue?: (value: string) => void;
-    // Phone Input is defined in a different module
-    // this way libphonenumber is not imported for all inputs
-    Input: PhoneInputType;
-    type: 'phone';
-    multiline?: undefined;
-}
-
-interface CreditCardExpirationTextFieldBaseProps extends TextFieldBaseProps {
-    onChangeValue?: (value: {month: number; year: number; raw: string}) => void;
-    type: 'credit-card-expiration';
-    multiline?: undefined;
-}
-
-type Props =
-    | SimpleTextFieldBaseProps
-    | OtherTextFieldBaseProps
-    | PhoneTextFieldBaseProps
-    | CreditCardExpirationTextFieldBaseProps;
 
 const commonInputStyles = (theme: Theme) => ({
     background: 'none',
@@ -180,7 +139,7 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-const TextFieldBase = React.forwardRef<any, Props>(
+const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
     (
         {
             error,
@@ -201,8 +160,8 @@ const TextFieldBase = React.forwardRef<any, Props>(
             focus,
             fieldStyle,
             fieldRef,
-            children,
             maxLength,
+            children, // unused
             ...rest
         },
         ref
@@ -328,7 +287,6 @@ const TextFieldBase = React.forwardRef<any, Props>(
                     </Label>
                 )}
                 {endIcon && <div className={classes.endIcon}>{endIcon}</div>}
-                {children}
             </FieldContainer>
         );
     }

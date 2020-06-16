@@ -61,7 +61,7 @@ interface CommonTextFieldProps {
     defaultValue?: string;
     name?: string;
     maxLength?: number;
-    prefix?: string;
+    prefix?: React.ReactNode;
     endIcon?: React.ReactNode;
     style?: React.CSSProperties;
     value?: string;
@@ -470,7 +470,7 @@ const TextField: React.FC<TextFieldProps> = ({
 }) => {
     const {formStatus} = useForm();
     const [isPasswordVisible, setPasswordVisibility] = React.useState(false);
-    const [suggestions, setSuggestions] = React.useState([]);
+    const [suggestions, setSuggestions] = React.useState<Array<string>>([]);
     const inputRef = React.useRef<HTMLInputElement>(null);
     const [currentInputValue, setCurrentInputValue] = React.useState(props.value || props.defaultValue);
     const {isMobile} = useScreenSize();
@@ -501,10 +501,11 @@ const TextField: React.FC<TextFieldProps> = ({
     };
 
     const newProps: Omit<TextFieldProps, 'type'> & {
+        id: string;
         inputMode?: string;
         fieldStyle?: React.CSSProperties;
         shrinkLabel?: boolean;
-        inputComponent?: React.ReactNode;
+        inputComponent?: React.ComponentType<any>;
         onInput?: React.FormEventHandler<HTMLInputElement>;
         type: string;
         multiline?: boolean;
@@ -604,7 +605,6 @@ const TextField: React.FC<TextFieldProps> = ({
             newProps.inputComponent = CreditCardInput;
             newProps.autoComplete = newProps.autoComplete || 'cc-number';
             newProps.onInput = (e: React.FormEvent<HTMLInputElement>) => {
-                // @ts-expect-error TODO: check this case
                 setCurrentInputValue(e.currentTarget.value);
             };
             processValue = (s: any) => String(s).replace(/\s/g, '');
@@ -674,6 +674,7 @@ const TextField: React.FC<TextFieldProps> = ({
                         }
                     >
                         <Autosuggest
+                            // @ts-expect-error Autosuggest expects slightly different types
                             inputProps={{
                                 ...newProps,
                                 autoComplete: 'off',
@@ -686,14 +687,14 @@ const TextField: React.FC<TextFieldProps> = ({
                             }}
                             renderInputComponent={(inputProps) => (
                                 <TextFieldBase
-                                    {...inputProps}
+                                    {...(inputProps as typeof newProps)}
                                     inputRef={(actualRef) => {
                                         [externalInputRef, inputRef].forEach((currentRef) => {
                                             if (currentRef) {
                                                 if (typeof currentRef === 'function') {
                                                     currentRef(actualRef);
                                                 } else {
-                                                    // $FlowFixMe
+                                                    // @ts-expect-error https://github.com/DefinitelyTyped/DefinitelyTyped/issues/31065
                                                     currentRef.current = actualRef;
                                                 }
                                             }
@@ -704,8 +705,8 @@ const TextField: React.FC<TextFieldProps> = ({
                             suggestions={suggestions}
                             onSuggestionsFetchRequested={({value}) => setSuggestions(getSuggestions(value))}
                             onSuggestionsClearRequested={() => setSuggestions([])}
-                            getSuggestionValue={(suggestion) => suggestion}
-                            renderSuggestion={(suggestion, {isHighlighted}) => (
+                            getSuggestionValue={(suggestion: any) => suggestion}
+                            renderSuggestion={(suggestion: any, {isHighlighted}) => (
                                 <div
                                     role="menuitem"
                                     className={classNames(classes.menuItem, {
