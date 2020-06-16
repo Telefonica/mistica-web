@@ -34,7 +34,7 @@ const DoubleField: React.FC<Props> = ({children, fullWidth}) => {
     };
 
     const renderChildren = () => {
-        const [first, second] = React.Children.toArray(children);
+        const [first, second]: any = React.Children.toArray(children);
         return (
             <>
                 <Box paddingRight={8} width="50%">

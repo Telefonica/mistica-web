@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import ScreenSizeContext from './screen-size-context';
 import {useTheme} from './hooks';
@@ -7,9 +6,9 @@ type Props = {
     children: React.ReactNode;
 };
 
-const stripMedia = (s) => s.replace(/^@media /, '');
+const stripMedia = (s: string) => s.replace(/^@media /, '');
 
-const ScreenSizeContextProvider = ({children}: Props): React.ReactNode => {
+const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
     const theme = useTheme();
     const mediaQueries = React.useMemo(
         () => ({
@@ -31,7 +30,7 @@ const ScreenSizeContextProvider = ({children}: Props): React.ReactNode => {
     );
 
     React.useLayoutEffect(() => {
-        const entries = [
+        const entries: Array<[string, (flag: boolean) => void]> = [
             [mediaQueries.mobile, setIsMobile],
             [mediaQueries.tablet, setIsTablet],
             [mediaQueries.tabletOrBigger, setIsTabletOrBigger],

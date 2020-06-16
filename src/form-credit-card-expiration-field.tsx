@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {useForm} from './form-context';
 import {useTheme} from './hooks';
@@ -12,12 +11,12 @@ type ExpirationDateValue = {
     raw: string;
 };
 
-interface FormCreditCardExpirationFieldProps extends CommonFormFieldProps {
+export interface FormCreditCardExpirationFieldProps extends CommonFormFieldProps {
     // validate?: (value: ExpirationDateValue | void, rawValue: string | void) => string | void;
     onChangeValue?: (value: ExpirationDateValue) => void;
 }
 
-const FormCreditCardExpirationField = ({
+const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -27,7 +26,7 @@ const FormCreditCardExpirationField = ({
     onChangeValue,
     onBlur,
     ...rest
-}: FormCreditCardExpirationFieldProps): React.ReactNode => {
+}) => {
     const {texts} = useTheme();
     const {
         rawValues,
