@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import Touchable from './touchable';
@@ -74,17 +73,17 @@ type Props = {
     buttonText?: string;
     duration?: number;
     message: string;
-    onClose?: () => mixed;
+    onClose?: () => unknown;
     type?: SnackbarType;
 };
 
-const Snackbar = ({
+const Snackbar: React.FC<Props> = ({
     message,
     buttonText,
     duration = buttonText ? 10000 : 5000,
     onClose = () => {},
     type = 'INFORMATIVE',
-}: Props) => {
+}) => {
     const [isOpen, setIsOpen] = React.useState(false);
     const classes = useStyles({type, isOpen});
 

@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {useForm} from './form-context';
 import {useTheme} from './hooks';
@@ -9,7 +8,12 @@ import type {CommonFormFieldProps} from './form';
 // matches strings like: "x@x.x" (where "x" is any string without spaces)
 const RE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const FormEmailField = ({
+interface FormEmailFieldProps extends CommonFormFieldProps {
+    value?: string;
+    onChangeValue?: (value: string, rawValue: string) => void;
+}
+
+const FormEmailField: React.FC<FormEmailFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -19,12 +23,7 @@ const FormEmailField = ({
     onChangeValue,
     onBlur,
     ...rest
-}: {
-    ...CommonFormFieldProps,
-    value?: string,
-    validate?: (value: string | void, rawValue: string | void) => string | void,
-    onChangeValue?: (value: string, rawValue: string) => void,
-}): React.ReactNode => {
+}) => {
     const {texts} = useTheme();
     const {
         rawValues,
@@ -37,7 +36,7 @@ const FormEmailField = ({
         register,
     } = useForm();
 
-    const validate = (value?: string, rawValue) => {
+    const validate = (value: string | void, rawValue: string) => {
         if (!value) {
             return optional ? '' : texts.formFieldErrorIsMandatory;
         }

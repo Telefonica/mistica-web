@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 import Text from './text';
@@ -7,16 +6,17 @@ import {useTheme} from './hooks';
 const BREADCRUMB_SEPARATOR = ' / ';
 
 type NavigationBreadcrumbsProps = {
-    title: string,
-    breadcrumbs: $ReadOnlyArray<{
-        +title: string,
-        +url: string,
-    }>,
+    title: string;
+    breadcrumbs: Readonly<
+        Array<{
+            readonly title: string;
+            readonly url: string;
+        }>
+    >;
 };
 
-const NavigationBreadcrumbs = ({title, breadcrumbs}: NavigationBreadcrumbsProps): React.ReactElement<'div'> => {
+const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({title, breadcrumbs}) => {
     const theme = useTheme();
-
     return (
         <div>
             {breadcrumbs.map(({title, url}, index) => (

@@ -1,14 +1,14 @@
-// @flow
 import * as React from 'react';
 
 type AvatarPlaceholderProps = {size?: string | number};
-type PlaceholderProps = {width?: string | number; height?: string | number};
 
-export const AvatarPlaceholder = ({size = 40}: AvatarPlaceholderProps): React.ReactElement<'div'> => (
+export const AvatarPlaceholder: React.FC<AvatarPlaceholderProps> = ({size = 40}) => (
     <div style={{width: size, height: size, borderRadius: '50%', background: 'gray'}} />
 );
 
-const Placeholder = ({width = 'auto', height = 120}: PlaceholderProps): React.ReactElement<'div'> => (
+type PlaceholderProps = {width?: string | number; height?: string | number};
+
+export const Placeholder: React.FC<PlaceholderProps> = ({width = 'auto', height = 120}) => (
     <div
         style={{
             height,
@@ -19,10 +19,8 @@ const Placeholder = ({width = 'auto', height = 120}: PlaceholderProps): React.Re
         }}
     >
         <svg width="full" height="full">
-            <line style={{strokeWith: 2, stroke: 'rgba(51,51,51,.1)'}} x1={0} y1={0} x2="100%" y2="100%" />
-            <line style={{strokeWith: 2, stroke: 'rgba(51,51,51,.1)'}} x1="100%" y1={0} x2={0} y2="100%" />
+            <line style={{strokeWidth: 2, stroke: 'rgba(51,51,51,.1)'}} x1={0} y1={0} x2="100%" y2="100%" />
+            <line style={{strokeWidth: 2, stroke: 'rgba(51,51,51,.1)'}} x1="100%" y1={0} x2={0} y2="100%" />
         </svg>
     </div>
 );
-
-export default Placeholder;

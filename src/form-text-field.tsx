@@ -1,24 +1,27 @@
-// @flow
 import * as React from 'react';
 import {useForm} from './form-context';
 import TextField from './text-field';
 
 import type {CommonFormFieldProps} from './form';
+import type {SimpleTextFieldProps} from './text-field';
 
-export type FormTextFieldProps =
-    | {
-          ...CommonFormFieldProps,
-          onChangeValue?: (value: string, rawValue: string) => void,
-          multiline?: boolean,
-          type?: 'text',
-      }
-    | {
-          ...CommonFormFieldProps,
-          onChangeValue?: (value: string, rawValue: string) => void,
-          type: 'password' | 'integer' | 'decimal' | 'date',
-      };
+export interface SimpleFormTextFieldProps extends CommonFormFieldProps {
+    type?: 'text';
+    value?: string;
+    onChangeValue?: (value: string, rawValue: string) => void;
+    multiline?: boolean;
+}
+export interface OtherFormTextFieldProps extends CommonFormFieldProps {
+    type: 'password' | 'integer' | 'decimal' | 'date';
+    value?: string;
+    onChangeValue?: (value: string, rawValue: string) => void;
+}
 
-const FormTextField = ({
+export type FormTextFieldProps = SimpleFormTextFieldProps | OtherFormTextFieldProps;
+
+const CustomTextField = TextField as React.FC<SimpleTextFieldProps | OtherFormTextFieldProps>;
+
+const FormTextField: React.FC<FormTextFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -30,11 +33,7 @@ const FormTextField = ({
     onBlur,
     value,
     ...rest
-}: {
-    ...FormTextFieldProps,
-    value?: string,
-    validate?: (value: string | void, rawValue: string | void) => string | void,
-}): React.ReactNode => {
+}) => {
     const {
         rawValues,
         setRawValue,
@@ -47,7 +46,7 @@ const FormTextField = ({
     } = useForm();
 
     return (
-        <TextField
+        <CustomTextField
             {...rest}
             inputRef={(field) => register({name, field, validate})}
             disabled={disabled || formStatus === 'sending'}
@@ -58,7 +57,7 @@ const FormTextField = ({
             required={!optional}
             value={value ?? rawValues[name] ?? ''}
             onChange={(event) => setRawValue({name, value: event.currentTarget.value})}
-            onChangeValue={(value, rawValue) => {
+            onChangeValue={(value: string, rawValue: string) => {
                 setValue({name, value});
                 onChangeValue?.(value, rawValue);
                 setFormError({name, error: ''});

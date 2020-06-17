@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {useForm} from './form-context';
 import {useTheme} from './hooks';
@@ -7,7 +6,12 @@ import PhoneInput from './phone-input';
 
 import type {CommonFormFieldProps} from './form';
 
-const FormPhoneNumberField = ({
+interface FormPhoneNumberFieldProps extends CommonFormFieldProps {
+    prefix?: string;
+    onChangeValue?: (value: string, rawValue: string) => void;
+}
+
+const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -17,12 +21,7 @@ const FormPhoneNumberField = ({
     onChangeValue,
     onBlur,
     ...rest
-}: {
-    ...CommonFormFieldProps,
-    prefix?: string,
-    validate?: (value: string | void, rawValue: string | void) => string | void,
-    onChangeValue?: (string, string) => void,
-}): React.ReactNode => {
+}) => {
     const {texts} = useTheme();
     const {
         rawValues,
@@ -35,7 +34,7 @@ const FormPhoneNumberField = ({
         register,
     } = useForm();
 
-    const validate = (value: string | void, rawValue) => {
+    const validate = (value: string | void, rawValue: string) => {
         if (!value) {
             return optional ? '' : texts.formFieldErrorIsMandatory;
         }

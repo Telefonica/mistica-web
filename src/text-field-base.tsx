@@ -29,7 +29,7 @@ type AutoComplete =
 
 interface TextFieldBaseProps {
     id: string;
-    type: string;
+    type?: string;
     autoComplete?: AutoComplete;
     autoFocus?: boolean;
     disabled?: boolean;
@@ -47,7 +47,7 @@ interface TextFieldBaseProps {
     endIcon?: React.ReactNode;
     style?: React.CSSProperties;
     value?: string;
-    inputRef?: React.Ref<HTMLInputElement>;
+    inputRef?: React.Ref<HTMLInputElement | HTMLSelectElement>;
     getSuggestions?: (value: string) => Array<string>;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (event: React.FocusEvent) => void;
@@ -62,6 +62,7 @@ interface TextFieldBaseProps {
     fieldRef?: React.RefObject<HTMLDivElement>;
     onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
     multiline?: boolean;
+    children?: React.ReactNode;
 }
 
 const commonInputStyles = (theme: Theme) => ({
@@ -287,6 +288,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                     </Label>
                 )}
                 {endIcon && <div className={classes.endIcon}>{endIcon}</div>}
+                {children}
             </FieldContainer>
         );
     }

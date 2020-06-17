@@ -75,14 +75,14 @@ interface CommonTextFieldProps {
     inputProps?: {[prop: string]: string | number};
 }
 
-interface SimpleTextFieldProps extends CommonTextFieldProps {
+export interface SimpleTextFieldProps extends CommonTextFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
     multiline?: boolean;
     type?: 'text';
     Input?: undefined;
 }
 
-interface OtherTextFieldProps extends CommonTextFieldProps {
+export interface OtherTextFieldProps extends CommonTextFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
     type:
         | 'email'

@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {useAriaId, useTheme, useScreenSize} from './hooks';
 import {isAndroid, isIos} from './utils/platform';
@@ -10,7 +9,7 @@ import classNames from 'classnames';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/key-codes';
 import {FieldContainer, HelperText, Label} from './text-field-components';
 
-const cancelEvent = (event) => {
+const cancelEvent = (event: React.SyntheticEvent | Event) => {
     event.stopPropagation();
     event.preventDefault();
 };
@@ -92,30 +91,32 @@ const useStyles = createUseStyles((theme) => ({
 }));
 
 export type SelectProps = {
-    id?: string,
-    label?: string,
-    helperText?: string,
-    value?: string,
-    onChange?: (event: SyntheticInputEvent<*>) => void,
-    onChangeValue?: (string) => void,
-    name?: string,
-    fullWidth?: boolean,
-    style?: Object,
-    options: $ReadOnlyArray<{
-        value: string,
-        text: string,
-    }>,
-    required?: boolean,
-    inputRef?: React.Ref<'select' | 'input'>,
-    disabled?: boolean,
-    error?: boolean,
-    inputProps?: {[string]: string, ...},
-    autoFocus?: boolean,
-    onBlur?: (event: SyntheticEvent<*>) => void,
-    focusableRef?: React.Ref<'div' | 'select'>,
+    id?: string;
+    label?: string;
+    helperText?: string;
+    value?: string;
+    onChange?: (event: React.ChangeEvent<any>) => void;
+    onChangeValue?: (value: string) => void;
+    name?: string;
+    fullWidth?: boolean;
+    style?: React.CSSProperties;
+    options: Readonly<
+        Array<{
+            value: string;
+            text: string;
+        }>
+    >;
+    required?: boolean;
+    inputRef?: React.Ref<HTMLSelectElement | HTMLInputElement>;
+    disabled?: boolean;
+    error?: boolean;
+    inputProps?: {[prop: string]: string};
+    autoFocus?: boolean;
+    onBlur?: (event: React.FocusEvent<any>) => void;
+    focusableRef?: React.Ref<HTMLDivElement | HTMLSelectElement>;
 };
 
-const Select = ({
+const Select: React.FC<SelectProps> = ({
     id,
     label: labelProp,
     helperText,
@@ -134,24 +135,24 @@ const Select = ({
     onBlur,
     autoFocus = false,
     focusableRef: externalFocusableRef,
-}: SelectProps): React.ReactNode => {
+}) => {
     const {isMobile} = useScreenSize();
-    const focusableRef = React.useRef<?HTMLDivElement | HTMLSelectElement>();
-    const fieldRef = React.useRef<?HTMLDivElement>();
-    const optionsMenuRef = React.useRef();
+    const focusableRef = React.useRef<HTMLDivElement | HTMLSelectElement>(null);
+    const fieldRef = React.useRef<HTMLDivElement>(null);
+    const optionsMenuRef = React.useRef<HTMLUListElement>(null);
     const optionRefs = React.useRef(new Map<string, HTMLLIElement>());
-    const [valueState, setValueState] = React.useState(undefined);
+    const [valueState, setValueState] = React.useState<string>();
     const [optionsShown, setOptionsShown] = React.useState(false);
     const [animateShowOptions, setAnimateShowOptions] = React.useState(false);
     const [isFocused, setIsFocused] = React.useState(false);
     const [optionsComputedProps, setOptionsComputedProps] = React.useState({});
-    const [tentativeValueState, setTentativeValueState] = React.useState(undefined);
-    const lastElementSelectionScrollTop = React.useRef();
+    const [tentativeValueState, setTentativeValueState] = React.useState<string>();
+    const lastElementSelectionScrollTop = React.useRef<number>(null);
     const inputId = useAriaId(id);
     const {texts} = useTheme();
     const label = required ? labelProp : `${labelProp ?? ''} (${texts.formFieldOptionalLabelSuffix})`;
 
-    const toggleOptions = (show) => {
+    const toggleOptions = (show: boolean) => {
         if (show) {
             if (fieldRef?.current) {
                 const MAX_OPTIONS = 8;
@@ -212,7 +213,8 @@ const Select = ({
         }
     };
 
-    const setValue = (val) => {
+    const setValue = (val?: string) => {
+        // @ts-expect-error current is typed as read-only
         lastElementSelectionScrollTop.current = optionsMenuRef.current?.scrollTop;
         toggleOptions(false);
         if (onChangeValue && typeof val === 'string') {
@@ -228,7 +230,10 @@ const Select = ({
         if (menuClientRect && tentativeValueState && optionRefs.current.has(tentativeValueState)) {
             const itemRef = optionRefs.current.get(tentativeValueState);
             const clientRect = itemRef?.getBoundingClientRect();
-            if (clientRect?.top + clientRect?.height >= menuClientRect.top + menuClientRect.height) {
+            if (
+                clientRect &&
+                clientRect.top + clientRect.height >= menuClientRect.top + menuClientRect.height
+            ) {
                 itemRef?.scrollIntoView();
                 return;
             }
@@ -239,7 +244,7 @@ const Select = ({
     };
 
     React.useEffect(() => {
-        const handleKeyDown: KeyboardEventListener = (e) => {
+        const handleKeyDown = (e: KeyboardEvent) => {
             if (optionsShown) {
                 if (e.keyCode === TAB) {
                     cancelEvent(e);
@@ -302,7 +307,7 @@ const Select = ({
     });
 
     // When the value is null/undefined/'' we assume it's the default empty option and we don't show any label
-    const getOptionText = (val) => (val ? options.find(({value}) => value === val)?.text : '');
+    const getOptionText = (val?: string) => (val ? options.find(({value}) => value === val)?.text : '');
 
     const containerExtraProps = disabled
         ? {}
@@ -314,7 +319,7 @@ const Select = ({
                   toggleOptions(true);
                   setIsFocused(true);
               },
-              onKeyDown: (e) => {
+              onKeyDown: (e: React.KeyboardEvent) => {
                   if (!optionsShown && (e.keyCode === SPACE || e.keyCode === ENTER)) {
                       cancelEvent(e);
                       toggleOptions(true);
@@ -364,7 +369,7 @@ const Select = ({
                             if (typeof currentRef === 'function') {
                                 currentRef(actualRef);
                             } else if (currentRef) {
-                                // $FlowFixMe
+                                // @ts-expect-error current is typed as read-only
                                 currentRef.current = actualRef;
                             }
                         });
@@ -397,7 +402,7 @@ const Select = ({
                         if (typeof currentRef === 'function') {
                             currentRef(actualRef);
                         } else if (currentRef) {
-                            // $FlowFixMe
+                            // @ts-expect-error current is typed as read-only
                             currentRef.current = actualRef;
                         }
                     });

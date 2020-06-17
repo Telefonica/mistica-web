@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {useForm} from './form-context';
 import {useTheme} from './hooks';
@@ -14,7 +13,12 @@ import {
 import type {CommonFormFieldProps} from './form';
 import type {CardOptions} from './utils/credit-card';
 
-const FormCreditCardNumberField = ({
+interface FormCreditCardNumberFieldProps extends CommonFormFieldProps {
+    acceptedCards?: CardOptions;
+    onChangeValue?: (value: string, rawValue: string) => void;
+}
+
+const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -25,12 +29,7 @@ const FormCreditCardNumberField = ({
     onBlur,
     acceptedCards = {americanExpress: true, visa: true, masterCard: true},
     ...rest
-}: {
-    ...CommonFormFieldProps,
-    acceptedCards?: CardOptions,
-    validate?: (value: string | void, rawValue: string | void) => string | void,
-    onChangeValue?: (value: string, rawValue: string) => void,
-}): React.ReactNode => {
+}) => {
     const {texts} = useTheme();
     const {
         rawValues,
@@ -44,7 +43,7 @@ const FormCreditCardNumberField = ({
         jumpToNext,
     } = useForm();
 
-    const validate = (value: string | void, rawValue) => {
+    const validate = (value: string | void, rawValue: string) => {
         const error = texts.formCreditCardNumberError;
         if (!value) {
             return optional ? '' : texts.formFieldErrorIsMandatory;

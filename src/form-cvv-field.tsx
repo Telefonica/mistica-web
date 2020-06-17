@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {getPlatform} from './utils/platform';
@@ -48,14 +47,13 @@ const TooltipContent = ({acceptedCards}: {acceptedCards: CardOptions}) => {
     );
 };
 
-export type FormCvvFieldProps = {
-    ...CommonFormFieldProps,
-    acceptedCards?: CardOptions,
-    onChangeValue?: (value: string, rawValue: string) => void,
-    type: 'credit-card-cvv',
-};
+export interface FormCvvFieldProps extends CommonFormFieldProps {
+    acceptedCards?: CardOptions;
+    onChangeValue?: (value: string, rawValue: string) => void;
+    type: 'credit-card-cvv';
+}
 
-const FormCvvField = ({
+const FormCvvField: React.FC<FormCvvFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -67,7 +65,7 @@ const FormCvvField = ({
     acceptedCards = {americanExpress: true, visa: true, masterCard: true},
     maxLength,
     ...rest
-}: FormCvvFieldProps): React.ReactNode => {
+}) => {
     const {texts} = useTheme();
     const {
         rawValues,
@@ -81,7 +79,7 @@ const FormCvvField = ({
         jumpToNext,
     } = useForm();
 
-    const validate = (value, rawValue) => {
+    const validate = (value: string, rawValue: string) => {
         if (!value) {
             return optional ? '' : texts.formFieldErrorIsMandatory;
         }

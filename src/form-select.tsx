@@ -1,28 +1,27 @@
-// @flow
 import * as React from 'react';
 import {useForm} from './form-context';
 import Select from './select';
 
 export type FormSelectProps = {
-    disabled?: boolean,
-    error?: boolean,
-    helperText?: string,
-    id?: string,
-    label?: string,
-    name: string,
-    optional?: boolean,
+    disabled?: boolean;
+    error?: boolean;
+    helperText?: string;
+    id?: string;
+    label?: string;
+    name: string;
+    optional?: boolean;
     // use `inputProps` to pass props (as attributes) to the input element, for example a data-testid
-    inputProps?: {[prop: string]: string, ...},
-    validate?: (value: string | void, rawValue: string | void) => string | void,
-    onChangeValue?: (string) => void,
-    onBlur?: (event: SyntheticEvent<*>) => void,
-    options: $ReadOnlyArray<{value: string, text: string}>,
-    autoFocus?: boolean,
-    value?: string,
-    fullWidth?: boolean,
+    inputProps?: {[prop: string]: string};
+    validate?: (value: string | void, rawValue: string | void) => string | void;
+    onChangeValue?: (value: string) => void;
+    onBlur?: (event: React.FocusEvent<any>) => void;
+    options: Readonly<Array<{value: string; text: string}>>;
+    autoFocus?: boolean;
+    value?: string;
+    fullWidth?: boolean;
 };
 
-const FormSelect = ({
+const FormSelect: React.FC<FormSelectProps> = ({
     disabled,
     error,
     helperText,
@@ -32,10 +31,10 @@ const FormSelect = ({
     onChangeValue,
     value,
     ...rest
-}: FormSelectProps): React.ReactNode => {
+}) => {
     const {rawValues, setRawValue, setValue, formStatus, formErrors, setFormError, register} = useForm();
-    const focusableRef = React.useRef<?HTMLDivElement | HTMLSelectElement>();
-    const inputRef = React.useRef();
+    const focusableRef = React.useRef<HTMLDivElement | HTMLSelectElement>(null);
+    const inputRef = React.useRef<HTMLInputElement>(null);
 
     const focusableElement = focusableRef.current;
     const inputElement = inputRef.current;

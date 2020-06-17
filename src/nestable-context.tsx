@@ -1,8 +1,7 @@
-// @flow
 import * as React from 'react';
 import isEqual from 'lodash/isEqual';
 
-const useDeepCompareMemoize = (value) => {
+const useDeepCompareMemoize = (value: any) => {
     const ref = React.useRef();
 
     if (!isEqual(value, ref.current)) {
@@ -21,33 +20,34 @@ const useDeepCompareEffect: typeof React.useEffect = (create, inputs) =>
 
 type Action<Value> =
     | {
-          type: 'add',
-          value: Value,
+          type: 'add';
+          value: Value;
       }
     | {
-          type: 'remove',
-          value: Value,
+          type: 'remove';
+          value: Value;
       };
-type Dispatch<Value> = (Action<Value>) => void;
+
+type Dispatch<Value> = (action: Action<Value>) => void;
 
 type ProviderProps = {children: React.ReactNode};
 
-const isObject = (object: any): boolean %checks =>
+const isObject = (object: any): object is Record<string, unknown> =>
     object !== null && typeof object === 'object' && !Array.isArray(object);
 
-const createNestableContext = <Value>(
-    defaultValue: Value
-): ({
-    Getter: React.ComponentType<{children: (value: Value) => React.ReactNode}>,
-    Provider: React.ComponentType<ProviderProps>,
-    Setter: React.ComponentType<{value: Value}>,
-    useValue: () => Value,
-    useSetValue: (value: Value) => void,
-}) => {
+type NestableContext<Value> = {
+    Getter: React.FC<{children: (value: Value) => React.ReactNode}>;
+    Provider: React.FC<{value: Value}>;
+    Setter: React.FC<{value: Value}>;
+    useValue: () => Value;
+    useSetValue: (value: Value) => void;
+};
+
+const createNestableContext = <Value extends any>(defaultValue: Value): NestableContext<Value> => {
     const DispatchContext = React.createContext<Dispatch<Value>>(() => {});
     const ValueContext = React.createContext<Value>(defaultValue);
 
-    let isProviderInstanceMounted: boolean = false;
+    let isProviderInstanceMounted = false;
 
     /*
     This component may have multiple children setting a value at the same time. When a child component mounts,
@@ -63,7 +63,7 @@ const createNestableContext = <Value>(
     - Page 1 sets value X, page 2 sets value Y. While transitioning between both values X and Y are set at
     the same time, when Page 1 unmounts, value Y should be used.
     */
-    const reducer = (values, action) => {
+    const reducer = (values: Array<Value>, action: Action<Value>): Array<Value> => {
         switch (action.type) {
             case 'add':
                 return [...values, action.value];
@@ -72,11 +72,11 @@ const createNestableContext = <Value>(
                 return [...values.slice(0, idx), ...values.slice(idx + 1, values.length)];
             }
             default:
-                throw new Error(`Unhandled action type ${(action.type: empty)}`);
+                throw new Error(`Unhandled action type ${(action as any).type}`);
         }
     };
 
-    const Provider = ({children}: ProviderProps) => {
+    const Provider: React.FC<{value: Value}> = ({children}) => {
         React.useEffect(() => {
             if (!isProviderInstanceMounted) {
                 isProviderInstanceMounted = true;
@@ -91,7 +91,7 @@ const createNestableContext = <Value>(
             };
         }, []);
 
-        const [values, dispatch] = React.useReducer<Array<Value>, Action<Value>>(reducer, []);
+        const [values, dispatch] = React.useReducer(reducer, []);
         let computedValue: Value = defaultValue;
         if (values.length) {
             if (isObject(values[0])) {
@@ -108,7 +108,7 @@ const createNestableContext = <Value>(
         );
     };
 
-    const useSetValue = (value) => {
+    const useSetValue = (value: Value) => {
         const dispatch = React.useContext(DispatchContext);
 
         useDeepCompareEffect(() => {
@@ -121,12 +121,14 @@ const createNestableContext = <Value>(
 
     const useValue = () => React.useContext(ValueContext);
 
-    const Setter = ({value}: {value: Value}) => {
+    const Setter: React.FC<{value: Value}> = ({value}) => {
         useSetValue(value);
         return null;
     };
 
-    const Getter = ({children}: {children: (value: Value) => React.ReactNode}) => children(useValue());
+    const Getter: React.FC<{children: (value: Value) => React.ReactNode}> = ({children}) => (
+        <>{children(useValue())}</>
+    );
 
     return {Setter, Provider, Getter, useSetValue, useValue};
 };

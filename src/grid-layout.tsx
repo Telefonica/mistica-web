@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {createUseStyles} from './jss';
 
@@ -26,7 +25,7 @@ const useStyles = createUseStyles((theme) => ({
 
 type Props = {children: React.ReactNode};
 
-const GridLayout = ({children}: Props): React.ReactElement<'div'> => {
+const GridLayout: React.FC<Props> = ({children}) => {
     const classes = useStyles();
 
     return <div className={classes.grid}>{children}</div>;

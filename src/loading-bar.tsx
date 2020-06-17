@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import classnames from 'classnames';
 import {CSSTransition} from 'react-transition-group';
@@ -98,7 +97,7 @@ const useStyles = createUseStyles((theme) => ({
 
 type Props = {visible: boolean};
 
-const LoadingBar = ({visible}: Props): React.ReactNode => {
+const LoadingBar: React.FC<Props> = ({visible}) => {
     const classes = useStyles();
     const isInverseVariant = useIsInverseVariant();
 

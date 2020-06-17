@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import Box from './box';
 import Stack from './stack';
@@ -29,7 +28,7 @@ const useButtonLayoutStyles = createUseStyles(() => ({
     },
 }));
 
-const MobileHeaderButtonLayout = ({children}) => {
+const MobileHeaderButtonLayout: React.FC = ({children}) => {
     const classes = useButtonLayoutStyles();
     return (
         <div className={classes.inlineBlockContainer}>
@@ -47,24 +46,24 @@ const MobileHeaderButtonLayout = ({children}) => {
 };
 
 type OverridableTextProps = {
-    color?: $PropertyType<TextProps, 'color'>,
-    textDecoration?: $PropertyType<TextProps, 'textDecoration'>,
+    color?: TextProps['color'];
+    textDecoration?: TextProps['textDecoration'];
 };
 
-type RichText = string | {text: string, ...OverridableTextProps};
+type RichText = string | ({text: string} & OverridableTextProps);
 
 type HeaderProps = {
-    pretitle?: RichText,
-    title?: string,
-    preamount?: RichText,
-    amount?: string,
-    button?: React.ReactElement<typeof ButtonPrimary>,
-    secondaryButton?: React.ReactElement<typeof ButtonSecondary>,
-    subtitle?: RichText,
-    isErrorAmount?: boolean,
+    pretitle?: RichText;
+    title?: string;
+    preamount?: RichText;
+    amount?: string;
+    button?: React.ReactElement<typeof ButtonPrimary>;
+    secondaryButton?: React.ReactElement<typeof ButtonSecondary>;
+    subtitle?: RichText;
+    isErrorAmount?: boolean;
 };
 
-export const Header = ({
+export const Header: React.FC<HeaderProps> = ({
     pretitle,
     title,
     preamount,
@@ -73,12 +72,12 @@ export const Header = ({
     subtitle,
     isErrorAmount,
     secondaryButton,
-}: HeaderProps): React.ReactNode => {
+}) => {
     const {isMobile} = useScreenSize();
     const theme = useTheme();
     const isInverse = useIsInverseVariant();
 
-    const renderRichText = (richText: RichText, notOverridableProps: $Diff<TextProps, {children: any}>) => {
+    const renderRichText = (richText: RichText, notOverridableProps: Omit<TextProps, 'children'>) => {
         if (typeof richText === 'string') {
             return <Text {...notOverridableProps}>{richText}</Text>;
         }
@@ -144,7 +143,6 @@ export const Header = ({
                                 {secondaryButton}
                             </MobileHeaderButtonLayout>
                         ) : (
-                            // $FlowFixMe
                             <ButtonLayout align="left">
                                 {button}
                                 {secondaryButton}
@@ -158,12 +156,12 @@ export const Header = ({
 };
 
 type MainSectionHeaderProps = {
-    title: string,
-    description?: string,
-    button?: React.ReactElement<typeof ButtonPrimary> | React.ReactElement<typeof ButtonSecondary>,
+    title: string;
+    description?: string;
+    button?: React.ReactElement<typeof ButtonPrimary> | React.ReactElement<typeof ButtonSecondary>;
 };
 
-export const MainSectionHeader = ({title, description, button}: MainSectionHeaderProps): React.ReactNode => {
+export const MainSectionHeader: React.FC<MainSectionHeaderProps> = ({title, description, button}) => {
     const {isMobile} = useScreenSize();
 
     return (
@@ -201,20 +199,20 @@ const useHeaderLayoutStyles = createUseStyles((theme) => ({
 }));
 
 type HeaderLayoutProps = {
-    isInverse?: boolean,
-    breadcrumbs?: React.ReactElement<typeof NavigationBreadcrumbs>,
-    header: React.ReactNode, // intentionally not forced to React.ReactElement<typeof Header> to allow skeletons for example
-    extra?: React.ReactNode,
-    sideBySideExtraOnDesktop?: boolean,
+    isInverse?: boolean;
+    breadcrumbs?: React.ReactElement<typeof NavigationBreadcrumbs>;
+    header: React.ReactNode; // intentionally not forced to React.ReactElement<typeof Header> to allow skeletons for example
+    extra?: React.ReactNode;
+    sideBySideExtraOnDesktop?: boolean;
 };
 
-export const HeaderLayout = ({
+export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
     isInverse = true,
     breadcrumbs,
     header,
     extra,
     sideBySideExtraOnDesktop = false,
-}: HeaderLayoutProps): React.ReactNode => {
+}) => {
     const classes = useHeaderLayoutStyles({isInverse});
     const {isTabletOrSmaller} = useScreenSize();
 
@@ -262,14 +260,14 @@ export const HeaderLayout = ({
 };
 
 type MainSectionHeaderLayoutProps = {
-    isInverse?: boolean,
-    children: React.ReactElement<typeof MainSectionHeader>,
+    isInverse?: boolean;
+    children: React.ReactElement<typeof MainSectionHeader>;
 };
 
-export const MainSectionHeaderLayout = ({
+export const MainSectionHeaderLayout: React.FC<MainSectionHeaderLayoutProps> = ({
     isInverse = true,
     children,
-}: MainSectionHeaderLayoutProps): React.ReactNode => {
+}) => {
     const classes = useHeaderLayoutStyles({isInverse});
     const {isMobile} = useScreenSize();
 

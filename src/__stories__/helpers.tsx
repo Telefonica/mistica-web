@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import TextField from '../text-field';
 import Select from '../select';
@@ -8,7 +7,7 @@ type Props = {
     children: React.ReactNode;
 };
 
-export const StorySection = ({title, children}: Props): React.ReactElement<'div'> => (
+export const StorySection: React.FC<Props> = ({title, children}) => (
     <div style={{marginBottom: 32}}>
         <h1 style={{color: '#888', fontSize: 20, margin: '16px 0px'}}>{title}</h1>
         {children}
@@ -43,10 +42,7 @@ export const fruitEntries = [
     ['Lemon', 'lemon'],
 ];
 
-export const useCheckbox = (
-    label: string,
-    defaultValue: boolean = false
-): [boolean, React.ReactElement<'label'>] => {
+export const useCheckbox = (label: string, defaultValue = false): [boolean, React.ReactElement<'label'>] => {
     const [isEnabled, setIsEnabled] = React.useState(defaultValue);
     const checkbox = (
         <label style={{margin: 8}}>
@@ -58,8 +54,8 @@ export const useCheckbox = (
 
 export const useTextField = (
     label: string,
-    defaultValue: string = '',
-    required: boolean = false
+    defaultValue = '',
+    required = false
 ): [string, React.ReactNode] => {
     const [text, setText] = React.useState(defaultValue);
     const textField = (

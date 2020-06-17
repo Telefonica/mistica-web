@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {isAndroid, isChrome} from './utils/platform';
 import {useDisableBodyScroll} from './hooks';
@@ -21,13 +20,7 @@ type Props = {
     disableScroll?: boolean;
 };
 
-const Overlay = ({
-    onPress,
-    children,
-    className,
-    style,
-    disableScroll = false,
-}: Props): React.ReactElement<'div'> => {
+const Overlay: React.FC<Props> = ({onPress, children, className, style, disableScroll = false}) => {
     const [showChildren, setChildrenVisibility] = React.useState(true);
     useDisableBodyScroll(disableScroll);
 
@@ -43,7 +36,7 @@ const Overlay = ({
             data-overlay="true"
             style={{...defaultStyle, ...style}}
             className={className}
-            onPointerDown={(e: React.MouseEvent<HTMLDivElement>) => {
+            onPointerDown={(e) => {
                 // We use listen to and cancel pointerdown to close overlay if user scrolls on iOS.
                 // In Android with children we hide children and onPress later in onClick to ensure click event doesn't hit element below overlay.
                 if ((e.target as any).dataset.overlay && onPress) {
@@ -55,7 +48,7 @@ const Overlay = ({
                     }
                 }
             }}
-            onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+            onClick={(e) => {
                 // In Android we need to call onPress here in onClick to ensure click event doesn't hit element below overlay.
                 if ((e.target as any).dataset.overlay && onPress && children && isAndroid() && isChrome()) {
                     setChildrenVisibility(true);

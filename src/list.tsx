@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import classNames from 'classnames';
 import {createUseStyles} from './jss';
@@ -65,25 +64,24 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-type CommonProps = {
-    title: string,
-    description?: string | null,
-    icon?: React.ReactElement<any> | string | null,
-    iconSize?: 24 | 40,
-    badge?: boolean | number,
-};
+interface CommonProps {
+    title: string;
+    description?: string | null;
+    icon?: React.ReactElement<any> | string | null;
+    iconSize?: 24 | 40;
+    badge?: boolean | number;
+}
 
-type ContentProps = {
-    ...CommonProps,
-    isClickable?: boolean,
-};
+interface ContentProps extends CommonProps {
+    isClickable?: boolean;
+}
 
-const Content = ({title, description, icon, iconSize = 40, isClickable, badge}: ContentProps) => {
+const Content: React.FC<ContentProps> = ({title, description, icon, iconSize = 40, isClickable, badge}) => {
     const classes = useStyles();
     const theme = useTheme();
     const getIconSize = description ? 40 : iconSize;
     const renderBadge = () => {
-        const wrapper = (content) => (
+        const wrapper = (content: React.ReactNode) => (
             <Box paddingLeft={16}>
                 <div className={classNames(classes.center, classes.badge)}>{content}</div>
             </Box>
@@ -132,26 +130,40 @@ const Content = ({title, description, icon, iconSize = 40, isClickable, badge}: 
     );
 };
 
+interface BasicRowContentProps extends CommonProps {
+    href?: undefined;
+    onPress?: undefined;
+    to?: undefined;
+}
+
+interface HrefRowContentProps extends CommonProps {
+    trackingEvent?: TrackingEvent;
+    href: string;
+    newTab?: boolean;
+    onPress?: undefined;
+    to?: undefined;
+}
+
+interface ToRowContentProps extends CommonProps {
+    trackingEvent?: TrackingEvent;
+    to: string;
+    fullPageOnWebView?: boolean;
+    replace?: boolean;
+    href?: undefined;
+    onPress?: undefined;
+}
+interface OnPressRowContentProps extends CommonProps {
+    trackingEvent?: TrackingEvent;
+    onPress: () => void;
+    href?: undefined;
+    to?: undefined;
+}
+
 type RowContentProps =
-    | {...CommonProps}
-    | {
-          ...CommonProps,
-          trackingEvent?: TrackingEvent,
-          href: string,
-          newTab?: boolean,
-      }
-    | {
-          ...CommonProps,
-          trackingEvent?: TrackingEvent,
-          to: string,
-          fullPageOnWebView?: boolean,
-          replace?: boolean,
-      }
-    | {
-          ...CommonProps,
-          trackingEvent?: TrackingEvent,
-          onPress: Function,
-      };
+    | BasicRowContentProps
+    | HrefRowContentProps
+    | ToRowContentProps
+    | OnPressRowContentProps;
 
 const RowContent = (props: RowContentProps) => {
     const classes = useStyles();
@@ -229,27 +241,52 @@ const RowContent = (props: RowContentProps) => {
     );
 };
 
-export const Row = (props: RowContentProps): React.ReactNode => <RowContent {...props} />;
+/*
+!!! FIXME !!!
+
+At this moment Row and BoxedRow have the same type (same shape)
+Typescript's check for children is structural (not nominal) so now
+a BoxedRowList can contain Row items and RowLists can contain BoxedRows
+
+To avoid this we need different prop type shapes for different row types
+
+This could be an alternative:
+
+<RowList boxed> --> this "boxed" flag would set the type of the children
+    <Row title="foo" />
+    <Row title="foo" />
+</RowList>    
+
+<RowList>
+    <Row title="foo" />
+    <Row title="foo" />
+</RowList>    
+*/
+
+export const Row: React.FC<RowContentProps> = (props) => <RowContent {...props} />;
+
+type RowElement = React.ReactElement<typeof Row>;
 
 type RowListProps = {
-    children: React.ChildrenArray<React.ReactElement<typeof Row>>,
+    children: RowElement | Array<RowElement>;
 };
 
-export const RowList = ({children}: RowListProps): React.ReactNode =>
-    React.Children.map(children, (child) => child);
+export const RowList: React.FC<RowListProps> = ({children}) => <>{children}</>;
 
-export const BoxedRow = (props: RowContentProps): React.ReactNode => <RowContent {...props} />;
+export const BoxedRow: React.FC<RowContentProps> = (props) => <RowContent {...props} />;
+
+type BoxedRowElement = Array<React.ReactElement<typeof BoxedRow>>;
 
 type BoxedRowListProps = {
-    children: React.ChildrenArray<React.ReactElement<typeof BoxedRow>>,
+    children: BoxedRowElement | Array<BoxedRowElement>;
 };
 
-export const BoxedRowList = ({children}: BoxedRowListProps): React.ReactNode => {
+export const BoxedRowList: React.FC<BoxedRowListProps> = ({children}) => {
     const classes = useStyles();
 
     return (
         <Stack space={16}>
-            {React.Children.map(children, (child) => (
+            {React.Children.map(children as any, (child) => (
                 <div className={classes.boxed}>{child}</div>
             ))}
         </Stack>

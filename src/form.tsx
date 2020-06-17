@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {useTheme} from './hooks';
 import {FormContext} from './form-context';
@@ -8,22 +7,13 @@ import classnames from 'classnames';
 import type {AutoComplete} from './text-field';
 import type {FormStatus, FormErrors, FieldValidator} from './form-context';
 
-type FormValues = {[string]: any, ...};
+type FormValues = {[name: string]: any};
 
 type FieldRegistration = {
-    name: string,
-    field?: HTMLInputElement | HTMLSelectElement | null,
-    validate?: FieldValidator,
-    focusableElement?: HTMLDivElement | HTMLSelectElement | null,
-};
-
-type FormProps = {
-    id?: string,
-    onSubmit: (values: FormValues, rawValues: FormValues) => Promise<void> | void,
-    initialValues?: FormValues,
-    autoJump?: boolean,
-    children: React.ReactNode,
-    className?: string,
+    name: string;
+    field?: HTMLInputElement | HTMLSelectElement | null;
+    validate?: FieldValidator;
+    focusableElement?: HTMLDivElement | HTMLSelectElement | null;
 };
 
 const useStyles = createUseStyles(() => ({
@@ -32,14 +22,23 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-const Form = ({
+type FormProps = {
+    id?: string;
+    onSubmit: (values: FormValues, rawValues: FormValues) => Promise<void> | void;
+    initialValues?: FormValues;
+    autoJump?: boolean;
+    children: React.ReactNode;
+    className?: string;
+};
+
+const Form: React.FC<FormProps> = ({
     children,
     className,
     onSubmit,
     initialValues = {},
     autoJump = false,
     id,
-}: FormProps): React.ReactNode => {
+}) => {
     const isMountedRef = React.useRef(true); // https://github.com/facebook/react/issues/14369#issuecomment-468305796
     const [values, setValues] = React.useState(initialValues);
     const [rawValues, setRawValues] = React.useState(initialValues);
@@ -75,17 +74,14 @@ const Form = ({
         }
     }, []);
 
-    const setFormError = React.useCallback(
-        ({name, error}: {+name: string, +error: string | void}) =>
-            setFormErrors({...formErrors, [name]: error}),
-        [formErrors]
-    );
+    const setFormError = ({name, error}: {name: string; error?: string}) =>
+        setFormErrors((formErrors) => ({...formErrors, [name]: error}));
 
     /**
      * returns true if all fields are ok and focuses the first field with an error
      */
     const validateFields = (): boolean => {
-        const errors = {};
+        const errors: FormErrors = {};
         let didFocus = false;
         for (const [name, input] of fieldRefs.current) {
             if (input.required && !input.value.trim()) {
@@ -115,9 +111,11 @@ const Form = ({
             // after onChange events and the validators executed onBlur still read from the old state
             setTimeout(() => {
                 if (autoJump && formRef.current) {
-                    const elements = [...formRef.current.querySelectorAll('input, select')];
+                    const elements: Array<HTMLElement> = Array.from(
+                        formRef.current.querySelectorAll('input, select')
+                    );
                     const currentElement = fieldRefs.current.get(currentName);
-                    const currentIndex = elements.indexOf(currentElement);
+                    const currentIndex = elements.indexOf(currentElement as HTMLElement);
                     if (currentIndex >= 0) {
                         const nextElement = elements[currentIndex + 1];
                         if (nextElement) {
@@ -132,7 +130,7 @@ const Form = ({
         [autoJump]
     );
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setFormStatus('sending');
         if (!validateFields()) {
@@ -188,24 +186,24 @@ const Form = ({
 };
 
 export interface CommonFormFieldProps {
-    autoFocus?: boolean,
-    disabled?: boolean,
-    error?: boolean,
-    helperText?: string,
-    id?: string,
-    label: string,
-    name: string,
-    optional?: boolean,
-    maxLength?: number,
+    autoFocus?: boolean;
+    disabled?: boolean;
+    error?: boolean;
+    helperText?: string;
+    id?: string;
+    label: string;
+    name: string;
+    optional?: boolean;
+    maxLength?: number;
     // use `inputProps` to pass props (as attributes) to the input element, for example a data-testid
-    inputProps?: {[prop: string]: string | number},
-    validate?: FieldValidator,
-    autoComplete?: AutoComplete,
-    onFocus?: (event: React.FocusEvent) => void,
-    onBlur?: (event: React.FocusEvent) => void,
-    fullWidth?: boolean,
-    getSuggestions?: (text: string) => Array<string>,
-    placeholder?: string,
-};
+    inputProps?: {[prop: string]: string | number};
+    validate?: FieldValidator;
+    autoComplete?: AutoComplete;
+    onFocus?: (event: React.FocusEvent) => void;
+    onBlur?: (event: React.FocusEvent) => void;
+    fullWidth?: boolean;
+    getSuggestions?: (text: string) => Array<string>;
+    placeholder?: string;
+}
 
 export default Form;

@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {useForm} from './form-context';
 import {useTheme} from './hooks';
@@ -18,12 +17,12 @@ type FormCreditCardFieldsProps = {
     acceptedCards?: CardOptions;
 };
 
-const FormCreditCardFields = ({
+const FormCreditCardFields: React.FC<FormCreditCardFieldsProps> = ({
     numberFieldName = 'ccNum',
     expirationFieldName = 'ccExp',
     cvvFieldName = 'ccCvv',
     acceptedCards,
-}: FormCreditCardFieldsProps): React.ReactNode => {
+}) => {
     const {values} = useForm();
     const {texts} = useTheme();
     const cvvLength = getCvvLength(String(values[numberFieldName]));
@@ -35,7 +34,6 @@ const FormCreditCardFields = ({
                 name={numberFieldName}
                 label={texts.formCreditCardNumberLabel}
             />
-
             <DoubleField>
                 <FormCreditCardExpirationField
                     name={expirationFieldName}

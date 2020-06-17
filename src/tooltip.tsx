@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import classnames from 'classnames';
 import {getPlatform} from './utils/platform';
@@ -99,7 +98,7 @@ const useStyles = createUseStyles((theme) => ({
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
-const getWidthDesktop = (customWidth) => (customWidth ? customWidth : defaultWidthDesktop);
+const getWidthDesktop = (customWidth?: number) => (customWidth ? customWidth : defaultWidthDesktop);
 
 const EVENT_THROTTLE_TIME = process.env.NODE_ENV === 'test' ? 0 : 200;
 
@@ -113,8 +112,8 @@ type Props = {
     targetLabel: string;
 };
 
-const Tooltip = ({children, description, target, title, targetLabel, ...rest}: Props): React.ReactNode => {
-    const [isVisible, setIsVisible] = React.useState();
+const Tooltip: React.FC<Props> = ({children, description, target, title, targetLabel, ...rest}) => {
+    const [isVisible, setIsVisible] = React.useState(false);
     const {isMobile} = useScreenSize();
     const ariaId = useAriaId();
     const targetBoundingClientRect = React.useRef({
@@ -151,7 +150,7 @@ const Tooltip = ({children, description, target, title, targetLabel, ...rest}: P
         setIsVisible(false);
     };
 
-    const toggleVisibility = (e: SyntheticEvent<HTMLDivElement>) => {
+    const toggleVisibility = (e: React.FocusEvent<HTMLDivElement> | React.PointerEvent<HTMLDivElement>) => {
         if (Date.now() - lastChangeTime.current < EVENT_THROTTLE_TIME) {
             return;
         }
@@ -160,13 +159,13 @@ const Tooltip = ({children, description, target, title, targetLabel, ...rest}: P
         setIsVisible(!isVisible);
     };
 
-    const handleFocus = (e: SyntheticEvent<HTMLDivElement>) => {
+    const handleFocus = (e: React.FocusEvent<HTMLDivElement>) => {
         if (!isVisible) {
             toggleVisibility(e);
         }
     };
 
-    const handleKeyDown = (event: KeyboardEvent) => {
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (event.keyCode === key.TAB) {
             handleClickOutside();
         }

@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import Text from './text';
 import {useTheme} from './hooks';
@@ -21,7 +20,7 @@ type Props = {
     children: string;
 };
 
-const PromoTag = ({children}: Props): React.ReactElement<'span'> => {
+const PromoTag: React.FC<Props> = ({children}) => {
     const classes = useStyles();
     const {colors} = useTheme();
     return (
