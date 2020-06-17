@@ -71,6 +71,7 @@ export const TEXT_INACTIVE = c.GREY_3;
 export const TEXT_INACTIVE_INVERSE = c.VIVO_PURPLE_LIGHT_40;
 export const TEXT_WARNING = c.ORANGE;
 export const TEXT_DANGER = c.PINK;
+export const TEXT_NAVBAR_HOVER = c.VIVO_PURPLE;
 
 // TAG
 export const TAG_BACKGROUND_FIRST = c.VIVO_GREEN;
