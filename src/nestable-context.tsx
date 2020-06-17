@@ -37,7 +37,7 @@ const isObject = (object: any): object is Record<string, unknown> =>
 
 type NestableContext<Value> = {
     Getter: React.FC<{children: (value: Value) => React.ReactNode}>;
-    Provider: React.FC<{value: Value}>;
+    Provider: React.FC<ProviderProps>;
     Setter: React.FC<{value: Value}>;
     useValue: () => Value;
     useSetValue: (value: Value) => void;
@@ -76,7 +76,7 @@ const createNestableContext = <Value extends any>(defaultValue: Value): Nestable
         }
     };
 
-    const Provider: React.FC<{value: Value}> = ({children}) => {
+    const Provider: React.FC<ProviderProps> = ({children}) => {
         React.useEffect(() => {
             if (!isProviderInstanceMounted) {
                 isProviderInstanceMounted = true;

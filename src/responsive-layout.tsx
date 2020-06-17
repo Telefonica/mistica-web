@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import classnames from 'classnames';
@@ -49,7 +48,7 @@ type Props = {
     className?: string;
 };
 
-const ResponsiveLayout = ({children, className, fullWidth}: Props): React.ReactElement<'div'> => {
+const ResponsiveLayout: React.FC<Props> = ({children, className, fullWidth}) => {
     const classes = useStyles();
 
     return (

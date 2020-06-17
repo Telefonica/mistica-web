@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {formatAsYouType} from '@telefonica/libphonenumber';
 import {useTheme} from './hooks';
@@ -8,7 +7,7 @@ import type {RegionCode} from './utils/region-code';
 const format = (regionCode: RegionCode, number?: string): string =>
     number === undefined ? '' : formatAsYouType(number.replace(/[^\d+*#]/g, ''), regionCode);
 
-// @ts-expect-error
+// @ts-expect-error TODO review prop types
 const PhoneInput: React.FC<any> = ({inputRef, value, defaultValue, ...other}) => {
     const {i18n} = useTheme();
     return (

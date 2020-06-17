@@ -1,14 +1,17 @@
-// @flow
 import {getDocument, queries} from 'pptr-testing-library';
 import jimp from 'jimp';
 
-import type {Page, ElementHandle, ClickOptions} from 'puppeteer';
+import type {Page, ElementHandle, ClickOptions, ScreenshotOptions, Browser} from 'puppeteer';
 import type {Viewport} from 'puppeteer/DeviceDescriptors';
 import type {Skin} from '../colors';
 
+// TODO find a way to define global vars
+const globalBrowser: Browser = (global as any).browser;
+const globalPage: Page = (global as any).page;
+
 const STORYBOOK_URL = ((): string => {
-    if (global.browser) {
-        const url = new URL(global.browser.wsEndpoint());
+    if (globalBrowser) {
+        const url = new URL(globalBrowser.wsEndpoint());
         const isUsingDockerizedChromium = url.port === '9223';
         if (isUsingDockerizedChromium) {
             return process.platform === 'linux'
@@ -30,13 +33,15 @@ type Device =
     | typeof TABLET_DEVICE
     | typeof DESKTOP_DEVICE;
 
-const DEVICES: {
-    [name: Device]: {
-        platform?: string,
-        viewport: Viewport,
-    },
-    ...
-} = {
+type DeviceCollection = Record<
+    Device,
+    {
+        platform?: string;
+        viewport: Viewport;
+    }
+>;
+
+const DEVICES: DeviceCollection = {
     [MOBILE_DEVICE_IOS]: {
         platform: 'ios',
         viewport: {
@@ -88,11 +93,14 @@ const DEVICES: {
 const STEP_TIME = 250;
 
 type WaitForPaintEndOptions = {
-    maxWait?: number,
-    fullPage?: boolean,
+    maxWait?: number;
+    fullPage?: boolean;
 };
 
-const waitForPaintEnd = async (element, {maxWait = 10000, fullPage = true}: WaitForPaintEndOptions = {}) => {
+const waitForPaintEnd = async (
+    element: ElementHandle | Page,
+    {maxWait = 10000, fullPage = true}: WaitForPaintEndOptions = {}
+) => {
     const t0 = Date.now();
 
     let buf1 = await element.screenshot({fullPage});
@@ -110,15 +118,12 @@ const waitForPaintEnd = async (element, {maxWait = 10000, fullPage = true}: Wait
     }
 };
 
-const watermarkIfNeeded = async (bufferPromise: Promise<Buffer>): Promise<Buffer> => {
+const watermarkIfNeeded = async (bufferPromise: Promise<Buffer | string>): Promise<Buffer | string> => {
     if (process.env.HEADLESS || process.env.CI) {
         return bufferPromise;
     }
-    const image = await jimp.read(await bufferPromise);
-    image.color([
-        {apply: 'desaturate', params: [100]},
-        {apply: 'tint', params: [50]},
-    ]);
+    const image = await jimp.read(Buffer.from(await bufferPromise));
+    image.color([{apply: 'tint', params: [50]}]);
     await jimp.loadFont(jimp.FONT_SANS_32_BLACK).then((font) => {
         image.print(
             font,
@@ -136,7 +141,7 @@ const watermarkIfNeeded = async (bufferPromise: Promise<Buffer>): Promise<Buffer
     return image.getBufferAsync(jimp.MIME_PNG);
 };
 
-const buildStoryUrl = (section: string, name: string, skin: ?string, platform: ?string) => {
+const buildStoryUrl = (section: string, name: string, skin?: string, platform?: string) => {
     const params = new URLSearchParams();
     params.set('selectedKind', section);
     params.set('selectedStory', name);
@@ -157,23 +162,21 @@ type PageApi = {
         selector: ElementHandle | Promise<ElementHandle>,
         text: string,
         options?: {delay: number}
-    ) => Promise<void>,
-    click: (selector: ElementHandle | Promise<ElementHandle>, options?: ClickOptions) => Promise<void>,
-    // We need to use this convoluted $Call because $PropertyType does not work with Interfaces, and Page is
-    // declared as an Interface, not an Object type
+    ) => Promise<void>;
+    click: (selector: ElementHandle | Promise<ElementHandle>, options?: ClickOptions) => Promise<void>;
 
     // These are from prototype chain (inherited from Puppeteer.Page)
-    screenshot: $Call<<T, P: {+screenshot: T, ...}>(P) => T, Page>,
+    screenshot: (options: ScreenshotOptions) => ReturnType<Page['screenshot']>;
 };
 
-const wait = <T>(
+const wait = <T extends any>(
     expectation: () => Promise<T> | T,
-    timeout?: number = 4500,
-    interval?: number = 50
+    timeout = 4500,
+    interval = 50
 ): Promise<T> => {
     const startTime = Date.now();
     return new Promise((resolve, reject) => {
-        const rejectOrRerun = (error) => {
+        const rejectOrRerun = (error: Error) => {
             if (Date.now() - startTime >= timeout) {
                 reject(error);
                 return;
@@ -194,12 +197,12 @@ const wait = <T>(
     });
 };
 
-const bindToDoc = (fn) => async (m: string) => {
-    const doc = await getDocument(global.page);
+const bindToDoc = (fn: (e: ElementHandle | null, method: string) => ElementHandle) => async (m: string) => {
+    const doc = await getDocument(globalPage);
     const body = await doc.$('body');
     const elementHandle = await wait(() => fn(body, m));
 
-    const screenshot = async (options) => {
+    const screenshot = async (options: ScreenshotOptions) => {
         await waitForPaintEnd(elementHandle, {fullPage: false});
         return watermarkIfNeeded(elementHandle.screenshot(options));
     };
@@ -213,39 +216,37 @@ type Query = (m: string) => Promise<ElementHandle>;
 type AllQuery = (m: string) => Promise<Array<ElementHandle>>;
 
 type Queries = {
-    getByText: Query,
-    getAllByText: AllQuery,
-    getByTestId: Query,
-    getAllByTestId: AllQuery,
-    getByTitle: Query,
-    getAllByTitle: AllQuery,
-    getByRole: Query,
-    getAllByRole: AllQuery,
-    getByPlaceholderText: Query,
-    getAllByPlaceholderText: AllQuery,
-    getByLabelText: Query,
-    getAllByLabelText: AllQuery,
-    getByAltText: Query,
-    getAllByAltText: AllQuery,
+    getByText: Query;
+    getAllByText: AllQuery;
+    getByTestId: Query;
+    getAllByTestId: AllQuery;
+    getByTitle: Query;
+    getAllByTitle: AllQuery;
+    getByRole: Query;
+    getAllByRole: AllQuery;
+    getByPlaceholderText: Query;
+    getAllByPlaceholderText: AllQuery;
+    getByLabelText: Query;
+    getAllByLabelText: AllQuery;
+    getByAltText: Query;
+    getAllByAltText: AllQuery;
 };
 
-const buildQueryMethods = (): any => {
-    return Object.entries(queries).reduce(
-        (bindedQueries, [queryName: $Keys<Queries>, queryFn]) => ({
+const buildQueryMethods = () =>
+    Object.entries(queries).reduce(
+        (bindedQueries, [queryName, queryFn]) => ({
             ...bindedQueries,
             [queryName]: bindToDoc(queryFn),
         }),
-        {}
+        {} as Queries
     );
-};
 
 const createPageApi = (page: Page): PageApi => {
-    // $FlowFixMe I know, flow. This is a bit hacky
     const api: PageApi = Object.create(page);
 
     api.type = async (selector, text, options) => (await selector).type(text, options);
     api.click = async (selector, options) => (await selector).click(options);
-    api.screenshot = async (options) => {
+    api.screenshot = async (options: ScreenshotOptions) => {
         await waitForPaintEnd(page);
         return watermarkIfNeeded(page.screenshot(options));
     };
@@ -259,13 +260,13 @@ export const openStoryPage = async ({
     device = TABLET_DEVICE,
     skin = 'Movistar',
 }: {
-    section: string,
-    name: string,
-    device?: Device,
-    skin?: Skin,
+    section: string;
+    name: string;
+    device?: Device;
+    skin?: Skin;
 }): Promise<PageApi> => {
-    const page: Page = global.page;
-    const browser = global.browser;
+    const page = globalPage;
+    const browser = globalBrowser;
     await page.bringToFront();
     await page.setViewport(DEVICES[device].viewport);
     await page.setUserAgent(`${await browser.userAgent()} acceptance-test`);

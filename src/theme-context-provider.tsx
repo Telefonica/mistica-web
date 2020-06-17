@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {JssProvider} from 'react-jss';
 import {getJss} from './jss';
@@ -19,7 +18,7 @@ type Props = {
 
 let jssInstanceId = 0;
 
-const ThemeContextProvider = ({theme, children}: Props): React.ReactNode => {
+const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
     const classNamePrefix = React.useMemo(
         () => `mistica-${PACKAGE_VERSION.replace(/\./g, '-')}-${jssInstanceId++}-`,
         []

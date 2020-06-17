@@ -1,19 +1,18 @@
-// @flow
 import * as React from 'react';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useTheme, useScreenSize} from './hooks';
-import createContext from './nestable-context';
+import createNestableContext from './nestable-context';
 import {isInsideNovumNativeApp, getPlatform} from './utils/platform';
 
-const {Provider, Getter, useSetValue} = createContext<string>('');
+const {Provider, Getter, useSetValue} = createNestableContext('');
 
 const shouldRender = getPlatform() === 'ios';
 
 type ProviderProps = {children: React.ReactNode};
 
-const OverscrollColorProviderNoOp = ({children}: ProviderProps) => children || null;
+const OverscrollColorProviderNoOp: React.FC<ProviderProps> = ({children}) => <>{children || null}</>;
 
-const OverscrollColorProviderComponent = ({children}: ProviderProps) => {
+const OverscrollColorProviderComponent: React.FC<ProviderProps> = ({children}) => {
     const {platformOverrides} = useTheme();
     const {isMobile} = useScreenSize();
     const theme = useTheme();
@@ -44,11 +43,11 @@ const OverscrollColorProviderComponent = ({children}: ProviderProps) => {
             </Getter>
         </Provider>
     ) : (
-        children
+        <>{children}</>
     );
 };
 
-export const OverscrollColorProvider: (ProviderProps) => React.ReactNode = shouldRender
+export const OverscrollColorProvider = shouldRender
     ? OverscrollColorProviderComponent
     : OverscrollColorProviderNoOp;
 
@@ -62,6 +61,6 @@ const OverscrollColorComponent = () => {
 
 const OverscrollColorNoOp = () => null;
 
-const OverscrollColor: () => null = shouldRender ? OverscrollColorComponent : OverscrollColorNoOp;
+const OverscrollColor = shouldRender ? OverscrollColorComponent : OverscrollColorNoOp;
 
 export default OverscrollColor;

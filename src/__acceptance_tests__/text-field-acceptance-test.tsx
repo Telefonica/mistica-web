@@ -1,4 +1,3 @@
-// @flow
 import {openStoryPage, screen} from '../test-utils';
 
 const clearAndType = async (page, element, text) => {
