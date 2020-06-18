@@ -28,7 +28,7 @@ const FormCreditCardFields: React.FC<FormCreditCardFieldsProps> = ({
     const cvvLength = getCvvLength(String(values[numberFieldName]));
 
     return (
-        <Stack space={32}>
+        <Stack space={16}>
             <FormCreditCardNumberField
                 acceptedCards={acceptedCards}
                 name={numberFieldName}

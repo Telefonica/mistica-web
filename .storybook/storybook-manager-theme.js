@@ -1,5 +1,5 @@
 // @flow
-import logo from '../img/mistica-react-logo.svg';
+import logo from '../img/mistica-logo.svg';
 import {getColors} from '../src';
 import {create} from '@storybook/theming/create';
 
