@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {ThemeVariant} from '../theme-variant-context';
 import {ButtonPrimary, ButtonSecondary} from '../button';
@@ -179,7 +178,7 @@ test('"href" with "newTab" renders required attributes', () => {
 });
 
 test('"to" uses a Link Component', () => {
-    jest.spyOn(ReactRouterDom.Link, 'render').mockImplementation(() => '(Link Component)');
+    jest.spyOn(ReactRouterDom, 'Link').mockImplementation(() => '(Link Component)' as any);
 
     const {asFragment} = render(
         <ReactRouterDom.MemoryRouter>
@@ -231,7 +230,7 @@ test('<a> is rendered when using "to" prop', () => {
 });
 
 test('button with spinner', () => {
-    jest.spyOn(Spinner, 'default').mockImplementation(({color}) => `(Spinner color=${color})`);
+    jest.spyOn(Spinner, 'default').mockImplementation(({color}) => `(Spinner color=${color})` as any);
 
     const {asFragment} = render(
         <>

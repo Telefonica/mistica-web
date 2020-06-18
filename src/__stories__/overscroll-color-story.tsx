@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {OverscrollColor, useTheme, Text, Box} from '..';
 
@@ -9,7 +8,7 @@ export default {
     },
 };
 
-export const Default = (): React.ReactNode => {
+export const Default: StoryComponent = () => {
     const theme = useTheme();
     return (
         <>

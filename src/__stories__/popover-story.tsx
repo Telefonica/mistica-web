@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {StorySection} from './helpers';
 import Popover from '../popover';
@@ -9,7 +8,7 @@ export default {
     component: Popover,
 };
 
-export const Default = (): React.ReactNode => (
+export const Default: StoryComponent = () => (
     <StorySection title="Popover">
         <strong>Desktop examples:</strong>
         <div

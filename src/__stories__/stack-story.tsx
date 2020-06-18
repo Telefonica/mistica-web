@@ -1,9 +1,8 @@
-// @flow
 import * as React from 'react';
 import Stack from '../stack';
 import {StorySection} from './helpers';
 import Select from '../select';
-import Placeholder from '../placeholder';
+import {Placeholder} from '../placeholder';
 
 export default {
     title: 'Components|Layouts/Stack',
@@ -28,7 +27,7 @@ const options = [
     {value: '64', text: '64px'},
 ];
 
-export const Default = (): React.ReactNode => {
+export const Default: StoryComponent = () => {
     const [space, setSpace] = React.useState('32');
 
     return (
@@ -37,7 +36,7 @@ export const Default = (): React.ReactNode => {
 
             <StorySection title="Stack example">
                 <Placeholder height={48} />
-                <Stack space={(+space: any)}>
+                <Stack space={+space as any}>
                     <ComponentThatReturnsNullComponent />
                     <Row>One</Row>
                     {null}

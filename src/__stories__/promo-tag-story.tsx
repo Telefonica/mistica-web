@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {PromoTag, Stack} from '..';
 import {useTextField} from './helpers';
@@ -7,7 +6,7 @@ export default {
     title: 'Components|Others/PromoTag',
 };
 
-export const Default = (): React.ReactNode => {
+export const Default: StoryComponent = () => {
     const [text, textField] = useTextField('Text', 'promo');
 
     return (

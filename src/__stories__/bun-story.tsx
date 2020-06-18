@@ -1,9 +1,8 @@
-// @flow
 import * as React from 'react';
 import Bun from '../bun';
 import {StorySection} from './helpers';
 
-const fakeContentStyle = {
+const fakeContentStyle: React.CSSProperties = {
     background: `repeating-linear-gradient(
         45deg,
         #606dbc,
@@ -20,7 +19,7 @@ export default {
     title: 'Components|Cards/Bun',
 };
 
-export const bun = (): React.ReactElement<'div'> => (
+export const bun: StoryComponent = () => (
     <div data-testid="bun">
         <StorySection title="Bun without a description">
             <Bun title="Title" action={{href: 'whatever/url', text: 'Text link'}}>

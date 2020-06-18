@@ -1,35 +1,34 @@
-// @flow
 import * as React from 'react';
 import {ButtonPrimary} from '../button';
 
-// $ExpectError - no children
+// @ts-expect-error - no children
 <ButtonPrimary />;
 
-// $ExpectError - no children
+// @ts-expect-error - no children
 <ButtonPrimary fake />;
 
-// $ExpectError - missing props
+// @ts-expect-error - missing props
 <ButtonPrimary>Text</ButtonPrimary>;
 
-// $ExpectError - press handler must return void
+// @ts-expect-error - press handler must return void
 <ButtonPrimary onPress={() => false}>Text</ButtonPrimary>;
 
-// $ExpectError - unexpected prop
+// @ts-expect-error - unexpected prop
 <ButtonPrimary fake foo>
     Text
 </ButtonPrimary>;
 
-// $ExpectError - bad combination
+// @ts-expect-error - bad combination
 <ButtonPrimary href="/foo" fullPageOnWebView>
     Text
 </ButtonPrimary>;
 
-// $ExpectError - bad combination
+// @ts-expect-error - bad combination
 <ButtonPrimary fake onPress={() => {}}>
     Text
 </ButtonPrimary>;
 
-// $ExpectError - bad combination
+// @ts-expect-error - bad combination
 <ButtonPrimary submit onPress={() => {}}>
     Text
 </ButtonPrimary>;

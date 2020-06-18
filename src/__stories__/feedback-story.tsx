@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {Feedback, Stack} from '..';
 import {ThemeVariant} from '../theme-variant-context';
@@ -8,7 +7,7 @@ export default {
     title: 'Components|Feedbacks/Feedback',
 };
 
-export const Default = (): React.ReactNode => {
+export const Default: StoryComponent = () => {
     const [type, typeSelectField] = useSelect('Type', 'success', ['success', 'error', 'info']);
     const [title, titleTextField] = useTextField('Title', "I'm the title");
     const [description, descriptionTextField] = useTextField('Description', "I'm the description");
@@ -21,7 +20,7 @@ export const Default = (): React.ReactNode => {
                     {titleTextField}
                     {descriptionTextField}
                     {isInverseStateCheckbox}
-                    <Feedback type={(type: any)} title={title} description={description} />
+                    <Feedback type={type as any} title={title} description={description} />
                 </Stack>
             </StorySection>
         </ThemeVariant>

@@ -1,7 +1,7 @@
-// @flow
 import {openStoryPage, screen} from '../test-utils';
+import type {Device} from '../test-utils';
 
-const DEVICES = ['MOBILE_IOS', 'DESKTOP'];
+const DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each`
     device          | isInverse | isErrorAmount
@@ -16,9 +16,9 @@ test.each`
         isInverse,
         isErrorAmount,
     }: {
-        device: 'MOBILE_IOS' | 'DESKTOP',
-        isInverse: Boolean,
-        isErrorAmount: boolean,
+        device: Device;
+        isInverse: boolean;
+        isErrorAmount: boolean;
     }) => {
         const {click} = await openStoryPage({
             section: 'Components|Headers/Header',

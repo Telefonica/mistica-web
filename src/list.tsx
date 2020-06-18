@@ -138,7 +138,7 @@ interface BasicRowContentProps extends CommonProps {
 
 interface HrefRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent;
-    href: string;
+    href?: string;
     newTab?: boolean;
     onPress?: undefined;
     to?: undefined;
@@ -146,7 +146,7 @@ interface HrefRowContentProps extends CommonProps {
 
 interface ToRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent;
-    to: string;
+    to?: string;
     fullPageOnWebView?: boolean;
     replace?: boolean;
     href?: undefined;
@@ -154,7 +154,7 @@ interface ToRowContentProps extends CommonProps {
 }
 interface OnPressRowContentProps extends CommonProps {
     trackingEvent?: TrackingEvent;
-    onPress: () => void;
+    onPress?: () => void;
     href?: undefined;
     to?: undefined;
 }
@@ -249,18 +249,6 @@ Typescript's check for children is structural (not nominal) so now
 a BoxedRowList can contain Row items and RowLists can contain BoxedRows
 
 To avoid this we need different prop type shapes for different row types
-
-This could be an alternative:
-
-<RowList boxed> --> this "boxed" flag would set the type of the children
-    <Row title="foo" />
-    <Row title="foo" />
-</RowList>    
-
-<RowList>
-    <Row title="foo" />
-    <Row title="foo" />
-</RowList>    
 */
 
 export const Row: React.FC<RowContentProps> = (props) => <RowContent {...props} />;

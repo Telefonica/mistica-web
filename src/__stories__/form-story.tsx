@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {fruitEntries, countriesList} from './helpers';
 import {
@@ -21,7 +20,7 @@ export default {
     title: 'Components|Forms/Form',
 };
 
-const fakeApiCall = (data) =>
+const fakeApiCall = (data: any): Promise<void> =>
     new Promise((r) =>
         setTimeout(() => {
             r();
@@ -32,7 +31,7 @@ const fakeApiCall = (data) =>
 const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 const countryOptions = countriesList.map((text, i) => ({text, value: '' + i}));
 
-export const AutomaticForm = (): React.ReactNode => (
+export const AutomaticForm: StoryComponent = () => (
     <Form initialValues={{email: 'john.doe@gmail.com', decimal: '123'}} onSubmit={fakeApiCall} autoJump>
         <Stack space={16}>
             <FormEmailField name="email" label="email" />
@@ -59,7 +58,7 @@ export const AutomaticForm = (): React.ReactNode => (
     </Form>
 );
 
-export const ManualForm = (): React.ReactElement<'form'> => {
+export const ManualForm: StoryComponent = () => {
     const [fruit, setFruit] = React.useState('');
     const [quantity, setQuantity] = React.useState('');
     const [creditCardNumber, setCreditCardNumber] = React.useState('');

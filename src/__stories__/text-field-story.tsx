@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {TextField, PhoneInput, ThemeVariant, useTheme} from '..';
 import Stack from '../stack';
@@ -12,12 +11,20 @@ export default {
     component: TextField,
 };
 
-const Uncontrolled = ({title, children}: any) => {
-    const [rawValue, setRawValue] = React.useState(undefined);
-    const [value, setValue] = React.useState(undefined);
+type UncontrolledProps = {
+    title: string;
+    children: (
+        onChange: (e: React.ChangeEvent<any>) => void,
+        onChangeValue: (v: any) => void
+    ) => React.ReactNode;
+};
 
-    const onChange = (e) => setRawValue(e.target.value);
-    const onChangeValue = (v) => setValue(v);
+const Uncontrolled: React.FC<UncontrolledProps> = ({title, children}) => {
+    const [rawValue, setRawValue] = React.useState<any>(undefined);
+    const [value, setValue] = React.useState<any>(undefined);
+
+    const onChange = (e: React.ChangeEvent<any>) => setRawValue(e.target.value);
+    const onChangeValue = (v: any) => setValue(v);
 
     return (
         <StorySection title={title}>
@@ -32,12 +39,22 @@ const Uncontrolled = ({title, children}: any) => {
     );
 };
 
-const Controlled = ({title, initialValue, children}: any) => {
+type ControlledProps = {
+    title: string;
+    initialValue: string;
+    children: (
+        onChange: (e: React.ChangeEvent<any>) => void,
+        onChangeValue: (v: any) => void,
+        value: string
+    ) => React.ReactNode;
+};
+
+const Controlled: React.FC<ControlledProps> = ({title, initialValue, children}) => {
     const [rawValue, setRawValue] = React.useState(initialValue);
     const [value, setValue] = React.useState(undefined);
 
-    const onChange = (e) => setRawValue(e.target.value);
-    const onChangeValue = (v) => setValue(v);
+    const onChange = (e: React.ChangeEvent<any>) => setRawValue(e.target.value);
+    const onChangeValue = (v: any) => setValue(v);
 
     return (
         <StorySection title={title}>
@@ -52,12 +69,12 @@ const Controlled = ({title, initialValue, children}: any) => {
     );
 };
 
-const getSuggestions = (value) =>
+const getSuggestions = (value: string) =>
     countriesList
         .filter((s) => String(s).toLocaleLowerCase().startsWith(value.toLocaleLowerCase()))
         .slice(0, 5);
 
-export const Variants = (): React.ReactNode => {
+export const Variants: StoryComponent = () => {
     const {colors} = useTheme();
     return (
         <>
@@ -135,7 +152,7 @@ export const Variants = (): React.ReactNode => {
     );
 };
 
-export const TypesUncontrolled = (): React.ReactNode => (
+export const TypesUncontrolled: StoryComponent = () => (
     <>
         <Uncontrolled title="Type integer">
             {(handleChange, handleChangeValue) => (
@@ -173,9 +190,8 @@ export const TypesUncontrolled = (): React.ReactNode => (
         </Uncontrolled>
 
         <Uncontrolled title="Type credit card expiration">
-            {(handleChange, handleChangeValue, value) => (
+            {(handleChange, handleChangeValue) => (
                 <TextField
-                    value={value}
                     type="credit-card-expiration"
                     label="Expiration"
                     onChange={handleChange}

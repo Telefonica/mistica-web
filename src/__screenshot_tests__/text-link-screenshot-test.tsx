@@ -1,4 +1,3 @@
-// @flow
 import {openStoryPage, screen} from '../test-utils';
 
 test('TextLink common component screenshot', async () => {

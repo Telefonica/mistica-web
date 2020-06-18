@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import Spinner from '../spinner';
 import {StorySection} from './helpers';
@@ -8,7 +7,7 @@ export default {
     component: Spinner,
 };
 
-export const Default = (): React.ReactNode => {
+export const Default: StoryComponent = () => {
     const [size, setSize] = React.useState(24);
     return (
         <StorySection title="Spinner">

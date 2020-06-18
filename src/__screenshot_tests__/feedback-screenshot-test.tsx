@@ -1,11 +1,12 @@
-// @flow
 import {openStoryPage} from '../test-utils';
+import type {Device} from '../test-utils';
+import type {Skin} from '../colors';
 
-const testableSkins = ['Movistar', 'Vivo', 'O2'];
-const testableDevices = ['MOBILE_IOS', 'DESKTOP'];
+const testableSkins: Array<Skin> = ['Movistar', 'Vivo', 'O2'];
+const testableDevices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 const feedbackTypes = ['Success', 'Error', 'Info'];
 
-const cases = [];
+const cases: Array<[string, Skin, Device]> = [];
 for (const skin of testableSkins) {
     for (const device of testableDevices) {
         for (const feedbackType of feedbackTypes) {

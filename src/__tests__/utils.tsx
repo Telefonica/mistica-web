@@ -1,4 +1,3 @@
-// @flow
 import {baseTheme} from '../theme';
 
 import type {ThemeConfig, ThemeTexts} from '../theme';
@@ -8,19 +7,19 @@ import type {Skin} from '../colors';
 import type {TrackingEvent} from '../utils/types';
 
 type ThemeOverrides = {
-    skin?: Skin,
-    colorOverride?: string,
+    skin?: Skin;
+    colorOverride?: string;
     i18n?: {
-        locale: Locale,
-        phoneNumberFormattingRegionCode: RegionCode,
-    },
+        locale: Locale;
+        phoneNumberFormattingRegionCode: RegionCode;
+    };
     platformOverrides?: {
-        platform?: 'ios' | 'android',
-        insideNovumNativeApp?: boolean,
-    },
-    texts?: ThemeTexts,
-    analytics?: {logEvent: (TrackingEvent) => Promise<void>},
-    dimensions?: {headerMobileHeight: number},
+        platform?: 'ios' | 'android';
+        insideNovumNativeApp?: boolean;
+    };
+    texts?: ThemeTexts;
+    analytics?: {logEvent: (trackingEvent: TrackingEvent) => Promise<void>};
+    dimensions?: {headerMobileHeight: number};
 };
 
 // ONLY FOR TESTING!!

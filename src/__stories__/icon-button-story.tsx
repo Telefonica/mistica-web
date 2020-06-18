@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import IconButton from '../icon-button';
 import IcnClose from '../icons/icon-close';
@@ -8,7 +7,7 @@ export default {
     title: 'Components|Touchables/IconButton',
 };
 
-export const Default = (): React.ReactNode => (
+export const Default: StoryComponent = () => (
     <>
         <StorySection title="Icon Button Image URL">
             <IconButton

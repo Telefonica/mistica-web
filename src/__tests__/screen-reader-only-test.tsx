@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {render} from '@testing-library/react';
 import ScreenReaderOnly from '../screen-reader-only';

@@ -123,13 +123,13 @@ const Snackbar: React.FC<Props> = ({
     );
 };
 
-const SnackbarContainer = ({
+const SnackbarContainer: React.FC<Props> = ({
     message,
     buttonText,
     duration = buttonText ? 10000 : 5000,
     onClose = () => {},
     type = 'INFORMATIVE',
-}: Props): React.ReactNode => {
+}) => {
     const renderNative = isWebViewBridgeAvailable();
 
     React.useEffect(() => {

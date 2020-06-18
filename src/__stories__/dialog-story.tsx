@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {ButtonPrimary} from '../button';
 import {confirm, alert} from '../dialog';
@@ -9,7 +8,7 @@ export default {
     title: 'Components|Feedbacks/Dialogs',
 };
 
-export const Default = (): React.ReactNode => (
+export const Default: StoryComponent = () => (
     <>
         <ButtonLayout>
             <ButtonPrimary onPress={() => alert({title: 'title', message: 'message'})}>

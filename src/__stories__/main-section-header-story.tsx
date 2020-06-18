@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {MainSectionHeader, MainSectionHeaderLayout, ButtonPrimary, Stack, ResponsiveLayout} from '..';
 import {useTextField, useCheckbox} from './helpers';
@@ -10,7 +9,7 @@ export default {
     },
 };
 
-export const Default = (): React.ReactNode => {
+export const Default: StoryComponent = () => {
     const [title, titleTextField] = useTextField('title', 'Soporte');
     const [desciption, descriptionTextField] = useTextField('description', '¿En qué podemos ayudarte?');
     const [buttonLabel, buttonLabelTextField] = useTextField('buttonLabel', 'Acción');

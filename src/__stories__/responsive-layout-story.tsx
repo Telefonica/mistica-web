@@ -1,7 +1,6 @@
-// @flow
 import * as React from 'react';
 import {ResponsiveLayout} from '..';
-import Placeholder from '../placeholder';
+import {Placeholder} from '../placeholder';
 
 export default {
     title: 'Components|Layouts/ResponsiveLayout',
@@ -10,7 +9,7 @@ export default {
     },
 };
 
-export const Default = (): React.ReactNode => (
+export const Default: StoryComponent = () => (
     <ResponsiveLayout>
         <Placeholder />
     </ResponsiveLayout>

@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {ButtonPrimary, ButtonSecondary} from '../button';
 import FixedFooterLayout from '../fixed-footer-layout';
@@ -11,7 +10,7 @@ export default {
 };
 
 const someTextLines = Array.from({length: 4}, () => 'Body text');
-const useTextLines = () => {
+const useTextLines = (): [Array<string>, () => void, () => void] => {
     const [textLines, setTextLines] = React.useState(someTextLines);
     const loadMoreText = () => {
         setTextLines((textLines) => [...textLines, ...someTextLines]);
@@ -22,7 +21,7 @@ const useTextLines = () => {
     return [textLines, loadMoreText, loadLessText];
 };
 
-export const FooterWithButtonsOnly = (): React.ReactNode => {
+export const FooterWithButtonsOnly: StoryComponent = () => {
     const [isFooterVisible, isFooterVisibleCheckbox] = useCheckbox('isFooterVisible', true);
     const [textLines, loadMoreText, loadLessText] = useTextLines();
     return (
@@ -41,7 +40,7 @@ export const FooterWithButtonsOnly = (): React.ReactNode => {
 
 FooterWithButtonsOnly.story = {name: 'ButtonFixedFooterLayout'};
 
-export const MoreComplexFooter = (): React.ReactNode => {
+export const MoreComplexFooter: StoryComponent = () => {
     const [textLines, loadMoreText] = useTextLines();
     const [isFooterVisible, isFooterVisibleCheckbox] = useCheckbox('isFooterVisible', true);
     return (

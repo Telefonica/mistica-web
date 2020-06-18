@@ -1,7 +1,7 @@
-// @flow
 import {openStoryPage, screen} from '../test-utils';
+import type {Device} from '../test-utils';
 
-const DEVICES = ['MOBILE_IOS', 'MOBILE_ANDROID'];
+const DEVICES: Array<Device> = ['MOBILE_IOS', 'MOBILE_ANDROID'];
 
 test.each(DEVICES)('Buttons - normal (%s)', async (device) => {
     await openStoryPage({

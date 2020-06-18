@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {MemoryRouter} from 'react-router-dom';
 import {
@@ -20,11 +19,11 @@ export default {
     },
 };
 
-const FieldWithCheckbox = ({children}: {children: React.ReactNode}) => (
+const FieldWithCheckbox: React.FC = ({children}) => (
     <div style={{display: 'flex', alignItems: 'center'}}>{children}</div>
 );
 
-export const Default = (): React.ReactNode => {
+export const Default: StoryComponent = () => {
     const [pretitle, pretitleTextField] = useTextField('pretitle', 'Factura de diciembre');
     const [title, titleTextField] = useTextField(
         'title',

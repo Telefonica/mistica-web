@@ -692,7 +692,7 @@ const TextField: React.FC<TextFieldProps> = ({
                                         [externalInputRef, inputRef].forEach((currentRef) => {
                                             if (currentRef) {
                                                 if (typeof currentRef === 'function') {
-                                                    currentRef(actualRef);
+                                                    currentRef(actualRef as HTMLInputElement);
                                                 } else {
                                                     // @ts-expect-error https://github.com/DefinitelyTyped/DefinitelyTyped/issues/31065
                                                     currentRef.current = actualRef;

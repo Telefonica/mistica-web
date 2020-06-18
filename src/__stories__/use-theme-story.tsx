@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {useTheme, Stack, Text} from '..';
 
@@ -6,13 +5,13 @@ export default {
     title: 'Hooks|useTheme',
 };
 
-const CodeText = ({children}) => (
+const CodeText: React.FC = ({children}) => (
     <Text size={16} weight="medium">
         {children}
     </Text>
 );
 
-export const UseTheme = (): React.ReactNode => {
+export const UseTheme: StoryComponent = () => {
     const theme = useTheme();
 
     return (

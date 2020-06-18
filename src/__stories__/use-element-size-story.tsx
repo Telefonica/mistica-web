@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {StorySection} from './helpers';
 import {useElementSize} from '../hooks';
@@ -7,8 +6,8 @@ export default {
     title: 'Hooks|useElementSize',
 };
 
-export const UseElementSize = (): React.ReactNode => {
-    const elementRef = React.useRef();
+export const UseElementSize: StoryComponent = () => {
+    const elementRef = React.useRef(null);
     const {height, width} = useElementSize(elementRef);
 
     return (

@@ -1,9 +1,10 @@
-// @flow
 import * as React from 'react';
 import {render, fireEvent, screen} from '@testing-library/react';
 import Tooltip from '../tooltip';
 
-const TestTooltip = (props) => (
+type Props = Omit<React.ComponentProps<typeof Tooltip>, 'children' | 'targetLabel' | 'target'>;
+
+const TestTooltip: React.FC<Props> = (props) => (
     <Tooltip {...props} targetLabel="help text" target={<span className="target">Press me!</span>}>
         <div className="content">Content</div>
     </Tooltip>
@@ -79,14 +80,15 @@ const scrollY = 0;
 const scrollX = 0;
 const defaultWidth = 340;
 
-const getBoundingClientRect = () => ({
-    top: targetTop,
-    right: targetRight,
-    bottom: targetBottom,
-    left: targetLeft,
-    height: targetHeight,
-    width: targetWidth,
-});
+const getBoundingClientRect = () =>
+    ({
+        top: targetTop,
+        right: targetRight,
+        bottom: targetBottom,
+        left: targetLeft,
+        height: targetHeight,
+        width: targetWidth,
+    } as DOMRect);
 
 test('check container styles for right position', async () => {
     jest.spyOn(global.Element.prototype, 'getBoundingClientRect').mockReturnValue(getBoundingClientRect());

@@ -1,7 +1,7 @@
-// @flow
 import {openStoryPage, screen} from '../test-utils';
+import type {Device} from '../test-utils';
 
-const TESTABLE_DEVICES = ['MOBILE_IOS', 'DESKTOP'];
+const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('Default textfield appears properly on %s', async (device) => {
     const page = await openStoryPage({

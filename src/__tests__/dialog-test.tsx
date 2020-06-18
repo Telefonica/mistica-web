@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {render, fireEvent, waitFor, screen} from '@testing-library/react';
 import {alert, confirm} from '../dialog';
@@ -148,7 +147,7 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
 
 test('when webview bridge is available nativeAlert is shown', async () => {
     jest.spyOn(webviewBridge, 'isWebViewBridgeAvailable').mockReturnValue(true);
-    const nativeAlertSpy = jest.spyOn(webviewBridge, 'nativeAlert').mockResolvedValue(() => {});
+    const nativeAlertSpy = jest.spyOn(webviewBridge, 'nativeAlert').mockResolvedValue();
 
     render(<ThemeContextProvider theme={overrideTheme({})} />);
     alert({...confirmProps, title: 'lolo'});
@@ -164,7 +163,7 @@ test('when webview bridge is available nativeAlert is shown', async () => {
 
 test('when webview bridge is available nativeConfirm is shown', async () => {
     jest.spyOn(webviewBridge, 'isWebViewBridgeAvailable').mockReturnValue(true);
-    const nativeAlertSpy = jest.spyOn(webviewBridge, 'nativeConfirm').mockResolvedValue(() => {});
+    const nativeAlertSpy = jest.spyOn(webviewBridge, 'nativeConfirm').mockResolvedValue(true);
 
     render(<ThemeContextProvider theme={overrideTheme({})} />);
     confirm({...confirmProps, title: 'lolo', acceptText: 'Cuco peludo'});

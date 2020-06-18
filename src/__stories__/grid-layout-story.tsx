@@ -1,7 +1,6 @@
-// @flow
 import * as React from 'react';
 import {GridLayout, ResponsiveLayout} from '..';
-import Placeholder from '../placeholder';
+import {Placeholder} from '../placeholder';
 
 export default {
     title: 'Components|Layouts/GridLayout',
@@ -10,7 +9,7 @@ export default {
     },
 };
 
-export const sixAndSix = (): React.ReactNode => (
+export const SixAndSix: StoryComponent = () => (
     <ResponsiveLayout>
         <GridLayout>
             <div style={{gridColumn: 'span 6'}}>
@@ -22,9 +21,10 @@ export const sixAndSix = (): React.ReactNode => (
         </GridLayout>
     </ResponsiveLayout>
 );
-sixAndSix.story = {name: '6 + 6'};
 
-export const eightAndFour = (): React.ReactNode => (
+SixAndSix.story = {name: '6 + 6'};
+
+export const EightAndFour: StoryComponent = () => (
     <ResponsiveLayout>
         <GridLayout>
             <div style={{gridColumn: 'span 8'}}>
@@ -36,4 +36,5 @@ export const eightAndFour = (): React.ReactNode => (
         </GridLayout>
     </ResponsiveLayout>
 );
-eightAndFour.story = {name: '8 + 4'};
+
+EightAndFour.story = {name: '8 + 4'};

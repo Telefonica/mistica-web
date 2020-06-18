@@ -107,12 +107,12 @@ const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     );
 };
 
-export const SuccessFeedbackScreen = (props: FeedbackProps): React.ReactNode => (
+export const SuccessFeedbackScreen: React.FC<FeedbackProps> = (props) => (
     <FeedbackScreen feedbackType={FEEDBACK_SUCCESS} {...props} />
 );
-export const ErrorFeedbackScreen = (props: FeedbackProps): React.ReactNode => (
+export const ErrorFeedbackScreen: React.FC<FeedbackProps> = (props) => (
     <FeedbackScreen feedbackType={FEEDBACK_ERROR} {...props} />
 );
-export const InfoFeedbackScreen = (props: FeedbackProps): React.ReactNode => (
+export const InfoFeedbackScreen: React.FC<FeedbackProps> = (props) => (
     <FeedbackScreen feedbackType={FEEDBACK_INFO} {...props} />
 );

@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {StorySection, fruitEntries} from './helpers';
 import {Select} from '..';
@@ -10,7 +9,7 @@ export default {
 
 const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 
-export const Default = (): React.ReactNode => {
+export const Default: StoryComponent = () => {
     const [value, setValue] = React.useState('');
 
     return (

@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import createContext from '../nestable-context';
 import {render, fireEvent, waitFor, act, screen} from '@testing-library/react';
@@ -137,7 +136,7 @@ const Transition = ({
 test('works as expected with transitions', async () => {
     const {Provider, Getter, Setter} = createContext<string>('nothing');
 
-    let resolve;
+    let resolve: () => void;
     const transitionPromise = new Promise((r) => {
         resolve = r;
     });

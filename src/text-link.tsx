@@ -30,20 +30,20 @@ interface CommonProps {
     'data-testid'?: string;
 }
 
-interface HrefProps extends CommonProps {
+export interface HrefProps extends CommonProps {
     href: string;
     newTab?: boolean;
     onPress?: undefined;
     to?: undefined;
 }
 
-interface ToProps extends CommonProps {
+export interface ToProps extends CommonProps {
     to: string;
     fullPageOnWebView?: boolean;
     href?: undefined;
     onPress?: undefined;
 }
-interface OnPressProps extends CommonProps {
+export interface OnPressProps extends CommonProps {
     onPress: (event: React.MouseEvent<HTMLElement>) => void | boolean;
     href?: undefined;
     to?: undefined;

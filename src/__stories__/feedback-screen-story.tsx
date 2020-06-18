@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {ErrorFeedbackScreen, InfoFeedbackScreen, SuccessFeedbackScreen} from '../feedback-screen';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from '../button';
@@ -16,7 +15,7 @@ const linkButton = <ButtonLink onPress={() => {}}>Action2</ButtonLink>;
 const defaultTitle = "I'm the title",
     defaultDescription = "I'm the description";
 
-export const Success = (): React.ReactNode => (
+export const Success: StoryComponent = () => (
     <SuccessFeedbackScreen
         title={defaultTitle}
         description={defaultDescription}
@@ -26,7 +25,7 @@ export const Success = (): React.ReactNode => (
 );
 Success.story = {name: 'SuccessFeedbackScreen'};
 
-export const Error = (): React.ReactNode => (
+export const Error: StoryComponent = () => (
     <ErrorFeedbackScreen
         title={defaultTitle}
         description={defaultDescription}
@@ -36,12 +35,12 @@ export const Error = (): React.ReactNode => (
 );
 Error.story = {name: 'ErrorFeedbackScreen'};
 
-export const Info = (): React.ReactNode => (
+export const Info: StoryComponent = () => (
     <InfoFeedbackScreen title={defaultTitle} description={defaultDescription} primaryButton={primaryButton} />
 );
 Info.story = {name: 'InfoFeedbackScreen'};
 
-export const multipleParagraphs = (): React.ReactNode => (
+export const multipleParagraphs: StoryComponent = () => (
     <SuccessFeedbackScreen
         title={defaultTitle}
         description={[defaultDescription, "I'm the second paragraph"]}

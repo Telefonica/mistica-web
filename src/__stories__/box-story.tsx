@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {Box, Stack, Placeholder} from '..';
 
@@ -6,7 +5,7 @@ export default {
     title: 'Components|Layouts/Box',
 };
 
-export const Default = (): React.ReactNode => (
+export const Default: StoryComponent = () => (
     <div style={{width: 200}}>
         <Stack space={16}>
             <div style={{border: `1px solid red`}}>

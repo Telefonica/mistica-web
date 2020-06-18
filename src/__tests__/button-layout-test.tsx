@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {ButtonPrimary, ButtonSecondary} from '../button';
 import ButtonLayout from '../button-layout';

@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {MemoryRouter, Route, Switch} from 'react-router-dom';
 import Touchable from '../touchable';
@@ -21,7 +20,7 @@ test('Check "Link" component is rendered when "to" prop is passed without tracki
         </MemoryRouter>
     );
 
-    const anchor = screen.getByText((text, el) => el.textContent === 'Test', {selector: 'a'});
+    const anchor = screen.getByText((_, el) => el.textContent === 'Test', {selector: 'a'});
 
     expect(anchor).toHaveAttribute('href', to);
 });
@@ -50,7 +49,7 @@ test('Check "Link" component is rendered when "to" prop is passed with tracking'
         </ThemeContextProvider>
     );
 
-    const anchor = screen.getByText((text, el) => el.textContent === 'Test', {selector: 'a'});
+    const anchor = screen.getByText((_, el) => el.textContent === 'Test', {selector: 'a'});
 
     fireEvent.click(anchor);
 
@@ -72,7 +71,7 @@ test('Check "a" component is rendered when "fullPageOnWebView" and "to" props ar
         </ThemeContextProvider>
     );
 
-    const anchor = screen.getByText((text, el) => el.textContent === 'Test', {selector: 'a'});
+    const anchor = screen.getByText((_, el) => el.textContent === 'Test', {selector: 'a'});
     expect(anchor).toHaveAttribute('href', href);
 });
 
@@ -97,7 +96,7 @@ test('Check "Link" component is rendered when "fullPageOnWebView" and "to" props
         </ThemeContextProvider>
     );
 
-    const anchor = screen.getByText((text, el) => el.textContent === 'Test', {selector: 'a'});
+    const anchor = screen.getByText((_, el) => el.textContent === 'Test', {selector: 'a'});
 
     expect(anchor).toHaveAttribute('href', `/${href}`);
 });
@@ -105,7 +104,7 @@ test('Check "Link" component is rendered when "fullPageOnWebView" and "to" props
 test('Check "a" component is rendered when "href" prop is passed', () => {
     const href = 'href';
     render(<Touchable href={href}>Test</Touchable>);
-    const anchor = screen.getByText((text, el) => el.textContent === 'Test', {selector: 'a'});
+    const anchor = screen.getByText((_, el) => el.textContent === 'Test', {selector: 'a'});
 
     expect(anchor).toHaveAttribute('href', href);
 });
@@ -113,7 +112,7 @@ test('Check "a" component is rendered when "href" prop is passed', () => {
 test('Check "a" component is rendered when "href" prop is passed and trackingEvents', async () => {
     const href = 'href';
     const logEventSpy = jest.fn(() => Promise.resolve());
-    const redirectSpy = jest.spyOn(window, 'open').mockImplementation(() => {});
+    const redirectSpy = jest.spyOn(window, 'open').mockImplementation(() => null);
 
     render(
         <ThemeContextProvider theme={overrideTheme({analytics: {logEvent: logEventSpy}})}>
@@ -143,7 +142,7 @@ test('Check "button" component is rendered when "onPress" prop is passed', () =>
 });
 
 test('Check "button" component is rendered when "onPress" prop is passed and trackingEvents', async () => {
-    const onPressSpy = jest.fn().mockReturnValue();
+    const onPressSpy = jest.fn().mockReturnValue(undefined);
     const logEventSpy = jest.fn(() => Promise.resolve());
     const {container} = render(
         <ThemeContextProvider theme={overrideTheme({analytics: {logEvent: logEventSpy}})}>
@@ -166,7 +165,7 @@ test('Check "button" component is rendered when "onPress" prop is passed and tra
 });
 
 test('Check "a" component has click-like behaviour on "space" key press', async () => {
-    const redirectSpy = jest.spyOn(window, 'open').mockImplementation(() => {});
+    const redirectSpy = jest.spyOn(window, 'open').mockImplementation(() => null);
     const href = 'href';
 
     render(
@@ -196,7 +195,7 @@ test('Check "Link" component has click-like behaviour on "space" key press', asy
         </MemoryRouter>
     );
 
-    const anchor = screen.getByText((text, el) => el.textContent === 'Test', {selector: 'a'});
+    const anchor = screen.getByText((_, el) => el.textContent === 'Test', {selector: 'a'});
 
     fireEvent.keyDown(anchor, {key: 'Space', keyCode: 32});
 

@@ -268,7 +268,7 @@ export interface ToButtonProps extends CommonProps {
     href?: undefined;
 }
 export interface OnPressButtonProps extends CommonProps {
-    onPress: (event: React.MouseEvent<HTMLElement>) => void;
+    onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined;
     submit?: undefined;
     fake?: undefined;
     to?: undefined;

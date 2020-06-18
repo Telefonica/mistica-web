@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from '../button';
 import {ThemeVariant} from '../theme-variant-context';
@@ -30,7 +29,7 @@ const IcnCamera = () => (
     </svg>
 );
 
-const BackgroundTheme = ({children}: {children: React.ReactNode}) => {
+const BackgroundTheme: StoryComponent = ({children}) => {
     const {colors} = useTheme();
     const [isInverseVariantState, setIsInverseVariantState] = React.useState(false);
     return (
@@ -58,7 +57,7 @@ const BackgroundTheme = ({children}: {children: React.ReactNode}) => {
 
 const handleOnPress = () => window.alert('pressed!');
 
-export const TypeOfButtons = (): React.ReactNode => {
+export const TypeOfButtons: StoryComponent = () => {
     const [disabled, disabledCheckbox] = useCheckbox('disabled');
     const [showSpinner, showSpinnerCheckbox] = useCheckbox('showSpinner');
     const [small, smallCheckbox] = useCheckbox('small');
@@ -139,7 +138,7 @@ export const TypeOfButtons = (): React.ReactNode => {
     );
 };
 
-export const withIcon = (): React.ReactNode => (
+export const withIcon: StoryComponent = () => (
     <StorySection title="Buttons can have an icon">
         <ButtonPrimary onPress={() => window.alert('photo!')}>
             <IcnCamera />
@@ -148,7 +147,7 @@ export const withIcon = (): React.ReactNode => (
     </StorySection>
 );
 
-export const LoadingState = (): React.ReactNode => {
+export const LoadingState: StoryComponent = () => {
     const [isLoading, setIsLoading] = React.useState(false);
     const handlePress = () => {
         setIsLoading(true);
@@ -215,7 +214,7 @@ export const LoadingState = (): React.ReactNode => {
     );
 };
 
-export const SubmitButton = (): React.ReactNode => (
+export const SubmitButton: StoryComponent = () => (
     <StorySection title="Submitbutton">
         <p>
             A button with submit attribute in a form doesn't need a onPress prop. And clicking on it will fire

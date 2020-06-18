@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {ThemeVariant} from '../theme-variant-context';
 import LoadingBarComponent from '../loading-bar';
@@ -8,7 +7,7 @@ export default {
     title: 'Components|Feedbacks/LoadingBar',
 };
 
-const BackgroundTheme = ({children}: {children: React.ReactNode}) => {
+const BackgroundTheme: React.FC = ({children}) => {
     const [isInverseVariant, setIsInverseVariant] = React.useState(false);
     return (
         <ThemeVariant isInverse={isInverseVariant}>
@@ -27,7 +26,7 @@ const BackgroundTheme = ({children}: {children: React.ReactNode}) => {
     );
 };
 
-export const LoadingBar = (): React.ReactNode => (
+export const LoadingBar: StoryComponent = () => (
     <BackgroundTheme>
         <StorySection title="Loading Bar">
             <LoadingBarComponent visible />

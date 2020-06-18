@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {render, act, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -7,7 +6,7 @@ import FormTextField from '../form-text-field';
 import {ButtonPrimary} from '../button';
 
 test('happy case', async () => {
-    const handleSubmitSpy = jest.fn().mockResolvedValue();
+    const handleSubmitSpy = jest.fn().mockResolvedValue(undefined);
 
     render(
         <Form onSubmit={handleSubmitSpy}>
@@ -25,7 +24,7 @@ test('happy case', async () => {
 });
 
 test('not submitting if required field is empty', async () => {
-    const handleSubmitSpy = jest.fn().mockResolvedValue();
+    const handleSubmitSpy = jest.fn().mockResolvedValue(undefined);
 
     render(
         <Form onSubmit={handleSubmitSpy}>
@@ -43,7 +42,7 @@ test('not submitting if required field is empty', async () => {
 });
 
 test('custom validator', async () => {
-    const handleSubmitSpy = jest.fn().mockResolvedValue();
+    const handleSubmitSpy = jest.fn().mockResolvedValue(undefined);
 
     render(
         <Form onSubmit={handleSubmitSpy}>
@@ -76,7 +75,7 @@ test('custom validator', async () => {
 });
 
 test('fields are disabled during submit', async () => {
-    let resolveSubmitPromise;
+    let resolveSubmitPromise: () => void;
     const submitPromise = new Promise((r) => {
         resolveSubmitPromise = r;
     });

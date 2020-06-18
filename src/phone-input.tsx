@@ -7,8 +7,14 @@ import type {RegionCode} from './utils/region-code';
 const format = (regionCode: RegionCode, number?: string): string =>
     number === undefined ? '' : formatAsYouType(number.replace(/[^\d+*#]/g, ''), regionCode);
 
-// @ts-expect-error TODO review prop types
-const PhoneInput: React.FC<any> = ({inputRef, value, defaultValue, ...other}) => {
+type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onInput'> & {
+    inputRef?: React.Ref<HTMLInputElement>;
+    value?: string;
+    defaultValue?: string;
+    onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
+};
+
+const PhoneInput: React.FC<Props> = ({inputRef, value, defaultValue, ...other}) => {
     const {i18n} = useTheme();
     return (
         <input

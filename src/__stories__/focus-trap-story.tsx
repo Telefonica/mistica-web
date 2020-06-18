@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {FocusTrap, ButtonPrimary, ButtonSecondary, ButtonLayout, Stack, Text} from '..';
 import {useTheme} from '../hooks';
@@ -7,7 +6,7 @@ export default {
     title: 'Components|Accesibility/FocusTrap',
 };
 
-export const Default = (): React.ReactNode => {
+export const Default: StoryComponent = () => {
     const theme = useTheme();
     return (
         <Stack space={16}>

@@ -76,32 +76,32 @@ interface CommonProps {
  * this way we can know the type of the union by checking that property
  * See https://www.typescriptlang.org/docs/handbook/advanced-types.html#discriminated-unions
  */
-interface PropsHref extends CommonProps {
+export interface PropsHref extends CommonProps {
     href: string;
     newTab?: boolean;
     to?: undefined;
     onPress?: undefined;
 }
-interface PropsOnPress extends CommonProps {
+export interface PropsOnPress extends CommonProps {
     onPress: PressHandler;
     href?: undefined;
     to?: undefined;
 }
-interface PropsTo extends CommonProps {
+export interface PropsTo extends CommonProps {
     to: string | Location;
     fullPageOnWebView?: boolean;
     replace?: boolean;
     href?: undefined;
     onPress?: undefined;
 }
-interface PropsMaybeHref extends CommonProps {
+export interface PropsMaybeHref extends CommonProps {
     maybe: true;
     href?: string;
     newTab?: boolean;
     to?: undefined;
     onPress?: undefined;
 }
-interface PropsMaybeTo extends CommonProps {
+export interface PropsMaybeTo extends CommonProps {
     maybe: true;
     to?: string | Location;
     fullPageOnWebView?: boolean;
@@ -109,7 +109,7 @@ interface PropsMaybeTo extends CommonProps {
     href?: undefined;
     onPress?: undefined;
 }
-interface PropsMaybeOnPress extends CommonProps {
+export interface PropsMaybeOnPress extends CommonProps {
     maybe: true;
     onPress?: PressHandler;
     href?: undefined;

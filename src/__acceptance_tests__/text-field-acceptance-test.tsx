@@ -1,11 +1,13 @@
-import {openStoryPage, screen} from '../test-utils';
+import {openStoryPage, screen, PageApi} from '../test-utils';
+import {ElementHandle} from 'puppeteer';
 
-const clearAndType = async (page, element, text) => {
+const clearAndType = async (page: PageApi, element: ElementHandle, text: string) => {
     await page.click(element, {clickCount: 3});
     await page.type(element, text);
 };
 
-const getValue = async (element) => (await element).getProperty('value').then((t) => t.jsonValue());
+const getValue = async (element: Promise<ElementHandle> | ElementHandle) =>
+    (await element).getProperty('value').then((t) => t.jsonValue());
 
 const STORY = {
     section: 'Components|Forms/TextField',

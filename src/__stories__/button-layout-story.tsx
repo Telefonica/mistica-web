@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {ButtonPrimary, ButtonSecondary, ButtonLink} from '../button';
 import ButtonLayout from '../button-layout';
@@ -9,7 +8,7 @@ export default {
     component: ButtonLayout,
 };
 
-export const Default = (): React.ReactNode => (
+export const Default: StoryComponent = () => (
     <>
         <StorySection title="ButtonLayout">
             <ButtonLayout>

@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {useWindowSize, useTheme, Stack, Text} from '..';
 
@@ -6,7 +5,7 @@ export default {
     title: 'Hooks|useWindowSize',
 };
 
-export const UseWindowSize = (): React.ReactNode => {
+export const UseWindowSize: StoryComponent = () => {
     const theme = useTheme();
     const size = useWindowSize();
     return (

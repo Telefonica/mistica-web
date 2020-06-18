@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {useAriaId, useTheme, Stack, Text} from '..';
 
@@ -6,7 +5,7 @@ export default {
     title: 'Hooks|useAriaId',
 };
 
-export const UseAriaId = (): React.ReactNode => {
+export const UseAriaId: StoryComponent = () => {
     const theme = useTheme();
     const id = useAriaId();
     return (

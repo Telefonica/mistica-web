@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {TextField, PhoneInput} from '..';
 import {render, waitFor, screen} from '@testing-library/react';

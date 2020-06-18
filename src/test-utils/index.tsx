@@ -27,7 +27,7 @@ const MOBILE_DEVICE_ANDROID: 'MOBILE_ANDROID' = 'MOBILE_ANDROID';
 const TABLET_DEVICE: 'TABLET' = 'TABLET';
 const DESKTOP_DEVICE: 'DESKTOP' = 'DESKTOP';
 
-type Device =
+export type Device =
     | typeof MOBILE_DEVICE_IOS
     | typeof MOBILE_DEVICE_ANDROID
     | typeof TABLET_DEVICE
@@ -154,7 +154,7 @@ const buildStoryUrl = (section: string, name: string, skin?: string, platform?: 
     return `${STORYBOOK_URL}?${params.toString()}`;
 };
 
-type PageApi = {
+export type PageApi = {
     // Following methods are inherited from Puppeteer.Page, some are overridden
 
     // These are overridden:
@@ -166,7 +166,7 @@ type PageApi = {
     click: (selector: ElementHandle | Promise<ElementHandle>, options?: ClickOptions) => Promise<void>;
 
     // These are from prototype chain (inherited from Puppeteer.Page)
-    screenshot: (options: ScreenshotOptions) => ReturnType<Page['screenshot']>;
+    screenshot: (options?: ScreenshotOptions) => ReturnType<Page['screenshot']>;
 };
 
 const wait = <T extends any>(
@@ -246,7 +246,7 @@ const createPageApi = (page: Page): PageApi => {
 
     api.type = async (selector, text, options) => (await selector).type(text, options);
     api.click = async (selector, options) => (await selector).click(options);
-    api.screenshot = async (options: ScreenshotOptions) => {
+    api.screenshot = async (options?: ScreenshotOptions) => {
         await waitForPaintEnd(page);
         return watermarkIfNeeded(page.screenshot(options));
     };

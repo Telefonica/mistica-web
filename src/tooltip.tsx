@@ -105,7 +105,7 @@ const EVENT_THROTTLE_TIME = process.env.NODE_ENV === 'test' ? 0 : 200;
 type Props = {
     children?: React.ReactNode;
     description?: string;
-    target: React.ReactElement<any>;
+    target: React.ReactNode;
     title?: string;
     position?: Position;
     width?: number;

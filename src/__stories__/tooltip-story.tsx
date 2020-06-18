@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import Tooltip from '../tooltip';
 import {StorySection} from './helpers';
@@ -11,7 +10,7 @@ export default {
     title: 'Components|Hints/Tooltip',
 };
 
-export const Default = (): React.ReactNode => (
+export const Default: StoryComponent = () => (
     <StorySection title="Tooltip">
         <strong>Desktop examples:</strong>
         <div

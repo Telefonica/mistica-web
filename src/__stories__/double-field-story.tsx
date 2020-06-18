@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {StorySection, fruitEntries} from './helpers';
 import {TextField, Select, DoubleField, Stack} from '..';
@@ -8,7 +7,7 @@ export default {
     component: DoubleField,
 };
 
-export const Default = (): React.ReactNode => {
+export const Default: StoryComponent = () => {
     const [selectValue, setSelectValue] = React.useState('');
     return (
         <>

@@ -1,4 +1,3 @@
-// @flow
 import {openStoryPage} from '../test-utils';
 
 test('Stack ', async () => {

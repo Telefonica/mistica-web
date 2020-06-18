@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {FixedToTop} from '..';
 
@@ -6,7 +5,9 @@ export default {
     title: 'Components|Utils/FixedToTop',
 };
 
-const FixedDiv = ({background, height, top}) => (
+type Props = {background: string; height: number; top: number};
+
+const FixedDiv: React.FC<Props> = ({background, height, top}) => (
     <div style={{position: 'fixed', top, height, width: 300, background}}>
         top: {top}, height: {height}
     </div>
@@ -18,7 +19,7 @@ const OtherComponent = () => (
     </FixedToTop>
 );
 
-export const Default = (): React.ReactNode => (
+export const Default: StoryComponent = () => (
     <FixedToTop height={20}>
         {(topDistance) => (
             <>

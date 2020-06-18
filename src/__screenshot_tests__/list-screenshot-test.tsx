@@ -1,7 +1,7 @@
-// @flow
 import {openStoryPage, screen} from '../test-utils';
+import type {Device} from '../test-utils';
 
-const testDevices = ['MOBILE_IOS', 'DESKTOP'];
+const testDevices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(testDevices)('Row list - %s', async (device) => {
     await openStoryPage({

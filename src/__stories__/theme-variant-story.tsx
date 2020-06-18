@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {ThemeVariant, useTheme, Text, useIsInverseVariant, Stack} from '..';
 import {useCheckbox} from './helpers';
@@ -8,7 +7,7 @@ export default {
     title: 'Components|Utils/ThemeVariant',
 };
 
-const OtherComponent = () => {
+const OtherComponent: React.FC = () => {
     const theme = useTheme();
     const isInverse = useIsInverseVariant();
     return (
@@ -29,7 +28,7 @@ const OtherComponent = () => {
     );
 };
 
-export const Default = (): React.ReactNode => {
+export const Default: StoryComponent = () => {
     const theme = useTheme();
     const [isInverse, inverseCheckbox] = useCheckbox('is inverse', false);
     return (

@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {MemoryRouter} from 'react-router-dom';
 import {StorySection, useTextField, useCheckbox, useSelect} from './helpers';
@@ -15,7 +14,7 @@ export default {
 const url = 'https://www.google.com';
 const handleOnPress = () => window.alert('Button pressed!');
 
-export const Default = (): React.ReactNode => {
+export const Default: StoryComponent = () => {
     const [title, titleTextField] = useTextField('title', 'Title', true);
     const [description, descriptionTextField] = useTextField('description', 'Description');
     const [iconSize, iconSizeSelectField] = useSelect('Icon Size', '40', ['40', '24 *', 'Without icon']);
@@ -60,7 +59,7 @@ export const Default = (): React.ReactNode => {
                             iconSize={iconSize === '40' ? 40 : 24}
                             title={title}
                             description={description}
-                            onPress={withLink ? handleOnPress : ''}
+                            onPress={withLink ? handleOnPress : undefined}
                             badge={withBadge ? 2 : undefined}
                         />
                         <Row

@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import FadeIn from '../fade-in';
 import {StorySection} from './helpers';
@@ -8,7 +7,7 @@ export default {
     component: FadeIn,
 };
 
-export const Default = (): React.ReactNode => (
+export const Default: StoryComponent = () => (
     <StorySection title="FadeIn transition">
         <FadeIn delay="1s">
             <p>

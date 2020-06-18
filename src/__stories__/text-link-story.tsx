@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import TextLink from '../text-link';
 import {StorySection} from './helpers';
@@ -8,7 +7,7 @@ export default {
     component: TextLink,
 };
 
-export const Default = (): React.ReactElement<'div'> => {
+export const Default: StoryComponent = () => {
     const [count, setCount] = React.useState(0);
     return (
         <div data-testid="text-link">
@@ -24,10 +23,10 @@ export const Default = (): React.ReactElement<'div'> => {
             <StorySection title="TextLink opened in new tab">
                 <p
                     style={{
-                        fontSize: '13px',
-                        fontWeight: '400',
+                        fontSize: 13,
+                        fontWeight: 400,
                         display: 'block',
-                        marginBottom: '32px',
+                        marginBottom: 32,
                         color: 'rgb(102, 102, 102)',
                     }}
                 >
