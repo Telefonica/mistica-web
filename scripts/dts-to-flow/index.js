@@ -46,30 +46,46 @@ const fixFlowDefinition = (flowFilename) => {
     // `React.FC` => `React.ComponentType`
     src = src.replace(/React.(FC|ComponentClass|FunctionComponent)/g, 'React.ComponentType');
 
-    // `React.MouseEvent` => `React.SyntheticMouseEvent`
-    src = src.replace(/React.(Mouse)Event/g, 'Synthetic$1Event');
+    // `React.ForwardRefExoticComponent` => `React.Component`
+    src = src.replace(/React\.ForwardRefExoticComponent/g, 'React.Component');
 
-    // This patch isn't really needed. Flow marks the import as an error but seems to correctly use imported type
-    // `import { Locale }` => `import { type Locale}`
-    const types = [
-        'Locale',
-        'Location',
-        'RegionCode',
-        'ScreenSizeContextType',
-        'Skin',
-        'Theme',
-        'TrackingEvent',
-    ];
-    src = src.replace(new RegExp(`(import {.*?)(${types.join('|')})([\\s,].*?})`, 'gm'), '$1type $2$3');
+    // `& React.RefAttributes<any>` => ``
+    src = src.replace(/&\s*React\.RefAttributes<any>/gm, '');
+
+    // `React.MouseEvent` => `React.SyntheticMouseEvent`
+    const eventMap = {
+        Mouse: 'Mouse',
+        Focus: 'Focus',
+        Keyboard: 'Keyboard',
+        Change: '',
+        Form: '',
+    };
+    src = src.replace(
+        /React.(Mouse|Change|Focus|Keyboard|Form)Event/g,
+        (_, $1) => `Synthetic${eventMap[$1]}Event`
+    );
+
+    // `$PropertyType<$Exports<'./button'>, 'ButtonProps'>` => `ButtonProps` + `import type {ButtonProps} from './button';`
+    const imports = new Set();
+    let importsSrc = '';
+    src = src.replace(/\$PropertyType<\$Exports<"([./\w]+)">,\s*"(\w+)">/gm, (_, $1, $2) => {
+        const key = $1 + '~' + $2;
+        if (!imports.has(key)) {
+            importsSrc += `\nimport type {${$2}} from "${$1}";`;
+            imports.add(key);
+        }
+        return $2;
+    });
+    src += importsSrc;
 
     // `Omit<T, K>` => `Pick<T, Exclude<$Keys<T>, K>>`
-    src = src.replace(/Omit<(\w+), ([^>]+)>/g, 'Pick<$1, Exclude<$$Keys<$1>, $2>>');
+    src = src.replace(/Omit<\s*([^,]+),\s*([^>]+)\s*>/gm, 'Pick<$1, Exclude<$$Keys<$1>, $2>>');
 
     // `Pick<P, Exclude<$Keys<P>, "foo">>` => `$Diff<P, {foo: *}>`
+    src = src.replace(/Pick<([^,]+), Exclude<\$Keys<(\w+)>, "(\w+)">>/g, '$$Diff<$1, {"$3": *}>');
     // `Pick<P, Exclude<$Keys<P>, "foo" | "bar">` => `$Diff<P, {foo: *, bar: *}>`
-    src = src.replace(/Pick<(\w+), Exclude<\$Keys<(\w+)>, "(\w+)">>/g, '$$Diff<$1, {"$3": *}>');
     src = src.replace(
-        /Pick<(\w+), Exclude<\$Keys<(\w+)>, "(\w+)" \| "(\w+)">>/g,
+        /Pick<\s*([^,]+),\s*Exclude<\s*\$Keys<([^,]+)>,\s*"(\w+)"\s*\|\s*"(\w+)"\s*>\s*>/gm,
         '$$Diff<$1, {"$3": *, "$4": *}>'
     );
 
@@ -81,6 +97,9 @@ const fixFlowDefinition = (flowFilename) => {
         const pathImport = relativePath.startsWith('.') ? relativePath : `./` + relativePath;
         src += `\nimport {type CssStyle} from "${pathImport}";\n`;
     }
+
+    // `React.InputHTMLAttributes<HTMLInputElement>` => `any`
+    src = src.replace(/React\.InputHTMLAttributes<HTMLInputElement>/, 'any');
 
     // File is written two times, one before applying beautify to be able to check problems if beautify fails
     writeFileSync(flowFilename, src);

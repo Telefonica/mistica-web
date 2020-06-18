@@ -23,7 +23,7 @@ declare type CommonProps = {
   "aria-expanded"?: "true" | "false",
   tabIndex?: number
 };
-declare type ToButtonProps = {
+export type ToButtonProps = {
   ...$Exact<CommonProps>,
 
   to: string | Location,
@@ -33,16 +33,16 @@ declare type ToButtonProps = {
   onPress?: void,
   href?: void
 };
-declare type OnPressButtonProps = {
+export type OnPressButtonProps = {
   ...$Exact<CommonProps>,
 
-  onPress: (event: SyntheticMouseEvent<HTMLElement>) => void,
+  onPress: (event: SyntheticMouseEvent<HTMLElement>) => void | void,
   submit?: void,
   fake?: void,
   to?: void,
   href?: void
 };
-declare type HrefButtonProps = {
+export type HrefButtonProps = {
   ...$Exact<CommonProps>,
 
   href: string,
@@ -52,7 +52,7 @@ declare type HrefButtonProps = {
   onPress?: void,
   to?: void
 };
-declare type FakeButtonProps = {
+export type FakeButtonProps = {
   ...$Exact<CommonProps>,
 
   fake: true,
@@ -61,7 +61,7 @@ declare type FakeButtonProps = {
   to?: void,
   href?: void
 };
-declare type SubmitButtonProps = {
+export type SubmitButtonProps = {
   ...$Exact<CommonProps>,
 
   submit: true,
@@ -70,7 +70,7 @@ declare type SubmitButtonProps = {
   onPress?: void,
   href?: void
 };
-declare type Props =
+export type ButtonProps =
   | FakeButtonProps
   | SubmitButtonProps
   | ToButtonProps
@@ -104,14 +104,18 @@ declare type ButtonLinkToProps = {
   onPress?: void,
   href?: void
 };
-declare type ButtonLinkProps =
+export type ButtonLinkProps =
   | ButtonLinkOnPressProps
   | ButtonLinkHrefProps
   | ButtonLinkToProps;
-declare export var ButtonLink: (props: ButtonLinkProps) => React.Node;
-declare export var ButtonPrimary: (props: Props) => React.Node;
-declare export var ButtonSecondary: (props: Props) => React.Node;
-declare export var ButtonDanger: (props: Props) => React.Node;
+declare export var ButtonLink: React.ComponentType<ButtonLinkProps>;
+declare export var ButtonPrimary: React.ComponentType<ButtonProps>;
+declare export var ButtonSecondary: React.ComponentType<ButtonProps>;
+declare export var ButtonDanger: React.ComponentType<ButtonProps>;
+export type ButtonElement =
+  | React.Element<typeof ButtonPrimary>
+  | React.Element<typeof ButtonSecondary>
+  | React.Element<typeof ButtonDanger>;
 declare export {};
 
 import { type CssStyle } from "./__types__.js.flow";

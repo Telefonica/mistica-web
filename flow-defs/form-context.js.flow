@@ -8,7 +8,7 @@
 import * as React from "react";
 export type FormStatus = "filling" | "sending";
 export type FormErrors = { [name: string]: string | void, ... };
-export type FieldValidator = (value?: any, rawValue?: string) => string | void;
+export type FieldValidator = (value: any, rawValue: string) => string | void;
 declare type FieldRegistration = {
   name: string,
   field?: HTMLInputElement | HTMLSelectElement | null,

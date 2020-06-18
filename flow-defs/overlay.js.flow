@@ -13,7 +13,7 @@ declare type Props = {
   className?: string,
   disableScroll?: boolean
 };
-declare var Overlay: (x: Props) => React.Element<"div">;
+declare var Overlay: React.ComponentType<Props>;
 declare export default typeof Overlay;
 
 import { type CssStyle } from "./__types__.js.flow";

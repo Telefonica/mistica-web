@@ -6,7 +6,7 @@
  */
 
 import * as React from "react";
-declare type InputState = "focused" | "filled" | "default";
+export type InputState = "focused" | "filled" | "default";
 declare type LabelProps = {
   shrinkLabel?: boolean,
   forId: string,

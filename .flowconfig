@@ -1,6 +1,8 @@
 [ignore]
 .*/node_modules/.*
 !.*/node_modules/@tef-novum/.*
+<PROJECT_ROOT>/playroom/.*
+<PROJECT_ROOT>/.storybook/.*
 <PROJECT_ROOT>/scripts/dts-to-flow/overrides
 
 

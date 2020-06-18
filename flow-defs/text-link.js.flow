@@ -16,7 +16,7 @@ declare type CommonProps = {
   trackingEvent?: TrackingEvent,
   "data-testid"?: string
 };
-declare type HrefProps = {
+export type HrefProps = {
   ...$Exact<CommonProps>,
 
   href: string,
@@ -24,7 +24,7 @@ declare type HrefProps = {
   onPress?: void,
   to?: void
 };
-declare type ToProps = {
+export type ToProps = {
   ...$Exact<CommonProps>,
 
   to: string,
@@ -32,7 +32,7 @@ declare type ToProps = {
   href?: void,
   onPress?: void
 };
-declare type OnPressProps = {
+export type OnPressProps = {
   ...$Exact<CommonProps>,
 
   onPress: (event: SyntheticMouseEvent<HTMLElement>) => void | boolean,
@@ -40,7 +40,7 @@ declare type OnPressProps = {
   to?: void
 };
 declare type Props = HrefProps | ToProps | OnPressProps;
-declare var TextLink: (x: Props) => React.Node;
+declare var TextLink: React.ComponentType<Props>;
 declare export default typeof TextLink;
 
 import { type CssStyle } from "./__types__.js.flow";

@@ -6,7 +6,6 @@
  */
 
 import * as React from "react";
-import { Link } from "react-router-dom";
 import { type TrackingEvent } from "./utils/types";
 import { type Location } from "history";
 export type PressHandler = (event: SyntheticMouseEvent<HTMLElement>) => void;
@@ -27,7 +26,7 @@ declare type CommonProps = {
   type?: "button" | "submit",
   tabIndex?: number
 };
-declare type PropsHref = {
+export type PropsHref = {
   ...$Exact<CommonProps>,
 
   href: string,
@@ -35,14 +34,14 @@ declare type PropsHref = {
   to?: void,
   onPress?: void
 };
-declare type PropsOnPress = {
+export type PropsOnPress = {
   ...$Exact<CommonProps>,
 
   onPress: PressHandler,
   href?: void,
   to?: void
 };
-declare type PropsTo = {
+export type PropsTo = {
   ...$Exact<CommonProps>,
 
   to: string | Location,
@@ -51,7 +50,7 @@ declare type PropsTo = {
   href?: void,
   onPress?: void
 };
-declare type PropsMaybeHref = {
+export type PropsMaybeHref = {
   ...$Exact<CommonProps>,
 
   maybe: true,
@@ -60,7 +59,7 @@ declare type PropsMaybeHref = {
   to?: void,
   onPress?: void
 };
-declare type PropsMaybeTo = {
+export type PropsMaybeTo = {
   ...$Exact<CommonProps>,
 
   maybe: true,
@@ -70,7 +69,7 @@ declare type PropsMaybeTo = {
   href?: void,
   onPress?: void
 };
-declare type PropsMaybeOnPress = {
+export type PropsMaybeOnPress = {
   ...$Exact<CommonProps>,
 
   maybe: true,
@@ -85,13 +84,7 @@ declare type Props =
   | PropsMaybeHref
   | PropsMaybeTo
   | PropsMaybeOnPress;
-declare var Touchable: (
-  props: Props
-) =>
-  | React.Element<typeof Link>
-  | React.Element<"a">
-  | React.Element<"button">
-  | React.Element<"div">;
+declare var Touchable: React.ComponentType<Props>;
 declare export default typeof Touchable;
 
 import { type CssStyle } from "./__types__.js.flow";
