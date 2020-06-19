@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v.2.1.1 - 2020-06-19
+
+- Fix for mistica version check.
+
 ## v.2.1.0 - 2020-06-19
 
 - Check there is only one version of mistica running in the same page
