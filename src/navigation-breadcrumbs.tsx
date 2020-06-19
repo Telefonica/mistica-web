@@ -7,12 +7,10 @@ const BREADCRUMB_SEPARATOR = ' / ';
 
 type NavigationBreadcrumbsProps = {
     title: string;
-    breadcrumbs: Readonly<
-        Array<{
-            readonly title: string;
-            readonly url: string;
-        }>
-    >;
+    breadcrumbs: ReadonlyArray<{
+        readonly title: string;
+        readonly url: string;
+    }>;
 };
 
 const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({title, breadcrumbs}) => {

@@ -18,12 +18,10 @@ export type FormSelectProps = {
   validate?: (value: string | void, rawValue: string | void) => string | void,
   onChangeValue?: (value: string) => void,
   onBlur?: (event: SyntheticFocusEvent<any>) => void,
-  options: $ReadOnly<
-    Array<{
-      value: string,
-      text: string
-    }>
-  >,
+  options: $ReadOnlyArray<{
+    value: string,
+    text: string
+  }>,
   autoFocus?: boolean,
   value?: string,
   fullWidth?: boolean

@@ -15,7 +15,7 @@ declare type FeedbackType =
   | typeof FEEDBACK_INFO;
 declare type FeedbackProps = {
   title: string,
-  description?: string | $ReadOnly<Array<string>>,
+  description?: string | $ReadOnlyArray<string>,
   type: FeedbackType,
   children?: React.Node
 };

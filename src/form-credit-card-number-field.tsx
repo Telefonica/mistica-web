@@ -43,7 +43,7 @@ const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps> = ({
         jumpToNext,
     } = useForm();
 
-    const validate = (value: string | void, rawValue: string) => {
+    const validate = (value: string | undefined, rawValue: string) => {
         const error = texts.formCreditCardNumberError;
         if (!value) {
             return optional ? '' : texts.formFieldErrorIsMandatory;

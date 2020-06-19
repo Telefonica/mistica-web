@@ -36,7 +36,7 @@ const FormEmailField: React.FC<FormEmailFieldProps> = ({
         register,
     } = useForm();
 
-    const validate = (value: string | void, rawValue: string) => {
+    const validate = (value: string | undefined, rawValue: string) => {
         if (!value) {
             return optional ? '' : texts.formFieldErrorIsMandatory;
         }

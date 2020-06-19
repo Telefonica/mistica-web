@@ -122,7 +122,7 @@ const useHapticFeedback = (type: FeedbackType) => {
 
 type FeedbackProps = {
     title: string;
-    description?: string | Readonly<Array<string>>;
+    description?: string | ReadonlyArray<string>;
     type: FeedbackType;
     children?: React.ReactNode;
 };

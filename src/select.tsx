@@ -100,12 +100,10 @@ export type SelectProps = {
     name?: string;
     fullWidth?: boolean;
     style?: React.CSSProperties;
-    options: Readonly<
-        Array<{
-            value: string;
-            text: string;
-        }>
-    >;
+    options: ReadonlyArray<{
+        value: string;
+        text: string;
+    }>;
     required?: boolean;
     inputRef?: React.Ref<HTMLSelectElement | HTMLInputElement>;
     disabled?: boolean;

@@ -15,7 +15,7 @@ export type FormSelectProps = {
     validate?: (value: string | void, rawValue: string | void) => string | void;
     onChangeValue?: (value: string) => void;
     onBlur?: (event: React.FocusEvent<any>) => void;
-    options: Readonly<Array<{value: string; text: string}>>;
+    options: ReadonlyArray<{value: string; text: string}>;
     autoFocus?: boolean;
     value?: string;
     fullWidth?: boolean;

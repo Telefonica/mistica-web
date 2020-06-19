@@ -8,12 +8,10 @@
 import * as React from "react";
 declare type NavigationBreadcrumbsProps = {
   title: string,
-  breadcrumbs: $ReadOnly<
-    Array<{
-      +title: string,
-      +url: string
-    }>
-  >
+  breadcrumbs: $ReadOnlyArray<{
+    +title: string,
+    +url: string
+  }>
 };
 declare var NavigationBreadcrumbs: React.ComponentType<NavigationBreadcrumbsProps>;
 declare export default typeof NavigationBreadcrumbs;
