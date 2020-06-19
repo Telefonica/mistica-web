@@ -8,7 +8,6 @@ import getColors from './colors';
 import DialogRoot from './dialog';
 import ScreenSizeContextProvider from './screen-size-context-provider';
 import {createMediaQueries} from './utils/media-queries';
-// eslint-disable-next-line import/extensions
 import {version} from '../package.json';
 
 import type {Theme, ThemeConfig} from './theme';

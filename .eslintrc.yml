@@ -150,7 +150,7 @@ rules:
     import/export: error
     import/no-mutable-exports: error
     import/no-duplicates: error
-    import/extensions: [error, {js: never}]
+    import/extensions: [error, {js: never, json: always}]
     import/no-named-default: error
     import/no-useless-path-segments: error
     import/no-self-import: error
