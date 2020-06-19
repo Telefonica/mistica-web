@@ -1,4 +1,9 @@
 {
     "javascript.validate.enable": false,
-    "typescript.tsdk": "node_modules/typescript/lib"
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/flow-defs": true,
+        "**/flow-typed": true
+    }
 }

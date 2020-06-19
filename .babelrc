@@ -1,7 +1,15 @@
 {
     "presets": [
         "@babel/preset-react",
-        "@babel/preset-flow",
+        [
+            "@babel/preset-typescript",
+            {
+                "isTSX": true,
+                "allExtensions": true,
+                "allowNamespaces": false,
+                "allowDeclareFields": true
+            }
+        ],
         [
             "@babel/preset-env",
             {

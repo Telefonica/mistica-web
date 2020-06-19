@@ -75,5 +75,5 @@
 
         "resolveJsonModule": true
     },
-    "exclude": ["dist", "**/__*__/**", ".storybook", "playroom"]
+    "exclude": ["dist", "**/__*__/**", ".storybook", "playroom", "src/test-utils/**"]
 }

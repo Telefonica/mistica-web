@@ -1,5 +1,6 @@
 import {openStoryPage, screen, PageApi} from '../test-utils';
-import {ElementHandle} from 'puppeteer';
+
+import type {ElementHandle} from 'puppeteer';
 
 const clearAndType = async (page: PageApi, element: ElementHandle, text: string) => {
     await page.click(element, {clickCount: 3});

@@ -1,15 +1,14 @@
-// @flow
 const path = require('path');
 
-const config /*: any*/ = {
-    stories: ['./welcome-story.js', '../src/**/__stories__/*-story.js'],
+module.exports = {
+    stories: ['./welcome-story.tsx', '../src/**/__stories__/*-story.tsx'],
     addons: [
         '@storybook/addon-links',
         {
             name: '@storybook/addon-storysource',
             options: {
                 rule: {
-                    test: [/-story\.js/],
+                    test: [/-story\.tsx/],
                     include: [path.resolve(__dirname, '..', 'src'), __dirname],
                 },
                 loaderOptions: {
@@ -19,6 +18,16 @@ const config /*: any*/ = {
         },
         './.storybook/theme-selector-addon/register',
     ],
+    webpackFinal: async (config) => {
+        config.module.rules.push({
+            test: /\.tsx$/,
+            use: [
+                {
+                    loader: require.resolve('ts-loader'),
+                },
+            ],
+        });
+        config.resolve.extensions.push('.tsx');
+        return config;
+    },
 };
-
-module.exports = config;

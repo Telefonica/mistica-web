@@ -30,7 +30,7 @@ rules:
     default-case: error
     dot-notation: error
     eqeqeq: error
-    filenames/match-regex: [error, '^[a-z0-9]+(-[a-z0-9]+)*(\.[a-z]+)?$']
+    filenames/match-regex: [error, '^[a-z0-9]+(-[a-z0-9]+)*(\.(config))?$'] # matches: "foo-bar" or "foo-bar.config"
     new-cap: [error, {newIsCap: true, capIsNew: false}]
     no-cond-assign: error
     no-debugger: error
@@ -206,5 +206,7 @@ overrides:
     - files:
           - '*.js.flow'
       rules:
+          filenames/match-regex: [error, '^[a-z0-9]+(-[a-z0-9]+)*\.js$'] # matches: "foo-bar.js"
           no-use-before-define: off
           import/no-duplicates: off
+          no-undef: off

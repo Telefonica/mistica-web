@@ -126,18 +126,9 @@ const applyOverrides = () => {
 const main = async () => {
     process.chdir(PATH_ROOT);
 
+    // clean
     rimraf.sync('flow-defs');
-
-    if (process.argv.includes('--nobuild')) {
-        rimraf.sync('dist/**/*.js.flow');
-    } else {
-        rimraf.sync('dist');
-
-        // typescript build
-        execSync('yarn build-ts', {
-            stdio: 'inherit',
-        });
-    }
+    rimraf.sync('dist/**/*.js.flow');
 
     // generate .js.flow files
     cpx.copySync(join(__dirname, '__types__.js.flow'), PATH_DIST);

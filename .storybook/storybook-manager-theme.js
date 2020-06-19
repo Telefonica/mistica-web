@@ -1,11 +1,12 @@
-// @flow
 import logo from '../img/mistica-logo.svg';
-import {getColors} from '../src';
+import {getColors} from './colors';
+
 import {create} from '@storybook/theming/create';
 
-import type {Skin} from '../src';
-
-const createTheme = (skin: Skin): any => {
+/**
+ * @param {'Movistar' | 'Vivo' | 'O2'} skin
+ */
+const createTheme = (skin) => {
     const colors = getColors(skin);
     return create({
         base: 'light',

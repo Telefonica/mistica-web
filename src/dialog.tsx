@@ -348,7 +348,6 @@ const ModalDialog = (props: ModalDialogProps) => {
     );
 };
 
-// eslint-disable-next-line no-use-before-define
 let dialogInstance: DialogRoot | null = null;
 
 type DialogRootProps = {children?: React.ReactNode};

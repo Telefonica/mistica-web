@@ -1,4 +1,3 @@
-// @flow
 import '../css/roboto.css';
 import '../css/reset.css';
 import * as React from 'react';
@@ -7,11 +6,11 @@ import {ThemeContextProvider, Box, MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN} from '../s
 import addons from '@storybook/addons';
 import getTheme from './theme-selector-addon/themes';
 
-import type {Context} from '@storybook/react';
-import type {Skin} from '../src';
+// import type {Context} from '@storybook/react';
+// import type {Skin} from '../src';
 
-const getUserAgent = (): string => self.navigator.userAgent || '';
-const isRunningAcceptanceTest = (): boolean => getUserAgent().includes('acceptance-test');
+const getUserAgent = () /*: string */ => self.navigator.userAgent || '';
+const isRunningAcceptanceTest = () /*: boolean */ => getUserAgent().includes('acceptance-test');
 
 const acceptanceStyles = `
 *, *:after, *:before {
@@ -29,18 +28,18 @@ const acceptanceStyles = `
     height: 0 !important;
 }`;
 
-type DecoratorProps = {
-    Story: React.ComponentType<any>,
-    context?: {
-        ...Context,
-        parameters: {
-            fullScreen?: boolean,
-        },
-        ...
-    },
-};
+// type DecoratorProps = {
+//     Story: React.ComponentType<any>,
+//     context?: {
+//         ...Context,
+//         parameters: {
+//             fullScreen?: boolean,
+//         },
+//         ...
+//     },
+// };
 
-const LayoutDecorator = ({Story, context}: DecoratorProps) => {
+const LayoutDecorator = ({Story, context} /*: DecoratorProps*/) => {
     const styles = isRunningAcceptanceTest() ? <style>{acceptanceStyles}</style> : null;
 
     return (
@@ -53,19 +52,19 @@ const LayoutDecorator = ({Story, context}: DecoratorProps) => {
     );
 };
 
-const getSkin = (searchParams): ?Skin => {
+const getSkin = (searchParams /*: any*/) /*: Skin | null*/ => {
     const qsSkin = searchParams.get('skin');
     return [MOVISTAR_SKIN, O2_SKIN, VIVO_SKIN].find((skin) => skin === qsSkin);
 };
 
-const getPlatform = (searchParams): ?'ios' | 'android' => {
+const getPlatform = (searchParams /*: any*/) /*: 'ios' | 'android' | null*/ => {
     const qsPlatform = searchParams.get('platform');
     return ['ios', 'android'].find((platform) => platform === qsPlatform);
 };
 
-const ThemeDecorator = ({Story}: DecoratorProps) => {
+const ThemeDecorator = ({Story} /*: DecoratorProps*/) => {
     const searchParams = new URLSearchParams(location.search);
-    const [skin, setSkin] = React.useState<?Skin>(getSkin(searchParams));
+    const [skin, setSkin] = React.useState(/*<?Skin>*/ getSkin(searchParams));
 
     React.useEffect(() => {
         const channel = addons.getChannel();
@@ -81,5 +80,5 @@ const ThemeDecorator = ({Story}: DecoratorProps) => {
     );
 };
 
-addDecorator((Story, context: any) => <LayoutDecorator Story={Story} context={context} />);
+addDecorator((Story, context /*: any*/) => <LayoutDecorator Story={Story} context={context} />);
 addDecorator((Story) => <ThemeDecorator Story={Story} />);
