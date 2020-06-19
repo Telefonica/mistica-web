@@ -72,6 +72,12 @@ export const TEXT_INACTIVE_INVERSE = c.MOVISTAR_BLUE_LIGHT_50;
 export const TEXT_WARNING = c.EGG;
 export const TEXT_DANGER = c.PINK;
 
+// NAVBAR
+export const TEXT_NAVBAR_HOVER = c.MOVISTAR_BLUE;
+export const NAVBAR_BACKGROUND = c.WHITE;
+export const NAVBAR_CONTROL = c.MOVISTAR_BLUE_DARK;
+export const NAVBAR_DIVIDER = c.GREY_4;
+
 // TAG
 export const TAG_BACKGROUND_FIRST = c.MOVISTAR_GREEN;
 export const TAG_BACKGROUND_SECOND = c.GREY_3;
