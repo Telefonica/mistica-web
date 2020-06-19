@@ -147,11 +147,6 @@ const main = async () => {
     applyOverrides();
 
     cpx.copySync('./dist/**/*.js.flow', 'flow-defs');
-
-    // check
-    execSync('yarn flow', {
-        stdio: 'inherit',
-    });
 };
 
 main();

@@ -24,7 +24,7 @@
         "storybook": "start-storybook -p 6006",
         "playroom": "playroom start",
         "gen-ts-defs": "tsc --project tsconfig.production.json --emitDeclarationOnly",
-        "gen-flow-defs": "node scripts/dts-to-flow",
+        "gen-flow-defs": "node scripts/dts-to-flow && yarn flow",
         "now-build": "yarn storybook-static && ./node_modules/.bin/playroom build && cp img/favicon.ico public/",
         "storybook-static": "rimraf public && yarn build-storybook -o public --quiet",
         "up-chromium": "docker-compose up -d chromium"
