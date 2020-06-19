@@ -81,7 +81,7 @@ export type {RegionCode} from './utils/region-code';
 if (process.env.NODE_ENV !== 'production') {
     // $FlowFixMe
     if (window.__mistica_version__) {
-        throw new Error(`There are more than one version of ${packageJson.name} running on the same page`);
+        throw new Error(`There is more than one version of ${packageJson.name} running on the same page`);
     } else {
         // $FlowFixMe
         window.__mistica_version__ = packageJson.version;
