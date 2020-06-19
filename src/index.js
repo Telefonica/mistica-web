@@ -80,7 +80,7 @@ export type {RegionCode} from './utils/region-code';
 // Check there is only one version of mistica installed in the page.
 if (process.env.NODE_ENV !== 'production') {
     // $FlowFixMe
-    if (window.__mistica_version__) {
+    if (window.__mistica_version__ && window.__mistica_version__ !== packageJson.version) {
         throw new Error(`There is more than one version of ${packageJson.name} running on the same page`);
     } else {
         // $FlowFixMe
