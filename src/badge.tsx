@@ -46,7 +46,7 @@ const Badge: React.FC<Props> = ({children, value}) => {
     const classes = useStyles({hasChildren});
 
     if (children && value === 0) {
-        return <>children</>;
+        return <>{children}</>;
     }
 
     if (value === 0) {

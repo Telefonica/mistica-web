@@ -1,4 +1,4 @@
-import {VERSION} from './package-version';
+import {PACKAGE_VERSION} from './package-version';
 
 export {createSheet, withSheet, removeJssProps, createUseStyles, getJss} from './jss';
 export {default as ThemeContext} from './theme-context';
@@ -81,10 +81,10 @@ export type {RegionCode} from './utils/region-code';
 // Check there is only one version of mistica installed in the page.
 if (process.env.NODE_ENV !== 'production') {
     // @ts-expect-error __mistica_version__ does not exist in window
-    if (window.__mistica_version__ && window.__mistica_version__ !== VERSION) {
+    if (window.__mistica_version__ && window.__mistica_version__ !== PACKAGE_VERSION) {
         throw new Error(`There is more than one version of @telefonica/mistica running on the same page`);
     } else {
         // @ts-expect-error __mistica_version__ does not exist in window
-        window.__mistica_version__ = VERSION;
+        window.__mistica_version__ = PACKAGE_VERSION;
     }
 }

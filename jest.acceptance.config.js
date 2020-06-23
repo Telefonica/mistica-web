@@ -10,15 +10,15 @@ module.exports = {
     maxWorkers: process.platform === 'darwin' ? '50%' : '100%', // chromium docker crashes on mac when using 8 cores (taking 8 screenshots at once)
 
     testMatch: [
-        '**/__acceptance_tests__/*-acceptance-test.js',
-        '**/__screenshot_tests__/*-screenshot-test.js',
+        '**/__acceptance_tests__/*-acceptance-test.tsx',
+        '**/__screenshot_tests__/*-screenshot-test.tsx',
     ],
 
     // $FlowFixMe
-    globalSetup: require.resolve('./src/test-utils/environment/setup.js'),
+    globalSetup: require.resolve('./src/test-utils/environment/setup.tsx'),
     // $FlowFixMe
-    globalTeardown: require.resolve('./src/test-utils/environment/teardown.js'),
+    globalTeardown: require.resolve('./src/test-utils/environment/teardown.tsx'),
     testEnvironment: 'jest-environment-puppeteer',
     // $FlowFixMe
-    setupFilesAfterEnv: [require.resolve('./src/test-utils/setup-acceptance-test-env.js')],
+    setupFilesAfterEnv: [require.resolve('./src/test-utils/setup-acceptance-test-env.tsx')],
 };
