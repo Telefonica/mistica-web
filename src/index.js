@@ -52,6 +52,7 @@ export {default as PromoTag} from './promo-tag';
 export {default as SectionTitle} from './section-title';
 export {default as Placeholder, AvatarPlaceholder} from './placeholder';
 export {RowList, Row, BoxedRowList, BoxedRow} from './list';
+export {default as Switch} from './switch';
 
 // Icons
 export {default as IcnClose} from './icons/icn-close';

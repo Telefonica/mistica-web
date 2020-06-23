@@ -103,6 +103,7 @@ const ThemeContextProvider = ({theme, children}: Props): React.Node => {
             layerDecorations: c.LAYER_DECORATIONS,
             divider: c.DIVIDER,
             border: c.BORDER,
+            borderDark: c.BORDER_DARK,
             borderLight: c.BORDER_LIGHT,
             textDanger: c.TEXT_DANGER,
             textError: c.TEXT_ERROR,
@@ -118,6 +119,14 @@ const ThemeContextProvider = ({theme, children}: Props): React.Node => {
             iconTertiary: c.ICON_TERTIARY,
 
             badgeBackground: c.BADGE_BACKGROUND,
+
+            toggleAndroidInactive: c.TOGGLE_ANDROID_INACTIVE,
+            toggleAndroidBackgroundInactive: c.TOGGLE_ANDROID_BACKGROUND_INACTIVE,
+            toggleAndroidActive: c.TOGGLE_ANDROID_ACTIVE,
+            toggleAndroidBackgroundActive: c.TOGGLE_ANDROID_BACKGROUND_ACTIVE,
+            toggleIosInactive: c.TOGGLE_IOS_INACTIVE,
+            toggleIosBackgroundInactive: c.TOGGLE_IOS_BACKGROUND_INACTIVE,
+            toggleIosBackgroundActive: c.TOGGLE_IOS_BACKGROUND_ACTIVE,
         },
     };
 
