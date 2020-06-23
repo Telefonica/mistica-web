@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## v.2.1.1 - 2020-06-19
+
+- Fix for mistica version check.
+
+## v.2.1.0 - 2020-06-19
+
+- Check there is only one version of mistica running in the same page
+- New color constants for desktop nav bar
+- Change credit card form fields spacing to 16px
+- Fix control active color for Movitar prominent.
+
 ## v.2.0.0 - 2020-06-12
 
 - Header improvements:
