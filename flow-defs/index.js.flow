@@ -109,3 +109,4 @@ declare export {
 declare export { Skin } from "./colors";
 declare export { Locale } from "./utils/locale";
 declare export { TrackingEvent } from "./utils/types";
+declare export { RegionCode } from "./utils/region-code";

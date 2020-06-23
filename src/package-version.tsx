@@ -1,6 +1,7 @@
-// Inspired from: https://github.com/facebook/jest/blob/master/packages/jest-core/src/version.ts
+// @ts-expect-error no definitions for this module
+import preval from 'babel-plugin-preval/macro';
 
 // Cannot be `import` as it's not under TS root dir
-const {version} = require('../package.json'); // eslint-disable-line @typescript-eslint/no-var-requires
+const version = preval(`module.exports = require('../package.json').version`);
 
 export const PACKAGE_VERSION: string = version;

@@ -99,6 +99,8 @@
         "babel-eslint": "^10.1.0",
         "babel-loader": "^8.1.0",
         "babel-plugin-lodash": "^3.3.4",
+        "babel-plugin-macros": "^2.8.0",
+        "babel-plugin-preval": "^5.0.0",
         "babel-plugin-transform-class-properties": "^6.24.1",
         "cpx": "^1.5.0",
         "cross-env": "^7.0.2",
