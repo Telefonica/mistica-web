@@ -489,7 +489,8 @@ const TextField: React.FC<TextFieldProps> = ({
             input.focus();
             if (goToEnd && input instanceof HTMLInputElement) {
                 setTimeout(
-                    (actualValue) => {
+                    (actualValue: string) => {
+                        // neeeded to place the caret at the end
                         input.value = '';
                         input.value = actualValue;
                     },

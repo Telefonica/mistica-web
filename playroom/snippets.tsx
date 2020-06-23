@@ -1,5 +1,3 @@
-// @flow
-
 const buttonSnippets = ['ButtonPrimary', 'ButtonSecondary', 'ButtonDanger'].map((name) => ({
     group: 'Buttons',
     name,
@@ -196,9 +194,9 @@ const headerSnippets = [
     },
 ];
 
-type Snippet = {group: string, name: string, code: string};
+type Snippet = {group: string; name: string; code: string};
 
-export default ([
+export default [
     ...buttonSnippets,
     {
         group: 'Buttons',
@@ -231,4 +229,4 @@ export default ([
     {group: 'Text', name: 'Text', code: '<Text>some text</Text>'},
     ...headerSnippets,
     ...listSnippets,
-].sort((s1, s2) => s1.group.localeCompare(s2.group)): Array<Snippet>);
+].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

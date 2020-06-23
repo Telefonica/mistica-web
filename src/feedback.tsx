@@ -105,7 +105,7 @@ const feedbackToIconComponent = {
 
 const useHapticFeedback = (type: FeedbackType) => {
     React.useEffect(() => {
-        let timeoutId: NodeJS.Timeout;
+        let timeoutId: any;
         if (type === FEEDBACK_SUCCESS) {
             timeoutId = setTimeout(() => requestVibration('success'), 700);
         }
