@@ -2,7 +2,7 @@
 import * as React from 'react';
 import {createUseStyles} from '../jss';
 import {useTheme} from '../hooks';
-import {O2_SKIN} from '../colors';
+import {O2_SKIN, O2_CLASSIC_SKIN} from '../colors';
 
 const useStyles = createUseStyles((theme) => ({
     iconContainer: {
@@ -40,4 +40,7 @@ const DefaultIcon = () => {
     );
 };
 
-export default (): React.Element<'svg'> => (useTheme().skin === O2_SKIN ? O2Icon() : DefaultIcon());
+export default (): React.Element<'svg'> => {
+    const skin = useTheme().skin;
+    return skin === O2_CLASSIC_SKIN || skin === O2_SKIN ? O2Icon() : DefaultIcon();
+};

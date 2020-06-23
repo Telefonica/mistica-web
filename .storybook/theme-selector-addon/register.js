@@ -19,7 +19,7 @@ const renderPrimaryColorDot = (skin) => (
 
 const ThemeSelectorAddon = ({api}) => {
     const channel = addonApi.getChannel();
-    const [currentSkin, setCurrentSkin] = React.useState(api.getQueryParam('skin') || 'Movistar');
+    const [currentSkin, setCurrentSkin] = React.useState(() => api.getQueryParam('skin') || 'Movistar');
 
     React.useEffect(() => {
         channel.emit('skin-selected', currentSkin);

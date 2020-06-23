@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import {O2_SKIN, VIVO_SKIN} from '../colors';
+import {O2_SKIN, O2_CLASSIC_SKIN, VIVO_SKIN} from '../colors';
 import {
     getAnimateDrawLineProps,
     getAnimateHopInProps,
@@ -91,6 +91,7 @@ export default (): React.Element<'svg'> => {
     switch (skin) {
         case VIVO_SKIN:
             return VIVOIcon(isInverse);
+        case O2_CLASSIC_SKIN:
         case O2_SKIN:
             return O2Icon(isInverse);
         default:
