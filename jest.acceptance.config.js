@@ -14,11 +14,8 @@ module.exports = {
         '**/__screenshot_tests__/*-screenshot-test.tsx',
     ],
 
-    // $FlowFixMe
     globalSetup: require.resolve('./src/test-utils/environment/setup.tsx'),
-    // $FlowFixMe
     globalTeardown: require.resolve('./src/test-utils/environment/teardown.tsx'),
     testEnvironment: 'jest-environment-puppeteer',
-    // $FlowFixMe
     setupFilesAfterEnv: [require.resolve('./src/test-utils/setup-acceptance-test-env.tsx')],
 };
