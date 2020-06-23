@@ -72,5 +72,3 @@ const Badge: React.FC<Props> = ({children, value}) => {
 };
 
 export default Badge;
-
-export const C: React.FC = () => 3;
