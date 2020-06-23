@@ -15,7 +15,7 @@ import {ESC} from './utils/key-codes';
 import Box from './box';
 import {isOldChrome} from './utils/platform';
 
-const animationsSupported = () => !isOldChrome() && process.env.NOVE_ENV !== 'test';
+const animationsSupported = () => !isOldChrome() && process.env.NODE_ENV !== 'test';
 
 const useStylesModalDialog = createUseStyles((theme) => ({
     wrapper: {

@@ -35,7 +35,6 @@ type ObjValuesToStr<O> = {[Key in keyof O]: string};
 /**
  * This function does nothing, this is just used to make css-in-js autocomplete
  * editor extensions work with JSS. @see https://github.com/ansumanshah/css-in-js
- *
  */
 export const createSheet = <S extends Sheet>(sheet: S): ObjValuesToStr<S> =>
     // @ts-expect-error - This function casts a value to an incompatible type
@@ -86,6 +85,12 @@ type StylesDefinition = {[className: string]: ClassDefinition};
 type UseStyles<S extends StylesDefinition> = (props?: any) => ObjValuesToStr<S>;
 
 export const createUseStyles = <S extends StylesDefinition>(styles?: (theme: Theme) => S): UseStyles<S> => {
+    // this checks the number of arguments
+    if (styles?.length === 0) {
+        // evaluate styles so JSS does not complain about declaring styles as a function
+        // @ts-expect-error overwriting function as object
+        styles = styles();
+    }
     // @ts-expect-error - jss styles could be better
     const useStyles = jssCreateUseStyles(styles, {theming: {context: ThemeContext}});
     return (...args) => {

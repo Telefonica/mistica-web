@@ -4,8 +4,8 @@ import {useTheme} from './hooks';
 
 import type {RegionCode} from './utils/region-code';
 
-const format = (regionCode: RegionCode, number?: string): string =>
-    number === undefined ? '' : formatAsYouType(number.replace(/[^\d+*#]/g, ''), regionCode);
+const format = (regionCode: RegionCode, number?: string): string | undefined =>
+    number === undefined ? undefined : formatAsYouType(number.replace(/[^\d+*#]/g, ''), regionCode);
 
 type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onInput'> & {
     inputRef?: React.Ref<HTMLInputElement>;
@@ -21,6 +21,7 @@ const PhoneInput: React.FC<Props> = ({inputRef, value, defaultValue, ...other}) 
             {...other}
             type="tel" // shows telephone keypad in Android and iOS
             onInput={(e: React.FormEvent<HTMLInputElement>) => {
+                // @ts-expect-error value can be undefined
                 e.currentTarget.value = format(i18n.phoneNumberFormattingRegionCode, e.currentTarget.value);
             }}
             value={format(i18n.phoneNumberFormattingRegionCode, value)}

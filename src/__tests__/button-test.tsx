@@ -178,7 +178,8 @@ test('"href" with "newTab" renders required attributes', () => {
 });
 
 test('"to" uses a Link Component', () => {
-    jest.spyOn(ReactRouterDom, 'Link').mockImplementation(() => '(Link Component)' as any);
+    // @ts-expect-error mocking render method
+    jest.spyOn(ReactRouterDom.Link, 'render').mockImplementation(() => '(Link Component)' as any);
 
     const {asFragment} = render(
         <ReactRouterDom.MemoryRouter>
