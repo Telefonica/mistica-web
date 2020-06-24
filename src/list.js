@@ -190,7 +190,11 @@ const Content = ({
         );
 
         if (type === 'control') {
-            return <label htmlFor={controlId}>{text}</label>;
+            return (
+                <label style={{cursor: 'pointer'}} htmlFor={controlId}>
+                    {text}
+                </label>
+            );
         }
 
         return text;
@@ -268,6 +272,7 @@ type RowContentProps =
           trackingEvent?: TrackingEvent,
           href: string,
           newTab?: boolean,
+          chevron?: boolean,
       }
     | {
           ...CommonProps,
@@ -275,11 +280,13 @@ type RowContentProps =
           to: string,
           fullPageOnWebView?: boolean,
           replace?: boolean,
+          chevron?: boolean,
       }
     | {
           ...CommonProps,
           trackingEvent?: TrackingEvent,
           onPress: Function,
+          chevron?: boolean,
       };
 
 const useControlState = ({
@@ -315,7 +322,7 @@ const RowContent = (props: RowContentProps) => {
     const {icon, iconSize, headline, title, subtitle, description, badge} = props;
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || ({}: any));
 
-    const content = (
+    const renderContent = (moreProps) => (
         <Content
             icon={icon}
             iconSize={iconSize}
@@ -324,9 +331,15 @@ const RowContent = (props: RowContentProps) => {
             subtitle={subtitle}
             description={description}
             badge={badge}
-            type="chevron"
+            {...moreProps}
         />
     );
+
+    const renderTouchableContent = () => {
+        return (
+            <Box paddingX={16}>{renderContent({type: props.chevron === false ? 'basic' : 'chevron'})}</Box>
+        );
+    };
 
     if (props.onPress) {
         return (
@@ -335,7 +348,7 @@ const RowContent = (props: RowContentProps) => {
                 trackingEvent={props.trackingEvent}
                 onPress={props.onPress}
             >
-                <Box paddingX={16}>{content}</Box>
+                {renderTouchableContent()}
             </Touchable>
         );
     }
@@ -348,7 +361,7 @@ const RowContent = (props: RowContentProps) => {
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
             >
-                <Box paddingX={16}>{content}</Box>
+                {renderTouchableContent()}
             </Touchable>
         );
     }
@@ -361,7 +374,7 @@ const RowContent = (props: RowContentProps) => {
                 href={props.href}
                 newTab={props.newTab}
             >
-                <Box paddingX={16}>{content}</Box>
+                {renderTouchableContent()}
             </Touchable>
         );
     }
@@ -370,7 +383,7 @@ const RowContent = (props: RowContentProps) => {
         // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div onClick={() => toggle()} className={classes.rowContent}>
             <Box paddingX={16}>
-                {React.cloneElement(content, {
+                {renderContent({
                     type: 'control',
                     renderControl: (id) => <Control checked={isChecked} onChange={toggle} id={id} />,
                 })}
@@ -388,7 +401,7 @@ const RowContent = (props: RowContentProps) => {
 
     return (
         <Box paddingX={16} className={classNames(classes.rowContent, classes.hoverDisabled)}>
-            {React.cloneElement(content, {type: 'basic'})}
+            {renderContent({type: 'basic'})}
         </Box>
     );
 };

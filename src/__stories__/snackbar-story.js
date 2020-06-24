@@ -10,7 +10,7 @@ export default {
 
 export const Default = (): React.Node => {
     const [buttonText, buttonTextField] = useTextField('buttonText', 'Action');
-    const [message, messageTextField] = useTextField('message', 'Some message');
+    const [message, messageTextField] = useTextField('message', 'Some message', true);
     const [type, select] = useSelect('type', 'INFORMATIVE', ['INFORMATIVE', 'CRITICAL']);
     return (
         <StorySection title="Snackbar">

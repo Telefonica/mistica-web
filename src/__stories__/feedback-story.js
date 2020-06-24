@@ -10,7 +10,7 @@ export default {
 
 export const Default = (): React.Node => {
     const [type, typeSelectField] = useSelect('Type', 'success', ['success', 'error', 'info']);
-    const [title, titleTextField] = useTextField('Title', "I'm the title");
+    const [title, titleTextField] = useTextField('Title', "I'm the title", true);
     const [description, descriptionTextField] = useTextField('Description', "I'm the description");
     const [isInverseState, isInverseStateCheckbox] = useCheckbox('Inverse variant', false);
     return (
