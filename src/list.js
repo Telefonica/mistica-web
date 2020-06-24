@@ -259,12 +259,10 @@ type RowContentProps =
     | CommonProps
     | {
           ...CommonProps,
-          trackingEvent?: TrackingEvent,
           switch: ControlProps,
       }
     | {
           ...CommonProps,
-          trackingEvent?: TrackingEvent,
           checkbox: ControlProps,
       }
     | {
