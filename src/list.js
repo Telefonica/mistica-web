@@ -167,10 +167,8 @@ const Content = ({
     const classes = useStyles();
     const controlId = useAriaId();
     const theme = useTheme();
-    if (description || subtitle || headline) {
-        iconSize = 40;
-    }
-    const isBigIcon = iconSize === 40;
+    const numTextLines = [headline, title, subtitle, description].filter(Boolean).length;
+    const centerIcon = numTextLines === 1;
     const renderBadge = () => {
         if (!badge) {
             return null;
@@ -203,8 +201,8 @@ const Content = ({
             {icon && (
                 <Box
                     paddingRight={16}
-                    paddingY={isBigIcon ? 4 : 0}
-                    className={classNames({[classes.center]: !isBigIcon})}
+                    paddingY={!centerIcon ? 4 : 0}
+                    className={classNames({[classes.center]: centerIcon})}
                 >
                     <div className={classes.icon} style={{width: iconSize, height: iconSize}}>
                         {icon}

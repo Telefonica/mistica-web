@@ -19,7 +19,7 @@ export const Default = (): React.Node => {
     const [title, titleTextField] = useTextField('title', 'Title', true);
     const [subtitle, subtitleTextField] = useTextField('subtitle', 'Subtitle');
     const [description, descriptionTextField] = useTextField('description', 'Description');
-    const [iconSize, iconSizeSelectField] = useSelect('Icon Size', '40', ['40', '24 *', 'Without icon']);
+    const [iconSize, iconSizeSelectField] = useSelect('Icon Size', '40', ['40', '24', 'Without icon']);
     const [withLink, linkCheckbox] = useCheckbox('With link', true);
     const [newTab, newTabCheckbox] = useCheckbox('Link newTab prop', false);
     const [withBadge, badgeCheckbox] = useCheckbox('With badge', true);
@@ -38,12 +38,6 @@ export const Default = (): React.Node => {
                     {subtitleTextField}
                     {descriptionTextField}
                     {iconSizeSelectField}
-                    <Box paddingX={16}>
-                        <Text as="p" size={12}>
-                            * 24 icon size can only be used in rows with only title (no subtitle, description,
-                            etc).
-                        </Text>
-                    </Box>
                 </Stack>
             </Box>
             <div data-testid="row-list">
