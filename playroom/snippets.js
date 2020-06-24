@@ -104,6 +104,72 @@ const listSnippets = [
         `,
 }));
 
+const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
+    {
+        group: 'List',
+        name: `${rowName} (simple)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            title="Title"
+            description="Description"
+            href="https://google.com"
+        />`,
+    },
+    {
+        group: 'List',
+        name: `${rowName} (complex)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            headline="Headline"
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+            badge={9}
+            href="https://google.com"
+        />`,
+    },
+    {
+        group: 'List',
+        name: `${rowName} (switch)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            title="Title"
+            description="Description"
+            switch={{defaultValue: false}}
+        />`,
+    },
+    {
+        group: 'List',
+        name: `${rowName} (checkbox)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            title="Title"
+            description="Description"
+            checkbox={{defaultValue: false}}
+        />`,
+    },
+    {
+        group: 'List',
+        name: `${rowName} (custom element)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            title="Title"
+            description="Description"
+            right={<Placeholder width={32} height={32} />}
+        />`,
+    },
+]);
+
 const tooltipSnippets = ['Tooltip', 'Popover'].map((name) => ({
     group: 'Tooltip',
     name,
@@ -231,4 +297,5 @@ export default ([
     {group: 'Text', name: 'Text', code: '<Text>some text</Text>'},
     ...headerSnippets,
     ...listSnippets,
+    ...listRowSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)): Array<Snippet>);
