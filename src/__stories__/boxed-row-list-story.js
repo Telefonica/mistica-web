@@ -22,8 +22,11 @@ export const Default = (): React.Node => {
     const [iconSize, iconSizeSelectField] = useSelect('Icon Size', '40', ['40', '24', 'Without icon']);
     const [control, controlSelect] = useSelect('Control type', 'chevron', [
         'chevron',
+        'navigates without chevron',
         'switch',
         'checkbox',
+        'custom element',
+        'action with custom element',
         'none',
     ]);
     const [withBadge, badgeCheckbox] = useCheckbox('With badge', false);
@@ -34,11 +37,33 @@ export const Default = (): React.Node => {
         case 'chevron':
             controlProps = {href: url, newTab: true};
             break;
+        case 'navigates without chevron':
+            controlProps = {href: url, newTab: true, right: null}; // right null removes the chevron
+            break;
         case 'switch':
             controlProps = {switch: {defaultValue: true, onChange: () => {}}};
             break;
         case 'checkbox':
             controlProps = {checkbox: {defaultValue: true, onChange: () => {}}};
+            break;
+        case 'custom element':
+            controlProps = {
+                right: (
+                    <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
+                        <div style={{width: 32, height: 32, borderRadius: '50%', background: 'pink'}} />
+                    </div>
+                ),
+            };
+            break;
+        case 'action with custom element':
+            controlProps = {
+                onPress: () => alert('pressed'),
+                right: (
+                    <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
+                        <div style={{width: 32, height: 32, borderRadius: '50%', background: 'pink'}} />
+                    </div>
+                ),
+            };
             break;
         case 'none':
         default:
