@@ -62,7 +62,7 @@ export const Default = (): React.Node => {
                 </Stack>
             </Box>
             <div data-testid="row-list">
-                <StorySection title="Row List">
+                <StorySection title="Boxed Row List">
                     <BoxedRowList>
                         <BoxedRow
                             icon={iconSize !== 'Without icon' ? <AvatarPlaceholder size="100%" /> : undefined}
