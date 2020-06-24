@@ -6,5 +6,5 @@
  */
 
 import * as React from "react";
-declare var IconInfo: React.ComponentType<>;
+declare var IconInfo: React.ComponentType<{}>;
 declare export default typeof IconInfo;

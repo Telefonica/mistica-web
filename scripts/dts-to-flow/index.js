@@ -46,6 +46,9 @@ const fixFlowDefinition = (flowFilename) => {
     // `React.FC` => `React.ComponentType`
     src = src.replace(/React.(FC|ComponentClass|FunctionComponent)/g, 'React.ComponentType');
 
+    // `React.ComponentType<>` => `React.ComponentType<{}>`
+    src = src.replace(/React.ComponentType<>/g, 'React.ComponentType<{}>');
+
     // `React.ForwardRefExoticComponent` => `React.Component`
     src = src.replace(/React\.ForwardRefExoticComponent/g, 'React.Component');
 

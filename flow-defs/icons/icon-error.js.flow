@@ -6,5 +6,5 @@
  */
 
 import * as React from "react";
-declare var IconError: React.ComponentType<>;
+declare var IconError: React.ComponentType<{}>;
 declare export default typeof IconError;

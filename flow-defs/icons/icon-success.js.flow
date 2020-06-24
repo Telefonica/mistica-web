@@ -6,5 +6,5 @@
  */
 
 import * as React from "react";
-declare var IconSuccess: React.ComponentType<>;
+declare var IconSuccess: React.ComponentType<{}>;
 declare export default typeof IconSuccess;
