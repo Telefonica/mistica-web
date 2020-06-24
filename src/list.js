@@ -135,6 +135,9 @@ const useStyles = createUseStyles((theme) => ({
         flexGrow: 0,
         flexShrink: 0,
     },
+    right: {
+        marginLeft: 16,
+    },
 }));
 
 type CommonProps = {
@@ -149,8 +152,9 @@ type CommonProps = {
 
 type ContentProps = {
     ...CommonProps,
-    type?: 'chevron' | 'control' | 'basic',
+    type?: 'chevron' | 'control' | 'basic' | 'custom',
     renderControl?: (id: string) => React.Element<any>,
+    right?: React.Node,
 };
 
 const Content = ({
@@ -163,6 +167,7 @@ const Content = ({
     type = 'basic',
     renderControl,
     badge,
+    right,
 }: ContentProps) => {
     const classes = useStyles();
     const controlId = useAriaId();
@@ -244,6 +249,8 @@ const Content = ({
                 </Box>
             ) : renderControl ? (
                 <div className={classes.control}>{renderControl(controlId)}</div>
+            ) : right ? (
+                <div className={classes.right}>{right}</div>
             ) : null}
         </Box>
     );
@@ -256,7 +263,10 @@ type ControlProps = {
 };
 
 type RowContentProps =
-    | CommonProps
+    | {
+          ...CommonProps,
+          right?: React.Node,
+      }
     | {
           ...CommonProps,
           switch: ControlProps,
@@ -270,7 +280,7 @@ type RowContentProps =
           trackingEvent?: TrackingEvent,
           href: string,
           newTab?: boolean,
-          chevron?: boolean,
+          right?: React.Node,
       }
     | {
           ...CommonProps,
@@ -278,13 +288,13 @@ type RowContentProps =
           to: string,
           fullPageOnWebView?: boolean,
           replace?: boolean,
-          chevron?: boolean,
+          right?: React.Node,
       }
     | {
           ...CommonProps,
           trackingEvent?: TrackingEvent,
           onPress: Function,
-          chevron?: boolean,
+          right?: React.Node,
       };
 
 const useControlState = ({
@@ -333,10 +343,18 @@ const RowContent = (props: RowContentProps) => {
         />
     );
 
-    const renderTouchableContent = () => {
-        return (
-            <Box paddingX={16}>{renderContent({type: props.chevron === false ? 'basic' : 'chevron'})}</Box>
-        );
+    const renderTouchableContent = (props) => {
+        let type = 'chevron';
+
+        if (props.right === null) {
+            type = 'basic';
+        }
+
+        if (props.right) {
+            type = 'custom';
+        }
+
+        return <Box paddingX={16}>{renderContent({type, right: props.right})}</Box>;
     };
 
     if (props.onPress) {
@@ -346,7 +364,7 @@ const RowContent = (props: RowContentProps) => {
                 trackingEvent={props.trackingEvent}
                 onPress={props.onPress}
             >
-                {renderTouchableContent()}
+                {renderTouchableContent(props)}
             </Touchable>
         );
     }
@@ -359,7 +377,7 @@ const RowContent = (props: RowContentProps) => {
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
             >
-                {renderTouchableContent()}
+                {renderTouchableContent(props)}
             </Touchable>
         );
     }
@@ -372,7 +390,7 @@ const RowContent = (props: RowContentProps) => {
                 href={props.href}
                 newTab={props.newTab}
             >
-                {renderTouchableContent()}
+                {renderTouchableContent(props)}
             </Touchable>
         );
     }
@@ -399,7 +417,9 @@ const RowContent = (props: RowContentProps) => {
 
     return (
         <Box paddingX={16} className={classNames(classes.rowContent, classes.hoverDisabled)}>
-            {renderContent({type: 'basic'})}
+            {props.right
+                ? renderContent({type: 'custom', right: props.right})
+                : renderContent({type: 'basic'})}
         </Box>
     );
 };
