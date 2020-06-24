@@ -10,8 +10,70 @@ import Badge from './badge';
 import {useTheme, useAriaId} from './hooks';
 import IcnChevron from './icons/icn-chevron';
 import Switch from './switch';
+import {SPACE} from './utils/key-codes';
 
 import type {TrackingEvent} from './utils/types';
+
+// This CircularCheckbox component is only intended to be used inside list rows. Please, don't extract it to it's own file and don't export it from the library.
+
+type CircularCheckboxProps = {
+    checked: boolean,
+    onChange: (checked: boolean) => void,
+    id: string,
+};
+
+const CircularCheckbox = ({checked, onChange, id}: CircularCheckboxProps) => {
+    const theme = useTheme();
+
+    const handleClick = () => {
+        onChange(!checked);
+    };
+
+    const handleKeyDown = (event) => {
+        if (event.keyCode === SPACE) {
+            event.preventDefault();
+            event.stopPropagation();
+            onChange(!checked);
+        }
+    };
+
+    return (
+        <div
+            id={id}
+            role="checkbox"
+            aria-checked={checked}
+            onKeyDown={handleKeyDown}
+            onClick={handleClick}
+            tabIndex="0"
+            style={{display: 'inline-flex'}}
+        >
+            {checked ? (
+                <svg role="presentation" width={24} height={24} viewBox="0 0 24 24">
+                    <g fill="none" fillRule="evenodd" transform="translate(1 1)">
+                        <circle cx="11" cy="11" r="11" fill={theme.colors.controlActive} />
+                        <path
+                            fill="#FFF"
+                            fillRule="nonzero"
+                            d="M8.854 14.686c.303.348.843.35 1.15.005l5.387-6.086c.28-.316.25-.8-.066-1.08s-.8-.25-1.08.066l-4.799 5.445-1.688-1.94c-.277-.318-.76-.352-1.079-.074-.318.277-.352.76-.074 1.079l2.249 2.585z"
+                        />
+                    </g>
+                </svg>
+            ) : (
+                <svg role="presentation" width={24} height={24} viewBox="0 0 24 24">
+                    <circle
+                        cx="11"
+                        cy="11"
+                        r="10.5"
+                        fill="none"
+                        fillRule="evenodd"
+                        stroke="#DDD"
+                        transform="translate(1 1)"
+                    />
+                </svg>
+            )}
+        </div>
+    );
+};
 
 const useStyles = createUseStyles((theme) => ({
     rowContent: {
@@ -185,16 +247,23 @@ const Content = ({
     );
 };
 
+type ControlProps = {
+    value?: boolean,
+    defaultValue?: boolean,
+    onChange?: (checked: boolean) => void,
+};
+
 type RowContentProps =
     | CommonProps
     | {
           ...CommonProps,
           trackingEvent?: TrackingEvent,
-          switch: {
-              value?: boolean,
-              defaultValue?: boolean,
-              onChange?: (checked: boolean) => void,
-          },
+          switch: ControlProps,
+      }
+    | {
+          ...CommonProps,
+          trackingEvent?: TrackingEvent,
+          checkbox: ControlProps,
       }
     | {
           ...CommonProps,
@@ -246,7 +315,7 @@ const useControlState = ({
 const RowContent = (props: RowContentProps) => {
     const classes = useStyles();
     const {icon, iconSize, headline, title, subtitle, description, badge} = props;
-    const [isChecked, toggle] = useControlState(props.switch || {});
+    const [isChecked, toggle] = useControlState(props.switch || props.checkbox || ({}: any));
 
     const content = (
         <Content
@@ -299,18 +368,24 @@ const RowContent = (props: RowContentProps) => {
         );
     }
 
+    const renderRowWithControl = (Control) => (
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+        <div onClick={() => toggle()} className={classes.rowContent}>
+            <Box paddingX={16}>
+                {React.cloneElement(content, {
+                    type: 'control',
+                    renderControl: (id) => <Control checked={isChecked} onChange={toggle} id={id} />,
+                })}
+            </Box>
+        </div>
+    );
+
     if (props.switch) {
-        return (
-            // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-            <div onClick={() => toggle()} className={classes.rowContent}>
-                <Box paddingX={16}>
-                    {React.cloneElement(content, {
-                        type: 'control',
-                        renderControl: (id) => <Switch checked={isChecked} onChange={toggle} id={id} />,
-                    })}
-                </Box>
-            </div>
-        );
+        return renderRowWithControl(Switch);
+    }
+
+    if (props.checkbox) {
+        return renderRowWithControl(CircularCheckbox);
     }
 
     return (
