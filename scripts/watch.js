@@ -38,3 +38,10 @@ babelProcess.stdout.on('data', (data) => {
         postBuild();
     }
 });
+
+// CTRL+C
+process.on('SIGINT', () => {
+    if (postBuildProcess && postBuildProcess.exitCode === null && process.platform !== 'win32') {
+        process.kill(-postBuildProcess.pid);
+    }
+});
