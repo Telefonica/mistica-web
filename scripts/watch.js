@@ -33,7 +33,7 @@ const postBuild = () => {
 };
 
 babelProcess.stdout.on('data', (data) => {
-    const strOut = `${data}`.trim();
+    const strOut = `${data}`;
     if (strOut.includes('Successfully compiled')) {
         postBuild();
     }
