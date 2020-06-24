@@ -221,7 +221,7 @@ const Content = ({
             <div className={classes.rowBody}>
                 {headline && (
                     <Box paddingBottom={8}>
-                        <Text size={12} lineHeight="16px" color={theme.colors.textSecondary}>
+                        <Text as="div" size={12} lineHeight="16px" color={theme.colors.textSecondary}>
                             {headline}
                         </Text>
                     </Box>
