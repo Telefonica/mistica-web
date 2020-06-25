@@ -4,6 +4,7 @@ import {getPlatform} from './utils/platform';
 import {applyAlpha} from './utils/color';
 import debounce from 'lodash/debounce';
 import {SPACE} from './utils/key-codes';
+import {render} from 'react-dom';
 
 const SWITCH_ANIMATION = '0.2s ease-in 0s';
 
@@ -84,17 +85,17 @@ const useStyles = createUseStyles((theme) => {
     };
 });
 
+type RenderSwitch = (switchElement: React.ReactElement<any>) => React.ReactNode;
+
 type UncontrolledProps = {
-    id?: string;
-    'data-testid'?: string;
+    render?: RenderSwitch;
     defaultChecked?: boolean;
     checked?: undefined;
     onChange?: (checked: boolean) => void;
 };
 
 type ControlledProps = {
-    id?: string;
-    'data-testid'?: string;
+    render?: RenderSwitch;
     checked: boolean;
     onChange: (checked: boolean) => void;
 };
@@ -140,23 +141,26 @@ const Switch: React.FC<Props> = (props) => {
         }
     };
 
-    return (
-        <div
-            id={props.id}
-            data-testid={props['data-testid']}
-            role="checkbox"
-            aria-checked={isChecked}
-            onClick={handleChange}
-            onKeyDown={handleKeyDown}
-            tabIndex={0}
-            className={classes.checkbox}
-        >
+    const switchEl = (
+        <div className={classes.checkbox}>
             <div className={classes.switchCheckboxContainer}>
                 <div className={classes.switchCheckboxLabel}>
                     <span className={classes.bar} />
                     <span className={classes.ball} />
                 </div>
             </div>
+        </div>
+    );
+
+    return (
+        <div
+            role="checkbox"
+            aria-checked={isChecked}
+            onClick={handleChange}
+            onKeyDown={handleKeyDown}
+            tabIndex={0}
+        >
+            {props.render ? <>{props.render(switchEl)}</> : switchEl}
         </div>
     );
 };

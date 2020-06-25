@@ -6,22 +6,24 @@ import Text from './text';
 import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
-import {useTheme, useAriaId} from './hooks';
+import {useTheme} from './hooks';
 import IconChevron from './icons/icon-chevron';
 import Switch from './switch';
 import {SPACE} from './utils/key-codes';
+import RadioButton from './radio-button';
 
 import type {TrackingEvent} from './utils/types';
 
 // This CircularCheckbox component is only intended to be used inside list rows. Please, don't extract it to it's own file and don't export it from the library.
 
 type CircularCheckboxProps = {
+    render?: (checkboxElement: React.ReactElement) => React.ReactNode;
     checked: boolean;
     onChange: (checked: boolean) => void;
     id: string;
 };
 
-const CircularCheckbox = ({checked, onChange, id}: CircularCheckboxProps) => {
+const CircularCheckbox = ({checked, onChange, id, render}: CircularCheckboxProps) => {
     const theme = useTheme();
 
     const handleClick = () => {
@@ -36,16 +38,8 @@ const CircularCheckbox = ({checked, onChange, id}: CircularCheckboxProps) => {
         }
     };
 
-    return (
-        <div
-            id={id}
-            role="checkbox"
-            aria-checked={checked}
-            onKeyDown={handleKeyDown}
-            onClick={handleClick}
-            tabIndex={0}
-            style={{display: 'inline-flex'}}
-        >
+    const checkbox = (
+        <div style={{display: 'inline-flex'}}>
             {checked ? (
                 <svg role="presentation" width={24} height={24} viewBox="0 0 24 24">
                     <g fill="none" fillRule="evenodd" transform="translate(1 1)">
@@ -70,6 +64,19 @@ const CircularCheckbox = ({checked, onChange, id}: CircularCheckboxProps) => {
                     />
                 </svg>
             )}
+        </div>
+    );
+
+    return (
+        <div
+            id={id}
+            role="checkbox"
+            aria-checked={checked}
+            onKeyDown={handleKeyDown}
+            onClick={handleClick}
+            tabIndex={0}
+        >
+            {render ? <>{render(checkbox)}</> : checkbox}
         </div>
     );
 };
@@ -137,6 +144,11 @@ const useStyles = createUseStyles((theme) => ({
     right: {
         marginLeft: 16,
     },
+    centeredControl: {
+        display: 'flex',
+        alignItems: 'center',
+        height: '100%',
+    },
 }));
 
 interface CommonProps {
@@ -151,8 +163,7 @@ interface CommonProps {
 
 interface ContentProps extends CommonProps {
     isClickable?: boolean;
-    type?: 'chevron' | 'control' | 'basic' | 'custom';
-    renderControl?: (id: string) => React.ReactElement<any>;
+    type?: 'chevron' | 'basic' | 'custom';
     right?: React.ReactNode;
 }
 
@@ -164,12 +175,10 @@ const Content: React.FC<ContentProps> = ({
     icon,
     iconSize = 40,
     type = 'basic',
-    renderControl,
     badge,
     right,
 }) => {
     const classes = useStyles();
-    const controlId = useAriaId();
     const theme = useTheme();
     const numTextLines = [headline, title, subtitle, description].filter(Boolean).length;
     const centerIcon = numTextLines === 1;
@@ -184,24 +193,6 @@ const Content: React.FC<ContentProps> = ({
                 </div>
             </Box>
         );
-    };
-
-    const renderTitle = () => {
-        const text = (
-            <Text size={18} weight="light" lineHeight="24px" color={theme.colors.textPrimary}>
-                {title}
-            </Text>
-        );
-
-        if (type === 'control') {
-            return (
-                <label style={{cursor: 'pointer'}} htmlFor={controlId}>
-                    {text}
-                </label>
-            );
-        }
-
-        return text;
     };
 
     return (
@@ -225,7 +216,9 @@ const Content: React.FC<ContentProps> = ({
                         </Text>
                     </Box>
                 )}
-                {renderTitle()}
+                <Text size={18} weight="light" lineHeight="24px" color={theme.colors.textPrimary}>
+                    {title}
+                </Text>
                 {subtitle && (
                     <Box paddingY={2}>
                         <Text size={14} lineHeight="20px" color={theme.colors.textSecondary}>
@@ -246,8 +239,6 @@ const Content: React.FC<ContentProps> = ({
                 <Box paddingLeft={16} className={classes.center}>
                     <IconChevron size={24} color={theme.colors.iconSecondary} direction="right" />
                 </Box>
-            ) : renderControl ? (
-                <div className={classes.control}>{renderControl(controlId)}</div>
             ) : right ? (
                 <div className={classes.right}>{right}</div>
             ) : null}
@@ -267,6 +258,7 @@ interface BasicRowContentProps extends CommonProps {
     to?: undefined;
     checkbox?: undefined;
     switch?: undefined;
+    radioValue?: undefined;
 
     right?: React.ReactNode;
 }
@@ -277,6 +269,7 @@ interface SwitchRowContentProps extends CommonProps {
     to?: undefined;
     right?: undefined;
     checkbox?: undefined;
+    radioValue?: undefined;
 
     switch: ControlProps;
 }
@@ -287,13 +280,26 @@ interface CheckboxRowContentProps extends CommonProps {
     to?: undefined;
     right?: undefined;
     switch?: undefined;
+    radioValue?: undefined;
 
     checkbox: ControlProps;
+}
+
+interface RadioRowContentProps extends CommonProps {
+    href?: undefined;
+    onPress?: undefined;
+    to?: undefined;
+    right?: undefined;
+    switch?: undefined;
+    checkbox?: undefined;
+
+    radioValue: string;
 }
 
 interface HrefRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
+    radioValue?: undefined;
 
     trackingEvent?: TrackingEvent;
     href?: string;
@@ -306,6 +312,7 @@ interface HrefRowContentProps extends CommonProps {
 interface ToRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
+    radioValue?: undefined;
 
     trackingEvent?: TrackingEvent;
     to?: string;
@@ -319,6 +326,7 @@ interface ToRowContentProps extends CommonProps {
 interface OnPressRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
+    radioValue?: undefined;
 
     trackingEvent?: TrackingEvent;
     onPress?: () => void;
@@ -330,6 +338,7 @@ interface OnPressRowContentProps extends CommonProps {
 type RowContentProps =
     | BasicRowContentProps
     | SwitchRowContentProps
+    | RadioRowContentProps
     | CheckboxRowContentProps
     | HrefRowContentProps
     | ToRowContentProps
@@ -368,11 +377,7 @@ const RowContent = (props: RowContentProps) => {
     const {icon, iconSize, headline, title, subtitle, description, badge} = props;
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
-    const renderContent = (moreProps: {
-        type: ContentProps['type'];
-        right?: ContentProps['right'];
-        renderControl?: ContentProps['renderControl'];
-    }) => (
+    const renderContent = (moreProps: {type: ContentProps['type']; right?: ContentProps['right']}) => (
         <Content
             icon={icon}
             iconSize={iconSize}
@@ -439,16 +444,21 @@ const RowContent = (props: RowContentProps) => {
         );
     }
 
+    const centered = (el: React.ReactElement<any>) => <div className={classes.centeredControl}>{el}</div>;
+
     const renderRowWithControl = (Control: React.FC<any>) => (
-        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-        <div onClick={() => toggle()} className={classes.rowContent}>
-            <Box paddingX={16}>
-                {renderContent({
-                    type: 'control',
-                    renderControl: (id: string) => <Control checked={isChecked} onChange={toggle} id={id} />,
-                })}
-            </Box>
-        </div>
+        <Control
+            checked={isChecked}
+            onChange={toggle}
+            render={(control: React.ReactElement) => (
+                <Box paddingX={16} className={classes.rowContent}>
+                    {renderContent({
+                        type: 'custom',
+                        right: centered(control),
+                    })}
+                </Box>
+            )}
+        />
     );
 
     if (props.switch) {
@@ -457,6 +467,22 @@ const RowContent = (props: RowContentProps) => {
 
     if (props.checkbox) {
         return renderRowWithControl(CircularCheckbox);
+    }
+
+    if (props.radioValue) {
+        return (
+            <RadioButton
+                value={props.radioValue}
+                render={(radio) => (
+                    <Box paddingX={16} className={classes.rowContent}>
+                        {renderContent({
+                            type: 'custom',
+                            right: centered(radio),
+                        })}
+                    </Box>
+                )}
+            />
+        );
     }
 
     return (

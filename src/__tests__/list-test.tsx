@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {RowList, Row} from '../list';
+import {RadioGroup} from '../radio-button';
 import {screen, fireEvent, render} from '@testing-library/react';
 
 test('Row which navigates', () => {
@@ -36,7 +37,7 @@ test('Row with switch', () => {
         </RowList>
     );
 
-    const switchEl = screen.getByLabelText('Title');
+    const switchEl = screen.getByRole('checkbox', {name: 'Title'});
 
     expect(switchEl).not.toBeChecked();
 
@@ -52,7 +53,7 @@ test('Row with checkbox', () => {
         </RowList>
     );
 
-    const checkboxEl = screen.getByLabelText('Title');
+    const checkboxEl = screen.getByRole('checkbox', {name: 'Title'});
 
     expect(checkboxEl).not.toBeChecked();
 
@@ -69,4 +70,31 @@ test('Row with custom right element', () => {
     );
 
     expect(screen.getByText('custom')).toBeInTheDocument();
+});
+
+test('Row list with radio buttons', () => {
+    render(
+        <RadioGroup>
+            <RowList>
+                <Row title="Banana" radioValue="banana" />
+                <Row title="Apple" radioValue="apple" />
+            </RowList>
+        </RadioGroup>
+    );
+
+    const radioBanana = screen.getByRole('radio', {name: 'Banana'});
+    const radioApple = screen.getByRole('radio', {name: 'Apple'});
+
+    expect(radioBanana).not.toBeChecked();
+    expect(radioApple).not.toBeChecked();
+
+    fireEvent.click(radioBanana);
+
+    expect(radioBanana).toBeChecked();
+    expect(radioApple).not.toBeChecked();
+
+    fireEvent.click(radioApple);
+
+    expect(radioBanana).not.toBeChecked();
+    expect(radioApple).toBeChecked();
 });

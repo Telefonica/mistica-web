@@ -3,6 +3,7 @@ import {MemoryRouter} from 'react-router-dom';
 import {StorySection, useTextField, useCheckbox, useSelect} from './helpers';
 import {RowList, Row} from '../list';
 import {Box, Stack, AvatarPlaceholder} from '..';
+import {RadioGroup} from '../radio-button';
 
 export default {
     title: 'Components|Lists/RowList',
@@ -126,3 +127,37 @@ export const Default: StoryComponent = () => {
 };
 
 Default.story = {name: 'RowList'};
+
+export const Radio: StoryComponent = () => (
+    <div data-testid="radio-row-list">
+        <StorySection title="Radio Row List">
+            <RadioGroup defaultValue="apple">
+                <RowList>
+                    <Row
+                        icon={<AvatarPlaceholder size="100%" />}
+                        iconSize={40}
+                        title="Banana"
+                        description="Yellow"
+                        radioValue="banana"
+                    />
+                    <Row
+                        icon={<AvatarPlaceholder size="100%" />}
+                        iconSize={40}
+                        title="Apple"
+                        description="Green"
+                        radioValue="apple"
+                    />
+                    <Row
+                        icon={<AvatarPlaceholder size="100%" />}
+                        iconSize={40}
+                        title="Orange"
+                        description="Orange"
+                        radioValue="orange"
+                    />
+                </RowList>
+            </RadioGroup>
+        </StorySection>
+    </div>
+);
+
+Radio.story = {name: 'RowList (radio button)'};
