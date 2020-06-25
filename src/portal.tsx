@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-let modalRoot: HTMLElement = document.body;
+let modalRoot: HTMLElement;
 
 if (typeof document !== 'undefined') {
     modalRoot = document.body;

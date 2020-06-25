@@ -1,10 +1,10 @@
 import {isWebViewBridgeAvailable} from '@tef-novum/webview-bridge';
 
 const getUserAgent = (): string => {
-    if (typeof self !== 'undefined' && self.navigator?.userAgent) {
-        return self.navigator.userAgent;
+    if (typeof self === 'undefined') {
+        return '';
     }
-    return '';
+    return self.navigator?.userAgent ?? '';
 };
 
 type PlatformOverrides = {
