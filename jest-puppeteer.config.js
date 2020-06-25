@@ -1,4 +1,3 @@
-/* eslint-disable filenames/match-regex */
 const fetch = require('node-fetch');
 const execSync = require('child_process').execSync;
 

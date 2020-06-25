@@ -1,4 +1,3 @@
-// @flow
 import '../css/roboto.css';
 import '../css/reset.css';
 import {addons} from '@storybook/addons';
