@@ -1,0 +1,264 @@
+import {applyAlpha} from './utils';
+import c from './colors/o2';
+
+// LAYOUT
+export const PRIMARY = c.O2_BLUE;
+export const BACKGROUND_BRAND = `linear-gradient(to bottom, ${c.O2_BLUE}, #0b4680 51%, #0d71ad 72%, ${c.O2_LAST_GRADIENT_COLOR})`;
+export const BACKGROUND_BRAND_VARIATION = `linear-gradient(115deg, ${c.O2_BLUE}, #0b4680 50%, #0d71ad 84%, ${c.O2_LAST_GRADIENT_COLOR})`;
+export const BACKGROUND_SPECIAL_0 = `linear-gradient(to bottom, ${c.O2_BLUE}, #0b4680 51%, #0d71ad 72%, ${c.O2_LAST_GRADIENT_COLOR})`;
+export const BACKGROUND_SPECIAL_1 = `linear-gradient(to bottom, ${c.O2_BLUE}, #0b4680 51%, #0d71ad 72%, ${c.O2_LAST_GRADIENT_COLOR})`;
+export const PRIMARY_DARK = c.O2_BLUE_DARK;
+export const ACCENT = c.O2_GEM;
+export const DIVIDER = c.GREY_4;
+export const DIVIDER_SPECIAL_0 = c.O2_BLUE;
+export const DIVIDER_SPECIAL_1 = c.O2_BLUE_LIGHT_60;
+
+export const BACKGROUND = c.WHITE;
+export const BACKGROUND_PROMO = c.O2_PURPLE;
+export const BACKGROUND_DARK = c.GREY_0;
+export const BACKGROUND_ALTERNATIVE = c.GREY_5;
+export const BACKGROUND_SELECTED_DARK = c.WHITE;
+export const BACKGROUND_UNSELECTED_DARK: string = applyAlpha(c.WHITE, 0.2);
+export const BACKGROUND_ACCENT = c.O2_BLUE;
+export const BACKGROUND_HEADING = `linear-gradient(to bottom, ${c.O2_BLUE}, #0b4680 51%, #0d71ad 72%, ${c.O2_LAST_GRADIENT_COLOR})`;
+export const BACKGROUND_SPECIAL = `linear-gradient(to bottom, ${c.O2_BLUE}, #0b4680 51%, #0d71ad 72%, ${c.O2_LAST_GRADIENT_COLOR})`;
+export const LAYER_DECORATIONS = c.BLACK;
+export const BACKGROUND_SKELETON = c.GREY_5;
+export const BACKGROUND_SKELETON_DARK = `linear-gradient(to right, ${applyAlpha(c.WHITE, 0.1)}, ${applyAlpha(
+    c.WHITE,
+    0.2
+)})`;
+export const BACKGROUND_OPACITY: string = applyAlpha(c.GREY_0, 0.6);
+export const BACKGROUND_LOYALTY = c.O2_BLUE;
+export const OVERSCROLL_COLOR_TOP = c.O2_BLUE;
+export const BACKGROUND_SPECIAL_BOTTOM = c.O2_LAST_GRADIENT_COLOR;
+export const GRID_BUTTON_SPECIAL_1_HOVER = c.O2_SKY_BLUE_LIGHT;
+
+export const BACKGROUND_SHEET_BAR_TOP = c.WHITE;
+export const BACKGROUND_SHEET_BAR_TOP_SPECIAL = c.O2_BLUE;
+export const ICN_SHEET_BAR_TOP = c.GREY_3;
+export const ICN_SHEET_BAR_TOP_SPECIAL = c.O2_BLUE_LIGHT_60;
+
+// BORDERS
+export const BORDER = c.GREY_3;
+export const BORDER_SELECTED = c.O2_GEM;
+export const BORDER_DARK = c.GREY_1;
+export const BORDER_LIGHT = c.GREY_5;
+export const BORDER_ALTERNATIVE = c.WHITE;
+export const BORDER_SPECIAL_0 = c.WHITE;
+
+// TABS
+export const TAB_SELECTED = c.O2_GEM;
+
+// ITEM
+export const ITEM_ACTIVE = c.GREY_5;
+export const ITEM_HOVER = c.GREY_4;
+
+// TEXT
+export const TEXT_ACCENT = c.O2_GEM;
+export const TEXT_PRIMARY = c.COOL_GREY;
+export const TEXT_PRIMARY_SPECIAL = c.WHITE;
+export const TEXT_PRIMARY_INVERSE = c.WHITE;
+export const TEXT_SECONDARY = c.GREY_1;
+export const TEXT_SECONDARY_DARK = c.GREY_2;
+export const TEXT_GROUP_TITLE_LIST = c.COOL_GREY;
+export const TEXT_HINT = c.GREY_1;
+export const TEXT_LINK = c.O2_SKY_BLUE;
+export const TEXT_LINK_SNACKBAR = c.O2_SKY_BLUE_LIGHT;
+export const TEXT_CLICKABLE = TEXT_LINK;
+export const TEXT_ERROR = c.PEPPER;
+export const TEXT_HIGHLIGHT = c.PINK;
+export const TEXT_LABEL = c.O2_GEM;
+export const TEXT_INACTIVE = c.GREY_3;
+export const TEXT_INACTIVE_INVERSE = c.O2_SKY_BLUE_LIGHT_60;
+export const TEXT_WARNING = c.ORANGE;
+export const TEXT_DANGER = c.PINK;
+
+// NAVBAR
+export const TEXT_NAVBAR_HOVER = c.O2_BLUE_LIGHT_60;
+export const NAVBAR_BACKGROUND = c.O2_BLUE;
+export const NAVBAR_CONTROL = c.O2_SKY_BLUE_LIGHT_30;
+export const NAVBAR_DIVIDER = c.O2_BLUE;
+
+// TAG
+export const TAG_BACKGROUND_FIRST = c.O2_GREEN;
+export const TAG_BACKGROUND_SECOND = c.GREY_3;
+export const TAG_BACKGROUND_THIRD = c.O2_BLUE;
+export const TAG_BACKGROUND_FOURTH = c.ORANGE;
+export const TAG_BACKGROUND_FIFTH = c.O2_BLUE_DARK;
+export const TAG_BACKGROUND_SIXTH = c.O2_GEM;
+export const TAG_BACKGROUND_SEVENTH = c.PINK;
+
+// ICON
+export const ICON_ACCENT = c.O2_GEM;
+export const ICON_NAVIGATION_BAR = c.WHITE;
+export const ICON_INVERSE_DISABLE: string = applyAlpha(c.WHITE, 0.5);
+export const ICON_INACTIVE = c.GREY_1;
+export const ICON_PRIMARY = c.GREY_0;
+export const ICON_SECONDARY = c.GREY_2;
+export const ICON_SECONDARY_SPECIAL_0 = c.WHITE;
+export const ICON_TERTIARY = c.O2_BLUE;
+export const ICON_INVERSE = c.WHITE;
+export const ICON_DISABLED = c.GREY_3;
+export const ICON_DANGER = c.PEPPER;
+export const ICON_PLACEHOLDER = c.GREY_4;
+export const ICON_HEADER = c.WHITE;
+export const ICON_HIGHLIGHT = c.PINK;
+
+// BUTTONS
+export const BUTTON_PRIMARY_BACKGROUND = c.O2_SKY_BLUE;
+export const BUTTON_PRIMARY_BACKGROUND_SELECTED = c.O2_SKY_BLUE_DARK;
+export const BUTTON_PRIMARY_BACKGROUND_HOVER = c.O2_SKY_BLUE_DARK;
+export const BUTTON_PRIMARY_BACKGROUND_DISABLED = c.O2_SKY_BLUE_LIGHT_60;
+export const BUTTON_PRIMARY_TEXT = c.WHITE;
+
+export const BUTTON_PRIMARY_BACKGROUND_INVERSE = c.WHITE;
+export const TEXT_BUTTON_PRIMARY_INVERSE = c.O2_SKY_BLUE;
+export const BUTTON_PRIMARY_BACKGROUND_INVERSE_SELECTED = c.O2_SKY_BLUE_LIGHT_60;
+export const TEXT_BUTTON_PRIMARY_INVERSE_SELECTED = c.O2_SKY_BLUE;
+export const BUTTON_PRIMARY_BACKGROUND_INVERSE_DISABLED = c.O2_SKY_BLUE_LIGHT_60;
+export const TEXT_BUTTON_PRIMARY_INVERSE_DISABLED = c.O2_SKY_BLUE_LIGHT_30;
+
+export const BUTTON_SECONDARY_BACKGROUND = 'transparent';
+export const BUTTON_SECONDARY_TEXT = c.O2_SKY_BLUE;
+export const BUTTON_SECONDARY_TEXT_SELECTED = c.O2_SKY_BLUE_DARK;
+export const BUTTON_SECONDARY_TEXT_DISABLED = c.O2_SKY_BLUE_LIGHT_60;
+export const BUTTON_SECONDARY_BORDER = c.O2_SKY_BLUE;
+export const BUTTON_SECONDARY_BORDER_SELECTED = c.O2_SKY_BLUE_DARK;
+export const BUTTON_SECONDARY_BORDER_DISABLED = c.O2_SKY_BLUE_LIGHT_60;
+
+export const BUTTON_SECONDARY_BORDER_INVERSE = c.WHITE;
+export const TEXT_BUTTON_SECONDARY_INVERSE = c.WHITE;
+export const BUTTON_SECONDARY_BORDER_INVERSE_SELECTED = c.O2_SKY_BLUE_LIGHT_60;
+export const TEXT_BUTTON_SECONDARY_INVERSE_SELECTED = c.WHITE;
+export const BUTTON_SECONDARY_BORDER_INVERSE_DISABLED = c.O2_SKY_BLUE_LIGHT_60;
+export const TEXT_BUTTON_SECONDARY_INVERSE_DISABLED = c.O2_SKY_BLUE_LIGHT_60;
+
+export const BUTTON_TERTIARY_BACKGROUND = c.GREY_4;
+
+export const BUTTON_DANGER_BACKGROUND = c.PEPPER;
+export const BUTTON_DANGER_BACKGROUND_SELECTED = c.PEPPER_DARK;
+export const BUTTON_DANGER_BACKGROUND_HOVER = c.PEPPER_DARK;
+export const BUTTON_DANGER_BACKGROUND_DISABLED = c.PEPPER_LIGHT;
+
+export const BUTTON_LINK_BACKGROUND_SELECTED = '#e5f3fa'; // No palette constant?
+
+// FEEDBACKS
+export const FEEDBACK_SUCCESS_BACKGROUND = c.O2_GREEN;
+export const FEEDBACK_SYSTEM_BACKGROUND = c.ORANGE;
+export const FEEDBACK_INFO_BACKGROUND = c.GREY_0;
+export const FEEDBACK_ERROR_BACKGROUND = c.PEPPER;
+export const FEEDBACK_PERMANENT_BORDER = c.O2_GEM;
+
+// FORM CONTROLS - https://app.zeplin.io/project/5a81c7fc94d98154381bec44/screen/5c6a96a1c72d1e466439c72f
+export const CONTROL_INACTIVE = c.GREY_3;
+export const CONTROL_ACTIVE = c.O2_GEM;
+export const CONTROL_ERROR = c.PEPPER;
+export const CONTROL_HOVER = c.GREY_1;
+
+export const CONTROL_SPECIAL_0_ACTIVE = c.WHITE;
+export const CONTROL_SPECIAL_0_INACTIVE: string = applyAlpha(c.WHITE, 0.3);
+export const CONTROL_INVERSE_ACTIVE = c.WHITE;
+export const CONTROL_INVERSE_INACTIVE: string = applyAlpha(c.WHITE, 0.3);
+
+// TOGGLE
+export const TOGGLE_ANDROID_INACTIVE = c.GREY_4;
+export const TOGGLE_ANDROID_BACKGROUND_INACTIVE = c.GREY_3;
+export const TOGGLE_ANDROID_ACTIVE = CONTROL_ACTIVE;
+export const TOGGLE_ANDROID_BACKGROUND_ACTIVE = c.O2_GEM_LIGHT_30;
+export const TOGGLE_IOS_INACTIVE = c.WHITE;
+export const TOGGLE_IOS_BACKGROUND_INACTIVE = c.WHITE;
+export const TOGGLE_IOS_BACKGROUND_ACTIVE = '#4CD964';
+
+// CHARTS -- TBD
+export const PROGRESS_CHART_0 = c.O2_GREEN;
+export const PROGRESS_CHART_1 = c.O2_GREEN;
+export const PROGRESS_CHART_2 = c.O2_GREEN_LIGHT;
+export const PROGRESS_CHART_3 = c.O2_YELLOW;
+export const PROGRESS_CHART_4 = c.O2_YELLOW_LIGHT;
+export const PROGRESS_CHART_5 = c.CORAL;
+export const PROGRESS_CHART_6 = c.O2_SKY_BLUE_LIGHT;
+
+export const CHART_SECONDARY_LIGHT = c.O2_SKY_BLUE_LIGHT;
+export const CHART_SECONDARY_DARK = c.O2_SKY_BLUE_DARK;
+export const CHART_TERTIARY_LIGHT = c.GREY_4;
+export const CHART_TERTIARY_DARK: string = applyAlpha(c.WHITE, 0.2);
+export const CHART_SPECIAL_DARK = c.ORANGE;
+
+export const BAR_CHART_INACTIVE = c.GREY_3;
+export const BAR_CHART_INACTIVE_DARK = c.O2_SKY_BLUE_LIGHT_60;
+export const BAR_CHART_ACTIVE = c.O2_SKY_BLUE;
+export const BAR_CHART_ACTIVE_DARK = c.WHITE;
+export const CHART_LABEL_INACTIVE = c.GREY_3;
+export const CHART_LABEL_INACTIVE_DARK = c.O2_SKY_BLUE_LIGHT_60;
+export const CHART_LABEL_ACTIVE = c.GREY_1;
+export const CHART_LABEL_ACTIVE_DARK = BACKGROUND;
+
+export const BAR_CHART_0 = c.O2_SKY_BLUE;
+export const BAR_CHART_1 = c.O2_SKY_BLUE;
+export const BAR_CHART_2 = c.O2_SKY_BLUE;
+export const BAR_CHART_3 = c.PINK;
+export const BAR_CHART_4 = c.O2_SKY_BLUE;
+
+export const BRANCH = c.GREY_4;
+export const CHART_BACKGROUND = c.GREY_4;
+export const CHART_BACKGROUND_TOOLTIP = c.GREY_4;
+export const CHART_BACKGROUND_SPECIAL_0: string = applyAlpha(c.WHITE, 0.2);
+export const CHART_TEXT_AMOUNT = c.O2_SKY_BLUE;
+
+export const STAKED_BAR_CHART_0 = c.O2_SKY_BLUE;
+export const STAKED_BAR_CHART_1 = c.O2_SKY_BLUE_LIGHT_60;
+export const STAKED_BAR_CHART_2 = c.O2_GEM_DARK;
+export const STAKED_BAR_CHART_3 = c.ORANGE;
+export const STAKED_BAR_CHART_4 = c.PINK;
+export const STAKED_BAR_CHART_5 = c.O2_YELLOW;
+export const STAKED_BAR_CHART_6 = c.ORANGE; // ORANGE_LIGHT does not exist in O2
+
+// PROGRESS BAR
+export const PROGRESSBAR_BACKGROUND_DARK = c.GREY_2;
+export const PROGRESSBAR_INNER = ACCENT;
+
+// MAIN NAVIGATION
+export const MAIN_NAV_PRIMARY = PRIMARY_DARK;
+export const MAIN_NAV_PRIMARY_HOME = c.O2_BLUE;
+export const NAVIGATION_BAR_BACKGROUND = c.O2_BLUE;
+export const MAIN_NAV_NOTIFICATION = c.O2_GEM;
+export const MAIN_NAV_ITEM_INACTIVE = c.O2_BLUE_LIGHT_60;
+export const MAIN_NAV_ITEM_ACTIVE = c.WHITE;
+
+// SECONDARY NAVIGATION TABLET AND MOBILE
+export const NAVTAB_IOS_BACKGROUND = c.WHITE;
+export const NAVTAB_IOS_BORDER = c.O2_BLUE;
+export const NAVTAB_IOS_ACTIVE_TAB_BACKGROUND = c.O2_BLUE;
+export const NAVTAB_ANDROID_BACKGROUND = c.GREY_5;
+export const NAVTAB_ANDROID_ACTIVE_TAB_BACKGROUND = c.GREY_5;
+export const NAVTAB_ANDROID_ACTIVE_TAB_BORDER = ACCENT;
+export const NAVTAB_PRIMARY_TEXT = c.COOL_GREY;
+export const NAVTAB_IOS_ACTIVE_TEXT = c.WHITE;
+export const NAVTAB_IOS_INACTIVE_TEXT = c.O2_BLUE;
+export const NAVTAB_ANDROID_ACTIVE_TEXT = c.O2_BLUE;
+export const NAVTAB_ANDROID_INACTIVE_TEXT = c.GREY_1;
+
+// BUBBLES
+export const BUBBLE_FROM_ME_BACKGROUND = c.GREY_5;
+export const BUBBLE_FROM_OTHERS_BACKGROUND = c.O2_SKY_BLUE_LIGHT_30;
+export const BUBBLE_TEXT = '#191919';
+
+// AUDIO WAVES
+export const WAVE_PLAYER_SOUND = c.GREY_3;
+export const WAVE_PLAYER_SOUND_FILLED = c.O2_SKY_BLUE_LIGHT_60;
+
+// ALERTS
+export const BACKGROUND_TRANSACTIONAL_ALERT = `linear-gradient(${c.O2_BLUE}, ${c.O2_SKY_BLUE})`;
+
+// SHADOWS
+export const CONTAINER_SHADOW = c.PEPPER;
+
+// PROGRESS INDICATOR
+export const LOADING_BAR_PRIMARY = c.O2_GEM;
+export const LOADING_BAR_BACKGROUND = c.O2_GEM_LIGHT_30;
+export const LOADING_BAR_PRIMARY_INVERSE = c.O2_GEM;
+export const LOADING_BAR_BACKGROUND_INVERSE = c.O2_GEM_LIGHT_30;
+
+// BADGE
+export const BADGE_BACKGROUND = c.PEPPER_DARK;

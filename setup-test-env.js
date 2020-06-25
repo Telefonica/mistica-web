@@ -1,4 +1,9 @@
-// @flow
+/**
+ * @param {string} mediaFeature
+ * @param {string} mediaQuery
+ * @param {number} defaultSize
+ * @returns {number}
+ */
 const getMediaQuerySize = (mediaFeature, mediaQuery, defaultSize) => {
     const regExp = new RegExp(`\\(${mediaFeature}: (\\d+)px\\)`);
     const [, size = defaultSize] = mediaQuery.match(regExp) || [];

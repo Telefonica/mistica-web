@@ -1,6 +1,7 @@
-parser: babel-eslint
+parser: babel-eslint # typescript parser is used as an override (see overrides section)
 env:
     es6: true
+    node: true
     browser: true
     jest/globals: true
 parserOptions: # http://eslint.org/docs/user-guide/configuring.html#specifying-parser-options
@@ -21,12 +22,15 @@ plugins:
     - testing-library
     - flowtype
     - import
+    - '@typescript-eslint'
+extends:
+    - 'eslint:recommended'
 rules:
     # Basic rules
     default-case: error
     dot-notation: error
     eqeqeq: error
-    filenames/match-regex: [error, '^[a-z0-9]+(-[a-z0-9]+)*$']
+    filenames/match-regex: [error, '^[a-z0-9]+(-[a-z0-9]+)*(\.(config))?$'] # matches: "foo-bar" or "foo-bar.config"
     new-cap: [error, {newIsCap: true, capIsNew: false}]
     no-cond-assign: error
     no-debugger: error
@@ -154,3 +158,55 @@ rules:
     import/no-named-default: error
     import/no-useless-path-segments: error
     import/no-self-import: error
+
+overrides:
+    # overrides for TypeScript files
+    - files:
+          - '*.tsx'
+      parser: '@typescript-eslint/parser'
+      rules:
+          'flowtype/no-types-missing-file-annotation': off
+          no-unused-vars: off
+          '@typescript-eslint/no-unused-vars':
+              - error
+              - vars: all
+                args: after-used
+                ignoreRestSiblings: true
+          '@typescript-eslint/no-empty-function': off
+          '@typescript-eslint/no-explicit-any': off
+          '@typescript-eslint/ban-ts-comment':
+              - error
+              - ts-expect-error: allow-with-description
+                ts-ignore: true
+                ts-nocheck: true
+                ts-check: false
+          '@typescript-eslint/no-namespace':
+              - error
+              - allowDeclarations: false
+                allowDefinitionFiles: false
+          'no-restricted-syntax':
+              - error
+              - selector: TSEnumDeclaration
+                message: 'enums are not allowed'
+          '@typescript-eslint/prefer-as-const': off # TODO: review this rule and check how flowgen translates "as const" syntax
+      extends:
+          - 'eslint:recommended'
+          - 'plugin:@typescript-eslint/recommended'
+
+    # overrides for Type Tests
+    - files:
+          - '**/__type_tests__/*-type-test.tsx'
+          - '**/__type_tests__/*-type-test.js'
+      rules:
+          'no-unused-vars': off
+          'babel/no-unused-expressions': off
+          '@typescript-eslint/no-unused-vars': off
+
+    # overrides for flow definitions
+    - files:
+          - '*.js.flow'
+      rules:
+          filenames/match-regex: [error, '^[a-z0-9]+(-[a-z0-9]+)*\.js$'] # matches: "foo-bar.js"
+          no-use-before-define: off
+          import/no-duplicates: off
+          no-undef: off

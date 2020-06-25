@@ -1,70 +1,52 @@
-// @flow
-/* eslint-disable filenames/match-regex */
-
 const path = require('path');
 
-// Dont apply babel-plugin-flow-react-proptypes to these files because make the build break:
-const flowToPropTypesBlackList = [/src\/button/, /src\/form-text-field/];
+const exampleCode = `
+<Form
+  onSubmit={(formData) =>
+    alert({
+      title: "This is your data",
+      message: JSON.stringify(formData, null, 2),
+    })
+  }
+>
+  <Box padding={16}>
+    <Stack space={16}>
+      <FormTextField name="name" label="Name" />
+      <FormEmailField name="email" label="e-mail" />
+      <ButtonLayout>
+        <ButtonPrimary submit>Send</ButtonPrimary>
+      </ButtonLayout>
+    </Stack>
+  </Box>
+</Form>`;
 
-const babelLoaderOptions = {
-    babelrc: true,
-    configFile: './.babelrc',
-};
-
-const config /* : any */ = {
+const config = {
     title: 'Novum design system',
-    components: './playroom/components',
+    components: './playroom/components.tsx',
     outputPath: './public/playroom',
     baseUrl: '/playroom/',
-    themes: './playroom/themes.js',
-    snippets: './playroom/snippets.js',
-    frameComponent: './playroom/frame-component.js',
+    themes: './playroom/themes.tsx',
+    snippets: './playroom/snippets.tsx',
+    frameComponent: './playroom/frame-component.tsx',
     widths: [320, 768, 1024, 1366],
-    exampleCode: `
-    <Form
-      onSubmit={(formData) =>
-        alert({
-          title: "This is your data",
-          message: JSON.stringify(formData, null, 2),
-        })
-      }
-    >
-      <Box padding={16}>
-        <Stack space={16}>
-          <FormTextField name="name" label="Name" />
-          <FormEmailField name="email" label="e-mail" />
-          <ButtonLayout>
-            <ButtonPrimary submit>Send</ButtonPrimary>
-          </ButtonLayout>
-        </Stack>
-      </Box>
-    </Form>`,
+    exampleCode,
     webpackConfig: () => ({
         module: {
             rules: [
                 {
-                    test: /\.(js|mjs)$/,
-
+                    test: /\.tsx$/,
                     include: [
                         path.resolve(__dirname, 'src'),
                         path.resolve(__dirname, 'playroom'),
                         path.resolve(__dirname, '.storybook'),
                     ],
-                    oneOf: [
+                    use: [
                         {
-                            test: flowToPropTypesBlackList,
-                            use: {
-                                loader: 'babel-loader',
-                                options: babelLoaderOptions,
-                            },
-                        },
-                        {
-                            use: {
-                                loader: 'babel-loader',
-                                options: {
-                                    ...babelLoaderOptions,
-                                    plugins: ['babel-plugin-flow-react-proptypes'],
-                                },
+                            loader: 'babel-loader',
+                            options: {
+                                babelrc: true,
+                                configFile: './.babelrc',
+                                plugins: ['babel-plugin-typescript-to-proptypes'],
                             },
                         },
                     ],

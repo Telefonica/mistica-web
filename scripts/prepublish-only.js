@@ -1,4 +1,3 @@
-// @flow
 if (!process.env.CI) {
     const lines = [
         '',
