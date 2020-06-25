@@ -2,7 +2,7 @@ import '../css/roboto.css';
 import '../css/reset.css';
 import * as React from 'react';
 import {addDecorator} from '@storybook/react';
-import {ThemeContextProvider, Box, MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN} from '../src';
+import {ThemeContextProvider, Box, MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN, O2_CLASSIC_SKIN} from '../src';
 import addons from '@storybook/addons';
 import getTheme from './theme-selector-addon/themes';
 
@@ -40,7 +40,7 @@ const LayoutDecorator = ({Story, context}) => {
 
 const getSkin = (searchParams) => {
     const qsSkin = searchParams.get('skin');
-    return [MOVISTAR_SKIN, O2_SKIN, VIVO_SKIN].find((skin) => skin === qsSkin);
+    return [MOVISTAR_SKIN, O2_SKIN, O2_CLASSIC_SKIN, VIVO_SKIN].find((skin) => skin === qsSkin);
 };
 
 const getPlatform = (searchParams) => {

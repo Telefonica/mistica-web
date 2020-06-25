@@ -2,7 +2,7 @@ import * as React from 'react';
 import {getAnimateDrawLineProps, getAnimateFadeInProps, animateShakeStyles} from '../utils/animation';
 import {createUseStyles} from '../jss';
 import {useTheme} from '../hooks';
-import {O2_SKIN} from '../colors';
+import {O2_SKIN, O2_CLASSIC_SKIN} from '../colors';
 
 const useStyles = createUseStyles((theme) => ({
     iconContainerFill: {
@@ -92,6 +92,9 @@ const IconErrorDefault: React.FC = () => {
     );
 };
 
-const IconError: React.FC = () => (useTheme().skin === O2_SKIN ? <IconErrorO2 /> : <IconErrorDefault />);
+const IconError: React.FC = () => {
+    const skin = useTheme().skin;
+    return skin === O2_SKIN || skin === O2_CLASSIC_SKIN ? <IconErrorO2 /> : <IconErrorDefault />;
+};
 
 export default IconError;

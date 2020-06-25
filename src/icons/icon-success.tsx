@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {O2_SKIN, VIVO_SKIN} from '../colors';
+import {O2_SKIN, O2_CLASSIC_SKIN, VIVO_SKIN} from '../colors';
 import {
     getAnimateDrawLineProps,
     getAnimateHopInProps,
@@ -92,6 +92,7 @@ const IconSuccess: React.FC = () => {
     switch (skin) {
         case VIVO_SKIN:
             return <IconSuccessVivo />;
+        case O2_CLASSIC_SKIN:
         case O2_SKIN:
             return <IconSuccessO2 />;
         default:
