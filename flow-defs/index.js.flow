@@ -82,6 +82,7 @@ declare export { default as PromoTag } from "./promo-tag";
 declare export { default as SectionTitle } from "./section-title";
 declare export { Placeholder, AvatarPlaceholder } from "./placeholder";
 declare export { RowList, Row, BoxedRowList, BoxedRow } from "./list";
+declare export { default as Switch } from "./switch";
 declare export { default as IconClose } from "./icons/icon-close";
 declare export { default as IconInfo } from "./icons/icon-info";
 declare export { default as IconArrowDown } from "./icons/icon-arrow-down";
