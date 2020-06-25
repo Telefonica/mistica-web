@@ -1,8 +1,7 @@
-// @flow
 import * as React from 'react';
 import addonApi, {types} from '@storybook/addons';
 import {WithTooltip, IconButton, TooltipLinkList} from '@storybook/components';
-import {getColors} from '../../src';
+import {getColors} from '../colors';
 import {AVAILABLE_THEMES} from './themes';
 import createManagerTheme from '../storybook-manager-theme';
 
@@ -26,7 +25,7 @@ const ThemeSelectorAddon = ({api}) => {
 
         api.setOptions({theme: createManagerTheme(currentSkin)});
 
-        // We need this timeout because there could be some race condition between addon mount and storibook manager initialization on page load.
+        // We need this timeout because there could be some race condition between addon mount and storybook manager initialization on page load
         const tid = setTimeout(() => {
             api.setOptions({theme: createManagerTheme(currentSkin)});
         }, 100);

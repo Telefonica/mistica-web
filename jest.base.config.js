@@ -1,15 +1,12 @@
-// @flow
 /* eslint-disable filenames/match-regex */
 
-const config /* : any */ = {
+module.exports = {
     // Automatically restore mock state between every test
     restoreMocks: true,
     collectCoverageFrom: [
-        '**/src/**/*.js',
+        '**/src/**/*.tsx',
         '!**/node_modules/**',
         '!**/__*__/**', // ignore tests, acceptance, stories, etc
     ],
     coverageReporters: ['json-summary', 'lcov'],
 };
-
-module.exports = config;

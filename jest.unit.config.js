@@ -1,12 +1,9 @@
-// @flow
 /* eslint-disable filenames/match-regex */
 
-const config /* : any */ = {
+module.exports = {
     ...require('./jest.base.config'),
     displayName: 'unit',
-    testMatch: ['**/__tests__/*-test.js'],
+    testMatch: ['**/__tests__/*-test.tsx'],
     testURL: 'http://test.tuenti.com',
     setupFilesAfterEnv: [require.resolve('./setup-test-env'), '@testing-library/jest-dom/extend-expect'],
 };
-
-module.exports = config;

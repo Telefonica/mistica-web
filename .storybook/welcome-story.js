@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {Text, Stack, Box, ResponsiveLayout, useTheme, ButtonLink, TextLink} from '../src';
 import logo from '../img/mistica-react-logo.svg';
@@ -16,7 +15,7 @@ const Paragraph = ({children}) => {
     );
 };
 
-export const Mistica = (): React.Node => {
+export const Mistica = () => {
     return (
         <ResponsiveLayout>
             <Box paddingY={32}>
