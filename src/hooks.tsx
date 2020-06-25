@@ -61,11 +61,12 @@ export const useDisableBodyScroll = (disable: boolean): void => {
 
 export const useScreenSize = (): ScreenSizeContextType => React.useContext(ScreenSizeContext);
 
-const resizeObserverPromise: Promise<typeof window.ResizeObserver> = window.ResizeObserver
-    ? Promise.resolve(ResizeObserver)
-    : import(/* webpackChunkName: "@juggle/resize-observer" */ '@juggle/resize-observer').then(
-          (m: any) => m.ResizeObserver
-      );
+const resizeObserverPromise: Promise<typeof window.ResizeObserver> =
+    typeof window !== 'undefined' && window.ResizeObserver
+        ? Promise.resolve(ResizeObserver)
+        : import(/* webpackChunkName: "@juggle/resize-observer" */ '@juggle/resize-observer').then(
+              (m: any) => m.ResizeObserver
+          );
 
 export const useElementSize = (elementRef: {
     current: HTMLElement | null;

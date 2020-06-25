@@ -1,6 +1,11 @@
 import {isWebViewBridgeAvailable} from '@tef-novum/webview-bridge';
 
-const getUserAgent = (): string => self.navigator.userAgent || '';
+const getUserAgent = (): string => {
+    if (typeof self !== 'undefined' && self.navigator?.userAgent) {
+        return self.navigator.userAgent;
+    }
+    return '';
+};
 
 type PlatformOverrides = {
     platform?: 'ios' | 'android';

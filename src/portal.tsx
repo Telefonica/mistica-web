@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const modalRoot: HTMLElement = document.body;
+let modalRoot: HTMLElement = document.body;
+
+if (typeof document !== 'undefined') {
+    modalRoot = document.body;
+}
 
 /**
  * This component renders the children elements outside the parent component.
