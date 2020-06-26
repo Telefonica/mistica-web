@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {useTheme} from './hooks';
+import {useTheme, usePrevious} from './hooks';
 import {getPlatform} from './utils/platform';
 import {SPACE, LEFT, UP, RIGHT} from './utils/key-codes';
 import {DOWN} from '../dist/utils/key-codes';
@@ -8,7 +8,7 @@ import {DOWN} from '../dist/utils/key-codes';
 const useStyles = createUseStyles((theme) => ({
     outerCircle: {
         borderRadius: '50%',
-        display: 'flex',
+        display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
         background: ({checked, isIos}) => (checked && isIos ? theme.colors.controlActive : '#fff'),
@@ -53,11 +53,21 @@ type Props = {
 
 const RadioButton: React.FC<Props> = ({value, id, render}) => {
     const {selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
+    const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
     const isFocusable = focusableValue === value;
+    const wasFocusable = usePrevious(isFocusable);
     const theme = useTheme();
     const isIos = getPlatform(theme.platformOverrides) === 'ios';
     const classes = useStyles({checked, isIos});
+
+    React.useEffect(() => {
+        if (isFocusable && !wasFocusable) {
+            if (ref.current) {
+                ref.current.focus();
+            }
+        }
+    }, [isFocusable, wasFocusable]);
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         switch (event.keyCode) {
@@ -90,7 +100,8 @@ const RadioButton: React.FC<Props> = ({value, id, render}) => {
     );
 
     return (
-        <div
+        <span
+            ref={ref}
             id={id}
             tabIndex={isFocusable ? 0 : -1}
             role="radio"
@@ -100,7 +111,7 @@ const RadioButton: React.FC<Props> = ({value, id, render}) => {
             onKeyDown={handleKeyDown}
         >
             {render ? <>{render(radio)}</> : radio}
-        </div>
+        </span>
     );
 };
 

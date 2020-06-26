@@ -88,7 +88,7 @@ const useStyles = createUseStyles((theme) => ({
         '&:hover': {
             background: theme.colors.backgroundAlternative,
         },
-        '&:last-child > div > div, &:last-child > div': {
+        '&:last-child $content': {
             borderBottom: 'none',
         },
     },
@@ -447,18 +447,20 @@ const RowContent = (props: RowContentProps) => {
     const centered = (el: React.ReactElement<any>) => <div className={classes.centeredControl}>{el}</div>;
 
     const renderRowWithControl = (Control: React.FC<any>) => (
-        <Control
-            checked={isChecked}
-            onChange={toggle}
-            render={(control: React.ReactElement) => (
-                <Box paddingX={16} className={classes.rowContent}>
-                    {renderContent({
-                        type: 'custom',
-                        right: centered(control),
-                    })}
-                </Box>
-            )}
-        />
+        <div className={classes.rowContent}>
+            <Control
+                checked={isChecked}
+                onChange={toggle}
+                render={(control: React.ReactElement) => (
+                    <Box paddingX={16}>
+                        {renderContent({
+                            type: 'custom',
+                            right: centered(control),
+                        })}
+                    </Box>
+                )}
+            />
+        </div>
     );
 
     if (props.switch) {
@@ -471,17 +473,19 @@ const RowContent = (props: RowContentProps) => {
 
     if (props.radioValue) {
         return (
-            <RadioButton
-                value={props.radioValue}
-                render={(radio) => (
-                    <Box paddingX={16} className={classes.rowContent}>
-                        {renderContent({
-                            type: 'custom',
-                            right: centered(radio),
-                        })}
-                    </Box>
-                )}
-            />
+            <div className={classes.rowContent}>
+                <RadioButton
+                    value={props.radioValue}
+                    render={(radio) => (
+                        <Box paddingX={16}>
+                            {renderContent({
+                                type: 'custom',
+                                right: centered(radio),
+                            })}
+                        </Box>
+                    )}
+                />
+            </div>
         );
     }
 

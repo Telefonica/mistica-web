@@ -152,7 +152,7 @@ const Switch: React.FC<Props> = (props) => {
     );
 
     return (
-        <div
+        <span
             role="checkbox"
             aria-checked={isChecked}
             onClick={handleChange}
@@ -160,7 +160,7 @@ const Switch: React.FC<Props> = (props) => {
             tabIndex={0}
         >
             {props.render ? <>{props.render(switchEl)}</> : switchEl}
-        </div>
+        </span>
     );
 };
 
