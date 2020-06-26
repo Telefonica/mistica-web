@@ -105,7 +105,7 @@ const RadioButton: React.FC<Props> = ({value, id, render}) => {
 };
 
 type RadioGroupProps = {
-    'aria-labeledby'?: string;
+    'aria-labelledby'?: string;
     children: React.ReactNode;
     value?: string;
     defaultValue?: string;
@@ -175,7 +175,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
     const focusableValue = selectedValue ?? fistRadioValue ?? null;
 
     return (
-        <div ref={ref} role="radiogroup" aria-labelledby={props['aria-labeledby']}>
+        <div ref={ref} role="radiogroup" aria-labelledby={props['aria-labelledby']}>
             <RadioContext.Provider
                 value={{selectedValue, focusableValue, select: handleSelect, selectNext, selectPrev}}
             >

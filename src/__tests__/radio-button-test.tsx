@@ -1,12 +1,13 @@
 import * as React from 'react';
 import RadioButton, {RadioGroup} from '../radio-button';
+import SectionTitle from '../section-title';
 import {render, screen, within, fireEvent} from '@testing-library/react';
 
 test('RadioGroup (uncontrolled)', () => {
     render(
         <div>
-            <label htmlFor="radio-group">Choose a fruit</label>
-            <RadioGroup id="radio-group" defaultValue="banana">
+            <SectionTitle id="label">Choose a fruit</SectionTitle>
+            <RadioGroup aria-labelledby="label" defaultValue="banana">
                 <RadioButton value="banana" />
                 <RadioButton value="apple" />
             </RadioGroup>
@@ -33,12 +34,12 @@ test('RadioGroup (controlled)', () => {
         const [fruit, setFruit] = React.useState('apple');
         return (
             <div>
-                <div>you have selected {fruit}</div>
-                <label htmlFor="radio-group">Choose a fruit</label>
-                <RadioGroup id="radio-group" value={fruit} onChange={setFruit}>
+                <SectionTitle id="label">Choose a fruit</SectionTitle>
+                <RadioGroup aria-labelledby="label" value={fruit} onChange={setFruit}>
                     <RadioButton value="banana" />
                     <RadioButton value="apple" />
                 </RadioGroup>
+                <div>you have selected {fruit}</div>
             </div>
         );
     };
@@ -66,8 +67,8 @@ test('RadioGroup (controlled)', () => {
 test('Radio custom render', () => {
     render(
         <div>
-            <label htmlFor="radio-group">Choose a fruit</label>
-            <RadioGroup id="radio-group" defaultValue="banana">
+            <SectionTitle id="label">Choose a fruit</SectionTitle>
+            <RadioGroup aria-labelledby="label" defaultValue="banana">
                 <RadioButton value="banana" render={(radio) => <div>banana {radio}</div>} />
                 <RadioButton value="apple" render={(radio) => <div>apple {radio}</div>} />
             </RadioGroup>
