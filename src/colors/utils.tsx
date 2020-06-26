@@ -32,7 +32,7 @@ export const applyAlpha = (color: string, alpha: number): string => {
 
 /* Added to try to minimize the impact on users of color changes on app versions that still have the old colors. To be removed on APPS-6332 */
 
-const brandAndVersionMatches = (typeof self === 'undefined' ? '' : self.navigator.userAgent).match(
+const brandAndVersionMatches = (typeof self === 'undefined' ? '' : self.navigator.userAgent || '').match(
     /MovistarES\/([^\s]+)(?:\s|$)/
 );
 const [major, minor] = (brandAndVersionMatches ? brandAndVersionMatches[1] : '11.9').split('.');
