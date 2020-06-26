@@ -13,9 +13,10 @@ import ButtonLayout from './button-layout';
 import Text from './text';
 import {ESC} from './utils/key-codes';
 import Box from './box';
-import {isOldChrome} from './utils/platform';
+import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 
-const animationsSupported = () => !isOldChrome() && process.env.NODE_ENV !== 'test';
+const animationsSupported = () =>
+    !isOldChrome() && process.env.NODE_ENV !== 'test' && !isRunningAcceptanceTest();
 
 const useStylesModalDialog = createUseStyles((theme) => ({
     wrapper: {
@@ -269,16 +270,20 @@ const ModalDialog = (props: ModalDialogProps) => {
     const renderNative = isWebViewBridgeAvailable();
     const closeHandler = props.showCancel ? props.onCancel : props.onAccept;
 
-    const handleClose = React.useCallback(() => {
-        if (!props.isClosing) {
-            closeHandler();
-        }
-    }, [closeHandler, props.isClosing]);
+    const handleClose = React.useCallback(
+        (event: React.SyntheticEvent<any> | Event) => {
+            if (!props.isClosing) {
+                closeHandler();
+                event.stopPropagation();
+            }
+        },
+        [closeHandler, props.isClosing]
+    );
 
     const handleKeyDown = React.useCallback(
         (event: KeyboardEvent) => {
             if (event.keyCode === ESC) {
-                handleClose();
+                handleClose(event);
                 event.stopPropagation();
                 event.preventDefault();
             }
