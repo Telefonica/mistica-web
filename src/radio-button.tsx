@@ -2,8 +2,7 @@ import * as React from 'react';
 import {createUseStyles} from './jss';
 import {useTheme, usePrevious} from './hooks';
 import {getPlatform} from './utils/platform';
-import {SPACE, LEFT, UP, RIGHT} from './utils/key-codes';
-import {DOWN} from '../dist/utils/key-codes';
+import {SPACE, LEFT, UP, DOWN, RIGHT} from './utils/key-codes';
 
 const useStyles = createUseStyles((theme) => ({
     outerCircle: {
