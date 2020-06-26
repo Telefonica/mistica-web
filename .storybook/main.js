@@ -8,7 +8,7 @@ module.exports = {
             name: '@storybook/addon-storysource',
             options: {
                 rule: {
-                    test: [/-story\.tsx/],
+                    test: [/-story\.tsx/, /welcome-story\.js/],
                     include: [path.resolve(__dirname, '..', 'src'), __dirname],
                 },
                 loaderOptions: {

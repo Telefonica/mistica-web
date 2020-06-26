@@ -25,6 +25,7 @@ export const getColors = (skin) => {
                 TEXT_PRIMARY_INVERSE: '#FFFFFF',
                 TEXT_SECONDARY: '#666666',
             };
+        case 'O2-classic':
         case 'O2':
             return {
                 PRIMARY: '#032B5A',
