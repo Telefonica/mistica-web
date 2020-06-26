@@ -28,7 +28,7 @@ const ThemeSelectorAddon = ({api}) => {
         channel.on('story-mounted', notifySkin);
 
         return () => {
-            channel.off('story-mountd', notifySkin);
+            channel.off('story-mounted', notifySkin);
         };
     }, [channel, currentSkin]);
 

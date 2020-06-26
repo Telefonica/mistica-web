@@ -24,10 +24,7 @@ const useStyles = createUseStyles((theme) => {
             overflow: 'hidden',
             cursor: 'pointer',
             borderRadius: 40,
-            border: isIos ? `1px solid ${applyAlpha(theme.colors.borderDark, 0.3)}` : undefined,
             '& > *': {pointerEvents: 'none'},
-            borderColor: ({isChecked}) =>
-                isChecked && isIos ? 'transparent' : applyAlpha(theme.colors.borderDark, 0.3),
         },
         bar: {
             display: 'block',
@@ -57,13 +54,13 @@ const useStyles = createUseStyles((theme) => {
         },
         ball: {
             position: 'absolute',
-            top: isIos ? 6 : 0,
+            top: isIos ? 5 : 1,
             bottom: 0,
             right: ({isChecked}) => {
                 if (isChecked) {
-                    return isIos ? 6 : 0;
+                    return isIos ? 5 : 1;
                 }
-                return isIos ? 20 : 21;
+                return 21;
             },
             display: 'block',
             width: isIos ? 22 : 20,

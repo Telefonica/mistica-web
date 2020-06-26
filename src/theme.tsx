@@ -64,7 +64,6 @@ const colors = {
     layerDecorations: c.LAYER_DECORATIONS,
     divider: c.DIVIDER,
     border: c.BORDER,
-    borderDark: c.BORDER_DARK,
     borderLight: c.BORDER_LIGHT,
     textDanger: c.TEXT_DANGER,
     textError: c.TEXT_ERROR,
