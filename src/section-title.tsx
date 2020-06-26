@@ -3,9 +3,9 @@ import Box from './box';
 import Text from './text';
 import {useTheme, useScreenSize} from './hooks';
 
-type Props = {children: React.ReactNode};
+type Props = {children: React.ReactNode; id?: string};
 
-const SectionTitle: React.FC<Props> = ({children}) => {
+const SectionTitle: React.FC<Props> = ({children, id}) => {
     const theme = useTheme();
     const {isTabletOrBigger} = useScreenSize();
     return (
@@ -17,6 +17,7 @@ const SectionTitle: React.FC<Props> = ({children}) => {
                 color={theme.colors.textSecondary}
                 uppercase
                 as="h3"
+                id={id}
             >
                 {children}
             </Text>

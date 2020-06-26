@@ -51,6 +51,8 @@ export {default as PromoTag} from './promo-tag';
 export {default as SectionTitle} from './section-title';
 export {Placeholder, AvatarPlaceholder} from './placeholder';
 export {RowList, Row, BoxedRowList, BoxedRow} from './list';
+export {default as Switch} from './switch';
+export {default as RadioButton, RadioGroup} from './radio-button';
 
 // Icons
 export {default as IconClose} from './icons/icon-close';
@@ -79,7 +81,7 @@ export type {TrackingEvent} from './utils/types';
 export type {RegionCode} from './utils/region-code';
 
 // Check there is only one version of mistica installed in the page.
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
     // @ts-expect-error __mistica_version__ does not exist in window
     if (window.__mistica_version__ && window.__mistica_version__ !== PACKAGE_VERSION) {
         throw new Error(`There is more than one version of @telefonica/mistica running on the same page`);

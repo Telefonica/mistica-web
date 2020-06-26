@@ -46,6 +46,7 @@ export type TextProps = {
     weight?: FontWeight;
     truncate?: boolean;
     uppercase?: boolean;
+    id?: string;
     as?: React.ComponentType<any> | string;
 };
 
@@ -58,6 +59,7 @@ const Text: React.FC<TextProps> = ({
     truncate,
     uppercase,
     as = 'span',
+    id,
     children,
 }) => {
     const isInverse = useIsInverseVariant();
@@ -67,7 +69,7 @@ const Text: React.FC<TextProps> = ({
     }
     const className = classnames(classes.text, {[classes.truncate]: truncate});
 
-    return React.createElement(as, {className}, children);
+    return React.createElement(as, {className, id}, children);
 };
 
 export default Text;
