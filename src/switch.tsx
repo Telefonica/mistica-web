@@ -4,7 +4,6 @@ import {getPlatform} from './utils/platform';
 import {applyAlpha} from './utils/color';
 import debounce from 'lodash/debounce';
 import {SPACE} from './utils/key-codes';
-import {render} from 'react-dom';
 
 const SWITCH_ANIMATION = '0.2s ease-in 0s';
 
