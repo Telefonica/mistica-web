@@ -64,7 +64,6 @@ declare var colors: {
   layerDecorations: string,
   divider: string,
   border: string,
-  borderDark: string,
   borderLight: string,
   textDanger: string,
   textError: string,
