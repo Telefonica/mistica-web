@@ -102,6 +102,31 @@ const listSnippets = [
         `,
 }));
 
+listSnippets.push({
+    group: 'List',
+    name: 'Radio list',
+    code: `
+    <RadioGroup defaultValue="banana">
+        <RowList>
+            <Row
+                icon={<AvatarPlaceholder />}
+                iconSize={40}
+                title="Banana"
+                description="Yellow"
+                radioValue="banana"
+            />
+            <Row
+                icon={<AvatarPlaceholder />}
+                iconSize={40}
+                title="Apple"
+                description="Green"
+                radioValue="apple"
+            />
+        </RowList>
+    </RadioGroup>
+    `,
+});
+
 const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
     {
         group: 'List',
@@ -152,6 +177,18 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
             title="Title"
             description="Description"
             checkbox={{defaultValue: false}}
+        />`,
+    },
+    {
+        group: 'List',
+        name: `${rowName} (radio)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            title="Orange"
+            description="orange"
+            radioValue="orange"
         />`,
     },
     {
