@@ -6,16 +6,15 @@
  */
 
 import * as React from "react";
+declare type RenderSwitch = (switchElement: React.Element<any>) => React.Node;
 declare type UncontrolledProps = {
-  id?: string,
-  "data-testid"?: string,
+  render?: RenderSwitch,
   defaultChecked?: boolean,
   checked?: void,
   onChange?: (checked: boolean) => void
 };
 declare type ControlledProps = {
-  id?: string,
-  "data-testid"?: string,
+  render?: RenderSwitch,
   checked: boolean,
   onChange: (checked: boolean) => void
 };

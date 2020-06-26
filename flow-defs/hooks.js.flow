@@ -23,3 +23,7 @@ declare export var useWindowSize: () => {
 };
 declare export var useWindowHeight: () => number;
 declare export var useWindowWidth: () => number;
+declare export var usePrevious: <A: mixed>(
+  value: A,
+  initialValue?: A | void
+) => A | void;
