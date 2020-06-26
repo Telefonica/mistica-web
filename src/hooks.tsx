@@ -145,3 +145,11 @@ export const useWindowWidth = (): number => {
     const {width} = useWindowSize();
     return width;
 };
+
+export const usePrevious = <A extends unknown>(value: A, initialValue?: A): A | undefined => {
+    const ref = React.useRef(initialValue);
+    React.useEffect(() => {
+        ref.current = value;
+    }, [value]);
+    return ref.current;
+};

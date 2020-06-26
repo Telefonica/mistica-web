@@ -102,6 +102,109 @@ const listSnippets = [
         `,
 }));
 
+listSnippets.push({
+    group: 'List',
+    name: 'Radio list',
+    code: `
+    <RadioGroup defaultValue="banana">
+        <RowList>
+            <Row
+                icon={<AvatarPlaceholder />}
+                iconSize={40}
+                title="Banana"
+                description="Yellow"
+                radioValue="banana"
+            />
+            <Row
+                icon={<AvatarPlaceholder />}
+                iconSize={40}
+                title="Apple"
+                description="Green"
+                radioValue="apple"
+            />
+        </RowList>
+    </RadioGroup>
+    `,
+});
+
+const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
+    {
+        group: 'List',
+        name: `${rowName} (simple)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            title="Title"
+            description="Description"
+            href="https://google.com"
+        />`,
+    },
+    {
+        group: 'List',
+        name: `${rowName} (complex)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            headline="Headline"
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+            badge={9}
+            href="https://google.com"
+        />`,
+    },
+    {
+        group: 'List',
+        name: `${rowName} (switch)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            title="Title"
+            description="Description"
+            switch={{defaultValue: false}}
+        />`,
+    },
+    {
+        group: 'List',
+        name: `${rowName} (checkbox)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            title="Title"
+            description="Description"
+            checkbox={{defaultValue: false}}
+        />`,
+    },
+    {
+        group: 'List',
+        name: `${rowName} (radio)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            title="Orange"
+            description="orange"
+            radioValue="orange"
+        />`,
+    },
+    {
+        group: 'List',
+        name: `${rowName} (custom element)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            title="Title"
+            description="Description"
+            right={<Placeholder width={32} height={32} />}
+        />`,
+    },
+]);
+
 const tooltipSnippets = ['Tooltip', 'Popover'].map((name) => ({
     group: 'Tooltip',
     name,
@@ -229,4 +332,5 @@ export default [
     {group: 'Text', name: 'Text', code: '<Text>some text</Text>'},
     ...headerSnippets,
     ...listSnippets,
+    ...listRowSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

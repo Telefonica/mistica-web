@@ -2,7 +2,7 @@ import * as React from 'react';
 
 type AvatarPlaceholderProps = {size?: string | number};
 
-export const AvatarPlaceholder: React.FC<AvatarPlaceholderProps> = ({size = 40}) => (
+export const AvatarPlaceholder: React.FC<AvatarPlaceholderProps> = ({size = '100%'}) => (
     <div style={{width: size, height: size, borderRadius: '50%', background: 'gray'}} />
 );
 
