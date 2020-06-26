@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v.3.0.2 - 2020-06-26
+
+- Minor bugfixes
+
+## v.3.0.1 - 2020-06-26
+
+- Minor bugfixes
+
 ## v.3.0.0 - 2020-06-26
 
 - **Breaking change**: Migrate to TS
