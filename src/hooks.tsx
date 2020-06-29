@@ -61,11 +61,17 @@ export const useDisableBodyScroll = (disable: boolean): void => {
 
 export const useScreenSize = (): ScreenSizeContextType => React.useContext(ScreenSizeContext);
 
-const resizeObserverPromise: Promise<typeof window.ResizeObserver> = window.ResizeObserver
-    ? Promise.resolve(ResizeObserver)
-    : import(/* webpackChunkName: "@juggle/resize-observer" */ '@juggle/resize-observer').then(
-          (m: any) => m.ResizeObserver
-      );
+const getResizeObserverPromise = (): Promise<typeof window.ResizeObserver | null> => {
+    if (typeof window === 'undefined') {
+        return Promise.resolve(null);
+    }
+
+    return window.ResizeObserver
+        ? Promise.resolve(ResizeObserver)
+        : import(/* webpackChunkName: "@juggle/resize-observer" */ '@juggle/resize-observer').then(
+              (m: any) => m.ResizeObserver
+          );
+};
 
 export const useElementSize = (elementRef: {
     current: HTMLElement | null;
@@ -84,8 +90,8 @@ export const useElementSize = (elementRef: {
         };
 
         let cancel = false;
-        const observerPromise = resizeObserverPromise.then((ResizeObserver) => {
-            if (cancel) {
+        const observerPromise = getResizeObserverPromise().then((ResizeObserver) => {
+            if (cancel || !ResizeObserver) {
                 return null;
             }
 
@@ -138,4 +144,12 @@ export const useWindowHeight = (): number => {
 export const useWindowWidth = (): number => {
     const {width} = useWindowSize();
     return width;
+};
+
+export const usePrevious = <A extends unknown>(value: A, initialValue?: A): A | undefined => {
+    const ref = React.useRef(initialValue);
+    React.useEffect(() => {
+        ref.current = value;
+    }, [value]);
+    return ref.current;
 };

@@ -10,6 +10,9 @@ test.each(testDevices)('Row list - %s', async (device) => {
         device,
     });
 
+    const badgeCheckbox = await screen.getByLabelText('With badge');
+    await badgeCheckbox.click();
+
     const story = await screen.getByTestId('row-list');
 
     const image = await story.screenshot();
@@ -23,7 +26,7 @@ test.each(testDevices)('Boxed row list - %s', async (device) => {
         device,
     });
 
-    const story = await screen.getByTestId('boxed-list');
+    const story = await screen.getByTestId('row-list');
 
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();

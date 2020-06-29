@@ -2511,10 +2511,10 @@
   dependencies:
     defer-to-connect "^2.0.0"
 
-"@tef-novum/webview-bridge@^2.14.6":
-  version "2.14.6"
-  resolved "https://registry.yarnpkg.com/@tef-novum/webview-bridge/-/webview-bridge-2.14.6.tgz#a3ee1f62619d754a6290b55904972bc34ec2c039"
-  integrity sha512-4KDfHmNw9vhghrF+G0YKoc71PxFY34Eb1CtCDaQpcUIy869iNNb22TNM8Na1KxgvZkmdy8AhNAik491t5WvKIg==
+"@tef-novum/webview-bridge@^2.17.1":
+  version "2.17.1"
+  resolved "https://registry.yarnpkg.com/@tef-novum/webview-bridge/-/webview-bridge-2.17.1.tgz#0af643fdd132f6e1e0d05a46564dbd158c59032d"
+  integrity sha512-Oz33LQzeRRK8/krobnyyrh5lEA/FHC4U9MLIpS2eUOuP87EqYIijcKd0WzSlqyWwNkg/jYUDTCGNcyyJKfFRLw==
 
 "@telefonica/libphonenumber@^2.7.5":
   version "2.7.5"

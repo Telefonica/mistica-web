@@ -79,6 +79,14 @@ const colors = {
     iconTertiary: c.ICON_TERTIARY,
 
     badgeBackground: c.BADGE_BACKGROUND,
+
+    toggleAndroidInactive: c.TOGGLE_ANDROID_INACTIVE,
+    toggleAndroidBackgroundInactive: c.TOGGLE_ANDROID_BACKGROUND_INACTIVE,
+    toggleAndroidActive: c.TOGGLE_ANDROID_ACTIVE,
+    toggleAndroidBackgroundActive: c.TOGGLE_ANDROID_BACKGROUND_ACTIVE,
+    toggleIosInactive: c.TOGGLE_IOS_INACTIVE,
+    toggleIosBackgroundInactive: c.TOGGLE_IOS_BACKGROUND_INACTIVE,
+    toggleIosBackgroundActive: c.TOGGLE_IOS_BACKGROUND_ACTIVE,
 };
 
 const texts = {

@@ -75,7 +75,14 @@ declare var colors: {
   iconSecondary: string,
   iconPrimary: string,
   iconTertiary: string,
-  badgeBackground: string
+  badgeBackground: string,
+  toggleAndroidInactive: string,
+  toggleAndroidBackgroundInactive: string,
+  toggleAndroidActive: string,
+  toggleAndroidBackgroundActive: string,
+  toggleIosInactive: string,
+  toggleIosBackgroundInactive: string,
+  toggleIosBackgroundActive: string
 };
 declare var texts: {
   expirationDatePlaceholder: string,

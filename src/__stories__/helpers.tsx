@@ -72,6 +72,7 @@ export const useSelect = (
     const [value, setValue] = React.useState(defaultValue);
     const select = (
         <Select
+            required
             value={value}
             onChangeValue={setValue}
             label={label}
