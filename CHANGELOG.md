@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v.3.0.1 - 2020-06-29
+
+- NegativeBox Component.
+
 ## v.3.0.2 - 2020-06-26
 
 - Minor bugfixes

@@ -53,6 +53,7 @@ export {Placeholder, AvatarPlaceholder} from './placeholder';
 export {RowList, Row, BoxedRowList, BoxedRow} from './list';
 export {default as Switch} from './switch';
 export {default as RadioButton, RadioGroup} from './radio-button';
+export {default as NegativeBox} from './negative-box';
 
 // Icons
 export {default as IconClose} from './icons/icon-close';
