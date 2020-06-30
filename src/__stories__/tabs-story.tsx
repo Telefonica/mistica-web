@@ -17,16 +17,14 @@ export const Default: StoryComponent = () => {
     return (
         <StorySection title="Tabs example">
             {withIconCheckbox}
-            <div data-testid="tabs">
-                <Tabs
-                    selectedIndex={selectedIndex}
-                    onChange={setSelectedIndex}
-                    tabs={texts.map((text) => ({
-                        text,
-                        icon: withIcon ? <Placeholder width={24} height={24} /> : null,
-                    }))}
-                />
-            </div>
+            <Tabs
+                selectedIndex={selectedIndex}
+                onChange={setSelectedIndex}
+                tabs={texts.map((text) => ({
+                    text,
+                    icon: withIcon ? <Placeholder width={24} height={24} /> : null,
+                }))}
+            />
         </StorySection>
     );
 };

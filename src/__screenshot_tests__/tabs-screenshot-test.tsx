@@ -20,6 +20,6 @@ test.each`
         await page.click(screen.getByText('With icons'));
     }
 
-    const image = await (await screen.getByTestId('tabs')).screenshot();
+    const image = await (await screen.getByRole('tablist')).screenshot();
     expect(image).toMatchImageSnapshot();
 });
