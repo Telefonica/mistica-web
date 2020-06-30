@@ -82,7 +82,9 @@ declare var colors: {
   toggleAndroidBackgroundActive: string,
   toggleIosInactive: string,
   toggleIosBackgroundInactive: string,
-  toggleIosBackgroundActive: string
+  toggleIosBackgroundActive: string,
+  textAppbar: string,
+  textAppbarSelected: string
 };
 declare var texts: {
   expirationDatePlaceholder: string,
