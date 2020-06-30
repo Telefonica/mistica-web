@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v.3.3.0 - 2020-06-30
+
+- New `Tabs` component.
+
 ## v.3.2.0 - 2020-06-30
 
 - New colors for app tab bar.
