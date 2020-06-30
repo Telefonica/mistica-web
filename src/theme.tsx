@@ -87,6 +87,9 @@ const colors = {
     toggleIosInactive: c.TOGGLE_IOS_INACTIVE,
     toggleIosBackgroundInactive: c.TOGGLE_IOS_BACKGROUND_INACTIVE,
     toggleIosBackgroundActive: c.TOGGLE_IOS_BACKGROUND_ACTIVE,
+
+    textAppbar: c.TEXT_APPBAR,
+    textAppbarSelected: c.TEXT_APPBAR_SELECTED,
 };
 
 const texts = {

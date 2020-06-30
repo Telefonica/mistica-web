@@ -77,6 +77,10 @@ export const NAVBAR_BACKGROUND = c.WHITE;
 export const NAVBAR_CONTROL = c.VIVO_PURPLE_DARK;
 export const NAVBAR_DIVIDER = c.GREY_4;
 
+// APPBAR (MOBILE MAIN TABS)
+export const TEXT_APPBAR = c.GREY_2;
+export const TEXT_APPBAR_SELECTED = c.VIVO_PURPLE;
+
 // TAG
 export const TAG_BACKGROUND_FIRST = c.VIVO_GREEN;
 export const TAG_BACKGROUND_SECOND = c.GREY_3;
