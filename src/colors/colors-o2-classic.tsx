@@ -1,5 +1,5 @@
 import {applyAlpha} from './utils';
-import c from './colors/o2';
+import c from './colors/o2-classic';
 
 // LAYOUT
 export const PRIMARY = c.O2_BLUE;
