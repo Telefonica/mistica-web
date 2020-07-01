@@ -3,8 +3,9 @@ import {createUseStyles} from './jss';
 import classnames from 'classnames';
 
 const MOBILE_SIDE_MARGIN = 16;
+const TABLET_SIDE_MARGIN = 32;
 const SMALL_DESKTOP_SIDE_MARGIN = 40;
-const LARGE_DESKTOP_SIDE_MARGIN = 72;
+const LARGE_DESKTOP_SIDE_MARGIN = 71;
 const LARGE_DESKTOP_MAX_WIDTH = 1224;
 
 const useStyles = createUseStyles((theme) => ({
@@ -23,8 +24,8 @@ const useStyles = createUseStyles((theme) => ({
             margin: `0 ${SMALL_DESKTOP_SIDE_MARGIN}px`,
         },
         [theme.mq.tablet]: {
-            width: `calc(100% - ${SMALL_DESKTOP_SIDE_MARGIN * 2}px)`,
-            margin: `0 ${SMALL_DESKTOP_SIDE_MARGIN}px`,
+            width: `calc(100% - ${TABLET_SIDE_MARGIN * 2}px)`,
+            margin: `0 ${TABLET_SIDE_MARGIN}px`,
         },
         [theme.mq.mobile]: {
             width: `calc(100% - ${MOBILE_SIDE_MARGIN * 2}px)`,
