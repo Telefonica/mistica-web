@@ -1,4 +1,5 @@
 dist/
+dist-es/
 dist-ts/
 .directory
 .DS_Store
