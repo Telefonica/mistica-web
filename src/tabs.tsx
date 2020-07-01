@@ -5,6 +5,7 @@ import Touchable from './touchable';
 import ResponsiveLayout from './responsive-layout';
 import {useElementSize} from './hooks';
 import {getPlatform} from './utils/platform';
+import {TrackingEvent} from './utils/types';
 
 const smallOuterStyles = {
     display: 'flex',
@@ -92,7 +93,9 @@ export type TabsProps = {
     onChange: (selectedIndex: number) => void;
     tabs: ReadonlyArray<{
         readonly text: string;
+        readonly trackingEvent?: TrackingEvent;
         readonly icon?: React.ReactNode;
+        readonly 'aria-controls'?: string;
     }>;
 };
 
@@ -101,12 +104,12 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) =
     const {width} = useElementSize(ref);
     const classes = useStyles({width});
     return (
-        <div ref={ref} className={classes.outerBorder}>
+        <div role="tablist" ref={ref} className={classes.outerBorder}>
             <ResponsiveLayout fullWidth>
                 <div className={classes.outer}>
                     <div className={classes.inner}>
                         <div className={classes.tabsContainer}>
-                            {tabs.map(({text, icon}, index) => {
+                            {tabs.map(({text, trackingEvent, icon, 'aria-controls': ariaControls}, index) => {
                                 const isSelected = index === selectedIndex;
                                 return (
                                     <Touchable
@@ -114,7 +117,10 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) =
                                         className={classnames(classes.tab, isSelected && classes.tabSelected)}
                                         disabled={isSelected}
                                         onPress={() => onChange(index)}
+                                        trackingEvent={trackingEvent}
                                         role="tab"
+                                        aria-controls={ariaControls}
+                                        aria-selected={isSelected ? 'true' : 'false'}
                                     >
                                         {icon && <div className={classes.icon}>{icon}</div>}
                                         <span
