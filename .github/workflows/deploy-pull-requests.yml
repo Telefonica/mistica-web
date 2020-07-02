@@ -2,7 +2,7 @@ name: deploy-pull-requests
 on: [pull_request]
 jobs:
     deploy:
-        runs-on: ubuntu-latest
+        runs-on: self-hosted
         steps:
             - uses: actions/checkout@v2
             - uses: amondnet/vercel-action@v19.0.1+1
