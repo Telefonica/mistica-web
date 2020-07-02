@@ -6,3 +6,7 @@ dist-es/
 public/
 storybook-static/
 .vercel/
+
+# next.js
+examples/next/.next/
+examples/next/out/
