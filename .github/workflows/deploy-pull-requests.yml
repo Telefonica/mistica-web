@@ -3,6 +3,7 @@ on: [pull_request]
 jobs:
     deploy:
         runs-on: self-hosted
+        container: node:lts
         steps:
             - uses: actions/checkout@v1
             - uses: amondnet/vercel-action@v19.0.1+1
