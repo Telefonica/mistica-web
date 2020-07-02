@@ -6,12 +6,15 @@
  */
 
 import * as React from "react";
+import { type TrackingEvent } from "./utils/types";
 export type TabsProps = {
   selectedIndex: number,
   onChange: (selectedIndex: number) => void,
   tabs: $ReadOnlyArray<{
     +text: string,
-    +icon?: React.Node
+    +trackingEvent?: TrackingEvent,
+    +icon?: React.Node,
+    +"aria-controls"?: string
   }>
 };
 declare var Tabs: React.ComponentType<TabsProps>;

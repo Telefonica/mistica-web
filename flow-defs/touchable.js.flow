@@ -22,6 +22,7 @@ declare type CommonProps = {
   "aria-controls"?: string,
   "aria-expanded"?: "true" | "false",
   "aria-hidden"?: "true" | "false",
+  "aria-selected"?: "true" | "false",
   role?: string,
   type?: "button" | "submit",
   tabIndex?: number
