@@ -2,6 +2,7 @@ flow-typed/npm/
 generated/
 node_modules/
 dist/
+dist-es/
 public/
 storybook-static/
 .vercel/
