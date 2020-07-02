@@ -5,7 +5,6 @@ import classnames from 'classnames';
 const MOBILE_SIDE_MARGIN = 16;
 const TABLET_SIDE_MARGIN = 32;
 const SMALL_DESKTOP_SIDE_MARGIN = 40;
-const LARGE_DESKTOP_SIDE_MARGIN = 71;
 const LARGE_DESKTOP_MAX_WIDTH = 1224;
 
 const useStyles = createUseStyles((theme) => ({
@@ -16,8 +15,7 @@ const useStyles = createUseStyles((theme) => ({
         margin: 'auto',
 
         [theme.mq.largeDesktop]: {
-            maxWidth: LARGE_DESKTOP_MAX_WIDTH,
-            width: `calc(100% - ${LARGE_DESKTOP_SIDE_MARGIN * 2}px)`,
+            width: LARGE_DESKTOP_MAX_WIDTH,
         },
         [theme.mq.desktop]: {
             width: `calc(100% - ${SMALL_DESKTOP_SIDE_MARGIN * 2}px)`,
