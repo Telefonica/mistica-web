@@ -12,7 +12,7 @@ on:
 jobs:
     build:
         runs-on: self-hosted
-        container: docker.tuenti.io/service-inf/webapp-builder:6.1.0
+        container: docker.tuenti.io/service-inf/mistica-web-builder:1.0.0
 
         strategy:
             matrix:
