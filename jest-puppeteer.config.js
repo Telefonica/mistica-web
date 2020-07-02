@@ -21,8 +21,7 @@ const getConfig = async () => {
     };
 
     let connect;
-    const needsChromiumDocker =
-        process.platform !== 'linux' && process.env.SCREENSHOT && process.env.HEADLESS;
+    const needsChromiumDocker = process.env.SCREENSHOT && process.env.HEADLESS;
     if (needsChromiumDocker) {
         execSync('yarn up-chromium', {stdio: 'inherit', cwd: __dirname});
         await poll('http://localhost:9223');
