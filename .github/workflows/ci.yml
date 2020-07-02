@@ -12,7 +12,7 @@ on:
 jobs:
     build:
         runs-on: self-hosted
-        container: node:lts
+        container: docker.tuenti.io/service-inf/webapp-builder:6.1.0
 
         strategy:
             matrix:
