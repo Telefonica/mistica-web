@@ -12,6 +12,7 @@ on:
 jobs:
     build:
         runs-on: self-hosted
+        container: node:lts
 
         strategy:
             matrix:
