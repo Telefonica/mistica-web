@@ -1,6 +1,7 @@
+import '@telefonica/mistica/css/roboto.css';
+import '@telefonica/mistica/css/reset.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {ThemeContextProvider} from '@telefonica/mistica';

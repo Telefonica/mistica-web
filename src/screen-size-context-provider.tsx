@@ -45,6 +45,10 @@ const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
     );
 
     useIsomorphicLayoutEffect(() => {
+        if (!window.matchMedia) {
+            return;
+        }
+
         const entries: Array<[string, (flag: boolean) => void]> = [
             [mediaQueries.mobile, setIsMobile],
             [mediaQueries.tablet, setIsTablet],
