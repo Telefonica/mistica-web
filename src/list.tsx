@@ -159,6 +159,7 @@ interface CommonProps {
     icon?: React.ReactElement<any> | string | null;
     iconSize?: 24 | 40;
     badge?: boolean | number;
+    role?: string;
 }
 
 interface ContentProps extends CommonProps {
@@ -177,6 +178,7 @@ const Content: React.FC<ContentProps> = ({
     type = 'basic',
     badge,
     right,
+    role,
 }) => {
     const classes = useStyles();
     const theme = useTheme();
@@ -196,7 +198,7 @@ const Content: React.FC<ContentProps> = ({
     };
 
     return (
-        <Box paddingY={16} className={classes.content}>
+        <Box paddingY={16} className={classes.content} role={role}>
             {icon && (
                 <Box
                     paddingRight={16}

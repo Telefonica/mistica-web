@@ -14,7 +14,8 @@ declare type CommonProps = {
   description?: string | null,
   icon?: React.Element<any> | string | null,
   iconSize?: 24 | 40,
-  badge?: boolean | number
+  badge?: boolean | number,
+  role?: string
 };
 declare type ControlProps = {
   value?: boolean,
