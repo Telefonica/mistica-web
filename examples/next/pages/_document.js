@@ -3,7 +3,7 @@ import * as React from 'react';
 import Document from 'next/document';
 import {ServerSideStyles} from '@telefonica/mistica';
 
-export default class JssDocument extends Document {
+export default class MisticaDocument extends Document {
     static async getInitialProps(ctx) {
         const serverSideStyles = new ServerSideStyles();
         const originalRenderPage = ctx.renderPage;
