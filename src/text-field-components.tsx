@@ -1,4 +1,5 @@
 import * as React from 'react';
+import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 
@@ -138,7 +139,7 @@ type FieldContainerProps = {
     multiline?: boolean;
     children: React.ReactNode;
     helperText?: React.ReactNode;
-    style?: React.CSSProperties;
+    className?: string;
     fieldRef?: React.RefObject<HTMLDivElement>;
 };
 
@@ -146,14 +147,14 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
     multiline,
     children,
     helperText,
-    style,
+    className,
     fieldRef,
 }) => {
     const classes = useFieldContainerStyles({multiline});
 
     return (
         <div className={classes.container}>
-            <div className={classes.border} style={style} ref={fieldRef}>
+            <div className={classnames(classes.border, className)} ref={fieldRef}>
                 {children}
             </div>
             {helperText}

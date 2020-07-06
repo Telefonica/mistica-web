@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {useScreenSize} from './hooks';
+import {useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 import {BUTTON_MIN_WIDTH, ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 
 import type {ButtonElement} from './button';
@@ -130,7 +130,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     const classes = useStyles({buttonWidth, isMobile, align, childrenCount});
 
     const wrapperElRef = React.useRef<HTMLDivElement | null>(null);
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         if (isMeasuring) {
             const req = window.requestAnimationFrame(() => {
                 if (wrapperElRef.current) {

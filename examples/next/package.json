@@ -8,7 +8,7 @@
         "start": "next start"
     },
     "dependencies": {
-        "@telefonica/mistica": "file:../..",
+        "@telefonica/mistica": "latest",
         "next": "9.4.4"
     }
 }

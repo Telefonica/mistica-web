@@ -426,7 +426,7 @@ const CreditcardAdornment = ({value}: {value?: string}) => {
     );
 };
 
-const useStyles = createUseStyles(() => ({
+const useStyles = createUseStyles((theme) => ({
     menuItem: {
         lineHeight: 1.5,
         padding: '6px 16px',
@@ -448,6 +448,12 @@ const useStyles = createUseStyles(() => ({
         backgroundColor: 'white',
         position: 'absolute',
         zIndex: 2, // one more than TextField label
+    },
+    fullWidthField: {
+        width: ({isFullWidth}) => (isFullWidth === true ? 'initial' : DEFAULT_WIDTH),
+        [theme.mq.mobile]: {
+            width: ({isFullWidth}) => (isFullWidth === false ? DEFAULT_WIDTH : 'initial'),
+        },
     },
 }));
 
@@ -474,12 +480,9 @@ const TextField: React.FC<TextFieldProps> = ({
     const inputRef = React.useRef<HTMLInputElement>(null);
     const [currentInputValue, setCurrentInputValue] = React.useState(props.value || props.defaultValue);
     const {isMobile} = useScreenSize();
-    const classes = useStyles();
+    const classes = useStyles({isFullWidth: fullWidth});
     const id = useAriaId(props.id);
     const {texts} = useTheme();
-
-    // in mobile, fullWidth by default
-    const isFullWidth = fullWidth ?? isMobile;
 
     let processValue = (v: string | number): any => v;
 
@@ -504,7 +507,7 @@ const TextField: React.FC<TextFieldProps> = ({
     const newProps: Omit<TextFieldProps, 'type'> & {
         id: string;
         inputMode?: string;
-        fieldStyle?: React.CSSProperties;
+        fieldClassName?: string;
         shrinkLabel?: boolean;
         inputComponent?: React.ComponentType<any>;
         onInput?: React.FormEventHandler<HTMLInputElement>;
@@ -539,9 +542,7 @@ const TextField: React.FC<TextFieldProps> = ({
             }
         },
         style,
-        fieldStyle: {
-            width: isFullWidth ? undefined : DEFAULT_WIDTH,
-        },
+        fieldClassName: classes.fullWidthField,
         required,
         multiline: undefined,
         label: required ? props.label : `${props.label || ''} (${texts.formFieldOptionalLabelSuffix})`,
@@ -645,17 +646,13 @@ const TextField: React.FC<TextFieldProps> = ({
         newProps.endIcon = endIcon;
     }
 
-    const wrapperStyle = {
-        width: isFullWidth ? undefined : DEFAULT_WIDTH,
-    };
-
     if (getSuggestions && (newProps.value === undefined || newProps.defaultValue !== undefined)) {
         throw Error('Fields with suggestions must be used in controlled mode');
     }
 
     /* eslint-disable jsx-a11y/no-static-element-interactions */
     return (
-        <div style={wrapperStyle}>
+        <div className={classes.fullWidthField}>
             <div
                 // workaround for iOS where tappable area is very small (just the input)
                 // so it is hard to gain focus by tapping the text-field
@@ -722,8 +719,8 @@ const TextField: React.FC<TextFieldProps> = ({
                                     {...options.containerProps}
                                     style={{
                                         width: inputRef.current
-                                            ? inputRef.current.clientWidth + 2
-                                            : undefined, // +2 due to borders (input)
+                                            ? inputRef.current.clientWidth + 2 // +2 due to borders (input)
+                                            : undefined,
                                     }}
                                     className={classes.suggestionsContainer}
                                 >

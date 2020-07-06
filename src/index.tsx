@@ -1,6 +1,6 @@
 import {PACKAGE_VERSION} from './package-version';
 
-export {createSheet, withSheet, removeJssProps, createUseStyles, getJss} from './jss';
+export {createSheet, withSheet, removeJssProps, createUseStyles, getJss, ServerSideStyles} from './jss';
 export {default as ThemeContext} from './theme-context';
 export {default as ThemeContextProvider} from './theme-context-provider';
 export {default as TextField} from './text-field';

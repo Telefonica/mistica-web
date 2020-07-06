@@ -1434,10 +1434,10 @@
   resolved "https://registry.yarnpkg.com/@telefonica/libphonenumber/-/libphonenumber-2.7.5.tgz#db47c87c11c86df6be3c8df34f25f7a46571c737"
   integrity sha512-AgH4FAWh1wYf+JsETApCNdEwFDMZgX5NkNu6J8w4HAnUGJN/r77Sa5Z4ZZVFcVWiwucKbd7auH1tGshhYIebtg==
 
-"@telefonica/mistica@^3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@telefonica/mistica/-/mistica-3.3.0.tgz#46f18a62e30117f3113ac92cb790f68334fb3e0b"
-  integrity sha512-tlaa0BkQyJbO14PuI73cjObeWHiA9kNMa7kg5SZ3pmOv7kqUPXeohQdtL5X4+TkyLF2k9lBcS6Kh15z5SUmKNQ==
+"@telefonica/mistica@latest":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@telefonica/mistica/-/mistica-3.3.1.tgz#a44748c6462c177401d0f202ad65357d1e6f67ca"
+  integrity sha512-H3htDcTy0+73N5HsWOHZcOSo6o5t/HZ/V2ndyyO2Tc8J9vWdpb4WObDhNTlcUjYRkmB7Er0tT8hsG6Pzw6uRNw==
   dependencies:
     "@juggle/resize-observer" "^3.1.3"
     "@tef-novum/webview-bridge" "^2.17.1"
