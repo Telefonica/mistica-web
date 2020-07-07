@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {MemoryRouter} from 'react-router-dom';
 import {StorySection, useTextField, useCheckbox, useSelect} from './helpers';
 import {RowList, Row} from '../list';
 import {Box, Stack, AvatarPlaceholder} from '..';
@@ -71,7 +70,7 @@ export const Default: StoryComponent = () => {
     }
 
     return (
-        <MemoryRouter>
+        <>
             <Box paddingX={16}>
                 <Stack space={16}>
                     <Box paddingTop={16}>
@@ -122,7 +121,7 @@ export const Default: StoryComponent = () => {
                     </RowList>
                 </StorySection>
             </div>
-        </MemoryRouter>
+        </>
     );
 };
 
