@@ -376,7 +376,7 @@ const useControlState = ({
 
 const RowContent = (props: RowContentProps) => {
     const classes = useStyles();
-    const {icon, iconSize, headline, title, subtitle, description, badge} = props;
+    const {icon, iconSize, headline, title, subtitle, description, badge, role} = props;
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
     const renderContent = (moreProps: {type: ContentProps['type']; right?: ContentProps['right']}) => (
@@ -388,6 +388,7 @@ const RowContent = (props: RowContentProps) => {
             subtitle={subtitle}
             description={description}
             badge={badge}
+            role={role}
             {...moreProps}
         />
     );
@@ -516,9 +517,15 @@ type RowElement = React.ReactElement<typeof Row>;
 
 type RowListProps = {
     children: RowElement | Array<RowElement>;
+    ariaLabelledby?: string;
+    role?: string;
 };
 
-export const RowList: React.FC<RowListProps> = ({children}) => <>{children}</>;
+export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role}) => (
+    <div role={role} aria-labelledby={ariaLabelledby}>
+        {children}
+    </div>
+);
 
 export const BoxedRow: React.FC<RowContentProps> = (props) => <RowContent {...props} />;
 
@@ -526,13 +533,15 @@ type BoxedRowElement = Array<React.ReactElement<typeof BoxedRow>>;
 
 type BoxedRowListProps = {
     children: BoxedRowElement | Array<BoxedRowElement>;
+    ariaLabelledby?: string;
+    role?: string;
 };
 
-export const BoxedRowList: React.FC<BoxedRowListProps> = ({children}) => {
+export const BoxedRowList: React.FC<BoxedRowListProps> = ({children, ariaLabelledby, role}) => {
     const classes = useStyles();
 
     return (
-        <Stack space={16}>
+        <Stack space={16} role={role} ariaLabelledby={ariaLabelledby}>
             {React.Children.map(children as any, (child) => (
                 <div className={classes.boxed}>{child}</div>
             ))}
