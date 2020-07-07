@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {Link} from 'react-router-dom';
 import Text from './text';
 import {useTheme} from './hooks';
 
@@ -15,6 +14,7 @@ type NavigationBreadcrumbsProps = {
 
 const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({title, breadcrumbs}) => {
     const theme = useTheme();
+    const Link = theme.Link;
     return (
         <div>
             {breadcrumbs.map(({title, url}, index) => (

@@ -137,6 +137,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
             textAppbar: c.TEXT_APPBAR,
             textAppbarSelected: c.TEXT_APPBAR_SELECTED,
         },
+        Link: theme.Link ?? baseTheme.Link,
     };
 
     return (

@@ -162,8 +162,7 @@
     },
     "peerDependencies": {
         "react": ">=16.11",
-        "react-dom": ">=16.11",
-        "react-router-dom": ">=5.1"
+        "react-dom": ">=16.11"
     },
     "publishConfig": {
         "registry": "https://registry.npmjs.org"
