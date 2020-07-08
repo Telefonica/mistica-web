@@ -10,3 +10,6 @@ storybook-static/
 # next.js
 examples/next/.next/
 examples/next/out/
+
+# create-react-app
+examples/create-react-app/build
