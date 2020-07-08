@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v.3.3.1 - 2020-07-01
+
+- Accessibility and tracking for `Tabs` component.
+
+## v.3.3.0 - 2020-06-30
+
+- New `Tabs` component.
+
+## v.3.2.0 - 2020-06-30
+
+- New colors for app tab bar.
+
 ## v.3.1.1 - 2020-06-29
 
 - Fixed changelog.

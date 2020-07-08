@@ -101,8 +101,8 @@ export type SelectProps = {
     fullWidth?: boolean;
     style?: React.CSSProperties;
     options: ReadonlyArray<{
-        value: string;
-        text: string;
+        readonly value: string;
+        readonly text: string;
     }>;
     required?: boolean;
     inputRef?: React.Ref<HTMLSelectElement | HTMLInputElement>;

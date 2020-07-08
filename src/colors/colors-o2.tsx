@@ -80,6 +80,10 @@ export const NAVBAR_BACKGROUND = c.O2_BLUE;
 export const NAVBAR_CONTROL = c.O2_SKY_BLUE_LIGHT_30;
 export const NAVBAR_DIVIDER = c.O2_BLUE;
 
+// APPBAR (MOBILE MAIN TABS)
+export const TEXT_APPBAR = c.GREY_2;
+export const TEXT_APPBAR_SELECTED = c.O2_BLUE;
+
 // TAG
 export const TAG_BACKGROUND_FIRST = c.O2_GREEN;
 export const TAG_BACKGROUND_SECOND = c.GREY_3;

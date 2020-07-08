@@ -66,6 +66,7 @@ interface CommonProps {
     'aria-controls'?: string;
     'aria-expanded'?: 'true' | 'false';
     'aria-hidden'?: 'true' | 'false';
+    'aria-selected'?: 'true' | 'false';
     role?: string;
     type?: 'button' | 'submit';
     tabIndex?: number;
@@ -135,6 +136,7 @@ const Touchable: React.FC<Props> = (props) => {
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
         'aria-hidden': props['aria-hidden'],
+        'aria-selected': props['aria-selected'],
         tabIndex: props.tabIndex,
     };
 

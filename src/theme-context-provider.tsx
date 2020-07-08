@@ -125,6 +125,9 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
             toggleIosInactive: c.TOGGLE_IOS_INACTIVE,
             toggleIosBackgroundInactive: c.TOGGLE_IOS_BACKGROUND_INACTIVE,
             toggleIosBackgroundActive: c.TOGGLE_IOS_BACKGROUND_ACTIVE,
+
+            textAppbar: c.TEXT_APPBAR,
+            textAppbarSelected: c.TEXT_APPBAR_SELECTED,
         },
     };
 
