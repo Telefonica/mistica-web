@@ -14,8 +14,7 @@ declare type CommonProps = {
   description?: string | null,
   icon?: React.Element<any> | string | null,
   iconSize?: 24 | 40,
-  badge?: boolean | number,
-  role?: string
+  badge?: boolean | number
 };
 declare type ControlProps = {
   value?: boolean,
@@ -118,7 +117,7 @@ declare type RowElement = React.Element<typeof Row>;
 declare type RowListProps = {
   children: RowElement | Array<RowElement>,
   ariaLabelledby?: string,
-  role?: string
+  role?: "menu" | "list"
 };
 declare export var RowList: React.ComponentType<RowListProps>;
 declare export var BoxedRow: React.ComponentType<RowContentProps>;
@@ -126,7 +125,7 @@ declare type BoxedRowElement = Array<React.Element<typeof BoxedRow>>;
 declare type BoxedRowListProps = {
   children: BoxedRowElement | Array<BoxedRowElement>,
   ariaLabelledby?: string,
-  role?: string
+  role?: "menu" | "list"
 };
 declare export var BoxedRowList: React.ComponentType<BoxedRowListProps>;
 declare export {};

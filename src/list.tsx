@@ -159,7 +159,6 @@ interface CommonProps {
     icon?: React.ReactElement<any> | string | null;
     iconSize?: 24 | 40;
     badge?: boolean | number;
-    role?: string;
 }
 
 interface ContentProps extends CommonProps {
@@ -178,7 +177,6 @@ const Content: React.FC<ContentProps> = ({
     type = 'basic',
     badge,
     right,
-    role,
 }) => {
     const classes = useStyles();
     const theme = useTheme();
@@ -198,7 +196,7 @@ const Content: React.FC<ContentProps> = ({
     };
 
     return (
-        <Box paddingY={16} className={classes.content} role={role}>
+        <Box paddingY={16} className={classes.content}>
             {icon && (
                 <Box
                     paddingRight={16}
@@ -376,7 +374,7 @@ const useControlState = ({
 
 const RowContent = (props: RowContentProps) => {
     const classes = useStyles();
-    const {icon, iconSize, headline, title, subtitle, description, badge, role} = props;
+    const {icon, iconSize, headline, title, subtitle, description, badge} = props;
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
     const renderContent = (moreProps: {type: ContentProps['type']; right?: ContentProps['right']}) => (
@@ -388,7 +386,6 @@ const RowContent = (props: RowContentProps) => {
             subtitle={subtitle}
             description={description}
             badge={badge}
-            role={role}
             {...moreProps}
         />
     );
@@ -415,6 +412,7 @@ const RowContent = (props: RowContentProps) => {
                 className={classes.rowContent}
                 trackingEvent={props.trackingEvent}
                 onPress={props.onPress}
+                role="menuitem"
             >
                 {renderTouchableContent(props)}
             </Touchable>
@@ -428,6 +426,7 @@ const RowContent = (props: RowContentProps) => {
                 trackingEvent={props.trackingEvent}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
+                role="menuitem"
             >
                 {renderTouchableContent(props)}
             </Touchable>
@@ -441,6 +440,7 @@ const RowContent = (props: RowContentProps) => {
                 trackingEvent={props.trackingEvent}
                 href={props.href}
                 newTab={props.newTab}
+                role="menuitem"
             >
                 {renderTouchableContent(props)}
             </Touchable>
@@ -455,7 +455,7 @@ const RowContent = (props: RowContentProps) => {
                 checked={isChecked}
                 onChange={toggle}
                 render={(control: React.ReactElement) => (
-                    <Box paddingX={16}>
+                    <Box paddingX={16} role="menuitem">
                         {renderContent({
                             type: 'custom',
                             right: centered(control),
@@ -476,7 +476,7 @@ const RowContent = (props: RowContentProps) => {
 
     if (props.radioValue) {
         return (
-            <div className={classes.rowContent}>
+            <div className={classes.rowContent} role="menuitem">
                 <RadioButton
                     value={props.radioValue}
                     render={(radio) => (
@@ -493,7 +493,7 @@ const RowContent = (props: RowContentProps) => {
     }
 
     return (
-        <Box paddingX={16} className={classNames(classes.rowContent, classes.hoverDisabled)}>
+        <Box paddingX={16} className={classNames(classes.rowContent, classes.hoverDisabled)} role="listitem">
             {props.right
                 ? renderContent({type: 'custom', right: props.right})
                 : renderContent({type: 'basic'})}
@@ -518,7 +518,7 @@ type RowElement = React.ReactElement<typeof Row>;
 type RowListProps = {
     children: RowElement | Array<RowElement>;
     ariaLabelledby?: string;
-    role?: string;
+    role?: 'menu' | 'list';
 };
 
 export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role}) => (
@@ -534,7 +534,7 @@ type BoxedRowElement = Array<React.ReactElement<typeof BoxedRow>>;
 type BoxedRowListProps = {
     children: BoxedRowElement | Array<BoxedRowElement>;
     ariaLabelledby?: string;
-    role?: string;
+    role?: 'menu' | 'list';
 };
 
 export const BoxedRowList: React.FC<BoxedRowListProps> = ({children, ariaLabelledby, role}) => {
