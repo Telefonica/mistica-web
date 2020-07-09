@@ -11,7 +11,7 @@ declare type Props = {
   children: React.Node,
   className?: string,
   role?: string,
-  ariaLabelledby?: string
+  "aria-labelledby"?: string
 };
 declare var Stack: React.ComponentType<Props>;
 declare export default typeof Stack;

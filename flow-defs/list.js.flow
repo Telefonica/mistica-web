@@ -14,7 +14,8 @@ declare type CommonProps = {
   description?: string | null,
   icon?: React.Element<any> | string | null,
   iconSize?: 24 | 40,
-  badge?: boolean | number
+  badge?: boolean | number,
+  role?: string
 };
 declare type ControlProps = {
   value?: boolean,
@@ -30,7 +31,6 @@ declare type BasicRowContentProps = {
   checkbox?: void,
   switch?: void,
   radioValue?: void,
-  role?: string,
   right?: React.Node
 };
 declare type SwitchRowContentProps = {
@@ -42,7 +42,6 @@ declare type SwitchRowContentProps = {
   right?: void,
   checkbox?: void,
   radioValue?: void,
-  role?: string,
   switch: ControlProps
 };
 declare type CheckboxRowContentProps = {
@@ -54,7 +53,6 @@ declare type CheckboxRowContentProps = {
   right?: void,
   switch?: void,
   radioValue?: void,
-  role?: string,
   checkbox: ControlProps
 };
 declare type RadioRowContentProps = {
@@ -66,7 +64,6 @@ declare type RadioRowContentProps = {
   right?: void,
   switch?: void,
   checkbox?: void,
-  role?: string,
   radioValue: string
 };
 declare type HrefRowContentProps = {
@@ -75,7 +72,6 @@ declare type HrefRowContentProps = {
   checkbox?: void,
   switch?: void,
   radioValue?: void,
-  role?: string,
   trackingEvent?: TrackingEvent,
   href?: string,
   newTab?: boolean,
@@ -89,7 +85,6 @@ declare type ToRowContentProps = {
   checkbox?: void,
   switch?: void,
   radioValue?: void,
-  role?: string,
   trackingEvent?: TrackingEvent,
   to?: string,
   fullPageOnWebView?: boolean,
@@ -104,7 +99,6 @@ declare type OnPressRowContentProps = {
   checkbox?: void,
   switch?: void,
   radioValue?: void,
-  role?: string,
   trackingEvent?: TrackingEvent,
   onPress?: () => void,
   href?: void,

@@ -15,14 +15,19 @@ type Props = {
     children: React.ReactNode;
     className?: string;
     role?: string;
-    ariaLabelledby?: string;
+    'aria-labelledby'?: string;
 };
 
-const Stack: React.FC<Props> = ({space, className, children, role, ariaLabelledby}) => {
+const Stack: React.FC<Props> = (props) => {
+    const {space, className, children, role} = props;
     const classes = useStyles({space});
 
     return (
-        <div className={classnames(className, classes.stack)} role={role} aria-labelledby={ariaLabelledby}>
+        <div
+            className={classnames(className, classes.stack)}
+            role={role}
+            aria-labelledby={props['aria-labelledby']}
+        >
             {React.Children.map(children, (child) => (
                 <div>{child}</div>
             ))}

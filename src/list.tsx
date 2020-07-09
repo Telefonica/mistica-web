@@ -159,6 +159,7 @@ interface CommonProps {
     icon?: React.ReactElement<any> | string | null;
     iconSize?: 24 | 40;
     badge?: boolean | number;
+    role?: string;
 }
 
 interface ContentProps extends CommonProps {
@@ -259,7 +260,6 @@ interface BasicRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
-    role?: string;
 
     right?: React.ReactNode;
 }
@@ -271,7 +271,6 @@ interface SwitchRowContentProps extends CommonProps {
     right?: undefined;
     checkbox?: undefined;
     radioValue?: undefined;
-    role?: string;
 
     switch: ControlProps;
 }
@@ -283,7 +282,6 @@ interface CheckboxRowContentProps extends CommonProps {
     right?: undefined;
     switch?: undefined;
     radioValue?: undefined;
-    role?: string;
 
     checkbox: ControlProps;
 }
@@ -295,7 +293,6 @@ interface RadioRowContentProps extends CommonProps {
     right?: undefined;
     switch?: undefined;
     checkbox?: undefined;
-    role?: string;
 
     radioValue: string;
 }
@@ -304,7 +301,6 @@ interface HrefRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
-    role?: string;
 
     trackingEvent?: TrackingEvent;
     href?: string;
@@ -318,7 +314,6 @@ interface ToRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
-    role?: string;
 
     trackingEvent?: TrackingEvent;
     to?: string;
@@ -333,7 +328,6 @@ interface OnPressRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
-    role?: string;
 
     trackingEvent?: TrackingEvent;
     onPress?: () => void;
@@ -548,7 +542,7 @@ export const BoxedRowList: React.FC<BoxedRowListProps> = ({children, ariaLabelle
     const classes = useStyles();
 
     return (
-        <Stack space={16} role={role} ariaLabelledby={ariaLabelledby}>
+        <Stack space={16} role={role} aria-labelledby={ariaLabelledby}>
             {React.Children.map(children as any, (child) => (
                 <div className={classes.boxed}>{child}</div>
             ))}
