@@ -30,6 +30,7 @@ declare type BasicRowContentProps = {
   checkbox?: void,
   switch?: void,
   radioValue?: void,
+  role?: string,
   right?: React.Node
 };
 declare type SwitchRowContentProps = {
@@ -41,6 +42,7 @@ declare type SwitchRowContentProps = {
   right?: void,
   checkbox?: void,
   radioValue?: void,
+  role?: string,
   switch: ControlProps
 };
 declare type CheckboxRowContentProps = {
@@ -52,6 +54,7 @@ declare type CheckboxRowContentProps = {
   right?: void,
   switch?: void,
   radioValue?: void,
+  role?: string,
   checkbox: ControlProps
 };
 declare type RadioRowContentProps = {
@@ -63,6 +66,7 @@ declare type RadioRowContentProps = {
   right?: void,
   switch?: void,
   checkbox?: void,
+  role?: string,
   radioValue: string
 };
 declare type HrefRowContentProps = {
@@ -71,6 +75,7 @@ declare type HrefRowContentProps = {
   checkbox?: void,
   switch?: void,
   radioValue?: void,
+  role?: string,
   trackingEvent?: TrackingEvent,
   href?: string,
   newTab?: boolean,
@@ -84,6 +89,7 @@ declare type ToRowContentProps = {
   checkbox?: void,
   switch?: void,
   radioValue?: void,
+  role?: string,
   trackingEvent?: TrackingEvent,
   to?: string,
   fullPageOnWebView?: boolean,
@@ -98,6 +104,7 @@ declare type OnPressRowContentProps = {
   checkbox?: void,
   switch?: void,
   radioValue?: void,
+  role?: string,
   trackingEvent?: TrackingEvent,
   onPress?: () => void,
   href?: void,
@@ -117,7 +124,7 @@ declare type RowElement = React.Element<typeof Row>;
 declare type RowListProps = {
   children: RowElement | Array<RowElement>,
   ariaLabelledby?: string,
-  role?: "menu" | "list"
+  role?: string
 };
 declare export var RowList: React.ComponentType<RowListProps>;
 declare export var BoxedRow: React.ComponentType<RowContentProps>;
@@ -125,7 +132,7 @@ declare type BoxedRowElement = Array<React.Element<typeof BoxedRow>>;
 declare type BoxedRowListProps = {
   children: BoxedRowElement | Array<BoxedRowElement>,
   ariaLabelledby?: string,
-  role?: "menu" | "list"
+  role?: string
 };
 declare export var BoxedRowList: React.ComponentType<BoxedRowListProps>;
 declare export {};

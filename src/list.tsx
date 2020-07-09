@@ -259,6 +259,7 @@ interface BasicRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
+    role?: string;
 
     right?: React.ReactNode;
 }
@@ -270,6 +271,7 @@ interface SwitchRowContentProps extends CommonProps {
     right?: undefined;
     checkbox?: undefined;
     radioValue?: undefined;
+    role?: string;
 
     switch: ControlProps;
 }
@@ -281,6 +283,7 @@ interface CheckboxRowContentProps extends CommonProps {
     right?: undefined;
     switch?: undefined;
     radioValue?: undefined;
+    role?: string;
 
     checkbox: ControlProps;
 }
@@ -292,6 +295,7 @@ interface RadioRowContentProps extends CommonProps {
     right?: undefined;
     switch?: undefined;
     checkbox?: undefined;
+    role?: string;
 
     radioValue: string;
 }
@@ -300,6 +304,7 @@ interface HrefRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
+    role?: string;
 
     trackingEvent?: TrackingEvent;
     href?: string;
@@ -313,6 +318,7 @@ interface ToRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
+    role?: string;
 
     trackingEvent?: TrackingEvent;
     to?: string;
@@ -327,6 +333,7 @@ interface OnPressRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
+    role?: string;
 
     trackingEvent?: TrackingEvent;
     onPress?: () => void;
@@ -374,7 +381,7 @@ const useControlState = ({
 
 const RowContent = (props: RowContentProps) => {
     const classes = useStyles();
-    const {icon, iconSize, headline, title, subtitle, description, badge} = props;
+    const {icon, iconSize, headline, title, subtitle, description, badge, role} = props;
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
     const renderContent = (moreProps: {type: ContentProps['type']; right?: ContentProps['right']}) => (
@@ -412,7 +419,7 @@ const RowContent = (props: RowContentProps) => {
                 className={classes.rowContent}
                 trackingEvent={props.trackingEvent}
                 onPress={props.onPress}
-                role="menuitem"
+                role={role}
             >
                 {renderTouchableContent(props)}
             </Touchable>
@@ -426,7 +433,7 @@ const RowContent = (props: RowContentProps) => {
                 trackingEvent={props.trackingEvent}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
-                role="menuitem"
+                role={role}
             >
                 {renderTouchableContent(props)}
             </Touchable>
@@ -440,7 +447,7 @@ const RowContent = (props: RowContentProps) => {
                 trackingEvent={props.trackingEvent}
                 href={props.href}
                 newTab={props.newTab}
-                role="menuitem"
+                role={role}
             >
                 {renderTouchableContent(props)}
             </Touchable>
@@ -455,7 +462,7 @@ const RowContent = (props: RowContentProps) => {
                 checked={isChecked}
                 onChange={toggle}
                 render={(control: React.ReactElement) => (
-                    <Box paddingX={16} role="menuitem">
+                    <Box paddingX={16} role={role}>
                         {renderContent({
                             type: 'custom',
                             right: centered(control),
@@ -476,7 +483,7 @@ const RowContent = (props: RowContentProps) => {
 
     if (props.radioValue) {
         return (
-            <div className={classes.rowContent} role="menuitem">
+            <div className={classes.rowContent} role={role}>
                 <RadioButton
                     value={props.radioValue}
                     render={(radio) => (
@@ -493,7 +500,7 @@ const RowContent = (props: RowContentProps) => {
     }
 
     return (
-        <Box paddingX={16} className={classNames(classes.rowContent, classes.hoverDisabled)} role="listitem">
+        <Box paddingX={16} className={classNames(classes.rowContent, classes.hoverDisabled)} role={role}>
             {props.right
                 ? renderContent({type: 'custom', right: props.right})
                 : renderContent({type: 'basic'})}
@@ -518,7 +525,7 @@ type RowElement = React.ReactElement<typeof Row>;
 type RowListProps = {
     children: RowElement | Array<RowElement>;
     ariaLabelledby?: string;
-    role?: 'menu' | 'list';
+    role?: string;
 };
 
 export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role}) => (
@@ -534,7 +541,7 @@ type BoxedRowElement = Array<React.ReactElement<typeof BoxedRow>>;
 type BoxedRowListProps = {
     children: BoxedRowElement | Array<BoxedRowElement>;
     ariaLabelledby?: string;
-    role?: 'menu' | 'list';
+    role?: string;
 };
 
 export const BoxedRowList: React.FC<BoxedRowListProps> = ({children, ariaLabelledby, role}) => {
