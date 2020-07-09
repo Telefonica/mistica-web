@@ -3,10 +3,10 @@ import c from './colors/o2';
 
 // LAYOUT
 export const PRIMARY = c.O2_BLUE_PRIMARY;
-export const BACKGROUND_BRAND = `linear-gradient(to bottom, ${c.O2_BLUE_PRIMARY}, #0b4680 51%, #0d71ad 72%, ${c.O2_LAST_GRADIENT_COLOR})`;
-export const BACKGROUND_BRAND_VARIATION = `linear-gradient(115deg, ${c.O2_BLUE_PRIMARY}, #0b4680 50%, #0d71ad 84%, ${c.O2_LAST_GRADIENT_COLOR})`;
-export const BACKGROUND_SPECIAL_0 = `linear-gradient(to bottom, ${c.O2_BLUE_PRIMARY}, #0b4680 51%, #0d71ad 72%, ${c.O2_LAST_GRADIENT_COLOR})`;
-export const BACKGROUND_SPECIAL_1 = `linear-gradient(to bottom, ${c.O2_BLUE_PRIMARY}, #0b4680 51%, #0d71ad 72%, ${c.O2_LAST_GRADIENT_COLOR})`;
+export const BACKGROUND_BRAND = c.O2_BLUE_PRIMARY;
+export const BACKGROUND_BRAND_VARIATION = c.O2_BLUE_PRIMARY;
+export const BACKGROUND_SPECIAL_0 = c.WHITE;
+export const BACKGROUND_SPECIAL_1 = c.O2_BLUE_PRIMARY;
 export const PRIMARY_DARK = c.O2_BLUE_PRIMARY_DARK;
 export const ACCENT = c.O2_TEAL;
 export const DIVIDER = c.GREY_4;
@@ -20,8 +20,8 @@ export const BACKGROUND_ALTERNATIVE = c.GREY_5;
 export const BACKGROUND_SELECTED_DARK = c.WHITE;
 export const BACKGROUND_UNSELECTED_DARK: string = applyAlpha(c.WHITE, 0.2);
 export const BACKGROUND_ACCENT = c.O2_BLUE_PRIMARY;
-export const BACKGROUND_HEADING = `linear-gradient(to bottom, ${c.O2_BLUE_PRIMARY}, #0b4680 51%, #0d71ad 72%, ${c.O2_LAST_GRADIENT_COLOR})`;
-export const BACKGROUND_SPECIAL = `linear-gradient(to bottom, ${c.O2_BLUE_PRIMARY}, #0b4680 51%, #0d71ad 72%, ${c.O2_LAST_GRADIENT_COLOR})`;
+export const BACKGROUND_HEADING = c.O2_BLUE_PRIMARY;
+export const BACKGROUND_SPECIAL = c.O2_BLUE_PRIMARY;
 export const LAYER_DECORATIONS = c.BLACK;
 export const BACKGROUND_SKELETON = c.GREY_5;
 export const BACKGROUND_SKELETON_DARK = `linear-gradient(to right, ${applyAlpha(c.WHITE, 0.1)}, ${applyAlpha(
@@ -243,7 +243,7 @@ export const WAVE_PLAYER_SOUND = c.GREY_3;
 export const WAVE_PLAYER_SOUND_FILLED = c.O2_BLUE_LIGHT_60;
 
 // ALERTS
-export const BACKGROUND_TRANSACTIONAL_ALERT = `linear-gradient(${c.O2_BLUE_PRIMARY}, ${c.O2_BLUE_MID})`;
+export const BACKGROUND_TRANSACTIONAL_ALERT = c.O2_BLUE_PRIMARY;
 
 // SHADOWS
 export const CONTAINER_SHADOW = c.PEPPER;
