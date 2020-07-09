@@ -54,9 +54,12 @@ const ThemeDecorator = ({Story}) => {
 
     React.useEffect(() => {
         const channel = addons.getChannel();
-        channel.on('skin-selected', (skin) => {
-            setSkin(skin);
-        });
+        channel.on('skin-selected', setSkin);
+        channel.emit('story-mounted');
+
+        return () => {
+            channel.off('skin-selected', setSkin);
+        };
     }, []);
 
     return (

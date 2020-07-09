@@ -63,6 +63,8 @@ declare export var TEXT_INACTIVE: string;
 declare export var TEXT_INACTIVE_INVERSE: string;
 declare export var TEXT_WARNING: string;
 declare export var TEXT_DANGER: string;
+declare export var TEXT_APPBAR: string;
+declare export var TEXT_APPBAR_SELECTED: string;
 declare export var TAG_BACKGROUND_FIRST: string;
 declare export var TAG_BACKGROUND_SECOND: string;
 declare export var TAG_BACKGROUND_THIRD: string;

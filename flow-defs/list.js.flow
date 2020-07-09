@@ -8,48 +8,107 @@
 import * as React from "react";
 import { type TrackingEvent } from "./utils/types";
 declare type CommonProps = {
+  headline?: string | React.Node,
   title: string,
+  subtitle?: string,
   description?: string | null,
   icon?: React.Element<any> | string | null,
   iconSize?: 24 | 40,
   badge?: boolean | number
+};
+declare type ControlProps = {
+  value?: boolean,
+  defaultValue?: boolean,
+  onChange?: (checked: boolean) => void
 };
 declare type BasicRowContentProps = {
   ...$Exact<CommonProps>,
 
   href?: void,
   onPress?: void,
-  to?: void
+  to?: void,
+  checkbox?: void,
+  switch?: void,
+  radioValue?: void,
+  right?: React.Node
+};
+declare type SwitchRowContentProps = {
+  ...$Exact<CommonProps>,
+
+  href?: void,
+  onPress?: void,
+  to?: void,
+  right?: void,
+  checkbox?: void,
+  radioValue?: void,
+  switch: ControlProps
+};
+declare type CheckboxRowContentProps = {
+  ...$Exact<CommonProps>,
+
+  href?: void,
+  onPress?: void,
+  to?: void,
+  right?: void,
+  switch?: void,
+  radioValue?: void,
+  checkbox: ControlProps
+};
+declare type RadioRowContentProps = {
+  ...$Exact<CommonProps>,
+
+  href?: void,
+  onPress?: void,
+  to?: void,
+  right?: void,
+  switch?: void,
+  checkbox?: void,
+  radioValue: string
 };
 declare type HrefRowContentProps = {
   ...$Exact<CommonProps>,
 
+  checkbox?: void,
+  switch?: void,
+  radioValue?: void,
   trackingEvent?: TrackingEvent,
   href?: string,
   newTab?: boolean,
   onPress?: void,
-  to?: void
+  to?: void,
+  right?: React.Node
 };
 declare type ToRowContentProps = {
   ...$Exact<CommonProps>,
 
+  checkbox?: void,
+  switch?: void,
+  radioValue?: void,
   trackingEvent?: TrackingEvent,
   to?: string,
   fullPageOnWebView?: boolean,
   replace?: boolean,
   href?: void,
-  onPress?: void
+  onPress?: void,
+  right?: React.Node
 };
 declare type OnPressRowContentProps = {
   ...$Exact<CommonProps>,
 
+  checkbox?: void,
+  switch?: void,
+  radioValue?: void,
   trackingEvent?: TrackingEvent,
   onPress?: () => void,
   href?: void,
-  to?: void
+  to?: void,
+  right?: React.Node
 };
 declare type RowContentProps =
   | BasicRowContentProps
+  | SwitchRowContentProps
+  | RadioRowContentProps
+  | CheckboxRowContentProps
   | HrefRowContentProps
   | ToRowContentProps
   | OnPressRowContentProps;

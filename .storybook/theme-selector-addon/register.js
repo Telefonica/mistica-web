@@ -21,6 +21,18 @@ const ThemeSelectorAddon = ({api}) => {
     const [currentSkin, setCurrentSkin] = React.useState(() => api.getQueryParam('skin') || 'Movistar');
 
     React.useEffect(() => {
+        const notifySkin = () => {
+            channel.emit('skin-selected', currentSkin);
+        };
+
+        channel.on('story-mounted', notifySkin);
+
+        return () => {
+            channel.off('story-mounted', notifySkin);
+        };
+    }, [channel, currentSkin]);
+
+    React.useEffect(() => {
         channel.emit('skin-selected', currentSkin);
 
         api.setOptions({theme: createManagerTheme(currentSkin)});

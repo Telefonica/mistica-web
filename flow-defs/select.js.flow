@@ -18,8 +18,8 @@ export type SelectProps = {
   fullWidth?: boolean,
   style?: CssStyle,
   options: $ReadOnlyArray<{
-    value: string,
-    text: string
+    +value: string,
+    +text: string
   }>,
   required?: boolean,
   inputRef?: React.Ref<HTMLSelectElement | HTMLInputElement>,

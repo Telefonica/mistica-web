@@ -19,8 +19,8 @@ export type FormSelectProps = {
   onChangeValue?: (value: string) => void,
   onBlur?: (event: SyntheticFocusEvent<any>) => void,
   options: $ReadOnlyArray<{
-    value: string,
-    text: string
+    +value: string,
+    +text: string
   }>,
   autoFocus?: boolean,
   value?: string,

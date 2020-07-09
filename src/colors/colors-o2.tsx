@@ -74,6 +74,10 @@ export const TEXT_INACTIVE_INVERSE = c.O2_BLUE_LIGHT_60;
 export const TEXT_WARNING = c.O2_ORANGE;
 export const TEXT_DANGER = c.O2_PINK;
 
+// APPBAR (MOBILE MAIN TABS)
+export const TEXT_APPBAR = c.GREY_2;
+export const TEXT_APPBAR_SELECTED = c.O2_BLUE_PRIMARY;
+
 // TAG
 export const TAG_BACKGROUND_FIRST = c.O2_GREEN;
 export const TAG_BACKGROUND_SECOND = c.GREY_3;
