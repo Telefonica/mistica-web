@@ -68,6 +68,7 @@ const useStyles = createUseStyles((theme) => ({
         letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.45 : undefined,
         opacity: initialTextOpacity,
         '& p': {
+            marginTop: 0,
             marginBottom: 16,
         },
     },
