@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v.3.4.0 - 2020-07-08
+
+- Changed responsive layout columns for tablet.
+- Changed grid layout margins and width for some viewports.
+- Fixed bug on radio buttons inside lists.
+
 ## v.3.3.1 - 2020-07-01
 
 - Accessibility and tracking for `Tabs` component.

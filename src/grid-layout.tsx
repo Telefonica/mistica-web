@@ -13,7 +13,7 @@ const useStyles = createUseStyles((theme) => ({
             gridGap: 16,
         },
         [theme.mq.tablet]: {
-            gridTemplateColumns: 'repeat(12, 1fr)', // 12 is a temporal value while we adapt these breakpoints to the new design requirements
+            gridTemplateColumns: 'repeat(1, 1fr)',
             gridGap: 16,
         },
         [theme.mq.mobile]: {

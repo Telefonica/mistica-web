@@ -362,7 +362,7 @@ const useControlState = ({
             setIsChecked(!isChecked);
         }
         if (onChange) {
-            onChange(!isChecked);
+            onChange(!value);
         }
     };
 
