@@ -12,6 +12,19 @@ import {
 } from '@telefonica/mistica';
 
 const Home = () => {
+    const handleSubmit = async (formData) => {
+        // see /pages/api/hello.js
+        const response = await fetch(
+            `/api/hello?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`
+        );
+        const responseData = await response.json();
+
+        alert({
+            title: 'Server response',
+            message: responseData.message,
+        });
+    };
+
     return (
         <div>
             <Head>
@@ -19,14 +32,7 @@ const Home = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Form
-                onSubmit={(formData) =>
-                    alert({
-                        title: 'This is your data',
-                        message: JSON.stringify(formData, null, 2),
-                    })
-                }
-            >
+            <Form onSubmit={handleSubmit}>
                 <Box padding={16}>
                     <Stack space={16}>
                         <FormTextField id="name" name="name" label="Name" />
