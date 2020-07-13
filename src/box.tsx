@@ -22,6 +22,7 @@ type Props = {
     paddingRight?: PadSize;
     children?: React.ReactNode;
     className?: string;
+    role?: string;
     'data-testid'?: string;
     'data-qsysid'?: string;
 };
@@ -37,6 +38,7 @@ const Box: React.FC<Props> = ({
     paddingBottom = paddingY,
     paddingLeft = paddingX,
     paddingRight = paddingX,
+    role,
     ...dataProps
 }) => {
     const classes = useStyles({
@@ -49,6 +51,7 @@ const Box: React.FC<Props> = ({
             data-testid={dataProps['data-testid']}
             data-qsysid={dataProps['data-qsysid']}
             className={classnames(className, classes.box)}
+            role={role}
         >
             {children}
         </div>
