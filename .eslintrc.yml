@@ -117,7 +117,7 @@ rules:
     react/no-unknown-property: error
     react/react-in-jsx-scope: error
     react-hooks/rules-of-hooks: error
-    react-hooks/exhaustive-deps: error
+    react-hooks/exhaustive-deps: [error, {'additionalHooks': 'useIsomorphicLayoutEffect'}]
 
     # Accessibility rules: https://github.com/evcohen/eslint-plugin-jsx-a11y/tree/master/docs/rules
     jsx-a11y/aria-role: error
