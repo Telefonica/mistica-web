@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v.3.5.0 - 2020-07-13
+
+- Created o2-classic skin and updated colors.
+
 ## v.3.4.0 - 2020-07-08
 
 - Changed responsive layout columns for tablet.
