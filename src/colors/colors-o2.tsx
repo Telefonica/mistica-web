@@ -31,7 +31,7 @@ export const BACKGROUND_SKELETON_DARK = `linear-gradient(to right, ${applyAlpha(
 export const BACKGROUND_OPACITY: string = applyAlpha(c.GREY_0, 0.6);
 export const BACKGROUND_LOYALTY = c.O2_BLUE_PRIMARY;
 export const OVERSCROLL_COLOR_TOP = c.O2_BLUE_PRIMARY;
-export const BACKGROUND_SPECIAL_BOTTOM = c.O2_LAST_GRADIENT_COLOR;
+export const BACKGROUND_SPECIAL_BOTTOM = c.O2_BLUE_PRIMARY;
 export const GRID_BUTTON_SPECIAL_1_HOVER = c.O2_BLUE_LIGHT;
 
 export const BACKGROUND_SHEET_BAR_TOP = c.WHITE;
