@@ -2,5 +2,5 @@
 
 export default (req, res) => {
     res.statusCode = 200;
-    res.json({name: 'John Doe'});
+    res.json({message: `Hello ${req.query.name}, your email is: ${req.query.email}`});
 };

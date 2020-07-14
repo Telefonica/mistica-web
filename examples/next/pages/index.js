@@ -19,6 +19,19 @@ import {
 
 const Home = () => {
     const [userName, setUserName] = React.useState('');
+    const handleSubmit = async (formData) => {
+        // see /pages/api/hello.js
+        const response = await fetch(
+            `/api/hello?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`
+        );
+        const responseData = await response.json();
+
+        alert({
+            title: 'Server response',
+            message: responseData.message,
+        });
+    };
+
     return (
         <>
             <Head>
@@ -30,14 +43,7 @@ const Home = () => {
                 <Stack space={32}>
                     <Box>
                         <SectionTitle>Form example</SectionTitle>
-                        <Form
-                            onSubmit={(formData) =>
-                                alert({
-                                    title: 'This is your data',
-                                    message: JSON.stringify(formData, null, 2),
-                                })
-                            }
-                        >
+                        <Form onSubmit={handleSubmit}>
                             <Stack space={16}>
                                 <FormTextField id="name" name="name" label="Name" />
                                 <FormEmailField id="email" name="email" label="e-mail" />
