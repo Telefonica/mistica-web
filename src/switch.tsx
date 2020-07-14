@@ -92,6 +92,7 @@ type UncontrolledProps = {
 
 type ControlledProps = {
     render?: RenderSwitch;
+    defaultChecked?: undefined;
     checked: boolean;
     onChange: (checked: boolean) => void;
 };
@@ -99,15 +100,10 @@ type ControlledProps = {
 type Props = ControlledProps | UncontrolledProps;
 
 const Switch: React.FC<Props> = (props) => {
-    const [isChecked, setIsChecked] = React.useState<boolean>(() =>
-        props.checked !== undefined ? props.checked : !!props.defaultChecked
-    );
+    const isControlledByParent = props.checked !== undefined;
+    const [isChecked, setIsChecked] = React.useState<boolean>(!!props.defaultChecked);
 
-    if (props.checked !== undefined && props.checked !== isChecked) {
-        setIsChecked(props.checked);
-    }
-
-    const classes = useStyles({isChecked});
+    const classes = useStyles({isChecked: isControlledByParent ? props.checked : isChecked});
 
     const notifyChange = debounce(() => {
         if (props.onChange) {
@@ -116,17 +112,14 @@ const Switch: React.FC<Props> = (props) => {
     }, 300);
 
     const handleChange = () => {
-        setIsChecked((prevValue) => {
-            const newValue = !prevValue;
+        if (isControlledByParent) {
             if (props.onChange) {
-                if (props.checked !== undefined) {
-                    props.onChange(newValue);
-                } else {
-                    notifyChange();
-                }
+                props.onChange(!props.checked);
             }
-            return newValue;
-        });
+        } else {
+            setIsChecked(!isChecked);
+            notifyChange();
+        }
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -151,7 +144,7 @@ const Switch: React.FC<Props> = (props) => {
     return (
         <span
             role="checkbox"
-            aria-checked={isChecked}
+            aria-checked={isControlledByParent ? props.checked : isChecked}
             onClick={handleChange}
             onKeyDown={handleKeyDown}
             tabIndex={0}
