@@ -13,7 +13,5 @@ yarn-debug.log*
 yarn-error.log*
 __diff_output__
 storybook-static/
-public/
-!examples/create-react-app/public
-!examples/cra-with-react-router/public
+/public
 .vercel
