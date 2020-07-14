@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {render, act, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Form from '../form';
 import FormTextField from '../form-text-field';
 import {ButtonPrimary} from '../button';
 
 test('happy case', async () => {
-    const handleSubmitSpy = jest.fn().mockResolvedValue(undefined);
+    const handleSubmitSpy = jest.fn();
 
     render(
         <Form onSubmit={handleSubmitSpy}>
@@ -15,16 +15,16 @@ test('happy case', async () => {
         </Form>
     );
 
-    await act(async () => {
-        await userEvent.type(screen.getByLabelText('Username'), 'pepito');
-        userEvent.click(screen.getByText('Submit'));
-    });
+    await userEvent.type(screen.getByLabelText('Username'), 'pepito');
+    userEvent.click(screen.getByText('Submit'));
 
-    expect(handleSubmitSpy).toHaveBeenCalledWith({username: 'pepito'}, {username: 'pepito'});
+    await waitFor(() =>
+        expect(handleSubmitSpy).toHaveBeenCalledWith({username: 'pepito'}, {username: 'pepito'})
+    );
 });
 
 test('not submitting if required field is empty', async () => {
-    const handleSubmitSpy = jest.fn().mockResolvedValue(undefined);
+    const handleSubmitSpy = jest.fn();
 
     render(
         <Form onSubmit={handleSubmitSpy}>
@@ -33,16 +33,16 @@ test('not submitting if required field is empty', async () => {
         </Form>
     );
 
-    await act(async () => {
-        userEvent.click(screen.getByText('Submit'));
-    });
+    expect(screen.queryByText('Este campo es obligatorio')).toBeNull();
 
-    expect(handleSubmitSpy).not.toHaveBeenCalled();
+    userEvent.click(screen.getByText('Submit'));
+
     expect(screen.getByText('Este campo es obligatorio')).toBeInTheDocument();
+    expect(handleSubmitSpy).not.toHaveBeenCalled();
 });
 
 test('custom validator', async () => {
-    const handleSubmitSpy = jest.fn().mockResolvedValue(undefined);
+    const handleSubmitSpy = jest.fn();
 
     render(
         <Form onSubmit={handleSubmitSpy}>
@@ -56,22 +56,20 @@ test('custom validator', async () => {
     );
 
     // validation fail
-    await act(async () => {
-        await userEvent.type(screen.getByLabelText('Password'), '1234');
-        userEvent.click(screen.getByText('Submit'));
-    });
+    await userEvent.type(screen.getByLabelText('Password'), '1234');
+    userEvent.click(screen.getByText('Submit'));
 
+    expect(await screen.findByText('wrong password')).toBeInTheDocument();
     expect(handleSubmitSpy).not.toHaveBeenCalled();
-    expect(screen.getByText('wrong password')).toBeInTheDocument();
 
     // validation success
-    await act(async () => {
-        userEvent.clear(screen.getByLabelText('Password'));
-        await userEvent.type(screen.getByLabelText('Password'), 'letmein');
-        userEvent.click(screen.getByText('Submit'));
-    });
+    userEvent.clear(screen.getByLabelText('Password'));
+    await userEvent.type(screen.getByLabelText('Password'), 'letmein');
+    userEvent.click(screen.getByText('Submit'));
 
-    expect(handleSubmitSpy).toHaveBeenCalledWith({password: 'letmein'}, {password: 'letmein'});
+    await waitFor(() =>
+        expect(handleSubmitSpy).toHaveBeenCalledWith({password: 'letmein'}, {password: 'letmein'})
+    );
 });
 
 test('fields are disabled during submit', async () => {
@@ -89,18 +87,17 @@ test('fields are disabled during submit', async () => {
         </Form>
     );
 
-    await act(async () => {
-        await userEvent.type(screen.getByTestId('username'), 'pepito');
-        userEvent.click(screen.getByText('Submit'));
-    });
+    await userEvent.type(screen.getByTestId('username'), 'pepito');
+    userEvent.click(screen.getByText('Submit'));
 
     expect(screen.getByTestId('username')).toBeDisabled();
     expect(screen.getByText('Submit')).toBeDisabled();
 
-    await act(async () => {
-        resolveSubmitPromise();
-    });
+    // @ts-expect-error this is already initialized
+    resolveSubmitPromise();
 
-    expect(screen.getByTestId('username')).not.toBeDisabled();
-    expect(screen.getByText('Submit')).not.toBeDisabled();
+    await waitFor(() => {
+        expect(screen.getByTestId('username')).not.toBeDisabled();
+        expect(screen.getByText('Submit')).not.toBeDisabled();
+    });
 });
