@@ -21,7 +21,7 @@ test.each(TESTABLE_DEVICES)('Default textfield appears properly (focus) on %s', 
         device,
     });
 
-    page.click(screen.getByLabelText('Normal field (opcional)'));
+    page.click(await screen.findByLabelText('Normal field (opcional)'));
 
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
@@ -34,7 +34,7 @@ test.each(TESTABLE_DEVICES)('Default textfield appears properly (typing) on %s',
         device,
     });
 
-    await page.type(screen.getByLabelText('Normal field (opcional)'), 'hello moto', {delay: 100});
+    await page.type(await screen.findByLabelText('Normal field (opcional)'), 'hello moto', {delay: 100});
 
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
@@ -47,8 +47,8 @@ test.each(TESTABLE_DEVICES)('Default textfield appears properly (typing and blur
         device,
     });
 
-    await page.type(screen.getByLabelText('Normal field (opcional)'), 'hello moto', {delay: 100});
-    await page.click((await screen.getAllByLabelText('Multiline (opcional)'))[0]);
+    await page.type(await screen.findByLabelText('Normal field (opcional)'), 'hello moto', {delay: 100});
+    await page.click((await screen.findAllByLabelText('Multiline (opcional)'))[0]);
 
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();

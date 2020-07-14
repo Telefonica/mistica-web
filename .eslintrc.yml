@@ -100,6 +100,9 @@ rules:
     testing-library/no-dom-import: error
     testing-library/await-async-utils: error
     testing-library/await-async-query: error
+    testing-library/no-await-sync-query: error
+    testing-library/prefer-find-by: error
+    testing-library/prefer-wait-for: error
 
     # react rules
     react/forbid-dom-props: [error, {forbid: [xmlns]}]

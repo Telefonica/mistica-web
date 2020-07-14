@@ -6,7 +6,7 @@ test('TextLink common component screenshot', async () => {
         name: 'TextLink',
     });
 
-    const textLink = await screen.getByTestId('text-link');
+    const textLink = await screen.findByTestId('text-link');
 
     const image = await textLink.screenshot();
 

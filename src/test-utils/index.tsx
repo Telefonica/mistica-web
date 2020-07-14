@@ -158,12 +158,8 @@ export type PageApi = {
     // Following methods are inherited from Puppeteer.Page, some are overridden
 
     // These are overridden:
-    type: (
-        selector: ElementHandle | Promise<ElementHandle>,
-        text: string,
-        options?: {delay: number}
-    ) => Promise<void>;
-    click: (selector: ElementHandle | Promise<ElementHandle>, options?: ClickOptions) => Promise<void>;
+    type: (selector: ElementHandle, text: string, options?: {delay: number}) => Promise<void>;
+    click: (selector: ElementHandle, options?: ClickOptions) => Promise<void>;
 
     // These are from prototype chain (inherited from Puppeteer.Page)
     screenshot: (options?: ScreenshotOptions) => ReturnType<Page['screenshot']>;
@@ -216,27 +212,27 @@ type Query = (m: string) => Promise<ElementHandle>;
 type AllQuery = (m: string) => Promise<Array<ElementHandle>>;
 
 type Queries = {
-    getByText: Query;
-    getAllByText: AllQuery;
-    getByTestId: Query;
-    getAllByTestId: AllQuery;
-    getByTitle: Query;
-    getAllByTitle: AllQuery;
-    getByRole: Query;
-    getAllByRole: AllQuery;
-    getByPlaceholderText: Query;
-    getAllByPlaceholderText: AllQuery;
-    getByLabelText: Query;
-    getAllByLabelText: AllQuery;
-    getByAltText: Query;
-    getAllByAltText: AllQuery;
+    findByText: Query;
+    findAllByText: AllQuery;
+    findByTestId: Query;
+    findAllByTestId: AllQuery;
+    findByTitle: Query;
+    findAllByTitle: AllQuery;
+    findByRole: Query;
+    findAllByRole: AllQuery;
+    findByPlaceholderText: Query;
+    findAllByPlaceholderText: AllQuery;
+    findByLabelText: Query;
+    findAllByLabelText: AllQuery;
+    findByAltText: Query;
+    findAllByAltText: AllQuery;
 };
 
 const buildQueryMethods = () =>
     Object.entries(queries).reduce(
         (bindedQueries, [queryName, queryFn]) => ({
             ...bindedQueries,
-            [queryName]: bindToDoc(queryFn),
+            [queryName.replace('get', 'find')]: bindToDoc(queryFn),
         }),
         {} as Queries
     );
@@ -244,8 +240,8 @@ const buildQueryMethods = () =>
 const createPageApi = (page: Page): PageApi => {
     const api: PageApi = Object.create(page);
 
-    api.type = async (selector, text, options) => (await selector).type(text, options);
-    api.click = async (selector, options) => (await selector).click(options);
+    api.type = async (selector, text, options) => selector.type(text, options);
+    api.click = async (selector, options) => selector.click(options);
     api.screenshot = async (options?: ScreenshotOptions) => {
         await waitForPaintEnd(page);
         return watermarkIfNeeded(page.screenshot(options));
