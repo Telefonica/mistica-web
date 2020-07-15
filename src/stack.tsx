@@ -8,6 +8,14 @@ const useStyles = createUseStyles(() => ({
             marginTop: (p) => p.space,
         },
     },
+    stackInline: {
+        display: 'flex',
+        flexDirection: 'row',
+
+        '& > div:not(:empty) ~ div:not(:empty)': {
+            marginLeft: (p) => p.space,
+        },
+    },
 }));
 
 type Props = {
@@ -16,18 +24,16 @@ type Props = {
     className?: string;
     role?: string;
     'aria-labelledby'?: string;
+    align?: 'vertical' | 'horizontal';
 };
 
 const Stack: React.FC<Props> = (props) => {
-    const {space, className, children, role} = props;
+    const {space, className, children, role, align = 'vertical'} = props;
     const classes = useStyles({space});
+    const classNames = classnames(className, align === 'vertical' ? classes.stack : classes.stackInline);
 
     return (
-        <div
-            className={classnames(className, classes.stack)}
-            role={role}
-            aria-labelledby={props['aria-labelledby']}
-        >
+        <div className={classNames} role={role} aria-labelledby={props['aria-labelledby']}>
             {React.Children.map(children, (child) => (
                 <div>{child}</div>
             ))}

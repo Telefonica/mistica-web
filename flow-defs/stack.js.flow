@@ -11,7 +11,8 @@ declare type Props = {
   children: React.Node,
   className?: string,
   role?: string,
-  "aria-labelledby"?: string
+  "aria-labelledby"?: string,
+  align?: "vertical" | "horizontal"
 };
 declare var Stack: React.ComponentType<Props>;
 declare export default typeof Stack;
