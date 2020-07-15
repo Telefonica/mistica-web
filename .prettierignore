@@ -2,6 +2,14 @@ flow-typed/npm/
 generated/
 node_modules/
 dist/
+dist-es/
 public/
 storybook-static/
 .vercel/
+
+# next.js
+examples/next/.next/
+examples/next/out/
+
+# create-react-app
+examples/create-react-app/build
