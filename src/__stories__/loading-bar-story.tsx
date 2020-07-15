@@ -13,7 +13,7 @@ const BackgroundTheme: React.FC = ({children}) => {
         <ThemeVariant isInverse={isInverseVariant}>
             <>
                 <div>{children}</div>
-                <p style={{paddingLeft: 8, marginBottom: 16}}>
+                <p style={{paddingLeft: 8, margin: 0, marginBottom: 16}}>
                     <input
                         type="checkbox"
                         checked={isInverseVariant}

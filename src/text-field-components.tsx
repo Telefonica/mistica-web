@@ -76,6 +76,7 @@ const useHelperTextStyles = createUseStyles((theme) => ({
         paddingLeft: 14,
         paddingRight: 16,
         '& p': {
+            margin: 0,
             marginTop: 4,
             fontSize: 12,
             flexGrow: 1,
