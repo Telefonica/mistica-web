@@ -20,6 +20,7 @@ type ThemeOverrides = {
     texts?: ThemeTexts;
     analytics?: {logEvent: (trackingEvent: TrackingEvent) => Promise<void>};
     dimensions?: {headerMobileHeight: number};
+    Link?: ThemeConfig['Link'];
 };
 
 // ONLY FOR TESTING!!

@@ -1,7 +1,6 @@
 import '../css/roboto.css';
 import '../css/reset.css';
 import * as React from 'react';
-import {MemoryRouter} from 'react-router-dom';
 import {ThemeContextProvider, getColors} from '../src';
 
 import type {ThemeConfig, Skin} from '../src';
@@ -28,11 +27,7 @@ const FrameComponent = ({children, theme}: Props): React.ReactNode => {
     window.__playroom_theme__ = {
         colors: buildColors(theme.skin),
     };
-    return (
-        <MemoryRouter>
-            <ThemeContextProvider theme={theme}>{children}</ThemeContextProvider>
-        </MemoryRouter>
-    );
+    return <ThemeContextProvider theme={theme}>{children}</ThemeContextProvider>;
 };
 
 export default FrameComponent;
