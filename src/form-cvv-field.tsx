@@ -15,6 +15,7 @@ import type {CardOptions} from './utils/credit-card';
 
 const useStyles = createUseStyles((theme) => ({
     cvvText: {
+        margin: 0,
         marginLeft: 16,
         color: theme.colors.textPrimary,
         lineHeight: 1.42857142,
