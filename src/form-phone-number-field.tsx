@@ -9,6 +9,7 @@ import type {CommonFormFieldProps} from './form';
 interface FormPhoneNumberFieldProps extends CommonFormFieldProps {
     prefix?: string;
     onChangeValue?: (value: string, rawValue: string) => void;
+    value?: string;
 }
 
 const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
@@ -20,6 +21,7 @@ const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
     validate: validateProp,
     onChangeValue,
     onBlur,
+    value,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -51,7 +53,7 @@ const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={rawValues[name] ?? ''}
+            value={value ?? rawValues[name] ?? ''}
             onChange={(event) => setRawValue({name, value: event.currentTarget.value})}
             onChangeValue={(value, rawValue) => {
                 setValue({name, value});

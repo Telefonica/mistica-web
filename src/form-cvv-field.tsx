@@ -51,6 +51,7 @@ export interface FormCvvFieldProps extends CommonFormFieldProps {
     acceptedCards?: CardOptions;
     onChangeValue?: (value: string, rawValue: string) => void;
     type: 'credit-card-cvv';
+    value?: string;
 }
 
 const FormCvvField: React.FC<FormCvvFieldProps> = ({
@@ -64,6 +65,7 @@ const FormCvvField: React.FC<FormCvvFieldProps> = ({
     onBlur,
     acceptedCards = {americanExpress: true, visa: true, masterCard: true},
     maxLength,
+    value,
     ...rest
 }) => {
     const {texts} = useTheme();

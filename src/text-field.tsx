@@ -1,3 +1,11 @@
+/*
+
+IMPORTANT
+
+This component is deprecated and will be removed in a future major release
+
+*/
+
 import * as React from 'react';
 import Visibility from './icons/icon-visibility';
 import VisibilityOff from './icons/icon-visibility-off';
@@ -451,6 +459,9 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
+/**
+ * @deprecated
+ */
 const TextField: React.FC<TextFieldProps> = ({
     onChange,
     onChangeValue,
@@ -477,6 +488,16 @@ const TextField: React.FC<TextFieldProps> = ({
     const classes = useStyles();
     const id = useAriaId(props.id);
     const {texts} = useTheme();
+
+    // TODO Remove: APPS-XXXX
+    React.useEffect(() => {
+        if (process.env.NODE_ENV !== 'production') {
+            console.error(
+                'TextField component is deprecated and will be removed, please use a FormField component:' +
+                    '\nSee: https://mistica-web.now.sh/?path=/story/components-forms-formfields--types-uncontrolled'
+            );
+        }
+    }, []);
 
     // in mobile, fullWidth by default
     const isFullWidth = fullWidth ?? isMobile;

@@ -5,6 +5,9 @@ import {isIos, isRunningAcceptanceTest} from './utils/platform';
 
 import type {Theme} from './theme';
 import type {InputState} from './text-field-components';
+import {useAriaId, useScreenSize} from './hooks';
+
+export const DEFAULT_WIDTH = 328;
 
 /**
  * Incomplete list, add more if needed
@@ -28,7 +31,7 @@ type AutoComplete =
     | 'cc-csc'; // The security code; on credit cards, this is the 3-digit verification number on the back of the card
 
 interface TextFieldBaseProps {
-    id: string;
+    id?: string;
     type?: string;
     autoComplete?: AutoComplete;
     autoFocus?: boolean;
@@ -63,6 +66,7 @@ interface TextFieldBaseProps {
     onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
     multiline?: boolean;
     children?: React.ReactNode;
+    inputMode?: string;
 }
 
 const commonInputStyles = (theme: Theme) => ({
@@ -156,21 +160,24 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             prefix,
             endIcon,
             shrinkLabel,
-            id,
             multiline = false,
             focus,
             fieldStyle,
             fieldRef,
             maxLength,
-            children, // unused
+            children,
+            id: idFromProps,
+            fullWidth,
             ...rest
         },
         ref
     ) => {
+        const id = useAriaId(idFromProps);
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
         );
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
+
         const classes = useStyles({
             inputState,
             error,
@@ -181,6 +188,9 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             multiline,
             type: rest.type,
         });
+        // in mobile, fullWidth by default
+        const {isMobile} = useScreenSize();
+        const isFullWidth = fullWidth ?? isMobile;
 
         React.useEffect(() => {
             if (inputState !== 'focused' && value?.length) {
@@ -231,6 +241,11 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             ...inputProps,
         };
 
+        const style = {
+            width: isFullWidth ? undefined : DEFAULT_WIDTH,
+            ...fieldStyle,
+        };
+
         return (
             <FieldContainer
                 helperText={
@@ -241,7 +256,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                     />
                 }
                 multiline={multiline}
-                style={fieldStyle}
+                style={style}
                 fieldRef={fieldRef}
             >
                 {prefix && <div className={classes.prefix}>{prefix}</div>}

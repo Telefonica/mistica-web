@@ -5,10 +5,13 @@ import Box from '../box';
 import {inspect} from 'util';
 import Icon from '../icons/icon-visibility';
 import {StorySection, countriesList} from './helpers';
+import FormEmailField from '../form-email-field';
+import FormIntegerField from '../form-integer-field';
+import FormDecimalField from '../form-decimal-field';
+import FormCreditCardNumberField from '../form-credit-card-number-field';
 
 export default {
-    title: 'Components|Forms/TextField',
-    component: TextField,
+    title: 'Components|Forms/FormFields',
 };
 
 type UncontrolledProps = {
@@ -154,10 +157,22 @@ export const Variants: StoryComponent = () => {
 
 export const TypesUncontrolled: StoryComponent = () => (
     <>
-        <Uncontrolled title="Type integer">
+        <Uncontrolled title="FormEmailField">
             {(handleChange, handleChangeValue) => (
-                <TextField
-                    type="integer"
+                <FormEmailField
+                    name="email"
+                    label="Email"
+                    defaultValue="aitor.menta@gmail.com"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Uncontrolled>
+
+        <Uncontrolled title="FormIntegerField">
+            {(handleChange, handleChangeValue) => (
+                <FormIntegerField
+                    name="integer"
                     label="Integer"
                     defaultValue="123"
                     onChange={handleChange}
@@ -166,10 +181,10 @@ export const TypesUncontrolled: StoryComponent = () => (
             )}
         </Uncontrolled>
 
-        <Uncontrolled title="Type decimal">
+        <Uncontrolled title="FormDecimalField">
             {(handleChange, handleChangeValue) => (
-                <TextField
-                    type="decimal"
+                <FormDecimalField
+                    name="decimal"
                     label="Decimal"
                     defaultValue="123.45"
                     onChange={handleChange}
@@ -178,11 +193,12 @@ export const TypesUncontrolled: StoryComponent = () => (
             )}
         </Uncontrolled>
 
-        <Uncontrolled title="Type credit card number">
+        <Uncontrolled title="FormCreditCardNumberField">
             {(handleChange, handleChangeValue) => (
-                <TextField
-                    type="credit-card-number"
+                <FormCreditCardNumberField
+                    name="credit-card-number"
                     label="Credit card"
+                    defaultValue="1234567890123456"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
                 />
@@ -191,8 +207,8 @@ export const TypesUncontrolled: StoryComponent = () => (
 
         <Uncontrolled title="Type credit card expiration">
             {(handleChange, handleChangeValue) => (
-                <TextField
-                    type="credit-card-expiration"
+                <FormCreditCardExpirationField
+                    name="credit-card-expiration"
                     label="Expiration"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
@@ -271,11 +287,23 @@ export const TypesControlled = (): React.ReactNode => (
             )}
         </Controlled>
 
-        <Controlled title="Type integer" initialValue="123">
+        <Controlled title="FormEmailField" initialValue="aitor.menta@gmail.com">
             {(handleChange, handleChangeValue, value) => (
-                <TextField
+                <FormEmailField
                     value={value}
-                    type="integer"
+                    name="email"
+                    label="Email"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Controlled>
+
+        <Controlled title="FormIntegerField" initialValue="123">
+            {(handleChange, handleChangeValue, value) => (
+                <FormIntegerField
+                    value={value}
+                    name="integer"
                     label="Integer"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
@@ -283,11 +311,11 @@ export const TypesControlled = (): React.ReactNode => (
             )}
         </Controlled>
 
-        <Controlled title="Type decimal" initialValue="123.456">
+        <Controlled title="FormDecimalField" initialValue="123.456">
             {(handleChange, handleChangeValue, value) => (
-                <TextField
+                <FormDecimalField
                     value={value}
-                    type="decimal"
+                    name="decimal"
                     label="Decimal"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
@@ -295,11 +323,11 @@ export const TypesControlled = (): React.ReactNode => (
             )}
         </Controlled>
 
-        <Controlled title="Type credit card" initialValue="1234567812345678">
+        <Controlled title="FormCreditCardNumberField" initialValue="1234567812345678">
             {(handleChange, handleChangeValue, value) => (
-                <TextField
+                <FormCreditCardNumberField
                     value={value}
-                    type="credit-card-number"
+                    name="credit-card-number"
                     label="Credit card"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}

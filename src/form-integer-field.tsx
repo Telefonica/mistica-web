@@ -5,14 +5,32 @@ import {useTheme} from './hooks';
 import type {CommonFormFieldProps} from './form';
 import TextFieldBase from './text-field-base';
 
-// matches strings like: "x@x.x" (where "x" is any string without spaces)
-const RE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const IntegerInput = ({inputRef, value, defaultValue, ...rest}: any) => {
+    const format = (v?: string) => String(v ?? '').replace(/[^\d]/g, '');
 
-interface FormEmailFieldProps extends CommonFormFieldProps {
+    const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+        // strip all non numeric characters
+        e.currentTarget.value = format(e.currentTarget.value);
+    };
+    return (
+        <input
+            {...rest}
+            inputMode="numeric" // shows numeric keypad in Chrome for Android
+            pattern="[0-9]*" // shows numeric keypad in iOS
+            onInput={handleInput}
+            ref={inputRef}
+            type="text"
+            value={value === undefined ? undefined : format(value)}
+            defaultValue={defaultValue === undefined ? undefined : format(defaultValue)}
+        />
+    );
+};
+
+interface FormIntegerFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const FormEmailField: React.FC<FormEmailFieldProps> = ({
+const FormIntegerField: React.FC<FormIntegerFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -23,7 +41,6 @@ const FormEmailField: React.FC<FormEmailFieldProps> = ({
     onChangeValue,
     onBlur,
     value,
-    autoComplete,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -42,19 +59,16 @@ const FormEmailField: React.FC<FormEmailFieldProps> = ({
         if (!value) {
             return optional ? '' : texts.formFieldErrorIsMandatory;
         }
-        if (!RE_EMAIL.test(value)) {
-            return texts.formEmailError;
-        }
         return validateProp?.(value, rawValue);
     };
 
-    const processValue = (value: string) => value.replace(/\s/g, '');
+    const processValue = (value: string) => value.trim();
 
     return (
         <TextFieldBase
             {...rest}
-            type="email"
             inputMode="email"
+            type="email"
             inputRef={(field) => register({name, field, validate})}
             disabled={disabled || formStatus === 'sending'}
             error={error || !!formErrors[name]}
@@ -64,19 +78,20 @@ const FormEmailField: React.FC<FormEmailFieldProps> = ({
             value={value ?? rawValues[name]}
             onChange={(event) => {
                 const rawValue = event.currentTarget.value;
+                const value = processValue(rawValue);
                 setRawValue({name, value: rawValue});
-                setValue({name, value: processValue(rawValue)});
+                setValue({name, value});
                 setFormError({name, error: ''});
                 onChange?.(event);
-                onChangeValue?.(processValue(rawValue), rawValue);
+                onChangeValue?.(value, rawValue);
             }}
             onBlur={(e) => {
                 setFormError({name, error: validate?.(values[name], rawValues[name])});
                 onBlur?.(e);
             }}
-            autoComplete={autoComplete || 'email'}
+            inputComponent={IntegerInput}
         />
     );
 };
 
-export default FormEmailField;
+export default FormIntegerField;

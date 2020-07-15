@@ -45,6 +45,18 @@ const FormTextField: React.FC<FormTextFieldProps> = ({
         register,
     } = useForm();
 
+    // TODO Remove: APPS-XXXX
+    React.useEffect(() => {
+        if (process.env.NODE_ENV !== 'production') {
+            if (type !== 'text') {
+                console.error(
+                    'FormTextFields with a type different than "text" are deprecated. Please use another FormField component.' +
+                        '\nSee: https://mistica-web.now.sh/?path=/story/components-forms-formfields--types-uncontrolled'
+                );
+            }
+        }
+    }, [type]);
+
     return (
         <CustomTextField
             {...rest}

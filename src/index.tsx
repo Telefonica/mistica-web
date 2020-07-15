@@ -3,10 +3,6 @@ import {PACKAGE_VERSION} from './package-version';
 export {createSheet, withSheet, removeJssProps, createUseStyles, getJss} from './jss';
 export {default as ThemeContext} from './theme-context';
 export {default as ThemeContextProvider} from './theme-context-provider';
-export {default as TextField} from './text-field';
-export {default as PhoneInput} from './phone-input';
-export {default as DoubleField} from './double-field';
-export {default as Select} from './select';
 export {default as ScreenReaderOnly} from './screen-reader-only';
 export {default as Touchable} from './touchable';
 export {default as Spinner} from './spinner';
@@ -30,14 +26,6 @@ export {confirm, alert} from './dialog';
 export {default as Badge} from './badge';
 export {default as TextLink} from './text-link';
 export {default as Bun} from './bun';
-export {default as Form} from './form';
-export {default as FormSelect} from './form-select';
-export {default as FormTextField} from './form-text-field';
-export {default as FormEmailField} from './form-email-field';
-export {default as FormPhoneNumberField} from './form-phone-number-field';
-export {default as FormCreditCardExpirationField} from './form-credit-card-expiration-field';
-export {default as FormCreditCardFields} from './form-credit-card-fields';
-export {default as FormCvvField} from './form-cvv-field';
 export {default as Overlay} from './overlay';
 export {default as Tooltip} from './tooltip';
 export {default as Stack} from './stack';
@@ -55,6 +43,24 @@ export {default as Switch} from './switch';
 export {default as RadioButton, RadioGroup} from './radio-button';
 export {default as NegativeBox} from './negative-box';
 export {default as Tabs} from './tabs';
+
+// Forms
+export {default as Form} from './form';
+export {default as FormSelect} from './form-select';
+export {default as FormTextField} from './form-text-field';
+export {default as FormEmailField} from './form-email-field';
+export {default as FormPhoneNumberField} from './form-phone-number-field';
+export {default as FormCreditCardExpirationField} from './form-credit-card-expiration-field';
+export {default as FormCreditCardFields} from './form-credit-card-fields';
+export {default as FormCvvField} from './form-cvv-field';
+export {default as FormIntegerField} from './form-integer-field';
+export {default as FormDecimalField} from './form-decimal-field';
+export {default as DoubleField} from './double-field';
+// @deprecated
+export {default as TextField} from './text-field';
+// @deprecated
+export {default as PhoneInput} from './phone-input';
+export {default as Select} from './select';
 
 // Icons
 export {default as IconClose} from './icons/icon-close';

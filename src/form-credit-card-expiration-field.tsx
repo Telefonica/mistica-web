@@ -13,6 +13,7 @@ type ExpirationDateValue = {
 
 export interface FormCreditCardExpirationFieldProps extends CommonFormFieldProps {
     // validate?: (value: ExpirationDateValue | void, rawValue: string | void) => string | void;
+    value?: string;
     onChangeValue?: (value: ExpirationDateValue) => void;
 }
 
@@ -25,6 +26,7 @@ const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFieldProps
     validate: validateProp,
     onChangeValue,
     onBlur,
+    value,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -70,7 +72,7 @@ const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFieldProps
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={rawValues[name] ?? ''}
+            value={value ?? rawValues[name] ?? ''}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setRawValue({name, value: event.currentTarget.value})
             }
