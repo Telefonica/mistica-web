@@ -229,13 +229,12 @@ type Queries = {
 };
 
 const buildQueryMethods = () =>
-    Object.entries(queries).reduce(
-        (bindedQueries, [queryName, queryFn]) => ({
-            ...bindedQueries,
-            [queryName.replace('get', 'find')]: bindToDoc(queryFn),
-        }),
-        {} as Queries
-    );
+    Object.fromEntries(
+        Object.entries(queries).map(([queryName, queryFn]) => [
+            queryName.replace('get', 'find'),
+            bindToDoc(queryFn),
+        ])
+    ) as Queries;
 
 const createPageApi = (page: Page): PageApi => {
     const api: PageApi = Object.create(page);
