@@ -12,7 +12,7 @@ declare type Props = {
   className?: string,
   role?: string,
   "aria-labelledby"?: string,
-  align?: "vertical" | "horizontal"
+  direction?: "column" | "row"
 };
 declare var Stack: React.ComponentType<Props>;
 declare export default typeof Stack;

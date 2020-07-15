@@ -27,23 +27,29 @@ const options = [
     {value: '64', text: '64px'},
 ];
 const alignOptions = [
-    {value: 'vertical', text: 'Vertical'},
-    {value: 'horizontal', text: 'Horizontal'},
+    {value: 'column', text: 'Column'},
+    {value: 'row', text: 'Row'},
 ];
 
 export const Default: StoryComponent = () => {
     const [space, setSpace] = React.useState('32');
-    const [align, setAlign] = React.useState('vertical');
+    const [align, setAlign] = React.useState('column');
 
     return (
         <>
             <Select required label="Space" value={space} options={options} onChangeValue={setSpace} />
             <div style={{height: 16}}></div>
-            <Select required label="Align" value={align} options={alignOptions} onChangeValue={setAlign} />
+            <Select
+                required
+                label="Direction"
+                value={align}
+                options={alignOptions}
+                onChangeValue={setAlign}
+            />
 
             <StorySection title="Stack example">
                 <Placeholder height={48} />
-                <Stack align={align as 'vertical' | 'horizontal'} space={+space as any}>
+                <Stack direction={align as 'column' | 'row'} space={+space as any}>
                     <ComponentThatReturnsNullComponent />
                     <Row>One</Row>
                     {null}

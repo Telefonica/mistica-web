@@ -24,13 +24,13 @@ type Props = {
     className?: string;
     role?: string;
     'aria-labelledby'?: string;
-    align?: 'vertical' | 'horizontal';
+    direction?: 'column' | 'row';
 };
 
 const Stack: React.FC<Props> = (props) => {
-    const {space, className, children, role, align = 'vertical'} = props;
+    const {space, className, children, role, direction = 'column'} = props;
     const classes = useStyles({space});
-    const classNames = classnames(className, align === 'vertical' ? classes.stack : classes.stackInline);
+    const classNames = classnames(className, direction === 'column' ? classes.stack : classes.stackInline);
 
     return (
         <div className={classNames} role={role} aria-labelledby={props['aria-labelledby']}>
