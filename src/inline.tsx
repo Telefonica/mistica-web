@@ -3,9 +3,12 @@ import {createUseStyles} from './jss';
 import classnames from 'classnames';
 
 const useStyles = createUseStyles(() => ({
-    stack: {
+    inline: {
+        display: 'flex',
+        flexDirection: 'row',
+
         '& > div:not(:empty) ~ div:not(:empty)': {
-            marginTop: (p) => p.space,
+            marginLeft: (p) => p.space,
         },
     },
 }));
@@ -18,13 +21,13 @@ type Props = {
     'aria-labelledby'?: string;
 };
 
-const Stack: React.FC<Props> = (props) => {
+const Inline: React.FC<Props> = (props) => {
     const {space, className, children, role} = props;
     const classes = useStyles({space});
 
     return (
         <div
-            className={classnames(className, classes.stack)}
+            className={classnames(className, classes.inline)}
             role={role}
             aria-labelledby={props['aria-labelledby']}
         >
@@ -35,4 +38,4 @@ const Stack: React.FC<Props> = (props) => {
     );
 };
 
-export default Stack;
+export default Inline;
