@@ -1,3 +1,4 @@
+import * as React from 'react';
 import getColors, {MOVISTAR_SKIN} from './colors';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import {createMediaQueries} from './utils/media-queries';
@@ -128,6 +129,41 @@ const mediaQueriesConfig = {
 type ThemeColors = typeof colors;
 export type ThemeTexts = typeof texts;
 
+type LinkComponent = React.ComponentType<{
+    style?: React.CSSProperties;
+    className?: string;
+    'aria-label'?: string;
+    disabled?: boolean;
+    role?: string;
+    'data-testid'?: string;
+    'aria-checked'?: 'true' | 'false' | boolean;
+    'aria-controls'?: string;
+    'aria-expanded'?: 'true' | 'false' | boolean;
+    'aria-hidden'?: 'true' | 'false' | boolean;
+    'aria-selected'?: 'true' | 'false' | boolean;
+    tabIndex?: number;
+    innerRef?: React.RefObject<HTMLAnchorElement>;
+    to:
+        | string
+        | {
+              pathname?: string;
+              search?: string;
+              state?: unknown;
+              hash?: string;
+              key?: string;
+          };
+    replace?: boolean;
+    onClick?: (event: React.MouseEvent<HTMLElement>) => any;
+    onKeyDown?: (event: React.KeyboardEvent<HTMLElement>) => any;
+    children: React.ReactNode;
+}>;
+
+const AnchorLink: LinkComponent = ({to, innerRef, ...props}) => (
+    <a ref={innerRef} href={typeof to === 'string' ? to : to?.pathname} {...props}>
+        {props.children}
+    </a>
+);
+
 // This is the type expected by ThemeContextProvider theme prop.
 // This config is provided by the user of the lib
 export type ThemeConfig = {
@@ -150,6 +186,7 @@ export type ThemeConfig = {
         largeDesktopMinWidth: number;
         desktopOrTabletMinHeight: number;
     };
+    Link?: LinkComponent;
 };
 
 // This is the lib INTERNAL context
@@ -176,6 +213,7 @@ export type Theme = {
         tabletOrSmaller: string;
     };
     colors: ThemeColors;
+    Link: LinkComponent;
 };
 
 export const baseTheme: Theme = {
@@ -195,4 +233,5 @@ export const baseTheme: Theme = {
     },
     mq: createMediaQueries(mediaQueriesConfig),
     dimensions,
+    Link: AnchorLink,
 };

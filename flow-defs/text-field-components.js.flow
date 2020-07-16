@@ -26,10 +26,8 @@ declare type FieldContainerProps = {
   multiline?: boolean,
   children: React.Node,
   helperText?: React.Node,
-  style?: CssStyle,
+  className?: string,
   fieldRef?: React.Ref<"div">
 };
 declare export var FieldContainer: React.ComponentType<FieldContainerProps>;
 declare export {};
-
-import { type CssStyle } from "./__types__.js.flow";

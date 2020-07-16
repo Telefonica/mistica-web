@@ -51,3 +51,9 @@ declare type UseStyles<P, S: StylesDefinition<any>> = (props: P) => $ObjMap<S, (
 declare export var createUseStyles: <P, S: StylesDefinition<P>>(
     styles: (theme: Theme) => S
 ) => UseStyles<P, S>;
+
+declare export class ServerSideStyles {
+    render(el: React.Element<any>): React.Element<any>;
+    getStylesString(): string;
+    renderStyles(): React.Element<'style'>;
+}

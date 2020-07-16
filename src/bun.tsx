@@ -11,6 +11,7 @@ import type {TrackingEvent} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
     title1: {
+        margin: 0,
         color: theme.colors.textPrimary,
         fontSize: 18,
         fontWeight: 300,
@@ -83,7 +84,7 @@ const Bun: React.FC<BunProps> = ({children, title, trackingEvent, action}) => {
                 trackingEvent={trackingEvent}
                 {...navigationProps}
             >
-                <p className={classnames(classes.sub2, classes.footerText)}>{text}</p>
+                <span className={classnames(classes.sub2, classes.footerText)}>{text}</span>
                 <IconChevron className={classes.chevron} color={colors.textLink} direction="right" />
             </TextLink>
         );

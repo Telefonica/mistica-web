@@ -5,6 +5,7 @@
  * Flowgen v1.10.0
  */
 
+import * as React from "react";
 import { type ScreenSizeContextType } from "./screen-size-context";
 import { type Theme } from "./theme";
 declare export var useTheme: () => Theme;
@@ -27,3 +28,4 @@ declare export var usePrevious: <A: mixed>(
   value: A,
   initialValue?: A | void
 ) => A | void;
+declare export var useIsomorphicLayoutEffect: typeof React.useLayoutEffect;

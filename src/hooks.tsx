@@ -153,3 +153,9 @@ export const usePrevious = <A extends unknown>(value: A, initialValue?: A): A | 
     }, [value]);
     return ref.current;
 };
+
+// React currently throws a warning when using useLayoutEffect on the server.
+// To get around it, we can conditionally useEffect on the server (no-op) and
+// useLayoutEffect in the browser
+export const useIsomorphicLayoutEffect =
+    typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;

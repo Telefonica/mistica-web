@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {MemoryRouter} from 'react-router-dom';
 import NavigationBreadcrumbs from '../navigation-breadcrumbs';
 
 export default {
@@ -7,9 +6,7 @@ export default {
 };
 
 export const Default: StoryComponent = () => (
-    <MemoryRouter>
-        <NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: 'Cuenta', url: '/consumptions'}]} />
-    </MemoryRouter>
+    <NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: 'Cuenta', url: '/consumptions'}]} />
 );
 
 Default.story = {name: 'NavigationBreadcrumbs'};

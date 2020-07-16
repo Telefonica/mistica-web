@@ -35,7 +35,7 @@ const BackgroundTheme: StoryComponent = ({children}) => {
     return (
         <ThemeVariant isInverse={isInverseVariantState}>
             <>
-                <p style={{paddingLeft: 8, marginBottom: 16}}>
+                <p style={{margin: 0, paddingLeft: 8, marginBottom: 16}}>
                     <input
                         type="checkbox"
                         checked={isInverseVariantState}

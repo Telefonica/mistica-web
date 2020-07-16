@@ -15,6 +15,7 @@ declare type UncontrolledProps = {
 };
 declare type ControlledProps = {
   render?: RenderSwitch,
+  defaultChecked?: void,
   checked: boolean,
   onChange: (checked: boolean) => void
 };

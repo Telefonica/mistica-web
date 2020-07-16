@@ -1,6 +1,6 @@
 import * as React from 'react';
 import createContext from '../nestable-context';
-import {render, fireEvent, waitFor, act, screen} from '@testing-library/react';
+import {render, fireEvent, screen} from '@testing-library/react';
 
 test('happy case', () => {
     const {Provider, Getter, Setter} = createContext<string>('nothing');
@@ -37,10 +37,8 @@ test('When unmount, the default value is restored', async () => {
     );
 
     expect(screen.getByText('The value is: a')).toBeInTheDocument();
-    await act(async () => {
-        fireEvent.click(screen.getByText('toggle'));
-    });
-    expect(screen.getByText('The value is: nothing')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('toggle'));
+    expect(await screen.findByText('The value is: nothing')).toBeInTheDocument();
 });
 
 test('When unmount, the previous value is restored', async () => {
@@ -67,10 +65,8 @@ test('When unmount, the previous value is restored', async () => {
     );
 
     expect(screen.getByText('The value is: a')).toBeInTheDocument();
-    await act(async () => {
-        fireEvent.click(screen.getByText('toggle'));
-    });
-    expect(screen.getByText('The value is: b')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('toggle'));
+    expect(await screen.findByText('The value is: b')).toBeInTheDocument();
 });
 
 test('when nesting, the innermost component wins', () => {
@@ -104,15 +100,7 @@ test('when nesting, the innermost component wins', () => {
 
 // This component simulates what a transition component does.
 // First renders A, then A + B, then only B
-const Transition = ({
-    a,
-    b,
-    onTransitionEnd,
-}: {
-    a: React.ReactNode;
-    b: React.ReactNode;
-    onTransitionEnd: () => void;
-}) => {
+const Transition = ({a, b}: {a: React.ReactNode; b: React.ReactNode}) => {
     const [isAVisible, setAVisible] = React.useState(true);
     const [isBVisible, setBVisible] = React.useState(false);
     React.useEffect(() => {
@@ -121,9 +109,8 @@ const Transition = ({
         }, 1);
         setTimeout(() => {
             setAVisible(false);
-            onTransitionEnd();
         }, 2);
-    }, [onTransitionEnd]);
+    }, []);
 
     return (
         <>
@@ -136,27 +123,12 @@ const Transition = ({
 test('works as expected with transitions', async () => {
     const {Provider, Getter, Setter} = createContext<string>('nothing');
 
-    let resolve: () => void;
-    const transitionPromise = new Promise((r) => {
-        resolve = r;
-    });
+    render(
+        <Provider>
+            <Getter>{(value) => `The value is: ${value}`}</Getter>
+            <Transition a={<Setter value="a" />} b={<Setter value="b" />} />
+        </Provider>
+    );
 
-    await act(async () => {
-        render(
-            <Provider>
-                <Getter>{(value) => `The value is: ${value}`}</Getter>
-                <Transition
-                    a={<Setter value="a" />}
-                    b={<Setter value="b" />}
-                    onTransitionEnd={() => resolve()}
-                />
-            </Provider>
-        );
-
-        await transitionPromise;
-
-        await waitFor(() => {
-            expect(screen.getByText('The value is: b')).toBeInTheDocument();
-        });
-    });
+    expect(await screen.findByText('The value is: b')).toBeInTheDocument();
 });
