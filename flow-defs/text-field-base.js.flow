@@ -57,7 +57,7 @@ declare type TextFieldBaseProps = {
   inputComponent?: React.ComponentType<any>,
   shrinkLabel?: boolean,
   focus?: boolean,
-  fieldStyle?: CssStyle,
+  fieldClassName?: string,
   fieldRef?: React.Ref<"div">,
   onInput?: (event: SyntheticEvent<HTMLInputElement>) => void,
   multiline?: boolean,
