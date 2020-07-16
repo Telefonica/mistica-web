@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v.4.0.1 - 2020-07-156
+
+- Fix `TextLink` line height
+
 ## v.4.0.0 - 2020-07-15
 
 - **Breaking change**: Decouple from `react-router-dom`.
