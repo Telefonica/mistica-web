@@ -41,7 +41,6 @@ const FormCreditCardFields: React.FC<FormCreditCardFieldsProps> = ({
                 />
                 <FormCvvField
                     acceptedCards={acceptedCards}
-                    type="credit-card-cvv"
                     name={cvvFieldName}
                     label={texts.formCreditCardCvvLabel}
                     maxLength={cvvLength}

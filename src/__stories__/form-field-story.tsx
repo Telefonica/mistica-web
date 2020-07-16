@@ -10,6 +10,8 @@ import FormIntegerField from '../form-integer-field';
 import FormDecimalField from '../form-decimal-field';
 import FormCreditCardNumberField from '../form-credit-card-number-field';
 import FormCreditCardExpirationField from '../form-credit-card-expiration-field';
+import FormCvvField from '../form-cvv-field';
+import FormTextField from '../form-text-field';
 
 export default {
     title: 'Components|Forms/FormFields',
@@ -83,38 +85,47 @@ export const Variants: StoryComponent = () => {
     return (
         <>
             <StorySection title="Default">
-                <TextField label="Normal field" />
-            </StorySection>
-
-            <StorySection title="Multiline with character limit">
-                <TextField label="Multiline" multiline maxLength={200} />
+                <FormTextField name="text" label="Normal field" />
             </StorySection>
 
             <StorySection title="Multiline">
-                <Stack space={16}>
-                    <TextField label="Multiline" multiline />
-                    <TextField label="Multiline" multiline />
-                </Stack>
+                <FormTextField name="text" label="Multiline" multiline />
+            </StorySection>
+
+            <StorySection title="Multiline with character limit">
+                <FormTextField
+                    name="text"
+                    label="Multiline"
+                    multiline
+                    maxLength={200}
+                    helperText="Helper Text"
+                />
             </StorySection>
 
             <StorySection title="With label">
-                <TextField label="Label" />
+                <FormTextField name="text" label="Label" />
             </StorySection>
 
             <StorySection title="With label and placeholder">
-                <TextField label="Label" placeholder="Placeholder" />
+                <FormTextField name="text" label="Label" placeholder="Placeholder" />
             </StorySection>
 
             <StorySection title="With label and default value">
-                <TextField label="Label" defaultValue="Default value" />
+                <FormTextField name="text" label="Label" defaultValue="Default value" />
             </StorySection>
 
             <StorySection title="With helper text">
-                <TextField label="Label" defaultValue="Default value" helperText="Helper Text" />
+                <FormTextField
+                    name="text"
+                    label="Label"
+                    defaultValue="Default value"
+                    helperText="Helper Text"
+                />
             </StorySection>
 
             <StorySection title="With Error">
-                <TextField
+                <FormTextField
+                    name="text"
                     error
                     label="Label"
                     defaultValue="Default value"
@@ -123,26 +134,32 @@ export const Variants: StoryComponent = () => {
             </StorySection>
 
             <StorySection title="With prefix">
-                <TextField label="Label" defaultValue="Default value" prefix="$" />
+                <FormTextField name="text" label="Label" defaultValue="Default value" prefix="$" />
             </StorySection>
 
             <StorySection title="With icon at the end">
-                <TextField label="Label" defaultValue="Default value" endIcon={<Icon />} />
+                <FormTextField name="text" label="Label" defaultValue="Default value" endIcon={<Icon />} />
             </StorySection>
 
             <StorySection title="Disabled">
-                <TextField disabled label="Disabled" defaultValue="Default value" />
+                <FormTextField name="text" disabled label="Disabled" defaultValue="Default value" />
             </StorySection>
 
             <div style={{backgroundColor: colors.textLink}}>
                 <ThemeVariant isInverse>
                     <Box padding={16}>
                         <StorySection title="Inverse with helper text">
-                            <TextField label="Label" defaultValue="Default value" helperText="Helper Text" />
+                            <FormTextField
+                                name="text"
+                                label="Label"
+                                defaultValue="Default value"
+                                helperText="Helper Text"
+                            />
                         </StorySection>
 
                         <StorySection title="Inverse with Error">
-                            <TextField
+                            <FormTextField
+                                name="text"
                                 error
                                 label="Label"
                                 defaultValue="Default value"
@@ -211,7 +228,19 @@ export const TypesUncontrolled: StoryComponent = () => (
                 <FormCreditCardExpirationField
                     name="credit-card-expiration"
                     label="Expiration"
-                    defaultValue="13/21"
+                    defaultValue="14/24"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Uncontrolled>
+
+        <Uncontrolled title="FormCvvField">
+            {(handleChange, handleChangeValue) => (
+                <FormCvvField
+                    name="cvv"
+                    label="CVV"
+                    defaultValue="1234"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
                 />
@@ -343,6 +372,18 @@ export const TypesControlled = (): React.ReactNode => (
                     value={value}
                     name="credit-card-expiration"
                     label="Expiration"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Controlled>
+
+        <Controlled title="FormCvvField" initialValue="1234">
+            {(handleChange, handleChangeValue, value) => (
+                <FormCvvField
+                    value={value}
+                    name="cvv"
+                    label="CVV"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
                 />

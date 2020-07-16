@@ -241,9 +241,8 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             ...inputProps,
         };
 
-        const style = {
+        const containerStyle = {
             width: isFullWidth ? undefined : DEFAULT_WIDTH,
-            ...fieldStyle,
         };
 
         return (
@@ -256,7 +255,8 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                     />
                 }
                 multiline={multiline}
-                style={style}
+                style={containerStyle}
+                fieldStyle={fieldStyle}
                 fieldRef={fieldRef}
             >
                 {prefix && <div className={classes.prefix}>{prefix}</div>}

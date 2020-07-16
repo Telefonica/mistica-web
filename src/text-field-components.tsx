@@ -139,6 +139,7 @@ type FieldContainerProps = {
     children: React.ReactNode;
     helperText?: React.ReactNode;
     style?: React.CSSProperties;
+    fieldStyle?: React.CSSProperties;
     fieldRef?: React.RefObject<HTMLDivElement>;
 };
 
@@ -146,14 +147,15 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
     multiline,
     children,
     helperText,
+    fieldStyle,
     style,
     fieldRef,
 }) => {
     const classes = useFieldContainerStyles({multiline});
 
     return (
-        <div className={classes.container}>
-            <div className={classes.border} style={style} ref={fieldRef}>
+        <div className={classes.container} style={style}>
+            <div className={classes.border} style={fieldStyle} ref={fieldRef}>
                 {children}
             </div>
             {helperText}

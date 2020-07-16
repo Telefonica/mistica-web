@@ -14,11 +14,13 @@ const getLocalDecimalChar = (locale: Locale): string => {
     }
 };
 
-export const DecimalInput = ({inputRef, value, defaultValue, ...rest}: any) => {
+type DecimalInputProps = React.HTMLProps<HTMLInputElement> & {inputRef: React.Ref<HTMLInputElement>};
+
+export const DecimalInput: React.FC<DecimalInputProps> = ({inputRef, value, defaultValue, ...rest}) => {
     const {i18n} = useTheme();
     const localDecimalChar = getLocalDecimalChar(i18n.locale);
 
-    const format = (value?: string) => {
+    const format = (value: any) => {
         const parts = String(value ?? '')
             .replace(/[^.,\d]/g, '') // remove non digits or decimal separator chars
             .replace(/[.,]/g, localDecimalChar) // use local decimal char

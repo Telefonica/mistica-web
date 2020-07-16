@@ -9,10 +9,10 @@ import IconButton from './icon-button';
 import IcnInfo from './icons/icon-info-cvv';
 import {useForm} from './form-context';
 import TextFieldBase from './text-field-base';
+import {DecimalInput} from './form-decimal-field';
 
 import type {CommonFormFieldProps} from './form';
 import type {CardOptions} from './utils/credit-card';
-import {DecimalInput} from './form-decimal-field';
 
 const useStyles = createUseStyles((theme) => ({
     cvvText: {
@@ -51,7 +51,6 @@ const TooltipContent = ({acceptedCards}: {acceptedCards: CardOptions}) => {
 export interface FormCvvFieldProps extends CommonFormFieldProps {
     acceptedCards?: CardOptions;
     onChangeValue?: (value: string, rawValue: string) => void;
-    type: 'credit-card-cvv';
     value?: string;
 }
 
@@ -62,10 +61,11 @@ const FormCvvField: React.FC<FormCvvFieldProps> = ({
     name,
     optional,
     validate: validateProp,
+    onChange,
     onChangeValue,
     onBlur,
     acceptedCards = {americanExpress: true, visa: true, masterCard: true},
-    maxLength,
+    maxLength = 4,
     value,
     autoComplete = 'cc-csc',
     ...rest
@@ -112,6 +112,7 @@ const FormCvvField: React.FC<FormCvvFieldProps> = ({
 
                 setRawValue({name, value: rawValue});
                 setValue({name, value});
+                onChange?.(event);
                 onChangeValue?.(value, rawValue);
                 if (value.length === maxLength) {
                     const error = validate(value, rawValue);

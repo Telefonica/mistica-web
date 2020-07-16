@@ -10,7 +10,8 @@ type ExpirationDateValue = {
     year: number | null;
     raw: string;
 };
-const MonthYearDateInput = ({inputRef, defaultValue, value, ...rest}: any) => {
+
+const MonthYearDateInput: React.FC<any> = ({inputRef, defaultValue, value, ...rest}) => {
     const {texts} = useTheme();
     const prevValue = React.useRef(value || '');
 
@@ -46,8 +47,6 @@ const MonthYearDateInput = ({inputRef, defaultValue, value, ...rest}: any) => {
                 value = `${value}/`; // append "/" to two-digit size months
             }
         }
-
-        prevValue.current = value;
         return value;
     };
 
@@ -59,7 +58,9 @@ const MonthYearDateInput = ({inputRef, defaultValue, value, ...rest}: any) => {
             inputMode="decimal"
             maxLength="5" // MM/YY
             onInput={(e) => {
-                e.currentTarget.value = format(e.currentTarget.value);
+                const nextValue = format(e.currentTarget.value);
+                prevValue.current = nextValue;
+                e.currentTarget.value = nextValue;
             }}
             value={value === undefined ? undefined : format(value)}
             defaultValue={defaultValue === undefined ? undefined : format(defaultValue)}
@@ -81,6 +82,7 @@ const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFieldProps
     name,
     optional,
     validate: validateProp,
+    onChange,
     onChangeValue,
     onBlur,
     value,
@@ -124,7 +126,8 @@ const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFieldProps
         const [month, year] = String(s)
             .split('/')
             .map((n) => parseInt(n));
-        const fullYear = Number.isNaN(year) ? null : 2000 + year;
+
+        const fullYear = Number.isNaN(year ?? NaN) ? null : 2000 + year;
         return {month: month || null, year: fullYear, raw: s};
     };
 
@@ -143,7 +146,7 @@ const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFieldProps
                 const value = processValue(rawValue);
                 setRawValue({name, value: rawValue});
                 setValue({name, value});
-
+                onChange?.(event);
                 onChangeValue?.(value);
                 setFormError({name, error: ''});
                 if (rawValue.length === 5) {

@@ -1,18 +1,22 @@
 import * as React from 'react';
 import TextField from '../text-field';
 import Select from '../select';
+import {useIsInverseVariant} from '../theme-variant-context';
 
 type Props = {
     title: string;
     children: React.ReactNode;
 };
 
-export const StorySection: React.FC<Props> = ({title, children}) => (
-    <div style={{marginBottom: 32}}>
-        <h1 style={{color: '#888', fontSize: 20, margin: '16px 0px'}}>{title}</h1>
-        {children}
-    </div>
-);
+export const StorySection: React.FC<Props> = ({title, children}) => {
+    const isInverse = useIsInverseVariant();
+    return (
+        <div style={{marginBottom: 32}}>
+            <h1 style={{color: isInverse ? 'white' : '#888', fontSize: 20, margin: '16px 0px'}}>{title}</h1>
+            {children}
+        </div>
+    );
+};
 
 export const countriesList = [
     'Afghanistan',
