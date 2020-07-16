@@ -1,18 +1,75 @@
 import * as React from 'react';
 import {useForm} from './form-context';
 import {useTheme} from './hooks';
-import TextField from './text-field';
+import TextFieldBase from './text-field-base';
 
 import type {CommonFormFieldProps} from './form';
 
 type ExpirationDateValue = {
-    month: number;
-    year: number;
+    month: number | null;
+    year: number | null;
     raw: string;
+};
+const MonthYearDateInput = ({inputRef, defaultValue, value, ...rest}: any) => {
+    const {texts} = useTheme();
+    const prevValue = React.useRef(value || '');
+
+    /**
+     * 1) characters other than [0-9] and '/' are removed
+     * 2) automatically insert "/" as you type
+     * 3) the user must be able to remove text (eg: deleting the slash must not automatically insert a new one)
+     */
+    const format = (s: string) => {
+        // remove invalid characters
+        let value = s.replace(/[^\d/]/g, '').replace(/\/+/g, '/');
+
+        // remove extra slashes: "01/12/34" => "01/12"
+        const [month, year] = value.split('/');
+        if (year) {
+            value = `${month}/${year}`;
+        }
+
+        const isDeleting = String(prevValue.current).length >= value.length;
+
+        if (isDeleting) {
+            // do not format when deleting
+        } else if (value === '/') {
+            value = ''; // missing month, invalid
+        } else if (value.length === 1 && parseInt(value) >= 2) {
+            value = `0${value}/`; // month is > 1, prepend with "0"
+        } else if (value.length === 2) {
+            if (value[1] === '/') {
+                value = `0${value}`; // prepend "0" to "1/"
+            } else if (parseInt(month) > 12 || parseInt(month) < 1) {
+                value = value[0]; // if month is invalid remove last character
+            } else {
+                value = `${value}/`; // append "/" to two-digit size months
+            }
+        }
+
+        prevValue.current = value;
+        return value;
+    };
+
+    return (
+        <input
+            {...rest}
+            placeholder={texts.expirationDatePlaceholder}
+            type="text"
+            inputMode="decimal"
+            maxLength="5" // MM/YY
+            onInput={(e) => {
+                e.currentTarget.value = format(e.currentTarget.value);
+            }}
+            value={value === undefined ? undefined : format(value)}
+            defaultValue={defaultValue === undefined ? undefined : format(defaultValue)}
+            ref={inputRef}
+        />
+    );
 };
 
 export interface FormCreditCardExpirationFieldProps extends CommonFormFieldProps {
-    // validate?: (value: ExpirationDateValue | void, rawValue: string | void) => string | void;
+    validate?: (value: ExpirationDateValue | undefined, rawValue: string) => string | undefined;
     value?: string;
     onChangeValue?: (value: ExpirationDateValue) => void;
 }
@@ -27,6 +84,7 @@ const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFieldProps
     onChangeValue,
     onBlur,
     value,
+    autoComplete = 'cc-exp',
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -62,22 +120,30 @@ const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFieldProps
         return validateProp?.(value, rawValue);
     };
 
+    const processValue = (s: any): ExpirationDateValue => {
+        const [month, year] = String(s)
+            .split('/')
+            .map((n) => parseInt(n));
+        const fullYear = Number.isNaN(year) ? null : 2000 + year;
+        return {month: month || null, year: fullYear, raw: s};
+    };
+
     return (
-        <TextField
+        <TextFieldBase
             {...rest}
-            type="credit-card-expiration"
             inputRef={(field: HTMLInputElement | null) => register({name, field, validate})}
             disabled={disabled || formStatus === 'sending'}
             error={error || !!formErrors[name]}
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name] ?? ''}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setRawValue({name, value: event.currentTarget.value})
-            }
-            onChangeValue={(value, rawValue) => {
+            value={value ?? rawValues[name]}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                const rawValue = event.currentTarget.value;
+                const value = processValue(rawValue);
+                setRawValue({name, value: rawValue});
                 setValue({name, value});
+
                 onChangeValue?.(value);
                 setFormError({name, error: ''});
                 if (rawValue.length === 5) {
@@ -93,6 +159,8 @@ const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFieldProps
                 setFormError({name, error: validate?.(values[name], rawValues[name])});
                 onBlur?.(e);
             }}
+            autoComplete={autoComplete}
+            inputComponent={MonthYearDateInput}
         />
     );
 };

@@ -7,11 +7,12 @@ import IconCvvAmex from './icons/icon-cvv-amex';
 import Tooltip from './tooltip';
 import IconButton from './icon-button';
 import IcnInfo from './icons/icon-info-cvv';
-import TextField from './text-field';
 import {useForm} from './form-context';
+import TextFieldBase from './text-field-base';
 
 import type {CommonFormFieldProps} from './form';
 import type {CardOptions} from './utils/credit-card';
+import {DecimalInput} from './form-decimal-field';
 
 const useStyles = createUseStyles((theme) => ({
     cvvText: {
@@ -66,6 +67,7 @@ const FormCvvField: React.FC<FormCvvFieldProps> = ({
     acceptedCards = {americanExpress: true, visa: true, masterCard: true},
     maxLength,
     value,
+    autoComplete = 'cc-csc',
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -91,20 +93,24 @@ const FormCvvField: React.FC<FormCvvFieldProps> = ({
         return validateProp?.(value, rawValue);
     };
 
+    const processValue = (s: string) => s;
+
     return (
-        <TextField
+        <TextFieldBase
             {...rest}
-            type="credit-card-cvv"
             inputRef={(field) => register({name, field, validate})}
             disabled={disabled || formStatus === 'sending'}
             error={error || !!formErrors[name]}
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={rawValues[name] ?? ''}
+            value={value ?? rawValues[name]}
             maxLength={maxLength}
-            onChange={(event) => setRawValue({name, value: event.currentTarget.value})}
-            onChangeValue={(value, rawValue) => {
+            onChange={(event) => {
+                const rawValue = event.currentTarget.value;
+                const value = processValue(rawValue);
+
+                setRawValue({name, value: rawValue});
                 setValue({name, value});
                 onChangeValue?.(value, rawValue);
                 if (value.length === maxLength) {
@@ -135,6 +141,8 @@ const FormCvvField: React.FC<FormCvvFieldProps> = ({
                     }
                 />
             }
+            autoComplete={autoComplete}
+            inputComponent={DecimalInput}
         />
     );
 };

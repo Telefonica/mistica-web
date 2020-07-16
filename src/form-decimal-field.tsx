@@ -14,7 +14,7 @@ const getLocalDecimalChar = (locale: Locale): string => {
     }
 };
 
-const DecimalInput = ({inputRef, value, defaultValue, ...rest}: any) => {
+export const DecimalInput = ({inputRef, value, defaultValue, ...rest}: any) => {
     const {i18n} = useTheme();
     const localDecimalChar = getLocalDecimalChar(i18n.locale);
 
@@ -96,8 +96,6 @@ const FormDecimalField: React.FC<FormDecimalFieldProps> = ({
     return (
         <TextFieldBase
             {...rest}
-            inputMode="email"
-            type="email"
             inputRef={(field) => register({name, field, validate})}
             disabled={disabled || formStatus === 'sending'}
             error={error || !!formErrors[name]}

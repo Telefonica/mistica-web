@@ -9,6 +9,7 @@ import FormEmailField from '../form-email-field';
 import FormIntegerField from '../form-integer-field';
 import FormDecimalField from '../form-decimal-field';
 import FormCreditCardNumberField from '../form-credit-card-number-field';
+import FormCreditCardExpirationField from '../form-credit-card-expiration-field';
 
 export default {
     title: 'Components|Forms/FormFields',
@@ -205,11 +206,12 @@ export const TypesUncontrolled: StoryComponent = () => (
             )}
         </Uncontrolled>
 
-        <Uncontrolled title="Type credit card expiration">
+        <Uncontrolled title="FormCreditCardExpirationField">
             {(handleChange, handleChangeValue) => (
                 <FormCreditCardExpirationField
                     name="credit-card-expiration"
                     label="Expiration"
+                    defaultValue="13/21"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
                 />
@@ -335,11 +337,11 @@ export const TypesControlled = (): React.ReactNode => (
             )}
         </Controlled>
 
-        <Controlled title="Type credit card expiration" initialValue="13/21">
+        <Controlled title="FormCreditCardExpirationField" initialValue="13/21">
             {(handleChange, handleChangeValue, value) => (
-                <TextField
+                <FormCreditCardExpirationField
                     value={value}
-                    type="credit-card-expiration"
+                    name="credit-card-expiration"
                     label="Expiration"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}

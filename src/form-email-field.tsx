@@ -53,7 +53,6 @@ const FormEmailField: React.FC<FormEmailFieldProps> = ({
     return (
         <TextFieldBase
             {...rest}
-            type="email"
             inputMode="email"
             inputRef={(field) => register({name, field, validate})}
             disabled={disabled || formStatus === 'sending'}

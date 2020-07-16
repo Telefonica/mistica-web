@@ -67,8 +67,6 @@ const FormIntegerField: React.FC<FormIntegerFieldProps> = ({
     return (
         <TextFieldBase
             {...rest}
-            inputMode="email"
-            type="email"
             inputRef={(field) => register({name, field, validate})}
             disabled={disabled || formStatus === 'sending'}
             error={error || !!formErrors[name]}

@@ -167,10 +167,11 @@ const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps> = ({
     onBlur,
     acceptedCards = {americanExpress: true, visa: true, masterCard: true},
     value,
-    autoComplete,
+    autoComplete = 'cc-number',
     ...rest
 }) => {
     const {texts} = useTheme();
+    const [currentValue, setCurrentValue] = React.useState(value ?? rest.defaultValue);
     const {
         jumpToNext,
         rawValues,
@@ -224,6 +225,7 @@ const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps> = ({
                 const value = processValue(rawValue);
                 setRawValue({name, value: rawValue});
                 setValue?.({name, value});
+                setCurrentValue(value);
                 onChange?.(event);
                 onChangeValue?.(value, rawValue);
                 if (value.length >= getCreditCardNumberLength(value)) {
@@ -242,8 +244,8 @@ const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps> = ({
                 onBlur?.(e);
             }}
             inputComponent={CreditCardInput}
-            autoComplete={autoComplete || 'cc-number'}
-            endIcon={<CreditcardAdornment value={value ?? rest.defaultValue} />}
+            autoComplete={autoComplete}
+            endIcon={<CreditcardAdornment value={currentValue} />}
         />
     );
 };
