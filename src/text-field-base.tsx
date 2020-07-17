@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {Label, HelperText, FieldContainer} from './text-field-components';
-import {isIos, isRunningAcceptanceTest} from './utils/platform';
+import {isIos, isRunningAcceptanceTest, isChrome} from './utils/platform';
+import {useAriaId, useScreenSize} from './hooks';
+import classNames from 'classnames';
 
 import type {Theme} from './theme';
 import type {InputState} from './text-field-components';
-import {useAriaId, useScreenSize} from './hooks';
 
 export const DEFAULT_WIDTH = 328;
 
@@ -144,7 +145,22 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
+// Chrome ignores 'off': https://bugs.chromium.org/p/chromium/issues/detail?id=468153#c164
+const fixAutoComplete = (autoComplete?: string) =>
+    autoComplete === 'off' && isChrome() ? 'nope' : autoComplete;
+
+const updateRef = (ref: React.Ref<any> | undefined, refValue: any) => {
+    if (ref) {
+        if (typeof ref === 'function') {
+            ref(refValue);
+        } else {
+            // @ts-expect-error - current is typed as read-only
+            ref.current = refValue;
+        }
+    }
+};
+
+const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
     (
         {
             error,
@@ -167,6 +183,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             maxLength,
             children,
             id: idFromProps,
+            autoComplete: autoCompleteProp,
             fullWidth,
             ...rest
         },
@@ -217,27 +234,20 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
 
         const defaultInputElement = multiline ? 'textarea' : 'input';
 
-        const inputRefProps = !inputComponent
-            ? {
-                  ref: (actualRef: HTMLInputElement) => {
-                      [ref, inputRef].forEach((currentRef) => {
-                          if (currentRef) {
-                              if (typeof currentRef === 'function') {
-                                  currentRef(actualRef);
-                              } else {
-                                  currentRef.current = actualRef;
-                              }
-                          }
-                      });
-                  },
-              }
+        // FIXME it should be enough to forward refs. inputRef could be removed
+        const inputRefProps = inputComponent
+            ? {inputRef}
             : {
-                  inputRef,
+                  ref: (refValue: HTMLInputElement) => {
+                      updateRef(ref, refValue);
+                      updateRef(inputRef, refValue);
+                  },
               };
 
         const props = {
             ...rest,
             maxLength,
+            autoComplete: fixAutoComplete(autoCompleteProp),
             ...inputProps,
         };
 
@@ -308,3 +318,109 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         );
     }
 );
+
+const useSuggestionsStyles = createUseStyles(() => ({
+    menuItem: {
+        lineHeight: 1.5,
+        padding: '6px 16px',
+        height: 48,
+        transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+        '& hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.08)',
+        },
+        display: 'flex',
+        alignItems: 'center',
+        cursor: 'pointer',
+    },
+    menuItemSelected: {
+        backgroundColor: 'rgba(0, 0, 0, 0.14)',
+    },
+    suggestionsContainer: {
+        boxShadow:
+            '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
+        backgroundColor: 'white',
+        position: 'absolute',
+        zIndex: 2, // one more than TextField label
+    },
+}));
+
+const Autosuggest = React.lazy(() => import(/* webpackChunkName: "react-autosuggest" */ 'react-autosuggest'));
+
+export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>((props, ref) => {
+    const [suggestions, setSuggestions] = React.useState<Array<string>>([]);
+    const inputRef = React.useRef<HTMLInputElement>(null);
+    const classes = useSuggestionsStyles();
+
+    if (props.getSuggestions && (props.value === undefined || props.defaultValue !== undefined)) {
+        throw Error('Fields with suggestions must be used in controlled mode');
+    }
+
+    const {getSuggestions} = props;
+
+    return getSuggestions ? (
+        <React.Suspense
+            fallback={
+                <TextFieldBaseComponent
+                    {...props}
+                    // This label override while loading is needed in acceptance tests because
+                    // while the test is typing, the component could be remounted.
+                    // By hiding the label, we ensure that the test selects the loaded component
+                    label={isRunningAcceptanceTest() ? '' : props.label}
+                    autoComplete="off"
+                    ref={ref}
+                />
+            }
+        >
+            <Autosuggest
+                // @ts-expect-error Autosuggest expects slightly different types
+                inputProps={{
+                    ...props,
+                    autoComplete: 'off',
+                    onChange: (e: React.ChangeEvent<HTMLInputElement>, {newValue}) => {
+                        // hack to mutate event value
+                        e.target = {...e.target, value: newValue};
+                        e.currentTarget = {...e.currentTarget, value: newValue};
+                        props.onChange?.(e);
+                    },
+                }}
+                renderInputComponent={(inputProps) => (
+                    <TextFieldBaseComponent
+                        {...(inputProps as TextFieldBaseProps)}
+                        inputRef={(refValue) => {
+                            updateRef(inputRef, refValue);
+                            updateRef(props.inputRef, refValue);
+                        }}
+                        ref={ref}
+                    />
+                )}
+                suggestions={suggestions}
+                onSuggestionsFetchRequested={({value}) => setSuggestions(getSuggestions(value))}
+                onSuggestionsClearRequested={() => setSuggestions([])}
+                getSuggestionValue={(suggestion: any) => suggestion}
+                renderSuggestion={(suggestion: any, {isHighlighted}) => (
+                    <div
+                        role="menuitem"
+                        className={classNames(classes.menuItem, {
+                            [classes.menuItemSelected]: isHighlighted,
+                        })}
+                    >
+                        {suggestion}
+                    </div>
+                )}
+                renderSuggestionsContainer={(options) => (
+                    <div
+                        {...options.containerProps}
+                        style={{
+                            width: inputRef.current ? inputRef.current.clientWidth + 2 : 0, // +2 due to borders (input)
+                        }}
+                        className={classes.suggestionsContainer}
+                    >
+                        {options.children}
+                    </div>
+                )}
+            />
+        </React.Suspense>
+    ) : (
+        <TextFieldBaseComponent {...props} ref={ref} />
+    );
+});

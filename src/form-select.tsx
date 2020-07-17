@@ -59,7 +59,7 @@ export const FormSelect: React.FC<FormSelectProps> = ({
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name] ?? ''}
+            value={value ?? rawValues[name]}
             onChange={(event) => {
                 setRawValue({name, value: event.currentTarget.value});
             }}

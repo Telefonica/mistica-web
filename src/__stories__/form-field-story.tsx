@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {TextField, ThemeVariant, useTheme} from '..';
+import {ThemeVariant, useTheme} from '..';
 import Box from '../box';
 import {inspect} from 'util';
 import Icon from '../icons/icon-visibility';
-import {StorySection, countriesList} from './helpers';
+import {StorySection, countriesList, phoneNumbersList} from './helpers';
 import {FormEmailField} from '../form-email-field';
 import {FormIntegerField} from '../form-integer-field';
 import {FormDecimalField} from '../form-decimal-field';
@@ -77,8 +77,13 @@ const Controlled: React.FC<ControlledProps> = ({title, initialValue, children}) 
     );
 };
 
-const getSuggestions = (value: string) =>
+const getCountrySuggestions = (value: string) =>
     countriesList
+        .filter((s) => String(s).toLocaleLowerCase().startsWith(value.toLocaleLowerCase()))
+        .slice(0, 5);
+
+const getPhoneNumberSuggestions = (value: string) =>
+    phoneNumbersList
         .filter((s) => String(s).toLocaleLowerCase().startsWith(value.toLocaleLowerCase()))
         .slice(0, 5);
 
@@ -177,6 +182,18 @@ export const Variants: StoryComponent = () => {
 
 export const TypesUncontrolled: StoryComponent = () => (
     <>
+        <Uncontrolled title="FormTextField">
+            {(handleChange, handleChangeValue) => (
+                <FormTextField
+                    name="text"
+                    label="Text"
+                    defaultValue="Some text"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Uncontrolled>
+
         <Uncontrolled title="FormEmailField">
             {(handleChange, handleChangeValue) => (
                 <FormEmailField
@@ -305,15 +322,29 @@ TypesUncontrolled.story = {name: 'Types (uncontrolled)'};
 
 export const TypesControlled = (): React.ReactNode => (
     <>
-        <Controlled title="Type text + autocomplete" initialValue="">
+        <Controlled title="FormTextField" initialValue="Some text">
             {(handleChange, handleChangeValue, value) => (
-                <TextField
+                <FormTextField
                     value={value}
-                    label="Text with autocomplete"
+                    name="text"
+                    label="Text"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Controlled>
+
+        <Controlled title="FormTextField with suggestions" initialValue="">
+            {(handleChange, handleChangeValue, value) => (
+                <FormTextField
+                    autoComplete="off"
+                    value={value}
+                    name="country"
+                    label="Text with suggestions"
                     placeholder="Country name (start with 'A')"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
-                    getSuggestions={getSuggestions}
+                    getSuggestions={getCountrySuggestions}
                 />
             )}
         </Controlled>
@@ -416,7 +447,7 @@ export const TypesControlled = (): React.ReactNode => (
             )}
         </Controlled>
 
-        <Controlled title="Type phone" initialValue="654834455">
+        <Controlled title="FormPhoneNumberField" initialValue="654834455">
             {(handleChange, handleChangeValue, value) => (
                 <FormPhoneNumberField
                     value={value}
@@ -428,7 +459,21 @@ export const TypesControlled = (): React.ReactNode => (
             )}
         </Controlled>
 
-        <Controlled title="Type phone (with prefix)" initialValue="654834455">
+        <Controlled title="FormPhoneNumberField (with suggestions)" initialValue="">
+            {(handleChange, handleChangeValue, value) => (
+                <FormPhoneNumberField
+                    value={value}
+                    name="phone"
+                    label="Phone with suggestions"
+                    placeholder="Enter phone (start with 6)"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                    getSuggestions={getPhoneNumberSuggestions}
+                />
+            )}
+        </Controlled>
+
+        <Controlled title="FormPhoneNumberField (with prefix)" initialValue="654834455">
             {(handleChange, handleChangeValue, value) => (
                 <FormPhoneNumberField
                     value={value}

@@ -15,19 +15,19 @@ const STORY = {
     name: 'Types (controlled)',
 };
 
-test('TextField of type text with autocomplete', async () => {
+test('TextField of type text with suggestions', async () => {
     const page = await openStoryPage(STORY);
 
-    // component is lazy mounted, when getting by label, reference is lost after autocomplete load
+    // component is lazy mounted, when getting by label, reference is lost after suggestions load
     const textField = await screen.getByRole('combobox');
 
-    await clearAndType(page, textField, 'a'); // start typing to trigger autocomplete list
+    await clearAndType(page, textField, 'a'); // start typing to trigger suggestions list
 
     const items = await screen.getAllByRole('option');
     expect(items).toHaveLength(5);
 
     await page.click(items[3]);
-    await expect(getValue(screen.getByLabelText('Text with autocomplete (opcional)'))).resolves.toBe(
+    await expect(getValue(screen.getByLabelText('Text with suggestions (opcional)'))).resolves.toBe(
         'Algeria'
     );
 });

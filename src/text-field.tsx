@@ -1,11 +1,9 @@
 /*
+!!! IMPORTANT !!!
 
-IMPORTANT
-
-This component is deprecated and will be removed in a future major release
-
+Do not add new features here!
+This component is deprecated and will be removed
 */
-
 import * as React from 'react';
 import Visibility from './icons/icon-visibility';
 import VisibilityOff from './icons/icon-visibility-off';

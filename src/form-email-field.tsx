@@ -10,6 +10,7 @@ const RE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 interface FormEmailFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
+    getSuggestions?: (value: string) => Array<string>;
 }
 
 export const FormEmailField: React.FC<FormEmailFieldProps> = ({

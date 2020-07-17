@@ -10,6 +10,7 @@ export interface SimpleFormTextFieldProps extends CommonFormFieldProps {
     multiline?: boolean;
     prefix?: React.ReactNode;
     endIcon?: React.ReactNode;
+    getSuggestions?: (value: string) => Array<string>;
 }
 
 /**

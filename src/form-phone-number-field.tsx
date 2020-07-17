@@ -9,6 +9,7 @@ import type {CommonFormFieldProps} from './form';
 interface FormPhoneNumberFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
     prefix?: string;
+    getSuggestions?: (value: string) => Array<string>;
 }
 
 export const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({

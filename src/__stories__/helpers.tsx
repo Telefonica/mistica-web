@@ -37,6 +37,19 @@ export const countriesList = [
     'Azerbaijan',
 ];
 
+export const phoneNumbersList = [
+    '600 00 00 00',
+    '611 11 11 11',
+    '622 22 22 22',
+    '633 33 33 33',
+    '644 44 44 44',
+    '655 55 55 55',
+    '666 66 66 66',
+    '677 77 77 77',
+    '688 88 88 88',
+    '699 99 99 99',
+];
+
 export const fruitEntries = [
     ['- None -', ''],
     ['Orange', 'orange'],
