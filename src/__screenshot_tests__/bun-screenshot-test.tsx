@@ -6,7 +6,7 @@ test('Bun common component screenshot', async () => {
         name: 'bun',
     });
 
-    const bun = await screen.getByTestId('bun');
+    const bun = await screen.findByTestId('bun');
 
     const image = await bun.screenshot();
 

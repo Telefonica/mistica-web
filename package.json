@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "4.0.0",
+    "version": "4.0.1",
     "license": "UNLICENSED",
     "main": "dist/index.js",
     "module": "dist-es/index.js",
@@ -116,7 +116,7 @@
         "eslint-plugin-jsx-a11y": "^6.2.3",
         "eslint-plugin-react": "^7.20.0",
         "eslint-plugin-react-hooks": "^4.0.4",
-        "eslint-plugin-testing-library": "^3.1.4",
+        "eslint-plugin-testing-library": "^3.3.1",
         "flow-bin": "^0.125.1",
         "flow-typed": "^3.1.0",
         "flowgen": "^1.10.0",

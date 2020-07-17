@@ -28,14 +28,14 @@ test.each`
         });
 
         if (!isInverse) {
-            await click(screen.getByText('Inverse'));
+            await click(await screen.findByText('Inverse'));
         }
 
         if (isErrorAmount) {
-            await click(screen.getByText('Error amount'));
+            await click(await screen.findByText('Error amount'));
         }
 
-        const story = await screen.getByTestId('header-layout');
+        const story = await screen.findByTestId('header-layout');
         const image = await story.screenshot();
         expect(image).toMatchImageSnapshot();
     }
@@ -48,9 +48,9 @@ test('Header vertical extra in desktop', async () => {
         device: 'DESKTOP',
     });
 
-    await click(screen.getByLabelText('Extra content placed on the right in desktop'));
+    await click(await screen.findByLabelText('Extra content placed on the right in desktop'));
 
-    const story = await screen.getByTestId('header-layout');
+    const story = await screen.findByTestId('header-layout');
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
 });
@@ -62,7 +62,7 @@ test.each(DEVICES)('MainSectionHeader', async (device) => {
         device,
     });
 
-    const story = await screen.getByTestId('header-layout');
+    const story = await screen.findByTestId('header-layout');
 
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
