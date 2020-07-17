@@ -5,7 +5,7 @@ import TextFieldBase from './text-field-base';
 import type {CommonFormFieldProps} from './form';
 
 export interface SimpleFormTextFieldProps extends CommonFormFieldProps {
-    type?: 'text'; // @deprecated
+    type?: 'text'; // @deprecated, this will be the only allowed type for FormTextFields
     onChangeValue?: (value: string, rawValue: string) => void;
     multiline?: boolean;
     prefix?: React.ReactNode;
@@ -31,7 +31,7 @@ const FormTextField: React.FC<FormTextFieldProps> = ({
     helperText,
     name,
     optional,
-    type = 'text', // @deprecated
+    type = 'text',
     validate,
     onChangeValue,
     onChange,

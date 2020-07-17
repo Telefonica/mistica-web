@@ -1,32 +1,26 @@
 import * as React from 'react';
 import {useForm} from './form-context';
-import {useTheme} from './hooks';
 
 import type {CommonFormFieldProps} from './form';
 import TextFieldBase from './text-field-base';
 
-// matches strings like: "x@x.x" (where "x" is any string without spaces)
-const RE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-interface FormEmailFieldProps extends CommonFormFieldProps {
+interface FormDateFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const FormEmailField: React.FC<FormEmailFieldProps> = ({
+const FormEmailField: React.FC<FormDateFieldProps> = ({
     disabled,
     error,
     helperText,
     name,
     optional,
-    validate: validateProp,
+    validate,
     onChange,
     onChangeValue,
     onBlur,
     value,
-    autoComplete = 'email',
     ...rest
 }) => {
-    const {texts} = useTheme();
     const {
         rawValues,
         setRawValue,
@@ -38,22 +32,13 @@ const FormEmailField: React.FC<FormEmailFieldProps> = ({
         register,
     } = useForm();
 
-    const validate = (value: string | undefined, rawValue: string) => {
-        if (!value) {
-            return optional ? '' : texts.formFieldErrorIsMandatory;
-        }
-        if (!RE_EMAIL.test(value)) {
-            return texts.formEmailError;
-        }
-        return validateProp?.(value, rawValue);
-    };
-
-    const processValue = (value: string) => value.replace(/\s/g, '');
+    const processValue = (value: string) => value;
 
     return (
         <TextFieldBase
             {...rest}
-            inputMode="email"
+            shrinkLabel
+            type="date"
             inputRef={(field) => register({name, field, validate})}
             disabled={disabled || formStatus === 'sending'}
             error={error || !!formErrors[name]}
@@ -74,7 +59,6 @@ const FormEmailField: React.FC<FormEmailFieldProps> = ({
                 setFormError({name, error: validate?.(values[name], rawValues[name])});
                 onBlur?.(e);
             }}
-            autoComplete={autoComplete}
         />
     );
 };

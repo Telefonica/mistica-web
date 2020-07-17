@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {TextField, PhoneInput, ThemeVariant, useTheme} from '..';
-import Stack from '../stack';
 import Box from '../box';
 import {inspect} from 'util';
 import Icon from '../icons/icon-visibility';
@@ -12,6 +11,8 @@ import FormCreditCardNumberField from '../form-credit-card-number-field';
 import FormCreditCardExpirationField from '../form-credit-card-expiration-field';
 import FormCvvField from '../form-cvv-field';
 import FormTextField from '../form-text-field';
+import FormPasswordField from '../form-password-field';
+import FormDateField from '../form-date-field';
 
 export default {
     title: 'Components|Forms/FormFields',
@@ -247,11 +248,11 @@ export const TypesUncontrolled: StoryComponent = () => (
             )}
         </Uncontrolled>
 
-        <Uncontrolled title="Type password">
+        <Uncontrolled title="FormPasswordField">
             {(handleChange, handleChangeValue) => (
                 <form>
-                    <TextField
-                        type="password"
+                    <FormPasswordField
+                        name="password"
                         label="Password"
                         defaultValue="password123"
                         onChange={handleChange}
@@ -261,10 +262,10 @@ export const TypesUncontrolled: StoryComponent = () => (
             )}
         </Uncontrolled>
 
-        <Uncontrolled title="Type date">
+        <Uncontrolled title="FormDateField">
             {(handleChange, handleChangeValue) => (
-                <TextField
-                    type="date"
+                <FormDateField
+                    name="date"
                     label="Date"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
@@ -390,12 +391,12 @@ export const TypesControlled = (): React.ReactNode => (
             )}
         </Controlled>
 
-        <Controlled title="Type password" initialValue="password123">
+        <Controlled title="FormPasswordField" initialValue="password123">
             {(handleChange, handleChangeValue, value) => (
                 <form>
-                    <TextField
+                    <FormPasswordField
+                        name="password"
                         value={value}
-                        type="password"
                         label="Password"
                         onChange={handleChange}
                         onChangeValue={handleChangeValue}
@@ -404,11 +405,11 @@ export const TypesControlled = (): React.ReactNode => (
             )}
         </Controlled>
 
-        <Controlled title="Type date" initialValue="1980-10-06">
+        <Controlled title="FormDateField" initialValue="1980-10-06">
             {(handleChange, handleChangeValue, value) => (
-                <TextField
+                <FormDateField
                     value={value}
-                    type="date"
+                    name="date"
                     label="Date"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
