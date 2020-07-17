@@ -528,7 +528,17 @@ export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role}
     </div>
 );
 
-export const BoxedRow: React.FC<RowContentProps> = (props) => <RowContent {...props} />;
+const BoxRowContent: React.FC<RowContentProps> = (props) => {
+    const classes = useStyles();
+
+    return (
+        <div className={classes.boxed}>
+            <RowContent {...props} />
+        </div>
+    );
+};
+
+export const BoxedRow: React.FC<RowContentProps> = (props) => <BoxRowContent {...props} />;
 
 type BoxedRowElement = Array<React.ReactElement<typeof BoxedRow>>;
 
@@ -538,14 +548,8 @@ type BoxedRowListProps = {
     role?: string;
 };
 
-export const BoxedRowList: React.FC<BoxedRowListProps> = ({children, ariaLabelledby, role}) => {
-    const classes = useStyles();
-
-    return (
-        <Stack space={16} role={role} aria-labelledby={ariaLabelledby}>
-            {React.Children.map(children as any, (child) => (
-                <div className={classes.boxed}>{child}</div>
-            ))}
-        </Stack>
-    );
-};
+export const BoxedRowList: React.FC<BoxedRowListProps> = ({children, ariaLabelledby, role}) => (
+    <Stack space={16} role={role} aria-labelledby={ariaLabelledby}>
+        {children}
+    </Stack>
+);
