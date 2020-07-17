@@ -104,7 +104,7 @@ export const FormDecimalField: React.FC<FormDecimalFieldProps> = ({
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name]}
+            value={value ?? rawValues[name] ?? (rest.defaultValue ? undefined : '')}
             onChange={(event) => {
                 const rawValue = event.currentTarget.value;
                 const value = processValue(rawValue);

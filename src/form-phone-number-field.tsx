@@ -43,6 +43,8 @@ export const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
         return validateProp?.(value, rawValue);
     };
 
+    const processValue = (s: string) => s.replace(/[^\d]/g, ''); // keep only digits
+
     return (
         <TextFieldBase
             {...rest}
@@ -53,10 +55,10 @@ export const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name]}
+            value={value ?? rawValues[name] ?? (rest.defaultValue ? undefined : '')}
             onChange={(event) => {
                 const rawValue = event.currentTarget.value;
-                const value = rawValue; // FIXME
+                const value = processValue(rawValue);
                 setRawValue({name, value: rawValue});
                 setValue({name, value});
 

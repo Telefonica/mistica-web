@@ -73,7 +73,7 @@ test('custom validator', async () => {
 });
 
 test('fields are disabled during submit', async () => {
-    let resolveSubmitPromise: () => void;
+    let resolveSubmitPromise = () => {};
     const submitPromise = new Promise((r) => {
         resolveSubmitPromise = r;
     });
@@ -93,7 +93,6 @@ test('fields are disabled during submit', async () => {
     expect(screen.getByTestId('username')).toBeDisabled();
     expect(screen.getByText('Submit')).toBeDisabled();
 
-    // @ts-expect-error this is already initialized
     resolveSubmitPromise();
 
     await waitFor(() => {

@@ -140,7 +140,7 @@ export const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFie
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name]}
+            value={value ?? rawValues[name] ?? (rest.defaultValue ? undefined : '')}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const rawValue = event.currentTarget.value;
                 const value = processValue(rawValue);

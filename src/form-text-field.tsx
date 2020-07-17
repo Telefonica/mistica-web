@@ -72,7 +72,7 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
             type={type}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name]}
+            value={value ?? rawValues[name] ?? (rest.defaultValue ? undefined : '')}
             onChange={(event) => {
                 const rawValue = event.currentTarget.value;
                 const value = rawValue;
