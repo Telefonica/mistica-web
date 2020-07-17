@@ -144,7 +144,7 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
+export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
     (
         {
             error,
@@ -308,5 +308,3 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         );
     }
 );
-
-export default TextFieldBase;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useForm} from './form-context';
-import TextFieldBase from './text-field-base';
+import {TextFieldBase} from './text-field-base';
 import {useTheme} from './hooks';
 import IconButton from './icon-button';
 import Visibility from './icons/icon-visibility';
@@ -53,7 +53,7 @@ const PasswordAdornment: React.FC<{
     );
 };
 
-const FormEmailField: React.FC<FormPasswordFieldProps> = ({
+export const FormPasswordField: React.FC<FormPasswordFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -129,5 +129,3 @@ const FormEmailField: React.FC<FormPasswordFieldProps> = ({
         />
     );
 };
-
-export default FormEmailField;

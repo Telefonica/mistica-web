@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useForm} from './form-context';
 import {useTheme} from './hooks';
-import TextFieldBase from './text-field-base';
+import {TextFieldBase} from './text-field-base';
 
 import type {CommonFormFieldProps} from './form';
 
@@ -75,7 +75,7 @@ export interface FormCreditCardExpirationFieldProps extends CommonFormFieldProps
     onChangeValue?: (value: ExpirationDateValue) => void;
 }
 
-const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFieldProps> = ({
+export const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -167,5 +167,3 @@ const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFieldProps
         />
     );
 };
-
-export default FormCreditCardExpirationField;

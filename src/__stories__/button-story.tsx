@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from '../button';
 import {ThemeVariant} from '../theme-variant-context';
-import TextField from '../text-field';
+import {FormTextField} from '../form-text-field';
 import Box from '../box';
 import Stack from '../stack';
 import {StorySection, useCheckbox} from './helpers';
@@ -223,7 +223,7 @@ export const SubmitButton: StoryComponent = () => (
         <form onSubmit={() => window.alert('form submitted')}>
             <Box paddingY={16}>
                 <Stack space={16}>
-                    <TextField label="name" />
+                    <FormTextField name="name" label="name" />
                     <ButtonPrimary submit>Submit</ButtonPrimary>
                 </Stack>
             </Box>

@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useAriaId, useTheme, useScreenSize} from './hooks';
 import {isAndroid, isIos} from './utils/platform';
 import {createUseStyles} from './jss';
-import TextFieldBase from './text-field-base';
+import {TextFieldBase} from './text-field-base';
 import IconArrowDown from './icons/icon-arrow-down';
 import Overlay from './overlay';
 import classNames from 'classnames';

@@ -2,11 +2,11 @@ import * as React from 'react';
 import {useForm} from './form-context';
 import {useTheme} from './hooks';
 import {getCvvLength} from './utils/credit-card';
-import DoubleField from './double-field';
+import {DoubleField} from './double-field';
 import Stack from './stack';
-import FormCreditCardExpirationField from './form-credit-card-expiration-field';
-import FormCreditCardNumberField from './form-credit-card-number-field';
-import FormCvvField from './form-cvv-field';
+import {FormCreditCardExpirationField} from './form-credit-card-expiration-field';
+import {FormCreditCardNumberField} from './form-credit-card-number-field';
+import {FormCvvField} from './form-cvv-field';
 
 import type {CardOptions} from './utils/credit-card';
 
@@ -17,7 +17,7 @@ type FormCreditCardFieldsProps = {
     acceptedCards?: CardOptions;
 };
 
-const FormCreditCardFields: React.FC<FormCreditCardFieldsProps> = ({
+export const FormCreditCardFields: React.FC<FormCreditCardFieldsProps> = ({
     numberFieldName = 'ccNum',
     expirationFieldName = 'ccExp',
     cvvFieldName = 'ccCvv',
@@ -49,5 +49,3 @@ const FormCreditCardFields: React.FC<FormCreditCardFieldsProps> = ({
         </Stack>
     );
 };
-
-export default FormCreditCardFields;

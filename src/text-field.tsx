@@ -11,7 +11,7 @@ import Visibility from './icons/icon-visibility';
 import VisibilityOff from './icons/icon-visibility-off';
 import {useAriaId, useTheme, useScreenSize} from './hooks';
 import {isRunningAcceptanceTest} from './utils/platform';
-import TextFieldBase from './text-field-base';
+import {TextFieldBase} from './text-field-base';
 import IconButton from './icon-button';
 import IconCreditcard from './icons/icon-creditcard';
 import IconVisa from './icons/icon-visa';
@@ -462,7 +462,7 @@ const useStyles = createUseStyles(() => ({
 /**
  * @deprecated
  */
-const TextField: React.FC<TextFieldProps> = ({
+export const TextField: React.FC<TextFieldProps> = ({
     onChange,
     onChangeValue,
     Input,
@@ -760,5 +760,3 @@ const TextField: React.FC<TextFieldProps> = ({
         </div>
     );
 };
-
-export default TextField;

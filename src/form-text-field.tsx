@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useForm} from './form-context';
-import TextFieldBase from './text-field-base';
+import {TextFieldBase} from './text-field-base';
 
 import type {CommonFormFieldProps} from './form';
 
@@ -25,7 +25,7 @@ export interface OtherFormTextFieldProps extends CommonFormFieldProps {
 
 export type FormTextFieldProps = SimpleFormTextFieldProps | OtherFormTextFieldProps;
 
-const FormTextField: React.FC<FormTextFieldProps> = ({
+export const FormTextField: React.FC<FormTextFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -90,7 +90,3 @@ const FormTextField: React.FC<FormTextFieldProps> = ({
         />
     );
 };
-
-export type FormTextFieldComponent = typeof FormTextField;
-
-export default FormTextField;

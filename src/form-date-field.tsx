@@ -1,14 +1,14 @@
 import * as React from 'react';
 import {useForm} from './form-context';
+import {TextFieldBase} from './text-field-base';
 
 import type {CommonFormFieldProps} from './form';
-import TextFieldBase from './text-field-base';
 
 interface FormDateFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const FormEmailField: React.FC<FormDateFieldProps> = ({
+export const FormDateField: React.FC<FormDateFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -62,5 +62,3 @@ const FormEmailField: React.FC<FormDateFieldProps> = ({
         />
     );
 };
-
-export default FormEmailField;

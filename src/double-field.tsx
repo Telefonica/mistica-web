@@ -24,7 +24,7 @@ type Props = {
 
 const DEFAULT_WIDTH = 328;
 
-const DoubleField: React.FC<Props> = ({children, fullWidth}) => {
+export const DoubleField: React.FC<Props> = ({children, fullWidth}) => {
     const {isMobile} = useScreenSize();
 
     const containerStyle: React.CSSProperties = {
@@ -54,5 +54,3 @@ const DoubleField: React.FC<Props> = ({children, fullWidth}) => {
 
     return <div style={containerStyle}>{renderChildren()}</div>;
 };
-
-export default DoubleField;

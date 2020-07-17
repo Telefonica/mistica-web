@@ -3,7 +3,7 @@ import {useForm} from './form-context';
 import {useTheme} from './hooks';
 
 import type {CommonFormFieldProps} from './form';
-import TextFieldBase from './text-field-base';
+import {TextFieldBase} from './text-field-base';
 
 const IntegerInput = ({inputRef, value, defaultValue, ...rest}: any) => {
     const format = (v?: string) => String(v ?? '').replace(/[^\d]/g, '');
@@ -30,7 +30,7 @@ interface FormIntegerFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const FormIntegerField: React.FC<FormIntegerFieldProps> = ({
+export const FormIntegerField: React.FC<FormIntegerFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -91,5 +91,3 @@ const FormIntegerField: React.FC<FormIntegerFieldProps> = ({
         />
     );
 };
-
-export default FormIntegerField;

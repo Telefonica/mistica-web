@@ -31,7 +31,7 @@ type FormProps = {
     className?: string;
 };
 
-const Form: React.FC<FormProps> = ({
+export const Form: React.FC<FormProps> = ({
     children,
     className,
     onSubmit,
@@ -208,5 +208,3 @@ export interface CommonFormFieldProps {
     defaultValue?: string;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-
-export default Form;

@@ -8,7 +8,7 @@ import {
     isMasterCard,
     isValidCreditCardNumber,
 } from './utils/credit-card';
-import TextFieldBase from './text-field-base';
+import {TextFieldBase} from './text-field-base';
 import IconCreditcard from './icons/icon-creditcard';
 import IconVisa from './icons/icon-visa';
 import IconMastercard from './icons/icon-mastercard';
@@ -155,7 +155,7 @@ interface FormCreditCardNumberFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps> = ({
+export const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -249,5 +249,3 @@ const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps> = ({
         />
     );
 };
-
-export default FormCreditCardNumberField;

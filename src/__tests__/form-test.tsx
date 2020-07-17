@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Form from '../form';
-import FormTextField from '../form-text-field';
+import {Form} from '../form';
+import {FormTextField} from '../form-text-field';
 import {ButtonPrimary} from '../button';
 
 test('happy case', async () => {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import TextField from '../text-field';
+import {FormTextField} from '../form-text-field';
 import Select from '../select';
 import {useIsInverseVariant} from '../theme-variant-context';
 
@@ -63,7 +63,7 @@ export const useTextField = (
 ): [string, React.ReactNode] => {
     const [text, setText] = React.useState(defaultValue);
     const textField = (
-        <TextField type="text" label={label} value={text} onChangeValue={setText} required={required} />
+        <FormTextField name={label} label={label} value={text} onChangeValue={setText} optional={!required} />
     );
     return [text, textField];
 };

@@ -8,7 +8,7 @@ import Tooltip from './tooltip';
 import IconButton from './icon-button';
 import IcnInfo from './icons/icon-info-cvv';
 import {useForm} from './form-context';
-import TextFieldBase from './text-field-base';
+import {TextFieldBase} from './text-field-base';
 import {DecimalInput} from './form-decimal-field';
 
 import type {CommonFormFieldProps} from './form';
@@ -54,7 +54,7 @@ export interface FormCvvFieldProps extends CommonFormFieldProps {
     value?: string;
 }
 
-const FormCvvField: React.FC<FormCvvFieldProps> = ({
+export const FormCvvField: React.FC<FormCvvFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -147,5 +147,3 @@ const FormCvvField: React.FC<FormCvvFieldProps> = ({
         />
     );
 };
-
-export default FormCvvField;

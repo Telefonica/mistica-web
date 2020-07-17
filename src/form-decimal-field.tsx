@@ -3,7 +3,7 @@ import {useForm} from './form-context';
 import {useTheme} from './hooks';
 
 import type {CommonFormFieldProps} from './form';
-import TextFieldBase from './text-field-base';
+import {TextFieldBase} from './text-field-base';
 import {Locale} from './utils/locale';
 
 const getLocalDecimalChar = (locale: Locale): string => {
@@ -61,7 +61,7 @@ interface FormDecimalFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const FormDecimalField: React.FC<FormDecimalFieldProps> = ({
+export const FormDecimalField: React.FC<FormDecimalFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -122,5 +122,3 @@ const FormDecimalField: React.FC<FormDecimalFieldProps> = ({
         />
     );
 };
-
-export default FormDecimalField;

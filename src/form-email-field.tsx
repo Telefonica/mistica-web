@@ -3,7 +3,7 @@ import {useForm} from './form-context';
 import {useTheme} from './hooks';
 
 import type {CommonFormFieldProps} from './form';
-import TextFieldBase from './text-field-base';
+import {TextFieldBase} from './text-field-base';
 
 // matches strings like: "x@x.x" (where "x" is any string without spaces)
 const RE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -12,7 +12,7 @@ interface FormEmailFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const FormEmailField: React.FC<FormEmailFieldProps> = ({
+export const FormEmailField: React.FC<FormEmailFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -78,5 +78,3 @@ const FormEmailField: React.FC<FormEmailFieldProps> = ({
         />
     );
 };
-
-export default FormEmailField;
