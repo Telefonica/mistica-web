@@ -146,7 +146,7 @@ const useStyles = createUseStyles((theme) => ({
 }));
 
 // Chrome ignores 'off': https://bugs.chromium.org/p/chromium/issues/detail?id=468153#c164
-const fixAutoComplete = (autoComplete?: string) =>
+const fixAutoComplete = (autoComplete?: AutoComplete) =>
     autoComplete === 'off' && isChrome() ? 'nope' : autoComplete;
 
 const updateRef = (ref: React.Ref<any> | undefined, refValue: any) => {
@@ -366,7 +366,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>((props, r
                     // while the test is typing, the component could be remounted.
                     // By hiding the label, we ensure that the test selects the loaded component
                     label={isRunningAcceptanceTest() ? '' : props.label}
-                    autoComplete="off"
+                    autoComplete={fixAutoComplete('off') as AutoComplete}
                     ref={ref}
                 />
             }
@@ -375,7 +375,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>((props, r
                 // @ts-expect-error Autosuggest expects slightly different types
                 inputProps={{
                     ...props,
-                    autoComplete: 'off',
+                    autoComplete: fixAutoComplete('off'),
                     onChange: (e: React.ChangeEvent<HTMLInputElement>, {newValue}) => {
                         // hack to mutate event value
                         e.target = {...e.target, value: newValue};
