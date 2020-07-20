@@ -125,7 +125,6 @@ const useStylesCCAdornment = createUseStyles(() => ({
     },
 }));
 
-// FIXME - APPS-XXXX
 const CreditcardAdornment = ({value}: {value?: string}) => {
     const [{showBackface, animationTarget, isAnimating}, dispatch] = React.useReducer(reducer, initialState);
     React.useEffect(() => {

@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## Release pending
+
+- Form fields refactor:
+  - Deprecate `TextField` (will be removed in a future release)
+  - Deprecate `FormTextField` with types different than `"text"` (those usages will be removed in a future
+    release)
+  - New semantic FormField components added:
+    - `FormDateField`
+    - `FormDecimalField`
+    - `FormEmailField`
+    - `FormIntegerField`
+    - `FormPasswordField`
+    - `FormPhonenumberField`
+  - FormField components can now be used inside a `<Form>` and standalone (connected or unconnected).
+  - `name` prop is in FormFields is now mandatory
+
 ## v.4.0.1 - 2020-07-156
 
 - Fix `TextLink` line height

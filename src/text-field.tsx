@@ -499,7 +499,6 @@ export const TextField: React.FC<TextFieldProps> = ({
     const id = useAriaId(props.id);
     const {texts} = useTheme();
 
-    // TODO Remove: APPS-XXXX
     React.useEffect(() => {
         if (process.env.NODE_ENV !== 'production') {
             console.error(
