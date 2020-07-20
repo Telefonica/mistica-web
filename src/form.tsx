@@ -51,7 +51,7 @@ export const Form: React.FC<FormProps> = ({
     const {texts} = useTheme();
     const classes = useStyles();
 
-    React.useLayoutEffect(
+    React.useEffect(
         () => () => {
             isMountedRef.current = false;
         },

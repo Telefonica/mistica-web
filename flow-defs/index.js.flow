@@ -10,7 +10,8 @@ declare export {
   withSheet,
   removeJssProps,
   createUseStyles,
-  getJss
+  getJss,
+  ServerSideStyles
 } from "./jss";
 declare export { default as ThemeContext } from "./theme-context";
 declare export { default as ThemeContextProvider } from "./theme-context-provider";

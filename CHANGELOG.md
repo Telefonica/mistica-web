@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## v.4.0.1 - 2020-07-156
+
+- Fix `TextLink` line height
+
+## v.4.0.0 - 2020-07-15
+
+- **Breaking change**: Decouple from `react-router-dom`.
+  - You can now provide your custom `Link` component to mistica using the `ThemeContextProvider`. There are
+    some examples in the `examples/` folder on how to use this feature with popular routers, like react-router
+    and Next.js router.
+  - By default, if you don't provide a custom `Link` component, `@telefonica/mistica` will render simple `<a>`
+    elements.
+- Reset some browser default styles at component level.
+- SSR compatibility to support using `@telefonica/mistica` in Next.js apps.
+- Added a `examples/` folder. Added some examples on how to use `@telefonica/mistica` with common
+  meta-frameworks, like Create React App or Next.js
+- Some fixes in `<Switch />` component to avoid some warnings in newer react versions.
+
 ## v.3.5.0 - 2020-07-13
 
 - Created o2-classic skin and updated colors.

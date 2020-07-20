@@ -1,4 +1,5 @@
 dist/
+dist-es/
 dist-ts/
 .directory
 .DS_Store
@@ -12,5 +13,5 @@ yarn-debug.log*
 yarn-error.log*
 __diff_output__
 storybook-static/
-public/
+/public
 .vercel

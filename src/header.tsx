@@ -101,7 +101,8 @@ export const Header: React.FC<HeaderProps> = ({
                             color: theme.colors.textPrimary,
                         })}
                     <Text
-                        as="h2"
+                        role="heading"
+                        aria-level={2}
                         size={isMobile ? 24 : 32}
                         lineHeight={isMobile ? '32px' : '40px'}
                         weight="light"
@@ -169,7 +170,8 @@ export const MainSectionHeader: React.FC<MainSectionHeaderProps> = ({title, desc
             <Stack space={isMobile ? 12 : 16}>
                 {title && (
                     <Text
-                        as="h1"
+                        role="heading"
+                        aria-level={1}
                         size={isMobile ? 28 : 40}
                         lineHeight={isMobile ? '32px' : '48px'}
                         weight="light"

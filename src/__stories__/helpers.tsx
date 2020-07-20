@@ -12,7 +12,16 @@ export const StorySection: React.FC<Props> = ({title, children}) => {
     const isInverse = useIsInverseVariant();
     return (
         <div style={{marginBottom: 32}}>
-            <h1 style={{color: isInverse ? 'white' : '#888', fontSize: 20, margin: '16px 0px'}}>{title}</h1>
+            <h1
+                style={{
+                    color: isInverse ? 'white' : '#888',
+                    fontWeight: 'normal',
+                    fontSize: 20,
+                    margin: '16px 0px',
+                }}
+            >
+                {title}
+            </h1>
             {children}
         </div>
     );

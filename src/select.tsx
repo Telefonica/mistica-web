@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useAriaId, useTheme, useScreenSize} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import {isAndroid, isIos} from './utils/platform';
 import {createUseStyles} from './jss';
 import {TextFieldBase} from './text-field-base';
@@ -85,8 +85,11 @@ const useStyles = createUseStyles((theme) => ({
         alignItems: 'center',
         cursor: 'pointer',
     },
-    wrapper: {
-        width: ({isFullWidth}) => (isFullWidth ? 'auto' : DEFAULT_WIDTH),
+    fullWidthField: {
+        width: ({isFullWidth}) => (isFullWidth === true ? 'initial' : DEFAULT_WIDTH),
+        [theme.mq.mobile]: {
+            width: ({isFullWidth}) => (isFullWidth === false ? DEFAULT_WIDTH : 'initial'),
+        },
     },
 }));
 
@@ -134,7 +137,6 @@ const Select: React.FC<SelectProps> = ({
     autoFocus = false,
     focusableRef: externalFocusableRef,
 }) => {
-    const {isMobile} = useScreenSize();
     const focusableRef = React.useRef<HTMLDivElement | HTMLSelectElement>(null);
     const fieldRef = React.useRef<HTMLDivElement>(null);
     const optionsMenuRef = React.useRef<HTMLUListElement>(null);
@@ -293,15 +295,13 @@ const Select: React.FC<SelectProps> = ({
         }
     }, [autoFocus]);
 
-    const isFullWidth = fullWidth === undefined ? isMobile : fullWidth; // in mobile fullwidth by default
-
     const classes = useStyles({
         label,
         optionsComputedProps,
         animateShowOptions,
         helperText,
         disabled,
-        isFullWidth,
+        isFullWidth: fullWidth,
     });
 
     // When the value is null/undefined/'' we assume it's the default empty option and we don't show any label
@@ -326,7 +326,7 @@ const Select: React.FC<SelectProps> = ({
           };
 
     return shouldUseNative ? (
-        <div className={classes.wrapper}>
+        <div className={classes.fullWidthField}>
             <FieldContainer
                 helperText={<HelperText error={error} leftText={helperText} />}
                 fieldRef={fieldRef}
@@ -387,7 +387,7 @@ const Select: React.FC<SelectProps> = ({
     ) : (
         <>
             <div
-                className={classes.wrapper}
+                className={classes.fullWidthField}
                 style={{
                     cursor: disabled ? 'auto' : 'pointer',
                     position: 'relative',
@@ -412,9 +412,7 @@ const Select: React.FC<SelectProps> = ({
                         visibility: 'hidden',
                         ...style,
                     }}
-                    fieldStyle={{
-                        width: isFullWidth ? undefined : DEFAULT_WIDTH,
-                    }}
+                    fieldClassName={classes.fullWidthField}
                     endIcon={<IconArrowDown />}
                     focus={isFocused}
                     label={label}

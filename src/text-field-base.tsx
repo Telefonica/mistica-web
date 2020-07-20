@@ -62,7 +62,7 @@ interface TextFieldBaseProps {
     inputComponent?: React.ComponentType<any>;
     shrinkLabel?: boolean;
     focus?: boolean;
-    fieldStyle?: React.CSSProperties;
+    fieldClassName?: string;
     fieldRef?: React.RefObject<HTMLDivElement>;
     onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
     multiline?: boolean;
@@ -178,7 +178,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             shrinkLabel,
             multiline = false,
             focus,
-            fieldStyle,
+            fieldClassName,
             fieldRef,
             maxLength,
             children,
@@ -266,7 +266,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                 }
                 multiline={multiline}
                 style={containerStyle}
-                fieldStyle={fieldStyle}
+                className={fieldClassName}
                 fieldRef={fieldRef}
             >
                 {prefix && <div className={classes.prefix}>{prefix}</div>}

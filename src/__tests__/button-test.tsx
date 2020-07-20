@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {ThemeVariant} from '../theme-variant-context';
 import {ButtonPrimary, ButtonSecondary} from '../button';
-import * as ReactRouterDom from 'react-router-dom';
 import * as Spinner from '../spinner';
 import {render} from '@testing-library/react';
+import ThemeContextProvider from '../theme-context-provider';
+import {overrideTheme} from './utils';
 
 test('fake button', () => {
     const {asFragment} = render(<ButtonPrimary fake>test</ButtonPrimary>);
@@ -178,13 +179,12 @@ test('"href" with "newTab" renders required attributes', () => {
 });
 
 test('"to" uses a Link Component', () => {
-    // @ts-expect-error mocking render method
-    jest.spyOn(ReactRouterDom.Link, 'render').mockImplementation(() => '(Link Component)' as any);
+    const Link = () => '(Link Component)' as any;
 
     const {asFragment} = render(
-        <ReactRouterDom.MemoryRouter>
+        <ThemeContextProvider theme={overrideTheme({Link})}>
             <ButtonPrimary to="/test">test</ButtonPrimary>
-        </ReactRouterDom.MemoryRouter>
+        </ThemeContextProvider>
     );
 
     expect(asFragment()).toMatchInlineSnapshot(`
@@ -195,11 +195,7 @@ test('"to" uses a Link Component', () => {
 });
 
 test('<a> is rendered when using "to" prop', () => {
-    const {asFragment} = render(
-        <ReactRouterDom.MemoryRouter>
-            <ButtonPrimary to="/test">test</ButtonPrimary>
-        </ReactRouterDom.MemoryRouter>
-    );
+    const {asFragment} = render(<ButtonPrimary to="/test">test</ButtonPrimary>);
 
     expect(asFragment()).toMatchInlineSnapshot(`
         <DocumentFragment>

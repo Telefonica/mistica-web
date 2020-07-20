@@ -17,9 +17,9 @@ test.each`
     });
 
     if (withIcon) {
-        await page.click(screen.getByText('With icons'));
+        await page.click(await screen.findByText('With icons'));
     }
 
-    const image = await (await screen.getByRole('tablist')).screenshot();
+    const image = await (await screen.findByRole('tablist')).screenshot();
     expect(image).toMatchImageSnapshot();
 });
