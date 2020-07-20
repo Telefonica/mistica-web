@@ -7,9 +7,16 @@
 
 import * as React from "react";
 import { type CommonFormFieldProps } from "./form";
-declare type DecimalInputProps = React.HTMLProps<HTMLInputElement> & {
-  inputRef: React.Ref<HTMLInputElement>
-};
+
+/**
+ * typed as `any` because `React.HTMLProps<>` has no equivalent in flowtype
+ * not a big problem because this component is not exported to the public API
+ *
+ * The correct type would be:
+ *
+ * type DecimalInputProps = React.HTMLProps<HTMLInputElement> & {inputRef: React.Ref<HTMLInputElement>}
+ */
+declare type DecimalInputProps = any;
 declare export var DecimalInput: React.ComponentType<DecimalInputProps>;
 export type FormDecimalFieldProps = {
   ...$Exact<CommonFormFieldProps>,
