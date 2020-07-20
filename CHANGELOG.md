@@ -12,8 +12,7 @@
     - `FormEmailField`
     - `FormIntegerField`
     - `FormPasswordField`
-    - `FormPhonenumberField`
-  - FormField components can now be used inside a `<Form>` and standalone (connected or unconnected).
+  - All FormField components can now be used inside a `<Form>` and standalone (connected or unconnected)
   - `name` prop is in FormFields is now mandatory
 
 ## v.4.0.1 - 2020-07-156
