@@ -6,7 +6,7 @@ import {PhoneInput} from './phone-input';
 
 import type {CommonFormFieldProps} from './form';
 
-interface FormPhoneNumberFieldProps extends CommonFormFieldProps {
+export interface FormPhoneNumberFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
     prefix?: string;
     getSuggestions?: (value: string) => Array<string>;

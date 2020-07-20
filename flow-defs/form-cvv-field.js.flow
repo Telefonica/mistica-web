@@ -13,7 +13,6 @@ export type FormCvvFieldProps = {
 
   acceptedCards?: CardOptions,
   onChangeValue?: (value: string, rawValue: string) => void,
-  type: "credit-card-cvv"
+  value?: string
 };
-declare var FormCvvField: React.ComponentType<FormCvvFieldProps>;
-declare export default typeof FormCvvField;
+declare export var FormCvvField: React.ComponentType<FormCvvFieldProps>;

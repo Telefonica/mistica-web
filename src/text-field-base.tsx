@@ -2,13 +2,11 @@ import * as React from 'react';
 import {createUseStyles} from './jss';
 import {Label, HelperText, FieldContainer} from './text-field-components';
 import {isIos, isRunningAcceptanceTest, isChrome} from './utils/platform';
-import {useAriaId, useScreenSize} from './hooks';
+import {useAriaId} from './hooks';
 import classNames from 'classnames';
 
 import type {Theme} from './theme';
 import type {InputState} from './text-field-components';
-
-export const DEFAULT_WIDTH = 328;
 
 /**
  * Incomplete list, add more if needed
@@ -205,9 +203,6 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             multiline,
             type: rest.type,
         });
-        // in mobile, fullWidth by default
-        const {isMobile} = useScreenSize();
-        const isFullWidth = fullWidth ?? isMobile;
 
         React.useEffect(() => {
             if (inputState !== 'focused' && value?.length) {
@@ -251,10 +246,6 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             ...inputProps,
         };
 
-        const containerStyle = {
-            width: isFullWidth ? undefined : DEFAULT_WIDTH,
-        };
-
         return (
             <FieldContainer
                 helperText={
@@ -265,7 +256,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                     />
                 }
                 multiline={multiline}
-                style={containerStyle}
+                fullWidth={fullWidth}
                 className={fieldClassName}
                 fieldRef={fieldRef}
             >
@@ -341,21 +332,24 @@ const useSuggestionsStyles = createUseStyles(() => ({
         backgroundColor: 'white',
         position: 'absolute',
         zIndex: 2, // one more than TextField label
+        '& > ul': {
+            listStyleType: 'none',
+            padding: 0,
+            margin: 0,
+        },
     },
 }));
 
 const Autosuggest = React.lazy(() => import(/* webpackChunkName: "react-autosuggest" */ 'react-autosuggest'));
 
-export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>((props, ref) => {
+export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(({getSuggestions, ...props}, ref) => {
     const [suggestions, setSuggestions] = React.useState<Array<string>>([]);
     const inputRef = React.useRef<HTMLInputElement>(null);
     const classes = useSuggestionsStyles();
 
-    if (props.getSuggestions && (props.value === undefined || props.defaultValue !== undefined)) {
+    if (getSuggestions && (props.value === undefined || props.defaultValue !== undefined)) {
         throw Error('Fields with suggestions must be used in controlled mode');
     }
-
-    const {getSuggestions} = props;
 
     return getSuggestions ? (
         <React.Suspense

@@ -8,14 +8,19 @@
 import * as React from "react";
 import { type CommonFormFieldProps } from "./form";
 declare type ExpirationDateValue = {
-  month: number,
-  year: number,
+  month: number | null,
+  year: number | null,
   raw: string
 };
 export type FormCreditCardExpirationFieldProps = {
   ...$Exact<CommonFormFieldProps>,
 
+  validate?: (
+    value: ExpirationDateValue | void,
+    rawValue: string
+  ) => string | void,
+  value?: string,
   onChangeValue?: (value: ExpirationDateValue) => void
 };
-declare var FormCreditCardExpirationField: React.ComponentType<FormCreditCardExpirationFieldProps>;
-declare export default typeof FormCreditCardExpirationField;
+declare export var FormCreditCardExpirationField: React.ComponentType<FormCreditCardExpirationFieldProps>;
+declare export {};

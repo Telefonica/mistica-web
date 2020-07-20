@@ -6,7 +6,6 @@
  */
 
 import * as React from "react";
-declare export var DEFAULT_WIDTH: 328;
 export type SelectProps = {
   id?: string,
   label?: string,

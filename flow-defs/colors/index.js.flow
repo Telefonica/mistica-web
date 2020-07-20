@@ -23,5 +23,4 @@ export type Colors =
   | typeof vivoColors
   | typeof o2Colors
   | typeof o2ClassicColors;
-declare var _default: (skin: Skin, override?: string | void) => Colors;
-declare export default typeof _default;
+declare export var getColors: (skin: Skin, override?: string | void) => Colors;

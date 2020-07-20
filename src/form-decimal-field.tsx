@@ -14,7 +14,15 @@ const getLocalDecimalChar = (locale: Locale): string => {
     }
 };
 
-type DecimalInputProps = React.HTMLProps<HTMLInputElement> & {inputRef: React.Ref<HTMLInputElement>};
+/**
+ * typed as `any` because `React.HTMLProps<>` has no equivalent in flowtype
+ * not a big problem because this component is not exported to the public API
+ *
+ * The correct type would be:
+ *
+ * type DecimalInputProps = React.HTMLProps<HTMLInputElement> & {inputRef: React.Ref<HTMLInputElement>}
+ */
+type DecimalInputProps = any;
 
 export const DecimalInput: React.FC<DecimalInputProps> = ({inputRef, value, defaultValue, ...rest}) => {
     const {i18n} = useTheme();
@@ -57,7 +65,7 @@ export const DecimalInput: React.FC<DecimalInputProps> = ({inputRef, value, defa
     );
 };
 
-interface FormDecimalFieldProps extends CommonFormFieldProps {
+export interface FormDecimalFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 

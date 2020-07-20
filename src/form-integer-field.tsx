@@ -26,7 +26,7 @@ const IntegerInput = ({inputRef, value, defaultValue, ...rest}: any) => {
     );
 };
 
-interface FormIntegerFieldProps extends CommonFormFieldProps {
+export interface FormIntegerFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 

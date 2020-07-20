@@ -127,7 +127,7 @@ export const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFie
             .split('/')
             .map((n) => parseInt(n));
 
-        const fullYear = Number.isNaN(year ?? NaN) ? null : 2000 + year;
+        const fullYear = Number.isInteger(year) ? 2000 + year : null;
         return {month: month || null, year: fullYear, raw: s};
     };
 

@@ -5,6 +5,8 @@ import {useIsInverseVariant} from './theme-variant-context';
 
 export type InputState = 'focused' | 'filled' | 'default';
 
+export const DEFAULT_WIDTH = 328;
+
 const useLabelStyles = createUseStyles((theme) => ({
     label: {
         position: 'absolute',
@@ -120,10 +122,16 @@ export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, erro
 };
 
 const useFieldContainerStyles = createUseStyles((theme) => ({
-    container: {
+    fieldContainer: {
         display: 'flex',
         flexDirection: 'column',
         minWidth: 112,
+        [theme.mq.mobile]: {
+            width: '100%',
+        },
+        [theme.mq.tabletOrBigger]: {
+            width: ({fullWidth}) => (fullWidth ? '100%' : DEFAULT_WIDTH),
+        },
     },
     border: {
         border: `1px solid ${theme.colors.border}`,
@@ -142,7 +150,7 @@ type FieldContainerProps = {
     helperText?: React.ReactNode;
     className?: string;
     fieldRef?: React.RefObject<HTMLDivElement>;
-    style: React.CSSProperties;
+    fullWidth?: boolean;
 };
 
 export const FieldContainer: React.FC<FieldContainerProps> = ({
@@ -151,12 +159,12 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
     helperText,
     className,
     fieldRef,
-    style,
+    fullWidth,
 }) => {
-    const classes = useFieldContainerStyles({multiline});
+    const classes = useFieldContainerStyles({multiline, fullWidth});
 
     return (
-        <div className={classes.container} style={style}>
+        <div className={classes.fieldContainer}>
             <div className={classnames(classes.border, className)} ref={fieldRef}>
                 {children}
             </div>

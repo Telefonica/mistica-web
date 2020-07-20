@@ -4,7 +4,7 @@ import {TextFieldBase} from './text-field-base';
 
 import type {CommonFormFieldProps} from './form';
 
-interface FormDateFieldProps extends CommonFormFieldProps {
+export interface FormDateFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 

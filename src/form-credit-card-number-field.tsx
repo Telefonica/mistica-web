@@ -151,7 +151,6 @@ const CreditcardAdornment = ({value}: {value?: string}) => {
 
 interface FormCreditCardNumberFieldProps extends CommonFormFieldProps {
     acceptedCards?: CardOptions;
-    jumpToNext?: boolean;
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 

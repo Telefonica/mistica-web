@@ -9,7 +9,7 @@ import VisibilityOff from './icons/icon-visibility-off';
 import type {CommonFormFieldProps} from './form';
 import {createUseStyles} from './jss';
 
-interface FormPasswordFieldProps extends CommonFormFieldProps {
+export interface FormPasswordFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
