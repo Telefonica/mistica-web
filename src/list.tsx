@@ -528,7 +528,7 @@ export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role}
     </div>
 );
 
-const BoxRowContent: React.FC<RowContentProps> = (props) => {
+export const BoxedRow: React.FC<RowContentProps> = (props) => {
     const classes = useStyles();
 
     return (
@@ -537,8 +537,6 @@ const BoxRowContent: React.FC<RowContentProps> = (props) => {
         </div>
     );
 };
-
-export const BoxedRow: React.FC<RowContentProps> = (props) => <BoxRowContent {...props} />;
 
 type BoxedRowElement = Array<React.ReactElement<typeof BoxedRow>>;
 
