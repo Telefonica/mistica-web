@@ -15,7 +15,12 @@
   - All FormField components can now be used inside a `<Form>` and standalone (connected or unconnected)
   - `name` prop is in FormFields is now mandatory
 
-## v.4.0.1 - 2020-07-156
+## v.4.1.0 - 2020-07-21
+
+- Removed border from `BoxedRowList` component, moved it to `BoxedRow` component
+- New `Inline` layout component
+
+## v.4.0.1 - 2020-07-16
 
 - Fix `TextLink` line height
 

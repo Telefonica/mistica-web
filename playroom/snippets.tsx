@@ -351,6 +351,11 @@ export default [
         name: 'Stack',
         code: '<Stack space={16}><Placeholder /><Placeholder /><Placeholder /></Stack>',
     },
+    {
+        group: 'Layout',
+        name: 'Inline',
+        code: '<Inline space={16}><Placeholder /><Placeholder /><Placeholder /></Inline>',
+    },
     {group: 'Spinner', name: 'Spinner', code: '<Spinner />'},
     {group: 'LoadingBar', name: 'LoadingBar', code: '<LoadingBar visible />'},
     {group: 'Text', name: 'Text', code: '<Text>some text</Text>'},

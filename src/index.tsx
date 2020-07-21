@@ -43,6 +43,7 @@ export {default as Switch} from './switch';
 export {default as RadioButton, RadioGroup} from './radio-button';
 export {default as NegativeBox} from './negative-box';
 export {default as Tabs} from './tabs';
+export {default as Inline} from './inline';
 
 // Forms
 export {Form} from './form';
