@@ -19,7 +19,6 @@ export type FormCreditCardExpirationFieldProps = {
     value: ExpirationDateValue | void,
     rawValue: string
   ) => string | void,
-  value?: string,
   onChangeValue?: (value: ExpirationDateValue) => void
 };
 declare export var FormCreditCardExpirationField: React.ComponentType<FormCreditCardExpirationFieldProps>;
