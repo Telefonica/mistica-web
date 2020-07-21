@@ -213,7 +213,7 @@ export const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps>
             inputRef={(field) => register({name, field, validate})}
             disabled={disabled || formStatus === 'sending'}
             error={error || !!formErrors[name]}
-            helperText={formErrors[name] ?? helperText ?? (rest.defaultValue ? undefined : '')}
+            helperText={formErrors[name] ?? helperText ?? (rest.defaultValue !== undefined ? undefined : '')}
             name={name}
             required={!optional}
             value={value ?? rawValues[name]}

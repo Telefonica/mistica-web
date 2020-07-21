@@ -104,7 +104,7 @@ export const FormCvvField: React.FC<FormCvvFieldProps> = ({
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name] ?? (rest.defaultValue ? undefined : '')}
+            value={value ?? rawValues[name] ?? (rest.defaultValue !== undefined ? undefined : '')}
             maxLength={maxLength}
             onChange={(event) => {
                 const rawValue = event.currentTarget.value;

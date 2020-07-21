@@ -110,7 +110,7 @@ export const FormPasswordField: React.FC<FormPasswordFieldProps> = ({
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name] ?? (rest.defaultValue ? undefined : '')}
+            value={value ?? rawValues[name] ?? (rest.defaultValue !== undefined ? undefined : '')}
             onChange={(event) => {
                 const rawValue = event.currentTarget.value;
                 const value = processValue(rawValue);
