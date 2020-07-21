@@ -52,7 +52,6 @@ const TooltipContent = ({acceptedCards}: {acceptedCards: CardOptions}) => {
 export interface FormCvvFieldProps extends CommonFormFieldProps {
     acceptedCards?: CardOptions;
     onChangeValue?: (value: string, rawValue: string) => void;
-    value?: string;
 }
 
 export const FormCvvField: React.FC<FormCvvFieldProps> = ({

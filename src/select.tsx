@@ -296,7 +296,6 @@ const Select: React.FC<SelectProps> = ({
         animateShowOptions,
         helperText,
         disabled,
-        isFullWidth: fullWidth,
     });
 
     // When the value is null/undefined/'' we assume it's the default empty option and we don't show any label
