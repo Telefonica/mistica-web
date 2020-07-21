@@ -1,11 +1,10 @@
 import * as React from 'react';
-import Stack from '../stack';
+import Inline from '../inline';
 import {StorySection} from './helpers';
 import Select from '../select';
-import {Placeholder} from '../placeholder';
 
 export default {
-    title: 'Components|Layouts/Stack',
+    title: 'Components|Layouts/Inline',
 };
 
 const Row = ({children}: {children?: any}) =>
@@ -26,16 +25,15 @@ const options = [
     {value: '56', text: '56px'},
     {value: '64', text: '64px'},
 ];
+
 export const Default: StoryComponent = () => {
     const [space, setSpace] = React.useState('32');
 
     return (
         <>
             <Select required label="Space" value={space} options={options} onChangeValue={setSpace} />
-
-            <StorySection title="Stack example">
-                <Placeholder height={48} />
-                <Stack space={+space as any}>
+            <StorySection title="Inline example">
+                <Inline space={+space as any}>
                     <ComponentThatReturnsNullComponent />
                     <Row>One</Row>
                     {null}
@@ -46,11 +44,10 @@ export const Default: StoryComponent = () => {
                     <Row>Three</Row>
                     <Row>Four</Row>
                     <ComponentThatReturnsNullComponent />
-                </Stack>
-                <Placeholder height={48} />
+                </Inline>
             </StorySection>
         </>
     );
 };
 
-Default.story = {name: 'Stack'};
+Default.story = {name: 'Inline'};

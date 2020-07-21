@@ -87,6 +87,7 @@ declare export { default as Switch } from "./switch";
 declare export { default as RadioButton, RadioGroup } from "./radio-button";
 declare export { default as NegativeBox } from "./negative-box";
 declare export { default as Tabs } from "./tabs";
+declare export { default as Inline } from "./inline";
 declare export { default as IconClose } from "./icons/icon-close";
 declare export { default as IconInfo } from "./icons/icon-info";
 declare export { default as IconArrowDown } from "./icons/icon-arrow-down";
