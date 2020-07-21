@@ -1,12 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-let modalRoot: HTMLElement;
-
-if (typeof document !== 'undefined') {
-    modalRoot = document.body;
-}
-
 /**
  * This component renders the children elements outside the parent component.
  *
@@ -24,6 +18,7 @@ type Props = {
 const Portal: React.FC<Props> = ({children, className}) => {
     const rootElemRef = React.useRef(document.createElement('div'));
     React.useEffect(() => {
+        const modalRoot = document.body;
         const divRef = rootElemRef.current;
         if (className) {
             divRef.classList.add(className);
