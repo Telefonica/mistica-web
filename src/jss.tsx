@@ -66,7 +66,7 @@ export const removeJssProps = <P extends {sheet?: any; classes?: any}>(
     return withoutJssProps;
 };
 
-type CSSValue = void | number | boolean | string | ((props: any) => void | string | number | boolean);
+type CSSValue = void | number | boolean | string | ((props: any) => string | number | boolean);
 
 type ClassDefinition = {
     [cssProp: string]:

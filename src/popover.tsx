@@ -32,7 +32,7 @@ const useStyles = createUseStyles((theme) => ({
         border: `1px solid ${theme.colors.divider}`,
         borderRadius: 2,
         boxShadow: ({position}) =>
-            position === 'bottom' ? undefined : `0 0 4px 0 ${applyAlpha(theme.colors.layerDecorations, 0.2)}`,
+            position === 'bottom' ? 'initial' : `0 0 4px 0 ${applyAlpha(theme.colors.layerDecorations, 0.2)}`,
     },
 
     arrowWrapper: {
