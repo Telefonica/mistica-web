@@ -56,6 +56,7 @@ export {FormCvvField} from './form-cvv-field';
 export {FormIntegerField} from './form-integer-field';
 export {FormDecimalField} from './form-decimal-field';
 export {DoubleField} from './double-field';
+export {useForm} from './form-context';
 export {TextField} from './text-field'; // @deprecated
 export {PhoneInput} from './phone-input'; // @deprecated
 export {default as Select} from './select'; // @deprecated
