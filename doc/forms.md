@@ -19,6 +19,7 @@
   - [<strike>FormTextField (deprecated)</strike>](#strikeformtextfield-deprecatedstrike)
 - [DoubleField](#doublefield)
 - [<strike>Primitive fields (deprecated)</strike>](#strikeprimitive-fields-deprecatedstrike)
+- [useForm Hook](#useform-hook)
 
 <!-- /TOC -->
 
@@ -178,3 +179,22 @@ Usage of the following components is discouraged and future versions of this lib
 - `TextField`
 - `PhoneInput`
 - `Select`
+
+## useForm Hook
+
+With `useForm` you can access the form context. See `form-context.tsx`
+
+For example, you may want to create a `SpecialField` component that sets its own initial value (instead of
+using `Form`'s `initialValue` property):
+
+```js
+const SpecialField = ({name, getInitialValue, ...}) => {
+    const {setValue} = useForm();
+
+    React.useEffect(() => {
+        setValue(name, getInitialValue())
+    }, [])
+
+    return <FormTextField name={name} />
+}
+```
