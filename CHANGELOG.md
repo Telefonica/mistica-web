@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## v.4.0.1 - 2020-07-156
+## Release pending
+
+- Removed border from `BoxedRowList` component, moved it to `BoxedRow` component
+
+## v.4.0.1 - 2020-07-16
 
 - Fix `TextLink` line height
 
