@@ -3,6 +3,7 @@
 ## Release pending
 
 - Removed border from `BoxedRowList` component, moved it to `BoxedRow` component
+- New `Inline` layout component
 
 ## v.4.0.1 - 2020-07-16
 
