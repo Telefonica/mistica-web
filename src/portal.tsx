@@ -1,4 +1,4 @@
-import React, {MutableRefObject} from 'react';
+import * as React from 'react';
 import ReactDOM from 'react-dom';
 
 /**
@@ -16,7 +16,7 @@ type Props = {
 };
 
 const Portal: React.FC<Props> = ({children, className}) => {
-    const rootElemRef: MutableRefObject<HTMLElement | null> = React.useRef(null);
+    const rootElemRef: React.MutableRefObject<HTMLElement | null> = React.useRef(null);
     const [, setIsReady] = React.useState(false);
 
     React.useEffect(() => {
