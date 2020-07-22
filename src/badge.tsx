@@ -8,7 +8,7 @@ const useStyles = createUseStyles((theme) => ({
         display: 'inline-block',
     },
     badge: {
-        position: ({hasChildren}) => (hasChildren ? 'absolute' : undefined),
+        position: ({hasChildren}) => (hasChildren ? 'absolute' : 'static'),
         top: -2,
         right: -6,
         width: 8,

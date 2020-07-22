@@ -3,7 +3,7 @@ import {JssProvider} from 'react-jss';
 import {getJss} from './jss';
 import {baseTheme} from './theme';
 import ThemeContext from './theme-context';
-import getColors from './colors';
+import {getColors} from './colors';
 import DialogRoot from './dialog';
 import ScreenSizeContextProvider from './screen-size-context-provider';
 import {createMediaQueries} from './utils/media-queries';

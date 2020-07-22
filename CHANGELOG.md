@@ -1,13 +1,25 @@
 # CHANGELOG
 
+## Release pending
+
+- Form fields refactor:
+  - Deprecate `TextField` (will be removed in a future release)
+  - Deprecate `FormTextField` with types different than `"text"` (those usages will be removed in a future
+    release)
+  - New semantic FormField components added:
+    - `FormDateField`
+    - `FormDecimalField`
+    - `FormEmailField`
+    - `FormIntegerField`
+    - `FormPasswordField`
+  - All FormField components can now be used inside a `<Form>` and standalone (connected or unconnected)
+  - `name` prop is in FormFields is now mandatory
+
 ## v.4.1.0 - 2020-07-21
-
-- Updated to minor version
-
-## v.4.0.2 - 2020-07-21
 
 - Removed border from `BoxedRowList` component, moved it to `BoxedRow` component
 - New `Inline` layout component
+- Forbid using `undefined` in jss dynamic styles
 
 ## v.4.0.1 - 2020-07-16
 

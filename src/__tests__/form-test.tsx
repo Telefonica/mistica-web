@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Form from '../form';
-import FormTextField from '../form-text-field';
+import {Form} from '../form';
+import {FormTextField} from '../form-text-field';
 import {ButtonPrimary} from '../button';
 
 test('happy case', async () => {
@@ -73,7 +73,7 @@ test('custom validator', async () => {
 });
 
 test('fields are disabled during submit', async () => {
-    let resolveSubmitPromise: () => void;
+    let resolveSubmitPromise = () => {};
     const submitPromise = new Promise((r) => {
         resolveSubmitPromise = r;
     });
@@ -93,7 +93,6 @@ test('fields are disabled during submit', async () => {
     expect(screen.getByTestId('username')).toBeDisabled();
     expect(screen.getByText('Submit')).toBeDisabled();
 
-    // @ts-expect-error this is already initialized
     resolveSubmitPromise();
 
     await waitFor(() => {

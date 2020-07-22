@@ -1,5 +1,5 @@
 import * as React from 'react';
-import getColors, {MOVISTAR_SKIN} from './colors';
+import {getColors, MOVISTAR_SKIN} from './colors';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import {createMediaQueries} from './utils/media-queries';
 

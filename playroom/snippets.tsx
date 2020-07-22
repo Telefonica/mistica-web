@@ -17,6 +17,10 @@ const formSnippets = [
     ['FormEmailField', '<FormEmailField name="email" label="e-mail"/>'],
     ['FormPhoneNumberField', '<FormPhoneNumberField name="phone" label="Phone"/>'],
     ['FormCreditCardFields', '<FormCreditCardFields/>'],
+    ['FormDateField', '<FormDateField name="date" label="Date"/>'],
+    ['FormDecimalField', '<FormDecimalField name="decimal" label="Decimal"/>'],
+    ['FormIntegerField', '<FormIntegerField name="integer" label="Integer"/>'],
+    ['FormPasswordField', '<FormPasswordField name="password" label="Password"/>'],
     [
         'FormCreditCardExpirationField',
         '<FormCreditCardExpirationField name="expiration-date" label="Expiration date"/>',

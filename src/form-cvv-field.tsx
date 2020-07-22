@@ -7,8 +7,9 @@ import IconCvvAmex from './icons/icon-cvv-amex';
 import Tooltip from './tooltip';
 import IconButton from './icon-button';
 import IcnInfo from './icons/icon-info-cvv';
-import TextField from './text-field';
 import {useForm} from './form-context';
+import {TextFieldBase} from './text-field-base';
+import {DecimalInput} from './form-decimal-field';
 
 import type {CommonFormFieldProps} from './form';
 import type {CardOptions} from './utils/credit-card';
@@ -20,7 +21,7 @@ const useStyles = createUseStyles((theme) => ({
         color: theme.colors.textPrimary,
         lineHeight: 1.42857142,
         fontSize: 14,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? 1.42857142 : undefined,
+        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? 1.42857142 : 'normal',
     },
     tooltipContainer: {
         display: 'flex',
@@ -51,20 +52,22 @@ const TooltipContent = ({acceptedCards}: {acceptedCards: CardOptions}) => {
 export interface FormCvvFieldProps extends CommonFormFieldProps {
     acceptedCards?: CardOptions;
     onChangeValue?: (value: string, rawValue: string) => void;
-    type: 'credit-card-cvv';
 }
 
-const FormCvvField: React.FC<FormCvvFieldProps> = ({
+export const FormCvvField: React.FC<FormCvvFieldProps> = ({
     disabled,
     error,
     helperText,
     name,
     optional,
     validate: validateProp,
+    onChange,
     onChangeValue,
     onBlur,
     acceptedCards = {americanExpress: true, visa: true, masterCard: true},
-    maxLength,
+    maxLength = 4,
+    value,
+    autoComplete = 'cc-csc',
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -90,21 +93,26 @@ const FormCvvField: React.FC<FormCvvFieldProps> = ({
         return validateProp?.(value, rawValue);
     };
 
+    const processValue = (s: string) => s;
+
     return (
-        <TextField
+        <TextFieldBase
             {...rest}
-            type="credit-card-cvv"
             inputRef={(field) => register({name, field, validate})}
             disabled={disabled || formStatus === 'sending'}
             error={error || !!formErrors[name]}
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={rawValues[name] ?? ''}
+            value={value ?? rawValues[name] ?? (rest.defaultValue !== undefined ? undefined : '')}
             maxLength={maxLength}
-            onChange={(event) => setRawValue({name, value: event.currentTarget.value})}
-            onChangeValue={(value, rawValue) => {
+            onChange={(event) => {
+                const rawValue = event.currentTarget.value;
+                const value = processValue(rawValue);
+
+                setRawValue({name, value: rawValue});
                 setValue({name, value});
+                onChange?.(event);
                 onChangeValue?.(value, rawValue);
                 if (value.length === maxLength) {
                     const error = validate(value, rawValue);
@@ -134,8 +142,8 @@ const FormCvvField: React.FC<FormCvvFieldProps> = ({
                     }
                 />
             }
+            autoComplete={autoComplete}
+            inputComponent={DecimalInput}
         />
     );
 };
-
-export default FormCvvField;
