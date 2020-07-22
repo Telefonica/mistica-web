@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ThemeVariant, useTheme, TextField} from '..';
+import {ThemeVariant, useTheme} from '..';
 import Box from '../box';
 import {inspect} from 'util';
 import Icon from '../icons/icon-visibility';
