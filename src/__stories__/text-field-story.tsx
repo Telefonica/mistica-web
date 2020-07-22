@@ -81,7 +81,7 @@ export const Variants: StoryComponent = () => {
     const {colors} = useTheme();
     return (
         <>
-            <StorySection title="Default (deprecated)">
+            <StorySection title="Default">
                 <TextField required name="text" label="Normal field" />
             </StorySection>
 
@@ -199,6 +199,7 @@ export const TypesUncontrolled: StoryComponent = () => (
         <Uncontrolled title="TextField type email">
             {(handleChange, handleChangeValue) => (
                 <TextField
+                    required
                     type="email"
                     label="Email"
                     defaultValue="aitor.menta@gmail.com"
@@ -211,6 +212,7 @@ export const TypesUncontrolled: StoryComponent = () => (
         <Uncontrolled title="TextField type integer">
             {(handleChange, handleChangeValue) => (
                 <TextField
+                    required
                     type="integer"
                     label="Integer"
                     defaultValue="123"
@@ -223,6 +225,7 @@ export const TypesUncontrolled: StoryComponent = () => (
         <Uncontrolled title="TextField type decimal">
             {(handleChange, handleChangeValue) => (
                 <TextField
+                    required
                     type="decimal"
                     label="Decimal"
                     defaultValue="123.45"
@@ -235,6 +238,7 @@ export const TypesUncontrolled: StoryComponent = () => (
         <Uncontrolled title="TextField type credit-card-number">
             {(handleChange, handleChangeValue) => (
                 <TextField
+                    required
                     type="credit-card-number"
                     label="Credit card"
                     defaultValue="1234567890123456"
@@ -247,6 +251,7 @@ export const TypesUncontrolled: StoryComponent = () => (
         <Uncontrolled title="TextField type credit-card-expiration">
             {(handleChange, handleChangeValue) => (
                 <TextField
+                    required
                     type="credit-card-expiration"
                     label="Expiration"
                     defaultValue="14/24"
@@ -259,6 +264,7 @@ export const TypesUncontrolled: StoryComponent = () => (
         <Uncontrolled title="TextField type credit-card-cvv">
             {(handleChange, handleChangeValue) => (
                 <TextField
+                    required
                     type="credit-card-cvv"
                     label="CVV"
                     defaultValue="1234"
@@ -272,6 +278,7 @@ export const TypesUncontrolled: StoryComponent = () => (
             {(handleChange, handleChangeValue) => (
                 <form>
                     <TextField
+                        required
                         type="password"
                         label="Password"
                         defaultValue="password123"
@@ -285,6 +292,7 @@ export const TypesUncontrolled: StoryComponent = () => (
         <Uncontrolled title="TextField type date">
             {(handleChange, handleChangeValue) => (
                 <TextField
+                    required
                     type="date"
                     label="Date"
                     onChange={handleChange}
@@ -296,6 +304,7 @@ export const TypesUncontrolled: StoryComponent = () => (
         <Uncontrolled title="TextField type phone">
             {(handleChange, handleChangeValue) => (
                 <TextField
+                    required
                     type="phone"
                     label="Phone"
                     defaultValue="654834455"
@@ -309,6 +318,7 @@ export const TypesUncontrolled: StoryComponent = () => (
         <Uncontrolled title="TextField type phone (with prefix)">
             {(handleChange, handleChangeValue) => (
                 <TextField
+                    required
                     type="phone"
                     label="Phone with prefix"
                     prefix="+34"
@@ -358,6 +368,7 @@ export const TypesControlled = (): React.ReactNode => (
         <Controlled title="TextField type email" initialValue="aitor.menta@gmail.com">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
+                    required
                     value={value}
                     type="email"
                     label="Email"
@@ -370,6 +381,7 @@ export const TypesControlled = (): React.ReactNode => (
         <Controlled title="TextField type integer" initialValue="123">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
+                    required
                     value={value}
                     type="integer"
                     label="Integer"
@@ -382,6 +394,7 @@ export const TypesControlled = (): React.ReactNode => (
         <Controlled title="TextField type decimal" initialValue="123.456">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
+                    required
                     type="decimal"
                     value={value}
                     name="decimal"
@@ -395,6 +408,7 @@ export const TypesControlled = (): React.ReactNode => (
         <Controlled title="TextField type credit-card-number" initialValue="1234567812345678">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
+                    required
                     value={value}
                     type="credit-card-number"
                     label="Credit card"
@@ -407,6 +421,7 @@ export const TypesControlled = (): React.ReactNode => (
         <Controlled title="TextField type creadit-card-expiration" initialValue="13/21">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
+                    required
                     value={value}
                     type="credit-card-expiration"
                     label="Expiration"
@@ -419,6 +434,7 @@ export const TypesControlled = (): React.ReactNode => (
         <Controlled title="TextField type credit-card-cvv" initialValue="1234">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
+                    required
                     value={value}
                     type="credit-card-cvv"
                     label="CVV"
@@ -432,6 +448,7 @@ export const TypesControlled = (): React.ReactNode => (
             {(handleChange, handleChangeValue, value) => (
                 <form>
                     <TextField
+                        required
                         value={value}
                         type="password"
                         label="Password"
@@ -445,6 +462,7 @@ export const TypesControlled = (): React.ReactNode => (
         <Controlled title="TextField type password" initialValue="1980-10-06">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
+                    required
                     value={value}
                     type="date"
                     label="Date"
@@ -457,6 +475,7 @@ export const TypesControlled = (): React.ReactNode => (
         <Controlled title="TextField type phone" initialValue="654834455">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
+                    required
                     value={value}
                     type="phone"
                     label="Phone"
@@ -470,6 +489,7 @@ export const TypesControlled = (): React.ReactNode => (
         <Controlled title="TextField type phone (with suggestions)" initialValue="">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
+                    required
                     value={value}
                     type="phone"
                     label="Phone with suggestions"
@@ -485,6 +505,7 @@ export const TypesControlled = (): React.ReactNode => (
         <Controlled title="TextField type phone (with prefix)" initialValue="654834455">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
+                    required
                     value={value}
                     type="phone"
                     label="Phone with prefix"

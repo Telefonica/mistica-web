@@ -381,7 +381,6 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(({getSugg
                             updateRef(inputRef, refValue);
                             updateRef(props.inputRef, refValue);
                         }}
-                        ref={ref}
                     />
                 )}
                 suggestions={suggestions}
