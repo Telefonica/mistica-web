@@ -14,7 +14,7 @@ type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onInpu
     onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
 };
 
-const PhoneInput: React.FC<Props> = ({inputRef, value, defaultValue, ...other}) => {
+export const PhoneInput: React.FC<Props> = ({inputRef, value, defaultValue, ...other}) => {
     const {i18n} = useTheme();
     return (
         <input
@@ -32,5 +32,3 @@ const PhoneInput: React.FC<Props> = ({inputRef, value, defaultValue, ...other}) 
 };
 
 export type PhoneInputType = typeof PhoneInput;
-
-export default PhoneInput;

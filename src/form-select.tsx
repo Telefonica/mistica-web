@@ -24,7 +24,7 @@ export type FormSelectProps = {
     fullWidth?: boolean;
 };
 
-const FormSelect: React.FC<FormSelectProps> = ({
+export const FormSelect: React.FC<FormSelectProps> = ({
     disabled,
     error,
     helperText,
@@ -59,7 +59,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name] ?? ''}
+            value={value ?? rawValues[name]}
             onChange={(event) => {
                 setRawValue({name, value: event.currentTarget.value});
             }}
@@ -72,5 +72,3 @@ const FormSelect: React.FC<FormSelectProps> = ({
         />
     );
 };
-
-export default FormSelect;

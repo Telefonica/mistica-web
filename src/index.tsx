@@ -3,10 +3,6 @@ import {PACKAGE_VERSION} from './package-version';
 export {createSheet, withSheet, removeJssProps, createUseStyles, getJss, ServerSideStyles} from './jss';
 export {default as ThemeContext} from './theme-context';
 export {default as ThemeContextProvider} from './theme-context-provider';
-export {default as TextField} from './text-field';
-export {default as PhoneInput} from './phone-input';
-export {default as DoubleField} from './double-field';
-export {default as Select} from './select';
 export {default as ScreenReaderOnly} from './screen-reader-only';
 export {default as Touchable} from './touchable';
 export {default as Spinner} from './spinner';
@@ -30,14 +26,6 @@ export {confirm, alert} from './dialog';
 export {default as Badge} from './badge';
 export {default as TextLink} from './text-link';
 export {default as Bun} from './bun';
-export {default as Form} from './form';
-export {default as FormSelect} from './form-select';
-export {default as FormTextField} from './form-text-field';
-export {default as FormEmailField} from './form-email-field';
-export {default as FormPhoneNumberField} from './form-phone-number-field';
-export {default as FormCreditCardExpirationField} from './form-credit-card-expiration-field';
-export {default as FormCreditCardFields} from './form-credit-card-fields';
-export {default as FormCvvField} from './form-cvv-field';
 export {default as Overlay} from './overlay';
 export {default as Tooltip} from './tooltip';
 export {default as Stack} from './stack';
@@ -56,6 +44,23 @@ export {default as RadioButton, RadioGroup} from './radio-button';
 export {default as NegativeBox} from './negative-box';
 export {default as Tabs} from './tabs';
 export {default as Inline} from './inline';
+
+// Forms
+export {Form} from './form';
+export {FormSelect} from './form-select';
+export {FormTextField} from './form-text-field';
+export {FormEmailField} from './form-email-field';
+export {FormPhoneNumberField} from './form-phone-number-field';
+export {FormCreditCardExpirationField} from './form-credit-card-expiration-field';
+export {FormCreditCardFields} from './form-credit-card-fields';
+export {FormCvvField} from './form-cvv-field';
+export {FormIntegerField} from './form-integer-field';
+export {FormDecimalField} from './form-decimal-field';
+export {DoubleField} from './double-field';
+export {useForm} from './form-context';
+export {TextField} from './text-field'; // @deprecated
+export {PhoneInput} from './phone-input'; // @deprecated
+export {default as Select} from './select'; // @deprecated
 
 // Icons
 export {default as IconClose} from './icons/icon-close';
@@ -76,7 +81,7 @@ export type {ThemeConfig} from './theme';
 
 export {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 
-export {default as getColors, MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN, O2_CLASSIC_SKIN} from './colors';
+export {getColors, MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN, O2_CLASSIC_SKIN} from './colors';
 export type {Skin} from './colors';
 
 export type {Locale} from './utils/locale';

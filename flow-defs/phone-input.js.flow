@@ -12,6 +12,6 @@ declare type Props = $Diff<any, { value: *, onInput: * }> & {
   defaultValue?: string,
   onInput?: (event: SyntheticEvent<HTMLInputElement>) => void
 };
-declare var PhoneInput: React.ComponentType<Props>;
+declare export var PhoneInput: React.ComponentType<Props>;
 export type PhoneInputType = typeof PhoneInput;
-declare export default typeof PhoneInput;
+declare export {};

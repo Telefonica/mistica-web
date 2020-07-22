@@ -17,7 +17,7 @@ declare type FormProps = {
   children: React.Node,
   className?: string
 };
-declare var Form: React.ComponentType<FormProps>;
+declare export var Form: React.ComponentType<FormProps>;
 export type CommonFormFieldProps = {
   autoFocus?: boolean,
   disabled?: boolean,
@@ -35,6 +35,9 @@ export type CommonFormFieldProps = {
   onBlur?: (event: SyntheticFocusEvent<>) => void,
   fullWidth?: boolean,
   getSuggestions?: (text: string) => Array<string>,
-  placeholder?: string
+  placeholder?: string,
+  value?: string,
+  defaultValue?: string,
+  onChange?: (event: SyntheticEvent<HTMLInputElement>) => void
 };
-declare export default typeof Form;
+declare export {};
