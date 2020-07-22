@@ -69,7 +69,7 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
         color: colors.textSecondary,
         lineHeight: 1.5,
         fontSize: 16,
-        letterSpacing: getPlatform(platformOverrides) === 'ios' ? -0.32 : undefined,
+        letterSpacing: getPlatform(platformOverrides) === 'ios' ? -0.32 : 'normal',
         fontWeight: 500,
         whiteSpace: 'nowrap',
         overflow: 'hidden',
