@@ -37,7 +37,7 @@ export const ICN_SHEET_BAR_TOP = c.GREY_3;
 export const ICN_SHEET_BAR_TOP_SPECIAL = c.MOVISTAR_BLUE_LIGHT_30;
 
 // BORDERS
-export const BORDER = c.GREY_3;
+export const BORDER = 'green';
 export const BORDER_SELECTED = c.MOVISTAR_GREEN;
 export const BORDER_DARK = c.GREY_1;
 export const BORDER_LIGHT = c.GREY_5;
@@ -53,7 +53,7 @@ export const ITEM_HOVER = c.GREY_4;
 
 // TEXT
 export const TEXT_ACCENT = c.MOVISTAR_GREEN;
-export const TEXT_PRIMARY = c.GREY_0;
+export const TEXT_PRIMARY = 'red';
 export const TEXT_PRIMARY_SPECIAL = c.WHITE;
 export const TEXT_PRIMARY_INVERSE = c.WHITE;
 export const TEXT_SECONDARY = c.GREY_1;

@@ -28,7 +28,7 @@ declare export var removeJssProps: <P: {sheet?: any, classes?: any}>(
     props: P
 ) => $Diff<P, {classes: *, sheet: *}>;
 
-declare type CSSValue<P> = void | number | boolean | string | ((P) => void | string | number | boolean);
+declare type CSSValue<P> = void | number | boolean | string | ((P) => string | number | boolean);
 declare type ClassDefinition<P> = {
     [cssProp: string]:
         | CSSValue<P>

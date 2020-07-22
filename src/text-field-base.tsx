@@ -94,7 +94,7 @@ const commonInputStyles = (theme: Theme) => ({
         color: theme.colors.border,
     },
     '&::-webkit-calendar-picker-indicator': {
-        marginTop: ({label}: {label: string}) => (label ? -12 : undefined),
+        marginTop: ({label}: {label: string}) => (label ? -12 : 'initial'),
     },
 });
 

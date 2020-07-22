@@ -17,7 +17,7 @@ const animationsSupported = !isOldChrome() && !isRunningAcceptanceTest();
 const animateText = ({isInfo}: {isInfo: boolean}) =>
     !isInfo && animationsSupported
         ? '$sweepIn 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards'
-        : undefined;
+        : 'initial';
 
 const initialTextOpacity = ({isInfo}: {isInfo: boolean}) => (!isInfo && animationsSupported ? 0 : 1);
 
@@ -53,7 +53,7 @@ const useStyles = createUseStyles((theme) => ({
         animation: animateText,
         lineHeight: 1.3333333,
         fontSize: 24,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? 0.36 : undefined,
+        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? 0.36 : 'normal',
         fontWeight: 300,
         opacity: initialTextOpacity,
     },
@@ -65,7 +65,7 @@ const useStyles = createUseStyles((theme) => ({
         fontSize: 18,
         fontWeight: 300,
         lineHeight: 1.3333333,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.45 : undefined,
+        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.45 : 'normal',
         opacity: initialTextOpacity,
         '& p': {
             marginTop: 0,

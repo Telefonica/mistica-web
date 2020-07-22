@@ -16,13 +16,13 @@ const useStyles = createUseStyles((theme) => ({
         fontSize: 18,
         fontWeight: 300,
         lineHeight: 1.3333333,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.32 : undefined,
+        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.32 : 'normal',
     },
     sub2: {
         color: theme.colors.textSecondary,
         lineHeight: 1.42857142,
         fontSize: 14,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.15 : undefined,
+        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.15 : 'normal',
         fontWeight: 500,
     },
     bunContainer: {

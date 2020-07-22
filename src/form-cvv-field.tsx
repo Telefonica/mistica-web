@@ -21,7 +21,7 @@ const useStyles = createUseStyles((theme) => ({
         color: theme.colors.textPrimary,
         lineHeight: 1.42857142,
         fontSize: 14,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? 1.42857142 : undefined,
+        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? 1.42857142 : 'normal',
     },
     tooltipContainer: {
         display: 'flex',

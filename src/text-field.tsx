@@ -348,7 +348,7 @@ const useStylesCCAdornment = createUseStyles(() => ({
         '& div': {
             backfaceVisibility: 'hidden',
         },
-        transform: ({showBackface}) => (showBackface ? 'rotateY(180deg)' : undefined),
+        transform: ({showBackface}) => (showBackface ? 'rotateY(180deg)' : 'initial'),
     },
     flipFront: {
         position: 'absolute',
