@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {MutableRefObject} from 'react';
 import ReactDOM from 'react-dom';
 
 /**
@@ -16,18 +16,30 @@ type Props = {
 };
 
 const Portal: React.FC<Props> = ({children, className}) => {
-    const rootElemRef = React.useRef(document.createElement('div'));
+    const rootElemRef: MutableRefObject<HTMLElement> = React.useRef(null as any);
+
     React.useEffect(() => {
+        const divRef = document.createElement('div');
+        rootElemRef.current = divRef;
         const modalRoot = document.body;
-        const divRef = rootElemRef.current;
-        if (className) {
-            divRef.classList.add(className);
-        }
 
         modalRoot.appendChild(divRef);
 
         return () => {
             modalRoot.removeChild(divRef);
+        };
+    }, []);
+
+    React.useEffect(() => {
+        const divRef = rootElemRef.current;
+        if (className) {
+            divRef.classList.add(className);
+        }
+
+        return () => {
+            if (className) {
+                divRef.classList.remove(className);
+            }
         };
     }, [className]);
 
