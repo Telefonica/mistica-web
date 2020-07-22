@@ -37,7 +37,7 @@ export const ICN_SHEET_BAR_TOP = c.GREY_3;
 export const ICN_SHEET_BAR_TOP_SPECIAL = c.MOVISTAR_BLUE_LIGHT_30;
 
 // BORDERS
-export const BORDER = 'pink';
+export const BORDER = 'green';
 export const BORDER_SELECTED = c.MOVISTAR_GREEN;
 export const BORDER_DARK = c.GREY_1;
 export const BORDER_LIGHT = c.GREY_5;
