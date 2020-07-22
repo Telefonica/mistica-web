@@ -16,7 +16,8 @@ type Props = {
 };
 
 const Portal: React.FC<Props> = ({children, className}) => {
-    const rootElemRef: MutableRefObject<HTMLElement> = React.useRef(null as any);
+    const rootElemRef: MutableRefObject<HTMLElement | null> = React.useRef(null);
+    const [, setIsReady] = React.useState(false);
 
     React.useEffect(() => {
         const divRef = document.createElement('div');
@@ -24,6 +25,7 @@ const Portal: React.FC<Props> = ({children, className}) => {
         const modalRoot = document.body;
 
         modalRoot.appendChild(divRef);
+        setIsReady(true);
 
         return () => {
             modalRoot.removeChild(divRef);
@@ -32,17 +34,17 @@ const Portal: React.FC<Props> = ({children, className}) => {
 
     React.useEffect(() => {
         const divRef = rootElemRef.current;
-        if (className) {
+        if (divRef && className) {
             divRef.classList.add(className);
         }
 
         return () => {
-            if (className) {
+            if (divRef && className) {
                 divRef.classList.remove(className);
             }
         };
     }, [className]);
 
-    return ReactDOM.createPortal(children, rootElemRef.current);
+    return rootElemRef.current && ReactDOM.createPortal(children, rootElemRef.current);
 };
 export default Portal;
