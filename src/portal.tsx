@@ -17,8 +17,9 @@ type Props = {
 
 const Portal: React.FC<Props> = ({children, className}) => {
     const rootElemRef: React.MutableRefObject<HTMLElement> = React.useRef(null as any);
+    const isDOM = typeof document !== 'undefined';
 
-    if (rootElemRef.current === null) {
+    if (rootElemRef.current === null && isDOM) {
         rootElemRef.current = document.createElement('div');
     }
 
@@ -46,6 +47,6 @@ const Portal: React.FC<Props> = ({children, className}) => {
         };
     }, [className]);
 
-    return ReactDOM.createPortal(children, rootElemRef.current);
+    return isDOM && ReactDOM.createPortal(children, rootElemRef.current);
 };
 export default Portal;
