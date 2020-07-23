@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm} from './form-context';
+import {useForm, useSyncFieldValue} from './form-context';
 import {useTheme} from './hooks';
 import {TextFieldBase} from './text-field-base';
 import {PhoneInput} from './phone-input';
@@ -23,6 +23,7 @@ export const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
     onChangeValue,
     onBlur,
     value,
+    defaultValue,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -46,17 +47,19 @@ export const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
 
     const processValue = (s: string) => s.replace(/[^\d]/g, ''); // keep only digits
 
+    useSyncFieldValue({name, value, defaultValue, processValue});
+
     return (
         <TextFieldBase
             {...rest}
             type="phone"
-            inputRef={(field) => register({name, field, validate, initialValue: value ?? rest.defaultValue})}
+            inputRef={(field) => register({name, field, validate})}
             disabled={disabled || formStatus === 'sending'}
             error={error || !!formErrors[name]}
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name] ?? (rest.defaultValue !== undefined ? undefined : '')}
+            value={value ?? rawValues[name] ?? ''}
             onChange={(event) => {
                 const rawValue = event.currentTarget.value;
                 const value = processValue(rawValue);

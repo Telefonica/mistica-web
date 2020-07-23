@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import {Form} from '../form';
 import {FormTextField} from '../form-text-field';
 import {ButtonPrimary} from '../button';
+import {FormEmailField} from '..';
 
 test('happy case', async () => {
     const handleSubmitSpy = jest.fn();
@@ -98,5 +99,49 @@ test('fields are disabled during submit', async () => {
     await waitFor(() => {
         expect(screen.getByTestId('username')).not.toBeDisabled();
         expect(screen.getByText('Submit')).not.toBeDisabled();
+    });
+});
+
+test('form with defaultValue in field', async () => {
+    const handleSubmit = jest.fn();
+
+    render(
+        <Form onSubmit={handleSubmit}>
+            <FormEmailField label="email" name="email" defaultValue="foo@bar.com" />
+            <ButtonPrimary submit>Send</ButtonPrimary>
+        </Form>
+    );
+
+    userEvent.click(screen.getByText('Send'));
+
+    await waitFor(() => {
+        expect(handleSubmit).toHaveBeenCalledWith({email: 'foo@bar.com'}, {email: 'foo@bar.com'});
+    });
+});
+
+test('form with controlled field', async () => {
+    const handleSubmit = jest.fn();
+
+    const MyForm = ({onSubmit}: any) => {
+        const [value, setValue] = React.useState('foo');
+        return (
+            <Form onSubmit={onSubmit}>
+                <FormEmailField label="email1" name="email1" value={value} onChangeValue={setValue} />
+                <FormEmailField label="email2" name="email2" value={value} />
+                <ButtonPrimary submit>Send</ButtonPrimary>
+            </Form>
+        );
+    };
+
+    render(<MyForm onSubmit={handleSubmit} />);
+
+    await userEvent.type(screen.getByLabelText('email1'), '@bar.com');
+    userEvent.click(screen.getByText('Send'));
+
+    await waitFor(() => {
+        expect(handleSubmit).toHaveBeenCalledWith(
+            {email1: 'foo@bar.com', email2: 'foo@bar.com'},
+            {email1: 'foo@bar.com', email2: 'foo@bar.com'}
+        );
     });
 });

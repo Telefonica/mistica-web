@@ -51,27 +51,21 @@ export const Form: React.FC<FormProps> = ({
         []
     );
 
-    const register = React.useCallback(
-        ({name, field, validate, focusableElement, initialValue}: FieldRegistration) => {
-            if (field) {
-                fieldRefs.current.set(name, field);
-                if (validate) {
-                    fieldValidators.current.set(name, validate);
-                }
-                if (focusableElement) {
-                    fieldFocusableRefs.current.set(name, focusableElement);
-                }
-                if (initialValue !== undefined) {
-                    setRawValues((rawValues) => ({...rawValues, [name]: initialValue}));
-                }
-            } else {
-                fieldRefs.current.delete(name);
-                fieldValidators.current.delete(name);
-                fieldFocusableRefs.current.delete(name);
+    const register = React.useCallback(({name, field, validate, focusableElement}: FieldRegistration) => {
+        if (field) {
+            fieldRefs.current.set(name, field);
+            if (validate) {
+                fieldValidators.current.set(name, validate);
             }
-        },
-        []
-    );
+            if (focusableElement) {
+                fieldFocusableRefs.current.set(name, focusableElement);
+            }
+        } else {
+            fieldRefs.current.delete(name);
+            fieldValidators.current.delete(name);
+            fieldFocusableRefs.current.delete(name);
+        }
+    }, []);
 
     const setFormError = ({name, error}: {name: string; error?: string}) =>
         setFormErrors((formErrors) => ({...formErrors, [name]: error}));
@@ -143,19 +137,13 @@ export const Form: React.FC<FormProps> = ({
         });
     };
 
-    const setValue = React.useCallback(
-        ({name, value}) => {
-            setValues({...values, [name]: value});
-        },
-        [values]
-    );
+    const setValue = React.useCallback(({name, value}) => {
+        setValues((values) => ({...values, [name]: value}));
+    }, []);
 
-    const setRawValue = React.useCallback(
-        ({name, value}) => {
-            setRawValues({...rawValues, [name]: value});
-        },
-        [rawValues]
-    );
+    const setRawValue = React.useCallback(({name, value}) => {
+        setRawValues((rawValues) => ({...rawValues, [name]: value}));
+    }, []);
 
     return (
         <FormContext.Provider

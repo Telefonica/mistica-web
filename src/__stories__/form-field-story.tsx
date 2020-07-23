@@ -1,10 +1,7 @@
 import * as React from 'react';
-import {ThemeVariant, useTheme} from '..';
-import Box from '../box';
-import {inspect} from 'util';
-import Icon from '../icons/icon-visibility';
-import {StorySection, countriesList, phoneNumbersList} from './helpers';
 import {
+    ThemeVariant,
+    useTheme,
     FormEmailField,
     FormIntegerField,
     FormDecimalField,
@@ -15,7 +12,11 @@ import {
     FormPasswordField,
     FormDateField,
     FormPhoneNumberField,
-} from '../..';
+} from '..';
+import Box from '../box';
+import {inspect} from 'util';
+import Icon from '../icons/icon-visibility';
+import {StorySection, countriesList, phoneNumbersList} from './helpers';
 
 export default {
     title: 'Components|Forms/FormFields',

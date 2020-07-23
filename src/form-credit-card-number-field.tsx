@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm} from './form-context';
+import {useForm, useSyncFieldValue} from './form-context';
 import {useTheme} from './hooks';
 import {
     getCreditCardNumberLength,
@@ -166,10 +166,10 @@ export const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps>
     acceptedCards = {americanExpress: true, visa: true, masterCard: true},
     value,
     autoComplete = 'cc-number',
+    defaultValue,
     ...rest
 }) => {
     const {texts} = useTheme();
-    const [currentValue, setCurrentValue] = React.useState(value ?? rest.defaultValue);
     const {
         jumpToNext,
         rawValues,
@@ -207,23 +207,24 @@ export const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps>
 
     const processValue = (s: string) => s.replace(/\s/g, '');
 
+    useSyncFieldValue({name, value, defaultValue, processValue});
+
     return (
         <TextFieldBase
             {...rest}
-            inputRef={(field) => register({name, field, validate, initialValue: value ?? rest.defaultValue})}
+            inputRef={(field) => register({name, field, validate})}
             disabled={disabled || formStatus === 'sending'}
             error={error || !!formErrors[name]}
-            helperText={formErrors[name] ?? helperText ?? (rest.defaultValue !== undefined ? undefined : '')}
+            helperText={formErrors[name] ?? helperText}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name]}
+            value={value ?? rawValues[name] ?? ''}
             maxLength={getCreditCardNumberLength(values[name]) + 3} // We have to take in account formatting spaces
             onChange={(event) => {
                 const rawValue = event.currentTarget.value;
                 const value = processValue(rawValue);
                 setRawValue({name, value: rawValue});
                 setValue?.({name, value});
-                setCurrentValue(value);
                 onChange?.(event);
                 onChangeValue?.(value, rawValue);
                 if (value.length >= getCreditCardNumberLength(value)) {
@@ -243,7 +244,7 @@ export const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps>
             }}
             inputComponent={CreditCardInput}
             autoComplete={autoComplete}
-            endIcon={<CreditcardAdornment value={currentValue} />}
+            endIcon={<CreditcardAdornment value={value ?? rawValues[name] ?? ''} />}
         />
     );
 };

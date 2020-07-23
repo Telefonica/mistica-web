@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm} from './form-context';
+import {useForm, useSyncFieldValue} from './form-context';
 import {useTheme} from './hooks';
 
 import type {CommonFormFieldProps} from './form';
@@ -41,6 +41,7 @@ export const FormIntegerField: React.FC<FormIntegerFieldProps> = ({
     onChangeValue,
     onBlur,
     value,
+    defaultValue,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -64,16 +65,18 @@ export const FormIntegerField: React.FC<FormIntegerFieldProps> = ({
 
     const processValue = (value: string) => value.trim();
 
+    useSyncFieldValue({name, value, defaultValue, processValue});
+
     return (
         <TextFieldBase
             {...rest}
-            inputRef={(field) => register({name, field, validate, initialValue: value ?? rest.defaultValue})}
+            inputRef={(field) => register({name, field, validate})}
             disabled={disabled || formStatus === 'sending'}
             error={error || !!formErrors[name]}
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name] ?? (rest.defaultValue !== undefined ? undefined : '')}
+            value={value ?? rawValues[name] ?? ''}
             onChange={(event) => {
                 const rawValue = event.currentTarget.value;
                 const value = processValue(rawValue);
