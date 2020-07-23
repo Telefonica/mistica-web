@@ -5,16 +5,9 @@ import {createUseStyles} from './jss';
 import classnames from 'classnames';
 
 import type {AutoComplete} from './text-field';
-import type {FormStatus, FormErrors, FieldValidator} from './form-context';
+import type {FormStatus, FormErrors, FieldValidator, FieldRegistration} from './form-context';
 
 type FormValues = {[name: string]: any};
-
-type FieldRegistration = {
-    name: string;
-    field?: HTMLInputElement | HTMLSelectElement | null;
-    validate?: FieldValidator;
-    focusableElement?: HTMLDivElement | HTMLSelectElement | null;
-};
 
 const useStyles = createUseStyles(() => ({
     form: {
@@ -58,21 +51,27 @@ export const Form: React.FC<FormProps> = ({
         []
     );
 
-    const register = React.useCallback(({name, field, validate, focusableElement}: FieldRegistration) => {
-        if (field) {
-            fieldRefs.current.set(name, field);
-            if (validate) {
-                fieldValidators.current.set(name, validate);
+    const register = React.useCallback(
+        ({name, field, validate, focusableElement, initialValue}: FieldRegistration) => {
+            if (field) {
+                fieldRefs.current.set(name, field);
+                if (validate) {
+                    fieldValidators.current.set(name, validate);
+                }
+                if (focusableElement) {
+                    fieldFocusableRefs.current.set(name, focusableElement);
+                }
+                if (initialValue !== undefined) {
+                    setRawValues((rawValues) => ({...rawValues, [name]: initialValue}));
+                }
+            } else {
+                fieldRefs.current.delete(name);
+                fieldValidators.current.delete(name);
+                fieldFocusableRefs.current.delete(name);
             }
-            if (focusableElement) {
-                fieldFocusableRefs.current.set(name, focusableElement);
-            }
-        } else {
-            fieldRefs.current.delete(name);
-            fieldValidators.current.delete(name);
-            fieldFocusableRefs.current.delete(name);
-        }
-    }, []);
+        },
+        []
+    );
 
     const setFormError = ({name, error}: {name: string; error?: string}) =>
         setFormErrors((formErrors) => ({...formErrors, [name]: error}));

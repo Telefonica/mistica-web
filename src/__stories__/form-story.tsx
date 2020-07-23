@@ -120,3 +120,22 @@ export const ManualForm: StoryComponent = () => {
         </form>
     );
 };
+
+export const InitialValueInField: StoryComponent = () => {
+    return (
+        <Form onSubmit={(values) => window.alert(JSON.stringify(values))}>
+            <FormEmailField label="email" name="email" defaultValue="foo@bar.com" />
+            <ButtonPrimary submit>Send</ButtonPrimary>
+        </Form>
+    );
+};
+
+export const ControlledField: StoryComponent = () => {
+    const [value, setValue] = React.useState('foo@bar.com');
+    return (
+        <Form onSubmit={(values) => window.alert(JSON.stringify(values))}>
+            <FormEmailField label="email" name="email" value={value} onChangeValue={setValue} />
+            <ButtonPrimary submit>Send</ButtonPrimary>
+        </Form>
+    );
+};

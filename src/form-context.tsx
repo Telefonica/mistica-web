@@ -4,11 +4,12 @@ export type FormStatus = 'filling' | 'sending';
 export type FormErrors = {[name: string]: string | undefined};
 export type FieldValidator = (value: any, rawValue: string) => string | undefined;
 
-type FieldRegistration = {
+export type FieldRegistration = {
     name: string;
     field?: HTMLInputElement | HTMLSelectElement | null;
     validate?: FieldValidator;
     focusableElement?: HTMLDivElement | HTMLSelectElement | null;
+    initialValue?: string;
 };
 
 type Context = {

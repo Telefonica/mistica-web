@@ -101,7 +101,7 @@ export const FormPasswordField: React.FC<FormPasswordFieldProps> = ({
             {...rest}
             type={isVisible ? 'text' : 'password'}
             inputRef={(field) => {
-                register({name, field, validate});
+                register({name, field, validate, initialValue: value ?? rest.defaultValue});
                 // @ts-expect-error - current is typed as read-only
                 inputRef.current = field;
             }}

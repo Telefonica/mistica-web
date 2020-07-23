@@ -98,7 +98,7 @@ export const FormCvvField: React.FC<FormCvvFieldProps> = ({
     return (
         <TextFieldBase
             {...rest}
-            inputRef={(field) => register({name, field, validate})}
+            inputRef={(field) => register({name, field, validate, initialValue: value ?? rest.defaultValue})}
             disabled={disabled || formStatus === 'sending'}
             error={error || !!formErrors[name]}
             helperText={formErrors[name] || helperText}

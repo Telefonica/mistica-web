@@ -39,7 +39,7 @@ export const FormDateField: React.FC<FormDateFieldProps> = ({
             {...rest}
             shrinkLabel
             type="date"
-            inputRef={(field) => register({name, field, validate})}
+            inputRef={(field) => register({name, field, validate, initialValue: value ?? rest.defaultValue})}
             disabled={disabled || formStatus === 'sending'}
             error={error || !!formErrors[name]}
             helperText={formErrors[name] || helperText}

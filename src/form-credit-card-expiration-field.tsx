@@ -133,7 +133,9 @@ export const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFie
     return (
         <TextFieldBase
             {...rest}
-            inputRef={(field: HTMLInputElement | null) => register({name, field, validate})}
+            inputRef={(field: HTMLInputElement | null) =>
+                register({name, field, validate, initialValue: value ?? rest.defaultValue})
+            }
             disabled={disabled || formStatus === 'sending'}
             error={error || !!formErrors[name]}
             helperText={formErrors[name] || helperText}
