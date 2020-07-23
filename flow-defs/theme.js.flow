@@ -5,6 +5,7 @@
  * Flowgen v1.10.0
  */
 
+import * as React from "react";
 import { type RegionCode } from "./utils/region-code";
 import { type Locale } from "./utils/locale";
 import { type Skin } from "./colors";
@@ -75,7 +76,16 @@ declare var colors: {
   iconSecondary: string,
   iconPrimary: string,
   iconTertiary: string,
-  badgeBackground: string
+  badgeBackground: string,
+  toggleAndroidInactive: string,
+  toggleAndroidBackgroundInactive: string,
+  toggleAndroidActive: string,
+  toggleAndroidBackgroundActive: string,
+  toggleIosInactive: string,
+  toggleIosBackgroundInactive: string,
+  toggleIosBackgroundActive: string,
+  textAppbar: string,
+  textAppbarSelected: string
 };
 declare var texts: {
   expirationDatePlaceholder: string,
@@ -100,6 +110,34 @@ declare var texts: {
 };
 declare type ThemeColors = typeof colors;
 export type ThemeTexts = typeof texts;
+declare type LinkComponent = React.ComponentType<{
+  style?: CssStyle,
+  className?: string,
+  "aria-label"?: string,
+  disabled?: boolean,
+  role?: string,
+  "data-testid"?: string,
+  "aria-checked"?: "true" | "false" | boolean,
+  "aria-controls"?: string,
+  "aria-expanded"?: "true" | "false" | boolean,
+  "aria-hidden"?: "true" | "false" | boolean,
+  "aria-selected"?: "true" | "false" | boolean,
+  tabIndex?: number,
+  innerRef?: React.Ref<HTMLAnchorElement>,
+  to:
+    | string
+    | {
+        pathname?: string,
+        search?: string,
+        state?: mixed,
+        hash?: string,
+        key?: string
+      },
+  replace?: boolean,
+  onClick?: (event: SyntheticMouseEvent<HTMLElement>) => any,
+  onKeyDown?: (event: SyntheticKeyboardEvent<HTMLElement>) => any,
+  children: React.Node
+}>;
 export type ThemeConfig = {
   skin: Skin,
   colorOverride?: string,
@@ -123,7 +161,8 @@ export type ThemeConfig = {
     desktopMinWidth: number,
     largeDesktopMinWidth: number,
     desktopOrTabletMinHeight: number
-  }
+  },
+  Link?: LinkComponent
 };
 export type Theme = {
   skin: Skin,
@@ -151,7 +190,10 @@ export type Theme = {
     tabletOrBigger: string,
     tabletOrSmaller: string
   },
-  colors: ThemeColors
+  colors: ThemeColors,
+  Link: LinkComponent
 };
 declare export var baseTheme: Theme;
 declare export {};
+
+import { type CssStyle } from "./__types__.js.flow";

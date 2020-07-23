@@ -1,5 +1,5 @@
 import '../css/roboto.css';
-import '../css/reset.css';
+import './css/main.css';
 import * as React from 'react';
 import {addDecorator} from '@storybook/react';
 import {ThemeContextProvider, Box, MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN, O2_CLASSIC_SKIN} from '../src';
@@ -54,9 +54,12 @@ const ThemeDecorator = ({Story}) => {
 
     React.useEffect(() => {
         const channel = addons.getChannel();
-        channel.on('skin-selected', (skin) => {
-            setSkin(skin);
-        });
+        channel.on('skin-selected', setSkin);
+        channel.emit('story-mounted');
+
+        return () => {
+            channel.off('skin-selected', setSkin);
+        };
     }, []);
 
     return (

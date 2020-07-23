@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {useAriaId, useTheme, useScreenSize} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import {isAndroid, isIos} from './utils/platform';
 import {createUseStyles} from './jss';
-import TextFieldBase from './text-field-base';
+import {TextFieldBase} from './text-field-base';
 import IconArrowDown from './icons/icon-arrow-down';
 import Overlay from './overlay';
 import classNames from 'classnames';
@@ -13,8 +13,6 @@ const cancelEvent = (event: React.SyntheticEvent | Event) => {
     event.stopPropagation();
     event.preventDefault();
 };
-
-export const DEFAULT_WIDTH = 328;
 
 const shouldUseNative = process.env.NODE_ENV === 'test' || isAndroid() || isIos();
 
@@ -34,7 +32,7 @@ const useStyles = createUseStyles((theme) => ({
         '&:disabled': {
             color: theme.colors.border,
         },
-        cursor: ({disabled}) => (disabled ? undefined : 'pointer'),
+        cursor: ({disabled}) => (disabled ? 'initial' : 'pointer'),
     },
     arrowDown: {
         position: 'absolute',
@@ -53,6 +51,9 @@ const useStyles = createUseStyles((theme) => ({
         textOverflow: 'ellipsis',
     },
     optionsContainer: {
+        margin: 0,
+        padding: 0,
+        listStyleType: 'none',
         position: 'absolute',
         top: ({optionsComputedProps}) => optionsComputedProps.top,
         left: ({optionsComputedProps}) => optionsComputedProps.left,
@@ -85,9 +86,6 @@ const useStyles = createUseStyles((theme) => ({
         alignItems: 'center',
         cursor: 'pointer',
     },
-    wrapper: {
-        width: ({isFullWidth}) => (isFullWidth ? 'auto' : DEFAULT_WIDTH),
-    },
 }));
 
 export type SelectProps = {
@@ -101,8 +99,8 @@ export type SelectProps = {
     fullWidth?: boolean;
     style?: React.CSSProperties;
     options: ReadonlyArray<{
-        value: string;
-        text: string;
+        readonly value: string;
+        readonly text: string;
     }>;
     required?: boolean;
     inputRef?: React.Ref<HTMLSelectElement | HTMLInputElement>;
@@ -134,7 +132,6 @@ const Select: React.FC<SelectProps> = ({
     autoFocus = false,
     focusableRef: externalFocusableRef,
 }) => {
-    const {isMobile} = useScreenSize();
     const focusableRef = React.useRef<HTMLDivElement | HTMLSelectElement>(null);
     const fieldRef = React.useRef<HTMLDivElement>(null);
     const optionsMenuRef = React.useRef<HTMLUListElement>(null);
@@ -293,15 +290,12 @@ const Select: React.FC<SelectProps> = ({
         }
     }, [autoFocus]);
 
-    const isFullWidth = fullWidth === undefined ? isMobile : fullWidth; // in mobile fullwidth by default
-
     const classes = useStyles({
         label,
         optionsComputedProps,
         animateShowOptions,
         helperText,
         disabled,
-        isFullWidth,
     });
 
     // When the value is null/undefined/'' we assume it's the default empty option and we don't show any label
@@ -326,68 +320,66 @@ const Select: React.FC<SelectProps> = ({
           };
 
     return shouldUseNative ? (
-        <div className={classes.wrapper}>
-            <FieldContainer
-                helperText={<HelperText error={error} leftText={helperText} />}
-                fieldRef={fieldRef}
-            >
-                {label && (
-                    <Label
-                        error={error}
-                        forId={inputId}
-                        inputState={isFocused ? 'focused' : 'filled'}
-                        disabled={disabled}
-                    >
-                        {label}
-                    </Label>
-                )}
-                <select
-                    {...inputProps}
-                    className={classes.select}
-                    id={inputId}
-                    aria-invalid={!!error}
-                    value={value}
-                    required={required}
+        <FieldContainer
+            helperText={<HelperText error={error} leftText={helperText} />}
+            fieldRef={fieldRef}
+            fullWidth={fullWidth}
+        >
+            {label && (
+                <Label
+                    error={error}
+                    forId={inputId}
+                    inputState={isFocused ? 'focused' : 'filled'}
                     disabled={disabled}
-                    onChange={(e) => {
-                        if (onChange) {
-                            onChange(e);
-                        }
-                        if (onChangeValue) {
-                            onChangeValue(e.target.value);
-                        }
-                    }}
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={(e) => {
-                        setIsFocused(false);
-                        onBlur?.(e);
-                    }}
-                    ref={(actualRef) => {
-                        [externalRef, focusableRef, externalFocusableRef].forEach((currentRef) => {
-                            if (typeof currentRef === 'function') {
-                                currentRef(actualRef);
-                            } else if (currentRef) {
-                                // @ts-expect-error current is typed as read-only
-                                currentRef.current = actualRef;
-                            }
-                        });
-                    }}
                 >
-                    {options.map(({value: val, text}) => (
-                        <option key={val} value={val}>
-                            {text}
-                        </option>
-                    ))}
-                </select>
-                <div className={classes.arrowDown} aria-hidden>
-                    <IconArrowDown />
-                </div>
-            </FieldContainer>
-        </div>
+                    {label}
+                </Label>
+            )}
+            <select
+                {...inputProps}
+                className={classes.select}
+                id={inputId}
+                aria-invalid={!!error}
+                value={value}
+                required={required}
+                disabled={disabled}
+                onChange={(e) => {
+                    if (onChange) {
+                        onChange(e);
+                    }
+                    if (onChangeValue) {
+                        onChangeValue(e.target.value);
+                    }
+                }}
+                onFocus={() => setIsFocused(true)}
+                onBlur={(e) => {
+                    setIsFocused(false);
+                    onBlur?.(e);
+                }}
+                ref={(actualRef) => {
+                    [externalRef, focusableRef, externalFocusableRef].forEach((currentRef) => {
+                        if (typeof currentRef === 'function') {
+                            currentRef(actualRef);
+                        } else if (currentRef) {
+                            // @ts-expect-error current is typed as read-only
+                            currentRef.current = actualRef;
+                        }
+                    });
+                }}
+            >
+                {options.map(({value: val, text}) => (
+                    <option key={val} value={val}>
+                        {text}
+                    </option>
+                ))}
+            </select>
+            <div className={classes.arrowDown} aria-hidden>
+                <IconArrowDown />
+            </div>
+        </FieldContainer>
     ) : (
         <>
             <div
-                className={classes.wrapper}
                 style={{
                     cursor: disabled ? 'auto' : 'pointer',
                     position: 'relative',
@@ -412,9 +404,7 @@ const Select: React.FC<SelectProps> = ({
                         visibility: 'hidden',
                         ...style,
                     }}
-                    fieldStyle={{
-                        width: isFullWidth ? undefined : DEFAULT_WIDTH,
-                    }}
+                    fullWidth={fullWidth}
                     endIcon={<IconArrowDown />}
                     focus={isFocused}
                     label={label}

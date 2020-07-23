@@ -26,7 +26,6 @@ const options = [
     {value: '56', text: '56px'},
     {value: '64', text: '64px'},
 ];
-
 export const Default: StoryComponent = () => {
     const [space, setSpace] = React.useState('32');
 

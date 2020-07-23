@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {useScreenSize} from './hooks';
 import Box from './box';
+import {createUseStyles} from './jss';
+import {DEFAULT_WIDTH} from './text-field-components';
 
 import type {TextFieldProps} from './text-field';
 import type {SelectProps} from './select';
@@ -8,6 +9,12 @@ import type {FormTextFieldProps} from './form-text-field';
 import type {FormSelectProps} from './form-select';
 import type {FormCvvFieldProps} from './form-cvv-field';
 import type {FormCreditCardExpirationFieldProps} from './form-credit-card-expiration-field';
+import type {FormDecimalFieldProps} from './form-decimal-field';
+import type {FormIntegerFieldProps} from './form-integer-field';
+import type {FormDateFieldProps} from './form-date-field';
+import type {FormPasswordFieldProps} from './form-password-field';
+import type {FormPhoneNumberFieldProps} from './form-phone-number-field';
+import type {FormEmailFieldProps} from './form-email-field';
 
 type Field =
     | React.ReactElement<TextFieldProps>
@@ -15,23 +22,34 @@ type Field =
     | React.ReactElement<FormTextFieldProps>
     | React.ReactElement<FormSelectProps>
     | React.ReactElement<FormCvvFieldProps>
-    | React.ReactElement<FormCreditCardExpirationFieldProps>;
+    | React.ReactElement<FormCreditCardExpirationFieldProps>
+    | React.ReactElement<FormDecimalFieldProps>
+    | React.ReactElement<FormIntegerFieldProps>
+    | React.ReactElement<FormDateFieldProps>
+    | React.ReactElement<FormPhoneNumberFieldProps>
+    | React.ReactElement<FormPasswordFieldProps>
+    | React.ReactElement<FormEmailFieldProps>;
 
 type Props = {
     fullWidth?: boolean;
     children: Field | [Field, Field];
 };
 
-const DEFAULT_WIDTH = 328;
-
-const DoubleField: React.FC<Props> = ({children, fullWidth}) => {
-    const {isMobile} = useScreenSize();
-
-    const containerStyle: React.CSSProperties = {
+const useStyles = createUseStyles((theme) => ({
+    container: {
         display: 'flex',
         flexDirection: 'row',
-        width: fullWidth || isMobile ? '100%' : DEFAULT_WIDTH,
-    };
+        [theme.mq.mobile]: {
+            width: '100%',
+        },
+        [theme.mq.tabletOrBigger]: {
+            width: ({fullWidth}) => (fullWidth ? '100%' : DEFAULT_WIDTH),
+        },
+    },
+}));
+
+export const DoubleField: React.FC<Props> = ({children, fullWidth}) => {
+    const classes = useStyles({fullWidth});
 
     const renderChildren = () => {
         const [first, second]: any = React.Children.toArray(children);
@@ -52,7 +70,5 @@ const DoubleField: React.FC<Props> = ({children, fullWidth}) => {
         );
     };
 
-    return <div style={containerStyle}>{renderChildren()}</div>;
+    return <div className={classes.container}>{renderChildren()}</div>;
 };
-
-export default DoubleField;

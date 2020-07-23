@@ -6,7 +6,7 @@ test('PromoTag', async () => {
         name: 'PromoTag',
     });
 
-    const tag = await screen.getByTestId('promo-tag');
+    const tag = await screen.findByTestId('promo-tag');
 
     const image = await tag.screenshot();
     expect(image).toMatchImageSnapshot();

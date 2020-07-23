@@ -11,17 +11,18 @@ import type {TrackingEvent} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
     title1: {
+        margin: 0,
         color: theme.colors.textPrimary,
         fontSize: 18,
         fontWeight: 300,
         lineHeight: 1.3333333,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.32 : undefined,
+        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.32 : 'normal',
     },
     sub2: {
         color: theme.colors.textSecondary,
         lineHeight: 1.42857142,
         fontSize: 14,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.15 : undefined,
+        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.15 : 'normal',
         fontWeight: 500,
     },
     bunContainer: {
@@ -83,7 +84,7 @@ const Bun: React.FC<BunProps> = ({children, title, trackingEvent, action}) => {
                 trackingEvent={trackingEvent}
                 {...navigationProps}
             >
-                <p className={classnames(classes.sub2, classes.footerText)}>{text}</p>
+                <span className={classnames(classes.sub2, classes.footerText)}>{text}</span>
                 <IconChevron className={classes.chevron} color={colors.textLink} direction="right" />
             </TextLink>
         );

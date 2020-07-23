@@ -1,5 +1,5 @@
 import {applyAlpha} from './utils';
-import c from './colors/o2';
+import c from './colors/o2-classic';
 
 // LAYOUT
 export const PRIMARY = c.O2_BLUE;
@@ -79,6 +79,10 @@ export const TEXT_NAVBAR_HOVER = c.O2_BLUE_LIGHT_60;
 export const NAVBAR_BACKGROUND = c.O2_BLUE;
 export const NAVBAR_CONTROL = c.O2_SKY_BLUE_LIGHT_30;
 export const NAVBAR_DIVIDER = c.O2_BLUE;
+
+// APPBAR (MOBILE MAIN TABS)
+export const TEXT_APPBAR = c.GREY_2;
+export const TEXT_APPBAR_SELECTED = c.O2_BLUE;
 
 // TAG
 export const TAG_BACKGROUND_FIRST = c.O2_GREEN;

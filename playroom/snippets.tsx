@@ -17,6 +17,10 @@ const formSnippets = [
     ['FormEmailField', '<FormEmailField name="email" label="e-mail"/>'],
     ['FormPhoneNumberField', '<FormPhoneNumberField name="phone" label="Phone"/>'],
     ['FormCreditCardFields', '<FormCreditCardFields/>'],
+    ['FormDateField', '<FormDateField name="date" label="Date"/>'],
+    ['FormDecimalField', '<FormDecimalField name="decimal" label="Decimal"/>'],
+    ['FormIntegerField', '<FormIntegerField name="integer" label="Integer"/>'],
+    ['FormPasswordField', '<FormPasswordField name="password" label="Password"/>'],
     [
         'FormCreditCardExpirationField',
         '<FormCreditCardExpirationField name="expiration-date" label="Expiration date"/>',
@@ -101,6 +105,109 @@ const listSnippets = [
         </${listName}>
         `,
 }));
+
+listSnippets.push({
+    group: 'List',
+    name: 'Radio list',
+    code: `
+    <RadioGroup defaultValue="banana">
+        <RowList>
+            <Row
+                icon={<AvatarPlaceholder />}
+                iconSize={40}
+                title="Banana"
+                description="Yellow"
+                radioValue="banana"
+            />
+            <Row
+                icon={<AvatarPlaceholder />}
+                iconSize={40}
+                title="Apple"
+                description="Green"
+                radioValue="apple"
+            />
+        </RowList>
+    </RadioGroup>
+    `,
+});
+
+const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
+    {
+        group: 'List',
+        name: `${rowName} (simple)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            title="Title"
+            description="Description"
+            href="https://google.com"
+        />`,
+    },
+    {
+        group: 'List',
+        name: `${rowName} (complex)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            headline="Headline"
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+            badge={9}
+            href="https://google.com"
+        />`,
+    },
+    {
+        group: 'List',
+        name: `${rowName} (switch)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            title="Title"
+            description="Description"
+            switch={{defaultValue: false}}
+        />`,
+    },
+    {
+        group: 'List',
+        name: `${rowName} (checkbox)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            title="Title"
+            description="Description"
+            checkbox={{defaultValue: false}}
+        />`,
+    },
+    {
+        group: 'List',
+        name: `${rowName} (radio)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            title="Orange"
+            description="orange"
+            radioValue="orange"
+        />`,
+    },
+    {
+        group: 'List',
+        name: `${rowName} (custom element)`,
+        code: `
+        <${rowName}
+            icon={<AvatarPlaceholder />}
+            iconSize={40}
+            title="Title"
+            description="Description"
+            right={<Placeholder width={32} height={32} />}
+        />`,
+    },
+]);
 
 const tooltipSnippets = ['Tooltip', 'Popover'].map((name) => ({
     group: 'Tooltip',
@@ -194,6 +301,26 @@ const headerSnippets = [
     },
 ];
 
+const tabsSnippets = [
+    {
+        group: 'Tabs',
+        name: 'Tabs (without icons)',
+        code: `<Tabs selectedIndex={0} tabs={[{text: 'Tab 1'}, {text: 'Tab 2'}, {text: 'Tab 2'}]} />`,
+    },
+    {
+        group: 'Tabs',
+        name: 'Tabs (with icons)',
+        code: `<Tabs
+    selectedIndex={0}
+    tabs={[
+        {text: 'Tab 1', icon: <Placeholder height={24} width={24} />},
+        {text: 'Tab 2', icon: <Placeholder height={24} width={24} />},
+        {text: 'Tab 3', icon: <Placeholder height={24} width={24} />},
+    ]}
+/>`,
+    },
+];
+
 type Snippet = {group: string; name: string; code: string};
 
 export default [
@@ -224,9 +351,16 @@ export default [
         name: 'Stack',
         code: '<Stack space={16}><Placeholder /><Placeholder /><Placeholder /></Stack>',
     },
+    {
+        group: 'Layout',
+        name: 'Inline',
+        code: '<Inline space={16}><Placeholder /><Placeholder /><Placeholder /></Inline>',
+    },
     {group: 'Spinner', name: 'Spinner', code: '<Spinner />'},
     {group: 'LoadingBar', name: 'LoadingBar', code: '<LoadingBar visible />'},
     {group: 'Text', name: 'Text', code: '<Text>some text</Text>'},
     ...headerSnippets,
     ...listSnippets,
+    ...listRowSnippets,
+    ...tabsSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

@@ -1,18 +1,31 @@
 import * as React from 'react';
-import TextField from '../text-field';
+import {FormTextField} from '../form-text-field';
 import Select from '../select';
+import {useIsInverseVariant} from '../theme-variant-context';
 
 type Props = {
     title: string;
     children: React.ReactNode;
 };
 
-export const StorySection: React.FC<Props> = ({title, children}) => (
-    <div style={{marginBottom: 32}}>
-        <h1 style={{color: '#888', fontSize: 20, margin: '16px 0px'}}>{title}</h1>
-        {children}
-    </div>
-);
+export const StorySection: React.FC<Props> = ({title, children}) => {
+    const isInverse = useIsInverseVariant();
+    return (
+        <div style={{marginBottom: 32}}>
+            <h1
+                style={{
+                    color: isInverse ? 'white' : '#888',
+                    fontWeight: 'normal',
+                    fontSize: 20,
+                    margin: '16px 0px',
+                }}
+            >
+                {title}
+            </h1>
+            {children}
+        </div>
+    );
+};
 
 export const countriesList = [
     'Afghanistan',
@@ -31,6 +44,19 @@ export const countriesList = [
     'Australia',
     'Austria',
     'Azerbaijan',
+];
+
+export const phoneNumbersList = [
+    '600 00 00 00',
+    '611 11 11 11',
+    '622 22 22 22',
+    '633 33 33 33',
+    '644 44 44 44',
+    '655 55 55 55',
+    '666 66 66 66',
+    '677 77 77 77',
+    '688 88 88 88',
+    '699 99 99 99',
 ];
 
 export const fruitEntries = [
@@ -59,7 +85,7 @@ export const useTextField = (
 ): [string, React.ReactNode] => {
     const [text, setText] = React.useState(defaultValue);
     const textField = (
-        <TextField type="text" label={label} value={text} onChangeValue={setText} required={required} />
+        <FormTextField name={label} label={label} value={text} onChangeValue={setText} optional={!required} />
     );
     return [text, textField];
 };
@@ -72,6 +98,7 @@ export const useSelect = (
     const [value, setValue] = React.useState(defaultValue);
     const select = (
         <Select
+            required
             value={value}
             onChangeValue={setValue}
             label={label}

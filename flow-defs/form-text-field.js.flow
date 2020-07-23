@@ -11,20 +11,26 @@ export type SimpleFormTextFieldProps = {
   ...$Exact<CommonFormFieldProps>,
 
   type?: "text",
-  value?: string,
   onChangeValue?: (value: string, rawValue: string) => void,
-  multiline?: boolean
+  multiline?: boolean,
+  prefix?: React.Node,
+  endIcon?: React.Node,
+  getSuggestions?: (value: string) => Array<string>
 };
+
+/**
+ * @deprecated
+ */
 export type OtherFormTextFieldProps = {
   ...$Exact<CommonFormFieldProps>,
 
-  type: "password" | "integer" | "decimal" | "date",
-  value?: string,
-  onChangeValue?: (value: string, rawValue: string) => void
+  type?: "password" | "integer" | "decimal" | "date",
+  onChangeValue?: (value: string, rawValue: string) => void,
+  multiline?: void,
+  prefix?: React.Node,
+  endIcon?: React.Node
 };
 export type FormTextFieldProps =
   | SimpleFormTextFieldProps
   | OtherFormTextFieldProps;
-declare var FormTextField: React.ComponentType<FormTextFieldProps>;
-export type FormTextFieldComponent = typeof FormTextField;
-declare export default typeof FormTextField;
+declare export var FormTextField: React.ComponentType<FormTextFieldProps>;

@@ -31,7 +31,7 @@ type FormProps = {
     className?: string;
 };
 
-const Form: React.FC<FormProps> = ({
+export const Form: React.FC<FormProps> = ({
     children,
     className,
     onSubmit,
@@ -51,7 +51,7 @@ const Form: React.FC<FormProps> = ({
     const {texts} = useTheme();
     const classes = useStyles();
 
-    React.useLayoutEffect(
+    React.useEffect(
         () => () => {
             isMountedRef.current = false;
         },
@@ -204,6 +204,7 @@ export interface CommonFormFieldProps {
     fullWidth?: boolean;
     getSuggestions?: (text: string) => Array<string>;
     placeholder?: string;
+    value?: string;
+    defaultValue?: string;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-
-export default Form;

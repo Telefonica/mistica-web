@@ -1,27 +1,32 @@
 import * as React from 'react';
 import {useForm} from './form-context';
-import TextField from './text-field';
+import {TextFieldBase} from './text-field-base';
 
 import type {CommonFormFieldProps} from './form';
-import type {SimpleTextFieldProps} from './text-field';
 
 export interface SimpleFormTextFieldProps extends CommonFormFieldProps {
-    type?: 'text';
-    value?: string;
+    type?: 'text'; // @deprecated, this will be the only allowed type for FormTextFields
     onChangeValue?: (value: string, rawValue: string) => void;
     multiline?: boolean;
+    prefix?: React.ReactNode;
+    endIcon?: React.ReactNode;
+    getSuggestions?: (value: string) => Array<string>;
 }
+
+/**
+ * @deprecated
+ */
 export interface OtherFormTextFieldProps extends CommonFormFieldProps {
-    type: 'password' | 'integer' | 'decimal' | 'date';
-    value?: string;
+    type?: 'password' | 'integer' | 'decimal' | 'date';
     onChangeValue?: (value: string, rawValue: string) => void;
+    multiline?: undefined;
+    prefix?: React.ReactNode;
+    endIcon?: React.ReactNode;
 }
 
 export type FormTextFieldProps = SimpleFormTextFieldProps | OtherFormTextFieldProps;
 
-const CustomTextField = TextField as React.FC<SimpleTextFieldProps | OtherFormTextFieldProps>;
-
-const FormTextField: React.FC<FormTextFieldProps> = ({
+export const FormTextField: React.FC<FormTextFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -30,6 +35,7 @@ const FormTextField: React.FC<FormTextFieldProps> = ({
     type = 'text',
     validate,
     onChangeValue,
+    onChange,
     onBlur,
     value,
     ...rest
@@ -45,8 +51,20 @@ const FormTextField: React.FC<FormTextFieldProps> = ({
         register,
     } = useForm();
 
+    // TODO Remove: APPS-XXXX
+    React.useEffect(() => {
+        if (process.env.NODE_ENV !== 'production') {
+            if (type !== 'text') {
+                console.error(
+                    'FormTextFields with a type different than "text" are deprecated. Please use another FormField component.' +
+                        '\nSee: https://mistica-web.now.sh/?path=/story/components-forms-formfields--types-uncontrolled'
+                );
+            }
+        }
+    }, [type]);
+
     return (
-        <CustomTextField
+        <TextFieldBase
             {...rest}
             inputRef={(field) => register({name, field, validate})}
             disabled={disabled || formStatus === 'sending'}
@@ -55,10 +73,14 @@ const FormTextField: React.FC<FormTextFieldProps> = ({
             type={type}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name] ?? ''}
-            onChange={(event) => setRawValue({name, value: event.currentTarget.value})}
-            onChangeValue={(value: string, rawValue: string) => {
+            value={value ?? rawValues[name] ?? (rest.defaultValue !== undefined ? undefined : '')}
+            onChange={(event) => {
+                const rawValue = event.currentTarget.value;
+                const value = rawValue;
+                setRawValue({name, value: rawValue});
                 setValue({name, value});
+
+                onChange?.(event);
                 onChangeValue?.(value, rawValue);
                 setFormError({name, error: ''});
             }}
@@ -69,7 +91,3 @@ const FormTextField: React.FC<FormTextFieldProps> = ({
         />
     );
 };
-
-export type FormTextFieldComponent = typeof FormTextField;
-
-export default FormTextField;

@@ -1,14 +1,12 @@
 import * as React from 'react';
-import {TextField, PhoneInput, ThemeVariant, useTheme} from '..';
-import Stack from '../stack';
+import {PhoneInput, ThemeVariant, useTheme, TextField} from '..';
 import Box from '../box';
 import {inspect} from 'util';
 import Icon from '../icons/icon-visibility';
-import {StorySection, countriesList} from './helpers';
+import {StorySection, countriesList, phoneNumbersList} from './helpers';
 
 export default {
-    title: 'Components|Forms/TextField',
-    component: TextField,
+    title: 'Components|Forms/TextField (deprecated)',
 };
 
 type UncontrolledProps = {
@@ -69,8 +67,13 @@ const Controlled: React.FC<ControlledProps> = ({title, initialValue, children}) 
     );
 };
 
-const getSuggestions = (value: string) =>
+const getCountrySuggestions = (value: string) =>
     countriesList
+        .filter((s) => String(s).toLocaleLowerCase().startsWith(value.toLocaleLowerCase()))
+        .slice(0, 5);
+
+const getPhoneNumberSuggestions = (value: string) =>
+    phoneNumbersList
         .filter((s) => String(s).toLocaleLowerCase().startsWith(value.toLocaleLowerCase()))
         .slice(0, 5);
 
@@ -79,38 +82,50 @@ export const Variants: StoryComponent = () => {
     return (
         <>
             <StorySection title="Default">
-                <TextField label="Normal field" />
-            </StorySection>
-
-            <StorySection title="Multiline with character limit">
-                <TextField label="Multiline" multiline maxLength={200} />
+                <TextField required name="text" label="Normal field" />
             </StorySection>
 
             <StorySection title="Multiline">
-                <Stack space={16}>
-                    <TextField label="Multiline" multiline />
-                    <TextField label="Multiline" multiline />
-                </Stack>
+                <TextField required name="text" label="Multiline" multiline />
+            </StorySection>
+
+            <StorySection title="Multiline with character limit">
+                <TextField
+                    required
+                    name="text"
+                    label="Multiline"
+                    multiline
+                    maxLength={200}
+                    helperText="Helper Text"
+                />
             </StorySection>
 
             <StorySection title="With label">
-                <TextField label="Label" />
+                <TextField required name="text" label="Label" />
             </StorySection>
 
             <StorySection title="With label and placeholder">
-                <TextField label="Label" placeholder="Placeholder" />
+                <TextField required name="text" label="Label" placeholder="Placeholder" />
             </StorySection>
 
             <StorySection title="With label and default value">
-                <TextField label="Label" defaultValue="Default value" />
+                <TextField required name="text" label="Label" defaultValue="Default value" />
             </StorySection>
 
             <StorySection title="With helper text">
-                <TextField label="Label" defaultValue="Default value" helperText="Helper Text" />
+                <TextField
+                    required
+                    name="text"
+                    label="Label"
+                    defaultValue="Default value"
+                    helperText="Helper Text"
+                />
             </StorySection>
 
             <StorySection title="With Error">
                 <TextField
+                    required
+                    name="text"
                     error
                     label="Label"
                     defaultValue="Default value"
@@ -119,26 +134,40 @@ export const Variants: StoryComponent = () => {
             </StorySection>
 
             <StorySection title="With prefix">
-                <TextField label="Label" defaultValue="Default value" prefix="$" />
+                <TextField required name="text" label="Label" defaultValue="Default value" prefix="$" />
             </StorySection>
 
             <StorySection title="With icon at the end">
-                <TextField label="Label" defaultValue="Default value" endIcon={<Icon />} />
+                <TextField
+                    required
+                    name="text"
+                    label="Label"
+                    defaultValue="Default value"
+                    endIcon={<Icon />}
+                />
             </StorySection>
 
             <StorySection title="Disabled">
-                <TextField disabled label="Disabled" defaultValue="Default value" />
+                <TextField required name="text" disabled label="Disabled" defaultValue="Default value" />
             </StorySection>
 
             <div style={{backgroundColor: colors.textLink}}>
                 <ThemeVariant isInverse>
                     <Box padding={16}>
                         <StorySection title="Inverse with helper text">
-                            <TextField label="Label" defaultValue="Default value" helperText="Helper Text" />
+                            <TextField
+                                required
+                                name="text"
+                                label="Label"
+                                defaultValue="Default value"
+                                helperText="Helper Text"
+                            />
                         </StorySection>
 
                         <StorySection title="Inverse with Error">
                             <TextField
+                                required
+                                name="text"
                                 error
                                 label="Label"
                                 defaultValue="Default value"
@@ -154,9 +183,36 @@ export const Variants: StoryComponent = () => {
 
 export const TypesUncontrolled: StoryComponent = () => (
     <>
-        <Uncontrolled title="Type integer">
+        <Uncontrolled title="TextField">
             {(handleChange, handleChangeValue) => (
                 <TextField
+                    required
+                    name="text"
+                    label="Text"
+                    defaultValue="Some text"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Uncontrolled>
+
+        <Uncontrolled title="TextField type email">
+            {(handleChange, handleChangeValue) => (
+                <TextField
+                    required
+                    type="email"
+                    label="Email"
+                    defaultValue="aitor.menta@gmail.com"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Uncontrolled>
+
+        <Uncontrolled title="TextField type integer">
+            {(handleChange, handleChangeValue) => (
+                <TextField
+                    required
                     type="integer"
                     label="Integer"
                     defaultValue="123"
@@ -166,9 +222,10 @@ export const TypesUncontrolled: StoryComponent = () => (
             )}
         </Uncontrolled>
 
-        <Uncontrolled title="Type decimal">
+        <Uncontrolled title="TextField type decimal">
             {(handleChange, handleChangeValue) => (
                 <TextField
+                    required
                     type="decimal"
                     label="Decimal"
                     defaultValue="123.45"
@@ -178,32 +235,50 @@ export const TypesUncontrolled: StoryComponent = () => (
             )}
         </Uncontrolled>
 
-        <Uncontrolled title="Type credit card number">
+        <Uncontrolled title="TextField type credit-card-number">
             {(handleChange, handleChangeValue) => (
                 <TextField
+                    required
                     type="credit-card-number"
                     label="Credit card"
+                    defaultValue="1234567890123456"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
                 />
             )}
         </Uncontrolled>
 
-        <Uncontrolled title="Type credit card expiration">
+        <Uncontrolled title="TextField type credit-card-expiration">
             {(handleChange, handleChangeValue) => (
                 <TextField
+                    required
                     type="credit-card-expiration"
                     label="Expiration"
+                    defaultValue="14/24"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
                 />
             )}
         </Uncontrolled>
 
-        <Uncontrolled title="Type password">
+        <Uncontrolled title="TextField type credit-card-cvv">
+            {(handleChange, handleChangeValue) => (
+                <TextField
+                    required
+                    type="credit-card-cvv"
+                    label="CVV"
+                    defaultValue="1234"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Uncontrolled>
+
+        <Uncontrolled title="TextField type password">
             {(handleChange, handleChangeValue) => (
                 <form>
                     <TextField
+                        required
                         type="password"
                         label="Password"
                         defaultValue="password123"
@@ -214,9 +289,10 @@ export const TypesUncontrolled: StoryComponent = () => (
             )}
         </Uncontrolled>
 
-        <Uncontrolled title="Type date">
+        <Uncontrolled title="TextField type date">
             {(handleChange, handleChangeValue) => (
                 <TextField
+                    required
                     type="date"
                     label="Date"
                     onChange={handleChange}
@@ -225,29 +301,31 @@ export const TypesUncontrolled: StoryComponent = () => (
             )}
         </Uncontrolled>
 
-        <Uncontrolled title="Type phone">
+        <Uncontrolled title="TextField type phone">
             {(handleChange, handleChangeValue) => (
                 <TextField
+                    required
                     type="phone"
                     label="Phone"
                     defaultValue="654834455"
-                    Input={PhoneInput}
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
+                    Input={PhoneInput}
                 />
             )}
         </Uncontrolled>
 
-        <Uncontrolled title="Type phone (with prefix)">
+        <Uncontrolled title="TextField type phone (with prefix)">
             {(handleChange, handleChangeValue) => (
                 <TextField
+                    required
                     type="phone"
                     label="Phone with prefix"
                     prefix="+34"
                     defaultValue="654834455"
-                    Input={PhoneInput}
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
+                    Input={PhoneInput}
                 />
             )}
         </Uncontrolled>
@@ -258,22 +336,52 @@ TypesUncontrolled.story = {name: 'Types (uncontrolled)'};
 
 export const TypesControlled = (): React.ReactNode => (
     <>
-        <Controlled title="Type text + autocomplete" initialValue="">
+        <Controlled title="TextField" initialValue="Some text">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
+                    required
                     value={value}
-                    label="Text with autocomplete"
-                    placeholder="Country name (start with 'A')"
+                    name="text"
+                    label="Text"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
-                    getSuggestions={getSuggestions}
                 />
             )}
         </Controlled>
 
-        <Controlled title="Type integer" initialValue="123">
+        <Controlled title="TextField with suggestions" initialValue="">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
+                    required
+                    autoComplete="off"
+                    value={value}
+                    name="country"
+                    label="Text with suggestions"
+                    placeholder="Country name (start with 'A')"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                    getSuggestions={getCountrySuggestions}
+                />
+            )}
+        </Controlled>
+
+        <Controlled title="TextField type email" initialValue="aitor.menta@gmail.com">
+            {(handleChange, handleChangeValue, value) => (
+                <TextField
+                    required
+                    value={value}
+                    type="email"
+                    label="Email"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Controlled>
+
+        <Controlled title="TextField type integer" initialValue="123">
+            {(handleChange, handleChangeValue, value) => (
+                <TextField
+                    required
                     value={value}
                     type="integer"
                     label="Integer"
@@ -283,11 +391,13 @@ export const TypesControlled = (): React.ReactNode => (
             )}
         </Controlled>
 
-        <Controlled title="Type decimal" initialValue="123.456">
+        <Controlled title="TextField type decimal" initialValue="123.456">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
-                    value={value}
+                    required
                     type="decimal"
+                    value={value}
+                    name="decimal"
                     label="Decimal"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
@@ -295,9 +405,10 @@ export const TypesControlled = (): React.ReactNode => (
             )}
         </Controlled>
 
-        <Controlled title="Type credit card" initialValue="1234567812345678">
+        <Controlled title="TextField type credit-card-number" initialValue="1234567812345678">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
+                    required
                     value={value}
                     type="credit-card-number"
                     label="Credit card"
@@ -307,9 +418,10 @@ export const TypesControlled = (): React.ReactNode => (
             )}
         </Controlled>
 
-        <Controlled title="Type credit card expiration" initialValue="13/21">
+        <Controlled title="TextField type creadit-card-expiration" initialValue="13/21">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
+                    required
                     value={value}
                     type="credit-card-expiration"
                     label="Expiration"
@@ -319,10 +431,24 @@ export const TypesControlled = (): React.ReactNode => (
             )}
         </Controlled>
 
-        <Controlled title="Type password" initialValue="password123">
+        <Controlled title="TextField type credit-card-cvv" initialValue="1234">
+            {(handleChange, handleChangeValue, value) => (
+                <TextField
+                    required
+                    value={value}
+                    type="credit-card-cvv"
+                    label="CVV"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Controlled>
+
+        <Controlled title="TextField type password" initialValue="password123">
             {(handleChange, handleChangeValue, value) => (
                 <form>
                     <TextField
+                        required
                         value={value}
                         type="password"
                         label="Password"
@@ -333,9 +459,10 @@ export const TypesControlled = (): React.ReactNode => (
             )}
         </Controlled>
 
-        <Controlled title="Type date" initialValue="1980-10-06">
+        <Controlled title="TextField type password" initialValue="1980-10-06">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
+                    required
                     value={value}
                     type="date"
                     label="Date"
@@ -345,29 +472,47 @@ export const TypesControlled = (): React.ReactNode => (
             )}
         </Controlled>
 
-        <Controlled title="Type phone" initialValue="654834455">
+        <Controlled title="TextField type phone" initialValue="654834455">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
+                    required
                     value={value}
                     type="phone"
                     label="Phone"
-                    Input={PhoneInput}
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
+                    Input={PhoneInput}
                 />
             )}
         </Controlled>
 
-        <Controlled title="Type phone (with prefix)" initialValue="654834455">
+        <Controlled title="TextField type phone (with suggestions)" initialValue="">
             {(handleChange, handleChangeValue, value) => (
                 <TextField
+                    required
+                    value={value}
+                    type="phone"
+                    label="Phone with suggestions"
+                    placeholder="Enter phone (start with 6)"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                    getSuggestions={getPhoneNumberSuggestions}
+                    Input={PhoneInput}
+                />
+            )}
+        </Controlled>
+
+        <Controlled title="TextField type phone (with prefix)" initialValue="654834455">
+            {(handleChange, handleChangeValue, value) => (
+                <TextField
+                    required
                     value={value}
                     type="phone"
                     label="Phone with prefix"
                     prefix="+34"
-                    Input={PhoneInput}
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
+                    Input={PhoneInput}
                 />
             )}
         </Controlled>

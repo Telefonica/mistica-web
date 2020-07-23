@@ -19,12 +19,11 @@ export type FormSelectProps = {
   onChangeValue?: (value: string) => void,
   onBlur?: (event: SyntheticFocusEvent<any>) => void,
   options: $ReadOnlyArray<{
-    value: string,
-    text: string
+    +value: string,
+    +text: string
   }>,
   autoFocus?: boolean,
   value?: string,
   fullWidth?: boolean
 };
-declare var FormSelect: React.ComponentType<FormSelectProps>;
-declare export default typeof FormSelect;
+declare export var FormSelect: React.ComponentType<FormSelectProps>;

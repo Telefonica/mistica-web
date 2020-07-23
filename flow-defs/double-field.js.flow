@@ -12,16 +12,28 @@ import { type FormTextFieldProps } from "./form-text-field";
 import { type FormSelectProps } from "./form-select";
 import { type FormCvvFieldProps } from "./form-cvv-field";
 import { type FormCreditCardExpirationFieldProps } from "./form-credit-card-expiration-field";
+import { type FormDecimalFieldProps } from "./form-decimal-field";
+import { type FormIntegerFieldProps } from "./form-integer-field";
+import { type FormDateFieldProps } from "./form-date-field";
+import { type FormPasswordFieldProps } from "./form-password-field";
+import { type FormPhoneNumberFieldProps } from "./form-phone-number-field";
+import { type FormEmailFieldProps } from "./form-email-field";
 declare type Field =
   | React.Element<TextFieldProps>
   | React.Element<SelectProps>
   | React.Element<FormTextFieldProps>
   | React.Element<FormSelectProps>
   | React.Element<FormCvvFieldProps>
-  | React.Element<FormCreditCardExpirationFieldProps>;
+  | React.Element<FormCreditCardExpirationFieldProps>
+  | React.Element<FormDecimalFieldProps>
+  | React.Element<FormIntegerFieldProps>
+  | React.Element<FormDateFieldProps>
+  | React.Element<FormPhoneNumberFieldProps>
+  | React.Element<FormPasswordFieldProps>
+  | React.Element<FormEmailFieldProps>;
 declare type Props = {
   fullWidth?: boolean,
   children: Field | [Field, Field]
 };
-declare var DoubleField: React.ComponentType<Props>;
-declare export default typeof DoubleField;
+declare export var DoubleField: React.ComponentType<Props>;
+declare export {};

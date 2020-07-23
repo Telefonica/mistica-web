@@ -16,7 +16,10 @@ export type TextProps = {
   weight?: FontWeight,
   truncate?: boolean,
   uppercase?: boolean,
-  as?: React.ComponentType<any> | string
+  id?: string,
+  as?: React.ComponentType<any> | string,
+  role?: string,
+  "aria-level"?: number
 };
 declare var Text: React.ComponentType<TextProps>;
 declare export default typeof Text;

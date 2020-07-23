@@ -1,27 +1,30 @@
 import * as React from 'react';
 import {useForm} from './form-context';
 import {useTheme} from './hooks';
-import TextField from './text-field';
 
 import type {CommonFormFieldProps} from './form';
+import {TextFieldBase} from './text-field-base';
 
 // matches strings like: "x@x.x" (where "x" is any string without spaces)
 const RE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-interface FormEmailFieldProps extends CommonFormFieldProps {
-    value?: string;
+export interface FormEmailFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
+    getSuggestions?: (value: string) => Array<string>;
 }
 
-const FormEmailField: React.FC<FormEmailFieldProps> = ({
+export const FormEmailField: React.FC<FormEmailFieldProps> = ({
     disabled,
     error,
     helperText,
     name,
     optional,
     validate: validateProp,
+    onChange,
     onChangeValue,
     onBlur,
+    value,
+    autoComplete = 'email',
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -46,29 +49,33 @@ const FormEmailField: React.FC<FormEmailFieldProps> = ({
         return validateProp?.(value, rawValue);
     };
 
+    const processValue = (value: string) => value.replace(/\s/g, '');
+
     return (
-        <TextField
+        <TextFieldBase
             {...rest}
-            type="email"
+            inputMode="email"
             inputRef={(field) => register({name, field, validate})}
             disabled={disabled || formStatus === 'sending'}
             error={error || !!formErrors[name]}
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={rawValues[name] ?? ''}
-            onChange={(event) => setRawValue({name, value: event.currentTarget.value})}
-            onChangeValue={(value, rawValue) => {
+            value={value ?? rawValues[name] ?? (rest.defaultValue !== undefined ? undefined : '')}
+            onChange={(event) => {
+                const rawValue = event.currentTarget.value;
+                const value = processValue(rawValue);
+                setRawValue({name, value: rawValue});
                 setValue({name, value});
-                onChangeValue?.(value, rawValue);
                 setFormError({name, error: ''});
+                onChange?.(event);
+                onChangeValue?.(value, rawValue);
             }}
             onBlur={(e) => {
                 setFormError({name, error: validate?.(values[name], rawValues[name])});
                 onBlur?.(e);
             }}
+            autoComplete={autoComplete}
         />
     );
 };
-
-export default FormEmailField;

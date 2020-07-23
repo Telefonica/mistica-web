@@ -28,7 +28,7 @@ declare type AutoComplete =
   | "cc-exp"
   | "cc-csc";
 declare type TextFieldBaseProps = {
-  id: string,
+  id?: string,
   type?: string,
   autoComplete?: AutoComplete,
   autoFocus?: boolean,
@@ -57,13 +57,13 @@ declare type TextFieldBaseProps = {
   inputComponent?: React.ComponentType<any>,
   shrinkLabel?: boolean,
   focus?: boolean,
-  fieldStyle?: CssStyle,
   fieldRef?: React.Ref<"div">,
   onInput?: (event: SyntheticEvent<HTMLInputElement>) => void,
   multiline?: boolean,
-  children?: React.Node
+  children?: React.Node,
+  inputMode?: string
 };
-declare var TextFieldBase: React.Component<TextFieldBaseProps>;
-declare export default typeof TextFieldBase;
+declare export var TextFieldBase: React.Component<TextFieldBaseProps>;
+declare export {};
 
 import { type CssStyle } from "./__types__.js.flow";

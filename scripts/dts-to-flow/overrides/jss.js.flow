@@ -28,15 +28,15 @@ declare export var removeJssProps: <P: {sheet?: any, classes?: any}>(
     props: P
 ) => $Diff<P, {classes: *, sheet: *}>;
 
-declare type CSSValue<P> = void | number | boolean | string | ((P) => void | string | number | boolean);
+declare type CSSValue<P> = void | number | boolean | string | ((P) => string | number | boolean);
 declare type ClassDefinition<P> = {
-    [cssProp: string]:
+    +[cssProp: string]:
         | CSSValue<P>
         | {
-              [cssProp: string]:
+              +[cssProp: string]:
                   | CSSValue<P>
                   | {
-                        [cssProp: string]: CSSValue<P>,
+                        +[cssProp: string]: CSSValue<P>,
                         ...
                     },
               ...
@@ -44,10 +44,16 @@ declare type ClassDefinition<P> = {
     ...
 };
 
-declare type StylesDefinition<P> = {[className: string]: ClassDefinition<P>, ...};
+declare type StylesDefinition<P> = {+[className: string]: ClassDefinition<P>, ...};
 
 declare type UseStyles<P, S: StylesDefinition<any>> = (props: P) => $ObjMap<S, () => string>;
 
 declare export var createUseStyles: <P, S: StylesDefinition<P>>(
     styles: (theme: Theme) => S
 ) => UseStyles<P, S>;
+
+declare export class ServerSideStyles {
+    render(el: React.Element<any>): React.Element<any>;
+    getStylesString(): string;
+    renderStyles(): React.Element<'style'>;
+}

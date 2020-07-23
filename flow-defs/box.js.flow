@@ -18,6 +18,7 @@ declare type Props = {
   paddingRight?: PadSize,
   children?: React.Node,
   className?: string,
+  role?: string,
   "data-testid"?: string,
   "data-qsysid"?: string
 };

@@ -1,8 +1,11 @@
 import * as React from 'react';
+import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 
 export type InputState = 'focused' | 'filled' | 'default';
+
+export const DEFAULT_WIDTH = 328;
 
 const useLabelStyles = createUseStyles((theme) => ({
     label: {
@@ -75,6 +78,7 @@ const useHelperTextStyles = createUseStyles((theme) => ({
         paddingLeft: 14,
         paddingRight: 16,
         '& p': {
+            margin: 0,
             marginTop: 4,
             fontSize: 12,
             flexGrow: 1,
@@ -118,10 +122,16 @@ export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, erro
 };
 
 const useFieldContainerStyles = createUseStyles((theme) => ({
-    container: {
+    fieldContainer: {
         display: 'flex',
         flexDirection: 'column',
         minWidth: 112,
+        [theme.mq.mobile]: {
+            width: '100%',
+        },
+        [theme.mq.tabletOrBigger]: {
+            width: ({fullWidth}) => (fullWidth ? '100%' : DEFAULT_WIDTH),
+        },
     },
     border: {
         border: `1px solid ${theme.colors.border}`,
@@ -138,22 +148,24 @@ type FieldContainerProps = {
     multiline?: boolean;
     children: React.ReactNode;
     helperText?: React.ReactNode;
-    style?: React.CSSProperties;
+    className?: string;
     fieldRef?: React.RefObject<HTMLDivElement>;
+    fullWidth?: boolean;
 };
 
 export const FieldContainer: React.FC<FieldContainerProps> = ({
     multiline,
     children,
     helperText,
-    style,
+    className,
     fieldRef,
+    fullWidth,
 }) => {
-    const classes = useFieldContainerStyles({multiline});
+    const classes = useFieldContainerStyles({multiline, fullWidth});
 
     return (
-        <div className={classes.container}>
-            <div className={classes.border} style={style} ref={fieldRef}>
+        <div className={classes.fieldContainer}>
+            <div className={classnames(classes.border, className)} ref={fieldRef}>
                 {children}
             </div>
             {helperText}

@@ -46,7 +46,10 @@ export type TextProps = {
     weight?: FontWeight;
     truncate?: boolean;
     uppercase?: boolean;
+    id?: string;
     as?: React.ComponentType<any> | string;
+    role?: string;
+    'aria-level'?: number;
 };
 
 const Text: React.FC<TextProps> = ({
@@ -59,6 +62,7 @@ const Text: React.FC<TextProps> = ({
     uppercase,
     as = 'span',
     children,
+    ...otherProps
 }) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({size, isInverse, weight, lineHeight, color, textDecoration, uppercase});
@@ -67,7 +71,7 @@ const Text: React.FC<TextProps> = ({
     }
     const className = classnames(classes.text, {[classes.truncate]: truncate});
 
-    return React.createElement(as, {className}, children);
+    return React.createElement(as, {className, ...otherProps}, children);
 };
 
 export default Text;
