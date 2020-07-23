@@ -51,11 +51,14 @@ export {FormSelect} from './form-select';
 export {FormTextField} from './form-text-field';
 export {FormEmailField} from './form-email-field';
 export {FormPhoneNumberField} from './form-phone-number-field';
+export {FormCreditCardNumberField} from './form-credit-card-number-field';
 export {FormCreditCardExpirationField} from './form-credit-card-expiration-field';
 export {FormCreditCardFields} from './form-credit-card-fields';
 export {FormCvvField} from './form-cvv-field';
+export {FormDateField} from './form-date-field';
 export {FormIntegerField} from './form-integer-field';
 export {FormDecimalField} from './form-decimal-field';
+export {FormPasswordField} from './form-password-field';
 export {DoubleField} from './double-field';
 export {useForm} from './form-context';
 export {TextField} from './text-field'; // @deprecated

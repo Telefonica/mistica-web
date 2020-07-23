@@ -4,16 +4,18 @@ import Box from '../box';
 import {inspect} from 'util';
 import Icon from '../icons/icon-visibility';
 import {StorySection, countriesList, phoneNumbersList} from './helpers';
-import {FormEmailField} from '../form-email-field';
-import {FormIntegerField} from '../form-integer-field';
-import {FormDecimalField} from '../form-decimal-field';
-import {FormCreditCardNumberField} from '../form-credit-card-number-field';
-import {FormCreditCardExpirationField} from '../form-credit-card-expiration-field';
-import {FormCvvField} from '../form-cvv-field';
-import {FormTextField} from '../form-text-field';
-import {FormPasswordField} from '../form-password-field';
-import {FormDateField} from '../form-date-field';
-import {FormPhoneNumberField} from '../form-phone-number-field';
+import {
+    FormEmailField,
+    FormIntegerField,
+    FormDecimalField,
+    FormCreditCardNumberField,
+    FormCreditCardExpirationField,
+    FormCvvField,
+    FormTextField,
+    FormPasswordField,
+    FormDateField,
+    FormPhoneNumberField,
+} from '../..';
 
 export default {
     title: 'Components|Forms/FormFields',
