@@ -1,6 +1,11 @@
 # CHANGELOG
 
+## v.4.2.2 - 2020-07-23
+
+- Add chart color for Vivo
+
 ## v.4.2.1 - 2020-07-23
+
 - Minor fix for `Portal`, including improved SSR
 
 ## v.4.2.0 - 2020-07-23
