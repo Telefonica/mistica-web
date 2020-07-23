@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Next
+
+- Fix: Portal is mounted after effect
+- Fix: Export some missing FormFields
+
 ## v.4.2.0 - 2020-07-23
 
 - Update a chart color for Vivo skin
