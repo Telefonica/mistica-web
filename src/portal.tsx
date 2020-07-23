@@ -47,6 +47,6 @@ const Portal: React.FC<Props> = ({children, className}) => {
         };
     }, [className]);
 
-    return isDOM && ReactDOM.createPortal(children, rootElemRef.current);
+    return isDOM ? ReactDOM.createPortal(children, rootElemRef.current) : null;
 };
 export default Portal;
