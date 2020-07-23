@@ -30,13 +30,13 @@ declare export var removeJssProps: <P: {sheet?: any, classes?: any}>(
 
 declare type CSSValue<P> = void | number | boolean | string | ((P) => string | number | boolean);
 declare type ClassDefinition<P> = {
-    [cssProp: string]:
+    +[cssProp: string]:
         | CSSValue<P>
         | {
-              [cssProp: string]:
+              +[cssProp: string]:
                   | CSSValue<P>
                   | {
-                        [cssProp: string]: CSSValue<P>,
+                        +[cssProp: string]: CSSValue<P>,
                         ...
                     },
               ...
@@ -44,7 +44,7 @@ declare type ClassDefinition<P> = {
     ...
 };
 
-declare type StylesDefinition<P> = {[className: string]: ClassDefinition<P>, ...};
+declare type StylesDefinition<P> = {+[className: string]: ClassDefinition<P>, ...};
 
 declare type UseStyles<P, S: StylesDefinition<any>> = (props: P) => $ObjMap<S, () => string>;
 
