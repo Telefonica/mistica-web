@@ -1,11 +1,5 @@
-import React from 'react';
+import * as React from 'react';
 import ReactDOM from 'react-dom';
-
-let modalRoot: HTMLElement;
-
-if (typeof document !== 'undefined') {
-    modalRoot = document.body;
-}
 
 /**
  * This component renders the children elements outside the parent component.
@@ -22,20 +16,34 @@ type Props = {
 };
 
 const Portal: React.FC<Props> = ({children, className}) => {
-    const rootElemRef = React.useRef(document.createElement('div'));
+    const [container, setContainer] = React.useState<HTMLDivElement | null>(null);
+
     React.useEffect(() => {
-        const divRef = rootElemRef.current;
-        if (className) {
-            divRef.classList.add(className);
+        if (!container) {
+            const newContainer = document.createElement('div');
+            setContainer(newContainer);
+            document.body.appendChild(newContainer);
         }
 
-        modalRoot.appendChild(divRef);
+        return () => {
+            if (container) {
+                document.body.removeChild(container);
+            }
+        };
+    }, [container]);
+
+    React.useEffect(() => {
+        if (container && className) {
+            container.classList.add(className);
+        }
 
         return () => {
-            modalRoot.removeChild(divRef);
+            if (container && className) {
+                container.classList.remove(className);
+            }
         };
-    }, [className]);
+    }, [className, container]);
 
-    return ReactDOM.createPortal(children, rootElemRef.current);
+    return container && ReactDOM.createPortal(children, container);
 };
 export default Portal;
