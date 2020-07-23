@@ -1,7 +1,8 @@
 # CHANGELOG
 
-## Release pending
+## v.4.2.0 - 2020-07-23
 
+- Update a chart color for Vivo skin
 - Form fields refactor:
   - Deprecate `TextField` (will be removed in a future release)
   - Deprecate `FormTextField` with types different than `"text"` (those usages will be removed in a future
