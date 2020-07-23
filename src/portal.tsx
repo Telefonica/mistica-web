@@ -16,37 +16,34 @@ type Props = {
 };
 
 const Portal: React.FC<Props> = ({children, className}) => {
-    const rootElemRef: React.MutableRefObject<HTMLElement> = React.useRef(null as any);
-    const isDOM = typeof document !== 'undefined';
-
-    if (rootElemRef.current === null && isDOM) {
-        rootElemRef.current = document.createElement('div');
-    }
+    const [container, setContainer] = React.useState<HTMLDivElement | null>(null);
 
     React.useEffect(() => {
-        const modalRoot = document.body;
-
-        modalRoot.appendChild(rootElemRef.current);
-
-        return () => {
-            modalRoot.removeChild(rootElemRef.current);
-        };
-    }, []);
-
-    React.useEffect(() => {
-        const divContainer = rootElemRef.current;
-
-        if (className) {
-            divContainer.classList.add(className);
+        if (!container) {
+            const newContainer = document.createElement('div');
+            setContainer(newContainer);
+            document.body.appendChild(newContainer);
         }
 
         return () => {
-            if (className) {
-                divContainer.classList.remove(className);
+            if (container) {
+                document.body.removeChild(container);
             }
         };
-    }, [className]);
+    }, [container]);
 
-    return isDOM ? ReactDOM.createPortal(children, rootElemRef.current) : null;
+    React.useEffect(() => {
+        if (container && className) {
+            container.classList.add(className);
+        }
+
+        return () => {
+            if (container && className) {
+                container.classList.remove(className);
+            }
+        };
+    }, [className, container]);
+
+    return container && ReactDOM.createPortal(children, container);
 };
 export default Portal;
