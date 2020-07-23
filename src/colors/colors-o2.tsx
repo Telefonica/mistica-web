@@ -182,6 +182,7 @@ export const PROGRESS_CHART_3 = c.O2_YELLOW;
 export const PROGRESS_CHART_4 = c.O2_YELLOW_LIGHT;
 export const PROGRESS_CHART_5 = c.O2_CORAL;
 export const PROGRESS_CHART_6 = c.O2_BLUE_LIGHT;
+export const PROGRESS_CHART_7 = c.O2_CORAL;
 
 export const CHART_SECONDARY_LIGHT = c.O2_BLUE_LIGHT;
 export const CHART_SECONDARY_DARK = c.O2_BLUE_MID_DARK;
