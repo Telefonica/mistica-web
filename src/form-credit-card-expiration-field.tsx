@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm} from './form-context';
+import {useForm, useSyncFieldValue} from './form-context';
 import {useTheme} from './hooks';
 import {TextFieldBase} from './text-field-base';
 
@@ -86,6 +86,7 @@ export const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFie
     onBlur,
     value,
     autoComplete = 'cc-exp',
+    defaultValue,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -130,6 +131,8 @@ export const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFie
         return {month: month || null, year: fullYear, raw: s};
     };
 
+    useSyncFieldValue({name, value, defaultValue, processValue});
+
     return (
         <TextFieldBase
             {...rest}
@@ -139,7 +142,7 @@ export const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFie
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name] ?? (rest.defaultValue !== undefined ? undefined : '')}
+            value={value ?? rawValues[name] ?? ''}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const rawValue = event.currentTarget.value;
                 const value = processValue(rawValue);

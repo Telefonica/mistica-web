@@ -43,7 +43,11 @@ export const FormSelect: React.FC<FormSelectProps> = ({
     const inputElement = inputRef.current;
 
     React.useEffect(() => {
-        register({name, field: inputRef.current, focusableElement: focusableRef.current});
+        register({
+            name,
+            field: inputRef.current,
+            focusableElement: focusableRef.current,
+        });
         return () => {
             register({name, field: null, focusableElement: null});
         };

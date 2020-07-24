@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm} from './form-context';
+import {useForm, useSyncFieldValue} from './form-context';
 import {useTheme} from './hooks';
 
 import type {CommonFormFieldProps} from './form';
@@ -25,6 +25,7 @@ export const FormEmailField: React.FC<FormEmailFieldProps> = ({
     onBlur,
     value,
     autoComplete = 'email',
+    defaultValue,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -51,6 +52,8 @@ export const FormEmailField: React.FC<FormEmailFieldProps> = ({
 
     const processValue = (value: string) => value.replace(/\s/g, '');
 
+    useSyncFieldValue({name, value, defaultValue, processValue});
+
     return (
         <TextFieldBase
             {...rest}
@@ -61,7 +64,7 @@ export const FormEmailField: React.FC<FormEmailFieldProps> = ({
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name] ?? (rest.defaultValue !== undefined ? undefined : '')}
+            value={value ?? rawValues[name] ?? ''}
             onChange={(event) => {
                 const rawValue = event.currentTarget.value;
                 const value = processValue(rawValue);

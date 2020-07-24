@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm} from './form-context';
+import {useForm, useSyncFieldValue} from './form-context';
 import {TextFieldBase} from './text-field-base';
 
 import type {CommonFormFieldProps} from './form';
@@ -19,6 +19,7 @@ export const FormDateField: React.FC<FormDateFieldProps> = ({
     onChangeValue,
     onBlur,
     value,
+    defaultValue,
     ...rest
 }) => {
     const {
@@ -34,6 +35,8 @@ export const FormDateField: React.FC<FormDateFieldProps> = ({
 
     const processValue = (value: string) => value;
 
+    useSyncFieldValue({name, value, defaultValue, processValue});
+
     return (
         <TextFieldBase
             {...rest}
@@ -45,7 +48,7 @@ export const FormDateField: React.FC<FormDateFieldProps> = ({
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name] ?? (rest.defaultValue !== undefined ? undefined : '')}
+            value={value ?? value ?? rawValues[name] ?? ''}
             onChange={(event) => {
                 const rawValue = event.currentTarget.value;
                 const value = processValue(rawValue);

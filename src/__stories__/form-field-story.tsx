@@ -1,19 +1,22 @@
 import * as React from 'react';
-import {ThemeVariant, useTheme} from '..';
-import Box from '../box';
+import {
+    ThemeVariant,
+    useTheme,
+    FormEmailField,
+    FormIntegerField,
+    FormDecimalField,
+    FormCreditCardNumberField,
+    FormCreditCardExpirationField,
+    FormCvvField,
+    FormTextField,
+    FormPasswordField,
+    FormDateField,
+    FormPhoneNumberField,
+    Box,
+} from '..';
 import {inspect} from 'util';
 import Icon from '../icons/icon-visibility';
 import {StorySection, countriesList, phoneNumbersList} from './helpers';
-import {FormEmailField} from '../form-email-field';
-import {FormIntegerField} from '../form-integer-field';
-import {FormDecimalField} from '../form-decimal-field';
-import {FormCreditCardNumberField} from '../form-credit-card-number-field';
-import {FormCreditCardExpirationField} from '../form-credit-card-expiration-field';
-import {FormCvvField} from '../form-cvv-field';
-import {FormTextField} from '../form-text-field';
-import {FormPasswordField} from '../form-password-field';
-import {FormDateField} from '../form-date-field';
-import {FormPhoneNumberField} from '../form-phone-number-field';
 
 export default {
     title: 'Components|Forms/FormFields',
@@ -92,11 +95,11 @@ export const Variants: StoryComponent = () => {
     return (
         <>
             <StorySection title="Default">
-                <FormTextField name="text" label="Normal field" />
+                <FormTextField optional name="text" label="Normal field" />
             </StorySection>
 
             <StorySection title="Multiline">
-                <FormTextField name="text" label="Multiline" multiline />
+                <FormTextField optional name="text" label="Multiline" multiline />
             </StorySection>
 
             <StorySection title="Multiline with character limit">

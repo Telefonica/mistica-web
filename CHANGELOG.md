@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Next
+
+- Fix: Export some missing FormFields, improve controlled/uncontrolled usage inside a `<Form>`
+
 ## v.4.2.2 - 2020-07-23
 
 - Add chart color for Vivo

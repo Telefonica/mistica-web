@@ -4,7 +4,7 @@ export type FormStatus = 'filling' | 'sending';
 export type FormErrors = {[name: string]: string | undefined};
 export type FieldValidator = (value: any, rawValue: string) => string | undefined;
 
-type FieldRegistration = {
+export type FieldRegistration = {
     name: string;
     field?: HTMLInputElement | HTMLSelectElement | null;
     validate?: FieldValidator;
@@ -38,3 +38,24 @@ export const FormContext = React.createContext<Context>({
 });
 
 export const useForm = (): Context => React.useContext(FormContext);
+
+export const useSyncFieldValue = ({
+    name,
+    value,
+    defaultValue,
+    processValue,
+}: {
+    name: string;
+    value: string | undefined;
+    defaultValue: string | undefined;
+    processValue: (value: string) => unknown;
+}): void => {
+    const rawValue = value ?? defaultValue ?? '';
+    const processValueRef = React.useRef(processValue);
+    const {setRawValue, setValue} = useForm();
+
+    React.useEffect(() => {
+        setRawValue({name, value: rawValue});
+        setValue({name, value: processValueRef.current(rawValue)});
+    }, [name, rawValue, setRawValue, setValue]);
+};

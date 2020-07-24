@@ -7,7 +7,7 @@ import IconCvvAmex from './icons/icon-cvv-amex';
 import Tooltip from './tooltip';
 import IconButton from './icon-button';
 import IcnInfo from './icons/icon-info-cvv';
-import {useForm} from './form-context';
+import {useForm, useSyncFieldValue} from './form-context';
 import {TextFieldBase} from './text-field-base';
 import {DecimalInput} from './form-decimal-field';
 
@@ -68,6 +68,7 @@ export const FormCvvField: React.FC<FormCvvFieldProps> = ({
     maxLength = 4,
     value,
     autoComplete = 'cc-csc',
+    defaultValue,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -95,6 +96,8 @@ export const FormCvvField: React.FC<FormCvvFieldProps> = ({
 
     const processValue = (s: string) => s;
 
+    useSyncFieldValue({name, value, defaultValue, processValue});
+
     return (
         <TextFieldBase
             {...rest}
@@ -104,7 +107,7 @@ export const FormCvvField: React.FC<FormCvvFieldProps> = ({
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name] ?? (rest.defaultValue !== undefined ? undefined : '')}
+            value={value ?? rawValues[name] ?? ''}
             maxLength={maxLength}
             onChange={(event) => {
                 const rawValue = event.currentTarget.value;
