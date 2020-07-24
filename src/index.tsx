@@ -50,6 +50,7 @@ export {Form} from './form';
 export {FormSelect} from './form-select';
 export {FormTextField} from './form-text-field';
 export {FormEmailField} from './form-email-field';
+export {FormDateField} from './form-date-field';
 export {FormPhoneNumberField} from './form-phone-number-field';
 export {FormCreditCardExpirationField} from './form-credit-card-expiration-field';
 export {FormCreditCardFields} from './form-credit-card-fields';
