@@ -9,7 +9,7 @@ import * as React from "react";
 export type FormStatus = "filling" | "sending";
 export type FormErrors = { [name: string]: string | void, ... };
 export type FieldValidator = (value: any, rawValue: string) => string | void;
-declare type FieldRegistration = {
+export type FieldRegistration = {
   name: string,
   field?: HTMLInputElement | HTMLSelectElement | null,
   validate?: FieldValidator,
@@ -37,4 +37,10 @@ declare type Context = {
 };
 declare export var FormContext: React.Context<Context>;
 declare export var useForm: () => Context;
+declare export var useSyncFieldValue: (x: {
+  name: string,
+  value: string | void,
+  defaultValue: string | void,
+  processValue: (value: string) => mixed
+}) => void;
 declare export {};
