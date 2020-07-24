@@ -2,8 +2,7 @@
 
 ## Next
 
-- Fix: Portal is mounted after effect
-- Fix: Export some missing FormFields
+- Fix: Export some missing FormFields, improve controlled/uncontrolled usage inside a `<Form>`
 
 ## v.4.2.0 - 2020-07-23
 
