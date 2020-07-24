@@ -54,7 +54,6 @@ export const useSyncFieldValue = ({
     const processValueRef = React.useRef(processValue);
     const {setRawValue, setValue} = useForm();
 
-    // Updates forms state when value changes, this happens in controlled fields
     React.useEffect(() => {
         setRawValue({name, value: rawValue});
         setValue({name, value: processValueRef.current(rawValue)});
