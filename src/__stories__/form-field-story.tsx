@@ -95,11 +95,11 @@ export const Variants: StoryComponent = () => {
     return (
         <>
             <StorySection title="Default">
-                <FormTextField name="text" label="Normal field" />
+                <FormTextField optional name="text" label="Normal field" />
             </StorySection>
 
             <StorySection title="Multiline">
-                <FormTextField name="text" label="Multiline" multiline />
+                <FormTextField optional name="text" label="Multiline" multiline />
             </StorySection>
 
             <StorySection title="Multiline with character limit">

@@ -2,7 +2,7 @@ import * as React from 'react';
 import {createUseStyles} from './jss';
 import {Label, HelperText, FieldContainer} from './text-field-components';
 import {isIos, isRunningAcceptanceTest, isChrome} from './utils/platform';
-import {useAriaId} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import classNames from 'classnames';
 
 import type {Theme} from './theme';
@@ -162,7 +162,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         {
             error,
             helperText,
-            label,
+            label: labelProp,
             inputProps,
             inputRef,
             defaultValue,
@@ -178,18 +178,22 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             fieldRef,
             maxLength,
             children,
-            id: idFromProps,
+            id: idProp,
             autoComplete: autoCompleteProp,
             fullWidth,
             ...rest
         },
         ref
     ) => {
-        const id = useAriaId(idFromProps);
+        const id = useAriaId(idProp);
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
         );
+        const {texts} = useTheme();
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
+        const label = rest.required
+            ? labelProp
+            : `${labelProp || ''} (${texts.formFieldOptionalLabelSuffix})`;
 
         const classes = useStyles({
             inputState,
