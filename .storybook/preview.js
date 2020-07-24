@@ -1,4 +1,4 @@
-import '../css/roboto.css';
+import './css/roboto.css';
 import './css/main.css';
 import * as React from 'react';
 import {addDecorator} from '@storybook/react';
