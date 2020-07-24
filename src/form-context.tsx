@@ -50,19 +50,13 @@ export const useSyncFieldValue = ({
     defaultValue: string | undefined;
     processValue: (value: string) => unknown;
 }): void => {
-    const valueRef = React.useRef(value ?? defaultValue ?? '');
+    const rawValue = value ?? defaultValue ?? '';
     const processValueRef = React.useRef(processValue);
     const {setRawValue, setValue} = useForm();
 
-    // Sets initial field value, needed to initialize internal form state with controlled or uncontrolled fields with defaultValue
-    React.useEffect(() => {
-        setRawValue({name, value: valueRef.current});
-        setValue({name, value: processValueRef.current(valueRef.current)});
-    }, [name, setRawValue, setValue]);
-
     // Updates forms state when value changes, this happens in controlled fields
     React.useEffect(() => {
-        setRawValue({name, value: value ?? valueRef.current});
-        setValue({name, value: processValueRef.current(value ?? valueRef.current)});
-    }, [name, value, setRawValue, setValue]);
+        setRawValue({name, value: rawValue});
+        setValue({name, value: processValueRef.current(rawValue)});
+    }, [name, rawValue, setRawValue, setValue]);
 };
