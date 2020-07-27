@@ -9,7 +9,6 @@ import {
     TextLink,
     SectionTitle,
     Text,
-    TextField,
     FormTextField,
     FormEmailField,
     ButtonLayout,
@@ -72,7 +71,8 @@ const Home = () => {
                         <SectionTitle>Dynamic Links</SectionTitle>
                         <Stack space={16}>
                             <Text>Write a user name to navigate to their page.</Text>
-                            <TextField
+                            <FormTextField
+                                name="user-name"
                                 id="user-name"
                                 value={userName}
                                 onChangeValue={setUserName}

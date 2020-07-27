@@ -112,6 +112,9 @@ export type SelectProps = {
     focusableRef?: React.Ref<HTMLDivElement | HTMLSelectElement>;
 };
 
+/**
+ * @deprecated
+ */
 const Select: React.FC<SelectProps> = ({
     id,
     label: labelProp,

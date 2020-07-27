@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {FormTextField} from '../form-text-field';
-import Select from '../select';
+import {FormSelect} from '../form-select';
 import {useIsInverseVariant} from '../theme-variant-context';
+import {useAriaId} from '../hooks';
 
 type Props = {
     title: string;
@@ -96,9 +97,10 @@ export const useSelect = (
     values: Array<string>
 ): [string, React.ReactNode] => {
     const [value, setValue] = React.useState(defaultValue);
+    const ariaId = useAriaId();
     const select = (
-        <Select
-            required
+        <FormSelect
+            name={ariaId}
             value={value}
             onChangeValue={setValue}
             label={label}

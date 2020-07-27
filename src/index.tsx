@@ -61,9 +61,6 @@ export {FormDecimalField} from './form-decimal-field';
 export {FormPasswordField} from './form-password-field';
 export {DoubleField} from './double-field';
 export {useForm} from './form-context';
-export {TextField} from './text-field'; // @deprecated
-export {PhoneInput} from './phone-input'; // @deprecated
-export {default as Select} from './select'; // @deprecated
 
 // Icons
 export {default as IconClose} from './icons/icon-close';

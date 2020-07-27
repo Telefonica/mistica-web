@@ -4,10 +4,30 @@ import {FormContext} from './form-context';
 import {createUseStyles} from './jss';
 import classnames from 'classnames';
 
-import type {AutoComplete} from './text-field';
 import type {FormStatus, FormErrors, FieldValidator, FieldRegistration} from './form-context';
 
 type FormValues = {[name: string]: any};
+
+/**
+ * Incomplete list, add more if needed
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
+ */
+type AutoComplete =
+    | 'on'
+    | 'off'
+    | 'name'
+    | 'email'
+    | 'tel'
+    | 'street-address'
+    | 'postal-code'
+    | 'transaction-amount'
+    | 'new-password'
+    | 'current-password'
+    | 'cc-type' // The type of payment instrument (such as "Visa" or "Master Card")
+    | 'cc-name' // The full name as printed on or associated with a payment instrument such as a credit card
+    | 'cc-number' // A credit card number or other number identifying a payment method, such as an account number
+    | 'cc-exp' // A payment method expiration date, typically in the form "MM/YY" or "MM/YYYY"
+    | 'cc-csc'; // The security code; on credit cards, this is the 3-digit verification number on the back of the card
 
 const useStyles = createUseStyles(() => ({
     form: {

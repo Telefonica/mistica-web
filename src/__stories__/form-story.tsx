@@ -2,8 +2,6 @@ import * as React from 'react';
 import {fruitEntries, countriesList} from './helpers';
 import {
     Stack,
-    TextField,
-    Select,
     DoubleField,
     ButtonPrimary,
     ButtonSecondary,
@@ -14,7 +12,12 @@ import {
     FormTextField,
     ButtonLayout,
     FormPhoneNumberField,
+    FormIntegerField,
+    FormCreditCardNumberField,
+    FormCreditCardExpirationField,
+    FormCvvField,
 } from '..';
+import {getCvvLength} from '../utils/credit-card';
 
 export default {
     title: 'Components|Forms/Form',
@@ -65,6 +68,8 @@ export const ManualForm: StoryComponent = () => {
     const [creditCardExpiration, setCreditCardExpiration] = React.useState({raw: ''});
     const [creditCardCvv, setCreditCardCvv] = React.useState('');
 
+    const cvvLength = getCvvLength(creditCardNumber);
+
     return (
         <form
             onSubmit={(e) => {
@@ -79,43 +84,45 @@ export const ManualForm: StoryComponent = () => {
             }}
         >
             <Stack space={16}>
-                <Select
-                    required
+                <FormSelect
+                    name="fruit-select"
                     label="Select fruit"
                     value={fruit}
                     onChangeValue={setFruit}
                     options={fruitEntries.map(([text, value]) => ({text, value}))}
                 />
-                <TextField
-                    required
-                    type="integer"
+                <FormIntegerField
+                    name="quantity"
                     label="Quantity"
                     value={quantity}
                     onChangeValue={setQuantity}
                 />
-                <TextField
-                    required
-                    type="credit-card-number"
+                <FormCreditCardNumberField
+                    name="cc-field"
                     label="Credit Card Number"
                     value={creditCardNumber}
                     onChangeValue={setCreditCardNumber}
                 />
                 <DoubleField>
-                    <TextField
-                        required
-                        type="credit-card-expiration"
+                    <FormCreditCardExpirationField
+                        name="cc-expiration"
                         label="Expiration"
                         value={creditCardExpiration.raw}
                         onChangeValue={setCreditCardExpiration}
                     />
-                    <TextField
-                        required
-                        type="credit-card-cvv"
+                    <FormCvvField
+                        name="cc-cvv"
                         label="CVV"
                         value={creditCardCvv}
                         onChangeValue={setCreditCardCvv}
+                        maxLength={cvvLength}
                     />
                 </DoubleField>
+                <ButtonLayout>
+                    <ButtonPrimary submit loadingText="Sending">
+                        Send
+                    </ButtonPrimary>
+                </ButtonLayout>
             </Stack>
         </form>
     );
