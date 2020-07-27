@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v.4.2.4 - 2020-07-27
+
+- Fix: Form default were ignored
+
 ## v.4.2.3 - 2020-07-24
 
 - Fix: Export some missing FormFields, improve controlled/uncontrolled usage inside a `<Form>`
