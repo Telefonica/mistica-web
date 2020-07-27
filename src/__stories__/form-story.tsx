@@ -9,13 +9,13 @@ import {
     FormCreditCardFields,
     FormEmailField,
     FormSelect,
-    FormTextField,
     ButtonLayout,
     FormPhoneNumberField,
     FormIntegerField,
     FormCreditCardNumberField,
     FormCreditCardExpirationField,
     FormCvvField,
+    FormDecimalField,
 } from '..';
 import {getCvvLength} from '../utils/credit-card';
 
@@ -41,9 +41,9 @@ export const AutomaticForm: StoryComponent = () => (
 
             <FormPhoneNumberField name="phone" label="phone" />
 
-            <FormTextField type="decimal" name="decimal" label="Decimal" />
+            <FormDecimalField name="decimal" label="Decimal" />
 
-            <FormTextField type="integer" optional autoComplete="off" name="integer" label="Integer" />
+            <FormIntegerField optional autoComplete="off" name="integer" label="Integer" />
 
             <FormSelect name="country" label="country" options={countryOptions} />
 
