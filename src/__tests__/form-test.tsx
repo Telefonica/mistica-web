@@ -147,7 +147,7 @@ test('form with controlled field', async () => {
     });
 });
 
-test('form with initialValues', async () => {
+test('defaultValue in Field takes precedence over Form initialValues', async () => {
     const handleSubmit = jest.fn();
 
     render(
