@@ -1,7 +1,9 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {Label, HelperText, FieldContainer} from './text-field-components';
-import {isIos, isRunningAcceptanceTest} from './utils/platform';
+import {isIos, isRunningAcceptanceTest, isChrome} from './utils/platform';
+import {useAriaId, useTheme} from './hooks';
+import classNames from 'classnames';
 
 import type {Theme} from './theme';
 import type {InputState} from './text-field-components';
@@ -28,7 +30,7 @@ type AutoComplete =
     | 'cc-csc'; // The security code; on credit cards, this is the 3-digit verification number on the back of the card
 
 interface TextFieldBaseProps {
-    id: string;
+    id?: string;
     type?: string;
     autoComplete?: AutoComplete;
     autoFocus?: boolean;
@@ -58,11 +60,11 @@ interface TextFieldBaseProps {
     inputComponent?: React.ComponentType<any>;
     shrinkLabel?: boolean;
     focus?: boolean;
-    fieldStyle?: React.CSSProperties;
     fieldRef?: React.RefObject<HTMLDivElement>;
     onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
     multiline?: boolean;
     children?: React.ReactNode;
+    inputMode?: string;
 }
 
 const commonInputStyles = (theme: Theme) => ({
@@ -92,7 +94,7 @@ const commonInputStyles = (theme: Theme) => ({
         color: theme.colors.border,
     },
     '&::-webkit-calendar-picker-indicator': {
-        marginTop: ({label}: {label: string}) => (label ? -12 : undefined),
+        marginTop: ({label}: {label: string}) => (label ? -12 : 'initial'),
     },
 });
 
@@ -140,12 +142,27 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
+// Chrome ignores 'off': https://bugs.chromium.org/p/chromium/issues/detail?id=468153#c164
+const fixAutoComplete = (autoComplete?: AutoComplete) =>
+    autoComplete === 'off' && isChrome() ? 'nope' : autoComplete;
+
+const updateRef = (ref: React.Ref<any> | undefined, refValue: any) => {
+    if (ref) {
+        if (typeof ref === 'function') {
+            ref(refValue);
+        } else {
+            // @ts-expect-error - current is typed as read-only
+            ref.current = refValue;
+        }
+    }
+};
+
+const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
     (
         {
             error,
             helperText,
-            label,
+            label: labelProp,
             inputProps,
             inputRef,
             defaultValue,
@@ -156,21 +173,28 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             prefix,
             endIcon,
             shrinkLabel,
-            id,
             multiline = false,
             focus,
-            fieldStyle,
             fieldRef,
             maxLength,
-            children, // unused
+            children,
+            id: idProp,
+            autoComplete: autoCompleteProp,
+            fullWidth,
             ...rest
         },
         ref
     ) => {
+        const id = useAriaId(idProp);
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
         );
+        const {texts} = useTheme();
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
+        const label = rest.required
+            ? labelProp
+            : `${labelProp || ''} (${texts.formFieldOptionalLabelSuffix})`;
+
         const classes = useStyles({
             inputState,
             error,
@@ -207,27 +231,20 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
 
         const defaultInputElement = multiline ? 'textarea' : 'input';
 
-        const inputRefProps = !inputComponent
-            ? {
-                  ref: (actualRef: HTMLInputElement) => {
-                      [ref, inputRef].forEach((currentRef) => {
-                          if (currentRef) {
-                              if (typeof currentRef === 'function') {
-                                  currentRef(actualRef);
-                              } else {
-                                  currentRef.current = actualRef;
-                              }
-                          }
-                      });
-                  },
-              }
+        // FIXME it should be enough to forward refs. inputRef could be removed
+        const inputRefProps = inputComponent
+            ? {inputRef}
             : {
-                  inputRef,
+                  ref: (refValue: HTMLInputElement) => {
+                      updateRef(ref, refValue);
+                      updateRef(inputRef, refValue);
+                  },
               };
 
         const props = {
             ...rest,
             maxLength,
+            autoComplete: fixAutoComplete(autoCompleteProp),
             ...inputProps,
         };
 
@@ -241,7 +258,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                     />
                 }
                 multiline={multiline}
-                style={fieldStyle}
+                fullWidth={fullWidth}
                 fieldRef={fieldRef}
             >
                 {prefix && <div className={classes.prefix}>{prefix}</div>}
@@ -294,4 +311,110 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
     }
 );
 
-export default TextFieldBase;
+const useSuggestionsStyles = createUseStyles(() => ({
+    menuItem: {
+        lineHeight: 1.5,
+        padding: '6px 16px',
+        height: 48,
+        transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+        '& hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.08)',
+        },
+        display: 'flex',
+        alignItems: 'center',
+        cursor: 'pointer',
+    },
+    menuItemSelected: {
+        backgroundColor: 'rgba(0, 0, 0, 0.14)',
+    },
+    suggestionsContainer: {
+        boxShadow:
+            '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
+        backgroundColor: 'white',
+        position: 'absolute',
+        zIndex: 2, // one more than TextField label
+        '& > ul': {
+            listStyleType: 'none',
+            padding: 0,
+            margin: 0,
+        },
+    },
+}));
+
+const Autosuggest = React.lazy(() => import(/* webpackChunkName: "react-autosuggest" */ 'react-autosuggest'));
+
+export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(({getSuggestions, ...props}, ref) => {
+    const [suggestions, setSuggestions] = React.useState<Array<string>>([]);
+    const inputRef = React.useRef<HTMLInputElement>(null);
+    const classes = useSuggestionsStyles();
+
+    if (getSuggestions && (props.value === undefined || props.defaultValue !== undefined)) {
+        throw Error('Fields with suggestions must be used in controlled mode');
+    }
+
+    return getSuggestions ? (
+        <React.Suspense
+            fallback={
+                <TextFieldBaseComponent
+                    {...props}
+                    // This label override while loading is needed in acceptance tests because
+                    // while the test is typing, the component could be remounted.
+                    // By hiding the label, we ensure that the test selects the loaded component
+                    label={isRunningAcceptanceTest() ? '' : props.label}
+                    autoComplete={fixAutoComplete('off') as AutoComplete}
+                    ref={ref}
+                />
+            }
+        >
+            <Autosuggest
+                // @ts-expect-error Autosuggest expects slightly different types
+                inputProps={{
+                    ...props,
+                    autoComplete: fixAutoComplete('off'),
+                    onChange: (e: React.ChangeEvent<HTMLInputElement>, {newValue}) => {
+                        // hack to mutate event value
+                        e.target = {...e.target, value: newValue};
+                        e.currentTarget = {...e.currentTarget, value: newValue};
+                        props.onChange?.(e);
+                    },
+                }}
+                renderInputComponent={(inputProps) => (
+                    <TextFieldBaseComponent
+                        {...(inputProps as TextFieldBaseProps)}
+                        inputRef={(refValue) => {
+                            updateRef(inputRef, refValue);
+                            updateRef(props.inputRef, refValue);
+                        }}
+                    />
+                )}
+                suggestions={suggestions}
+                onSuggestionsFetchRequested={({value}) => setSuggestions(getSuggestions(value))}
+                onSuggestionsClearRequested={() => setSuggestions([])}
+                getSuggestionValue={(suggestion: any) => suggestion}
+                renderSuggestion={(suggestion: any, {isHighlighted}) => (
+                    <div
+                        role="menuitem"
+                        className={classNames(classes.menuItem, {
+                            [classes.menuItemSelected]: isHighlighted,
+                        })}
+                    >
+                        {suggestion}
+                    </div>
+                )}
+                renderSuggestionsContainer={(options) => (
+                    <div
+                        {...options.containerProps}
+                        style={{
+                            width: inputRef.current ? inputRef.current.clientWidth + 2 : 0, // +2 due to borders (input)
+                        }}
+                        className={classes.suggestionsContainer}
+                    >
+                        {options.children}
+                    </div>
+                )}
+            />
+        </React.Suspense>
+    ) : (
+        <TextFieldBaseComponent {...props} ref={ref} />
+    );
+});

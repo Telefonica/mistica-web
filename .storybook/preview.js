@@ -1,5 +1,5 @@
-import '../css/roboto.css';
-import '../css/reset.css';
+import './css/roboto.css';
+import './css/main.css';
 import * as React from 'react';
 import {addDecorator} from '@storybook/react';
 import {ThemeContextProvider, Box, MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN, O2_CLASSIC_SKIN} from '../src';

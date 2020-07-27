@@ -21,6 +21,15 @@ workflows:
             - publish
             - docker_down
 
+    npm_publish_beta:
+        stages:
+            - docker_pull
+            - yarn_install
+            - build
+            - set_npmrc
+            - publish_beta
+            - docker_down
+
     npm_publish_dry_run:
         stages:
             - docker_pull
@@ -51,6 +60,9 @@ stages:
 
     publish:
         - docker-compose run node_mistica_builder bash -c 'CI=1 npm publish --access restricted'
+
+    publish_beta:
+        - docker-compose run node_mistica_builder bash -c 'CI=1 npm publish --access restricted --tag beta'
 
     publish_dry_run:
         - docker-compose run node_mistica_builder bash -c 'CI=1 npm publish --access restricted --dry-run'

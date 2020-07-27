@@ -13,7 +13,7 @@ export type Skin = typeof MOVISTAR_SKIN | typeof O2_SKIN | typeof O2_CLASSIC_SKI
 
 export type Colors = typeof movistarColors | typeof vivoColors | typeof o2Colors | typeof o2ClassicColors;
 
-export default (skin: Skin, override?: string): Colors => {
+export const getColors = (skin: Skin, override?: string): Colors => {
     const brandedColors = {
         [MOVISTAR_SKIN]: movistarColors,
         [O2_SKIN]: o2Colors,

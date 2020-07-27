@@ -15,13 +15,16 @@ export type FormSelectProps = {
     validate?: (value: string | void, rawValue: string | void) => string | void;
     onChangeValue?: (value: string) => void;
     onBlur?: (event: React.FocusEvent<any>) => void;
-    options: ReadonlyArray<{value: string; text: string}>;
+    options: ReadonlyArray<{
+        readonly value: string;
+        readonly text: string;
+    }>;
     autoFocus?: boolean;
     value?: string;
     fullWidth?: boolean;
 };
 
-const FormSelect: React.FC<FormSelectProps> = ({
+export const FormSelect: React.FC<FormSelectProps> = ({
     disabled,
     error,
     helperText,
@@ -40,7 +43,11 @@ const FormSelect: React.FC<FormSelectProps> = ({
     const inputElement = inputRef.current;
 
     React.useEffect(() => {
-        register({name, field: inputRef.current, focusableElement: focusableRef.current});
+        register({
+            name,
+            field: inputRef.current,
+            focusableElement: focusableRef.current,
+        });
         return () => {
             register({name, field: null, focusableElement: null});
         };
@@ -56,7 +63,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={value ?? rawValues[name] ?? ''}
+            value={value ?? rawValues[name]}
             onChange={(event) => {
                 setRawValue({name, value: event.currentTarget.value});
             }}
@@ -69,5 +76,3 @@ const FormSelect: React.FC<FormSelectProps> = ({
         />
     );
 };
-
-export default FormSelect;

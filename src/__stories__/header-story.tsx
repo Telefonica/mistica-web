@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {MemoryRouter} from 'react-router-dom';
 import {
     Header,
     HeaderLayout,
@@ -46,7 +45,7 @@ export const Default: StoryComponent = () => {
     );
     const [withBreadcrumbs, breadcrumbsCheckbox] = useCheckbox('With breadcrumbs', true);
     return (
-        <MemoryRouter>
+        <>
             <Stack space={16}>
                 <div data-testid="header-layout">
                     <HeaderLayout
@@ -102,7 +101,7 @@ export const Default: StoryComponent = () => {
                     </Stack>
                 </ResponsiveLayout>
             </Stack>
-        </MemoryRouter>
+        </>
     );
 };
 

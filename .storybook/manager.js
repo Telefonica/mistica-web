@@ -1,5 +1,4 @@
-import '../css/roboto.css';
-import '../css/reset.css';
+import './css/roboto.css';
 import {addons} from '@storybook/addons';
 import createTheme from './storybook-manager-theme';
 

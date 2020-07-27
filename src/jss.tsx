@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {create as createJss} from 'jss';
-import withStyles, {createUseStyles as jssCreateUseStyles} from 'react-jss';
+import {create as createJss, SheetsRegistry} from 'jss';
+import withStyles, {createUseStyles as jssCreateUseStyles, JssProvider} from 'react-jss';
 import camelCase from 'jss-plugin-camel-case';
 import defaultUnit from 'jss-plugin-default-unit';
 import ruleValueFunction from 'jss-plugin-rule-value-function';
@@ -66,7 +66,7 @@ export const removeJssProps = <P extends {sheet?: any; classes?: any}>(
     return withoutJssProps;
 };
 
-type CSSValue = void | number | boolean | string | ((props: any) => void | string | number | boolean);
+type CSSValue = void | number | boolean | string | ((props: any) => string | number | boolean);
 
 type ClassDefinition = {
     [cssProp: string]:
@@ -102,3 +102,33 @@ export const createUseStyles = <S extends StylesDefinition>(styles?: (theme: The
         }
     };
 };
+
+export class ServerSideStyles {
+    registry = new SheetsRegistry();
+
+    render(el: React.ReactElement): React.ReactElement {
+        return (
+            <JssProvider jss={getJss()} registry={this.registry}>
+                {el}
+            </JssProvider>
+        );
+    }
+
+    getStylesString(): string {
+        return this.registry.toString();
+    }
+
+    renderStyles(): React.ReactElement {
+        return (
+            <style
+                id="server-side-styles"
+                // eslint-disable-next-line react/no-danger
+                dangerouslySetInnerHTML={{__html: this.getStylesString()}}
+            />
+        );
+    }
+
+    static removeServerSideStyles(): void {
+        document.getElementById('server-side-styles')?.remove();
+    }
+}

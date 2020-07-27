@@ -4,7 +4,6 @@ import ScreenReaderOnly from './screen-reader-only';
 import {createUseStyles} from './jss';
 import {useTheme} from './hooks';
 import {isInsideNovumNativeApp} from './utils/platform';
-import {Link} from 'react-router-dom';
 import {ENTER, SPACE} from './utils/key-codes';
 
 import type {TrackingEvent} from './utils/types';
@@ -62,10 +61,11 @@ interface CommonProps {
     trackingEvent?: TrackingEvent;
     label?: string;
     'data-testid'?: string;
-    'aria-checked'?: 'true' | 'false';
+    'aria-checked'?: 'true' | 'false' | boolean;
     'aria-controls'?: string;
-    'aria-expanded'?: 'true' | 'false';
-    'aria-hidden'?: 'true' | 'false';
+    'aria-expanded'?: 'true' | 'false' | boolean;
+    'aria-hidden'?: 'true' | 'false' | boolean;
+    'aria-selected'?: 'true' | 'false' | boolean;
     role?: string;
     type?: 'button' | 'submit';
     tabIndex?: number;
@@ -119,7 +119,7 @@ export interface PropsMaybeOnPress extends CommonProps {
 type Props = PropsHref | PropsTo | PropsOnPress | PropsMaybeHref | PropsMaybeTo | PropsMaybeOnPress;
 
 const Touchable: React.FC<Props> = (props) => {
-    const {texts, analytics, platformOverrides} = useTheme();
+    const {texts, analytics, platformOverrides, Link} = useTheme();
     const classes = useStyles();
     const isClicked = React.useRef(false);
 
@@ -135,6 +135,7 @@ const Touchable: React.FC<Props> = (props) => {
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
         'aria-hidden': props['aria-hidden'],
+        'aria-selected': props['aria-selected'],
         tabIndex: props.tabIndex,
     };
 

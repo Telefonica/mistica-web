@@ -7,6 +7,7 @@
 
 import * as React from "react";
 export type InputState = "focused" | "filled" | "default";
+declare export var DEFAULT_WIDTH: 328;
 declare type LabelProps = {
   shrinkLabel?: boolean,
   forId: string,
@@ -26,10 +27,9 @@ declare type FieldContainerProps = {
   multiline?: boolean,
   children: React.Node,
   helperText?: React.Node,
-  style?: CssStyle,
-  fieldRef?: React.Ref<"div">
+  className?: string,
+  fieldRef?: React.Ref<"div">,
+  fullWidth?: boolean
 };
 declare export var FieldContainer: React.ComponentType<FieldContainerProps>;
 declare export {};
-
-import { type CssStyle } from "./__types__.js.flow";

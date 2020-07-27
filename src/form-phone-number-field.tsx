@@ -1,25 +1,29 @@
 import * as React from 'react';
-import {useForm} from './form-context';
+import {useForm, useSyncFieldValue} from './form-context';
 import {useTheme} from './hooks';
-import TextField from './text-field';
-import PhoneInput from './phone-input';
+import {TextFieldBase} from './text-field-base';
+import {PhoneInput} from './phone-input';
 
 import type {CommonFormFieldProps} from './form';
 
-interface FormPhoneNumberFieldProps extends CommonFormFieldProps {
-    prefix?: string;
+export interface FormPhoneNumberFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
+    prefix?: string;
+    getSuggestions?: (value: string) => Array<string>;
 }
 
-const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
+export const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
     disabled,
     error,
     helperText,
     name,
     optional,
     validate: validateProp,
+    onChange,
     onChangeValue,
     onBlur,
+    value,
+    defaultValue,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -41,8 +45,12 @@ const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
         return validateProp?.(value, rawValue);
     };
 
+    const processValue = (s: string) => s.replace(/[^\d]/g, ''); // keep only digits
+
+    useSyncFieldValue({name, value, defaultValue, processValue});
+
     return (
-        <TextField
+        <TextFieldBase
             {...rest}
             type="phone"
             inputRef={(field) => register({name, field, validate})}
@@ -51,10 +59,14 @@ const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
             helperText={formErrors[name] || helperText}
             name={name}
             required={!optional}
-            value={rawValues[name] ?? ''}
-            onChange={(event) => setRawValue({name, value: event.currentTarget.value})}
-            onChangeValue={(value, rawValue) => {
+            value={value ?? rawValues[name] ?? ''}
+            onChange={(event) => {
+                const rawValue = event.currentTarget.value;
+                const value = processValue(rawValue);
+                setRawValue({name, value: rawValue});
                 setValue({name, value});
+
+                onChange?.(event);
                 onChangeValue?.(value, rawValue);
                 setFormError({name, error: ''});
             }}
@@ -62,9 +74,7 @@ const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
                 setFormError({name, error: validate?.(values[name], rawValues[name])});
                 onBlur?.(e);
             }}
-            Input={PhoneInput}
+            inputComponent={PhoneInput}
         />
     );
 };
-
-export default FormPhoneNumberField;

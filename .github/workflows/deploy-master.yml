@@ -4,7 +4,8 @@ on:
         branches: [master]
 jobs:
     deploy:
-        runs-on: ubuntu-latest
+        runs-on: self-hosted
+        container: docker.tuenti.io/service-inf/mistica-web-builder:1.0.0
         steps:
             - uses: actions/checkout@v2
             - uses: amondnet/vercel-action@v19.0.1+1

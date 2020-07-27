@@ -82,17 +82,19 @@ const useStyles = createUseStyles((theme) => ({
         borderRadius: 2,
     },
     title: {
+        margin: 0,
         marginBottom: 12,
         color: theme.colors.textPrimary,
         lineHeight: 1.42857142,
         fontSize: 14,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? 1.42857142 : undefined,
+        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? 1.42857142 : 'normal',
     },
     description: {
+        margin: 0,
         color: theme.colors.textPrimary,
         lineHeight: 1.42857142,
         fontSize: 14,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? 1.42857142 : undefined,
+        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? 1.42857142 : 'normal',
     },
 }));
 

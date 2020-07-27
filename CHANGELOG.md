@@ -1,5 +1,103 @@
 # CHANGELOG
 
+## v.4.2.5 - 2020-07-27
+
+- Fix: missing new color in O2 Classic skin
+
+## v.4.2.4 - 2020-07-27
+
+- Fix: Form initialValues were ignored
+
+## v.4.2.3 - 2020-07-24
+
+- Fix: Export some missing FormFields, improve controlled/uncontrolled usage inside a `<Form>`
+
+## v.4.2.2 - 2020-07-23
+
+- Add chart color for Vivo
+
+## v.4.2.1 - 2020-07-23
+
+- Minor fix for `Portal`, including improved SSR
+
+## v.4.2.0 - 2020-07-23
+
+- Update a chart color for Vivo skin
+- Form fields refactor:
+  - Deprecate `TextField` (will be removed in a future release)
+  - Deprecate `FormTextField` with types different than `"text"` (those usages will be removed in a future
+    release)
+  - New semantic FormField components added:
+    - `FormDateField`
+    - `FormDecimalField`
+    - `FormEmailField`
+    - `FormIntegerField`
+    - `FormPasswordField`
+  - All FormField components can now be used inside a `<Form>` and standalone (connected or unconnected)
+  - `name` prop is in FormFields is now mandatory
+
+## v.4.1.0 - 2020-07-21
+
+- Removed border from `BoxedRowList` component, moved it to `BoxedRow` component
+- New `Inline` layout component
+- Forbid using `undefined` in jss dynamic styles
+
+## v.4.0.1 - 2020-07-16
+
+- Fix `TextLink` line height
+
+## v.4.0.0 - 2020-07-15
+
+- **Breaking change**: Decouple from `react-router-dom`.
+  - You can now provide your custom `Link` component to mistica using the `ThemeContextProvider`. There are
+    some examples in the `examples/` folder on how to use this feature with popular routers, like react-router
+    and Next.js router.
+  - By default, if you don't provide a custom `Link` component, `@telefonica/mistica` will render simple `<a>`
+    elements.
+- Reset some browser default styles at component level.
+- SSR compatibility to support using `@telefonica/mistica` in Next.js apps.
+- Added a `examples/` folder. Added some examples on how to use `@telefonica/mistica` with common
+  meta-frameworks, like Create React App or Next.js
+- Some fixes in `<Switch />` component to avoid some warnings in newer react versions.
+
+## v.3.5.0 - 2020-07-13
+
+- Created o2-classic skin and updated colors.
+
+## v.3.4.0 - 2020-07-08
+
+- Changed responsive layout columns for tablet.
+- Changed grid layout margins and width for some viewports.
+- Fixed bug on radio buttons inside lists.
+
+## v.3.3.1 - 2020-07-01
+
+- Accessibility and tracking for `Tabs` component.
+
+## v.3.3.0 - 2020-06-30
+
+- New `Tabs` component.
+
+## v.3.2.0 - 2020-06-30
+
+- New colors for app tab bar.
+
+## v.3.1.1 - 2020-06-29
+
+- Fixed changelog.
+
+## v.3.1.0 - 2020-06-29
+
+- NegativeBox Component.
+
+## v.3.0.2 - 2020-06-26
+
+- Minor bugfixes
+
+## v.3.0.1 - 2020-06-26
+
+- Minor bugfixes
+
 ## v.3.0.0 - 2020-06-26
 
 - **Breaking change**: Migrate to TS

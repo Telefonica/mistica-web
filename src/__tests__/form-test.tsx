@@ -1,12 +1,14 @@
 import * as React from 'react';
-import {render, act, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Form from '../form';
-import FormTextField from '../form-text-field';
+import {Form} from '../form';
+import {FormTextField} from '../form-text-field';
 import {ButtonPrimary} from '../button';
+import {FormEmailField} from '..';
+import {FormPasswordField} from '../form-password-field';
 
 test('happy case', async () => {
-    const handleSubmitSpy = jest.fn().mockResolvedValue(undefined);
+    const handleSubmitSpy = jest.fn();
 
     render(
         <Form onSubmit={handleSubmitSpy}>
@@ -15,16 +17,16 @@ test('happy case', async () => {
         </Form>
     );
 
-    await act(async () => {
-        await userEvent.type(screen.getByLabelText('Username'), 'pepito');
-        userEvent.click(screen.getByText('Submit'));
-    });
+    await userEvent.type(screen.getByLabelText('Username'), 'pepito');
+    userEvent.click(screen.getByText('Submit'));
 
-    expect(handleSubmitSpy).toHaveBeenCalledWith({username: 'pepito'}, {username: 'pepito'});
+    await waitFor(() =>
+        expect(handleSubmitSpy).toHaveBeenCalledWith({username: 'pepito'}, {username: 'pepito'})
+    );
 });
 
 test('not submitting if required field is empty', async () => {
-    const handleSubmitSpy = jest.fn().mockResolvedValue(undefined);
+    const handleSubmitSpy = jest.fn();
 
     render(
         <Form onSubmit={handleSubmitSpy}>
@@ -33,16 +35,16 @@ test('not submitting if required field is empty', async () => {
         </Form>
     );
 
-    await act(async () => {
-        userEvent.click(screen.getByText('Submit'));
-    });
+    expect(screen.queryByText('Este campo es obligatorio')).toBeNull();
 
-    expect(handleSubmitSpy).not.toHaveBeenCalled();
+    userEvent.click(screen.getByText('Submit'));
+
     expect(screen.getByText('Este campo es obligatorio')).toBeInTheDocument();
+    expect(handleSubmitSpy).not.toHaveBeenCalled();
 });
 
 test('custom validator', async () => {
-    const handleSubmitSpy = jest.fn().mockResolvedValue(undefined);
+    const handleSubmitSpy = jest.fn();
 
     render(
         <Form onSubmit={handleSubmitSpy}>
@@ -56,26 +58,24 @@ test('custom validator', async () => {
     );
 
     // validation fail
-    await act(async () => {
-        await userEvent.type(screen.getByLabelText('Password'), '1234');
-        userEvent.click(screen.getByText('Submit'));
-    });
+    await userEvent.type(screen.getByLabelText('Password'), '1234');
+    userEvent.click(screen.getByText('Submit'));
 
+    expect(await screen.findByText('wrong password')).toBeInTheDocument();
     expect(handleSubmitSpy).not.toHaveBeenCalled();
-    expect(screen.getByText('wrong password')).toBeInTheDocument();
 
     // validation success
-    await act(async () => {
-        userEvent.clear(screen.getByLabelText('Password'));
-        await userEvent.type(screen.getByLabelText('Password'), 'letmein');
-        userEvent.click(screen.getByText('Submit'));
-    });
+    userEvent.clear(screen.getByLabelText('Password'));
+    await userEvent.type(screen.getByLabelText('Password'), 'letmein');
+    userEvent.click(screen.getByText('Submit'));
 
-    expect(handleSubmitSpy).toHaveBeenCalledWith({password: 'letmein'}, {password: 'letmein'});
+    await waitFor(() =>
+        expect(handleSubmitSpy).toHaveBeenCalledWith({password: 'letmein'}, {password: 'letmein'})
+    );
 });
 
 test('fields are disabled during submit', async () => {
-    let resolveSubmitPromise: () => void;
+    let resolveSubmitPromise = () => {};
     const submitPromise = new Promise((r) => {
         resolveSubmitPromise = r;
     });
@@ -89,18 +89,81 @@ test('fields are disabled during submit', async () => {
         </Form>
     );
 
-    await act(async () => {
-        await userEvent.type(screen.getByTestId('username'), 'pepito');
-        userEvent.click(screen.getByText('Submit'));
-    });
+    await userEvent.type(screen.getByTestId('username'), 'pepito');
+    userEvent.click(screen.getByText('Submit'));
 
     expect(screen.getByTestId('username')).toBeDisabled();
     expect(screen.getByText('Submit')).toBeDisabled();
 
-    await act(async () => {
-        resolveSubmitPromise();
-    });
+    resolveSubmitPromise();
 
-    expect(screen.getByTestId('username')).not.toBeDisabled();
-    expect(screen.getByText('Submit')).not.toBeDisabled();
+    await waitFor(() => {
+        expect(screen.getByTestId('username')).not.toBeDisabled();
+        expect(screen.getByText('Submit')).not.toBeDisabled();
+    });
+});
+
+test('form with defaultValue in field', async () => {
+    const handleSubmit = jest.fn();
+
+    render(
+        <Form onSubmit={handleSubmit}>
+            <FormEmailField label="email" name="email" defaultValue="foo@bar.com" />
+            <ButtonPrimary submit>Send</ButtonPrimary>
+        </Form>
+    );
+
+    userEvent.click(screen.getByText('Send'));
+
+    await waitFor(() => {
+        expect(handleSubmit).toHaveBeenCalledWith({email: 'foo@bar.com'}, {email: 'foo@bar.com'});
+    });
+});
+
+test('form with controlled field', async () => {
+    const handleSubmit = jest.fn();
+
+    const MyForm = ({onSubmit}: any) => {
+        const [value, setValue] = React.useState('foo');
+        return (
+            <Form onSubmit={onSubmit}>
+                <FormEmailField label="email1" name="email1" value={value} onChangeValue={setValue} />
+                <FormEmailField label="email2" name="email2" value={value} />
+                <ButtonPrimary submit>Send</ButtonPrimary>
+            </Form>
+        );
+    };
+
+    render(<MyForm onSubmit={handleSubmit} />);
+
+    await userEvent.type(screen.getByLabelText('email1'), '@bar.com');
+    userEvent.click(screen.getByText('Send'));
+
+    await waitFor(() => {
+        expect(handleSubmit).toHaveBeenCalledWith(
+            {email1: 'foo@bar.com', email2: 'foo@bar.com'},
+            {email1: 'foo@bar.com', email2: 'foo@bar.com'}
+        );
+    });
+});
+
+test('defaultValue in Field takes precedence over Form initialValues', async () => {
+    const handleSubmit = jest.fn();
+
+    render(
+        <Form onSubmit={handleSubmit} initialValues={{email: 'foo@bar.com', password: 'password'}}>
+            <FormEmailField optional label="email" name="email" />
+            <FormPasswordField optional label="password" name="password" defaultValue="12345678" />
+            <ButtonPrimary submit>Send</ButtonPrimary>
+        </Form>
+    );
+
+    userEvent.click(screen.getByText('Send'));
+
+    await waitFor(() => {
+        expect(handleSubmit).toHaveBeenCalledWith(
+            {email: 'foo@bar.com', password: '12345678'},
+            {email: 'foo@bar.com', password: '12345678'}
+        );
+    });
 });

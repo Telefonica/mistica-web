@@ -1,31 +1,32 @@
 {
     "name": "@telefonica/mistica",
-    "version": "3.0.1",
+    "version": "4.2.5",
     "license": "UNLICENSED",
     "main": "dist/index.js",
-    "module": "dist/index.js",
+    "module": "dist-es/index.js",
     "files": [
         "dist/*",
+        "dist-es/*",
         "css/*"
     ],
     "scripts": {
         "test": "jest --config jest.unit.config.js",
         "test-acceptance": "cross-env SCREENSHOT=1 HEADLESS=1 yarn test-acceptance-ui",
         "test-acceptance-ui": "jest --config jest.acceptance.config.js",
-        "prettier-check": "prettier --check \"**/*.js\" \"**/*.json\"",
+        "prettier-check": "prettier --check \"**/*.js\" \"**/*.tsx\" \"**/*.ts\" \"**/*.json\"",
         "lint": "eslint --report-unused-disable-directives .",
-        "prebuild": "yarn clean",
         "ts-check": "tsc --project tsconfig.json --noEmit",
-        "build": "babel src --extensions \".tsx\" --out-dir dist --ignore \"**/test-utils/**\" --ignore \"**/__acceptance_tests__/**\" --ignore \"**/__screenshot_tests__/**\" --ignore \"**/__tests__/**\" --ignore \"**/__stories__/**\" --ignore \"**/__type_tests__/**\"",
+        "prebuild": "yarn clean",
+        "build": "node scripts/build.js",
         "postbuild": "yarn gen-ts-defs && yarn gen-flow-defs",
         "watch": "node scripts/watch.js",
-        "clean": "rimraf dist && rimraf dist-ts",
-        "ci": "yarn build && yarn storybook-static && yarn prettier-check && yarn flow check && yarn lint && yarn test --ci && yarn test-acceptance --ci",
+        "clean": "rimraf dist && rimraf dist-es && rimraf dist-ts",
+        "ci": "yarn build && yarn storybook-static && yarn prettier-check && yarn lint && yarn test --ci && yarn test-acceptance --ci",
         "prepublishOnly": "node scripts/prepublish-only.js",
         "storybook": "start-storybook -p 6006",
         "playroom": "playroom start",
         "gen-ts-defs": "rimraf dist-ts && tsc --project tsconfig.production.json --emitDeclarationOnly && cp -r dist-ts/src/* dist && rimraf dist-ts",
-        "gen-flow-defs": "node scripts/dts-to-flow && yarn flow",
+        "gen-flow-defs": "node scripts/dts-to-flow && yarn flow check",
         "now-build": "yarn storybook-static && ./node_modules/.bin/playroom build && cp img/favicon.ico public/",
         "storybook-static": "rimraf public && yarn build-storybook -o public --quiet",
         "up-chromium": "docker-compose up -d chromium"
@@ -68,11 +69,13 @@
         ]
     },
     "devDependencies": {
+        "@azure/storage-blob": "^12.2.0-preview.1",
         "@babel/cli": "^7.8.4",
         "@babel/core": "^7.8.4",
         "@babel/plugin-proposal-class-properties": "^7.8.3",
         "@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3",
         "@babel/plugin-proposal-optional-chaining": "^7.8.3",
+        "@babel/plugin-transform-modules-commonjs": "^7.10.4",
         "@babel/plugin-transform-property-literals": "^7.10.1",
         "@babel/preset-env": "^7.8.4",
         "@babel/preset-react": "^7.8.3",
@@ -114,7 +117,7 @@
         "eslint-plugin-jsx-a11y": "^6.2.3",
         "eslint-plugin-react": "^7.20.0",
         "eslint-plugin-react-hooks": "^4.0.4",
-        "eslint-plugin-testing-library": "^3.1.4",
+        "eslint-plugin-testing-library": "^3.3.1",
         "flow-bin": "^0.125.1",
         "flow-typed": "^3.1.0",
         "flowgen": "^1.10.0",
@@ -136,6 +139,7 @@
         "react-dom": "16.11.0",
         "react-router-dom": "^5.1.2",
         "rimraf": "^3.0.2",
+        "static-server": "^2.2.1",
         "ts-loader": "^7.0.5",
         "typescript": "^3.9.5"
     },
@@ -155,13 +159,11 @@
         "react-autosuggest": "^9.4.3",
         "react-jss": "^10.1.1",
         "react-transition-group": "^2.5.3",
-        "semver-compare": "^1.0.0",
-        "static-server": "^2.2.1"
+        "semver-compare": "^1.0.0"
     },
     "peerDependencies": {
         "react": ">=16.11",
-        "react-dom": "=>16.11",
-        "react-router-dom": ">=5.1"
+        "react-dom": ">=16.11"
     },
     "publishConfig": {
         "registry": "https://registry.npmjs.org"
@@ -175,6 +177,6 @@
         }
     },
     "lint-staged": {
-        "*.{js,css,md,yml,yaml,ts,tsx,d.ts}": "prettier --write"
+        "*.{js,css,md,yml,yaml,ts,tsx,d.ts,json}": "prettier --write"
     }
 }

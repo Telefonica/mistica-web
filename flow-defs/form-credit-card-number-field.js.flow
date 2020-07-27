@@ -14,5 +14,5 @@ declare type FormCreditCardNumberFieldProps = {
   acceptedCards?: CardOptions,
   onChangeValue?: (value: string, rawValue: string) => void
 };
-declare var FormCreditCardNumberField: React.ComponentType<FormCreditCardNumberFieldProps>;
-declare export default typeof FormCreditCardNumberField;
+declare export var FormCreditCardNumberField: React.ComponentType<FormCreditCardNumberFieldProps>;
+declare export {};

@@ -1,5 +1,5 @@
 import {applyAlpha} from './utils';
-import c from './colors/o2';
+import c from './colors/o2-classic';
 
 // LAYOUT
 export const PRIMARY = c.O2_BLUE;
@@ -79,6 +79,10 @@ export const TEXT_NAVBAR_HOVER = c.O2_BLUE_LIGHT_60;
 export const NAVBAR_BACKGROUND = c.O2_BLUE;
 export const NAVBAR_CONTROL = c.O2_SKY_BLUE_LIGHT_30;
 export const NAVBAR_DIVIDER = c.O2_BLUE;
+
+// APPBAR (MOBILE MAIN TABS)
+export const TEXT_APPBAR = c.GREY_2;
+export const TEXT_APPBAR_SELECTED = c.O2_BLUE;
 
 // TAG
 export const TAG_BACKGROUND_FIRST = c.O2_GREEN;
@@ -162,12 +166,12 @@ export const CONTROL_INVERSE_ACTIVE = c.WHITE;
 export const CONTROL_INVERSE_INACTIVE: string = applyAlpha(c.WHITE, 0.3);
 
 // TOGGLE
-export const TOGGLE_ANDROID_INACTIVE = c.GREY_4;
-export const TOGGLE_ANDROID_BACKGROUND_INACTIVE = c.GREY_3;
+export const TOGGLE_ANDROID_INACTIVE = CONTROL_INACTIVE;
+export const TOGGLE_ANDROID_BACKGROUND_INACTIVE = c.GREY_1;
 export const TOGGLE_ANDROID_ACTIVE = CONTROL_ACTIVE;
 export const TOGGLE_ANDROID_BACKGROUND_ACTIVE = c.O2_GEM_LIGHT_30;
 export const TOGGLE_IOS_INACTIVE = c.WHITE;
-export const TOGGLE_IOS_BACKGROUND_INACTIVE = c.GREY_3;
+export const TOGGLE_IOS_BACKGROUND_INACTIVE = c.WHITE;
 export const TOGGLE_IOS_BACKGROUND_ACTIVE = '#4CD964';
 
 // CHARTS -- TBD
@@ -178,6 +182,7 @@ export const PROGRESS_CHART_3 = c.O2_YELLOW;
 export const PROGRESS_CHART_4 = c.O2_YELLOW_LIGHT;
 export const PROGRESS_CHART_5 = c.CORAL;
 export const PROGRESS_CHART_6 = c.O2_SKY_BLUE_LIGHT;
+export const PROGRESS_CHART_7 = c.CORAL;
 
 export const CHART_SECONDARY_LIGHT = c.O2_SKY_BLUE_LIGHT;
 export const CHART_SECONDARY_DARK = c.O2_SKY_BLUE_DARK;

@@ -1,9 +1,15 @@
+/*
+!!! IMPORTANT !!!
+
+Do not add new features here!
+This component is deprecated and will be removed
+*/
 import * as React from 'react';
 import Visibility from './icons/icon-visibility';
 import VisibilityOff from './icons/icon-visibility-off';
 import {useAriaId, useTheme, useScreenSize} from './hooks';
 import {isRunningAcceptanceTest} from './utils/platform';
-import TextFieldBase from './text-field-base';
+import {TextFieldBase} from './text-field-base';
 import IconButton from './icon-button';
 import IconCreditcard from './icons/icon-creditcard';
 import IconVisa from './icons/icon-visa';
@@ -13,6 +19,7 @@ import {createUseStyles} from './jss';
 import classNames from 'classnames';
 import {useForm} from './form-context';
 import {isVisa, isMasterCard, isAmericanExpress} from './utils/credit-card';
+import {DEFAULT_WIDTH} from './text-field-components';
 
 import type {PhoneInputType} from './phone-input';
 import type {Locale} from './utils/locale';
@@ -22,8 +29,6 @@ import type {Locale} from './utils/locale';
 
 // https://css-tricks.com/finger-friendly-numerical-inputs-with-inputmode/
 // https://developers.google.com/web/updates/2015/06/checkout-faster-with-autofill
-
-export const DEFAULT_WIDTH = 328;
 
 /**
  * Incomplete list, add more if needed
@@ -343,7 +348,7 @@ const useStylesCCAdornment = createUseStyles(() => ({
         '& div': {
             backfaceVisibility: 'hidden',
         },
-        transform: ({showBackface}) => (showBackface ? 'rotateY(180deg)' : undefined),
+        transform: ({showBackface}) => (showBackface ? 'rotateY(180deg)' : 'initial'),
     },
     flipFront: {
         position: 'absolute',
@@ -426,7 +431,7 @@ const CreditcardAdornment = ({value}: {value?: string}) => {
     );
 };
 
-const useStyles = createUseStyles(() => ({
+const useStyles = createUseStyles((theme) => ({
     menuItem: {
         lineHeight: 1.5,
         padding: '6px 16px',
@@ -448,10 +453,26 @@ const useStyles = createUseStyles(() => ({
         backgroundColor: 'white',
         position: 'absolute',
         zIndex: 2, // one more than TextField label
+        '& > ul': {
+            margin: 0,
+            padding: 0,
+            listStyleType: 'none',
+        },
+    },
+    container: {
+        [theme.mq.mobile]: {
+            width: '100%',
+        },
+        [theme.mq.tabletOrBigger]: {
+            width: ({fullWidth}) => (fullWidth ? '100%' : DEFAULT_WIDTH),
+        },
     },
 }));
 
-const TextField: React.FC<TextFieldProps> = ({
+/**
+ * @deprecated
+ */
+export const TextField: React.FC<TextFieldProps> = ({
     onChange,
     onChangeValue,
     Input,
@@ -474,12 +495,18 @@ const TextField: React.FC<TextFieldProps> = ({
     const inputRef = React.useRef<HTMLInputElement>(null);
     const [currentInputValue, setCurrentInputValue] = React.useState(props.value || props.defaultValue);
     const {isMobile} = useScreenSize();
-    const classes = useStyles();
+    const classes = useStyles({fullWidth});
     const id = useAriaId(props.id);
     const {texts} = useTheme();
 
-    // in mobile, fullWidth by default
-    const isFullWidth = fullWidth ?? isMobile;
+    React.useEffect(() => {
+        if (process.env.NODE_ENV !== 'production') {
+            console.error(
+                'TextField component is deprecated and will be removed, please use a FormField component:' +
+                    '\nSee: https://mistica-web.now.sh/?path=/story/components-forms-formfields--types-uncontrolled'
+            );
+        }
+    }, []);
 
     let processValue = (v: string | number): any => v;
 
@@ -504,7 +531,6 @@ const TextField: React.FC<TextFieldProps> = ({
     const newProps: Omit<TextFieldProps, 'type'> & {
         id: string;
         inputMode?: string;
-        fieldStyle?: React.CSSProperties;
         shrinkLabel?: boolean;
         inputComponent?: React.ComponentType<any>;
         onInput?: React.FormEventHandler<HTMLInputElement>;
@@ -539,9 +565,6 @@ const TextField: React.FC<TextFieldProps> = ({
             }
         },
         style,
-        fieldStyle: {
-            width: isFullWidth ? undefined : DEFAULT_WIDTH,
-        },
         required,
         multiline: undefined,
         label: required ? props.label : `${props.label || ''} (${texts.formFieldOptionalLabelSuffix})`,
@@ -550,6 +573,7 @@ const TextField: React.FC<TextFieldProps> = ({
         shrinkLabel: undefined,
         inputComponent: undefined,
         onInput: undefined,
+        fullWidth,
     };
 
     switch (type) {
@@ -645,17 +669,13 @@ const TextField: React.FC<TextFieldProps> = ({
         newProps.endIcon = endIcon;
     }
 
-    const wrapperStyle = {
-        width: isFullWidth ? undefined : DEFAULT_WIDTH,
-    };
-
     if (getSuggestions && (newProps.value === undefined || newProps.defaultValue !== undefined)) {
         throw Error('Fields with suggestions must be used in controlled mode');
     }
 
     /* eslint-disable jsx-a11y/no-static-element-interactions */
     return (
-        <div style={wrapperStyle}>
+        <div className={classes.container}>
             <div
                 // workaround for iOS where tappable area is very small (just the input)
                 // so it is hard to gain focus by tapping the text-field
@@ -722,8 +742,8 @@ const TextField: React.FC<TextFieldProps> = ({
                                     {...options.containerProps}
                                     style={{
                                         width: inputRef.current
-                                            ? inputRef.current.clientWidth + 2
-                                            : undefined, // +2 due to borders (input)
+                                            ? inputRef.current.clientWidth + 2 // +2 due to borders (input)
+                                            : undefined,
                                     }}
                                     className={classes.suggestionsContainer}
                                 >
@@ -739,5 +759,3 @@ const TextField: React.FC<TextFieldProps> = ({
         </div>
     );
 };
-
-export default TextField;
