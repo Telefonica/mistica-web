@@ -170,7 +170,7 @@ export const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps>
     ...rest
 }) => {
     const {texts} = useTheme();
-    const {jumpToNext, rawValues, setRawValue, values, setValue, setFormError, register} = useForm();
+    const {jumpToNext, rawValues, values, setFormError} = useForm();
 
     const validate = (value: string | undefined, rawValue: string) => {
         const error = texts.formCreditCardNumberError;
@@ -208,6 +208,8 @@ export const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps>
         disabled,
         onBlur,
         validate,
+        onChange,
+        onChangeValue,
     });
 
     return (
@@ -216,12 +218,9 @@ export const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps>
             {...fieldProps}
             maxLength={getCreditCardNumberLength(values[name]) + 3} // We have to take in account formatting spaces
             onChange={(event) => {
+                fieldProps.onChange(event);
                 const rawValue = event.currentTarget.value;
                 const value = processValue(rawValue);
-                setRawValue({name, value: rawValue});
-                setValue?.({name, value});
-                onChange?.(event);
-                onChangeValue?.(value, rawValue);
                 if (value.length >= getCreditCardNumberLength(value)) {
                     const error = validate?.(value, rawValue);
                     if (error) {
@@ -229,8 +228,6 @@ export const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps>
                     } else {
                         jumpToNext(name);
                     }
-                } else {
-                    setFormError({name, error: ''});
                 }
             }}
             inputComponent={CreditCardInput}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm, useFieldProps} from './form-context';
+import {useFieldProps} from './form-context';
 import {TextFieldBase} from './text-field-base';
 
 import type {CommonFormFieldProps} from './form';
@@ -22,46 +22,22 @@ export const FormDateField: React.FC<FormDateFieldProps> = ({
     defaultValue,
     ...rest
 }) => {
-    const {
-        rawValues,
-        setRawValue,
-        values,
-        setValue,
-        formStatus,
-        formErrors,
-        setFormError,
-        register,
-    } = useForm();
-
     const processValue = (value: string) => value;
 
-    useFieldProps({name, value, defaultValue, processValue});
+    const fieldProps = useFieldProps({
+        name,
+        value,
+        defaultValue,
+        processValue,
+        helperText,
+        optional,
+        error,
+        disabled,
+        onBlur,
+        validate,
+        onChange,
+        onChangeValue,
+    });
 
-    return (
-        <TextFieldBase
-            {...rest}
-            shrinkLabel
-            type="date"
-            inputRef={(field) => register({name, field, validate})}
-            disabled={disabled || formStatus === 'sending'}
-            error={error || !!formErrors[name]}
-            helperText={formErrors[name] || helperText}
-            name={name}
-            required={!optional}
-            value={value ?? value ?? rawValues[name] ?? ''}
-            onChange={(event) => {
-                const rawValue = event.currentTarget.value;
-                const value = processValue(rawValue);
-                setRawValue({name, value: rawValue});
-                setValue({name, value});
-                setFormError({name, error: ''});
-                onChange?.(event);
-                onChangeValue?.(value, rawValue);
-            }}
-            onBlur={(e) => {
-                setFormError({name, error: validate?.(values[name], rawValues[name])});
-                onBlur?.(e);
-            }}
-        />
-    );
+    return <TextFieldBase {...rest} {...fieldProps} shrinkLabel type="date" />;
 };

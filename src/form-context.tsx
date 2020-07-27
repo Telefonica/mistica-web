@@ -50,6 +50,8 @@ export const useFieldProps = ({
     disabled,
     onBlur,
     validate,
+    onChange,
+    onChangeValue,
 }: {
     name: string;
     value: string | undefined;
@@ -61,6 +63,8 @@ export const useFieldProps = ({
     disabled: boolean | undefined;
     onBlur: undefined | ((event: React.FocusEvent<Element>) => void);
     validate: undefined | ((value: any, rawValue: string) => string | undefined);
+    onChange: undefined | ((event: React.ChangeEvent<HTMLInputElement>) => void);
+    onChangeValue: undefined | ((value: any, rawValue: string) => void);
 }): {
     value?: string;
     defaultValue?: string;
@@ -71,6 +75,7 @@ export const useFieldProps = ({
     disabled: boolean;
     onBlur: (event: React.FocusEvent<Element>) => void;
     inputRef: (field: HTMLInputElement | null) => void;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 } => {
     const {
         setRawValue,
@@ -82,16 +87,16 @@ export const useFieldProps = ({
         setFormError,
         register,
     } = useForm();
-    const rawValue = value ?? defaultValue ?? rawValues[name];
+    const rawValue = value ?? defaultValue ?? rawValues[name] ?? '';
     const processValueRef = React.useRef(processValue);
 
     React.useEffect(() => {
-        setRawValue({name, value: rawValue ?? ''});
-        setValue({name, value: processValueRef.current(rawValue ?? '')});
+        setRawValue({name, value: rawValue});
+        setValue({name, value: processValueRef.current(rawValue)});
     }, [name, rawValue, setRawValue, setValue]);
 
     return {
-        value: rawValue,
+        value,
         defaultValue,
         name,
         helperText: helperText ?? formErrors[name],
@@ -103,5 +108,14 @@ export const useFieldProps = ({
             onBlur?.(e);
         },
         inputRef: (field: HTMLInputElement | null) => register({name, field, validate}),
+        onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+            const rawValue = event.currentTarget.value;
+            const value = processValue(rawValue);
+            setRawValue({name, value: rawValue});
+            setValue({name, value});
+            setFormError({name, error: ''});
+            onChange?.(event);
+            onChangeValue?.(value, rawValue);
+        },
     };
 };

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm, useFieldProps} from './form-context';
+import {useFieldProps} from './form-context';
 import {useTheme} from './hooks';
 
 import type {CommonFormFieldProps} from './form';
@@ -29,16 +29,6 @@ export const FormEmailField: React.FC<FormEmailFieldProps> = ({
     ...rest
 }) => {
     const {texts} = useTheme();
-    const {
-        rawValues,
-        setRawValue,
-        values,
-        setValue,
-        formStatus,
-        formErrors,
-        setFormError,
-        register,
-    } = useForm();
 
     const validate = (value: string | undefined, rawValue: string) => {
         if (!value) {
@@ -52,33 +42,22 @@ export const FormEmailField: React.FC<FormEmailFieldProps> = ({
 
     const processValue = (value: string) => value.replace(/\s/g, '');
 
-    useFieldProps({name, value, defaultValue, processValue});
+    const fieldProps = useFieldProps({
+        name,
+        value,
+        defaultValue,
+        processValue,
+        helperText,
+        optional,
+        error,
+        disabled,
+        onBlur,
+        validate,
+        onChange,
+        onChangeValue,
+    });
 
     return (
-        <TextFieldBase
-            {...rest}
-            inputMode="email"
-            inputRef={(field) => register({name, field, validate})}
-            disabled={disabled || formStatus === 'sending'}
-            error={error || !!formErrors[name]}
-            helperText={formErrors[name] || helperText}
-            name={name}
-            required={!optional}
-            value={value ?? rawValues[name] ?? ''}
-            onChange={(event) => {
-                const rawValue = event.currentTarget.value;
-                const value = processValue(rawValue);
-                setRawValue({name, value: rawValue});
-                setValue({name, value});
-                setFormError({name, error: ''});
-                onChange?.(event);
-                onChangeValue?.(value, rawValue);
-            }}
-            onBlur={(e) => {
-                setFormError({name, error: validate?.(values[name], rawValues[name])});
-                onBlur?.(e);
-            }}
-            autoComplete={autoComplete}
-        />
+        <TextFieldBase {...rest} {...fieldProps} type="email" inputMode="email" autoComplete={autoComplete} />
     );
 };

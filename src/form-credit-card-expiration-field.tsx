@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm, useSyncFieldValue as useFieldProps} from './form-context';
+import {useForm, useFieldProps} from './form-context';
 import {useTheme} from './hooks';
 import {TextFieldBase} from './text-field-base';
 
@@ -90,7 +90,7 @@ export const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFie
     ...rest
 }) => {
     const {texts} = useTheme();
-    const {setRawValue, setValue, setFormError, jumpToNext} = useForm();
+    const {setFormError, jumpToNext} = useForm();
 
     const validate = (value: ExpirationDateValue, rawValue: string): string | undefined => {
         if (!value) {
@@ -132,6 +132,8 @@ export const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFie
         disabled,
         onBlur,
         validate,
+        onChange,
+        onChangeValue,
     });
 
     return (
@@ -139,13 +141,9 @@ export const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFie
             {...rest}
             {...fieldProps}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                fieldProps.onChange(event);
                 const rawValue = event.currentTarget.value;
                 const value = processValue(rawValue);
-                setRawValue({name, value: rawValue});
-                setValue({name, value});
-                onChange?.(event);
-                onChangeValue?.(value);
-                setFormError({name, error: ''});
                 if (rawValue.length === 5) {
                     const error = validate?.(value, rawValue);
                     if (error) {

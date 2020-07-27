@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm, useFieldProps} from './form-context';
+import {useFieldProps} from './form-context';
 import {TextFieldBase} from './text-field-base';
 
 import type {CommonFormFieldProps} from './form';
@@ -41,17 +41,6 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
     defaultValue,
     ...rest
 }) => {
-    const {
-        rawValues,
-        setRawValue,
-        values,
-        setValue,
-        formStatus,
-        formErrors,
-        setFormError,
-        register,
-    } = useForm();
-
     // TODO Remove: APPS-XXXX
     React.useEffect(() => {
         if (process.env.NODE_ENV !== 'production') {
@@ -66,32 +55,20 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
 
     const processValue = (v: string) => v;
 
-    useFieldProps({name, value, defaultValue, processValue});
+    const fieldProps = useFieldProps({
+        name,
+        value,
+        defaultValue,
+        processValue,
+        helperText,
+        optional,
+        error,
+        disabled,
+        onBlur,
+        validate,
+        onChange,
+        onChangeValue,
+    });
 
-    return (
-        <TextFieldBase
-            {...rest}
-            inputRef={(field) => register({name, field, validate})}
-            disabled={disabled || formStatus === 'sending'}
-            helperText={formErrors[name] || helperText}
-            type={type}
-            name={name}
-            required={!optional}
-            value={value ?? rawValues[name] ?? ''}
-            onChange={(event) => {
-                const rawValue = event.currentTarget.value;
-                const value = processValue(rawValue);
-                setRawValue({name, value: rawValue});
-                setValue({name, value});
-
-                onChange?.(event);
-                onChangeValue?.(value, rawValue);
-                setFormError({name, error: ''});
-            }}
-            onBlur={(e) => {
-                setFormError({name, error: validate?.(values[name], rawValues[name])});
-                onBlur?.(e);
-            }}
-        />
-    );
+    return <TextFieldBase {...rest} {...fieldProps} />;
 };

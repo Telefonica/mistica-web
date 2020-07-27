@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm, useFieldProps} from './form-context';
+import {useFieldProps} from './form-context';
 import {TextFieldBase} from './text-field-base';
 import {useTheme} from './hooks';
 import IconButton from './icon-button';
@@ -71,17 +71,6 @@ export const FormPasswordField: React.FC<FormPasswordFieldProps> = ({
     const [isVisible, setIsVisible] = React.useState(false);
     const inputRef = React.useRef<HTMLInputElement>(null);
 
-    const {
-        rawValues,
-        setRawValue,
-        values,
-        setValue,
-        formStatus,
-        formErrors,
-        setFormError,
-        register,
-    } = useForm();
-
     const processValue = (value: string) => value;
 
     const focus = () => {
@@ -97,7 +86,20 @@ export const FormPasswordField: React.FC<FormPasswordFieldProps> = ({
         }
     };
 
-    const fieldProps = useFieldProps({name, value, defaultValue, processValue});
+    const fieldProps = useFieldProps({
+        name,
+        value,
+        defaultValue,
+        processValue,
+        helperText,
+        optional,
+        error,
+        disabled,
+        onBlur,
+        validate,
+        onChange,
+        onChangeValue,
+    });
 
     return (
         <TextFieldBase
@@ -105,26 +107,9 @@ export const FormPasswordField: React.FC<FormPasswordFieldProps> = ({
             {...fieldProps}
             type={isVisible ? 'text' : 'password'}
             inputRef={(field) => {
-                register({name, field, validate});
+                fieldProps.inputRef(field as HTMLInputElement);
                 // @ts-expect-error - current is typed as read-only
                 inputRef.current = field;
-            }}
-            disabled={disabled || formStatus === 'sending'}
-            error={error || !!formErrors[name]}
-            helperText={formErrors[name] || helperText}
-            required={!optional}
-            onChange={(event) => {
-                const rawValue = event.currentTarget.value;
-                const value = processValue(rawValue);
-                setRawValue({name, value: rawValue});
-                setValue({name, value});
-                setFormError({name, error: ''});
-                onChange?.(event);
-                onChangeValue?.(value, rawValue);
-            }}
-            onBlur={(e) => {
-                setFormError({name, error: validate?.(values[name], rawValues[name])});
-                onBlur?.(e);
             }}
             autoComplete={autoComplete}
             endIcon={<PasswordAdornment focus={focus} isVisible={isVisible} setVisibility={setIsVisible} />}
