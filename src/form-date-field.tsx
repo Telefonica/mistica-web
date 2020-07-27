@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm, useSyncFieldValue} from './form-context';
+import {useForm, useFieldProps} from './form-context';
 import {TextFieldBase} from './text-field-base';
 
 import type {CommonFormFieldProps} from './form';
@@ -35,7 +35,7 @@ export const FormDateField: React.FC<FormDateFieldProps> = ({
 
     const processValue = (value: string) => value;
 
-    useSyncFieldValue({name, value, defaultValue, processValue});
+    useFieldProps({name, value, defaultValue, processValue});
 
     return (
         <TextFieldBase

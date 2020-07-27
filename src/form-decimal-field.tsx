@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm, useSyncFieldValue} from './form-context';
+import {useForm, useFieldProps} from './form-context';
 import {useTheme} from './hooks';
 
 import type {CommonFormFieldProps} from './form';
@@ -104,7 +104,7 @@ export const FormDecimalField: React.FC<FormDecimalFieldProps> = ({
 
     const processValue = (value: string) => value.trim();
 
-    useSyncFieldValue({name, value, defaultValue, processValue});
+    useFieldProps({name, value, defaultValue, processValue});
 
     return (
         <TextFieldBase

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm, useSyncFieldValue} from './form-context';
+import {useForm, useFieldProps} from './form-context';
 import {useTheme} from './hooks';
 import {
     getCreditCardNumberLength,
@@ -170,17 +170,7 @@ export const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps>
     ...rest
 }) => {
     const {texts} = useTheme();
-    const {
-        jumpToNext,
-        rawValues,
-        setRawValue,
-        values,
-        setValue,
-        formStatus,
-        formErrors,
-        setFormError,
-        register,
-    } = useForm();
+    const {jumpToNext, rawValues, setRawValue, values, setValue, setFormError, register} = useForm();
 
     const validate = (value: string | undefined, rawValue: string) => {
         const error = texts.formCreditCardNumberError;
@@ -207,18 +197,23 @@ export const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps>
 
     const processValue = (s: string) => s.replace(/\s/g, '');
 
-    useSyncFieldValue({name, value, defaultValue, processValue});
+    const fieldProps = useFieldProps({
+        name,
+        value,
+        defaultValue,
+        processValue,
+        helperText,
+        optional,
+        error,
+        disabled,
+        onBlur,
+        validate,
+    });
 
     return (
         <TextFieldBase
             {...rest}
-            inputRef={(field) => register({name, field, validate})}
-            disabled={disabled || formStatus === 'sending'}
-            error={error || !!formErrors[name]}
-            helperText={formErrors[name] ?? helperText}
-            name={name}
-            required={!optional}
-            value={value ?? rawValues[name] ?? ''}
+            {...fieldProps}
             maxLength={getCreditCardNumberLength(values[name]) + 3} // We have to take in account formatting spaces
             onChange={(event) => {
                 const rawValue = event.currentTarget.value;
@@ -237,10 +232,6 @@ export const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps>
                 } else {
                     setFormError({name, error: ''});
                 }
-            }}
-            onBlur={(e) => {
-                setFormError({name, error: validate?.(values[name], rawValues[name])});
-                onBlur?.(e);
             }}
             inputComponent={CreditCardInput}
             autoComplete={autoComplete}

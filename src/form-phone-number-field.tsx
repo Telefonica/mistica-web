@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm, useSyncFieldValue} from './form-context';
+import {useForm, useFieldProps} from './form-context';
 import {useTheme} from './hooks';
 import {TextFieldBase} from './text-field-base';
 import {PhoneInput} from './phone-input';
@@ -47,7 +47,7 @@ export const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
 
     const processValue = (s: string) => s.replace(/[^\d]/g, ''); // keep only digits
 
-    useSyncFieldValue({name, value, defaultValue, processValue});
+    useFieldProps({name, value, defaultValue, processValue});
 
     return (
         <TextFieldBase

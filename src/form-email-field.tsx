@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm, useSyncFieldValue} from './form-context';
+import {useForm, useFieldProps} from './form-context';
 import {useTheme} from './hooks';
 
 import type {CommonFormFieldProps} from './form';
@@ -52,7 +52,7 @@ export const FormEmailField: React.FC<FormEmailFieldProps> = ({
 
     const processValue = (value: string) => value.replace(/\s/g, '');
 
-    useSyncFieldValue({name, value, defaultValue, processValue});
+    useFieldProps({name, value, defaultValue, processValue});
 
     return (
         <TextFieldBase

@@ -7,7 +7,7 @@ import IconCvvAmex from './icons/icon-cvv-amex';
 import Tooltip from './tooltip';
 import IconButton from './icon-button';
 import IcnInfo from './icons/icon-info-cvv';
-import {useForm, useSyncFieldValue} from './form-context';
+import {useForm, useFieldProps} from './form-context';
 import {TextFieldBase} from './text-field-base';
 import {DecimalInput} from './form-decimal-field';
 
@@ -96,18 +96,23 @@ export const FormCvvField: React.FC<FormCvvFieldProps> = ({
 
     const processValue = (s: string) => s;
 
-    useSyncFieldValue({name, value, defaultValue, processValue});
+    const fieldProps = useFieldProps({
+        name,
+        value,
+        defaultValue,
+        processValue,
+        helperText,
+        optional,
+        error,
+        disabled,
+        onBlur,
+        validate,
+    });
 
     return (
         <TextFieldBase
             {...rest}
-            inputRef={(field) => register({name, field, validate})}
-            disabled={disabled || formStatus === 'sending'}
-            error={error || !!formErrors[name]}
-            helperText={formErrors[name] || helperText}
-            name={name}
-            required={!optional}
-            value={value ?? rawValues[name] ?? ''}
+            {...fieldProps}
             maxLength={maxLength}
             onChange={(event) => {
                 const rawValue = event.currentTarget.value;
@@ -125,10 +130,6 @@ export const FormCvvField: React.FC<FormCvvFieldProps> = ({
                         jumpToNext(name);
                     }
                 }
-            }}
-            onBlur={(e) => {
-                setFormError({name, error: validate(values[name], rawValues[name])});
-                onBlur?.(e);
             }}
             endIcon={
                 <Tooltip

@@ -39,23 +39,69 @@ export const FormContext = React.createContext<Context>({
 
 export const useForm = (): Context => React.useContext(FormContext);
 
-export const useSyncFieldValue = ({
+export const useFieldProps = ({
     name,
     value,
     defaultValue,
     processValue,
+    helperText,
+    optional,
+    error,
+    disabled,
+    onBlur,
+    validate,
 }: {
     name: string;
     value: string | undefined;
     defaultValue: string | undefined;
     processValue: (value: string) => unknown;
-}): void => {
-    const {setRawValue, setValue, rawValues} = useForm();
-    const rawValue = value ?? defaultValue ?? rawValues[name] ?? '';
+    helperText: string | undefined;
+    optional: boolean | undefined;
+    error: boolean | undefined;
+    disabled: boolean | undefined;
+    onBlur: undefined | ((event: React.FocusEvent<Element>) => void);
+    validate: undefined | ((value: any, rawValue: string) => string | undefined);
+}): {
+    value?: string;
+    defaultValue?: string;
+    name: string;
+    helperText?: string;
+    required: boolean;
+    error: boolean;
+    disabled: boolean;
+    onBlur: (event: React.FocusEvent<Element>) => void;
+    inputRef: (field: HTMLInputElement | null) => void;
+} => {
+    const {
+        setRawValue,
+        setValue,
+        rawValues,
+        values,
+        formErrors,
+        formStatus,
+        setFormError,
+        register,
+    } = useForm();
+    const rawValue = value ?? defaultValue ?? rawValues[name];
     const processValueRef = React.useRef(processValue);
 
     React.useEffect(() => {
-        setRawValue({name, value: rawValue});
-        setValue({name, value: processValueRef.current(rawValue)});
+        setRawValue({name, value: rawValue ?? ''});
+        setValue({name, value: processValueRef.current(rawValue ?? '')});
     }, [name, rawValue, setRawValue, setValue]);
+
+    return {
+        value: rawValue,
+        defaultValue,
+        name,
+        helperText: helperText ?? formErrors[name],
+        required: !optional,
+        error: error || !!formErrors[name],
+        disabled: disabled || formStatus === 'sending',
+        onBlur: (e: React.FocusEvent) => {
+            setFormError({name, error: validate?.(values[name], rawValues[name])});
+            onBlur?.(e);
+        },
+        inputRef: (field: HTMLInputElement | null) => register({name, field, validate}),
+    };
 };

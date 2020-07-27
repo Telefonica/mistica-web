@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm, useSyncFieldValue} from './form-context';
+import {useForm, useFieldProps} from './form-context';
 import {TextFieldBase} from './text-field-base';
 
 import type {CommonFormFieldProps} from './form';
@@ -66,14 +66,13 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
 
     const processValue = (v: string) => v;
 
-    useSyncFieldValue({name, value, defaultValue, processValue});
+    useFieldProps({name, value, defaultValue, processValue});
 
     return (
         <TextFieldBase
             {...rest}
             inputRef={(field) => register({name, field, validate})}
             disabled={disabled || formStatus === 'sending'}
-            error={error || !!formErrors[name]}
             helperText={formErrors[name] || helperText}
             type={type}
             name={name}

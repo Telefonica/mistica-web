@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm, useSyncFieldValue} from './form-context';
+import {useForm, useFieldProps} from './form-context';
 import {TextFieldBase} from './text-field-base';
 import {useTheme} from './hooks';
 import IconButton from './icon-button';
@@ -97,11 +97,12 @@ export const FormPasswordField: React.FC<FormPasswordFieldProps> = ({
         }
     };
 
-    useSyncFieldValue({name, value, defaultValue, processValue});
+    const fieldProps = useFieldProps({name, value, defaultValue, processValue});
 
     return (
         <TextFieldBase
             {...rest}
+            {...fieldProps}
             type={isVisible ? 'text' : 'password'}
             inputRef={(field) => {
                 register({name, field, validate});
@@ -111,9 +112,7 @@ export const FormPasswordField: React.FC<FormPasswordFieldProps> = ({
             disabled={disabled || formStatus === 'sending'}
             error={error || !!formErrors[name]}
             helperText={formErrors[name] || helperText}
-            name={name}
             required={!optional}
-            value={value ?? rawValues[name] ?? ''}
             onChange={(event) => {
                 const rawValue = event.currentTarget.value;
                 const value = processValue(rawValue);
