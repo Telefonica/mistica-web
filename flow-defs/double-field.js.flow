@@ -6,8 +6,6 @@
  */
 
 import * as React from "react";
-import { type TextFieldProps } from "./text-field";
-import { type SelectProps } from "./select";
 import { type FormTextFieldProps } from "./form-text-field";
 import { type FormSelectProps } from "./form-select";
 import { type FormCvvFieldProps } from "./form-cvv-field";
@@ -19,8 +17,6 @@ import { type FormPasswordFieldProps } from "./form-password-field";
 import { type FormPhoneNumberFieldProps } from "./form-phone-number-field";
 import { type FormEmailFieldProps } from "./form-email-field";
 declare type Field =
-  | React.Element<TextFieldProps>
-  | React.Element<SelectProps>
   | React.Element<FormTextFieldProps>
   | React.Element<FormSelectProps>
   | React.Element<FormCvvFieldProps>

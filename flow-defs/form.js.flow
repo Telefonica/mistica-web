@@ -6,9 +6,28 @@
  */
 
 import * as React from "react";
-import { type AutoComplete } from "./text-field";
 import { type FieldValidator } from "./form-context";
 declare type FormValues = { [name: string]: any, ... };
+/**
+ * Incomplete list, add more if needed
+ * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
+ */
+declare type AutoComplete =
+  | "on"
+  | "off"
+  | "name"
+  | "email"
+  | "tel"
+  | "street-address"
+  | "postal-code"
+  | "transaction-amount"
+  | "new-password"
+  | "current-password"
+  | "cc-type"
+  | "cc-name"
+  | "cc-number"
+  | "cc-exp"
+  | "cc-csc";
 declare type FormProps = {
   id?: string,
   onSubmit: (values: FormValues, rawValues: FormValues) => Promise<void> | void,

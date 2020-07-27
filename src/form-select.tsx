@@ -22,7 +22,12 @@ const useStyles = createUseStyles((theme) => ({
         cursor: ({disabled}) => (disabled ? 'auto' : 'pointer'),
         position: 'relative',
         outline: 0,
-        width: 'fit-content',
+        [theme.mq.mobile]: {
+            width: '100%',
+        },
+        [theme.mq.tabletOrBigger]: {
+            width: ({fullWidth}) => (fullWidth ? '100%' : 'fit-content'),
+        },
     },
     select: {
         paddingTop: ({label}) => (label ? 24 : 16),
