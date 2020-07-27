@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v.5.0.0 - pending to publish
+## Next (v.5.0.0)
 
 ### Breaking changes
 
