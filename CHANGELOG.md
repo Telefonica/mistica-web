@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v.4.2.5 - 2020-07-27
+
+- Fix: missing new color in O2 Classic skin
+
 ## v.4.2.4 - 2020-07-27
 
 - Fix: Form initialValues were ignored
