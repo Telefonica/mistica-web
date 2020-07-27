@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v.5.0.0 - pending to publish
+
+### Breaking changes
+
+- Deprecated `TextField` component is no longer available. Use `FormXXXField` variants.
+- Deprecated `type` property for `FormTextField` component is no longer available. Use corrresponding
+  `FormXXXField` variant.
+
 ## v.4.2.5 - 2020-07-27
 
 - Fix: missing new color in O2 Classic skin
