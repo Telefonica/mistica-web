@@ -70,5 +70,5 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
         onChangeValue,
     });
 
-    return <TextFieldBase {...rest} {...fieldProps} />;
+    return <TextFieldBase {...rest} {...fieldProps} type={type /*deprecated*/} />;
 };
