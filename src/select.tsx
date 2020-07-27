@@ -114,7 +114,7 @@ export type SelectProps = {
 
 const Select: React.FC<SelectProps> = ({
     id,
-    label: labelProp,
+    label,
     helperText,
     value,
     onChange,
@@ -144,8 +144,6 @@ const Select: React.FC<SelectProps> = ({
     const [tentativeValueState, setTentativeValueState] = React.useState<string>();
     const lastElementSelectionScrollTop = React.useRef<number>(null);
     const inputId = useAriaId(id);
-    const {texts} = useTheme();
-    const label = required ? labelProp : `${labelProp ?? ''} (${texts.formFieldOptionalLabelSuffix})`;
 
     const toggleOptions = (show: boolean) => {
         if (show) {
