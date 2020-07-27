@@ -5,6 +5,7 @@ import {Form} from '../form';
 import {FormTextField} from '../form-text-field';
 import {ButtonPrimary} from '../button';
 import {FormEmailField} from '..';
+import {FormPasswordField} from '../form-password-field';
 
 test('happy case', async () => {
     const handleSubmitSpy = jest.fn();
@@ -142,6 +143,27 @@ test('form with controlled field', async () => {
         expect(handleSubmit).toHaveBeenCalledWith(
             {email1: 'foo@bar.com', email2: 'foo@bar.com'},
             {email1: 'foo@bar.com', email2: 'foo@bar.com'}
+        );
+    });
+});
+
+test('defaultValue in Field takes precedence over Form initialValues', async () => {
+    const handleSubmit = jest.fn();
+
+    render(
+        <Form onSubmit={handleSubmit} initialValues={{email: 'foo@bar.com', password: 'password'}}>
+            <FormEmailField optional label="email" name="email" />
+            <FormPasswordField optional label="password" name="password" defaultValue="12345678" />
+            <ButtonPrimary submit>Send</ButtonPrimary>
+        </Form>
+    );
+
+    userEvent.click(screen.getByText('Send'));
+
+    await waitFor(() => {
+        expect(handleSubmit).toHaveBeenCalledWith(
+            {email: 'foo@bar.com', password: '12345678'},
+            {email: 'foo@bar.com', password: '12345678'}
         );
     });
 });

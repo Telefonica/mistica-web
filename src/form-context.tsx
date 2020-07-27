@@ -50,9 +50,9 @@ export const useSyncFieldValue = ({
     defaultValue: string | undefined;
     processValue: (value: string) => unknown;
 }): void => {
-    const rawValue = value ?? defaultValue ?? '';
+    const {setRawValue, setValue, rawValues} = useForm();
+    const rawValue = value ?? defaultValue ?? rawValues[name] ?? '';
     const processValueRef = React.useRef(processValue);
-    const {setRawValue, setValue} = useForm();
 
     React.useEffect(() => {
         setRawValue({name, value: rawValue});
