@@ -5,8 +5,12 @@
 ### Breaking changes
 
 - Deprecated `TextField` component is no longer available. Use `FormXXXField` variants.
-- Deprecated `type` property for `FormTextField` component is no longer available. Use corrresponding
+- Deprecated `type` property for `FormTextField` component is no longer available. Use corresponding
   `FormXXXField` variant.
+- `Select` component is no longer available. Use `FormSelect`.
+- `PhoneInput` component is no longer available. Use `FormPhoneNumberField`.
+- `withMargin` property for `ButtonLayout>` component is no longer available. Refer to `Box` and `Stack`
+  components to add spacings when necessary.
 
 ## v.4.2.5 - 2020-07-27
 
