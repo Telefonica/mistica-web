@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useAriaId, useTheme} from './hooks';
+import {useAriaId} from './hooks';
 import {isAndroid, isIos} from './utils/platform';
 import {createUseStyles} from './jss';
 import {TextFieldBase} from './text-field-base';
@@ -17,6 +17,12 @@ const cancelEvent = (event: React.SyntheticEvent | Event) => {
 const shouldUseNative = process.env.NODE_ENV === 'test' || isAndroid() || isIos();
 
 const useStyles = createUseStyles((theme) => ({
+    selectContainer: {
+        cursor: ({disabled}) => (disabled ? 'auto' : 'pointer'),
+        position: 'relative',
+        outline: 0,
+        width: 'fit-content',
+    },
     select: {
         paddingTop: ({label}) => (label ? 24 : 16),
         paddingBottom: ({label}) => (label ? 8 : 16),
@@ -117,7 +123,7 @@ export type SelectProps = {
  */
 const Select: React.FC<SelectProps> = ({
     id,
-    label: labelProp,
+    label,
     helperText,
     value,
     onChange,
@@ -147,8 +153,6 @@ const Select: React.FC<SelectProps> = ({
     const [tentativeValueState, setTentativeValueState] = React.useState<string>();
     const lastElementSelectionScrollTop = React.useRef<number>(null);
     const inputId = useAriaId(id);
-    const {texts} = useTheme();
-    const label = required ? labelProp : `${labelProp ?? ''} (${texts.formFieldOptionalLabelSuffix})`;
 
     const toggleOptions = (show: boolean) => {
         if (show) {
@@ -160,8 +164,8 @@ const Select: React.FC<SelectProps> = ({
                 const top = selectTop + height;
                 const visibleOptions = Math.min(options.length, MAX_OPTIONS);
                 const spaceTaken = visibleOptions * 48 + PADDING_SIZE;
+                // if it doesn't fit on bottom
                 if (top + spaceTaken + MARGIN_TOP_SIZE > window.innerHeight) {
-                    // if it doesn't fit on bottom
                     const availableSpaceBottom = window.innerHeight - top;
                     if (selectTop /* this is the available space on top */ > availableSpaceBottom) {
                         const newTop = selectTop - spaceTaken;
@@ -223,25 +227,37 @@ const Select: React.FC<SelectProps> = ({
         }
     };
 
-    const scrollIntoTargetListElement = () => {
+    const scrollIntoTargetListElement = (targetValueState: string) => {
         const menuClientRect = optionsMenuRef.current?.getBoundingClientRect();
-        if (menuClientRect && tentativeValueState && optionRefs.current.has(tentativeValueState)) {
-            const itemRef = optionRefs.current.get(tentativeValueState);
+        if (menuClientRect && targetValueState && optionRefs.current.has(targetValueState)) {
+            const itemRef = optionRefs.current.get(targetValueState);
             const clientRect = itemRef?.getBoundingClientRect();
             if (
                 clientRect &&
-                clientRect.top + clientRect.height >= menuClientRect.top + menuClientRect.height
+                clientRect.top + clientRect.height / 2 >= menuClientRect.top + menuClientRect.height
             ) {
                 itemRef?.scrollIntoView();
                 return;
             }
-            if (clientRect && clientRect.top <= menuClientRect.top) {
+            if (clientRect && clientRect.top + clientRect.height / 2 <= menuClientRect.top) {
                 itemRef?.scrollIntoView(false);
             }
         }
     };
 
     React.useEffect(() => {
+        const updateTentativeValueState = (e: KeyboardEvent) => {
+            const keyToOperand: Record<number, 1 | -1 | undefined> = {[UP]: -1, [DOWN]: 1};
+            const operand = keyToOperand[e.keyCode];
+            if (operand) {
+                cancelEvent(e);
+                const newTentativeValueState =
+                    options[options.findIndex(({value}) => value === tentativeValueState) + operand]?.value ??
+                    tentativeValueState;
+                setTentativeValueState(newTentativeValueState);
+                scrollIntoTargetListElement(newTentativeValueState);
+            }
+        };
         const handleKeyDown = (e: KeyboardEvent) => {
             if (optionsShown) {
                 if (e.keyCode === TAB) {
@@ -261,24 +277,9 @@ const Select: React.FC<SelectProps> = ({
                     toggleOptions(false);
                 }
             }
+            // so we don't change the tentativeValueState while menu is closing
             if (animateShowOptions) {
-                // so we don't change the tentativeValueState while menu is closing
-                if (e.keyCode === UP) {
-                    cancelEvent(e);
-                    setTentativeValueState(
-                        options[options.findIndex(({value}) => value === tentativeValueState) - 1]?.value ??
-                            tentativeValueState
-                    );
-                    scrollIntoTargetListElement();
-                }
-                if (e.keyCode === DOWN) {
-                    cancelEvent(e);
-                    setTentativeValueState(
-                        options[options.findIndex(({value}) => value === tentativeValueState) + 1]?.value ??
-                            tentativeValueState
-                    );
-                    scrollIntoTargetListElement();
-                }
+                updateTentativeValueState(e);
             }
         };
         document.addEventListener('keydown', handleKeyDown, false);
@@ -304,23 +305,21 @@ const Select: React.FC<SelectProps> = ({
     // When the value is null/undefined/'' we assume it's the default empty option and we don't show any label
     const getOptionText = (val?: string) => (val ? options.find(({value}) => value === val)?.text : '');
 
-    const containerExtraProps = disabled
-        ? {}
-        : {
-              tabIndex: 0,
-              onFocus: () => setIsFocused(true),
-              onBlur: () => setIsFocused(false),
-              onClick: () => {
-                  toggleOptions(true);
-                  setIsFocused(true);
-              },
-              onKeyDown: (e: React.KeyboardEvent) => {
-                  if (!optionsShown && (e.keyCode === SPACE || e.keyCode === ENTER)) {
-                      cancelEvent(e);
-                      toggleOptions(true);
-                  }
-              },
-          };
+    const containerActiveProps = {
+        tabIndex: 0,
+        onFocus: () => setIsFocused(true),
+        onBlur: () => setIsFocused(false),
+        onClick: () => {
+            toggleOptions(true);
+            setIsFocused(true);
+        },
+        onKeyDown: (e: React.KeyboardEvent) => {
+            if (!optionsShown && (e.keyCode === SPACE || e.keyCode === ENTER)) {
+                cancelEvent(e);
+                toggleOptions(true);
+            }
+        },
+    };
 
     return shouldUseNative ? (
         <FieldContainer
@@ -383,11 +382,7 @@ const Select: React.FC<SelectProps> = ({
     ) : (
         <>
             <div
-                style={{
-                    cursor: disabled ? 'auto' : 'pointer',
-                    position: 'relative',
-                    outline: 0,
-                }}
+                className={classes.selectContainer}
                 role="button"
                 aria-haspopup="listbox"
                 ref={(actualRef) => {
@@ -400,7 +395,7 @@ const Select: React.FC<SelectProps> = ({
                         }
                     });
                 }}
-                {...containerExtraProps}
+                {...(!disabled && containerActiveProps)}
             >
                 <TextFieldBase
                     style={{
