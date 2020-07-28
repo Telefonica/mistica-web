@@ -85,6 +85,26 @@ Explore the components in [Mistica storybook](https://mistica-web.now.sh)
 Start prototyping interfaces with Mistica components in the
 [Mistica playroom](https://mistica-web.now.sh/playroom)
 
+## Limitations
+
+### Negative margin
+
+There is one limitation with the negative margin we use to implement the `ButtonLayout` component. A
+horizontal scroll will appear if a negative margin goes beyond the `<body>`. There are 2 available
+workarounds:
+
+1. Applying padding to the parent with at least half the spacing value applied to the child:
+
+   ```jsx
+   <body>
+     <Box paddingX={16}>
+       <ButtonLayout>//...</ButtonLayout>
+     </Box>
+   </body>
+   ```
+
+2. Adding `overflow-x: hidden;` to the parent.
+
 ## More docs
 
 - [Working with forms](./doc/forms.md)
