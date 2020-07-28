@@ -167,3 +167,24 @@ test('defaultValue in Field takes precedence over Form initialValues', async () 
         );
     });
 });
+
+test("if a Field is disabled we skip its validation and don't submit its value", async () => {
+    const handleSubmit = jest.fn();
+    const validate = jest.fn().mockReturnValue('errorazo');
+
+    render(
+        <Form onSubmit={handleSubmit} initialValues={{email: 'foo@bar.com'}}>
+            <FormEmailField disabled label="email" name="email" validate={validate} />
+            <FormPasswordField label="password" name="password" />
+            <ButtonPrimary submit>Send</ButtonPrimary>
+        </Form>
+    );
+
+    await userEvent.type(screen.getByLabelText('password'), '123456');
+    userEvent.click(screen.getByText('Send'));
+
+    await waitFor(() => {
+        expect(handleSubmit).toHaveBeenCalledWith({password: '123456'}, {password: '123456'});
+    });
+    expect(validate).not.toHaveBeenCalled();
+});
