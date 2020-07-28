@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next
+## v4.2.6 - 2020-07-28
 
 - Simplify FormFields implementation. Move common logic to a hook
 - Fix a problem with `defaultValue` in fields being used outside a `<Form>` component
