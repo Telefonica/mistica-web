@@ -96,7 +96,7 @@ export const useFieldProps = ({
     }, [name, rawValue, setRawValue, setValue]);
 
     return {
-        value: value ?? (defaultValue === undefined ? rawValues[name] : undefined),
+        value: defaultValue === undefined ? value ?? rawValues[name] ?? '' : undefined,
         defaultValue,
         name,
         helperText: helperText ?? formErrors[name],
