@@ -127,10 +127,10 @@ export const Form: React.FC<FormProps> = ({
     );
 
     const getNonDisabledValues = (values: {[name: string]: string}) =>
-        Object.fromEntries(
-            [...fieldRefs.current.entries()]
-                .filter(([, input]) => !input.disabled)
-                .map(([name]) => [name, values[name]])
+        [...fieldRefs.current.entries()].reduce(
+            (nonDisabled, [name, input]) =>
+                input.disabled ? nonDisabled : {...nonDisabled, [name]: values[name]},
+            {}
         );
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
