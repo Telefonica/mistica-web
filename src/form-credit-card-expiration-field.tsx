@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useForm, useSyncFieldValue} from './form-context';
+import {useForm, useFieldProps} from './form-context';
 import {useTheme} from './hooks';
 import {TextFieldBase} from './text-field-base';
 
@@ -90,17 +90,7 @@ export const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFie
     ...rest
 }) => {
     const {texts} = useTheme();
-    const {
-        rawValues,
-        setRawValue,
-        values,
-        setValue,
-        formStatus,
-        formErrors,
-        setFormError,
-        register,
-        jumpToNext,
-    } = useForm();
+    const {setFormError, jumpToNext} = useForm();
 
     const validate = (value: ExpirationDateValue, rawValue: string): string | undefined => {
         if (!value) {
@@ -131,26 +121,29 @@ export const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFie
         return {month: month || null, year: fullYear, raw: s};
     };
 
-    useSyncFieldValue({name, value, defaultValue, processValue});
+    const fieldProps = useFieldProps({
+        name,
+        value,
+        defaultValue,
+        processValue,
+        helperText,
+        optional,
+        error,
+        disabled,
+        onBlur,
+        validate,
+        onChange,
+        onChangeValue,
+    });
 
     return (
         <TextFieldBase
             {...rest}
-            inputRef={(field: HTMLInputElement | null) => register({name, field, validate})}
-            disabled={disabled || formStatus === 'sending'}
-            error={error || !!formErrors[name]}
-            helperText={formErrors[name] || helperText}
-            name={name}
-            required={!optional}
-            value={value ?? rawValues[name] ?? ''}
+            {...fieldProps}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                fieldProps.onChange(event);
                 const rawValue = event.currentTarget.value;
                 const value = processValue(rawValue);
-                setRawValue({name, value: rawValue});
-                setValue({name, value});
-                onChange?.(event);
-                onChangeValue?.(value);
-                setFormError({name, error: ''});
                 if (rawValue.length === 5) {
                     const error = validate?.(value, rawValue);
                     if (error) {
@@ -159,10 +152,6 @@ export const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFie
                         jumpToNext(name);
                     }
                 }
-            }}
-            onBlur={(e: React.FocusEvent) => {
-                setFormError({name, error: validate?.(values[name], rawValues[name])});
-                onBlur?.(e);
             }}
             autoComplete={autoComplete}
             inputComponent={MonthYearDateInput}

@@ -11,10 +11,11 @@ import {
     FormCreditCardFields,
     FormEmailField,
     FormSelect,
-    FormTextField,
     ButtonLayout,
     FormPhoneNumberField,
 } from '..';
+import {FormDecimalField} from '../form-decimal-field';
+import {FormIntegerField} from '../form-integer-field';
 
 export default {
     title: 'Components|Forms/Form',
@@ -38,9 +39,9 @@ export const AutomaticForm: StoryComponent = () => (
 
             <FormPhoneNumberField name="phone" label="phone" />
 
-            <FormTextField type="decimal" name="decimal" label="Decimal" />
+            <FormDecimalField name="decimal" label="Decimal" />
 
-            <FormTextField type="integer" optional autoComplete="off" name="integer" label="Integer" />
+            <FormIntegerField optional autoComplete="off" name="integer" label="Integer" />
 
             <FormSelect name="country" label="country" options={countryOptions} />
 

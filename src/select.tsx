@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useAriaId, useTheme} from './hooks';
+import {useAriaId} from './hooks';
 import {isAndroid, isIos} from './utils/platform';
 import {createUseStyles} from './jss';
 import {TextFieldBase} from './text-field-base';
@@ -114,7 +114,7 @@ export type SelectProps = {
 
 const Select: React.FC<SelectProps> = ({
     id,
-    label: labelProp,
+    label,
     helperText,
     value,
     onChange,
@@ -144,8 +144,6 @@ const Select: React.FC<SelectProps> = ({
     const [tentativeValueState, setTentativeValueState] = React.useState<string>();
     const lastElementSelectionScrollTop = React.useRef<number>(null);
     const inputId = useAriaId(id);
-    const {texts} = useTheme();
-    const label = required ? labelProp : `${labelProp ?? ''} (${texts.formFieldOptionalLabelSuffix})`;
 
     const toggleOptions = (show: boolean) => {
         if (show) {

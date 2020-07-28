@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Next
+
+- Simplify FormFields implementation. Move common logic to a hook
+- Fix a problem with `defaultValue` in fields being used outside a `<Form>` component
+- Fix a problem in `Select` component where a double `optional` suffix was being added
+
 ## v.4.2.5 - 2020-07-27
 
 - Fix: missing new color in O2 Classic skin
