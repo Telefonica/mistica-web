@@ -31,6 +31,10 @@ const originalConsoleWarn = console.warn;
 
 beforeEach(() => {
     jest.spyOn(global.console, 'error').mockImplementation((...args) => {
+        // Temporary workaround
+        if (args[0].includes('A component is changing an uncontrolled input')) {
+            return;
+        }
         errorOrWarnCalled = true;
         originalConsoleError(...args);
     });
