@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v4.2.7 - 2020-07-28
+
+- Avoid warning in controlled/uncontroleld components
+
 ## v4.2.6 - 2020-07-28
 
 - Simplify FormFields implementation. Move common logic to a hook
