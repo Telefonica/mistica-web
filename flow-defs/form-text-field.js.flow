@@ -7,30 +7,13 @@
 
 import * as React from "react";
 import { type CommonFormFieldProps } from "./form";
-export type SimpleFormTextFieldProps = {
+export type FormTextFieldProps = {
   ...$Exact<CommonFormFieldProps>,
 
-  type?: "text",
   onChangeValue?: (value: string, rawValue: string) => void,
   multiline?: boolean,
   prefix?: React.Node,
   endIcon?: React.Node,
   getSuggestions?: (value: string) => Array<string>
 };
-
-/**
- * @deprecated
- */
-export type OtherFormTextFieldProps = {
-  ...$Exact<CommonFormFieldProps>,
-
-  type?: "password" | "integer" | "decimal" | "date",
-  onChangeValue?: (value: string, rawValue: string) => void,
-  multiline?: void,
-  prefix?: React.Node,
-  endIcon?: React.Node
-};
-export type FormTextFieldProps =
-  | SimpleFormTextFieldProps
-  | OtherFormTextFieldProps;
 declare export var FormTextField: React.ComponentType<FormTextFieldProps>;

@@ -11,7 +11,7 @@ import * as React from "react";
  * Incomplete list, add more if needed
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
  */
-declare type AutoComplete =
+export type AutoComplete =
   | "on"
   | "off"
   | "name"

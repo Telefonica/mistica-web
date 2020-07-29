@@ -6,8 +6,8 @@
  */
 
 import * as React from "react";
-import { type AutoComplete } from "./text-field";
 import { type FieldValidator } from "./form-context";
+import { type AutoComplete } from "./text-field-base";
 declare type FormValues = { [name: string]: any, ... };
 declare type FormProps = {
   id?: string,

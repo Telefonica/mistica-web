@@ -4,8 +4,8 @@ import {FormContext} from './form-context';
 import {createUseStyles} from './jss';
 import classnames from 'classnames';
 
-import type {AutoComplete} from './text-field';
 import type {FormStatus, FormErrors, FieldValidator, FieldRegistration} from './form-context';
+import type {AutoComplete} from './text-field-base';
 
 type FormValues = {[name: string]: any};
 
@@ -77,6 +77,9 @@ export const Form: React.FC<FormProps> = ({
         const errors: FormErrors = {};
         let didFocus = false;
         for (const [name, input] of fieldRefs.current) {
+            if (input.disabled) {
+                continue;
+            }
             if (input.required && !input.value.trim()) {
                 errors[name] = texts.formFieldErrorIsMandatory;
             } else {
@@ -123,6 +126,13 @@ export const Form: React.FC<FormProps> = ({
         [autoJump]
     );
 
+    const getNonDisabledValues = (values: {[name: string]: string}) =>
+        [...fieldRefs.current.entries()].reduce(
+            (nonDisabled, [name, input]) =>
+                input.disabled ? nonDisabled : {...nonDisabled, [name]: values[name]},
+            {}
+        );
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setFormStatus('sending');
@@ -130,7 +140,9 @@ export const Form: React.FC<FormProps> = ({
             setFormStatus('filling');
             return Promise.resolve();
         }
-        return Promise.resolve(onSubmit(values, rawValues)).finally(() => {
+        return Promise.resolve(
+            onSubmit(getNonDisabledValues(values), getNonDisabledValues(rawValues))
+        ).finally(() => {
             if (isMountedRef.current) {
                 setFormStatus('filling');
             }
