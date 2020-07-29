@@ -5,7 +5,7 @@ The `theme` prop must have the following type:
 
 ```ts
 type ThemeConfig = {
-  skin: 'Movistar' | 'O2' | 'Vivo';
+  skin: 'Movistar' | 'O2' | 'Vivo' | 'O2-classic';
   colorOverride?: 'prominent';
   i18n: {
     locale: Locale;
