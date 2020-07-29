@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next (v.5.0.0)
+## v.5.0.0 - 2020-07-29
 
 ### Breaking changes
 
