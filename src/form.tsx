@@ -5,29 +5,9 @@ import {createUseStyles} from './jss';
 import classnames from 'classnames';
 
 import type {FormStatus, FormErrors, FieldValidator, FieldRegistration} from './form-context';
+import type {AutoComplete} from './text-field-base';
 
 type FormValues = {[name: string]: any};
-
-/**
- * Incomplete list, add more if needed
- * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
- */
-type AutoComplete =
-    | 'on'
-    | 'off'
-    | 'name'
-    | 'email'
-    | 'tel'
-    | 'street-address'
-    | 'postal-code'
-    | 'transaction-amount'
-    | 'new-password'
-    | 'current-password'
-    | 'cc-type' // The type of payment instrument (such as "Visa" or "Master Card")
-    | 'cc-name' // The full name as printed on or associated with a payment instrument such as a credit card
-    | 'cc-number' // A credit card number or other number identifying a payment method, such as an account number
-    | 'cc-exp' // A payment method expiration date, typically in the form "MM/YY" or "MM/YYYY"
-    | 'cc-csc'; // The security code; on credit cards, this is the 3-digit verification number on the back of the card
 
 const useStyles = createUseStyles(() => ({
     form: {
@@ -97,6 +77,9 @@ export const Form: React.FC<FormProps> = ({
         const errors: FormErrors = {};
         let didFocus = false;
         for (const [name, input] of fieldRefs.current) {
+            if (input.disabled) {
+                continue;
+            }
             if (input.required && !input.value.trim()) {
                 errors[name] = texts.formFieldErrorIsMandatory;
             } else {
@@ -143,6 +126,13 @@ export const Form: React.FC<FormProps> = ({
         [autoJump]
     );
 
+    const getNonDisabledValues = (values: {[name: string]: string}) =>
+        [...fieldRefs.current.entries()].reduce(
+            (nonDisabled, [name, input]) =>
+                input.disabled ? nonDisabled : {...nonDisabled, [name]: values[name]},
+            {}
+        );
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setFormStatus('sending');
@@ -150,7 +140,9 @@ export const Form: React.FC<FormProps> = ({
             setFormStatus('filling');
             return Promise.resolve();
         }
-        return Promise.resolve(onSubmit(values, rawValues)).finally(() => {
+        return Promise.resolve(
+            onSubmit(getNonDisabledValues(values), getNonDisabledValues(rawValues))
+        ).finally(() => {
             if (isMountedRef.current) {
                 setFormStatus('filling');
             }

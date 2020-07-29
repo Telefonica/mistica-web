@@ -37,10 +37,29 @@ declare type Context = {
 };
 declare export var FormContext: React.Context<Context>;
 declare export var useForm: () => Context;
-declare export var useSyncFieldValue: (x: {
+declare export var useFieldProps: (x: {
   name: string,
   value: string | void,
   defaultValue: string | void,
-  processValue: (value: string) => mixed
-}) => void;
+  processValue: (value: string) => mixed,
+  helperText: string | void,
+  optional: boolean | void,
+  error: boolean | void,
+  disabled: boolean | void,
+  onBlur: ((event: SyntheticFocusEvent<Element>) => void) | void,
+  validate: ((value: any, rawValue: string) => string | void) | void,
+  onChange: ((event: SyntheticEvent<HTMLInputElement>) => void) | void,
+  onChangeValue: ((value: any, rawValue: string) => void) | void
+}) => {
+  value?: string | void,
+  defaultValue?: string | void,
+  name: string,
+  helperText?: string | void,
+  required: boolean,
+  error: boolean,
+  disabled: boolean,
+  onBlur: (event: SyntheticFocusEvent<Element>) => void,
+  inputRef: (field: HTMLInputElement | null) => void,
+  onChange: (event: SyntheticEvent<HTMLInputElement>) => void
+};
 declare export {};

@@ -7,7 +7,7 @@
 
 import * as React from "react";
 import { type CommonFormFieldProps } from "./form";
-export type SimpleFormTextFieldProps = {
+export type FormTextFieldProps = {
   ...$Exact<CommonFormFieldProps>,
 
   onChangeValue?: (value: string, rawValue: string) => void,
@@ -16,5 +16,4 @@ export type SimpleFormTextFieldProps = {
   endIcon?: React.Node,
   getSuggestions?: (value: string) => Array<string>
 };
-export type FormTextFieldProps = SimpleFormTextFieldProps;
 declare export var FormTextField: React.ComponentType<FormTextFieldProps>;

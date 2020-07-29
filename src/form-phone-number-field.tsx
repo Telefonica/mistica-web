@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {useForm, useSyncFieldValue} from './form-context';
-import {useTheme} from './hooks';
+import {useFieldProps} from './form-context';
 import {TextFieldBase} from './text-field-base';
 import {PhoneInput} from './phone-input';
 
@@ -18,7 +17,7 @@ export const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
     helperText,
     name,
     optional,
-    validate: validateProp,
+    validate,
     onChange,
     onChangeValue,
     onBlur,
@@ -26,55 +25,22 @@ export const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
     defaultValue,
     ...rest
 }) => {
-    const {texts} = useTheme();
-    const {
-        rawValues,
-        setRawValue,
-        values,
-        setValue,
-        formStatus,
-        formErrors,
-        setFormError,
-        register,
-    } = useForm();
-
-    const validate = (value: string | undefined, rawValue: string) => {
-        if (!value) {
-            return optional ? '' : texts.formFieldErrorIsMandatory;
-        }
-        return validateProp?.(value, rawValue);
-    };
-
     const processValue = (s: string) => s.replace(/[^\d]/g, ''); // keep only digits
 
-    useSyncFieldValue({name, value, defaultValue, processValue});
+    const fieldProps = useFieldProps({
+        name,
+        value,
+        defaultValue,
+        processValue,
+        helperText,
+        optional,
+        error,
+        disabled,
+        onBlur,
+        validate,
+        onChange,
+        onChangeValue,
+    });
 
-    return (
-        <TextFieldBase
-            {...rest}
-            type="phone"
-            inputRef={(field) => register({name, field, validate})}
-            disabled={disabled || formStatus === 'sending'}
-            error={error || !!formErrors[name]}
-            helperText={formErrors[name] || helperText}
-            name={name}
-            required={!optional}
-            value={value ?? rawValues[name] ?? ''}
-            onChange={(event) => {
-                const rawValue = event.currentTarget.value;
-                const value = processValue(rawValue);
-                setRawValue({name, value: rawValue});
-                setValue({name, value});
-
-                onChange?.(event);
-                onChangeValue?.(value, rawValue);
-                setFormError({name, error: ''});
-            }}
-            onBlur={(e) => {
-                setFormError({name, error: validate?.(values[name], rawValues[name])});
-                onBlur?.(e);
-            }}
-            inputComponent={PhoneInput}
-        />
-    );
+    return <TextFieldBase {...rest} {...fieldProps} type="phone" inputComponent={PhoneInput} />;
 };
