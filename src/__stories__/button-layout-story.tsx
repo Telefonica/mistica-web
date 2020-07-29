@@ -8,12 +8,6 @@ export default {
     component: ButtonLayout,
 };
 
-const a = `<body>
-    <Box paddingX={16}>
-    <ButtonLayout>//...</ButtonLayout>
-    </Box>
-</body>`;
-
 export const Default: StoryComponent = () => (
     <>
         <StorySection title="Limitations">
