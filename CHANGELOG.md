@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# Unreleased
+
+- Fix Switch component when used in uncontrolled mode
+
 ## v4.2.7 - 2020-07-28
 
 - Avoid warning in controlled/uncontroleld components
