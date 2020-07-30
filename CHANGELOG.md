@@ -4,6 +4,18 @@
 
 - Fix Switch component when used in uncontrolled mode
 
+## v.5.0.0 - 2020-07-29
+
+### Breaking changes
+
+- Deprecated `TextField` component is no longer available. Use `FormXXXField` variants.
+- Deprecated `type` property for `FormTextField` component is no longer available. Use corresponding
+  `FormXXXField` variant.
+- `Select` component is no longer available. Use `FormSelect`.
+- `PhoneInput` component is no longer available. Use `FormPhoneNumberField`.
+- `withMargin` property for `ButtonLayout>` component is no longer available. Refer to `Box` and `Stack`
+  components to add spacings when necessary.
+
 ## v4.2.7 - 2020-07-28
 
 - Avoid warning in controlled/uncontroleld components

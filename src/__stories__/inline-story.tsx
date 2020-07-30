@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Inline from '../inline';
-import {StorySection} from './helpers';
-import Select from '../select';
+import {StorySection, useSelect} from './helpers';
 
 export default {
     title: 'Components|Layouts/Inline',
@@ -13,27 +12,16 @@ const Row = ({children}: {children?: any}) =>
 const Null = () => null;
 const ComponentThatReturnsNullComponent = () => <Null />;
 
-const options = [
-    {value: '0', text: '0px'},
-    {value: '4', text: '4px'},
-    {value: '8', text: '8px'},
-    {value: '16', text: '16px'},
-    {value: '24', text: '24px'},
-    {value: '32', text: '32px'},
-    {value: '40', text: '40px'},
-    {value: '48', text: '48px'},
-    {value: '56', text: '56px'},
-    {value: '64', text: '64px'},
-];
+const options = ['0px', '4px', '8px', '16px', '24px', '32px', '40px', '48px', '56px', '64px'];
 
 export const Default: StoryComponent = () => {
-    const [space, setSpace] = React.useState('32');
+    const [iconSize, iconSizeSelectField] = useSelect('Space', '32px', options);
 
     return (
         <>
-            <Select required label="Space" value={space} options={options} onChangeValue={setSpace} />
+            {iconSizeSelectField}
             <StorySection title="Inline example">
-                <Inline space={+space as any}>
+                <Inline space={+iconSize.replace(/[^0-9]/g, '') as any}>
                     <ComponentThatReturnsNullComponent />
                     <Row>One</Row>
                     {null}

@@ -12,7 +12,7 @@ import type {InputState} from './text-field-components';
  * Incomplete list, add more if needed
  * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
  */
-type AutoComplete =
+export type AutoComplete =
     | 'on'
     | 'off'
     | 'name'
