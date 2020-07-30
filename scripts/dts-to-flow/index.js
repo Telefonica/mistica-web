@@ -116,7 +116,7 @@ const applyJscodeshift = () => {
         console.log('Apply codemod:', transform);
         const transformPath = join(PATH_TRANSFORMS, transform);
         execSync(
-            `yarn jscodeshift --transform=${transformPath} --extensions=flow --parser=flow --silent ${PATH_DIST}`,
+            `yarn jscodeshift -c 1 --transform=${transformPath} --extensions=flow --parser=flow --silent ${PATH_DIST}`,
             {stdio: 'inherit'}
         );
     });
