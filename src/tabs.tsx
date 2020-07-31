@@ -5,7 +5,8 @@ import Touchable from './touchable';
 import ResponsiveLayout from './responsive-layout';
 import {useElementSize} from './hooks';
 import {getPlatform} from './utils/platform';
-import {TrackingEvent} from './utils/types';
+
+import type {TrackingEvent} from './utils/types';
 
 const smallOuterStyles = {
     display: 'flex',
