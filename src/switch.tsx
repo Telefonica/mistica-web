@@ -105,11 +105,17 @@ const Switch: React.FC<Props> = (props) => {
 
     const classes = useStyles({isChecked: isControlledByParent ? props.checked : isChecked});
 
-    const notifyChange = debounce(() => {
-        if (props.onChange) {
-            props.onChange(isChecked);
-        }
-    }, 300);
+    const {onChange} = props;
+
+    const notifyChange = React.useMemo(
+        () =>
+            debounce((value: boolean) => {
+                if (onChange) {
+                    onChange(value);
+                }
+            }, 300),
+        [onChange]
+    );
 
     const handleChange = () => {
         if (isControlledByParent) {
@@ -118,7 +124,7 @@ const Switch: React.FC<Props> = (props) => {
             }
         } else {
             setIsChecked(!isChecked);
-            notifyChange();
+            notifyChange(!isChecked);
         }
     };
 

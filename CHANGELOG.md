@@ -1,7 +1,8 @@
 # CHANGELOG
 
-## Next
+## Unreleased
 
+- Fix Switch component when used in uncontrolled mode
 - **Internal**: Changed codemod `import-type.js`, now it transforms to import type (flow) everything imported
   as a type in typescript.
 
