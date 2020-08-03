@@ -2,8 +2,8 @@ import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {useTheme} from './hooks';
 
-import type {CommonFormFieldProps} from './form';
-import {TextFieldBase} from './text-field-base';
+import type {CommonFormFieldProps} from './text-field-base';
+import TextFieldBase from './text-field-base';
 
 const IntegerInput = ({inputRef, value, defaultValue, ...rest}: any) => {
     const format = (v?: string) => String(v ?? '').replace(/[^\d]/g, '');
@@ -30,7 +30,7 @@ export interface FormIntegerFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-export const FormIntegerField: React.FC<FormIntegerFieldProps> = ({
+const FormIntegerField: React.FC<FormIntegerFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -72,3 +72,5 @@ export const FormIntegerField: React.FC<FormIntegerFieldProps> = ({
 
     return <TextFieldBase {...rest} {...fieldProps} inputComponent={IntegerInput} />;
 };
+
+export default FormIntegerField;

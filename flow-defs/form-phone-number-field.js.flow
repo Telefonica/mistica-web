@@ -6,7 +6,7 @@
  */
 
 import * as React from "react";
-import { type CommonFormFieldProps } from "./form";
+import { type CommonFormFieldProps } from "./text-field-base";
 export type FormPhoneNumberFieldProps = {
   ...$Exact<CommonFormFieldProps>,
 
@@ -14,4 +14,5 @@ export type FormPhoneNumberFieldProps = {
   prefix?: string,
   getSuggestions?: (value: string) => Array<string>
 };
-declare export var FormPhoneNumberField: React.ComponentType<FormPhoneNumberFieldProps>;
+declare var FormPhoneNumberField: React.ComponentType<FormPhoneNumberFieldProps>;
+declare export default typeof FormPhoneNumberField;

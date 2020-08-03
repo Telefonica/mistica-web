@@ -1,14 +1,14 @@
 import * as React from 'react';
 import {useFieldProps} from './form-context';
-import {TextFieldBase} from './text-field-base';
+import TextFieldBase from './text-field-base';
 
-import type {CommonFormFieldProps} from './form';
+import type {CommonFormFieldProps} from './text-field-base';
 
 export interface FormDateFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-export const FormDateField: React.FC<FormDateFieldProps> = ({
+const FormDateField: React.FC<FormDateFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -41,3 +41,5 @@ export const FormDateField: React.FC<FormDateFieldProps> = ({
 
     return <TextFieldBase {...rest} {...fieldProps} shrinkLabel type="date" />;
 };
+
+export default FormDateField;

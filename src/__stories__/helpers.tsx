@@ -1,8 +1,5 @@
 import * as React from 'react';
-import {FormTextField} from '../form-text-field';
-import {FormSelect} from '../form-select';
-import {useIsInverseVariant} from '../theme-variant-context';
-import {useAriaId} from '../hooks';
+import {useAriaId, useIsInverseVariant, FormSelect, FormTextField} from '..';
 
 type Props = {
     title: string;

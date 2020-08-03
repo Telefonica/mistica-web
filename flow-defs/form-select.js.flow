@@ -26,4 +26,5 @@ export type FormSelectProps = {
   value?: string,
   fullWidth?: boolean
 };
-declare export var FormSelect: React.ComponentType<FormSelectProps>;
+declare var FormSelect: React.ComponentType<FormSelectProps>;
+declare export default typeof FormSelect;

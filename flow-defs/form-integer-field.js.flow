@@ -6,10 +6,11 @@
  */
 
 import * as React from "react";
-import { type CommonFormFieldProps } from "./form";
+import { type CommonFormFieldProps } from "./text-field-base";
 export type FormIntegerFieldProps = {
   ...$Exact<CommonFormFieldProps>,
 
   onChangeValue?: (value: string, rawValue: string) => void
 };
-declare export var FormIntegerField: React.ComponentType<FormIntegerFieldProps>;
+declare var FormIntegerField: React.ComponentType<FormIntegerFieldProps>;
+declare export default typeof FormIntegerField;

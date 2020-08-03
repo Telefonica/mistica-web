@@ -46,20 +46,20 @@ export {default as Tabs} from './tabs';
 export {default as Inline} from './inline';
 
 // Forms
-export {Form} from './form';
-export {FormSelect} from './form-select';
-export {FormTextField} from './form-text-field';
-export {FormEmailField} from './form-email-field';
-export {FormPhoneNumberField} from './form-phone-number-field';
-export {FormCreditCardNumberField} from './form-credit-card-number-field';
-export {FormCreditCardExpirationField} from './form-credit-card-expiration-field';
-export {FormCreditCardFields} from './form-credit-card-fields';
-export {FormCvvField} from './form-cvv-field';
-export {FormDateField} from './form-date-field';
-export {FormIntegerField} from './form-integer-field';
-export {FormDecimalField} from './form-decimal-field';
-export {FormPasswordField} from './form-password-field';
-export {DoubleField} from './double-field';
+export {default as Form} from './form';
+export {default as FormSelect} from './form-select';
+export {default as FormTextField} from './form-text-field';
+export {default as FormEmailField} from './form-email-field';
+export {default as FormPhoneNumberField} from './form-phone-number-field';
+export {default as FormCreditCardNumberField} from './form-credit-card-number-field';
+export {default as FormCreditCardExpirationField} from './form-credit-card-expiration-field';
+export {default as FormCreditCardFields} from './form-credit-card-fields';
+export {default as FormCvvField} from './form-cvv-field';
+export {default as FormDateField} from './form-date-field';
+export {default as FormIntegerField} from './form-integer-field';
+export {default as FormDecimalField} from './form-decimal-field';
+export {default as FormPasswordField} from './form-password-field';
+export {default as DoubleField} from './double-field';
 export {useForm} from './form-context';
 
 // Icons
