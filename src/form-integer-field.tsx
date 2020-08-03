@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {useTheme} from './hooks';
+import TextFieldBase from './text-field-base';
 
 import type {CommonFormFieldProps} from './text-field-base';
-import TextFieldBase from './text-field-base';
 
 const IntegerInput = ({inputRef, value, defaultValue, ...rest}: any) => {
     const format = (v?: string) => String(v ?? '').replace(/[^\d]/g, '');
