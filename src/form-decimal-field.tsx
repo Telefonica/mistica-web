@@ -69,7 +69,7 @@ export interface FormDecimalFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-export const FormDecimalField: React.FC<FormDecimalFieldProps> = ({
+const FormDecimalField: React.FC<FormDecimalFieldProps> = ({
     disabled,
     error,
     helperText,
