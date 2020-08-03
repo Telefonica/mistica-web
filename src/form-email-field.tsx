@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {useTheme} from './hooks';
+import TextFieldBase from './text-field-base';
 
 import type {CommonFormFieldProps} from './text-field-base';
-import TextFieldBase from './text-field-base';
 
 // matches strings like: "x@x.x" (where "x" is any string without spaces)
 const RE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
