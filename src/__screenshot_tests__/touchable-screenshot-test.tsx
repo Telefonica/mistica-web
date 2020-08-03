@@ -1,6 +1,6 @@
 import {openStoryPage} from '../test-utils';
 
-test('Bun common component screenshot', async () => {
+test('Touchable', async () => {
     await openStoryPage({
         section: 'Components|Touchables/Touchable',
         name: 'Touchable',
