@@ -10,13 +10,29 @@ const clearAndType = async (page: PageApi, element: ElementHandle, text: string)
 const getValue = async (element: Promise<ElementHandle> | ElementHandle) =>
     (await element).getProperty('value').then((t) => t.jsonValue());
 
-const STORY = {
+const CONTROLLED_STORY = {
     section: 'Components|Forms/FormFields',
     name: 'Types (controlled)',
 };
 
+const UNCONTROLLED_STORY = {
+    section: 'Components|Forms/FormFields',
+    name: 'Types (uncontrolled)',
+};
+
+const STORIES_MAP = {
+    controlled: CONTROLLED_STORY,
+    uncontrolled: UNCONTROLLED_STORY,
+};
+
+type StoryType = keyof typeof STORIES_MAP;
+
+const STORY_TYPES = Object.keys(STORIES_MAP) as Array<StoryType>;
+
+const getStoryOfType = (storyType: StoryType) => STORIES_MAP[storyType];
+
 test('FormField of type text with suggestions', async () => {
-    const page = await openStoryPage(STORY);
+    const page = await openStoryPage(CONTROLLED_STORY);
 
     const FormField = await screen.findByLabelText('Text with suggestions');
 
@@ -31,8 +47,8 @@ test('FormField of type text with suggestions', async () => {
     await expect(getValue(screen.findByLabelText('Text with suggestions'))).resolves.toBe('Algeria');
 });
 
-test('FormField of type integer', async () => {
-    const page = await openStoryPage(STORY);
+test.each(STORY_TYPES)('FormField of type integer (%s)', async (storyType) => {
+    const page = await openStoryPage(getStoryOfType(storyType));
 
     const FormField = await screen.findByLabelText('Integer');
 
@@ -40,8 +56,8 @@ test('FormField of type integer', async () => {
     await expect(getValue(FormField)).resolves.toBe('12345');
 });
 
-test('FormField of type decimal', async () => {
-    const page = await openStoryPage(STORY);
+test.each(STORY_TYPES)('FormField of type decimal (%s)', async (storyType) => {
+    const page = await openStoryPage(getStoryOfType(storyType));
 
     const FormField = await screen.findByLabelText('Decimal');
 
@@ -55,8 +71,8 @@ test('FormField of type decimal', async () => {
     await expect(getValue(FormField)).resolves.toBe('123,456');
 });
 
-test('FormField of type credit card', async () => {
-    const page = await openStoryPage(STORY);
+test.each(STORY_TYPES)('FormField of type credit card (%s)', async (storyType) => {
+    const page = await openStoryPage(getStoryOfType(storyType));
 
     const FormField = await screen.findByLabelText('Credit card');
 
@@ -67,8 +83,8 @@ test('FormField of type credit card', async () => {
     await expect(getValue(FormField)).resolves.toBe('1234 5678 9012 3456');
 });
 
-test('FormField of type expiration date', async () => {
-    const page = await openStoryPage(STORY);
+test.each(STORY_TYPES)('FormField of type expiration date (%s)', async (storyType) => {
+    const page = await openStoryPage(getStoryOfType(storyType));
 
     const FormField = await screen.findByLabelText('Expiration');
 
@@ -85,8 +101,8 @@ test('FormField of type expiration date', async () => {
     await expect(getValue(FormField)).resolves.toBe('12/34');
 });
 
-test('FormField of type password', async () => {
-    const page = await openStoryPage(STORY);
+test.each(STORY_TYPES)('FormField of type password (%s)', async (storyType) => {
+    const page = await openStoryPage(getStoryOfType(storyType));
 
     const FormField = await screen.findByLabelText('Password');
 
@@ -94,8 +110,8 @@ test('FormField of type password', async () => {
     await expect(getValue(FormField)).resolves.toBe('patata123');
 });
 
-test('FormField of type date', async () => {
-    const page = await openStoryPage(STORY);
+test.each(STORY_TYPES)('FormField of type date (%s)', async (storyType) => {
+    const page = await openStoryPage(getStoryOfType(storyType));
 
     const FormField = await screen.findByLabelText('Date');
 
@@ -103,8 +119,8 @@ test('FormField of type date', async () => {
     await expect(getValue(FormField)).resolves.toBe('1980-10-06');
 });
 
-test('FormField of type phone', async () => {
-    const page = await openStoryPage(STORY);
+test.each(STORY_TYPES)('FormField of type phone (%s)', async (storyType) => {
+    const page = await openStoryPage(getStoryOfType(storyType));
 
     const FormField = await screen.findByLabelText('Phone');
 
