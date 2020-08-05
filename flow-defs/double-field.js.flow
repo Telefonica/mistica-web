@@ -31,5 +31,5 @@ declare type Props = {
   fullWidth?: boolean,
   children: Field | [Field, Field]
 };
-declare export var DoubleField: React.ComponentType<Props>;
-declare export {};
+declare var DoubleField: React.ComponentType<Props>;
+declare export default typeof DoubleField;

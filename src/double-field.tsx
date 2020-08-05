@@ -44,7 +44,7 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-export const DoubleField: React.FC<Props> = ({children, fullWidth}) => {
+const DoubleField: React.FC<Props> = ({children, fullWidth}) => {
     const classes = useStyles({fullWidth});
 
     const renderChildren = () => {
@@ -68,3 +68,5 @@ export const DoubleField: React.FC<Props> = ({children, fullWidth}) => {
 
     return <div className={classes.container}>{renderChildren()}</div>;
 };
+
+export default DoubleField;

@@ -13,5 +13,5 @@ declare type FormCreditCardFieldsProps = {
   cvvFieldName?: string,
   acceptedCards?: CardOptions
 };
-declare export var FormCreditCardFields: React.ComponentType<FormCreditCardFieldsProps>;
-declare export {};
+declare var FormCreditCardFields: React.ComponentType<FormCreditCardFieldsProps>;
+declare export default typeof FormCreditCardFields;

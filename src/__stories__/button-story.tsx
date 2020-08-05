@@ -1,11 +1,16 @@
 import * as React from 'react';
-import {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from '../button';
-import {ThemeVariant} from '../theme-variant-context';
-import {FormTextField} from '../form-text-field';
-import Box from '../box';
-import Stack from '../stack';
 import {StorySection, useCheckbox} from './helpers';
-import {useTheme} from '../hooks';
+import {
+    Box,
+    ButtonDanger,
+    ButtonLink,
+    ButtonPrimary,
+    ButtonSecondary,
+    FormTextField,
+    Stack,
+    ThemeVariant,
+    useTheme,
+} from '..';
 
 export default {
     title: 'Components|Touchables/Button',

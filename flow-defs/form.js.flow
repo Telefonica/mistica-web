@@ -6,8 +6,6 @@
  */
 
 import * as React from "react";
-import { type FieldValidator } from "./form-context";
-import { type AutoComplete } from "./text-field-base";
 declare type FormValues = { [name: string]: any, ... };
 declare type FormProps = {
   id?: string,
@@ -17,27 +15,5 @@ declare type FormProps = {
   children: React.Node,
   className?: string
 };
-declare export var Form: React.ComponentType<FormProps>;
-export type CommonFormFieldProps = {
-  autoFocus?: boolean,
-  disabled?: boolean,
-  error?: boolean,
-  helperText?: string,
-  id?: string,
-  label: string,
-  name: string,
-  optional?: boolean,
-  maxLength?: number,
-  inputProps?: { [prop: string]: string | number, ... },
-  validate?: FieldValidator,
-  autoComplete?: AutoComplete,
-  onFocus?: (event: SyntheticFocusEvent<>) => void,
-  onBlur?: (event: SyntheticFocusEvent<>) => void,
-  fullWidth?: boolean,
-  getSuggestions?: (text: string) => Array<string>,
-  placeholder?: string,
-  value?: string,
-  defaultValue?: string,
-  onChange?: (event: SyntheticEvent<HTMLInputElement>) => void
-};
-declare export {};
+declare var Form: React.ComponentType<FormProps>;
+declare export default typeof Form;

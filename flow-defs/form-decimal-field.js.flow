@@ -6,7 +6,7 @@
  */
 
 import * as React from "react";
-import { type CommonFormFieldProps } from "./form";
+import { type CommonFormFieldProps } from "./text-field-base";
 
 /**
  * typed as `any` because `React.HTMLProps<>` has no equivalent in flowtype
@@ -23,5 +23,5 @@ export type FormDecimalFieldProps = {
 
   onChangeValue?: (value: string, rawValue: string) => void
 };
-declare export var FormDecimalField: React.ComponentType<FormDecimalFieldProps>;
-declare export {};
+declare var FormDecimalField: React.ComponentType<FormDecimalFieldProps>;
+declare export default typeof FormDecimalField;

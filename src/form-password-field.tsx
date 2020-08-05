@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {useFieldProps} from './form-context';
-import {TextFieldBase} from './text-field-base';
+import TextFieldBase from './text-field-base';
 import {useTheme} from './hooks';
 import IconButton from './icon-button';
 import Visibility from './icons/icon-visibility';
 import VisibilityOff from './icons/icon-visibility-off';
-
-import type {CommonFormFieldProps} from './form';
 import {createUseStyles} from './jss';
+
+import type {CommonFormFieldProps} from './text-field-base';
 
 export interface FormPasswordFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
@@ -53,7 +53,7 @@ const PasswordAdornment: React.FC<{
     );
 };
 
-export const FormPasswordField: React.FC<FormPasswordFieldProps> = ({
+const FormPasswordField: React.FC<FormPasswordFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -116,3 +116,5 @@ export const FormPasswordField: React.FC<FormPasswordFieldProps> = ({
         />
     );
 };
+
+export default FormPasswordField;

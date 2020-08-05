@@ -8,10 +8,10 @@ import Tooltip from './tooltip';
 import IconButton from './icon-button';
 import IcnInfo from './icons/icon-info-cvv';
 import {useFieldProps, useForm} from './form-context';
-import {TextFieldBase} from './text-field-base';
+import TextFieldBase from './text-field-base';
 import {DecimalInput} from './form-decimal-field';
 
-import type {CommonFormFieldProps} from './form';
+import type {CommonFormFieldProps} from './text-field-base';
 import type {CardOptions} from './utils/credit-card';
 
 const useStyles = createUseStyles((theme) => ({
@@ -54,7 +54,7 @@ export interface FormCvvFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-export const FormCvvField: React.FC<FormCvvFieldProps> = ({
+const FormCvvField: React.FC<FormCvvFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -139,3 +139,5 @@ export const FormCvvField: React.FC<FormCvvFieldProps> = ({
         />
     );
 };
+
+export default FormCvvField;

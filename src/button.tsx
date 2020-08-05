@@ -21,6 +21,7 @@ const buttonBorderWidth = '1.5px';
 const commonClasses = (theme: Theme) => ({
     button: {
         display: 'inline-block',
+        width: 'auto',
         height: 48,
         minWidth: BUTTON_MIN_WIDTH,
         padding: '0 16px',
@@ -402,6 +403,7 @@ const useButtonLinkStyles = createUseStyles((theme) => ({
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
         display: 'inline-block',
+        width: 'auto',
         height: 32,
         minWidth: 104,
         lineHeight: '32px',
