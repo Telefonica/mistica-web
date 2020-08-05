@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Fix Switch component colors in O2 (iOS) and Movistar (Android)
 - Fix Switch component when used in uncontrolled mode
 - **Internal**: Changed codemod `import-type.js`, now it transforms to import type (flow) everything imported
   as a type in typescript.
