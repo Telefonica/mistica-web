@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {FormTextField} from '../form-text-field';
+import FormTextField from '../form-text-field';
 
 test('FormTextField uncontrolled', async () => {
     render(<FormTextField label="Username" name="username" />);
