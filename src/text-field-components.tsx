@@ -28,7 +28,7 @@ const useLabelStyles = createUseStyles((theme) => ({
             if (inputState === 'default' && disabled) {
                 return theme.colors.textInactive;
             }
-            if (error) {
+            if (error && inputState !== 'default') {
                 return theme.colors.textError;
             }
             if (inputState === 'focused') {

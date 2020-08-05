@@ -23,7 +23,7 @@ module.exports = {
             test: /\.tsx$/,
             use: [
                 {
-                    loader: require.resolve('ts-loader'),
+                    loader: require.resolve('babel-loader'),
                 },
             ],
         });
