@@ -6,7 +6,7 @@
  */
 
 import * as React from "react";
-import { type CommonFormFieldProps } from "./form";
+import { type CommonFormFieldProps } from "./text-field-base";
 import { type CardOptions } from "./utils/credit-card";
 declare type FormCreditCardNumberFieldProps = {
   ...$Exact<CommonFormFieldProps>,
@@ -14,5 +14,5 @@ declare type FormCreditCardNumberFieldProps = {
   acceptedCards?: CardOptions,
   onChangeValue?: (value: string, rawValue: string) => void
 };
-declare export var FormCreditCardNumberField: React.ComponentType<FormCreditCardNumberFieldProps>;
-declare export {};
+declare var FormCreditCardNumberField: React.ComponentType<FormCreditCardNumberFieldProps>;
+declare export default typeof FormCreditCardNumberField;

@@ -1,11 +1,7 @@
 import * as React from 'react';
 import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {Form} from '../form';
-import {FormTextField} from '../form-text-field';
-import {ButtonPrimary} from '../button';
-import {FormEmailField} from '..';
-import {FormPasswordField} from '../form-password-field';
+import {ButtonPrimary, Form, FormTextField, FormEmailField, FormPasswordField} from '..';
 
 test('happy case', async () => {
     const handleSubmitSpy = jest.fn();

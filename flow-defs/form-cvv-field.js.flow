@@ -6,7 +6,7 @@
  */
 
 import * as React from "react";
-import { type CommonFormFieldProps } from "./form";
+import { type CommonFormFieldProps } from "./text-field-base";
 import { type CardOptions } from "./utils/credit-card";
 export type FormCvvFieldProps = {
   ...$Exact<CommonFormFieldProps>,
@@ -14,4 +14,5 @@ export type FormCvvFieldProps = {
   acceptedCards?: CardOptions,
   onChangeValue?: (value: string, rawValue: string) => void
 };
-declare export var FormCvvField: React.ComponentType<FormCvvFieldProps>;
+declare var FormCvvField: React.ComponentType<FormCvvFieldProps>;
+declare export default typeof FormCvvField;

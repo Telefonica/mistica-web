@@ -7,6 +7,7 @@ import type {TrackingEvent} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
     textLink: {
+        width: 'auto',
         lineHeight: 'inherit',
         display: 'inline-block',
         color: theme.colors.textLink,

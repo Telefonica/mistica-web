@@ -4,7 +4,7 @@ import {useAriaId} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/key-codes';
 import {FieldContainer, HelperText, Label} from './text-field-components';
 import IconArrowDown from './icons/icon-arrow-down';
-import {TextFieldBase} from './text-field-base';
+import TextFieldBase from './text-field-base';
 import Overlay from './overlay';
 import classNames from 'classnames';
 import {isAndroid, isIos} from './utils/platform';
@@ -122,7 +122,7 @@ export type FormSelectProps = {
     fullWidth?: boolean;
 };
 
-export const FormSelect: React.FC<FormSelectProps> = ({
+const FormSelect: React.FC<FormSelectProps> = ({
     id,
     label,
     helperText: helperTextProp,
@@ -476,3 +476,5 @@ export const FormSelect: React.FC<FormSelectProps> = ({
         </>
     );
 };
+
+export default FormSelect;

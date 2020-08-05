@@ -1,8 +1,14 @@
 import * as React from 'react';
 import {StorySection, fruitEntries} from './helpers';
-import {DoubleField, Stack, FormTextField} from '..';
-import {FormCreditCardNumberField} from '../form-credit-card-number-field';
-import {FormCreditCardExpirationField, FormCvvField, FormSelect} from '../../playroom/components';
+import {
+    DoubleField,
+    FormCreditCardExpirationField,
+    FormCreditCardNumberField,
+    FormCvvField,
+    FormSelect,
+    FormTextField,
+    Stack,
+} from '..';
 
 export default {
     title: 'Components|Forms/DoubleField',

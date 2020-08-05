@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {useFieldProps} from './form-context';
-import {TextFieldBase} from './text-field-base';
+import TextFieldBase from './text-field-base';
 import {PhoneInput} from './phone-input';
 
-import type {CommonFormFieldProps} from './form';
+import type {CommonFormFieldProps} from './text-field-base';
 
 export interface FormPhoneNumberFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
@@ -11,7 +11,7 @@ export interface FormPhoneNumberFieldProps extends CommonFormFieldProps {
     getSuggestions?: (value: string) => Array<string>;
 }
 
-export const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
+const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -44,3 +44,5 @@ export const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
 
     return <TextFieldBase {...rest} {...fieldProps} type="phone" inputComponent={PhoneInput} />;
 };
+
+export default FormPhoneNumberField;

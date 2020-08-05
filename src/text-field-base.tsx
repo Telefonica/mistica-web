@@ -7,6 +7,7 @@ import classNames from 'classnames';
 
 import type {Theme} from './theme';
 import type {InputState} from './text-field-components';
+import type {FieldValidator} from './form-context';
 
 /**
  * Incomplete list, add more if needed
@@ -28,6 +29,30 @@ export type AutoComplete =
     | 'cc-number' // A credit card number or other number identifying a payment method, such as an account number
     | 'cc-exp' // A payment method expiration date, typically in the form "MM/YY" or "MM/YYYY"
     | 'cc-csc'; // The security code; on credit cards, this is the 3-digit verification number on the back of the card
+
+export interface CommonFormFieldProps {
+    autoFocus?: boolean;
+    disabled?: boolean;
+    error?: boolean;
+    helperText?: string;
+    id?: string;
+    label: string;
+    name: string;
+    optional?: boolean;
+    maxLength?: number;
+    // use `inputProps` to pass props (as attributes) to the input element, for example a data-testid
+    inputProps?: {[prop: string]: string | number};
+    validate?: FieldValidator;
+    autoComplete?: AutoComplete;
+    onFocus?: (event: React.FocusEvent) => void;
+    onBlur?: (event: React.FocusEvent) => void;
+    fullWidth?: boolean;
+    getSuggestions?: (text: string) => Array<string>;
+    placeholder?: string;
+    value?: string;
+    defaultValue?: string;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
 interface TextFieldBaseProps {
     id?: string;
@@ -343,7 +368,7 @@ const useSuggestionsStyles = createUseStyles(() => ({
 
 const Autosuggest = React.lazy(() => import(/* webpackChunkName: "react-autosuggest" */ 'react-autosuggest'));
 
-export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(({getSuggestions, ...props}, ref) => {
+const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(({getSuggestions, ...props}, ref) => {
     const [suggestions, setSuggestions] = React.useState<Array<string>>([]);
     const inputRef = React.useRef<HTMLInputElement>(null);
     const classes = useSuggestionsStyles();
@@ -418,3 +443,5 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(({getSugg
         <TextFieldBaseComponent {...props} ref={ref} />
     );
 });
+
+export default TextFieldBase;

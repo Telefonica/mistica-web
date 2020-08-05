@@ -5,7 +5,6 @@ import {createUseStyles} from './jss';
 import classnames from 'classnames';
 
 import type {FormStatus, FormErrors, FieldValidator, FieldRegistration} from './form-context';
-import type {AutoComplete} from './text-field-base';
 
 type FormValues = {[name: string]: any};
 
@@ -24,7 +23,7 @@ type FormProps = {
     className?: string;
 };
 
-export const Form: React.FC<FormProps> = ({
+const Form: React.FC<FormProps> = ({
     children,
     className,
     onSubmit,
@@ -184,26 +183,4 @@ export const Form: React.FC<FormProps> = ({
     );
 };
 
-export interface CommonFormFieldProps {
-    autoFocus?: boolean;
-    disabled?: boolean;
-    error?: boolean;
-    helperText?: string;
-    id?: string;
-    label: string;
-    name: string;
-    optional?: boolean;
-    maxLength?: number;
-    // use `inputProps` to pass props (as attributes) to the input element, for example a data-testid
-    inputProps?: {[prop: string]: string | number};
-    validate?: FieldValidator;
-    autoComplete?: AutoComplete;
-    onFocus?: (event: React.FocusEvent) => void;
-    onBlur?: (event: React.FocusEvent) => void;
-    fullWidth?: boolean;
-    getSuggestions?: (text: string) => Array<string>;
-    placeholder?: string;
-    value?: string;
-    defaultValue?: string;
-    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
+export default Form;

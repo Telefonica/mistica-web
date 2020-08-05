@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {useFieldProps} from './form-context';
-import {TextFieldBase} from './text-field-base';
+import TextFieldBase from './text-field-base';
 
-import type {CommonFormFieldProps} from './form';
+import type {CommonFormFieldProps} from './text-field-base';
 
 export interface FormTextFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
@@ -12,7 +12,7 @@ export interface FormTextFieldProps extends CommonFormFieldProps {
     getSuggestions?: (value: string) => Array<string>;
 }
 
-export const FormTextField: React.FC<FormTextFieldProps> = ({
+const FormTextField: React.FC<FormTextFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -45,3 +45,5 @@ export const FormTextField: React.FC<FormTextFieldProps> = ({
 
     return <TextFieldBase {...rest} {...fieldProps} type="text" />;
 };
+
+export default FormTextField;

@@ -6,7 +6,7 @@
  */
 
 import * as React from "react";
-import { type CommonFormFieldProps } from "./form";
+import { type CommonFormFieldProps } from "./text-field-base";
 export type FormTextFieldProps = {
   ...$Exact<CommonFormFieldProps>,
 
@@ -16,4 +16,5 @@ export type FormTextFieldProps = {
   endIcon?: React.Node,
   getSuggestions?: (value: string) => Array<string>
 };
-declare export var FormTextField: React.ComponentType<FormTextFieldProps>;
+declare var FormTextField: React.ComponentType<FormTextFieldProps>;
+declare export default typeof FormTextField;

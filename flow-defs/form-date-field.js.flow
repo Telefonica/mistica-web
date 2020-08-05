@@ -6,10 +6,11 @@
  */
 
 import * as React from "react";
-import { type CommonFormFieldProps } from "./form";
+import { type CommonFormFieldProps } from "./text-field-base";
 export type FormDateFieldProps = {
   ...$Exact<CommonFormFieldProps>,
 
   onChangeValue?: (value: string, rawValue: string) => void
 };
-declare export var FormDateField: React.ComponentType<FormDateFieldProps>;
+declare var FormDateField: React.ComponentType<FormDateFieldProps>;
+declare export default typeof FormDateField;

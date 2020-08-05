@@ -19,19 +19,22 @@ const redirect = (url: string, external = false): void => {
 
 const useStyles = createUseStyles(() => ({
     touchable: {
+        color: 'inherit',
         verticalAlign: 'bottom', // required to remove bottom gap when rendered as inline-block div
         fontFamily: 'inherit',
-        display: 'block',
         overflow: 'visible',
         appearance: 'none',
         border: 'none',
         cursor: 'pointer',
+        display: 'block',
         userSelect: 'none',
         backgroundColor: 'transparent',
         padding: 0,
         textAlign: 'inherit',
         textDecoration: 'none',
+        fontSize: 'inherit',
         WebkitTapHighlightColor: 'transparent',
+        width: '100%',
         '&::-moz-focus-inner': {
             padding: 0,
             border: 'none',
