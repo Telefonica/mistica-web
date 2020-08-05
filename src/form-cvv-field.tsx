@@ -7,7 +7,7 @@ import IconCvvAmex from './icons/icon-cvv-amex';
 import Tooltip from './tooltip';
 import IconButton from './icon-button';
 import IcnInfo from './icons/icon-info-cvv';
-import {useForm, useSyncFieldValue} from './form-context';
+import {useFieldProps, useForm} from './form-context';
 import {TextFieldBase} from './text-field-base';
 import {DecimalInput} from './form-decimal-field';
 
@@ -72,17 +72,7 @@ export const FormCvvField: React.FC<FormCvvFieldProps> = ({
     ...rest
 }) => {
     const {texts} = useTheme();
-    const {
-        rawValues,
-        setRawValue,
-        values,
-        setValue,
-        formStatus,
-        formErrors,
-        setFormError,
-        register,
-        jumpToNext,
-    } = useForm();
+    const {setFormError, jumpToNext} = useForm();
 
     const validate = (value: string, rawValue: string) => {
         if (!value) {
@@ -96,27 +86,30 @@ export const FormCvvField: React.FC<FormCvvFieldProps> = ({
 
     const processValue = (s: string) => s;
 
-    useSyncFieldValue({name, value, defaultValue, processValue});
+    const fieldProps = useFieldProps({
+        name,
+        value,
+        defaultValue,
+        processValue,
+        helperText,
+        optional,
+        error,
+        disabled,
+        onBlur,
+        validate,
+        onChange,
+        onChangeValue,
+    });
 
     return (
         <TextFieldBase
             {...rest}
-            inputRef={(field) => register({name, field, validate})}
-            disabled={disabled || formStatus === 'sending'}
-            error={error || !!formErrors[name]}
-            helperText={formErrors[name] || helperText}
-            name={name}
-            required={!optional}
-            value={value ?? rawValues[name] ?? ''}
+            {...fieldProps}
             maxLength={maxLength}
             onChange={(event) => {
+                fieldProps.onChange(event);
                 const rawValue = event.currentTarget.value;
                 const value = processValue(rawValue);
-
-                setRawValue({name, value: rawValue});
-                setValue({name, value});
-                onChange?.(event);
-                onChangeValue?.(value, rawValue);
                 if (value.length === maxLength) {
                     const error = validate(value, rawValue);
                     if (error) {
@@ -125,10 +118,6 @@ export const FormCvvField: React.FC<FormCvvFieldProps> = ({
                         jumpToNext(name);
                     }
                 }
-            }}
-            onBlur={(e) => {
-                setFormError({name, error: validate(values[name], rawValues[name])});
-                onBlur?.(e);
             }}
             endIcon={
                 <Tooltip

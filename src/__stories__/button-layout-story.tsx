@@ -10,6 +10,30 @@ export default {
 
 export const Default: StoryComponent = () => (
     <>
+        <StorySection title="Limitations">
+            <p>
+                There is one limitation with the negative margin we use to implement the ButtonLayout
+                component. A horizontal scroll will appear if a negative margin goes beyond the body. There
+                are 2 available workarounds:
+            </p>
+            <p>
+                1. Applying padding to the parent with at least half the spacing value applied to the child:
+            </p>
+            <pre>
+                <code>
+                    {'<body>'}
+                    <br />
+                    {'  <Box paddingX={16}>'}
+                    <br />
+                    {'      <ButtonLayout>//...</ButtonLayout>'}
+                    <br />
+                    {'  </Box>'}
+                    <br />
+                    {'</body>'}
+                </code>
+            </pre>
+            <p>2. Adding `overflow-x: hidden;` to the parent.</p>
+        </StorySection>
         <StorySection title="ButtonLayout">
             <ButtonLayout>
                 <ButtonSecondary fake>ok</ButtonSecondary>

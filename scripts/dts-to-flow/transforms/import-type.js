@@ -1,43 +1,16 @@
-const types = [
-    'AutoComplete',
-    'ButtonElement',
-    'CardOptions',
-    'ClickOptions',
-    'CommonFormFieldProps',
-    'ElementHandle',
-    'ElementHandle',
-    'FieldValidator',
-    'FormCreditCardExpirationFieldProps',
-    'FormCvvFieldProps',
-    'FormDateFieldProps',
-    'FormDateFieldProps',
-    'FormDecimalFieldProps',
-    'FormDecimalFieldProps',
-    'FormEmailFieldProps',
-    'FormEmailFieldProps',
-    'FormIntegerFieldProps',
-    'FormIntegerFieldProps',
-    'FormPasswordFieldProps',
-    'FormPasswordFieldProps',
-    'FormPhoneNumberFieldProps',
-    'FormPhoneNumberFieldProps',
-    'FormSelectProps',
-    'FormTextFieldProps',
-    'Locale',
-    'Location',
-    'Page',
-    'PhoneInputType',
-    'RegionCode',
-    'ScreenshotOptions',
-    'ScreenSizeContextType',
-    'SelectProps',
-    'Skin',
-    'TextFieldProps',
-    'TextProps',
-    'Theme',
-    'ThemeConfig',
-    'TrackingEvent',
-];
+const fs = require('fs');
+const path = require('path');
+const parser = require('@babel/parser');
+const traverse = require('@babel/traverse');
+
+const FLOW_BASE_PATH = 'dist';
+const SRC_BASE_PATH = 'src';
+
+const getAST = (srcPath) =>
+    parser.parse(fs.readFileSync(srcPath, 'utf8'), {
+        sourceType: 'module',
+        plugins: ['typescript', 'jsx', 'classProperties'],
+    });
 
 /**
  * This codemod adds "type" to selected imports
@@ -47,11 +20,30 @@ const types = [
 module.exports = (file, api) => {
     const j = api.jscodeshift;
 
+    const srcFilePath = path.resolve(
+        file.path.replace(FLOW_BASE_PATH, SRC_BASE_PATH).replace('.js.flow', '.tsx')
+    );
+    if (!fs.existsSync(srcFilePath)) {
+        return null;
+    }
+    const srcFileAST = getAST(srcFilePath);
+
+    const srcFileImportTypeNames = [];
+    traverse.default(srcFileAST, {
+        ImportSpecifier(importNodePath) {
+            if (importNodePath.parent.importKind === 'type') {
+                srcFileImportTypeNames.push(importNodePath.node.imported.name);
+            }
+        },
+    });
+
     return j(file.source)
-        .find(j.ImportSpecifier)
-        .forEach((path) => {
-            if (types.includes(path.node.imported.name)) {
-                path.node.importKind = 'type';
+        .find(j.ImportSpecifier, {
+            importKind: (importKind) => importKind !== 'type',
+        })
+        .forEach((importSpecifierPath) => {
+            if (srcFileImportTypeNames.includes(importSpecifierPath.node.imported.name)) {
+                importSpecifierPath.node.importKind = 'type';
             }
         })
         .toSource();

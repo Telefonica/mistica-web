@@ -3,8 +3,6 @@ import Box from './box';
 import {createUseStyles} from './jss';
 import {DEFAULT_WIDTH} from './text-field-components';
 
-import type {TextFieldProps} from './text-field';
-import type {SelectProps} from './select';
 import type {FormTextFieldProps} from './form-text-field';
 import type {FormSelectProps} from './form-select';
 import type {FormCvvFieldProps} from './form-cvv-field';
@@ -17,8 +15,6 @@ import type {FormPhoneNumberFieldProps} from './form-phone-number-field';
 import type {FormEmailFieldProps} from './form-email-field';
 
 type Field =
-    | React.ReactElement<TextFieldProps>
-    | React.ReactElement<SelectProps>
     | React.ReactElement<FormTextFieldProps>
     | React.ReactElement<FormSelectProps>
     | React.ReactElement<FormCvvFieldProps>

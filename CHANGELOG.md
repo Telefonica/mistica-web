@@ -1,5 +1,33 @@
 # CHANGELOG
 
+## Unreleased
+
+- Fix Switch component when used in uncontrolled mode
+- **Internal**: Changed codemod `import-type.js`, now it transforms to import type (flow) everything imported
+  as a type in typescript.
+
+## v.5.0.0 - 2020-07-29
+
+### Breaking changes
+
+- Deprecated `TextField` component is no longer available. Use `FormXXXField` variants.
+- Deprecated `type` property for `FormTextField` component is no longer available. Use corresponding
+  `FormXXXField` variant.
+- `Select` component is no longer available. Use `FormSelect`.
+- `PhoneInput` component is no longer available. Use `FormPhoneNumberField`.
+- `withMargin` property for `ButtonLayout>` component is no longer available. Refer to `Box` and `Stack`
+  components to add spacings when necessary.
+
+## v4.2.7 - 2020-07-28
+
+- Avoid warning in controlled/uncontroleld components
+
+## v4.2.6 - 2020-07-28
+
+- Simplify FormFields implementation. Move common logic to a hook
+- Fix a problem with `defaultValue` in fields being used outside a `<Form>` component
+- Fix a problem in `Select` component where a double `optional` suffix was being added
+
 ## v.4.2.5 - 2020-07-27
 
 - Fix: missing new color in O2 Classic skin
