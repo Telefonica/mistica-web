@@ -6,16 +6,17 @@
  */
 
 import * as React from "react";
-import { type TrackingEvent } from "./utils/types";
+import { type TrackingProps } from "./utils/types";
 import { type Location } from "history";
 export type PressHandler = (event: SyntheticMouseEvent<HTMLElement>) => void;
 declare type CommonProps = {
+  ...$Exact<TrackingProps>,
+
   children: React.Node,
   className?: string,
   disabled?: boolean,
   elementRef?: React.Ref<"button" | "a" | "div">,
   style?: CssStyle,
-  trackingEvent?: TrackingEvent,
   label?: string,
   "data-testid"?: string,
   "aria-checked"?: "true" | "false" | boolean,

@@ -6,7 +6,7 @@
  */
 
 import * as React from "react";
-import { type TrackingEvent } from "./utils/types";
+import { type TrackingProps } from "./utils/types";
 declare type CommonProps = {
   headline?: string | React.Node,
   title: string,
@@ -68,11 +68,11 @@ declare type RadioRowContentProps = {
 };
 declare type HrefRowContentProps = {
   ...$Exact<CommonProps>,
+  ...$Exact<TrackingProps>,
 
   checkbox?: void,
   switch?: void,
   radioValue?: void,
-  trackingEvent?: TrackingEvent,
   href?: string,
   newTab?: boolean,
   onPress?: void,
@@ -81,11 +81,11 @@ declare type HrefRowContentProps = {
 };
 declare type ToRowContentProps = {
   ...$Exact<CommonProps>,
+  ...$Exact<TrackingProps>,
 
   checkbox?: void,
   switch?: void,
   radioValue?: void,
-  trackingEvent?: TrackingEvent,
   to?: string,
   fullPageOnWebView?: boolean,
   replace?: boolean,
@@ -95,11 +95,11 @@ declare type ToRowContentProps = {
 };
 declare type OnPressRowContentProps = {
   ...$Exact<CommonProps>,
+  ...$Exact<TrackingProps>,
 
   checkbox?: void,
   switch?: void,
   radioValue?: void,
-  trackingEvent?: TrackingEvent,
   onPress?: () => void,
   href?: void,
   to?: void,

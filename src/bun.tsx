@@ -55,7 +55,7 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-type BunProps = {
+interface BunProps extends TrackingProps {
     children: React.ReactNode;
     title: string;
     action?:
@@ -68,7 +68,7 @@ type BunProps = {
               text: string;
               href: string;
           };
-} & TrackingProps;
+}
 
 const Bun: React.FC<BunProps> = ({children, title, trackingEvent, action}) => {
     const classes = useStyles();

@@ -6,11 +6,12 @@
  */
 
 import * as React from "react";
-import { type TrackingEvent } from "./utils/types";
+import { type TrackingProps } from "./utils/types";
 declare type BunProps = {
+  ...$Exact<TrackingProps>,
+
   children: React.Node,
   title: string,
-  trackingEvent?: TrackingEvent,
   action?:
     | {
         text: string,

@@ -167,7 +167,7 @@ const Touchable: React.FC<Props> = (props) => {
         return '';
     };
 
-    const trackEvent = () => Promise.allSettled(trackingEvents.map((event) => analytics.logEvent(event)));
+    const trackEvent = () => Promise.all(trackingEvents.map((event) => analytics.logEvent(event)));
 
     const trackOnce = (callback: () => void) => {
         if (isClicked.current) return;

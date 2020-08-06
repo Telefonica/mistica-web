@@ -89,16 +89,16 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
     },
 }));
 
+interface Tab extends TrackingProps {
+    readonly text: string;
+    readonly icon?: React.ReactNode;
+    readonly 'aria-controls'?: string;
+}
+
 export type TabsProps = {
     selectedIndex: number;
     onChange: (selectedIndex: number) => void;
-    tabs: ReadonlyArray<
-        {
-            readonly text: string;
-            readonly icon?: React.ReactNode;
-            readonly 'aria-controls'?: string;
-        } & TrackingProps
-    >;
+    tabs: ReadonlyArray<Tab>;
 };
 
 const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) => {

@@ -202,7 +202,7 @@ const getTargetPosition = (targetWrapper: HTMLDivElement | null): TargetPosition
           }
         : null;
 
-type Props = {
+interface Props extends TrackingProps {
     description: string;
     target: React.ReactNode;
     title?: string;
@@ -211,7 +211,7 @@ type Props = {
     position?: Position;
     width?: number;
     isVisible?: boolean;
-} & TrackingProps;
+}
 
 const Popover: React.FC<Props> = ({
     description,

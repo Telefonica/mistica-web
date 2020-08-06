@@ -6,14 +6,15 @@
  */
 
 import * as React from "react";
-import { type TrackingEvent } from "./utils/types";
+import { type TrackingProps } from "./utils/types";
 declare type CommonProps = {
+  ...$Exact<TrackingProps>,
+
   children?: React.Node,
   className?: string,
   style?: CssStyle,
   classes?: { [className: string]: string, ... },
   small?: boolean,
-  trackingEvent?: TrackingEvent,
   "data-testid"?: string
 };
 export type HrefProps = {
