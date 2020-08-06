@@ -62,6 +62,7 @@ interface CommonProps {
     elementRef?: React.RefObject<HTMLButtonElement | HTMLAnchorElement | HTMLDivElement>;
     style?: React.CSSProperties;
     trackingEvent?: TrackingEvent;
+    trackingEvents?: ReadonlyArray<TrackingEvent>;
     label?: string;
     'data-testid'?: string;
     'aria-checked'?: 'true' | 'false' | boolean;
@@ -125,6 +126,9 @@ const Touchable: React.FC<Props> = (props) => {
     const {texts, analytics, platformOverrides, Link} = useTheme();
     const classes = useStyles();
     const isClicked = React.useRef(false);
+    const trackingEvents = [props.trackingEvent, ...(props.trackingEvents ?? [])].filter(
+        Boolean
+    ) as readonly TrackingEvent[];
 
     const children = props.children;
 
@@ -165,8 +169,7 @@ const Touchable: React.FC<Props> = (props) => {
         return '';
     };
 
-    const trackEvent = () =>
-        props.trackingEvent ? analytics.logEvent(props.trackingEvent) : Promise.resolve();
+    const trackEvent = () => Promise.allSettled(trackingEvents.map((event) => analytics.logEvent(event)));
 
     const trackOnce = (callback: () => void) => {
         if (isClicked.current) return;
@@ -180,7 +183,7 @@ const Touchable: React.FC<Props> = (props) => {
 
     const handleButtonClick = (event: React.MouseEvent<HTMLElement>) => {
         // synchronously execute handler when no tracking is needed
-        if (!props.trackingEvent) {
+        if (!trackingEvents.length) {
             onPress(event);
             return;
         }
@@ -189,7 +192,7 @@ const Touchable: React.FC<Props> = (props) => {
     };
 
     const handleHrefClick = (event: React.MouseEvent<HTMLElement>) => {
-        if (!props.trackingEvent) {
+        if (!trackingEvents.length) {
             return; // leave the browser handle the href
         }
 

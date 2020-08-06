@@ -29,6 +29,7 @@ interface CommonProps {
     classes?: {[className: string]: string};
     small?: boolean;
     trackingEvent?: TrackingEvent;
+    trackingEvents?: ReadonlyArray<TrackingEvent>;
     'data-testid'?: string;
 }
 

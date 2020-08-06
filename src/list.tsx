@@ -162,6 +162,11 @@ interface CommonProps {
     role?: string;
 }
 
+interface TrackingProps {
+    trackingEvent?: TrackingEvent;
+    trackingEvents?: ReadonlyArray<TrackingEvent>;
+}
+
 interface ContentProps extends CommonProps {
     isClickable?: boolean;
     type?: 'chevron' | 'basic' | 'custom';
@@ -297,12 +302,11 @@ interface RadioRowContentProps extends CommonProps {
     radioValue: string;
 }
 
-interface HrefRowContentProps extends CommonProps {
+interface HrefRowContentProps extends CommonProps, TrackingProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
 
-    trackingEvent?: TrackingEvent;
     href?: string;
     newTab?: boolean;
     onPress?: undefined;
@@ -310,12 +314,11 @@ interface HrefRowContentProps extends CommonProps {
     right?: React.ReactNode;
 }
 
-interface ToRowContentProps extends CommonProps {
+interface ToRowContentProps extends CommonProps, TrackingProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
 
-    trackingEvent?: TrackingEvent;
     to?: string;
     fullPageOnWebView?: boolean;
     replace?: boolean;
@@ -324,12 +327,11 @@ interface ToRowContentProps extends CommonProps {
     right?: React.ReactNode;
 }
 
-interface OnPressRowContentProps extends CommonProps {
+interface OnPressRowContentProps extends CommonProps, TrackingProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
 
-    trackingEvent?: TrackingEvent;
     onPress?: () => void;
     href?: undefined;
     to?: undefined;
@@ -412,6 +414,7 @@ const RowContent = (props: RowContentProps) => {
             <Touchable
                 className={classes.rowContent}
                 trackingEvent={props.trackingEvent}
+                trackingEvents={props.trackingEvents}
                 onPress={props.onPress}
                 role={role}
             >
@@ -425,6 +428,7 @@ const RowContent = (props: RowContentProps) => {
             <Touchable
                 className={classes.rowContent}
                 trackingEvent={props.trackingEvent}
+                trackingEvents={props.trackingEvents}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
                 role={role}
@@ -439,6 +443,7 @@ const RowContent = (props: RowContentProps) => {
             <Touchable
                 className={classes.rowContent}
                 trackingEvent={props.trackingEvent}
+                trackingEvents={props.trackingEvents}
                 href={props.href}
                 newTab={props.newTab}
                 role={role}

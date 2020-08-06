@@ -211,6 +211,7 @@ type Props = {
     position?: Position;
     width?: number;
     trackingEvent?: TrackingEvent;
+    trackingEvents?: ReadonlyArray<TrackingEvent>;
     isVisible?: boolean;
 };
 
@@ -219,6 +220,7 @@ const Popover: React.FC<Props> = ({
     title,
     onClose,
     trackingEvent,
+    trackingEvents,
     position,
     width,
     target,
@@ -280,7 +282,8 @@ const Popover: React.FC<Props> = ({
                     <div className={classes.closeButtonIcon}>
                         <IconButton
                             onPress={handleClose}
-                            trackingEvent={trackingEvent ? trackingEvent : undefined}
+                            trackingEvent={trackingEvent}
+                            trackingEvents={trackingEvents}
                             label={texts.modalClose}
                         >
                             <IcnClose color={colors.textPrimary} />

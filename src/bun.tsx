@@ -59,6 +59,7 @@ type BunProps = {
     children: React.ReactNode;
     title: string;
     trackingEvent?: TrackingEvent;
+    trackingEvents?: ReadonlyArray<TrackingEvent>;
     action?:
         | {
               text: string;

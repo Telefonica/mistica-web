@@ -39,6 +39,7 @@ interface CommonProps {
     size?: number | string;
     style?: React.CSSProperties;
     trackingEvent?: TrackingEvent;
+    trackingEvents?: ReadonlyArray<TrackingEvent>;
     'data-testid'?: string;
     newTab?: boolean;
 }
@@ -93,6 +94,7 @@ const IconButton: React.FC<Props> = (props) => {
             ...props.style,
         },
         trackingEvent: props.trackingEvent,
+        trackingEvents: props.trackingEvents,
     };
 
     if (props.href) {

@@ -254,6 +254,7 @@ interface CommonProps {
     loadingText?: string;
     disabled?: boolean;
     trackingEvent?: TrackingEvent;
+    trackingEvents?: ReadonlyArray<TrackingEvent>;
     'data-testid'?: string;
     'aria-controls'?: string;
     'aria-expanded'?: 'true' | 'false';
@@ -337,6 +338,7 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
         }),
         style: {cursor: props.fake ? 'pointer' : undefined, ...props.style},
         trackingEvent: props.trackingEvent,
+        trackingEvents: props.trackingEvents,
         'data-testid': props['data-testid'],
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
@@ -442,6 +444,7 @@ const useButtonLinkStyles = createUseStyles((theme) => ({
 interface ButtonLinkCommonProps {
     children: React.ReactNode;
     trackingEvent?: TrackingEvent;
+    trackingEvents?: ReadonlyArray<TrackingEvent>;
     'data-testid'?: string;
 }
 interface ButtonLinkOnPressProps extends ButtonLinkCommonProps {
@@ -472,6 +475,7 @@ export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
             [classes.inverse]: isInverse,
         }),
         trackingEvent: props.trackingEvent,
+        trackingEvents: props.trackingEvents,
         'data-testid': props['data-testid'],
         children: props.children,
     };
