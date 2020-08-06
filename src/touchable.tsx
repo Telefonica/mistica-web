@@ -124,9 +124,14 @@ const Touchable: React.FC<Props> = (props) => {
     const {texts, analytics, platformOverrides, Link} = useTheme();
     const classes = useStyles();
     const isClicked = React.useRef(false);
-    const trackingEvents: ReadonlyArray<TrackingEvent> = Array.isArray(props.trackingEvent)
-        ? props.trackingEvent
-        : [props.trackingEvent];
+    let trackingEvents: ReadonlyArray<TrackingEvent> = [];
+    if (props.trackingEvent) {
+        if (Array.isArray(props.trackingEvent)) {
+            trackingEvents = props.trackingEvent;
+        } else {
+            trackingEvents = [props.trackingEvent as TrackingEvent];
+        }
+    }
 
     const children = props.children;
 
