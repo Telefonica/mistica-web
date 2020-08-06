@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Touchable from './touchable';
 
-import type {TrackingEvent} from './utils/types';
+import type {TrackingProps} from './utils/types';
 
 const ICON_SIZE_1 = 24;
 
@@ -29,7 +29,7 @@ const getButtonStyle = (
     };
 };
 
-interface CommonProps {
+interface CommonProps extends TrackingProps {
     children?: React.ReactNode;
     className?: string;
     disabled?: boolean;
@@ -38,8 +38,6 @@ interface CommonProps {
     backgroundColor?: string;
     size?: number | string;
     style?: React.CSSProperties;
-    trackingEvent?: TrackingEvent;
-    trackingEvents?: ReadonlyArray<TrackingEvent>;
     'data-testid'?: string;
     newTab?: boolean;
 }
@@ -94,7 +92,6 @@ const IconButton: React.FC<Props> = (props) => {
             ...props.style,
         },
         trackingEvent: props.trackingEvent,
-        trackingEvents: props.trackingEvents,
     };
 
     if (props.href) {

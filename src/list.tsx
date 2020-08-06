@@ -12,7 +12,7 @@ import Switch from './switch';
 import {SPACE} from './utils/key-codes';
 import RadioButton from './radio-button';
 
-import type {TrackingEvent} from './utils/types';
+import type {TrackingProps} from './utils/types';
 
 // This CircularCheckbox component is only intended to be used inside list rows. Please, don't extract it to it's own file and don't export it from the library.
 
@@ -160,11 +160,6 @@ interface CommonProps {
     iconSize?: 24 | 40;
     badge?: boolean | number;
     role?: string;
-}
-
-interface TrackingProps {
-    trackingEvent?: TrackingEvent;
-    trackingEvents?: ReadonlyArray<TrackingEvent>;
 }
 
 interface ContentProps extends CommonProps {
@@ -414,7 +409,6 @@ const RowContent = (props: RowContentProps) => {
             <Touchable
                 className={classes.rowContent}
                 trackingEvent={props.trackingEvent}
-                trackingEvents={props.trackingEvents}
                 onPress={props.onPress}
                 role={role}
             >
@@ -428,7 +422,6 @@ const RowContent = (props: RowContentProps) => {
             <Touchable
                 className={classes.rowContent}
                 trackingEvent={props.trackingEvent}
-                trackingEvents={props.trackingEvents}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
                 role={role}
@@ -443,7 +436,6 @@ const RowContent = (props: RowContentProps) => {
             <Touchable
                 className={classes.rowContent}
                 trackingEvent={props.trackingEvent}
-                trackingEvents={props.trackingEvents}
                 href={props.href}
                 newTab={props.newTab}
                 role={role}

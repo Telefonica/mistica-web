@@ -8,7 +8,7 @@ import {applyAlpha} from './utils/color';
 import {useForm} from './form-context';
 import {getPlatform} from './utils/platform';
 
-import type {TrackingEvent} from './utils/types';
+import type {TrackingProps} from './utils/types';
 import type {Location} from 'history';
 import type {Theme} from './theme';
 
@@ -245,7 +245,7 @@ const useDangerButtonStyles = createUseStyles((theme) => ({
     inverse: dangerButtonStyles(theme),
 }));
 
-interface CommonProps {
+interface CommonProps extends TrackingProps {
     children: React.ReactNode;
     className?: string;
     style?: React.CSSProperties;
@@ -253,8 +253,6 @@ interface CommonProps {
     showSpinner?: boolean;
     loadingText?: string;
     disabled?: boolean;
-    trackingEvent?: TrackingEvent;
-    trackingEvents?: ReadonlyArray<TrackingEvent>;
     'data-testid'?: string;
     'aria-controls'?: string;
     'aria-expanded'?: 'true' | 'false';
@@ -338,7 +336,6 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
         }),
         style: {cursor: props.fake ? 'pointer' : undefined, ...props.style},
         trackingEvent: props.trackingEvent,
-        trackingEvents: props.trackingEvents,
         'data-testid': props['data-testid'],
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
@@ -441,10 +438,8 @@ const useButtonLinkStyles = createUseStyles((theme) => ({
     },
 }));
 
-interface ButtonLinkCommonProps {
+interface ButtonLinkCommonProps extends TrackingProps {
     children: React.ReactNode;
-    trackingEvent?: TrackingEvent;
-    trackingEvents?: ReadonlyArray<TrackingEvent>;
     'data-testid'?: string;
 }
 interface ButtonLinkOnPressProps extends ButtonLinkCommonProps {
@@ -475,7 +470,6 @@ export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
             [classes.inverse]: isInverse,
         }),
         trackingEvent: props.trackingEvent,
-        trackingEvents: props.trackingEvents,
         'data-testid': props['data-testid'],
         children: props.children,
     };

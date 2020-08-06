@@ -6,7 +6,7 @@ import ResponsiveLayout from './responsive-layout';
 import {useElementSize} from './hooks';
 import {getPlatform} from './utils/platform';
 
-import type {TrackingEvent} from './utils/types';
+import type {TrackingProps} from './utils/types';
 
 const smallOuterStyles = {
     display: 'flex',
@@ -92,13 +92,13 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
 export type TabsProps = {
     selectedIndex: number;
     onChange: (selectedIndex: number) => void;
-    tabs: ReadonlyArray<{
-        readonly text: string;
-        readonly trackingEvent?: TrackingEvent;
-        readonly trackingEvents?: ReadonlyArray<TrackingEvent>;
-        readonly icon?: React.ReactNode;
-        readonly 'aria-controls'?: string;
-    }>;
+    tabs: ReadonlyArray<
+        {
+            readonly text: string;
+            readonly icon?: React.ReactNode;
+            readonly 'aria-controls'?: string;
+        } & TrackingProps
+    >;
 };
 
 const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) => {
@@ -111,46 +111,31 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) =
                 <div className={classes.outer}>
                     <div className={classes.inner}>
                         <div className={classes.tabsContainer}>
-                            {tabs.map(
-                                (
-                                    {
-                                        text,
-                                        trackingEvent,
-                                        trackingEvents,
-                                        icon,
-                                        'aria-controls': ariaControls,
-                                    },
-                                    index
-                                ) => {
-                                    const isSelected = index === selectedIndex;
-                                    return (
-                                        <Touchable
-                                            key={index}
+                            {tabs.map(({text, trackingEvent, icon, 'aria-controls': ariaControls}, index) => {
+                                const isSelected = index === selectedIndex;
+                                return (
+                                    <Touchable
+                                        key={index}
+                                        className={classnames(classes.tab, isSelected && classes.tabSelected)}
+                                        disabled={isSelected}
+                                        onPress={() => onChange(index)}
+                                        trackingEvent={trackingEvent}
+                                        role="tab"
+                                        aria-controls={ariaControls}
+                                        aria-selected={isSelected ? 'true' : 'false'}
+                                    >
+                                        {icon && <div className={classes.icon}>{icon}</div>}
+                                        <span
                                             className={classnames(
-                                                classes.tab,
-                                                isSelected && classes.tabSelected
+                                                classes.tebText,
+                                                isSelected && classes.tabTextSelected
                                             )}
-                                            disabled={isSelected}
-                                            onPress={() => onChange(index)}
-                                            trackingEvent={trackingEvent}
-                                            trackingEvents={trackingEvents}
-                                            role="tab"
-                                            aria-controls={ariaControls}
-                                            aria-selected={isSelected ? 'true' : 'false'}
                                         >
-                                            {icon && <div className={classes.icon}>{icon}</div>}
-                                            <span
-                                                className={classnames(
-                                                    classes.tebText,
-                                                    isSelected && classes.tabTextSelected
-                                                )}
-                                            >
-                                                {text}
-                                            </span>
-                                        </Touchable>
-                                    );
-                                }
-                            )}
+                                            {text}
+                                        </span>
+                                    </Touchable>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>

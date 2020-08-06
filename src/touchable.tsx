@@ -6,7 +6,7 @@ import {useTheme} from './hooks';
 import {isInsideNovumNativeApp} from './utils/platform';
 import {ENTER, SPACE} from './utils/key-codes';
 
-import type {TrackingEvent} from './utils/types';
+import type {TrackingEvent, TrackingProps} from './utils/types';
 import type {Location} from 'history';
 
 const redirect = (url: string, external = false): void => {
@@ -55,14 +55,12 @@ const useStyles = createUseStyles(() => ({
 
 export type PressHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
-interface CommonProps {
+interface CommonProps extends TrackingProps {
     children: React.ReactNode;
     className?: string;
     disabled?: boolean;
     elementRef?: React.RefObject<HTMLButtonElement | HTMLAnchorElement | HTMLDivElement>;
     style?: React.CSSProperties;
-    trackingEvent?: TrackingEvent;
-    trackingEvents?: ReadonlyArray<TrackingEvent>;
     label?: string;
     'data-testid'?: string;
     'aria-checked'?: 'true' | 'false' | boolean;
@@ -126,9 +124,9 @@ const Touchable: React.FC<Props> = (props) => {
     const {texts, analytics, platformOverrides, Link} = useTheme();
     const classes = useStyles();
     const isClicked = React.useRef(false);
-    const trackingEvents = [props.trackingEvent, ...(props.trackingEvents ?? [])].filter(
-        Boolean
-    ) as readonly TrackingEvent[];
+    const trackingEvents: ReadonlyArray<TrackingEvent> = Array.isArray(props.trackingEvent)
+        ? props.trackingEvent
+        : [props.trackingEvent];
 
     const children = props.children;
 

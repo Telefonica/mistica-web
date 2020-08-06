@@ -92,7 +92,7 @@ test('<Link> element is rendered when "to" prop is passed with multiple tracking
                         exact
                         path="/"
                         render={() => (
-                            <Touchable to={to} trackingEvents={[trackingEvent, trackingEvent]}>
+                            <Touchable to={to} trackingEvent={[trackingEvent, trackingEvent]}>
                                 Test
                             </Touchable>
                         )}
@@ -187,7 +187,7 @@ test('<a> element is rendered when "href" prop is passed and trackingEvent', asy
     expect(redirectSpy).toHaveBeenCalledTimes(1);
 });
 
-test('<a> element is rendered when "href" prop is passed and trackingEvents', async () => {
+test('<a> element is rendered when "href" prop is passed and multiple trackingEvent', async () => {
     const href = 'href';
     const logEventSpy = jest.fn(() => Promise.resolve());
     const redirectSpy = jest.spyOn(window, 'open').mockImplementation(() => null);
@@ -198,7 +198,7 @@ test('<a> element is rendered when "href" prop is passed and trackingEvents', as
                 data-testid="touchable-events"
                 href={href}
                 newTab
-                trackingEvents={[trackingEvent, trackingEvent]}
+                trackingEvent={[trackingEvent, trackingEvent]}
             >
                 Test
             </Touchable>
@@ -247,12 +247,12 @@ test('<button> element is rendered when "onPress" prop is passed and trackingEve
     expect(onPressSpy).toHaveBeenCalledTimes(1);
 });
 
-test('<button> element is rendered when "onPress" prop is passed and trackingEvents', async () => {
+test('<button> element is rendered when "onPress" prop is passed and multiple trackingEvent', async () => {
     const onPressSpy = jest.fn().mockReturnValue(undefined);
     const logEventSpy = jest.fn(() => Promise.resolve());
     const {container} = render(
         <ThemeContextProvider theme={overrideTheme({analytics: {logEvent: logEventSpy}})}>
-            <Touchable onPress={onPressSpy} trackingEvents={[trackingEvent, trackingEvent]}>
+            <Touchable onPress={onPressSpy} trackingEvent={[trackingEvent, trackingEvent]}>
                 Test
             </Touchable>
         </ThemeContextProvider>

@@ -5,3 +5,7 @@ export type TrackingEvent = {
     label?: string;
     value?: number;
 };
+
+export interface TrackingProps {
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+}

@@ -7,7 +7,7 @@ import {ThemeVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
 import {getPlatform} from './utils/platform';
 
-import type {TrackingEvent} from './utils/types';
+import type {TrackingProps} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
     title1: {
@@ -58,8 +58,6 @@ const useStyles = createUseStyles((theme) => ({
 type BunProps = {
     children: React.ReactNode;
     title: string;
-    trackingEvent?: TrackingEvent;
-    trackingEvents?: ReadonlyArray<TrackingEvent>;
     action?:
         | {
               text: string;
@@ -70,7 +68,7 @@ type BunProps = {
               text: string;
               href: string;
           };
-};
+} & TrackingProps;
 
 const Bun: React.FC<BunProps> = ({children, title, trackingEvent, action}) => {
     const classes = useStyles();

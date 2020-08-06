@@ -6,7 +6,7 @@ import IconButton from './icon-button';
 import {useWindowSize, useTheme, useScreenSize} from './hooks';
 import {getPlatform} from './utils/platform';
 
-import type {TrackingEvent} from './utils/types';
+import type {TrackingProps} from './utils/types';
 
 // Zeplin definition:
 // https://app.zeplin.io/project/5c9b6f097168bc065782b5c3/screen/5d15d87e46571573089f2863
@@ -210,17 +210,14 @@ type Props = {
     onClose?: () => void;
     position?: Position;
     width?: number;
-    trackingEvent?: TrackingEvent;
-    trackingEvents?: ReadonlyArray<TrackingEvent>;
     isVisible?: boolean;
-};
+} & TrackingProps;
 
 const Popover: React.FC<Props> = ({
     description,
     title,
     onClose,
     trackingEvent,
-    trackingEvents,
     position,
     width,
     target,
@@ -283,7 +280,6 @@ const Popover: React.FC<Props> = ({
                         <IconButton
                             onPress={handleClose}
                             trackingEvent={trackingEvent}
-                            trackingEvents={trackingEvents}
                             label={texts.modalClose}
                         >
                             <IcnClose color={colors.textPrimary} />
