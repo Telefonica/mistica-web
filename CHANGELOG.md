@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## v.5.0.1 - 2020-08-06
 
 - Fix `FormXXXField` components when used in uncontrolled mode outside a `Form` parent component.
 - Fix `FormXXXField` label color when error.
@@ -10,7 +10,7 @@
 - **Internal**: Changed codemod `import-type.js`, now it transforms to import type (flow) everything imported
   as a type in typescript.
 - **Internal**: Code reorganization
-- Fix `Touchable` styles. All variants are now equally styled
+- Fix `Touchable` styles. All variants are now equally styled (`display: block` and `width: 100%`)
 
 ## v.5.0.0 - 2020-07-29
 
