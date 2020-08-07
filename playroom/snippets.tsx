@@ -373,7 +373,7 @@ export default [
     },
     {
         group: 'Cards',
-        name: 'Highlighted Card',
+        name: 'HighlightedCard',
         code: `
         <HighlightedCard
             title="Resolver problema técnico"

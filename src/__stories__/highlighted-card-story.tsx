@@ -7,7 +7,7 @@ import TextLink from '../text-link';
 import {Box, Stack} from '..';
 
 export default {
-    title: 'Components|Cards/Highlighted Card',
+    title: 'Components|Cards/HighlightedCard',
 };
 
 export const Default: StoryComponent = () => {
@@ -54,18 +54,16 @@ export const Default: StoryComponent = () => {
 
     return (
         <>
-            <Box paddingX={16}>
-                <Stack space={16}>
-                    <Box paddingTop={16}>
-                        <p>Highlighted options:</p>
-                    </Box>
-                    {titleTextField}
-                    {paragraphTextField}
-                    {inverseCheckbox}
-                    {imageCheckbox}
-                    {actionSelect}
-                </Stack>
-            </Box>
+            <Stack space={16}>
+                <Box paddingTop={16}>
+                    <p>Highlighted options:</p>
+                </Box>
+                {titleTextField}
+                {paragraphTextField}
+                {inverseCheckbox}
+                {imageCheckbox}
+                {actionSelect}
+            </Stack>
             <div data-testid="highlighted-card">
                 <StorySection title="HighlightedCard">
                     <HighlightedCard
