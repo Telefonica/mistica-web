@@ -2,6 +2,7 @@ import * as React from 'react';
 import {createUseStyles} from './jss';
 import Touchable from './touchable';
 import classnames from 'classnames';
+import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 
 import type {TrackingEvent} from './utils/types';
 
@@ -10,13 +11,12 @@ const useStyles = createUseStyles((theme) => ({
         width: 'auto',
         lineHeight: 'inherit',
         display: 'inline-block',
-        color: theme.colors.textLink,
+        color: ({isInverse}) => (isInverse ? theme.colors.textPrimaryInverse : theme.colors.textLink),
         wordBreak: 'break-word',
         '&:hover': {
             textDecoration: 'underline',
         },
     },
-
     small: {
         fontSize: 14,
     },
@@ -54,12 +54,18 @@ export interface OnPressProps extends CommonProps {
 type Props = HrefProps | ToProps | OnPressProps;
 
 const TextLink: React.FC<Props> = ({children, className = '', small, ...props}) => {
-    const classes = useStyles();
+    const isInverse = useIsInverseVariant();
+    const classes = useStyles({isInverse});
 
     return (
-        <Touchable {...props} className={classnames(classes.textLink, className, {[classes.small]: small})}>
-            {children}
-        </Touchable>
+        <ThemeVariant isInverse={isInverse}>
+            <Touchable
+                {...props}
+                className={classnames(classes.textLink, className, {[classes.small]: small})}
+            >
+                {children}
+            </Touchable>
+        </ThemeVariant>
     );
 };
 

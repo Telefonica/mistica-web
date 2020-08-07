@@ -6,16 +6,19 @@
  */
 
 import * as React from "react";
-import { ButtonPrimary, ButtonSecondary, ButtonLink } from "./button";
+import { ButtonPrimary, ButtonSecondary } from "./button";
+import TextLink from "./text-link";
 declare type HighlightedCardProps = {
   title: string,
   paragraph: string,
   image?: React.Element<any> | string | null,
+  backgroundImage?: string,
   isInverse?: boolean,
   button:
     | React.Element<typeof ButtonPrimary>
     | React.Element<typeof ButtonSecondary>
-    | React.Element<typeof ButtonLink>
+    | React.Element<typeof TextLink>
+    | null
 };
 declare var HighlightedCard: React.ComponentType<HighlightedCardProps>;
 declare export default typeof HighlightedCard;

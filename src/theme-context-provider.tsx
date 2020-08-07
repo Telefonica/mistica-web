@@ -63,6 +63,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
             backgroundHeading: c.BACKGROUND_HEADING,
             backgroundAlternative: c.BACKGROUND_ALTERNATIVE,
             backgroundPromo: c.BACKGROUND_PROMO,
+            backgroundBrand: c.BACKGROUND_BRAND,
 
             buttonPrimaryBackground: c.BUTTON_PRIMARY_BACKGROUND,
             buttonPrimaryBackgroundSelected: c.BUTTON_PRIMARY_BACKGROUND_SELECTED,

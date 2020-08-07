@@ -363,4 +363,23 @@ export default [
     ...listSnippets,
     ...listRowSnippets,
     ...tabsSnippets,
+    {
+        group: 'Cards',
+        name: 'Bun',
+        code: `
+        <Bun title="Title" action={{href: 'whatever/url', text: 'Text link'}}>
+            <Placeholder />
+        </Bun>`,
+    },
+    {
+        group: 'Cards',
+        name: 'Highlighted Card',
+        code: `
+        <HighlightedCard
+            title="Resolver problema técnico"
+            paragraph="Usa nuestra herramienta para resolver tus problemas técnicos"
+            image={<Placeholder height={100} />}
+            action={<TextLink href="whatever/url">ButtonLink</TextLink>}
+        />`,
+    },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

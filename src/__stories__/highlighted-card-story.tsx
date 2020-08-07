@@ -2,7 +2,8 @@ import * as React from 'react';
 import HighlightedCard from '../highlighted-card';
 import {StorySection, useCheckbox, useTextField, useSelect} from './helpers';
 import {Placeholder} from '../placeholder';
-import {ButtonPrimary, ButtonSecondary, ButtonLink} from '../button';
+import {ButtonPrimary, ButtonSecondary} from '../button';
+import TextLink from '../text-link';
 import {Box, Stack} from '..';
 
 export default {
@@ -16,17 +17,17 @@ export const Default: StoryComponent = () => {
         'Usa nuestra herramienta para resolver tus problemas técnicos',
         true
     );
-    const [isInverse, inverseCheckbox] = useCheckbox('Inverse', false);
+    const [isInverse, inverseCheckbox] = useCheckbox('Inverse context', false);
     const [image, imageCheckbox] = useCheckbox('With Image', true);
-    const [buttonType, buttonTypeSelect] = useSelect('Button type', 'ButtonPrimary', [
+    const [action, actionSelect] = useSelect('Action type', 'ButtonPrimary', [
         'ButtonPrimary',
         'ButtonSecondary',
-        'ButtonLink',
+        'TextLink',
         'None',
     ]);
 
-    const getButton = (buttonType: string) => {
-        switch (buttonType) {
+    const getAction = (action: string) => {
+        switch (action) {
             case 'ButtonPrimary':
                 return (
                     <ButtonPrimary href="whatever/url" small>
@@ -39,8 +40,12 @@ export const Default: StoryComponent = () => {
                         ButtonSecondary
                     </ButtonSecondary>
                 );
-            case 'ButtonLink':
-                return <ButtonLink href="whatever/url">ButtonLink</ButtonLink>;
+            case 'TextLink':
+                return (
+                    <TextLink href="whatever/url" small>
+                        ButtonLink
+                    </TextLink>
+                );
             case 'None':
             default:
                 return null;
@@ -58,7 +63,7 @@ export const Default: StoryComponent = () => {
                     {paragraphTextField}
                     {inverseCheckbox}
                     {imageCheckbox}
-                    {buttonTypeSelect}
+                    {actionSelect}
                 </Stack>
             </Box>
             <div data-testid="highlighted-card">
@@ -68,7 +73,7 @@ export const Default: StoryComponent = () => {
                         paragraph={paragraph}
                         isInverse={isInverse}
                         image={image ? <Placeholder height={100} /> : ''}
-                        button={getButton(buttonType)}
+                        action={getAction(action)}
                     />
                 </StorySection>
             </div>

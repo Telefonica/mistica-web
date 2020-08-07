@@ -3,13 +3,15 @@ import {createUseStyles} from './jss';
 import {ThemeVariant} from './theme-variant-context';
 import {getPlatform} from './utils/platform';
 import Box from './box';
-import {ButtonPrimary, ButtonSecondary, ButtonLink} from './button';
+import {ButtonPrimary, ButtonSecondary} from './button';
+import TextLink from './text-link';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
         display: 'flex',
         flexDirection: 'row',
-        background: ({isInverse}) => (isInverse ? theme.colors.backgroundPromo : theme.colors.background),
+        justifyContent: 'space-between',
+        background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : theme.colors.background),
         border: ({isInverse}) => (isInverse ? '0' : `1px solid ${theme.colors.divider}`),
         borderRadius: 4,
     },
@@ -32,6 +34,7 @@ const useStyles = createUseStyles((theme) => ({
         display: 'flex',
         alignItems: 'flex-end',
         width: 100,
+        minWidth: 100,
     },
 }));
 
@@ -41,10 +44,11 @@ type HighlightedCardProps = {
     image?: React.ReactElement<any> | string | null;
     backgroundImage?: string;
     isInverse?: boolean;
-    button:
+    action:
         | React.ReactElement<typeof ButtonPrimary>
         | React.ReactElement<typeof ButtonSecondary>
-        | React.ReactElement<typeof ButtonLink>;
+        | React.ReactElement<typeof TextLink>
+        | null;
 };
 
 const HighlightedCard: React.FC<HighlightedCardProps> = ({
@@ -53,7 +57,7 @@ const HighlightedCard: React.FC<HighlightedCardProps> = ({
     image,
     backgroundImage,
     isInverse = false,
-    button,
+    action,
 }) => {
     const classes = useStyles({isInverse});
 
@@ -63,7 +67,7 @@ const HighlightedCard: React.FC<HighlightedCardProps> = ({
                 <Box paddingLeft={16} paddingRight={image ? 8 : 16} paddingY={24}>
                     <h2 className={classes.title}>{title}</h2>
                     <p className={classes.paragraph}>{paragraph}</p>
-                    {button}
+                    {action}
                 </Box>
                 {image && <div className={classes.imageContent}>{image}</div>}
             </div>
