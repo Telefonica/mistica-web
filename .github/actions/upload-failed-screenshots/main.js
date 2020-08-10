@@ -13,15 +13,13 @@ const main = async () => {
         .trim()
         .split('\n');
 
-    core.startGroup('Upload failed screenshot test diffs');
+    core.info('Upload failed screenshot test diffs');
 
     for (const file of files) {
         core.info(file);
         const url = await storage.uploadFile(file, 'image/png');
         core.info(url);
     }
-
-    core.endGroup();
 
     await storage.deleteOldContainers();
 };
