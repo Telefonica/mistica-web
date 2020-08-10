@@ -69,6 +69,7 @@
         ]
     },
     "devDependencies": {
+        "@actions/core": "^1.2.4",
         "@azure/storage-blob": "^12.2.0-preview.1",
         "@babel/cli": "^7.8.4",
         "@babel/core": "^7.8.4",
