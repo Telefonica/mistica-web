@@ -17,7 +17,7 @@ export const Default: StoryComponent = () => {
         'Usa nuestra herramienta para resolver tus problemas técnicos',
         true
     );
-    const [isInverse, inverseCheckbox] = useCheckbox('Inverse context', false);
+    const [isInverse, inverseCheckbox] = useCheckbox('Is inverse', false);
     const [image, imageCheckbox] = useCheckbox('With Image', true);
     const [action, actionSelect] = useSelect('Action type', 'ButtonPrimary', [
         'ButtonPrimary',
@@ -25,6 +25,7 @@ export const Default: StoryComponent = () => {
         'TextLink',
         'None',
     ]);
+    const [isClosable, closableCheckbox] = useCheckbox('Is closable', false);
 
     const getAction = (action: string) => {
         switch (action) {
@@ -60,9 +61,10 @@ export const Default: StoryComponent = () => {
                 </Box>
                 {titleTextField}
                 {paragraphTextField}
-                {inverseCheckbox}
-                {imageCheckbox}
                 {actionSelect}
+                {imageCheckbox}
+                {inverseCheckbox}
+                {closableCheckbox}
             </Stack>
             <div data-testid="highlighted-card">
                 <StorySection title="HighlightedCard">
@@ -72,6 +74,7 @@ export const Default: StoryComponent = () => {
                         isInverse={isInverse}
                         image={image ? <Placeholder height={100} /> : ''}
                         action={getAction(action)}
+                        isClosable={isClosable}
                     />
                 </StorySection>
             </div>

@@ -5,9 +5,14 @@ import {getPlatform} from './utils/platform';
 import Box from './box';
 import {ButtonPrimary, ButtonSecondary} from './button';
 import TextLink from './text-link';
+import IcnClose from './icons/icon-close';
+import IconButton from './icon-button';
+import {applyAlpha} from './utils/color';
+import {useTheme} from './hooks';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
+        position: 'relative',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -36,6 +41,18 @@ const useStyles = createUseStyles((theme) => ({
         width: 100,
         minWidth: 100,
     },
+    closeContainer: {
+        position: 'absolute',
+        top: 8,
+        right: 8,
+        width: 24,
+        height: 24,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        backgroundColor: applyAlpha(theme.colors.background, 0.7),
+    },
 }));
 
 type HighlightedCardProps = {
@@ -44,11 +61,12 @@ type HighlightedCardProps = {
     image?: React.ReactElement<any> | string | null;
     backgroundImage?: string;
     isInverse?: boolean;
-    action:
+    action?:
         | React.ReactElement<typeof ButtonPrimary>
         | React.ReactElement<typeof ButtonSecondary>
         | React.ReactElement<typeof TextLink>
         | null;
+    isClosable?: boolean;
 };
 
 const HighlightedCard: React.FC<HighlightedCardProps> = ({
@@ -57,9 +75,18 @@ const HighlightedCard: React.FC<HighlightedCardProps> = ({
     image,
     backgroundImage,
     isInverse = false,
+    isClosable = false,
     action,
 }) => {
     const classes = useStyles({isInverse});
+    const {colors, texts} = useTheme();
+
+    const [close, setClose] = React.useState(false);
+    const handleClose = () => setClose(true);
+
+    if (close) {
+        return null;
+    }
 
     return (
         <ThemeVariant isInverse={isInverse}>
@@ -67,9 +94,16 @@ const HighlightedCard: React.FC<HighlightedCardProps> = ({
                 <Box paddingLeft={16} paddingRight={image ? 8 : 16} paddingY={24}>
                     <h2 className={classes.title}>{title}</h2>
                     <p className={classes.paragraph}>{paragraph}</p>
-                    {action}
+                    {action && action}
                 </Box>
                 {image && <div className={classes.imageContent}>{image}</div>}
+                {isClosable && (
+                    <div className={classes.closeContainer}>
+                        <IconButton onPress={handleClose} label={texts.modalClose}>
+                            <IcnClose color={colors.iconPrimary} />
+                        </IconButton>
+                    </div>
+                )}
             </div>
         </ThemeVariant>
     );
