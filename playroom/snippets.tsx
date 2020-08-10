@@ -379,7 +379,7 @@ export default [
             title="Resolver problema técnico"
             paragraph="Usa nuestra herramienta para resolver tus problemas técnicos"
             image={<Placeholder height={100} />}
-            action={<TextLink href="whatever/url">ButtonLink</TextLink>}
+            action={<TextLink href="whatever/url" small>ButtonLink</TextLink>}
         />`,
     },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
