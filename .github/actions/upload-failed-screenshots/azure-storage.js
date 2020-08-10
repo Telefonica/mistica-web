@@ -4,20 +4,18 @@ const {basename} = require('path');
 const {promisify} = require('util');
 const fs = require('fs');
 const readFile = promisify(fs.readFile);
+const core = require('@actions/core');
 
-const {AZURE_ACCOUNT_NAME, AZURE_ACCOUNT_KEY} = process.env;
-
-if (!AZURE_ACCOUNT_KEY || !AZURE_ACCOUNT_KEY) {
-    console.error('Missing credentials, check env vars AZURE_ACCOUNT_NAME and AZURE_ACCOUNT_KEY');
-    process.exit(1);
-}
+const ACCOUNT_NAME = core.getInput('azure-account-name') || process.env.INPUT_AZURE_ACCOUNT_NAME;
+const ACCOUNT_KEY = core.getInput('azure-account-key') || process.env.INPUT_AZURE_ACCOUNT_KEY;
 
 const CONTAINER_NAME = 'ci-screenshots-' + Date.now();
+
 const DEFAULT_EXPIRY_TIME_MS = 7 * 24 * 60 * 60 * 1000; // one week
 
 const getBlobServiceClient = once(() => {
-    const sharedKeyCredential = new StorageSharedKeyCredential(AZURE_ACCOUNT_NAME, AZURE_ACCOUNT_KEY);
-    return new BlobServiceClient(`https://${AZURE_ACCOUNT_NAME}.blob.core.windows.net`, sharedKeyCredential);
+    const sharedKeyCredential = new StorageSharedKeyCredential(ACCOUNT_NAME, ACCOUNT_KEY);
+    return new BlobServiceClient(`https://${ACCOUNT_NAME}.blob.core.windows.net`, sharedKeyCredential);
 });
 
 const getContainerClient = once(async () => {

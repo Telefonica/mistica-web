@@ -34,9 +34,8 @@ jobs:
               with:
                   name: screenshot-diff
                   path: '**/__diff_output__/*.png'
-            - name: 'Upload failed screenshot diffs'
-              uses: './.github/actions/upload-failed-screenshots.js'
+            - uses: './.github/actions/upload-failed-screenshots'
               if: failure()
-              env:
-                  AZURE_ACCOUNT_NAME: ${{ secrets.AZURE_ACCOUNT_NAME }}
-                  AZURE_ACCOUNT_KEY: ${{ secrets.AZURE_ACCOUNT_KEY }}
+              with:
+                  azure-account-name: ${{ secrets.AZURE_ACCOUNT_NAME }}
+                  azure-account-key: ${{ secrets.AZURE_ACCOUNT_KEY }}
