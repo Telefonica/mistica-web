@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const core = require('@actions/core');
 const storage = require('../../scripts/storage-service');
 const {join} = require('path');
