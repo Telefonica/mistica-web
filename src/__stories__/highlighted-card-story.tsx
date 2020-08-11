@@ -17,6 +17,7 @@ export const Default: StoryComponent = () => {
         'Usa nuestra herramienta para resolver tus problemas técnicos',
         true
     );
+    const [href, hrefTextField] = useTextField('href *', 'url/url');
     const [isInverse, inverseCheckbox] = useCheckbox('Is inverse', false);
     const [image, imageCheckbox] = useCheckbox('With Image', true);
     const [action, actionSelect] = useSelect('Action type', 'ButtonPrimary', [
@@ -61,6 +62,11 @@ export const Default: StoryComponent = () => {
                 </Box>
                 {titleTextField}
                 {paragraphTextField}
+                {hrefTextField}
+                <span style={{fontSize: 12}}>
+                    * This could be <b>to | href | onPress</b> prop. If any of these prop is set without an
+                    action all card will be clickable.
+                </span>
                 {actionSelect}
                 {imageCheckbox}
                 {inverseCheckbox}
@@ -75,6 +81,7 @@ export const Default: StoryComponent = () => {
                         image={image ? <Placeholder height={100} /> : ''}
                         action={getAction(action)}
                         isClosable={isClosable}
+                        href={href}
                     />
                 </StorySection>
             </div>
