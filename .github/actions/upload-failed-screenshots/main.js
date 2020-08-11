@@ -30,11 +30,11 @@ const main = async () => {
             '**Failed screenshot tests**',
             '',
             ...uploads.map(({filename, url}) => {
-                // form-fields-screenshot-test-tsx-default-textfield-appears-properly-on-desktop-1-diff
-                const name = basename(filename).replace(/(-1)?-diff$/, '');
+                // src/__screenshot_tests__/__image_snapshots__/__diff_output__/form-fields-screenshot-test-tsx-default-textfield-appears-properly-typing-and-blur-on-mobile-ios-1-diff.png
+                const name = basename(filename).replace(/(-1)?-diff.png$/, '');
                 const [testFileName, testName] = name.split(/-screenshot-test-tsx-/);
 
-                return `* \`${testFileName}\` / [${testName}](${url})`;
+                return `* \`${testFileName}\` [${testName}](${url})`;
             }),
         ].join('\n')
     );
