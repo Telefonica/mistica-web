@@ -21,6 +21,7 @@ const useStyles = createUseStyles((theme) => ({
         background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : theme.colors.background),
         border: ({isInverse}) => (isInverse ? '0' : `1px solid ${theme.colors.divider}`),
         borderRadius: 4,
+        overflow: 'hidden',
     },
     title: {
         margin: 0,
