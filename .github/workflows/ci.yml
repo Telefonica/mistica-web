@@ -36,7 +36,7 @@ jobs:
                   path: '**/__diff_output__/*.png'
             - name: 'Upload failed screenshot diffs'
               uses: './.github/actions/upload-failed-screenshots'
-              if: failure()
+              if: always()
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   azure-account-name: ${{ secrets.AZURE_ACCOUNT_NAME }}
