@@ -2,7 +2,7 @@ import {applyAlpha} from './utils';
 import c from './colors/movistar';
 
 // LAYOUT
-export const PRIMARY = 'green'; // c.MOVISTAR_BLUE;
+export const PRIMARY = c.MOVISTAR_BLUE;
 export const BACKGROUND_BRAND = c.MOVISTAR_BLUE;
 export const BACKGROUND_BRAND_VARIATION = c.MOVISTAR_BLUE;
 export const BACKGROUND_SPECIAL_0 = c.WHITE;
@@ -13,7 +13,7 @@ export const DIVIDER = c.GREY_4;
 export const DIVIDER_SPECIAL_0 = c.GREY_4;
 export const DIVIDER_SPECIAL_1 = c.MOVISTAR_BLUE_LIGHT_60;
 
-export const BACKGROUND = 'cyan'; // c.WHITE;
+export const BACKGROUND = c.WHITE;
 export const BACKGROUND_PROMO = c.PURPLE;
 export const BACKGROUND_DARK = c.GREY_0;
 export const BACKGROUND_ALTERNATIVE = c.GREY_5;
