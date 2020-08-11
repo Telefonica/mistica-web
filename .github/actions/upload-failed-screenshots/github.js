@@ -24,8 +24,9 @@ const findPullRequestComment = async (firstLine) => {
 
 /**
  * @param {string} message
+ * @param {{updateOnly?: boolean}} options
  */
-const commentPullRequest = async (message) => {
+const commentPullRequest = async (message, {updateOnly = false} = {}) => {
     if (!context.payload.pull_request) {
         core.setFailed('No pull request found');
         return;
@@ -40,7 +41,7 @@ const commentPullRequest = async (message) => {
             comment_id: commentId,
             body: message,
         });
-    } else {
+    } else if (!updateOnly) {
         await octokit.issues.createComment({
             ...context.repo,
             issue_number: context.issue.number,

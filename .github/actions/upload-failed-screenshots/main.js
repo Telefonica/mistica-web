@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action
 // @ts-check
 const core = require('@actions/core');
@@ -25,24 +24,30 @@ const main = async () => {
 
     await storage.deleteOldContainers();
 
-    await commentPullRequest(
-        [
-            '**Failed screenshot tests**',
-            '',
-            ...uploads.map(({filename, url}) => {
-                // src/__screenshot_tests__/__image_snapshots__/__diff_output__/suite-screenshot-test-tsx-name-1-diff.png
-                const name = basename(filename).replace(/(-1)?-diff.png$/, '');
-                const [testSuite, testName] = name.split(/-screenshot-test-tsx-/);
+    if (uploads.length) {
+        await commentPullRequest(
+            [
+                '**Failed screenshot tests**',
+                '',
+                ...uploads.map(({filename, url}) => {
+                    // src/__screenshot_tests__/__image_snapshots__/__diff_output__/suite-screenshot-test-tsx-name-1-diff.png
+                    const name = basename(filename).replace(/(-1)?-diff.png$/, '');
+                    const [testSuite, testName] = name.split(/-screenshot-test-tsx-/);
 
-                return [
-                    `<details>`,
-                    `  <summary><b>${testSuite}</b> / ${testName}</summary>`,
-                    `  <img src="${url}" />`,
-                    `</details>`,
-                ].join('\n');
-            }),
-        ].join('\n')
-    );
+                    return [
+                        `<details>`,
+                        `  <summary>❌ <b>${testSuite}</b> / ${testName}</summary>`,
+                        `  <img src="${url}" />`,
+                        `</details>`,
+                    ].join('\n');
+                }),
+            ].join('\n')
+        );
+    } else {
+        await commentPullRequest(['**Failed screenshot tests**', '', '✔️ All passing'].join('\n'), {
+            updateOnly: true,
+        });
+    }
 };
 
 main().catch((error) => {
