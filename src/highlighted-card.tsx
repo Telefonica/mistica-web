@@ -29,10 +29,10 @@ const useStyles = createUseStyles((theme) => ({
         letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.45 : 'normal',
     },
     paragraph: {
-        margin: '8px 0 16px',
+        margin: '8px 0 0',
         color: ({isInverse}) => (isInverse ? theme.colors.textPrimaryInverse : theme.colors.textSecondary),
-        lineHeight: 1.43,
         fontSize: 14,
+        lineHeight: 1.43,
         letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.15 : 'normal',
     },
     imageContent: {
@@ -94,7 +94,7 @@ const HighlightedCard: React.FC<HighlightedCardProps> = ({
                 <Box paddingLeft={16} paddingRight={image ? 8 : 16} paddingY={24}>
                     <h2 className={classes.title}>{title}</h2>
                     <p className={classes.paragraph}>{paragraph}</p>
-                    {action && action}
+                    {action && <Box paddingTop={16}>{action}</Box>}
                 </Box>
                 {image && <div className={classes.imageContent}>{image}</div>}
                 {isClosable && (
