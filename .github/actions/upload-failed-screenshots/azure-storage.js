@@ -1,3 +1,4 @@
+// @ts-check
 const {BlobServiceClient, StorageSharedKeyCredential} = require('@azure/storage-blob');
 const {once} = require('lodash');
 const {basename} = require('path');
@@ -42,9 +43,9 @@ const uploadFile = async (path, contentType) => {
 
 const deleteOldContainers = async (ms = DEFAULT_EXPIRY_TIME_MS) => {
     const now = Date.now();
-    const blobServiceClient = await getBlobServiceClient();
-    for await (const container of (await getBlobServiceClient()).listContainers()) {
-        if (now - container.properties.lastModified > ms) {
+    const blobServiceClient = getBlobServiceClient();
+    for await (const container of getBlobServiceClient().listContainers()) {
+        if (now - container.properties.lastModified.getTime() > ms) {
             await blobServiceClient.deleteContainer(container.name);
         }
     }
