@@ -1,25 +1,26 @@
 #!/usr/bin/env node
+// https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action
 const core = require('@actions/core');
 const storage = require('./azure-storage');
 const {join} = require('path');
 const {execSync} = require('child_process');
-
-const PATH_ROOT = join(__dirname, '../../..');
-process.chdir(PATH_ROOT);
+const glob = require('glob');
 
 const main = async () => {
-    const files = execSync("find src | grep '/__diff_output__/.*-diff.png$'")
-        .toString('utf8')
-        .trim()
-        .split('\n');
+    const filenames = glob.sync(core.getInput('glob') || process.env.INPUT_GLOB);
 
     core.info('Upload failed screenshot test diffs');
 
-    for (const file of files) {
-        core.info(file);
-        const url = await storage.uploadFile(file, 'image/png');
+    const uploads = [];
+
+    for (const filename of filenames) {
+        core.info(filename);
+        const url = await storage.uploadFile(filename, 'image/png');
         core.info(url);
+        uploads.push({filename, url});
     }
+
+    core.setOutput('uploads', uploads);
 
     await storage.deleteOldContainers();
 };
