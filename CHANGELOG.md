@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Unreleased
+
+- Expose `validate` and `submit` in `Form` context to be able to create forms with manual validation and
+  submit. See form stories for an example
+
 ## v.5.0.1 - 2020-08-06
 
 - Fix `FormXXXField` components when used in uncontrolled mode outside a `Form` parent component.
