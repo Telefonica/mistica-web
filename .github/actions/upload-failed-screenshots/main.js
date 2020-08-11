@@ -2,7 +2,7 @@
 // https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action
 const core = require('@actions/core');
 const storage = require('./azure-storage');
-const {join} = require('path');
+const {join, basename} = require('path');
 const {execSync} = require('child_process');
 const glob = require('glob');
 
@@ -23,6 +23,20 @@ const main = async () => {
     core.setOutput('uploads', uploads);
 
     await storage.deleteOldContainers();
+
+    await commentPullRequest(
+        [
+            '**Failed screenshot tests**',
+            '',
+            ...uploads.map(({filename, url}) => {
+                // form-fields-screenshot-test-tsx-default-textfield-appears-properly-on-desktop-1-diff
+                const name = basename(filename).replace(/(-1)?-diff$/, '');
+                const [testFileName, testName] = name.split(/-screenshot-test-tsx-/);
+
+                return `* \`${testFileName}\` / [${testName}](${url})`;
+            }),
+        ].join('\n')
+    );
 };
 
 main().catch((error) => {
