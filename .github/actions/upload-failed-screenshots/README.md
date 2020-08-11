@@ -4,6 +4,10 @@ This action uploads failed screenshots to azure
 
 ## Inputs
 
+### `github-token`
+
+**Required** GitHub token, required to comment on PRs
+
 ### `azure-account-name`
 
 **Required** Azure Account Name

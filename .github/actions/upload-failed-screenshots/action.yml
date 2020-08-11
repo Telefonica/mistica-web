@@ -3,6 +3,9 @@ name: 'Upload failed screenshot diffs'
 description: 'This action uploads diff pngs to the cloud and returns image URLs'
 
 inputs:
+    github-token:
+        description: 'GitHub token, required to comment on PRs'
+        required: true
     azure-account-name:
         description: 'Azure Account Name'
         required: true
