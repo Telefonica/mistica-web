@@ -32,7 +32,7 @@ List of uploaded images: Array<{filename: string, url: string}>
 
 ```yaml
 uses: './.github/actions/upload-failed-screenshots'
-if: failure()
+if: always()
 with:
   azure-account-name: ${{ secrets.AZURE_ACCOUNT_NAME }}
   azure-account-key: ${{ secrets.AZURE_ACCOUNT_KEY }}
