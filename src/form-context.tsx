@@ -23,6 +23,8 @@ type Context = {
     formErrors: FormErrors;
     setFormError: (param: {readonly name: string; readonly error?: string}) => void;
     jumpToNext: (currentName: string) => void;
+    submit: () => void;
+    validate: () => FormErrors;
 };
 
 export const FormContext = React.createContext<Context>({
@@ -35,6 +37,8 @@ export const FormContext = React.createContext<Context>({
     formErrors: {},
     setFormError: () => {},
     jumpToNext: () => {},
+    submit: () => {},
+    validate: () => ({}),
 });
 
 export const useForm = (): Context => React.useContext(FormContext);

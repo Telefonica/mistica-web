@@ -2,6 +2,8 @@
 
 ## Next release
 
+- Expose `validate` and `submit` in `Form` context to be able to create forms with manual validation and
+  submit. See examples in form stories
 - **Internal**: GitHub action to upload failed screenshot diffs to azure and show them as PR comment
 
 ## v.5.0.1 - 2020-08-06
