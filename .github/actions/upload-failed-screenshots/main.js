@@ -27,7 +27,7 @@ const main = async () => {
     if (uploads.length) {
         await commentPullRequest(
             [
-                '**Failed screenshot tests**',
+                '**Screenshot tests report**',
                 '',
                 ...uploads.map(({filename, url}) => {
                     // src/__screenshot_tests__/__image_snapshots__/__diff_output__/suite-screenshot-test-tsx-name-1-diff.png
@@ -44,7 +44,7 @@ const main = async () => {
             ].join('\n')
         );
     } else {
-        await commentPullRequest(['**Failed screenshot tests**', '', '✔️ All passing'].join('\n'), {
+        await commentPullRequest(['**Screenshot tests report**', '', '✔️ All passing'].join('\n'), {
             updateOnly: true,
         });
     }
