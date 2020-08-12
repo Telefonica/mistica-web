@@ -96,9 +96,7 @@ type ContentProps = {
     title: string;
     paragraph: string;
     image?: string | null;
-    imageFit?: 'auto' | 'contain' | 'cover';
-    imagePositionX?: 'top' | 'bottom' | 'right' | 'left' | 'center';
-    imagePositionY?: 'top' | 'bottom' | 'right' | 'left' | 'center';
+    imageBackgroundSize?: 'auto' | 'contain' | 'cover';
     backgroundImage?: string;
     isInverse?: boolean;
     isClosable?: boolean;
@@ -113,15 +111,12 @@ const Content: React.FC<ContentProps> = ({
     title,
     paragraph,
     image,
-    imageFit,
-    imagePositionX,
-    imagePositionY,
+    imageBackgroundSize = 'cover',
     backgroundImage,
     isInverse = false,
     action,
 }) => {
     const classes = useStyles({isInverse});
-    console.log(image);
 
     return (
         <div className={classes.container} style={{backgroundImage}}>
@@ -135,9 +130,8 @@ const Content: React.FC<ContentProps> = ({
                     className={classes.imageContent}
                     style={{
                         background: `url(${image}) no-repeat`,
-                        backgroundSize: imageFit,
-                        backgroundPositionX: imagePositionX,
-                        backgroundPositionY: imagePositionY,
+                        backgroundSize: imageBackgroundSize,
+                        backgroundPosition: 'center right',
                     }}
                 />
             )}

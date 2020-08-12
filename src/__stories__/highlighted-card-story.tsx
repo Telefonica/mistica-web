@@ -4,7 +4,7 @@ import {StorySection, useCheckbox, useTextField, useSelect} from './helpers';
 import {ButtonPrimary, ButtonSecondary} from '../button';
 import TextLink from '../text-link';
 import {Box, Stack} from '..';
-import logo from '../../img/placeholder.svg';
+import {imagePlaceholder} from '../placeholder';
 
 export default {
     title: 'Components|Cards/HighlightedCard',
@@ -27,24 +27,10 @@ export const Default: StoryComponent = () => {
         'TextLink',
         'None',
     ]);
-    const [imageFit, imageFitSelect] = useSelect('Image background-size', 'auto', [
+    const [imageBackgroundSize, imageBackgroundSizeSelect] = useSelect('Image background-size', 'cover', [
         'auto',
         'contain',
         'cover',
-    ]);
-    const [imagePositionX, imagePositionXSelect] = useSelect('Image background-position-x', 'bottom', [
-        'top',
-        'bottom',
-        'left',
-        'right',
-        'center',
-    ]);
-    const [imagePositionY, imagePositionYSelect] = useSelect('Image background-position-y', 'bottom', [
-        'top',
-        'bottom',
-        'left',
-        'right',
-        'center',
     ]);
 
     const getAction = (action: string) => {
@@ -87,9 +73,7 @@ export const Default: StoryComponent = () => {
                     action all card will be clickable.
                 </span>
                 {actionSelect}
-                {imageFitSelect}
-                {imagePositionXSelect}
-                {imagePositionYSelect}
+                {imageBackgroundSizeSelect}
                 {imageCheckbox}
                 {inverseCheckbox}
                 {closableCheckbox}
@@ -100,10 +84,8 @@ export const Default: StoryComponent = () => {
                         title={title}
                         paragraph={paragraph}
                         isInverse={isInverse}
-                        image={image ? logo : ''}
-                        imageFit={imageFit ? imageFit : ''}
-                        imagePositionX={imagePositionX}
-                        imagePositionY={imagePositionY}
+                        image={image ? imagePlaceholder : ''}
+                        imageBackgroundSize={imageBackgroundSize}
                         action={getAction(action)}
                         isClosable={isClosable}
                         href={href}

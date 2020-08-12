@@ -37,7 +37,7 @@ export {default as NavigationBreadcrumbs} from './navigation-breadcrumbs';
 export {default as Text} from './text';
 export {default as PromoTag} from './promo-tag';
 export {default as SectionTitle} from './section-title';
-export {Placeholder, AvatarPlaceholder} from './placeholder';
+export {Placeholder, AvatarPlaceholder, imagePlaceholder} from './placeholder';
 export {RowList, Row, BoxedRowList, BoxedRow} from './list';
 export {default as Switch} from './switch';
 export {default as RadioButton, RadioGroup} from './radio-button';
