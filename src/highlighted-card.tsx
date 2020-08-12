@@ -39,9 +39,9 @@ const useStyles = createUseStyles((theme) => ({
     },
     imageContent: {
         display: 'flex',
-        alignItems: 'flex-end',
         width: 100,
         minWidth: 100,
+        height: 'inherit',
     },
     dismissContainer: {
         position: 'relative',
@@ -95,7 +95,10 @@ const Dismiss: React.FC<DismissProps> = ({children, isInverse = false}) => {
 type ContentProps = {
     title: string;
     paragraph: string;
-    image?: React.ReactElement<any> | string | null;
+    image?: string | null;
+    imageFit?: 'auto' | 'contain' | 'cover';
+    imagePositionX?: 'top' | 'bottom' | 'right' | 'left' | 'center';
+    imagePositionY?: 'top' | 'bottom' | 'right' | 'left' | 'center';
     backgroundImage?: string;
     isInverse?: boolean;
     isClosable?: boolean;
@@ -110,11 +113,15 @@ const Content: React.FC<ContentProps> = ({
     title,
     paragraph,
     image,
+    imageFit,
+    imagePositionX,
+    imagePositionY,
     backgroundImage,
     isInverse = false,
     action,
 }) => {
     const classes = useStyles({isInverse});
+    console.log(image);
 
     return (
         <div className={classes.container} style={{backgroundImage}}>
@@ -123,7 +130,17 @@ const Content: React.FC<ContentProps> = ({
                 <p className={classes.paragraph}>{paragraph}</p>
                 {action && <Box paddingTop={16}>{action}</Box>}
             </Box>
-            {image && <div className={classes.imageContent}>{image}</div>}
+            {image && (
+                <div
+                    className={classes.imageContent}
+                    style={{
+                        background: `url(${image}) no-repeat`,
+                        backgroundSize: imageFit,
+                        backgroundPositionX: imagePositionX,
+                        backgroundPositionY: imagePositionY,
+                    }}
+                />
+            )}
         </div>
     );
 };

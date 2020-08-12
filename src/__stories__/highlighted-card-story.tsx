@@ -1,10 +1,10 @@
 import * as React from 'react';
 import HighlightedCard from '../highlighted-card';
 import {StorySection, useCheckbox, useTextField, useSelect} from './helpers';
-import {Placeholder} from '../placeholder';
 import {ButtonPrimary, ButtonSecondary} from '../button';
 import TextLink from '../text-link';
 import {Box, Stack} from '..';
+import logo from '../../img/placeholder.svg';
 
 export default {
     title: 'Components|Cards/HighlightedCard',
@@ -20,13 +20,32 @@ export const Default: StoryComponent = () => {
     const [href, hrefTextField] = useTextField('href *', 'url/url');
     const [isInverse, inverseCheckbox] = useCheckbox('Is inverse', false);
     const [image, imageCheckbox] = useCheckbox('With Image', true);
+    const [isClosable, closableCheckbox] = useCheckbox('Is closable', false);
     const [action, actionSelect] = useSelect('Action type', 'ButtonPrimary', [
         'ButtonPrimary',
         'ButtonSecondary',
         'TextLink',
         'None',
     ]);
-    const [isClosable, closableCheckbox] = useCheckbox('Is closable', false);
+    const [imageFit, imageFitSelect] = useSelect('Image background-size', 'auto', [
+        'auto',
+        'contain',
+        'cover',
+    ]);
+    const [imagePositionX, imagePositionXSelect] = useSelect('Image background-position-x', 'bottom', [
+        'top',
+        'bottom',
+        'left',
+        'right',
+        'center',
+    ]);
+    const [imagePositionY, imagePositionYSelect] = useSelect('Image background-position-y', 'bottom', [
+        'top',
+        'bottom',
+        'left',
+        'right',
+        'center',
+    ]);
 
     const getAction = (action: string) => {
         switch (action) {
@@ -68,6 +87,9 @@ export const Default: StoryComponent = () => {
                     action all card will be clickable.
                 </span>
                 {actionSelect}
+                {imageFitSelect}
+                {imagePositionXSelect}
+                {imagePositionYSelect}
                 {imageCheckbox}
                 {inverseCheckbox}
                 {closableCheckbox}
@@ -78,7 +100,10 @@ export const Default: StoryComponent = () => {
                         title={title}
                         paragraph={paragraph}
                         isInverse={isInverse}
-                        image={image ? <Placeholder height={100} /> : ''}
+                        image={image ? logo : ''}
+                        imageFit={imageFit ? imageFit : ''}
+                        imagePositionX={imagePositionX}
+                        imagePositionY={imagePositionY}
                         action={getAction(action)}
                         isClosable={isClosable}
                         href={href}
