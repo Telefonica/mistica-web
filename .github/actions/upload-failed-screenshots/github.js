@@ -28,7 +28,6 @@ const findPullRequestComment = async (firstLine) => {
  */
 const commentPullRequest = async (message, {updateOnly = false} = {}) => {
     if (!context.payload.pull_request) {
-        core.setFailed('No pull request found');
         return;
     }
 
