@@ -28,12 +28,6 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - run: yarn
             - run: yarn ci
-            - name: Upload artifact
-              uses: actions/upload-artifact@v2
-              if: failure()
-              with:
-                  name: screenshot-diff
-                  path: '**/__diff_output__/*.png'
             - name: 'Upload failed screenshot diffs'
               uses: './.github/actions/upload-failed-screenshots'
               if: always()
