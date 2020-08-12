@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Next release
+## v.5.1.0 - 2020-08-12
 
 - Expose `validate` and `submit` in `Form` context to be able to create forms with manual validation and
   submit. See examples in form stories
