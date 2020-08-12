@@ -45,7 +45,7 @@ export const Default: StoryComponent = () => {
             case 'TextLink':
                 return (
                     <TextLink href="whatever/url" small>
-                        ButtonLink
+                        TextLink
                     </TextLink>
                 );
             case 'None':

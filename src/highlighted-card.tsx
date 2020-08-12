@@ -7,7 +7,6 @@ import Touchable from './touchable';
 import {ButtonPrimary, ButtonSecondary} from './button';
 import TextLink from './text-link';
 import IcnClose from './icons/icon-close';
-import IconButton from './icon-button';
 import {applyAlpha} from './utils/color';
 import {useTheme} from './hooks';
 
@@ -47,15 +46,20 @@ const useStyles = createUseStyles((theme) => ({
     dismissContainer: {
         position: 'relative',
     },
-    dismissButtonContainer: {
+    dismissButton: {
         position: 'absolute',
-        top: 8,
-        right: 8,
-        width: 24,
-        height: 24,
+        top: 0,
+        right: 0,
+        width: 48,
+        height: 48,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    dismissCircleContainer: {
+        width: 24,
+        height: 24,
+        margin: '0 0 8px 8px',
         borderRadius: '50%',
         backgroundColor: applyAlpha(theme.colors.background, 0.7),
     },
@@ -79,11 +83,11 @@ const Dismiss: React.FC<DismissProps> = ({children, isInverse = false}) => {
     return (
         <div className={classes.dismissContainer}>
             {children}
-            <div className={classes.dismissButtonContainer}>
-                <IconButton onPress={handleClose} label={texts.modalClose}>
+            <Touchable className={classes.dismissButton} onPress={handleClose} label={texts.modalClose}>
+                <div className={classes.dismissCircleContainer}>
                     <IcnClose color={colors.iconPrimary} />
-                </IconButton>
-            </div>
+                </div>
+            </Touchable>
         </div>
     );
 };
