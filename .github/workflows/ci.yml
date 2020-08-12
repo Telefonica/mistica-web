@@ -28,9 +28,10 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - run: yarn
             - run: yarn ci
-            - name: Upload failed screeshot diffs
-              uses: actions/upload-artifact@v2
-              if: failure()
+            - name: 'Upload failed screenshot diffs'
+              uses: './.github/actions/upload-failed-screenshots'
+              if: always()
               with:
-                  name: screenshot-diff
-                  path: '**/__diff_output__/*.png'
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  azure-account-name: ${{ secrets.AZURE_ACCOUNT_NAME }}
+                  azure-account-key: ${{ secrets.AZURE_ACCOUNT_KEY }}

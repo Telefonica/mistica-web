@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Next release
+
+- **Internal**: GitHub action to upload failed screenshot diffs to azure and show them as PR comment
+
 ## v.5.0.1 - 2020-08-06
 
 - Fix `FormXXXField` components when used in uncontrolled mode outside a `Form` parent component.
