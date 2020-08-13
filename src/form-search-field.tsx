@@ -49,11 +49,13 @@ const FormSearchField: React.FC<FormSearchFieldProps> = ({
     const clearInput = React.useCallback(() => {
         handleChangeValue('', '');
         if (inputRef.current) {
-            inputRef.current.focus();
+            const el = inputRef.current;
+            const event = new Event('change') as any;
+            el.value = '';
+            onChange?.({...event, target: el, currentTarget: el});
+            el.focus();
         }
-        // there is a known problem here, we are not calling onChange when we clear the input,
-        // because we don't have an event to pass. Only onChangeValue is called
-    }, [handleChangeValue]);
+    }, [handleChangeValue, onChange]);
 
     const fieldProps = useFieldProps({
         name,
