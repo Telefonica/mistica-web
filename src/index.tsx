@@ -49,6 +49,7 @@ export {default as Inline} from './inline';
 export {default as Form} from './form';
 export {default as FormSelect} from './form-select';
 export {default as FormTextField} from './form-text-field';
+export {default as FormSearchField} from './form-search-field';
 export {default as FormEmailField} from './form-email-field';
 export {default as FormPhoneNumberField} from './form-phone-number-field';
 export {default as FormCreditCardNumberField} from './form-credit-card-number-field';

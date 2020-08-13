@@ -6,7 +6,7 @@ type Props = {
     color?: string;
 };
 
-const IcnInfo: React.FC<Props> = ({size = 24, color}) => {
+const IconInfo: React.FC<Props> = ({size = 24, color}) => {
     const {colors} = useTheme();
 
     return (
@@ -20,4 +20,4 @@ const IcnInfo: React.FC<Props> = ({size = 24, color}) => {
     );
 };
 
-export default IcnInfo;
+export default IconInfo;

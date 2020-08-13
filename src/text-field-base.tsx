@@ -71,6 +71,7 @@ interface TextFieldBaseProps {
     name?: string;
     maxLength?: number;
     prefix?: React.ReactNode;
+    startIcon?: React.ReactNode;
     endIcon?: React.ReactNode;
     style?: React.CSSProperties;
     value?: string;
@@ -98,7 +99,8 @@ const commonInputStyles = (theme: Theme) => ({
     outline: 0,
     fontSize: 16,
     paddingRight: ({endIcon}: {endIcon: boolean}) => (endIcon ? 0 : 16),
-    paddingLeft: ({prefix}: {prefix: boolean}) => (prefix ? 0 : 12),
+    paddingLeft: ({prefix, startIcon}: {prefix: boolean; startIcon: boolean}) =>
+        prefix || startIcon ? 0 : 12,
     /* Workaround to avoid huge bullets on ios devices (-apple-system font related) */
     fontFamily: ({type}: {type: string}) =>
         type === 'password' && isIos() && !isRunningAcceptanceTest() ? 'arial' : 'inherit',
@@ -147,10 +149,19 @@ const useStyles = createUseStyles((theme) => ({
         paddingBottom: ({label}) => (label ? 8 : 16),
         height: '100%',
         ...commonInputStyles(theme),
+        '&::-webkit-search-cancel-button': {
+            WebkitAppearance: 'none',
+        },
     },
     endIcon: {
         paddingLeft: 16,
         paddingRight: 16,
+        display: 'flex',
+        alignItems: 'center',
+    },
+    startIcon: {
+        paddingLeft: 12,
+        paddingRight: 12,
         display: 'flex',
         alignItems: 'center',
     },
@@ -196,6 +207,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             onBlur,
             inputComponent,
             prefix,
+            startIcon,
             endIcon,
             shrinkLabel,
             multiline = false,
@@ -224,6 +236,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             inputState,
             error,
             endIcon,
+            startIcon,
             shrinkLabel,
             label,
             prefix,
@@ -286,6 +299,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                 fullWidth={fullWidth}
                 fieldRef={fieldRef}
             >
+                {startIcon && <div className={classes.startIcon}>{startIcon}</div>}
                 {prefix && <div className={classes.prefix}>{prefix}</div>}
                 {React.createElement(inputComponent || defaultInputElement, {
                     ...inputRefProps,
@@ -320,6 +334,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                 })}
                 {label && (
                     <Label
+                        style={startIcon ? {marginLeft: 48, left: 0} : {}}
                         error={error}
                         forId={id}
                         inputState={inputState}
