@@ -11,5 +11,5 @@ declare type Props = {
   size?: number,
   color?: string
 };
-declare var IcnClose: React.ComponentType<Props>;
-declare export default typeof IcnClose;
+declare var IconClose: React.ComponentType<Props>;
+declare export default typeof IconClose;

@@ -14,7 +14,8 @@ declare type LabelProps = {
   inputState: InputState,
   error?: boolean,
   children: string,
-  disabled?: boolean
+  disabled?: boolean,
+  style?: CssStyle
 };
 declare export var Label: React.ComponentType<LabelProps>;
 declare type HelperTextProps = {
@@ -33,3 +34,5 @@ declare type FieldContainerProps = {
 };
 declare export var FieldContainer: React.ComponentType<FieldContainerProps>;
 declare export {};
+
+import { type CssStyle } from "./__types__.js.flow";

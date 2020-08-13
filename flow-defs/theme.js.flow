@@ -106,7 +106,8 @@ declare var texts: {
   formCreditCardCvvTooltipAmex: string,
   formCreditCardExpirationError: string,
   formCreditCardNumberError: string,
-  formEmailError: string
+  formEmailError: string,
+  formSearchClear: string
 };
 declare type ThemeColors = typeof colors;
 export type ThemeTexts = typeof texts;
