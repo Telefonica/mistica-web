@@ -149,7 +149,11 @@ const useStyles = createUseStyles((theme) => ({
         paddingBottom: ({label}) => (label ? 8 : 16),
         height: '100%',
         ...commonInputStyles(theme),
+        WebkitAppearance: 'none',
         '&::-webkit-search-cancel-button': {
+            WebkitAppearance: 'none',
+        },
+        '&::-webkit-search-decoration': {
             WebkitAppearance: 'none',
         },
     },
