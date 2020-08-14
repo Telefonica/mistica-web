@@ -6,7 +6,7 @@ Thank you for your interest in Mística. You can contribute to this project in s
 
 - [Bug reports](#bug-reports)
 - [Feature requests (no UI/UX changes)](#feature-requests-no-uiux-changes)
-- [Documentation or help requests](#documentation-or-help-requests)
+- [Documentation and help requests](#documentation-and-help-requests)
 - [New component proposals or UI/UX changes](#new-component-proposals-or-uiux-changes)
 - [Pull Requests](#pull-requests)
 
@@ -28,12 +28,16 @@ If you need additional functionality, support a new use case, improve a componen
 
 :construction: [Open a Feature Request issue](https://github.com/Telefonica/mistica-web/issues/new/choose)
 
-## Documentation or help requests
+**Important:** Your feature request should not include UI or UX changes, only implementation details, because
+those kind of changes must be evaluated, approved and documented by the `Design Core Team` (see
+[New component proposals or UI/UX changes](#new-component-proposals-or-uiux-changes) section).
+
+## Documentation and help requests
 
 Is something in our documentation not well explained? Do you need help using a component? Should we create a
 new [Storybook](https://mistica-web.now.sh/) story as example?
 
-:blue_book: [Open an Documentation request issue](https://github.com/Telefonica/mistica-web/issues/new/choose)
+:blue_book: [Open an Documentation issue](https://github.com/Telefonica/mistica-web/issues/new/choose)
 
 ## New component proposals or UI/UX changes
 
