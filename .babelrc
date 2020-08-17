@@ -15,7 +15,6 @@
             {
                 "modules": false,
                 "useBuiltIns": false,
-                "corejs": 3,
                 "loose": false
             }
         ]

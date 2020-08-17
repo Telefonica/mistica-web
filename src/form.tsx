@@ -72,7 +72,7 @@ const Form: React.FC<FormProps> = ({
     /**
      * returns true if all fields are ok and focuses the first field with an error
      */
-    const validateFields = (): boolean => {
+    const validateFields = React.useCallback((): FormErrors => {
         const errors: FormErrors = {};
         let didFocus = false;
         for (const [name, input] of fieldRefs.current) {
@@ -97,8 +97,8 @@ const Form: React.FC<FormProps> = ({
             }
         }
         setFormErrors(errors);
-        return !Object.keys(errors).length;
-    };
+        return errors;
+    }, [rawValues, texts, values]);
 
     const jumpToNext = React.useCallback(
         (currentName: string) => {
@@ -132,21 +132,24 @@ const Form: React.FC<FormProps> = ({
             {}
         );
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setFormStatus('sending');
-        if (!validateFields()) {
-            setFormStatus('filling');
-            return Promise.resolve();
-        }
-        return Promise.resolve(
-            onSubmit(getNonDisabledValues(values), getNonDisabledValues(rawValues))
-        ).finally(() => {
-            if (isMountedRef.current) {
+    const handleSubmit = React.useCallback(
+        (e?: React.FormEvent<HTMLFormElement>) => {
+            e?.preventDefault();
+            setFormStatus('sending');
+            if (Object.keys(validateFields()).length > 0) {
                 setFormStatus('filling');
+                return Promise.resolve();
             }
-        });
-    };
+            return Promise.resolve(
+                onSubmit(getNonDisabledValues(values), getNonDisabledValues(rawValues))
+            ).finally(() => {
+                if (isMountedRef.current) {
+                    setFormStatus('filling');
+                }
+            });
+        },
+        [onSubmit, rawValues, validateFields, values]
+    );
 
     const setValue = React.useCallback(({name, value}) => {
         setValues((values) => ({...values, [name]: value}));
@@ -168,6 +171,8 @@ const Form: React.FC<FormProps> = ({
                 setFormError,
                 register,
                 jumpToNext,
+                validate: validateFields,
+                submit: handleSubmit,
             }}
         >
             <form

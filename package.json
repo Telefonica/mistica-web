@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "5.0.1",
+    "version": "5.1.0",
     "license": "UNLICENSED",
     "main": "dist/index.js",
     "module": "dist-es/index.js",
@@ -69,6 +69,8 @@
         ]
     },
     "devDependencies": {
+        "@actions/core": "^1.2.4",
+        "@actions/github": "^4.0.0",
         "@azure/storage-blob": "^12.2.0-preview.1",
         "@babel/cli": "^7.8.4",
         "@babel/core": "^7.8.4",
