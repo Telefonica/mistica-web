@@ -79,7 +79,7 @@ test('<Link> element is rendered when "to" prop is passed with tracking', async 
     expect(screen.getByText('Target route')).toBeInTheDocument();
 });
 
-test('<Link> element is rendered when "to" prop is passed with multiple tracking', async () => {
+test('<Link> element is rendered when "to" prop is passed with multiple tracking events', async () => {
     const logEventSpy = jest.fn();
 
     const to = '/to';
