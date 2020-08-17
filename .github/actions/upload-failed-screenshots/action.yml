@@ -1,0 +1,31 @@
+# https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions
+name: 'Upload failed screenshot diffs'
+description: 'This action uploads diff pngs to the cloud and returns image URLs'
+
+inputs:
+    github-token:
+        description: 'GitHub token, required to comment on PRs'
+        required: true
+    azure-account-name:
+        description: 'Azure Account Name'
+        required: true
+    azure-account-key:
+        description: 'Azure Account Key'
+        required: true
+    glob:
+        description: 'Glob to match diff image files'
+        required: false
+        default: 'src/**/__diff_output__/*-diff.png'
+
+outputs:
+    uploads:
+        description: 'List of uploaded images: Array<{filename: string, url: string}>'
+
+runs:
+    using: 'node12'
+    main: 'main.js'
+
+branding:
+    # https://haya14busa.github.io/github-action-brandings/
+    icon: 'upload-cloud'
+    color: 'green'

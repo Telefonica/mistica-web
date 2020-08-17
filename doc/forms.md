@@ -182,19 +182,8 @@ Usage of the following components is discouraged and future versions of this lib
 
 ## useForm Hook
 
-With `useForm` you can access the form context. See `form-context.tsx`
+With `useForm` you can access the form context. See `form-context.tsx`.
 
-For example, you may want to create a `SpecialField` component that sets its own initial value (instead of
-using `Form`'s `initialValue` property):
+This allows you to implement advanced form logic. See form stories for examples.
 
-```js
-const SpecialField = ({name, getInitialValue, ...}) => {
-    const {setValue} = useForm();
-
-    React.useEffect(() => {
-        setValue(name, getInitialValue())
-    }, [])
-
-    return <FormTextField name={name} />
-}
-```
+Please open an issue if your use case is not covered or you need additional examples.

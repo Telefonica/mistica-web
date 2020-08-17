@@ -1,15 +1,18 @@
+// @ts-check
 const {BlobServiceClient, StorageSharedKeyCredential} = require('@azure/storage-blob');
 const {once} = require('lodash');
 const {basename} = require('path');
 const {promisify} = require('util');
 const fs = require('fs');
 const readFile = promisify(fs.readFile);
+const core = require('@actions/core');
 
-const ACCOUNT_NAME = process.env.ACCOUNT_NAME || 'pladaria1';
-const ACCOUNT_KEY = process.env.ACCOUNT_KEY || '';
+const ACCOUNT_NAME = core.getInput('azure-account-name') || process.env.INPUT_AZURE_ACCOUNT_NAME;
+const ACCOUNT_KEY = core.getInput('azure-account-key') || process.env.INPUT_AZURE_ACCOUNT_KEY;
 
 const CONTAINER_NAME = 'ci-screenshots-' + Date.now();
-const EXPIRY_TIME_MS = 7 * 24 * 60 * 60 * 1000; // one week
+
+const DEFAULT_EXPIRY_TIME_MS = 7 * 24 * 60 * 60 * 1000; // one week
 
 const getBlobServiceClient = once(() => {
     const sharedKeyCredential = new StorageSharedKeyCredential(ACCOUNT_NAME, ACCOUNT_KEY);
@@ -38,25 +41,14 @@ const uploadFile = async (path, contentType) => {
     return blockBlobClient.url;
 };
 
-const deleteContainersOlderThan = async (ms) => {
+const deleteOldContainers = async (ms = DEFAULT_EXPIRY_TIME_MS) => {
     const now = Date.now();
-    const blobServiceClient = await getBlobServiceClient();
-    for await (const container of (await getBlobServiceClient()).listContainers()) {
-        if (now - container.properties.lastModified > ms) {
-            console.log('delete container', container.name);
+    const blobServiceClient = getBlobServiceClient();
+    for await (const container of getBlobServiceClient().listContainers()) {
+        if (now - container.properties.lastModified.getTime() > ms) {
             await blobServiceClient.deleteContainer(container.name);
         }
     }
 };
 
-async function main() {
-    const url = await uploadFile('/home/pladaria/Nextcloud/images/avatars/doge.png', 'image/png');
-
-    console.log(url);
-
-    deleteContainersOlderThan(EXPIRY_TIME_MS);
-}
-
-main().catch((err) => {
-    console.error('Error running sample:', err.message);
-});
+module.exports = {uploadFile, deleteOldContainers};
