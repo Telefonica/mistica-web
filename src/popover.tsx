@@ -6,7 +6,7 @@ import IconButton from './icon-button';
 import {useWindowSize, useTheme, useScreenSize} from './hooks';
 import {getPlatform} from './utils/platform';
 
-import type {TrackingProps} from './utils/types';
+import type {TrackingEvent} from './utils/types';
 
 // Zeplin definition:
 // https://app.zeplin.io/project/5c9b6f097168bc065782b5c3/screen/5d15d87e46571573089f2863
@@ -202,7 +202,7 @@ const getTargetPosition = (targetWrapper: HTMLDivElement | null): TargetPosition
           }
         : null;
 
-interface Props extends TrackingProps {
+type Props = {
     description: string;
     target: React.ReactNode;
     title?: string;
@@ -210,8 +210,9 @@ interface Props extends TrackingProps {
     onClose?: () => void;
     position?: Position;
     width?: number;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     isVisible?: boolean;
-}
+};
 
 const Popover: React.FC<Props> = ({
     description,

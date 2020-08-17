@@ -6,7 +6,7 @@ import ResponsiveLayout from './responsive-layout';
 import {useElementSize} from './hooks';
 import {getPlatform} from './utils/platform';
 
-import type {TrackingProps} from './utils/types';
+import type {TrackingEvent} from './utils/types';
 
 const smallOuterStyles = {
     display: 'flex',
@@ -89,16 +89,15 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
     },
 }));
 
-interface Tab extends TrackingProps {
-    readonly text: string;
-    readonly icon?: React.ReactNode;
-    readonly 'aria-controls'?: string;
-}
-
 export type TabsProps = {
     selectedIndex: number;
     onChange: (selectedIndex: number) => void;
-    tabs: ReadonlyArray<Tab>;
+    tabs: ReadonlyArray<{
+        readonly text: string;
+        readonly trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+        readonly icon?: React.ReactNode;
+        readonly 'aria-controls'?: string;
+    }>;
 };
 
 const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) => {

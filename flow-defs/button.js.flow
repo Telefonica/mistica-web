@@ -6,12 +6,10 @@
  */
 
 import * as React from "react";
-import { type TrackingProps } from "./utils/types";
+import { type TrackingEvent } from "./utils/types";
 import { type Location } from "history";
 declare export var BUTTON_MIN_WIDTH: 156;
 declare type CommonProps = {
-  ...$Exact<TrackingProps>,
-
   children: React.Node,
   className?: string,
   style?: CssStyle,
@@ -19,6 +17,7 @@ declare type CommonProps = {
   showSpinner?: boolean,
   loadingText?: string,
   disabled?: boolean,
+  trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   "data-testid"?: string,
   "aria-controls"?: string,
   "aria-expanded"?: "true" | "false",
@@ -78,9 +77,8 @@ export type ButtonProps =
   | OnPressButtonProps
   | HrefButtonProps;
 declare type ButtonLinkCommonProps = {
-  ...$Exact<TrackingProps>,
-
   children: React.Node,
+  trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   "data-testid"?: string
 };
 declare type ButtonLinkOnPressProps = {

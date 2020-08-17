@@ -6,7 +6,7 @@ import {useTheme} from './hooks';
 import {isInsideNovumNativeApp} from './utils/platform';
 import {ENTER, SPACE} from './utils/key-codes';
 
-import type {TrackingEvent, TrackingProps} from './utils/types';
+import type {TrackingEvent} from './utils/types';
 import type {Location} from 'history';
 
 const redirect = (url: string, external = false): void => {
@@ -55,12 +55,13 @@ const useStyles = createUseStyles(() => ({
 
 export type PressHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
-interface CommonProps extends TrackingProps {
+interface CommonProps {
     children: React.ReactNode;
     className?: string;
     disabled?: boolean;
     elementRef?: React.RefObject<HTMLButtonElement | HTMLAnchorElement | HTMLDivElement>;
     style?: React.CSSProperties;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     label?: string;
     'data-testid'?: string;
     'aria-checked'?: 'true' | 'false' | boolean;

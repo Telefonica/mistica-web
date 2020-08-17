@@ -6,13 +6,10 @@
  */
 
 export type TrackingEvent = {
-  [key: string]: mixed,
-  +category: string,
-  +action: string,
-  +label?: string,
-  +value?: number,
-  ...
-};
-export type TrackingProps = {
-  +trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>
+ [key: string]: mixed,
+ +category: string,
+ +action: string,
+ +label?: string,
+ +value?: number,
+ ...
 };

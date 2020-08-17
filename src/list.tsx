@@ -12,7 +12,7 @@ import Switch from './switch';
 import {SPACE} from './utils/key-codes';
 import RadioButton from './radio-button';
 
-import type {TrackingProps} from './utils/types';
+import type {TrackingEvent} from './utils/types';
 
 // This CircularCheckbox component is only intended to be used inside list rows. Please, don't extract it to it's own file and don't export it from the library.
 
@@ -297,11 +297,12 @@ interface RadioRowContentProps extends CommonProps {
     radioValue: string;
 }
 
-interface HrefRowContentProps extends CommonProps, TrackingProps {
+interface HrefRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
 
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     href?: string;
     newTab?: boolean;
     onPress?: undefined;
@@ -309,11 +310,12 @@ interface HrefRowContentProps extends CommonProps, TrackingProps {
     right?: React.ReactNode;
 }
 
-interface ToRowContentProps extends CommonProps, TrackingProps {
+interface ToRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
 
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     to?: string;
     fullPageOnWebView?: boolean;
     replace?: boolean;
@@ -322,11 +324,12 @@ interface ToRowContentProps extends CommonProps, TrackingProps {
     right?: React.ReactNode;
 }
 
-interface OnPressRowContentProps extends CommonProps, TrackingProps {
+interface OnPressRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
 
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     onPress?: () => void;
     href?: undefined;
     to?: undefined;

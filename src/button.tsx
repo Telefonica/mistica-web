@@ -8,7 +8,7 @@ import {applyAlpha} from './utils/color';
 import {useForm} from './form-context';
 import {getPlatform} from './utils/platform';
 
-import type {TrackingProps} from './utils/types';
+import type {TrackingEvent} from './utils/types';
 import type {Location} from 'history';
 import type {Theme} from './theme';
 
@@ -245,7 +245,7 @@ const useDangerButtonStyles = createUseStyles((theme) => ({
     inverse: dangerButtonStyles(theme),
 }));
 
-interface CommonProps extends TrackingProps {
+interface CommonProps {
     children: React.ReactNode;
     className?: string;
     style?: React.CSSProperties;
@@ -253,6 +253,7 @@ interface CommonProps extends TrackingProps {
     showSpinner?: boolean;
     loadingText?: string;
     disabled?: boolean;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     'data-testid'?: string;
     'aria-controls'?: string;
     'aria-expanded'?: 'true' | 'false';
@@ -438,8 +439,9 @@ const useButtonLinkStyles = createUseStyles((theme) => ({
     },
 }));
 
-interface ButtonLinkCommonProps extends TrackingProps {
+interface ButtonLinkCommonProps {
     children: React.ReactNode;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     'data-testid'?: string;
 }
 interface ButtonLinkOnPressProps extends ButtonLinkCommonProps {

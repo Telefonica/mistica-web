@@ -3,7 +3,7 @@ import {createUseStyles} from './jss';
 import Touchable from './touchable';
 import classnames from 'classnames';
 
-import type {TrackingProps} from './utils/types';
+import type {TrackingEvent} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
     textLink: {
@@ -22,12 +22,13 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-interface CommonProps extends TrackingProps {
+interface CommonProps {
     children?: React.ReactNode;
     className?: string;
     style?: React.CSSProperties;
     classes?: {[className: string]: string};
     small?: boolean;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     'data-testid'?: string;
 }
 

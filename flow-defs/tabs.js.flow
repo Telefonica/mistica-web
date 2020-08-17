@@ -6,18 +6,16 @@
  */
 
 import * as React from "react";
-import { type TrackingProps } from "./utils/types";
-declare type Tab = {
-  ...$Exact<TrackingProps>,
-
-  +text: string,
-  +icon?: React.Node,
-  +"aria-controls"?: string
-};
+import { type TrackingEvent } from "./utils/types";
 export type TabsProps = {
   selectedIndex: number,
   onChange: (selectedIndex: number) => void,
-  tabs: $ReadOnlyArray<Tab>
+  tabs: $ReadOnlyArray<{
+    +text: string,
+    +trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
+    +icon?: React.Node,
+    +"aria-controls"?: string
+  }>
 };
 declare var Tabs: React.ComponentType<TabsProps>;
 declare export default typeof Tabs;
