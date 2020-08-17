@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {ThemeVariant} from './theme-variant-context';
-import {getPlatform} from './utils/platform';
+import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import Box from './box';
 import Touchable from './touchable';
 import {ButtonPrimary, ButtonSecondary} from './button';
@@ -9,6 +8,7 @@ import TextLink from './text-link';
 import IcnClose from './icons/icon-close';
 import {applyAlpha} from './utils/color';
 import {useTheme} from './hooks';
+import Text from './text';
 
 import type {TrackingEvent} from './utils/types';
 
@@ -22,31 +22,16 @@ const useStyles = createUseStyles((theme) => ({
         borderRadius: 4,
         overflow: 'hidden',
     },
-    title: {
-        margin: 0,
-        color: ({isInverse}) => (isInverse ? theme.colors.textPrimaryInverse : theme.colors.textPrimary),
-        fontSize: 18,
-        fontWeight: 300,
-        lineHeight: 1.33,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.45 : 'normal',
-    },
-    paragraph: {
-        margin: '8px 0 0',
-        color: ({isInverse}) => (isInverse ? theme.colors.textPrimaryInverse : theme.colors.textSecondary),
-        fontSize: 14,
-        lineHeight: 1.43,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.15 : 'normal',
-    },
     imageContent: {
         display: 'flex',
         width: 100,
         minWidth: 100,
         height: 'inherit',
     },
-    dismissContainer: {
+    dismissableContainer: {
         position: 'relative',
     },
-    dismissButton: {
+    dismissableButton: {
         position: 'absolute',
         top: 0,
         right: 0,
@@ -56,7 +41,7 @@ const useStyles = createUseStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    dismissCircleContainer: {
+    dismissableCircleContainer: {
         width: 24,
         height: 24,
         margin: '0 0 8px 8px',
@@ -65,26 +50,33 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-type DismissProps = {
+type DismissableProps = {
     children: React.ReactNode;
-    isInverse: boolean;
+    onClose?: () => void;
 };
 
-const Dismiss: React.FC<DismissProps> = ({children, isInverse = false}) => {
+const Dismissable: React.FC<DismissableProps> = ({children, onClose}) => {
+    const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
     const {colors, texts} = useTheme();
     const [close, setClose] = React.useState(false);
-    const handleClose = () => setClose(true);
+    const handleClose = () => {
+        if (onClose) {
+            onClose();
+        }
+
+        return setClose(true);
+    };
 
     if (close) {
         return null;
     }
 
     return (
-        <div className={classes.dismissContainer}>
+        <div className={classes.dismissableContainer}>
             {children}
-            <Touchable className={classes.dismissButton} onPress={handleClose} label={texts.modalClose}>
-                <div className={classes.dismissCircleContainer}>
+            <Touchable className={classes.dismissableButton} onPress={handleClose} label={texts.modalClose}>
+                <div className={classes.dismissableCircleContainer}>
                     <IcnClose color={colors.iconPrimary} />
                 </div>
             </Touchable>
@@ -92,44 +84,60 @@ const Dismiss: React.FC<DismissProps> = ({children, isInverse = false}) => {
     );
 };
 
-type ContentProps = {
+type CommonContentProps = {
     title: string;
     paragraph: string;
-    image?: string | null;
+    imageUrl?: string;
     imageBackgroundSize?: 'auto' | 'contain' | 'cover';
-    backgroundImage?: string;
+    backgroundImageUrl?: string;
     isInverse?: boolean;
-    isClosable?: boolean;
+    onClose?: () => void;
     action?:
         | React.ReactElement<typeof ButtonPrimary>
         | React.ReactElement<typeof ButtonSecondary>
         | React.ReactElement<typeof TextLink>
         | null;
+    trackingEvent?: TrackingEvent;
 };
 
-const Content: React.FC<ContentProps> = ({
+const CommonContent: React.FC<CommonContentProps> = ({
     title,
     paragraph,
-    image,
+    imageUrl,
     imageBackgroundSize = 'cover',
-    backgroundImage,
-    isInverse = false,
+    backgroundImageUrl,
     action,
 }) => {
+    const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
+    const theme = useTheme();
 
     return (
-        <div className={classes.container} style={{backgroundImage}}>
-            <Box paddingLeft={16} paddingRight={image ? 8 : 16} paddingY={24}>
-                <h2 className={classes.title}>{title}</h2>
-                <p className={classes.paragraph}>{paragraph}</p>
+        <div className={classes.container} style={{backgroundImage: backgroundImageUrl}}>
+            <Box paddingLeft={16} paddingRight={imageUrl ? 8 : 16} paddingY={24}>
+                <Text
+                    size={18}
+                    lineHeight={1.33}
+                    color={isInverse ? theme.colors.textPrimaryInverse : theme.colors.textPrimary}
+                >
+                    {title}
+                </Text>
+                <Box paddingTop={8}>
+                    <Text
+                        size={14}
+                        lineHeight={1.43}
+                        color={isInverse ? theme.colors.textPrimaryInverse : theme.colors.textSecondary}
+                    >
+                        {paragraph}
+                    </Text>
+                </Box>
                 {action && <Box paddingTop={16}>{action}</Box>}
             </Box>
-            {image && (
+            {imageUrl && (
                 <div
                     className={classes.imageContent}
                     style={{
-                        background: `url(${image}) no-repeat`,
+                        background: `url(${imageUrl}) no-repeat`,
                         backgroundSize: imageBackgroundSize,
                         backgroundPosition: 'center right',
                     }}
@@ -139,38 +147,37 @@ const Content: React.FC<ContentProps> = ({
     );
 };
 
-interface HrefProps extends ContentProps {
+interface HrefProps extends CommonContentProps {
     href?: string;
     newTab?: boolean;
     onPress?: undefined;
     to?: undefined;
-    trackingEvent?: TrackingEvent;
 }
 
-interface ToProps extends ContentProps {
+interface ToProps extends CommonContentProps {
     to?: string;
     fullPageOnWebView?: boolean;
     href?: undefined;
     onPress?: undefined;
-    trackingEvent?: TrackingEvent;
 }
-interface OnPressProps extends ContentProps {
+interface OnPressProps extends CommonContentProps {
     onPress?: () => void;
     href?: undefined;
     to?: undefined;
-    trackingEvent?: TrackingEvent;
 }
 
-type TouchableContentProps = HrefProps | ToProps | OnPressProps;
+type Props = HrefProps | ToProps | OnPressProps;
 
-const TouchableContent: React.FC<TouchableContentProps> = (props) => {
+const Content: React.FC<Props> = (props) => {
+    const content = <CommonContent {...props} />;
+
     if (props.action) {
-        return <Content {...props} />;
+        return content;
     }
     if (props.onPress) {
         return (
             <Touchable onPress={props.onPress} trackingEvent={props.trackingEvent}>
-                <Content {...props} />
+                {content}
             </Touchable>
         );
     }
@@ -181,31 +188,35 @@ const TouchableContent: React.FC<TouchableContentProps> = (props) => {
                 trackingEvent={props.trackingEvent}
                 fullPageOnWebView={props.fullPageOnWebView}
             >
-                <Content {...props} />
+                {content}
             </Touchable>
         );
     }
     if (props.href) {
         return (
             <Touchable trackingEvent={props.trackingEvent} href={props.href} newTab={props.newTab}>
-                <Content {...props} />
+                {content}
             </Touchable>
         );
     }
 
-    return <Content {...props} />;
+    return content;
 };
 
-const HighlightedCard: React.FC<TouchableContentProps> = ({isClosable, ...props}) => (
-    <ThemeVariant isInverse={props.isInverse}>
-        {isClosable ? (
-            <Dismiss isInverse={props.isInverse}>
-                <TouchableContent {...props} />
-            </Dismiss>
-        ) : (
-            <TouchableContent {...props} />
-        )}
-    </ThemeVariant>
-);
+const HighlightedCard: React.FC<Props> = (props) => {
+    const isInverse = useIsInverseVariant();
+
+    return (
+        <ThemeVariant isInverse={isInverse}>
+            {props.onClose ? (
+                <Dismissable onClose={props.onClose}>
+                    <Content {...props} />
+                </Dismissable>
+            ) : (
+                <Content {...props} />
+            )}
+        </ThemeVariant>
+    );
+};
 
 export default HighlightedCard;
