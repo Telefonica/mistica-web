@@ -57,6 +57,12 @@ const FormSearchField: React.FC<FormSearchFieldProps> = ({
         }
     }, [handleChangeValue, onChange]);
 
+    const focus = React.useCallback(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, []);
+
     const fieldProps = useFieldProps({
         name,
         value: controlledValue,
@@ -75,7 +81,12 @@ const FormSearchField: React.FC<FormSearchFieldProps> = ({
     return (
         <TextFieldBase
             ref={inputRef}
-            startIcon={<IconSearch />}
+            startIcon={
+                // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+                <div onClick={focus}>
+                    <IconSearch />
+                </div>
+            }
             endIcon={
                 controlledValue ? (
                     <IconButton
