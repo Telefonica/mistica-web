@@ -512,6 +512,21 @@ export const TypesControlled = (): React.ReactNode => (
                 />
             )}
         </Controlled>
+
+        <Controlled title="FormSearchField with suggestions" initialValue="">
+            {(handleChange, handleChangeValue, value) => (
+                <FormSearchField
+                    autoComplete="off"
+                    name="searchCountry"
+                    label="Search country"
+                    placeholder="Country name (start with 'A')"
+                    value={value}
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                    getSuggestions={getCountrySuggestions}
+                />
+            )}
+        </Controlled>
     </>
 );
 
