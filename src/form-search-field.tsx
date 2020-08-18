@@ -9,7 +9,6 @@ import type {CommonFormFieldProps} from './text-field-base';
 import {useTheme} from './hooks';
 
 export interface FormSearchFieldProps extends CommonFormFieldProps {
-    // onChange?: undefined;
     onChangeValue?: (value: string, rawValue: string) => void;
     getSuggestions?: (value: string) => Array<string>;
 }
