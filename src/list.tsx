@@ -87,6 +87,11 @@ const useStyles = createUseStyles((theme) => ({
         cursor: 'pointer',
         '&:hover': {
             background: theme.colors.backgroundAlternative,
+
+            // Revert hover background in touch devices
+            '@media (pointer: coarse)': {
+                background: 'initial',
+            },
         },
         '&:last-child $content': {
             borderBottom: 'none',
