@@ -99,8 +99,15 @@ const commonInputStyles = (theme: Theme) => ({
     outline: 0,
     fontSize: 16,
     paddingRight: ({endIcon}: {endIcon: boolean}) => (endIcon ? 0 : 16),
-    paddingLeft: ({prefix, startIcon}: {prefix: boolean; startIcon: boolean}) =>
-        prefix || startIcon ? 0 : 12,
+    paddingLeft: ({prefix, startIcon}: {prefix: boolean; startIcon: boolean}) => {
+        if (prefix) {
+            return 0;
+        }
+        if (startIcon) {
+            return 48;
+        }
+        return 12;
+    },
     /* Workaround to avoid huge bullets on ios devices (-apple-system font related) */
     fontFamily: ({type}: {type: string}) =>
         type === 'password' && isIos() && !isRunningAcceptanceTest() ? 'arial' : 'inherit',
@@ -164,10 +171,13 @@ const useStyles = createUseStyles((theme) => ({
         alignItems: 'center',
     },
     startIcon: {
+        pointerEvents: 'none', // passthrough click events to the input
         paddingLeft: 12,
         paddingRight: 12,
         display: 'flex',
         alignItems: 'center',
+        height: '100%',
+        position: 'absolute',
     },
     prefix: {
         paddingTop: ({label}) => (label ? 25 : 16),
