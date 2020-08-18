@@ -45,6 +45,10 @@ const useStyles = createUseStyles((theme) => ({
             color: theme.colors.border,
         },
         cursor: ({disabled}) => (disabled ? 'initial' : 'pointer'),
+        '&': {
+            appearance: 'none',
+            '::-ms-expand': 'none',
+        },
     },
     arrowDown: {
         position: 'absolute',
@@ -327,7 +331,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
     }, [autoFocus]);
 
     const classes = useStyles({
-        label,
+        label: label || optional,
         optionsComputedProps,
         animateShowOptions,
         helperText,
