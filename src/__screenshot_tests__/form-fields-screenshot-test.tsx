@@ -1,6 +1,7 @@
 import {openStoryPage, screen} from '../test-utils';
+
 import type {Device} from '../test-utils';
-import {ElementHandle} from 'puppeteer';
+import type {ElementHandle} from 'puppeteer';
 
 const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 

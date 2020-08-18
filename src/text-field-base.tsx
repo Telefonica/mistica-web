@@ -130,6 +130,7 @@ const commonInputStyles = (theme: Theme) => ({
     '&::-webkit-calendar-picker-indicator': {
         marginTop: ({label}: {label: string}) => (label ? -12 : 'initial'),
     },
+    boxShadow: 'none', // reset FF red shadow styles for required inputs
 });
 
 const useStyles = createUseStyles((theme) => ({
