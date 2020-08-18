@@ -21,7 +21,7 @@ test.each(TESTABLE_DEVICES)('Default textfield appears properly (focus) on %s', 
         device,
     });
 
-    page.click(await screen.findByLabelText('Normal field (opcional)'));
+    await page.click(await screen.findByLabelText('Normal field (opcional)'));
 
     const image = await page.screenshot({fullPage: true});
     expect(image).toMatchImageSnapshot();

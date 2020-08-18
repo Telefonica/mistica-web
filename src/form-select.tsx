@@ -331,7 +331,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
     }, [autoFocus]);
 
     const classes = useStyles({
-        label: label || optional,
+        label: label || (optional && !shouldUseNative),
         optionsComputedProps,
         animateShowOptions,
         helperText,

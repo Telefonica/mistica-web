@@ -254,17 +254,19 @@ export const openStoryPage = async ({
     name,
     device = TABLET_DEVICE,
     skin = 'Movistar',
+    userAgent,
 }: {
     section: string;
     name: string;
     device?: Device;
     skin?: Skin;
+    userAgent?: string;
 }): Promise<PageApi> => {
+    const currentUserAgent = userAgent || (await globalBrowser.userAgent());
     const page = globalPage;
-    const browser = globalBrowser;
     await page.bringToFront();
     await page.setViewport(DEVICES[device].viewport);
-    await page.setUserAgent(`${await browser.userAgent()} acceptance-test`);
+    await page.setUserAgent(`${currentUserAgent} acceptance-test`);
     await page.goto(buildStoryUrl(section, name, skin, DEVICES[device].platform));
 
     return createPageApi(page);
