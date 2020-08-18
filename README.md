@@ -114,3 +114,7 @@ Start prototyping interfaces with Mistica components in the
 
 - [Android (WIP)](https://github.com/Telefonica/mistica-android)
 - [iOS (WIP)](https://github.com/Telefonica/mistica-ios)
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md)
