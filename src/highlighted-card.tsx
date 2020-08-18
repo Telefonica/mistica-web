@@ -3,7 +3,6 @@ import {createUseStyles} from './jss';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import Box from './box';
 import Touchable from './touchable';
-import {ButtonPrimary, ButtonSecondary} from './button';
 import TextLink from './text-link';
 import IcnClose from './icons/icon-close';
 import {applyAlpha} from './utils/color';
@@ -11,6 +10,7 @@ import {useTheme} from './hooks';
 import Text from './text';
 
 import type {TrackingEvent} from './utils/types';
+import type {ButtonElement} from './button';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -84,7 +84,7 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose}) => {
     );
 };
 
-type CommonContentProps = {
+interface CommonProps {
     title: string;
     paragraph: string;
     imageUrl?: string;
@@ -92,33 +92,52 @@ type CommonContentProps = {
     backgroundImageUrl?: string;
     isInverse?: boolean;
     onClose?: () => void;
-    action?:
-        | React.ReactElement<typeof ButtonPrimary>
-        | React.ReactElement<typeof ButtonSecondary>
-        | React.ReactElement<typeof TextLink>
-        | null;
+    button?: ButtonElement | React.ReactElement<typeof TextLink> | null;
     trackingEvent?: TrackingEvent;
-};
+}
 
-const CommonContent: React.FC<CommonContentProps> = ({
-    title,
-    paragraph,
-    imageUrl,
-    imageBackgroundSize = 'cover',
-    backgroundImageUrl,
-    action,
-}) => {
+interface BasicProps extends CommonProps {
+    href?: undefined;
+    newTab?: undefined;
+    onPress?: undefined;
+    to?: undefined;
+}
+
+interface HrefProps extends CommonProps {
+    href?: string;
+    newTab?: boolean;
+    onPress?: undefined;
+    to?: undefined;
+}
+
+interface ToProps extends CommonProps {
+    to?: string;
+    fullPageOnWebView?: boolean;
+    href?: undefined;
+    onPress?: undefined;
+}
+interface OnPressProps extends CommonProps {
+    onPress?: () => void;
+    href?: undefined;
+    to?: undefined;
+}
+
+type Props = BasicProps | HrefProps | ToProps | OnPressProps;
+
+const Content: React.FC<Props> = (props) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
     const theme = useTheme();
+    const {title, paragraph, button, imageUrl, backgroundImageUrl, imageBackgroundSize} = props;
 
-    return (
+    const content = (
         <div className={classes.container} style={{backgroundImage: backgroundImageUrl}}>
             <Box paddingLeft={16} paddingRight={imageUrl ? 8 : 16} paddingY={24}>
                 <Text
                     size={18}
                     lineHeight={1.33}
                     color={isInverse ? theme.colors.textPrimaryInverse : theme.colors.textPrimary}
+                    weight="light"
                 >
                     {title}
                 </Text>
@@ -131,7 +150,7 @@ const CommonContent: React.FC<CommonContentProps> = ({
                         {paragraph}
                     </Text>
                 </Box>
-                {action && <Box paddingTop={16}>{action}</Box>}
+                {button && <Box paddingTop={16}>{button}</Box>}
             </Box>
             {imageUrl && (
                 <div
@@ -145,33 +164,8 @@ const CommonContent: React.FC<CommonContentProps> = ({
             )}
         </div>
     );
-};
 
-interface HrefProps extends CommonContentProps {
-    href?: string;
-    newTab?: boolean;
-    onPress?: undefined;
-    to?: undefined;
-}
-
-interface ToProps extends CommonContentProps {
-    to?: string;
-    fullPageOnWebView?: boolean;
-    href?: undefined;
-    onPress?: undefined;
-}
-interface OnPressProps extends CommonContentProps {
-    onPress?: () => void;
-    href?: undefined;
-    to?: undefined;
-}
-
-type Props = HrefProps | ToProps | OnPressProps;
-
-const Content: React.FC<Props> = (props) => {
-    const content = <CommonContent {...props} />;
-
-    if (props.action) {
+    if (button) {
         return content;
     }
     if (props.onPress) {
