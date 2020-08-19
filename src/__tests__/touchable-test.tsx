@@ -79,6 +79,41 @@ test('<Link> element is rendered when "to" prop is passed with tracking', async 
     expect(screen.getByText('Target route')).toBeInTheDocument();
 });
 
+test('<Link> element is rendered when "to" prop is passed with multiple tracking events', async () => {
+    const logEventSpy = jest.fn();
+
+    const to = '/to';
+
+    render(
+        <ThemeContextProvider theme={overrideTheme({analytics: {logEvent: logEventSpy}, Link})}>
+            <MemoryRouter initialEntries={['/']} initialIndex={0}>
+                <Switch>
+                    <Route
+                        exact
+                        path="/"
+                        render={() => (
+                            <Touchable to={to} trackingEvent={[trackingEvent, trackingEvent]}>
+                                Test
+                            </Touchable>
+                        )}
+                    />
+                    <Route path={to} component={() => <div>Target route</div>} />
+                </Switch>
+            </MemoryRouter>
+        </ThemeContextProvider>
+    );
+
+    const anchor = screen.getByRole('link', {name: 'Test'});
+
+    fireEvent.click(anchor);
+
+    await waitFor(() => {
+        expect(logEventSpy).toHaveBeenCalledTimes(2);
+    });
+    expect(logEventSpy.mock.calls).toEqual([[trackingEvent], [trackingEvent]]);
+    expect(screen.getByText('Target route')).toBeInTheDocument();
+});
+
 test('<a> element is rendered when "fullPageOnWebView" and "to" props are passed, inside App', () => {
     const href = 'href';
 
@@ -128,7 +163,7 @@ test('<a> element is rendered when "href" prop is passed', () => {
     expect(anchor).toHaveAttribute('href', href);
 });
 
-test('<a> element is rendered when "href" prop is passed and trackingEvents', async () => {
+test('<a> element is rendered when "href" prop is passed and trackingEvent', async () => {
     const href = 'href';
     const logEventSpy = jest.fn(() => Promise.resolve());
     const redirectSpy = jest.spyOn(window, 'open').mockImplementation(() => null);
@@ -149,6 +184,35 @@ test('<a> element is rendered when "href" prop is passed and trackingEvents', as
         expect(logEventSpy).toHaveBeenCalledTimes(1);
     });
     expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
+    expect(redirectSpy).toHaveBeenCalledTimes(1);
+});
+
+test('<a> element is rendered when "href" prop is passed and multiple trackingEvent', async () => {
+    const href = 'href';
+    const logEventSpy = jest.fn(() => Promise.resolve());
+    const redirectSpy = jest.spyOn(window, 'open').mockImplementation(() => null);
+
+    render(
+        <ThemeContextProvider theme={overrideTheme({analytics: {logEvent: logEventSpy}})}>
+            <Touchable
+                data-testid="touchable-events"
+                href={href}
+                newTab
+                trackingEvent={[trackingEvent, trackingEvent]}
+            >
+                Test
+            </Touchable>
+        </ThemeContextProvider>
+    );
+
+    const anchor = screen.getByTestId('touchable-events');
+    expect(anchor).toBeInTheDocument();
+    fireEvent.click(anchor);
+
+    await waitFor(() => {
+        expect(logEventSpy).toHaveBeenCalledTimes(2);
+    });
+    expect(logEventSpy.mock.calls).toEqual([[trackingEvent], [trackingEvent]]);
     expect(redirectSpy).toHaveBeenCalledTimes(1);
 });
 
@@ -180,6 +244,29 @@ test('<button> element is rendered when "onPress" prop is passed and trackingEve
         expect(logEventSpy).toHaveBeenCalledTimes(1);
     });
     expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
+    expect(onPressSpy).toHaveBeenCalledTimes(1);
+});
+
+test('<button> element is rendered when "onPress" prop is passed and multiple trackingEvent', async () => {
+    const onPressSpy = jest.fn().mockReturnValue(undefined);
+    const logEventSpy = jest.fn(() => Promise.resolve());
+    const {container} = render(
+        <ThemeContextProvider theme={overrideTheme({analytics: {logEvent: logEventSpy}})}>
+            <Touchable onPress={onPressSpy} trackingEvent={[trackingEvent, trackingEvent]}>
+                Test
+            </Touchable>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByText('Test')).toBeInTheDocument();
+    expect(container.querySelector('button')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByText('Test'));
+
+    await waitFor(() => {
+        expect(logEventSpy).toHaveBeenCalledTimes(2);
+    });
+    expect(logEventSpy.mock.calls).toEqual([[trackingEvent], [trackingEvent]]);
     expect(onPressSpy).toHaveBeenCalledTimes(1);
 });
 

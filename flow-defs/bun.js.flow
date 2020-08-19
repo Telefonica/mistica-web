@@ -10,7 +10,7 @@ import { type TrackingEvent } from "./utils/types";
 declare type BunProps = {
   children: React.Node,
   title: string,
-  trackingEvent?: TrackingEvent,
+  trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   action?:
     | {
         text: string,

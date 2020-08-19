@@ -13,7 +13,7 @@ declare type CommonProps = {
   style?: CssStyle,
   classes?: { [className: string]: string, ... },
   small?: boolean,
-  trackingEvent?: TrackingEvent,
+  trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   "data-testid"?: string
 };
 export type HrefProps = {

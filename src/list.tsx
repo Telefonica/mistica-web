@@ -302,7 +302,7 @@ interface HrefRowContentProps extends CommonProps {
     switch?: undefined;
     radioValue?: undefined;
 
-    trackingEvent?: TrackingEvent;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     href?: string;
     newTab?: boolean;
     onPress?: undefined;
@@ -315,7 +315,7 @@ interface ToRowContentProps extends CommonProps {
     switch?: undefined;
     radioValue?: undefined;
 
-    trackingEvent?: TrackingEvent;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     to?: string;
     fullPageOnWebView?: boolean;
     replace?: boolean;
@@ -329,7 +329,7 @@ interface OnPressRowContentProps extends CommonProps {
     switch?: undefined;
     radioValue?: undefined;
 
-    trackingEvent?: TrackingEvent;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     onPress?: () => void;
     href?: undefined;
     to?: undefined;
