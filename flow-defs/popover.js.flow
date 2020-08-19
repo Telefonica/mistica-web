@@ -16,7 +16,7 @@ declare type Props = {
   onClose?: () => void,
   position?: Position,
   width?: number,
-  trackingEvent?: TrackingEvent,
+  trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   isVisible?: boolean
 };
 declare var Popover: React.ComponentType<Props>;

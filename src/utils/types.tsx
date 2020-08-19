@@ -1,7 +1,7 @@
 export type TrackingEvent = {
-    [key: string]: unknown;
-    category: string;
-    action: string;
-    label?: string;
-    value?: number;
+    readonly [key: string]: unknown;
+    readonly category: string;
+    readonly action: string;
+    readonly label?: string;
+    readonly value?: number;
 };

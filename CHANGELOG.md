@@ -3,6 +3,7 @@
 ## Unreleased
 
 - New `HighlightedCard` component.
+- Support multiple tracking events
 
 ## v.5.1.0 - 2020-08-12
 
