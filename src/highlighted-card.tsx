@@ -8,6 +8,7 @@ import IcnClose from './icons/icon-close';
 import {applyAlpha} from './utils/color';
 import {useTheme} from './hooks';
 import Text from './text';
+import IconButton from './icon-button';
 
 import type {TrackingEvent} from './utils/types';
 import type {ButtonElement} from './button';
@@ -76,15 +77,16 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose}) => {
     return (
         <div className={classes.dismissableContainer}>
             {children}
-            <Touchable
+            <IconButton
                 className={classes.dismissableButton}
                 onPress={handleClose}
                 label={texts.closeButtonLabel}
+                style={{display: 'flex', width: 48, height: 48}}
             >
                 <div className={classes.dismissableCircleContainer}>
                     <IcnClose color={colors.iconPrimary} />
                 </div>
-            </Touchable>
+            </IconButton>
         </div>
     );
 };

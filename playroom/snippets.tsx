@@ -1,4 +1,4 @@
-import imagePlaceholder from './assets/image-placeholder.jpg';
+import {imagePlaceholder} from './assets';
 
 const buttonSnippets = ['ButtonPrimary', 'ButtonSecondary', 'ButtonDanger'].map((name) => ({
     group: 'Buttons',
