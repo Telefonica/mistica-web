@@ -31,8 +31,8 @@ test.each(devices)('Select elements on a selected state appear properly on %s', 
     });
 
     if (device === 'MOBILE_IOS') {
-        // @ts-expect-error Property 'select' does not exist on type 'PageApi'.
-        await page.select('select', 'apple');
+        const select = (await screen.findAllByRole('combobox'))[0];
+        await select.select('apple');
     } else {
         const select = await screen.findByLabelText('(opcional)');
         await select.click();

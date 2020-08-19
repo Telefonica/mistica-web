@@ -155,11 +155,12 @@ const buildStoryUrl = (section: string, name: string, skin?: string, platform?: 
 };
 
 export type PageApi = {
-    // Following methods are inherited from Puppeteer.Page, some are overridden
+    // Following methods are inherited from Puppeteer.Page:
 
     // These are overridden:
     type: (selector: ElementHandle, text: string, options?: {delay: number}) => Promise<void>;
     click: (selector: ElementHandle, options?: ClickOptions) => Promise<void>;
+    select: (selector: ElementHandle, ...values: string[]) => Promise<string[]>;
 
     // These are from prototype chain (inherited from Puppeteer.Page)
     screenshot: (options?: ScreenshotOptions) => ReturnType<Page['screenshot']>;
@@ -241,6 +242,7 @@ const createPageApi = (page: Page): PageApi => {
 
     api.type = async (selector, text, options) => selector.type(text, options);
     api.click = async (selector, options) => selector.click(options);
+    api.select = async (selector, ...values) => selector.select(...values);
     api.screenshot = async (options?: ScreenshotOptions) => {
         await waitForPaintEnd(page);
         return watermarkIfNeeded(page.screenshot(options));

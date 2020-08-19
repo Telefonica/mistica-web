@@ -47,7 +47,6 @@ const useStyles = createUseStyles((theme) => ({
         cursor: ({disabled}) => (disabled ? 'initial' : 'pointer'),
         '&': {
             appearance: 'none',
-            '::-ms-expand': 'none',
         },
     },
     arrowDown: {
