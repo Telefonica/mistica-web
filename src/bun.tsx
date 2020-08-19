@@ -58,7 +58,7 @@ const useStyles = createUseStyles((theme) => ({
 type BunProps = {
     children: React.ReactNode;
     title: string;
-    trackingEvent?: TrackingEvent;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     action?:
         | {
               text: string;
