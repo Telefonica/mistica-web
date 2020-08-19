@@ -60,26 +60,13 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose}) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
     const {colors, texts} = useTheme();
-    const [close, setClose] = React.useState(false);
-
-    const handleClose = () => {
-        if (onClose) {
-            onClose();
-        }
-
-        return setClose(true);
-    };
-
-    if (close) {
-        return null;
-    }
 
     return (
         <div className={classes.dismissableContainer}>
             {children}
             <IconButton
                 className={classes.dismissableButton}
-                onPress={handleClose}
+                onPress={() => onClose}
                 label={texts.closeButtonLabel}
                 style={{display: 'flex', width: 48, height: 48}}
             >
