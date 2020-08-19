@@ -60,7 +60,6 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose}) => {
     const classes = useStyles({isInverse});
     const {colors, texts} = useTheme();
     const [close, setClose] = React.useState(false);
-    const [isCardClosed, setIsCardClosed] = React.useEffect(false);
 
     const handleClose = () => {
         if (onClose) {
@@ -73,12 +72,6 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose}) => {
     if (close) {
         return null;
     }
-
-    if (isCardClosed) {
-        return somethingToRenderWhenClosed;
-    }
-
-    return <HighlightedCard title={title} description={description} onClose={() => setIsCardClosed(true)} />;
 
     return (
         <div className={classes.dismissableContainer}>
