@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseVariant} from './theme-variant-context';
 import Box from './box';
 import Touchable from './touchable';
 import TextLink from './text-link';
@@ -60,6 +60,8 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose}) => {
     const classes = useStyles({isInverse});
     const {colors, texts} = useTheme();
     const [close, setClose] = React.useState(false);
+    const [isCardClosed, setIsCardClosed] = React.useEffect(false);
+
     const handleClose = () => {
         if (onClose) {
             onClose();
@@ -71,6 +73,12 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose}) => {
     if (close) {
         return null;
     }
+
+    if (isCardClosed) {
+        return somethingToRenderWhenClosed;
+    }
+
+    return <HighlightedCard title={title} description={description} onClose={() => setIsCardClosed(true)} />;
 
     return (
         <div className={classes.dismissableContainer}>
@@ -86,14 +94,14 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose}) => {
 
 interface CommonProps {
     title: string;
-    paragraph: string;
+    description: string;
     imageUrl?: string;
-    imageBackgroundSize?: 'auto' | 'contain' | 'cover';
+    imageFit?: 'auto' | 'contain' | 'cover';
     backgroundImageUrl?: string;
     isInverse?: boolean;
     onClose?: () => void;
     button?: ButtonElement | React.ReactElement<typeof TextLink> | null;
-    trackingEvent?: TrackingEvent;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 }
 
 interface BasicProps extends CommonProps {
@@ -128,26 +136,17 @@ const Content: React.FC<Props> = (props) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
     const theme = useTheme();
-    const {title, paragraph, button, imageUrl, backgroundImageUrl, imageBackgroundSize} = props;
+    const {title, description, button, imageUrl, backgroundImageUrl, imageFit} = props;
 
     const content = (
         <div className={classes.container} style={{backgroundImage: backgroundImageUrl}}>
             <Box paddingLeft={16} paddingRight={imageUrl ? 8 : 16} paddingY={24}>
-                <Text
-                    size={18}
-                    lineHeight={1.33}
-                    color={isInverse ? theme.colors.textPrimaryInverse : theme.colors.textPrimary}
-                    weight="light"
-                >
+                <Text size={18} lineHeight={1.33} weight="light">
                     {title}
                 </Text>
                 <Box paddingTop={8}>
-                    <Text
-                        size={14}
-                        lineHeight={1.43}
-                        color={isInverse ? theme.colors.textPrimaryInverse : theme.colors.textSecondary}
-                    >
-                        {paragraph}
+                    <Text size={14} lineHeight={1.43} color={theme.colors.textSecondary}>
+                        {description}
                     </Text>
                 </Box>
                 {button && <Box paddingTop={16}>{button}</Box>}
@@ -157,7 +156,7 @@ const Content: React.FC<Props> = (props) => {
                     className={classes.imageContent}
                     style={{
                         background: `url(${imageUrl}) no-repeat`,
-                        backgroundSize: imageBackgroundSize,
+                        backgroundSize: imageFit,
                         backgroundPosition: 'center right',
                     }}
                 />
@@ -197,20 +196,12 @@ const Content: React.FC<Props> = (props) => {
     return content;
 };
 
-const HighlightedCard: React.FC<Props> = (props) => {
-    const isInverse = useIsInverseVariant();
-
-    return (
-        <ThemeVariant isInverse={isInverse}>
-            {props.onClose ? (
-                <Dismissable onClose={props.onClose}>
-                    <Content {...props} />
-                </Dismissable>
-            ) : (
-                <Content {...props} />
-            )}
-        </ThemeVariant>
+const HighlightedCard: React.FC<Props> = (props) =>
+    props.onClose ? (
+        <Dismissable onClose={props.onClose}>
+            <Content {...props} />
+        </Dismissable>
+    ) : (
+        <Content {...props} />
     );
-};
-
 export default HighlightedCard;

@@ -14,8 +14,8 @@ export default {
 
 export const Default: StoryComponent = () => {
     const [title, titleTextField] = useTextField('title', 'Resolver problema técnico', true);
-    const [paragraph, paragraphTextField] = useTextField(
-        'paragraph',
+    const [description, descriptionTextField] = useTextField(
+        'description',
         'Usa nuestra herramienta para resolver tus problemas técnicos',
         true
     );
@@ -29,7 +29,7 @@ export const Default: StoryComponent = () => {
         'TextLink',
         'None',
     ]);
-    const [imageBackgroundSize, imageBackgroundSizeSelect] = useSelect('Image background-size', 'cover', [
+    const [imageFit, imageFitSelect] = useSelect('Image fit background-size', 'cover', [
         'auto',
         'contain',
         'cover',
@@ -68,14 +68,14 @@ export const Default: StoryComponent = () => {
                     <p>Highlighted options:</p>
                 </Box>
                 {titleTextField}
-                {paragraphTextField}
+                {descriptionTextField}
                 {hrefTextField}
                 <span style={{fontSize: 12}}>
                     * This could be <b>to | href | onPress</b> prop. If any of these prop is set without an
                     action all card will be clickable.
                 </span>
                 {buttonSelect}
-                {imageBackgroundSizeSelect}
+                {imageFitSelect}
                 {imageCheckbox}
                 {inverseCheckbox}
                 {onCloseCheckbox}
@@ -85,10 +85,10 @@ export const Default: StoryComponent = () => {
                     <ThemeVariant isInverse={isInverse}>
                         <HighlightedCard
                             title={title}
-                            paragraph={paragraph}
+                            description={description}
                             isInverse={isInverse}
                             imageUrl={image ? imagePlaceholder : ''}
-                            imageBackgroundSize={imageBackgroundSize}
+                            imageFit={imageFit}
                             button={getButton(button)}
                             onClose={onClose ? () => {} : undefined}
                             href={href}
