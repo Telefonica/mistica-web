@@ -86,7 +86,6 @@ export const Default: StoryComponent = () => {
                         <HighlightedCard
                             title={title}
                             description={description}
-                            isInverse={isInverse}
                             imageUrl={image ? imagePlaceholder : ''}
                             imageFit={imageFit}
                             button={getButton(button)}

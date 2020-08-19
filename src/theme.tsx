@@ -114,6 +114,7 @@ const texts = {
     formCreditCardExpirationError: 'Fecha no válida',
     formCreditCardNumberError: 'No es un número de tarjeta valido',
     formEmailError: 'Email incorrecto',
+    closeButtonLabel: 'Cerrar',
 };
 
 const dimensions = {

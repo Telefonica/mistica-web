@@ -76,7 +76,11 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose}) => {
     return (
         <div className={classes.dismissableContainer}>
             {children}
-            <Touchable className={classes.dismissableButton} onPress={handleClose} label={texts.modalClose}>
+            <Touchable
+                className={classes.dismissableButton}
+                onPress={handleClose}
+                label={texts.closeButtonLabel}
+            >
                 <div className={classes.dismissableCircleContainer}>
                     <IcnClose color={colors.iconPrimary} />
                 </div>
@@ -91,7 +95,6 @@ interface CommonProps {
     imageUrl?: string;
     imageFit?: 'auto' | 'contain' | 'cover';
     backgroundImageUrl?: string;
-    isInverse?: boolean;
     onClose?: () => void;
     button?: ButtonElement | React.ReactElement<typeof TextLink> | null;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
@@ -197,4 +200,5 @@ const HighlightedCard: React.FC<Props> = (props) =>
     ) : (
         <Content {...props} />
     );
+
 export default HighlightedCard;

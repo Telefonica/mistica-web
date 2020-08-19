@@ -23,6 +23,7 @@ These are the customizable texts and their default values:
 - `formCreditCardExpirationError`: `'Fecha no válida'`
 - `formCreditCardNumberError`: `'No es un número de tarjeta valido'`
 - `formEmailError`: `'Email incorrecto'`
+- `closeButtonLabel`: `'Cerrar'`
 
 You can customize some (or all) of them in your page. For example:
 

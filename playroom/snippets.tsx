@@ -1,3 +1,5 @@
+import imagePlaceholder from './assets/image-placeholder.jpg';
+
 const buttonSnippets = ['ButtonPrimary', 'ButtonSecondary', 'ButtonDanger'].map((name) => ({
     group: 'Buttons',
     name,
@@ -377,9 +379,15 @@ export default [
         code: `
         <HighlightedCard
             title="Resolver problema técnico"
-            paragraph="Usa nuestra herramienta para resolver tus problemas técnicos"
-            image={<Placeholder height={100} />}
-            action={<TextLink href="whatever/url" small>ButtonLink</TextLink>}
+            description="Usa nuestra herramienta para resolver tus problemas técnicos"
+            imageUrl="${imagePlaceholder}"
+            imageFit="cover"
+            onClose={() => {}}
+            button={
+                <ButtonPrimary href="whatever/url" small>
+                    ButtonPrimary
+                </ButtonPrimary>
+            }
         />`,
     },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
