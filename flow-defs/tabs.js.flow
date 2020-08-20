@@ -12,7 +12,7 @@ export type TabsProps = {
   onChange: (selectedIndex: number) => void,
   tabs: $ReadOnlyArray<{
     +text: string,
-    +trackingEvent?: TrackingEvent,
+    +trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
     +icon?: React.Node,
     +"aria-controls"?: string
   }>

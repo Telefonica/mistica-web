@@ -87,6 +87,11 @@ const useStyles = createUseStyles((theme) => ({
         cursor: 'pointer',
         '&:hover': {
             background: theme.colors.backgroundAlternative,
+
+            // Revert hover background in touch devices
+            '@media (pointer: coarse)': {
+                background: 'initial',
+            },
         },
         '&:last-child $content': {
             borderBottom: 'none',
@@ -302,7 +307,7 @@ interface HrefRowContentProps extends CommonProps {
     switch?: undefined;
     radioValue?: undefined;
 
-    trackingEvent?: TrackingEvent;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     href?: string;
     newTab?: boolean;
     onPress?: undefined;
@@ -315,7 +320,7 @@ interface ToRowContentProps extends CommonProps {
     switch?: undefined;
     radioValue?: undefined;
 
-    trackingEvent?: TrackingEvent;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     to?: string;
     fullPageOnWebView?: boolean;
     replace?: boolean;
@@ -329,7 +334,7 @@ interface OnPressRowContentProps extends CommonProps {
     switch?: undefined;
     radioValue?: undefined;
 
-    trackingEvent?: TrackingEvent;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     onPress?: () => void;
     href?: undefined;
     to?: undefined;

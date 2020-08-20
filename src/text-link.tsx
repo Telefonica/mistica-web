@@ -14,6 +14,10 @@ const useStyles = createUseStyles((theme) => ({
         wordBreak: 'break-word',
         '&:hover': {
             textDecoration: 'underline',
+            // Revert hover effect in touch devices
+            '@media (pointer: coarse)': {
+                textDecoration: 'initial',
+            },
         },
     },
 
@@ -28,7 +32,7 @@ interface CommonProps {
     style?: React.CSSProperties;
     classes?: {[className: string]: string};
     small?: boolean;
-    trackingEvent?: TrackingEvent;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     'data-testid'?: string;
 }
 

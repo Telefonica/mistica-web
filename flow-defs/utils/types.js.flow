@@ -7,9 +7,9 @@
 
 export type TrackingEvent = {
  [key: string]: mixed,
- category: string,
- action: string,
- label?: string,
- value?: number,
+ +category: string,
+ +action: string,
+ +label?: string,
+ +value?: number,
  ...
 };

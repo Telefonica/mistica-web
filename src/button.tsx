@@ -253,7 +253,7 @@ interface CommonProps {
     showSpinner?: boolean;
     loadingText?: string;
     disabled?: boolean;
-    trackingEvent?: TrackingEvent;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     'data-testid'?: string;
     'aria-controls'?: string;
     'aria-expanded'?: 'true' | 'false';
@@ -441,7 +441,7 @@ const useButtonLinkStyles = createUseStyles((theme) => ({
 
 interface ButtonLinkCommonProps {
     children: React.ReactNode;
-    trackingEvent?: TrackingEvent;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     'data-testid'?: string;
 }
 interface ButtonLinkOnPressProps extends ButtonLinkCommonProps {

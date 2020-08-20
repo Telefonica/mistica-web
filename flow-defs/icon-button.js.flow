@@ -16,7 +16,7 @@ declare type CommonProps = {
   backgroundColor?: string,
   size?: number | string,
   style?: CssStyle,
-  trackingEvent?: TrackingEvent,
+  trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   "data-testid"?: string,
   newTab?: boolean
 };
