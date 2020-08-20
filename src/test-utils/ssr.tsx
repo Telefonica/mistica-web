@@ -103,16 +103,23 @@ export const createServer = async (): Promise<http.Server> => {
             return;
         }
 
-        let Component;
-        let componentFound = true;
-        try {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            Component = require('../__acceptance_tests__/__ssr_pages__/' + moduleName).default;
-        } catch (e) {
-            console.error(e);
-            componentFound = false;
-            Component = () => e.message;
+        if (moduleName.endsWith('.css') || moduleName.endsWith('.woff2')) {
+            fs.readFile(
+                path.join(__dirname, '..', '..', '.storybook', 'css', parsedUrl.path as string),
+                (err, data) => {
+                    if (err) {
+                        throw err;
+                    }
+                    res.writeHead(200);
+                    res.end(data);
+                }
+            );
+            return;
         }
+
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const Component = require('../__acceptance_tests__/__ssr_pages__/' + moduleName).default;
+
         const serverSideStyles = new ServerSideStyles();
 
         const renderedComponent = ReactDomServer.renderToString(
@@ -126,9 +133,9 @@ export const createServer = async (): Promise<http.Server> => {
         );
 
         const css = serverSideStyles.getStylesString();
-        const clientCode = componentFound
-            ? fs.readFileSync(path.join(__dirname, '..', '..', 'public', 'ssr', `${moduleName}.js`))
-            : '';
+        const clientCode = fs.readFileSync(
+            path.join(__dirname, '..', '..', 'public', 'ssr', `${moduleName}.js`)
+        );
 
         res.writeHead(200);
         res.end(`
@@ -137,6 +144,8 @@ export const createServer = async (): Promise<http.Server> => {
                 <head>
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,viewport-fit=cover">
+                    <link rel="stylesheet" href="main.css">
+                    <link rel="stylesheet" href="roboto.css">
                     <style id="server-side-styles">${css}</style>
                 </head>
                 <body>

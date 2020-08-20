@@ -1,6 +1,7 @@
 dist/
 dist-es/
 dist-ts/
+coverage/
 .directory
 .DS_Store
 .idea/
