@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## v.5.2.0 - 2020-08-20
 
 - Support multiple tracking events
 - New `FormSearchField` component
