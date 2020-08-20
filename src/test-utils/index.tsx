@@ -270,4 +270,44 @@ export const openStoryPage = async ({
     return createPageApi(page);
 };
 
+/**
+ * Renders a page with a React component in the server and opens it in the browser, where it's hydrated client side
+ * @param fileName it's the name (without extension) of a file in the __ssr_pages__ folder. This file exports
+ * the component to be rendered.
+ */
+export const openSSRPage = async (fileName: string): Promise<PageApi> => {
+    const page = globalPage;
+    const port = (global as any).__SSR_SERVER__.address().port;
+
+    // Capture browser console.error and console.warn calls that React could trigger when calling hydrate()
+    page.on('console', async (msg) => {
+        const type = msg.type();
+        const args = await Promise.all(msg.args().map((h) => h.jsonValue()));
+        if (type === 'error') {
+            console.error(...args);
+        }
+        if (type === 'warning') {
+            console.warn(...args);
+        }
+    });
+
+    await page.coverage.startJSCoverage();
+
+    await page.bringToFront();
+    await page.goto(`http://localhost:${port}/${fileName}`);
+
+    const jsCoverage = await page.coverage.stopJSCoverage();
+    let totalBytes = 0;
+    let usedBytes = 0;
+    for (const entry of jsCoverage) {
+        totalBytes += entry.text.length;
+        for (const range of entry.ranges) {
+            usedBytes += range.end - range.start - 1;
+        }
+    }
+    console.log(`Bytes used: ${(usedBytes / totalBytes) * 100}%`);
+
+    return createPageApi(page);
+};
+
 export const screen: Queries = buildQueryMethods();
