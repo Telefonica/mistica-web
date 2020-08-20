@@ -155,11 +155,12 @@ const buildStoryUrl = (section: string, name: string, skin?: string, platform?: 
 };
 
 export type PageApi = {
-    // Following methods are inherited from Puppeteer.Page, some are overridden
+    // Following methods are inherited from Puppeteer.Page:
 
     // These are overridden:
     type: (selector: ElementHandle, text: string, options?: {delay: number}) => Promise<void>;
     click: (selector: ElementHandle, options?: ClickOptions) => Promise<void>;
+    select: (selector: ElementHandle, ...values: string[]) => Promise<string[]>;
 
     // These are from prototype chain (inherited from Puppeteer.Page)
     screenshot: (options?: ScreenshotOptions) => ReturnType<Page['screenshot']>;
@@ -241,6 +242,7 @@ const createPageApi = (page: Page): PageApi => {
 
     api.type = async (selector, text, options) => selector.type(text, options);
     api.click = async (selector, options) => selector.click(options);
+    api.select = async (selector, ...values) => selector.select(...values);
     api.screenshot = async (options?: ScreenshotOptions) => {
         await waitForPaintEnd(page);
         return watermarkIfNeeded(page.screenshot(options));
@@ -254,17 +256,19 @@ export const openStoryPage = async ({
     name,
     device = TABLET_DEVICE,
     skin = 'Movistar',
+    userAgent,
 }: {
     section: string;
     name: string;
     device?: Device;
     skin?: Skin;
+    userAgent?: string;
 }): Promise<PageApi> => {
+    const currentUserAgent = userAgent || (await globalBrowser.userAgent());
     const page = globalPage;
-    const browser = globalBrowser;
     await page.bringToFront();
     await page.setViewport(DEVICES[device].viewport);
-    await page.setUserAgent(`${await browser.userAgent()} acceptance-test`);
+    await page.setUserAgent(`${currentUserAgent} acceptance-test`);
     await page.goto(buildStoryUrl(section, name, skin, DEVICES[device].platform));
 
     return createPageApi(page);

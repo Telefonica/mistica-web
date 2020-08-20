@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "5.1.0",
+    "version": "5.2.0",
     "license": "UNLICENSED",
     "main": "dist/index.js",
     "module": "dist-es/index.js",
@@ -29,7 +29,8 @@
         "gen-flow-defs": "node scripts/dts-to-flow && yarn flow check",
         "now-build": "yarn storybook-static && ./node_modules/.bin/playroom build && cp img/favicon.ico public/",
         "storybook-static": "rimraf public && yarn build-storybook -o public --quiet",
-        "up-chromium": "docker-compose up -d chromium"
+        "up-chromium": "docker-compose up -d chromium",
+        "down-chromium": "docker-compose stop chromium"
     },
     "browserslist": [
         "chrome >= 36",

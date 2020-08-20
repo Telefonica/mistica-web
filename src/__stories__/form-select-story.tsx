@@ -19,8 +19,8 @@ export const Default: StoryComponent = () => {
                 value={value}
                 onChangeValue={setValue}
                 helperText="Helper Text"
-                label="Select a fruit"
                 options={fruitOptions}
+                optional
             />
 
             <FormSelect
