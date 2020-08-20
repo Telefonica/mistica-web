@@ -1,5 +1,7 @@
 import {openStoryPage, screen} from '../test-utils';
+
 import type {Device} from '../test-utils';
+import type {ElementHandle} from 'puppeteer';
 
 const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
@@ -52,4 +54,25 @@ test.each(TESTABLE_DEVICES)('Default textfield appears properly (typing and blur
 
     const image = await page.screenshot({fullPage: true});
     expect(image).toMatchImageSnapshot();
+});
+
+const screenshotField = async (element: ElementHandle) => {
+    const parentElement = (await element.$x('..'))[0];
+    return parentElement.screenshot();
+};
+
+test('Search text field', async () => {
+    const page = await openStoryPage({
+        section: 'Components|Forms/FormFields',
+        name: 'Types (controlled)',
+    });
+
+    const field = await screen.findByLabelText('Search');
+
+    const emptyScreenshot = await screenshotField(field);
+    expect(emptyScreenshot).toMatchImageSnapshot();
+
+    await page.type(field, 'hello moto', {delay: 100});
+    const filledScreenshot = await screenshotField(field);
+    expect(filledScreenshot).toMatchImageSnapshot();
 });

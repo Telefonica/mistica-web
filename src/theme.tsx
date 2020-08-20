@@ -113,6 +113,7 @@ const texts = {
     formCreditCardExpirationError: 'Fecha no válida',
     formCreditCardNumberError: 'No es un número de tarjeta valido',
     formEmailError: 'Email incorrecto',
+    formSearchClear: 'Borrar búsqueda',
 };
 
 const dimensions = {

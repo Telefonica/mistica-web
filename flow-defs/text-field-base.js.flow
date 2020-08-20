@@ -67,6 +67,7 @@ declare type TextFieldBaseProps = {
   name?: string,
   maxLength?: number,
   prefix?: React.Node,
+  startIcon?: React.Node,
   endIcon?: React.Node,
   style?: CssStyle,
   value?: string,

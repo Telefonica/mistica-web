@@ -9,6 +9,7 @@ import {
     FormCreditCardExpirationField,
     FormCvvField,
     FormTextField,
+    FormSearchField,
     FormPasswordField,
     FormDateField,
     FormPhoneNumberField,
@@ -318,6 +319,17 @@ export const TypesUncontrolled: StoryComponent = () => (
                 />
             )}
         </Uncontrolled>
+
+        <Uncontrolled title="FormSearchField">
+            {(handleChange, handleChangeValue) => (
+                <FormSearchField
+                    name="search"
+                    label="Search"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Uncontrolled>
     </>
 );
 
@@ -485,6 +497,33 @@ export const TypesControlled = (): React.ReactNode => (
                     prefix="+34"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
+                />
+            )}
+        </Controlled>
+
+        <Controlled title="FormSearchField" initialValue="">
+            {(handleChange, handleChangeValue, value) => (
+                <FormSearchField
+                    name="search"
+                    label="Search"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                    value={value}
+                />
+            )}
+        </Controlled>
+
+        <Controlled title="FormSearchField with suggestions" initialValue="">
+            {(handleChange, handleChangeValue, value) => (
+                <FormSearchField
+                    autoComplete="off"
+                    name="searchCountry"
+                    label="Search country"
+                    placeholder="Country name (start with 'A')"
+                    value={value}
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                    getSuggestions={getCountrySuggestions}
                 />
             )}
         </Controlled>
