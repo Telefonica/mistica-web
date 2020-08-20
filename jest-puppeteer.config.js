@@ -1,5 +1,8 @@
 const fetch = require('node-fetch');
 const execSync = require('child_process').execSync;
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
 
 const poll = async (url, attempt = 0) => {
     try {
@@ -24,8 +27,16 @@ const getConfig = async () => {
     const needsChromiumDocker =
         process.platform !== 'linux' && process.env.SCREENSHOT && process.env.HEADLESS;
     if (needsChromiumDocker) {
-        execSync('yarn up-chromium', {stdio: 'inherit', cwd: __dirname});
-        await poll('http://localhost:9223');
+        const dockerChromiumUrl = 'http://localhost:9223';
+        try {
+            await fetch(dockerChromiumUrl);
+        } catch (e) {
+            execSync('yarn up-chromium', {stdio: 'inherit', cwd: __dirname});
+            await poll(dockerChromiumUrl);
+            const DIR = path.join(os.tmpdir(), 'jest_puppeteer_setup');
+            fs.mkdirSync(DIR, {recursive: true});
+            fs.writeFileSync(path.join(DIR, 'killDocker'), '');
+        }
     }
 
     try {
