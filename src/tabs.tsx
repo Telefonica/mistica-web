@@ -94,7 +94,7 @@ export type TabsProps = {
     onChange: (selectedIndex: number) => void;
     tabs: ReadonlyArray<{
         readonly text: string;
-        readonly trackingEvent?: TrackingEvent;
+        readonly trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
         readonly icon?: React.ReactNode;
         readonly 'aria-controls'?: string;
     }>;

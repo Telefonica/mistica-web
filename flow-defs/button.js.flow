@@ -17,7 +17,7 @@ declare type CommonProps = {
   showSpinner?: boolean,
   loadingText?: string,
   disabled?: boolean,
-  trackingEvent?: TrackingEvent,
+  trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   "data-testid"?: string,
   "aria-controls"?: string,
   "aria-expanded"?: "true" | "false",
@@ -78,7 +78,7 @@ export type ButtonProps =
   | HrefButtonProps;
 declare type ButtonLinkCommonProps = {
   children: React.Node,
-  trackingEvent?: TrackingEvent,
+  trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   "data-testid"?: string
 };
 declare type ButtonLinkOnPressProps = {

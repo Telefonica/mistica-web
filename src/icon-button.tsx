@@ -38,7 +38,7 @@ interface CommonProps {
     backgroundColor?: string;
     size?: number | string;
     style?: React.CSSProperties;
-    trackingEvent?: TrackingEvent;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     'data-testid'?: string;
     newTab?: boolean;
 }

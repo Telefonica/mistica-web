@@ -32,7 +32,7 @@ interface CommonProps {
     style?: React.CSSProperties;
     classes?: {[className: string]: string};
     small?: boolean;
-    trackingEvent?: TrackingEvent;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     'data-testid'?: string;
 }
 
