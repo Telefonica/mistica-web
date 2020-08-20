@@ -44,7 +44,7 @@ const createWebpackEntries = (): {[entryName: string]: string} => {
     return entries;
 };
 
-const compileClient = () => {
+export const compileSsrClient = (): Promise<webpack.Stats> => {
     const entries = createWebpackEntries();
     const webpackConfig: webpack.Configuration = {
         mode: 'development',
@@ -72,7 +72,7 @@ const compileClient = () => {
         },
     };
 
-    const stats = new Promise((resolve, reject) => {
+    const stats = new Promise<webpack.Stats>((resolve, reject) => {
         const compiler = webpack(webpackConfig);
         compiler.run((err, stats) => {
             if (err || stats.hasErrors()) {
@@ -90,9 +90,7 @@ const compileClient = () => {
     return stats;
 };
 
-export const createServer = async (): Promise<http.Server> => {
-    await compileClient();
-
+export const createServer = (): http.Server => {
     const server = http.createServer((req, res) => {
         const parsedUrl = url.parse(req.url || '');
         const pathParts = (parsedUrl.path || '').split('/');

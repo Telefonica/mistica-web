@@ -12,8 +12,8 @@ const argv = process.execArgv.join();
 const isDebug = argv.includes('inspect') || argv.includes('debug');
 jest.setTimeout(isDebug ? 3600000 : 30000);
 
-beforeAll(async () => {
-    (global as any).__SSR_SERVER__ = await createServer();
+beforeAll(() => {
+    (global as any).__SSR_SERVER__ = createServer();
     (global as any).__SSR_SERVER__.listen(0); // use any free port
 });
 

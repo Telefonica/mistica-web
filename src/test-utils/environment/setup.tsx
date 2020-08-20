@@ -1,6 +1,7 @@
 import puppeteerSetup from 'jest-environment-puppeteer/setup';
 import {join} from 'path';
 import StaticServer from 'static-server';
+import {compileSsrClient} from '../ssr';
 
 export default async (jestConfig: any = {}): Promise<void> => {
     if (process.argv.includes('--ci')) {
@@ -15,5 +16,10 @@ export default async (jestConfig: any = {}): Promise<void> => {
             console.log('Storybook server ready');
         });
     }
+
+    const startTime = Date.now();
+    await compileSsrClient();
+    console.log('\nTime to compile ssr client bundles:', ((Date.now() - startTime) / 1000).toFixed(2) + 's');
+
     await puppeteerSetup(jestConfig);
 };
