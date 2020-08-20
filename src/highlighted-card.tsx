@@ -85,46 +85,51 @@ interface CommonProps {
     imageFit?: 'auto' | 'contain' | 'cover';
     backgroundImageUrl?: string;
     onClose?: () => void;
-    button?: ButtonElement | React.ReactElement<typeof TextLink> | null;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
 }
-
 interface BasicProps extends CommonProps {
-    href?: undefined;
-    newTab?: undefined;
+    button?: undefined;
     onPress?: undefined;
     to?: undefined;
+    href?: undefined;
 }
-
+interface ButtonProps extends CommonProps {
+    button?: ButtonElement | React.ReactElement<typeof TextLink> | null;
+    onPress?: undefined;
+    to?: undefined;
+    href?: undefined;
+}
 interface HrefProps extends CommonProps {
     href?: string;
     newTab?: boolean;
     onPress?: undefined;
     to?: undefined;
+    button?: undefined;
 }
-
 interface ToProps extends CommonProps {
     to?: string;
     fullPageOnWebView?: boolean;
     href?: undefined;
     onPress?: undefined;
+    button?: undefined;
 }
 interface OnPressProps extends CommonProps {
     onPress?: () => void;
     href?: undefined;
     to?: undefined;
+    button?: undefined;
 }
 
-type Props = BasicProps | HrefProps | ToProps | OnPressProps;
+type Props = BasicProps | ButtonProps | HrefProps | ToProps | OnPressProps;
 
 const Content: React.FC<Props> = (props) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
     const theme = useTheme();
-    const {title, description, button, imageUrl, backgroundImageUrl, imageFit} = props;
+    const {title, description, imageUrl, imageFit} = props;
 
     const content = (
-        <div className={classes.container} style={{backgroundImage: backgroundImageUrl}}>
+        <div className={classes.container}>
             <Box paddingLeft={16} paddingRight={imageUrl ? 8 : 16} paddingY={24}>
                 <Text size={18} lineHeight={1.33} weight="light">
                     {title}
@@ -134,7 +139,7 @@ const Content: React.FC<Props> = (props) => {
                         {description}
                     </Text>
                 </Box>
-                {button && <Box paddingTop={16}>{button}</Box>}
+                {props.button && <Box paddingTop={16}>{props.button}</Box>}
             </Box>
             {imageUrl && (
                 <div
@@ -149,7 +154,7 @@ const Content: React.FC<Props> = (props) => {
         </div>
     );
 
-    if (button) {
+    if (props.button) {
         return content;
     }
     if (props.onPress) {

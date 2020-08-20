@@ -27,7 +27,6 @@ export const Default: StoryComponent = () => {
         'ButtonPrimary',
         'ButtonSecondary',
         'TextLink',
-        'None',
     ]);
     const [imageFit, imageFitSelect] = useSelect('Image fit background-size', 'cover', [
         'auto',
@@ -61,6 +60,14 @@ export const Default: StoryComponent = () => {
         }
     };
 
+    const commonProps = {
+        title,
+        description,
+        imageUrl: image ? imagePlaceholder : '',
+        imageFit: imageFit as any,
+        onClose: onClose ? () => {} : undefined,
+    };
+
     return (
         <>
             <Stack space={16}>
@@ -71,8 +78,8 @@ export const Default: StoryComponent = () => {
                 {descriptionTextField}
                 {hrefTextField}
                 <span style={{fontSize: 12}}>
-                    * This could be <b>to | href | onPress</b> prop. If any of these prop is set without an
-                    action all card will be clickable.
+                    * This could be <b>to | href | onPress</b> prop. If it's empty the card will be not
+                    touchable.
                 </span>
                 {buttonSelect}
                 {imageFitSelect}
@@ -81,17 +88,14 @@ export const Default: StoryComponent = () => {
                 {onCloseCheckbox}
             </Stack>
             <div data-testid="highlighted-card">
-                <StorySection title="HighlightedCard">
+                <StorySection title="HighlightedCard - With button">
                     <ThemeVariant isInverse={isInverse}>
-                        <HighlightedCard
-                            title={title}
-                            description={description}
-                            imageUrl={image ? imagePlaceholder : ''}
-                            imageFit={imageFit}
-                            button={getButton(button)}
-                            onClose={onClose ? () => {} : undefined}
-                            href={href}
-                        />
+                        <HighlightedCard {...commonProps} button={getButton(button)} />
+                    </ThemeVariant>
+                </StorySection>
+                <StorySection title="HighlightedCard - Fully touchable card">
+                    <ThemeVariant isInverse={isInverse}>
+                        <HighlightedCard {...commonProps} href={href} />
                     </ThemeVariant>
                 </StorySection>
             </div>
