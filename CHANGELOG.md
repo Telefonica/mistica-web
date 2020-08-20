@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Support multiple tracking events
+- `TextLink` and `ListRow`: disable wrong `:hover` styles in touch devices.
 
 ## v.5.1.0 - 2020-08-12
 
