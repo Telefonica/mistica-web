@@ -115,6 +115,7 @@ const texts = {
     formCreditCardNumberError: 'No es un número de tarjeta valido',
     formEmailError: 'Email incorrecto',
     closeButtonLabel: 'Cerrar',
+    formSearchClear: 'Borrar búsqueda',
 };
 
 const dimensions = {

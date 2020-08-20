@@ -14,6 +14,10 @@ const useStyles = createUseStyles((theme) => ({
         wordBreak: 'break-word',
         '&:hover': {
             textDecoration: 'underline',
+            // Revert hover effect in touch devices
+            '@media (pointer: coarse)': {
+                textDecoration: 'initial',
+            },
         },
     },
     small: {

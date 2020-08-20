@@ -9,7 +9,7 @@ type Props = {
     color?: string;
 };
 
-const IcnClose: React.FC<Props> = ({role = 'presentation', size = ICON_SIZE_1, color}) => {
+const IconClose: React.FC<Props> = ({role = 'presentation', size = ICON_SIZE_1, color}) => {
     const {colors} = useTheme();
     const fillColor = color || colors.iconPrimary;
     return (
@@ -23,4 +23,4 @@ const IcnClose: React.FC<Props> = ({role = 'presentation', size = ICON_SIZE_1, c
     );
 };
 
-export default IcnClose;
+export default IconClose;
