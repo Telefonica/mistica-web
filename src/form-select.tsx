@@ -44,10 +44,8 @@ const useStyles = createUseStyles((theme) => ({
         '&:disabled': {
             color: theme.colors.border,
         },
+        appearance: 'none',
         cursor: ({disabled}) => (disabled ? 'initial' : 'pointer'),
-        '&': {
-            appearance: 'none',
-        },
     },
     arrowDown: {
         position: 'absolute',
