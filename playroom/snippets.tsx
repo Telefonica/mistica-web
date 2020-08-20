@@ -26,6 +26,7 @@ const formSnippets = [
         '<FormCreditCardExpirationField name="expiration-date" label="Expiration date"/>',
     ],
     ['FormCvvField', '<FormCvvField name="cvv" label="CVV"/>'],
+    ['FormSearchField', '<FormSearchField name="search" label="Search"/>'],
     [
         'Form',
         `

@@ -46,18 +46,27 @@ type LabelProps = {
     error?: boolean;
     children: string;
     disabled?: boolean;
+    style?: React.CSSProperties;
 };
 
-export const Label: React.FC<LabelProps> = ({shrinkLabel, forId, inputState, error, children, disabled}) => {
+export const Label: React.FC<LabelProps> = ({
+    shrinkLabel,
+    forId,
+    inputState,
+    error,
+    children,
+    disabled,
+    style,
+}) => {
     const classes = useLabelStyles({shrinkLabel, inputState, error, disabled});
-    const [style, setStyle] = React.useState({});
+    const [transitionStyle, setTransitionStyle] = React.useState('');
 
     // This way we prevent animation when field is filled as initial state
     React.useEffect(() => {
         const tid = setTimeout(() => {
             // Check environment or we will get a warning if this gets executed outside @testing-library/act
             if (process.env.NODE_ENV !== 'test') {
-                setStyle({transition: 'transform 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms'});
+                setTransitionStyle('transform 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms');
             }
         });
         return () => {
@@ -66,7 +75,7 @@ export const Label: React.FC<LabelProps> = ({shrinkLabel, forId, inputState, err
     }, []);
 
     return (
-        <label className={classes.label} htmlFor={forId} style={style}>
+        <label className={classes.label} htmlFor={forId} style={{...style, transition: transitionStyle}}>
             {children}
         </label>
     );

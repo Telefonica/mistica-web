@@ -71,6 +71,7 @@ interface TextFieldBaseProps {
     name?: string;
     maxLength?: number;
     prefix?: React.ReactNode;
+    startIcon?: React.ReactNode;
     endIcon?: React.ReactNode;
     style?: React.CSSProperties;
     value?: string;
@@ -98,7 +99,15 @@ const commonInputStyles = (theme: Theme) => ({
     outline: 0,
     fontSize: 16,
     paddingRight: ({endIcon}: {endIcon: boolean}) => (endIcon ? 0 : 16),
-    paddingLeft: ({prefix}: {prefix: boolean}) => (prefix ? 0 : 12),
+    paddingLeft: ({prefix, startIcon}: {prefix: boolean; startIcon: boolean}) => {
+        if (prefix) {
+            return 0;
+        }
+        if (startIcon) {
+            return 48;
+        }
+        return 12;
+    },
     /* Workaround to avoid huge bullets on ios devices (-apple-system font related) */
     fontFamily: ({type}: {type: string}) =>
         type === 'password' && isIos() && !isRunningAcceptanceTest() ? 'arial' : 'inherit',
@@ -123,6 +132,7 @@ const commonInputStyles = (theme: Theme) => ({
     '&::-webkit-calendar-picker-indicator': {
         marginTop: ({label}: {label: string}) => (label ? -12 : 'initial'),
     },
+    boxShadow: 'none', // reset FF red shadow styles for required inputs
 });
 
 const useStyles = createUseStyles((theme) => ({
@@ -149,12 +159,28 @@ const useStyles = createUseStyles((theme) => ({
         paddingBottom: ({label}) => (label ? 8 : 16),
         height: '100%',
         ...commonInputStyles(theme),
+        WebkitAppearance: 'none',
+        '&::-webkit-search-cancel-button': {
+            WebkitAppearance: 'none',
+        },
+        '&::-webkit-search-decoration': {
+            WebkitAppearance: 'none',
+        },
     },
     endIcon: {
         paddingLeft: 16,
         paddingRight: 16,
         display: 'flex',
         alignItems: 'center',
+    },
+    startIcon: {
+        pointerEvents: 'none', // passthrough click events to the input
+        paddingLeft: 12,
+        paddingRight: 12,
+        display: 'flex',
+        alignItems: 'center',
+        height: '100%',
+        position: 'absolute',
     },
     prefix: {
         paddingTop: ({label}) => (label ? 25 : 16),
@@ -198,6 +224,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             onBlur,
             inputComponent,
             prefix,
+            startIcon,
             endIcon,
             shrinkLabel,
             multiline = false,
@@ -226,6 +253,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             inputState,
             error,
             endIcon,
+            startIcon,
             shrinkLabel,
             label,
             prefix,
@@ -288,6 +316,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                 fullWidth={fullWidth}
                 fieldRef={fieldRef}
             >
+                {startIcon && <div className={classes.startIcon}>{startIcon}</div>}
                 {prefix && <div className={classes.prefix}>{prefix}</div>}
                 {React.createElement(inputComponent || defaultInputElement, {
                     ...inputRefProps,
@@ -322,6 +351,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                 })}
                 {label && (
                     <Label
+                        style={startIcon ? {marginLeft: 48, left: 0} : {}}
                         error={error}
                         forId={id}
                         inputState={inputState}
@@ -411,6 +441,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(({getSuggestions
                         inputRef={(refValue) => {
                             updateRef(inputRef, refValue);
                             updateRef(props.inputRef, refValue);
+                            updateRef(ref, refValue);
                         }}
                     />
                 )}
