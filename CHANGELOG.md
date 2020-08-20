@@ -5,6 +5,11 @@
 - Support multiple tracking events
 - New `FormSearchField` component
 - `TextLink` and `ListRow`: disable wrong `:hover` styles in touch devices.
+- Fixed several `FormSelect` bugs:
+  - Bad spacing when label is empty.
+  - Native caret being shown when rendered as a native component.
+  - Caret being mispositioned on firefox.
+- **Internal**: Kill docker container after running acceptance tests.
 
 ## v.5.1.0 - 2020-08-12
 
