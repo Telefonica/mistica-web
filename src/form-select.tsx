@@ -30,6 +30,8 @@ const useStyles = createUseStyles((theme) => ({
         },
     },
     select: {
+        fontFamily: 'inherit',
+        backgroundColor: 'white',
         paddingTop: ({label}) => (label ? 24 : 16),
         paddingBottom: ({label}) => (label ? 8 : 16),
         paddingRight: 0,
