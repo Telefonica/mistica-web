@@ -7,7 +7,6 @@ import {
     FormEmailField,
     ButtonLayout,
     ButtonPrimary,
-    FormSelect,
     FormPhoneNumberField,
     FormCreditCardFields,
     FormDateField,
