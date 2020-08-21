@@ -30,6 +30,8 @@ const useStyles = createUseStyles((theme) => ({
         },
     },
     select: {
+        fontFamily: 'inherit',
+        backgroundColor: 'white',
         paddingTop: ({label}) => (label ? 24 : 16),
         paddingBottom: ({label}) => (label ? 8 : 16),
         paddingRight: 0,
@@ -44,6 +46,7 @@ const useStyles = createUseStyles((theme) => ({
         '&:disabled': {
             color: theme.colors.border,
         },
+        appearance: 'none',
         cursor: ({disabled}) => (disabled ? 'initial' : 'pointer'),
     },
     arrowDown: {
@@ -327,7 +330,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
     }, [autoFocus]);
 
     const classes = useStyles({
-        label,
+        label: label || (optional && !shouldUseNative),
         optionsComputedProps,
         animateShowOptions,
         helperText,
