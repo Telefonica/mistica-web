@@ -2,4 +2,5 @@ body {
     font-family: -apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif;
     line-height: 1;
     margin: 0;
+    -webkit-font-smoothing: antialiased;
 }

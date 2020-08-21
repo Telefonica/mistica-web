@@ -339,7 +339,10 @@ const ModalDialog = (props: ModalDialogProps) => {
                                 className={classnames(classes.modalContent, {closed: isClosing})}
                             >
                                 <div className={classes.modalCloseButtonContainer}>
-                                    <IconButton onPress={handleClose} label={context.texts.modalClose}>
+                                    <IconButton
+                                        onPress={handleClose}
+                                        label={context.texts.modalClose ?? context.texts.closeButtonLabel}
+                                    >
                                         <IcnClose color={context.colors.iconPrimary} />
                                     </IconButton>
                                 </div>
