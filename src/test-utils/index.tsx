@@ -295,6 +295,9 @@ export const openSSRPage = async ({
     page.on('console', async (msg) => {
         const type = msg.type();
         const args = await Promise.all(msg.args().map((h) => h.jsonValue()));
+        if (args.length === 0) {
+            args.push(msg.text());
+        }
         if (type === 'error') {
             console.error(...args);
         }
@@ -303,22 +306,8 @@ export const openSSRPage = async ({
         }
     });
 
-    await page.coverage.startJSCoverage();
-
     const url = `http://localhost:${port}/${name}?skin=${skin}`;
-
     const pageApi = await openPage({url, device});
-
-    const jsCoverage = await page.coverage.stopJSCoverage();
-    let totalBytes = 0;
-    let usedBytes = 0;
-    for (const entry of jsCoverage) {
-        totalBytes += entry.text.length;
-        for (const range of entry.ranges) {
-            usedBytes += range.end - range.start - 1;
-        }
-    }
-    console.log(`Bytes used: ${(usedBytes / totalBytes) * 100}%`);
 
     return pageApi;
 };

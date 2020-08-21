@@ -1,5 +1,5 @@
 import {openSSRPage} from '../test-utils';
 
-test('ssr', async () => {
+test('ssr button', async () => {
     await openSSRPage({name: 'button'});
 });
