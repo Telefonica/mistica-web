@@ -249,7 +249,18 @@ const createPageApi = (page: Page): PageApi => {
     return api;
 };
 
-export const openStoryPage = async ({
+const openPage = async ({url, device}: {url: string; device: Device}) => {
+    const page = globalPage;
+    const browser = globalBrowser;
+    await page.bringToFront();
+    await page.setViewport(DEVICES[device].viewport);
+    await page.setUserAgent(`${await browser.userAgent()} acceptance-test`);
+    await page.goto(url);
+
+    return createPageApi(page);
+};
+
+export const openStoryPage = ({
     section,
     name,
     device = TABLET_DEVICE,
@@ -260,22 +271,23 @@ export const openStoryPage = async ({
     device?: Device;
     skin?: Skin;
 }): Promise<PageApi> => {
-    const page = globalPage;
-    const browser = globalBrowser;
-    await page.bringToFront();
-    await page.setViewport(DEVICES[device].viewport);
-    await page.setUserAgent(`${await browser.userAgent()} acceptance-test`);
-    await page.goto(buildStoryUrl(section, name, skin, DEVICES[device].platform));
-
-    return createPageApi(page);
+    const url = buildStoryUrl(section, name, skin, DEVICES[device].platform);
+    return openPage({url, device});
 };
 
 /**
- * Renders a page with a React component in the server and opens it in the browser, where it's hydrated client side
- * @param fileName it's the name (without extension) of a file in the __ssr_pages__ folder. This file exports
- * the component to be rendered.
+ * Renders a page with a React component in the server and opens it in the browser, where it's hydrated client side.
+ * `name` is the name (without extension) of a file in the __ssr_pages__ folder. This file exports the component to be rendered.
  */
-export const openSSRPage = async (fileName: string): Promise<PageApi> => {
+export const openSSRPage = async ({
+    name,
+    device = TABLET_DEVICE,
+    skin = 'Movistar',
+}: {
+    name: string;
+    device?: Device;
+    skin?: Skin;
+}): Promise<PageApi> => {
     const page = globalPage;
     const port = (global as any).__SSR_SERVER__.address().port;
 
@@ -293,8 +305,9 @@ export const openSSRPage = async (fileName: string): Promise<PageApi> => {
 
     await page.coverage.startJSCoverage();
 
-    await page.bringToFront();
-    await page.goto(`http://localhost:${port}/${fileName}`);
+    const url = `http://localhost:${port}/${name}?skin=${skin}`;
+
+    const pageApi = await openPage({url, device});
 
     const jsCoverage = await page.coverage.stopJSCoverage();
     let totalBytes = 0;
@@ -307,7 +320,7 @@ export const openSSRPage = async (fileName: string): Promise<PageApi> => {
     }
     console.log(`Bytes used: ${(usedBytes / totalBytes) * 100}%`);
 
-    return createPageApi(page);
+    return pageApi;
 };
 
 export const screen: Queries = buildQueryMethods();

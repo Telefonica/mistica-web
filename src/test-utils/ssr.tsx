@@ -5,7 +5,7 @@ import path from 'path';
 import webpack from 'webpack';
 import http from 'http';
 import fs from 'fs';
-import {ThemeContextProvider, ServerSideStyles} from '..';
+import {ThemeContextProvider, ServerSideStyles, Skin} from '..';
 
 const createWebpackEntries = (): {[entryName: string]: string} => {
     const entries: {[entryName: string]: string} = {};
@@ -25,12 +25,14 @@ const createWebpackEntries = (): {[entryName: string]: string} => {
             `
             import * as React from 'react';
             import ReactDOM from 'react-dom';
-            import Component from '../__acceptance_tests__/__ssr_pages__/${moduleName}'
-            import {ThemeContextProvider} from '..'
+            import Component from '../__acceptance_tests__/__ssr_pages__/${moduleName}';
+            import {ThemeContextProvider} from '..';
+
+            const skin = new URL(location).searchParams.get('skin');
 
             ReactDOM.hydrate(
                 <ThemeContextProvider
-                    theme={{skin: 'Movistar', i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}}}
+                    theme={{skin: skin || 'Movistar', i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}}}
                 >
                     <Component />
                 </ThemeContextProvider>,
@@ -92,8 +94,8 @@ export const compileSsrClient = (): Promise<webpack.Stats> => {
 
 export const createServer = (): http.Server => {
     const server = http.createServer((req, res) => {
-        const parsedUrl = url.parse(req.url || '');
-        const pathParts = (parsedUrl.path || '').split('/');
+        const parsedUrl = url.parse(req.url || '', true);
+        const pathParts = (parsedUrl.pathname || '').split('/');
         const moduleName = pathParts[pathParts.length - 1];
 
         if (moduleName === 'favicon.ico') {
@@ -123,7 +125,10 @@ export const createServer = (): http.Server => {
         const renderedComponent = ReactDomServer.renderToString(
             serverSideStyles.render(
                 <ThemeContextProvider
-                    theme={{skin: 'Movistar', i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}}}
+                    theme={{
+                        skin: (parsedUrl.query.skin as Skin) || 'Movistar',
+                        i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+                    }}
                 >
                     <Component />
                 </ThemeContextProvider>
