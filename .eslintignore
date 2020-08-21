@@ -1,6 +1,7 @@
 flow-typed/
 dist/
 dist-es/
+coverage/
 node_modules/
 storybook-static/
 public/
