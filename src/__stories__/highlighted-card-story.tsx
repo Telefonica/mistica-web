@@ -65,7 +65,7 @@ export const Default: StoryComponent = () => {
         description,
         imageUrl: image ? imagePlaceholder : '',
         imageFit: imageFit as any,
-        onClose: onClose ? () => {} : undefined,
+        onClose: onClose ? () => alert('Close pressed') : undefined,
     };
 
     return (

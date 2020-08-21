@@ -56,7 +56,7 @@ type DismissableProps = {
     onClose?: () => void;
 };
 
-const Dismissable: React.FC<DismissableProps> = ({children, onClose}) => {
+const Dismissable: React.FC<DismissableProps> = ({children, onClose = () => {}}) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
     const {colors, texts} = useTheme();
@@ -66,7 +66,7 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose}) => {
             {children}
             <IconButton
                 className={classes.dismissableButton}
-                onPress={() => onClose}
+                onPress={onClose}
                 label={texts.closeButtonLabel}
                 style={{display: 'flex', width: 48, height: 48}}
             >
