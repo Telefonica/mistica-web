@@ -3,6 +3,7 @@
 ## Unreleased
 
 - New `HighlightedCard` component.
+- Added `@telefonica/eslint-plugin-async-await`.
 
 ## v.5.2.0 - 2020-08-20
 
