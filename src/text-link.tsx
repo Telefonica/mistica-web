@@ -20,7 +20,6 @@ const useStyles = createUseStyles((theme) => ({
             },
         },
     },
-
     small: {
         fontSize: 14,
     },

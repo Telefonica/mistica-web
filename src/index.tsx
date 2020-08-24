@@ -44,6 +44,7 @@ export {default as RadioButton, RadioGroup} from './radio-button';
 export {default as NegativeBox} from './negative-box';
 export {default as Tabs} from './tabs';
 export {default as Inline} from './inline';
+export {default as HighlightedCard} from './highlighted-card';
 
 // Forms
 export {default as Form} from './form';
