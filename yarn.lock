@@ -2907,6 +2907,11 @@
   resolved "https://registry.yarnpkg.com/@tef-novum/webview-bridge/-/webview-bridge-2.17.1.tgz#0af643fdd132f6e1e0d05a46564dbd158c59032d"
   integrity sha512-Oz33LQzeRRK8/krobnyyrh5lEA/FHC4U9MLIpS2eUOuP87EqYIijcKd0WzSlqyWwNkg/jYUDTCGNcyyJKfFRLw==
 
+"@telefonica/eslint-plugin-async-await@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@telefonica/eslint-plugin-async-await/-/eslint-plugin-async-await-1.0.0.tgz#2c62332b5eebf59ed266d2b8db164320f907a8ad"
+  integrity sha512-6JTAwmn/DuRyTEu7uN3FQy7bOxfQVPcnjNRHLSbTHBnd14gqgS3TSBfbXxI/oNVPejWsyfDHPXHCimWK0nbpQg==
+
 "@telefonica/libphonenumber@^2.7.5":
   version "2.7.5"
   resolved "https://registry.yarnpkg.com/@telefonica/libphonenumber/-/libphonenumber-2.7.5.tgz#db47c87c11c86df6be3c8df34f25f7a46571c737"
