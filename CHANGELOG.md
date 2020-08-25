@@ -3,6 +3,7 @@
 # Not released
 
 - **Internal**: Make PRs fail in CI if flow definitions are not commited.
+- **Internal**: Automatically start storybook when running acceptance tests if it hasn't already been started.
 
 ## v.5.3.0 - 2020-08-25
 
