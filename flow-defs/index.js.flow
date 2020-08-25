@@ -76,6 +76,7 @@ declare export { default as RadioButton, RadioGroup } from "./radio-button";
 declare export { default as NegativeBox } from "./negative-box";
 declare export { default as Tabs } from "./tabs";
 declare export { default as Inline } from "./inline";
+declare export { default as HighlightedCard } from "./highlighted-card";
 declare export { default as Form } from "./form";
 declare export { default as FormSelect } from "./form-select";
 declare export { default as FormTextField } from "./form-text-field";
