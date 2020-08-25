@@ -5,7 +5,6 @@ const glob = promisify(require('glob'));
 const {writeFileSync, readFileSync, readdirSync} = require('fs');
 const rimraf = require('rimraf');
 const {beautify} = require('flowgen');
-const colors = require('colors/safe');
 const cpx = require('cpx');
 const isCI = require('is-ci');
 
@@ -172,8 +171,8 @@ const main = async () => {
 
     if (isCI && hasFlowDefChanges()) {
         console.log();
-        console.error(colors.red('Please, commit the generated Flow definitions before merging your PR.'));
-        console.error(colors.red('Run yarn build and commit the generated files in flow-defs/ folder'));
+        console.error('Please, commit the generated Flow definitions before merging your PR.');
+        console.error('Run yarn build and commit the generated files in flow-defs/ folder');
         console.log();
         process.exit(1);
     }
