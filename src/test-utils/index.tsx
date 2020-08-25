@@ -9,17 +9,20 @@ import type {Skin} from '../colors';
 const globalBrowser: Browser = (global as any).browser;
 const globalPage: Page = (global as any).page;
 
-const STORYBOOK_URL = ((): string => {
+const {STORYBOOK_URL, SSR_HOST} = ((): {STORYBOOK_URL: string; SSR_HOST: string} => {
     if (globalBrowser) {
         const url = new URL(globalBrowser.wsEndpoint());
         const isUsingDockerizedChromium = url.port === '9223';
         if (isUsingDockerizedChromium) {
             return process.platform === 'linux'
-                ? 'http://172.17.0.1:6006/iframe.html'
-                : 'http://host.docker.internal:6006/iframe.html';
+                ? {STORYBOOK_URL: 'http://172.17.0.1:6006/iframe.html', SSR_HOST: '172.17.0.1'}
+                : {
+                      STORYBOOK_URL: 'http://host.docker.internal:6006/iframe.html',
+                      SSR_HOST: 'host.docker.internal',
+                  };
         }
     }
-    return 'http://localhost:6006/iframe.html';
+    return {STORYBOOK_URL: 'http://localhost:6006/iframe.html', SSR_HOST: 'localhost'};
 })();
 
 const MOBILE_DEVICE_IOS: 'MOBILE_IOS' = 'MOBILE_IOS';
@@ -312,7 +315,7 @@ export const openSSRPage = async ({
         }
     });
 
-    const url = `http://localhost:${port}/${name}?skin=${skin}`;
+    const url = `http://${SSR_HOST}:${port}/${name}?skin=${skin}`;
     const pageApi = await openPage({url, device, userAgent});
 
     return pageApi;

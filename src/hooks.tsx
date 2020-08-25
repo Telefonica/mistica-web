@@ -116,8 +116,12 @@ const getAriaId = (): string => `aria-id-hook-${nextAriaId++}`;
 export const useAriaId = (id?: string): string => React.useRef(id || getAriaId()).current;
 
 export const useWindowSize = (): {height: number; width: number} => {
-    const [windowHeight, setWindowHeight] = React.useState(window.innerHeight);
-    const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
+    const [windowHeight, setWindowHeight] = React.useState<number>(
+        typeof window !== 'undefined' ? window.innerHeight : 0
+    );
+    const [windowWidth, setWindowWidth] = React.useState<number>(
+        typeof window !== 'undefined' ? window.innerWidth : 0
+    );
 
     React.useEffect(() => {
         const handleResize = () => {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {isOldChrome, isRunningAcceptanceTest} from './platform';
 
-const animationsSupported = !isOldChrome() && !isRunningAcceptanceTest();
+const animationsSupported = !isOldChrome() && !isRunningAcceptanceTest() && typeof window !== 'undefined';
 
 type ShakeStyles = {outerAnimation: any; innerAnimation: any; '@keyframes shake'?: any};
 
