@@ -1,25 +1,60 @@
 import puppeteerSetup from 'jest-environment-puppeteer/setup';
 import {join} from 'path';
 import StaticServer from 'static-server';
+import detectPort from 'detect-port';
+import util from 'util';
+import childProcess from 'child_process';
 import {compileSsrClient} from '../ssr';
 
-export default async (jestConfig: any = {}): Promise<void> => {
-    if (process.argv.includes('--ci')) {
-        console.log('\nStarting storybook server on port 6006');
-        // @ts-expect-error __STORYBOOK_SERVER__ does not exist in global
-        global.__STORYBOOK_SERVER__ = new StaticServer({
-            rootPath: join(__dirname, '../../../public'),
-            port: 6006,
-        });
+const exec = util.promisify(childProcess.exec);
+
+const storybookPort = 6006;
+
+const isStorybookRunning = async () => {
+    try {
+        const port = await detectPort(storybookPort);
+        if (port !== storybookPort) {
+            return true;
+        }
+    } catch {
+        // do nothing
+    }
+    return false;
+};
+
+const serveStaticStorybook = () => {
+    console.log(`Starting storybook server on port ${storybookPort}`);
+    // @ts-expect-error __STORYBOOK_SERVER__ does not exist in global
+    global.__STORYBOOK_SERVER__ = new StaticServer({
+        rootPath: join(__dirname, '../../../public'),
+        port: storybookPort,
+    });
+
+    return new Promise((resolve) => {
         // @ts-expect-error __STORYBOOK_SERVER__ does not exist in global
         global.__STORYBOOK_SERVER__.start(() => {
             console.log('Storybook server ready');
+            resolve();
         });
+    });
+};
+
+const buildStaticStorybook = () => exec('yarn storybook-static', {env: {NODE_ENV: 'development'}});
+
+export default async (jestConfig: any = {}): Promise<void> => {
+    console.log();
+    if (process.argv.includes('--ci')) {
+        await serveStaticStorybook();
+    } else if (!(await isStorybookRunning())) {
+        console.log('Storybook server not running. Building it...');
+        await buildStaticStorybook();
+        await serveStaticStorybook();
+    } else {
+        console.log(`Found server on port ${storybookPort}, assuming it's Storybook.`);
     }
 
-    const startTime = Date.now();
+    console.log('Building SSR client bundles...');
     await compileSsrClient();
-    console.log('\nTime to compile ssr client bundles:', ((Date.now() - startTime) / 1000).toFixed(2) + 's');
 
     await puppeteerSetup(jestConfig);
 };

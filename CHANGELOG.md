@@ -4,6 +4,8 @@
 
 - Fix some Flow types for components with union types in Props (`Touchable`, `Button`, `ListRow`,
   `HightlightedCard`, etc)
+- **Internal**: Make PRs fail in CI if flow definitions are not commited.
+- **Internal**: Automatically start storybook when running acceptance tests if it hasn't already been started.
 
 ## v.5.3.0 - 2020-08-25
 
