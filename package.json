@@ -131,6 +131,7 @@
         "flowgen": "^1.10.0",
         "glob": "^7.1.6",
         "husky": ">=4",
+        "is-ci": "^2.0.0",
         "jest": "^26.0.1",
         "jest-environment-puppeteer": "^4.4.0",
         "jest-image-snapshot": "^4.0.2",

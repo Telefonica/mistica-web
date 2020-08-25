@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# Not released
+
+- **Internal**: Make PRs fail in CI if flow definitions are not commited.
+
 ## v.5.3.0 - 2020-08-25
 
 - New `HighlightedCard` component.
