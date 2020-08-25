@@ -1,5 +1,6 @@
 flow-typed/npm/
 generated/
+coverage/
 node_modules/
 dist/
 dist-es/

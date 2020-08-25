@@ -251,7 +251,18 @@ const createPageApi = (page: Page): PageApi => {
     return api;
 };
 
-export const openStoryPage = async ({
+const openPage = async ({url, device, userAgent}: {url: string; device: Device; userAgent?: string}) => {
+    const currentUserAgent = userAgent || (await globalBrowser.userAgent());
+    const page = globalPage;
+    await page.bringToFront();
+    await page.setViewport(DEVICES[device].viewport);
+    await page.setUserAgent(`${currentUserAgent} acceptance-test`);
+    await page.goto(url);
+
+    return createPageApi(page);
+};
+
+export const openStoryPage = ({
     section,
     name,
     device = TABLET_DEVICE,
@@ -264,14 +275,47 @@ export const openStoryPage = async ({
     skin?: Skin;
     userAgent?: string;
 }): Promise<PageApi> => {
-    const currentUserAgent = userAgent || (await globalBrowser.userAgent());
-    const page = globalPage;
-    await page.bringToFront();
-    await page.setViewport(DEVICES[device].viewport);
-    await page.setUserAgent(`${currentUserAgent} acceptance-test`);
-    await page.goto(buildStoryUrl(section, name, skin, DEVICES[device].platform));
+    const url = buildStoryUrl(section, name, skin, DEVICES[device].platform);
+    return openPage({url, device, userAgent});
+};
 
-    return createPageApi(page);
+/**
+ * Renders a page with a React component in the server and opens it in the browser, where it's hydrated client side.
+ * `name` is the name (without extension) of a file in the __ssr_pages__ folder. This file exports the component to be rendered.
+ */
+export const openSSRPage = async ({
+    name,
+    device = TABLET_DEVICE,
+    skin = 'Movistar',
+    userAgent,
+}: {
+    name: string;
+    device?: Device;
+    skin?: Skin;
+    userAgent?: string;
+}): Promise<PageApi> => {
+    const page = globalPage;
+    const port = (global as any).__SSR_SERVER__.address().port;
+
+    // Capture browser console.error and console.warn calls that React could trigger when calling hydrate()
+    page.on('console', async (msg) => {
+        const type = msg.type();
+        const args = await Promise.all(msg.args().map((h) => h.jsonValue()));
+        if (args.length === 0) {
+            args.push(msg.text());
+        }
+        if (type === 'error') {
+            console.error(...args);
+        }
+        if (type === 'warning') {
+            console.warn(...args);
+        }
+    });
+
+    const url = `http://localhost:${port}/${name}?skin=${skin}`;
+    const pageApi = await openPage({url, device, userAgent});
+
+    return pageApi;
 };
 
 export const screen: Queries = buildQueryMethods();

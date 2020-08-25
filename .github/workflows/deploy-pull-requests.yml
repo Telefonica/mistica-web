@@ -8,10 +8,11 @@ jobs:
         # container: docker.tuenti.io/service-inf/mistica-web-builder:1.0.0
         steps:
             - uses: actions/checkout@v2
-            - uses: amondnet/vercel-action@v19.0.1+2
+            - uses: amondnet/vercel-action@v19.0.1+3
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }} # needed to allow comments on prs
                   vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
                   vercel-org-id: ${{ secrets.ORG_ID}} #Required
                   vercel-project-id: ${{ secrets.PROJECT_ID}} #Required
+                  vercel-project-name: mistica-web # Not requried by the docs, but the action fails if not specified. See https://github.com/amondnet/vercel-action/issues/30#issuecomment-678608424
                   working-directory: ./
