@@ -1,5 +1,10 @@
 # CHANGELOG
 
+# Not released
+
+- Fix some Flow types for components with union types in Props (`Touchable`, `Button`, `ListRow`,
+  `HightlightedCard`, etc)
+
 ## v.5.3.0 - 2020-08-25
 
 - New `HighlightedCard` component.
