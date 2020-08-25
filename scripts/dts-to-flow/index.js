@@ -135,7 +135,7 @@ const hasFlowDefChanges = () => {
             .map((l) => l.trim())
             .filter(Boolean);
 
-        const changedFiles = lines.map((l) => l.split(' ')[1]);
+        const changedFiles = lines.map((l) => l.split(/\s+/)[1]);
 
         if (changedFiles.some((f) => f.startsWith('flow-defs/'))) {
             return true;
