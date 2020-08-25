@@ -9,20 +9,15 @@ import type {Skin} from '../colors';
 const globalBrowser: Browser = (global as any).browser;
 const globalPage: Page = (global as any).page;
 
-const {STORYBOOK_URL, SSR_HOST} = ((): {STORYBOOK_URL: string; SSR_HOST: string} => {
+const HOST = ((): string => {
     if (globalBrowser) {
         const url = new URL(globalBrowser.wsEndpoint());
         const isUsingDockerizedChromium = url.port === '9223';
         if (isUsingDockerizedChromium) {
-            return process.platform === 'linux'
-                ? {STORYBOOK_URL: 'http://172.17.0.1:6006/iframe.html', SSR_HOST: '172.17.0.1'}
-                : {
-                      STORYBOOK_URL: 'http://host.docker.internal:6006/iframe.html',
-                      SSR_HOST: 'host.docker.internal',
-                  };
+            return process.platform === 'linux' ? '172.17.0.1' : 'host.docker.internal';
         }
     }
-    return {STORYBOOK_URL: 'http://localhost:6006/iframe.html', SSR_HOST: 'localhost'};
+    return 'localhost';
 })();
 
 const MOBILE_DEVICE_IOS: 'MOBILE_IOS' = 'MOBILE_IOS';
@@ -154,7 +149,7 @@ const buildStoryUrl = (section: string, name: string, skin?: string, platform?: 
     if (platform) {
         params.set('platform', platform);
     }
-    return `${STORYBOOK_URL}?${params.toString()}`;
+    return `http://${HOST}/iframe.html?${params.toString()}`;
 };
 
 export type PageApi = {
@@ -315,7 +310,7 @@ export const openSSRPage = async ({
         }
     });
 
-    const url = `http://${SSR_HOST}:${port}/${name}?skin=${skin}`;
+    const url = `http://${HOST}:${port}/${name}?skin=${skin}`;
     const pageApi = await openPage({url, device, userAgent});
 
     return pageApi;
