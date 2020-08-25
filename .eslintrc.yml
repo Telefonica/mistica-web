@@ -23,6 +23,7 @@ plugins:
     - flowtype
     - import
     - '@typescript-eslint'
+    - '@telefonica/eslint-plugin-async-await'
 extends:
     - 'eslint:recommended'
 rules:
@@ -213,3 +214,24 @@ overrides:
           no-use-before-define: off
           import/no-duplicates: off
           no-undef: off
+    - files:
+          - '**/*+(screenshot|acceptance)-test.tsx'
+      rules:
+          '@telefonica/async-await/await-async-methods':
+              [
+                  error,
+                  {
+                      page: ['click', 'type', 'screenshot', 'title', 'close', 'goBack'],
+                      screen:
+                          [
+                              'findByPlaceholderToken',
+                              'findAllByPlaceholderToken',
+                              'findByToken',
+                              'findAllByToken',
+                              'findByLabelToken',
+                              'findAllByLabelToken',
+                              'findByAltToken',
+                              'findAllByAltToken',
+                          ],
+                  },
+              ]
