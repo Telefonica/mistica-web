@@ -19,6 +19,7 @@ declare var colors: {
   backgroundHeading: string,
   backgroundAlternative: string,
   backgroundPromo: string,
+  backgroundBrand: string,
   buttonPrimaryBackground: string,
   buttonPrimaryBackgroundSelected: string,
   buttonPrimaryBackgroundDisabled: string,
@@ -107,6 +108,7 @@ declare var texts: {
   formCreditCardExpirationError: string,
   formCreditCardNumberError: string,
   formEmailError: string,
+  closeButtonLabel: string,
   formSearchClear: string
 };
 declare type ThemeColors = typeof colors;
