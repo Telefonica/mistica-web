@@ -25,50 +25,25 @@ declare type CommonProps = {
 };
 export type ToButtonProps = {
   ...$Exact<CommonProps>,
-
   to: string | Location,
   fullPageOnWebView?: boolean,
-  submit?: void,
-  fake?: void,
-  onPress?: void,
-  href?: void
 };
 export type OnPressButtonProps = {
   ...$Exact<CommonProps>,
-
   onPress: (event: SyntheticMouseEvent<HTMLElement>) => void | void,
-  submit?: void,
-  fake?: void,
-  to?: void,
-  href?: void
 };
 export type HrefButtonProps = {
   ...$Exact<CommonProps>,
-
   href: string,
   newTab?: boolean,
-  submit?: void,
-  fake?: void,
-  onPress?: void,
-  to?: void
 };
 export type FakeButtonProps = {
   ...$Exact<CommonProps>,
-
   fake: true,
-  submit?: void,
-  onPress?: void,
-  to?: void,
-  href?: void
 };
 export type SubmitButtonProps = {
   ...$Exact<CommonProps>,
-
   submit: true,
-  to?: void,
-  fake?: void,
-  onPress?: void,
-  href?: void
 };
 export type ButtonProps =
   | FakeButtonProps
@@ -83,26 +58,17 @@ declare type ButtonLinkCommonProps = {
 };
 declare type ButtonLinkOnPressProps = {
   ...$Exact<ButtonLinkCommonProps>,
-
   onPress: (event: SyntheticMouseEvent<HTMLElement>) => void,
-  to?: void,
-  href?: void
 };
 declare type ButtonLinkHrefProps = {
   ...$Exact<ButtonLinkCommonProps>,
-
   href: string,
   newTab?: boolean,
-  onPress?: void,
-  to?: void
 };
 declare type ButtonLinkToProps = {
   ...$Exact<ButtonLinkCommonProps>,
-
   to: string,
   fullPageOnWebView?: boolean,
-  onPress?: void,
-  href?: void
 };
 export type ButtonLinkProps =
   | ButtonLinkOnPressProps

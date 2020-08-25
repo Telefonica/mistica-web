@@ -18,26 +18,17 @@ declare type CommonProps = {
 };
 export type HrefProps = {
   ...$Exact<CommonProps>,
-
   href: string,
   newTab?: boolean,
-  onPress?: void,
-  to?: void
 };
 export type ToProps = {
   ...$Exact<CommonProps>,
-
   to: string,
   fullPageOnWebView?: boolean,
-  href?: void,
-  onPress?: void
 };
 export type OnPressProps = {
   ...$Exact<CommonProps>,
-
   onPress: (event: SyntheticMouseEvent<HTMLElement>) => void | boolean,
-  href?: void,
-  to?: void
 };
 declare type Props = HrefProps | ToProps | OnPressProps;
 declare var TextLink: React.ComponentType<Props>;
