@@ -46,6 +46,8 @@ export {default as Tabs} from './tabs';
 export {default as Inline} from './inline';
 export {default as HighlightedCard} from './highlighted-card';
 
+export const whatever = 6;
+
 // Forms
 export {default as Form} from './form';
 export {default as FormSelect} from './form-select';
