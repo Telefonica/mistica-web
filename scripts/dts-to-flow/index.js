@@ -5,7 +5,9 @@ const glob = promisify(require('glob'));
 const {writeFileSync, readFileSync, readdirSync} = require('fs');
 const rimraf = require('rimraf');
 const {beautify} = require('flowgen');
+const colors = require('colors/safe');
 const cpx = require('cpx');
+const isCI = require('is-ci');
 
 const PATH_ROOT = join(__dirname, '..', '..');
 const PATH_DIST = join(PATH_ROOT, 'dist');
@@ -126,6 +128,23 @@ const applyOverrides = () => {
     cpx.copySync(join(PATH_OVERRIDES, 'jss.js.flow'), join(PATH_DIST));
 };
 
+const hasFlowDefChanges = () => {
+    const output = String(execSync('git status --porcelain'));
+    if (output) {
+        const lines = output
+            .split('\n')
+            .map((l) => l.trim())
+            .filter(Boolean);
+
+        const changedFiles = lines.map((l) => l.split(' ')[1]);
+
+        if (changedFiles.some((f) => f.startsWith('flow-defs/'))) {
+            return true;
+        }
+    }
+    return false;
+};
+
 const main = async () => {
     process.chdir(PATH_ROOT);
 
@@ -150,6 +169,14 @@ const main = async () => {
     applyOverrides();
 
     cpx.copySync('./dist/**/*.js.flow', 'flow-defs');
+
+    if (isCI && hasFlowDefChanges()) {
+        console.log();
+        console.error(colors.red('Please, commit the generated Flow definitions before merging your PR.'));
+        console.error(colors.red('Run yarn build and commit the generated files in flow-defs/ folder'));
+        console.log();
+        process.exit(1);
+    }
 };
 
 main();
