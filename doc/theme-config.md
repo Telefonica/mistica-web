@@ -14,6 +14,7 @@ type ThemeConfig = {
   platformOverrides?: {
     platform?: 'ios' | 'android';
     insideNovumNativeApp?: boolean;
+    userAgent?: string;
   };
   texts?: ThemeTexts;
   analytics?: {
@@ -46,6 +47,9 @@ Here is a description of every attribute:
     to `'ios'` or `'android'`
   - `insideNovumNativeApp?:` some components have different behavior if the web is running inside a webview in
     the native Novum App. The lib can autodetect it, but you can force it by setting this to `true`.
+  - `userAgent:` **IMPORTANT** In case you are using SSR, you should set this value with the user-agent header
+    you receive on every request to your server, otherwise the server-side render won't take the user agent
+    into account.
 - `texts?`: some copies you can customize. See [customizable texts doc](./texts.md).
 - `analytics?`: see [analytics docs](./analytics.md).
 - `mediaQueries?`: see [media queries doc](./media-queries.md).
