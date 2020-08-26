@@ -130,7 +130,7 @@ const Content: React.FC<Props> = (props) => {
 
     const content = (
         <div className={classes.container}>
-            <Box paddingLeft={16} paddingRight={imageUrl ? 8 : 16} paddingY={24}>
+            <Box paddingLeft={16} paddingRight={imageUrl ? 8 : 56} paddingY={24}>
                 <Text size={18} lineHeight={1.33} weight="light">
                     {title}
                 </Text>
