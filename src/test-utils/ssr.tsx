@@ -126,12 +126,17 @@ export const createServer = (): http.Server => {
 
         const serverSideStyles = new ServerSideStyles();
 
+        const userAgent = req.headers['user-agent'];
+
         const renderedComponent = ReactDomServer.renderToString(
             serverSideStyles.render(
                 <ThemeContextProvider
                     theme={{
                         skin: (parsedUrl.query.skin as Skin) || 'Movistar',
                         i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+                        platformOverrides: {
+                            userAgent,
+                        },
                     }}
                 >
                     <Component />

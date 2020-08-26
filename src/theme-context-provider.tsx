@@ -8,6 +8,7 @@ import DialogRoot from './dialog';
 import ScreenSizeContextProvider from './screen-size-context-provider';
 import {createMediaQueries} from './utils/media-queries';
 import {PACKAGE_VERSION} from './package-version';
+import AriaIdGetterContext from './aria-id-context';
 
 import type {Theme, ThemeConfig} from './theme';
 
@@ -33,6 +34,8 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
     );
     const {skin, colorOverride} = theme;
     const c = getColors(skin, colorOverride);
+    const nextAriaId = React.useRef(1);
+    const getAriaId = React.useCallback((): string => `aria-id-hook-${nextAriaId.current++}`, []);
 
     const contextTheme: Theme = {
         skin: theme.skin,
@@ -144,9 +147,11 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
     return (
         <JssProvider jss={getJss()} classNamePrefix={classNamePrefix}>
             <ThemeContext.Provider value={contextTheme}>
-                <ScreenSizeContextProvider>
-                    <DialogRoot>{children}</DialogRoot>
-                </ScreenSizeContextProvider>
+                <AriaIdGetterContext.Provider value={getAriaId}>
+                    <ScreenSizeContextProvider>
+                        <DialogRoot>{children}</DialogRoot>
+                    </ScreenSizeContextProvider>
+                </AriaIdGetterContext.Provider>
             </ThemeContext.Provider>
         </JssProvider>
     );

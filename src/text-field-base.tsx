@@ -110,7 +110,11 @@ const commonInputStyles = (theme: Theme) => ({
     },
     /* Workaround to avoid huge bullets on ios devices (-apple-system font related) */
     fontFamily: ({type}: {type: string}) =>
-        type === 'password' && isIos() && !isRunningAcceptanceTest() ? 'arial' : 'inherit',
+        type === 'password' &&
+        isIos(theme.platformOverrides) &&
+        !isRunningAcceptanceTest(theme.platformOverrides)
+            ? 'arial'
+            : 'inherit',
     color: theme.colors.textPrimary,
     caretColor: theme.colors.controlActive,
     width: '100%',
@@ -196,8 +200,8 @@ const useStyles = createUseStyles((theme) => ({
 }));
 
 // Chrome ignores 'off': https://bugs.chromium.org/p/chromium/issues/detail?id=468153#c164
-const fixAutoComplete = (autoComplete?: AutoComplete) =>
-    autoComplete === 'off' && isChrome() ? 'nope' : autoComplete;
+const fixAutoComplete = (platformOverrides: Theme['platformOverrides'], autoComplete?: AutoComplete) =>
+    autoComplete === 'off' && isChrome(platformOverrides) ? 'nope' : autoComplete;
 
 const updateRef = (ref: React.Ref<any> | undefined, refValue: any) => {
     if (ref) {
@@ -243,7 +247,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
         );
-        const {texts} = useTheme();
+        const {texts, platformOverrides} = useTheme();
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
         const label = rest.required
             ? labelProp
@@ -299,7 +303,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const props = {
             ...rest,
             maxLength,
-            autoComplete: fixAutoComplete(autoCompleteProp),
+            autoComplete: fixAutoComplete(platformOverrides, autoCompleteProp),
             ...inputProps,
         };
 
@@ -404,6 +408,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(({getSuggestions
     const [suggestions, setSuggestions] = React.useState<Array<string>>([]);
     const inputRef = React.useRef<HTMLInputElement>(null);
     const classes = useSuggestionsStyles();
+    const {platformOverrides} = useTheme();
 
     if (getSuggestions && (props.value === undefined || props.defaultValue !== undefined)) {
         throw Error('Fields with suggestions must be used in controlled mode');
@@ -417,8 +422,8 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(({getSuggestions
                     // This label override while loading is needed in acceptance tests because
                     // while the test is typing, the component could be remounted.
                     // By hiding the label, we ensure that the test selects the loaded component
-                    label={isRunningAcceptanceTest() ? '' : props.label}
-                    autoComplete={fixAutoComplete('off') as AutoComplete}
+                    label={isRunningAcceptanceTest(platformOverrides) ? '' : props.label}
+                    autoComplete={fixAutoComplete(platformOverrides, 'off') as AutoComplete}
                     ref={ref}
                 />
             }
@@ -427,7 +432,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(({getSuggestions
                 // @ts-expect-error Autosuggest expects slightly different types
                 inputProps={{
                     ...props,
-                    autoComplete: fixAutoComplete('off'),
+                    autoComplete: fixAutoComplete(platformOverrides, 'off'),
                     onChange: (e: React.ChangeEvent<HTMLInputElement>, {newValue}) => {
                         // hack to mutate event value
                         e.target = {...e.target, value: newValue};

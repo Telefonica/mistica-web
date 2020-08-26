@@ -34,6 +34,7 @@ export type Device =
 type DeviceCollection = Record<
     Device,
     {
+        userAgent?: string;
         platform?: string;
         viewport: Viewport;
     }
@@ -41,6 +42,8 @@ type DeviceCollection = Record<
 
 const DEVICES: DeviceCollection = {
     [MOBILE_DEVICE_IOS]: {
+        userAgent:
+            'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
         platform: 'ios',
         viewport: {
             width: 375,
@@ -52,6 +55,8 @@ const DEVICES: DeviceCollection = {
         },
     },
     [MOBILE_DEVICE_ANDROID]: {
+        userAgent:
+            'Mozilla/5.0 (Linux; Android 8.0; Pixel 2 Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Mobile Safari/537.36',
         platform: 'android',
         viewport: {
             width: 411,
@@ -285,7 +290,7 @@ export const openSSRPage = async ({
     name,
     device = TABLET_DEVICE,
     skin = 'Movistar',
-    userAgent,
+    userAgent = DEVICES[device].userAgent,
 }: {
     name: string;
     device?: Device;
