@@ -311,9 +311,7 @@ export const openSSRPage = async ({
     });
 
     const url = `http://${HOST}:${port}/${name}?skin=${skin}`;
-    const pageApi = await openPage({url, device, userAgent});
-
-    return pageApi;
+    return openPage({url, device, userAgent});
 };
 
 export const screen: Queries = buildQueryMethods();

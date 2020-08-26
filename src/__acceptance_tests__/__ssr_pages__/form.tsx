@@ -16,6 +16,7 @@ import {
     FormCreditCardExpirationField,
     FormCvvField,
     FormSearchField,
+    FormSelect,
 } from '../..';
 
 const FormTest: React.FC = () => (
@@ -24,15 +25,14 @@ const FormTest: React.FC = () => (
             <Stack space={16}>
                 <FormTextField name="name" label="Name" />
                 <FormEmailField name="email" label="e-mail" />
-                {/* TODO: Make FormSelect work with SSR */}
-                {/* <FormSelect
+                <FormSelect
                     name="fruits"
                     label="Choose a fruit"
                     options={[
                         {value: 'orange', text: 'Orange'},
                         {value: 'banana', text: 'Banana'},
                     ]}
-                /> */}
+                />
                 <FormPhoneNumberField name="phone" label="Phone" />
                 <FormCreditCardFields />
                 <FormDateField name="date" label="Date" />
