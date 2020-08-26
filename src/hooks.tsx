@@ -117,10 +117,10 @@ export const useAriaId = (id?: string): string => React.useRef(id || getAriaId()
 
 export const useWindowSize = (): {height: number; width: number} => {
     const [windowHeight, setWindowHeight] = React.useState<number>(
-        typeof window !== 'undefined' ? window.innerHeight : 0
+        typeof window !== 'undefined' ? window.innerHeight : 1200 // Best guess
     );
     const [windowWidth, setWindowWidth] = React.useState<number>(
-        typeof window !== 'undefined' ? window.innerWidth : 0
+        typeof window !== 'undefined' ? window.innerWidth : 800 // Best guess
     );
 
     React.useEffect(() => {
