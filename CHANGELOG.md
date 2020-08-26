@@ -1,6 +1,6 @@
 # CHANGELOG
 
-# Not released
+## v.5.3.1 - 2020-08-26
 
 - Fix some Flow types for components with union types in Props (`Touchable`, `Button`, `ListRow`,
   `HightlightedCard`, etc)
