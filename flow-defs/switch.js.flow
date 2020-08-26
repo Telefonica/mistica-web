@@ -10,14 +10,12 @@ declare type RenderSwitch = (switchElement: React.Element<any>) => React.Node;
 declare type UncontrolledProps = {
   render?: RenderSwitch,
   defaultChecked?: boolean,
-  checked?: void,
-  onChange?: (checked: boolean) => void
+  onChange?: (checked: boolean) => void,
 };
 declare type ControlledProps = {
   render?: RenderSwitch,
-  defaultChecked?: void,
   checked: boolean,
-  onChange: (checked: boolean) => void
+  onChange: (checked: boolean) => void,
 };
 declare type Props = ControlledProps | UncontrolledProps;
 declare var Switch: React.ComponentType<Props>;

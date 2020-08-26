@@ -29,54 +29,36 @@ declare type CommonProps = {
 };
 export type PropsHref = {
   ...$Exact<CommonProps>,
-
   href: string,
   newTab?: boolean,
-  to?: void,
-  onPress?: void
 };
 export type PropsOnPress = {
   ...$Exact<CommonProps>,
-
   onPress: PressHandler,
-  href?: void,
-  to?: void
 };
 export type PropsTo = {
   ...$Exact<CommonProps>,
-
   to: string | Location,
   fullPageOnWebView?: boolean,
   replace?: boolean,
-  href?: void,
-  onPress?: void
 };
 export type PropsMaybeHref = {
   ...$Exact<CommonProps>,
-
   maybe: true,
   href?: string,
   newTab?: boolean,
-  to?: void,
-  onPress?: void
 };
 export type PropsMaybeTo = {
   ...$Exact<CommonProps>,
-
   maybe: true,
   to?: string | Location,
   fullPageOnWebView?: boolean,
   replace?: boolean,
-  href?: void,
-  onPress?: void
 };
 export type PropsMaybeOnPress = {
   ...$Exact<CommonProps>,
-
   maybe: true,
   onPress?: PressHandler,
-  href?: void,
-  to?: void
 };
 declare type Props =
   | PropsHref

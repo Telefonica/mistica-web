@@ -22,37 +22,22 @@ declare type CommonProps = {
 };
 declare type HrefProps = {
   ...$Exact<CommonProps>,
-
   label: string,
   href: string,
-  to?: void,
-  onPress?: void
 };
 declare type ToProps = {
   ...$Exact<CommonProps>,
-
   label: string,
   to: string,
   fullPageOnWebView?: boolean,
   replace?: boolean,
-  href?: void,
-  onPress?: void
 };
 declare type OnClickProps = {
   ...$Exact<CommonProps>,
-
   label: string,
   onPress: (event: SyntheticMouseEvent<HTMLElement>) => void,
-  href?: void,
-  to?: void
 };
-declare type MaybeProps = {
-  ...$Exact<CommonProps>,
-
-  onPress?: void,
-  href?: void,
-  to?: void
-};
+declare type MaybeProps = { ...$Exact<CommonProps> };
 declare type Props = HrefProps | ToProps | OnClickProps | MaybeProps;
 declare var IconButton: React.ComponentType<Props>;
 declare export default typeof IconButton;

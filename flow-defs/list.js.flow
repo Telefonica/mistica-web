@@ -24,86 +24,40 @@ declare type ControlProps = {
 };
 declare type BasicRowContentProps = {
   ...$Exact<CommonProps>,
-
-  href?: void,
-  onPress?: void,
-  to?: void,
-  checkbox?: void,
-  switch?: void,
-  radioValue?: void,
-  right?: React.Node
+  right?: React.Node,
 };
 declare type SwitchRowContentProps = {
   ...$Exact<CommonProps>,
-
-  href?: void,
-  onPress?: void,
-  to?: void,
-  right?: void,
-  checkbox?: void,
-  radioValue?: void,
-  switch: ControlProps
+  switch: ControlProps,
 };
 declare type CheckboxRowContentProps = {
   ...$Exact<CommonProps>,
-
-  href?: void,
-  onPress?: void,
-  to?: void,
-  right?: void,
-  switch?: void,
-  radioValue?: void,
-  checkbox: ControlProps
+  checkbox: ControlProps,
 };
 declare type RadioRowContentProps = {
   ...$Exact<CommonProps>,
-
-  href?: void,
-  onPress?: void,
-  to?: void,
-  right?: void,
-  switch?: void,
-  checkbox?: void,
-  radioValue: string
+  radioValue: string,
 };
 declare type HrefRowContentProps = {
   ...$Exact<CommonProps>,
-
-  checkbox?: void,
-  switch?: void,
-  radioValue?: void,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   href?: string,
   newTab?: boolean,
-  onPress?: void,
-  to?: void,
-  right?: React.Node
+  right?: React.Node,
 };
 declare type ToRowContentProps = {
   ...$Exact<CommonProps>,
-
-  checkbox?: void,
-  switch?: void,
-  radioValue?: void,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   to?: string,
   fullPageOnWebView?: boolean,
   replace?: boolean,
-  href?: void,
-  onPress?: void,
-  right?: React.Node
+  right?: React.Node,
 };
 declare type OnPressRowContentProps = {
   ...$Exact<CommonProps>,
-
-  checkbox?: void,
-  switch?: void,
-  radioValue?: void,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   onPress?: () => void,
-  href?: void,
-  to?: void,
-  right?: React.Node
+  right?: React.Node,
 };
 declare type RowContentProps =
   | BasicRowContentProps
