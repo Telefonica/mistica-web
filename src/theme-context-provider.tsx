@@ -8,7 +8,7 @@ import DialogRoot from './dialog';
 import ScreenSizeContextProvider from './screen-size-context-provider';
 import {createMediaQueries} from './utils/media-queries';
 import {PACKAGE_VERSION} from './package-version';
-import AriaIdGetterContext from './aria-id-context';
+import AriaIdGetterContext from './aria-id-getter-context';
 
 import type {Theme, ThemeConfig} from './theme';
 
