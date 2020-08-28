@@ -18,7 +18,7 @@
 
 ## v.5.2.0 - 2020-08-20
 
-- Support multiple tracking events
+- Support multiple tracking events.
 - New `FormSearchField` component
 - `TextLink` and `ListRow`: disable wrong `:hover` styles in touch devices.
 - Fixed several `FormSelect` bugs:
