@@ -86,6 +86,8 @@ const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     });
 
     // This trick along with the 100vh measure allows us to perform a first meaningful render on the server side.
+    // We can't use vh on client side because it causes problems with iOS (as sometimes the height is calculated as
+    // if there were no OS buttons on bottom): https://bugs.webkit.org/show_bug.cgi?id=141832
     useIsomorphicLayoutEffect(() => {
         setIsServerSide(false);
     }, []);
