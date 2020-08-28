@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Pending to release
+
+- Update `@tef-novum/webview-bridge` dependency
+
 ## v.5.3.1 - 2020-08-26
 
 - Fix some Flow types for components with union types in Props (`Touchable`, `Button`, `ListRow`,
@@ -14,7 +18,7 @@
 
 ## v.5.2.0 - 2020-08-20
 
-- Support multiple tracking events
+- Support multiple tracking events.
 - New `FormSearchField` component
 - `TextLink` and `ListRow`: disable wrong `:hover` styles in touch devices.
 - Fixed several `FormSelect` bugs:
