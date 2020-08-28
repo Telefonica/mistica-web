@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Pending to release
+## v5.3.2 - 2020-08-28
 
 - Update `@tef-novum/webview-bridge` dependency
 
