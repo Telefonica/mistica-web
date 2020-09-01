@@ -383,7 +383,7 @@ export default [
             title="Resolver problema técnico"
             description="Usa nuestra herramienta para resolver tus problemas técnicos"
             imageUrl="${imagePlaceholder}"
-            imageFit="cover"
+            imageFit="fit"
             onClose={() => {}}
             button={
                 <ButtonPrimary href="whatever/url" small>

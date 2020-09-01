@@ -28,11 +28,7 @@ export const Default: StoryComponent = () => {
         'ButtonSecondary',
         'TextLink',
     ]);
-    const [imageFit, imageFitSelect] = useSelect('Image fit background-size', 'cover', [
-        'auto',
-        'contain',
-        'cover',
-    ]);
+    const [imageFit, imageFitSelect] = useSelect('Image fit background-size', 'fit', ['fit', 'fill']);
 
     const getButton = (button: string) => {
         switch (button) {
