@@ -5,14 +5,7 @@
  * Flowgen v1.10.0
  */
 
-declare export {
-  createSheet,
-  withSheet,
-  removeJssProps,
-  createUseStyles,
-  getJss,
-  ServerSideStyles
-} from "./jss";
+declare export { createUseStyles, getJss, ServerSideStyles } from "./jss";
 declare export { default as ThemeContext } from "./theme-context";
 declare export { default as ThemeContextProvider } from "./theme-context-provider";
 declare export { default as ScreenReaderOnly } from "./screen-reader-only";

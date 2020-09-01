@@ -4,30 +4,6 @@ import {type Theme} from './theme';
 
 declare export var getJss: () => any;
 
-declare type CssClass = {[K: string]: string | number | boolean | CssClass, ...};
-
-declare type Sheet = {[K: string]: CssClass, ...};
-
-/**
- * This function does nothing, this is just used to make css-in-js autocomplete
- * editor extensions work with JSS. @see https://github.com/ansumanshah/css-in-js
- */
-declare export var createSheet: <S: Sheet>(s: S) => $ObjMap<S, () => string>;
-
-declare class StyledComponent<P, +WC> extends React.Component<P> {
-    static +WrappedComponent: WC;
-}
-
-declare type CreateStyledComponent = <P, Comp: React.ComponentType<P>, ST: {[_: $Keys<Comp>]: any, ...}>(
-    Component: Comp
-) => Class<StyledComponent<$Diff<React.ElementConfig<Comp>, {classes: *}>, Comp>> & $Shape<ST>;
-
-declare export var withSheet: <S: {...}>(sheet: S) => CreateStyledComponent;
-
-declare export var removeJssProps: <P: {sheet?: any, classes?: any}>(
-    props: P
-) => $Diff<P, {classes: *, sheet: *}>;
-
 declare type CSSValue<P> = void | number | boolean | string | ((P) => string | number | boolean);
 declare type ClassDefinition<P> = {
     +[cssProp: string]:
