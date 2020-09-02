@@ -13,7 +13,7 @@ declare type CommonProps = {
   title: string,
   description: string,
   imageUrl?: string,
-  imageFit?: "auto" | "contain" | "cover",
+  imageFit?: "fit" | "fill",
   backgroundImageUrl?: string,
   onClose?: () => void,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>
