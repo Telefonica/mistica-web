@@ -1,9 +1,10 @@
 # CHANGELOG
 
-## Next
+## Unreleased
 
 - Update Focus/Blur behavior in multiline `FormTextField`. On focus, caret and scroll is positioned to the
   end. On blur scroll is set to top.
+- Fix `HighlightedCard` imageFit issues.
 
 ## v5.3.2 - 2020-08-28
 
