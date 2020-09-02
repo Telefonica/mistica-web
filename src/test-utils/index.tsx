@@ -154,7 +154,7 @@ const buildStoryUrl = (section: string, name: string, skin?: string, platform?: 
     if (platform) {
         params.set('platform', platform);
     }
-    return `http://${HOST}/iframe.html?${params.toString()}`;
+    return `http://${HOST}:6006/iframe.html?${params.toString()}`;
 };
 
 export type PageApi = {
