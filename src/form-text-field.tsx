@@ -21,12 +21,38 @@ const FormTextField: React.FC<FormTextFieldProps> = ({
     validate,
     onChangeValue,
     onChange,
-    onBlur,
     value,
     defaultValue,
+    onBlur: onBlurProp,
+    onFocus: onFocusProp,
     ...rest
 }) => {
+    const inputRef = React.useRef<HTMLInputElement | null>(null);
     const processValue = (v: string) => v;
+
+    const onBlur = (event: React.FocusEvent<Element>) => {
+        if (rest.multiline && inputRef.current) {
+            // scroll to start
+            inputRef.current.scrollTop = 0;
+        }
+        onBlurProp?.(event);
+    };
+
+    const onFocus = (event: React.FocusEvent<Element>) => {
+        if (rest.multiline) {
+            setTimeout(() => {
+                if (inputRef.current) {
+                    // scroll to end
+                    inputRef.current.scrollTop = inputRef.current.scrollHeight;
+                    // place caret to the end
+                    const value = inputRef.current.value;
+                    inputRef.current.value = '';
+                    inputRef.current.value = value;
+                }
+            }, 0);
+        }
+        onFocusProp?.(event);
+    };
 
     const fieldProps = useFieldProps({
         name,
@@ -43,7 +69,12 @@ const FormTextField: React.FC<FormTextFieldProps> = ({
         onChangeValue,
     });
 
-    return <TextFieldBase {...rest} {...fieldProps} type="text" />;
+    const setInputRef = (field: HTMLInputElement | null) => {
+        inputRef.current = field;
+        fieldProps.inputRef(field);
+    };
+
+    return <TextFieldBase {...rest} {...fieldProps} inputRef={setInputRef} onFocus={onFocus} type="text" />;
 };
 
 export default FormTextField;
