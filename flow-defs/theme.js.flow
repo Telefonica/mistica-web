@@ -150,7 +150,8 @@ export type ThemeConfig = {
   },
   platformOverrides?: {
     platform?: "ios" | "android",
-    insideNovumNativeApp?: boolean
+    insideNovumNativeApp?: boolean,
+    userAgent?: string
   },
   texts?: $Rest<ThemeTexts, {}>,
   analytics?: {
@@ -176,7 +177,8 @@ export type Theme = {
   },
   platformOverrides: {
     platform?: "ios" | "android",
-    insideNovumNativeApp?: boolean
+    insideNovumNativeApp?: boolean,
+    userAgent?: string
   },
   texts: ThemeTexts,
   analytics: {
