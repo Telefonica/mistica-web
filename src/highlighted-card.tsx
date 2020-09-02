@@ -82,7 +82,7 @@ interface CommonProps {
     title: string;
     description: string;
     imageUrl?: string;
-    imageFit?: 'auto' | 'contain' | 'cover';
+    imageFit?: 'fit' | 'fill';
     backgroundImageUrl?: string;
     onClose?: () => void;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
@@ -146,8 +146,8 @@ const Content: React.FC<Props> = (props) => {
                     className={classes.imageContent}
                     style={{
                         background: `url(${imageUrl}) no-repeat`,
-                        backgroundSize: imageFit,
-                        backgroundPosition: 'center right',
+                        backgroundSize: imageFit === 'fit' ? 'contain' : 'cover',
+                        backgroundPosition: imageFit === 'fit' ? 'bottom right' : 'center right',
                     }}
                 />
             )}
