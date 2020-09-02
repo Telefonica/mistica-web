@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "5.3.0",
+    "version": "5.3.2",
     "license": "UNLICENSED",
     "main": "dist/index.js",
     "module": "dist-es/index.js",
@@ -85,6 +85,8 @@
         "@babel/preset-react": "^7.8.3",
         "@babel/preset-typescript": "^7.10.1",
         "@babel/traverse": "^7.10.5",
+        "@semantic-release/changelog": "^5.0.1",
+        "@semantic-release/git": "^9.0.0",
         "@storybook/addon-actions": "^5.3.19",
         "@storybook/addon-info": "^5.3.19",
         "@storybook/addon-links": "^5.3.19",
@@ -97,6 +99,7 @@
         "@testing-library/jest-dom": "^5.8.0",
         "@testing-library/react": "^10.0.4",
         "@testing-library/user-event": "^10.3.4",
+        "@types/detect-port": "^1.3.0",
         "@types/jest-environment-puppeteer": "^4.3.1",
         "@types/jest-image-snapshot": "^3.1.0",
         "@types/puppeteer": "^3.0.0",
@@ -114,6 +117,7 @@
         "babel-plugin-typescript-to-proptypes": "^1.3.2",
         "cpx": "^1.5.0",
         "cross-env": "^7.0.2",
+        "detect-port": "^1.3.0",
         "eslint": "^7.2.0",
         "eslint-plugin-babel": "^5.3.0",
         "eslint-plugin-filenames": "^1.3.2",
@@ -129,6 +133,7 @@
         "flowgen": "^1.10.0",
         "glob": "^7.1.6",
         "husky": ">=4",
+        "is-ci": "^2.0.0",
         "jest": "^26.0.1",
         "jest-environment-puppeteer": "^4.4.0",
         "jest-image-snapshot": "^4.0.2",
@@ -145,12 +150,13 @@
         "react-dom": "16.11.0",
         "react-router-dom": "^5.1.2",
         "rimraf": "^3.0.2",
+        "semantic-release": "^17.1.1",
         "static-server": "^2.2.1",
         "typescript": "^3.9.5"
     },
     "dependencies": {
         "@juggle/resize-observer": "^3.1.3",
-        "@tef-novum/webview-bridge": "^2.17.1",
+        "@tef-novum/webview-bridge": "^2.18.1",
         "@telefonica/libphonenumber": "^2.7.5",
         "classnames": "^2.2.6",
         "focus-trap-react": "^4.0.0",
@@ -183,5 +189,15 @@
     },
     "lint-staged": {
         "*.{js,css,md,yml,yaml,ts,tsx,d.ts,json}": "prettier --write"
+    },
+    "release": {
+        "plugins": [
+            "@semantic-release/commit-analyzer",
+            "@semantic-release/release-notes-generator",
+            "@semantic-release/changelog",
+            "@semantic-release/git",
+            "@semantic-release/npm",
+            "@semantic-release/github"
+        ]
     }
 }

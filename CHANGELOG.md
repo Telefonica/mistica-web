@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## Unreleased
+
+- Fix `HighlightedCard` imageFit issues.
+
+## v5.3.2 - 2020-08-28
+
+- Update `@tef-novum/webview-bridge` dependency
+
+## v.5.3.1 - 2020-08-26
+
+- Fix some Flow types for components with union types in Props (`Touchable`, `Button`, `ListRow`,
+  `HightlightedCard`, etc)
+- **Internal**: Make PRs fail in CI if flow definitions are not commited.
+- **Internal**: Automatically start storybook when running acceptance tests if it hasn't already been started.
+
 ## v.5.3.0 - 2020-08-25
 
 - New `HighlightedCard` component.
@@ -7,7 +22,7 @@
 
 ## v.5.2.0 - 2020-08-20
 
-- Support multiple tracking events
+- Support multiple tracking events.
 - New `FormSearchField` component
 - `TextLink` and `ListRow`: disable wrong `:hover` styles in touch devices.
 - Fixed several `FormSelect` bugs:
