@@ -42,12 +42,12 @@ const FormTextField: React.FC<FormTextFieldProps> = ({
         if (rest.multiline) {
             setTimeout(() => {
                 if (inputRef.current) {
-                    // scroll to end
-                    inputRef.current.scrollTop = inputRef.current.scrollHeight;
                     // place caret to the end
                     const value = inputRef.current.value;
                     inputRef.current.value = '';
                     inputRef.current.value = value;
+                    // scroll to end
+                    inputRef.current.scrollTop = inputRef.current.scrollHeight;
                 }
             }, 0);
         }
