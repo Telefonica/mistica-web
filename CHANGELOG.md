@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Fix `HighlightedCard` imageFit issues.
+- Fix SSR components that were causing problems on tests.
 
 ## v5.3.2 - 2020-08-28
 
