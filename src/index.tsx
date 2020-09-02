@@ -25,7 +25,6 @@ export {default as FocusTrap} from './focus-trap';
 export {confirm, alert} from './dialog';
 export {default as Badge} from './badge';
 export {default as TextLink} from './text-link';
-export {default as Bun} from './bun';
 export {default as Overlay} from './overlay';
 export {default as Tooltip} from './tooltip';
 export {default as Stack} from './stack';
