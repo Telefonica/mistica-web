@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Next
+
+- Update Focus/Blur behavior in multiline `FormTextField`. On focus, caret and scroll is positioned to the
+  end. On blur scroll is set to top.
+
 ## v5.3.2 - 2020-08-28
 
 - Update `@tef-novum/webview-bridge` dependency
