@@ -76,6 +76,7 @@ test('Search text field', async () => {
     const page = await openStoryPage({
         section: 'Components|Forms/FormFields',
         name: 'Types (controlled)',
+        device: 'MOBILE_ANDROID',
     });
 
     const fieldWrapper = await screen.findByTestId('search');
