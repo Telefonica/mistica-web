@@ -39,7 +39,8 @@ const serveStaticStorybook = () => {
     });
 };
 
-const buildStaticStorybook = () => exec('yarn storybook-static', {env: {NODE_ENV: 'development'}});
+const buildStaticStorybook = () =>
+    exec('yarn storybook-static', {env: {...process.env, NODE_ENV: 'development'}});
 
 export default async (jestConfig: any = {}): Promise<void> => {
     console.log();
