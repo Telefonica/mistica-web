@@ -25,7 +25,7 @@ We would love to accept your Pull Requests but please, before starting your deve
 
 If something is broken or not working as expected, let us know!
 
-:bug: [Open a Bug issue](https://github.com/Telefonica/mistica-web/issues/new?assignees=&labels=bug&template=bug_report.md&title=)
+:bug: [Open a Bug issue](https://github.com/Telefonica/mistica-web/issues/new?assignees=&labels=bug&template=bug-report.md&title=)
 
 ## Feature requests (no UI/UX changes)
 
