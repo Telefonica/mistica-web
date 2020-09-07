@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {create as createJss, SheetsRegistry} from 'jss';
-import withStyles, {createUseStyles as jssCreateUseStyles, JssProvider} from 'react-jss';
+import {createUseStyles as jssCreateUseStyles, JssProvider} from 'react-jss';
 import camelCase from 'jss-plugin-camel-case';
 import defaultUnit from 'jss-plugin-default-unit';
 import ruleValueFunction from 'jss-plugin-rule-value-function';
@@ -27,44 +27,7 @@ jss.use(ruleValueFunction(), nested(), camelCase(), defaultUnit(), vendorPrefixe
 
 export const getJss = (): any => jss;
 
-type CssClass = {[K: string]: string | number | boolean | CssClass};
-type Sheet = {[K: string]: CssClass};
-
 type ObjValuesToStr<O> = {[Key in keyof O]: string};
-
-/**
- * This function does nothing, this is just used to make css-in-js autocomplete
- * editor extensions work with JSS. @see https://github.com/ansumanshah/css-in-js
- */
-export const createSheet = <S extends Sheet>(sheet: S): ObjValuesToStr<S> =>
-    // @ts-expect-error - This function casts a value to an incompatible type
-    sheet;
-
-type WithSheetResult<P, C> = React.ComponentType<Omit<P, 'classes'>> & {WrappedComponent: C};
-
-export const withSheet = <S extends ObjValuesToStr<Sheet>>(sheet: S) => <P extends any>(
-    Component: React.ComponentType<P>
-): WithSheetResult<P, typeof Component> => {
-    // @ts-expect-error - our types are fine
-    const StyledComponent: WithSheetResult<typeof Component> = withStyles(sheet)(Component);
-    if (process.env.STORYBOOK_BUILD) {
-        StyledComponent.propTypes = Component.propTypes;
-        if (StyledComponent.propTypes) {
-            delete StyledComponent.propTypes.sheet;
-        }
-        StyledComponent.defaultProps = Component.defaultProps;
-        StyledComponent.displayName = Component.displayName || Component.name;
-    }
-    StyledComponent.WrappedComponent = Component;
-    return StyledComponent;
-};
-
-export const removeJssProps = <P extends {sheet?: any; classes?: any}>(
-    props: P
-): Omit<P, 'sheet' | 'classes'> => {
-    const {sheet, classes, ...withoutJssProps} = props;
-    return withoutJssProps;
-};
 
 type CSSValue = void | number | boolean | string | ((props: any) => string | number | boolean);
 

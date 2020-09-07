@@ -1,6 +1,6 @@
 import {PACKAGE_VERSION} from './package-version';
 
-export {createSheet, withSheet, removeJssProps, createUseStyles, getJss, ServerSideStyles} from './jss';
+export {createUseStyles, getJss, ServerSideStyles} from './jss';
 export {default as ThemeContext} from './theme-context';
 export {default as ThemeContextProvider} from './theme-context-provider';
 export {default as ScreenReaderOnly} from './screen-reader-only';
@@ -25,7 +25,6 @@ export {default as FocusTrap} from './focus-trap';
 export {confirm, alert} from './dialog';
 export {default as Badge} from './badge';
 export {default as TextLink} from './text-link';
-export {default as Bun} from './bun';
 export {default as Overlay} from './overlay';
 export {default as Tooltip} from './tooltip';
 export {default as Stack} from './stack';
