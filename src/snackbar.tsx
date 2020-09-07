@@ -4,6 +4,8 @@ import Touchable from './touchable';
 import classNames from 'classnames';
 import {isWebViewBridgeAvailable, nativeMessage} from '@tef-novum/webview-bridge';
 
+const PADDING_Y = 12;
+const PADDING_X = 16;
 const TRANSITION_TIME_IN_MS = 300;
 const SNACKBAR_MAX_WIDTH = 800;
 const SNACKBAR_MIN_WIDTH = 360;
@@ -32,12 +34,11 @@ const useStyles = createUseStyles((theme) => ({
         maxWidth: SNACKBAR_MAX_WIDTH,
         minWidth: SNACKBAR_MIN_WIDTH,
         minHeight: SNACKBAR_MIN_HEIGHT,
-        padding: `16px 24px`,
+        padding: `${PADDING_Y}px ${PADDING_X}px`,
         borderRadius: 4,
         position: 'fixed',
         bottom: 24,
         zIndex: 1000, // above anything
-
         backgroundColor: ({type}) =>
             type === 'CRITICAL' ? theme.colors.feedbackErrorBackground : theme.colors.feedbackInfoBackground,
         opacity: ({isOpen}) => (isOpen ? 1 : 0),
@@ -46,15 +47,20 @@ const useStyles = createUseStyles((theme) => ({
     },
     snackbarContent: {
         fontSize: 14,
-        lineHeight: 1.7,
+        lineHeight: `20px`,
         color: theme.colors.textPrimaryInverse,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     snackbarButton: {
-        float: 'right',
         marginLeft: 28,
         fontWeight: 500,
-        lineHeight: 1.7,
-
+        fontSize: 16,
+        lineHeight: `24px`,
+        whiteSpace: 'no-wrap',
+        width: 'auto',
         color: ({type}) =>
             type === 'INFORMATIVE' ? theme.colors.textLinkSnackbar : theme.colors.textPrimaryInverse,
     },
@@ -64,7 +70,6 @@ const useStyles = createUseStyles((theme) => ({
             right: 8,
             bottom: 8,
             minWidth: 0,
-            borderRadius: 4,
         },
     },
 }));
@@ -126,7 +131,7 @@ const Snackbar: React.FC<Props> = ({
 const SnackbarContainer: React.FC<Props> = ({
     message,
     buttonText,
-    duration = buttonText ? 10000 : 5000,
+    duration = Infinity, //buttonText ? 10000 : 5000,
     onClose = () => {},
     type = 'INFORMATIVE',
 }) => {

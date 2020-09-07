@@ -10,13 +10,13 @@ import ThemeContext from './theme-context';
 
 import type {Theme} from './theme';
 
-const affectedBoxSizingProps = ['width', 'min-width', 'max-width', 'height', 'min-height', 'max-height'];
+const affectedBoxSizingProps = ['width', 'minWidth', 'maxWidth', 'height', 'minHeight', 'maxHeight'];
 
 const autoBoxSizing = () => {
     return {
         onProcessRule(rule: any /* this type should be StyleRule but it is not exposed by JSS */): void {
             if (rule.style && affectedBoxSizingProps.some((cssKey) => cssKey in rule.style)) {
-                rule.style['box-sizing'] = 'border-box';
+                rule.style.boxSizing = 'border-box';
             }
         },
     };
