@@ -7,6 +7,10 @@ import {ButtonPrimary, ButtonSecondary, ButtonLink} from './button';
 import {TopDistanceContext} from './fixed-to-top';
 import OverscrollColor from './overscroll-color-context';
 import Feedback from './feedback';
+import {VIVO_SKIN} from './colors';
+import IcnSuccess from './icons/icon-success';
+import IcnError from './icons/icon-error';
+import IcnInfo from './icons/icon-info';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -48,6 +52,12 @@ const FEEDBACK_INFO: 'info' = 'info';
 
 type FeedbackType = typeof FEEDBACK_SUCCESS | typeof FEEDBACK_ERROR | typeof FEEDBACK_INFO;
 
+const feedbackToIconComponent = {
+    [FEEDBACK_SUCCESS]: IcnSuccess,
+    [FEEDBACK_ERROR]: IcnError,
+    [FEEDBACK_INFO]: IcnInfo,
+};
+
 interface FeedbackProps {
     title: string;
     primaryButton: React.ReactElement<typeof ButtonPrimary>;
@@ -77,6 +87,9 @@ const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     const footerHeight = getFooterHeight(isMobile, link, secondaryButton);
     const isInverse = feedbackType === FEEDBACK_SUCCESS && isMobile;
     const [isServerSide, setIsServerSide] = React.useState(true);
+    const hasNotIcon = theme.skin === VIVO_SKIN && feedbackType !== FEEDBACK_SUCCESS;
+    const hasIcon = !hasNotIcon;
+    const Icon = feedbackToIconComponent[feedbackType];
 
     const visibleAreaHeightPx = `${windowHeight - topDistance - footerHeight}px`;
     const classes = useStyles({
@@ -103,7 +116,13 @@ const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                     containerBgColor={isInverse ? theme.colors.overscrollColorTop : undefined}
                 >
                     <div className={classes.container}>
-                        <Feedback type={feedbackType} title={title} description={description}>
+                        <Feedback
+                            title={title}
+                            description={description}
+                            animateText={feedbackType !== FEEDBACK_INFO}
+                            hapticFeedback={feedbackType !== FEEDBACK_INFO ? feedbackType : undefined}
+                            {...(hasIcon && {icon: <Icon />})}
+                        >
                             {children}
                         </Feedback>
                     </div>

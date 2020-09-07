@@ -1,11 +1,6 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {useTheme} from './hooks';
 import {useIsInverseVariant} from './theme-variant-context';
-import IcnError from './icons/icon-error';
-import IcnSuccess from './icons/icon-success';
-import IcnInfo from './icons/icon-info';
-import {VIVO_SKIN} from './colors';
 import {getPlatform, isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {
     isWebViewBridgeAvailable,
@@ -17,19 +12,20 @@ import type {Theme} from './theme';
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) && !isRunningAcceptanceTest(platformOverrides);
 
-const animateText = (platformOverrides: Theme['platformOverrides']) => ({isInfo}: {isInfo: boolean}) =>
-    !isInfo && areAnimationsSupported(platformOverrides)
+const animateText = (platformOverrides: Theme['platformOverrides']) => ({
+    animateText,
+}: {
+    animateText: boolean;
+}) =>
+    animateText && areAnimationsSupported(platformOverrides)
         ? '$sweepIn 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards'
         : 'initial';
 
-const initialTextOpacity = (platformOverrides: Theme['platformOverrides']) => ({isInfo}: {isInfo: boolean}) =>
-    !isInfo && areAnimationsSupported(platformOverrides) ? 0 : 1;
-
-const requestVibration = (type: 'error' | 'success') => {
-    if (isWebViewBridgeAvailable()) {
-        requestVibrationNative(type).catch(() => {});
-    }
-};
+const initialTextOpacity = (platformOverrides: Theme['platformOverrides']) => ({
+    animateText,
+}: {
+    animateText: boolean;
+}) => (animateText && areAnimationsSupported(platformOverrides) ? 0 : 1);
 
 const useStyles = createUseStyles((theme) => ({
     '@keyframes sweepIn': {
@@ -96,26 +92,22 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-const FEEDBACK_SUCCESS: 'success' = 'success';
-const FEEDBACK_ERROR: 'error' = 'error';
-const FEEDBACK_INFO: 'info' = 'info';
+type HapticFeedback = 'error' | 'success';
 
-type FeedbackType = typeof FEEDBACK_SUCCESS | typeof FEEDBACK_ERROR | typeof FEEDBACK_INFO;
-
-const feedbackToIconComponent = {
-    [FEEDBACK_SUCCESS]: IcnSuccess,
-    [FEEDBACK_ERROR]: IcnError,
-    [FEEDBACK_INFO]: IcnInfo,
+const requestVibration = (type: HapticFeedback) => {
+    if (isWebViewBridgeAvailable()) {
+        requestVibrationNative(type).catch(() => {});
+    }
 };
 
-const useHapticFeedback = (type: FeedbackType) => {
+const useHapticFeedback = (type?: HapticFeedback) => {
     React.useEffect(() => {
-        let timeoutId: any;
-        if (type === FEEDBACK_SUCCESS) {
+        let timeoutId: NodeJS.Timeout;
+        if (type === 'success') {
             timeoutId = setTimeout(() => requestVibration('success'), 700);
         }
 
-        if (type === FEEDBACK_ERROR) {
+        if (type === 'error') {
             timeoutId = setTimeout(() => requestVibration('error'), 1000);
         }
 
@@ -125,37 +117,37 @@ const useHapticFeedback = (type: FeedbackType) => {
     }, [type]);
 };
 
-type FeedbackProps = {
+interface FeedbackProps {
     title: string;
     description?: string | ReadonlyArray<string>;
-    type: FeedbackType;
     children?: React.ReactNode;
-};
+    icon?: React.ReactNode;
+    hapticFeedback?: HapticFeedback;
+    animateText?: boolean;
+}
 
-const Feedback: React.FC<FeedbackProps> = ({title, description, type, children}) => {
-    const theme = useTheme();
-    useHapticFeedback(type);
+const Feedback: React.FC<FeedbackProps> = ({
+    title,
+    description,
+    children,
+    icon,
+    hapticFeedback,
+    animateText = false,
+}) => {
+    useHapticFeedback(hapticFeedback);
     const isInverse = useIsInverseVariant();
-    const hasNotIcon = theme.skin === VIVO_SKIN && type !== FEEDBACK_SUCCESS;
-    const hasIcon = !hasNotIcon;
     const classes = useStyles({
         isInverse,
-        isInfo: type === FEEDBACK_INFO,
+        animateText,
     });
     const normalizedDescription =
         description && Array.isArray(description)
             ? description.map((paragraph, i) => <p key={i}>{paragraph}</p>)
             : description;
 
-    const Icon = feedbackToIconComponent[type];
-
     return (
         <div className={classes.container}>
-            {hasIcon && (
-                <div className={classes.iconContainer}>
-                    <Icon />
-                </div>
-            )}
+            {!!icon && <div className={classes.iconContainer}>{icon}</div>}
             <span className={classes.title}>{title}</span>
             {normalizedDescription && <div className={classes.description}>{normalizedDescription}</div>}
             {children && <div className={classes.childrenContainer}>{children}</div>}
