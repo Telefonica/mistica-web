@@ -4,6 +4,9 @@ import {ButtonLink, ButtonPrimary, ButtonSecondary} from '../button';
 
 export default {
     title: 'Components|Feedbacks/FeedbackScreen',
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 const primaryButton = <ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>;
