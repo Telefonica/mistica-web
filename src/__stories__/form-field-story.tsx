@@ -96,21 +96,25 @@ export const Variants: StoryComponent = () => {
     return (
         <>
             <StorySection title="Default">
-                <FormTextField optional name="text" label="Normal field" />
+                <div data-testid="normal-field">
+                    <FormTextField optional name="text" label="Normal field" />
+                </div>
             </StorySection>
 
             <StorySection title="Multiline">
                 <FormTextField optional name="text" label="Multiline" multiline />
             </StorySection>
 
-            <StorySection title="Multiline with character limit">
-                <FormTextField
-                    name="text"
-                    label="Multiline"
-                    multiline
-                    maxLength={200}
-                    helperText="Helper Text"
-                />
+            <StorySection title="Multiline with maxLength">
+                <div data-testid="multiline-max-length">
+                    <FormTextField
+                        name="text"
+                        label="Multiline with maxLength"
+                        multiline
+                        maxLength={200}
+                        helperText="Helper Text"
+                    />
+                </div>
             </StorySection>
 
             <StorySection title="With label">
@@ -503,13 +507,15 @@ export const TypesControlled = (): React.ReactNode => (
 
         <Controlled title="FormSearchField" initialValue="">
             {(handleChange, handleChangeValue, value) => (
-                <FormSearchField
-                    name="search"
-                    label="Search"
-                    onChange={handleChange}
-                    onChangeValue={handleChangeValue}
-                    value={value}
-                />
+                <div data-testid="search">
+                    <FormSearchField
+                        name="search"
+                        label="Search"
+                        onChange={handleChange}
+                        onChangeValue={handleChangeValue}
+                        value={value}
+                    />
+                </div>
             )}
         </Controlled>
 

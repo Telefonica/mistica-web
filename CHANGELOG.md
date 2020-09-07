@@ -1,10 +1,5 @@
 # CHANGELOG
 
-## Unreleased
-
-- Fix `HighlightedCard` imageFit issues.
-- **Breaking Change**: Remove `Bun` component
-
 ## v5.3.2 - 2020-08-28
 
 - Update `@tef-novum/webview-bridge` dependency
