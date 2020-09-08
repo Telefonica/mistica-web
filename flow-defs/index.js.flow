@@ -33,7 +33,6 @@ declare export {
   default as OverscrollColor,
   OverscrollColorProvider
 } from "./overscroll-color-context";
-declare export { default as Feedback } from "./feedback";
 declare export {
   FeedbackScreen,
   ErrorFeedbackScreen,

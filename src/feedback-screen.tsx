@@ -1,16 +1,39 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {useTheme, useScreenSize, useWindowHeight, useIsomorphicLayoutEffect} from './hooks';
-import {ThemeVariant} from './theme-variant-context';
+import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import ButtonFixedFooterLayout, {getFooterHeight} from './button-fixed-footer-layout';
 import {ButtonPrimary, ButtonSecondary, ButtonLink} from './button';
 import {TopDistanceContext} from './fixed-to-top';
 import OverscrollColor from './overscroll-color-context';
-import Feedback from './feedback';
 import {VIVO_SKIN} from './colors';
 import IcnSuccess from './icons/icon-success';
 import IcnError from './icons/icon-error';
 import IcnInfo from './icons/icon-info';
+import {
+    isWebViewBridgeAvailable,
+    requestVibration as requestVibrationNative,
+} from '@tef-novum/webview-bridge';
+import {getPlatform, isOldChrome, isRunningAcceptanceTest} from './utils/platform';
+import {Theme} from './theme';
+
+const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
+    !isOldChrome(platformOverrides) && !isRunningAcceptanceTest(platformOverrides);
+
+const animateText = (platformOverrides: Theme['platformOverrides']) => ({
+    animateText,
+}: {
+    animateText: boolean;
+}) =>
+    animateText && areAnimationsSupported(platformOverrides)
+        ? '$sweepIn 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards'
+        : 'initial';
+
+const initialTextOpacity = (platformOverrides: Theme['platformOverrides']) => ({
+    animateText,
+}: {
+    animateText: boolean;
+}) => (animateText && areAnimationsSupported(platformOverrides) ? 0 : 1);
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -44,9 +67,95 @@ const useStyles = createUseStyles((theme) => ({
             padding: '0px 32px',
         },
     },
+
+    '@keyframes sweepIn': {
+        '0%': {
+            opacity: 0,
+            transform: 'translate(0, 20px)',
+        },
+        '100%': {
+            opacity: 1,
+            transform: 'translate(0, 0)',
+        },
+    },
+
+    innerContainer: {
+        textAlign: 'left',
+        padding: '64px 24px 16px',
+    },
+
+    iconContainer: {
+        marginBottom: 24,
+    },
+
+    title: {
+        color: ({isInverse}) => (isInverse ? theme.colors.textPrimarySpecial : theme.colors.textPrimary),
+        animation: animateText(theme.platformOverrides),
+        lineHeight: 1.3333333,
+        fontSize: 24,
+        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? 0.36 : 'normal',
+        fontWeight: 300,
+        opacity: initialTextOpacity(theme.platformOverrides),
+    },
+
+    description: {
+        marginTop: 16,
+        color: ({isInverse}) => (isInverse ? theme.colors.textPrimarySpecial : theme.colors.textSecondary),
+        animation: animateText(theme.platformOverrides),
+        fontSize: 18,
+        fontWeight: 300,
+        lineHeight: 1.3333333,
+        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.45 : 'normal',
+        opacity: initialTextOpacity(theme.platformOverrides),
+        '& p': {
+            marginTop: 0,
+            marginBottom: 16,
+        },
+    },
+
+    childrenContainer: {
+        marginTop: 16,
+        animation: animateText(theme.platformOverrides),
+        opacity: initialTextOpacity(theme.platformOverrides),
+    },
+
+    [theme.mq.tabletOrBigger]: {
+        innerContainer: {
+            padding: '64px 16px 16px',
+        },
+        description: {
+            maxWidth: 456,
+        },
+        title: {
+            maxWidth: 344,
+        },
+    },
 }));
 
 type HapticFeedback = 'error' | 'success';
+
+const requestVibration = (type: HapticFeedback) => {
+    if (isWebViewBridgeAvailable()) {
+        requestVibrationNative(type).catch(() => {});
+    }
+};
+
+const useHapticFeedback = (type?: HapticFeedback) => {
+    React.useEffect(() => {
+        let timeoutId: NodeJS.Timeout;
+        if (type === 'success') {
+            timeoutId = setTimeout(() => requestVibration('success'), 700);
+        }
+
+        if (type === 'error') {
+            timeoutId = setTimeout(() => requestVibration('error'), 1000);
+        }
+
+        return () => {
+            clearTimeout(timeoutId);
+        };
+    }, [type]);
+};
 
 interface FeedbackProps {
     title: string;
@@ -60,7 +169,6 @@ interface FeedbackProps {
 interface FeedbackScreenProps extends FeedbackProps {
     hapticFeedback?: HapticFeedback;
     icon?: React.ReactNode;
-    isInverse?: boolean;
     animateText?: boolean;
 }
 
@@ -73,9 +181,10 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     link,
     hapticFeedback,
     icon,
-    isInverse = false,
     animateText = false,
 }) => {
+    useHapticFeedback(hapticFeedback);
+    const isInverse = useIsInverseVariant();
     const theme = useTheme();
     const windowHeight = useWindowHeight();
     const {isMobile} = useScreenSize();
@@ -88,6 +197,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         isInverse,
         visibleAreaHeight: isServerSide ? '100vh' : visibleAreaHeightPx,
         footerHeight,
+        animateText,
     });
 
     // This trick along with the 100vh measure allows us to perform a first meaningful render on the server side.
@@ -97,17 +207,19 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         setIsServerSide(false);
     }, []);
 
+    const normalizedDescription =
+        description && Array.isArray(description)
+            ? description.map((paragraph, i) => <p key={i}>{paragraph}</p>)
+            : description;
+
     const feedbackBasicContent = (
         <div className={classes.container}>
-            <Feedback
-                title={title}
-                description={description}
-                animateText={animateText}
-                hapticFeedback={hapticFeedback}
-                icon={icon}
-            >
-                {children}
-            </Feedback>
+            <div className={classes.innerContainer}>
+                {!!icon && <div className={classes.iconContainer}>{icon}</div>}
+                <span className={classes.title}>{title}</span>
+                {normalizedDescription && <div className={classes.description}>{normalizedDescription}</div>}
+                {children && <div className={classes.childrenContainer}>{children}</div>}
+            </div>
         </div>
     );
 
@@ -143,13 +255,9 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
 export const SuccessFeedbackScreen: React.FC<FeedbackProps> = (props) => {
     const {isMobile} = useScreenSize();
     return (
-        <FeedbackScreen
-            {...props}
-            hapticFeedback="success"
-            icon={<IcnSuccess />}
-            isInverse={isMobile}
-            animateText
-        />
+        <ThemeVariant isInverse={isMobile}>
+            <FeedbackScreen {...props} hapticFeedback="success" icon={<IcnSuccess />} animateText />
+        </ThemeVariant>
     );
 };
 export const ErrorFeedbackScreen: React.FC<FeedbackProps> = (props) => {

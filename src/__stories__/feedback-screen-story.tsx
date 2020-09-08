@@ -13,6 +13,7 @@ import IconError from '../icons/icon-error';
 import IconInfo from '../icons/icon-info';
 import IconOrders from '../icons/icon-orders';
 import Box from '../box';
+import {ThemeVariant} from '../theme-variant-context';
 
 export default {
     title: 'Components|Feedbacks/FeedbackScreen',
@@ -100,24 +101,27 @@ export const Default: StoryComponent = () => {
                     {isInverseStateCheckbox}
                 </Stack>
             </Box>
-            <FeedbackScreen
-                title={title}
-                description={description}
-                isInverse={isInverseState}
-                animateText={animateText}
-                icon={iconSelectToIcon[iconName as keyof typeof iconSelectToIcon]}
-                primaryButton={
-                    primaryButtonText.length ? (
-                        <ButtonPrimary onPress={() => {}}>{primaryButtonText}</ButtonPrimary>
-                    ) : undefined
-                }
-                secondaryButton={
-                    secondaryButtonText.length ? (
-                        <ButtonSecondary onPress={() => {}}>{secondaryButtonText}</ButtonSecondary>
-                    ) : undefined
-                }
-                link={linkText.length ? <ButtonLink onPress={() => {}}>{linkText}</ButtonLink> : undefined}
-            />
+            <ThemeVariant isInverse={isInverseState}>
+                <FeedbackScreen
+                    title={title}
+                    description={description}
+                    animateText={animateText}
+                    icon={iconSelectToIcon[iconName as keyof typeof iconSelectToIcon]}
+                    primaryButton={
+                        primaryButtonText.length ? (
+                            <ButtonPrimary onPress={() => {}}>{primaryButtonText}</ButtonPrimary>
+                        ) : undefined
+                    }
+                    secondaryButton={
+                        secondaryButtonText.length ? (
+                            <ButtonSecondary onPress={() => {}}>{secondaryButtonText}</ButtonSecondary>
+                        ) : undefined
+                    }
+                    link={
+                        linkText.length ? <ButtonLink onPress={() => {}}>{linkText}</ButtonLink> : undefined
+                    }
+                />
+            </ThemeVariant>
         </Stack>
     );
 };

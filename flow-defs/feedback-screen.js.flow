@@ -21,7 +21,6 @@ declare type FeedbackScreenProps = {
 
   hapticFeedback?: HapticFeedback,
   icon?: React.Node,
-  isInverse?: boolean,
   animateText?: boolean
 };
 declare export var FeedbackScreen: React.ComponentType<FeedbackScreenProps>;
