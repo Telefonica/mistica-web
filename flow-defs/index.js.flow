@@ -89,6 +89,8 @@ declare export { default as IconClose } from "./icons/icon-close";
 declare export { default as IconInfo } from "./icons/icon-info";
 declare export { default as IconArrowDown } from "./icons/icon-arrow-down";
 declare export { default as IconChevron } from "./icons/icon-chevron";
+declare export { default as IconError } from "./icons/icon-error";
+declare export { default as IconSuccess } from "./icons/icon-success";
 declare export {
   useTheme,
   useScreenSize,

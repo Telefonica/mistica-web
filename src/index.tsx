@@ -68,6 +68,8 @@ export {default as IconClose} from './icons/icon-close';
 export {default as IconInfo} from './icons/icon-info';
 export {default as IconArrowDown} from './icons/icon-arrow-down';
 export {default as IconChevron} from './icons/icon-chevron';
+export {default as IconError} from './icons/icon-error';
+export {default as IconSuccess} from './icons/icon-success';
 
 export {
     useTheme,
