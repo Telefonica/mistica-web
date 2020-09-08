@@ -5,20 +5,28 @@
  * Flowgen v1.10.0
  */
 
-declare type PlatformOverrides = {
-  platform?: "ios" | "android",
-  insideNovumNativeApp?: boolean
-};
+import { type Theme } from "../theme";
 declare export var isInsideNovumNativeApp: (
-  platformOverrides?: PlatformOverrides | void
+  platformOverrides: $PropertyType<Theme, "platformOverrides">
 ) => boolean;
-declare export var isRunningAcceptanceTest: () => boolean;
-declare export var isAndroid: () => boolean;
-declare export var isIos: () => boolean;
-declare export var isChrome: () => boolean;
-declare export var isOldChrome: () => boolean;
-declare export var getIosVersion: () => string;
+declare export var isRunningAcceptanceTest: (
+  platformOverrides: $PropertyType<Theme, "platformOverrides">
+) => boolean;
+declare export var isAndroid: (
+  platformOverrides: $PropertyType<Theme, "platformOverrides">
+) => boolean;
+declare export var isIos: (
+  platformOverrides: $PropertyType<Theme, "platformOverrides">
+) => boolean;
+declare export var isChrome: (
+  platformOverrides: $PropertyType<Theme, "platformOverrides">
+) => boolean;
+declare export var isOldChrome: (
+  platformOverrides: $PropertyType<Theme, "platformOverrides">
+) => boolean;
+declare export var getIosVersion: (
+  platformOverrides: $PropertyType<Theme, "platformOverrides">
+) => string;
 declare export var getPlatform: (
-  platformOverrides?: PlatformOverrides | void
+  platformOverrides: $PropertyType<Theme, "platformOverrides">
 ) => "ios" | "android";
-declare export {};

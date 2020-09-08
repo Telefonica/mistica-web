@@ -12,14 +12,18 @@ import {
     requestVibration as requestVibrationNative,
 } from '@tef-novum/webview-bridge';
 
-const animationsSupported = !isOldChrome() && !isRunningAcceptanceTest();
+import type {Theme} from './theme';
 
-const animateText = ({isInfo}: {isInfo: boolean}) =>
-    !isInfo && animationsSupported
+const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
+    !isOldChrome(platformOverrides) && !isRunningAcceptanceTest(platformOverrides);
+
+const animateText = (platformOverrides: Theme['platformOverrides']) => ({isInfo}: {isInfo: boolean}) =>
+    !isInfo && areAnimationsSupported(platformOverrides)
         ? '$sweepIn 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards'
         : 'initial';
 
-const initialTextOpacity = ({isInfo}: {isInfo: boolean}) => (!isInfo && animationsSupported ? 0 : 1);
+const initialTextOpacity = (platformOverrides: Theme['platformOverrides']) => ({isInfo}: {isInfo: boolean}) =>
+    !isInfo && areAnimationsSupported(platformOverrides) ? 0 : 1;
 
 const requestVibration = (type: 'error' | 'success') => {
     if (isWebViewBridgeAvailable()) {
@@ -50,23 +54,23 @@ const useStyles = createUseStyles((theme) => ({
 
     title: {
         color: ({isInverse}) => (isInverse ? theme.colors.textPrimarySpecial : theme.colors.textPrimary),
-        animation: animateText,
+        animation: animateText(theme.platformOverrides),
         lineHeight: 1.3333333,
         fontSize: 24,
         letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? 0.36 : 'normal',
         fontWeight: 300,
-        opacity: initialTextOpacity,
+        opacity: initialTextOpacity(theme.platformOverrides),
     },
 
     description: {
         marginTop: 16,
         color: ({isInverse}) => (isInverse ? theme.colors.textPrimarySpecial : theme.colors.textSecondary),
-        animation: animateText,
+        animation: animateText(theme.platformOverrides),
         fontSize: 18,
         fontWeight: 300,
         lineHeight: 1.3333333,
         letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.45 : 'normal',
-        opacity: initialTextOpacity,
+        opacity: initialTextOpacity(theme.platformOverrides),
         '& p': {
             marginTop: 0,
             marginBottom: 16,
@@ -75,8 +79,8 @@ const useStyles = createUseStyles((theme) => ({
 
     childrenContainer: {
         marginTop: 16,
-        animation: animateText,
-        opacity: initialTextOpacity,
+        animation: animateText(theme.platformOverrides),
+        opacity: initialTextOpacity(theme.platformOverrides),
     },
 
     [theme.mq.tabletOrBigger]: {

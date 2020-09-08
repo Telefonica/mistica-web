@@ -9,17 +9,15 @@ import type {Skin} from '../colors';
 const globalBrowser: Browser = (global as any).browser;
 const globalPage: Page = (global as any).page;
 
-const STORYBOOK_URL = ((): string => {
+const HOST = ((): string => {
     if (globalBrowser) {
         const url = new URL(globalBrowser.wsEndpoint());
         const isUsingDockerizedChromium = url.port === '9223';
         if (isUsingDockerizedChromium) {
-            return process.platform === 'linux'
-                ? 'http://172.17.0.1:6006/iframe.html'
-                : 'http://host.docker.internal:6006/iframe.html';
+            return process.platform === 'linux' ? '172.17.0.1' : 'host.docker.internal';
         }
     }
-    return 'http://localhost:6006/iframe.html';
+    return 'localhost';
 })();
 
 const MOBILE_DEVICE_IOS: 'MOBILE_IOS' = 'MOBILE_IOS';
@@ -36,6 +34,7 @@ export type Device =
 type DeviceCollection = Record<
     Device,
     {
+        userAgent?: string;
         platform?: string;
         viewport: Viewport;
     }
@@ -43,6 +42,8 @@ type DeviceCollection = Record<
 
 const DEVICES: DeviceCollection = {
     [MOBILE_DEVICE_IOS]: {
+        userAgent:
+            'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
         platform: 'ios',
         viewport: {
             width: 375,
@@ -54,6 +55,8 @@ const DEVICES: DeviceCollection = {
         },
     },
     [MOBILE_DEVICE_ANDROID]: {
+        userAgent:
+            'Mozilla/5.0 (Linux; Android 8.0; Pixel 2 Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Mobile Safari/537.36',
         platform: 'android',
         viewport: {
             width: 411,
@@ -151,7 +154,7 @@ const buildStoryUrl = (section: string, name: string, skin?: string, platform?: 
     if (platform) {
         params.set('platform', platform);
     }
-    return `${STORYBOOK_URL}?${params.toString()}`;
+    return `http://${HOST}:6006/iframe.html?${params.toString()}`;
 };
 
 export type PageApi = {
@@ -287,7 +290,7 @@ export const openSSRPage = async ({
     name,
     device = TABLET_DEVICE,
     skin = 'Movistar',
-    userAgent,
+    userAgent = DEVICES[device].userAgent,
 }: {
     name: string;
     device?: Device;
@@ -312,10 +315,8 @@ export const openSSRPage = async ({
         }
     });
 
-    const url = `http://localhost:${port}/${name}?skin=${skin}`;
-    const pageApi = await openPage({url, device, userAgent});
-
-    return pageApi;
+    const url = `http://${HOST}:${port}/${name}?skin=${skin}`;
+    return openPage({url, device, userAgent});
 };
 
 export const screen: Queries = buildQueryMethods();

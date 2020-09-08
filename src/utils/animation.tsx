@@ -1,12 +1,17 @@
 import * as React from 'react';
 import {isOldChrome, isRunningAcceptanceTest} from './platform';
 
-const animationsSupported = !isOldChrome() && !isRunningAcceptanceTest();
+import type {Theme} from '../theme';
+
+const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
+    !isOldChrome(platformOverrides) &&
+    !isRunningAcceptanceTest(platformOverrides) &&
+    typeof window !== 'undefined';
 
 type ShakeStyles = {outerAnimation: any; innerAnimation: any; '@keyframes shake'?: any};
 
-export const animateShakeStyles = (): ShakeStyles =>
-    animationsSupported
+export const animateShakeStyles = (platformOverrides: Theme['platformOverrides']): ShakeStyles =>
+    areAnimationsSupported(platformOverrides)
         ? {
               '@keyframes shake': {
                   '10%, 90%': {
@@ -46,8 +51,12 @@ type AnimationProps = {
     opacity?: number;
 };
 
-export const getAnimateDrawLineProps = (from: string, begin: string): null | AnimationProps =>
-    animationsSupported
+export const getAnimateDrawLineProps = (
+    from: string,
+    begin: string,
+    platformOverrides: Theme['platformOverrides']
+): null | AnimationProps =>
+    areAnimationsSupported(platformOverrides)
         ? {
               strokeDasharray: from.replace('-', ''),
               strokeDashoffset: from,
@@ -68,8 +77,11 @@ export const getAnimateDrawLineProps = (from: string, begin: string): null | Ani
           }
         : null;
 
-export const getAnimateFadeInProps = (begin: string): null | AnimationProps =>
-    animationsSupported
+export const getAnimateFadeInProps = (
+    begin: string,
+    platformOverrides: Theme['platformOverrides']
+): null | AnimationProps =>
+    areAnimationsSupported(platformOverrides)
         ? {
               opacity: 0,
               children: (
@@ -89,8 +101,11 @@ export const getAnimateFadeInProps = (begin: string): null | AnimationProps =>
           }
         : null;
 
-export const getAnimateHopInProps = (begin: string): null | AnimationProps =>
-    animationsSupported
+export const getAnimateHopInProps = (
+    begin: string,
+    platformOverrides: Theme['platformOverrides']
+): null | AnimationProps =>
+    areAnimationsSupported(platformOverrides)
         ? {
               children: (
                   <>
@@ -122,8 +137,11 @@ export const getAnimateHopInProps = (begin: string): null | AnimationProps =>
           }
         : null;
 
-export const getAnimateSweepInProps = (begin: string): null | AnimationProps =>
-    animationsSupported
+export const getAnimateSweepInProps = (
+    begin: string,
+    platformOverrides: Theme['platformOverrides']
+): null | AnimationProps =>
+    areAnimationsSupported(platformOverrides)
         ? {
               opacity: 0,
               children: (

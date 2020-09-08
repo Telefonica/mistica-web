@@ -2,15 +2,19 @@ import * as React from 'react';
 import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {ButtonPrimary, Form, FormTextField, FormEmailField, FormPasswordField} from '..';
+import ThemeContextProvider from '../theme-context-provider';
+import {overrideTheme} from './utils';
 
 test('happy case', async () => {
     const handleSubmitSpy = jest.fn();
 
     render(
-        <Form onSubmit={handleSubmitSpy}>
-            <FormTextField label="Username" name="username" />
-            <ButtonPrimary submit>Submit</ButtonPrimary>
-        </Form>
+        <ThemeContextProvider theme={overrideTheme({})}>
+            <Form onSubmit={handleSubmitSpy}>
+                <FormTextField label="Username" name="username" />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
     );
 
     await userEvent.type(screen.getByLabelText('Username'), 'pepito');
@@ -43,14 +47,16 @@ test('custom validator', async () => {
     const handleSubmitSpy = jest.fn();
 
     render(
-        <Form onSubmit={handleSubmitSpy}>
-            <FormTextField
-                label="Password"
-                name="password"
-                validate={(value) => (value === 'letmein' ? '' : 'wrong password')}
-            />
-            <ButtonPrimary submit>Submit</ButtonPrimary>
-        </Form>
+        <ThemeContextProvider theme={overrideTheme({})}>
+            <Form onSubmit={handleSubmitSpy}>
+                <FormTextField
+                    label="Password"
+                    name="password"
+                    validate={(value) => (value === 'letmein' ? '' : 'wrong password')}
+                />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
     );
 
     // validation fail
@@ -122,11 +128,13 @@ test('form with controlled field', async () => {
     const MyForm = ({onSubmit}: any) => {
         const [value, setValue] = React.useState('foo');
         return (
-            <Form onSubmit={onSubmit}>
-                <FormEmailField label="email1" name="email1" value={value} onChangeValue={setValue} />
-                <FormEmailField label="email2" name="email2" value={value} />
-                <ButtonPrimary submit>Send</ButtonPrimary>
-            </Form>
+            <ThemeContextProvider theme={overrideTheme({})}>
+                <Form onSubmit={onSubmit}>
+                    <FormEmailField label="email1" name="email1" value={value} onChangeValue={setValue} />
+                    <FormEmailField label="email2" name="email2" value={value} />
+                    <ButtonPrimary submit>Send</ButtonPrimary>
+                </Form>
+            </ThemeContextProvider>
         );
     };
 
@@ -169,11 +177,13 @@ test("if a Field is disabled we skip its validation and don't submit its value",
     const validate = jest.fn().mockReturnValue('errorazo');
 
     render(
-        <Form onSubmit={handleSubmit} initialValues={{email: 'foo@bar.com'}}>
-            <FormEmailField disabled label="email" name="email" validate={validate} />
-            <FormPasswordField label="password" name="password" />
-            <ButtonPrimary submit>Send</ButtonPrimary>
-        </Form>
+        <ThemeContextProvider theme={overrideTheme({})}>
+            <Form onSubmit={handleSubmit} initialValues={{email: 'foo@bar.com'}}>
+                <FormEmailField disabled label="email" name="email" validate={validate} />
+                <FormPasswordField label="password" name="password" />
+                <ButtonPrimary submit>Send</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
     );
 
     await userEvent.type(screen.getByLabelText('password'), '123456');

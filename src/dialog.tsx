@@ -15,8 +15,12 @@ import {ESC} from './utils/key-codes';
 import Box from './box';
 import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 
-const animationsSupported = () =>
-    !isOldChrome() && process.env.NODE_ENV !== 'test' && !isRunningAcceptanceTest();
+import type {Theme} from './theme';
+
+const animationsSupported = (platformOverrides: Theme['platformOverrides']) =>
+    !isOldChrome(platformOverrides) &&
+    process.env.NODE_ENV !== 'test' &&
+    !isRunningAcceptanceTest(platformOverrides);
 
 const useStylesModalDialog = createUseStyles((theme) => ({
     wrapper: {
@@ -259,6 +263,7 @@ const useNativeDialog = ({
 };
 
 const ModalDialog = (props: ModalDialogProps) => {
+    const {platformOverrides} = useTheme();
     const context = React.useContext(ThemeContext);
     const classes = useStylesModalDialog();
     if (!context) {
@@ -306,18 +311,22 @@ const ModalDialog = (props: ModalDialogProps) => {
     });
 
     React.useEffect(() => {
-        if (!animationsSupported()) {
+        if (!animationsSupported(platformOverrides)) {
             addKeyDownListener();
         }
 
-        if ((renderNative || !animationsSupported()) && props.isClosing && props.onCloseTransitionEnd) {
+        if (
+            (renderNative || !animationsSupported(platformOverrides)) &&
+            props.isClosing &&
+            props.onCloseTransitionEnd
+        ) {
             props.onCloseTransitionEnd();
         }
 
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [addKeyDownListener, handleKeyDown, props, renderNative]);
+    }, [addKeyDownListener, handleKeyDown, props, renderNative, platformOverrides]);
 
     const {isClosing, onCloseTransitionEnd, ...dialogProps} = props;
     /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions */

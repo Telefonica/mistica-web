@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useForm} from './form-context';
-import {useAriaId} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/key-codes';
 import {FieldContainer, HelperText, Label} from './text-field-components';
 import IconArrowDown from './icons/icon-arrow-down';
@@ -9,8 +9,6 @@ import Overlay from './overlay';
 import classNames from 'classnames';
 import {isAndroid, isIos} from './utils/platform';
 import {createUseStyles} from './jss';
-
-const shouldUseNative = process.env.NODE_ENV === 'test' || isAndroid() || isIos();
 
 const cancelEvent = (event: React.SyntheticEvent | Event) => {
     event.stopPropagation();
@@ -163,6 +161,10 @@ const FormSelect: React.FC<FormSelectProps> = ({
         setFormError,
         register,
     } = useForm();
+    const {platformOverrides} = useTheme();
+
+    const shouldUseNative =
+        process.env.NODE_ENV === 'test' || isAndroid(platformOverrides) || isIos(platformOverrides);
 
     const disabled = disabledProp || formStatus === 'sending';
     const error = errorProp || !!formErrors[name];

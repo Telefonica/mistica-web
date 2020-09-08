@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {isAndroid, isChrome} from './utils/platform';
-import {useDisableBodyScroll} from './hooks';
+import {useDisableBodyScroll, useTheme} from './hooks';
 
 const defaultStyle: React.CSSProperties = {
     position: 'fixed',
@@ -23,6 +23,7 @@ type Props = {
 const Overlay: React.FC<Props> = ({onPress, children, className, style, disableScroll = false}) => {
     const [showChildren, setChildrenVisibility] = React.useState(true);
     useDisableBodyScroll(disableScroll);
+    const {platformOverrides} = useTheme();
 
     // In mobile browsers event.button === 0. This event does not need to be handled in mobile. In desktop event.button === 2
     const handleContextMenu = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -40,7 +41,7 @@ const Overlay: React.FC<Props> = ({onPress, children, className, style, disableS
                 // We use listen to and cancel pointerdown to close overlay if user scrolls on iOS.
                 // In Android with children we hide children and onPress later in onClick to ensure click event doesn't hit element below overlay.
                 if ((e.target as any).dataset.overlay && onPress) {
-                    if (children && isAndroid() && isChrome()) {
+                    if (children && isAndroid(platformOverrides) && isChrome(platformOverrides)) {
                         setChildrenVisibility(false);
                         e.stopPropagation();
                     } else {
@@ -50,7 +51,13 @@ const Overlay: React.FC<Props> = ({onPress, children, className, style, disableS
             }}
             onClick={(e) => {
                 // In Android we need to call onPress here in onClick to ensure click event doesn't hit element below overlay.
-                if ((e.target as any).dataset.overlay && onPress && children && isAndroid() && isChrome()) {
+                if (
+                    (e.target as any).dataset.overlay &&
+                    onPress &&
+                    children &&
+                    isAndroid(platformOverrides) &&
+                    isChrome(platformOverrides)
+                ) {
                     setChildrenVisibility(true);
                     onPress(e);
                 }

@@ -4,7 +4,9 @@ import debounce from 'lodash/debounce';
 import {createUseStyles} from './jss';
 import {getIosVersion, isRunningAcceptanceTest} from './utils/platform';
 import compareVersion from 'semver-compare';
-import {useScreenSize} from './hooks';
+import {useScreenSize, useTheme} from './hooks';
+
+import type {Theme} from './theme';
 
 const getScrollDistanceToBottom = () => document.body.scrollHeight - window.innerHeight - window.scrollY;
 
@@ -80,7 +82,8 @@ type Props = {
     children: React.ReactNode;
 };
 
-const canHaveNotch = () => compareVersion(getIosVersion(), '11.4.0') >= 0; // https://caniuse.com/#search=env
+const canHaveNotch = (platformOverrides: Theme['platformOverrides']) =>
+    compareVersion(getIosVersion(platformOverrides), '11.4.0') >= 0; // https://caniuse.com/#search=env
 
 const FixedFooterLayout: React.FC<Props> = ({
     isFooterVisible = true,
@@ -93,10 +96,11 @@ const FixedFooterLayout: React.FC<Props> = ({
     const [displayShadow, setDisplayShadow] = React.useState(false);
     const childrenRef = React.useRef<HTMLDivElement>(null);
     const {isMobile} = useScreenSize();
+    const {platformOverrides} = useTheme();
 
     React.useEffect(() => {
         const shouldDisplayShadow = () => {
-            if (isRunningAcceptanceTest()) {
+            if (isRunningAcceptanceTest(platformOverrides)) {
                 return false;
             }
             const {current: childrenContainer} = childrenRef;
@@ -127,9 +131,9 @@ const FixedFooterLayout: React.FC<Props> = ({
             removePassiveEventListener(window, 'resize', checkDisplayShadow);
             transitionAwaiter.cancel();
         };
-    }, [children, childrenRef]);
+    }, [children, childrenRef, platformOverrides]);
 
-    const heightWithNotchInset = canHaveNotch()
+    const heightWithNotchInset = canHaveNotch(platformOverrides)
         ? `calc(${footerHeight}px + env(safe-area-inset-bottom))`
         : footerHeight;
     const height = isFooterVisible ? heightWithNotchInset : 0;

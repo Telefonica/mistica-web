@@ -6,12 +6,15 @@
  */
 
 import * as React from "react";
+import { type Theme } from "../theme";
 declare type ShakeStyles = {
   outerAnimation: any,
   innerAnimation: any,
   "@keyframes shake"?: any
 };
-declare export var animateShakeStyles: () => ShakeStyles;
+declare export var animateShakeStyles: (
+  platformOverrides: $PropertyType<Theme, "platformOverrides">
+) => ShakeStyles;
 declare type AnimationProps = {
   children?: React.Node,
   strokeDasharray?: string,
@@ -20,16 +23,20 @@ declare type AnimationProps = {
 };
 declare export var getAnimateDrawLineProps: (
   from: string,
-  begin: string
+  begin: string,
+  platformOverrides: $PropertyType<Theme, "platformOverrides">
 ) => null | AnimationProps;
 declare export var getAnimateFadeInProps: (
-  begin: string
+  begin: string,
+  platformOverrides: $PropertyType<Theme, "platformOverrides">
 ) => null | AnimationProps;
 declare export var getAnimateHopInProps: (
-  begin: string
+  begin: string,
+  platformOverrides: $PropertyType<Theme, "platformOverrides">
 ) => null | AnimationProps;
 declare export var getAnimateSweepInProps: (
-  begin: string
+  begin: string,
+  platformOverrides: $PropertyType<Theme, "platformOverrides">
 ) => null | AnimationProps;
 declare export var mergeProperties: (
   ...props: Array<AnimationProps | null>

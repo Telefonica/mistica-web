@@ -24,15 +24,13 @@ const isStorybookRunning = async () => {
 
 const serveStaticStorybook = () => {
     console.log(`Starting storybook server on port ${storybookPort}`);
-    // @ts-expect-error __STORYBOOK_SERVER__ does not exist in global
-    global.__STORYBOOK_SERVER__ = new StaticServer({
+    (global as any).__STORYBOOK_SERVER__ = new StaticServer({
         rootPath: join(__dirname, '../../../public'),
         port: storybookPort,
     });
 
     return new Promise((resolve) => {
-        // @ts-expect-error __STORYBOOK_SERVER__ does not exist in global
-        global.__STORYBOOK_SERVER__.start(() => {
+        (global as any).__STORYBOOK_SERVER__.start(() => {
             console.log('Storybook server ready');
             resolve();
         });

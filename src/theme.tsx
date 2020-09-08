@@ -179,6 +179,7 @@ export type ThemeConfig = {
     platformOverrides?: {
         platform?: 'ios' | 'android';
         insideNovumNativeApp?: boolean;
+        userAgent?: string;
     };
     texts?: Partial<ThemeTexts>;
     analytics?: {logEvent: (trackingEvent: TrackingEvent) => Promise<void>};
@@ -203,6 +204,7 @@ export type Theme = {
     platformOverrides: {
         platform?: 'ios' | 'android';
         insideNovumNativeApp?: boolean;
+        userAgent?: string;
     };
     texts: ThemeTexts;
     analytics: {logEvent: (trackingEvent: TrackingEvent) => Promise<void>};
@@ -226,8 +228,8 @@ export const baseTheme: Theme = {
         phoneNumberFormattingRegionCode: 'ES',
     },
     platformOverrides: {
-        platform: getPlatform(),
-        insideNovumNativeApp: isInsideNovumNativeApp(),
+        platform: getPlatform({}),
+        insideNovumNativeApp: isInsideNovumNativeApp({}),
     },
     colors,
     texts,
