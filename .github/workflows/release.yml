@@ -13,7 +13,7 @@ jobs:
         steps:
             - uses: actions/checkout@v2
               with:
-                  persist-credentials: false
+                  token: ${{ secrets.FLOW_GITHUB_TOKEN }}
             - name: Setup Node.js
               uses: actions/setup-node@v1
               with:
