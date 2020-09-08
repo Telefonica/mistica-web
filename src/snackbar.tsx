@@ -102,7 +102,7 @@ const SnackbarComponent: React.FC<Props> = ({
     const buttonRef = React.useRef<HTMLTouchableElement | null>(null);
     const {width: buttonWidth} = useElementSize(buttonRef);
     const classes = useStyles({type, isOpen, isLongButton: buttonWidth >= LONG_BUTTON_WIDTH});
-    console.log(buttonWidth, buttonRef.current);
+
     const close = React.useCallback(() => {
         setIsOpen(false);
         setTimeout(() => {
