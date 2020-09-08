@@ -78,9 +78,10 @@ export const useElementSize = (elementRef: {
 }): {height: number; width: number} => {
     const [size, setSize] = React.useState({width: 0, height: 0});
 
+    const element = elementRef?.current;
+
     // WARN: don't use a layout effect here, because it breaks page transitions (switch-transition.js)
     React.useEffect(() => {
-        const element = elementRef.current;
         if (!element) {
             return () => {};
         }
@@ -106,7 +107,7 @@ export const useElementSize = (elementRef: {
             cancel = true;
             observerPromise.then((observer) => observer?.disconnect());
         };
-    }, [elementRef]);
+    }, [element]);
 
     return size;
 };

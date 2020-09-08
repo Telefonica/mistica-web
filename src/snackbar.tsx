@@ -3,13 +3,17 @@ import {createUseStyles} from './jss';
 import Touchable from './touchable';
 import classNames from 'classnames';
 import {isWebViewBridgeAvailable, nativeMessage} from '@tef-novum/webview-bridge';
+import {useElementSize} from './hooks';
 
-const PADDING_Y = 12;
+import type {HTMLTouchableElement} from './touchable';
+
+const PADDING_Y = 14;
 const PADDING_X = 16;
 const TRANSITION_TIME_IN_MS = 300;
 const SNACKBAR_MAX_WIDTH = 800;
 const SNACKBAR_MIN_WIDTH = 360;
 const SNACKBAR_MIN_HEIGHT = 48;
+const LONG_BUTTON_WIDTH = 128;
 
 type SnackbarType = 'INFORMATIVE' | 'CRITICAL';
 
@@ -50,17 +54,22 @@ const useStyles = createUseStyles((theme) => ({
         lineHeight: `20px`,
         color: theme.colors.textPrimaryInverse,
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: ({isLongButton}) => (isLongButton ? 'column' : 'row'),
         justifyContent: 'space-between',
-        alignItems: 'center',
+        alignItems: ({isLongButton}) => (isLongButton ? 'unset' : 'center'),
     },
     snackbarButton: {
-        marginLeft: 28,
+        marginTop: ({isLongButton}) => (isLongButton ? 18 : -6),
+        marginLeft: ({isLongButton}) => (isLongButton ? 0 : 28),
+        marginBottom: -6,
+        marginRight: -8,
         fontWeight: 500,
         fontSize: 16,
         lineHeight: `24px`,
-        whiteSpace: 'no-wrap',
+        padding: '4px 8px',
+        whiteSpace: 'nowrap',
         width: 'auto',
+        alignSelf: ({isLongButton}) => (isLongButton ? 'flex-end' : 'unset'),
         color: ({type}) =>
             type === 'INFORMATIVE' ? theme.colors.textLinkSnackbar : theme.colors.textPrimaryInverse,
     },
@@ -82,7 +91,7 @@ type Props = {
     type?: SnackbarType;
 };
 
-const Snackbar: React.FC<Props> = ({
+const SnackbarComponent: React.FC<Props> = ({
     message,
     buttonText,
     duration = buttonText ? 10000 : 5000,
@@ -90,8 +99,10 @@ const Snackbar: React.FC<Props> = ({
     type = 'INFORMATIVE',
 }) => {
     const [isOpen, setIsOpen] = React.useState(false);
-    const classes = useStyles({type, isOpen});
-
+    const buttonRef = React.useRef<HTMLTouchableElement | null>(null);
+    const {width: buttonWidth} = useElementSize(buttonRef);
+    const classes = useStyles({type, isOpen, isLongButton: buttonWidth >= LONG_BUTTON_WIDTH});
+    console.log(buttonWidth, buttonRef.current);
     const close = React.useCallback(() => {
         setIsOpen(false);
         setTimeout(() => {
@@ -113,12 +124,15 @@ const Snackbar: React.FC<Props> = ({
     }, [close, duration]);
 
     return (
-        <div className={classes.snackbar} role="alert">
-            <div className={classNames(classes.snackbarWrapper, {[classes.snackbarOpen]: isOpen})}>
+        <div className={classes.snackbar}>
+            <div
+                role="alert"
+                className={classNames(classes.snackbarWrapper, {[classes.snackbarOpen]: isOpen})}
+            >
                 <div className={classes.snackbarContent}>
                     <span>{message}</span>
                     {buttonText && (
-                        <Touchable className={classes.snackbarButton} onPress={close}>
+                        <Touchable elementRef={buttonRef} className={classes.snackbarButton} onPress={close}>
                             {buttonText}
                         </Touchable>
                     )}
@@ -128,10 +142,10 @@ const Snackbar: React.FC<Props> = ({
     );
 };
 
-const SnackbarContainer: React.FC<Props> = ({
+const Snackbar: React.FC<Props> = ({
     message,
     buttonText,
-    duration = Infinity, //buttonText ? 10000 : 5000,
+    duration = buttonText ? 10000 : 5000,
     onClose = () => {},
     type = 'INFORMATIVE',
 }) => {
@@ -148,7 +162,7 @@ const SnackbarContainer: React.FC<Props> = ({
     }
 
     return (
-        <Snackbar
+        <SnackbarComponent
             message={message}
             duration={duration}
             buttonText={buttonText}
@@ -158,4 +172,4 @@ const SnackbarContainer: React.FC<Props> = ({
     );
 };
 
-export default SnackbarContainer;
+export default Snackbar;

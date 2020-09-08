@@ -143,6 +143,7 @@ const useFieldContainerStyles = createUseStyles((theme) => ({
         },
     },
     border: {
+        overflow: 'hidden',
         border: `1px solid ${theme.colors.border}`,
         borderRadius: 4,
         height: ({multiline}) => (multiline ? 152 : 56),

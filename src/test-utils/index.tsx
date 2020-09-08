@@ -37,6 +37,7 @@ type DeviceCollection = Record<
     Device,
     {
         platform?: string;
+        userAgent?: string;
         viewport: Viewport;
     }
 >;
@@ -52,6 +53,8 @@ const DEVICES: DeviceCollection = {
             hasTouch: true,
             isLandscape: false,
         },
+        userAgent:
+            'Mozilla/5.0 (iPhone; CPU iPhone OS 13_1_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.1 Mobile/15E148 Safari/604.1',
     },
     [MOBILE_DEVICE_ANDROID]: {
         platform: 'android',
@@ -63,6 +66,8 @@ const DEVICES: DeviceCollection = {
             hasTouch: true,
             isLandscape: false,
         },
+        userAgent:
+            'Mozilla/5.0 (Linux; Android 7.1.1; SM-T555 Build/NMF26X; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/83.0.4103.96 Safari/537.36',
     },
     [TABLET_DEVICE]: {
         // Use default platform
@@ -75,6 +80,7 @@ const DEVICES: DeviceCollection = {
             hasTouch: false,
             isLandscape: false,
         },
+        userAgent: '',
     },
     [DESKTOP_DEVICE]: {
         // Use default platform
@@ -252,7 +258,7 @@ const createPageApi = (page: Page): PageApi => {
 };
 
 const openPage = async ({url, device, userAgent}: {url: string; device: Device; userAgent?: string}) => {
-    const currentUserAgent = userAgent || (await globalBrowser.userAgent());
+    const currentUserAgent = userAgent || DEVICES[device].userAgent || (await globalBrowser.userAgent());
     const page = globalPage;
     await page.bringToFront();
     await page.setViewport(DEVICES[device].viewport);

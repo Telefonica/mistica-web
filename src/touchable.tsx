@@ -55,11 +55,13 @@ const useStyles = createUseStyles(() => ({
 
 export type PressHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
+export type HTMLTouchableElement = HTMLButtonElement | HTMLAnchorElement | HTMLDivElement;
+
 interface CommonProps {
     children: React.ReactNode;
     className?: string;
     disabled?: boolean;
-    elementRef?: React.RefObject<HTMLButtonElement | HTMLAnchorElement | HTMLDivElement>;
+    elementRef?: React.RefObject<HTMLTouchableElement>;
     style?: React.CSSProperties;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     label?: string;
