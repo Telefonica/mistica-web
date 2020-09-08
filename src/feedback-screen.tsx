@@ -240,7 +240,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                     feedbackBasicContent
                 )}
             </div>
-            {isMobile && <div className={classes.backgroundDiv} />}
+            {isMobile && primaryButton && <div className={classes.backgroundDiv} />}
         </>
     );
 
