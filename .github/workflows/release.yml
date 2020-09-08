@@ -24,4 +24,5 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.FLOW_GITHUB_TOKEN }}
                   GH_TOKEN: ${{ secrets.FLOW_GITHUB_TOKEN }}
                   NPM_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+                  NPM_CONFIG_USERCONFIG: '.do-not-use-npmrc'
               run: npx semantic-release ${{ github.event.inputs.cliArgs }}
