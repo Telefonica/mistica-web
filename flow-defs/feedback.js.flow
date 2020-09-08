@@ -6,18 +6,14 @@
  */
 
 import * as React from "react";
-declare var FEEDBACK_SUCCESS: "success";
-declare var FEEDBACK_ERROR: "error";
-declare var FEEDBACK_INFO: "info";
-declare type FeedbackType =
-  | typeof FEEDBACK_SUCCESS
-  | typeof FEEDBACK_ERROR
-  | typeof FEEDBACK_INFO;
+declare type HapticFeedback = "error" | "success";
 declare type FeedbackProps = {
   title: string,
   description?: string | $ReadOnlyArray<string>,
-  type: FeedbackType,
-  children?: React.Node
+  children?: React.Node,
+  icon?: React.Node,
+  hapticFeedback?: HapticFeedback,
+  animateText?: boolean
 };
 declare var Feedback: React.ComponentType<FeedbackProps>;
 declare export default typeof Feedback;
