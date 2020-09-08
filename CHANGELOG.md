@@ -1,24 +1,3 @@
-# [6.0.0](https://github.com/Telefonica/mistica-web/compare/v5.3.2...v6.0.0) (2020-09-08)
-
-
-### Bug Fixes
-
-* **FormTextField:** Update Focus/Blur behavior in multiline `FormTextField` ([b69c49b](https://github.com/Telefonica/mistica-web/commit/b69c49b1078009cafff4fb0ceec973c5cc38bef5))
-* **HighlightedCard:** background image positioning ([#108](https://github.com/Telefonica/mistica-web/issues/108)) ([5813cac](https://github.com/Telefonica/mistica-web/commit/5813cac3d7527c484dfe6b78d55bb2537ff7b297))
-* **SSR:** Fix some components server side rendering ([e0b6777](https://github.com/Telefonica/mistica-web/commit/e0b677741873d0eed64052d356b1ffe4531bbbf3))
-
-
-### Features
-
-* **bun:** Remove Bun component ([da4ca92](https://github.com/Telefonica/mistica-web/commit/da4ca920b8e82616d651646a98b9f574a052bb10))
-* Removed `withSheet`, `createSheet` and `removeJssProps` ([#107](https://github.com/Telefonica/mistica-web/issues/107)) ([7cf4aeb](https://github.com/Telefonica/mistica-web/commit/7cf4aeb07e4654e4ca56aac85ea2fb82331ec6b7))
-
-
-### BREAKING CHANGES
-
-* **bun:** Remove Bun component
-* `withSheet`, `createSheet` and `removeJssProps` are no longer part of mistica-web. Use `createUseStyles` instead
-
 # v5.3.2 - 2020-08-28
 
 - Update `@tef-novum/webview-bridge` dependency
