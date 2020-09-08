@@ -46,21 +46,11 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-const FEEDBACK_SUCCESS: 'success' = 'success';
-const FEEDBACK_ERROR: 'error' = 'error';
-const FEEDBACK_INFO: 'info' = 'info';
-
-type FeedbackType = typeof FEEDBACK_SUCCESS | typeof FEEDBACK_ERROR | typeof FEEDBACK_INFO;
-
-const feedbackToIconComponent = {
-    [FEEDBACK_SUCCESS]: IcnSuccess,
-    [FEEDBACK_ERROR]: IcnError,
-    [FEEDBACK_INFO]: IcnInfo,
-};
+type HapticFeedback = 'error' | 'success';
 
 interface FeedbackProps {
     title: string;
-    primaryButton: React.ReactElement<typeof ButtonPrimary>;
+    primaryButton?: React.ReactElement<typeof ButtonPrimary>;
     secondaryButton?: React.ReactElement<typeof ButtonSecondary>;
     link?: React.ReactElement<typeof ButtonLink>;
     description?: string | Array<string>;
@@ -68,28 +58,30 @@ interface FeedbackProps {
 }
 
 interface FeedbackScreenProps extends FeedbackProps {
-    feedbackType: FeedbackType;
+    hapticFeedback?: HapticFeedback;
+    icon?: React.ReactNode;
+    isInverse?: boolean;
+    animateText?: boolean;
 }
 
-const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
+export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     title,
     description,
-    feedbackType,
     children,
     primaryButton,
     secondaryButton,
     link,
+    hapticFeedback,
+    icon,
+    isInverse = false,
+    animateText = false,
 }) => {
     const theme = useTheme();
     const windowHeight = useWindowHeight();
     const {isMobile} = useScreenSize();
     const topDistance = React.useContext(TopDistanceContext);
     const footerHeight = getFooterHeight(isMobile, link, secondaryButton);
-    const isInverse = feedbackType === FEEDBACK_SUCCESS && isMobile;
     const [isServerSide, setIsServerSide] = React.useState(true);
-    const hasNotIcon = theme.skin === VIVO_SKIN && feedbackType !== FEEDBACK_SUCCESS;
-    const hasIcon = !hasNotIcon;
-    const Icon = feedbackToIconComponent[feedbackType];
 
     const visibleAreaHeightPx = `${windowHeight - topDistance - footerHeight}px`;
     const classes = useStyles({
@@ -105,28 +97,36 @@ const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         setIsServerSide(false);
     }, []);
 
+    const feedbackBasicContent = (
+        <div className={classes.container}>
+            <Feedback
+                title={title}
+                description={description}
+                animateText={animateText}
+                hapticFeedback={hapticFeedback}
+                icon={icon}
+            >
+                {children}
+            </Feedback>
+        </div>
+    );
+
     const content = (
         <>
             <div className={classes.footer}>
-                <ButtonFixedFooterLayout
-                    button={primaryButton}
-                    secondaryButton={secondaryButton}
-                    link={link}
-                    footerBgColor={isInverse ? theme.colors.backgroundSpecialBottom : undefined}
-                    containerBgColor={isInverse ? theme.colors.overscrollColorTop : undefined}
-                >
-                    <div className={classes.container}>
-                        <Feedback
-                            title={title}
-                            description={description}
-                            animateText={feedbackType !== FEEDBACK_INFO}
-                            hapticFeedback={feedbackType !== FEEDBACK_INFO ? feedbackType : undefined}
-                            {...(hasIcon && {icon: <Icon />})}
-                        >
-                            {children}
-                        </Feedback>
-                    </div>
-                </ButtonFixedFooterLayout>
+                {primaryButton ? (
+                    <ButtonFixedFooterLayout
+                        button={primaryButton}
+                        secondaryButton={secondaryButton}
+                        link={link}
+                        footerBgColor={isInverse ? theme.colors.backgroundSpecialBottom : undefined}
+                        containerBgColor={isInverse ? theme.colors.overscrollColorTop : undefined}
+                    >
+                        {feedbackBasicContent}
+                    </ButtonFixedFooterLayout>
+                ) : (
+                    feedbackBasicContent
+                )}
             </div>
             {isMobile && <div className={classes.backgroundDiv} />}
         </>
@@ -140,12 +140,32 @@ const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     );
 };
 
-export const SuccessFeedbackScreen: React.FC<FeedbackProps> = (props) => (
-    <FeedbackScreen feedbackType={FEEDBACK_SUCCESS} {...props} />
-);
-export const ErrorFeedbackScreen: React.FC<FeedbackProps> = (props) => (
-    <FeedbackScreen feedbackType={FEEDBACK_ERROR} {...props} />
-);
-export const InfoFeedbackScreen: React.FC<FeedbackProps> = (props) => (
-    <FeedbackScreen feedbackType={FEEDBACK_INFO} {...props} />
-);
+export const SuccessFeedbackScreen: React.FC<FeedbackProps> = (props) => {
+    const {isMobile} = useScreenSize();
+    return (
+        <FeedbackScreen
+            {...props}
+            hapticFeedback="success"
+            icon={<IcnSuccess />}
+            isInverse={isMobile}
+            animateText
+        />
+    );
+};
+export const ErrorFeedbackScreen: React.FC<FeedbackProps> = (props) => {
+    const theme = useTheme();
+    const hasNotIcon = theme.skin === VIVO_SKIN;
+    return (
+        <FeedbackScreen
+            {...props}
+            hapticFeedback="error"
+            icon={hasNotIcon ? undefined : <IcnError />}
+            animateText
+        />
+    );
+};
+export const InfoFeedbackScreen: React.FC<FeedbackProps> = (props) => {
+    const theme = useTheme();
+    const hasNotIcon = theme.skin === VIVO_SKIN;
+    return <FeedbackScreen {...props} icon={hasNotIcon ? undefined : <IcnInfo />} />;
+};

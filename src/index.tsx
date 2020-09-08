@@ -18,7 +18,12 @@ export {default as FixedToTop, TopDistanceContext} from './fixed-to-top';
 export {default as createNestableContext} from './nestable-context';
 export {default as OverscrollColor, OverscrollColorProvider} from './overscroll-color-context';
 export {default as Feedback} from './feedback';
-export {ErrorFeedbackScreen, InfoFeedbackScreen, SuccessFeedbackScreen} from './feedback-screen';
+export {
+    FeedbackScreen,
+    ErrorFeedbackScreen,
+    InfoFeedbackScreen,
+    SuccessFeedbackScreen,
+} from './feedback-screen';
 export {default as IconButton} from './icon-button';
 export {default as Popover} from './popover';
 export {default as FocusTrap} from './focus-trap';
