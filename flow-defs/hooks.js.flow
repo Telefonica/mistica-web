@@ -11,6 +11,14 @@ import { type Theme } from "./theme";
 declare export var useTheme: () => Theme;
 declare export var useDisableBodyScroll: (disable: boolean) => void;
 declare export var useScreenSize: () => ScreenSizeContextType;
+declare export var useElementDimensions: () => {
+  width: number,
+  height: number,
+  ref: (node: HTMLElement | null) => void
+};
+/**
+ * @deprecated this hook is unreliable, use useElementDimensions
+ */
 declare export var useElementSize: (elementRef: {
   current: HTMLElement | null
 }) => {
