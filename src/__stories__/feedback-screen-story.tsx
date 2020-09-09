@@ -93,9 +93,6 @@ export const Default: StoryComponent = () => {
                     }
                 >
                     <Stack space={16}>
-                        <span style={{fontSize: 12}}>
-                            * Select info as the Type to be able to choose an icon
-                        </span>
                         {titleTextField}
                         {descriptionTextField}
                         {primaryButtonTextField}
@@ -103,6 +100,9 @@ export const Default: StoryComponent = () => {
                         {primaryButtonText && linkTextField}
                         {showIconCheckbox}
                         {animateTextCheckbox}
+                        <span style={{fontSize: 12}}>
+                            * To see the inverse variant use a mobile screen size
+                        </span>
                         {isInverseStateCheckbox}
                     </Stack>
                 </FeedbackScreen>
