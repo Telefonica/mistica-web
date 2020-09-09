@@ -101,7 +101,7 @@ export const Default: StoryComponent = () => {
                         {showIconCheckbox}
                         {animateTextCheckbox}
                         <span style={{fontSize: 12}}>
-                            * To see the inverse variant use a mobile screen size
+                            * To see the inverse variant use a mobile screen size and add any button
                         </span>
                         {isInverseStateCheckbox}
                     </Stack>
