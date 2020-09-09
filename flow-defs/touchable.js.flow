@@ -9,11 +9,15 @@ import * as React from "react";
 import { type TrackingEvent } from "./utils/types";
 import { type Location } from "history";
 export type PressHandler = (event: SyntheticMouseEvent<HTMLElement>) => void;
+export type HTMLTouchableElement =
+  | HTMLButtonElement
+  | HTMLAnchorElement
+  | HTMLDivElement;
 declare type CommonProps = {
   children: React.Node,
   className?: string,
   disabled?: boolean,
-  elementRef?: React.Ref<"button" | "a" | "div">,
+  elementRef?: React.Ref<HTMLTouchableElement>,
   style?: CssStyle,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   label?: string,
