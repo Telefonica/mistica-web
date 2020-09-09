@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {useTheme, useScreenSize, useWindowHeight} from './hooks';
+import {useTheme, useScreenSize, useWindowHeight, useIsomorphicLayoutEffect} from './hooks';
 import {ThemeVariant} from './theme-variant-context';
 import ButtonFixedFooterLayout, {getFooterHeight} from './button-fixed-footer-layout';
 import {ButtonPrimary, ButtonSecondary, ButtonLink} from './button';
@@ -14,7 +14,9 @@ const useStyles = createUseStyles((theme) => ({
         height: '100%',
         width: '100%',
         margin: 'auto',
-        minHeight: ({visibleAreaHeight}) => `calc(${visibleAreaHeight}px - env(safe-area-inset-bottom))`,
+        [theme.mq.mobile]: {
+            minHeight: ({visibleAreaHeight}) => `calc(${visibleAreaHeight} - env(safe-area-inset-bottom))`,
+        },
         '& *': {
             zIndex: 1,
         },
@@ -26,7 +28,9 @@ const useStyles = createUseStyles((theme) => ({
         bottom: ({footerHeight}) => `calc(${footerHeight}px + env(safe-area-inset-bottom) - 1px)`,
         left: 0,
         // There is a weird line between the background and the header if we dont add 2 px
-        height: ({visibleAreaHeight}) => `calc(${visibleAreaHeight}px - env(safe-area-inset-bottom) + 2px)`,
+        [theme.mq.mobile]: {
+            height: ({visibleAreaHeight}) => `calc(${visibleAreaHeight} - env(safe-area-inset-bottom) + 2px)`,
+        },
         width: '100%',
         background: ({isInverse}) => (isInverse ? theme.colors.backgroundSpecial1 : theme.colors.background),
     },
@@ -72,11 +76,21 @@ const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     const topDistance = React.useContext(TopDistanceContext);
     const footerHeight = getFooterHeight(isMobile, link, secondaryButton);
     const isInverse = feedbackType === FEEDBACK_SUCCESS && isMobile;
+    const [isServerSide, setIsServerSide] = React.useState(true);
+
+    const visibleAreaHeightPx = `${windowHeight - topDistance - footerHeight}px`;
     const classes = useStyles({
         isInverse,
-        visibleAreaHeight: isMobile ? windowHeight - topDistance - footerHeight : 0,
+        visibleAreaHeight: isServerSide ? '100vh' : visibleAreaHeightPx,
         footerHeight,
     });
+
+    // This trick along with the 100vh measure allows us to perform a first meaningful render on the server side.
+    // We can't use vh on client side because it causes problems with iOS (as sometimes the height is calculated as
+    // if there were no OS buttons on bottom): https://bugs.webkit.org/show_bug.cgi?id=141832
+    useIsomorphicLayoutEffect(() => {
+        setIsServerSide(false);
+    }, []);
 
     const content = (
         <>

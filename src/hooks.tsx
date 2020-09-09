@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ThemeContext from './theme-context';
 import ScreenSizeContext from './screen-size-context';
+import AriaIdGetterContext from './aria-id-getter-context';
 
 import type {ScreenSizeContextType} from './screen-size-context';
 import type {Theme} from './theme';
@@ -112,13 +113,18 @@ export const useElementSize = (elementRef: {
     return size;
 };
 
-let nextAriaId = 1;
-const getAriaId = (): string => `aria-id-hook-${nextAriaId++}`;
-export const useAriaId = (id?: string): string => React.useRef(id || getAriaId()).current;
+export const useAriaId = (id?: string): string => {
+    const getAriaId = React.useContext(AriaIdGetterContext);
+    return React.useRef(id || getAriaId()).current;
+};
 
 export const useWindowSize = (): {height: number; width: number} => {
-    const [windowHeight, setWindowHeight] = React.useState(window.innerHeight);
-    const [windowWidth, setWindowWidth] = React.useState(window.innerWidth);
+    const [windowHeight, setWindowHeight] = React.useState<number>(
+        typeof window !== 'undefined' ? window.innerHeight : 1200 // Best guess
+    );
+    const [windowWidth, setWindowWidth] = React.useState<number>(
+        typeof window !== 'undefined' ? window.innerWidth : 800 // Best guess
+    );
 
     React.useEffect(() => {
         const handleResize = () => {

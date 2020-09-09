@@ -31,7 +31,8 @@ If something is broken or not working as expected, let us know!
 
 If you need additional functionality, support a new use case, improve a component API...
 
-:construction: [Open a Feature Request issue](https://github.com/Telefonica/mistica-web/issues/new?assignees=&labels=enhancement&template=feature-request.md&title=)
+:construction:
+[Open a Feature Request issue](https://github.com/Telefonica/mistica-web/issues/new?assignees=&labels=enhancement&template=feature-request.md&title=)
 
 **Important:** Your feature request should not include UI or UX changes, only implementation details, because
 those kind of changes must be evaluated, approved and documented by the `Design Core Team` (see
@@ -42,7 +43,8 @@ those kind of changes must be evaluated, approved and documented by the `Design 
 Is something in our documentation not well explained? Do you need help using a component? Should we create a
 new [Storybook](https://mistica-web.now.sh/) story as example?
 
-:blue_book: [Open an Documentation issue](https://github.com/Telefonica/mistica-web/issues/new?assignees=&labels=documentation&template=documentation-request.md&title=)
+:blue_book:
+[Open an Documentation issue](https://github.com/Telefonica/mistica-web/issues/new?assignees=&labels=documentation&template=documentation-request.md&title=)
 
 ## New component proposals or UI/UX changes
 

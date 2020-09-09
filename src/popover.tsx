@@ -3,7 +3,7 @@ import {createUseStyles} from './jss';
 import {applyAlpha} from './utils/color';
 import IcnClose from './icons/icon-close';
 import IconButton from './icon-button';
-import {useWindowSize, useTheme, useScreenSize} from './hooks';
+import {useTheme, useScreenSize} from './hooks';
 import {getPlatform} from './utils/platform';
 
 import type {TrackingEvent} from './utils/types';
@@ -227,7 +227,6 @@ const Popover: React.FC<Props> = ({
 }) => {
     const {texts, colors} = useTheme();
     const {isMobile} = useScreenSize();
-    const windowSize = useWindowSize();
     const [targetPosition, setTargetPosition] = React.useState<TargetPosition | null>(null);
 
     const targetWrapperRef = React.useRef<HTMLDivElement | null>(null);
@@ -237,12 +236,22 @@ const Popover: React.FC<Props> = ({
     const classes = useStyles({position});
 
     React.useEffect(() => {
-        setTargetPosition(getTargetPosition(targetWrapperRef.current));
-    }, [isVisible]);
+        const handleResize = () => {
+            setTargetPosition(getTargetPosition(targetWrapperRef.current));
+        };
+
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     React.useEffect(() => {
         setTargetPosition(getTargetPosition(targetWrapperRef.current));
-    }, [windowSize]);
+    }, [isVisible]);
 
     const handleClose = () => {
         if (onClose) {

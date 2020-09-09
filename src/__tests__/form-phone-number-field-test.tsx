@@ -2,11 +2,17 @@ import * as React from 'react';
 import {FormPhoneNumberField} from '..';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import ThemeContextProvider from '../theme-context-provider';
+import {overrideTheme} from './utils';
 
 test('form-phone-number-field', async () => {
     const onChangeValueSpy = jest.fn();
 
-    render(<FormPhoneNumberField label="Enter Phone" name="phone" onChangeValue={onChangeValueSpy} />);
+    render(
+        <ThemeContextProvider theme={overrideTheme({})}>
+            <FormPhoneNumberField label="Enter Phone" name="phone" onChangeValue={onChangeValueSpy} />
+        </ThemeContextProvider>
+    );
 
     await userEvent.type(screen.getByLabelText('Enter Phone'), '+54 9 223 123-4567');
 

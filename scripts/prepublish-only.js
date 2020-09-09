@@ -3,13 +3,12 @@ if (!process.env.CI) {
         '',
         'Cannot publish from this machine',
         '',
-        'To publish, execute:',
-        '    tu-ci npm_publish',
-        '',
-        'Or, for a dry-run:',
-        '    tu-ci npm_publish_dry_run',
+        'To publish, use the  Github Release action workflow:',
+        'https://github.com/Telefonica/mistica-web/actions?query=workflow%3ARelease',
         '',
     ];
     console.error(lines.join('\n'));
     process.exit(1);
 }
+
+require('./build');

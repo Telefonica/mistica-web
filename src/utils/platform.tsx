@@ -1,51 +1,51 @@
 import {isWebViewBridgeAvailable} from '@tef-novum/webview-bridge';
 
-const getUserAgent = (): string => {
+import type {Theme} from '../theme';
+
+const getUserAgent = (platformOverrides: Theme['platformOverrides']): string => {
     if (typeof self === 'undefined') {
-        return '';
+        return platformOverrides.userAgent ?? '';
     }
     return self.navigator?.userAgent ?? '';
 };
 
-type PlatformOverrides = {
-    platform?: 'ios' | 'android';
-    insideNovumNativeApp?: boolean;
-};
-
-export const isInsideNovumNativeApp = (platformOverrides?: PlatformOverrides): boolean => {
-    if (typeof platformOverrides?.insideNovumNativeApp !== 'undefined') {
+export const isInsideNovumNativeApp = (platformOverrides: Theme['platformOverrides']): boolean => {
+    if (typeof platformOverrides.insideNovumNativeApp !== 'undefined') {
         return platformOverrides.insideNovumNativeApp;
     }
     return isWebViewBridgeAvailable();
 };
 
-export const isRunningAcceptanceTest = (): boolean => getUserAgent().includes('acceptance-test');
+export const isRunningAcceptanceTest = (platformOverrides: Theme['platformOverrides']): boolean =>
+    getUserAgent(platformOverrides).includes('acceptance-test');
 
 const isEdgeOrIE = Boolean(typeof self !== 'undefined' && self.MSStream);
 
-export const isAndroid = (): boolean => getUserAgent().toLowerCase().includes('android') && !isEdgeOrIE;
+export const isAndroid = (platformOverrides: Theme['platformOverrides']): boolean =>
+    getUserAgent(platformOverrides).toLowerCase().includes('android') && !isEdgeOrIE;
 
-export const isIos = (): boolean => {
+export const isIos = (platformOverrides: Theme['platformOverrides']): boolean => {
     // IE and Edge mobile browsers includes Android and iPhone in the user agent
-    if (/iPad|iPhone|iPod/.test(getUserAgent()) && !isEdgeOrIE) {
+    if (/iPad|iPhone|iPod/.test(getUserAgent(platformOverrides)) && !isEdgeOrIE) {
         return true;
     }
 
     // In iOS13, iPad uses the Mac OS user-agent, but we know it's an iOS device when it runs inside our
     // native app and is not Android
-    if (isInsideNovumNativeApp() && !isAndroid()) {
+    if (isInsideNovumNativeApp(platformOverrides) && !isAndroid(platformOverrides)) {
         return true;
     }
 
     return false;
 };
 
-export const isChrome = (): boolean => !!getUserAgent().match(/Chrom(e|ium)\/([0-9]+)\./);
+export const isChrome = (platformOverrides: Theme['platformOverrides']): boolean =>
+    !!getUserAgent(platformOverrides).match(/Chrom(e|ium)\/([0-9]+)\./);
 
 const MODERN_CHROME_VERSION = 44;
 
-export const isOldChrome = (): boolean => {
-    const matches = getUserAgent().match(/Chrome\/(\d+)/);
+export const isOldChrome = (platformOverrides: Theme['platformOverrides']): boolean => {
+    const matches = getUserAgent(platformOverrides).match(/Chrome\/(\d+)/);
 
     if (!matches || !matches[1]) {
         // not Chrome
@@ -58,11 +58,11 @@ export const isOldChrome = (): boolean => {
 };
 
 const SEMVER_ZERO = '0.0.0';
-export const getIosVersion = (): string => {
-    if (!isIos()) {
+export const getIosVersion = (platformOverrides: Theme['platformOverrides']): string => {
+    if (!isIos(platformOverrides)) {
         return SEMVER_ZERO;
     }
-    const raw = getUserAgent().match(/OS ((\d+_?){1,3})[\s_]/);
+    const raw = getUserAgent(platformOverrides).match(/OS ((\d+_?){1,3})[\s_]/);
     if (!raw || !raw[1]) {
         return SEMVER_ZERO;
     }
@@ -70,10 +70,10 @@ export const getIosVersion = (): string => {
     return [major, minor, patch].join('.');
 };
 
-export const getPlatform = (platformOverrides?: PlatformOverrides): 'ios' | 'android' => {
-    const overridenPlatform = platformOverrides?.platform;
+export const getPlatform = (platformOverrides: Theme['platformOverrides']): 'ios' | 'android' => {
+    const overridenPlatform = platformOverrides.platform;
     if (overridenPlatform) {
         return overridenPlatform;
     }
-    return isIos() ? 'ios' : 'android';
+    return isIos(platformOverrides) ? 'ios' : 'android';
 };
