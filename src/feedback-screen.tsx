@@ -262,18 +262,18 @@ export const SuccessFeedbackScreen: React.FC<FeedbackProps> = (props) => {
 };
 export const ErrorFeedbackScreen: React.FC<FeedbackProps> = (props) => {
     const theme = useTheme();
-    const hasNotIcon = theme.skin === VIVO_SKIN;
+    const hasIcon = theme.skin !== VIVO_SKIN;
     return (
         <FeedbackScreen
             {...props}
             hapticFeedback="error"
-            icon={hasNotIcon ? undefined : <IcnError />}
+            icon={hasIcon ? <IcnError /> : undefined}
             animateText
         />
     );
 };
 export const InfoFeedbackScreen: React.FC<FeedbackProps> = (props) => {
     const theme = useTheme();
-    const hasNotIcon = theme.skin === VIVO_SKIN;
-    return <FeedbackScreen {...props} icon={hasNotIcon ? undefined : <IcnInfo />} />;
+    const hasIcon = theme.skin !== VIVO_SKIN;
+    return <FeedbackScreen {...props} icon={hasIcon ? <IcnInfo /> : undefined} />;
 };
