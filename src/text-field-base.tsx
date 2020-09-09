@@ -155,7 +155,6 @@ const useStyles = createUseStyles((theme) => ({
     textArea: {
         resize: 'none',
         marginTop: ({label}) => (label ? 24 : 16),
-        marginBottom: ({label}) => (label ? 8 : 16),
         ...commonInputStyles(theme),
     },
     input: {
