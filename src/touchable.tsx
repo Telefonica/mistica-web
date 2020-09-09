@@ -59,7 +59,7 @@ interface CommonProps {
     children: React.ReactNode;
     className?: string;
     disabled?: boolean;
-    elementRef?: React.Ref<HTMLTouchableElement>;
+    elementRef?: React.Ref<HTMLButtonElement | HTMLAnchorElement | HTMLDivElement>;
     style?: React.CSSProperties;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     label?: string;
