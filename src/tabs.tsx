@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import Touchable from './touchable';
 import ResponsiveLayout from './responsive-layout';
-import {useElementSize} from './hooks';
+import {useElementDimensions} from './hooks';
 import {getPlatform} from './utils/platform';
 
 import type {TrackingEvent} from './utils/types';
@@ -101,8 +101,7 @@ export type TabsProps = {
 };
 
 const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) => {
-    const ref = React.useRef(null);
-    const {width} = useElementSize(ref);
+    const {width, ref} = useElementDimensions();
     const classes = useStyles({width});
     return (
         <div role="tablist" ref={ref} className={classes.outerBorder}>

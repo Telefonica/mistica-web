@@ -3,9 +3,7 @@ import {createUseStyles} from './jss';
 import Touchable from './touchable';
 import classNames from 'classnames';
 import {isWebViewBridgeAvailable, nativeMessage} from '@tef-novum/webview-bridge';
-import {useElementSize} from './hooks';
-
-import type {HTMLTouchableElement} from './touchable';
+import {useElementDimensions} from './hooks';
 
 const PADDING_Y = 14;
 const PADDING_X = 16;
@@ -99,8 +97,7 @@ const SnackbarComponent: React.FC<Props> = ({
     type = 'INFORMATIVE',
 }) => {
     const [isOpen, setIsOpen] = React.useState(false);
-    const buttonRef = React.useRef<HTMLTouchableElement | null>(null);
-    const {width: buttonWidth} = useElementSize(buttonRef);
+    const {width: buttonWidth, ref: buttonRef} = useElementDimensions();
     const classes = useStyles({type, isOpen, isLongButton: buttonWidth >= LONG_BUTTON_WIDTH});
 
     const close = React.useCallback(() => {

@@ -74,15 +74,68 @@ const getResizeObserverPromise = (): Promise<typeof window.ResizeObserver | null
           );
 };
 
+export const useElementDimensions = (): {
+    width: number;
+    height: number;
+    ref: (node: HTMLElement | null) => void;
+} => {
+    const [width, setWidth] = React.useState(0);
+    const [height, setHeight] = React.useState(0);
+    const [element, setElement] = React.useState<HTMLElement | null>(null);
+
+    const updateSize = React.useCallback(() => {
+        if (!element) {
+            setWidth(0);
+            setHeight(0);
+            return;
+        }
+        const rect = element.getBoundingClientRect();
+        setWidth(rect.width);
+        setHeight(rect.height);
+    }, [element]);
+
+    const ref = React.useCallback(
+        (node: HTMLElement | null) => {
+            setElement(node);
+            updateSize();
+        },
+        [updateSize]
+    );
+
+    React.useEffect(() => {
+        if (!element) {
+            return;
+        }
+
+        let cancel = false;
+        const observerPromise = getResizeObserverPromise().then((ResizeObserver) => {
+            if (cancel || !ResizeObserver || !element) {
+                return null;
+            }
+
+            const observer = new ResizeObserver(updateSize);
+            observer.observe(element);
+            return observer;
+        });
+
+        return () => {
+            cancel = true;
+            observerPromise.then((observer) => observer?.disconnect());
+        };
+    }, [element, updateSize]);
+
+    return {width, height, ref};
+};
+
+/** @deprecated this hook is unreliable, use useElementDimensions */
 export const useElementSize = (elementRef: {
     current: HTMLElement | null;
 }): {height: number; width: number} => {
     const [size, setSize] = React.useState({width: 0, height: 0});
 
-    const element = elementRef?.current;
-
     // WARN: don't use a layout effect here, because it breaks page transitions (switch-transition.js)
     React.useEffect(() => {
+        const element = elementRef.current;
         if (!element) {
             return () => {};
         }
@@ -108,7 +161,7 @@ export const useElementSize = (elementRef: {
             cancel = true;
             observerPromise.then((observer) => observer?.disconnect());
         };
-    }, [element]);
+    }, [elementRef]);
 
     return size;
 };

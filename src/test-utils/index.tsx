@@ -34,7 +34,6 @@ export type Device =
 type DeviceCollection = Record<
     Device,
     {
-        userAgent?: string;
         platform?: string;
         userAgent?: string;
         viewport: Viewport;
@@ -54,8 +53,6 @@ const DEVICES: DeviceCollection = {
             hasTouch: true,
             isLandscape: false,
         },
-        userAgent:
-            'Mozilla/5.0 (iPhone; CPU iPhone OS 13_1_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.1 Mobile/15E148 Safari/604.1',
     },
     [MOBILE_DEVICE_ANDROID]: {
         userAgent:
@@ -69,8 +66,6 @@ const DEVICES: DeviceCollection = {
             hasTouch: true,
             isLandscape: false,
         },
-        userAgent:
-            'Mozilla/5.0 (Linux; Android 7.1.1; SM-T555 Build/NMF26X; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/83.0.4103.96 Safari/537.36',
     },
     [TABLET_DEVICE]: {
         // Use default platform
