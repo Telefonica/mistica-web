@@ -67,6 +67,7 @@ export const Default: StoryComponent = () => {
     const [primaryButtonText, primaryButtonTextField] = useTextField('Primary button text', '');
     const [secondaryButtonText, secondaryButtonTextField] = useTextField('Secondary button text', '');
     const [linkText, linkTextField] = useTextField('Link button text', '');
+    const [showIcon, showIconCheckbox] = useCheckbox('Show icon', true);
     const [isInverseState, isInverseStateCheckbox] = useCheckbox('Inverse variant', false);
     const [animateText, animateTextCheckbox] = useCheckbox('Animate text', true);
     return (
@@ -76,7 +77,7 @@ export const Default: StoryComponent = () => {
                     title={title}
                     description={description}
                     animateText={animateText}
-                    icon={<IconOrders />}
+                    icon={showIcon ? <IconOrders /> : undefined}
                     primaryButton={
                         primaryButtonText.length ? (
                             <ButtonPrimary onPress={() => {}}>{primaryButtonText}</ButtonPrimary>
@@ -100,6 +101,7 @@ export const Default: StoryComponent = () => {
                         {primaryButtonTextField}
                         {primaryButtonText && secondaryButtonTextField}
                         {primaryButtonText && linkTextField}
+                        {showIconCheckbox}
                         {animateTextCheckbox}
                         {isInverseStateCheckbox}
                     </Stack>
