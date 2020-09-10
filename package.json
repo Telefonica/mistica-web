@@ -20,7 +20,7 @@
         "build": "node scripts/build.js",
         "postbuild": "yarn gen-ts-defs && yarn gen-flow-defs",
         "watch": "node scripts/watch.js",
-        "clean": "rimraf dist && rimraf dist-es && rimraf dist-ts",
+        "clean": "rimraf dist && rimraf dist-es && rimraf dist-ts && rimraf node_modules/.cache",
         "ci": "yarn build && yarn storybook-static && yarn prettier-check && yarn lint && yarn test --ci && yarn test-acceptance --ci",
         "prepublishOnly": "node scripts/prepublish-only.js",
         "storybook": "start-storybook -p 6006",
