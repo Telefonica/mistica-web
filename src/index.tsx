@@ -33,7 +33,7 @@ export {Header, HeaderLayout, MainSectionHeader, MainSectionHeaderLayout} from '
 export {default as GridLayout} from './grid-layout';
 export {default as ResponsiveLayout} from './responsive-layout';
 export {default as NavigationBreadcrumbs} from './navigation-breadcrumbs';
-export {default as Text} from './text';
+export {default as Text, Text1} from './text';
 export {default as PromoTag} from './promo-tag';
 export {default as SectionTitle} from './section-title';
 export {Placeholder, AvatarPlaceholder} from './placeholder';
