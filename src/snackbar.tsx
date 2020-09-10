@@ -3,7 +3,7 @@ import {createUseStyles} from './jss';
 import Touchable from './touchable';
 import classNames from 'classnames';
 import {isWebViewBridgeAvailable, nativeMessage} from '@tef-novum/webview-bridge';
-import {useElementDimensions} from './hooks';
+import {useElementDimensions, useScreenSize} from './hooks';
 
 const PADDING_Y = 14;
 const PADDING_X = 16;
@@ -11,7 +11,6 @@ const TRANSITION_TIME_IN_MS = 300;
 const SNACKBAR_MAX_WIDTH = 800;
 const SNACKBAR_MIN_WIDTH = 360;
 const SNACKBAR_MIN_HEIGHT = 48;
-const LONG_BUTTON_WIDTH = 128;
 
 type SnackbarType = 'INFORMATIVE' | 'CRITICAL';
 
@@ -58,7 +57,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     snackbarButton: {
         marginTop: ({isLongButton}) => (isLongButton ? 18 : -6),
-        marginLeft: ({isLongButton}) => (isLongButton ? 0 : 28),
+        marginLeft: ({isLongButton, isTabletOrBigger}) => (isLongButton ? 0 : isTabletOrBigger ? 48 : 16),
         marginBottom: -6,
         marginRight: -8,
         fontWeight: 500,
@@ -98,7 +97,9 @@ const SnackbarComponent: React.FC<Props> = ({
 }) => {
     const [isOpen, setIsOpen] = React.useState(false);
     const {width: buttonWidth, ref: buttonRef} = useElementDimensions();
-    const classes = useStyles({type, isOpen, isLongButton: buttonWidth >= LONG_BUTTON_WIDTH});
+    const {isTabletOrBigger} = useScreenSize();
+    const longButtonWidth = isTabletOrBigger ? 160 : 128;
+    const classes = useStyles({type, isOpen, isTabletOrBigger, isLongButton: buttonWidth >= longButtonWidth});
 
     const close = React.useCallback(() => {
         setIsOpen(false);
