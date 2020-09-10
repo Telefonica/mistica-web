@@ -112,7 +112,7 @@ const useStyles = createUseStyles((theme) => ({
         display: 'flex',
         width: '100%',
         minHeight: 72,
-        borderBottom: `1px solid ${theme.colors.borderLight}`,
+        borderBottom: `1px solid ${theme.colors.divider}`,
     },
     icon: {
         display: 'flex',
