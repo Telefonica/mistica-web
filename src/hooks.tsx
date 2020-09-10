@@ -83,7 +83,7 @@ export const useElementDimensions = (): {
     const [height, setHeight] = React.useState(0);
     const [element, setElement] = React.useState<HTMLElement | null>(null);
 
-    const updateSize = React.useCallback(() => {
+    const updateSize = React.useCallback((element) => {
         if (!element) {
             setWidth(0);
             setHeight(0);
@@ -92,12 +92,12 @@ export const useElementDimensions = (): {
         const rect = element.getBoundingClientRect();
         setWidth(rect.width);
         setHeight(rect.height);
-    }, [element]);
+    }, []);
 
     const ref = React.useCallback(
         (node: HTMLElement | null) => {
             setElement(node);
-            updateSize();
+            updateSize(node);
         },
         [updateSize]
     );
@@ -113,7 +113,7 @@ export const useElementDimensions = (): {
                 return null;
             }
 
-            const observer = new ResizeObserver(updateSize);
+            const observer = new ResizeObserver(() => updateSize(element));
             observer.observe(element);
             return observer;
         });
