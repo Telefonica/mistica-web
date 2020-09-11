@@ -17,8 +17,12 @@ export {default as LoadingBar} from './loading-bar';
 export {default as FixedToTop, TopDistanceContext} from './fixed-to-top';
 export {default as createNestableContext} from './nestable-context';
 export {default as OverscrollColor, OverscrollColorProvider} from './overscroll-color-context';
-export {default as Feedback} from './feedback';
-export {ErrorFeedbackScreen, InfoFeedbackScreen, SuccessFeedbackScreen} from './feedback-screen';
+export {
+    FeedbackScreen,
+    ErrorFeedbackScreen,
+    InfoFeedbackScreen,
+    SuccessFeedbackScreen,
+} from './feedback-screen';
 export {default as IconButton} from './icon-button';
 export {default as Popover} from './popover';
 export {default as FocusTrap} from './focus-trap';
@@ -68,6 +72,8 @@ export {default as IconClose} from './icons/icon-close';
 export {default as IconInfo} from './icons/icon-info';
 export {default as IconArrowDown} from './icons/icon-arrow-down';
 export {default as IconChevron} from './icons/icon-chevron';
+export {default as IconError} from './icons/icon-error';
+export {default as IconSuccess} from './icons/icon-success';
 
 export {
     useTheme,
