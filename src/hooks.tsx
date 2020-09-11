@@ -74,6 +74,60 @@ const getResizeObserverPromise = (): Promise<typeof window.ResizeObserver | null
           );
 };
 
+export const useElementDimensions = (): {
+    width: number;
+    height: number;
+    ref: (node: HTMLElement | null) => void;
+} => {
+    const [width, setWidth] = React.useState(0);
+    const [height, setHeight] = React.useState(0);
+    const [element, setElement] = React.useState<HTMLElement | null>(null);
+
+    const updateSize = React.useCallback((element) => {
+        if (!element) {
+            setWidth(0);
+            setHeight(0);
+            return;
+        }
+        const rect = element.getBoundingClientRect();
+        setWidth(rect.width);
+        setHeight(rect.height);
+    }, []);
+
+    const ref = React.useCallback(
+        (node: HTMLElement | null) => {
+            setElement(node);
+            updateSize(node);
+        },
+        [updateSize]
+    );
+
+    React.useEffect(() => {
+        if (!element) {
+            return;
+        }
+
+        let cancel = false;
+        const observerPromise = getResizeObserverPromise().then((ResizeObserver) => {
+            if (cancel || !ResizeObserver || !element) {
+                return null;
+            }
+
+            const observer = new ResizeObserver(() => updateSize(element));
+            observer.observe(element);
+            return observer;
+        });
+
+        return () => {
+            cancel = true;
+            observerPromise.then((observer) => observer?.disconnect());
+        };
+    }, [element, updateSize]);
+
+    return {width, height, ref};
+};
+
+/** @deprecated this hook is unreliable, use useElementDimensions */
 export const useElementSize = (elementRef: {
     current: HTMLElement | null;
 }): {height: number; width: number} => {
