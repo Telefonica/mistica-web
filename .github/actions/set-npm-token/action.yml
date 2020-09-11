@@ -1,0 +1,10 @@
+# https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions
+name: 'Set npm token'
+description: 'This action sets a publish npm token (from an env var) in the .npmrc config file to be able to publish.'
+inputs:
+    npm-token:
+        description: 'npm publish token'
+        required: true
+runs:
+    using: 'node12'
+    main: 'main.js'
