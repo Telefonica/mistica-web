@@ -6,14 +6,10 @@
  */
 
 import * as React from "react";
-declare type FontWeight = "light" | "regular" | "medium" | "bold";
-export type TextProps = {
-  size: number,
-  lineHeight?: string | number,
+declare type CommonProps = {
   color?: string,
   textDecoration?: "underline" | "line-through",
   children?: React.Node,
-  weight?: FontWeight,
   truncate?: boolean,
   uppercase?: boolean,
   id?: string,
@@ -21,5 +17,26 @@ export type TextProps = {
   role?: string,
   "aria-level"?: number
 };
-declare var Text: React.ComponentType<TextProps>;
-declare export default typeof Text;
+declare type LightProps = {
+  ...$Exact<CommonProps>,
+  light?: boolean,
+};
+declare type MediumProps = {
+  ...$Exact<CommonProps>,
+  medium?: boolean,
+};
+declare type RegularProps = {
+  ...$Exact<CommonProps>,
+  regular?: boolean,
+};
+declare type LightMediumProps = LightProps | MediumProps;
+declare type RegularMediumProps = RegularProps | MediumProps;
+declare export var Text1: React.ComponentType<CommonProps>;
+declare export var Text2: React.ComponentType<CommonProps>;
+declare export var Text3: React.ComponentType<CommonProps>;
+declare export var Text4: React.ComponentType<CommonProps>;
+declare export var Text5: React.ComponentType<LightMediumProps>;
+declare export var Text6: React.ComponentType<LightMediumProps>;
+declare export var Text7: React.ComponentType<RegularMediumProps>;
+declare export var Text8: React.ComponentType<RegularMediumProps>;
+declare export {};
