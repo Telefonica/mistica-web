@@ -19,7 +19,7 @@ const useStyles = createUseStyles((theme) => ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : theme.colors.background),
-        border: ({isInverse}) => (isInverse ? '0' : `1px solid ${theme.colors.divider}`),
+        border: ({isInverse}) => (isInverse ? '0' : `1px solid ${theme.colors.border}`),
         borderRadius: 4,
         overflow: 'hidden',
     },

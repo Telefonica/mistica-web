@@ -3,7 +3,10 @@ import {createUseStyles} from './jss';
 import Touchable from './touchable';
 import classNames from 'classnames';
 import {isWebViewBridgeAvailable, nativeMessage} from '@tef-novum/webview-bridge';
+import {useElementDimensions, useScreenSize} from './hooks';
 
+const PADDING_Y = 14;
+const PADDING_X = 16;
 const TRANSITION_TIME_IN_MS = 300;
 const SNACKBAR_MAX_WIDTH = 800;
 const SNACKBAR_MIN_WIDTH = 360;
@@ -32,12 +35,11 @@ const useStyles = createUseStyles((theme) => ({
         maxWidth: SNACKBAR_MAX_WIDTH,
         minWidth: SNACKBAR_MIN_WIDTH,
         minHeight: SNACKBAR_MIN_HEIGHT,
-        padding: `16px 24px`,
+        padding: `${PADDING_Y}px ${PADDING_X}px`,
         borderRadius: 4,
         position: 'fixed',
         bottom: 24,
         zIndex: 1000, // above anything
-
         backgroundColor: ({type}) =>
             type === 'CRITICAL' ? theme.colors.feedbackErrorBackground : theme.colors.feedbackInfoBackground,
         opacity: ({isOpen}) => (isOpen ? 1 : 0),
@@ -46,15 +48,25 @@ const useStyles = createUseStyles((theme) => ({
     },
     snackbarContent: {
         fontSize: 14,
-        lineHeight: 1.7,
+        lineHeight: `20px`,
         color: theme.colors.textPrimaryInverse,
+        display: 'flex',
+        flexDirection: ({isLongButton}) => (isLongButton ? 'column' : 'row'),
+        justifyContent: 'space-between',
+        alignItems: ({isLongButton}) => (isLongButton ? 'unset' : 'center'),
     },
     snackbarButton: {
-        float: 'right',
-        marginLeft: 28,
+        marginTop: ({isLongButton}) => (isLongButton ? 18 : -6),
+        marginLeft: ({isLongButton, isTabletOrBigger}) => (isLongButton ? 0 : isTabletOrBigger ? 48 : 16),
+        marginBottom: -6,
+        marginRight: -8,
         fontWeight: 500,
-        lineHeight: 1.7,
-
+        fontSize: 16,
+        lineHeight: `24px`,
+        padding: '4px 8px',
+        whiteSpace: 'nowrap',
+        width: 'auto',
+        alignSelf: ({isLongButton}) => (isLongButton ? 'flex-end' : 'unset'),
         color: ({type}) =>
             type === 'INFORMATIVE' ? theme.colors.textLinkSnackbar : theme.colors.textPrimaryInverse,
     },
@@ -64,7 +76,6 @@ const useStyles = createUseStyles((theme) => ({
             right: 8,
             bottom: 8,
             minWidth: 0,
-            borderRadius: 4,
         },
     },
 }));
@@ -77,7 +88,7 @@ type Props = {
     type?: SnackbarType;
 };
 
-const Snackbar: React.FC<Props> = ({
+const SnackbarComponent: React.FC<Props> = ({
     message,
     buttonText,
     duration = buttonText ? 10000 : 5000,
@@ -85,7 +96,10 @@ const Snackbar: React.FC<Props> = ({
     type = 'INFORMATIVE',
 }) => {
     const [isOpen, setIsOpen] = React.useState(false);
-    const classes = useStyles({type, isOpen});
+    const {width: buttonWidth, ref: buttonRef} = useElementDimensions();
+    const {isTabletOrBigger} = useScreenSize();
+    const longButtonWidth = isTabletOrBigger ? 160 : 128;
+    const classes = useStyles({type, isOpen, isTabletOrBigger, isLongButton: buttonWidth >= longButtonWidth});
 
     const close = React.useCallback(() => {
         setIsOpen(false);
@@ -108,12 +122,15 @@ const Snackbar: React.FC<Props> = ({
     }, [close, duration]);
 
     return (
-        <div className={classes.snackbar} role="alert">
-            <div className={classNames(classes.snackbarWrapper, {[classes.snackbarOpen]: isOpen})}>
+        <div className={classes.snackbar}>
+            <div
+                role="alert"
+                className={classNames(classes.snackbarWrapper, {[classes.snackbarOpen]: isOpen})}
+            >
                 <div className={classes.snackbarContent}>
                     <span>{message}</span>
                     {buttonText && (
-                        <Touchable className={classes.snackbarButton} onPress={close}>
+                        <Touchable elementRef={buttonRef} className={classes.snackbarButton} onPress={close}>
                             {buttonText}
                         </Touchable>
                     )}
@@ -123,7 +140,7 @@ const Snackbar: React.FC<Props> = ({
     );
 };
 
-const SnackbarContainer: React.FC<Props> = ({
+const Snackbar: React.FC<Props> = ({
     message,
     buttonText,
     duration = buttonText ? 10000 : 5000,
@@ -143,7 +160,7 @@ const SnackbarContainer: React.FC<Props> = ({
     }
 
     return (
-        <Snackbar
+        <SnackbarComponent
             message={message}
             duration={duration}
             buttonText={buttonText}
@@ -153,4 +170,4 @@ const SnackbarContainer: React.FC<Props> = ({
     );
 };
 
-export default SnackbarContainer;
+export default Snackbar;

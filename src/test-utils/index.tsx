@@ -34,8 +34,8 @@ export type Device =
 type DeviceCollection = Record<
     Device,
     {
-        userAgent?: string;
         platform?: string;
+        userAgent?: string;
         viewport: Viewport;
     }
 >;
@@ -78,6 +78,7 @@ const DEVICES: DeviceCollection = {
             hasTouch: false,
             isLandscape: false,
         },
+        userAgent: '',
     },
     [DESKTOP_DEVICE]: {
         // Use default platform
@@ -255,7 +256,7 @@ const createPageApi = (page: Page): PageApi => {
 };
 
 const openPage = async ({url, device, userAgent}: {url: string; device: Device; userAgent?: string}) => {
-    const currentUserAgent = userAgent || (await globalBrowser.userAgent());
+    const currentUserAgent = userAgent || DEVICES[device].userAgent || (await globalBrowser.userAgent());
     const page = globalPage;
     await page.bringToFront();
     await page.setViewport(DEVICES[device].viewport);
