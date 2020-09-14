@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import {createUseStyles} from './jss';
 import Touchable from './touchable';
-import Text from './text';
+import {Text5, Text7, Text8} from './text';
 import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
@@ -217,26 +217,26 @@ const Content: React.FC<ContentProps> = ({
             <div className={classes.rowBody}>
                 {headline && (
                     <Box paddingBottom={8}>
-                        <Text as="div" size={12} lineHeight="16px" color={theme.colors.textSecondary}>
+                        <Text8 as="div" regular color={theme.colors.textSecondary}>
                             {headline}
-                        </Text>
+                        </Text8>
                     </Box>
                 )}
-                <Text size={18} weight="light" lineHeight="24px" color={theme.colors.textPrimary}>
+                <Text5 light color={theme.colors.textPrimary}>
                     {title}
-                </Text>
+                </Text5>
                 {subtitle && (
                     <Box paddingY={2}>
-                        <Text size={14} lineHeight="20px" color={theme.colors.textSecondary}>
+                        <Text7 regular color={theme.colors.textSecondary}>
                             {subtitle}
-                        </Text>
+                        </Text7>
                     </Box>
                 )}
                 {description && (
                     <Box paddingY={2}>
-                        <Text size={14} lineHeight="20px" color={theme.colors.textSecondary}>
+                        <Text7 regular color={theme.colors.textSecondary}>
                             {description}
-                        </Text>
+                        </Text7>
                     </Box>
                 )}
             </div>

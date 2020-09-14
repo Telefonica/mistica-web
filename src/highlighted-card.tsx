@@ -7,7 +7,7 @@ import TextLink from './text-link';
 import IcnClose from './icons/icon-close';
 import {applyAlpha} from './utils/color';
 import {useTheme} from './hooks';
-import Text from './text';
+import {Text5, Text7} from './text';
 import IconButton from './icon-button';
 
 import type {TrackingEvent} from './utils/types';
@@ -131,13 +131,11 @@ const Content: React.FC<Props> = (props) => {
     const content = (
         <div className={classes.container}>
             <Box paddingLeft={16} paddingRight={imageUrl ? 8 : 56} paddingY={24}>
-                <Text size={18} lineHeight={1.33} weight="light">
-                    {title}
-                </Text>
+                <Text5 light>{title}</Text5>
                 <Box paddingTop={8}>
-                    <Text size={14} lineHeight={1.43} color={theme.colors.textSecondary}>
+                    <Text7 regular color={theme.colors.textSecondary}>
                         {description}
-                    </Text>
+                    </Text7>
                 </Box>
                 {props.button && <Box paddingTop={16}>{props.button}</Box>}
             </Box>

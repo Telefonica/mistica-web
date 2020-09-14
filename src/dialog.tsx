@@ -10,7 +10,7 @@ import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/w
 import ThemeContext from './theme-context';
 import {useTheme, useScreenSize} from './hooks';
 import ButtonLayout from './button-layout';
-import Text from './text';
+import {Text5, Text6} from './text';
 import {ESC} from './utils/key-codes';
 import Box from './box';
 import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
@@ -158,20 +158,15 @@ const Dialog: React.FC<DialogProps> = (props) => {
             {icon && <Box paddingBottom={24}>{icon}</Box>}
             {title && (
                 <Box paddingBottom={16}>
-                    <Text
-                        as="h2"
-                        size={isMobile ? 20 : 24}
-                        lineHeight={isMobile ? '24px' : '32px'}
-                        weight="light"
-                    >
+                    <Text5 as="h2" light>
                         {title}
-                    </Text>
+                    </Text5>
                 </Box>
             )}
             <div className={classes.dialogContent}>
-                <Text size={isMobile ? 16 : 18} lineHeight="24px" color={colors.textSecondary} weight="light">
+                <Text6 color={colors.textSecondary} light>
                     {message}
-                </Text>
+                </Text6>
             </div>
             <Box paddingTop={isMobile ? 24 : 32}>
                 <ButtonLayout>
