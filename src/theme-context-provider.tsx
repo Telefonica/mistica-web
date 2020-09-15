@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {JssProvider} from 'react-jss';
+import {createGenerateId} from 'jss';
 import {getJss} from './jss';
 import {baseTheme} from './theme';
 import ThemeContext from './theme-context';
@@ -23,6 +24,8 @@ type Props = {
 let jssInstanceId = 0;
 
 const isServerSide = typeof window === 'undefined';
+
+const generateId = createGenerateId();
 
 const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
     const classNamePrefix = React.useMemo(
@@ -145,7 +148,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
     };
 
     return (
-        <JssProvider jss={getJss()} classNamePrefix={classNamePrefix}>
+        <JssProvider jss={getJss()} classNamePrefix={classNamePrefix} generateId={generateId}>
             <ThemeContext.Provider value={contextTheme}>
                 <AriaIdGetterContext.Provider value={getAriaId}>
                     <ScreenSizeContextProvider>
