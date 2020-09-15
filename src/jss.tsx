@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {create as createJss, SheetsRegistry, createGenerateId} from 'jss';
+import {create as createJss, SheetsRegistry} from 'jss';
 import {createUseStyles as jssCreateUseStyles, JssProvider} from 'react-jss';
 import camelCase from 'jss-plugin-camel-case';
 import defaultUnit from 'jss-plugin-default-unit';
@@ -66,14 +66,12 @@ export const createUseStyles = <S extends StylesDefinition>(styles?: (theme: The
     };
 };
 
-const generateId = createGenerateId();
-
 export class ServerSideStyles {
     registry = new SheetsRegistry();
 
     render(el: React.ReactElement): React.ReactElement {
         return (
-            <JssProvider jss={getJss()} registry={this.registry} generateId={generateId}>
+            <JssProvider jss={getJss()} registry={this.registry}>
                 {el}
             </JssProvider>
         );

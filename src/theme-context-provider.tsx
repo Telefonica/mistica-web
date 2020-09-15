@@ -148,7 +148,11 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
     };
 
     return (
-        <JssProvider jss={getJss()} classNamePrefix={classNamePrefix} generateId={generateId}>
+        <JssProvider
+            jss={getJss()}
+            classNamePrefix={classNamePrefix}
+            generateId={typeof window === 'undefined' ? undefined : generateId}
+        >
             <ThemeContext.Provider value={contextTheme}>
                 <AriaIdGetterContext.Provider value={getAriaId}>
                     <ScreenSizeContextProvider>
