@@ -14,6 +14,7 @@ import {
     FormDateField,
     FormPhoneNumberField,
     Box,
+    FormDateTimeField,
 } from '..';
 import {inspect} from 'util';
 import Icon from '../icons/icon-visibility';
@@ -290,12 +291,27 @@ export const TypesUncontrolled: StoryComponent = () => (
 
         <Uncontrolled title="FormDateField">
             {(handleChange, handleChangeValue) => (
-                <FormDateField
-                    name="date"
-                    label="Date"
-                    onChange={handleChange}
-                    onChangeValue={handleChangeValue}
-                />
+                <div data-testid="date">
+                    <FormDateField
+                        name="date"
+                        label="Date"
+                        onChange={handleChange}
+                        onChangeValue={handleChangeValue}
+                    />
+                </div>
+            )}
+        </Uncontrolled>
+
+        <Uncontrolled title="FormDateTimeField">
+            {(handleChange, handleChangeValue) => (
+                <div data-testid="datetime">
+                    <FormDateTimeField
+                        name="datetime"
+                        label="DateTime"
+                        onChange={handleChange}
+                        onChangeValue={handleChangeValue}
+                    />
+                </div>
             )}
         </Uncontrolled>
 
@@ -460,6 +476,18 @@ export const TypesControlled = (): React.ReactNode => (
                     value={value}
                     name="date"
                     label="Date"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Controlled>
+
+        <Controlled title="FormDateTimeField" initialValue="1980-10-06T13:14">
+            {(handleChange, handleChangeValue, value) => (
+                <FormDateTimeField
+                    value={value}
+                    name="datetime"
+                    label="DateTime"
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
                 />
