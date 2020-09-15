@@ -14,5 +14,5 @@ declare type Props = {
   onClose?: () => mixed,
   type?: SnackbarType
 };
-declare var SnackbarContainer: React.ComponentType<Props>;
-declare export default typeof SnackbarContainer;
+declare var Snackbar: React.ComponentType<Props>;
+declare export default typeof Snackbar;

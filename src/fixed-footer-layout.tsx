@@ -43,9 +43,6 @@ const waitForSwitchTransitionToStart = (fn: () => void) => {
 const useStyles = createUseStyles((theme) => ({
     footer: {
         width: '100%',
-        // JSS warns here if we use a nested function value
-        background: ({isMobile, footerBgColor}) =>
-            isMobile ? footerBgColor || theme.colors.background : undefined,
     },
 
     shadow: {},
@@ -65,6 +62,7 @@ const useStyles = createUseStyles((theme) => ({
             left: 0,
             bottom: 0,
             zIndex: 1,
+            background: ({footerBgColor}) => footerBgColor || theme.colors.background,
         },
         shadow: {
             boxShadow: '0 -1px 2px 0 rgba(0, 0, 0, 0.2)',
@@ -138,7 +136,7 @@ const FixedFooterLayout: React.FC<Props> = ({
         : footerHeight;
     const height = isFooterVisible ? heightWithNotchInset : 0;
 
-    const classes = useStyles({footerBgColor, containerBgColor, height, isMobile});
+    const classes = useStyles({footerBgColor, containerBgColor, height});
 
     return (
         <>
