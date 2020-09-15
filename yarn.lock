@@ -3062,6 +3062,11 @@
   resolved "https://registry.yarnpkg.com/@telefonica/libphonenumber/-/libphonenumber-2.7.5.tgz#db47c87c11c86df6be3c8df34f25f7a46571c737"
   integrity sha512-AgH4FAWh1wYf+JsETApCNdEwFDMZgX5NkNu6J8w4HAnUGJN/r77Sa5Z4ZZVFcVWiwucKbd7auH1tGshhYIebtg==
 
+"@telefonica/prettier-config@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@telefonica/prettier-config/-/prettier-config-1.0.0.tgz#ee8f7407c687c7ad85dfcea6038e14b007b77ca2"
+  integrity sha512-hwwTudq/9W9gslu7IzpxJTObpMC+5rKecK/XLaZSpF/HBMdwtHh2E46GETiSDEA4l0gEq0KSLcbzzq/Fv9N16Q==
+
 "@testing-library/dom@^7.0.4":
   version "7.10.0"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-7.10.0.tgz#ceb77b80ddc0f1b5b71f49684eabd18d07f2d3cb"

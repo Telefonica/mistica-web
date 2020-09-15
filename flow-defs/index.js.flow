@@ -80,6 +80,7 @@ declare export { default as FormCreditCardExpirationField } from "./form-credit-
 declare export { default as FormCreditCardFields } from "./form-credit-card-fields";
 declare export { default as FormCvvField } from "./form-cvv-field";
 declare export { default as FormDateField } from "./form-date-field";
+declare export { default as FormDateTimeField } from "./form-date-time-field";
 declare export { default as FormIntegerField } from "./form-integer-field";
 declare export { default as FormDecimalField } from "./form-decimal-field";
 declare export { default as FormPasswordField } from "./form-password-field";

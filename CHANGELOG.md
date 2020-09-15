@@ -1,3 +1,18 @@
+# [6.1.0](https://github.com/Telefonica/mistica-web/compare/v6.0.0...v6.1.0) (2020-09-15)
+
+
+### Bug Fixes
+
+* **FormTextField:** fix multi line FormTextField bottom padding ([1f5c0a8](https://github.com/Telefonica/mistica-web/commit/1f5c0a8fc4e5caae3b2b4324c2023151a8746d2a))
+* **JSS:** use className id generator for client side executed code to avoid class names collision ([e972eaf](https://github.com/Telefonica/mistica-web/commit/e972eaf11f23b1a7c02ef1a046445f5f3395e03e))
+* **Snackbar:** Fix Snackbar styles for mobile and desktop ([f9f8eed](https://github.com/Telefonica/mistica-web/commit/f9f8eedd6dc2ca4bb6f674302ddeba3eda584159))
+
+
+### Features
+
+* **FeedbackScreen:** New FeedbackScreen component ([e22f65c](https://github.com/Telefonica/mistica-web/commit/e22f65ce553716d8c985a623d7c683696935183b))
+* **FormDateTimeField:** new Form Field component for DateTime values ([221d158](https://github.com/Telefonica/mistica-web/commit/221d1583711fd434444560378f3c40dc88a20cf4))
+
 # [6.0.0](https://github.com/Telefonica/mistica-web/compare/v5.3.2...v6.0.0) (2020-09-08)
 
 ### Bug Fixes
