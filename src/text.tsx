@@ -115,11 +115,14 @@ interface RegularProps extends CommonProps {
 
 type LightMediumProps = LightProps | MediumProps;
 type RegularMediumProps = RegularProps | MediumProps;
+type LightRegularMediumProps = LightProps | RegularProps | MediumProps;
 
 const getLightOrMediumWeight = (props: LightMediumProps) =>
     (props.light && 'light') || (props.medium && 'medium');
 const getRegularOrMediumWeight = (props: RegularMediumProps) =>
     (props.regular && 'regular') || (props.medium && 'medium');
+const getAllWeights = (props: LightRegularMediumProps) =>
+    (props.light && 'light') || (props.regular && 'regular') || (props.medium && 'medium');
 
 export const Text1: React.FC<CommonProps> = (props) => (
     <Text
@@ -186,13 +189,13 @@ export const Text5: React.FC<LightMediumProps> = (props) => (
     </Text>
 );
 
-export const Text6: React.FC<LightMediumProps> = (props) => (
+export const Text6: React.FC<LightRegularMediumProps> = (props) => (
     <Text
         mobileSize={16}
         mobileLineHeight="24px"
         desktopSize={18}
         desktopLineHeight="24px"
-        weight={getLightOrMediumWeight(props)}
+        weight={getAllWeights(props)}
         {...props}
     >
         {props.children}
