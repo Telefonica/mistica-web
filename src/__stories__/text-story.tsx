@@ -22,28 +22,31 @@ export const Default: StoryComponent = () => (
             <Text4>Text4 Light 22/24 (Mobile) | 28/32 (Desktop)</Text4>
         </StorySection>
         <StorySection title="text-preset-5">
-            <Text5 light>Text5 Light 18/24 (Mobile) | 20/28 (Desktop)</Text5>
-        </StorySection>
-        <StorySection title="text-preset-5">
             <Text5 medium>Text5 Medium 18/24 (Mobile) | 20/28 (Desktop)</Text5>
         </StorySection>
-        <StorySection title="text-preset-6">
-            <Text6 light>Text6 Light 16/24 (Mobile) | 18/24 (Desktop)</Text6>
+        <StorySection title="text-preset-5">
+            <Text5 light>Text5 Light 18/24 (Mobile) | 20/28 (Desktop)</Text5>
         </StorySection>
         <StorySection title="text-preset-6">
             <Text6 medium>Text6 Medium 16/24 (Mobile) | 18/24 (Desktop)</Text6>
         </StorySection>
-        <StorySection title="text-preset-7">
-            <Text7 regular>Text7 Regular 14/20 (Mobile) | 16/24 (Desktop)</Text7>
+        <StorySection title="text-preset-6">
+            <Text6 regular>Text6 Regular 16/24 (Mobile) | 18/24 (Desktop)</Text6>
+        </StorySection>
+        <StorySection title="text-preset-6">
+            <Text6 light>Text6 Light 16/24 (Mobile) | 18/24 (Desktop)</Text6>
         </StorySection>
         <StorySection title="text-preset-7">
             <Text7 medium>Text7 Medium 14/24 (Mobile) | 16/24 (Desktop)</Text7>
         </StorySection>
-        <StorySection title="text-preset-8">
-            <Text8 regular>Text8 Regular 12/16 (Mobile) | 14/20 (Desktop)</Text8>
+        <StorySection title="text-preset-7">
+            <Text7 regular>Text7 Regular 14/20 (Mobile) | 16/24 (Desktop)</Text7>
         </StorySection>
         <StorySection title="text-preset-8">
             <Text8 medium>Text8 Medium 12/16 (Mobile) | 14/20 (Desktop)</Text8>
+        </StorySection>
+        <StorySection title="text-preset-8">
+            <Text8 regular>Text8 Regular 12/16 (Mobile) | 14/20 (Desktop)</Text8>
         </StorySection>
     </div>
 );
