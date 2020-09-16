@@ -10,5 +10,3 @@ if (!process.env.CI) {
     console.error(lines.join('\n'));
     process.exit(1);
 }
-
-require('./build');
