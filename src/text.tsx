@@ -9,7 +9,6 @@ const useStyles = createUseStyles((theme) => {
         light: 300,
         regular: 400,
         medium: 500,
-        bold: 700,
     };
 
     const inverseColorsMap: Record<string, string> = {
