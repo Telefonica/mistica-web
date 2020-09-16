@@ -11,7 +11,7 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={16}>
             <Text3 as="h2">FocusTrap demo</Text3>
-            <Text7 color={theme.colors.textSecondary}>
+            <Text7 medium color={theme.colors.textSecondary}>
                 Click the tab key in your keyboard. You'll notice the focus is trapped inside the FocusTrap.
                 This is useful for some components like modals.
             </Text7>

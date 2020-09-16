@@ -16,7 +16,7 @@ export const Default: StoryComponent = () => {
                 <OverscrollColor />
             </div>
             <Box padding={16}>
-                <Text7 color={theme.colors.textSecondary}>
+                <Text7 regular color={theme.colors.textSecondary}>
                     Try to overscroll this screen in iOS. You'll see how the header color remains above the
                     scroll.
                 </Text7>

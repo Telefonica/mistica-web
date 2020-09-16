@@ -39,7 +39,7 @@ const useStyles = createUseStyles((theme) => {
 
 type FontWeight = 'light' | 'regular' | 'medium';
 
-interface CommonProps {
+export interface TextPresetProps {
     color?: string;
     textDecoration?: 'underline' | 'line-through';
     children?: React.ReactNode;
@@ -51,15 +51,17 @@ interface CommonProps {
     'aria-level'?: number;
 }
 
-interface CommonTextProps extends CommonProps {
+interface TextProps extends TextPresetProps {
     weight?: FontWeight | boolean;
-    mobileSize: number;
-    desktopSize: number;
-    mobileLineHeight: string | number;
-    desktopLineHeight: string | number;
+    size?: number;
+    mobileSize?: number;
+    desktopSize?: number;
+    lineHeight?: string | number;
+    mobileLineHeight?: string | number;
+    desktopLineHeight?: string | number;
 }
 
-const Text: React.FC<CommonTextProps> = ({
+const Text: React.FC<TextProps> = ({
     weight,
     color,
     textDecoration,
@@ -67,10 +69,12 @@ const Text: React.FC<CommonTextProps> = ({
     uppercase,
     as = 'span',
     children,
-    mobileSize,
-    desktopSize,
-    mobileLineHeight,
-    desktopLineHeight,
+    size,
+    mobileSize = size,
+    desktopSize = size,
+    lineHeight,
+    mobileLineHeight = lineHeight,
+    desktopLineHeight = lineHeight,
     ...otherProps
 }) => {
     const isInverse = useIsInverseVariant();
@@ -95,21 +99,21 @@ const Text: React.FC<CommonTextProps> = ({
     return React.createElement(as, {className, ...otherProps}, children);
 };
 
-interface LightProps extends CommonProps {
-    light?: boolean;
+interface LightProps extends TextPresetProps {
+    light: boolean;
     regular?: undefined;
     medium?: undefined;
 }
 
-interface MediumProps extends CommonProps {
+interface MediumProps extends TextPresetProps {
     light?: undefined;
     regular?: undefined;
-    medium?: boolean;
+    medium: boolean;
 }
 
-interface RegularProps extends CommonProps {
+interface RegularProps extends TextPresetProps {
     light?: undefined;
-    regular?: boolean;
+    regular: boolean;
     medium?: undefined;
 }
 
@@ -124,7 +128,7 @@ const getRegularOrMediumWeight = (props: RegularMediumProps) =>
 const getAllWeights = (props: LightRegularMediumProps) =>
     (props.light && 'light') || (props.regular && 'regular') || (props.medium && 'medium');
 
-export const Text1: React.FC<CommonProps> = (props) => (
+export const Text1: React.FC<TextPresetProps> = (props) => (
     <Text
         mobileSize={32}
         mobileLineHeight="40px"
@@ -137,7 +141,7 @@ export const Text1: React.FC<CommonProps> = (props) => (
     </Text>
 );
 
-export const Text2: React.FC<CommonProps> = (props) => (
+export const Text2: React.FC<TextPresetProps> = (props) => (
     <Text
         mobileSize={28}
         mobileLineHeight="32px"
@@ -150,7 +154,7 @@ export const Text2: React.FC<CommonProps> = (props) => (
     </Text>
 );
 
-export const Text3: React.FC<CommonProps> = (props) => (
+export const Text3: React.FC<TextPresetProps> = (props) => (
     <Text
         mobileSize={24}
         mobileLineHeight="32px"
@@ -163,7 +167,7 @@ export const Text3: React.FC<CommonProps> = (props) => (
     </Text>
 );
 
-export const Text4: React.FC<CommonProps> = (props) => (
+export const Text4: React.FC<TextPresetProps> = (props) => (
     <Text
         mobileSize={22}
         mobileLineHeight="24px"
@@ -190,14 +194,7 @@ export const Text5: React.FC<LightMediumProps> = (props) => (
 );
 
 export const Text6: React.FC<LightRegularMediumProps> = (props) => (
-    <Text
-        mobileSize={16}
-        mobileLineHeight="24px"
-        desktopSize={18}
-        desktopLineHeight="24px"
-        weight={getAllWeights(props)}
-        {...props}
-    >
+    <Text mobileSize={16} desktopSize={18} lineHeight="24px" weight={getAllWeights(props)} {...props}>
         {props.children}
     </Text>
 );

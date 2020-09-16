@@ -25,7 +25,9 @@ const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({title, bre
                     <Text7 regular>{BREADCRUMB_SEPARATOR}</Text7>
                 </React.Fragment>
             ))}
-            <Text7 color={theme.colors.textSecondary}>{title}</Text7>
+            <Text7 regular color={theme.colors.textSecondary}>
+                {title}
+            </Text7>
         </div>
     );
 };

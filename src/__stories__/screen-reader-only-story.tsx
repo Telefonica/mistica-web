@@ -11,7 +11,7 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={16}>
             <Text3 as="h2">ScreenReader demo</Text3>
-            <Text7 color={theme.colors.textSecondary}>
+            <Text7 regular color={theme.colors.textSecondary}>
                 There is a hidden message in this screen that's only accessible to screen readers. Turn on
                 your OS screen reader to discover it.
             </Text7>

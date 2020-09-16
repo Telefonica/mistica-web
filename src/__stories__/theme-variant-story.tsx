@@ -12,7 +12,7 @@ const OtherComponent: React.FC = () => {
     const isInverse = useIsInverseVariant();
     return (
         <Stack space={16}>
-            <Text7 color={theme.colors.textPrimary}>
+            <Text7 regular color={theme.colors.textPrimary}>
                 Some components, like Text, or Button, automatically react to theme variant changes
             </Text7>
             <ButtonPrimary onPress={() => alert('pressed')}>Button</ButtonPrimary>

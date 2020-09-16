@@ -10,7 +10,9 @@ export const UseScreenSize: StoryComponent = () => {
     const screenSize = useScreenSize();
     return (
         <Stack space={16}>
-            <Text7 color={theme.colors.textSecondary}>Resize the window</Text7>
+            <Text7 regular color={theme.colors.textSecondary}>
+                Resize the window
+            </Text7>
             <pre style={{fontFamily: 'monospace'}}>{JSON.stringify(screenSize, null, 2)}</pre>
         </Stack>
     );

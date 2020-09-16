@@ -10,7 +10,7 @@ export const UseAriaId: StoryComponent = () => {
     const id = useAriaId();
     return (
         <Stack space={16}>
-            <Text7 color={theme.colors.textSecondary}>
+            <Text7 regular color={theme.colors.textSecondary}>
                 Aria ids are useful for multiple accesibility purposes, for example to link a label with an
                 input/checkbox.
             </Text7>
