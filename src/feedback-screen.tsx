@@ -42,7 +42,8 @@ const useStyles = createUseStyles((theme) => ({
         width: '100%',
         margin: 'auto',
         [theme.mq.mobile]: {
-            minHeight: ({visibleAreaHeight}) => `calc(${visibleAreaHeight} - env(safe-area-inset-bottom))`,
+            minHeight: ({visibleAreaHeight, primaryButton}) =>
+                primaryButton ? `calc(${visibleAreaHeight} - env(safe-area-inset-bottom))` : 'unset',
         },
         '& *': {
             zIndex: 1,
@@ -198,6 +199,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         visibleAreaHeight: isServerSide ? '100vh' : visibleAreaHeightPx,
         footerHeight,
         animateText,
+        primaryButton,
     });
 
     // This trick along with the 100vh measure allows us to perform a first meaningful render on the server side.
