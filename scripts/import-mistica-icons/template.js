@@ -1,43 +1,31 @@
-// https://react-svgr.com/docs/custom-templates/#custom-templates
-
-function defaultTemplate({template}, opts, {imports, interfaces, componentName, props: ppp, jsx, exports}) {
+const template = ({template}, opts, {imports, interfaces, componentName, /* props, */ jsx, exports}) => {
     const plugins = ['jsx'];
 
     if (opts.typescript) {
         plugins.push('typescript');
     }
 
-    const typeScriptTpl = template.smart({plugins});
-
-    console.log(jsx);
-
-    const props = {
-        type: 'Identifier',
-        identifierName: 'props',
-        name: 'props',
-    };
-
-    console.log(props);
-
-    return typeScriptTpl.ast`${imports}
+    const typeScriptTemplate = template.smart({plugins});
+    return typeScriptTemplate.ast`${imports}
+        import {useIsInverseVariant, useTheme} from '../..';
 
         ${interfaces}
 
-
         type Props = {
-            color: string,
-            size: number,
-            role?: string,
-            className: string,
+            color?: string,
+            size?: number,
         }
 
-        const ${componentName}: React.FC<Props> = (${props}) => {
+        const ${componentName}: React.FC<Props> = ({color, size}) => {
+            const {colors} = useTheme();
+            const isInverse = useIsInverseVariant();
+            const fillColor = color ?? (isInverse ? colors.iconInverse : colors.iconPrimary);
+
             return ${jsx};
         }
 
         ${exports}
     `;
-}
-module.exports = defaultTemplate;
+};
 
-// const ${componentName}: React.FC<Props> = ({role= 'presentation', size = 24, ...props}) => {
+module.exports = template;
