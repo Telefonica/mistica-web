@@ -64,11 +64,12 @@ const main = async () => {
     const result = svgr.sync(
         svgCode,
         {
-            ref: true,
+            ref: false,
             titleProp: false,
             typescript: true,
             svgProps: {foo: 'string'},
-            plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx'],
+            template: require('./template'),
+            plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx', '@svgr/plugin-prettier'],
         },
         {componentName: 'LALA'}
     );
