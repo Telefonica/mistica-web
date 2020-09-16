@@ -6,7 +6,7 @@
  */
 
 import * as React from "react";
-declare type CommonProps = {
+export type TextPresetProps = {
   color?: string,
   textDecoration?: "underline" | "line-through",
   children?: React.Node,
@@ -18,24 +18,24 @@ declare type CommonProps = {
   "aria-level"?: number
 };
 declare type LightProps = {
-  ...$Exact<CommonProps>,
-  light?: boolean,
+  ...$Exact<TextPresetProps>,
+  light: boolean,
 };
 declare type MediumProps = {
-  ...$Exact<CommonProps>,
-  medium?: boolean,
+  ...$Exact<TextPresetProps>,
+  medium: boolean,
 };
 declare type RegularProps = {
-  ...$Exact<CommonProps>,
-  regular?: boolean,
+  ...$Exact<TextPresetProps>,
+  regular: boolean,
 };
 declare type LightMediumProps = LightProps | MediumProps;
 declare type RegularMediumProps = RegularProps | MediumProps;
 declare type LightRegularMediumProps = LightProps | RegularProps | MediumProps;
-declare export var Text1: React.ComponentType<CommonProps>;
-declare export var Text2: React.ComponentType<CommonProps>;
-declare export var Text3: React.ComponentType<CommonProps>;
-declare export var Text4: React.ComponentType<CommonProps>;
+declare export var Text1: React.ComponentType<TextPresetProps>;
+declare export var Text2: React.ComponentType<TextPresetProps>;
+declare export var Text3: React.ComponentType<TextPresetProps>;
+declare export var Text4: React.ComponentType<TextPresetProps>;
 declare export var Text5: React.ComponentType<LightMediumProps>;
 declare export var Text6: React.ComponentType<LightRegularMediumProps>;
 declare export var Text7: React.ComponentType<RegularMediumProps>;

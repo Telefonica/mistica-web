@@ -8,14 +8,24 @@
 import * as React from "react";
 import NavigationBreadcrumbs from "./navigation-breadcrumbs";
 import { ButtonPrimary, ButtonSecondary } from "./button";
+import { type TextPresetProps } from "./text";
+declare type OverridableTextProps = {
+  color?: $PropertyType<TextPresetProps, "color">,
+  textDecoration?: $PropertyType<TextPresetProps, "textDecoration">
+};
+declare type RichText =
+  | string
+  | ({
+      text: string
+    } & OverridableTextProps);
 declare type HeaderProps = {
-  pretitle?: string,
+  pretitle?: RichText,
   title?: string,
-  preamount?: string,
+  preamount?: RichText,
   amount?: string,
   button?: React.Element<typeof ButtonPrimary>,
   secondaryButton?: React.Element<typeof ButtonSecondary>,
-  subtitle?: string,
+  subtitle?: RichText,
   isErrorAmount?: boolean
 };
 declare export var Header: React.ComponentType<HeaderProps>;
