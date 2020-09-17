@@ -212,7 +212,7 @@ declare export var ChatRegular: React.ComponentType<Props>;
 declare export var CheckedFilled: React.ComponentType<Props>;
 declare export var CheckedLight: React.ComponentType<Props>;
 declare export var CheckedRegular: React.ComponentType<Props>;
-declare export var CheckFilled: React.ComponentType<Props>;
+declare export var CheckRegular: React.ComponentType<Props>;
 declare export var ChemistryFilled: React.ComponentType<Props>;
 declare export var ChemistryLight: React.ComponentType<Props>;
 declare export var ChemistryRegular: React.ComponentType<Props>;
