@@ -2,7 +2,6 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
-import {useScreenSize} from './hooks';
 
 const useStyles = createUseStyles((theme) => {
     const mapToWeight: Record<string, number> = {
@@ -18,14 +17,18 @@ const useStyles = createUseStyles((theme) => {
 
     return {
         text: {
-            lineHeight: ({isMobile, mobileLineHeight, desktopLineHeight}) =>
-                isMobile ? mobileLineHeight : desktopLineHeight,
+            lineHeight: ({desktopLineHeight}) => desktopLineHeight,
             textTransform: ({uppercase}) => (uppercase ? 'uppercase' : 'inherit'),
-            fontSize: ({isMobile, mobileSize, desktopSize}) => (isMobile ? mobileSize : desktopSize),
+            fontSize: ({desktopSize}) => desktopSize,
             fontWeight: ({weight}) => (weight ? mapToWeight[weight] : 'inherit'),
             color: ({isInverse, color = theme.colors.textPrimary}) =>
                 isInverse ? inverseColorsMap[color] ?? color : color,
             textDecoration: (p) => p.textDecoration,
+
+            [theme.mq.mobile]: {
+                lineHeight: ({mobileLineHeight}) => mobileLineHeight,
+                fontSize: ({mobileSize}) => mobileSize,
+            },
         },
         truncate: {
             whiteSpace: 'nowrap',
@@ -77,9 +80,7 @@ const Text: React.FC<TextProps> = ({
     ...otherProps
 }) => {
     const isInverse = useIsInverseVariant();
-    const {isMobile} = useScreenSize();
     const classes = useStyles({
-        isMobile,
         isInverse,
         mobileSize,
         desktopSize,
