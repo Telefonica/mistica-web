@@ -62,7 +62,6 @@ const createIconComponentSource = async (svgSource, componentName) => {
             ref: false,
             titleProp: false,
             typescript: true,
-            // svgProps: {foo: 'string'},
             template: require('./template'),
             plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx'],
         },
