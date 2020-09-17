@@ -2,11 +2,11 @@ import * as React from 'react';
 import classNames from 'classnames';
 import {createUseStyles} from './jss';
 import Touchable from './touchable';
-import {Text5, Text7, Text8} from './text';
+import {Text6, Text7, Text8} from './text';
 import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
-import {useTheme} from './hooks';
+import {useTheme, useScreenSize} from './hooks';
 import IconChevron from './icons/icon-chevron';
 import Switch from './switch';
 import {SPACE} from './utils/key-codes';
@@ -188,6 +188,8 @@ const Content: React.FC<ContentProps> = ({
     const theme = useTheme();
     const numTextLines = [headline, title, subtitle, description].filter(Boolean).length;
     const centerIcon = numTextLines === 1;
+    const {isMobile} = useScreenSize();
+
     const renderBadge = () => {
         if (!badge) {
             return null;
@@ -222,9 +224,9 @@ const Content: React.FC<ContentProps> = ({
                         </Text8>
                     </Box>
                 )}
-                <Text5 light color={theme.colors.textPrimary}>
+                <Text6 light color={theme.colors.textPrimary}>
                     {title}
-                </Text5>
+                </Text6>
                 {subtitle && (
                     <Box paddingY={2}>
                         <Text7 regular color={theme.colors.textSecondary}>
@@ -233,7 +235,7 @@ const Content: React.FC<ContentProps> = ({
                     </Box>
                 )}
                 {description && (
-                    <Box paddingY={2}>
+                    <Box paddingY={isMobile ? 2 : 0}>
                         <Text7 regular color={theme.colors.textSecondary}>
                             {description}
                         </Text7>
