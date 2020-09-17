@@ -61,6 +61,7 @@ export {default as FormCreditCardExpirationField} from './form-credit-card-expir
 export {default as FormCreditCardFields} from './form-credit-card-fields';
 export {default as FormCvvField} from './form-cvv-field';
 export {default as FormDateField} from './form-date-field';
+export {default as FormDateTimeField} from './form-date-time-field';
 export {default as FormIntegerField} from './form-integer-field';
 export {default as FormDecimalField} from './form-decimal-field';
 export {default as FormPasswordField} from './form-password-field';
