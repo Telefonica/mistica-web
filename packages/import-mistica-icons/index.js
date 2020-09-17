@@ -1,7 +1,4 @@
 // @ts-check
-
-// https://github.com/facebook/create-react-app/blob/66bf7dfc43350249e2f09d138a20840dae8a0a4a/packages/react-scripts/config/webpack.config.js#L436
-
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 const {join, basename} = require('path');
@@ -14,7 +11,7 @@ const {yellow, green} = require('colors/safe');
 const pascalCase = (s) => upperFirst(camelCase(s));
 
 const PATH_REPO_ROOT = join(__dirname, '..', '..');
-const PATH_CACHE = join(PATH_REPO_ROOT, 'node_modules', '.cache');
+const PATH_CACHE = join(__dirname, 'node_modules', '.cache');
 const PATH_MISTICA_ICONS_REPO = join(PATH_CACHE, 'mistica-icons');
 const PATH_OUTPUT = join(PATH_REPO_ROOT, 'src', 'generated');
 const PATH_OUTPUT_FILENAME = join(PATH_OUTPUT, 'mistica-icons.tsx');
