@@ -74,8 +74,6 @@ const createIconComponentSource = async (svgSource, componentName) => {
             .replace(/<svg .*?>/, `<svg width={size} height={size} viewBox="0 0 ${svgSize} ${svgSize}">`)
             // set fill color
             .replace(/fill="#\d+"/g, 'fill={fillColor}')
-            // add space before type definition
-            .replace(/^type /gm, '\ntype ')
             // add component type, for some reason it gets stripped from the template
             .replace(/\s*=\s*\({\s*color,/m, ': React.FC<Props> = ({color,')
     );
