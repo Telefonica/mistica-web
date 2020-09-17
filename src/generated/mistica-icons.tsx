@@ -2862,14 +2862,14 @@ export const CheckedRegular: React.FC<Props> = ({color, size}) => {
     );
 };
 
-export const CheckFilled: React.FC<Props> = ({color, size}) => {
+export const CheckRegular: React.FC<Props> = ({color, size}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.iconInverse : colors.iconPrimary);
     return (
         <svg width={size} height={size} viewBox="0 0 24 24">
             <path
-                d="M2.182 12.338l1.567-1.733a.59.59 0 01.885-.002l3.99 4.288a.587.587 0 00.885 0l9.864-10.69a.59.59 0 01.884 0l1.558 1.71c.245.268.247.71.003.98L10.473 19.22c-.243.271-.723.493-1.067.493h-.73c-.345 0-.825-.222-1.067-.49L2.18 13.317a.753.753 0 01.001-.98z"
+                d="M9.416 19.5a.997.997 0 01-.77-.353l-5.033-6.065a.916.916 0 01.155-1.322 1.012 1.012 0 011.379.149L9.39 17.02 19.633 3.877a1.01 1.01 0 011.373-.19.915.915 0 01.198 1.317L10.207 19.121a.988.988 0 01-.77.379h-.02z"
                 fill={fillColor}
             />
         </svg>
