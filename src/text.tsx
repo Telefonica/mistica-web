@@ -51,7 +51,7 @@ export interface TextPresetProps {
     id?: string;
     as?: React.ComponentType<any> | string;
     role?: string;
-    'aria-level'?: number;
+    ariaLevel?: number;
 }
 
 interface TextProps extends TextPresetProps {
@@ -80,7 +80,9 @@ const Text: React.FC<TextProps> = ({
     mobileLineHeight = lineHeight,
     desktopLineHeight = lineHeight,
     letterSpacing,
-    ...otherProps
+    id,
+    role,
+    ariaLevel,
 }) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({
@@ -100,7 +102,7 @@ const Text: React.FC<TextProps> = ({
     }
     const className = classnames(classes.text, {[classes.truncate]: truncate});
 
-    return React.createElement(as, {className, ...otherProps}, children);
+    return React.createElement(as, {className, id, role, 'aria-level': ariaLevel}, children);
 };
 
 interface LightProps extends TextPresetProps {
