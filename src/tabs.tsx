@@ -8,6 +8,8 @@ import {getPlatform} from './utils/platform';
 
 import type {TrackingEvent} from './utils/types';
 
+const tabMaxWidth = 284;
+
 const smallOuterStyles = {
     display: 'flex',
 };
@@ -15,6 +17,7 @@ const smallOuterStyles = {
 const bigTabStyles = {
     flex: '0 1 208px',
     padding: `16px 32px`,
+    maxWidth: tabMaxWidth,
 };
 
 const height = 56;
@@ -59,12 +62,31 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
         paddingRight: 16,
         verticalAlign: 'baseline',
         height,
-        maxWidth: 284,
         textAlign: 'center',
         borderBottom: '2px solid transparent',
+        maxWidth: ({numTabs}) => {
+            if (numTabs === 2) {
+                return `max(50%, ${tabMaxWidth}px)`;
+            } else if (numTabs === 3) {
+                return `max(33.33%, ${tabMaxWidth}px)`;
+            }
+            return tabMaxWidth;
+        },
+        fallbacks: {
+            maxWidth: tabMaxWidth, // max() is not supported by all browsers
+        },
 
         [mq.desktop]: bigTabStyles,
         [mq.largeDesktop]: bigTabStyles,
+    },
+    tabWithIcon: {
+        flexBasis: 112,
+        [mq.desktop]: {
+            flexBasis: 208,
+        },
+        [mq.largeDesktop]: {
+            flexBasis: 208,
+        },
     },
     tebText: {
         color: colors.textSecondary,
@@ -102,7 +124,7 @@ export type TabsProps = {
 
 const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) => {
     const {width, ref} = useElementDimensions();
-    const classes = useStyles({width});
+    const classes = useStyles({width, numTabs: tabs.length});
     return (
         <div role="tablist" ref={ref} className={classes.outerBorder}>
             <ResponsiveLayout fullWidth>
@@ -114,7 +136,11 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) =
                                 return (
                                     <Touchable
                                         key={index}
-                                        className={classnames(classes.tab, isSelected && classes.tabSelected)}
+                                        className={classnames(
+                                            classes.tab,
+                                            isSelected && classes.tabSelected,
+                                            icon && classes.tabWithIcon
+                                        )}
                                         disabled={isSelected}
                                         onPress={() => onChange(index)}
                                         trackingEvent={trackingEvent}
