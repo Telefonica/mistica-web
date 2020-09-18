@@ -65,7 +65,7 @@ export const Catalog: React.FC = () => {
         kebabCase(name)
             .split('-')
             .map(upperFirst)
-            .flatMap((part, i) => (
+            .map((part, i) => (
                 <span key={i}>
                     {part}
                     <wbr />
