@@ -212,7 +212,7 @@ export const Text6: React.FC<LightRegularMediumProps> = (props) => (
         desktopSize={18}
         lineHeight="24px"
         weight={getAllWeights(props)}
-        letterSpacing={-0.31}
+        letterSpacing={isIos ? -0.31 : 0}
         {...props}
     >
         {props.children}
