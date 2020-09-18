@@ -146,7 +146,6 @@ export const Text1: React.FC<TextPresetProps> = (props) => (
         letterSpacing={isIos ? 0.41 : 0}
         {...props}
     >
-        sdf
         {props.children}
     </Text>
 );
