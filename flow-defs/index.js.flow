@@ -59,6 +59,7 @@ declare export { default as GridLayout } from "./grid-layout";
 declare export { default as ResponsiveLayout } from "./responsive-layout";
 declare export { default as NavigationBreadcrumbs } from "./navigation-breadcrumbs";
 declare export {
+  default as Text,
   Text1,
   Text2,
   Text3,
