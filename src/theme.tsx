@@ -79,6 +79,7 @@ const colors = {
     iconSecondary: c.ICON_SECONDARY,
     iconPrimary: c.ICON_PRIMARY,
     iconTertiary: c.ICON_TERTIARY,
+    iconInverse: c.ICON_INVERSE,
 
     badgeBackground: c.BADGE_BACKGROUND,
 

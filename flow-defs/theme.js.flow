@@ -77,6 +77,7 @@ declare var colors: {
   iconSecondary: string,
   iconPrimary: string,
   iconTertiary: string,
+  iconInverse: string,
   badgeBackground: string,
   toggleAndroidInactive: string,
   toggleAndroidBackgroundInactive: string,
