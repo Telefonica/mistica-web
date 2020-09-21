@@ -102,7 +102,7 @@ export const Header: React.FC<HeaderProps> = ({
                             truncate: true,
                             color: theme.colors.textPrimary,
                         })}
-                    <Text3 role="heading" ariaLevel={2}>
+                    <Text3 role="heading" aria-level={2}>
                         {title}
                     </Text3>
                 </Stack>
@@ -160,7 +160,7 @@ export const MainSectionHeader: React.FC<MainSectionHeaderProps> = ({title, desc
         <Stack space={32}>
             <Stack space={isMobile ? 12 : 16}>
                 {title && (
-                    <Text2 role="heading" ariaLevel={1} truncate>
+                    <Text2 role="heading" aria-level={1} truncate>
                         {title}
                     </Text2>
                 )}

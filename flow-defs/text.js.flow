@@ -16,7 +16,7 @@ export type TextPresetProps = {
   id?: string,
   as?: React.ComponentType<any> | string,
   role?: string,
-  ariaLevel?: number
+  "aria-level"?: number
 };
 declare type TextProps = {
   ...$Exact<TextPresetProps>,
