@@ -7,11 +7,11 @@ import ResponsiveLayout from './responsive-layout';
 import GridLayout from './grid-layout';
 import {useScreenSize, useTheme} from './hooks';
 import OverscrollColor from './overscroll-color-context';
-import Text from './text';
+import {Text1, Text2, Text3, Text6} from './text';
 import NavigationBreadcrumbs from './navigation-breadcrumbs';
 import {ButtonPrimary, ButtonSecondary} from './button';
 
-import type {TextProps} from './text';
+import type {TextPresetProps} from './text';
 import ButtonLayout from './button-layout';
 
 const useButtonLayoutStyles = createUseStyles(() => ({
@@ -27,6 +27,13 @@ const useButtonLayoutStyles = createUseStyles(() => ({
         },
     },
 }));
+
+type OverridableTextProps = {
+    color?: TextPresetProps['color'];
+    textDecoration?: TextPresetProps['textDecoration'];
+};
+
+type RichText = string | ({text: string} & OverridableTextProps);
 
 const MobileHeaderButtonLayout: React.FC = ({children}) => {
     const classes = useButtonLayoutStyles();
@@ -44,13 +51,6 @@ const MobileHeaderButtonLayout: React.FC = ({children}) => {
         </div>
     );
 };
-
-type OverridableTextProps = {
-    color?: TextProps['color'];
-    textDecoration?: TextProps['textDecoration'];
-};
-
-type RichText = string | ({text: string} & OverridableTextProps);
 
 type HeaderProps = {
     pretitle?: RichText;
@@ -77,15 +77,19 @@ export const Header: React.FC<HeaderProps> = ({
     const theme = useTheme();
     const isInverse = useIsInverseVariant();
 
-    const renderRichText = (richText: RichText, notOverridableProps: Omit<TextProps, 'children'>) => {
+    const renderRichText = (richText: RichText, notOverridableProps: Omit<TextPresetProps, 'children'>) => {
         if (typeof richText === 'string') {
-            return <Text {...notOverridableProps}>{richText}</Text>;
+            return (
+                <Text6 regular {...notOverridableProps}>
+                    {richText}
+                </Text6>
+            );
         }
         const {text, ...textProps} = richText;
         return (
-            <Text {...textProps} {...notOverridableProps}>
+            <Text6 regular {...textProps} {...notOverridableProps}>
                 {richText.text}
-            </Text>
+            </Text6>
         );
     };
 
@@ -95,20 +99,12 @@ export const Header: React.FC<HeaderProps> = ({
                 <Stack space={8}>
                     {pretitle &&
                         renderRichText(pretitle, {
-                            size: 16,
-                            lineHeight: '24px',
                             truncate: true,
                             color: theme.colors.textPrimary,
                         })}
-                    <Text
-                        role="heading"
-                        aria-level={2}
-                        size={isMobile ? 24 : 32}
-                        lineHeight={isMobile ? '32px' : '40px'}
-                        weight="light"
-                    >
+                    <Text3 role="heading" aria-level={2}>
                         {title}
-                    </Text>
+                    </Text3>
                 </Stack>
             )}
             {(preamount || amount || button || subtitle) && (
@@ -117,15 +113,10 @@ export const Header: React.FC<HeaderProps> = ({
                         <Stack space={8}>
                             {preamount &&
                                 renderRichText(preamount, {
-                                    size: 16,
-                                    lineHeight: '24px',
                                     truncate: true,
                                     color: theme.colors.textPrimary,
                                 })}
-                            <Text
-                                size={isMobile ? 32 : 40}
-                                lineHeight={isMobile ? '40px' : '48px'}
-                                weight="light"
+                            <Text1
                                 truncate
                                 color={
                                     isErrorAmount && !isInverse
@@ -134,7 +125,7 @@ export const Header: React.FC<HeaderProps> = ({
                                 }
                             >
                                 {amount}
-                            </Text>
+                            </Text1>
                         </Stack>
                     )}
                     {(button || secondaryButton) &&
@@ -149,7 +140,7 @@ export const Header: React.FC<HeaderProps> = ({
                                 {secondaryButton}
                             </ButtonLayout>
                         ))}
-                    {subtitle && renderRichText(subtitle, {size: 16, lineHeight: '24px', truncate: true})}
+                    {subtitle && renderRichText(subtitle, {truncate: true})}
                 </Stack>
             )}
         </Stack>
@@ -169,22 +160,11 @@ export const MainSectionHeader: React.FC<MainSectionHeaderProps> = ({title, desc
         <Stack space={32}>
             <Stack space={isMobile ? 12 : 16}>
                 {title && (
-                    <Text
-                        role="heading"
-                        aria-level={1}
-                        size={isMobile ? 28 : 40}
-                        lineHeight={isMobile ? '32px' : '48px'}
-                        weight="light"
-                        truncate
-                    >
+                    <Text2 role="heading" aria-level={1} truncate>
                         {title}
-                    </Text>
+                    </Text2>
                 )}
-                {description && (
-                    <Text size={24} lineHeight="32px" weight="light">
-                        {description}
-                    </Text>
-                )}
+                {description && <Text3>{description}</Text3>}
             </Stack>
             {button}
         </Stack>

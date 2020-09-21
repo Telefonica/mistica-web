@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {OverscrollColor, useTheme, Text, Box} from '..';
+import {OverscrollColor, useTheme, Text7, Box} from '..';
 
 export default {
     title: 'Components|Utils/OverscrollColor',
@@ -16,10 +16,10 @@ export const Default: StoryComponent = () => {
                 <OverscrollColor />
             </div>
             <Box padding={16}>
-                <Text size={16} color={theme.colors.textSecondary}>
+                <Text7 regular color={theme.colors.textSecondary}>
                     Try to overscroll this screen in iOS. You'll see how the header color remains above the
                     scroll.
-                </Text>
+                </Text7>
             </Box>
         </>
     );

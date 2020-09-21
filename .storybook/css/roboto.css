@@ -30,11 +30,3 @@
     src: local('Roboto Medium'), local('Roboto-Medium'),
         url('./fonts/roboto-v20-latin-ext_latin-500.woff2') format('woff2');
 }
-/* roboto-700 - latin-ext_latin */
-@font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    src: local('Roboto Bold'), local('Roboto-Bold'),
-        url('./fonts/roboto-v20-latin-ext_latin-700.woff2') format('woff2');
-}

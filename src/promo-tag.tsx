@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Text from './text';
+import {Text8} from './text';
 import {useTheme} from './hooks';
 import {createUseStyles} from './jss';
 
@@ -25,9 +25,9 @@ const PromoTag: React.FC<Props> = ({children}) => {
     const {colors} = useTheme();
     return (
         <span className={classes.tag}>
-            <Text size={12} color={colors.textPrimaryInverse} uppercase>
+            <Text8 color={colors.textPrimaryInverse} regular uppercase>
                 {children}
-            </Text>
+            </Text8>
         </span>
     );
 };

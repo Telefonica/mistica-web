@@ -8,10 +8,10 @@
 import * as React from "react";
 import NavigationBreadcrumbs from "./navigation-breadcrumbs";
 import { ButtonPrimary, ButtonSecondary } from "./button";
-import { type TextProps } from "./text";
+import { type TextPresetProps } from "./text";
 declare type OverridableTextProps = {
-  color?: $PropertyType<TextProps, "color">,
-  textDecoration?: $PropertyType<TextProps, "textDecoration">
+  color?: $PropertyType<TextPresetProps, "color">,
+  textDecoration?: $PropertyType<TextPresetProps, "textDecoration">
 };
 declare type RichText =
   | string

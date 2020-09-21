@@ -58,7 +58,17 @@ declare export {
 declare export { default as GridLayout } from "./grid-layout";
 declare export { default as ResponsiveLayout } from "./responsive-layout";
 declare export { default as NavigationBreadcrumbs } from "./navigation-breadcrumbs";
-declare export { default as Text } from "./text";
+declare export {
+  default as Text,
+  Text1,
+  Text2,
+  Text3,
+  Text4,
+  Text5,
+  Text6,
+  Text7,
+  Text8
+} from "./text";
 declare export { default as PromoTag } from "./promo-tag";
 declare export { default as SectionTitle } from "./section-title";
 declare export { Placeholder, AvatarPlaceholder } from "./placeholder";

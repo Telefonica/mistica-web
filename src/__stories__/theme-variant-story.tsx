@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ThemeVariant, useTheme, Text, useIsInverseVariant, Stack} from '..';
+import {ThemeVariant, useTheme, Text7, useIsInverseVariant, Stack} from '..';
 import {useCheckbox} from './helpers';
 import {ButtonPrimary} from '../button';
 
@@ -12,9 +12,9 @@ const OtherComponent: React.FC = () => {
     const isInverse = useIsInverseVariant();
     return (
         <Stack space={16}>
-            <Text size={16} color={theme.colors.textPrimary}>
+            <Text7 regular color={theme.colors.textPrimary}>
                 Some components, like Text, or Button, automatically react to theme variant changes
-            </Text>
+            </Text7>
             <ButtonPrimary onPress={() => alert('pressed')}>Button</ButtonPrimary>
             <pre
                 style={{

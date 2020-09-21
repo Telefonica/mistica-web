@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FocusTrap, ButtonPrimary, ButtonSecondary, ButtonLayout, Stack, Text} from '..';
+import {FocusTrap, ButtonPrimary, ButtonSecondary, ButtonLayout, Stack, Text3, Text7} from '..';
 import {useTheme} from '../hooks';
 
 export default {
@@ -10,13 +10,11 @@ export const Default: StoryComponent = () => {
     const theme = useTheme();
     return (
         <Stack space={16}>
-            <Text as="h2" size={24} weight="medium">
-                FocusTrap demo
-            </Text>
-            <Text size={16} color={theme.colors.textSecondary}>
+            <Text3 as="h2">FocusTrap demo</Text3>
+            <Text7 medium color={theme.colors.textSecondary}>
                 Click the tab key in your keyboard. You'll notice the focus is trapped inside the FocusTrap.
                 This is useful for some components like modals.
-            </Text>
+            </Text7>
             <FocusTrap>
                 <ButtonLayout>
                     <ButtonPrimary onPress={() => alert('clicked')}>Inside 1</ButtonPrimary>
