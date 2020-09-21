@@ -1,3 +1,16 @@
+# [6.2.0](https://github.com/Telefonica/mistica-web/compare/v6.1.2...v6.2.0) (2020-09-21)
+
+
+### Bug Fixes
+
+* **Tabs:** Some style fixes mainly affecting tablet breakpoint layout ([1ac7d03](https://github.com/Telefonica/mistica-web/commit/1ac7d036fbe25584ba6077deed5a5309d0122e6d))
+
+
+### Features
+
+* **Icons:** Added all mistica-icons as React Components. See Storybook Icons section ([3d074c4](https://github.com/Telefonica/mistica-web/commit/3d074c473d14052434baaaa27f9341346c868985))
+* **Text:** new TextX components with the allowed texts presets ([c0b36da](https://github.com/Telefonica/mistica-web/commit/c0b36da0193160ff93b4395c63858e887d213b12))
+
 ## [6.1.2](https://github.com/Telefonica/mistica-web/compare/v6.1.1...v6.1.2) (2020-09-16)
 
 
