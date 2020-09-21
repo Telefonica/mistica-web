@@ -102,6 +102,7 @@ declare export { default as IconArrowDown } from "./icons/icon-arrow-down";
 declare export { default as IconChevron } from "./icons/icon-chevron";
 declare export { default as IconError } from "./icons/icon-error";
 declare export { default as IconSuccess } from "./icons/icon-success";
+declare export * from "./generated/mistica-icons"
 declare export {
   useTheme,
   useScreenSize,
