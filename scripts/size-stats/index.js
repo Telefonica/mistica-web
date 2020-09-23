@@ -12,6 +12,7 @@ const PATH_DIST_ES = join(PATH_REPO_ROOT, 'dist-es');
 const PATH_CRA = join(__dirname, 'cra-minimal');
 const PATH_CRA_INDEX = join(PATH_CRA, 'src', 'index.js');
 const PATH_CRA_BUILD = join(PATH_CRA, 'build');
+const PATH_TELEFONICA_SCOPE = join(PATH_CRA, 'node_modules', '@telefonica');
 
 const getTotalSize = (filenames, exclude = []) => {
     let size = 0;
@@ -49,19 +50,24 @@ const patchCra = () => {
     fs.writeFileSync(pathCraPackageJson, JSON.stringify(packageJson, null, 4));
 
     // link @telefonica/mistica dependency
-    const pathTelefonicaScope = join(PATH_CRA, 'node_modules', '@telefonica');
-    const pathMisticaPackage = join(pathTelefonicaScope, 'mistica');
-    mkdirp(pathTelefonicaScope);
-    fs.linkSync(PATH_REPO_ROOT, pathMisticaPackage);
+    const pathMisticaPackage = join(PATH_TELEFONICA_SCOPE, 'mistica');
+    rimraf.sync(PATH_TELEFONICA_SCOPE);
+    mkdirp.sync(PATH_TELEFONICA_SCOPE);
+    fs.symlinkSync(PATH_REPO_ROOT, pathMisticaPackage);
+};
+
+const revertPatch = () => {
+    execSync('git checkout scripts/size-stats/cra-minimal', {cwd: PATH_REPO_ROOT});
+    rimraf.sync(PATH_TELEFONICA_SCOPE);
 };
 
 const installCraDeps = () => {
-    execSync('yarn', {stdio: 'inherit', cwd: PATH_CRA});
+    execSync('yarn', {cwd: PATH_CRA});
 };
 
 const buildCra = () => {
     console.log(fs.readFileSync(PATH_CRA_INDEX, 'utf-8'));
-    execSync('yarn build', {stdio: 'inherit', cwd: PATH_CRA});
+    execSync('yarn build', {cwd: PATH_CRA});
 };
 
 const main = () => {
@@ -71,6 +77,7 @@ const main = () => {
     patchCra();
     buildCra();
     const craWithMistica = getTotalSize(glob.sync(join(PATH_CRA_BUILD, '**/*.js')));
+    revertPatch();
 
     const distJsFilenames = glob.sync(join(PATH_DIST, '**/*.js'));
     const distEsJsFilenames = glob.sync(join(PATH_DIST_ES, '**/*.js'));
@@ -85,8 +92,8 @@ const main = () => {
             jsNoMisticaIcons: getTotalSize(distEsJsFilenames, [/\/generated\/mistica-icons\.js$/]),
         },
         cra: {
-            craInitial,
-            craWithMistica,
+            initial: craInitial,
+            withMistica: craWithMistica,
         },
     };
 
