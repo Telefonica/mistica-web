@@ -10,7 +10,6 @@ const PATH_REPO_ROOT = join(__dirname, '../..');
 const PATH_DIST = join(PATH_REPO_ROOT, 'dist');
 const PATH_DIST_ES = join(PATH_REPO_ROOT, 'dist-es');
 const PATH_CRA = join(__dirname, 'cra-minimal');
-const PATH_CRA_INDEX = join(PATH_CRA, 'src', 'index.js');
 const PATH_CRA_BUILD = join(PATH_CRA, 'build');
 const PATH_TELEFONICA_SCOPE = join(PATH_CRA, 'node_modules', '@telefonica');
 
@@ -24,80 +23,50 @@ const getTotalSize = (filenames, exclude = []) => {
     return size;
 };
 
-const patchCra = () => {
-    const indexJs = `
-        import React from 'react';
-        import ReactDOM from 'react-dom';
-        import {ThemeContextProvider, Text1} from '@telefonica/mistica';
-
-        ReactDOM.render(
-            <React.StrictMode>
-                <ThemeContextProvider theme={{skin: 'Movistar', i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}}}>
-                    <Text1>Hello</Text1>
-                </ThemeContextProvider>
-            </React.StrictMode>,
-            document.getElementById('root')
-        );
-    `;
-
-    // update index.js
-    fs.writeFileSync(PATH_CRA_INDEX, indexJs);
-
-    // add @telefonica/mistica dependency to package.json
-    const pathCraPackageJson = join(PATH_CRA, 'package.json');
-    const packageJson = require(pathCraPackageJson);
-    packageJson.dependencies['@telefonica/mistica'] = 'latest';
-    fs.writeFileSync(pathCraPackageJson, JSON.stringify(packageJson, null, 4));
+const buildCra = () => {
+    execSync('yarn', {cwd: PATH_CRA});
 
     // link @telefonica/mistica dependency
     const pathMisticaPackage = join(PATH_TELEFONICA_SCOPE, 'mistica');
     rimraf.sync(PATH_TELEFONICA_SCOPE);
     mkdirp.sync(PATH_TELEFONICA_SCOPE);
     fs.symlinkSync(PATH_REPO_ROOT, pathMisticaPackage);
-};
 
-const revertPatch = () => {
-    execSync('git checkout scripts/size-stats/cra-minimal', {cwd: PATH_REPO_ROOT});
-    rimraf.sync(PATH_TELEFONICA_SCOPE);
-};
-
-const installCraDeps = () => {
-    execSync('yarn', {cwd: PATH_CRA});
-};
-
-const buildCra = () => {
-    console.log(fs.readFileSync(PATH_CRA_INDEX, 'utf-8'));
+    // build
     execSync('yarn build', {cwd: PATH_CRA});
 };
 
 const main = () => {
-    installCraDeps();
+    console.log('Creating size stats...');
     buildCra();
-    const craInitial = getTotalSize(glob.sync(join(PATH_CRA_BUILD, '**/*.js')));
-    patchCra();
-    buildCra();
+    const craInitial = 133128; // precalculated
     const craWithMistica = getTotalSize(glob.sync(join(PATH_CRA_BUILD, '**/*.js')));
-    revertPatch();
 
     const distJsFilenames = glob.sync(join(PATH_DIST, '**/*.js'));
     const distEsJsFilenames = glob.sync(join(PATH_DIST_ES, '**/*.js'));
 
-    const result = {
-        dist: {
-            js: getTotalSize(distJsFilenames),
-            jsNoMisticaIcons: getTotalSize(distJsFilenames, [/\/generated\/mistica-icons\.js$/]),
+    const result = JSON.stringify(
+        {
+            dist: {
+                js: getTotalSize(distJsFilenames),
+                jsNoMisticaIcons: getTotalSize(distJsFilenames, [/\/generated\/mistica-icons\.js$/]),
+            },
+            distEs: {
+                js: getTotalSize(distEsJsFilenames),
+                jsNoMisticaIcons: getTotalSize(distEsJsFilenames, [/\/generated\/mistica-icons\.js$/]),
+            },
+            cra: {
+                initial: craInitial,
+                withMistica: craWithMistica,
+                difference: craWithMistica - craInitial,
+            },
         },
-        distEs: {
-            js: getTotalSize(distEsJsFilenames),
-            jsNoMisticaIcons: getTotalSize(distEsJsFilenames, [/\/generated\/mistica-icons\.js$/]),
-        },
-        cra: {
-            initial: craInitial,
-            withMistica: craWithMistica,
-        },
-    };
+        null,
+        4
+    );
 
     console.log(result);
+    fs.writeFileSync(join(PATH_REPO_ROOT, 'build-stats.json'), result);
 };
 
 main();
