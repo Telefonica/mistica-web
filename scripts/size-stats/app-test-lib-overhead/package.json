@@ -1,0 +1,12 @@
+{
+    "name": "app-test-lib-overhead",
+    "private": true,
+    "scripts": {
+        "build": "rimraf dist && webpack --mode production"
+    },
+    "devDependencies": {
+        "webpack": "^4.44.2",
+        "webpack-cli": "^3.3.12",
+        "rimraf": "^3.0.2"
+    }
+}

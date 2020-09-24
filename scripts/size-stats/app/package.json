@@ -1,9 +1,0 @@
-{
-    "name": "app",
-    "main": "index.js",
-    "license": "UNLINCENSED",
-    "private": true,
-    "dependencies": {
-        "webpack": "^4.44.2"
-    }
-}

@@ -8,8 +8,8 @@ const isCi = require('is-ci');
 const PATH_REPO_ROOT = join(__dirname, '../..');
 const PATH_DIST = join(PATH_REPO_ROOT, 'dist');
 const PATH_DIST_ES = join(PATH_REPO_ROOT, 'dist-es');
-const PATH_CRA = join(__dirname, 'cra-minimal');
-const PATH_CRA_BUILD = join(PATH_CRA, 'build');
+const PATH_CRA = join(__dirname, 'app-test-lib-overhead');
+const PATH_CRA_BUILD = join(PATH_CRA, 'dist');
 
 const FILE_NAME_STATS_JSON = 'size-stats.json';
 
@@ -48,7 +48,7 @@ const main = () => {
     const t0 = Date.now();
     console.log('Creating size stats...');
     buildCra();
-    const craInitial = 133128; // precalculated
+    const craInitial = 130857; // precalculated - see webpack.config.js
     const craWithMistica = getTotalSize(glob.sync(join(PATH_CRA_BUILD, '**/*.js')));
 
     const distJsFilenames = glob.sync(join(PATH_DIST, '**/*.js'));
