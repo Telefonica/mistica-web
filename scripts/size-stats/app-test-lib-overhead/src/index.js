@@ -28,5 +28,3 @@ ReactDOM.render(
     ),
     document.getElementById('root')
 );
-
-// 140098 - https://github.com/Telefonica/mistica-web/pull/124/checks?check_run_id=1161404549#step:6:133
