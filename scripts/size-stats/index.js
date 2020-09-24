@@ -53,25 +53,26 @@ const main = () => {
     const distJsFilenames = glob.sync(join(PATH_DIST, '**/*.js'));
     const distEsJsFilenames = glob.sync(join(PATH_DIST_ES, '**/*.js'));
 
-    const result = JSON.stringify(
-        {
-            dist: {
-                js: getTotalSize(distJsFilenames),
-                jsNoMisticaIcons: getTotalSize(distJsFilenames, [/\/generated\/mistica-icons\.js$/]),
+    const result =
+        JSON.stringify(
+            {
+                dist: {
+                    js: getTotalSize(distJsFilenames),
+                    jsNoMisticaIcons: getTotalSize(distJsFilenames, [/\/generated\/mistica-icons\.js$/]),
+                },
+                distEs: {
+                    js: getTotalSize(distEsJsFilenames),
+                    jsNoMisticaIcons: getTotalSize(distEsJsFilenames, [/\/generated\/mistica-icons\.js$/]),
+                },
+                cra: {
+                    initial: craInitial,
+                    withMistica: craWithMistica,
+                    difference: craWithMistica - craInitial,
+                },
             },
-            distEs: {
-                js: getTotalSize(distEsJsFilenames),
-                jsNoMisticaIcons: getTotalSize(distEsJsFilenames, [/\/generated\/mistica-icons\.js$/]),
-            },
-            cra: {
-                initial: craInitial,
-                withMistica: craWithMistica,
-                difference: craWithMistica - craInitial,
-            },
-        },
-        null,
-        4
-    );
+            null,
+            4
+        ) + '\n';
 
     fs.writeFileSync(join(PATH_REPO_ROOT, FILE_NAME_STATS_JSON), result);
 
