@@ -1,14 +1,14 @@
 {
     "dist": {
-        "js": 1,
-        "jsNoMisticaIcons": 2
+        "js": 2789059,
+        "jsNoMisticaIcons": 740468
     },
     "distEs": {
-        "js": 2,
-        "jsNoMisticaIcons": 3
+        "js": 2442291,
+        "jsNoMisticaIcons": 485772
     },
     "cra": {
-        "initial": 4,
+        "initial": 133128,
         "withMistica": 454412,
         "difference": 321284
     }
