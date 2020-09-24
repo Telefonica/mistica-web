@@ -8,8 +8,8 @@ const isCi = require('is-ci');
 const PATH_REPO_ROOT = join(__dirname, '../..');
 const PATH_DIST = join(PATH_REPO_ROOT, 'dist');
 const PATH_DIST_ES = join(PATH_REPO_ROOT, 'dist-es');
-const PATH_CRA = join(__dirname, 'app-test-lib-overhead');
-const PATH_CRA_BUILD = join(PATH_CRA, 'dist');
+const PATH_APP = join(__dirname, 'app-test-lib-overhead');
+const PATH_APP_BUILD = join(PATH_APP, 'dist');
 
 const FILE_NAME_STATS_JSON = 'size-stats.json';
 
@@ -23,9 +23,9 @@ const getTotalSize = (filenames, exclude = []) => {
     return size;
 };
 
-const buildCra = () => {
-    execSync('yarn', {cwd: PATH_CRA});
-    execSync('yarn build', {cwd: PATH_CRA});
+const buildApp = () => {
+    execSync('yarn', {cwd: PATH_APP});
+    execSync('yarn build', {cwd: PATH_APP});
 };
 
 const assertNoChangesInStatsFile = () => {
@@ -47,9 +47,9 @@ const assertNoChangesInStatsFile = () => {
 const main = () => {
     const t0 = Date.now();
     console.log('Creating size stats...');
-    buildCra();
-    const craInitial = 130857; // precalculated - see webpack.config.js
-    const craWithMistica = getTotalSize(glob.sync(join(PATH_CRA_BUILD, '**/*.js')));
+    buildApp();
+    const appInitial = 130857; // precalculated - see webpack.config.js
+    const appWithMistica = getTotalSize(glob.sync(join(PATH_APP_BUILD, '**/*.js')));
 
     const distJsFilenames = glob.sync(join(PATH_DIST, '**/*.js'));
     const distEsJsFilenames = glob.sync(join(PATH_DIST_ES, '**/*.js'));
@@ -65,10 +65,10 @@ const main = () => {
                     js: getTotalSize(distEsJsFilenames),
                     jsNoMisticaIcons: getTotalSize(distEsJsFilenames, [/\/generated\/mistica-icons\.js$/]),
                 },
-                cra: {
-                    initial: craInitial,
-                    withMistica: craWithMistica,
-                    difference: craWithMistica - craInitial,
+                libOverhead: {
+                    initial: appInitial,
+                    withMistica: appWithMistica,
+                    difference: appWithMistica - appInitial,
                 },
             },
             null,
