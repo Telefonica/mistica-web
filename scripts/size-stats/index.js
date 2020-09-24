@@ -45,6 +45,7 @@ const assertNoChangesInStatsFile = () => {
 };
 
 const main = () => {
+    const t0 = Date.now();
     console.log('Creating size stats...');
     buildCra();
     const craInitial = 133128; // precalculated
@@ -75,6 +76,8 @@ const main = () => {
         ) + '\n';
 
     fs.writeFileSync(join(PATH_REPO_ROOT, FILE_NAME_STATS_JSON), result);
+
+    console.log('Done in:', Date.now() - t0, 'ms');
 
     if (isCi) {
         assertNoChangesInStatsFile();
