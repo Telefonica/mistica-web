@@ -29,11 +29,13 @@ const buildCra = () => {
 };
 
 const assertNoChangesInStatsFile = () => {
-    const stdout = execSync(`git status --porcelain "${FILE_NAME_STATS_JSON}"`, {cwd: PATH_REPO_ROOT})
+    const stdout = execSync(`git diff "${FILE_NAME_STATS_JSON}"`, {cwd: PATH_REPO_ROOT})
         .toString('utf-8')
         .trim();
 
     if (stdout) {
+        console.log();
+        console.log(stdout);
         console.log();
         console.error('Size stats file was not updated!');
         console.error(`Run yarn build and commit the generated "${FILE_NAME_STATS_JSON}" file`);

@@ -1,11 +1,11 @@
 {
     "dist": {
-        "js": 278909,
-        "jsNoMisticaIcons": 74048
+        "js": 1,
+        "jsNoMisticaIcons": 2
     },
     "distEs": {
-        "js": 2442291,
-        "jsNoMisticaIcons": 485772
+        "js": 2,
+        "jsNoMisticaIcons": 3
     },
     "cra": {
         "initial": 133128,
