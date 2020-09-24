@@ -3,15 +3,15 @@ const fs = require('fs');
 const glob = require('glob');
 const {join} = require('path');
 const {execSync} = require('child_process');
-const mkdirp = require('mkdirp');
-const rimraf = require('rimraf');
+const isCi = require('is-ci');
 
 const PATH_REPO_ROOT = join(__dirname, '../..');
 const PATH_DIST = join(PATH_REPO_ROOT, 'dist');
 const PATH_DIST_ES = join(PATH_REPO_ROOT, 'dist-es');
 const PATH_CRA = join(__dirname, 'cra-minimal');
 const PATH_CRA_BUILD = join(PATH_CRA, 'build');
-const PATH_TELEFONICA_SCOPE = join(PATH_CRA, 'node_modules', '@telefonica');
+
+const FILE_NAME_STATS_JSON = 'size-stats.json';
 
 const getTotalSize = (filenames, exclude = []) => {
     let size = 0;
@@ -25,15 +25,21 @@ const getTotalSize = (filenames, exclude = []) => {
 
 const buildCra = () => {
     execSync('yarn', {cwd: PATH_CRA});
-
-    // link @telefonica/mistica dependency
-    const pathMisticaPackage = join(PATH_TELEFONICA_SCOPE, 'mistica');
-    rimraf.sync(PATH_TELEFONICA_SCOPE);
-    mkdirp.sync(PATH_TELEFONICA_SCOPE);
-    fs.symlinkSync(PATH_REPO_ROOT, pathMisticaPackage);
-
-    // build
     execSync('yarn build', {cwd: PATH_CRA});
+};
+
+const assertNoChangesInStatsFile = () => {
+    const stdout = execSync(`git status --porcelain "${FILE_NAME_STATS_JSON}"`, {cwd: PATH_REPO_ROOT})
+        .toString('utf-8')
+        .trim();
+
+    if (stdout) {
+        console.log();
+        console.error('Size stats file was not updated!');
+        console.error(`Run yarn build and commit the generated "${FILE_NAME_STATS_JSON}" file`);
+        console.log();
+        process.exit(1);
+    }
 };
 
 const main = () => {
@@ -65,8 +71,11 @@ const main = () => {
         4
     );
 
-    console.log(result);
-    fs.writeFileSync(join(PATH_REPO_ROOT, 'build-stats.json'), result);
+    fs.writeFileSync(join(PATH_REPO_ROOT, FILE_NAME_STATS_JSON), result);
+
+    if (isCi) {
+        assertNoChangesInStatsFile();
+    }
 };
 
 main();
