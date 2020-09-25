@@ -10,6 +10,7 @@ import ScreenSizeContextProvider from './screen-size-context-provider';
 import {createMediaQueries} from './utils/media-queries';
 import {PACKAGE_VERSION} from './package-version';
 import AriaIdGetterContext from './aria-id-getter-context';
+import {isServerSide} from './utils/environnment';
 
 import type {Theme, ThemeConfig} from './theme';
 
@@ -22,8 +23,6 @@ type Props = {
 // one instance of ThemeContextProvider. But some apps may depend on libs that use Mistica too, so there may be more than one instance
 // in those cases. We use this counter to avoid class name collisions in those cases.
 let jssInstanceId = 0;
-
-const isServerSide = typeof window === 'undefined';
 
 const generateId = isServerSide ? undefined : createGenerateId();
 

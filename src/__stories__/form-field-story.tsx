@@ -19,6 +19,7 @@ import {
 import {inspect} from 'util';
 import Icon from '../icons/icon-visibility';
 import {StorySection, countriesList, phoneNumbersList} from './helpers';
+import DateTimePicker from '../date-time-picker';
 
 export default {
     title: 'Components|Forms/FormFields',
@@ -96,6 +97,10 @@ export const Variants: StoryComponent = () => {
     const {colors} = useTheme();
     return (
         <>
+            <StorySection title="DateTimePicker">
+                <DateTimePicker name="text" label="DateTimePicker" />
+            </StorySection>
+
             <StorySection title="Default">
                 <div data-testid="normal-field">
                     <FormTextField optional name="text" label="Normal field" />
