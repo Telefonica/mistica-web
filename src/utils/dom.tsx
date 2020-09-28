@@ -14,7 +14,7 @@ export const isInputTypeSupported = (type: string): boolean => {
     return input.type === type;
 };
 
-export const cancelEvent = (event: React.SyntheticEvent | Event): void => {
+export const cancelEvent = (event: Event | React.SyntheticEvent): void => {
     event.stopPropagation();
     event.preventDefault();
 };

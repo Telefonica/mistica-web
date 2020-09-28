@@ -9,7 +9,7 @@ export interface FormDateFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const hasNativePicker = isInputTypeSupported('datetime-local');
+const hasNativePicker = !isInputTypeSupported('datetime-local');
 
 const ReactDateTimePicker = React.lazy(() =>
     import(/* webpackChunkName: "date-time-picker" */ './date-time-picker')
