@@ -27,7 +27,7 @@ const FormDateField: React.FC<FormDateFieldProps> = ({
     defaultValue,
     ...rest
 }) => {
-    const {current: hasNativePicker} = React.useRef(isInputTypeSupported('datetime-local'));
+    const hasNativePicker = React.useMemo(() => isInputTypeSupported('datetime-local'), []);
     const processValue = (value: string) => (hasNativePicker ? value : value.replace(/\s/, 'T'));
 
     const fieldProps = useFieldProps({
