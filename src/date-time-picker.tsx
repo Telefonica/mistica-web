@@ -1,6 +1,5 @@
 import * as React from 'react';
 import TextFieldBase, {CommonFormFieldProps} from './text-field-base';
-import {useFieldProps} from './form-context';
 import {IconCalendarRegular} from './generated/mistica-icons';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
@@ -22,48 +21,17 @@ const browserLocale = navigator.language.toLocaleLowerCase().split('-')[0];
 import(/* webpackChunkName: "moment-locale" */ `moment/locale/${browserLocale}`).finally(() => {});
 
 export interface DateTimePickerProps extends CommonFormFieldProps {
-    onChangeValue?: (value: string, rawValue: string) => void;
-    withTime?: false;
+    inputRef: (field: HTMLInputElement | null) => void;
+    withTime?: boolean;
 }
 
-const DateTimePicker: React.FC<DateTimePickerProps> = ({
-    disabled,
-    error,
-    helperText,
-    name,
-    optional,
-    validate,
-    onChange,
-    onChangeValue,
-    onBlur,
-    value,
-    defaultValue,
-    onFocus: onFocusProp,
-    withTime,
-    ...rest
-}) => {
-    const processValue = (value: string) => value;
+const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, ...rest}) => {
     const [showPicker, setShowPicker] = React.useState(false);
     const fieldRef = React.useRef<HTMLInputElement | null>(null);
 
-    const fieldProps = useFieldProps({
-        name,
-        value,
-        defaultValue,
-        processValue,
-        helperText,
-        optional,
-        error,
-        disabled,
-        onBlur,
-        validate,
-        onChange,
-        onChangeValue,
-    });
-
     const onFocus = (event: React.FocusEvent) => {
         setShowPicker(true);
-        onFocusProp?.(event);
+        rest.onFocus?.(event);
     };
 
     const getCalendarContainerStyles = (): React.CSSProperties => {
@@ -86,31 +54,30 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({
     };
 
     const setValue = (moment: string | Moment.Moment) => {
+        console.log(moment);
         const value =
-            typeof moment === 'string' ? moment : moment.format(withTime ? 'yyyy-MM-DDThh:mm' : 'yyyy-MM-DD');
-        onChangeValue?.(value, value);
+            typeof moment === 'string' ? moment : moment.format(withTime ? 'yyyy-MM-DD hh:mm' : 'yyyy-MM-DD');
         if (fieldRef.current) {
-            fieldRef.current.value = value;
-            onChange?.(createChangeEvent(fieldRef.current, value));
+            console.log('onChange', value);
+            rest.onChange?.(createChangeEvent(fieldRef.current, value));
         }
     };
 
     return (
         <>
             <TextFieldBase
-                type={withTime ? 'datetime-local' : 'date'}
+                {...rest}
+                type="text"
                 autoComplete="off"
                 onFocus={onFocus}
-                {...rest}
-                {...fieldProps}
-                shrinkLabel
+                shrinkLabel={!!getValue()}
                 endIcon={
                     <IconButton label="" size={32} onPress={() => setShowPicker(!showPicker)}>
                         <IconCalendarRegular size={24} />
                     </IconButton>
                 }
                 inputRef={(e: HTMLInputElement) => {
-                    fieldProps.inputRef(e);
+                    rest?.inputRef?.(e);
                     fieldRef.current = e;
                 }}
                 readOnly

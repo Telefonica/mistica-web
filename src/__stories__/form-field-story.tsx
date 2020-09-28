@@ -15,11 +15,11 @@ import {
     FormPhoneNumberField,
     Box,
     FormDateTimeField,
+    Text7,
 } from '..';
 import {inspect} from 'util';
 import Icon from '../icons/icon-visibility';
 import {StorySection, countriesList, phoneNumbersList} from './helpers';
-import DateTimePicker from '../date-time-picker';
 
 export default {
     title: 'Components|Forms/FormFields',
@@ -97,10 +97,6 @@ export const Variants: StoryComponent = () => {
     const {colors} = useTheme();
     return (
         <>
-            <StorySection title="DateTimePicker">
-                <DateTimePicker name="text" label="DateTimePicker" />
-            </StorySection>
-
             <StorySection title="Default">
                 <div data-testid="normal-field">
                     <FormTextField optional name="text" label="Normal field" />
@@ -296,27 +292,39 @@ export const TypesUncontrolled: StoryComponent = () => (
 
         <Uncontrolled title="FormDateField">
             {(handleChange, handleChangeValue) => (
-                <div data-testid="date">
-                    <FormDateField
-                        name="date"
-                        label="Date"
-                        onChange={handleChange}
-                        onChangeValue={handleChangeValue}
-                    />
-                </div>
+                <>
+                    <Text7 regular>
+                        Renders a React picker in browsers that don't implement a Native picker (Safari
+                        Desktop)
+                    </Text7>
+                    <div data-testid="date">
+                        <FormDateField
+                            name="date"
+                            label="Date"
+                            onChange={handleChange}
+                            onChangeValue={handleChangeValue}
+                        />
+                    </div>
+                </>
             )}
         </Uncontrolled>
 
         <Uncontrolled title="FormDateTimeField">
             {(handleChange, handleChangeValue) => (
-                <div data-testid="datetime">
-                    <FormDateTimeField
-                        name="datetime"
-                        label="DateTime"
-                        onChange={handleChange}
-                        onChangeValue={handleChangeValue}
-                    />
-                </div>
+                <>
+                    <Text7 regular>
+                        Renders a React picker in browsers that don't implement a Native picker (Safari
+                        Desktop)
+                    </Text7>
+                    <div data-testid="datetime">
+                        <FormDateTimeField
+                            name="datetime"
+                            label="DateTime"
+                            onChange={handleChange}
+                            onChangeValue={handleChangeValue}
+                        />
+                    </div>
+                </>
             )}
         </Uncontrolled>
 
