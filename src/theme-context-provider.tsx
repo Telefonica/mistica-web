@@ -10,7 +10,7 @@ import ScreenSizeContextProvider from './screen-size-context-provider';
 import {createMediaQueries} from './utils/media-queries';
 import {PACKAGE_VERSION} from './package-version';
 import AriaIdGetterContext from './aria-id-getter-context';
-import {isServerSide} from './utils/environnment';
+import {isServerSide} from './utils/environment';
 
 import type {Theme, ThemeConfig} from './theme';
 

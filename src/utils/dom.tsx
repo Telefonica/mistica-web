@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {isServerSide} from './environnment';
+import {isServerSide} from './environment';
 
 /**
  * Returns true if provided type is supported <input> type
