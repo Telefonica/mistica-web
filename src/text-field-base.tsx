@@ -238,7 +238,6 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             focus,
             fieldRef,
             maxLength,
-            // children,
             id: idProp,
             autoComplete: autoCompleteProp,
             fullWidth,
