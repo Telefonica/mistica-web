@@ -5,7 +5,7 @@ import {isServerSide} from './environment';
  * Returns true if provided type is supported <input> type
  */
 export const isInputTypeSupported = (type: string): boolean => {
-    if (isServerSide) {
+    if (isServerSide()) {
         return false;
     }
     const input = document.createElement('input');
