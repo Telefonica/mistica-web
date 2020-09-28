@@ -9,8 +9,6 @@ export interface FormDateFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const hasNativePicker = !isInputTypeSupported('datetime-local');
-
 const ReactDateTimePicker = React.lazy(() =>
     import(/* webpackChunkName: "date-time-picker" */ './date-time-picker')
 );
@@ -29,6 +27,7 @@ const FormDateField: React.FC<FormDateFieldProps> = ({
     defaultValue,
     ...rest
 }) => {
+    const {current: hasNativePicker} = React.useRef(isInputTypeSupported('datetime-local'));
     const processValue = (value: string) => (hasNativePicker ? value : value.replace(/\s/, 'T'));
 
     const fieldProps = useFieldProps({
@@ -52,7 +51,7 @@ const FormDateField: React.FC<FormDateFieldProps> = ({
 
     return (
         <React.Suspense
-            fallback={<TextFieldBase {...rest} {...fieldProps} shrinkLabel type="datetime-local" />}
+            fallback={<TextFieldBase {...rest} {...fieldProps} disabled shrinkLabel type="datetime-local" />}
         >
             <ReactDateTimePicker {...rest} {...fieldProps} withTime />
         </React.Suspense>
