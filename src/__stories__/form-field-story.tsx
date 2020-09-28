@@ -294,8 +294,8 @@ export const TypesUncontrolled: StoryComponent = () => (
             {(handleChange, handleChangeValue) => (
                 <>
                     <Text7 regular>
-                        Renders a React picker in browsers that don't implement a Native picker (Safari
-                        Desktop)
+                        ⚠️ Uses browser's native date picker when available. Otherwise renders a React
+                        datepicker (for example in Safari Desktop)
                     </Text7>
                     <div data-testid="date">
                         <FormDateField
@@ -313,8 +313,8 @@ export const TypesUncontrolled: StoryComponent = () => (
             {(handleChange, handleChangeValue) => (
                 <>
                     <Text7 regular>
-                        Renders a React picker in browsers that don't implement a Native picker (Safari
-                        Desktop)
+                        ⚠️ Uses browser's native date picker when available. Otherwise renders a React
+                        datepicker (for example in Safari Desktop)
                     </Text7>
                     <div data-testid="datetime">
                         <FormDateTimeField
