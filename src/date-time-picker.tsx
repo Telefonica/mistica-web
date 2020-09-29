@@ -122,7 +122,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, ...rest}) => {
     const [showPicker, setShowPicker] = React.useState(false);
     const classes = useStyles();
     const fieldRef = React.useRef<HTMLInputElement | null>(null);
-    const {height: containerHeight, ref: containerRef} = useElementDimensions();
+    const {height: pickerContainerHeight, ref: pickerContainerRef} = useElementDimensions();
 
     const onFocus = (event: React.FocusEvent) => {
         setShowPicker(true);
@@ -130,15 +130,15 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, ...rest}) => {
     };
 
     const getCalendarContainerStyles = (): React.CSSProperties => {
-        const {top = 0, bottom = 0, left = 0, height = 0} = fieldRef.current?.getBoundingClientRect() || {};
+        const {top = 0, bottom = 0, left = 0} = fieldRef.current?.getBoundingClientRect() || {};
         // picker has different heights for month, year or day selectors
         // this hardcoded value is the date selector height + a little threshold
-        const datePickerHeight = 260;
-        const openToBottom = datePickerHeight + bottom < window.innerHeight;
+        const maxPickerHeight = 260;
+        const openToBottom = maxPickerHeight + bottom < window.innerHeight;
 
         return {
             width: DEFAULT_WIDTH,
-            top: openToBottom ? top + height : top - containerHeight,
+            top: openToBottom ? bottom : top - pickerContainerHeight,
             left,
             position: 'absolute',
             borderRadius: 4,
@@ -191,7 +191,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, ...rest}) => {
                     disableScroll
                 >
                     <div
-                        ref={containerRef}
+                        ref={pickerContainerRef}
                         style={getCalendarContainerStyles()}
                         className={classes.reactDatePicker}
                     >
