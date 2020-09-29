@@ -11,7 +11,6 @@ import {createUseStyles} from './jss';
 import type {CommonFormFieldProps} from './text-field-base';
 import type Moment from 'moment';
 import {useElementDimensions} from './hooks';
-import {isServerSide} from './utils/environment';
 
 /**
  * Do not use this component!
