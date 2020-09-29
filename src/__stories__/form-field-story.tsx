@@ -15,7 +15,7 @@ import {
     FormPhoneNumberField,
     Box,
     FormDateTimeField,
-    Text,
+    Text8,
 } from '..';
 import {inspect} from 'util';
 import Icon from '../icons/icon-visibility';
@@ -85,10 +85,10 @@ const Controlled: React.FC<ControlledProps> = ({title, initialValue, children}) 
 
 const DatePickerWarning: React.FC = () => (
     <Box paddingBottom={8}>
-        <Text size={13}>
+        <Text8>
             ⚠️ Uses browser's native date picker when available. Otherwise renders a React datepicker (eg.
             Safari Desktop)
-        </Text>
+        </Text8>
     </Box>
 );
 

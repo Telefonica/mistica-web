@@ -10,6 +10,8 @@ import {createUseStyles} from './jss';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type Moment from 'moment';
+import {useElementDimensions} from './hooks';
+import {isServerSide} from './utils/environment';
 
 /**
  * Do not use this component!
@@ -121,6 +123,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, ...rest}) => {
     const [showPicker, setShowPicker] = React.useState(false);
     const classes = useStyles();
     const fieldRef = React.useRef<HTMLInputElement | null>(null);
+    const {height: containerHeight, ref: containerRef} = useElementDimensions();
 
     const onFocus = (event: React.FocusEvent) => {
         setShowPicker(true);
@@ -128,10 +131,15 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, ...rest}) => {
     };
 
     const getCalendarContainerStyles = (): React.CSSProperties => {
-        const {top = 0, left = 0, height = 0} = fieldRef.current?.getBoundingClientRect() || {};
+        const {top = 0, bottom = 0, left = 0, height = 0} = fieldRef.current?.getBoundingClientRect() || {};
+        // picker has different heights for month, year or day selectors
+        // this hardcoded value is the date selector height + a little threshold
+        const datePickerHeight = 350;
+        const openToBottom = datePickerHeight + bottom < window.innerHeight;
+
         return {
             width: DEFAULT_WIDTH,
-            top: top + height,
+            top: openToBottom ? top + height : top - containerHeight,
             left,
             position: 'absolute',
             borderRadius: 4,
@@ -147,11 +155,9 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, ...rest}) => {
     };
 
     const setValue = (moment: string | Moment.Moment) => {
-        console.log(moment);
         const value =
             typeof moment === 'string' ? moment : moment.format(withTime ? 'yyyy-MM-DD hh:mm' : 'yyyy-MM-DD');
         if (fieldRef.current) {
-            console.log('onChange', value);
             rest.onChange?.(createChangeEvent(fieldRef.current, value));
         }
     };
@@ -185,7 +191,11 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, ...rest}) => {
                     }}
                     disableScroll
                 >
-                    <div style={getCalendarContainerStyles()} className={classes.reactDatePicker}>
+                    <div
+                        ref={containerRef}
+                        style={getCalendarContainerStyles()}
+                        className={classes.reactDatePicker}
+                    >
                         <Datetime
                             initialValue={getValue()}
                             timeFormat={withTime ? undefined : false}

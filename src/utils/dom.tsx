@@ -10,7 +10,6 @@ export const isInputTypeSupported = (type: string): boolean => {
     }
     const input = document.createElement('input');
     input.setAttribute('type', type);
-    console.log(input.type);
     return input.type === type;
 };
 
