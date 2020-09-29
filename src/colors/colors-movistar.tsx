@@ -1,4 +1,4 @@
-import {applyAlpha} from './utils';
+import {applyAlpha} from '../utils/color';
 import c from './colors/movistar';
 
 // LAYOUT
