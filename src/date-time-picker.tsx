@@ -133,7 +133,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, ...rest}) => {
         const {top = 0, bottom = 0, left = 0, height = 0} = fieldRef.current?.getBoundingClientRect() || {};
         // picker has different heights for month, year or day selectors
         // this hardcoded value is the date selector height + a little threshold
-        const datePickerHeight = 350;
+        const datePickerHeight = 260;
         const openToBottom = datePickerHeight + bottom < window.innerHeight;
 
         return {
