@@ -85,7 +85,7 @@ const Controlled: React.FC<ControlledProps> = ({title, initialValue, children}) 
 
 const DatePickerWarning: React.FC = () => (
     <Box paddingBottom={8}>
-        <Text8>
+        <Text8 regular>
             ⚠️ Uses browser's native date picker when available. Otherwise renders a React datepicker (eg.
             Safari Desktop)
         </Text8>
