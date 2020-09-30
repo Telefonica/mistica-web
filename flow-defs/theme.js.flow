@@ -8,87 +8,8 @@
 import * as React from "react";
 import { type RegionCode } from "./utils/region-code";
 import { type Locale } from "./utils/locale";
-import { type Skin } from "./colors";
+import { type Skin, type Colors } from "./skins/types";
 import { type TrackingEvent } from "./utils/types";
-declare var colors: {
-  controlActive: string,
-  controlInactive: string,
-  controlError: string,
-  textPrimary: string,
-  background: string,
-  backgroundHeading: string,
-  backgroundAlternative: string,
-  backgroundPromo: string,
-  backgroundBrand: string,
-  buttonPrimaryBackground: string,
-  buttonPrimaryBackgroundSelected: string,
-  buttonPrimaryBackgroundDisabled: string,
-  buttonPrimaryBackgroundHover: string,
-  buttonPrimaryText: string,
-  buttonSecondaryBackground: string,
-  buttonSecondaryText: string,
-  buttonSecondaryTextSelected: string,
-  buttonSecondaryTextDisabled: string,
-  buttonSecondaryBorder: string,
-  buttonSecondaryBorderSelected: string,
-  buttonSecondaryBorderDisabled: string,
-  buttonPrimaryBackgroundInverse: string,
-  textButtonPrimaryInverse: string,
-  buttonPrimaryBackgroundInverseSelected: string,
-  textButtonPrimaryInverseSelected: string,
-  buttonPrimaryBackgroundInverseDisabled: string,
-  textButtonPrimaryInverseDisabled: string,
-  buttonSecondaryBorderInverse: string,
-  textButtonSecondaryInverse: string,
-  buttonSecondaryBorderInverseSelected: string,
-  textButtonSecondaryInverseSelected: string,
-  buttonSecondaryBorderInverseDisabled: string,
-  textButtonSecondaryInverseDisabled: string,
-  buttonDangerBackground: string,
-  buttonDangerBackgroundDisabled: string,
-  buttonDangerBackgroundHover: string,
-  buttonDangerBackgroundSelected: string,
-  textLink: string,
-  textInactive: string,
-  textPrimaryInverse: string,
-  buttonLinkBackgroundSelected: string,
-  iconHighlight: string,
-  overscrollColorTop: string,
-  backgroundSpecialBottom: string,
-  backgroundSpecial1: string,
-  backgroundOpacity: string,
-  textPrimarySpecial: string,
-  textSecondary: string,
-  loadingBarPrimary: string,
-  loadingBarPrimaryInverse: string,
-  loadingBarBackground: string,
-  loadingBarBackgroundInverse: string,
-  layerDecorations: string,
-  divider: string,
-  border: string,
-  borderLight: string,
-  textDanger: string,
-  textError: string,
-  feedbackErrorBackground: string,
-  feedbackInfoBackground: string,
-  textAccent: string,
-  textLinkSnackbar: string,
-  iconAccent: string,
-  iconSecondary: string,
-  iconPrimary: string,
-  iconTertiary: string,
-  iconInverse: string,
-  badgeBackground: string,
-  toggleAndroidInactive: string,
-  toggleAndroidBackgroundInactive: string,
-  toggleAndroidActive: string,
-  toggleAndroidBackgroundActive: string,
-  toggleIosInactive: string,
-  toggleIosBackgroundInactive: string,
-  toggleIosBackgroundActive: string,
-  textAppbar: string,
-  textAppbarSelected: string
-};
 declare var texts: {
   expirationDatePlaceholder: string,
   togglePasswordVisibilityLabel: string,
@@ -112,7 +33,6 @@ declare var texts: {
   closeButtonLabel: string,
   formSearchClear: string
 };
-declare type ThemeColors = typeof colors;
 export type ThemeTexts = typeof texts;
 declare type LinkComponent = React.ComponentType<{
   style?: CssStyle,
@@ -144,7 +64,6 @@ declare type LinkComponent = React.ComponentType<{
 }>;
 export type ThemeConfig = {
   skin: Skin,
-  colorOverride?: string,
   i18n: {
     locale: Locale,
     phoneNumberFormattingRegionCode: RegionCode
@@ -170,8 +89,7 @@ export type ThemeConfig = {
   Link?: LinkComponent
 };
 export type Theme = {
-  skin: Skin,
-  colorOverride?: string,
+  skin: string,
   i18n: {
     locale: Locale,
     phoneNumberFormattingRegionCode: RegionCode
@@ -196,7 +114,7 @@ export type Theme = {
     tabletOrBigger: string,
     tabletOrSmaller: string
   },
-  colors: ThemeColors,
+  colors: Colors,
   Link: LinkComponent
 };
 declare export var baseTheme: Theme;
