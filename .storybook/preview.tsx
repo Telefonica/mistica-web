@@ -2,9 +2,20 @@ import './css/roboto.css';
 import './css/main.css';
 import * as React from 'react';
 import {addDecorator} from '@storybook/react';
-import {ThemeContextProvider, Box, MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN, O2_CLASSIC_SKIN} from '../src';
+import {
+    ThemeContextProvider,
+    Box,
+    MOVISTAR_SKIN,
+    VIVO_SKIN,
+    O2_SKIN,
+    O2_CLASSIC_SKIN,
+    ThemeConfig,
+    getMovistarSkin,
+    getO2Skin,
+    getO2ClassicSkin,
+    getVivoSkin,
+} from '../src';
 import addons from '@storybook/addons';
-import getTheme from './theme-selector-addon/themes';
 
 const getUserAgent = () => self.navigator.userAgent || '';
 const isRunningAcceptanceTest = () => getUserAgent().includes('acceptance-test');
@@ -43,9 +54,46 @@ const getSkin = (searchParams) => {
     return [MOVISTAR_SKIN, O2_SKIN, O2_CLASSIC_SKIN, VIVO_SKIN].find((skin) => skin === qsSkin);
 };
 
-const getPlatform = (searchParams) => {
+const getPlatform = (searchParams: URLSearchParams): 'ios' | 'android' => {
     const qsPlatform = searchParams.get('platform');
-    return ['ios', 'android'].find((platform) => platform === qsPlatform);
+    if (qsPlatform === 'ios' || qsPlatform === 'android') {
+        return qsPlatform;
+    }
+};
+
+export const Movistar = {
+    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+    skin: getMovistarSkin(),
+} as const;
+
+export const O2 = {
+    i18n: {locale: 'en-US', phoneNumberFormattingRegionCode: 'GB'},
+    skin: getO2Skin(),
+} as const;
+
+export const O2_Classic = {
+    i18n: {locale: 'en-US', phoneNumberFormattingRegionCode: 'GB'},
+    skin: getO2ClassicSkin(),
+} as const;
+
+export const Vivo = {
+    i18n: {locale: 'pt-BR', phoneNumberFormattingRegionCode: 'BR'},
+    skin: getVivoSkin(),
+} as const;
+
+const AVAILABLE_THEMES = [Movistar, O2, O2_Classic, Vivo];
+
+const getTheme = (selectedSkin: string, platform?: 'ios' | 'android'): ThemeConfig => {
+    const themeConfig = AVAILABLE_THEMES.find(({skin}) => skin.name === selectedSkin) || Movistar;
+    return platform
+        ? {
+              ...themeConfig,
+              platformOverrides: {
+                  platform,
+                  insideNovumNativeApp: true,
+              },
+          }
+        : themeConfig;
 };
 
 const ThemeDecorator = ({Story}) => {
