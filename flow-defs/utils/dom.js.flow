@@ -5,8 +5,6 @@
  * Flowgen v1.10.0
  */
 
-import * as React from "react";
-
 /**
  * Returns true if provided type is supported <input> type
  */
