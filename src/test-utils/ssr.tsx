@@ -5,7 +5,9 @@ import path from 'path';
 import webpack from 'webpack';
 import http from 'http';
 import fs from 'fs';
-import {ThemeContextProvider, ServerSideStyles, Skin} from '..';
+import {ThemeContextProvider, ServerSideStyles} from '..';
+import {MOVISTAR_SKIN} from '../skins/constants';
+import {getSkinByName} from '../skins/utils';
 
 const createWebpackEntries = (): {[entryName: string]: string} => {
     const entries: {[entryName: string]: string} = {};
@@ -132,7 +134,7 @@ export const createServer = (): http.Server => {
             serverSideStyles.render(
                 <ThemeContextProvider
                     theme={{
-                        skin: (parsedUrl.query.skin as Skin) || 'Movistar',
+                        skin: getSkinByName(String(parsedUrl.query.skin || MOVISTAR_SKIN)),
                         i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
                         platformOverrides: {
                             userAgent,

@@ -3,7 +3,7 @@ import {createUseStyles} from './jss';
 import {getPlatform} from './utils/platform';
 import FadeIn from './fade-in';
 import {useAriaId, useTheme} from './hooks';
-import {MOVISTAR_SKIN} from './colors';
+import {MOVISTAR_SKIN} from './skins/constants';
 
 const useStyles = createUseStyles(() => ({
     spinnerDefault: {

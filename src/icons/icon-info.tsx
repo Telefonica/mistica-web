@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {createUseStyles} from '../jss';
 import {useTheme} from '../hooks';
-import {O2_SKIN, O2_CLASSIC_SKIN} from '../colors';
+import {O2_SKIN, O2_CLASSIC_SKIN} from '../skins/constants';
 
 const useStyles = createUseStyles((theme) => ({
     iconContainer: {
@@ -40,7 +40,7 @@ const IconInfoDefault: React.FC = () => {
 };
 
 const IconInfo: React.FC = () => {
-    const skin = useTheme().skin;
+    const {skin} = useTheme();
     return skin === O2_CLASSIC_SKIN || skin === O2_SKIN ? <IconInfoO2 /> : <IconInfoDefault />;
 };
 

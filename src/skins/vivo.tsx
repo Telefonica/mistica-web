@@ -1,4 +1,5 @@
 import {applyAlpha} from '../utils/color';
+import {VIVO_SKIN} from './constants';
 
 import type {GetSkin} from './types';
 
@@ -37,6 +38,7 @@ export const getVivoSkin: GetSkin = () => {
     const textPrimary = GREY_0;
 
     return {
+        name: VIVO_SKIN,
         colors: {
             // LAYOUT
             primary: VIVO_PURPLE,

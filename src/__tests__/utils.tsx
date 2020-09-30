@@ -1,14 +1,14 @@
 import {baseTheme} from '../theme';
+import {getSkinByName} from '../skins/utils';
 
 import type {ThemeConfig, ThemeTexts} from '../theme';
 import type {Locale} from '../utils/locale';
 import type {RegionCode} from '../utils/region-code';
-import type {Skin} from '../colors';
 import type {TrackingEvent} from '../utils/types';
+import type {Skin} from '../skins/types';
 
 type ThemeOverrides = {
     skin?: Skin;
-    colorOverride?: string;
     i18n?: {
         locale: Locale;
         phoneNumberFormattingRegionCode: RegionCode;
@@ -23,9 +23,13 @@ type ThemeOverrides = {
     Link?: ThemeConfig['Link'];
 };
 
-// ONLY FOR TESTING!!
-export const overrideTheme = (overrides: ThemeOverrides): ThemeConfig => ({
-    ...overrides,
-    skin: overrides.skin || baseTheme.skin,
-    i18n: overrides.i18n || baseTheme.i18n,
-});
+export const overrideTheme = (overrides: ThemeOverrides): ThemeConfig => {
+    if (process.env.NODE_ENV !== 'testing') {
+        throw Error('"overrideTheme" can only be used in testing environment');
+    }
+    return {
+        ...overrides,
+        skin: overrides.skin || getSkinByName(baseTheme.skin),
+        i18n: overrides.i18n || baseTheme.i18n,
+    };
+};

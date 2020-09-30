@@ -1,4 +1,5 @@
 import {applyAlpha} from '../utils/color';
+import {O2_CLASSIC_SKIN} from './constants';
 
 import type {GetSkin} from './types';
 
@@ -45,6 +46,7 @@ export const getO2ClassicSkin: GetSkin = () => {
     const background = WHITE;
 
     return {
+        name: O2_CLASSIC_SKIN,
         colors: {
             // LAYOUT
             primary: O2_BLUE,

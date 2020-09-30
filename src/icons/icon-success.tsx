@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {O2_SKIN, O2_CLASSIC_SKIN, VIVO_SKIN} from '../colors';
+import {O2_SKIN, O2_CLASSIC_SKIN, VIVO_SKIN} from '../skins/constants';
 import {
     getAnimateDrawLineProps,
     getAnimateHopInProps,

@@ -6,7 +6,7 @@ import ButtonFixedFooterLayout, {getFooterHeight} from './button-fixed-footer-la
 import {ButtonPrimary, ButtonSecondary, ButtonLink} from './button';
 import {TopDistanceContext} from './fixed-to-top';
 import OverscrollColor from './overscroll-color-context';
-import {VIVO_SKIN} from './colors';
+import {VIVO_SKIN} from './skins/constants';
 import IcnSuccess from './icons/icon-success';
 import IcnError from './icons/icon-error';
 import IcnInfo from './icons/icon-info';
@@ -263,8 +263,8 @@ export const SuccessFeedbackScreen: React.FC<FeedbackProps> = (props) => {
     );
 };
 export const ErrorFeedbackScreen: React.FC<FeedbackProps> = (props) => {
-    const theme = useTheme();
-    const hasIcon = theme.skin !== VIVO_SKIN;
+    const {skin} = useTheme();
+    const hasIcon = skin !== VIVO_SKIN;
     return (
         <FeedbackScreen
             {...props}
@@ -275,7 +275,7 @@ export const ErrorFeedbackScreen: React.FC<FeedbackProps> = (props) => {
     );
 };
 export const InfoFeedbackScreen: React.FC<FeedbackProps> = (props) => {
-    const theme = useTheme();
-    const hasIcon = theme.skin !== VIVO_SKIN;
+    const {skin} = useTheme();
+    const hasIcon = skin !== VIVO_SKIN;
     return <FeedbackScreen {...props} icon={hasIcon ? <IcnInfo /> : undefined} />;
 };
