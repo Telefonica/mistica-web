@@ -7,6 +7,7 @@ import IconButton from './icon-button';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import {useTheme} from './hooks';
+import {createChangeEvent} from './utils/dom';
 
 export interface FormSearchFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
@@ -48,11 +49,8 @@ const FormSearchField: React.FC<FormSearchFieldProps> = ({
     const clearInput = React.useCallback(() => {
         handleChangeValue('', '');
         if (inputRef.current) {
-            const el = inputRef.current;
-            const event = new Event('change') as any;
-            el.value = '';
-            onChange?.({...event, target: el, currentTarget: el});
-            el.focus();
+            onChange?.(createChangeEvent(inputRef.current, ''));
+            inputRef.current.focus();
         }
     }, [handleChangeValue, onChange]);
 

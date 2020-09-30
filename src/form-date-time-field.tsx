@@ -1,12 +1,18 @@
 import * as React from 'react';
 import {useFieldProps} from './form-context';
 import TextFieldBase from './text-field-base';
+import {isInputTypeSupported} from './utils/dom';
+import {isServerSide} from './utils/environment';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
 export interface FormDateFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
+
+const ReactDateTimePicker = React.lazy(() =>
+    import(/* webpackChunkName: "date-time-picker" */ './date-time-picker')
+);
 
 const FormDateField: React.FC<FormDateFieldProps> = ({
     disabled,
@@ -22,7 +28,8 @@ const FormDateField: React.FC<FormDateFieldProps> = ({
     defaultValue,
     ...rest
 }) => {
-    const processValue = (value: string) => value;
+    const hasNativePicker = React.useMemo(() => isInputTypeSupported('datetime-local'), []);
+    const processValue = (value: string) => (hasNativePicker ? value : value.replace(/\s/, 'T'));
 
     const fieldProps = useFieldProps({
         name,
@@ -39,7 +46,17 @@ const FormDateField: React.FC<FormDateFieldProps> = ({
         onChangeValue,
     });
 
-    return <TextFieldBase {...rest} {...fieldProps} shrinkLabel type="datetime-local" />;
+    if (hasNativePicker || isServerSide()) {
+        return <TextFieldBase {...rest} {...fieldProps} shrinkLabel type="datetime-local" />;
+    }
+
+    return (
+        <React.Suspense
+            fallback={<TextFieldBase {...rest} {...fieldProps} disabled shrinkLabel type="datetime-local" />}
+        >
+            <ReactDateTimePicker {...rest} {...fieldProps} withTime />
+        </React.Suspense>
+    );
 };
 
 export default FormDateField;
