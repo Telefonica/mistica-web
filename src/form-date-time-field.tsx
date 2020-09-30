@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useFieldProps} from './form-context';
 import TextFieldBase from './text-field-base';
 import {isInputTypeSupported} from './utils/dom';
+import {isServerSide} from './utils/environment';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -45,7 +46,7 @@ const FormDateField: React.FC<FormDateFieldProps> = ({
         onChangeValue,
     });
 
-    if (hasNativePicker) {
+    if (hasNativePicker || isServerSide()) {
         return <TextFieldBase {...rest} {...fieldProps} shrinkLabel type="datetime-local" />;
     }
 
