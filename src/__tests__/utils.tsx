@@ -24,7 +24,7 @@ type ThemeOverrides = {
 };
 
 export const overrideTheme = (overrides: ThemeOverrides): ThemeConfig => {
-    if (process.env.NODE_ENV !== 'testing') {
+    if (process.env.NODE_ENV !== 'test') {
         throw Error('"overrideTheme" can only be used in testing environment');
     }
     return {
