@@ -10,11 +10,8 @@ import {
     O2_SKIN,
     O2_CLASSIC_SKIN,
     ThemeConfig,
-    getMovistarSkin,
-    getO2Skin,
-    getO2ClassicSkin,
-    getVivoSkin,
 } from '../src';
+import {AVAILABLE_THEMES, Movistar} from './themes';
 import addons from '@storybook/addons';
 
 const getUserAgent = () => self.navigator.userAgent || '';
@@ -36,7 +33,7 @@ const acceptanceStyles = `
     height: 0 !important;
 }`;
 
-const LayoutDecorator = ({Story, context}) => {
+const LayoutDecorator = ({Story, context}: any) => {
     const styles = isRunningAcceptanceTest() ? <style>{acceptanceStyles}</style> : null;
 
     return (
@@ -49,39 +46,18 @@ const LayoutDecorator = ({Story, context}) => {
     );
 };
 
-const getSkin = (searchParams) => {
+const getSkin = (searchParams: URLSearchParams) => {
     const qsSkin = searchParams.get('skin');
     return [MOVISTAR_SKIN, O2_SKIN, O2_CLASSIC_SKIN, VIVO_SKIN].find((skin) => skin === qsSkin);
 };
 
-const getPlatform = (searchParams: URLSearchParams): 'ios' | 'android' => {
+const getPlatform = (searchParams: URLSearchParams): 'ios' | 'android' | undefined => {
     const qsPlatform = searchParams.get('platform');
     if (qsPlatform === 'ios' || qsPlatform === 'android') {
         return qsPlatform;
     }
+    return;
 };
-
-export const Movistar = {
-    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
-    skin: getMovistarSkin(),
-} as const;
-
-export const O2 = {
-    i18n: {locale: 'en-US', phoneNumberFormattingRegionCode: 'GB'},
-    skin: getO2Skin(),
-} as const;
-
-export const O2_Classic = {
-    i18n: {locale: 'en-US', phoneNumberFormattingRegionCode: 'GB'},
-    skin: getO2ClassicSkin(),
-} as const;
-
-export const Vivo = {
-    i18n: {locale: 'pt-BR', phoneNumberFormattingRegionCode: 'BR'},
-    skin: getVivoSkin(),
-} as const;
-
-const AVAILABLE_THEMES = [Movistar, O2, O2_Classic, Vivo];
 
 const getTheme = (selectedSkin: string, platform?: 'ios' | 'android'): ThemeConfig => {
     const themeConfig = AVAILABLE_THEMES.find(({skin}) => skin.name === selectedSkin) || Movistar;
@@ -96,9 +72,9 @@ const getTheme = (selectedSkin: string, platform?: 'ios' | 'android'): ThemeConf
         : themeConfig;
 };
 
-const ThemeDecorator = ({Story}) => {
+const ThemeDecorator = ({Story}: any) => {
     const searchParams = new URLSearchParams(location.search);
-    const [skin, setSkin] = React.useState(getSkin(searchParams));
+    const [skin, setSkin] = React.useState(String(getSkin(searchParams)));
 
     React.useEffect(() => {
         const channel = addons.getChannel();
