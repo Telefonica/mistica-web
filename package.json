@@ -140,7 +140,9 @@
         "jss-plugin-rule-value-function": "^10.1.1",
         "jss-plugin-vendor-prefixer": "^10.1.1",
         "lodash": "^4.17.15",
+        "moment": "^2.29.0",
         "react-autosuggest": "^9.4.3",
+        "react-datetime": "^3.0.4",
         "react-jss": "^10.1.1",
         "react-transition-group": "^2.5.3",
         "semver-compare": "^1.0.0"

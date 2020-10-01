@@ -57,7 +57,7 @@ interface ToProps extends CommonProps {
     href?: undefined;
     onPress?: undefined;
 }
-interface OnClickProps extends CommonProps {
+interface OnPressProps extends CommonProps {
     label: string;
     onPress: (event: React.MouseEvent<HTMLElement>) => void;
     href?: undefined;
@@ -69,7 +69,7 @@ interface MaybeProps extends CommonProps {
     to?: undefined;
 }
 
-type Props = HrefProps | ToProps | OnClickProps | MaybeProps;
+type Props = HrefProps | ToProps | OnPressProps | MaybeProps;
 
 /*
  * Examples:

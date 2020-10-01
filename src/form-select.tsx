@@ -9,11 +9,7 @@ import Overlay from './overlay';
 import classNames from 'classnames';
 import {isAndroid, isIos} from './utils/platform';
 import {createUseStyles} from './jss';
-
-const cancelEvent = (event: React.SyntheticEvent | Event) => {
-    event.stopPropagation();
-    event.preventDefault();
-};
+import {cancelEvent} from './utils/dom';
 
 const useStyles = createUseStyles((theme) => ({
     selectContainer: {
@@ -434,9 +430,8 @@ const FormSelect: React.FC<FormSelectProps> = ({
                     inputProps={inputProps}
                     inputRef={inputRef}
                     fieldRef={fieldRef}
-                >
-                    <div className={classes.selectText}>{getOptionText(value ?? valueState)}</div>
-                </TextFieldBase>
+                />
+                <div className={classes.selectText}>{getOptionText(value ?? valueState)}</div>
             </div>
             {optionsShown && (
                 <Overlay

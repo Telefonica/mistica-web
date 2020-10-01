@@ -32,13 +32,13 @@ declare type ToProps = {
   fullPageOnWebView?: boolean,
   replace?: boolean,
 };
-declare type OnClickProps = {
+declare type OnPressProps = {
   ...$Exact<CommonProps>,
   label: string,
   onPress: (event: SyntheticMouseEvent<HTMLElement>) => void,
 };
 declare type MaybeProps = { ...$Exact<CommonProps> };
-declare type Props = HrefProps | ToProps | OnClickProps | MaybeProps;
+declare type Props = HrefProps | ToProps | OnPressProps | MaybeProps;
 declare var IconButton: React.ComponentType<Props>;
 declare export default typeof IconButton;
 
