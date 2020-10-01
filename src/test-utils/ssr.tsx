@@ -28,17 +28,20 @@ const createWebpackEntries = (): {[entryName: string]: string} => {
             import * as React from 'react';
             import ReactDOM from 'react-dom';
             import Component from '../__acceptance_tests__/__ssr_pages__/${moduleName}';
-            import {ThemeContextProvider} from '..';
+            import {ThemeContextProvider, getSkinByName} from '..';
 
             const skin = new URL(location).searchParams.get('skin');
 
             ReactDOM.hydrate(
                 <ThemeContextProvider
-                    theme={{skin: skin || 'Movistar', i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}}}
+                    theme={{
+                        skin: getSkinByName(skin || 'Movistar'),
+                        i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}
+                    }}
                 >
                     <Component />
                 </ThemeContextProvider>,
-                document.getElementById('root')
+                document.getElementById ('root')
             );`
         );
 
