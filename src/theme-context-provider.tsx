@@ -57,7 +57,6 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
             ...theme.dimensions,
         },
         mq: theme.mediaQueries ? createMediaQueries(theme.mediaQueries) : baseTheme.mq,
-        // colors are also accesible in theme.skin.colors
         colors: theme.skin.colors,
         Link: theme.Link ?? baseTheme.Link,
     };
