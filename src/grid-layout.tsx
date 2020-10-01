@@ -13,11 +13,11 @@ const useStyles = createUseStyles((theme) => ({
             gridGap: 16,
         },
         [theme.mq.tablet]: {
-            gridTemplateColumns: 'repeat(1, 1fr)',
+            gridTemplateColumns: 'minmax(0, 1fr)',
             gridGap: 16,
         },
         [theme.mq.mobile]: {
-            gridTemplateColumns: 'repeat(1, 1fr)',
+            gridTemplateColumns: 'minmax(0, 1fr)',
             gridGap: 16,
         },
     },
