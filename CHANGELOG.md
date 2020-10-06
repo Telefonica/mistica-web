@@ -1,3 +1,16 @@
+# [6.3.0](https://github.com/Telefonica/mistica-web/compare/v6.2.0...v6.3.0) (2020-10-06)
+
+
+### Bug Fixes
+
+* **GridLayout:** fixed styles to avoid horizontal scroll in mobile ([18a2605](https://github.com/Telefonica/mistica-web/commit/18a26052c8ecf31b8df1b1d8b013428d4d87fa3c))
+* **Version:** improve version import from package.json ([f367521](https://github.com/Telefonica/mistica-web/commit/f36752147c7e251c19039524d07f7c8ad407f70e))
+
+
+### Features
+
+* **Build:** generate library size stats on build time (see `size-stats.json`) ([b3e8b66](https://github.com/Telefonica/mistica-web/commit/b3e8b6618ac401be8285afa6aab329b6aace6dd9))
+
 # [6.2.0](https://github.com/Telefonica/mistica-web/compare/v6.1.2...v6.2.0) (2020-09-21)
 
 
