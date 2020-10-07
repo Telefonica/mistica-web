@@ -15,6 +15,7 @@ import {
     FormPhoneNumberField,
     Box,
     FormDateTimeField,
+    Text8,
 } from '..';
 import {inspect} from 'util';
 import Icon from '../icons/icon-visibility';
@@ -81,6 +82,15 @@ const Controlled: React.FC<ControlledProps> = ({title, initialValue, children}) 
         </StorySection>
     );
 };
+
+const DatePickerWarning: React.FC = () => (
+    <Box paddingBottom={8}>
+        <Text8 regular>
+            ⚠️ Uses browser's native date picker when available. Otherwise renders a React datepicker (eg.
+            Safari Desktop)
+        </Text8>
+    </Box>
+);
 
 const getCountrySuggestions = (value: string) =>
     countriesList
@@ -291,27 +301,33 @@ export const TypesUncontrolled: StoryComponent = () => (
 
         <Uncontrolled title="FormDateField">
             {(handleChange, handleChangeValue) => (
-                <div data-testid="date">
-                    <FormDateField
-                        name="date"
-                        label="Date"
-                        onChange={handleChange}
-                        onChangeValue={handleChangeValue}
-                    />
-                </div>
+                <>
+                    <DatePickerWarning />
+                    <div data-testid="date">
+                        <FormDateField
+                            name="date"
+                            label="Date"
+                            onChange={handleChange}
+                            onChangeValue={handleChangeValue}
+                        />
+                    </div>
+                </>
             )}
         </Uncontrolled>
 
         <Uncontrolled title="FormDateTimeField">
             {(handleChange, handleChangeValue) => (
-                <div data-testid="datetime">
-                    <FormDateTimeField
-                        name="datetime"
-                        label="DateTime"
-                        onChange={handleChange}
-                        onChangeValue={handleChangeValue}
-                    />
-                </div>
+                <>
+                    <DatePickerWarning />
+                    <div data-testid="datetime">
+                        <FormDateTimeField
+                            name="datetime"
+                            label="DateTime"
+                            onChange={handleChange}
+                            onChangeValue={handleChangeValue}
+                        />
+                    </div>
+                </>
             )}
         </Uncontrolled>
 
@@ -472,25 +488,31 @@ export const TypesControlled = (): React.ReactNode => (
 
         <Controlled title="FormDateField" initialValue="1980-10-06">
             {(handleChange, handleChangeValue, value) => (
-                <FormDateField
-                    value={value}
-                    name="date"
-                    label="Date"
-                    onChange={handleChange}
-                    onChangeValue={handleChangeValue}
-                />
+                <>
+                    <DatePickerWarning />
+                    <FormDateField
+                        value={value}
+                        name="date"
+                        label="Date"
+                        onChange={handleChange}
+                        onChangeValue={handleChangeValue}
+                    />
+                </>
             )}
         </Controlled>
 
         <Controlled title="FormDateTimeField" initialValue="1980-10-06T13:14">
             {(handleChange, handleChangeValue, value) => (
-                <FormDateTimeField
-                    value={value}
-                    name="datetime"
-                    label="DateTime"
-                    onChange={handleChange}
-                    onChangeValue={handleChangeValue}
-                />
+                <>
+                    <DatePickerWarning />
+                    <FormDateTimeField
+                        value={value}
+                        name="datetime"
+                        label="DateTime"
+                        onChange={handleChange}
+                        onChangeValue={handleChangeValue}
+                    />
+                </>
             )}
         </Controlled>
 

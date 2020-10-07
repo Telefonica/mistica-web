@@ -48,7 +48,8 @@ export type CommonFormFieldProps = {
   placeholder?: string,
   value?: string,
   defaultValue?: string,
-  onChange?: (event: SyntheticEvent<HTMLInputElement>) => void
+  onChange?: (event: SyntheticEvent<HTMLInputElement>) => void,
+  readOnly?: boolean,
 };
 declare type TextFieldBaseProps = {
   id?: string,
@@ -73,6 +74,7 @@ declare type TextFieldBaseProps = {
   value?: string,
   inputRef?: React.Ref<HTMLInputElement | HTMLSelectElement>,
   getSuggestions?: (value: string) => Array<string>,
+  onClick?: (event: SyntheticMouseEvent<>) => void,
   onChange?: (event: SyntheticEvent<HTMLInputElement>) => void,
   onBlur?: (event: SyntheticFocusEvent<>) => void,
   onFocus?: (event: SyntheticFocusEvent<>) => void,
@@ -84,8 +86,8 @@ declare type TextFieldBaseProps = {
   fieldRef?: React.Ref<"div">,
   onInput?: (event: SyntheticEvent<HTMLInputElement>) => void,
   multiline?: boolean,
-  children?: React.Node,
-  inputMode?: string
+  inputMode?: string,
+  readOnly?: boolean
 };
 declare var TextFieldBase: React.Component<TextFieldBaseProps>;
 declare export default typeof TextFieldBase;

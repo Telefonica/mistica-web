@@ -37,6 +37,9 @@ const fixFlowDefinition = (flowFilename) => {
     // `React.RefObject` => `React.Ref`
     src = src.replace(/React.RefObject/g, 'React.Ref');
 
+    // `React.SyntheticEvent<>` => `SyntheticEvent<any>`
+    src = src.replace(/React.SyntheticEvent<>/g, 'SyntheticEvent<any>');
+
     // `React.Ref<HTMLDivElement>` => `React.Ref<'div'>`
     src = src.replace(/React\.Ref<HTMLDivElement>/g, `React.Ref<'div'>`);
     src = src.replace(

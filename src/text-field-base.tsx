@@ -52,6 +52,8 @@ export interface CommonFormFieldProps {
     value?: string;
     defaultValue?: string;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    children?: void;
+    readOnly?: boolean;
 }
 
 interface TextFieldBaseProps {
@@ -77,6 +79,7 @@ interface TextFieldBaseProps {
     value?: string;
     inputRef?: React.Ref<HTMLInputElement | HTMLSelectElement>;
     getSuggestions?: (value: string) => Array<string>;
+    onClick?: (event: React.MouseEvent) => void;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (event: React.FocusEvent) => void;
     onFocus?: (event: React.FocusEvent) => void;
@@ -89,8 +92,8 @@ interface TextFieldBaseProps {
     fieldRef?: React.RefObject<HTMLDivElement>;
     onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
     multiline?: boolean;
-    children?: React.ReactNode;
     inputMode?: string;
+    readOnly?: boolean;
 }
 
 const commonInputStyles = (theme: Theme) => ({
@@ -235,7 +238,6 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             focus,
             fieldRef,
             maxLength,
-            children,
             id: idProp,
             autoComplete: autoCompleteProp,
             fullWidth,
@@ -366,7 +368,6 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                     </Label>
                 )}
                 {endIcon && <div className={classes.endIcon}>{endIcon}</div>}
-                {children}
             </FieldContainer>
         );
     }

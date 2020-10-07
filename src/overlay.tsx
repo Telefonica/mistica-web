@@ -9,6 +9,7 @@ const defaultStyle: React.CSSProperties = {
     bottom: 0,
     left: 0,
     zIndex: 12,
+    outline: 'none',
     WebkitTapHighlightColor: 'transparent',
 };
 
