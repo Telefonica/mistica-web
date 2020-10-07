@@ -15,5 +15,7 @@
         "lodash": "^4.17.20",
         "mkdirp": "^1.0.4"
     },
-    "devDependencies": {}
+    "devDependencies": {
+        "rimraf": "^3.0.2"
+    }
 }

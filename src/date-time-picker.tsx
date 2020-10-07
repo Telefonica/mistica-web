@@ -1,6 +1,6 @@
 import * as React from 'react';
 import TextFieldBase from './text-field-base';
-import {IconCalendarRegular} from './generated/mistica-icons';
+import {IconCalendarRegular} from './generated/mistica-icons/icon-calendar-regular';
 import Datetime from 'react-datetime';
 import Overlay from './overlay';
 import {DEFAULT_WIDTH} from './text-field-components';
