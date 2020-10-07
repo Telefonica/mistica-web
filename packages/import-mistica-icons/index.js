@@ -15,7 +15,7 @@ const PATH_REPO_ROOT = join(__dirname, '..', '..');
 const PATH_CACHE = join(__dirname, 'node_modules', '.cache');
 const PATH_MISTICA_ICONS_REPO = join(PATH_CACHE, 'mistica-icons');
 const PATH_OUTPUT = join(PATH_REPO_ROOT, 'src', 'generated/mistica-icons');
-const PATH_OUTPUT_INDEX_FILENAME = join(PATH_OUTPUT, 'index.tsx');
+const PATH_OUTPUT_INDEX_FILENAME = join(PATH_OUTPUT, 'index.tsx.txt');
 
 const GIT_MISTICA_ICONS_MAIN_BRANCH = 'production';
 const GIT_MISTICA_ICONS = 'git@github.com:Telefonica/mistica-icons.git';
@@ -131,20 +131,18 @@ const main = async () => {
         fs.writeFileSync(join(PATH_OUTPUT, filename), formatted);
     }
 
-    const index =
-        doNotEditComment +
-        components
-            .sort((a, b) => (a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1))
-            .map(
-                ([componentName, importName]) =>
-                    `export {${componentName}} from './generated/mistica-icons/${importName}';`
-            )
-            .join('\n');
+    const index = components
+        .sort((a, b) => (a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1))
+        .map(
+            ([componentName, importName]) =>
+                `export {${componentName}} from './generated/mistica-icons/${importName}';`
+        )
+        .join('\n');
 
     fs.writeFileSync(PATH_OUTPUT_INDEX_FILENAME, index, 'utf8');
 
     console.log();
-    console.log('Done!', yellow(PATH_OUTPUT_INDEX_FILENAME));
+    console.log('Done! Copy exports in ', yellow(PATH_OUTPUT_INDEX_FILENAME), ' to src/index.tsx');
     console.log();
 };
 

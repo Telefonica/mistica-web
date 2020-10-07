@@ -107,6 +107,7 @@ if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
     }
 }
 
+// Exported this way to facilitate tree-shaking
 export {IconAcademicFilled} from './generated/mistica-icons/icon-academic-filled';
 export {IconAcademicLight} from './generated/mistica-icons/icon-academic-light';
 export {IconAcademicRegular} from './generated/mistica-icons/icon-academic-regular';
