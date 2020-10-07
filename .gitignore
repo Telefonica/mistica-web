@@ -16,3 +16,4 @@ __diff_output__
 storybook-static/
 /public
 .vercel
+src/generated/mistica-icons/index.tsx.txt
