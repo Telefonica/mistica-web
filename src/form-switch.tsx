@@ -104,21 +104,19 @@ const FormSwitch: React.FC<Props> = (props) => {
 
     const classes = useStyles({isChecked: checked ?? checkedState});
 
-    const notifyChange = React.useMemo(
-        () =>
-            debounce((value: boolean) => {
-                if (onChange) {
-                    onChange(value);
-                }
-            }, 300),
-        [onChange]
-    );
+    const notifyChange = React.useMemo(() => {
+        if (process.env.NODE_ENV === 'test') {
+            return (value: boolean) => onChange?.(value);
+        } else {
+            return debounce((value: boolean) => {
+                onChange?.(value);
+            }, 300);
+        }
+    }, [onChange]);
 
     const handleChange = () => {
         if (checked !== undefined) {
-            if (onChange) {
-                onChange(!checked);
-            }
+            onChange?.(!checked);
         } else {
             setCheckedState(!checkedState);
             notifyChange(!checkedState);
