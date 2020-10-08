@@ -41,7 +41,7 @@ type Props = {
     defaultChecked?: boolean;
     checked?: boolean;
     onChange?: (value: boolean) => void;
-    id: string;
+    id?: string;
 };
 
 const FormCheckbox: React.FC<Props> = (props) => {

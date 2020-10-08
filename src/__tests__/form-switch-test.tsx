@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import {render, waitFor, fireEvent, screen, act} from '@testing-library/react';
+import {render, waitFor, fireEvent, screen} from '@testing-library/react';
 import {ButtonPrimary, Form, FormSwitch} from '..';
 import userEvent from '@testing-library/user-event';
 
