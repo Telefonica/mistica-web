@@ -6,7 +6,7 @@
  */
 
 declare export { createUseStyles, getJss, ServerSideStyles } from "./jss";
-declare export { default as ThemeContext } from "./theme-context-provider";
+declare export { default as ThemeContext } from "./theme-context";
 declare export { default as ThemeContextProvider } from "./theme-context-provider";
 declare export { default as ScreenReaderOnly } from "./screen-reader-only";
 declare export { default as Touchable } from "./touchable";
@@ -117,7 +117,7 @@ declare export {
   ThemeVariant,
   useIsInverseVariant
 } from "./theme-variant-context";
-declare export { Skin } from "./skins/types";
+declare export { Skin, SkinName } from "./skins/types";
 declare export {
   VIVO_SKIN,
   O2_CLASSIC_SKIN,
