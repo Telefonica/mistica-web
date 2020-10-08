@@ -18,6 +18,7 @@ import {
     FormDecimalField,
     FormSwitch,
     Text7,
+    FormCheckbox,
 } from '..';
 import {getCvvLength} from '../utils/credit-card';
 
@@ -66,6 +67,15 @@ export const AutomaticForm: StoryComponent = () => (
                 )}
             />
 
+            <FormCheckbox
+                name="t&c"
+                render={(checkboxElement) => (
+                    <>
+                        <Text7 regular>Accept Terms and Conditions</Text7> {checkboxElement}
+                    </>
+                )}
+            />
+
             <ButtonLayout>
                 <ButtonSecondary onPress={() => window.alert('hello')}>Hello</ButtonSecondary>
                 <ButtonPrimary submit loadingText="Sending">
@@ -83,6 +93,7 @@ export const ManualForm: StoryComponent = () => {
     const [creditCardExpiration, setCreditCardExpiration] = React.useState({raw: ''});
     const [creditCardCvv, setCreditCardCvv] = React.useState('');
     const [saveCC, setSaveCC] = React.useState(true);
+    const [acceptTC, setAcceptTC] = React.useState(true);
 
     const cvvLength = getCvvLength(creditCardNumber);
 
@@ -92,7 +103,15 @@ export const ManualForm: StoryComponent = () => {
                 e.preventDefault();
                 window.alert(
                     JSON.stringify(
-                        {fruit, quantity, creditCardNumber, creditCardExpiration, creditCardCvv, saveCC},
+                        {
+                            fruit,
+                            quantity,
+                            creditCardNumber,
+                            creditCardExpiration,
+                            creditCardCvv,
+                            saveCC,
+                            acceptTC,
+                        },
                         null,
                         2
                     )
@@ -141,6 +160,16 @@ export const ManualForm: StoryComponent = () => {
                     render={(switchElement) => (
                         <>
                             <Text7 regular>Save CC</Text7> {switchElement}
+                        </>
+                    )}
+                />
+                <FormCheckbox
+                    name="t&c"
+                    checked={acceptTC}
+                    onChange={setAcceptTC}
+                    render={(checkboxElement) => (
+                        <>
+                            <Text7 regular>Accept Terms and Conditions</Text7> {checkboxElement}
                         </>
                     )}
                 />
