@@ -1,11 +1,15 @@
 import * as React from 'react';
 import {fireEvent, render, waitFor, screen} from '@testing-library/react';
 import Popover from '../popover';
+import {ThemeContextProvider} from '..';
+import {makeTheme} from './test-utils';
 
 type Props = Omit<React.ComponentProps<typeof Popover>, 'children' | 'description' | 'target'>;
 
 const TestPopover: React.FC<Props> = (props) => (
-    <Popover {...props} description="Content" target={<span>Press me!</span>} />
+    <ThemeContextProvider theme={makeTheme()}>
+        <Popover {...props} description="Content" target={<span>Press me!</span>} />
+    </ThemeContextProvider>
 );
 
 const TestWrapper = ({onCloseSpy}: {onCloseSpy: () => void}) => {
@@ -15,12 +19,14 @@ const TestWrapper = ({onCloseSpy}: {onCloseSpy: () => void}) => {
         setIsVisible(false);
     };
     return (
-        <Popover
-            isVisible={isVisible}
-            description="Content"
-            onClose={handleClose}
-            target={<span>Press me!</span>}
-        />
+        <ThemeContextProvider theme={makeTheme()}>
+            <Popover
+                isVisible={isVisible}
+                description="Content"
+                onClose={handleClose}
+                target={<span>Press me!</span>}
+            />
+        </ThemeContextProvider>
     );
 };
 

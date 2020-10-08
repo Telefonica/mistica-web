@@ -46,7 +46,11 @@ test('RadioGroup (controlled)', () => {
         );
     };
 
-    render(<Component />);
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Component />
+        </ThemeContextProvider>
+    );
 
     expect(screen.getByText('you have selected apple')).toBeInTheDocument();
 

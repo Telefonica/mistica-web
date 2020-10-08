@@ -9,6 +9,10 @@ import type {RegionCode} from '../utils/region-code';
 import type {TrackingEvent} from '../utils/types';
 import type {Skin} from '..';
 
+if (process.env.NODE_ENV !== 'test') {
+    throw Error('Using test-utils outside test environment');
+}
+
 type ThemeOverrides = {
     skin?: Skin;
     i18n?: {
