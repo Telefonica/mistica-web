@@ -135,7 +135,7 @@ const main = async () => {
         .sort((a, b) => (a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1))
         .map(
             ([componentName, importName]) =>
-                `export {${componentName}} from './generated/mistica-icons/${importName}';`
+                `export {default as ${componentName}} from './generated/mistica-icons/${importName}';`
         )
         .join('\n');
 
