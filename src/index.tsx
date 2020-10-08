@@ -42,7 +42,7 @@ export {default as PromoTag} from './promo-tag';
 export {default as SectionTitle} from './section-title';
 export {Placeholder, AvatarPlaceholder} from './placeholder';
 export {RowList, Row, BoxedRowList, BoxedRow} from './list';
-export {default as Switch} from './switch';
+export {default as FormSwitch} from './form-switch';
 export {default as RadioButton, RadioGroup} from './radio-button';
 export {default as NegativeBox} from './negative-box';
 export {default as Tabs} from './tabs';

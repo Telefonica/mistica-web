@@ -8,7 +8,7 @@ import Stack from './stack';
 import Badge from './badge';
 import {useTheme, useScreenSize} from './hooks';
 import IconChevron from './icons/icon-chevron';
-import Switch from './switch';
+import FormSwitch from './form-switch';
 import {SPACE} from './utils/key-codes';
 import RadioButton from './radio-button';
 
@@ -475,7 +475,7 @@ const RowContent = (props: RowContentProps) => {
     );
 
     if (props.switch) {
-        return renderRowWithControl(Switch);
+        return renderRowWithControl(FormSwitch);
     }
 
     if (props.checkbox) {

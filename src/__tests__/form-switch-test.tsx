@@ -1,10 +1,10 @@
 // @flow
 import * as React from 'react';
 import {render, waitFor, fireEvent, screen} from '@testing-library/react';
-import {Switch} from '..';
+import {FormSwitch} from '..';
 
 test('renders accesible switch', () => {
-    render(<Switch defaultChecked={false} />);
+    render(<FormSwitch name="switch" defaultChecked={false} />);
 
     const switchElement = screen.getByRole('checkbox');
 
@@ -15,7 +15,7 @@ test('renders accesible switch', () => {
 test('controlled mode', () => {
     const Component = () => {
         const [checked, setChecked] = React.useState(false);
-        return <Switch onChange={setChecked} checked={checked} />;
+        return <FormSwitch name="switch" onChange={setChecked} checked={checked} />;
     };
 
     render(<Component />);
@@ -28,7 +28,7 @@ test('controlled mode', () => {
 });
 
 test('uncontrolled mode', () => {
-    render(<Switch defaultChecked />);
+    render(<FormSwitch name="switch" defaultChecked />);
 
     const switchElement = screen.getByRole('checkbox');
 
@@ -40,7 +40,7 @@ test('uncontrolled mode', () => {
 test('uncontrolled mode with onChange handler', async () => {
     const onChangeSpy = jest.fn();
 
-    render(<Switch onChange={onChangeSpy} defaultChecked />);
+    render(<FormSwitch name="switch" onChange={onChangeSpy} defaultChecked />);
 
     const switchElement = screen.getByRole('checkbox');
 

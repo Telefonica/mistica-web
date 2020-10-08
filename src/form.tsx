@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useTheme} from './hooks';
-import {FormContext} from './form-context';
+import {ControlElement, FormContext} from './form-context';
 import {createUseStyles} from './jss';
 import classnames from 'classnames';
 
@@ -36,7 +36,7 @@ const Form: React.FC<FormProps> = ({
     const [rawValues, setRawValues] = React.useState(initialValues);
     const [formStatus, setFormStatus] = React.useState<FormStatus>('filling');
     const [formErrors, setFormErrors] = React.useState<FormErrors>({});
-    const fieldRefs = React.useRef(new Map<string, HTMLInputElement | HTMLSelectElement>());
+    const fieldRefs = React.useRef(new Map<string, HTMLInputElement | HTMLSelectElement | ControlElement>());
     const fieldValidators = React.useRef(new Map<string, FieldValidator>());
     const fieldFocusableRefs = React.useRef(new Map<string, HTMLDivElement | HTMLSelectElement>());
     const formRef = React.useRef<HTMLFormElement | null>(null);

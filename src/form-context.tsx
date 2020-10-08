@@ -4,17 +4,24 @@ export type FormStatus = 'filling' | 'sending';
 export type FormErrors = {[name: string]: string | undefined};
 export type FieldValidator = (value: any, rawValue: string) => string | undefined;
 
+export type ControlElement = {
+    disabled: false;
+    required: false;
+    focus: () => void;
+    blur: () => void;
+};
+
 export type FieldRegistration = {
     name: string;
-    field?: HTMLInputElement | HTMLSelectElement | null;
+    field?: HTMLInputElement | HTMLSelectElement | ControlElement | null;
     validate?: FieldValidator;
     focusableElement?: HTMLDivElement | HTMLSelectElement | null;
 };
 
 type Context = {
     // raw values are the real input values
-    rawValues: {[name: string]: string};
-    setRawValue: (param: {readonly name: string; readonly value: string}) => void;
+    rawValues: {[name: string]: any};
+    setRawValue: (param: {readonly name: string; readonly value: any}) => void;
     // these values can have some kind of postprocessing. For example, remove spaces from credit card numbers
     values: {[name: string]: any};
     setValue: (param: {readonly name: string; readonly value: any}) => void;
@@ -42,6 +49,59 @@ export const FormContext = React.createContext<Context>({
 });
 
 export const useForm = (): Context => React.useContext(FormContext);
+
+export const useControlProps = ({
+    name,
+    checked,
+    defaultChecked,
+    onChange,
+}: {
+    name: string;
+    checked: undefined | boolean;
+    defaultChecked: undefined | boolean;
+    onChange: undefined | ((value: boolean) => void);
+}): {
+    name: string;
+    checked?: boolean;
+    defaultChecked?: boolean;
+    onChange: (value: boolean) => void;
+    focusableRef: (focusableElement: HTMLDivElement | null) => void;
+} => {
+    const {setRawValue, setValue, rawValues, setFormError, register} = useForm();
+    const rawChecked = checked ?? defaultChecked ?? rawValues[name] ?? false;
+
+    React.useEffect(() => {
+        setRawValue({name, value: rawChecked});
+        setValue({name, value: rawChecked});
+    }, [name, rawChecked, setRawValue, setValue]);
+
+    return {
+        name,
+        checked,
+        defaultChecked: defaultChecked ?? (checked === undefined ? rawValues[name] ?? false : undefined),
+        focusableRef: (focusableElement: HTMLDivElement | null) =>
+            register({
+                name,
+                field: {
+                    disabled: false,
+                    required: false,
+                    focus: () => {
+                        focusableElement?.focus();
+                    },
+                    blur: () => {
+                        focusableElement?.blur();
+                    },
+                },
+                focusableElement,
+            }),
+        onChange: (value: boolean) => {
+            setRawValue({name, value});
+            setValue({name, value});
+            setFormError({name, error: ''});
+            onChange?.(value);
+        },
+    };
+};
 
 export const useFieldProps = ({
     name,

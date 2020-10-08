@@ -4,6 +4,7 @@ import {getPlatform} from './utils/platform';
 import {applyAlpha} from './utils/color';
 import debounce from 'lodash/debounce';
 import {SPACE} from './utils/key-codes';
+import {useControlProps} from './form-context';
 
 const SWITCH_ANIMATION = '0.2s ease-in 0s';
 
@@ -83,29 +84,25 @@ const useStyles = createUseStyles((theme) => {
 
 type RenderSwitch = (switchElement: React.ReactElement<any>) => React.ReactNode;
 
-type UncontrolledProps = {
+type Props = {
+    name: string;
     render?: RenderSwitch;
     defaultChecked?: boolean;
-    checked?: undefined;
-    onChange?: (checked: boolean) => void;
+    checked?: boolean;
+    onChange?: (value: boolean) => void;
 };
 
-type ControlledProps = {
-    render?: RenderSwitch;
-    defaultChecked?: undefined;
-    checked: boolean;
-    onChange: (checked: boolean) => void;
-};
+const FormSwitch: React.FC<Props> = (props) => {
+    const {defaultChecked, checked, onChange, focusableRef} = useControlProps({
+        name: props.name,
+        checked: props.checked,
+        defaultChecked: props.defaultChecked,
+        onChange: props.onChange,
+    });
 
-type Props = ControlledProps | UncontrolledProps;
+    const [checkedState, setCheckedState] = React.useState(!!defaultChecked);
 
-const Switch: React.FC<Props> = (props) => {
-    const isControlledByParent = props.checked !== undefined;
-    const [isChecked, setIsChecked] = React.useState<boolean>(!!props.defaultChecked);
-
-    const classes = useStyles({isChecked: isControlledByParent ? props.checked : isChecked});
-
-    const {onChange} = props;
+    const classes = useStyles({isChecked: checked ?? checkedState});
 
     const notifyChange = React.useMemo(
         () =>
@@ -118,13 +115,13 @@ const Switch: React.FC<Props> = (props) => {
     );
 
     const handleChange = () => {
-        if (isControlledByParent) {
-            if (props.onChange) {
-                props.onChange(!props.checked);
+        if (checked !== undefined) {
+            if (onChange) {
+                onChange(!checked);
             }
         } else {
-            setIsChecked(!isChecked);
-            notifyChange(!isChecked);
+            setCheckedState(!checkedState);
+            notifyChange(!checkedState);
         }
     };
 
@@ -150,14 +147,15 @@ const Switch: React.FC<Props> = (props) => {
     return (
         <span
             role="checkbox"
-            aria-checked={isControlledByParent ? props.checked : isChecked}
+            aria-checked={checked ?? checkedState}
             onClick={handleChange}
             onKeyDown={handleKeyDown}
             tabIndex={0}
+            ref={focusableRef}
         >
             {props.render ? <>{props.render(switchEl)}</> : switchEl}
         </span>
     );
 };
 
-export default Switch;
+export default FormSwitch;

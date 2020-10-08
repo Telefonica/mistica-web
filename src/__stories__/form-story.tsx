@@ -16,6 +16,8 @@ import {
     FormCreditCardExpirationField,
     FormCvvField,
     FormDecimalField,
+    FormSwitch,
+    Text7,
 } from '..';
 import {getCvvLength} from '../utils/credit-card';
 
@@ -35,7 +37,11 @@ const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 const countryOptions = countriesList.map((text, i) => ({text, value: '' + i}));
 
 export const AutomaticForm: StoryComponent = () => (
-    <Form initialValues={{email: 'john.doe@gmail.com', decimal: '123'}} onSubmit={fakeApiCall} autoJump>
+    <Form
+        initialValues={{email: 'john.doe@gmail.com', decimal: '123', 'save-cc': true}}
+        onSubmit={fakeApiCall}
+        autoJump
+    >
         <Stack space={16}>
             <FormEmailField name="email" label="email" />
 
@@ -50,6 +56,15 @@ export const AutomaticForm: StoryComponent = () => (
             <FormSelect autoFocus name="fruit" label="fruit" optional options={fruitOptions} />
 
             <FormCreditCardFields />
+
+            <FormSwitch
+                name="save-cc"
+                render={(switchElement) => (
+                    <>
+                        <Text7 regular>Save CC</Text7> {switchElement}
+                    </>
+                )}
+            />
 
             <ButtonLayout>
                 <ButtonSecondary onPress={() => window.alert('hello')}>Hello</ButtonSecondary>
@@ -67,6 +82,7 @@ export const ManualForm: StoryComponent = () => {
     const [creditCardNumber, setCreditCardNumber] = React.useState('');
     const [creditCardExpiration, setCreditCardExpiration] = React.useState({raw: ''});
     const [creditCardCvv, setCreditCardCvv] = React.useState('');
+    const [saveCC, setSaveCC] = React.useState(true);
 
     const cvvLength = getCvvLength(creditCardNumber);
 
@@ -76,7 +92,7 @@ export const ManualForm: StoryComponent = () => {
                 e.preventDefault();
                 window.alert(
                     JSON.stringify(
-                        {fruit, quantity, creditCardNumber, creditCardExpiration, creditCardCvv},
+                        {fruit, quantity, creditCardNumber, creditCardExpiration, creditCardCvv, saveCC},
                         null,
                         2
                     )
@@ -118,6 +134,16 @@ export const ManualForm: StoryComponent = () => {
                         maxLength={cvvLength}
                     />
                 </DoubleField>
+                <FormSwitch
+                    name="save-cc"
+                    checked={saveCC}
+                    onChange={setSaveCC}
+                    render={(switchElement) => (
+                        <>
+                            <Text7 regular>Save CC</Text7> {switchElement}
+                        </>
+                    )}
+                />
                 <ButtonLayout>
                     <ButtonPrimary submit loadingText="Sending">
                         Send
