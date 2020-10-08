@@ -3,13 +3,13 @@ import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {ButtonPrimary, Form, FormTextField, FormEmailField, FormPasswordField} from '..';
 import ThemeContextProvider from '../theme-context-provider';
-import {overrideTheme} from './test-utils';
+import {makeTheme} from './test-utils';
 
 test('happy case', async () => {
     const handleSubmitSpy = jest.fn();
 
     render(
-        <ThemeContextProvider theme={overrideTheme()}>
+        <ThemeContextProvider theme={makeTheme()}>
             <Form onSubmit={handleSubmitSpy}>
                 <FormTextField label="Username" name="username" />
                 <ButtonPrimary submit>Submit</ButtonPrimary>
@@ -29,10 +29,12 @@ test('not submitting if required field is empty', async () => {
     const handleSubmitSpy = jest.fn();
 
     render(
-        <Form onSubmit={handleSubmitSpy}>
-            <FormTextField label="Username" name="username" />
-            <ButtonPrimary submit>Submit</ButtonPrimary>
-        </Form>
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy}>
+                <FormTextField label="Username" name="username" />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
     );
 
     expect(screen.queryByText('Este campo es obligatorio')).toBeNull();
@@ -47,7 +49,7 @@ test('custom validator', async () => {
     const handleSubmitSpy = jest.fn();
 
     render(
-        <ThemeContextProvider theme={overrideTheme()}>
+        <ThemeContextProvider theme={makeTheme()}>
             <Form onSubmit={handleSubmitSpy}>
                 <FormTextField
                     label="Password"
@@ -85,10 +87,12 @@ test('fields are disabled during submit', async () => {
     const handleSubmitSpy = jest.fn().mockImplementation(() => submitPromise);
 
     render(
-        <Form onSubmit={handleSubmitSpy}>
-            <FormTextField inputProps={{'data-testid': 'username'}} label="Username" name="username" />
-            <ButtonPrimary submit>Submit</ButtonPrimary>
-        </Form>
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy}>
+                <FormTextField inputProps={{'data-testid': 'username'}} label="Username" name="username" />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
     );
 
     await userEvent.type(screen.getByTestId('username'), 'pepito');
@@ -109,10 +113,12 @@ test('form with defaultValue in field', async () => {
     const handleSubmit = jest.fn();
 
     render(
-        <Form onSubmit={handleSubmit}>
-            <FormEmailField label="email" name="email" defaultValue="foo@bar.com" />
-            <ButtonPrimary submit>Send</ButtonPrimary>
-        </Form>
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmit}>
+                <FormEmailField label="email" name="email" defaultValue="foo@bar.com" />
+                <ButtonPrimary submit>Send</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
     );
 
     userEvent.click(screen.getByText('Send'));
@@ -128,7 +134,7 @@ test('form with controlled field', async () => {
     const MyForm = ({onSubmit}: any) => {
         const [value, setValue] = React.useState('foo');
         return (
-            <ThemeContextProvider theme={overrideTheme()}>
+            <ThemeContextProvider theme={makeTheme()}>
                 <Form onSubmit={onSubmit}>
                     <FormEmailField label="email1" name="email1" value={value} onChangeValue={setValue} />
                     <FormEmailField label="email2" name="email2" value={value} />
@@ -155,11 +161,13 @@ test('defaultValue in Field takes precedence over Form initialValues', async () 
     const handleSubmit = jest.fn();
 
     render(
-        <Form onSubmit={handleSubmit} initialValues={{email: 'foo@bar.com', password: 'password'}}>
-            <FormEmailField optional label="email" name="email" />
-            <FormPasswordField optional label="password" name="password" defaultValue="12345678" />
-            <ButtonPrimary submit>Send</ButtonPrimary>
-        </Form>
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmit} initialValues={{email: 'foo@bar.com', password: 'password'}}>
+                <FormEmailField optional label="email" name="email" />
+                <FormPasswordField optional label="password" name="password" defaultValue="12345678" />
+                <ButtonPrimary submit>Send</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
     );
 
     userEvent.click(screen.getByText('Send'));
@@ -177,7 +185,7 @@ test("if a Field is disabled we skip its validation and don't submit its value",
     const validate = jest.fn().mockReturnValue('errorazo');
 
     render(
-        <ThemeContextProvider theme={overrideTheme()}>
+        <ThemeContextProvider theme={makeTheme()}>
             <Form onSubmit={handleSubmit} initialValues={{email: 'foo@bar.com'}}>
                 <FormEmailField disabled label="email" name="email" validate={validate} />
                 <FormPasswordField label="password" name="password" />

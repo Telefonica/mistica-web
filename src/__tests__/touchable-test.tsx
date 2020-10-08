@@ -3,7 +3,7 @@ import {MemoryRouter, Route, Switch, Link} from 'react-router-dom';
 import Touchable from '../touchable';
 import {waitFor, fireEvent, render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
-import {overrideTheme} from './test-utils';
+import {makeTheme} from './test-utils';
 
 const trackingEvent = {
     category: 'test',
@@ -15,7 +15,7 @@ test('<Link> element is rendered when "to" prop is passed', async () => {
     const to = '/to';
 
     render(
-        <ThemeContextProvider theme={overrideTheme({Link})}>
+        <ThemeContextProvider theme={makeTheme({Link})}>
             <MemoryRouter>
                 <Touchable to={to}>Test</Touchable>
             </MemoryRouter>
@@ -30,12 +30,16 @@ test('<Link> element is rendered when "to" prop is passed', async () => {
 test('<a> element is rendered when "to" prop is used and no Link component injected via ThemeContextProvider', async () => {
     const to = '/to';
 
-    const {container} = render(<Touchable to={to}>Test</Touchable>);
+    const {container} = render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Touchable to={to}>Test</Touchable>
+        </ThemeContextProvider>
+    );
 
     expect(container).toMatchInlineSnapshot(`
         <div>
           <a
-            class="touchable-0-2-1"
+            class="touchable"
             href="/to"
           >
             Test
@@ -50,7 +54,7 @@ test('<Link> element is rendered when "to" prop is passed with tracking', async 
     const to = '/to';
 
     render(
-        <ThemeContextProvider theme={overrideTheme({analytics: {logEvent: logEventSpy}, Link})}>
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}, Link})}>
             <MemoryRouter initialEntries={['/']} initialIndex={0}>
                 <Switch>
                     <Route
@@ -85,7 +89,7 @@ test('<Link> element is rendered when "to" prop is passed with multiple tracking
     const to = '/to';
 
     render(
-        <ThemeContextProvider theme={overrideTheme({analytics: {logEvent: logEventSpy}, Link})}>
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}, Link})}>
             <MemoryRouter initialEntries={['/']} initialIndex={0}>
                 <Switch>
                     <Route
@@ -118,7 +122,7 @@ test('<a> element is rendered when "fullPageOnWebView" and "to" props are passed
     const href = 'href';
 
     render(
-        <ThemeContextProvider theme={overrideTheme({platformOverrides: {insideNovumNativeApp: true}})}>
+        <ThemeContextProvider theme={makeTheme({platformOverrides: {insideNovumNativeApp: true}})}>
             <Touchable to={href} fullPageOnWebView>
                 Test
             </Touchable>
@@ -133,7 +137,7 @@ test('<Link> element is rendered when "fullPageOnWebView" and "to" props are pas
     const href = 'href';
 
     render(
-        <ThemeContextProvider theme={overrideTheme({platformOverrides: {insideNovumNativeApp: false}, Link})}>
+        <ThemeContextProvider theme={makeTheme({platformOverrides: {insideNovumNativeApp: false}, Link})}>
             <MemoryRouter initialEntries={['/']} initialIndex={0}>
                 <Switch>
                     <Route
@@ -157,7 +161,11 @@ test('<Link> element is rendered when "fullPageOnWebView" and "to" props are pas
 
 test('<a> element is rendered when "href" prop is passed', () => {
     const href = 'href';
-    render(<Touchable href={href}>Test</Touchable>);
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Touchable href={href}>Test</Touchable>
+        </ThemeContextProvider>
+    );
     const anchor = screen.getByRole('link', {name: 'Test'});
 
     expect(anchor).toHaveAttribute('href', href);
@@ -169,7 +177,7 @@ test('<a> element is rendered when "href" prop is passed and trackingEvent', asy
     const redirectSpy = jest.spyOn(window, 'open').mockImplementation(() => null);
 
     render(
-        <ThemeContextProvider theme={overrideTheme({analytics: {logEvent: logEventSpy}})}>
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
             <Touchable data-testid="touchable-events" href={href} newTab trackingEvent={trackingEvent}>
                 Test
             </Touchable>
@@ -193,7 +201,7 @@ test('<a> element is rendered when "href" prop is passed and multiple trackingEv
     const redirectSpy = jest.spyOn(window, 'open').mockImplementation(() => null);
 
     render(
-        <ThemeContextProvider theme={overrideTheme({analytics: {logEvent: logEventSpy}})}>
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
             <Touchable
                 data-testid="touchable-events"
                 href={href}
@@ -218,7 +226,11 @@ test('<a> element is rendered when "href" prop is passed and multiple trackingEv
 
 test('<button> element is rendered when "onPress" prop is passed', () => {
     const onPress = () => {};
-    const {container} = render(<Touchable onPress={onPress}>Test</Touchable>);
+    const {container} = render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Touchable onPress={onPress}>Test</Touchable>
+        </ThemeContextProvider>
+    );
 
     expect(screen.getByText('Test')).toBeInTheDocument();
     expect(container.querySelector('button')).toBeInTheDocument();
@@ -228,7 +240,7 @@ test('<button> element is rendered when "onPress" prop is passed and trackingEve
     const onPressSpy = jest.fn().mockReturnValue(undefined);
     const logEventSpy = jest.fn(() => Promise.resolve());
     const {container} = render(
-        <ThemeContextProvider theme={overrideTheme({analytics: {logEvent: logEventSpy}})}>
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
             <Touchable onPress={onPressSpy} trackingEvent={trackingEvent}>
                 Test
             </Touchable>
@@ -251,7 +263,7 @@ test('<button> element is rendered when "onPress" prop is passed and multiple tr
     const onPressSpy = jest.fn().mockReturnValue(undefined);
     const logEventSpy = jest.fn(() => Promise.resolve());
     const {container} = render(
-        <ThemeContextProvider theme={overrideTheme({analytics: {logEvent: logEventSpy}})}>
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
             <Touchable onPress={onPressSpy} trackingEvent={[trackingEvent, trackingEvent]}>
                 Test
             </Touchable>
@@ -275,9 +287,11 @@ test('<a> component has click-like behaviour on "space" key press', async () => 
     const href = 'href';
 
     render(
-        <Touchable href={href} newTab trackingEvent={trackingEvent}>
-            Test
-        </Touchable>
+        <ThemeContextProvider theme={makeTheme()}>
+            <Touchable href={href} newTab trackingEvent={trackingEvent}>
+                Test
+            </Touchable>
+        </ThemeContextProvider>
     );
 
     const anchor = screen.getByText(/Test/);
@@ -293,7 +307,7 @@ test('<Link> component has click-like behaviour on "space" key press', async () 
     const to = '/to';
 
     render(
-        <ThemeContextProvider theme={overrideTheme({Link})}>
+        <ThemeContextProvider theme={makeTheme({Link})}>
             <MemoryRouter initialEntries={['/']} initialIndex={0}>
                 <Switch>
                     <Route exact path="/" render={() => <Touchable to={to}>Test</Touchable>} />

@@ -4,11 +4,11 @@ import {ButtonPrimary, ButtonSecondary} from '../button';
 import * as Spinner from '../spinner';
 import {render} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
-import {overrideTheme} from './test-utils';
+import {makeTheme} from './test-utils';
 
 test('fake button', () => {
     const {asFragment} = render(
-        <ThemeContextProvider theme={overrideTheme()}>
+        <ThemeContextProvider theme={makeTheme()}>
             <ButtonPrimary fake>test</ButtonPrimary>
         </ThemeContextProvider>
     );
@@ -45,7 +45,7 @@ test('fake button', () => {
 
 test('submit button', () => {
     const {asFragment} = render(
-        <ThemeContextProvider theme={overrideTheme()}>
+        <ThemeContextProvider theme={makeTheme()}>
             <ButtonPrimary submit>test</ButtonPrimary>
         </ThemeContextProvider>
     );
@@ -81,7 +81,7 @@ test('submit button', () => {
 
 test('<button> is rendered when using "onPress" prop', () => {
     const {asFragment} = render(
-        <ThemeContextProvider theme={overrideTheme()}>
+        <ThemeContextProvider theme={makeTheme()}>
             <ButtonPrimary onPress={() => {}}>test</ButtonPrimary>
         </ThemeContextProvider>
     );
@@ -117,7 +117,7 @@ test('<button> is rendered when using "onPress" prop', () => {
 
 test('<a> is rendered when using "href" prop', () => {
     const {asFragment} = render(
-        <ThemeContextProvider theme={overrideTheme()}>
+        <ThemeContextProvider theme={makeTheme()}>
             <ButtonPrimary href="/test">test</ButtonPrimary>
         </ThemeContextProvider>
     );
@@ -153,7 +153,7 @@ test('<a> is rendered when using "href" prop', () => {
 
 test('"href" with "newTab" renders required attributes', () => {
     const {asFragment} = render(
-        <ThemeContextProvider theme={overrideTheme()}>
+        <ThemeContextProvider theme={makeTheme()}>
             <ButtonPrimary href="/test" newTab>
                 test
             </ButtonPrimary>
@@ -200,7 +200,7 @@ test('"to" uses a Link Component', () => {
     const Link = () => '(Link Component)' as any;
 
     const {asFragment} = render(
-        <ThemeContextProvider theme={overrideTheme({Link})}>
+        <ThemeContextProvider theme={makeTheme({Link})}>
             <ButtonPrimary to="/test">test</ButtonPrimary>
         </ThemeContextProvider>
     );
@@ -214,7 +214,7 @@ test('"to" uses a Link Component', () => {
 
 test('<a> is rendered when using "to" prop', () => {
     const {asFragment} = render(
-        <ThemeContextProvider theme={overrideTheme()}>
+        <ThemeContextProvider theme={makeTheme()}>
             <ButtonPrimary to="/test">test</ButtonPrimary>
         </ThemeContextProvider>
     );
@@ -252,7 +252,7 @@ test('button with spinner', () => {
     jest.spyOn(Spinner, 'default').mockImplementation(({color}) => `(Spinner color=${color})` as any);
 
     const {asFragment} = render(
-        <ThemeContextProvider theme={overrideTheme()}>
+        <ThemeContextProvider theme={makeTheme()}>
             <ButtonPrimary onPress={() => {}} showSpinner>
                 test
             </ButtonPrimary>
@@ -314,7 +314,7 @@ test('button with spinner', () => {
 
 test('dark theme', () => {
     const {asFragment} = render(
-        <ThemeContextProvider theme={overrideTheme()}>
+        <ThemeContextProvider theme={makeTheme()}>
             <ThemeVariant isInverse>
                 <ButtonPrimary href="/test">test</ButtonPrimary>
             </ThemeVariant>
