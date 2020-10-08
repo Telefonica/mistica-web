@@ -24,8 +24,18 @@ type Props = {
     children?: React.ReactNode;
 };
 
-const generateId =
-    process.env.NODE_ENV === 'test' ? (r: any) => r.key : isServerSide() ? undefined : createGenerateId();
+const generateId = (() => {
+    if (process.env.NODE_ENV === 'test') {
+        // In tests classnames are just the classame, whithout ids
+        return (r: any) => r.key;
+    }
+    if (isServerSide()) {
+        // this makes jss to create a new generator in each jss instance
+        return undefined;
+    }
+    // in frontend, use the same generator for all JssProvider renders, this way we avoid classname collisions
+    return createGenerateId();
+})();
 
 const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
     const classNamePrefix = React.useMemo(
@@ -35,8 +45,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
         () =>
             process.env.NODE_ENV === 'test'
                 ? ''
-                : `mistica-${PACKAGE_VERSION.replace(/\./g, '-')}-` +
-                  `${isServerSide() ? 0 : jssInstanceId++}-`,
+                : `mistica-${PACKAGE_VERSION.replace(/\./g, '-')}-${isServerSide() ? 0 : jssInstanceId++}-`,
         []
     );
 
