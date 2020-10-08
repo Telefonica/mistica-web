@@ -6,7 +6,8 @@
  */
 
 import * as React from "react";
-import { type ThemeConfig } from "./theme";
+import { type Theme, type ThemeConfig } from "./theme";
+declare export var ThemeContext: React.Context<Theme | null>;
 declare type Props = {
   theme: ThemeConfig,
   children?: React.Node

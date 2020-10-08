@@ -5,8 +5,8 @@
  * Flowgen v1.10.0
  */
 
-import { type Skin } from "./types";
+import { type Skin, type SkinName } from "./types";
 declare export var getSkinByName: (
-  name: string,
+  name: SkinName,
   variant?: "prominent" | void
 ) => Skin;

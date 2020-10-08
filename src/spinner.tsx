@@ -68,8 +68,8 @@ type Props = {
 };
 
 const Spinner: React.FC<Props> = ({color, delay = '500ms', size = 24, style, rolePresentation}) => {
-    const {texts, platformOverrides, colors, skin} = useTheme();
-    color = color || (skin === MOVISTAR_SKIN ? colors.controlActive : colors.iconAccent);
+    const {texts, platformOverrides, colors, skinName} = useTheme();
+    color = color || (skinName === MOVISTAR_SKIN ? colors.controlActive : colors.iconAccent);
     const classes = useStyles();
     const spinnerId = useAriaId();
     const withTitle = !rolePresentation;

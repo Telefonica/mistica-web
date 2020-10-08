@@ -1,7 +1,7 @@
 import {applyAlpha} from '../utils/color';
 import {MOVISTAR_SKIN} from './constants';
 
-import type {GetSkin} from './types';
+import type {GetSkin, Skin} from './types';
 
 const BLACK = '#000000';
 const WHITE = '#FFFFFF';
@@ -45,7 +45,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
     const background = WHITE;
     const primaryDark = MOVISTAR_BLUE_DARK;
 
-    const skin = {
+    const skin: Skin = {
         name: MOVISTAR_SKIN,
         colors: {
             // LAYOUT

@@ -8,9 +8,9 @@
 import * as React from "react";
 import { type RegionCode } from "./utils/region-code";
 import { type Locale } from "./utils/locale";
-import { type Skin, type Colors } from "./skins/types";
+import { type Skin, type Colors, type SkinName } from "./skins/types";
 import { type TrackingEvent } from "./utils/types";
-declare var texts: {
+declare export var texts: {
   expirationDatePlaceholder: string,
   togglePasswordVisibilityLabel: string,
   loading: string,
@@ -32,6 +32,15 @@ declare var texts: {
   formEmailError: string,
   closeButtonLabel: string,
   formSearchClear: string
+};
+declare export var dimensions: {
+  headerMobileHeight: number
+};
+declare export var mediaQueriesConfig: {
+  tabletMinWidth: number,
+  desktopMinWidth: number,
+  largeDesktopMinWidth: number,
+  desktopOrTabletMinHeight: number
 };
 export type ThemeTexts = typeof texts;
 declare type LinkComponent = React.ComponentType<{
@@ -62,6 +71,7 @@ declare type LinkComponent = React.ComponentType<{
   onKeyDown?: (event: SyntheticKeyboardEvent<HTMLElement>) => any,
   children: React.Node
 }>;
+declare export var AnchorLink: LinkComponent;
 export type ThemeConfig = {
   skin: Skin,
   i18n: {
@@ -89,7 +99,7 @@ export type ThemeConfig = {
   Link?: LinkComponent
 };
 export type Theme = {
-  skin: string,
+  skinName: SkinName,
   i18n: {
     locale: Locale,
     phoneNumberFormattingRegionCode: RegionCode
@@ -117,7 +127,6 @@ export type Theme = {
   colors: Colors,
   Link: LinkComponent
 };
-declare export var baseTheme: Theme;
 declare export {};
 
 import { type CssStyle } from "./__types__.js.flow";

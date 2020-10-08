@@ -97,8 +97,8 @@ const IconErrorDefault: React.FC = () => {
 };
 
 const IconError: React.FC = () => {
-    const {skin} = useTheme();
-    return skin === O2_SKIN || skin === O2_CLASSIC_SKIN ? <IconErrorO2 /> : <IconErrorDefault />;
+    const {skinName} = useTheme();
+    return skinName === O2_SKIN || skinName === O2_CLASSIC_SKIN ? <IconErrorO2 /> : <IconErrorDefault />;
 };
 
 export default IconError;

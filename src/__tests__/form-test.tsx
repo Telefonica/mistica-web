@@ -3,7 +3,7 @@ import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {ButtonPrimary, Form, FormTextField, FormEmailField, FormPasswordField} from '..';
 import ThemeContextProvider from '../theme-context-provider';
-import {overrideTheme} from './utils';
+import {overrideTheme} from './test-utils';
 
 test('happy case', async () => {
     const handleSubmitSpy = jest.fn();

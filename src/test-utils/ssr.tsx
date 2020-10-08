@@ -8,6 +8,7 @@ import fs from 'fs';
 import {ThemeContextProvider, ServerSideStyles} from '..';
 import {MOVISTAR_SKIN} from '../skins/constants';
 import {getSkinByName} from '../skins/utils';
+import {SkinName} from '../skins/types';
 
 const createWebpackEntries = (): {[entryName: string]: string} => {
     const entries: {[entryName: string]: string} = {};
@@ -41,7 +42,7 @@ const createWebpackEntries = (): {[entryName: string]: string} => {
                 >
                     <Component />
                 </ThemeContextProvider>,
-                document.getElementById ('root')
+                document.getElementById('root')
             );`
         );
 
@@ -137,7 +138,7 @@ export const createServer = (): http.Server => {
             serverSideStyles.render(
                 <ThemeContextProvider
                     theme={{
-                        skin: getSkinByName(String(parsedUrl.query.skin || MOVISTAR_SKIN)),
+                        skin: getSkinByName(String(parsedUrl.query.skin || MOVISTAR_SKIN) as SkinName),
                         i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
                         platformOverrides: {
                             userAgent,

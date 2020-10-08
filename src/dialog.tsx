@@ -7,7 +7,7 @@ import FocusTrap from './focus-trap';
 import IcnClose from './icons/icon-close';
 import IconButton from './icon-button';
 import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/webview-bridge';
-import ThemeContext from './theme-context';
+import {ThemeContext} from './theme-context-provider';
 import {useTheme, useScreenSize} from './hooks';
 import ButtonLayout from './button-layout';
 import {Text5, Text6} from './text';

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ThemeContext from './theme-context';
+import {ThemeContext} from './theme-context-provider';
 import ScreenSizeContext from './screen-size-context';
 import AriaIdGetterContext from './aria-id-getter-context';
 

@@ -40,8 +40,8 @@ const IconInfoDefault: React.FC = () => {
 };
 
 const IconInfo: React.FC = () => {
-    const {skin} = useTheme();
-    return skin === O2_CLASSIC_SKIN || skin === O2_SKIN ? <IconInfoO2 /> : <IconInfoDefault />;
+    const {skinName} = useTheme();
+    return skinName === O2_CLASSIC_SKIN || skinName === O2_SKIN ? <IconInfoO2 /> : <IconInfoDefault />;
 };
 
 export default IconInfo;

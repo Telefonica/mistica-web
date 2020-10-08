@@ -2,7 +2,7 @@ import * as React from 'react';
 import {render, fireEvent, waitFor, screen} from '@testing-library/react';
 import {alert, confirm} from '../dialog';
 import ThemeContextProvider from '../theme-context-provider';
-import {overrideTheme} from './utils';
+import {overrideTheme} from './test-utils';
 import * as webviewBridge from '@tef-novum/webview-bridge';
 
 const alertProps = {message: 'Message'};

@@ -96,9 +96,9 @@ const IconSuccessDefault: React.FC = () => {
 };
 
 const IconSuccess: React.FC = () => {
-    const {skin} = useTheme();
+    const {skinName} = useTheme();
 
-    switch (skin) {
+    switch (skinName) {
         case VIVO_SKIN:
             return <IconSuccessVivo />;
         case O2_CLASSIC_SKIN:

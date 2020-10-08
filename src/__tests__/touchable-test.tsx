@@ -3,7 +3,7 @@ import {MemoryRouter, Route, Switch, Link} from 'react-router-dom';
 import Touchable from '../touchable';
 import {waitFor, fireEvent, render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
-import {overrideTheme} from './utils';
+import {overrideTheme} from './test-utils';
 
 const trackingEvent = {
     category: 'test',

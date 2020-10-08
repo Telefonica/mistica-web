@@ -1,9 +1,11 @@
 export type SkinVariant = 'prominent';
 
+export type SkinName = 'Movistar' | 'O2' | 'O2-classic' | 'Vivo';
+
 export type GetSkin = (variant?: SkinVariant) => Skin;
 
 export type Skin = {
-    name: string;
+    name: SkinName;
     colors: Colors;
 };
 

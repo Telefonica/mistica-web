@@ -4,7 +4,7 @@ import {ButtonPrimary, ButtonSecondary} from '../button';
 import * as Spinner from '../spinner';
 import {render} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
-import {overrideTheme} from './utils';
+import {overrideTheme} from './test-utils';
 
 test('fake button', () => {
     const {asFragment} = render(<ButtonPrimary fake>test</ButtonPrimary>);

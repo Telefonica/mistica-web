@@ -4,9 +4,9 @@ import {getO2Skin} from './o2';
 import {getO2ClassicSkin} from './o2-classic';
 import {getMovistarSkin} from './movistar';
 
-import type {SkinVariant, Skin} from './types';
+import type {SkinVariant, Skin, SkinName} from './types';
 
-export const getSkinByName = (name: string, variant?: SkinVariant): Skin => {
+export const getSkinByName = (name: SkinName, variant?: SkinVariant): Skin => {
     switch (name) {
         case VIVO_SKIN:
             return getVivoSkin(variant);
@@ -16,7 +16,9 @@ export const getSkinByName = (name: string, variant?: SkinVariant): Skin => {
             return getO2ClassicSkin(variant);
         case MOVISTAR_SKIN:
             return getMovistarSkin(variant);
-        default:
-            throw Error('Unknown skin name: ' + name);
+        default: {
+            const n: never = name;
+            throw Error('Unknown skin name: ' + n);
+        }
     }
 };

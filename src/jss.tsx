@@ -6,7 +6,7 @@ import defaultUnit from 'jss-plugin-default-unit';
 import ruleValueFunction from 'jss-plugin-rule-value-function';
 import nested from 'jss-plugin-nested';
 import vendorPrefixer from 'jss-plugin-vendor-prefixer';
-import ThemeContext from './theme-context';
+import {ThemeContext} from './theme-context-provider';
 
 import type {Theme} from './theme';
 

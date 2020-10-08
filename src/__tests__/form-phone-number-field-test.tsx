@@ -3,7 +3,7 @@ import {FormPhoneNumberField} from '..';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ThemeContextProvider from '../theme-context-provider';
-import {overrideTheme} from './utils';
+import {overrideTheme} from './test-utils';
 
 test('form-phone-number-field', async () => {
     const onChangeValueSpy = jest.fn();

@@ -1,7 +1,7 @@
 import {PACKAGE_VERSION} from './package-version';
 
 export {createUseStyles, getJss, ServerSideStyles} from './jss';
-export {default as ThemeContext} from './theme-context';
+export {default as ThemeContext} from './theme-context-provider';
 export {default as ThemeContextProvider} from './theme-context-provider';
 export {default as ScreenReaderOnly} from './screen-reader-only';
 export {default as Touchable} from './touchable';

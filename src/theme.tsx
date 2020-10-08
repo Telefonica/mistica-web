@@ -1,14 +1,11 @@
 import * as React from 'react';
-import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
-import {createMediaQueries} from './utils/media-queries';
-import {getMovistarSkin} from './skins/movistar';
 
 import type {RegionCode} from './utils/region-code';
 import type {Locale} from './utils/locale';
-import type {Skin, Colors} from './skins/types';
+import type {Skin, Colors, SkinName} from './skins/types';
 import type {TrackingEvent} from './utils/types';
 
-const texts = {
+export const texts = {
     expirationDatePlaceholder: 'MM/AA',
     togglePasswordVisibilityLabel: 'Mostrar u ocultar contraseña',
     loading: 'Cargando',
@@ -32,11 +29,11 @@ const texts = {
     formSearchClear: 'Borrar búsqueda',
 };
 
-const dimensions = {
+export const dimensions = {
     headerMobileHeight: 56,
 };
 
-const mediaQueriesConfig = {
+export const mediaQueriesConfig = {
     tabletMinWidth: 768,
     desktopMinWidth: 1024,
     largeDesktopMinWidth: 1366,
@@ -74,7 +71,7 @@ type LinkComponent = React.ComponentType<{
     children: React.ReactNode;
 }>;
 
-const AnchorLink: LinkComponent = ({to, innerRef, ...props}) => (
+export const AnchorLink: LinkComponent = ({to, innerRef, ...props}) => (
     <a ref={innerRef} href={typeof to === 'string' ? to : to?.pathname} {...props}>
         {props.children}
     </a>
@@ -107,7 +104,7 @@ export type ThemeConfig = {
 
 // This is the lib INTERNAL context
 export type Theme = {
-    skin: string;
+    skinName: SkinName;
     i18n: {
         locale: Locale;
         phoneNumberFormattingRegionCode: RegionCode;
@@ -130,26 +127,4 @@ export type Theme = {
     };
     colors: Colors;
     Link: LinkComponent;
-};
-
-const defaultSkin = getMovistarSkin();
-
-export const baseTheme: Theme = {
-    skin: defaultSkin.name,
-    i18n: {
-        locale: 'es-ES',
-        phoneNumberFormattingRegionCode: 'ES',
-    },
-    platformOverrides: {
-        platform: getPlatform({}),
-        insideNovumNativeApp: isInsideNovumNativeApp({}),
-    },
-    colors: defaultSkin.colors,
-    texts,
-    analytics: {
-        logEvent: (): Promise<void> => Promise.resolve(),
-    },
-    mq: createMediaQueries(mediaQueriesConfig),
-    dimensions,
-    Link: AnchorLink,
 };

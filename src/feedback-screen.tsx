@@ -263,8 +263,8 @@ export const SuccessFeedbackScreen: React.FC<FeedbackProps> = (props) => {
     );
 };
 export const ErrorFeedbackScreen: React.FC<FeedbackProps> = (props) => {
-    const {skin} = useTheme();
-    const hasIcon = skin !== VIVO_SKIN;
+    const {skinName} = useTheme();
+    const hasIcon = skinName !== VIVO_SKIN;
     return (
         <FeedbackScreen
             {...props}
@@ -275,7 +275,7 @@ export const ErrorFeedbackScreen: React.FC<FeedbackProps> = (props) => {
     );
 };
 export const InfoFeedbackScreen: React.FC<FeedbackProps> = (props) => {
-    const {skin} = useTheme();
-    const hasIcon = skin !== VIVO_SKIN;
+    const {skinName} = useTheme();
+    const hasIcon = skinName !== VIVO_SKIN;
     return <FeedbackScreen {...props} icon={hasIcon ? <IcnInfo /> : undefined} />;
 };
