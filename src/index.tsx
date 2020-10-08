@@ -1,7 +1,7 @@
 import {PACKAGE_VERSION} from './package-version';
 
 export {createUseStyles, getJss, ServerSideStyles} from './jss';
-export {default as ThemeContext} from './theme-context-provider';
+export {default as ThemeContext} from './theme-context';
 export {default as ThemeContextProvider} from './theme-context-provider';
 export {default as ScreenReaderOnly} from './screen-reader-only';
 export {default as Touchable} from './touchable';
@@ -90,7 +90,7 @@ export type {ThemeConfig} from './theme';
 
 export {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 
-export type {Skin} from './skins/types';
+export type {Skin, SkinName} from './skins/types';
 export {VIVO_SKIN, O2_CLASSIC_SKIN, O2_SKIN, MOVISTAR_SKIN} from './skins/constants';
 export {getSkinByName} from './skins/utils';
 export {getVivoSkin} from './skins/vivo';
