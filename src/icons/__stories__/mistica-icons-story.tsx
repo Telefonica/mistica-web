@@ -139,7 +139,7 @@ export const Catalog: React.FC = () => {
                                     </div>
                                     {showNames && (
                                         <Box paddingTop={8}>
-                                            <Text size={13}>{breakName(name)}</Text>
+                                            <Text size={13}>{breakName(Icon.name)}</Text>
                                         </Box>
                                     )}
                                 </div>
