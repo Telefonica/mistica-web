@@ -12,7 +12,7 @@ type Props = {
     size?: number;
 };
 
-export const IconSmileySadRegular: React.FC<Props> = ({color, size}) => {
+const IconSmileySadRegular: React.FC<Props> = ({color, size = 24}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.iconInverse : colors.iconPrimary);
@@ -25,3 +25,5 @@ export const IconSmileySadRegular: React.FC<Props> = ({color, size}) => {
         </svg>
     );
 };
+
+export default IconSmileySadRegular;
