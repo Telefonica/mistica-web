@@ -10,5 +10,5 @@ declare type Props = {
   color?: string,
   size?: number
 };
-declare export var IconLocationMapFilled: React.ComponentType<Props>;
-declare export {};
+declare var IconLocationMapFilled: React.ComponentType<Props>;
+declare export default typeof IconLocationMapFilled;

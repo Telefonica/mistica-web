@@ -10,5 +10,5 @@ declare type Props = {
   color?: string,
   size?: number
 };
-declare export var IconSunFilled: React.ComponentType<Props>;
-declare export {};
+declare var IconSunFilled: React.ComponentType<Props>;
+declare export default typeof IconSunFilled;

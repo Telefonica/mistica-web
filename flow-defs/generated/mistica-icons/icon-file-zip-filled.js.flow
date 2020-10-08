@@ -10,5 +10,5 @@ declare type Props = {
   color?: string,
   size?: number
 };
-declare export var IconFileZipFilled: React.ComponentType<Props>;
-declare export {};
+declare var IconFileZipFilled: React.ComponentType<Props>;
+declare export default typeof IconFileZipFilled;

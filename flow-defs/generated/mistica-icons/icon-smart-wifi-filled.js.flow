@@ -10,5 +10,5 @@ declare type Props = {
   color?: string,
   size?: number
 };
-declare export var IconSmartWifiFilled: React.ComponentType<Props>;
-declare export {};
+declare var IconSmartWifiFilled: React.ComponentType<Props>;
+declare export default typeof IconSmartWifiFilled;

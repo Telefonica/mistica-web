@@ -10,5 +10,5 @@ declare type Props = {
   color?: string,
   size?: number
 };
-declare export var IconIntranetRegular: React.ComponentType<Props>;
-declare export {};
+declare var IconIntranetRegular: React.ComponentType<Props>;
+declare export default typeof IconIntranetRegular;

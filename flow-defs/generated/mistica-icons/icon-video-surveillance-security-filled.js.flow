@@ -10,5 +10,5 @@ declare type Props = {
   color?: string,
   size?: number
 };
-declare export var IconVideoSurveillanceSecurityFilled: React.ComponentType<Props>;
-declare export {};
+declare var IconVideoSurveillanceSecurityFilled: React.ComponentType<Props>;
+declare export default typeof IconVideoSurveillanceSecurityFilled;
