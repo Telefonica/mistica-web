@@ -26,7 +26,7 @@ type Props = {
 
 const generateId = (() => {
     if (process.env.NODE_ENV === 'test') {
-        // In tests classnames are just the classame, whithout ids
+        // in tests classnames are just the classame, whithout ids
         return (r: any) => r.key;
     }
     if (isServerSide()) {
