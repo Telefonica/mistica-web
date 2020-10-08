@@ -9,7 +9,7 @@ test('form-phone-number-field', async () => {
     const onChangeValueSpy = jest.fn();
 
     render(
-        <ThemeContextProvider theme={overrideTheme({})}>
+        <ThemeContextProvider theme={overrideTheme()}>
             <FormPhoneNumberField label="Enter Phone" name="phone" onChangeValue={onChangeValueSpy} />
         </ThemeContextProvider>
     );

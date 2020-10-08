@@ -47,7 +47,7 @@ export const baseTheme: Theme = {
     Link: AnchorLink,
 };
 
-export const overrideTheme = (overrides: ThemeOverrides): ThemeConfig => ({
+export const overrideTheme = (overrides: ThemeOverrides = {}): ThemeConfig => ({
     ...overrides,
     skin: overrides.skin || baseSkin,
     i18n: overrides.i18n || baseTheme.i18n,

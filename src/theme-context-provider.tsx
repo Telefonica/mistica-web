@@ -10,10 +10,9 @@ import AriaIdGetterContext from './aria-id-getter-context';
 import {isServerSide} from './utils/environment';
 import {AnchorLink, mediaQueriesConfig, dimensions, texts} from './theme';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
+import ThemeContext from './theme-context';
 
 import type {Theme, ThemeConfig} from './theme';
-
-export const ThemeContext = React.createContext<Theme | null>(null);
 
 // This counter will increment with every new instance of ThemeContextProvider in the app. In a typical app we don't need more than
 // one instance of ThemeContextProvider. But some apps may depend on libs that use Mistica too, so there may be more than one instance
@@ -25,13 +24,19 @@ type Props = {
     children?: React.ReactNode;
 };
 
-const generateId = isServerSide() ? undefined : createGenerateId();
+const generateId =
+    process.env.NODE_ENV === 'test' ? (r: any) => r.key : isServerSide() ? undefined : createGenerateId();
+
 const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
     const classNamePrefix = React.useMemo(
         // Always start the counter in 0 in server side, otherwise every new request to the server will inclrement the counter and
         // we'll have missmatches when rendering client side. The disadvantage of this is that we can only have one instance of
         // ThemeContextProvider in apps with ssr.
-        () => `mistica-${PACKAGE_VERSION.replace(/\./g, '-')}-${isServerSide() ? 0 : jssInstanceId++}-`,
+        () =>
+            process.env.NODE_ENV === 'test'
+                ? ''
+                : `mistica-${PACKAGE_VERSION.replace(/\./g, '-')}-` +
+                  `${isServerSide() ? 0 : jssInstanceId++}-`,
         []
     );
 

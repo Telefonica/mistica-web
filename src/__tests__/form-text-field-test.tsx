@@ -7,7 +7,7 @@ import {overrideTheme} from './test-utils';
 
 test('FormTextField uncontrolled', async () => {
     render(
-        <ThemeContextProvider theme={overrideTheme({})}>
+        <ThemeContextProvider theme={overrideTheme()}>
             <FormTextField label="Username" name="username" />
         </ThemeContextProvider>
     );
@@ -26,7 +26,7 @@ test('FormTextField controlled', async () => {
     };
 
     render(
-        <ThemeContextProvider theme={overrideTheme({})}>
+        <ThemeContextProvider theme={overrideTheme()}>
             <Component />
         </ThemeContextProvider>
     );

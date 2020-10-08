@@ -9,7 +9,7 @@ test('happy case', async () => {
     const handleSubmitSpy = jest.fn();
 
     render(
-        <ThemeContextProvider theme={overrideTheme({})}>
+        <ThemeContextProvider theme={overrideTheme()}>
             <Form onSubmit={handleSubmitSpy}>
                 <FormTextField label="Username" name="username" />
                 <ButtonPrimary submit>Submit</ButtonPrimary>
@@ -47,7 +47,7 @@ test('custom validator', async () => {
     const handleSubmitSpy = jest.fn();
 
     render(
-        <ThemeContextProvider theme={overrideTheme({})}>
+        <ThemeContextProvider theme={overrideTheme()}>
             <Form onSubmit={handleSubmitSpy}>
                 <FormTextField
                     label="Password"
@@ -128,7 +128,7 @@ test('form with controlled field', async () => {
     const MyForm = ({onSubmit}: any) => {
         const [value, setValue] = React.useState('foo');
         return (
-            <ThemeContextProvider theme={overrideTheme({})}>
+            <ThemeContextProvider theme={overrideTheme()}>
                 <Form onSubmit={onSubmit}>
                     <FormEmailField label="email1" name="email1" value={value} onChangeValue={setValue} />
                     <FormEmailField label="email2" name="email2" value={value} />
@@ -177,7 +177,7 @@ test("if a Field is disabled we skip its validation and don't submit its value",
     const validate = jest.fn().mockReturnValue('errorazo');
 
     render(
-        <ThemeContextProvider theme={overrideTheme({})}>
+        <ThemeContextProvider theme={overrideTheme()}>
             <Form onSubmit={handleSubmit} initialValues={{email: 'foo@bar.com'}}>
                 <FormEmailField disabled label="email" name="email" validate={validate} />
                 <FormPasswordField label="password" name="password" />
