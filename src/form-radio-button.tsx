@@ -139,6 +139,7 @@ export const FormRadioGroup: React.FC<RadioGroupProps> = (props) => {
         optional: undefined,
         processValue: (s) => s,
         validate: undefined,
+        hasInput: false,
     });
     const [selectedValue, select] = React.useState<string | null>(() => value ?? defaultValue ?? null);
     const [firstRadioValue, setFirstRadioValue] = React.useState<string | null>(null);

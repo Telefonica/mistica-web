@@ -116,6 +116,7 @@ export const useFieldProps = ({
     validate,
     onChange,
     onChangeValue,
+    hasInput = true,
 }: {
     name: string;
     value: string | undefined;
@@ -129,6 +130,7 @@ export const useFieldProps = ({
     validate: undefined | ((value: any, rawValue: string) => string | undefined);
     onChange: undefined | ((event: React.ChangeEvent<HTMLInputElement>) => void);
     onChangeValue: undefined | ((value: any, rawValue: string) => void);
+    hasInput?: boolean;
 }): {
     value?: string;
     defaultValue?: string;
@@ -140,7 +142,7 @@ export const useFieldProps = ({
     onBlur: (event: React.FocusEvent<Element>) => void;
     inputRef: (field: HTMLInputElement | null) => void;
     onChange: (changeParam: React.ChangeEvent<HTMLInputElement> | string) => void;
-    focusableRef: (focusableElement: HTMLDivElement | null) => void;
+    focusableRef?: (focusableElement: HTMLDivElement | null) => void;
 } => {
     const {
         setRawValue,
@@ -184,20 +186,22 @@ export const useFieldProps = ({
             }
             onChangeValue?.(value, rawValue);
         },
-        focusableRef: (focusableElement: HTMLDivElement | null) =>
-            register({
-                name,
-                field: {
-                    disabled: false,
-                    required: false,
-                    focus: () => {
-                        focusableElement?.focus();
+        ...(!hasInput && {
+            focusableRef: (focusableElement: HTMLDivElement | null) =>
+                register({
+                    name,
+                    field: {
+                        disabled: false,
+                        required: false,
+                        focus: () => {
+                            focusableElement?.focus();
+                        },
+                        blur: () => {
+                            focusableElement?.blur();
+                        },
                     },
-                    blur: () => {
-                        focusableElement?.blur();
-                    },
-                },
-                focusableElement,
-            }),
+                    focusableElement,
+                }),
+        }),
     };
 };
