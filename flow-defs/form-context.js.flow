@@ -9,17 +9,23 @@ import * as React from "react";
 export type FormStatus = "filling" | "sending";
 export type FormErrors = { [name: string]: string | void, ... };
 export type FieldValidator = (value: any, rawValue: string) => string | void;
+export type ControlElement = {
+  disabled: false,
+  required: false,
+  focus: () => void,
+  blur: () => void
+};
 export type FieldRegistration = {
   name: string,
-  field?: HTMLInputElement | HTMLSelectElement | null,
+  field?: HTMLInputElement | HTMLSelectElement | ControlElement | null,
   validate?: FieldValidator,
   focusableElement?: HTMLDivElement | HTMLSelectElement | null
 };
 declare type Context = {
-  rawValues: { [name: string]: string, ... },
+  rawValues: { [name: string]: any, ... },
   setRawValue: (param: {
     +name: string,
-    +value: string
+    +value: any
   }) => void,
   values: { [name: string]: any, ... },
   setValue: (param: {
@@ -39,6 +45,18 @@ declare type Context = {
 };
 declare export var FormContext: React.Context<Context>;
 declare export var useForm: () => Context;
+declare export var useControlProps: <T>(x: {
+  name: string,
+  value: T | void,
+  defaultValue: T | void,
+  onChange: ((value: T) => void) | void
+}) => {
+  name: string,
+  value?: T | void,
+  defaultValue?: T | void,
+  onChange: (value: T) => void,
+  focusableRef: (focusableElement: HTMLDivElement | null) => void
+};
 declare export var useFieldProps: (x: {
   name: string,
   value: string | void,
@@ -62,6 +80,7 @@ declare export var useFieldProps: (x: {
   disabled: boolean,
   onBlur: (event: SyntheticFocusEvent<Element>) => void,
   inputRef: (field: HTMLInputElement | null) => void,
-  onChange: (event: SyntheticEvent<HTMLInputElement>) => void
+  onChange: (changeParam: SyntheticEvent<HTMLInputElement> | string) => void,
+  focusableRef?: ((focusableElement: HTMLDivElement | null) => void) | void
 };
 declare export {};

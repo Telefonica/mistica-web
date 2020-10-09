@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useTheme} from '../hooks';
-import {getPlatform, isIos} from '../utils/platform';
+import {getPlatform} from '../utils/platform';
 
 type InternalProps = {
     checked: boolean;

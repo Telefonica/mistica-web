@@ -73,8 +73,12 @@ declare export { default as PromoTag } from "./promo-tag";
 declare export { default as SectionTitle } from "./section-title";
 declare export { Placeholder, AvatarPlaceholder } from "./placeholder";
 declare export { RowList, Row, BoxedRowList, BoxedRow } from "./list";
-declare export { default as Switch } from "./switch";
-declare export { default as RadioButton, RadioGroup } from "./radio-button";
+declare export { default as FormSwitch } from "./form-switch";
+declare export { default as FormCheckbox } from "./form-checkbox";
+declare export {
+  default as FormRadioButton,
+  FormRadioGroup
+} from "./form-radio-button";
 declare export { default as NegativeBox } from "./negative-box";
 declare export { default as Tabs } from "./tabs";
 declare export { default as Inline } from "./inline";
