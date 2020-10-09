@@ -13,21 +13,21 @@ type Props = {
 };
 
 const FormCheckbox: React.FC<Props> = (props) => {
-    const {defaultChecked, checked, onChange, focusableRef} = useControlProps({
+    const {defaultValue, value, onChange, focusableRef} = useControlProps({
         name: props.name,
-        checked: props.checked,
-        defaultChecked: props.defaultChecked,
+        value: props.checked,
+        defaultValue: props.defaultChecked,
         onChange: props.onChange,
     });
 
-    const [checkedState, setCheckedState] = React.useState(!!defaultChecked);
+    const [checkedState, setCheckedState] = React.useState(!!defaultValue);
 
     const handleChange = () => {
-        if (checked === undefined) {
+        if (value === undefined) {
             setCheckedState(!checkedState);
             onChange(!checkedState);
         } else {
-            onChange(!checked);
+            onChange(!value);
         }
     };
 
@@ -43,16 +43,16 @@ const FormCheckbox: React.FC<Props> = (props) => {
         <div
             id={props.id}
             role="checkbox"
-            aria-checked={checked ?? checkedState}
+            aria-checked={value ?? checkedState}
             onKeyDown={handleKeyDown}
             onClick={handleChange}
             tabIndex={0}
             ref={focusableRef}
         >
             {props.render ? (
-                props.render(<IconCheckbox checked={checked ?? checkedState} />)
+                props.render(<IconCheckbox checked={value ?? checkedState} />)
             ) : (
-                <IconCheckbox checked={checked ?? checkedState} />
+                <IconCheckbox checked={value ?? checkedState} />
             )}
         </div>
     );

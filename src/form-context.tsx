@@ -50,25 +50,25 @@ export const FormContext = React.createContext<Context>({
 
 export const useForm = (): Context => React.useContext(FormContext);
 
-export const useControlProps = ({
+export const useControlProps = <T,>({
     name,
-    checked,
-    defaultChecked,
+    value,
+    defaultValue,
     onChange,
 }: {
     name: string;
-    checked: undefined | boolean;
-    defaultChecked: undefined | boolean;
-    onChange: undefined | ((value: boolean) => void);
+    value: undefined | T;
+    defaultValue: undefined | T;
+    onChange: undefined | ((value: T) => void);
 }): {
     name: string;
-    checked?: boolean;
-    defaultChecked?: boolean;
-    onChange: (value: boolean) => void;
+    value?: T;
+    defaultValue?: T;
+    onChange: (value: T) => void;
     focusableRef: (focusableElement: HTMLDivElement | null) => void;
 } => {
     const {setRawValue, setValue, rawValues, setFormError, register} = useForm();
-    const rawChecked = checked ?? defaultChecked ?? rawValues[name] ?? false;
+    const rawChecked = value ?? defaultValue ?? rawValues[name] ?? false;
 
     React.useEffect(() => {
         setRawValue({name, value: rawChecked});
@@ -77,8 +77,8 @@ export const useControlProps = ({
 
     return {
         name,
-        checked,
-        defaultChecked: defaultChecked ?? (checked === undefined ? rawValues[name] ?? false : undefined),
+        value,
+        defaultValue: defaultValue ?? (value === undefined ? rawValues[name] ?? false : undefined),
         focusableRef: (focusableElement: HTMLDivElement | null) =>
             register({
                 name,
@@ -94,7 +94,7 @@ export const useControlProps = ({
                 },
                 focusableElement,
             }),
-        onChange: (value: boolean) => {
+        onChange: (value: T) => {
             setRawValue({name, value});
             setValue({name, value});
             setFormError({name, error: ''});
@@ -116,7 +116,6 @@ export const useFieldProps = ({
     validate,
     onChange,
     onChangeValue,
-    hasInput = true,
 }: {
     name: string;
     value: string | undefined;
@@ -130,7 +129,6 @@ export const useFieldProps = ({
     validate: undefined | ((value: any, rawValue: string) => string | undefined);
     onChange: undefined | ((event: React.ChangeEvent<HTMLInputElement>) => void);
     onChangeValue: undefined | ((value: any, rawValue: string) => void);
-    hasInput?: boolean;
 }): {
     value?: string;
     defaultValue?: string;
@@ -186,22 +184,5 @@ export const useFieldProps = ({
             }
             onChangeValue?.(value, rawValue);
         },
-        ...(!hasInput && {
-            focusableRef: (focusableElement: HTMLDivElement | null) =>
-                register({
-                    name,
-                    field: {
-                        disabled: false,
-                        required: false,
-                        focus: () => {
-                            focusableElement?.focus();
-                        },
-                        blur: () => {
-                            focusableElement?.blur();
-                        },
-                    },
-                    focusableElement,
-                }),
-        }),
     };
 };

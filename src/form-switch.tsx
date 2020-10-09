@@ -93,16 +93,16 @@ type Props = {
 };
 
 const FormSwitch: React.FC<Props> = (props) => {
-    const {defaultChecked, checked, onChange, focusableRef} = useControlProps({
+    const {defaultValue, value, onChange, focusableRef} = useControlProps({
         name: props.name,
-        checked: props.checked,
-        defaultChecked: props.defaultChecked,
+        value: props.checked,
+        defaultValue: props.defaultChecked,
         onChange: props.onChange,
     });
 
-    const [checkedState, setCheckedState] = React.useState(!!defaultChecked);
+    const [checkedState, setCheckedState] = React.useState(!!defaultValue);
 
-    const classes = useStyles({isChecked: checked ?? checkedState});
+    const classes = useStyles({isChecked: value ?? checkedState});
 
     const notifyChange = React.useMemo(() => {
         if (process.env.NODE_ENV === 'test') {
@@ -115,8 +115,8 @@ const FormSwitch: React.FC<Props> = (props) => {
     }, [onChange]);
 
     const handleChange = () => {
-        if (checked !== undefined) {
-            onChange?.(!checked);
+        if (value !== undefined) {
+            onChange?.(!value);
         } else {
             setCheckedState(!checkedState);
             notifyChange(!checkedState);
@@ -145,7 +145,7 @@ const FormSwitch: React.FC<Props> = (props) => {
     return (
         <span
             role="checkbox"
-            aria-checked={checked ?? checkedState}
+            aria-checked={value ?? checkedState}
             onClick={handleChange}
             onKeyDown={handleKeyDown}
             tabIndex={0}

@@ -3,7 +3,7 @@ import {createUseStyles} from './jss';
 import {useTheme, usePrevious} from './hooks';
 import {getPlatform} from './utils/platform';
 import {SPACE, LEFT, UP, DOWN, RIGHT} from './utils/key-codes';
-import {useFieldProps} from './form-context';
+import {useControlProps} from './form-context';
 import {forwardRefs} from './utils/common';
 
 const useStyles = createUseStyles((theme) => ({
@@ -122,24 +122,15 @@ type RadioGroupProps = {
     children: React.ReactNode;
     value?: string;
     defaultValue?: string;
-    onChange?: (value: string, rawValue: string) => void;
+    onChange?: (value: string) => void;
 };
 
 export const FormRadioGroup: React.FC<RadioGroupProps> = (props) => {
-    const {value, defaultValue, onChange, focusableRef} = useFieldProps({
+    const {value, defaultValue, onChange, focusableRef} = useControlProps({
         name: props.name,
         value: props.value,
         defaultValue: props.defaultValue,
-        onChangeValue: props.onChange,
-        disabled: undefined,
-        error: undefined,
-        helperText: undefined,
-        onBlur: undefined,
-        onChange: undefined,
-        optional: undefined,
-        processValue: (s) => s,
-        validate: undefined,
-        hasInput: false,
+        onChange: props.onChange,
     });
     const [selectedValue, select] = React.useState<string | null>(() => value ?? defaultValue ?? null);
     const [firstRadioValue, setFirstRadioValue] = React.useState<string | null>(null);
