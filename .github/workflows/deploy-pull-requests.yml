@@ -4,7 +4,7 @@ jobs:
     deploy:
         # replace this line with the following 2 comented lines to enable self-hosted github actions
         # runs-on: ubuntu-latest
-        runs-on: self-hosted
+        runs-on: self-hosted-novum
         container: docker.tuenti.io/service-inf/mistica-web-builder:1.0.0
         steps:
             - uses: actions/checkout@v2
