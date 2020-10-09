@@ -29,7 +29,7 @@ export type AutoComplete =
     | 'cc-number' // A credit card number or other number identifying a payment method, such as an account number
     | 'cc-exp' // A payment method expiration date, typically in the form "MM/YY" or "MM/YYYY"
     | 'cc-csc' // The security code; on credit cards, this is the 3-digit verification number on the back of the card
-    | 'username';
+    | 'username'; // Username or account name, when used with a password field the browser offers to save credentials together
 
 export interface CommonFormFieldProps {
     autoFocus?: boolean;
