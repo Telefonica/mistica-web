@@ -1,9 +1,17 @@
 import * as React from 'react';
-import * as misticaIcons from '../../generated/mistica-icons';
 import {useCheckbox} from '../../__stories__/helpers';
 import {ThemeVariant, useTheme, Box, Stack, FormSearchField, Inline, DoubleField, Text} from '../..';
 import FormIntegerField from '../../form-integer-field';
 import {kebabCase, upperFirst} from 'lodash';
+
+// require all icons
+const misticaIcons = ((requireContext) =>
+    requireContext
+        .keys()
+        .map((id: string) => requireContext(id))
+        .map((module: any) => module.default))(
+    require.context('../../generated/mistica-icons/', true, /\.tsx$/)
+);
 
 export default {
     title: 'Icons|Mistica Icons',
@@ -106,10 +114,10 @@ export const Catalog: React.FC = () => {
 
             <ThemeVariant isInverse={isInverse}>
                 <div style={{background: backgroundColor}}>
-                    {Object.entries(misticaIcons)
-                        .filter(([name]) => filterIcon(name))
-                        .sort((a, b) => compareNames(a[0], b[0]))
-                        .map(([name, Icon]) => (
+                    {misticaIcons
+                        .filter(({name}) => filterIcon(name))
+                        .sort((a, b) => compareNames(a.name, b.name))
+                        .map((Icon) => (
                             <div style={{display: 'inline-block', verticalAlign: 'top', textAlign: 'center'}}>
                                 <div
                                     style={{
@@ -131,7 +139,7 @@ export const Catalog: React.FC = () => {
                                     </div>
                                     {showNames && (
                                         <Box paddingTop={8}>
-                                            <Text size={13}>{breakName(name)}</Text>
+                                            <Text size={13}>{breakName(Icon.name)}</Text>
                                         </Box>
                                     )}
                                 </div>

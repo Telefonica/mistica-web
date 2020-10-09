@@ -11,13 +11,15 @@ const template = (
 
     const typeScriptTemplate = template.smart({plugins});
     return typeScriptTemplate.ast`
-        export const ${componentName}: React.FC<Props> = ({color, size}) => {
+        const ${componentName}: React.FC<Props> = ({color, size = 24}) => {
             const {colors} = useTheme();
             const isInverse = useIsInverseVariant();
             const fillColor = color ?? (isInverse ? colors.iconInverse : colors.iconPrimary);
 
             return ${jsx};
         }
+
+        export default ${componentName};
     `;
 };
 
