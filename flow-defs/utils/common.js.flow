@@ -7,5 +7,5 @@
 
 import * as React from "react";
 declare export var forwardRefs: <T>(
-  ...refs: (((instance: T | null) => void) | React.Ref<T> | null | void)[]
+  ...refs: Array<React.Ref<T> | null | void>
 ) => (refValue: T | null) => void;
