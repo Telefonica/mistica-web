@@ -5,12 +5,13 @@ import {IconButton, TooltipLinkList, WithTooltip} from '@storybook/components';
 const PLATFORMS = [
     {id: 'ios', title: 'iOS'},
     {id: 'android', title: 'Android'},
+    {id: undefined, title: 'Desktop'},
 ];
 
 const PlatformSelectorAddon = ({api}) => {
     const channel = addonApi.getChannel();
     const [currentPlatform, setCurrentPlatform] = React.useState(
-        () => api.getQueryParam('platform') || 'android'
+        () => api.getQueryParam('platform') || undefined
     );
 
     React.useEffect(() => {
@@ -36,7 +37,7 @@ const PlatformSelectorAddon = ({api}) => {
             closeOnClick
             tooltip={({onHide}) => (
                 <TooltipLinkList
-                    links={PLATFORMS.map(({id, title}) => ({
+                    links={PLATFORMS.filter(({id}) => id !== currentPlatform).map(({id, title}) => ({
                         id,
                         title,
                         onClick: () => {
