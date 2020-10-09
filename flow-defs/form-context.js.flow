@@ -80,7 +80,6 @@ declare export var useFieldProps: (x: {
   disabled: boolean,
   onBlur: (event: SyntheticFocusEvent<Element>) => void,
   inputRef: (field: HTMLInputElement | null) => void,
-  onChange: (changeParam: SyntheticEvent<HTMLInputElement> | string) => void,
-  focusableRef?: ((focusableElement: HTMLDivElement | null) => void) | void
+  onChange: (changeParam: SyntheticEvent<HTMLInputElement>) => void
 };
 declare export {};
