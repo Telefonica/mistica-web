@@ -2,7 +2,7 @@ import * as React from 'react';
 import {StorySection, useTextField, useCheckbox, useSelect} from './helpers';
 import {RowList, Row} from '../list';
 import {Box, Stack, AvatarPlaceholder} from '..';
-import {RadioGroup} from '../radio-button';
+import {FormRadioGroup} from '../form-radio-button';
 
 export default {
     title: 'Components|Lists/RowList',
@@ -130,7 +130,7 @@ Default.story = {name: 'RowList'};
 export const Radio: StoryComponent = () => (
     <div data-testid="radio-row-list">
         <StorySection title="Radio Row List">
-            <RadioGroup defaultValue="apple">
+            <FormRadioGroup name="radio-group" defaultValue="apple">
                 <RowList>
                     <Row
                         icon={<AvatarPlaceholder size="100%" />}
@@ -154,7 +154,7 @@ export const Radio: StoryComponent = () => (
                         radioValue="orange"
                     />
                 </RowList>
-            </RadioGroup>
+            </FormRadioGroup>
         </StorySection>
     </div>
 );

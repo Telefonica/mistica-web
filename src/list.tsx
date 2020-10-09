@@ -9,7 +9,7 @@ import Badge from './badge';
 import {useTheme, useScreenSize} from './hooks';
 import IconChevron from './icons/icon-chevron';
 import FormSwitch from './form-switch';
-import RadioButton from './radio-button';
+import FormRadioButton from './form-radio-button';
 import FormCheckbox from './form-checkbox';
 
 import type {TrackingEvent} from './utils/types';
@@ -418,7 +418,7 @@ const RowContent = (props: RowContentProps) => {
     if (props.radioValue) {
         return (
             <div className={classes.rowContent} role={role}>
-                <RadioButton
+                <FormRadioButton
                     value={props.radioValue}
                     render={(radio) => (
                         <Box paddingX={16}>

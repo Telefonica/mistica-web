@@ -3,6 +3,8 @@ import {createUseStyles} from './jss';
 import {useTheme, usePrevious} from './hooks';
 import {getPlatform} from './utils/platform';
 import {SPACE, LEFT, UP, DOWN, RIGHT} from './utils/key-codes';
+import {useFieldProps} from './form-context';
+import {forwardRefs} from './utils/common';
 
 const useStyles = createUseStyles((theme) => ({
     outerCircle: {
@@ -50,7 +52,7 @@ type Props = {
     render?: (radioElement: React.ReactElement<any>) => React.ReactNode;
 };
 
-const RadioButton: React.FC<Props> = ({value, id, render}) => {
+const FormRadioButton: React.FC<Props> = ({value, id, render}) => {
     const {selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
@@ -115,15 +117,29 @@ const RadioButton: React.FC<Props> = ({value, id, render}) => {
 };
 
 type RadioGroupProps = {
+    name: string;
     'aria-labelledby'?: string;
     children: React.ReactNode;
     value?: string;
     defaultValue?: string;
-    onChange?: (value: string) => void;
+    onChange?: (value: string, rawValue: string) => void;
 };
 
-export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
-    const {children, value, defaultValue, onChange} = props;
+export const FormRadioGroup: React.FC<RadioGroupProps> = (props) => {
+    const {value, defaultValue, onChange, focusableRef} = useFieldProps({
+        name: props.name,
+        value: props.value,
+        defaultValue: props.defaultValue,
+        onChangeValue: props.onChange,
+        disabled: undefined,
+        error: undefined,
+        helperText: undefined,
+        onBlur: undefined,
+        onChange: undefined,
+        optional: undefined,
+        processValue: (s) => s,
+        validate: undefined,
+    });
     const [selectedValue, select] = React.useState<string | null>(() => value ?? defaultValue ?? null);
     const [firstRadioValue, setFirstRadioValue] = React.useState<string | null>(null);
     const ref = React.useRef<HTMLDivElement>(null);
@@ -185,14 +201,18 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
     const focusableValue = selectedValue ?? firstRadioValue ?? null;
 
     return (
-        <div ref={ref} role="radiogroup" aria-labelledby={props['aria-labelledby']}>
+        <div
+            ref={forwardRefs(ref, focusableRef)}
+            role="radiogroup"
+            aria-labelledby={props['aria-labelledby']}
+        >
             <RadioContext.Provider
                 value={{selectedValue, focusableValue, select: handleSelect, selectNext, selectPrev}}
             >
-                {children}
+                {props.children}
             </RadioContext.Provider>
         </div>
     );
 };
 
-export default RadioButton;
+export default FormRadioButton;

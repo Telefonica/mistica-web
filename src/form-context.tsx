@@ -139,7 +139,8 @@ export const useFieldProps = ({
     disabled: boolean;
     onBlur: (event: React.FocusEvent<Element>) => void;
     inputRef: (field: HTMLInputElement | null) => void;
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange: (changeParam: React.ChangeEvent<HTMLInputElement> | string) => void;
+    focusableRef: (focusableElement: HTMLDivElement | null) => void;
 } => {
     const {
         setRawValue,
@@ -172,14 +173,31 @@ export const useFieldProps = ({
             onBlur?.(e);
         },
         inputRef: (field: HTMLInputElement | null) => register({name, field, validate}),
-        onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-            const rawValue = event.currentTarget.value;
+        onChange: (changeParam: React.ChangeEvent<HTMLInputElement> | string) => {
+            const rawValue = typeof changeParam === 'string' ? changeParam : changeParam.currentTarget.value;
             const value = processValue(rawValue);
             setRawValue({name, value: rawValue});
             setValue({name, value});
             setFormError({name, error: ''});
-            onChange?.(event);
+            if (typeof changeParam !== 'string') {
+                onChange?.(changeParam);
+            }
             onChangeValue?.(value, rawValue);
         },
+        focusableRef: (focusableElement: HTMLDivElement | null) =>
+            register({
+                name,
+                field: {
+                    disabled: false,
+                    required: false,
+                    focus: () => {
+                        focusableElement?.focus();
+                    },
+                    blur: () => {
+                        focusableElement?.blur();
+                    },
+                },
+                focusableElement,
+            }),
     };
 };

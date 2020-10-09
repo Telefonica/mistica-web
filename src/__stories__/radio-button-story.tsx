@@ -1,22 +1,22 @@
 import * as React from 'react';
-import {Stack, SectionTitle, RadioGroup, RadioButton} from '..';
+import {Stack, SectionTitle, FormRadioGroup, FormRadioButton} from '..';
 
 export default {
-    title: 'Components|Controls/RadioButton',
+    title: 'Components|Controls/FormRadioButton',
 };
 
 export const Default: StoryComponent = () => {
     return (
         <>
             <SectionTitle id="label">Choose a fruit</SectionTitle>
-            <RadioGroup aria-labelledby="label" defaultValue="banana">
+            <FormRadioGroup name="juicy-fruit" aria-labelledby="label" defaultValue="banana">
                 <Stack space={8}>
-                    <RadioButton value="banana" render={(radio) => <span>Banana {radio}</span>} />
-                    <RadioButton value="apple" render={(radio) => <span>Apple {radio}</span>} />
+                    <FormRadioButton value="banana" render={(radio) => <span>Banana {radio}</span>} />
+                    <FormRadioButton value="apple" render={(radio) => <span>Apple {radio}</span>} />
                 </Stack>
-            </RadioGroup>
+            </FormRadioGroup>
         </>
     );
 };
 
-Default.story = {name: 'RadioButton'};
+Default.story = {name: 'FormRadioButton'};

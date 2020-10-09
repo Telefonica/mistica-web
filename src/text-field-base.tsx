@@ -4,6 +4,7 @@ import {Label, HelperText, FieldContainer} from './text-field-components';
 import {isIos, isRunningAcceptanceTest, isChrome} from './utils/platform';
 import {useAriaId, useTheme} from './hooks';
 import classNames from 'classnames';
+import {forwardRefs} from './utils/common';
 
 import type {Theme} from './theme';
 import type {InputState} from './text-field-components';
@@ -206,17 +207,6 @@ const useStyles = createUseStyles((theme) => ({
 const fixAutoComplete = (platformOverrides: Theme['platformOverrides'], autoComplete?: AutoComplete) =>
     autoComplete === 'off' && isChrome(platformOverrides) ? 'nope' : autoComplete;
 
-const updateRef = (ref: React.Ref<any> | undefined, refValue: any) => {
-    if (ref) {
-        if (typeof ref === 'function') {
-            ref(refValue);
-        } else {
-            // @ts-expect-error - current is typed as read-only
-            ref.current = refValue;
-        }
-    }
-};
-
 const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
     (
         {
@@ -296,10 +286,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const inputRefProps = inputComponent
             ? {inputRef}
             : {
-                  ref: (refValue: HTMLInputElement) => {
-                      updateRef(ref, refValue);
-                      updateRef(inputRef, refValue);
-                  },
+                  ref: forwardRefs(ref, inputRef),
               };
 
         const props = {
@@ -444,11 +431,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(({getSuggestions
                 renderInputComponent={(inputProps) => (
                     <TextFieldBaseComponent
                         {...(inputProps as TextFieldBaseProps)}
-                        inputRef={(refValue) => {
-                            updateRef(inputRef, refValue);
-                            updateRef(props.inputRef, refValue);
-                            updateRef(ref, refValue);
-                        }}
+                        inputRef={forwardRefs(inputRef, props.inputRef, ref)}
                     />
                 )}
                 suggestions={suggestions}

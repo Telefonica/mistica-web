@@ -44,7 +44,7 @@ export {Placeholder, AvatarPlaceholder} from './placeholder';
 export {RowList, Row, BoxedRowList, BoxedRow} from './list';
 export {default as FormSwitch} from './form-switch';
 export {default as FormCheckbox} from './form-checkbox';
-export {default as RadioButton, RadioGroup} from './radio-button';
+export {default as FormRadioButton, FormRadioGroup} from './form-radio-button';
 export {default as NegativeBox} from './negative-box';
 export {default as Tabs} from './tabs';
 export {default as Inline} from './inline';
