@@ -125,7 +125,7 @@ type RadioGroupProps = {
 export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
     const {children, value, defaultValue, onChange} = props;
     const [selectedValue, select] = React.useState<string | null>(() => value ?? defaultValue ?? null);
-    const [fistRadioValue, setFirstRadioValue] = React.useState<string | null>(null);
+    const [firstRadioValue, setFirstRadioValue] = React.useState<string | null>(null);
     const ref = React.useRef<HTMLDivElement>(null);
 
     const handleSelect = (newValue: string) => {
@@ -182,7 +182,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
         }
     }, []);
 
-    const focusableValue = selectedValue ?? fistRadioValue ?? null;
+    const focusableValue = selectedValue ?? firstRadioValue ?? null;
 
     return (
         <div ref={ref} role="radiogroup" aria-labelledby={props['aria-labelledby']}>
