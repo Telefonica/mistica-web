@@ -1,3 +1,16 @@
+# [6.4.0](https://github.com/Telefonica/mistica-web/compare/v6.3.0...v6.4.0) (2020-10-09)
+
+
+### Bug Fixes
+
+* **FormEmailField:** improve email validation ([#130](https://github.com/Telefonica/mistica-web/issues/130)) ([5c8badf](https://github.com/Telefonica/mistica-web/commit/5c8badf39116f4bbac30f779203d47e3cec041af))
+* **Icons:** Improve icons tree-shaking ([e993755](https://github.com/Telefonica/mistica-web/commit/e99375588faff7cc8ad2a7856a0d375eb7dc02b8))
+
+
+### Features
+
+* **FormTextField:** Add 'username' as valid autoComplete option ([#128](https://github.com/Telefonica/mistica-web/issues/128)) ([969a8f1](https://github.com/Telefonica/mistica-web/commit/969a8f1ad8af4f008b86c318ba3a26ff6624aa5d))
+
 # [6.3.0](https://github.com/Telefonica/mistica-web/compare/v6.2.0...v6.3.0) (2020-10-06)
 
 

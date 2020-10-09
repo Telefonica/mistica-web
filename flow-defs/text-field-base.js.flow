@@ -27,7 +27,8 @@ export type AutoComplete =
   | "cc-name"
   | "cc-number"
   | "cc-exp"
-  | "cc-csc";
+  | "cc-csc"
+  | "username";
 export type CommonFormFieldProps = {
   autoFocus?: boolean,
   disabled?: boolean,

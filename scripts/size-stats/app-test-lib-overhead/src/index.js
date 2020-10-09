@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {ThemeContextProvider, Text1} from '@telefonica/mistica';
+import {ThemeContextProvider, IconTruckFilled} from '@telefonica/mistica';
 
 /*
 Using React.createElement so we don't need to compile JSX
@@ -9,7 +9,7 @@ Using React.createElement so we don't need to compile JSX
     <ThemeContextProvider
         theme={{skin: 'Movistar', i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}}}
     >
-        <Text1>Hello</Text1>
+        <IconTruckFilled />
     </ThemeContextProvider>
 </React.StrictMode>,
 */
@@ -23,7 +23,7 @@ ReactDOM.render(
             {
                 theme: {skin: 'Movistar', i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}},
             },
-            React.createElement(Text1, {}, 'Hello')
+            React.createElement(IconTruckFilled, {})
         )
     ),
     document.getElementById('root')

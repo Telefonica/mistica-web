@@ -40,7 +40,7 @@ const FormEmailField: React.FC<FormEmailFieldProps> = ({
         return validateProp?.(value, rawValue);
     };
 
-    const processValue = (value: string) => value.replace(/\s/g, '');
+    const processValue = (value: string) => value.trim();
 
     const fieldProps = useFieldProps({
         name,
