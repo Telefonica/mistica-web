@@ -59,11 +59,17 @@ const main = () => {
             {
                 dist: {
                     js: getTotalSize(distJsFilenames),
-                    jsNoMisticaIcons: getTotalSize(distJsFilenames, [/\/generated\/mistica-icons\.js$/]),
+                    jsNoMisticaIcons: getTotalSize(distJsFilenames, [
+                        /\/generated\/mistica-icons\/.*/,
+                        /\/dist\/index.js$/,
+                    ]),
                 },
                 distEs: {
                     js: getTotalSize(distEsJsFilenames),
-                    jsNoMisticaIcons: getTotalSize(distEsJsFilenames, [/\/generated\/mistica-icons\.js$/]),
+                    jsNoMisticaIcons: getTotalSize(distEsJsFilenames, [
+                        /\/generated\/mistica-icons\/.*/,
+                        /\/dist-es\/index.js$/,
+                    ]),
                 },
                 libOverhead: {
                     initial: appInitial,
