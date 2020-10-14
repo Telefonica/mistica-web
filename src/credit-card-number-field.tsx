@@ -148,12 +148,12 @@ const CreditcardAdornment = ({value}: {value?: string}) => {
     );
 };
 
-interface FormCreditCardNumberFieldProps extends CommonFormFieldProps {
+interface CreditCardNumberFieldProps extends CommonFormFieldProps {
     acceptedCards?: CardOptions;
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const CreditCardNumberField: React.FC<FormCreditCardNumberFieldProps> = ({
+const CreditCardNumberField: React.FC<CreditCardNumberFieldProps> = ({
     disabled,
     error,
     helperText,

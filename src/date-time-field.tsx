@@ -6,7 +6,7 @@ import {isServerSide} from './utils/environment';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
-export interface FormDateFieldProps extends CommonFormFieldProps {
+export interface DateFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
@@ -14,7 +14,7 @@ const ReactDateTimePicker = React.lazy(() =>
     import(/* webpackChunkName: "date-time-picker" */ './date-time-picker')
 );
 
-const FormDateField: React.FC<FormDateFieldProps> = ({
+const FormDateField: React.FC<DateFieldProps> = ({
     disabled,
     error,
     helperText,

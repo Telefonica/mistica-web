@@ -3,28 +3,28 @@ import Box from './box';
 import {createUseStyles} from './jss';
 import {DEFAULT_WIDTH} from './text-field-components';
 
-import type {FormTextFieldProps} from './text-field';
-import type {FormSelectProps} from './select';
-import type {FormCvvFieldProps} from './cvv-field';
-import type {FormCreditCardExpirationFieldProps} from './credit-card-expiration-field';
-import type {FormDecimalFieldProps} from './decimal-field';
-import type {FormIntegerFieldProps} from './integer-field';
-import type {FormDateFieldProps} from './date-field';
-import type {FormPasswordFieldProps} from './password-field';
-import type {FormPhoneNumberFieldProps} from './phone-number-field';
-import type {FormEmailFieldProps} from './email-field';
+import type {TextFieldProps} from './text-field';
+import type {SelectProps} from './select';
+import type {CvvFieldProps} from './cvv-field';
+import type {CreditCardExpirationFieldProps} from './credit-card-expiration-field';
+import type {DecimalFieldProps} from './decimal-field';
+import type {IntegerFieldProps} from './integer-field';
+import type {DateFieldProps} from './date-field';
+import type {PasswordFieldProps} from './password-field';
+import type {PhoneNumberFieldProps} from './phone-number-field';
+import type {EmailFieldProps} from './email-field';
 
 type Field =
-    | React.ReactElement<FormTextFieldProps>
-    | React.ReactElement<FormSelectProps>
-    | React.ReactElement<FormCvvFieldProps>
-    | React.ReactElement<FormCreditCardExpirationFieldProps>
-    | React.ReactElement<FormDecimalFieldProps>
-    | React.ReactElement<FormIntegerFieldProps>
-    | React.ReactElement<FormDateFieldProps>
-    | React.ReactElement<FormPhoneNumberFieldProps>
-    | React.ReactElement<FormPasswordFieldProps>
-    | React.ReactElement<FormEmailFieldProps>;
+    | React.ReactElement<TextFieldProps>
+    | React.ReactElement<SelectProps>
+    | React.ReactElement<CvvFieldProps>
+    | React.ReactElement<CreditCardExpirationFieldProps>
+    | React.ReactElement<DecimalFieldProps>
+    | React.ReactElement<IntegerFieldProps>
+    | React.ReactElement<DateFieldProps>
+    | React.ReactElement<PhoneNumberFieldProps>
+    | React.ReactElement<PasswordFieldProps>
+    | React.ReactElement<EmailFieldProps>;
 
 type Props = {
     fullWidth?: boolean;

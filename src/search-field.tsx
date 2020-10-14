@@ -9,12 +9,12 @@ import type {CommonFormFieldProps} from './text-field-base';
 import {useTheme} from './hooks';
 import {createChangeEvent} from './utils/dom';
 
-export interface FormSearchFieldProps extends CommonFormFieldProps {
+export interface SearchFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
     getSuggestions?: (value: string) => Array<string>;
 }
 
-const SearchField: React.FC<FormSearchFieldProps> = ({
+const SearchField: React.FC<SearchFieldProps> = ({
     disabled,
     error,
     helperText,

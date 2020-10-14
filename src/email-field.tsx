@@ -8,12 +8,12 @@ import type {CommonFormFieldProps} from './text-field-base';
 // matches strings like: "x@x.x" (where "x" is any string without spaces)
 const RE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export interface FormEmailFieldProps extends CommonFormFieldProps {
+export interface EmailFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
     getSuggestions?: (value: string) => Array<string>;
 }
 
-const EmailField: React.FC<FormEmailFieldProps> = ({
+const EmailField: React.FC<EmailFieldProps> = ({
     disabled,
     error,
     helperText,

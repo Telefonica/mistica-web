@@ -5,13 +5,13 @@ import {PhoneInput} from './phone-input';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
-export interface FormPhoneNumberFieldProps extends CommonFormFieldProps {
+export interface PhoneNumberFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
     prefix?: string;
     getSuggestions?: (value: string) => Array<string>;
 }
 
-const PhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
+const PhoneNumberField: React.FC<PhoneNumberFieldProps> = ({
     disabled,
     error,
     helperText,

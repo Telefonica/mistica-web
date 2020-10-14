@@ -97,7 +97,7 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-export type FormSelectProps = {
+export type SelectProps = {
     disabled?: boolean;
     error?: boolean;
     helperText?: string;
@@ -119,7 +119,7 @@ export type FormSelectProps = {
     fullWidth?: boolean;
 };
 
-const Select: React.FC<FormSelectProps> = ({
+const Select: React.FC<SelectProps> = ({
     id,
     label,
     helperText: helperTextProp,

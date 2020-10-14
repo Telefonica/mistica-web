@@ -22,7 +22,7 @@ import Icon from '../icons/icon-visibility';
 import {StorySection, countriesList, phoneNumbersList} from './helpers';
 
 export default {
-    title: 'Components|Forms/FormFields',
+    title: 'Components|Forms/Fields',
 };
 
 type UncontrolledProps = {
@@ -310,7 +310,7 @@ export const TypesUncontrolled: StoryComponent = () => (
             )}
         </Uncontrolled>
 
-        <Uncontrolled title="FormDateTimeField">
+        <Uncontrolled title="DateTimeField">
             {(handleChange, handleChangeValue) => (
                 <>
                     <DatePickerWarning />
@@ -496,7 +496,7 @@ export const TypesControlled = (): React.ReactNode => (
             )}
         </Controlled>
 
-        <Controlled title="FormDateTimeField" initialValue="1980-10-06T13:14">
+        <Controlled title="DateTimeField" initialValue="1980-10-06T13:14">
             {(handleChange, handleChangeValue, value) => (
                 <>
                     <DatePickerWarning />

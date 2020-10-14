@@ -10,14 +10,14 @@ import CvvField from './cvv-field';
 
 import type {CardOptions} from './utils/credit-card';
 
-type FormCreditCardFieldsProps = {
+type CreditCardFieldsProps = {
     numberFieldName?: string;
     expirationFieldName?: string;
     cvvFieldName?: string;
     acceptedCards?: CardOptions;
 };
 
-const CreditCardFields: React.FC<FormCreditCardFieldsProps> = ({
+const CreditCardFields: React.FC<CreditCardFieldsProps> = ({
     numberFieldName = 'ccNum',
     expirationFieldName = 'ccExp',
     cvvFieldName = 'ccCvv',

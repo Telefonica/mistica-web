@@ -4,7 +4,7 @@ import TextFieldBase from './text-field-base';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
-export interface FormTextFieldProps extends CommonFormFieldProps {
+export interface TextFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
     multiline?: boolean;
     prefix?: React.ReactNode;
@@ -12,7 +12,7 @@ export interface FormTextFieldProps extends CommonFormFieldProps {
     getSuggestions?: (value: string) => Array<string>;
 }
 
-const TextField: React.FC<FormTextFieldProps> = ({
+const TextField: React.FC<TextFieldProps> = ({
     disabled,
     error,
     helperText,

@@ -9,7 +9,7 @@ import {createUseStyles} from './jss';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
-export interface FormPasswordFieldProps extends CommonFormFieldProps {
+export interface PasswordFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
@@ -53,7 +53,7 @@ const PasswordAdornment: React.FC<{
     );
 };
 
-const PasswordField: React.FC<FormPasswordFieldProps> = ({
+const PasswordField: React.FC<PasswordFieldProps> = ({
     disabled,
     error,
     helperText,

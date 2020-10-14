@@ -69,12 +69,12 @@ const MonthYearDateInput: React.FC<any> = ({inputRef, defaultValue, value, ...re
     );
 };
 
-export interface FormCreditCardExpirationFieldProps extends CommonFormFieldProps {
+export interface CreditCardExpirationFieldProps extends CommonFormFieldProps {
     validate?: (value: ExpirationDateValue | undefined, rawValue: string) => string | undefined;
     onChangeValue?: (value: ExpirationDateValue) => void;
 }
 
-const CreditCardExpirationField: React.FC<FormCreditCardExpirationFieldProps> = ({
+const CreditCardExpirationField: React.FC<CreditCardExpirationFieldProps> = ({
     disabled,
     error,
     helperText,

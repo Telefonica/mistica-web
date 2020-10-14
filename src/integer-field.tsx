@@ -26,11 +26,11 @@ const IntegerInput = ({inputRef, value, defaultValue, ...rest}: any) => {
     );
 };
 
-export interface FormIntegerFieldProps extends CommonFormFieldProps {
+export interface IntegerFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const IntegerField: React.FC<FormIntegerFieldProps> = ({
+const IntegerField: React.FC<IntegerFieldProps> = ({
     disabled,
     error,
     helperText,

@@ -5,7 +5,7 @@ import {render, screen, within, fireEvent, waitFor} from '@testing-library/react
 import {ButtonPrimary, Form} from '../index';
 import userEvent from '@testing-library/user-event';
 
-test('FormRadioGroup (uncontrolled)', () => {
+test('RadioGroup (uncontrolled)', () => {
     render(
         <div>
             <SectionTitle id="label">Choose a fruit</SectionTitle>
@@ -31,7 +31,7 @@ test('FormRadioGroup (uncontrolled)', () => {
     expect(radios[1]).toBeChecked();
 });
 
-test('FormRadioGroup (controlled)', () => {
+test('RadioGroup (controlled)', () => {
     const Component = () => {
         const [fruit, setFruit] = React.useState('apple');
         return (
