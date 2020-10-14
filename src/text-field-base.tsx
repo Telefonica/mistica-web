@@ -4,7 +4,7 @@ import {Label, HelperText, FieldContainer} from './text-field-components';
 import {isIos, isRunningAcceptanceTest, isChrome} from './utils/platform';
 import {useAriaId, useTheme} from './hooks';
 import classNames from 'classnames';
-import {forwardRefs} from './utils/common';
+import {getRefsCombiner} from './utils/common';
 
 import type {Theme} from './theme';
 import type {InputState} from './text-field-components';
@@ -287,7 +287,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const inputRefProps = inputComponent
             ? {inputRef}
             : {
-                  ref: forwardRefs(ref, inputRef),
+                  ref: getRefsCombiner(ref, inputRef),
               };
 
         const props = {
@@ -432,7 +432,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(({getSuggestions
                 renderInputComponent={(inputProps) => (
                     <TextFieldBaseComponent
                         {...(inputProps as TextFieldBaseProps)}
-                        inputRef={forwardRefs(inputRef, props.inputRef, ref)}
+                        inputRef={getRefsCombiner(inputRef, props.inputRef, ref)}
                     />
                 )}
                 suggestions={suggestions}

@@ -15,7 +15,10 @@ type Props = {
 
 const useStyles = createUseStyles(() => ({
     checkbox: {
-        display: 'inline-block',
+        display: 'inline-flex',
+        alignItems: 'center',
+        outline: 0,
+        lineHeight: 0.5, // If not set, div height will be bigger than the icon, leading to misalignments
     },
 }));
 
@@ -47,7 +50,7 @@ const FormCheckbox: React.FC<Props> = (props) => {
         }
     };
 
-    const checkbox = (
+    return (
         <div
             id={props.id}
             role="checkbox"
@@ -58,11 +61,13 @@ const FormCheckbox: React.FC<Props> = (props) => {
             ref={focusableRef}
             className={classes.checkbox}
         >
-            <IconCheckbox checked={value ?? checkedState} />
+            {props.render ? (
+                props.render(<IconCheckbox checked={value ?? checkedState} />)
+            ) : (
+                <IconCheckbox checked={value ?? checkedState} />
+            )}
         </div>
     );
-
-    return props.render ? props.render(checkbox) : checkbox;
 };
 
 export default FormCheckbox;

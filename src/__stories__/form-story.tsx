@@ -39,10 +39,6 @@ const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 const countryOptions = countriesList.map((text, i) => ({text, value: '' + i}));
 
 const useStyles = createUseStyles(() => ({
-    centered: {
-        display: 'flex',
-        alignItems: 'center',
-    },
     text: {
         marginLeft: 16,
     },
@@ -83,12 +79,12 @@ export const AutomaticForm: StoryComponent = () => {
                 <FormCheckbox
                     name="t&c"
                     render={(checkboxElement) => (
-                        <div className={classes.centered}>
+                        <>
                             {checkboxElement}
                             <span className={classes.text}>
                                 <Text7 regular>Accept Terms and Conditions</Text7>
                             </span>
-                        </div>
+                        </>
                     )}
                 />
 
@@ -186,12 +182,12 @@ export const ManualForm: StoryComponent = () => {
                     checked={acceptTC}
                     onChange={setAcceptTC}
                     render={(checkboxElement) => (
-                        <div className={classes.centered}>
+                        <>
                             {checkboxElement}
                             <span className={classes.text}>
                                 <Text7 regular>Accept Terms and Conditions</Text7>
                             </span>
-                        </div>
+                        </>
                     )}
                 />
                 <ButtonLayout>

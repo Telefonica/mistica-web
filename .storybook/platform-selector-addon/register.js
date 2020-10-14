@@ -20,15 +20,12 @@ const PlatformSelectorAddon = ({api}) => {
         };
 
         channel.on('story-mounted', notifyPlatform);
+        channel.emit('platform-selected', currentPlatform);
 
         return () => {
             channel.off('story-mounted', notifyPlatform);
         };
     }, [channel, currentPlatform]);
-
-    React.useEffect(() => {
-        channel.emit('platform-selected', currentPlatform);
-    }, [api, channel, currentPlatform]);
 
     return (
         <WithTooltip

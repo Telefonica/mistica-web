@@ -6,10 +6,6 @@ export default {
 };
 
 const useStyles = createUseStyles(() => ({
-    centered: {
-        display: 'flex',
-        alignItems: 'center',
-    },
     text: {
         marginLeft: 16,
     },
@@ -25,10 +21,10 @@ export const Default: StoryComponent = () => {
                 name="second"
                 defaultChecked={false}
                 render={(switchElement) => (
-                    <div className={classes.centered}>
+                    <>
                         {switchElement}
                         <span className={classes.text}>You accept to sell your soul</span>
-                    </div>
+                    </>
                 )}
             />
             <FormCheckbox
@@ -36,12 +32,12 @@ export const Default: StoryComponent = () => {
                 checked={checked}
                 onChange={onChange}
                 render={(switchElement) => (
-                    <div className={classes.centered}>
+                    <>
                         {switchElement}
                         <span className={classes.text}>
                             You accept to sell your soul: {checked ? 'sure!' : 'nahh'}
                         </span>
-                    </div>
+                    </>
                 )}
             />
         </Stack>

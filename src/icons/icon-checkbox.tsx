@@ -10,67 +10,37 @@ type InternalProps = {
 const IconAndroid: React.FC<InternalProps> = ({checked, markedColor}) =>
     checked ? (
         <svg width="24" height="24" viewBox="0 0 24 24">
-            <g fill="none" fillRule="evenodd">
-                <g fill={markedColor} fillRule="nonzero">
-                    <g>
-                        <g>
-                            <path
-                                d="M16 0H2C.9 0 0 .9 0 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V2c0-1.1-.9-2-2-2zM7 14L2 9.192l1.4-1.346L7 11.308 14.6 4 16 5.346 7 14z"
-                                transform="translate(-269 -837) translate(269 837) translate(3 3)"
-                            />
-                        </g>
-                    </g>
-                </g>
-            </g>
+            <path
+                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-4.808 1.4-1.346 3.6 3.462L17.6 7 19 8.346 10 17z"
+                fill={markedColor}
+            />
         </svg>
     ) : (
         <svg width="24" height="24" viewBox="0 0 24 24">
-            <g fill="none" fillRule="evenodd">
-                <g fill="#DDD" fillRule="nonzero">
-                    <g>
-                        <g>
-                            <path
-                                d="M16 2v14H2V2h14zm0-2H2C.9 0 0 .9 0 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V2c0-1.1-.9-2-2-2z"
-                                transform="translate(-314 -837) translate(314 837) translate(3 3)"
-                            />
-                        </g>
-                    </g>
-                </g>
-            </g>
+            <path
+                d="M19 5v14H5V5h14zm0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                fill="#DDD"
+            />
         </svg>
     );
 
 const IconIos: React.FC<InternalProps> = ({checked, markedColor}) =>
     checked ? (
         <svg width="24" height="24" viewBox="0 0 24 24">
-            <g fill="none" fillRule="evenodd">
-                <g fillRule="nonzero">
-                    <g>
-                        <g transform="translate(-269 -889) translate(269 889) translate(1 1)">
-                            <circle cx="11" cy="11" r="11" fill={markedColor} />
-                            <path
-                                fill="#FFF"
-                                d="M8.854 14.686c.303.348.843.35 1.15.005l5.387-6.086c.28-.316.25-.8-.066-1.08s-.8-.25-1.08.066l-4.799 5.445-1.688-1.94c-.277-.318-.76-.352-1.079-.074-.318.277-.352.76-.074 1.079l2.249 2.585z"
-                            />
-                        </g>
-                    </g>
-                </g>
+            <g transform="translate(1 1)" fillRule="nonzero" fill="none">
+                <circle cx="11" cy="11" r="11" fill={markedColor} />
+                <path
+                    fill="#FFF"
+                    d="M8.854 14.686a.766.766 0 001.15.005l5.387-6.086a.766.766 0 00-1.146-1.014l-4.799 5.445-1.688-1.94a.765.765 0 10-1.153 1.005l2.249 2.585z"
+                />
             </g>
         </svg>
     ) : (
         <svg width="24" height="24" viewBox="0 0 24 24">
-            <g fill="none" fillRule="evenodd">
-                <g fill="#DDD" fillRule="nonzero">
-                    <g>
-                        <g>
-                            <path
-                                d="M11 0c6.075 0 11 4.924 11 11 0 6.075-4.924 11-11 11-6.075 0-11-4.924-11-11C0 4.925 4.924 0 11 0zM1 11c0 5.524 4.477 10 10 10 5.524 0 10-4.477 10-10 0-5.524-4.477-10-10-10C5.476 1 1 5.477 1 11z"
-                                transform="translate(-314 -889) translate(314 889) translate(1 1)"
-                            />
-                        </g>
-                    </g>
-                </g>
-            </g>
+            <path
+                d="M12 1c6.075 0 11 4.924 11 11 0 6.075-4.924 11-11 11-6.075 0-11-4.924-11-11C1 5.925 5.924 1 12 1zM2 12c0 5.524 4.477 10 10 10 5.524 0 10-4.477 10-10 0-5.524-4.477-10-10-10C6.476 2 2 6.477 2 12z"
+                fill="#DDD"
+            />
         </svg>
     );
 

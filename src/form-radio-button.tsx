@@ -4,7 +4,7 @@ import {useTheme, usePrevious} from './hooks';
 import {getPlatform} from './utils/platform';
 import {SPACE, LEFT, UP, DOWN, RIGHT} from './utils/key-codes';
 import {useControlProps} from './form-context';
-import {forwardRefs} from './utils/common';
+import {getRefsCombiner} from './utils/common';
 
 const useStyles = createUseStyles((theme) => ({
     outerCircle: {
@@ -12,7 +12,8 @@ const useStyles = createUseStyles((theme) => ({
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: ({checked, isIos}) => (checked && isIos ? theme.colors.controlActive : '#fff'),
+        background: ({checked, isIos}) =>
+            checked && isIos ? theme.colors.controlActive : theme.colors.background,
         border: ({checked, isIos}) =>
             checked
                 ? isIos
@@ -26,7 +27,8 @@ const useStyles = createUseStyles((theme) => ({
         borderRadius: '50%',
         width: 12,
         height: 12,
-        background: ({checked, isIos}) => (checked && !isIos ? theme.colors.controlActive : '#fff'),
+        background: ({checked, isIos}) =>
+            checked && !isIos ? theme.colors.controlActive : theme.colors.background,
     },
 }));
 
@@ -194,7 +196,7 @@ export const FormRadioGroup: React.FC<RadioGroupProps> = (props) => {
 
     return (
         <div
-            ref={forwardRefs(ref, focusableRef)}
+            ref={getRefsCombiner(ref, focusableRef)}
             role="radiogroup"
             aria-labelledby={props['aria-labelledby']}
         >
