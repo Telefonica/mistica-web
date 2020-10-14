@@ -29,6 +29,15 @@ const formSnippets = [
     ],
     ['FormCvvField', '<FormCvvField name="cvv" label="CVV"/>'],
     ['FormSearchField', '<FormSearchField name="search" label="Search"/>'],
+    ['FormSwitch', '<FormSwitch name="switch"/>'],
+    ['FormCheckbox', '<FormCheckbox name="checkbox"/>'],
+    [
+        'FormRadioGroup',
+        '<FormRadioGroup name="juicy-fruit" aria-labelledby="label" defaultValue="banana">\n' +
+            '  <FormRadioButton value="banana" render={(radio) => <span>Banana {radio}</span>} />\n' +
+            '  <FormRadioButton value="apple" render={(radio) => <span>Apple {radio}</span>} />\n' +
+            '</FormRadioGroup>',
+    ],
     [
         'Form',
         `

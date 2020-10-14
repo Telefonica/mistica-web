@@ -2,17 +2,25 @@ import * as React from 'react';
 import {SPACE} from './utils/key-codes';
 import {useControlProps} from './form-context';
 import IconCheckbox from './icons/icon-checkbox';
+import {createUseStyles} from './jss';
 
 type Props = {
     name: string;
-    render?: (checkboxElement: React.ReactElement) => React.ReactNode;
+    render?: (checkboxElement: React.ReactElement) => React.ReactElement<any, any>; // Seems like this is the type returned by React.FC
     defaultChecked?: boolean;
     checked?: boolean;
     onChange?: (value: boolean) => void;
     id?: string;
 };
 
+const useStyles = createUseStyles(() => ({
+    checkbox: {
+        display: 'inline-block',
+    },
+}));
+
 const FormCheckbox: React.FC<Props> = (props) => {
+    const classes = useStyles();
     const {defaultValue, value, onChange, focusableRef} = useControlProps({
         name: props.name,
         value: props.checked,
@@ -39,7 +47,7 @@ const FormCheckbox: React.FC<Props> = (props) => {
         }
     };
 
-    return (
+    const checkbox = (
         <div
             id={props.id}
             role="checkbox"
@@ -48,14 +56,13 @@ const FormCheckbox: React.FC<Props> = (props) => {
             onClick={handleChange}
             tabIndex={0}
             ref={focusableRef}
+            className={classes.checkbox}
         >
-            {props.render ? (
-                props.render(<IconCheckbox checked={value ?? checkedState} />)
-            ) : (
-                <IconCheckbox checked={value ?? checkedState} />
-            )}
+            <IconCheckbox checked={value ?? checkedState} />
         </div>
     );
+
+    return props.render ? props.render(checkbox) : checkbox;
 };
 
 export default FormCheckbox;

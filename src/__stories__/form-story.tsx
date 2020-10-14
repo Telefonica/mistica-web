@@ -19,6 +19,7 @@ import {
     FormSwitch,
     Text7,
     FormCheckbox,
+    createUseStyles,
 } from '..';
 import {getCvvLength} from '../utils/credit-card';
 
@@ -37,56 +38,73 @@ const fakeApiCall = (data: any): Promise<void> =>
 const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 const countryOptions = countriesList.map((text, i) => ({text, value: '' + i}));
 
-export const AutomaticForm: StoryComponent = () => (
-    <Form
-        initialValues={{email: 'john.doe@gmail.com', decimal: '123', 'save-cc': true}}
-        onSubmit={fakeApiCall}
-        autoJump
-    >
-        <Stack space={16}>
-            <FormEmailField name="email" label="email" />
+const useStyles = createUseStyles(() => ({
+    centered: {
+        display: 'flex',
+        alignItems: 'center',
+    },
+    text: {
+        marginLeft: 16,
+    },
+}));
 
-            <FormPhoneNumberField name="phone" label="phone" />
+export const AutomaticForm: StoryComponent = () => {
+    const classes = useStyles();
+    return (
+        <Form
+            initialValues={{email: 'john.doe@gmail.com', decimal: '123', 'save-cc': true}}
+            onSubmit={fakeApiCall}
+            autoJump
+        >
+            <Stack space={16}>
+                <FormEmailField name="email" label="email" />
 
-            <FormDecimalField name="decimal" label="Decimal" />
+                <FormPhoneNumberField name="phone" label="phone" />
 
-            <FormIntegerField optional autoComplete="off" name="integer" label="Integer" />
+                <FormDecimalField name="decimal" label="Decimal" />
 
-            <FormSelect name="country" label="country" options={countryOptions} />
+                <FormIntegerField optional autoComplete="off" name="integer" label="Integer" />
 
-            <FormSelect autoFocus name="fruit" label="fruit" optional options={fruitOptions} />
+                <FormSelect name="country" label="country" options={countryOptions} />
 
-            <FormCreditCardFields />
+                <FormSelect autoFocus name="fruit" label="fruit" optional options={fruitOptions} />
 
-            <FormSwitch
-                name="save-cc"
-                render={(switchElement) => (
-                    <>
-                        <Text7 regular>Save CC</Text7> {switchElement}
-                    </>
-                )}
-            />
+                <FormCreditCardFields />
 
-            <FormCheckbox
-                name="t&c"
-                render={(checkboxElement) => (
-                    <>
-                        <Text7 regular>Accept Terms and Conditions</Text7> {checkboxElement}
-                    </>
-                )}
-            />
+                <FormSwitch
+                    name="save-cc"
+                    render={(switchElement) => (
+                        <>
+                            <Text7 regular>Save CC</Text7> {switchElement}
+                        </>
+                    )}
+                />
 
-            <ButtonLayout>
-                <ButtonSecondary onPress={() => window.alert('hello')}>Hello</ButtonSecondary>
-                <ButtonPrimary submit loadingText="Sending">
-                    Send
-                </ButtonPrimary>
-            </ButtonLayout>
-        </Stack>
-    </Form>
-);
+                <FormCheckbox
+                    name="t&c"
+                    render={(checkboxElement) => (
+                        <div className={classes.centered}>
+                            {checkboxElement}
+                            <span className={classes.text}>
+                                <Text7 regular>Accept Terms and Conditions</Text7>
+                            </span>
+                        </div>
+                    )}
+                />
+
+                <ButtonLayout>
+                    <ButtonSecondary onPress={() => window.alert('hello')}>Hello</ButtonSecondary>
+                    <ButtonPrimary submit loadingText="Sending">
+                        Send
+                    </ButtonPrimary>
+                </ButtonLayout>
+            </Stack>
+        </Form>
+    );
+};
 
 export const ManualForm: StoryComponent = () => {
+    const classes = useStyles();
     const [fruit, setFruit] = React.useState('');
     const [quantity, setQuantity] = React.useState('');
     const [creditCardNumber, setCreditCardNumber] = React.useState('');
@@ -168,9 +186,12 @@ export const ManualForm: StoryComponent = () => {
                     checked={acceptTC}
                     onChange={setAcceptTC}
                     render={(checkboxElement) => (
-                        <>
-                            <Text7 regular>Accept Terms and Conditions</Text7> {checkboxElement}
-                        </>
+                        <div className={classes.centered}>
+                            {checkboxElement}
+                            <span className={classes.text}>
+                                <Text7 regular>Accept Terms and Conditions</Text7>
+                            </span>
+                        </div>
                     )}
                 />
                 <ButtonLayout>
