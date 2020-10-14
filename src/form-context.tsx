@@ -4,16 +4,9 @@ export type FormStatus = 'filling' | 'sending';
 export type FormErrors = {[name: string]: string | undefined};
 export type FieldValidator = (value: any, rawValue: string) => string | undefined;
 
-export type ControlElement = {
-    disabled: false;
-    required: false;
-    focus: () => void;
-    blur: () => void;
-};
-
 export type FieldRegistration = {
     name: string;
-    field?: HTMLInputElement | HTMLSelectElement | ControlElement | null;
+    field?: HTMLInputElement | HTMLSelectElement | null;
     validate?: FieldValidator;
     focusableElement?: HTMLDivElement | HTMLSelectElement | null;
 };
@@ -82,16 +75,6 @@ export const useControlProps = <T,>({
         focusableRef: (focusableElement: HTMLDivElement | null) =>
             register({
                 name,
-                field: {
-                    disabled: false,
-                    required: false,
-                    focus: () => {
-                        focusableElement?.focus();
-                    },
-                    blur: () => {
-                        focusableElement?.blur();
-                    },
-                },
                 focusableElement,
             }),
         onChange: (value: T) => {
@@ -139,7 +122,7 @@ export const useFieldProps = ({
     disabled: boolean;
     onBlur: (event: React.FocusEvent<Element>) => void;
     inputRef: (field: HTMLInputElement | null) => void;
-    onChange: (changeParam: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 } => {
     const {
         setRawValue,

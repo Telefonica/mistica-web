@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Stack, SectionTitle, FormRadioGroup, FormRadioButton} from '..';
 
 export default {
-    title: 'Components|Controls/FormRadioButton',
+    title: 'Components|Forms/FormRadioButton',
 };
 
 export const Default: StoryComponent = () => {
