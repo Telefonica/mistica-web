@@ -9,15 +9,9 @@ import * as React from "react";
 export type FormStatus = "filling" | "sending";
 export type FormErrors = { [name: string]: string | void, ... };
 export type FieldValidator = (value: any, rawValue: string) => string | void;
-export type ControlElement = {
-  disabled: false,
-  required: false,
-  focus: () => void,
-  blur: () => void
-};
 export type FieldRegistration = {
   name: string,
-  field?: HTMLInputElement | HTMLSelectElement | ControlElement | null,
+  field?: HTMLInputElement | HTMLSelectElement | null,
   validate?: FieldValidator,
   focusableElement?: HTMLDivElement | HTMLSelectElement | null
 };
@@ -80,6 +74,6 @@ declare export var useFieldProps: (x: {
   disabled: boolean,
   onBlur: (event: SyntheticFocusEvent<Element>) => void,
   inputRef: (field: HTMLInputElement | null) => void,
-  onChange: (changeParam: SyntheticEvent<HTMLInputElement>) => void
+  onChange: (event: SyntheticEvent<HTMLInputElement>) => void
 };
 declare export {};

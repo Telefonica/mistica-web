@@ -6,6 +6,6 @@
  */
 
 import * as React from "react";
-declare export var forwardRefs: <T>(
+declare export var getRefsCombiner: <T>(
   ...refs: Array<React.Ref<T> | null | void>
 ) => (refValue: T | null) => void;
