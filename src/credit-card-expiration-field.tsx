@@ -74,7 +74,7 @@ export interface FormCreditCardExpirationFieldProps extends CommonFormFieldProps
     onChangeValue?: (value: ExpirationDateValue) => void;
 }
 
-const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFieldProps> = ({
+const CreditCardExpirationField: React.FC<FormCreditCardExpirationFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -159,4 +159,4 @@ const FormCreditCardExpirationField: React.FC<FormCreditCardExpirationFieldProps
     );
 };
 
-export default FormCreditCardExpirationField;
+export default CreditCardExpirationField;

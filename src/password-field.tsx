@@ -53,7 +53,7 @@ const PasswordAdornment: React.FC<{
     );
 };
 
-const FormPasswordField: React.FC<FormPasswordFieldProps> = ({
+const PasswordField: React.FC<FormPasswordFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -117,4 +117,4 @@ const FormPasswordField: React.FC<FormPasswordFieldProps> = ({
     );
 };
 
-export default FormPasswordField;
+export default PasswordField;

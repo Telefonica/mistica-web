@@ -119,7 +119,7 @@ export type FormSelectProps = {
     fullWidth?: boolean;
 };
 
-const FormSelect: React.FC<FormSelectProps> = ({
+const Select: React.FC<FormSelectProps> = ({
     id,
     label,
     helperText: helperTextProp,
@@ -477,4 +477,4 @@ const FormSelect: React.FC<FormSelectProps> = ({
     );
 };
 
-export default FormSelect;
+export default Select;

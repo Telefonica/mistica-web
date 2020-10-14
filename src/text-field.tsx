@@ -12,7 +12,7 @@ export interface FormTextFieldProps extends CommonFormFieldProps {
     getSuggestions?: (value: string) => Array<string>;
 }
 
-const FormTextField: React.FC<FormTextFieldProps> = ({
+const TextField: React.FC<FormTextFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -77,4 +77,4 @@ const FormTextField: React.FC<FormTextFieldProps> = ({
     return <TextFieldBase {...rest} {...fieldProps} inputRef={setInputRef} onFocus={onFocus} type="text" />;
 };
 
-export default FormTextField;
+export default TextField;

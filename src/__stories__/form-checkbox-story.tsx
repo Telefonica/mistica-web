@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {createUseStyles, FormCheckbox, Stack} from '..';
+import {createUseStyles, Checkbox, Stack} from '..';
 
 export default {
-    title: 'Components|Forms/FormCheckbox',
+    title: 'Components|Forms/Checkbox',
 };
 
 const useStyles = createUseStyles(() => ({
@@ -16,8 +16,8 @@ export const Default: StoryComponent = () => {
     const [checked, onChange] = React.useState(false);
     return (
         <Stack space={16}>
-            <FormCheckbox name="first" defaultChecked={false} />
-            <FormCheckbox
+            <Checkbox name="first" defaultChecked={false} />
+            <Checkbox
                 name="second"
                 defaultChecked={false}
                 render={(switchElement) => (
@@ -27,7 +27,7 @@ export const Default: StoryComponent = () => {
                     </>
                 )}
             />
-            <FormCheckbox
+            <Checkbox
                 name="third"
                 checked={checked}
                 onChange={onChange}
@@ -44,4 +44,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'FormCheckbox'};
+Default.story = {name: 'Checkbox'};

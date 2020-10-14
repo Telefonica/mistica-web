@@ -30,7 +30,7 @@ export interface FormIntegerFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const FormIntegerField: React.FC<FormIntegerFieldProps> = ({
+const IntegerField: React.FC<FormIntegerFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -73,4 +73,4 @@ const FormIntegerField: React.FC<FormIntegerFieldProps> = ({
     return <TextFieldBase {...rest} {...fieldProps} inputComponent={IntegerInput} />;
 };
 
-export default FormIntegerField;
+export default IntegerField;

@@ -8,9 +8,9 @@ import Stack from './stack';
 import Badge from './badge';
 import {useTheme, useScreenSize} from './hooks';
 import IconChevron from './icons/icon-chevron';
-import FormSwitch from './form-switch';
-import FormRadioButton from './form-radio-button';
-import FormCheckbox from './form-checkbox';
+import Switch from './switch';
+import RadioButton from './radio-button';
+import Checkbox from './checkbox';
 
 import type {TrackingEvent} from './utils/types';
 
@@ -408,17 +408,17 @@ const RowContent = (props: RowContentProps) => {
     );
 
     if (props.switch) {
-        return renderRowWithControl(FormSwitch);
+        return renderRowWithControl(Switch);
     }
 
     if (props.checkbox) {
-        return renderRowWithControl(FormCheckbox);
+        return renderRowWithControl(Checkbox);
     }
 
     if (props.radioValue) {
         return (
             <div className={classes.rowContent} role={role}>
-                <FormRadioButton
+                <RadioButton
                     value={props.radioValue}
                     render={(radio) => (
                         <Box paddingX={16}>

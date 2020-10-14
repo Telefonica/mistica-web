@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {ButtonPrimary, Form, FormTextField, FormEmailField, FormPasswordField} from '..';
+import {ButtonPrimary, Form, TextField, EmailField, PasswordField} from '..';
 import ThemeContextProvider from '../theme-context-provider';
 import {overrideTheme} from './utils';
 
@@ -11,7 +11,7 @@ test('happy case', async () => {
     render(
         <ThemeContextProvider theme={overrideTheme({})}>
             <Form onSubmit={handleSubmitSpy}>
-                <FormTextField label="Username" name="username" />
+                <TextField label="Username" name="username" />
                 <ButtonPrimary submit>Submit</ButtonPrimary>
             </Form>
         </ThemeContextProvider>
@@ -30,7 +30,7 @@ test('not submitting if required field is empty', async () => {
 
     render(
         <Form onSubmit={handleSubmitSpy}>
-            <FormTextField label="Username" name="username" />
+            <TextField label="Username" name="username" />
             <ButtonPrimary submit>Submit</ButtonPrimary>
         </Form>
     );
@@ -49,7 +49,7 @@ test('custom validator', async () => {
     render(
         <ThemeContextProvider theme={overrideTheme({})}>
             <Form onSubmit={handleSubmitSpy}>
-                <FormTextField
+                <TextField
                     label="Password"
                     name="password"
                     validate={(value) => (value === 'letmein' ? '' : 'wrong password')}
@@ -86,7 +86,7 @@ test('fields are disabled during submit', async () => {
 
     render(
         <Form onSubmit={handleSubmitSpy}>
-            <FormTextField inputProps={{'data-testid': 'username'}} label="Username" name="username" />
+            <TextField inputProps={{'data-testid': 'username'}} label="Username" name="username" />
             <ButtonPrimary submit>Submit</ButtonPrimary>
         </Form>
     );
@@ -110,7 +110,7 @@ test('form with defaultValue in field', async () => {
 
     render(
         <Form onSubmit={handleSubmit}>
-            <FormEmailField label="email" name="email" defaultValue="foo@bar.com" />
+            <EmailField label="email" name="email" defaultValue="foo@bar.com" />
             <ButtonPrimary submit>Send</ButtonPrimary>
         </Form>
     );
@@ -130,8 +130,8 @@ test('form with controlled field', async () => {
         return (
             <ThemeContextProvider theme={overrideTheme({})}>
                 <Form onSubmit={onSubmit}>
-                    <FormEmailField label="email1" name="email1" value={value} onChangeValue={setValue} />
-                    <FormEmailField label="email2" name="email2" value={value} />
+                    <EmailField label="email1" name="email1" value={value} onChangeValue={setValue} />
+                    <EmailField label="email2" name="email2" value={value} />
                     <ButtonPrimary submit>Send</ButtonPrimary>
                 </Form>
             </ThemeContextProvider>
@@ -156,8 +156,8 @@ test('defaultValue in Field takes precedence over Form initialValues', async () 
 
     render(
         <Form onSubmit={handleSubmit} initialValues={{email: 'foo@bar.com', password: 'password'}}>
-            <FormEmailField optional label="email" name="email" />
-            <FormPasswordField optional label="password" name="password" defaultValue="12345678" />
+            <EmailField optional label="email" name="email" />
+            <PasswordField optional label="password" name="password" defaultValue="12345678" />
             <ButtonPrimary submit>Send</ButtonPrimary>
         </Form>
     );
@@ -179,8 +179,8 @@ test("if a Field is disabled we skip its validation and don't submit its value",
     render(
         <ThemeContextProvider theme={overrideTheme({})}>
             <Form onSubmit={handleSubmit} initialValues={{email: 'foo@bar.com'}}>
-                <FormEmailField disabled label="email" name="email" validate={validate} />
-                <FormPasswordField label="password" name="password" />
+                <EmailField disabled label="email" name="email" validate={validate} />
+                <PasswordField label="password" name="password" />
                 <ButtonPrimary submit>Send</ButtonPrimary>
             </Form>
         </ThemeContextProvider>

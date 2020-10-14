@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, Touchable, Form, FormTextField, useForm, ButtonPrimary} from '..';
+import {Stack, Touchable, Form, TextField, useForm, ButtonPrimary} from '..';
 
 export default {
     title: 'Components|Forms/Form',
@@ -26,15 +26,15 @@ const Cards: React.FC<any> = ({activeCard, setActiveCard}) => {
     return (
         <Stack space={16}>
             <Card show={activeCard === 0} onPress={() => setActiveCard(0)}>
-                <FormTextField name="0-foo" label="foo" />
+                <TextField name="0-foo" label="foo" />
             </Card>
 
             <Card show={activeCard === 1} onPress={() => setActiveCard(1)}>
-                <FormTextField name="1-bar" label="bar" />
+                <TextField name="1-bar" label="bar" />
             </Card>
 
             <Card show={activeCard === 2} onPress={() => setActiveCard(2)}>
-                <FormTextField name="2-baz" label="baz" />
+                <TextField name="2-baz" label="baz" />
             </Card>
             <ButtonPrimary
                 onPress={() => {

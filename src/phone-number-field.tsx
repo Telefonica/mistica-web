@@ -11,7 +11,7 @@ export interface FormPhoneNumberFieldProps extends CommonFormFieldProps {
     getSuggestions?: (value: string) => Array<string>;
 }
 
-const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
+const PhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -45,4 +45,4 @@ const FormPhoneNumberField: React.FC<FormPhoneNumberFieldProps> = ({
     return <TextFieldBase {...rest} {...fieldProps} type="phone" inputComponent={PhoneInput} />;
 };
 
-export default FormPhoneNumberField;
+export default PhoneNumberField;

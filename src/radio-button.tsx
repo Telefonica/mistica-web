@@ -54,7 +54,7 @@ type Props = {
     render?: (radioElement: React.ReactElement<any>) => React.ReactNode;
 };
 
-const FormRadioButton: React.FC<Props> = ({value, id, render}) => {
+const RadioButton: React.FC<Props> = ({value, id, render}) => {
     const {selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
@@ -127,7 +127,7 @@ type RadioGroupProps = {
     onChange?: (value: string) => void;
 };
 
-export const FormRadioGroup: React.FC<RadioGroupProps> = (props) => {
+export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
     const {value, defaultValue, onChange, focusableRef} = useControlProps({
         name: props.name,
         value: props.value,
@@ -209,4 +209,4 @@ export const FormRadioGroup: React.FC<RadioGroupProps> = (props) => {
     );
 };
 
-export default FormRadioButton;
+export default RadioButton;

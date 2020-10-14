@@ -40,7 +40,7 @@ Here is a description of every attribute:
 - `i18n`: we use this to localize some messages or formatting dates phone numbers, etc.
   - `locale`: a valid locale (language and region codes separated by `'-'`). For example `'es-ES'`.
   - `phoneNumberFormattingRegionCode`: region code used to format phone numbers (for example in
-    `FormPhoneNumberField`).
+    `PhoneNumberField`).
 - `platformOverrides?`:
   - `platform?`: the lib applies some style differences depending on the current platform.
     `@telefonica/mistica` will try to automatically detect the platform, but you can manually set this setting

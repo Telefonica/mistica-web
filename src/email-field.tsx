@@ -13,7 +13,7 @@ export interface FormEmailFieldProps extends CommonFormFieldProps {
     getSuggestions?: (value: string) => Array<string>;
 }
 
-const FormEmailField: React.FC<FormEmailFieldProps> = ({
+const EmailField: React.FC<FormEmailFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -62,4 +62,4 @@ const FormEmailField: React.FC<FormEmailFieldProps> = ({
     );
 };
 
-export default FormEmailField;
+export default EmailField;

@@ -1,11 +1,11 @@
 // @flow
 import * as React from 'react';
 import {render, waitFor, fireEvent, screen} from '@testing-library/react';
-import {ButtonPrimary, Form, FormCheckbox} from '..';
+import {ButtonPrimary, Form, Checkbox} from '..';
 import userEvent from '@testing-library/user-event';
 
 test('renders accesible checkbox', () => {
-    render(<FormCheckbox name="checkbox" defaultChecked={false} />);
+    render(<Checkbox name="checkbox" defaultChecked={false} />);
 
     const checkBoxElement = screen.getByRole('checkbox');
 
@@ -16,7 +16,7 @@ test('renders accesible checkbox', () => {
 test('controlled mode', () => {
     const Component = () => {
         const [checked, setChecked] = React.useState(false);
-        return <FormCheckbox name="checkbox" onChange={setChecked} checked={checked} />;
+        return <Checkbox name="checkbox" onChange={setChecked} checked={checked} />;
     };
 
     render(<Component />);
@@ -29,7 +29,7 @@ test('controlled mode', () => {
 });
 
 test('uncontrolled mode', () => {
-    render(<FormCheckbox name="checkbox" defaultChecked />);
+    render(<Checkbox name="checkbox" defaultChecked />);
 
     const checkBoxElement = screen.getByRole('checkbox');
 
@@ -41,7 +41,7 @@ test('uncontrolled mode', () => {
 test('uncontrolled mode with onChange handler', async () => {
     const onChangeSpy = jest.fn();
 
-    render(<FormCheckbox name="checkbox" onChange={onChangeSpy} defaultChecked />);
+    render(<Checkbox name="checkbox" onChange={onChangeSpy} defaultChecked />);
 
     const checkBoxElement = screen.getByRole('checkbox');
 
@@ -57,7 +57,7 @@ test('form controlled mode', async () => {
 
     render(
         <Form onSubmit={handleSubmitSpy} initialValues={{checkbox: true}}>
-            <FormCheckbox name="checkbox" />
+            <Checkbox name="checkbox" />
             <ButtonPrimary submit>done!</ButtonPrimary>
         </Form>
     );
@@ -76,7 +76,7 @@ test('form uncontrolled mode', async () => {
 
     const ControlledSwitch = () => {
         const [checked, setChecked] = React.useState(false);
-        return <FormCheckbox checked={checked} onChange={setChecked} name="checkbox" />;
+        return <Checkbox checked={checked} onChange={setChecked} name="checkbox" />;
     };
 
     render(

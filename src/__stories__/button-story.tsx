@@ -6,7 +6,7 @@ import {
     ButtonLink,
     ButtonPrimary,
     ButtonSecondary,
-    FormTextField,
+    TextField,
     Stack,
     ThemeVariant,
     useTheme,
@@ -228,7 +228,7 @@ export const SubmitButton: StoryComponent = () => (
         <form onSubmit={() => window.alert('form submitted')}>
             <Box paddingY={16}>
                 <Stack space={16}>
-                    <FormTextField name="name" label="name" />
+                    <TextField name="name" label="name" />
                     <ButtonPrimary submit>Submit</ButtonPrimary>
                 </Stack>
             </Box>

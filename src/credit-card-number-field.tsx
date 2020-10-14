@@ -153,7 +153,7 @@ interface FormCreditCardNumberFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps> = ({
+const CreditCardNumberField: React.FC<FormCreditCardNumberFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -237,4 +237,4 @@ const FormCreditCardNumberField: React.FC<FormCreditCardNumberFieldProps> = ({
     );
 };
 
-export default FormCreditCardNumberField;
+export default CreditCardNumberField;

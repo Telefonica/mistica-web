@@ -4,9 +4,9 @@ import {useTheme} from './hooks';
 import {getCvvLength} from './utils/credit-card';
 import DoubleField from './double-field';
 import Stack from './stack';
-import FormCreditCardExpirationField from './form-credit-card-expiration-field';
-import FormCreditCardNumberField from './form-credit-card-number-field';
-import FormCvvField from './form-cvv-field';
+import CreditCardExpirationField from './credit-card-expiration-field';
+import CreditCardNumberField from './credit-card-number-field';
+import CvvField from './cvv-field';
 
 import type {CardOptions} from './utils/credit-card';
 
@@ -17,7 +17,7 @@ type FormCreditCardFieldsProps = {
     acceptedCards?: CardOptions;
 };
 
-const FormCreditCardFields: React.FC<FormCreditCardFieldsProps> = ({
+const CreditCardFields: React.FC<FormCreditCardFieldsProps> = ({
     numberFieldName = 'ccNum',
     expirationFieldName = 'ccExp',
     cvvFieldName = 'ccCvv',
@@ -29,17 +29,17 @@ const FormCreditCardFields: React.FC<FormCreditCardFieldsProps> = ({
 
     return (
         <Stack space={16}>
-            <FormCreditCardNumberField
+            <CreditCardNumberField
                 acceptedCards={acceptedCards}
                 name={numberFieldName}
                 label={texts.formCreditCardNumberLabel}
             />
             <DoubleField>
-                <FormCreditCardExpirationField
+                <CreditCardExpirationField
                     name={expirationFieldName}
                     label={texts.formCreditCardExpirationLabel}
                 />
-                <FormCvvField
+                <CvvField
                     acceptedCards={acceptedCards}
                     name={cvvFieldName}
                     label={texts.formCreditCardCvvLabel}
@@ -50,4 +50,4 @@ const FormCreditCardFields: React.FC<FormCreditCardFieldsProps> = ({
     );
 };
 
-export default FormCreditCardFields;
+export default CreditCardFields;

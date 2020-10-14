@@ -14,7 +14,7 @@ import {useElementDimensions} from './hooks';
 
 /**
  * Do not use this component!
- * Use FormDateField or FormDateTimeField
+ * Use DateField or FormDateTimeField
  *
  * This component is a fallback for browsers that don't support datetime-local or date inputs
  */

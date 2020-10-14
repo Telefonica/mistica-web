@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {StorySection, fruitEntries} from './helpers';
-import {FormSelect} from '..';
+import {Select} from '..';
 
 export default {
-    title: 'Components|Forms/FormSelect',
-    component: FormSelect,
+    title: 'Components|Forms/Select',
+    component: Select,
 };
 
 const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
@@ -14,7 +14,7 @@ export const Default: StoryComponent = () => {
 
     return (
         <StorySection title="Select">
-            <FormSelect
+            <Select
                 name="select1"
                 value={value}
                 onChangeValue={setValue}
@@ -23,7 +23,7 @@ export const Default: StoryComponent = () => {
                 optional
             />
 
-            <FormSelect
+            <Select
                 name="select2"
                 error
                 value={value}
@@ -33,7 +33,7 @@ export const Default: StoryComponent = () => {
                 options={fruitOptions}
             />
 
-            <FormSelect
+            <Select
                 name="select3"
                 disabled
                 value={value}
@@ -46,4 +46,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'FormSelect'};
+Default.story = {name: 'Select'};

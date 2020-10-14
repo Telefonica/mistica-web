@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {RowList, Row} from '../list';
-import {FormRadioGroup} from '../form-radio-button';
+import {RadioGroup} from '../radio-button';
 import {screen, fireEvent, render} from '@testing-library/react';
 
 test('Row which navigates', () => {
@@ -74,12 +74,12 @@ test('Row with custom right element', () => {
 
 test('Row list with radio buttons', () => {
     render(
-        <FormRadioGroup name="radio-group">
+        <RadioGroup name="radio-group">
             <RowList>
                 <Row title="Banana" radioValue="banana" />
                 <Row title="Apple" radioValue="apple" />
             </RowList>
-        </FormRadioGroup>
+        </RadioGroup>
     );
 
     const radioBanana = screen.getByRole('radio', {name: 'Banana'});

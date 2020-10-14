@@ -92,7 +92,7 @@ type Props = {
     onChange?: (value: boolean) => void;
 };
 
-const FormSwitch: React.FC<Props> = (props) => {
+const Switch: React.FC<Props> = (props) => {
     const {defaultValue, value, onChange, focusableRef} = useControlProps({
         name: props.name,
         value: props.checked,
@@ -156,4 +156,4 @@ const FormSwitch: React.FC<Props> = (props) => {
     );
 };
 
-export default FormSwitch;
+export default Switch;

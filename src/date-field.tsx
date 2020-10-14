@@ -14,7 +14,7 @@ const ReactDateTimePicker = React.lazy(() =>
     import(/* webpackChunkName: "date-time-picker" */ './date-time-picker')
 );
 
-const FormDateField: React.FC<FormDateFieldProps> = ({
+const DateField: React.FC<FormDateFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -59,4 +59,4 @@ const FormDateField: React.FC<FormDateFieldProps> = ({
     );
 };
 
-export default FormDateField;
+export default DateField;

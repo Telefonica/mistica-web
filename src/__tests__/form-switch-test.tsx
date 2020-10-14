@@ -1,11 +1,11 @@
 // @flow
 import * as React from 'react';
 import {render, waitFor, fireEvent, screen} from '@testing-library/react';
-import {ButtonPrimary, Form, FormSwitch} from '..';
+import {ButtonPrimary, Form, Switch} from '..';
 import userEvent from '@testing-library/user-event';
 
 test('renders accesible switch', () => {
-    render(<FormSwitch name="switch" defaultChecked={false} />);
+    render(<Switch name="switch" defaultChecked={false} />);
 
     const switchElement = screen.getByRole('checkbox');
 
@@ -16,7 +16,7 @@ test('renders accesible switch', () => {
 test('controlled mode', () => {
     const Component = () => {
         const [checked, setChecked] = React.useState(false);
-        return <FormSwitch name="switch" onChange={setChecked} checked={checked} />;
+        return <Switch name="switch" onChange={setChecked} checked={checked} />;
     };
 
     render(<Component />);
@@ -29,7 +29,7 @@ test('controlled mode', () => {
 });
 
 test('uncontrolled mode', () => {
-    render(<FormSwitch name="switch" defaultChecked />);
+    render(<Switch name="switch" defaultChecked />);
 
     const switchElement = screen.getByRole('checkbox');
 
@@ -41,7 +41,7 @@ test('uncontrolled mode', () => {
 test('uncontrolled mode with onChange handler', async () => {
     const onChangeSpy = jest.fn();
 
-    render(<FormSwitch name="switch" onChange={onChangeSpy} defaultChecked />);
+    render(<Switch name="switch" onChange={onChangeSpy} defaultChecked />);
 
     const switchElement = screen.getByRole('checkbox');
 
@@ -57,7 +57,7 @@ test('form controlled mode', async () => {
 
     render(
         <Form onSubmit={handleSubmitSpy} initialValues={{switch: true}}>
-            <FormSwitch name="switch" />
+            <Switch name="switch" />
             <ButtonPrimary submit>done!</ButtonPrimary>
         </Form>
     );
@@ -76,7 +76,7 @@ test('form uncontrolled mode', async () => {
 
     const ControlledSwitch = () => {
         const [checked, setChecked] = React.useState(false);
-        return <FormSwitch checked={checked} onChange={setChecked} name="switch" />;
+        return <Switch checked={checked} onChange={setChecked} name="switch" />;
     };
 
     render(

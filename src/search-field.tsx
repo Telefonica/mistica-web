@@ -14,7 +14,7 @@ export interface FormSearchFieldProps extends CommonFormFieldProps {
     getSuggestions?: (value: string) => Array<string>;
 }
 
-const FormSearchField: React.FC<FormSearchFieldProps> = ({
+const SearchField: React.FC<FormSearchFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -92,4 +92,4 @@ const FormSearchField: React.FC<FormSearchFieldProps> = ({
     );
 };
 
-export default FormSearchField;
+export default SearchField;

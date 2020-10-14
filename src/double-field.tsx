@@ -3,16 +3,16 @@ import Box from './box';
 import {createUseStyles} from './jss';
 import {DEFAULT_WIDTH} from './text-field-components';
 
-import type {FormTextFieldProps} from './form-text-field';
-import type {FormSelectProps} from './form-select';
-import type {FormCvvFieldProps} from './form-cvv-field';
-import type {FormCreditCardExpirationFieldProps} from './form-credit-card-expiration-field';
-import type {FormDecimalFieldProps} from './form-decimal-field';
-import type {FormIntegerFieldProps} from './form-integer-field';
-import type {FormDateFieldProps} from './form-date-field';
-import type {FormPasswordFieldProps} from './form-password-field';
-import type {FormPhoneNumberFieldProps} from './form-phone-number-field';
-import type {FormEmailFieldProps} from './form-email-field';
+import type {FormTextFieldProps} from './text-field';
+import type {FormSelectProps} from './select';
+import type {FormCvvFieldProps} from './cvv-field';
+import type {FormCreditCardExpirationFieldProps} from './credit-card-expiration-field';
+import type {FormDecimalFieldProps} from './decimal-field';
+import type {FormIntegerFieldProps} from './integer-field';
+import type {FormDateFieldProps} from './date-field';
+import type {FormPasswordFieldProps} from './password-field';
+import type {FormPhoneNumberFieldProps} from './phone-number-field';
+import type {FormEmailFieldProps} from './email-field';
 
 type Field =
     | React.ReactElement<FormTextFieldProps>

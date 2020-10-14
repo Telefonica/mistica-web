@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FormPhoneNumberField} from '..';
+import {PhoneNumberField} from '..';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ThemeContextProvider from '../theme-context-provider';
@@ -10,7 +10,7 @@ test('form-phone-number-field', async () => {
 
     render(
         <ThemeContextProvider theme={overrideTheme({})}>
-            <FormPhoneNumberField label="Enter Phone" name="phone" onChangeValue={onChangeValueSpy} />
+            <PhoneNumberField label="Enter Phone" name="phone" onChangeValue={onChangeValueSpy} />
         </ThemeContextProvider>
     );
 

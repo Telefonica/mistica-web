@@ -31,7 +31,7 @@ const STORY_TYPES = Object.keys(STORIES_MAP) as Array<StoryType>;
 
 const getStoryOfType = (storyType: StoryType) => STORIES_MAP[storyType];
 
-test('FormTextField with suggestions', async () => {
+test('TextField with suggestions', async () => {
     const page = await openStoryPage(CONTROLLED_STORY);
 
     const field = await screen.findByLabelText('Text with suggestions');
@@ -47,7 +47,7 @@ test('FormTextField with suggestions', async () => {
     await expect(getValue(screen.findByLabelText('Text with suggestions'))).resolves.toBe('Algeria');
 });
 
-test.each(STORY_TYPES)('FormIntegerField (%s)', async (storyType) => {
+test.each(STORY_TYPES)('IntegerField (%s)', async (storyType) => {
     const page = await openStoryPage(getStoryOfType(storyType));
 
     const field = await screen.findByLabelText('Integer');
@@ -56,7 +56,7 @@ test.each(STORY_TYPES)('FormIntegerField (%s)', async (storyType) => {
     await expect(getValue(field)).resolves.toBe('12345');
 });
 
-test.each(STORY_TYPES)('FormDecimalField (%s)', async (storyType) => {
+test.each(STORY_TYPES)('DecimalField (%s)', async (storyType) => {
     const page = await openStoryPage(getStoryOfType(storyType));
 
     const field = await screen.findByLabelText('Decimal');
@@ -71,7 +71,7 @@ test.each(STORY_TYPES)('FormDecimalField (%s)', async (storyType) => {
     await expect(getValue(field)).resolves.toBe('123,456');
 });
 
-test.each(STORY_TYPES)('FormCreditCardNumberField (%s)', async (storyType) => {
+test.each(STORY_TYPES)('CreditCardNumberField (%s)', async (storyType) => {
     const page = await openStoryPage(getStoryOfType(storyType));
 
     const field = await screen.findByLabelText('Credit card');
@@ -83,7 +83,7 @@ test.each(STORY_TYPES)('FormCreditCardNumberField (%s)', async (storyType) => {
     await expect(getValue(field)).resolves.toBe('1234 5678 9012 3456');
 });
 
-test.each(STORY_TYPES)('FormCreditCardExpirationField (%s)', async (storyType) => {
+test.each(STORY_TYPES)('CreditCardExpirationField (%s)', async (storyType) => {
     const page = await openStoryPage(getStoryOfType(storyType));
 
     const field = await screen.findByLabelText('Expiration');
@@ -101,7 +101,7 @@ test.each(STORY_TYPES)('FormCreditCardExpirationField (%s)', async (storyType) =
     await expect(getValue(field)).resolves.toBe('12/34');
 });
 
-test.each(STORY_TYPES)('FormPasswordField (%s)', async (storyType) => {
+test.each(STORY_TYPES)('PasswordField (%s)', async (storyType) => {
     const page = await openStoryPage(getStoryOfType(storyType));
 
     const field = await screen.findByLabelText('Password');
@@ -110,7 +110,7 @@ test.each(STORY_TYPES)('FormPasswordField (%s)', async (storyType) => {
     await expect(getValue(field)).resolves.toBe('patata123');
 });
 
-test.each(STORY_TYPES)('FormDateField (%s)', async (storyType) => {
+test.each(STORY_TYPES)('DateField (%s)', async (storyType) => {
     const page = await openStoryPage(getStoryOfType(storyType));
 
     const field = await screen.findByLabelText('Date');
@@ -119,7 +119,7 @@ test.each(STORY_TYPES)('FormDateField (%s)', async (storyType) => {
     await expect(getValue(field)).resolves.toBe('1980-10-06');
 });
 
-test.each(STORY_TYPES)('FormPhoneNumberField (%s)', async (storyType) => {
+test.each(STORY_TYPES)('PhoneNumberField (%s)', async (storyType) => {
     const page = await openStoryPage(getStoryOfType(storyType));
 
     const field = await screen.findByLabelText('Phone');
@@ -134,7 +134,7 @@ test.each(STORY_TYPES)('FormPhoneNumberField (%s)', async (storyType) => {
     await expect(getValue(field)).resolves.toBe('#1*2');
 });
 
-test.each(STORY_TYPES)('FormSearchField (%s)', async (storyType) => {
+test.each(STORY_TYPES)('SearchField (%s)', async (storyType) => {
     const page = await openStoryPage(getStoryOfType(storyType));
 
     const field = await screen.findByLabelText('Search');

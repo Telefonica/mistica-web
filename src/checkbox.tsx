@@ -22,7 +22,7 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-const FormCheckbox: React.FC<Props> = (props) => {
+const Checkbox: React.FC<Props> = (props) => {
     const classes = useStyles();
     const {defaultValue, value, onChange, focusableRef} = useControlProps({
         name: props.name,
@@ -70,4 +70,4 @@ const FormCheckbox: React.FC<Props> = (props) => {
     );
 };
 
-export default FormCheckbox;
+export default Checkbox;

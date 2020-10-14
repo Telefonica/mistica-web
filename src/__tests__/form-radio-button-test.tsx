@@ -1,5 +1,5 @@
 import * as React from 'react';
-import FormRadioButton, {FormRadioGroup} from '../form-radio-button';
+import RadioButton, {RadioGroup} from '../radio-button';
 import SectionTitle from '../section-title';
 import {render, screen, within, fireEvent, waitFor} from '@testing-library/react';
 import {ButtonPrimary, Form} from '../index';
@@ -9,10 +9,10 @@ test('FormRadioGroup (uncontrolled)', () => {
     render(
         <div>
             <SectionTitle id="label">Choose a fruit</SectionTitle>
-            <FormRadioGroup name="radio-group" aria-labelledby="label" defaultValue="banana">
-                <FormRadioButton value="banana" />
-                <FormRadioButton value="apple" />
-            </FormRadioGroup>
+            <RadioGroup name="radio-group" aria-labelledby="label" defaultValue="banana">
+                <RadioButton value="banana" />
+                <RadioButton value="apple" />
+            </RadioGroup>
         </div>
     );
 
@@ -37,10 +37,10 @@ test('FormRadioGroup (controlled)', () => {
         return (
             <div>
                 <SectionTitle id="label">Choose a fruit</SectionTitle>
-                <FormRadioGroup name="radio-group" aria-labelledby="label" value={fruit} onChange={setFruit}>
-                    <FormRadioButton value="banana" />
-                    <FormRadioButton value="apple" />
-                </FormRadioGroup>
+                <RadioGroup name="radio-group" aria-labelledby="label" value={fruit} onChange={setFruit}>
+                    <RadioButton value="banana" />
+                    <RadioButton value="apple" />
+                </RadioGroup>
                 <div>you have selected {fruit}</div>
             </div>
         );
@@ -70,10 +70,10 @@ test('Radio custom render', () => {
     render(
         <div>
             <SectionTitle id="label">Choose a fruit</SectionTitle>
-            <FormRadioGroup name="radio-group" aria-labelledby="label" defaultValue="banana">
-                <FormRadioButton value="banana" render={(radio) => <div>banana {radio}</div>} />
-                <FormRadioButton value="apple" render={(radio) => <div>apple {radio}</div>} />
-            </FormRadioGroup>
+            <RadioGroup name="radio-group" aria-labelledby="label" defaultValue="banana">
+                <RadioButton value="banana" render={(radio) => <div>banana {radio}</div>} />
+                <RadioButton value="apple" render={(radio) => <div>apple {radio}</div>} />
+            </RadioGroup>
         </div>
     );
 
@@ -94,10 +94,10 @@ test('form controlled mode', async () => {
 
     render(
         <Form onSubmit={handleSubmitSpy} initialValues={{'radio-group': 'apple'}}>
-            <FormRadioGroup name="radio-group" aria-labelledby="label">
-                <FormRadioButton value="banana" render={(radio) => <div>banana {radio}</div>} />
-                <FormRadioButton value="apple" render={(radio) => <div>apple {radio}</div>} />
-            </FormRadioGroup>
+            <RadioGroup name="radio-group" aria-labelledby="label">
+                <RadioButton value="banana" render={(radio) => <div>banana {radio}</div>} />
+                <RadioButton value="apple" render={(radio) => <div>apple {radio}</div>} />
+            </RadioGroup>
             <ButtonPrimary submit>done!</ButtonPrimary>
         </Form>
     );
@@ -123,10 +123,10 @@ test('form uncontrolled mode', async () => {
     const ControlledRadioGroup = () => {
         const [value, setValue] = React.useState('banana');
         return (
-            <FormRadioGroup value={value} onChange={setValue} name="radio-group" aria-labelledby="label">
-                <FormRadioButton value="banana" render={(radio) => <div>banana {radio}</div>} />
-                <FormRadioButton value="apple" render={(radio) => <div>apple {radio}</div>} />
-            </FormRadioGroup>
+            <RadioGroup value={value} onChange={setValue} name="radio-group" aria-labelledby="label">
+                <RadioButton value="banana" render={(radio) => <div>banana {radio}</div>} />
+                <RadioButton value="apple" render={(radio) => <div>apple {radio}</div>} />
+            </RadioGroup>
         );
     };
 

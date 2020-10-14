@@ -1,21 +1,21 @@
 import * as React from 'react';
-import {FormSwitch, Stack} from '..';
+import {Switch, Stack} from '..';
 
 export default {
-    title: 'Components|Forms/FormSwitch',
+    title: 'Components|Forms/Switch',
 };
 
 export const Default: StoryComponent = () => {
     const [checked, onChange] = React.useState(false);
     return (
         <Stack space={16}>
-            <FormSwitch name="first" defaultChecked={false} />
-            <FormSwitch
+            <Switch name="first" defaultChecked={false} />
+            <Switch
                 name="second"
                 defaultChecked={false}
                 render={(switchElement) => <span>WiFi {switchElement}</span>}
             />
-            <FormSwitch
+            <Switch
                 name="third"
                 checked={checked}
                 onChange={onChange}
@@ -29,4 +29,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'FormSwitch'};
+Default.story = {name: 'Switch'};

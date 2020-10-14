@@ -5,18 +5,18 @@
 - [Form example](#form-example)
   - [Important notes](#important-notes)
 - [Form fields](#form-fields)
-  - [FormCreditCardFields](#formcreditcardfields)
-  - [FormCreditCardNumberField](#formcreditcardnumberfield)
-  - [FormCreditCardExpirationField](#formcreditcardexpirationfield)
-  - [FormCvvField](#formcvvfield)
-  - [FormDateField](#formdatefield)
-  - [FormDecimalField](#formdecimalfield)
-  - [FormIntegerField](#formintegerfield)
-  - [FormPasswordField](#formpasswordfield)
-  - [FormEmailField](#formemailfield)
-  - [FormSelect](#formselect)
-  - [FormPhoneNumberField](#formphonenumberfield)
-  - [<strike>FormTextField (deprecated)</strike>](#strikeformtextfield-deprecatedstrike)
+  - [CreditCardFields](#formcreditcardfields)
+  - [CreditCardNumberField](#formcreditcardnumberfield)
+  - [CreditCardExpirationField](#formcreditcardexpirationfield)
+  - [CvvField](#formcvvfield)
+  - [DateField](#formdatefield)
+  - [DecimalField](#formdecimalfield)
+  - [IntegerField](#formintegerfield)
+  - [PasswordField](#formpasswordfield)
+  - [EmailField](#formemailfield)
+  - [Select](#formselect)
+  - [PhoneNumberField](#formphonenumberfield)
+  - [<strike>TextField (deprecated)</strike>](#strikeformtextfield-deprecatedstrike)
 - [DoubleField](#doublefield)
 - [<strike>Primitive fields (deprecated)</strike>](#strikeprimitive-fields-deprecatedstrike)
 - [useForm Hook](#useform-hook)
@@ -30,7 +30,7 @@ You can build complex forms with automatic state handling using the components p
 Let's see a quick example to see how it works
 
 ```js
-import {Form, FormTextField, ButtonPrimary} from '@telefonica/mistica';
+import {Form, TextField, ButtonPrimary} from '@telefonica/mistica';
 
 const validateName = (name) => (/^\w+$/.test(name) ? '' : 'bad username');
 
@@ -43,8 +43,8 @@ const LoginForm = () => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FormTextField name="user" label="Username" validate={validateName} />
-      <FormTextField name="pass" label="Password" type="password" />
+      <TextField name="user" label="Username" validate={validateName} />
+      <TextField name="pass" label="Password" type="password" />
       <ButtonPrimary submit>Log in</ButtonPrimary>
     </Form>
   );
@@ -71,65 +71,65 @@ const LoginForm = () => {
 
 ## Form fields
 
-### FormCreditCardFields
+### CreditCardFields
 
 - Use it if you want to request credit card information
 - This component will render 3 fields:
-  - `FormCreditCardNumberField`
-  - `FormCreditCardExpirationField`
-  - `FormCvvField`
+  - `CreditCardNumberField`
+  - `CreditCardExpirationField`
+  - `CvvField`
 - When used inside a `<Form>` component, these fields have built-in validations:
   - Simple validation is performed in credit card number
   - CVV length depends on card type
   - Expiration date must be a future date
 
-### FormCreditCardNumberField
+### CreditCardNumberField
 
 - To request a Credit Card number
 - Use `acceptedCards` prop to set accepted cards. By default:
   - `{americanExpress: true, visa: true, masterCard: true}`
 - An icon will hint the card type based on the card number
 
-### FormCreditCardExpirationField
+### CreditCardExpirationField
 
 - To request a Credit Card expiration date
 - Format as you write (MM/YY)
 
-### FormCvvField
+### CvvField
 
 - To request the Credit Card Verification value
 
-### FormDateField
+### DateField
 
 - To select dates
 - Uses device/browser native date picker
 
-### FormDecimalField
+### DecimalField
 
 - Shows a numeric keypad in mobile devices
 - Values restricted to decimal values
 - Decimal separator characted (comma or dot) depends on context locale
 
-### FormIntegerField
+### IntegerField
 
 - Shows a numeric keypad in mobile devices
 - Values restricted to integer values
 
-### FormPasswordField
+### PasswordField
 
 - Use this field to request a password
 - Includes an "eye" icon to show/hide password
 - Use the `autoComplete` prop to autocomplete to an existing password (`"current-password"`) or request a new
   one (`"new-password"`)
 
-### FormEmailField
+### EmailField
 
 - Use this field to request an email address
 - Has built-in email address validation (naive)
 - Uses an email keypad on mobile
 - Autocompletes to current email, to disable, set `autoComplete` to `"off"`
 
-### FormSelect
+### Select
 
 Use this component to create a `Select`
 
@@ -141,17 +141,17 @@ const options = [
 
 //...
 
-<FormSelect options={options} />;
+<Select options={options} />;
 ```
 
-### FormPhoneNumberField
+### PhoneNumberField
 
 To enter phone numbers
 
 - Uses Google's `libphonenumber` library to format numbers as you type (uses `locale` from theme context to
   format numbers accordingly)
 
-### <strike>FormTextField (deprecated)</strike>
+### <strike>TextField (deprecated)</strike>
 
 This field accepts a `type` prop to change its behavior
 
@@ -167,8 +167,8 @@ Use this component to place two fields at the same row
 
 ```js
 <DoubleField>
-  <FormTextField name="foo" label="Foo" />
-  <FormTextField name="bar" label="Bar" />
+  <TextField name="foo" label="Foo" />
+  <TextField name="bar" label="Bar" />
 </DoubleField>
 ```
 

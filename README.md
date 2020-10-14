@@ -36,8 +36,8 @@ import {
   Form,
   Box,
   Stack,
-  FormTextField,
-  FormEmailField,
+  TextField,
+  EmailField,
   ButtonLayout,
   ButtonPrimary,
   alert,
@@ -54,8 +54,8 @@ const App = () => (
   >
     <Box padding={16}>
       <Stack space={16}>
-        <FormTextField name="name" label="Name" />
-        <FormEmailField name="email" label="e-mail" />
+        <TextField name="name" label="Name" />
+        <EmailField name="email" label="e-mail" />
         <ButtonLayout>
           <ButtonPrimary submit>Send</ButtonPrimary>
         </ButtonLayout>
