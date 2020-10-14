@@ -42,6 +42,9 @@ const useStyles = createUseStyles(() => ({
     text: {
         marginLeft: 16,
     },
+    textLeft: {
+        marginRight: 16,
+    },
 }));
 
 export const AutomaticForm: StoryComponent = () => {
@@ -71,7 +74,10 @@ export const AutomaticForm: StoryComponent = () => {
                     name="save-cc"
                     render={(switchElement) => (
                         <>
-                            <Text7 regular>Save CC</Text7> {switchElement}
+                            <span className={classes.textLeft}>
+                                <Text7 regular>Save CC</Text7>
+                            </span>
+                            {switchElement}
                         </>
                     )}
                 />
@@ -168,7 +174,10 @@ export const ManualForm: StoryComponent = () => {
                     onChange={setSaveCC}
                     render={(switchElement) => (
                         <>
-                            <Text7 regular>Save CC</Text7> {switchElement}
+                            <span className={classes.textLeft}>
+                                <Text7 regular>Save CC</Text7>
+                            </span>
+                            {switchElement}
                         </>
                     )}
                 />

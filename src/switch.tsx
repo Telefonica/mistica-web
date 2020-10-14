@@ -79,6 +79,11 @@ const useStyles = createUseStyles((theme) => {
                 ? `1px 2px 4px ${applyAlpha(theme.colors.layerDecorations, 0.3)}`
                 : `1px 1px 2px ${applyAlpha(theme.colors.layerDecorations, 0.3)}`,
         },
+        container: {
+            outline: 0,
+            display: 'inline-flex',
+            alignItems: 'center',
+        },
     };
 });
 
@@ -150,6 +155,7 @@ const Switch: React.FC<Props> = (props) => {
             onKeyDown={handleKeyDown}
             tabIndex={0}
             ref={focusableRef}
+            className={classes.container}
         >
             {props.render ? <>{props.render(switchEl)}</> : switchEl}
         </span>

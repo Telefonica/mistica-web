@@ -30,6 +30,9 @@ const useStyles = createUseStyles((theme) => ({
         background: ({checked, isIos}) =>
             checked && !isIos ? theme.colors.controlActive : theme.colors.background,
     },
+    container: {
+        outline: 0,
+    },
 }));
 
 type RadioContextType = {
@@ -112,6 +115,7 @@ const RadioButton: React.FC<Props> = ({value, id, render}) => {
             aria-checked={checked}
             onClick={() => select(value)}
             onKeyDown={handleKeyDown}
+            className={classes.container}
         >
             {render ? <>{render(radio)}</> : radio}
         </span>

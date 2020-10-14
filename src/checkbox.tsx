@@ -18,7 +18,7 @@ const useStyles = createUseStyles(() => ({
         display: 'inline-flex',
         alignItems: 'center',
         outline: 0,
-        lineHeight: 0.5, // If not set, div height will be bigger than the icon, leading to misalignments
+        lineHeight: 0.5, // If not set, div height will be bigger than the icon, leading to misalignment
     },
 }));
 
