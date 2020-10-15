@@ -1,18 +1,11 @@
 import * as React from 'react';
-import {createUseStyles, Checkbox, Stack} from '..';
+import {createUseStyles, Checkbox, Stack, Text6, Inline} from '..';
 
 export default {
     title: 'Components|Forms/Checkbox',
 };
 
-const useStyles = createUseStyles(() => ({
-    text: {
-        marginLeft: 16,
-    },
-}));
-
 export const Default: StoryComponent = () => {
-    const classes = useStyles();
     const [checked, onChange] = React.useState(false);
     return (
         <Stack space={16}>
@@ -20,24 +13,22 @@ export const Default: StoryComponent = () => {
             <Checkbox
                 name="second"
                 defaultChecked={false}
-                render={(switchElement) => (
-                    <>
-                        {switchElement}
-                        <span className={classes.text}>You accept to sell your soul</span>
-                    </>
+                render={(checkboxElement) => (
+                    <Inline space={16}>
+                        {checkboxElement}
+                        <Text6 regular>You accept to sell your soul</Text6>
+                    </Inline>
                 )}
             />
             <Checkbox
                 name="third"
                 checked={checked}
                 onChange={onChange}
-                render={(switchElement) => (
-                    <>
-                        {switchElement}
-                        <span className={classes.text}>
-                            You accept to sell your soul: {checked ? 'sure!' : 'nahh'}
-                        </span>
-                    </>
+                render={(checkboxElement) => (
+                    <Inline space={16}>
+                        {checkboxElement}
+                        <Text6 regular>You accept to sell your soul: {checked ? 'sure!' : 'nahh'}</Text6>
+                    </Inline>
                 )}
             />
         </Stack>

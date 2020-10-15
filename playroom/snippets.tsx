@@ -30,7 +30,18 @@ const formSnippets = [
     ['CvvField', '<CvvField name="cvv" label="CVV"/>'],
     ['SearchField', '<SearchField name="search" label="Search"/>'],
     ['Switch', '<Switch name="switch"/>'],
-    ['Checkbox', '<Checkbox name="checkbox"/>'],
+    [
+        'Checkbox',
+        '<Checkbox\n' +
+            '   name="second"\n' +
+            '   render={(checkboxElement) => (\n' +
+            '       <Inline space={16}>\n' +
+            '       {checkboxElement}\n' +
+            '       <Text6 regular>Example checkbox</Text6>\n' +
+            '       </Inline>\n' +
+            '   )}\n' +
+            '/>',
+    ],
     [
         'RadioGroup',
         '<RadioGroup name="juicy-fruit" aria-labelledby="label" defaultValue="banana">\n' +

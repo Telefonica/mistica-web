@@ -1,18 +1,11 @@
 import * as React from 'react';
-import {Switch, Stack, createUseStyles} from '..';
+import {Switch, Stack, createUseStyles, Inline, Text6} from '..';
 
 export default {
     title: 'Components|Forms/Switch',
 };
 
-const useStyles = createUseStyles(() => ({
-    text: {
-        marginRight: 16,
-    },
-}));
-
 export const Default: StoryComponent = () => {
-    const classes = useStyles();
     const [checked, onChange] = React.useState(false);
     return (
         <Stack space={16}>
@@ -21,10 +14,10 @@ export const Default: StoryComponent = () => {
                 name="second"
                 defaultChecked={false}
                 render={(switchElement) => (
-                    <>
-                        <span className={classes.text}>WiFi</span>
+                    <Inline space={16}>
+                        <Text6 regular>WiFi</Text6>
                         {switchElement}
-                    </>
+                    </Inline>
                 )}
             />
             <Switch
@@ -32,10 +25,10 @@ export const Default: StoryComponent = () => {
                 checked={checked}
                 onChange={onChange}
                 render={(switchElement) => (
-                    <>
-                        <span className={classes.text}>{checked ? 'on' : 'off'}</span>
+                    <Inline space={16}>
+                        <Text6 regular>{checked ? 'on' : 'off'}</Text6>
                         {switchElement}
-                    </>
+                    </Inline>
                 )}
             />
         </Stack>

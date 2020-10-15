@@ -14,11 +14,10 @@ type Props = {
 };
 
 const useStyles = createUseStyles(() => ({
-    checkbox: {
+    checkboxContainer: {
         display: 'inline-flex',
         alignItems: 'center',
-        outline: 0,
-        lineHeight: 0.5, // If not set, div height will be bigger than the icon, leading to misalignment
+        cursor: 'default',
     },
 }));
 
@@ -50,6 +49,8 @@ const Checkbox: React.FC<Props> = (props) => {
         }
     };
 
+    const iconCheckbox = <IconCheckbox checked={value ?? checkedState} />;
+
     return (
         <div
             id={props.id}
@@ -59,13 +60,9 @@ const Checkbox: React.FC<Props> = (props) => {
             onClick={handleChange}
             tabIndex={0}
             ref={focusableRef}
-            className={classes.checkbox}
+            className={classes.checkboxContainer}
         >
-            {props.render ? (
-                props.render(<IconCheckbox checked={value ?? checkedState} />)
-            ) : (
-                <IconCheckbox checked={value ?? checkedState} />
-            )}
+            {props.render ? props.render(iconCheckbox) : iconCheckbox}
         </div>
     );
 };

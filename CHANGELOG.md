@@ -2,14 +2,14 @@
 
 ### Bug Fixes
 
-- **EmailField:** improve email validation ([#130](https://github.com/Telefonica/mistica-web/issues/130))
+- **FormEmailField:** improve email validation ([#130](https://github.com/Telefonica/mistica-web/issues/130))
   ([5c8badf](https://github.com/Telefonica/mistica-web/commit/5c8badf39116f4bbac30f779203d47e3cec041af))
 - **Icons:** Improve icons tree-shaking
   ([e993755](https://github.com/Telefonica/mistica-web/commit/e99375588faff7cc8ad2a7856a0d375eb7dc02b8))
 
 ### Features
 
-- **TextField:** Add 'username' as valid autoComplete option
+- **FormTextField:** Add 'username' as valid autoComplete option
   ([#128](https://github.com/Telefonica/mistica-web/issues/128))
   ([969a8f1](https://github.com/Telefonica/mistica-web/commit/969a8f1ad8af4f008b86c318ba3a26ff6624aa5d))
 
@@ -59,7 +59,7 @@
 
 ### Bug Fixes
 
-- **TextField:** fix multi line TextField bottom padding
+- **FormTextField:** fix multi line FormTextField bottom padding
   ([1f5c0a8](https://github.com/Telefonica/mistica-web/commit/1f5c0a8fc4e5caae3b2b4324c2023151a8746d2a))
 - **JSS:** use className id generator for client side executed code to avoid class names collision
   ([e972eaf](https://github.com/Telefonica/mistica-web/commit/e972eaf11f23b1a7c02ef1a046445f5f3395e03e))
@@ -77,7 +77,7 @@
 
 ### Bug Fixes
 
-- **TextField:** Update Focus/Blur behavior in multiline `TextField`
+- **FormTextField:** Update Focus/Blur behavior in multiline `FormTextField`
   ([b69c49b](https://github.com/Telefonica/mistica-web/commit/b69c49b1078009cafff4fb0ceec973c5cc38bef5))
 - **HighlightedCard:** background image positioning
   ([#108](https://github.com/Telefonica/mistica-web/issues/108))
@@ -118,9 +118,9 @@
 # 5.2.0 (2020-08-20)
 
 - Support multiple tracking events.
-- New `SearchField` component
+- New `FormSearchField` component
 - `TextLink` and `ListRow`: disable wrong `:hover` styles in touch devices.
-- Fixed several `Select` bugs:
+- Fixed several `FormSelect` bugs:
   - Bad spacing when label is empty.
   - Native caret being shown when rendered as a native component.
   - Caret being mispositioned on firefox.
@@ -149,10 +149,10 @@
 ### BREAKING CHANGES
 
 - Deprecated `TextField` component is no longer available. Use `FormXXXField` variants.
-- Deprecated `type` property for `TextField` component is no longer available. Use corresponding
+- Deprecated `type` property for `FormTextField` component is no longer available. Use corresponding
   `FormXXXField` variant.
-- `Select` component is no longer available. Use `Select`.
-- `PhoneInput` component is no longer available. Use `PhoneNumberField`.
+- `Select` component is no longer available. Use `FormSelect`.
+- `PhoneInput` component is no longer available. Use `FormPhoneNumberField`.
 - `withMargin` property for `ButtonLayout>` component is no longer available. Refer to `Box` and `Stack`
   components to add spacings when necessary.
 
@@ -191,14 +191,14 @@
 - Update a chart color for Vivo skin
 - Form fields refactor:
   - Deprecate `TextField` (will be removed in a future release)
-  - Deprecate `TextField` with types different than `"text"` (those usages will be removed in a future
+  - Deprecate `FormTextField` with types different than `"text"` (those usages will be removed in a future
     release)
   - New semantic FormField components added:
-    - `DateField`
-    - `DecimalField`
-    - `EmailField`
-    - `IntegerField`
-    - `PasswordField`
+    - `FormDateField`
+    - `FormDecimalField`
+    - `FormEmailField`
+    - `FormIntegerField`
+    - `FormPasswordField`
   - All FormField components can now be used inside a `<Form>` and standalone (connected or unconnected)
   - `name` prop is in FormFields is now mandatory
 

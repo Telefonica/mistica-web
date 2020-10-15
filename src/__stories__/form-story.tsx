@@ -19,7 +19,7 @@ import {
     Switch,
     Text7,
     Checkbox,
-    createUseStyles,
+    Inline,
 } from '..';
 import {getCvvLength} from '../utils/credit-card';
 
@@ -38,17 +38,7 @@ const fakeApiCall = (data: any): Promise<void> =>
 const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 const countryOptions = countriesList.map((text, i) => ({text, value: '' + i}));
 
-const useStyles = createUseStyles(() => ({
-    text: {
-        marginLeft: 16,
-    },
-    textLeft: {
-        marginRight: 16,
-    },
-}));
-
 export const AutomaticForm: StoryComponent = () => {
-    const classes = useStyles();
     return (
         <Form
             initialValues={{email: 'john.doe@gmail.com', decimal: '123', 'save-cc': true}}
@@ -73,24 +63,20 @@ export const AutomaticForm: StoryComponent = () => {
                 <Switch
                     name="save-cc"
                     render={(switchElement) => (
-                        <>
-                            <span className={classes.textLeft}>
-                                <Text7 regular>Save CC</Text7>
-                            </span>
+                        <Inline space={16}>
+                            <Text7 regular>Save CC</Text7>
                             {switchElement}
-                        </>
+                        </Inline>
                     )}
                 />
 
                 <Checkbox
                     name="t&c"
                     render={(checkboxElement) => (
-                        <>
+                        <Inline space={16}>
                             {checkboxElement}
-                            <span className={classes.text}>
-                                <Text7 regular>Accept Terms and Conditions</Text7>
-                            </span>
-                        </>
+                            <Text7 regular>Accept Terms and Conditions</Text7>
+                        </Inline>
                     )}
                 />
 
@@ -106,7 +92,6 @@ export const AutomaticForm: StoryComponent = () => {
 };
 
 export const ManualForm: StoryComponent = () => {
-    const classes = useStyles();
     const [fruit, setFruit] = React.useState('');
     const [quantity, setQuantity] = React.useState('');
     const [creditCardNumber, setCreditCardNumber] = React.useState('');
@@ -173,12 +158,10 @@ export const ManualForm: StoryComponent = () => {
                     checked={saveCC}
                     onChange={setSaveCC}
                     render={(switchElement) => (
-                        <>
-                            <span className={classes.textLeft}>
-                                <Text7 regular>Save CC</Text7>
-                            </span>
+                        <Inline space={16}>
+                            <Text7 regular>Save CC</Text7>
                             {switchElement}
-                        </>
+                        </Inline>
                     )}
                 />
                 <Checkbox
@@ -186,12 +169,10 @@ export const ManualForm: StoryComponent = () => {
                     checked={acceptTC}
                     onChange={setAcceptTC}
                     render={(checkboxElement) => (
-                        <>
+                        <Inline space={16}>
                             {checkboxElement}
-                            <span className={classes.text}>
-                                <Text7 regular>Accept Terms and Conditions</Text7>
-                            </span>
-                        </>
+                            <Text7 regular>Accept Terms and Conditions</Text7>
+                        </Inline>
                     )}
                 />
                 <ButtonLayout>

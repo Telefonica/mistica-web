@@ -80,9 +80,7 @@ const useStyles = createUseStyles((theme) => {
                 : `1px 1px 2px ${applyAlpha(theme.colors.layerDecorations, 0.3)}`,
         },
         container: {
-            outline: 0,
-            display: 'inline-flex',
-            alignItems: 'center',
+            cursor: 'default',
         },
     };
 });
