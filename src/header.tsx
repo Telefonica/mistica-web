@@ -99,7 +99,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <Stack space={8}>
                     {pretitle &&
                         renderRichText(pretitle, {
-                            truncate: true,
+                            lineClamp: 1,
                             color: theme.colors.textPrimary,
                         })}
                     <Text3 role="heading" aria-level={2}>
@@ -113,11 +113,11 @@ export const Header: React.FC<HeaderProps> = ({
                         <Stack space={8}>
                             {preamount &&
                                 renderRichText(preamount, {
-                                    truncate: true,
+                                    lineClamp: 1,
                                     color: theme.colors.textPrimary,
                                 })}
                             <Text1
-                                truncate
+                                lineClamp={1}
                                 color={
                                     isErrorAmount && !isInverse
                                         ? theme.colors.textDanger
@@ -140,7 +140,7 @@ export const Header: React.FC<HeaderProps> = ({
                                 {secondaryButton}
                             </ButtonLayout>
                         ))}
-                    {subtitle && renderRichText(subtitle, {truncate: true})}
+                    {subtitle && renderRichText(subtitle, {lineClamp: 1})}
                 </Stack>
             )}
         </Stack>
@@ -160,7 +160,7 @@ export const MainSectionHeader: React.FC<MainSectionHeaderProps> = ({title, desc
         <Stack space={32}>
             <Stack space={isMobile ? 12 : 16}>
                 {title && (
-                    <Text2 role="heading" aria-level={1} truncate>
+                    <Text2 role="heading" aria-level={1} lineClamp={1}>
                         {title}
                     </Text2>
                 )}

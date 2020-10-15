@@ -32,10 +32,10 @@ const useStyles = createUseStyles((theme) => {
             },
         },
         truncate: {
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
+            lineClamp: ({lineClamp}) => lineClamp ?? 'initial',
+            display: 'box',
+            boxOrient: 'vertical',
             overflow: 'hidden',
-            display: 'block',
         },
     };
 });
@@ -46,7 +46,7 @@ export interface TextPresetProps {
     color?: string;
     textDecoration?: 'underline' | 'line-through';
     children?: React.ReactNode;
-    truncate?: boolean;
+    lineClamp?: number;
     uppercase?: boolean;
     id?: string;
     as?: React.ComponentType<any> | string;
@@ -69,7 +69,7 @@ const Text: React.FC<TextProps> = ({
     weight,
     color,
     textDecoration,
-    truncate,
+    lineClamp,
     uppercase,
     as = 'span',
     children,
@@ -96,12 +96,12 @@ const Text: React.FC<TextProps> = ({
         textDecoration,
         uppercase,
         letterSpacing,
+        lineClamp,
     });
     if (!children) {
         return null;
     }
-    const className = classnames(classes.text, {[classes.truncate]: truncate});
-
+    const className = classnames(classes.text, {[classes.truncate]: !!lineClamp});
     return React.createElement(as, {className, id, role, 'aria-level': otherProps['aria-level']}, children);
 };
 
