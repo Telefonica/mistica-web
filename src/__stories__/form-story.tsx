@@ -63,7 +63,7 @@ export const AutomaticForm: StoryComponent = () => {
                 <Switch
                     name="save-cc"
                     render={(switchElement) => (
-                        <Inline space={16}>
+                        <Inline alignItems="center" space={16}>
                             <Text7 regular>Save CC</Text7>
                             {switchElement}
                         </Inline>
@@ -73,7 +73,7 @@ export const AutomaticForm: StoryComponent = () => {
                 <Checkbox
                     name="t&c"
                     render={(checkboxElement) => (
-                        <Inline space={16}>
+                        <Inline alignItems="center" space={16}>
                             {checkboxElement}
                             <Text7 regular>Accept Terms and Conditions</Text7>
                         </Inline>
@@ -158,7 +158,7 @@ export const ManualForm: StoryComponent = () => {
                     checked={saveCC}
                     onChange={setSaveCC}
                     render={(switchElement) => (
-                        <Inline space={16}>
+                        <Inline alignItems="center" space={16}>
                             <Text7 regular>Save CC</Text7>
                             {switchElement}
                         </Inline>
@@ -169,7 +169,7 @@ export const ManualForm: StoryComponent = () => {
                     checked={acceptTC}
                     onChange={setAcceptTC}
                     render={(checkboxElement) => (
-                        <Inline space={16}>
+                        <Inline alignItems="center" space={16}>
                             {checkboxElement}
                             <Text7 regular>Accept Terms and Conditions</Text7>
                         </Inline>

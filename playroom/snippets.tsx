@@ -35,7 +35,7 @@ const formSnippets = [
         '<Checkbox\n' +
             '   name="second"\n' +
             '   render={(checkboxElement) => (\n' +
-            '       <Inline space={16}>\n' +
+            '       <Inline alignItems="center" space={16}>\n' +
             '       {checkboxElement}\n' +
             '       <Text6 regular>Example checkbox</Text6>\n' +
             '       </Inline>\n' +

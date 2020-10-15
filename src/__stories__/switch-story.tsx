@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Switch, Stack, createUseStyles, Inline, Text6} from '..';
+import {Switch, Stack, Inline, Text6} from '..';
 
 export default {
     title: 'Components|Forms/Switch',
@@ -14,7 +14,7 @@ export const Default: StoryComponent = () => {
                 name="second"
                 defaultChecked={false}
                 render={(switchElement) => (
-                    <Inline space={16}>
+                    <Inline alignItems="center" space={16}>
                         <Text6 regular>WiFi</Text6>
                         {switchElement}
                     </Inline>
@@ -25,7 +25,7 @@ export const Default: StoryComponent = () => {
                 checked={checked}
                 onChange={onChange}
                 render={(switchElement) => (
-                    <Inline space={16}>
+                    <Inline alignItems="center" space={16}>
                         <Text6 regular>{checked ? 'on' : 'off'}</Text6>
                         {switchElement}
                     </Inline>
