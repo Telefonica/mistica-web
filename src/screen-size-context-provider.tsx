@@ -27,15 +27,8 @@ const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
             tablet: stripMedia(theme.mq.tablet),
             tabletOrBigger: stripMedia(theme.mq.tabletOrBigger),
             tabletOrSmaller: stripMedia(theme.mq.tabletOrSmaller),
-            desktopOrBigger: stripMedia(theme.mq.desktopOrBigger),
         }),
-        [
-            theme.mq.mobile,
-            theme.mq.tablet,
-            theme.mq.tabletOrBigger,
-            theme.mq.tabletOrSmaller,
-            theme.mq.desktopOrBigger,
-        ]
+        [theme.mq.mobile, theme.mq.tablet, theme.mq.tabletOrBigger, theme.mq.tabletOrSmaller]
     );
 
     const [isMobile, setIsMobile] = React.useState(
@@ -50,9 +43,6 @@ const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
     const [isTabletOrSmaller, setIsTabletOrSmaller] = React.useState(
         () => !isServerSide && window.matchMedia(mediaQueries.tabletOrSmaller).matches
     );
-    const [isDesktopOrBigger, setIsDesktopOrBigger] = React.useState(
-        () => !isServerSide && window.matchMedia(mediaQueries.desktopOrBigger).matches
-    );
 
     useIsomorphicLayoutEffect(() => {
         if (!window.matchMedia) {
@@ -64,7 +54,6 @@ const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
             [mediaQueries.tablet, setIsTablet],
             [mediaQueries.tabletOrBigger, setIsTabletOrBigger],
             [mediaQueries.tabletOrSmaller, setIsTabletOrSmaller],
-            [mediaQueries.desktopOrBigger, setIsDesktopOrBigger],
         ];
 
         const cleanupFunctions = entries.map(([query, setState]) => {
@@ -78,13 +67,7 @@ const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
         });
 
         return () => cleanupFunctions.forEach((fn) => fn());
-    }, [
-        mediaQueries.mobile,
-        mediaQueries.tablet,
-        mediaQueries.tabletOrBigger,
-        mediaQueries.tabletOrSmaller,
-        mediaQueries.desktopOrBigger,
-    ]);
+    }, [mediaQueries.mobile, mediaQueries.tablet, mediaQueries.tabletOrBigger, mediaQueries.tabletOrSmaller]);
 
     const value = React.useMemo(
         () => ({
@@ -92,9 +75,9 @@ const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
             isTablet,
             isTabletOrBigger,
             isTabletOrSmaller,
-            isDesktopOrBigger,
+            isDesktopOrBigger: !isTabletOrSmaller,
         }),
-        [isMobile, isTablet, isTabletOrBigger, isTabletOrSmaller, isDesktopOrBigger]
+        [isMobile, isTablet, isTabletOrBigger, isTabletOrSmaller]
     );
 
     return <ScreenSizeContext.Provider value={value}>{children}</ScreenSizeContext.Provider>;
