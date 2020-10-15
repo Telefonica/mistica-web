@@ -4,7 +4,7 @@ import {useTheme, usePrevious} from './hooks';
 import {getPlatform} from './utils/platform';
 import {SPACE, LEFT, UP, DOWN, RIGHT} from './utils/key-codes';
 import {useControlProps} from './form-context';
-import {getRefsCombiner} from './utils/common';
+import {combineRefs} from './utils/common';
 
 const useStyles = createUseStyles((theme) => ({
     outerCircle: {
@@ -196,7 +196,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
 
     return (
         <div
-            ref={getRefsCombiner(ref, focusableRef)}
+            ref={combineRefs(ref, focusableRef)}
             role="radiogroup"
             aria-labelledby={props['aria-labelledby']}
         >

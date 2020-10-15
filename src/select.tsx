@@ -268,13 +268,12 @@ const Select: React.FC<SelectProps> = ({
     const inputElement = inputRef.current;
 
     React.useEffect(() => {
-        register({
-            name,
-            field: inputRef.current,
+        register(name, {
+            input: inputRef.current,
             focusableElement: focusableRef.current,
         });
         return () => {
-            register({name, field: null, focusableElement: null});
+            register(name, {input: null, focusableElement: null});
         };
     }, [name, register, focusableRef, inputRef, focusableElement, inputElement]);
 

@@ -5,9 +5,8 @@ export type FormErrors = {[name: string]: string | undefined};
 export type FieldValidator = (value: any, rawValue: string) => string | undefined;
 
 export type FieldRegistration = {
-    name: string;
-    field?: HTMLInputElement | HTMLSelectElement | null;
-    validate?: FieldValidator;
+    input?: HTMLInputElement | HTMLSelectElement | null;
+    validator?: FieldValidator;
     focusableElement?: HTMLDivElement | HTMLSelectElement | null;
 };
 
@@ -19,7 +18,7 @@ type Context = {
     values: {[name: string]: any};
     setValue: (param: {readonly name: string; readonly value: any}) => void;
     formStatus: FormStatus;
-    register: (ref: FieldRegistration) => void;
+    register: (name: string, ref: FieldRegistration) => void;
     formErrors: FormErrors;
     setFormError: (param: {readonly name: string; readonly error?: string}) => void;
     jumpToNext: (currentName: string) => void;
@@ -73,8 +72,7 @@ export const useControlProps = <T,>({
         value,
         defaultValue: defaultValue ?? (value === undefined ? rawValues[name] ?? false : undefined),
         focusableRef: (focusableElement: HTMLDivElement | null) =>
-            register({
-                name,
+            register(name, {
                 focusableElement,
             }),
         onChange: (value: T) => {
@@ -154,7 +152,7 @@ export const useFieldProps = ({
             setFormError({name, error: validate?.(values[name], rawValues[name])});
             onBlur?.(e);
         },
-        inputRef: (field: HTMLInputElement | null) => register({name, field, validate}),
+        inputRef: (input: HTMLInputElement | null) => register(name, {input, validator: validate}),
         onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
             const rawValue = event.currentTarget.value;
             const value = processValue(rawValue);

@@ -4,7 +4,7 @@ import {FormContext} from './form-context';
 import {createUseStyles} from './jss';
 import classnames from 'classnames';
 
-import type {FormStatus, FormErrors, FieldValidator, FieldRegistration} from './form-context';
+import type {FormStatus, FormErrors, FieldRegistration} from './form-context';
 
 type FormValues = {[name: string]: any};
 
@@ -13,12 +13,6 @@ const useStyles = createUseStyles(() => ({
         width: '100%',
     },
 }));
-
-type FieldRefs = {
-    input?: HTMLInputElement | HTMLSelectElement | null;
-    validator?: FieldValidator;
-    focusableElement?: HTMLDivElement | HTMLSelectElement | null;
-};
 
 type FormProps = {
     id?: string;
@@ -42,7 +36,7 @@ const Form: React.FC<FormProps> = ({
     const [rawValues, setRawValues] = React.useState(initialValues);
     const [formStatus, setFormStatus] = React.useState<FormStatus>('filling');
     const [formErrors, setFormErrors] = React.useState<FormErrors>({});
-    const fieldRefs = React.useRef(new Map<string, FieldRefs>());
+    const fieldRefs = React.useRef(new Map<string, FieldRegistration>());
     const formRef = React.useRef<HTMLFormElement | null>(null);
     const {texts} = useTheme();
     const classes = useStyles();
@@ -54,7 +48,7 @@ const Form: React.FC<FormProps> = ({
         []
     );
 
-    const register = React.useCallback(({name, field, validate, focusableElement}: FieldRegistration) => {
+    const register = React.useCallback((name, {field, validate, focusableElement}: FieldRegistration) => {
         if (field || focusableElement) {
             fieldRefs.current.set(name, {
                 input: field,
