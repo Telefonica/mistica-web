@@ -5,7 +5,7 @@ export const combineRefs = <T,>(...refs: Array<React.Ref<T> | undefined>) => (re
         if (ref) {
             if (typeof ref === 'function') {
                 ref(refValue);
-            } else if (ref.current) {
+            } else if ('current' in ref) {
                 // @ts-expect-error - current is typed as read-only
                 ref.current = refValue;
             }
