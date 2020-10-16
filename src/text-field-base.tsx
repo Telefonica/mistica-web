@@ -194,7 +194,7 @@ const useStyles = createUseStyles((theme) => ({
         '&[type="datetime-local"]:not(:valid):not(:focus)::-webkit-datetime-edit': {color: 'transparent'},
 
         // Firefox: hide value if not valid or focused
-        // Only apply when Firefox, otherwise it breaks styles safari mobile
+        // Only apply when Firefox, otherwise it breaks styles in safari mobile
         '&[type="date"]:not(:valid):not(:focus)': isFirefox() ? {color: 'transparent'} : {},
         '&[type="datetime-local"]:not(:valid):not(:focus)': isFirefox() ? {color: 'transparent'} : {},
     },
