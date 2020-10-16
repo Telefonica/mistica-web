@@ -36,7 +36,7 @@ const Form: React.FC<FormProps> = ({
     const [rawValues, setRawValues] = React.useState(initialValues);
     const [formStatus, setFormStatus] = React.useState<FormStatus>('filling');
     const [formErrors, setFormErrors] = React.useState<FormErrors>({});
-    const fieldRefs = React.useRef(new Map<string, FieldRegistration>());
+    const fieldRegistrations = React.useRef(new Map<string, FieldRegistration>());
     const formRef = React.useRef<HTMLFormElement | null>(null);
     const {texts} = useTheme();
     const classes = useStyles();
@@ -48,15 +48,15 @@ const Form: React.FC<FormProps> = ({
         []
     );
 
-    const register = React.useCallback((name, {field, validate, focusableElement}: FieldRegistration) => {
-        if (field || focusableElement) {
-            fieldRefs.current.set(name, {
-                input: field,
-                validator: validate,
+    const register = React.useCallback((name, {input, validator, focusableElement}: FieldRegistration) => {
+        if (input || focusableElement) {
+            fieldRegistrations.current.set(name, {
+                input,
+                validator,
                 focusableElement,
             });
         } else {
-            fieldRefs.current.delete(name);
+            fieldRegistrations.current.delete(name);
         }
     }, []);
 
@@ -69,7 +69,7 @@ const Form: React.FC<FormProps> = ({
     const validateFields = React.useCallback((): FormErrors => {
         const errors: FormErrors = {};
         let didFocus = false;
-        for (const [name, {input, validator, focusableElement}] of fieldRefs.current) {
+        for (const [name, {input, validator, focusableElement}] of fieldRegistrations.current) {
             if (input) {
                 if (input.disabled) {
                     continue;
@@ -105,7 +105,7 @@ const Form: React.FC<FormProps> = ({
                     const elements: Array<HTMLElement> = Array.from(
                         formRef.current.querySelectorAll('input, select')
                     );
-                    const currentElement = fieldRefs.current.get(currentName)?.input;
+                    const currentElement = fieldRegistrations.current.get(currentName)?.input;
                     const currentIndex = elements.indexOf(currentElement as HTMLElement);
                     if (currentIndex >= 0) {
                         const nextElement = elements[currentIndex + 1];
@@ -122,9 +122,9 @@ const Form: React.FC<FormProps> = ({
     );
 
     const getNonDisabledValues = (values: {[name: string]: string}) =>
-        [...fieldRefs.current.keys()].reduce(
+        [...fieldRegistrations.current.keys()].reduce(
             (nonDisabled, name) =>
-                fieldRefs.current.get(name)?.input?.disabled
+                fieldRegistrations.current.get(name)?.input?.disabled
                     ? nonDisabled
                     : {...nonDisabled, [name]: values[name]},
             {}
