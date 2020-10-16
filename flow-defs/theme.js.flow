@@ -194,7 +194,8 @@ export type Theme = {
     desktop: string,
     largeDesktop: string,
     tabletOrBigger: string,
-    tabletOrSmaller: string
+    tabletOrSmaller: string,
+    desktopOrBigger: string
   },
   colors: ThemeColors,
   Link: LinkComponent

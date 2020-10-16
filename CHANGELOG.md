@@ -1,3 +1,17 @@
+# [6.5.0](https://github.com/Telefonica/mistica-web/compare/v6.4.0...v6.5.0) (2020-10-15)
+
+### Bug Fixes
+
+- **CI:** update vercel action version ([#132](https://github.com/Telefonica/mistica-web/issues/132))
+  ([787033f](https://github.com/Telefonica/mistica-web/commit/787033f69dd27a245f787a99c32b905f4456ea98))
+
+### Features
+
+- **Inline:** support 2, 4 and 12px space
+  ([d7a71c6](https://github.com/Telefonica/mistica-web/commit/d7a71c6620cbfaf3df2fa5094f1630a2b08c4c77))
+- **media queries:** add new isDesktopOrBigger media query
+  ([aca5479](https://github.com/Telefonica/mistica-web/commit/aca5479b518963529a0959b9f7b66e7aa1f774c3))
+
 # [6.4.0](https://github.com/Telefonica/mistica-web/compare/v6.3.0...v6.4.0) (2020-10-09)
 
 ### Bug Fixes

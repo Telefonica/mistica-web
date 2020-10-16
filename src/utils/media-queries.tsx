@@ -15,6 +15,7 @@ export const createMediaQueries = ({
     largeDesktop: string;
     tabletOrBigger: string;
     tabletOrSmaller: string;
+    desktopOrBigger: string;
 } => ({
     mobile:
         `@media only screen and (max-width: ${tabletMinWidth - 1}px), ` +
@@ -42,4 +43,9 @@ export const createMediaQueries = ({
     tabletOrSmaller:
         `@media only screen and (max-width: ${desktopMinWidth - 1}px), ` +
         `(max-height: ${desktopOrTabletMinHeight - 1}px)`,
+
+    desktopOrBigger:
+        `@media only screen ` +
+        `and (min-height: ${desktopOrTabletMinHeight}px) ` +
+        `and (min-width: ${desktopMinWidth}px)`,
 });

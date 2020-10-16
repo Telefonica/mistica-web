@@ -10,9 +10,8 @@ export type FormStatus = "filling" | "sending";
 export type FormErrors = { [name: string]: string | void, ... };
 export type FieldValidator = (value: any, rawValue: string) => string | void;
 export type FieldRegistration = {
-  name: string,
-  field?: HTMLInputElement | HTMLSelectElement | null,
-  validate?: FieldValidator,
+  input?: HTMLInputElement | HTMLSelectElement | null,
+  validator?: FieldValidator,
   focusableElement?: HTMLDivElement | HTMLSelectElement | null
 };
 declare type Context = {
@@ -27,7 +26,7 @@ declare type Context = {
     +value: any
   }) => void,
   formStatus: FormStatus,
-  register: (ref: FieldRegistration) => void,
+  register: (name: string, ref: FieldRegistration) => void,
   formErrors: FormErrors,
   setFormError: (param: {
     +name: string,
