@@ -63,9 +63,9 @@ export const AutomaticForm: StoryComponent = () => {
                 <Switch
                     name="save-cc"
                     render={(switchElement) => (
-                        <Inline alignItems="center" space={16}>
-                            <Text7 regular>Save CC</Text7>
+                        <Inline alignItems="center" space={8}>
                             {switchElement}
+                            <Text7 regular>Save CC</Text7>
                         </Inline>
                     )}
                 />
@@ -158,9 +158,9 @@ export const ManualForm: StoryComponent = () => {
                     checked={saveCC}
                     onChange={setSaveCC}
                     render={(switchElement) => (
-                        <Inline alignItems="center" space={16}>
-                            <Text7 regular>Save CC</Text7>
+                        <Inline alignItems="center" space={8}>
                             {switchElement}
+                            <Text7 regular>Save CC</Text7>
                         </Inline>
                     )}
                 />

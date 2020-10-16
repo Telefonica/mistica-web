@@ -14,9 +14,9 @@ export const Default: StoryComponent = () => {
                 name="second"
                 defaultChecked={false}
                 render={(switchElement) => (
-                    <Inline alignItems="center" space={16}>
-                        <Text6 regular>WiFi</Text6>
+                    <Inline alignItems="center" space={8}>
                         {switchElement}
+                        <Text6 regular>WiFi</Text6>
                     </Inline>
                 )}
             />
@@ -25,9 +25,9 @@ export const Default: StoryComponent = () => {
                 checked={checked}
                 onChange={onChange}
                 render={(switchElement) => (
-                    <Inline alignItems="center" space={16}>
-                        <Text6 regular>{checked ? 'on' : 'off'}</Text6>
+                    <Inline alignItems="center" space={8}>
                         {switchElement}
+                        <Text6 regular>{checked ? 'on' : 'off'}</Text6>
                     </Inline>
                 )}
             />
