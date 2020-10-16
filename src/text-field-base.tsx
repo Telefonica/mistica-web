@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {Label, HelperText, FieldContainer} from './text-field-components';
-import {isIos, isRunningAcceptanceTest, isChrome} from './utils/platform';
+import {isIos, isRunningAcceptanceTest, isChrome, isFirefox} from './utils/platform';
 import {useAriaId, useTheme} from './hooks';
 import classNames from 'classnames';
 
@@ -194,8 +194,9 @@ const useStyles = createUseStyles((theme) => ({
         '&[type="datetime-local"]:not(:valid):not(:focus)::-webkit-datetime-edit': {color: 'transparent'},
 
         // Firefox: hide value if not valid or focused
-        '&[type="date"]:not(:valid):not(:focus)': {color: 'transparent'},
-        '&[type="datetime-local"]:not(:valid):not(:focus)': {color: 'transparent'},
+        // Only apply when Firefox, otherwise it breaks styles safari mobile
+        '&[type="date"]:not(:valid):not(:focus)': isFirefox() ? {color: 'transparent'} : {},
+        '&[type="datetime-local"]:not(:valid):not(:focus)': isFirefox() ? {color: 'transparent'} : {},
     },
     endIcon: {
         paddingLeft: 16,
