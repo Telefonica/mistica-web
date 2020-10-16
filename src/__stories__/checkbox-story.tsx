@@ -14,7 +14,7 @@ export const Default: StoryComponent = () => {
                 name="second"
                 defaultChecked={false}
                 render={(checkboxElement) => (
-                    <Inline alignItems="center" space={16}>
+                    <Inline alignItems="center" space={8}>
                         {checkboxElement}
                         <Text6 regular>You accept to sell your soul</Text6>
                     </Inline>
@@ -25,7 +25,7 @@ export const Default: StoryComponent = () => {
                 checked={checked}
                 onChange={onChange}
                 render={(checkboxElement) => (
-                    <Inline alignItems="center" space={16}>
+                    <Inline alignItems="center" space={8}>
                         {checkboxElement}
                         <Text6 regular>You accept to sell your soul: {checked ? 'sure!' : 'nahh'}</Text6>
                     </Inline>

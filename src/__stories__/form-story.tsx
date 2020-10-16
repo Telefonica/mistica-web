@@ -73,7 +73,7 @@ export const AutomaticForm: StoryComponent = () => {
                 <Checkbox
                     name="t&c"
                     render={(checkboxElement) => (
-                        <Inline alignItems="center" space={16}>
+                        <Inline alignItems="center" space={8}>
                             {checkboxElement}
                             <Text7 regular>Accept Terms and Conditions</Text7>
                         </Inline>
@@ -169,7 +169,7 @@ export const ManualForm: StoryComponent = () => {
                     checked={acceptTC}
                     onChange={setAcceptTC}
                     render={(checkboxElement) => (
-                        <Inline alignItems="center" space={16}>
+                        <Inline alignItems="center" space={8}>
                             {checkboxElement}
                             <Text7 regular>Accept Terms and Conditions</Text7>
                         </Inline>
