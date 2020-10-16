@@ -110,15 +110,6 @@ test.each(STORY_TYPES)('FormPasswordField (%s)', async (storyType) => {
     await expect(getValue(field)).resolves.toBe('patata123');
 });
 
-test.each(STORY_TYPES)('FormDateField (%s)', async (storyType) => {
-    const page = await openStoryPage(getStoryOfType(storyType));
-
-    const field = await screen.findByLabelText('Date');
-
-    await clearAndType(page, field, '06101980');
-    await expect(getValue(field)).resolves.toBe('1980-10-06');
-});
-
 test.each(STORY_TYPES)('FormPhoneNumberField (%s)', async (storyType) => {
     const page = await openStoryPage(getStoryOfType(storyType));
 
