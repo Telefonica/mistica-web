@@ -392,7 +392,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                     </Label>
                 )}
                 {endIcon && <div className={classes.endIcon}>{endIcon}</div>}
-                {!!endIconOverlay && endIconOverlay}
+                {endIconOverlay}
             </FieldContainer>
         );
     }
