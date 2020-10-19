@@ -60,9 +60,9 @@ const FormDateField: React.FC<FormDateFieldProps> = ({
         />
     );
 
-    // if (hasNativePicker || isServerSide()) {
-    //     return nativePicker;
-    // }
+    if (hasNativePicker || isServerSide()) {
+        return nativePicker;
+    }
 
     return (
         <React.Suspense fallback={nativePicker}>
