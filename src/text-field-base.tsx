@@ -174,7 +174,7 @@ const useStyles = createUseStyles((theme) => ({
             WebkitAppearance: 'none',
         },
 
-        // Chrome: make the native arrow invisible and stretch it over the whole field so you can click
+        // Chrome: make the native icon invisible and stretch it over the whole field so you can click
         // anywhere in the input field to trigger the native datepicker
         '&::-webkit-calendar-picker-indicator': {
             position: 'absolute',
