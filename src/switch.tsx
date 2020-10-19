@@ -147,7 +147,7 @@ const Switch: React.FC<Props> = (props) => {
 
     return (
         <span
-            role="checkbox"
+            role="switch"
             aria-checked={value ?? checkedState}
             onClick={handleChange}
             onKeyDown={handleKeyDown}
