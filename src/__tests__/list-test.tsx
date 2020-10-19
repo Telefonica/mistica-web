@@ -37,7 +37,7 @@ test('Row with switch', () => {
         </RowList>
     );
 
-    const switchEl = screen.getByRole('checkbox', {name: 'Title'});
+    const switchEl = screen.getByRole('switch', {name: 'Title'});
 
     expect(switchEl).not.toBeChecked();
 

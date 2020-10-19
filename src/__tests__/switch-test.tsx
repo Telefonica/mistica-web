@@ -7,7 +7,7 @@ import userEvent from '@testing-library/user-event';
 test('renders accesible switch', () => {
     render(<Switch name="switch" defaultChecked={false} />);
 
-    const switchElement = screen.getByRole('checkbox');
+    const switchElement = screen.getByRole('switch');
 
     expect(switchElement).toBeInTheDocument();
     expect(switchElement.getAttribute('aria-checked')).toBe('false');
@@ -21,7 +21,7 @@ test('controlled mode', () => {
 
     render(<Component />);
 
-    const switchElement = screen.getByRole('checkbox');
+    const switchElement = screen.getByRole('switch');
 
     expect(switchElement.getAttribute('aria-checked')).toBe('false');
     fireEvent.click(switchElement);
@@ -31,7 +31,7 @@ test('controlled mode', () => {
 test('uncontrolled mode', () => {
     render(<Switch name="switch" defaultChecked />);
 
-    const switchElement = screen.getByRole('checkbox');
+    const switchElement = screen.getByRole('switch');
 
     expect(switchElement.getAttribute('aria-checked')).toBe('true');
     fireEvent.click(switchElement);
@@ -43,7 +43,7 @@ test('uncontrolled mode with onChange handler', async () => {
 
     render(<Switch name="switch" onChange={onChangeSpy} defaultChecked />);
 
-    const switchElement = screen.getByRole('checkbox');
+    const switchElement = screen.getByRole('switch');
 
     expect(switchElement.getAttribute('aria-checked')).toBe('true');
     fireEvent.click(switchElement);
@@ -62,7 +62,7 @@ test('form controlled mode', async () => {
         </Form>
     );
 
-    const switchElement = screen.getByRole('checkbox');
+    const switchElement = screen.getByRole('switch');
 
     expect(switchElement.getAttribute('aria-checked')).toBe('true');
     fireEvent.click(switchElement);
@@ -86,7 +86,7 @@ test('form uncontrolled mode', async () => {
         </Form>
     );
 
-    const switchElement = screen.getByRole('checkbox');
+    const switchElement = screen.getByRole('switch');
 
     expect(switchElement.getAttribute('aria-checked')).toBe('false');
     fireEvent.click(switchElement);
