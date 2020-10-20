@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {Label, HelperText, FieldContainer} from './text-field-components';
-import {isIos, isRunningAcceptanceTest, isChrome} from './utils/platform';
+import {isIos, isRunningAcceptanceTest, isChrome, isFirefox} from './utils/platform';
 import {useAriaId, useTheme} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
@@ -77,6 +77,7 @@ interface TextFieldBaseProps {
     prefix?: React.ReactNode;
     startIcon?: React.ReactNode;
     endIcon?: React.ReactNode;
+    endIconOverlay?: React.ReactNode;
     style?: React.CSSProperties;
     value?: string;
     inputRef?: React.Ref<HTMLInputElement | HTMLSelectElement>;
@@ -138,9 +139,6 @@ const commonInputStyles = (theme: Theme) => ({
     '&:disabled': {
         color: theme.colors.border,
     },
-    '&::-webkit-calendar-picker-indicator': {
-        marginTop: ({label}: {label: string}) => (label ? -12 : 'initial'),
-    },
     boxShadow: 'none', // reset FF red shadow styles for required inputs
 });
 
@@ -164,6 +162,7 @@ const useStyles = createUseStyles((theme) => ({
         ...commonInputStyles(theme),
     },
     input: {
+        position: 'relative',
         paddingTop: ({label}) => (label ? 24 : 16),
         paddingBottom: ({label}) => (label ? 8 : 16),
         height: '100%',
@@ -175,6 +174,30 @@ const useStyles = createUseStyles((theme) => ({
         '&::-webkit-search-decoration': {
             WebkitAppearance: 'none',
         },
+
+        // Chrome: make the native icon invisible and stretch it over the whole field so you can click
+        // anywhere in the input field to trigger the native datepicker
+        '&::-webkit-calendar-picker-indicator': {
+            position: 'absolute',
+            top: 0,
+            left: -24, // to fully cover input area
+            right: 0,
+            bottom: 0,
+            width: 'auto',
+            height: 'auto',
+            opacity: 0,
+            color: 'transparent',
+            background: 'transparent',
+        },
+
+        // Chrome: hide value if not valid or focused
+        '&[type="date"]:not(:valid):not(:focus)::-webkit-datetime-edit': {color: 'transparent'},
+        '&[type="datetime-local"]:not(:valid):not(:focus)::-webkit-datetime-edit': {color: 'transparent'},
+
+        // Firefox: hide value if not valid or focused
+        // Only apply when Firefox, otherwise it breaks styles in safari mobile
+        '&[type="date"]:not(:valid):not(:focus)': isFirefox() ? {color: 'transparent'} : {},
+        '&[type="datetime-local"]:not(:valid):not(:focus)': isFirefox() ? {color: 'transparent'} : {},
     },
     endIcon: {
         paddingLeft: 16,
@@ -224,6 +247,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             prefix,
             startIcon,
             endIcon,
+            endIconOverlay,
             shrinkLabel,
             multiline = false,
             focus,
@@ -356,6 +380,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                     </Label>
                 )}
                 {endIcon && <div className={classes.endIcon}>{endIcon}</div>}
+                {endIconOverlay}
             </FieldContainer>
         );
     }

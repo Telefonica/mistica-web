@@ -1,3 +1,13 @@
+# [6.6.0](https://github.com/Telefonica/mistica-web/compare/v6.5.0...v6.6.0) (2020-10-20)
+
+### Features
+
+- **DateField:** Date and DateTime improvements (custom icon, improved styles and ux)
+  ([#136](https://github.com/Telefonica/mistica-web/issues/136))
+  ([2542185](https://github.com/Telefonica/mistica-web/commit/2542185be9e06e83c2f9a4dd2d509c35b301d564))
+- **Text:** new `wordBreak` prop.
+  ([3895f71](https://github.com/Telefonica/mistica-web/commit/3895f71bbd8e0f09149def7e30783cce8b682e81))
+
 # [6.5.0](https://github.com/Telefonica/mistica-web/compare/v6.4.0...v6.5.0) (2020-10-15)
 
 ### Bug Fixes

@@ -111,11 +111,10 @@ test.each(STORY_TYPES)('PasswordField (%s)', async (storyType) => {
 });
 
 test.each(STORY_TYPES)('DateField (%s)', async (storyType) => {
-    const page = await openStoryPage(getStoryOfType(storyType));
-
+    await openStoryPage(getStoryOfType(storyType));
     const field = await screen.findByLabelText('Date');
-
-    await clearAndType(page, field, '06101980');
+    await field.focus();
+    await field.type('06101980');
     await expect(getValue(field)).resolves.toBe('1980-10-06');
 });
 

@@ -5,6 +5,7 @@ import {isInputTypeSupported} from './utils/dom';
 import {isServerSide} from './utils/environment';
 
 import type {CommonFormFieldProps} from './text-field-base';
+import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
 
 export interface DateFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
@@ -46,14 +47,25 @@ const FormDateField: React.FC<DateFieldProps> = ({
         onChangeValue,
     });
 
+    const nativePicker = (
+        <TextFieldBase
+            {...rest}
+            {...fieldProps}
+            type="datetime-local"
+            endIconOverlay={
+                <div style={{position: 'absolute', top: 16, right: 16, pointerEvents: 'none'}}>
+                    <IconCalendarRegular />
+                </div>
+            }
+        />
+    );
+
     if (hasNativePicker || isServerSide()) {
-        return <TextFieldBase {...rest} {...fieldProps} shrinkLabel type="datetime-local" />;
+        return nativePicker;
     }
 
     return (
-        <React.Suspense
-            fallback={<TextFieldBase {...rest} {...fieldProps} disabled shrinkLabel type="datetime-local" />}
-        >
+        <React.Suspense fallback={nativePicker}>
             <ReactDateTimePicker {...rest} {...fieldProps} withTime />
         </React.Suspense>
     );
