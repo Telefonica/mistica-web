@@ -30,6 +30,7 @@ export interface DateTimePickerProps extends CommonFormFieldProps {
 // styles from "react-datetime/css/react-datetime.css" converted to JSS "as is"
 const useStyles = createUseStyles(() => ({
     reactDatePicker: {
+        '& td, & th': {verticalAlign: 'middle'},
         '& .rdt': {position: 'relative', userSelect: 'none'},
         '& .rdtPicker': {
             display: 'none',
@@ -157,6 +158,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, ...rest}) => {
         const value =
             typeof moment === 'string' ? moment : moment.format(withTime ? 'yyyy-MM-DD hh:mm' : 'yyyy-MM-DD');
         if (fieldRef.current) {
+            fieldRef.current.focus();
             rest.onChange?.(createChangeEvent(fieldRef.current, value));
         }
     };
