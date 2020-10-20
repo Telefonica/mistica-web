@@ -13,6 +13,7 @@ export type TextPresetProps = {
   children?: React.Node,
   truncate?: boolean,
   uppercase?: boolean,
+  wordBreak?: boolean,
   id?: string,
   as?: React.ComponentType<any> | string,
   role?: string,
