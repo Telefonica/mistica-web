@@ -32,7 +32,7 @@ const useStyles = createUseStyles((theme) => {
             },
         },
         truncate: {
-            lineClamp: ({lineClamp}) => lineClamp ?? 'initial',
+            '-webkit-line-clamp': ({lineClamp}) => lineClamp ?? 'initial',
             display: 'box',
             boxOrient: 'vertical',
             overflow: 'hidden',

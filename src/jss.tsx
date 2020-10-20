@@ -23,7 +23,7 @@ const autoBoxSizing = () => {
 };
 
 const jss = createJss();
-jss.use(vendorPrefixer(), ruleValueFunction(), nested(), camelCase(), defaultUnit(), autoBoxSizing());
+jss.use(ruleValueFunction(), nested(), camelCase(), defaultUnit(), vendorPrefixer(), autoBoxSizing());
 
 export const getJss = (): any => jss;
 
