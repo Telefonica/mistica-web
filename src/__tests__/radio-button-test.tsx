@@ -2,16 +2,18 @@ import * as React from 'react';
 import RadioButton, {RadioGroup} from '../radio-button';
 import SectionTitle from '../section-title';
 import {render, screen, within, fireEvent} from '@testing-library/react';
+import {ThemeContextProvider} from '..';
+import {makeTheme} from './test-utils';
 
 test('RadioGroup (uncontrolled)', () => {
     render(
-        <div>
+        <ThemeContextProvider theme={makeTheme()}>
             <SectionTitle id="label">Choose a fruit</SectionTitle>
             <RadioGroup aria-labelledby="label" defaultValue="banana">
                 <RadioButton value="banana" />
                 <RadioButton value="apple" />
             </RadioGroup>
-        </div>
+        </ThemeContextProvider>
     );
 
     const group = screen.getByLabelText('Choose a fruit');
@@ -33,18 +35,22 @@ test('RadioGroup (controlled)', () => {
     const Component = () => {
         const [fruit, setFruit] = React.useState('apple');
         return (
-            <div>
+            <ThemeContextProvider theme={makeTheme()}>
                 <SectionTitle id="label">Choose a fruit</SectionTitle>
                 <RadioGroup aria-labelledby="label" value={fruit} onChange={setFruit}>
                     <RadioButton value="banana" />
                     <RadioButton value="apple" />
                 </RadioGroup>
                 <div>you have selected {fruit}</div>
-            </div>
+            </ThemeContextProvider>
         );
     };
 
-    render(<Component />);
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Component />
+        </ThemeContextProvider>
+    );
 
     expect(screen.getByText('you have selected apple')).toBeInTheDocument();
 
@@ -66,13 +72,13 @@ test('RadioGroup (controlled)', () => {
 
 test('Radio custom render', () => {
     render(
-        <div>
+        <ThemeContextProvider theme={makeTheme()}>
             <SectionTitle id="label">Choose a fruit</SectionTitle>
             <RadioGroup aria-labelledby="label" defaultValue="banana">
                 <RadioButton value="banana" render={(radio) => <div>banana {radio}</div>} />
                 <RadioButton value="apple" render={(radio) => <div>apple {radio}</div>} />
             </RadioGroup>
-        </div>
+        </ThemeContextProvider>
     );
 
     expect(screen.getByText('banana')).toBeInTheDocument();

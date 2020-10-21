@@ -20,12 +20,10 @@ export const applyAlpha = (color: string, alpha: number): string => {
     try {
         if (color.startsWith('var(')) {
             // it's a css variable
-            const cssColorVar = color;
-            return `rgba(${cssColorVar.slice(0, -1)}_RAW, ${alpha})`;
+            return `rgba(${color.slice(0, -1)}_RAW, ${alpha})`;
         } else {
             // it's a hex color
-            const hexColor = color;
-            return `rgba(${fromHexToRgb(hexColor).join(',')}, ${alpha})`;
+            return `rgba(${fromHexToRgb(color).join(',')}, ${alpha})`;
         }
     } catch (e) {
         return color;

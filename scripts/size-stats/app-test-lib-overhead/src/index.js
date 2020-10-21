@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {ThemeContextProvider, IconTruckFilled} from '@telefonica/mistica';
+import {ThemeContextProvider, IconTruckFilled, getMovistarSkin} from '@telefonica/mistica';
 
 /*
 Using React.createElement so we don't need to compile JSX
 
 <React.StrictMode>
     <ThemeContextProvider
-        theme={{skin: 'Movistar', i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}}}
+        theme={{skin: getMovistarSkin(), i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}}}
     >
         <IconTruckFilled />
     </ThemeContextProvider>
@@ -21,7 +21,10 @@ ReactDOM.render(
         React.createElement(
             ThemeContextProvider,
             {
-                theme: {skin: 'Movistar', i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}},
+                theme: {
+                    skin: getMovistarSkin(),
+                    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+                },
             },
             React.createElement(IconTruckFilled, {})
         )

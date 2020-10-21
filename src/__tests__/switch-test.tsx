@@ -1,10 +1,15 @@
 // @flow
 import * as React from 'react';
 import {render, waitFor, fireEvent, screen} from '@testing-library/react';
-import {Switch} from '..';
+import {Switch, ThemeContextProvider} from '..';
+import {makeTheme} from './test-utils';
 
 test('renders accesible switch', () => {
-    render(<Switch defaultChecked={false} />);
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Switch defaultChecked={false} />
+        </ThemeContextProvider>
+    );
 
     const switchElement = screen.getByRole('checkbox');
 
@@ -18,7 +23,11 @@ test('controlled mode', () => {
         return <Switch onChange={setChecked} checked={checked} />;
     };
 
-    render(<Component />);
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Component />
+        </ThemeContextProvider>
+    );
 
     const switchElement = screen.getByRole('checkbox');
 
@@ -28,7 +37,11 @@ test('controlled mode', () => {
 });
 
 test('uncontrolled mode', () => {
-    render(<Switch defaultChecked />);
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Switch defaultChecked />
+        </ThemeContextProvider>
+    );
 
     const switchElement = screen.getByRole('checkbox');
 
@@ -40,7 +53,11 @@ test('uncontrolled mode', () => {
 test('uncontrolled mode with onChange handler', async () => {
     const onChangeSpy = jest.fn();
 
-    render(<Switch onChange={onChangeSpy} defaultChecked />);
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Switch onChange={onChangeSpy} defaultChecked />
+        </ThemeContextProvider>
+    );
 
     const switchElement = screen.getByRole('checkbox');
 

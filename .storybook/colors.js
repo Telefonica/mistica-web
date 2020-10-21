@@ -1,13 +1,14 @@
+// @ts-check
 // Workaround until these issues get fixed and released
 // https://github.com/storybookjs/storybook/pull/10980
 // https://github.com/storybookjs/storybook/pull/10813
 //
 // At this moment we cannot write addon's register in TSX (extension must be .js)
 // but then we cannot import stuff from ./src
-// So this module replaces the required parts from ./src/colors.tsx
+// So this module replaces the required parts from ./src/skins
 
 /**
- * @param {'Movistar' | 'Vivo' | 'O2'} skin
+ * @param {'Movistar' | 'Vivo' | 'O2' | 'O2-classic'} skin
  */
 export const getColors = (skin) => {
     switch (skin) {

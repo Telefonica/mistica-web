@@ -2,8 +2,9 @@ import * as React from 'react';
 import addonApi, {types} from '@storybook/addons';
 import {WithTooltip, IconButton, TooltipLinkList} from '@storybook/components';
 import {getColors} from '../colors';
-import {AVAILABLE_THEMES} from './themes';
 import createManagerTheme from '../storybook-manager-theme';
+
+const AVAILABLE_SKINS = ['Movistar', 'O2', 'O2-classic', 'Vivo'];
 
 const renderPrimaryColorDot = (skin) => (
     <div
@@ -54,12 +55,12 @@ const ThemeSelectorAddon = ({api}) => {
             closeOnClick
             tooltip={({onHide}) => (
                 <TooltipLinkList
-                    links={AVAILABLE_THEMES.map((theme) => ({
-                        id: theme.skin,
-                        title: theme.skin,
-                        right: renderPrimaryColorDot(theme.skin),
+                    links={AVAILABLE_SKINS.map((skin) => ({
+                        id: skin,
+                        title: skin,
+                        right: renderPrimaryColorDot(skin),
                         onClick: () => {
-                            setCurrentSkin(theme.skin);
+                            setCurrentSkin(skin);
                             onHide();
                         },
                     }))}

@@ -2,9 +2,17 @@ import './css/roboto.css';
 import './css/main.css';
 import * as React from 'react';
 import {addDecorator} from '@storybook/react';
-import {ThemeContextProvider, Box, MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN, O2_CLASSIC_SKIN} from '../src';
+import {
+    ThemeContextProvider,
+    Box,
+    MOVISTAR_SKIN,
+    VIVO_SKIN,
+    O2_SKIN,
+    O2_CLASSIC_SKIN,
+    ThemeConfig,
+} from '../src';
+import {AVAILABLE_THEMES, Movistar} from './themes';
 import addons from '@storybook/addons';
-import getTheme from './theme-selector-addon/themes';
 
 const getUserAgent = () => self.navigator.userAgent || '';
 const isRunningAcceptanceTest = () => getUserAgent().includes('acceptance-test');
@@ -25,7 +33,7 @@ const acceptanceStyles = `
     height: 0 !important;
 }`;
 
-const LayoutDecorator = ({Story, context}) => {
+const LayoutDecorator = ({Story, context}: any) => {
     const styles = isRunningAcceptanceTest() ? <style>{acceptanceStyles}</style> : null;
 
     return (
@@ -38,19 +46,35 @@ const LayoutDecorator = ({Story, context}) => {
     );
 };
 
-const getSkin = (searchParams) => {
+const getSkin = (searchParams: URLSearchParams) => {
     const qsSkin = searchParams.get('skin');
     return [MOVISTAR_SKIN, O2_SKIN, O2_CLASSIC_SKIN, VIVO_SKIN].find((skin) => skin === qsSkin);
 };
 
-const getPlatform = (searchParams) => {
+const getPlatform = (searchParams: URLSearchParams): 'ios' | 'android' | undefined => {
     const qsPlatform = searchParams.get('platform');
-    return ['ios', 'android'].find((platform) => platform === qsPlatform);
+    if (qsPlatform === 'ios' || qsPlatform === 'android') {
+        return qsPlatform;
+    }
+    return;
 };
 
-const ThemeDecorator = ({Story}) => {
+const getTheme = (selectedSkin: string, platform?: 'ios' | 'android'): ThemeConfig => {
+    const themeConfig = AVAILABLE_THEMES.find(({skin}) => skin.name === selectedSkin) || Movistar;
+    return platform
+        ? {
+              ...themeConfig,
+              platformOverrides: {
+                  platform,
+                  insideNovumNativeApp: true,
+              },
+          }
+        : themeConfig;
+};
+
+const ThemeDecorator = ({Story}: any) => {
     const searchParams = new URLSearchParams(location.search);
-    const [skin, setSkin] = React.useState(getSkin(searchParams));
+    const [skin, setSkin] = React.useState(String(getSkin(searchParams)));
 
     React.useEffect(() => {
         const channel = addons.getChannel();

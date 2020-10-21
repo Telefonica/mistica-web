@@ -116,14 +116,18 @@ declare export {
   ThemeVariant,
   useIsInverseVariant
 } from "./theme-variant-context";
+declare export { Skin, SkinName } from "./skins/types";
 declare export {
-  getColors,
-  MOVISTAR_SKIN,
   VIVO_SKIN,
+  O2_CLASSIC_SKIN,
   O2_SKIN,
-  O2_CLASSIC_SKIN
-} from "./colors";
-declare export { Skin } from "./colors";
+  MOVISTAR_SKIN
+} from "./skins/constants";
+declare export { getSkinByName } from "./skins/utils";
+declare export { getVivoSkin } from "./skins/vivo";
+declare export { getMovistarSkin } from "./skins/movistar";
+declare export { getO2Skin } from "./skins/o2";
+declare export { getO2ClassicSkin } from "./skins/o2-classic";
 declare export { Locale } from "./utils/locale";
 declare export { TrackingEvent } from "./utils/types";
 declare export { RegionCode } from "./utils/region-code";

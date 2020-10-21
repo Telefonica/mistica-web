@@ -149,7 +149,7 @@ const getRegularOrMediumWeight = (props: RegularMediumProps) =>
 const getAllWeights = (props: LightRegularMediumProps) =>
     (props.light && 'light') || (props.regular && 'regular') || (props.medium && 'medium');
 
-const isIos = getPlatform({}) === 'ios';
+const isIos = getPlatform() === 'ios';
 
 export const Text1: React.FC<TextPresetProps> = (props) => (
     <Text
