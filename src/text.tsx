@@ -45,6 +45,7 @@ const useStyles = createUseStyles((theme) => {
         truncate: {
             '-webkit-line-clamp': lineClamp,
             lineClamp,
+            wordBreak: ({truncate}) => (truncate === 1 || truncate === true ? 'break-all' : 'normal'),
             display: 'box',
             boxOrient: 'vertical',
             overflow: 'hidden',
