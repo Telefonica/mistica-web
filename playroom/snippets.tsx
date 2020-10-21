@@ -12,23 +12,43 @@ const buttonSnippets = ['ButtonPrimary', 'ButtonSecondary', 'ButtonDanger'].map(
 
 const formSnippets = [
     [
-        'FormSelect',
-        `<FormSelect name="fruits" label="Choose a fruit" options={[{value: 'orange', text: 'Orange'}, {value: 'banana', text: 'Banana'}]}/>`,
+        'Select',
+        `<Select name="fruits" label="Choose a fruit" options={[{value: 'orange', text: 'Orange'}, {value: 'banana', text: 'Banana'}]}/>`,
     ],
-    ['FormTextField', '<FormTextField name="name" label="Name"/>'],
-    ['FormEmailField', '<FormEmailField name="email" label="e-mail"/>'],
-    ['FormPhoneNumberField', '<FormPhoneNumberField name="phone" label="Phone"/>'],
-    ['FormCreditCardFields', '<FormCreditCardFields/>'],
-    ['FormDateField', '<FormDateField name="date" label="Date"/>'],
-    ['FormDecimalField', '<FormDecimalField name="decimal" label="Decimal"/>'],
-    ['FormIntegerField', '<FormIntegerField name="integer" label="Integer"/>'],
-    ['FormPasswordField', '<FormPasswordField name="password" label="Password"/>'],
+    ['TextField', '<TextField name="name" label="Name"/>'],
+    ['EmailField', '<EmailField name="email" label="e-mail"/>'],
+    ['PhoneNumberField', '<PhoneNumberField name="phone" label="Phone"/>'],
+    ['CreditCardFields', '<CreditCardFields/>'],
+    ['DateField', '<DateField name="date" label="Date"/>'],
+    ['DecimalField', '<DecimalField name="decimal" label="Decimal"/>'],
+    ['IntegerField', '<IntegerField name="integer" label="Integer"/>'],
+    ['PasswordField', '<PasswordField name="password" label="Password"/>'],
     [
-        'FormCreditCardExpirationField',
-        '<FormCreditCardExpirationField name="expiration-date" label="Expiration date"/>',
+        'CreditCardExpirationField',
+        '<CreditCardExpirationField name="expiration-date" label="Expiration date"/>',
     ],
-    ['FormCvvField', '<FormCvvField name="cvv" label="CVV"/>'],
-    ['FormSearchField', '<FormSearchField name="search" label="Search"/>'],
+    ['CvvField', '<CvvField name="cvv" label="CVV"/>'],
+    ['SearchField', '<SearchField name="search" label="Search"/>'],
+    ['Switch', '<Switch name="switch"/>'],
+    [
+        'Checkbox',
+        '<Checkbox\n' +
+            '   name="second"\n' +
+            '   render={(checkboxElement) => (\n' +
+            '       <Inline alignItems="center" space={8}>\n' +
+            '       {checkboxElement}\n' +
+            '       <Text6 regular>Example checkbox</Text6>\n' +
+            '       </Inline>\n' +
+            '   )}\n' +
+            '/>',
+    ],
+    [
+        'RadioGroup',
+        '<RadioGroup name="juicy-fruit" aria-labelledby="label" defaultValue="banana">\n' +
+            '  <RadioButton value="banana" render={(radio) => <span>Banana {radio}</span>} />\n' +
+            '  <RadioButton value="apple" render={(radio) => <span>Apple {radio}</span>} />\n' +
+            '</RadioGroup>',
+    ],
     [
         'Form',
         `
@@ -42,8 +62,8 @@ const formSnippets = [
         >
             <Box padding={16}>
                 <Stack space={16}>
-                    <FormTextField name="name" label="Name" />
-                    <FormEmailField
+                    <TextField name="name" label="Name" />
+                    <EmailField
                         name="email"
                         label="e-mail"
                     />

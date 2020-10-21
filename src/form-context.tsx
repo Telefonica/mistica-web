@@ -5,21 +5,20 @@ export type FormErrors = {[name: string]: string | undefined};
 export type FieldValidator = (value: any, rawValue: string) => string | undefined;
 
 export type FieldRegistration = {
-    name: string;
-    field?: HTMLInputElement | HTMLSelectElement | null;
-    validate?: FieldValidator;
+    input?: HTMLInputElement | HTMLSelectElement | null;
+    validator?: FieldValidator;
     focusableElement?: HTMLDivElement | HTMLSelectElement | null;
 };
 
 type Context = {
     // raw values are the real input values
-    rawValues: {[name: string]: string};
-    setRawValue: (param: {readonly name: string; readonly value: string}) => void;
+    rawValues: {[name: string]: any};
+    setRawValue: (param: {readonly name: string; readonly value: any}) => void;
     // these values can have some kind of postprocessing. For example, remove spaces from credit card numbers
     values: {[name: string]: any};
     setValue: (param: {readonly name: string; readonly value: any}) => void;
     formStatus: FormStatus;
-    register: (ref: FieldRegistration) => void;
+    register: (name: string, ref: FieldRegistration) => void;
     formErrors: FormErrors;
     setFormError: (param: {readonly name: string; readonly error?: string}) => void;
     jumpToNext: (currentName: string) => void;
@@ -42,6 +41,48 @@ export const FormContext = React.createContext<Context>({
 });
 
 export const useForm = (): Context => React.useContext(FormContext);
+
+export const useControlProps = <T,>({
+    name,
+    value,
+    defaultValue,
+    onChange,
+}: {
+    name: string;
+    value: undefined | T;
+    defaultValue: undefined | T;
+    onChange: undefined | ((value: T) => void);
+}): {
+    name: string;
+    value?: T;
+    defaultValue?: T;
+    onChange: (value: T) => void;
+    focusableRef: (focusableElement: HTMLDivElement | null) => void;
+} => {
+    const {setRawValue, setValue, rawValues, setFormError, register} = useForm();
+    const rawChecked = value ?? defaultValue ?? rawValues[name] ?? false;
+
+    React.useEffect(() => {
+        setRawValue({name, value: rawChecked});
+        setValue({name, value: rawChecked});
+    }, [name, rawChecked, setRawValue, setValue]);
+
+    return {
+        name,
+        value,
+        defaultValue: defaultValue ?? (value === undefined ? rawValues[name] ?? false : undefined),
+        focusableRef: (focusableElement: HTMLDivElement | null) =>
+            register(name, {
+                focusableElement,
+            }),
+        onChange: (value: T) => {
+            setRawValue({name, value});
+            setValue({name, value});
+            setFormError({name, error: ''});
+            onChange?.(value);
+        },
+    };
+};
 
 export const useFieldProps = ({
     name,
@@ -111,7 +152,7 @@ export const useFieldProps = ({
             setFormError({name, error: validate?.(values[name], rawValues[name])});
             onBlur?.(e);
         },
-        inputRef: (field: HTMLInputElement | null) => register({name, field, validate}),
+        inputRef: (input: HTMLInputElement | null) => register(name, {input, validator: validate}),
         onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
             const rawValue = event.currentTarget.value;
             const value = processValue(rawValue);

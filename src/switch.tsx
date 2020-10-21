@@ -4,6 +4,7 @@ import {getPlatform} from './utils/platform';
 import {applyAlpha} from './utils/color';
 import debounce from 'lodash/debounce';
 import {SPACE} from './utils/key-codes';
+import {useControlProps} from './form-context';
 
 const SWITCH_ANIMATION = '0.2s ease-in 0s';
 
@@ -78,53 +79,50 @@ const useStyles = createUseStyles((theme) => {
                 ? `1px 2px 4px ${applyAlpha(theme.colors.layerDecorations, 0.3)}`
                 : `1px 1px 2px ${applyAlpha(theme.colors.layerDecorations, 0.3)}`,
         },
+        container: {
+            cursor: 'default',
+        },
     };
 });
 
 type RenderSwitch = (switchElement: React.ReactElement<any>) => React.ReactNode;
 
-type UncontrolledProps = {
+type Props = {
+    name: string;
     render?: RenderSwitch;
     defaultChecked?: boolean;
-    checked?: undefined;
-    onChange?: (checked: boolean) => void;
+    checked?: boolean;
+    onChange?: (value: boolean) => void;
 };
-
-type ControlledProps = {
-    render?: RenderSwitch;
-    defaultChecked?: undefined;
-    checked: boolean;
-    onChange: (checked: boolean) => void;
-};
-
-type Props = ControlledProps | UncontrolledProps;
 
 const Switch: React.FC<Props> = (props) => {
-    const isControlledByParent = props.checked !== undefined;
-    const [isChecked, setIsChecked] = React.useState<boolean>(!!props.defaultChecked);
+    const {defaultValue, value, onChange, focusableRef} = useControlProps({
+        name: props.name,
+        value: props.checked,
+        defaultValue: props.defaultChecked,
+        onChange: props.onChange,
+    });
 
-    const classes = useStyles({isChecked: isControlledByParent ? props.checked : isChecked});
+    const [checkedState, setCheckedState] = React.useState(!!defaultValue);
 
-    const {onChange} = props;
+    const classes = useStyles({isChecked: value ?? checkedState});
 
-    const notifyChange = React.useMemo(
-        () =>
-            debounce((value: boolean) => {
-                if (onChange) {
-                    onChange(value);
-                }
-            }, 300),
-        [onChange]
-    );
+    const notifyChange = React.useMemo(() => {
+        if (process.env.NODE_ENV === 'test') {
+            return (value: boolean) => onChange?.(value);
+        } else {
+            return debounce((value: boolean) => {
+                onChange?.(value);
+            }, 300);
+        }
+    }, [onChange]);
 
     const handleChange = () => {
-        if (isControlledByParent) {
-            if (props.onChange) {
-                props.onChange(!props.checked);
-            }
+        if (value !== undefined) {
+            onChange?.(!value);
         } else {
-            setIsChecked(!isChecked);
-            notifyChange(!isChecked);
+            setCheckedState(!checkedState);
+            notifyChange(!checkedState);
         }
     };
 
@@ -149,11 +147,13 @@ const Switch: React.FC<Props> = (props) => {
 
     return (
         <span
-            role="checkbox"
-            aria-checked={isControlledByParent ? props.checked : isChecked}
+            role="switch"
+            aria-checked={value ?? checkedState}
             onClick={handleChange}
             onKeyDown={handleKeyDown}
             tabIndex={0}
+            ref={focusableRef}
+            className={classes.container}
         >
             {props.render ? <>{props.render(switchEl)}</> : switchEl}
         </span>

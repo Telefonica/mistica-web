@@ -74,20 +74,23 @@ const getTheme = (selectedSkin: string, platform?: 'ios' | 'android'): ThemeConf
 
 const ThemeDecorator = ({Story}: any) => {
     const searchParams = new URLSearchParams(location.search);
-    const [skin, setSkin] = React.useState(String(getSkin(searchParams)));
+    const [skin, setSkin] = React.useState(getSkin(searchParams));
+    const [platform, setPlatform] = React.useState(getPlatform(searchParams));
 
     React.useEffect(() => {
         const channel = addons.getChannel();
         channel.on('skin-selected', setSkin);
+        channel.on('platform-selected', setPlatform);
         channel.emit('story-mounted');
 
         return () => {
             channel.off('skin-selected', setSkin);
+            channel.off('platform-selected', setPlatform);
         };
     }, []);
 
     return (
-        <ThemeContextProvider theme={getTheme(skin, getPlatform(searchParams))}>
+        <ThemeContextProvider theme={getTheme(skin, platform)}>
             <Story />
         </ThemeContextProvider>
     );

@@ -9,77 +9,10 @@ import Badge from './badge';
 import {useTheme, useScreenSize} from './hooks';
 import IconChevron from './icons/icon-chevron';
 import Switch from './switch';
-import {SPACE} from './utils/key-codes';
 import RadioButton from './radio-button';
+import Checkbox from './checkbox';
 
 import type {TrackingEvent} from './utils/types';
-
-// This CircularCheckbox component is only intended to be used inside list rows. Please, don't extract it to it's own file and don't export it from the library.
-
-type CircularCheckboxProps = {
-    render?: (checkboxElement: React.ReactElement) => React.ReactNode;
-    checked: boolean;
-    onChange: (checked: boolean) => void;
-    id: string;
-};
-
-const CircularCheckbox = ({checked, onChange, id, render}: CircularCheckboxProps) => {
-    const theme = useTheme();
-
-    const handleClick = () => {
-        onChange(!checked);
-    };
-
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (event.keyCode === SPACE) {
-            event.preventDefault();
-            event.stopPropagation();
-            onChange(!checked);
-        }
-    };
-
-    const checkbox = (
-        <div style={{display: 'inline-flex'}}>
-            {checked ? (
-                <svg role="presentation" width={24} height={24} viewBox="0 0 24 24">
-                    <g fill="none" fillRule="evenodd" transform="translate(1 1)">
-                        <circle cx="11" cy="11" r="11" fill={theme.colors.controlActive} />
-                        <path
-                            fill="#FFF"
-                            fillRule="nonzero"
-                            d="M8.854 14.686c.303.348.843.35 1.15.005l5.387-6.086c.28-.316.25-.8-.066-1.08s-.8-.25-1.08.066l-4.799 5.445-1.688-1.94c-.277-.318-.76-.352-1.079-.074-.318.277-.352.76-.074 1.079l2.249 2.585z"
-                        />
-                    </g>
-                </svg>
-            ) : (
-                <svg role="presentation" width={24} height={24} viewBox="0 0 24 24">
-                    <circle
-                        cx="11"
-                        cy="11"
-                        r="10.5"
-                        fill="none"
-                        fillRule="evenodd"
-                        stroke="#DDD"
-                        transform="translate(1 1)"
-                    />
-                </svg>
-            )}
-        </div>
-    );
-
-    return (
-        <div
-            id={id}
-            role="checkbox"
-            aria-checked={checked}
-            onKeyDown={handleKeyDown}
-            onClick={handleClick}
-            tabIndex={0}
-        >
-            {render ? <>{render(checkbox)}</> : checkbox}
-        </div>
-    );
-};
 
 const useStyles = createUseStyles((theme) => ({
     rowContent: {
@@ -479,7 +412,7 @@ const RowContent = (props: RowContentProps) => {
     }
 
     if (props.checkbox) {
-        return renderRowWithControl(CircularCheckbox);
+        return renderRowWithControl(Checkbox);
     }
 
     if (props.radioValue) {

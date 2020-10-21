@@ -17,6 +17,7 @@ module.exports = {
             },
         },
         './.storybook/theme-selector-addon/register',
+        './.storybook/platform-selector-addon/register',
     ],
     webpackFinal: async (config) => {
         config.module.rules.push({

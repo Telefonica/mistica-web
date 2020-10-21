@@ -6,6 +6,7 @@ const useStyles = createUseStyles(() => ({
     inline: {
         display: 'flex',
         flexDirection: 'row',
+        alignItems: ({alignItems}) => alignItems,
 
         '& > div:not(:empty) ~ div:not(:empty)': {
             marginLeft: (p) => p.space,
@@ -14,7 +15,8 @@ const useStyles = createUseStyles(() => ({
 }));
 
 type Props = {
-    space: 0 | 2 | 4 | 8 | 12 | 16 | 24 | 32 | 40 | 48 | 56 | 64;
+    space: 0 | 2 | 4 | 8 | 16 | 24 | 32 | 40 | 48 | 56 | 64;
+    alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
     children: React.ReactNode;
     className?: string;
     role?: string;
@@ -22,8 +24,8 @@ type Props = {
 };
 
 const Inline: React.FC<Props> = (props) => {
-    const {space, className, children, role} = props;
-    const classes = useStyles({space});
+    const {space, className, children, role, alignItems = 'flex-start'} = props;
+    const classes = useStyles({space, alignItems});
 
     return (
         <div

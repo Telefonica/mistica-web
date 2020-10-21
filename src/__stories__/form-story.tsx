@@ -6,16 +6,20 @@ import {
     ButtonPrimary,
     ButtonSecondary,
     Form,
-    FormCreditCardFields,
-    FormEmailField,
-    FormSelect,
+    CreditCardFields,
+    EmailField,
+    Select,
     ButtonLayout,
-    FormPhoneNumberField,
-    FormIntegerField,
-    FormCreditCardNumberField,
-    FormCreditCardExpirationField,
-    FormCvvField,
-    FormDecimalField,
+    PhoneNumberField,
+    IntegerField,
+    CreditCardNumberField,
+    CreditCardExpirationField,
+    CvvField,
+    DecimalField,
+    Switch,
+    Text7,
+    Checkbox,
+    Inline,
 } from '..';
 import {getCvvLength} from '../utils/credit-card';
 
@@ -34,32 +38,58 @@ const fakeApiCall = (data: any): Promise<void> =>
 const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 const countryOptions = countriesList.map((text, i) => ({text, value: '' + i}));
 
-export const AutomaticForm: StoryComponent = () => (
-    <Form initialValues={{email: 'john.doe@gmail.com', decimal: '123'}} onSubmit={fakeApiCall} autoJump>
-        <Stack space={16}>
-            <FormEmailField name="email" label="email" />
+export const AutomaticForm: StoryComponent = () => {
+    return (
+        <Form
+            initialValues={{email: 'john.doe@gmail.com', decimal: '123', 'save-cc': true}}
+            onSubmit={fakeApiCall}
+            autoJump
+        >
+            <Stack space={16}>
+                <EmailField name="email" label="email" />
 
-            <FormPhoneNumberField name="phone" label="phone" />
+                <PhoneNumberField name="phone" label="phone" />
 
-            <FormDecimalField name="decimal" label="Decimal" />
+                <DecimalField name="decimal" label="Decimal" />
 
-            <FormIntegerField optional autoComplete="off" name="integer" label="Integer" />
+                <IntegerField optional autoComplete="off" name="integer" label="Integer" />
 
-            <FormSelect name="country" label="country" options={countryOptions} />
+                <Select name="country" label="country" options={countryOptions} />
 
-            <FormSelect autoFocus name="fruit" label="fruit" optional options={fruitOptions} />
+                <Select autoFocus name="fruit" label="fruit" optional options={fruitOptions} />
 
-            <FormCreditCardFields />
+                <CreditCardFields />
 
-            <ButtonLayout>
-                <ButtonSecondary onPress={() => window.alert('hello')}>Hello</ButtonSecondary>
-                <ButtonPrimary submit loadingText="Sending">
-                    Send
-                </ButtonPrimary>
-            </ButtonLayout>
-        </Stack>
-    </Form>
-);
+                <Switch
+                    name="save-cc"
+                    render={(switchElement) => (
+                        <Inline alignItems="center" space={8}>
+                            {switchElement}
+                            <Text7 regular>Save CC</Text7>
+                        </Inline>
+                    )}
+                />
+
+                <Checkbox
+                    name="t&c"
+                    render={(checkboxElement) => (
+                        <Inline alignItems="center" space={8}>
+                            {checkboxElement}
+                            <Text7 regular>Accept Terms and Conditions</Text7>
+                        </Inline>
+                    )}
+                />
+
+                <ButtonLayout>
+                    <ButtonSecondary onPress={() => window.alert('hello')}>Hello</ButtonSecondary>
+                    <ButtonPrimary submit loadingText="Sending">
+                        Send
+                    </ButtonPrimary>
+                </ButtonLayout>
+            </Stack>
+        </Form>
+    );
+};
 
 export const ManualForm: StoryComponent = () => {
     const [fruit, setFruit] = React.useState('');
@@ -67,6 +97,8 @@ export const ManualForm: StoryComponent = () => {
     const [creditCardNumber, setCreditCardNumber] = React.useState('');
     const [creditCardExpiration, setCreditCardExpiration] = React.useState({raw: ''});
     const [creditCardCvv, setCreditCardCvv] = React.useState('');
+    const [saveCC, setSaveCC] = React.useState(true);
+    const [acceptTC, setAcceptTC] = React.useState(true);
 
     const cvvLength = getCvvLength(creditCardNumber);
 
@@ -76,7 +108,15 @@ export const ManualForm: StoryComponent = () => {
                 e.preventDefault();
                 window.alert(
                     JSON.stringify(
-                        {fruit, quantity, creditCardNumber, creditCardExpiration, creditCardCvv},
+                        {
+                            fruit,
+                            quantity,
+                            creditCardNumber,
+                            creditCardExpiration,
+                            creditCardCvv,
+                            saveCC,
+                            acceptTC,
+                        },
                         null,
                         2
                     )
@@ -84,33 +124,28 @@ export const ManualForm: StoryComponent = () => {
             }}
         >
             <Stack space={16}>
-                <FormSelect
+                <Select
                     name="fruit-select"
                     label="Select fruit"
                     value={fruit}
                     onChangeValue={setFruit}
                     options={fruitEntries.map(([text, value]) => ({text, value}))}
                 />
-                <FormIntegerField
-                    name="quantity"
-                    label="Quantity"
-                    value={quantity}
-                    onChangeValue={setQuantity}
-                />
-                <FormCreditCardNumberField
+                <IntegerField name="quantity" label="Quantity" value={quantity} onChangeValue={setQuantity} />
+                <CreditCardNumberField
                     name="cc-field"
                     label="Credit Card Number"
                     value={creditCardNumber}
                     onChangeValue={setCreditCardNumber}
                 />
                 <DoubleField>
-                    <FormCreditCardExpirationField
+                    <CreditCardExpirationField
                         name="cc-expiration"
                         label="Expiration"
                         value={creditCardExpiration.raw}
                         onChangeValue={setCreditCardExpiration}
                     />
-                    <FormCvvField
+                    <CvvField
                         name="cc-cvv"
                         label="CVV"
                         value={creditCardCvv}
@@ -118,6 +153,28 @@ export const ManualForm: StoryComponent = () => {
                         maxLength={cvvLength}
                     />
                 </DoubleField>
+                <Switch
+                    name="save-cc"
+                    checked={saveCC}
+                    onChange={setSaveCC}
+                    render={(switchElement) => (
+                        <Inline alignItems="center" space={8}>
+                            {switchElement}
+                            <Text7 regular>Save CC</Text7>
+                        </Inline>
+                    )}
+                />
+                <Checkbox
+                    name="t&c"
+                    checked={acceptTC}
+                    onChange={setAcceptTC}
+                    render={(checkboxElement) => (
+                        <Inline alignItems="center" space={8}>
+                            {checkboxElement}
+                            <Text7 regular>Accept Terms and Conditions</Text7>
+                        </Inline>
+                    )}
+                />
                 <ButtonLayout>
                     <ButtonPrimary submit loadingText="Sending">
                         Send

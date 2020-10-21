@@ -6,27 +6,27 @@
  */
 
 import * as React from "react";
-import { type FormTextFieldProps } from "./form-text-field";
-import { type FormSelectProps } from "./form-select";
-import { type FormCvvFieldProps } from "./form-cvv-field";
-import { type FormCreditCardExpirationFieldProps } from "./form-credit-card-expiration-field";
-import { type FormDecimalFieldProps } from "./form-decimal-field";
-import { type FormIntegerFieldProps } from "./form-integer-field";
-import { type FormDateFieldProps } from "./form-date-field";
-import { type FormPasswordFieldProps } from "./form-password-field";
-import { type FormPhoneNumberFieldProps } from "./form-phone-number-field";
-import { type FormEmailFieldProps } from "./form-email-field";
+import { type TextFieldProps } from "./text-field";
+import { type SelectProps } from "./select";
+import { type CvvFieldProps } from "./cvv-field";
+import { type CreditCardExpirationFieldProps } from "./credit-card-expiration-field";
+import { type DecimalFieldProps } from "./decimal-field";
+import { type IntegerFieldProps } from "./integer-field";
+import { type DateFieldProps } from "./date-field";
+import { type PasswordFieldProps } from "./password-field";
+import { type PhoneNumberFieldProps } from "./phone-number-field";
+import { type EmailFieldProps } from "./email-field";
 declare type Field =
-  | React.Element<FormTextFieldProps>
-  | React.Element<FormSelectProps>
-  | React.Element<FormCvvFieldProps>
-  | React.Element<FormCreditCardExpirationFieldProps>
-  | React.Element<FormDecimalFieldProps>
-  | React.Element<FormIntegerFieldProps>
-  | React.Element<FormDateFieldProps>
-  | React.Element<FormPhoneNumberFieldProps>
-  | React.Element<FormPasswordFieldProps>
-  | React.Element<FormEmailFieldProps>;
+  | React.Element<TextFieldProps>
+  | React.Element<SelectProps>
+  | React.Element<CvvFieldProps>
+  | React.Element<CreditCardExpirationFieldProps>
+  | React.Element<DecimalFieldProps>
+  | React.Element<IntegerFieldProps>
+  | React.Element<DateFieldProps>
+  | React.Element<PhoneNumberFieldProps>
+  | React.Element<PasswordFieldProps>
+  | React.Element<EmailFieldProps>;
 declare type Props = {
   fullWidth?: boolean,
   children: Field | [Field, Field]

@@ -130,7 +130,7 @@ Default.story = {name: 'RowList'};
 export const Radio: StoryComponent = () => (
     <div data-testid="radio-row-list">
         <StorySection title="Radio Row List">
-            <RadioGroup defaultValue="apple">
+            <RadioGroup name="radio-group" defaultValue="apple">
                 <RowList>
                     <Row
                         icon={<AvatarPlaceholder size="100%" />}

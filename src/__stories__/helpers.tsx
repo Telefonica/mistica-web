@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useAriaId, useIsInverseVariant, FormSelect, FormTextField} from '..';
+import {useAriaId, useIsInverseVariant, Select, TextField} from '..';
 
 type Props = {
     title: string;
@@ -83,7 +83,7 @@ export const useTextField = (
 ): [string, React.ReactNode] => {
     const [text, setText] = React.useState(defaultValue);
     const textField = (
-        <FormTextField name={label} label={label} value={text} onChangeValue={setText} optional={!required} />
+        <TextField name={label} label={label} value={text} onChangeValue={setText} optional={!required} />
     );
     return [text, textField];
 };
@@ -96,7 +96,7 @@ export const useSelect = (
     const [value, setValue] = React.useState(defaultValue);
     const ariaId = useAriaId();
     const select = (
-        <FormSelect
+        <Select
             name={ariaId}
             value={value}
             onChangeValue={setValue}

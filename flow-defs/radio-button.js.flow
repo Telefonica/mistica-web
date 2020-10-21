@@ -21,6 +21,7 @@ declare type Props = {
 };
 declare var RadioButton: React.ComponentType<Props>;
 declare type RadioGroupProps = {
+  name: string,
   "aria-labelledby"?: string,
   children: React.Node,
   value?: string,

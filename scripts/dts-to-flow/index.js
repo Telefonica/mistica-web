@@ -59,6 +59,9 @@ const fixFlowDefinition = (flowFilename) => {
     // `& React.RefAttributes<any>` => ``
     src = src.replace(/&\s*React\.RefAttributes<any>/gm, '');
 
+    // `((instance: T | null) => void) | React.Ref<T> => React.Ref<T>`
+    src = src.replace(/\(\(instance: T \| null\) => void\) \| React\.Ref<T>/gm, 'React.Ref<T>');
+
     // `React.MouseEvent` => `React.SyntheticMouseEvent`
     const eventMap = {
         Mouse: 'Mouse',

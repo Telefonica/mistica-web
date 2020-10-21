@@ -45,7 +45,7 @@ test('Row with switch', () => {
         </ThemeContextProvider>
     );
 
-    const switchEl = screen.getByRole('checkbox', {name: 'Title'});
+    const switchEl = screen.getByRole('switch', {name: 'Title'});
 
     expect(switchEl).not.toBeChecked();
 
@@ -87,7 +87,7 @@ test('Row with custom right element', () => {
 test('Row list with radio buttons', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <RadioGroup>
+            <RadioGroup name="radio-group">
                 <RowList>
                     <Row title="Banana" radioValue="banana" />
                     <Row title="Apple" radioValue="apple" />

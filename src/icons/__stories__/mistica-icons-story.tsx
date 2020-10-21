@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useCheckbox} from '../../__stories__/helpers';
-import {ThemeVariant, useTheme, Box, Stack, FormSearchField, Inline, DoubleField, Text} from '../..';
-import FormIntegerField from '../../form-integer-field';
+import {ThemeVariant, useTheme, Box, Stack, SearchField, Inline, DoubleField, Text} from '../..';
+import IntegerField from '../../integer-field';
 import {kebabCase, upperFirst} from 'lodash';
 
 // require all icons
@@ -88,13 +88,8 @@ export const Catalog: React.FC = () => {
             <Box paddingY={16}>
                 <Inline space={16}>
                     <DoubleField>
-                        <FormSearchField
-                            name="filter"
-                            value={filter}
-                            label="Filter"
-                            onChangeValue={setFilter}
-                        />
-                        <FormIntegerField
+                        <SearchField name="filter" value={filter} label="Filter" onChangeValue={setFilter} />
+                        <IntegerField
                             name="size"
                             value={String(size || 0)}
                             label="Size (px)"

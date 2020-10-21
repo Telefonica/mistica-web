@@ -10,16 +10,15 @@ export type FormStatus = "filling" | "sending";
 export type FormErrors = { [name: string]: string | void, ... };
 export type FieldValidator = (value: any, rawValue: string) => string | void;
 export type FieldRegistration = {
-  name: string,
-  field?: HTMLInputElement | HTMLSelectElement | null,
-  validate?: FieldValidator,
+  input?: HTMLInputElement | HTMLSelectElement | null,
+  validator?: FieldValidator,
   focusableElement?: HTMLDivElement | HTMLSelectElement | null
 };
 declare type Context = {
-  rawValues: { [name: string]: string, ... },
+  rawValues: { [name: string]: any, ... },
   setRawValue: (param: {
     +name: string,
-    +value: string
+    +value: any
   }) => void,
   values: { [name: string]: any, ... },
   setValue: (param: {
@@ -27,7 +26,7 @@ declare type Context = {
     +value: any
   }) => void,
   formStatus: FormStatus,
-  register: (ref: FieldRegistration) => void,
+  register: (name: string, ref: FieldRegistration) => void,
   formErrors: FormErrors,
   setFormError: (param: {
     +name: string,
@@ -39,6 +38,18 @@ declare type Context = {
 };
 declare export var FormContext: React.Context<Context>;
 declare export var useForm: () => Context;
+declare export var useControlProps: <T>(x: {
+  name: string,
+  value: T | void,
+  defaultValue: T | void,
+  onChange: ((value: T) => void) | void
+}) => {
+  name: string,
+  value?: T | void,
+  defaultValue?: T | void,
+  onChange: (value: T) => void,
+  focusableRef: (focusableElement: HTMLDivElement | null) => void
+};
 declare export var useFieldProps: (x: {
   name: string,
   value: string | void,
