@@ -98,13 +98,15 @@ test('form controlled mode', async () => {
     const handleSubmitSpy = jest.fn();
 
     render(
-        <Form onSubmit={handleSubmitSpy} initialValues={{'radio-group': 'apple'}}>
-            <RadioGroup name="radio-group" aria-labelledby="label">
-                <RadioButton value="banana" render={(radio) => <div>banana {radio}</div>} />
-                <RadioButton value="apple" render={(radio) => <div>apple {radio}</div>} />
-            </RadioGroup>
-            <ButtonPrimary submit>done!</ButtonPrimary>
-        </Form>
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy} initialValues={{'radio-group': 'apple'}}>
+                <RadioGroup name="radio-group" aria-labelledby="label">
+                    <RadioButton value="banana" render={(radio) => <div>banana {radio}</div>} />
+                    <RadioButton value="apple" render={(radio) => <div>apple {radio}</div>} />
+                </RadioGroup>
+                <ButtonPrimary submit>done!</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
     );
 
     expect(screen.getByText('banana').parentElement).not.toBeChecked();
@@ -128,18 +130,22 @@ test('form uncontrolled mode', async () => {
     const ControlledRadioGroup = () => {
         const [value, setValue] = React.useState('banana');
         return (
-            <RadioGroup value={value} onChange={setValue} name="radio-group" aria-labelledby="label">
-                <RadioButton value="banana" render={(radio) => <div>banana {radio}</div>} />
-                <RadioButton value="apple" render={(radio) => <div>apple {radio}</div>} />
-            </RadioGroup>
+            <ThemeContextProvider theme={makeTheme()}>
+                <RadioGroup value={value} onChange={setValue} name="radio-group" aria-labelledby="label">
+                    <RadioButton value="banana" render={(radio) => <div>banana {radio}</div>} />
+                    <RadioButton value="apple" render={(radio) => <div>apple {radio}</div>} />
+                </RadioGroup>
+            </ThemeContextProvider>
         );
     };
 
     render(
-        <Form onSubmit={handleSubmitSpy}>
-            <ControlledRadioGroup />
-            <ButtonPrimary submit>done!</ButtonPrimary>
-        </Form>
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy}>
+                <ControlledRadioGroup />
+                <ButtonPrimary submit>done!</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
     );
 
     expect(screen.getByText('banana').parentElement).toBeChecked();

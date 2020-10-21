@@ -73,10 +73,12 @@ test('form controlled mode', async () => {
     const handleSubmitSpy = jest.fn();
 
     render(
-        <Form onSubmit={handleSubmitSpy} initialValues={{switch: true}}>
-            <Switch name="switch" />
-            <ButtonPrimary submit>done!</ButtonPrimary>
-        </Form>
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy} initialValues={{switch: true}}>
+                <Switch name="switch" />
+                <ButtonPrimary submit>done!</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
     );
 
     const switchElement = screen.getByRole('switch');
@@ -97,10 +99,12 @@ test('form uncontrolled mode', async () => {
     };
 
     render(
-        <Form onSubmit={handleSubmitSpy} initialValues={{switch: true}}>
-            <ControlledSwitch />
-            <ButtonPrimary submit>done!</ButtonPrimary>
-        </Form>
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy} initialValues={{switch: true}}>
+                <ControlledSwitch />
+                <ButtonPrimary submit>done!</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
     );
 
     const switchElement = screen.getByRole('switch');

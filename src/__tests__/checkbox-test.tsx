@@ -1,11 +1,16 @@
 // @flow
 import * as React from 'react';
 import {render, waitFor, fireEvent, screen} from '@testing-library/react';
-import {ButtonPrimary, Form, Checkbox} from '..';
+import {ButtonPrimary, Form, Checkbox, ThemeContextProvider} from '..';
 import userEvent from '@testing-library/user-event';
+import {makeTheme} from './test-utils';
 
 test('renders accesible checkbox', () => {
-    render(<Checkbox name="checkbox" defaultChecked={false} />);
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Checkbox name="checkbox" defaultChecked={false} />
+        </ThemeContextProvider>
+    );
 
     const checkBoxElement = screen.getByRole('checkbox');
 
@@ -16,7 +21,11 @@ test('renders accesible checkbox', () => {
 test('controlled mode', () => {
     const Component = () => {
         const [checked, setChecked] = React.useState(false);
-        return <Checkbox name="checkbox" onChange={setChecked} checked={checked} />;
+        return (
+            <ThemeContextProvider theme={makeTheme()}>
+                <Checkbox name="checkbox" onChange={setChecked} checked={checked} />
+            </ThemeContextProvider>
+        );
     };
 
     render(<Component />);
@@ -29,7 +38,11 @@ test('controlled mode', () => {
 });
 
 test('uncontrolled mode', () => {
-    render(<Checkbox name="checkbox" defaultChecked />);
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Checkbox name="checkbox" defaultChecked />
+        </ThemeContextProvider>
+    );
 
     const checkBoxElement = screen.getByRole('checkbox');
 
@@ -41,7 +54,11 @@ test('uncontrolled mode', () => {
 test('uncontrolled mode with onChange handler', async () => {
     const onChangeSpy = jest.fn();
 
-    render(<Checkbox name="checkbox" onChange={onChangeSpy} defaultChecked />);
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Checkbox name="checkbox" onChange={onChangeSpy} defaultChecked />
+        </ThemeContextProvider>
+    );
 
     const checkBoxElement = screen.getByRole('checkbox');
 
@@ -56,10 +73,12 @@ test('form controlled mode', async () => {
     const handleSubmitSpy = jest.fn();
 
     render(
-        <Form onSubmit={handleSubmitSpy} initialValues={{checkbox: true}}>
-            <Checkbox name="checkbox" />
-            <ButtonPrimary submit>done!</ButtonPrimary>
-        </Form>
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy} initialValues={{checkbox: true}}>
+                <Checkbox name="checkbox" />
+                <ButtonPrimary submit>done!</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
     );
 
     const checkBoxElement = screen.getByRole('checkbox');
@@ -80,10 +99,12 @@ test('form uncontrolled mode', async () => {
     };
 
     render(
-        <Form onSubmit={handleSubmitSpy} initialValues={{switch: true}}>
-            <ControlledSwitch />
-            <ButtonPrimary submit>done!</ButtonPrimary>
-        </Form>
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={handleSubmitSpy} initialValues={{switch: true}}>
+                <ControlledSwitch />
+                <ButtonPrimary submit>done!</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
     );
 
     const checkBoxElement = screen.getByRole('checkbox');
