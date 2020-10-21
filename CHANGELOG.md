@@ -1,3 +1,10 @@
+# [6.7.0](https://github.com/Telefonica/mistica-web/compare/v6.6.0...v6.7.0) (2020-10-21)
+
+
+### Features
+
+* **Text:** Allow to pass a number of lines to `truncate` prop ([0aeb2dc](https://github.com/Telefonica/mistica-web/commit/0aeb2dc4f478e886cfc171154848d1a1b57117f5))
+
 # [6.6.0](https://github.com/Telefonica/mistica-web/compare/v6.5.0...v6.6.0) (2020-10-20)
 
 ### Features
