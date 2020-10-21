@@ -10,7 +10,8 @@ export type ScreenSizeContextType = {
   isMobile: boolean,
   isTablet: boolean,
   isTabletOrBigger: boolean,
-  isTabletOrSmaller: boolean
+  isTabletOrSmaller: boolean,
+  isDesktopOrBigger: boolean
 };
 declare var ScreenSizeContext: React.Context<ScreenSizeContextType>;
 declare export default typeof ScreenSizeContext;

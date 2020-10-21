@@ -18,6 +18,13 @@ declare export var isAndroid: (
 declare export var isIos: (
   platformOverrides: $PropertyType<Theme, "platformOverrides">
 ) => boolean;
+declare export var isFirefox: (
+  platformOverrides?: {
+    platform?: "android" | "ios" | void,
+    insideNovumNativeApp?: boolean | void,
+    userAgent?: string | void
+  } | void
+) => boolean;
 declare export var isChrome: (
   platformOverrides: $PropertyType<Theme, "platformOverrides">
 ) => boolean;

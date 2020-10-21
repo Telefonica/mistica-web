@@ -133,7 +133,7 @@ test('Multiline text field', async () => {
 });
 
 test('date field', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         section: 'Components|Forms/FormFields',
         name: 'Types (uncontrolled)',
         device: 'MOBILE_ANDROID',
@@ -146,14 +146,16 @@ test('date field', async () => {
 
     expect(emptyScreenshot).toMatchImageSnapshot();
 
-    await page.type(field, '06' + '10' + '1980', {delay: 0});
+    await field.focus();
+
+    await field.type('06' + '10' + '1980', {delay: 0});
     const filledScreenshot = await fieldWrapper.screenshot();
 
     expect(filledScreenshot).toMatchImageSnapshot();
 });
 
 test('date-time field', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         section: 'Components|Forms/FormFields',
         name: 'Types (uncontrolled)',
         device: 'MOBILE_ANDROID',
@@ -166,8 +168,9 @@ test('date-time field', async () => {
 
     expect(emptyScreenshot).toMatchImageSnapshot();
 
-    // chrome needs a 5 digit year to auto jump to the time part
-    await page.type(field, '06' + '10' + '001980' + '13' + '14', {delay: 0});
+    await field.focus();
+    await field.type('06' + '10' + '001980' + '13' + '14', {delay: 0});
+
     const filledScreenshot = await fieldWrapper.screenshot();
 
     expect(filledScreenshot).toMatchImageSnapshot();
