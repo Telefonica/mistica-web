@@ -11,7 +11,7 @@ export type TextPresetProps = {
   color?: string,
   textDecoration?: "underline" | "line-through",
   children?: React.Node,
-  truncate?: boolean,
+  truncate?: boolean | number,
   uppercase?: boolean,
   wordBreak?: boolean,
   id?: string,

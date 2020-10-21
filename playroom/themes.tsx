@@ -1,5 +1,4 @@
-// @ts-expect-error importing from plain js
-import {Movistar, Vivo, O2, O2_Classic} from '../.storybook/theme-selector-addon/themes';
+import {Movistar, Vivo, O2, O2_Classic} from '../.storybook/themes';
 
 export {Movistar, Vivo, O2, O2_Classic};
 export const Movistar_iOS = {...Movistar, platformOverrides: {platform: 'ios'}};

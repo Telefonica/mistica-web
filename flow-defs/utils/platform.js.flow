@@ -7,7 +7,7 @@
 
 import { type Theme } from "../theme";
 declare export var isInsideNovumNativeApp: (
-  platformOverrides: $PropertyType<Theme, "platformOverrides">
+  platformOverrides?: $PropertyType<Theme, "platformOverrides">
 ) => boolean;
 declare export var isRunningAcceptanceTest: (
   platformOverrides: $PropertyType<Theme, "platformOverrides">
@@ -20,7 +20,7 @@ declare export var isIos: (
 ) => boolean;
 declare export var isFirefox: (
   platformOverrides?: {
-    platform?: "android" | "ios" | void,
+    platform?: "ios" | "android" | void,
     insideNovumNativeApp?: boolean | void,
     userAgent?: string | void
   } | void
@@ -35,5 +35,5 @@ declare export var getIosVersion: (
   platformOverrides: $PropertyType<Theme, "platformOverrides">
 ) => string;
 declare export var getPlatform: (
-  platformOverrides: $PropertyType<Theme, "platformOverrides">
+  platformOverrides?: $PropertyType<Theme, "platformOverrides">
 ) => "ios" | "android";

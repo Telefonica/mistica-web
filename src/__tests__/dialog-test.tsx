@@ -2,19 +2,19 @@ import * as React from 'react';
 import {render, fireEvent, waitFor, screen} from '@testing-library/react';
 import {alert, confirm} from '../dialog';
 import ThemeContextProvider from '../theme-context-provider';
-import {overrideTheme} from './utils';
+import {makeTheme} from './test-utils';
 import * as webviewBridge from '@tef-novum/webview-bridge';
 
 const alertProps = {message: 'Message'};
 const confirmProps = {message: 'Confirm', onAccept: () => {}};
 
 test('does not render anything initially', () => {
-    const {asFragment} = render(<ThemeContextProvider theme={overrideTheme({})} />);
+    const {asFragment} = render(<ThemeContextProvider theme={makeTheme()} />);
     expect(asFragment()).toMatchInlineSnapshot(`<DocumentFragment />`);
 });
 
 test('throws when we try to stack dialogs', async () => {
-    render(<ThemeContextProvider theme={overrideTheme({})} />);
+    render(<ThemeContextProvider theme={makeTheme()} />);
     alert(alertProps);
     await waitFor(() => {
         expect(screen.getByText(alertProps.message)).toBeInTheDocument();
@@ -30,7 +30,7 @@ test('throws when we dont instantiate theme', async () => {
 });
 
 test('renders alert dialog correctly when alert function called', async () => {
-    render(<ThemeContextProvider theme={overrideTheme({})} />);
+    render(<ThemeContextProvider theme={makeTheme()} />);
     alert(alertProps);
 
     await waitFor(() => {
@@ -40,7 +40,7 @@ test('renders alert dialog correctly when alert function called', async () => {
 });
 
 test('closes alert dialog when clicking on button', async () => {
-    render(<ThemeContextProvider theme={overrideTheme({})} />);
+    render(<ThemeContextProvider theme={makeTheme()} />);
     const onAcceptSpy = jest.fn();
     alert({...alertProps, onAccept: onAcceptSpy});
 
@@ -53,7 +53,7 @@ test('closes alert dialog when clicking on button', async () => {
 });
 
 test('renders confirm dialog correctly when confirm function called', async () => {
-    render(<ThemeContextProvider theme={overrideTheme({})} />);
+    render(<ThemeContextProvider theme={makeTheme()} />);
     confirm(confirmProps);
 
     await waitFor(() => {
@@ -67,7 +67,7 @@ test('Closes a dialog on click outside', async () => {
     // We disable animations so dialogs get closed properly
     jest.spyOn(window.navigator, 'userAgent', 'get').mockReturnValue('acceptance-test');
 
-    render(<ThemeContextProvider theme={overrideTheme({})} />);
+    render(<ThemeContextProvider theme={makeTheme()} />);
 
     const onCancelSpy = jest.fn();
     confirm({...confirmProps, onCancel: onCancelSpy});
@@ -88,7 +88,7 @@ test('closes confirm dialog when clicking on any button', async () => {
     // We disable animations so dialogs get closed properly
     jest.spyOn(window.navigator, 'userAgent', 'get').mockReturnValue('acceptance-test');
 
-    render(<ThemeContextProvider theme={overrideTheme({})} />);
+    render(<ThemeContextProvider theme={makeTheme()} />);
 
     const onCancelSpy = jest.fn();
     confirm({...confirmProps, onCancel: onCancelSpy});
@@ -119,7 +119,7 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     // We disable animations so dialogs get closed properly
     jest.spyOn(window.navigator, 'userAgent', 'get').mockReturnValue('acceptance-test');
 
-    render(<ThemeContextProvider theme={overrideTheme({})} />);
+    render(<ThemeContextProvider theme={makeTheme()} />);
 
     const onAcceptSpy = jest.fn();
     confirm({...confirmProps, onAccept: onAcceptSpy, onCancel: undefined});
@@ -149,7 +149,7 @@ test('when webview bridge is available nativeAlert is shown', async () => {
     jest.spyOn(webviewBridge, 'isWebViewBridgeAvailable').mockReturnValue(true);
     const nativeAlertSpy = jest.spyOn(webviewBridge, 'nativeAlert').mockResolvedValue();
 
-    render(<ThemeContextProvider theme={overrideTheme({})} />);
+    render(<ThemeContextProvider theme={makeTheme()} />);
     alert({...confirmProps, title: 'lolo'});
 
     await waitFor(() => {
@@ -165,7 +165,7 @@ test('when webview bridge is available nativeConfirm is shown', async () => {
     jest.spyOn(webviewBridge, 'isWebViewBridgeAvailable').mockReturnValue(true);
     const nativeAlertSpy = jest.spyOn(webviewBridge, 'nativeConfirm').mockResolvedValue(true);
 
-    render(<ThemeContextProvider theme={overrideTheme({})} />);
+    render(<ThemeContextProvider theme={makeTheme()} />);
     confirm({...confirmProps, title: 'lolo', acceptText: 'Cuco peludo'});
 
     await waitFor(() => {

@@ -3,11 +3,11 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import TextField from '../text-field';
 import ThemeContextProvider from '../theme-context-provider';
-import {overrideTheme} from './utils';
+import {makeTheme} from './test-utils';
 
 test('TextField uncontrolled', async () => {
     render(
-        <ThemeContextProvider theme={overrideTheme({})}>
+        <ThemeContextProvider theme={makeTheme()}>
             <TextField label="Username" name="username" />
         </ThemeContextProvider>
     );
@@ -26,7 +26,7 @@ test('TextField controlled', async () => {
     };
 
     render(
-        <ThemeContextProvider theme={overrideTheme({})}>
+        <ThemeContextProvider theme={makeTheme()}>
             <Component />
         </ThemeContextProvider>
     );

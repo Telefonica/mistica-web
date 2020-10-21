@@ -2,12 +2,16 @@ import * as React from 'react';
 import {RowList, Row} from '../list';
 import {RadioGroup} from '../radio-button';
 import {screen, fireEvent, render} from '@testing-library/react';
+import {ThemeContextProvider} from '..';
+import {makeTheme} from './test-utils';
 
 test('Row which navigates', () => {
     render(
-        <RowList>
-            <Row title="Title" href="/some/url" />
-        </RowList>
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" href="/some/url" />
+            </RowList>
+        </ThemeContextProvider>
     );
 
     const anchor = screen.getByRole('link');
@@ -19,9 +23,11 @@ test('Row which navigates', () => {
 test('Row as a button', () => {
     const spy = jest.fn();
     render(
-        <RowList>
-            <Row title="Title" onPress={spy} />
-        </RowList>
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" onPress={spy} />
+            </RowList>
+        </ThemeContextProvider>
     );
 
     const button = screen.getByRole('button', {name: 'Title'});
@@ -32,9 +38,11 @@ test('Row as a button', () => {
 
 test('Row with switch', () => {
     render(
-        <RowList>
-            <Row title="Title" switch={{defaultValue: false}} />
-        </RowList>
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" switch={{defaultValue: false}} />
+            </RowList>
+        </ThemeContextProvider>
     );
 
     const switchEl = screen.getByRole('switch', {name: 'Title'});
@@ -48,9 +56,11 @@ test('Row with switch', () => {
 
 test('Row with checkbox', () => {
     render(
-        <RowList>
-            <Row title="Title" checkbox={{defaultValue: false}} />
-        </RowList>
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" checkbox={{defaultValue: false}} />
+            </RowList>
+        </ThemeContextProvider>
     );
 
     const checkboxEl = screen.getByRole('checkbox', {name: 'Title'});
@@ -64,9 +74,11 @@ test('Row with checkbox', () => {
 
 test('Row with custom right element', () => {
     render(
-        <RowList>
-            <Row title="Title" right={<div>custom</div>} />
-        </RowList>
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" right={<div>custom</div>} />
+            </RowList>
+        </ThemeContextProvider>
     );
 
     expect(screen.getByText('custom')).toBeInTheDocument();
@@ -74,12 +86,14 @@ test('Row with custom right element', () => {
 
 test('Row list with radio buttons', () => {
     render(
-        <RadioGroup name="radio-group">
-            <RowList>
-                <Row title="Banana" radioValue="banana" />
-                <Row title="Apple" radioValue="apple" />
-            </RowList>
-        </RadioGroup>
+        <ThemeContextProvider theme={makeTheme()}>
+            <RadioGroup name="radio-group">
+                <RowList>
+                    <Row title="Banana" radioValue="banana" />
+                    <Row title="Apple" radioValue="apple" />
+                </RowList>
+            </RadioGroup>
+        </ThemeContextProvider>
     );
 
     const radioBanana = screen.getByRole('radio', {name: 'Banana'});

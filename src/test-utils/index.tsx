@@ -1,9 +1,9 @@
 import {getDocument, queries} from 'pptr-testing-library';
 import jimp from 'jimp';
+import {MOVISTAR_SKIN} from '../skins/constants';
 
 import type {Page, ElementHandle, ClickOptions, ScreenshotOptions, Browser} from 'puppeteer';
 import type {Viewport} from 'puppeteer/DeviceDescriptors';
-import type {Skin} from '../colors';
 
 // TODO find a way to define global vars
 const globalBrowser: Browser = (global as any).browser;
@@ -276,7 +276,7 @@ export const openStoryPage = ({
     section: string;
     name: string;
     device?: Device;
-    skin?: Skin;
+    skin?: string;
     userAgent?: string;
 }): Promise<PageApi> => {
     const url = buildStoryUrl(section, name, skin, DEVICES[device].platform);
@@ -290,12 +290,12 @@ export const openStoryPage = ({
 export const openSSRPage = async ({
     name,
     device = TABLET_DEVICE,
-    skin = 'Movistar',
+    skin = MOVISTAR_SKIN,
     userAgent = DEVICES[device].userAgent,
 }: {
     name: string;
     device?: Device;
-    skin?: Skin;
+    skin?: string;
     userAgent?: string;
 }): Promise<PageApi> => {
     const page = globalPage;
