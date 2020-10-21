@@ -25,6 +25,7 @@ const useStyles = createUseStyles((theme) => {
                 isInverse ? inverseColorsMap[color] ?? color : color,
             textDecoration: (p) => p.textDecoration,
             letterSpacing: ({letterSpacing}) => letterSpacing,
+            overflowWrap: ({wordBreak}) => (wordBreak ? 'anywhere' : 'inherit'),
 
             [theme.mq.mobile]: {
                 lineHeight: ({mobileLineHeight}) => mobileLineHeight,
@@ -48,6 +49,7 @@ export interface TextPresetProps {
     children?: React.ReactNode;
     truncate?: boolean;
     uppercase?: boolean;
+    wordBreak?: boolean;
     id?: string;
     as?: React.ComponentType<any> | string;
     role?: string;
@@ -71,6 +73,7 @@ const Text: React.FC<TextProps> = ({
     textDecoration,
     truncate,
     uppercase,
+    wordBreak,
     as = 'span',
     children,
     size,
@@ -95,6 +98,7 @@ const Text: React.FC<TextProps> = ({
         color,
         textDecoration,
         uppercase,
+        wordBreak,
         letterSpacing,
     });
     if (!children) {

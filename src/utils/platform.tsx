@@ -2,7 +2,7 @@ import {isWebViewBridgeAvailable} from '@tef-novum/webview-bridge';
 
 import type {Theme} from '../theme';
 
-const getUserAgent = (platformOverrides: Theme['platformOverrides']): string => {
+const getUserAgent = (platformOverrides: Theme['platformOverrides'] = {}): string => {
     if (typeof self === 'undefined') {
         return platformOverrides.userAgent ?? '';
     }
@@ -38,6 +38,9 @@ export const isIos = (platformOverrides: Theme['platformOverrides']): boolean =>
 
     return false;
 };
+
+export const isFirefox = (platformOverrides?: Theme['platformOverrides']): boolean =>
+    !!getUserAgent(platformOverrides).match(/Firefox\/([0-9]+)\./);
 
 export const isChrome = (platformOverrides: Theme['platformOverrides']): boolean =>
     !!getUserAgent(platformOverrides).match(/Chrom(e|ium)\/([0-9]+)\./);

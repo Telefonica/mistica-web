@@ -71,6 +71,7 @@ declare type TextFieldBaseProps = {
   prefix?: React.Node,
   startIcon?: React.Node,
   endIcon?: React.Node,
+  endIconOverlay?: React.Node,
   style?: CssStyle,
   value?: string,
   inputRef?: React.Ref<HTMLInputElement | HTMLSelectElement>,

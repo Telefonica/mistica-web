@@ -219,24 +219,24 @@ const Content: React.FC<ContentProps> = ({
             <div className={classes.rowBody}>
                 {headline && (
                     <Box paddingBottom={8}>
-                        <Text8 as="div" regular color={theme.colors.textSecondary}>
+                        <Text8 wordBreak as="div" regular color={theme.colors.textSecondary}>
                             {headline}
                         </Text8>
                     </Box>
                 )}
-                <Text6 light color={theme.colors.textPrimary}>
+                <Text6 wordBreak light color={theme.colors.textPrimary}>
                     {title}
                 </Text6>
                 {subtitle && (
                     <Box paddingY={2}>
-                        <Text7 regular color={theme.colors.textSecondary}>
+                        <Text7 wordBreak regular color={theme.colors.textSecondary}>
                             {subtitle}
                         </Text7>
                     </Box>
                 )}
                 {description && (
                     <Box paddingY={isMobile ? 2 : 0}>
-                        <Text7 regular color={theme.colors.textSecondary}>
+                        <Text7 wordBreak regular color={theme.colors.textSecondary}>
                             {description}
                         </Text7>
                     </Box>
