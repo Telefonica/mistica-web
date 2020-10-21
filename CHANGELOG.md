@@ -1,3 +1,17 @@
+# [7.0.0](https://github.com/Telefonica/mistica-web/compare/v6.7.0...v7.0.0) (2020-10-21)
+
+
+### Features
+
+* **Contols:** Switch, Checkbox, Radio Buttons. Renamed FormXxxFields to XxxFields ([0119724](https://github.com/Telefonica/mistica-web/commit/011972491ee7dffa95d0b3249112764c7f7a18ae))
+* **ThemeContext:** Refactor skins and colors ([278c073](https://github.com/Telefonica/mistica-web/commit/278c0733d22e6c6533d7f5cfb2049c8873c3f7f9))
+
+
+### BREAKING CHANGES
+
+* **Contols:** renamed FormXxxFields to XxxFields
+* **ThemeContext:** theme context provider initialization has changed
+
 # [6.7.0](https://github.com/Telefonica/mistica-web/compare/v6.6.0...v6.7.0) (2020-10-21)
 
 ### Features
