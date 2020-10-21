@@ -15,6 +15,16 @@ const useStyles = createUseStyles((theme) => {
         [theme.colors.textSecondary]: theme.colors.textButtonPrimaryInverseDisabled,
     };
 
+    const lineClamp = ({truncate}: {truncate: boolean | number}) => {
+        if (truncate === true) {
+            return 1;
+        }
+        if (truncate) {
+            return truncate;
+        }
+        return 'initial';
+    };
+
     return {
         text: {
             lineHeight: ({desktopLineHeight}) => desktopLineHeight,
@@ -32,7 +42,8 @@ const useStyles = createUseStyles((theme) => {
             },
         },
         truncate: {
-            '-webkit-line-clamp': ({lineClamp}) => lineClamp ?? 'initial',
+            '-webkit-line-clamp': lineClamp,
+            lineClamp,
             display: 'box',
             boxOrient: 'vertical',
             overflow: 'hidden',
@@ -46,7 +57,7 @@ export interface TextPresetProps {
     color?: string;
     textDecoration?: 'underline' | 'line-through';
     children?: React.ReactNode;
-    lineClamp?: number;
+    truncate?: boolean | number;
     uppercase?: boolean;
     id?: string;
     as?: React.ComponentType<any> | string;
@@ -69,7 +80,7 @@ const Text: React.FC<TextProps> = ({
     weight,
     color,
     textDecoration,
-    lineClamp,
+    truncate,
     uppercase,
     as = 'span',
     children,
@@ -96,12 +107,12 @@ const Text: React.FC<TextProps> = ({
         textDecoration,
         uppercase,
         letterSpacing,
-        lineClamp,
+        truncate,
     });
     if (!children) {
         return null;
     }
-    const className = classnames(classes.text, {[classes.truncate]: !!lineClamp});
+    const className = classnames(classes.text, {[classes.truncate]: !!truncate});
     return React.createElement(as, {className, id, role, 'aria-level': otherProps['aria-level']}, children);
 };
 
