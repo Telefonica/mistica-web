@@ -1,3 +1,10 @@
+## [7.0.1](https://github.com/Telefonica/mistica-web/compare/v7.0.0...v7.0.1) (2020-10-22)
+
+
+### Bug Fixes
+
+* **Text:** improve truncate related styles ([27841c2](https://github.com/Telefonica/mistica-web/commit/27841c24d5b816f97f70ec9f3c56f4e0ebf1fb8a))
+
 # [7.0.0](https://github.com/Telefonica/mistica-web/compare/v6.7.0...v7.0.0) (2020-10-21)
 
 
