@@ -49,6 +49,17 @@ const useStyles = createUseStyles((theme) => ({
         borderRadius: '50%',
         backgroundColor: applyAlpha(theme.colors.background, 0.7),
     },
+    textContainer: {
+        paddingLeft: 16,
+        paddingTop: 24,
+        paddingBottom: 24,
+        paddingRight: ({hasImage}) => (hasImage ? 8 : 56),
+
+        [theme.mq.desktopOrBigger]: {
+            padding: 24,
+            paddingRight: ({hasImage}) => (hasImage ? 24 : 56),
+        },
+    },
 }));
 
 type DismissableProps = {
@@ -123,14 +134,14 @@ interface OnPressProps extends CommonProps {
 type Props = BasicProps | ButtonProps | HrefProps | ToProps | OnPressProps;
 
 const Content: React.FC<Props> = (props) => {
-    const isInverse = useIsInverseVariant();
-    const classes = useStyles({isInverse});
-    const theme = useTheme();
     const {title, description, imageUrl, imageFit} = props;
+    const isInverse = useIsInverseVariant();
+    const classes = useStyles({isInverse, hasImage: !!imageUrl});
+    const theme = useTheme();
 
     const content = (
         <div className={classes.container}>
-            <Box paddingLeft={16} paddingRight={imageUrl ? 8 : 56} paddingY={24}>
+            <div className={classes.textContainer}>
                 <Text5 light>{title}</Text5>
                 <Box paddingTop={8}>
                     <Text7 regular color={theme.colors.textSecondary}>
@@ -138,7 +149,7 @@ const Content: React.FC<Props> = (props) => {
                     </Text7>
                 </Box>
                 {props.button && <Box paddingTop={16}>{props.button}</Box>}
-            </Box>
+            </div>
             {imageUrl && (
                 <div
                     className={classes.imageContent}
