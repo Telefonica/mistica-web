@@ -4,7 +4,7 @@ import SectionTitle from '../section-title';
 import {Placeholder} from '../placeholder';
 
 export default {
-    title: 'Components|Others/SectionTitle',
+    title: 'Components/Others/SectionTitle',
 };
 
 export const Default: StoryComponent = () => (

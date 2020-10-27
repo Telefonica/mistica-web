@@ -12,7 +12,7 @@ import {
 import {useTextField, useCheckbox} from './helpers';
 
 export default {
-    title: 'Components|Headers/Header',
+    title: 'Components/Headers/Header',
     parameters: {
         fullScreen: true,
     },

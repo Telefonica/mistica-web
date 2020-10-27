@@ -13,7 +13,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components|Touchables/Button',
+    title: 'Components/Touchables/Button',
 };
 
 const IcnCamera = () => (

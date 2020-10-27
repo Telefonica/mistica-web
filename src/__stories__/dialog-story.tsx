@@ -5,7 +5,7 @@ import ButtonLayout from '../button-layout';
 import IcnInfo from '../icons/icon-info';
 
 export default {
-    title: 'Components|Feedbacks/Dialogs',
+    title: 'Components/Feedbacks/Dialogs',
 };
 
 export const Default: StoryComponent = () => (

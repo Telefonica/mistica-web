@@ -2,7 +2,7 @@ import * as React from 'react';
 import NavigationBreadcrumbs from '../navigation-breadcrumbs';
 
 export default {
-    title: 'Components|Others/NavigationBreadcrumbs',
+    title: 'Components/Others/NavigationBreadcrumbs',
 };
 
 export const Default: StoryComponent = () => (

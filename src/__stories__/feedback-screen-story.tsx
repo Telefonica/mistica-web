@@ -12,7 +12,7 @@ import {ThemeVariant, useIsInverseVariant} from '../theme-variant-context';
 import {useTheme} from '../hooks';
 
 export default {
-    title: 'Components|Feedbacks/FeedbackScreen',
+    title: 'Components/Feedbacks/FeedbackScreen',
     parameters: {
         fullScreen: true,
     },

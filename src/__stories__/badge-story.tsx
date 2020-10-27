@@ -13,7 +13,7 @@ const IcnSettings = ({color = '#00a9e0'}: {color?: string}) => (
 );
 
 export default {
-    title: 'Components|Hints/Badge',
+    title: 'Components/Hints/Badge',
 };
 
 export const BadgeStory: StoryComponent = () => (

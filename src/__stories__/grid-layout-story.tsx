@@ -3,7 +3,7 @@ import {GridLayout, ResponsiveLayout} from '..';
 import {Placeholder} from '../placeholder';
 
 export default {
-    title: 'Components|Layouts/GridLayout',
+    title: 'Components/Layouts/GridLayout',
     parameters: {
         fullScreen: true,
     },

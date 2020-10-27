@@ -22,7 +22,7 @@ import Icon from '../icons/icon-visibility';
 import {StorySection, countriesList, phoneNumbersList} from './helpers';
 
 export default {
-    title: 'Components|Forms/Fields',
+    title: 'Components/Forms/Fields',
 };
 
 type UncontrolledProps = {

@@ -3,7 +3,7 @@ import {MainSectionHeader, MainSectionHeaderLayout, ButtonPrimary, Stack, Respon
 import {useTextField, useCheckbox} from './helpers';
 
 export default {
-    title: 'Components|Headers/MainSectionHeader',
+    title: 'Components/Headers/MainSectionHeader',
     parameters: {
         fullScreen: true,
     },

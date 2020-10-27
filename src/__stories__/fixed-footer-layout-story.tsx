@@ -5,7 +5,7 @@ import ButtonFixedFooterLayout from '../button-fixed-footer-layout';
 import {useCheckbox} from './helpers';
 
 export default {
-    title: 'Components|Layouts/FixedFooterLayout',
+    title: 'Components/Layouts/FixedFooterLayout',
     component: FixedFooterLayout,
 };
 

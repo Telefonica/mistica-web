@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Box, Stack, Placeholder} from '..';
 
 export default {
-    title: 'Components|Layouts/Box',
+    title: 'Components/Layouts/Box',
 };
 
 export const Default: StoryComponent = () => (

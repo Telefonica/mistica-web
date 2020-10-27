@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Switch, Stack, Inline, Text6} from '..';
 
 export default {
-    title: 'Components|Forms/Switch',
+    title: 'Components/Forms/Switch',
 };
 
 export const Default: StoryComponent = () => {

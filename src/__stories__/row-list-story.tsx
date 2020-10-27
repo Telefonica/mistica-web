@@ -5,7 +5,7 @@ import {Box, Stack, AvatarPlaceholder} from '..';
 import {RadioGroup} from '../radio-button';
 
 export default {
-    title: 'Components|Lists/RowList',
+    title: 'Components/Lists/RowList',
     parameters: {
         fullScreen: true,
     },

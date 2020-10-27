@@ -3,7 +3,7 @@ import FadeIn from '../fade-in';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components|Animations/FadeIn',
+    title: 'Components/Animations/FadeIn',
     component: FadeIn,
 };
 

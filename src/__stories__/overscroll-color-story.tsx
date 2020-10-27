@@ -2,7 +2,7 @@ import * as React from 'react';
 import {OverscrollColor, useTheme, Text7, Box} from '..';
 
 export default {
-    title: 'Components|Utils/OverscrollColor',
+    title: 'Components/Utils/OverscrollColor',
     parameters: {
         fullScreen: true,
     },

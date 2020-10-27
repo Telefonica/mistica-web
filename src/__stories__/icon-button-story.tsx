@@ -4,7 +4,7 @@ import IcnClose from '../icons/icon-close';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components|Touchables/IconButton',
+    title: 'Components/Touchables/IconButton',
 };
 
 export const Default: StoryComponent = () => (

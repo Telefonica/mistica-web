@@ -3,7 +3,7 @@ import Spinner from '../spinner';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components|Feedbacks/Spinner',
+    title: 'Components/Feedbacks/Spinner',
     component: Spinner,
 };
 

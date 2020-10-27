@@ -11,7 +11,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components|Forms/DoubleField',
+    title: 'Components/Forms/DoubleField',
     component: DoubleField,
 };
 export const Default: StoryComponent = () => {

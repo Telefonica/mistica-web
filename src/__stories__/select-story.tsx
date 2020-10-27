@@ -3,7 +3,7 @@ import {StorySection, fruitEntries} from './helpers';
 import {Select} from '..';
 
 export default {
-    title: 'Components|Forms/Select',
+    title: 'Components/Forms/Select',
     component: Select,
 };
 

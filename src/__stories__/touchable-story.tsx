@@ -3,7 +3,7 @@ import {Touchable, Stack} from '..';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components|Touchables/Touchable',
+    title: 'Components/Touchables/Touchable',
     component: Touchable,
 };
 
