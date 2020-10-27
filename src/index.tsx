@@ -42,7 +42,7 @@ export {default as PromoTag} from './promo-tag';
 export {default as SectionTitle} from './section-title';
 export {Placeholder, AvatarPlaceholder} from './placeholder';
 export {RowList, Row, BoxedRowList, BoxedRow} from './list';
-export {default as Switch} from './switch';
+export {default as Switch} from './switch-component';
 export {default as Checkbox} from './checkbox';
 export {default as RadioButton, RadioGroup} from './radio-button';
 export {default as NegativeBox} from './negative-box';
@@ -101,7 +101,6 @@ export {getO2ClassicSkin} from './skins/o2-classic';
 export type {Locale} from './utils/locale';
 export type {TrackingEvent} from './utils/types';
 export type {RegionCode} from './utils/region-code';
-
 // Check there is only one version of mistica installed in the page.
 if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
     // @ts-expect-error __mistica_version__ does not exist in window

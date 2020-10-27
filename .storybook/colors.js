@@ -10,31 +10,31 @@
 /**
  * @param {'Movistar' | 'Vivo' | 'O2' | 'O2-classic'} skin
  */
-export const getColors = (skin) => {
-    switch (skin) {
-        case 'Movistar':
-            return {
-                PRIMARY: '#019DF4',
-                TEXT_PRIMARY: '#313235',
-                TEXT_PRIMARY_INVERSE: '#FFFFFF',
-                TEXT_SECONDARY: '#86888C',
-            };
-        case 'Vivo':
-            return {
-                PRIMARY: '#660099',
-                TEXT_PRIMARY: '#000000',
-                TEXT_PRIMARY_INVERSE: '#FFFFFF',
-                TEXT_SECONDARY: '#666666',
-            };
-        case 'O2-classic':
-        case 'O2':
-            return {
-                PRIMARY: '#032B5A',
-                TEXT_PRIMARY: '#000033',
-                TEXT_PRIMARY_INVERSE: '#FFFFFF',
-                TEXT_SECONDARY: '#757575',
-            };
-        default:
-            throw Error('Unexpected skin: ' + skin);
-    }
-};
+// export const getColors = (skin) => {
+//     switch (skin) {
+//         case 'Movistar':
+//             return {
+//                 PRIMARY: '#019DF4',
+//                 TEXT_PRIMARY: '#313235',
+//                 TEXT_PRIMARY_INVERSE: '#FFFFFF',
+//                 TEXT_SECONDARY: '#86888C',
+//             };
+//         case 'Vivo':
+//             return {
+//                 PRIMARY: '#660099',
+//                 TEXT_PRIMARY: '#000000',
+//                 TEXT_PRIMARY_INVERSE: '#FFFFFF',
+//                 TEXT_SECONDARY: '#666666',
+//             };
+//         case 'O2-classic':
+//         case 'O2':
+//             return {
+//                 PRIMARY: '#032B5A',
+//                 TEXT_PRIMARY: '#000033',
+//                 TEXT_PRIMARY_INVERSE: '#FFFFFF',
+//                 TEXT_SECONDARY: '#757575',
+//             };
+//         default:
+//             throw Error('Unexpected skin: ' + skin);
+//     }
+// };

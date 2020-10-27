@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useCheckbox} from '../../__stories__/helpers';
+import {useCheckbox} from './helpers';
 import {ThemeVariant, useTheme, Box, Stack, SearchField, Inline, DoubleField, Text} from '../..';
 import IntegerField from '../../integer-field';
 import {kebabCase, upperFirst} from 'lodash';
