@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useAriaId, useTheme, Stack, Text7} from '..';
 
 export default {
-    title: 'Hooks|useAriaId',
+    title: 'Hooks/useAriaId',
 };
 
 export const UseAriaId: StoryComponent = () => {

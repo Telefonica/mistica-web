@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useWindowSize, useTheme, Stack, Text7} from '..';
 
 export default {
-    title: 'Hooks|useWindowSize',
+    title: 'Hooks/useWindowSize',
 };
 
 export const UseWindowSize: StoryComponent = () => {

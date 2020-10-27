@@ -3,7 +3,7 @@ import {StorySection} from './helpers';
 import {useElementSize} from '../hooks';
 
 export default {
-    title: 'Hooks|useElementSize',
+    title: 'Hooks/useElementSize',
 };
 
 export const UseElementSize: StoryComponent = () => {
