@@ -34,19 +34,19 @@ export const Default: StoryComponent = () => {
         switch (button) {
             case 'ButtonPrimary':
                 return (
-                    <ButtonPrimary href={document.location.href} small>
+                    <ButtonPrimary href="#" small>
                         ButtonPrimary
                     </ButtonPrimary>
                 );
             case 'ButtonSecondary':
                 return (
-                    <ButtonSecondary href={document.location.href} small>
+                    <ButtonSecondary href="#" small>
                         ButtonSecondary
                     </ButtonSecondary>
                 );
             case 'TextLink':
                 return (
-                    <TextLink href={document.location.href} small>
+                    <TextLink href="#" small>
                         TextLink
                     </TextLink>
                 );

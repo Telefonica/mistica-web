@@ -11,12 +11,12 @@ const getValue = async (element: Promise<ElementHandle> | ElementHandle) =>
     (await element).getProperty('value').then((t) => t.jsonValue());
 
 const CONTROLLED_STORY = {
-    section: 'Components|Forms/Fields',
+    section: 'Components/Forms/Fields',
     name: 'Types (controlled)',
 };
 
 const UNCONTROLLED_STORY = {
-    section: 'Components|Forms/Fields',
+    section: 'Components/Forms/Fields',
     name: 'Types (uncontrolled)',
 };
 

@@ -397,7 +397,7 @@ export default [
             imageFit="fit"
             onClose={() => {}}
             button={
-                <ButtonPrimary href={document.location.href} small>
+                <ButtonPrimary href="#" small>
                     ButtonPrimary
                 </ButtonPrimary>
             }
