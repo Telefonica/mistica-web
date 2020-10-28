@@ -19,4 +19,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'RadioButton'};
+Default.storyName = 'RadioButton';

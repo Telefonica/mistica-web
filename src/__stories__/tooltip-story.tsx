@@ -113,4 +113,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'Tooltip'};
+Default.storyName = 'Tooltip';

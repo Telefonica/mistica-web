@@ -124,4 +124,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'BoxedRowList'};
+Default.storyName = 'BoxedRowList';

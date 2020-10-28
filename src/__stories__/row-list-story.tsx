@@ -125,7 +125,7 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'RowList'};
+Default.storyName = 'RowList';
 
 export const Radio: StoryComponent = () => (
     <div data-testid="radio-row-list">
@@ -159,4 +159,4 @@ export const Radio: StoryComponent = () => (
     </div>
 );
 
-Radio.story = {name: 'RowList (radio button)'};
+Radio.storyName = 'RowList (radio button)';

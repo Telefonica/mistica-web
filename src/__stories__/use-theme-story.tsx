@@ -25,6 +25,4 @@ export const UseTheme: StoryComponent = () => {
     );
 };
 
-UseTheme.story = {
-    name: 'useTheme',
-};
+UseTheme.storyName = 'useTheme';

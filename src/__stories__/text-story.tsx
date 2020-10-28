@@ -51,4 +51,4 @@ export const Default: StoryComponent = () => (
     </div>
 );
 
-Default.story = {name: 'Text'};
+Default.storyName = 'Text';

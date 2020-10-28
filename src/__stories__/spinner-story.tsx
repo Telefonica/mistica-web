@@ -21,4 +21,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'Spinner'};
+Default.storyName = 'Spinner';

@@ -9,4 +9,4 @@ export const Default: StoryComponent = () => (
     <NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: 'Cuenta', url: '/consumptions'}]} />
 );
 
-Default.story = {name: 'NavigationBreadcrumbs'};
+Default.storyName = 'NavigationBreadcrumbs';

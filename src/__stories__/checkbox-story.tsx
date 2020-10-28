@@ -35,4 +35,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'Checkbox'};
+Default.storyName = 'Checkbox';

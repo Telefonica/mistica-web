@@ -95,4 +95,4 @@ export const Default: StoryComponent = () => (
     </>
 );
 
-Default.story = {name: 'ButtonLayout'};
+Default.storyName = 'ButtonLayout';

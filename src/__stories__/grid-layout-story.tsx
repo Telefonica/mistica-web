@@ -22,7 +22,7 @@ export const SixAndSix: StoryComponent = () => (
     </ResponsiveLayout>
 );
 
-SixAndSix.story = {name: '6 + 6'};
+SixAndSix.storyName = '6 + 6';
 
 export const EightAndFour: StoryComponent = () => (
     <ResponsiveLayout>
@@ -37,4 +37,4 @@ export const EightAndFour: StoryComponent = () => (
     </ResponsiveLayout>
 );
 
-EightAndFour.story = {name: '8 + 4'};
+EightAndFour.storyName = '8 + 4';

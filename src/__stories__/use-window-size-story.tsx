@@ -18,6 +18,4 @@ export const UseWindowSize: StoryComponent = () => {
     );
 };
 
-UseWindowSize.story = {
-    name: 'useWindowSize',
-};
+UseWindowSize.storyName = 'useWindowSize';

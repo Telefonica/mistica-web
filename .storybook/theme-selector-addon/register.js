@@ -1,24 +1,25 @@
+// @ts-check
 import * as React from 'react';
-import addonApi, {types} from '@storybook/addons';
+import {addons, types} from '@storybook/addons';
 import {WithTooltip, IconButton, TooltipLinkList} from '@storybook/components';
 import {getColors} from '../colors';
-import createManagerTheme from '../storybook-manager-theme';
+import {createStorybookTheme} from '../storybook-manager-theme';
 
 const AVAILABLE_SKINS = ['Movistar', 'O2', 'O2-classic', 'Vivo'];
 
-const renderPrimaryColorDot = (skin) => (
+const renderPrimaryColorDot = (skinName) => (
     <div
         style={{
             width: 20,
             height: 20,
-            background: getColors(skin).PRIMARY,
+            background: getColors(skinName).primary,
             borderRadius: '50%',
         }}
     />
 );
 
 const ThemeSelectorAddon = ({api}) => {
-    const channel = addonApi.getChannel();
+    const channel = addons.getChannel();
     const [currentSkin, setCurrentSkin] = React.useState(() => api.getQueryParam('skin') || 'Movistar');
 
     React.useEffect(() => {
@@ -36,11 +37,11 @@ const ThemeSelectorAddon = ({api}) => {
     React.useEffect(() => {
         channel.emit('skin-selected', currentSkin);
 
-        api.setOptions({theme: createManagerTheme(currentSkin)});
+        api.setOptions({theme: createStorybookTheme(currentSkin)});
 
         // We need this timeout because there could be some race condition between addon mount and storybook manager initialization on page load
         const tid = setTimeout(() => {
-            api.setOptions({theme: createManagerTheme(currentSkin)});
+            api.setOptions({theme: createStorybookTheme(currentSkin)});
         }, 100);
 
         return () => {
@@ -77,8 +78,8 @@ const ThemeSelectorAddon = ({api}) => {
     );
 };
 
-addonApi.register('theme-selector', (api) => {
-    addonApi.add('theme-selector/panel', {
+addons.register('theme-selector', (api) => {
+    addons.add('theme-selector/panel', {
         type: types.TOOL,
         title: 'Theme',
         render: () => <ThemeSelectorAddon api={api} />,

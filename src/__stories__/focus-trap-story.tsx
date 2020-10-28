@@ -29,4 +29,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'FocusTrap'};
+Default.storyName = 'FocusTrap';

@@ -34,19 +34,19 @@ export const Default: StoryComponent = () => {
         switch (button) {
             case 'ButtonPrimary':
                 return (
-                    <ButtonPrimary href="whatever/url" small>
+                    <ButtonPrimary href={document.location.href} small>
                         ButtonPrimary
                     </ButtonPrimary>
                 );
             case 'ButtonSecondary':
                 return (
-                    <ButtonSecondary href="whatever/url" small>
+                    <ButtonSecondary href={document.location.href} small>
                         ButtonSecondary
                     </ButtonSecondary>
                 );
             case 'TextLink':
                 return (
-                    <TextLink href="whatever/url" small>
+                    <TextLink href={document.location.href} small>
                         TextLink
                     </TextLink>
                 );
@@ -99,4 +99,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'HighlightedCard'};
+Default.storyName = 'HighlightedCard';

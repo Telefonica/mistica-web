@@ -15,4 +15,4 @@ export const Default: StoryComponent = () => (
     </ResponsiveLayout>
 );
 
-Default.story = {name: 'ResponsiveLayout'};
+Default.storyName = 'ResponsiveLayout';

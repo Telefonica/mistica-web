@@ -43,4 +43,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'Touchable'};
+Default.storyName = 'Touchable';

@@ -25,4 +25,4 @@ export const Default: StoryComponent = () => (
     </>
 );
 
-Default.story = {name: 'IconButton'};
+Default.storyName = 'IconButton';

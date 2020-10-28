@@ -38,7 +38,7 @@ export const FooterWithButtonsOnly: StoryComponent = () => {
     );
 };
 
-FooterWithButtonsOnly.story = {name: 'ButtonFixedFooterLayout'};
+FooterWithButtonsOnly.storyName = 'ButtonFixedFooterLayout';
 
 export const MoreComplexFooter: StoryComponent = () => {
     const [textLines, loadMoreText] = useTextLines();
@@ -76,4 +76,4 @@ export const MoreComplexFooter: StoryComponent = () => {
     );
 };
 
-MoreComplexFooter.story = {name: 'FixedFooterLayout'};
+MoreComplexFooter.storyName = 'FixedFooterLayout';

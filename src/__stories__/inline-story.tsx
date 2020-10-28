@@ -38,4 +38,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'Inline'};
+Default.storyName = 'Inline';

@@ -18,6 +18,4 @@ export const UseScreenSize: StoryComponent = () => {
     );
 };
 
-UseScreenSize.story = {
-    name: 'useScreenSize',
-};
+UseScreenSize.storyName = 'useScreenSize';

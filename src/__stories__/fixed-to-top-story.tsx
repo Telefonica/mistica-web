@@ -31,4 +31,4 @@ export const Default: StoryComponent = () => (
     </FixedToTop>
 );
 
-Default.story = {name: 'FixedToTop'};
+Default.storyName = 'FixedToTop';

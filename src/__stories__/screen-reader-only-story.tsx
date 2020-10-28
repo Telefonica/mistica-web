@@ -22,4 +22,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'ScreenReaderOnly'};
+Default.storyName = 'ScreenReaderOnly';

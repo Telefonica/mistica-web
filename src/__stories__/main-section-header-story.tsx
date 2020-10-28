@@ -39,4 +39,4 @@ export const Default: StoryComponent = () => {
         </Stack>
     );
 };
-Default.story = {name: 'MainSectionHeader'};
+Default.storyName = 'MainSectionHeader';

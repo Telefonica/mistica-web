@@ -42,4 +42,4 @@ export const Default: StoryComponent = () => (
     </>
 );
 
-Default.story = {name: 'alert() and confirm()'};
+Default.storyName = 'alert() and confirm()';

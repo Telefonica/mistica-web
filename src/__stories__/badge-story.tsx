@@ -52,4 +52,4 @@ export const BadgeStory: StoryComponent = () => (
     </>
 );
 
-BadgeStory.story = {name: 'Badge'};
+BadgeStory.storyName = 'Badge';

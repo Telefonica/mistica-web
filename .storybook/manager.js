@@ -1,8 +1,9 @@
-// import './css/roboto.css';
-// import {addons} from '@storybook/addons';
-// import createTheme from './storybook-manager-theme';
+import './css/roboto.css';
+import {addons} from '@storybook/addons';
+import {createStorybookTheme} from './storybook-manager-theme';
 
-// addons.setConfig({
-//     panelPosition: 'right',
-//     theme: createTheme('Movistar'),
-// });
+// https://storybook.js.org/docs/react/configure/features-and-behavior
+addons.setConfig({
+    panelPosition: 'right',
+    theme: createStorybookTheme('Movistar'),
+});

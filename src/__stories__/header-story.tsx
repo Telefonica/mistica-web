@@ -105,4 +105,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'Header'};
+Default.storyName = 'Header';

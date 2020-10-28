@@ -27,6 +27,4 @@ export const UseElementSize: StoryComponent = () => {
     );
 };
 
-UseElementSize.story = {
-    name: 'useElementSize',
-};
+UseElementSize.storyName = 'useElementSize';

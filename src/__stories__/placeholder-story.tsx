@@ -12,4 +12,4 @@ export const Default: StoryComponent = () => (
     </Stack>
 );
 
-Default.story = {name: 'Placeholder'};
+Default.storyName = 'Placeholder';

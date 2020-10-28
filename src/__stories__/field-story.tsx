@@ -364,7 +364,7 @@ export const TypesUncontrolled: StoryComponent = () => (
     </>
 );
 
-TypesUncontrolled.story = {name: 'Types (uncontrolled)'};
+TypesUncontrolled.storyName = 'Types (uncontrolled)';
 
 export const TypesControlled = (): React.ReactNode => (
     <>
@@ -581,4 +581,4 @@ export const TypesControlled = (): React.ReactNode => (
     </>
 );
 
-TypesControlled.story = {name: 'Types (controlled)'};
+TypesControlled.storyName = 'Types (controlled)';

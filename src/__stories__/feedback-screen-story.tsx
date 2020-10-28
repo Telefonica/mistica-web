@@ -35,7 +35,7 @@ export const Success: StoryComponent = () => (
         secondaryButton={secondaryButton}
     />
 );
-Success.story = {name: 'SuccessFeedbackScreen'};
+Success.storyName = 'SuccessFeedbackScreen';
 
 export const Error: StoryComponent = () => (
     <ErrorFeedbackScreen
@@ -45,12 +45,12 @@ export const Error: StoryComponent = () => (
         link={linkButton}
     />
 );
-Error.story = {name: 'ErrorFeedbackScreen'};
+Error.storyName = 'ErrorFeedbackScreen';
 
 export const Info: StoryComponent = () => (
     <InfoFeedbackScreen title={defaultTitle} description={defaultDescription} primaryButton={primaryButton} />
 );
-Info.story = {name: 'InfoFeedbackScreen'};
+Info.storyName = 'InfoFeedbackScreen';
 
 export const multipleParagraphs: StoryComponent = () => (
     <SuccessFeedbackScreen
@@ -124,6 +124,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {
-    name: 'FeedbackScreen',
-};
+Default.storyName = 'FeedbackScreen';

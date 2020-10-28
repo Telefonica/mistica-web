@@ -22,6 +22,4 @@ export const UseAriaId: StoryComponent = () => {
     );
 };
 
-UseAriaId.story = {
-    name: 'useAriaId',
-};
+UseAriaId.storyName = 'useAriaId';

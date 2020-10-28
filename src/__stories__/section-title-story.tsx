@@ -15,4 +15,4 @@ export const Default: StoryComponent = () => (
     </StorySection>
 );
 
-Default.story = {name: 'SectionTitle'};
+Default.storyName = 'SectionTitle';

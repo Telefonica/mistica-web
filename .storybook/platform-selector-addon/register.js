@@ -1,5 +1,5 @@
 import * as React from 'react';
-import addonApi, {types} from '@storybook/addons';
+import {addons, types} from '@storybook/addons';
 import {IconButton, TooltipLinkList, WithTooltip} from '@storybook/components';
 
 const PLATFORMS = [
@@ -9,7 +9,7 @@ const PLATFORMS = [
 ];
 
 const PlatformSelectorAddon = ({api}) => {
-    const channel = addonApi.getChannel();
+    const channel = addons.getChannel();
     const [currentPlatform, setCurrentPlatform] = React.useState(
         () => api.getQueryParam('platform') || undefined
     );
@@ -25,7 +25,7 @@ const PlatformSelectorAddon = ({api}) => {
         return () => {
             channel.off('story-mounted', notifyPlatform);
         };
-    }, [channel, currentPlatform]);
+    }, [channel, currentPlatform, api]);
 
     return (
         <WithTooltip
@@ -56,8 +56,8 @@ const PlatformSelectorAddon = ({api}) => {
     );
 };
 
-addonApi.register('platform-selector', (api) => {
-    addonApi.add('platform-selector/panel', {
+addons.register('platform-selector', (api) => {
+    addons.add('platform-selector/panel', {
         type: types.TOOL,
         title: 'Platform',
         render: () => <PlatformSelectorAddon api={api} />,

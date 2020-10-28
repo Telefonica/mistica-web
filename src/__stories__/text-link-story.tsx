@@ -48,4 +48,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'TextLink'};
+Default.storyName = 'TextLink';

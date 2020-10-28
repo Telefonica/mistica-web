@@ -36,4 +36,4 @@ export const Default: StoryComponent = () => (
     </StorySection>
 );
 
-Default.story = {name: 'FadeIn'};
+Default.storyName = 'FadeIn';
