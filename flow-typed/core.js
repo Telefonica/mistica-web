@@ -17,8 +17,8 @@ declare class Object {
         entries: Iterable<
             | [K, V]
             | {
-                  '0': K,
-                  '1': V,
+                  0: K,
+                  1: V,
                   ...
               }
         >
