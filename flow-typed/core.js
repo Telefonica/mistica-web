@@ -13,12 +13,14 @@ declare class Object {
     static defineProperty<T>(o: any, p: any, attributes: PropertyDescriptor<T>): any;
     static entries<T>(object: T): Array<[$Keys<T>, $Values<T>]>;
     static freeze<T>(o: T): T;
+    /* prettier-ignore */
+    /* prettier removes quotes from keys and that is problematic for flow */
     static fromEntries<K, V>(
         entries: Iterable<
             | [K, V]
             | {
-                  0: K,
-                  1: V,
+                  '0': K,
+                  '1': V,
                   ...
               }
         >
