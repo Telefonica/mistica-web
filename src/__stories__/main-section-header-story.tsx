@@ -10,9 +10,9 @@ export default {
 };
 
 export const Default: StoryComponent = () => {
-    const [title, titleTextField] = useTextField('title', 'Soporte');
-    const [desciption, descriptionTextField] = useTextField('description', '¿En qué podemos ayudarte?');
-    const [buttonLabel, buttonLabelTextField] = useTextField('buttonLabel', 'Acción');
+    const [title, titleTextField] = useTextField('title', 'Support');
+    const [desciption, descriptionTextField] = useTextField('description', 'How can I help you?');
+    const [buttonLabel, buttonLabelTextField] = useTextField('buttonLabel', 'Action');
     const [isInverse, inverseCheckbox] = useCheckbox('Inverse', true);
 
     return (
