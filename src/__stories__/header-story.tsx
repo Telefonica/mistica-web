@@ -48,8 +48,8 @@ export const Default: StoryComponent = () => {
                         breadcrumbs={
                             withBreadcrumbs ? (
                                 <NavigationBreadcrumbs
-                                    title="Facturas"
-                                    breadcrumbs={[{title: 'Cuenta', url: '/consumptions'}]}
+                                    title="Bills"
+                                    breadcrumbs={[{title: 'Account', url: '/consumptions'}]}
                                 />
                             ) : undefined
                         }
