@@ -23,19 +23,13 @@ const FieldWithCheckbox: React.FC = ({children}) => (
 );
 
 export const Default: StoryComponent = () => {
-    const [pretitle, pretitleTextField] = useTextField('pretitle', 'Factura de diciembre');
-    const [title, titleTextField] = useTextField(
-        'title',
-        'La última factura de diciembre ya esta disponible'
-    );
-    const [preamount, preamountTextField] = useTextField('preamount', 'Cuota mensual (IVA incluido)');
+    const [pretitle, pretitleTextField] = useTextField('pretitle', 'Your last bill');
+    const [title, titleTextField] = useTextField('title', 'December bill is now available');
+    const [preamount, preamountTextField] = useTextField('preamount', 'Monthly fee (IVA included)');
     const [amount, amountTextField] = useTextField('amount', '60,44 €');
-    const [buttonLabel, buttonLabelTextField] = useTextField('button', 'Descargar factura');
-    const [secondaryButtonLabel, secondaryButtonLabelTextField] = useTextField(
-        'secondaryButton',
-        'Pagar factura'
-    );
-    const [subtitle, subtitleTextField] = useTextField('subtitle', 'Y esto es un subtitulo');
+    const [buttonLabel, buttonLabelTextField] = useTextField('button', 'Download bill');
+    const [secondaryButtonLabel, secondaryButtonLabelTextField] = useTextField('secondaryButton', 'Pay bill');
+    const [subtitle, subtitleTextField] = useTextField('subtitle', 'This is a subtitle');
     const [isInverse, inverseCheckbox] = useCheckbox('Inverse', true);
     const [isErrorAmount, errorAmountCheckbox] = useCheckbox('Error amount', false);
     const [withExtraContent, extraContentCheckbox] = useCheckbox('With extra content', true);
