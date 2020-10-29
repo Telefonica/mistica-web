@@ -24,7 +24,7 @@ import {
 import {getCvvLength} from '../utils/credit-card';
 
 export default {
-    title: 'Components/Forms/Form',
+    title: 'Components/Forms/Form examples',
 };
 
 const fakeApiCall = (data: any): Promise<void> =>
