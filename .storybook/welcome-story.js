@@ -3,7 +3,7 @@ import {Text7, Text3, Stack, Box, ResponsiveLayout, useTheme, ButtonLink, TextLi
 import logo from '../img/mistica-react-logo.svg';
 
 export default {
-    title: 'Welcome',
+    title: 'Welcome/Welcome',
 };
 
 const Paragraph = ({children}) => {

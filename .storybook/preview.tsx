@@ -12,7 +12,6 @@ import {
 } from '../src';
 import {AVAILABLE_THEMES, Movistar} from './themes';
 import {addons} from '@storybook/addons';
-import {MINIMAL_VIEWPORTS} from '@storybook/addon-viewport';
 
 const getUserAgent = () => self.navigator.userAgent || '';
 const isRunningAcceptanceTest = () => getUserAgent().includes('acceptance-test');
@@ -104,14 +103,17 @@ export const parameters = {
     // https://storybook.js.org/docs/react/configure/story-layout
     layout: 'fullscreen',
 
-    // https://storybook.js.org/docs/react/essentials/viewport
-    viewport: {
-        viewports: MINIMAL_VIEWPORTS,
-        defaultValue: 'responsive',
-    },
     options: {
         // https://storybook.js.org/docs/react/writing-stories/naming-components-and-hierarchy#sorting-stories
-        storySort: (a: {id: string; kind: string}[], b: {id: string; kind: string}[]): number =>
-            a[1].kind === b[1].kind ? 0 : a[1].id.localeCompare(b[1].id, undefined, {numeric: true}),
+        storySort: (a: {id: string; kind: string}[], b: {id: string; kind: string}[]): number => {
+            console.log(a, b);
+            if (a[1].kind === 'Welcome/Welcome') {
+                return -1;
+            }
+            if (b[1].kind === 'Welcome/Welcome') {
+                return 1;
+            }
+            return a[1].kind === b[1].kind ? 0 : a[1].id.localeCompare(b[1].id, undefined, {numeric: true});
+        },
     },
 };
