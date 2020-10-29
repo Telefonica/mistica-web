@@ -1,4 +1,4 @@
-const projectConfig = require('../.babelrc.js');
+const projectConfig = require('../.babelrc');
 
 /**
  * Take the project config, but set loose to true for class properties and private methods for Storybook.
