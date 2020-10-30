@@ -1,11 +1,11 @@
 {
     "dist": {
-        "js": 5051751,
-        "jsNoMisticaIcons": 650265
+        "js": 5051912,
+        "jsNoMisticaIcons": 650426
     },
     "distEs": {
-        "js": 3012147,
-        "jsNoMisticaIcons": 487082
+        "js": 3012307,
+        "jsNoMisticaIcons": 487242
     },
     "libOverhead": {
         "initial": 130857,
