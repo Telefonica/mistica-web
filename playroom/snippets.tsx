@@ -328,19 +328,30 @@ const tabsSnippets = [
     {
         group: 'Tabs',
         name: 'Tabs (without icons)',
-        code: `<Tabs selectedIndex={0} tabs={[{text: 'Tab 1'}, {text: 'Tab 2'}, {text: 'Tab 2'}]} />`,
+        code: `
+        <Tabs selectedIndex={0}
+            selectedIndex={getState('tabIndex')}
+            onChange={setState('tabIndex')}
+            tabs={[
+                {text: 'Tab 1'},
+                {text: 'Tab 2'},
+                {text: 'Tab 2'},
+            ]}
+        />`,
     },
     {
         group: 'Tabs',
         name: 'Tabs (with icons)',
-        code: `<Tabs
-    selectedIndex={0}
-    tabs={[
-        {text: 'Tab 1', icon: <Placeholder height={24} width={24} />},
-        {text: 'Tab 2', icon: <Placeholder height={24} width={24} />},
-        {text: 'Tab 3', icon: <Placeholder height={24} width={24} />},
-    ]}
-/>`,
+        code: `
+        <Tabs
+            selectedIndex={getState('tabIndex')}
+            onChange={setState('tabIndex')}
+            tabs={[
+                {text: 'Tab 1', icon: <IconAppointmentFilled />},
+                {text: 'Tab 2', icon: <IconBrainFilled />},
+                {text: 'Tab 3', icon: <IconBusFilled />},
+            ]}
+        />`,
     },
 ];
 
