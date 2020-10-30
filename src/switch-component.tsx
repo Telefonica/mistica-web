@@ -1,3 +1,8 @@
+/*
+This file is named "switch-component.tsx" instead of "switch.tsx" to workaround
+this storybook bug:
+https://github.com/storybookjs/storybook/issues/11980
+*/
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {getPlatform} from './utils/platform';
