@@ -1,4 +1,4 @@
-FROM zenika/alpine-chrome:87
+FROM zenika/alpine-chrome:86
 
 ENV TZ UTC
 ENV LANG es_ES
