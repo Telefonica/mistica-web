@@ -116,7 +116,7 @@
         "lint-staged": ">=10.5.0",
         "node-fetch": "^2.6.1",
         "playroom": "^0.22.3",
-        "pptr-testing-library": "^0.6.4",
+        "pptr-testing-library": "0.6.0",
         "prettier": "^2.1.2",
         "prop-types": "^15.7.2",
         "puppeteer": "3.3.0",
