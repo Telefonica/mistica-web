@@ -6,7 +6,7 @@ const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('HighlightedCard in %s', async (device) => {
     await openStoryPage({
-        section: 'Components|Cards/HighlightedCard',
+        section: 'Components/Cards/HighlightedCard',
         name: 'HighlightedCard',
         device,
     });

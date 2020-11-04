@@ -22,7 +22,7 @@ test.each`
         isErrorAmount: boolean;
     }) => {
         const {click} = await openStoryPage({
-            section: 'Components|Headers/Header',
+            section: 'Components/Headers/Header',
             name: 'Header',
             device,
         });
@@ -43,7 +43,7 @@ test.each`
 
 test('Header vertical extra in desktop', async () => {
     const {click} = await openStoryPage({
-        section: 'Components|Headers/Header',
+        section: 'Components/Headers/Header',
         name: 'Header',
         device: 'DESKTOP',
     });
@@ -57,7 +57,7 @@ test('Header vertical extra in desktop', async () => {
 
 test.each(DEVICES)('MainSectionHeader', async (device) => {
     await openStoryPage({
-        section: 'Components|Headers/MainSectionHeader',
+        section: 'Components/Headers/MainSectionHeader',
         name: 'MainSectionHeader',
         device,
     });

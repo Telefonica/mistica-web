@@ -19,4 +19,11 @@ module.exports = {
         './theme-selector-addon/register',
         './platform-selector-addon/register',
     ],
+    webpackFinal: async (config) => {
+        config.watchOptions = {
+            ...config.watchOptions,
+            ignored: [/node_modules/, /__tests__/, /__acceptance_tests__/, /__screenshot_tests__/],
+        };
+        return config;
+    },
 };
