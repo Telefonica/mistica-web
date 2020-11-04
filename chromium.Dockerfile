@@ -1,4 +1,4 @@
-FROM zenika/alpine-chrome:86
+FROM zenika/alpine-chrome:83
 
 ENV TZ UTC
 ENV LANG es_ES
@@ -35,4 +35,4 @@ CMD [ \
   # Expose port 9222 for remote debugging
   "--remote-debugging-port=9222", \
   "--remote-debugging-address=0.0.0.0" \
-  ]
+]

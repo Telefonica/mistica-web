@@ -24,7 +24,8 @@ const getConfig = async () => {
     };
 
     let connect;
-    const needsChromiumDocker = process.env.SCREENSHOT && process.env.HEADLESS;
+    const needsChromiumDocker =
+        process.platform !== 'linux' && process.env.SCREENSHOT && process.env.HEADLESS;
     if (needsChromiumDocker) {
         const dockerChromiumUrl = 'http://localhost:9223';
         try {
