@@ -2,7 +2,7 @@ import {openStoryPage, screen} from '../test-utils';
 
 test('TextLink common component screenshot', async () => {
     await openStoryPage({
-        section: 'Components/Touchables/TextLink',
+        section: 'Components|Touchables/TextLink',
         name: 'TextLink',
     });
 

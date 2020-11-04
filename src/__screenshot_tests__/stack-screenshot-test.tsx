@@ -2,7 +2,7 @@ import {openStoryPage} from '../test-utils';
 
 test('Stack ', async () => {
     const page = await openStoryPage({
-        section: 'Components/Layouts/Stack',
+        section: 'Components|Layouts/Stack',
         name: 'Stack',
     });
 

@@ -5,7 +5,7 @@ const testDevices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(testDevices)('ButtonLayout UI package, device: %s', async (device) => {
     await openStoryPage({
-        section: 'Components/Layouts/ButtonLayout',
+        section: 'Components|Layouts/ButtonLayout',
         name: 'ButtonLayout',
         device,
     });

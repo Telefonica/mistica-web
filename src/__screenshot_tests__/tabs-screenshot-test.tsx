@@ -11,7 +11,7 @@ test.each`
     ${'DESKTOP'}    | ${false}
 `('Tabs in $device withIcon ($withIcon)', async ({device, withIcon}) => {
     const page = await openStoryPage({
-        section: 'Components/Controls/Tabs',
+        section: 'Components|Controls/Tabs',
         name: 'Default',
         device,
     });
