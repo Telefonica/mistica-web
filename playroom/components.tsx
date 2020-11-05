@@ -81,9 +81,15 @@ const useStyles = createUseStyles((theme) => ({
 type PreviewToolsProps = {
     floating?: boolean;
     position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
+    showPlatformSelector?: boolean;
 };
 
-const PreviewToolsComponent: React.FC<PreviewToolsProps> = ({children, floating, position = 'top-right'}) => {
+const PreviewToolsComponent: React.FC<PreviewToolsProps> = ({
+    children,
+    floating,
+    position = 'top-right',
+    showPlatformSelector = false,
+}) => {
     const {
         skinName: initialSkinName,
         platformOverrides: {platform: initialOs = 'android'},
@@ -126,12 +132,16 @@ const PreviewToolsComponent: React.FC<PreviewToolsProps> = ({children, floating,
                 value={skinName}
                 onChangeValue={setSkinName as any}
             />
-            <Checkbox
-                name="iOS"
-                checked={os === 'ios'}
-                onChange={(checked) => setOs(checked ? 'ios' : 'android')}
-                render={(checkboxElement) => <div className={classes.checkbox}>{checkboxElement} iOS</div>}
-            />
+            {showPlatformSelector && (
+                <Checkbox
+                    name="iOS"
+                    checked={os === 'ios'}
+                    onChange={(checked) => setOs(checked ? 'ios' : 'android')}
+                    render={(checkboxElement) => (
+                        <div className={classes.checkbox}>{checkboxElement} iOS</div>
+                    )}
+                />
+            )}
             <ButtonLink onPress={editStory}>Edit</ButtonLink>
         </div>
     ) : (
@@ -145,16 +155,18 @@ const PreviewToolsComponent: React.FC<PreviewToolsProps> = ({children, floating,
                     }}
                 />
             </div>
-            <div className={classes.desktopControlItem}>
-                <Checkbox
-                    name="iOS"
-                    checked={os === 'ios'}
-                    onChange={(checked) => setOs(checked ? 'ios' : 'android')}
-                    render={(checkboxElement) => (
-                        <div className={classes.checkbox}>{checkboxElement} iOS</div>
-                    )}
-                />
-            </div>
+            {showPlatformSelector && (
+                <div className={classes.desktopControlItem}>
+                    <Checkbox
+                        name="iOS"
+                        checked={os === 'ios'}
+                        onChange={(checked) => setOs(checked ? 'ios' : 'android')}
+                        render={(checkboxElement) => (
+                            <div className={classes.checkbox}>{checkboxElement} iOS</div>
+                        )}
+                    />
+                </div>
+            )}
             <div className={classes.desktopControlItem}>
                 <ButtonLink onPress={editStory}>Edit in playroom</ButtonLink>
             </div>
