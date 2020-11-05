@@ -108,7 +108,7 @@ interface ContentProps extends CommonProps {
     right?: React.ReactNode;
 }
 
-const getTruncate = (truncate: boolean | number): boolean | number => {
+const getTruncate = (truncate?: boolean | number): boolean | number => {
     if (truncate === true) {
         return 1;
     }

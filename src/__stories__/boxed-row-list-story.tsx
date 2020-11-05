@@ -12,7 +12,7 @@ export default {
 
 const url = 'https://www.google.com';
 
-const getTruncate = (truncate: boolean, truncateValue?: number) => {
+const getTruncate = (truncate: boolean, truncateValue?: string) => {
     console.log('truncate', truncate, truncateValue);
     if (!truncate) {
         return false;
