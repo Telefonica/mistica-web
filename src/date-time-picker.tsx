@@ -156,7 +156,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, ...rest}) => {
 
     const setValue = (moment: string | Moment.Moment) => {
         const value =
-            typeof moment === 'string' ? moment : moment.format(withTime ? 'yyyy-MM-DD hh:mm' : 'yyyy-MM-DD');
+            typeof moment === 'string' ? moment : moment.format(withTime ? 'yyyy-MM-DD HH:mm' : 'yyyy-MM-DD');
         if (fieldRef.current) {
             fieldRef.current.focus();
             rest.onChange?.(createChangeEvent(fieldRef.current, value));
