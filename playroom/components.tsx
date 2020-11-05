@@ -11,11 +11,8 @@ import {
     SkinName,
     useScreenSize,
     Tabs,
-    RadioGroup,
-    RadioButton,
-    Inline,
     ButtonLink,
-    TextLink,
+    Checkbox,
 } from '../src';
 import {Movistar, Vivo, O2, O2_Classic} from './themes';
 import {mediaQueriesConfig} from '../src/theme';
@@ -32,14 +29,15 @@ const useStyles = createUseStyles((theme) => ({
         display: 'flex',
         '& *': {outline: 'none'},
     },
-    desktopControls: {
-        borderBottom: `1px solid ${theme.colors.divider}`,
-        height: 57,
-    },
     mobileControls: {
+        alignItems: 'center',
         paddingRight: 8,
         gap: '8px',
         '& > :last-child': {flexShrink: 0},
+    },
+    desktopControls: {
+        borderBottom: `1px solid ${theme.colors.divider}`,
+        height: 57,
     },
     tabs: {
         flexBasis: 880,
@@ -51,8 +49,10 @@ const useStyles = createUseStyles((theme) => ({
         alignItems: 'center',
         borderLeft: `1px solid ${theme.colors.divider}`,
     },
-    radio: {
-        cursor: 'default',
+    checkbox: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
     },
     floattingButton: {
         position: 'fixed',
@@ -126,17 +126,13 @@ const PreviewToolsComponent: React.FC<PreviewToolsProps> = ({children, floating,
                 value={skinName}
                 onChangeValue={setSkinName as any}
             />
-            <Select
-                label="Select platform"
-                name="os"
-                options={[
-                    {value: 'android', text: 'Android'},
-                    {value: 'ios', text: 'iOS'},
-                ]}
-                value={os}
-                onChangeValue={setOs as any}
+            <Checkbox
+                name="iOS"
+                checked={os === 'ios'}
+                onChange={(checked) => setOs(checked ? 'ios' : 'android')}
+                render={(checkboxElement) => <div className={classes.checkbox}>{checkboxElement} iOS</div>}
             />
-            <TextLink onPress={editStory}>Edit</TextLink>
+            <ButtonLink onPress={editStory}>Edit</ButtonLink>
         </div>
     ) : (
         <div className={`${classes.controls} ${classes.desktopControls}`}>
@@ -150,18 +146,14 @@ const PreviewToolsComponent: React.FC<PreviewToolsProps> = ({children, floating,
                 />
             </div>
             <div className={classes.desktopControlItem}>
-                <RadioGroup name="os" aria-label="OS" value={os} onChange={setOs as any}>
-                    <Inline space={16}>
-                        <RadioButton
-                            value="android"
-                            render={(radio) => <span className={classes.radio}>Android {radio}</span>}
-                        />
-                        <RadioButton
-                            value="ios"
-                            render={(radio) => <span className={classes.radio}>iOS {radio}</span>}
-                        />
-                    </Inline>
-                </RadioGroup>
+                <Checkbox
+                    name="iOS"
+                    checked={os === 'ios'}
+                    onChange={(checked) => setOs(checked ? 'ios' : 'android')}
+                    render={(checkboxElement) => (
+                        <div className={classes.checkbox}>{checkboxElement} iOS</div>
+                    )}
+                />
             </div>
             <div className={classes.desktopControlItem}>
                 <ButtonLink onPress={editStory}>Edit in playroom</ButtonLink>
@@ -196,7 +188,7 @@ const PreviewToolsComponent: React.FC<PreviewToolsProps> = ({children, floating,
         return (
             <>
                 {controls}
-                <div style={{height: isMobile ? 72 : 57}} />
+                <div style={{height: 56}} />
                 {playroom}
             </>
         );
