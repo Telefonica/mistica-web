@@ -54,7 +54,7 @@ const useStyles = createUseStyles((theme) => ({
         boxShadow: `0 2px 4px 0 ${applyAlpha(theme.colors.layerDecorations, 0.2)}`,
         backgroundColor: theme.colors.background,
         border: `1px solid ${theme.colors.divider}`,
-        borderRadius: 6,
+        borderRadius: 4,
     },
 
     title: {

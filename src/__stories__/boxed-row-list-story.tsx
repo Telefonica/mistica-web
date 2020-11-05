@@ -4,7 +4,7 @@ import {BoxedRowList, BoxedRow} from '../list';
 import {Box, Stack, AvatarPlaceholder} from '..';
 
 export default {
-    title: 'Components|Lists/BoxedRowList',
+    title: 'Components/Lists/BoxedRowList',
     parameters: {
         fullScreen: true,
     },
@@ -124,4 +124,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'BoxedRowList'};
+Default.storyName = 'BoxedRowList';

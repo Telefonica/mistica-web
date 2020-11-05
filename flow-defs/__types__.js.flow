@@ -303,5 +303,5 @@ export type CssStyle = {
   wordSpacing?: string,
   wordWrap?: string,
   writingMode?: string,
-  zIndex?: number
+  zIndex?: number,
 };

@@ -3,7 +3,7 @@ import {PromoTag, Stack} from '..';
 import {useTextField} from './helpers';
 
 export default {
-    title: 'Components|Others/PromoTag',
+    title: 'Components/Others/PromoTag',
 };
 
 export const Default: StoryComponent = () => {
@@ -19,4 +19,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'PromoTag'};
+Default.storyName = 'PromoTag';

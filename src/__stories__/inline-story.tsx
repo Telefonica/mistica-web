@@ -3,7 +3,7 @@ import Inline from '../inline';
 import {StorySection, useSelect} from './helpers';
 
 export default {
-    title: 'Components|Layouts/Inline',
+    title: 'Components/Layouts/Inline',
 };
 
 const Row = ({children}: {children?: any}) =>
@@ -38,4 +38,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'Inline'};
+Default.storyName = 'Inline';

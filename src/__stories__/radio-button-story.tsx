@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Stack, SectionTitle, RadioGroup, RadioButton} from '..';
 
 export default {
-    title: 'Components|Forms/RadioButton',
+    title: 'Components/Forms/RadioButton',
 };
 
 export const Default: StoryComponent = () => {
@@ -19,4 +19,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'RadioButton'};
+Default.storyName = 'RadioButton';

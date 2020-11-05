@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useTheme, Stack, Text7} from '..';
 
 export default {
-    title: 'Hooks|useTheme',
+    title: 'Hooks/useTheme',
 };
 
 const CodeText: React.FC = ({children}) => <Text7 medium>{children}</Text7>;
@@ -25,6 +25,4 @@ export const UseTheme: StoryComponent = () => {
     );
 };
 
-UseTheme.story = {
-    name: 'useTheme',
-};
+UseTheme.storyName = 'useTheme';

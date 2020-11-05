@@ -199,7 +199,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, ...rest}) => {
                     >
                         <Datetime
                             initialValue={getValue()}
-                            timeFormat={withTime ? undefined : false}
+                            timeFormat={withTime ? 'HH:mm' : false}
                             locale={browserLocale}
                             input={false}
                             onChange={setValue}

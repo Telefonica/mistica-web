@@ -11,7 +11,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components|Forms/DoubleField',
+    title: 'Components/Forms/DoubleField',
     component: DoubleField,
 };
 export const Default: StoryComponent = () => {
@@ -75,4 +75,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'Default'};
+Default.storyName = 'Default';

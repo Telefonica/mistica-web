@@ -1,4 +1,5 @@
 flow-typed/npm/
+flow-defs/
 generated/
 coverage/
 node_modules/
@@ -7,6 +8,7 @@ dist-es/
 public/
 storybook-static/
 .vercel/
+CHANGELOG.md
 
 # next.js
 examples/next/.next/

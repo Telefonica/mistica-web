@@ -3,7 +3,7 @@ import {StorySection} from './helpers';
 import {useElementSize} from '../hooks';
 
 export default {
-    title: 'Hooks|useElementSize',
+    title: 'Hooks/useElementSize',
 };
 
 export const UseElementSize: StoryComponent = () => {
@@ -27,6 +27,4 @@ export const UseElementSize: StoryComponent = () => {
     );
 };
 
-UseElementSize.story = {
-    name: 'useElementSize',
-};
+UseElementSize.storyName = 'useElementSize';

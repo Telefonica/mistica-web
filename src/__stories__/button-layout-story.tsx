@@ -4,7 +4,7 @@ import ButtonLayout from '../button-layout';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components|Layouts/ButtonLayout',
+    title: 'Components/Layouts/ButtonLayout',
     component: ButtonLayout,
 };
 
@@ -95,4 +95,4 @@ export const Default: StoryComponent = () => (
     </>
 );
 
-Default.story = {name: 'ButtonLayout'};
+Default.storyName = 'ButtonLayout';

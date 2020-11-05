@@ -99,7 +99,8 @@ test('fields are disabled during submit', async () => {
     userEvent.click(screen.getByText('Submit'));
 
     expect(screen.getByTestId('username')).toBeDisabled();
-    expect(screen.getByText('Submit')).toBeDisabled();
+    expect(screen.getByRole('button')).toBeDisabled();
+    expect(screen.getByText('Submit')).not.toBeVisible();
 
     resolveSubmitPromise();
 

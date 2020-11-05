@@ -2,7 +2,7 @@ import * as React from 'react';
 import {FixedToTop} from '..';
 
 export default {
-    title: 'Components|Utils/FixedToTop',
+    title: 'Components/Utils/FixedToTop',
 };
 
 type Props = {background: string; height: number; top: number};
@@ -31,4 +31,4 @@ export const Default: StoryComponent = () => (
     </FixedToTop>
 );
 
-Default.story = {name: 'FixedToTop'};
+Default.storyName = 'FixedToTop';

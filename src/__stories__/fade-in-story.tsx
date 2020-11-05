@@ -3,7 +3,7 @@ import FadeIn from '../fade-in';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components|Animations/FadeIn',
+    title: 'Components/Animations/FadeIn',
     component: FadeIn,
 };
 
@@ -36,4 +36,4 @@ export const Default: StoryComponent = () => (
     </StorySection>
 );
 
-Default.story = {name: 'FadeIn'};
+Default.storyName = 'FadeIn';

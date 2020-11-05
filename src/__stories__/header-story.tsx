@@ -12,7 +12,7 @@ import {
 import {useTextField, useCheckbox} from './helpers';
 
 export default {
-    title: 'Components|Headers/Header',
+    title: 'Components/Headers/Header',
     parameters: {
         fullScreen: true,
     },
@@ -99,4 +99,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'Header'};
+Default.storyName = 'Header';

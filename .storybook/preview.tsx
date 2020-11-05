@@ -1,7 +1,6 @@
 import './css/roboto.css';
 import './css/main.css';
 import * as React from 'react';
-import {addDecorator} from '@storybook/react';
 import {
     ThemeContextProvider,
     Box,
@@ -12,7 +11,7 @@ import {
     ThemeConfig,
 } from '../src';
 import {AVAILABLE_THEMES, Movistar} from './themes';
-import addons from '@storybook/addons';
+import {addons} from '@storybook/addons';
 
 const getUserAgent = () => self.navigator.userAgent || '';
 const isRunningAcceptanceTest = () => getUserAgent().includes('acceptance-test');
@@ -32,19 +31,6 @@ const acceptanceStyles = `
     width: 0 !important;
     height: 0 !important;
 }`;
-
-const LayoutDecorator = ({Story, context}: any) => {
-    const styles = isRunningAcceptanceTest() ? <style>{acceptanceStyles}</style> : null;
-
-    return (
-        <>
-            {styles}
-            <Box padding={context?.parameters?.fullScreen ? 0 : 16}>
-                <Story />
-            </Box>
-        </>
-    );
-};
 
 const getSkin = (searchParams: URLSearchParams) => {
     const qsSkin = searchParams.get('skin');
@@ -72,7 +58,7 @@ const getTheme = (selectedSkin: string, platform?: 'ios' | 'android'): ThemeConf
         : themeConfig;
 };
 
-const ThemeDecorator = ({Story}: any) => {
+const MisticaTemeProvider = ({Story, context}): React.ReactElement => {
     const searchParams = new URLSearchParams(location.search);
     const [skin, setSkin] = React.useState(getSkin(searchParams));
     const [platform, setPlatform] = React.useState(getPlatform(searchParams));
@@ -91,10 +77,42 @@ const ThemeDecorator = ({Story}: any) => {
 
     return (
         <ThemeContextProvider theme={getTheme(skin, platform)}>
-            <Story />
+            <Story {...context} />
         </ThemeContextProvider>
     );
 };
 
-addDecorator((Story, context) => <LayoutDecorator Story={Story} context={context} />);
-addDecorator((Story) => <ThemeDecorator Story={Story} />);
+const withMisticaThemeProvider = (Story, context) => <MisticaTemeProvider Story={Story} context={context} />;
+
+const withLayoutDecorator = (Story, context): React.ReactElement => {
+    const styles = isRunningAcceptanceTest() ? <style>{acceptanceStyles}</style> : null;
+
+    return (
+        <>
+            {styles}
+            <Box padding={context?.parameters?.fullScreen ? 0 : 16}>
+                <Story {...context} />
+            </Box>
+        </>
+    );
+};
+
+export const decorators = [withMisticaThemeProvider, withLayoutDecorator];
+
+export const parameters = {
+    // https://storybook.js.org/docs/react/configure/story-layout
+    layout: 'fullscreen',
+
+    options: {
+        // https://storybook.js.org/docs/react/writing-stories/naming-components-and-hierarchy#sorting-stories
+        storySort: (a: {id: string; kind: string}[], b: {id: string; kind: string}[]): number => {
+            if (a[1].kind === 'Welcome/Welcome') {
+                return -1;
+            }
+            if (b[1].kind === 'Welcome/Welcome') {
+                return 1;
+            }
+            return a[1].kind === b[1].kind ? 0 : a[1].id.localeCompare(b[1].id, undefined, {numeric: true});
+        },
+    },
+};

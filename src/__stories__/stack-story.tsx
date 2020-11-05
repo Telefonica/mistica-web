@@ -4,7 +4,7 @@ import {StorySection, useSelect} from './helpers';
 import {Placeholder} from '../placeholder';
 
 export default {
-    title: 'Components|Layouts/Stack',
+    title: 'Components/Layouts/Stack',
 };
 
 const Row = ({children}: {children?: any}) =>
@@ -41,4 +41,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'Stack'};
+Default.storyName = 'Stack';

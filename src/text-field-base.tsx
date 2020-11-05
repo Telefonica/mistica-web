@@ -248,7 +248,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             startIcon,
             endIcon,
             endIconOverlay,
-            shrinkLabel,
+            shrinkLabel: shrinkLabelProp,
             multiline = false,
             focus,
             fieldRef,
@@ -269,6 +269,11 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const label = rest.required
             ? labelProp
             : `${labelProp || ''} (${texts.formFieldOptionalLabelSuffix})`;
+
+        // this shrinkLabel override is a workaround because I was unable to find a way to hide date
+        // and date-time native placeholders when the input is not required
+        const shrinkLabel =
+            shrinkLabelProp || ((rest.type === 'date' || rest.type === 'datetime-local') && !rest.required);
 
         const classes = useStyles({
             inputState,
