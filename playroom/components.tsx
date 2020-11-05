@@ -120,7 +120,9 @@ const PreviewToolsComponent: React.FC<PreviewToolsProps> = ({
     };
 
     const editStory = () => {
-        window.location.href = window.location.href.replace('/preview', '');
+        if (window.location.href.includes('/preview')) {
+            window.open(window.location.href.replace('/preview', ''));
+        }
     };
 
     const controls = isMobile ? (
