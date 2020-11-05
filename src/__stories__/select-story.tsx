@@ -3,7 +3,7 @@ import {StorySection, fruitEntries} from './helpers';
 import {Select} from '..';
 
 export default {
-    title: 'Components|Forms/Select',
+    title: 'Components/Forms/Select',
     component: Select,
 };
 
@@ -46,4 +46,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'Select'};
+Default.storyName = 'Select';

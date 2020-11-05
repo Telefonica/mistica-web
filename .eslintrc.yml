@@ -193,6 +193,8 @@ overrides:
               - selector: TSEnumDeclaration
                 message: 'enums are not allowed'
           '@typescript-eslint/prefer-as-const': off # TODO: review this rule and check how flowgen translates "as const" syntax
+          no-use-before-define: off
+          '@typescript-eslint/no-use-before-define': error
       extends:
           - 'eslint:recommended'
           - 'plugin:@typescript-eslint/recommended'

@@ -182,7 +182,7 @@ const wait = <T extends any>(
                 reject(error);
                 return;
             }
-            // eslint-disable-next-line no-use-before-define
+            // eslint-disable-next-line @typescript-eslint/no-use-before-define
             setTimeout(runExpectation, interval);
         };
         const runExpectation = () => {

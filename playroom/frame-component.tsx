@@ -7,12 +7,8 @@ import type {ThemeConfig} from '../src';
 
 type Props = {children: React.ReactNode; theme: ThemeConfig};
 
-const FrameComponent = ({children, theme}: Props): React.ReactNode => {
-    // @ts-expect-error __playroom_theme__ does not exist in window
-    window.__playroom_theme__ = {
-        colors: theme.skin.colors,
-    };
-    return <ThemeContextProvider theme={theme}>{children}</ThemeContextProvider>;
-};
+const FrameComponent = ({children, theme}: Props): React.ReactNode => (
+    <ThemeContextProvider theme={theme}>{children}</ThemeContextProvider>
+);
 
 export default FrameComponent;

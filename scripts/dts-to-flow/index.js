@@ -22,6 +22,10 @@ const fixFlowDefinition = (flowFilename) => {
         src = '// @flow\n' + src.replace(/\s*\*\s*@flow/g, '');
     }
 
+    // removes Flowgen comment: https://regex101.com/r/YmTkLI/2/
+    // that comment has the Flowgen version number, we don't want to update all files when Flowgen version changes
+    src = src.replace(/\/\*\*[\s\n]*\*\sFlowtype definitions(.*\n)*?\s\*\//m, '');
+
     // `declare export var PRIMARY: any; // "#0B2739"` => `declare export var PRIMARY: "#0B2739"`
     src = src.replace(/declare export var (\w+): any; \/\/ "([^"]+)"/g, 'declare export var $1: "$2";');
 

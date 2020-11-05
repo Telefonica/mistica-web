@@ -4,7 +4,7 @@ import Popover from '../popover';
 import IcnClose from '../icons/icon-close';
 
 export default {
-    title: 'Components|Hints/Popover',
+    title: 'Components/Hints/Popover',
     component: Popover,
 };
 
@@ -89,4 +89,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'Popover'};
+Default.storyName = 'Popover';

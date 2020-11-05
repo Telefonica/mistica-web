@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Placeholder, Stack} from '..';
 
 export default {
-    title: 'Components|Placeholders/Placeholder',
+    title: 'Components/Placeholders/Placeholder',
 };
 
 export const Default: StoryComponent = () => (
@@ -12,4 +12,4 @@ export const Default: StoryComponent = () => (
     </Stack>
 );
 
-Default.story = {name: 'Placeholder'};
+Default.storyName = 'Placeholder';

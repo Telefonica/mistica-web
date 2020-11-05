@@ -4,7 +4,7 @@ import {useCheckbox} from './helpers';
 import {ButtonPrimary} from '../button';
 
 export default {
-    title: 'Components|Utils/ThemeVariant',
+    title: 'Components/Utils/ThemeVariant',
 };
 
 const OtherComponent: React.FC = () => {
@@ -43,4 +43,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'ThemeVariant'};
+Default.storyName = 'ThemeVariant';

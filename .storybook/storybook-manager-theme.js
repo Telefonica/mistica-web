@@ -1,13 +1,13 @@
-import logo from '../img/mistica-logo.svg';
-import {getColors} from './colors';
-
 import {create} from '@storybook/theming/create';
+import {getColors} from './colors';
+import logo from '../img/mistica-logo.svg';
 
 /**
- * @param {'Movistar' | 'Vivo' | 'O2'} skin
+ * @param {import('../src').SkinName} skinName
  */
-const createTheme = (skin) => {
-    const colors = getColors(skin);
+export const createStorybookTheme = (skinName) => {
+    const colors = getColors(skinName);
+
     return create({
         base: 'light',
 
@@ -15,20 +15,18 @@ const createTheme = (skin) => {
         brandUrl: 'https://github.com/Telefonica/mistica',
         brandImage: logo,
 
-        colorSecondary: colors.PRIMARY,
+        colorSecondary: colors.primary,
 
         // Typography
         fontBase: "-apple-system, 'Roboto', 'Helvetica', 'Arial', sans-serif",
         fontCode: 'monospace',
 
         // Text colors
-        textColor: colors.TEXT_PRIMARY,
-        textInverseColor: colors.TEXT_PRIMARY_INVERSE,
+        textColor: colors.textPrimary,
+        textInverseColor: colors.textPrimaryInverse,
 
         // Toolbar default and active colors
-        barTextColor: colors.TEXT_SECONDARY,
-        barSelectedColor: colors.PRIMARY,
+        barTextColor: colors.textSecondary,
+        barSelectedColor: colors.primary,
     });
 };
-
-export default createTheme;

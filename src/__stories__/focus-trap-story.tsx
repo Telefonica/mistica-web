@@ -3,7 +3,7 @@ import {FocusTrap, ButtonPrimary, ButtonSecondary, ButtonLayout, Stack, Text3, T
 import {useTheme} from '../hooks';
 
 export default {
-    title: 'Components|Accesibility/FocusTrap',
+    title: 'Components/Accesibility/FocusTrap',
 };
 
 export const Default: StoryComponent = () => {
@@ -29,4 +29,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'FocusTrap'};
+Default.storyName = 'FocusTrap';

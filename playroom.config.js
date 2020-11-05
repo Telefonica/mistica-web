@@ -28,6 +28,7 @@ const config = {
     themes: './playroom/themes.tsx',
     snippets: './playroom/snippets.tsx',
     frameComponent: './playroom/frame-component.tsx',
+    scope: './playroom/use-scope.tsx',
     widths: [320, 768, 1024, 1366],
     exampleCode,
     webpackConfig: () => ({

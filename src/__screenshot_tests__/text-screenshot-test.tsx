@@ -6,7 +6,7 @@ const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('Text in %s', async (device) => {
     await openStoryPage({
-        section: 'Components|Others/Text',
+        section: 'Components/Others/Text',
         name: 'Text',
         device,
     });

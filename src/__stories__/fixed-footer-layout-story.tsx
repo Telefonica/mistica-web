@@ -5,7 +5,7 @@ import ButtonFixedFooterLayout from '../button-fixed-footer-layout';
 import {useCheckbox} from './helpers';
 
 export default {
-    title: 'Components|Layouts/FixedFooterLayout',
+    title: 'Components/Layouts/FixedFooterLayout',
     component: FixedFooterLayout,
 };
 
@@ -38,7 +38,7 @@ export const FooterWithButtonsOnly: StoryComponent = () => {
     );
 };
 
-FooterWithButtonsOnly.story = {name: 'ButtonFixedFooterLayout'};
+FooterWithButtonsOnly.storyName = 'ButtonFixedFooterLayout';
 
 export const MoreComplexFooter: StoryComponent = () => {
     const [textLines, loadMoreText] = useTextLines();
@@ -76,4 +76,4 @@ export const MoreComplexFooter: StoryComponent = () => {
     );
 };
 
-MoreComplexFooter.story = {name: 'FixedFooterLayout'};
+MoreComplexFooter.storyName = 'FixedFooterLayout';

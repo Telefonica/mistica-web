@@ -8,7 +8,7 @@ import Stack from './stack';
 import Badge from './badge';
 import {useTheme, useScreenSize} from './hooks';
 import IconChevron from './icons/icon-chevron';
-import Switch from './switch';
+import Switch from './switch-component';
 import RadioButton from './radio-button';
 import Checkbox from './checkbox';
 

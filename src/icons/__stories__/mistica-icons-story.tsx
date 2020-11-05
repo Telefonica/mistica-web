@@ -14,7 +14,7 @@ const misticaIcons = ((requireContext) =>
 );
 
 export default {
-    title: 'Icons|Mistica Icons',
+    title: 'Icons/Mistica Icons',
 };
 
 export const Catalog: React.FC = () => {

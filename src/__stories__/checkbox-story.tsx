@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Checkbox, Stack, Text6, Inline} from '..';
 
 export default {
-    title: 'Components|Forms/Checkbox',
+    title: 'Components/Forms/Checkbox',
 };
 
 export const Default: StoryComponent = () => {
@@ -35,4 +35,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'Checkbox'};
+Default.storyName = 'Checkbox';

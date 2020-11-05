@@ -3,16 +3,16 @@ import {MainSectionHeader, MainSectionHeaderLayout, ButtonPrimary, Stack, Respon
 import {useTextField, useCheckbox} from './helpers';
 
 export default {
-    title: 'Components|Headers/MainSectionHeader',
+    title: 'Components/Headers/MainSectionHeader',
     parameters: {
         fullScreen: true,
     },
 };
 
 export const Default: StoryComponent = () => {
-    const [title, titleTextField] = useTextField('title', 'Soporte');
-    const [desciption, descriptionTextField] = useTextField('description', '¿En qué podemos ayudarte?');
-    const [buttonLabel, buttonLabelTextField] = useTextField('buttonLabel', 'Acción');
+    const [title, titleTextField] = useTextField('title', 'Support');
+    const [desciption, descriptionTextField] = useTextField('description', 'How can I help you?');
+    const [buttonLabel, buttonLabelTextField] = useTextField('buttonLabel', 'Action');
     const [isInverse, inverseCheckbox] = useCheckbox('Inverse', true);
 
     return (
@@ -39,4 +39,4 @@ export const Default: StoryComponent = () => {
         </Stack>
     );
 };
-Default.story = {name: 'MainSectionHeader'};
+Default.storyName = 'MainSectionHeader';
