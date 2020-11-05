@@ -1,3 +1,10 @@
+## [7.1.1](https://github.com/Telefonica/mistica-web/compare/v7.1.0...v7.1.1) (2020-11-05)
+
+
+### Bug Fixes
+
+* **DateTimePicker:** format time in 24H ([#143](https://github.com/Telefonica/mistica-web/issues/143)) ([2413c16](https://github.com/Telefonica/mistica-web/commit/2413c161ba28ce6087a59c0f3abe297977b00aae))
+
 # [7.1.0](https://github.com/Telefonica/mistica-web/compare/v7.0.2...v7.1.0) (2020-11-05)
 
 
