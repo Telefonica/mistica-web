@@ -92,7 +92,9 @@ const useStyles = createUseStyles((theme) => ({
 interface CommonProps {
     headline?: string | React.ReactNode;
     title: string;
+    truncateTitle?: boolean | number;
     subtitle?: string;
+    truncateSubtitle?: boolean | number;
     description?: string | null;
     icon?: React.ReactElement<any> | string | null;
     iconSize?: 24 | 40;
@@ -106,10 +108,24 @@ interface ContentProps extends CommonProps {
     right?: React.ReactNode;
 }
 
+const getTruncate = (truncate: boolean | number): boolean | number => {
+    if (truncate === true) {
+        return 1;
+    }
+
+    if (truncate) {
+        return truncate;
+    }
+
+    return false;
+};
+
 const Content: React.FC<ContentProps> = ({
     headline,
     title,
+    truncateTitle,
     subtitle,
+    truncateSubtitle,
     description,
     icon,
     iconSize = 40,
@@ -157,12 +173,17 @@ const Content: React.FC<ContentProps> = ({
                         </Text8>
                     </Box>
                 )}
-                <Text6 wordBreak light color={theme.colors.textPrimary}>
+                <Text6 wordBreak light color={theme.colors.textPrimary} truncate={getTruncate(truncateTitle)}>
                     {title}
                 </Text6>
                 {subtitle && (
                     <Box paddingY={2}>
-                        <Text7 wordBreak regular color={theme.colors.textSecondary}>
+                        <Text7
+                            wordBreak
+                            regular
+                            color={theme.colors.textSecondary}
+                            truncate={getTruncate(truncateSubtitle)}
+                        >
                             {subtitle}
                         </Text7>
                     </Box>
@@ -315,7 +336,18 @@ const useControlState = ({
 
 const RowContent = (props: RowContentProps) => {
     const classes = useStyles();
-    const {icon, iconSize, headline, title, subtitle, description, badge, role} = props;
+    const {
+        icon,
+        iconSize,
+        headline,
+        title,
+        truncateTitle,
+        subtitle,
+        truncateSubtitle,
+        description,
+        badge,
+        role,
+    } = props;
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
     const renderContent = (moreProps: {type: ContentProps['type']; right?: ContentProps['right']}) => (
@@ -327,6 +359,8 @@ const RowContent = (props: RowContentProps) => {
             subtitle={subtitle}
             description={description}
             badge={badge}
+            truncateTitle={truncateTitle}
+            truncateSubtitle={truncateSubtitle}
             {...moreProps}
         />
     );
