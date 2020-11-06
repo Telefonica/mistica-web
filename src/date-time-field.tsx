@@ -11,8 +11,8 @@ export interface DateFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const ReactDateTimePicker = React.lazy(() =>
-    import(/* webpackChunkName: "date-time-picker" */ './date-time-picker')
+const ReactDateTimePicker = React.lazy(
+    () => import(/* webpackChunkName: "date-time-picker" */ './date-time-picker')
 );
 
 const FormDateField: React.FC<DateFieldProps> = ({
