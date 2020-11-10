@@ -12,19 +12,6 @@ export default {
 
 const url = 'https://www.google.com';
 
-const getTruncate = (truncate: boolean, truncateValue?: string) => {
-    console.log('truncate', truncate, truncateValue);
-    if (!truncate) {
-        return false;
-    }
-
-    if (truncateValue) {
-        return Number(truncateValue);
-    }
-
-    return true;
-};
-
 export const Default: StoryComponent = () => {
     const [headline, headlineTextField] = useTextField('headline', '');
     const [title, titleTextField] = useTextField('title', 'Title', true);
@@ -41,13 +28,8 @@ export const Default: StoryComponent = () => {
         'none',
     ]);
     const [withBadge, badgeCheckbox] = useCheckbox('With badge', false);
-    const [truncateTitle, truncateTitleCheckbox] = useCheckbox('truncate title', false);
-    const [truncateTitleValue, truncateTitleValueTextField] = useTextField('truncate title value', '');
-    const [truncateSubtitle, truncateSubtitleCheckbox] = useCheckbox('truncate subtitle', false);
-    const [truncateSubtitleValue, truncateSubtitleValueTextField] = useTextField(
-        'truncate subtitle value',
-        ''
-    );
+    const [oneLineTitle, oneLineTitleCheckbox] = useCheckbox('one line title', false);
+    const [oneLineDescription, oneLineDescriptionCheckbox] = useCheckbox('one line description ', false);
 
     let controlProps = {};
 
@@ -99,16 +81,10 @@ export const Default: StoryComponent = () => {
                     {badgeCheckbox}
                     {headlineTextField}
                     {titleTextField}
-                    <div>
-                        {truncateTitleCheckbox}
-                        {truncateTitle && truncateTitleValueTextField}
-                    </div>
+                    {oneLineTitleCheckbox}
                     {subtitleTextField}
-                    <div>
-                        {truncateSubtitleCheckbox}
-                        {truncateSubtitle && truncateSubtitleValueTextField}
-                    </div>
                     {descriptionTextField}
+                    {oneLineDescriptionCheckbox}
                     {iconSizeSelectField}
                 </Stack>
             </Box>
@@ -123,8 +99,8 @@ export const Default: StoryComponent = () => {
                             subtitle={subtitle}
                             description={description}
                             badge={withBadge}
-                            truncateTitle={getTruncate(truncateTitle, truncateTitleValue)}
-                            truncateSubtitle={getTruncate(truncateSubtitle, truncateSubtitleValue)}
+                            oneLineTitle={oneLineTitle}
+                            oneLineDescription={oneLineDescription}
                             {...controlProps}
                         />
                         <BoxedRow
@@ -135,8 +111,8 @@ export const Default: StoryComponent = () => {
                             subtitle={subtitle}
                             description={description}
                             badge={withBadge ? 2 : undefined}
-                            truncateTitle={getTruncate(truncateTitle, truncateTitleValue)}
-                            truncateSubtitle={getTruncate(truncateSubtitle, truncateSubtitleValue)}
+                            oneLineTitle={oneLineTitle}
+                            oneLineDescription={oneLineDescription}
                             {...controlProps}
                         />
                         <BoxedRow
@@ -147,8 +123,8 @@ export const Default: StoryComponent = () => {
                             subtitle={subtitle}
                             description={description}
                             badge={withBadge ? 22 : undefined}
-                            truncateTitle={getTruncate(truncateTitle, truncateTitleValue)}
-                            truncateSubtitle={getTruncate(truncateSubtitle, truncateSubtitleValue)}
+                            oneLineTitle={oneLineTitle}
+                            oneLineDescription={oneLineDescription}
                             {...controlProps}
                         />
                     </BoxedRowList>

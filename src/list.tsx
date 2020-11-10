@@ -89,12 +89,14 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
+const MAX_NUM_LINES = 2;
+
 interface CommonProps {
     headline?: string | React.ReactNode;
     title: string;
-    truncateTitle?: boolean | number;
+    oneLineTitle?: boolean;
     subtitle?: string;
-    truncateSubtitle?: boolean | number;
+    oneLineDescription?: boolean;
     description?: string | null;
     icon?: React.ReactElement<any> | string | null;
     iconSize?: 24 | 40;
@@ -108,24 +110,12 @@ interface ContentProps extends CommonProps {
     right?: React.ReactNode;
 }
 
-const getTruncate = (truncate?: boolean | number): boolean | number => {
-    if (truncate === true) {
-        return 1;
-    }
-
-    if (truncate) {
-        return truncate;
-    }
-
-    return false;
-};
-
 const Content: React.FC<ContentProps> = ({
     headline,
     title,
-    truncateTitle,
+    oneLineTitle,
     subtitle,
-    truncateSubtitle,
+    oneLineDescription,
     description,
     icon,
     iconSize = 40,
@@ -173,24 +163,29 @@ const Content: React.FC<ContentProps> = ({
                         </Text8>
                     </Box>
                 )}
-                <Text6 wordBreak light color={theme.colors.textPrimary} truncate={getTruncate(truncateTitle)}>
+                <Text6
+                    wordBreak
+                    light
+                    color={theme.colors.textPrimary}
+                    truncate={oneLineTitle ? 1 : MAX_NUM_LINES}
+                >
                     {title}
                 </Text6>
                 {subtitle && (
                     <Box paddingY={2}>
-                        <Text7
-                            wordBreak
-                            regular
-                            color={theme.colors.textSecondary}
-                            truncate={getTruncate(truncateSubtitle)}
-                        >
+                        <Text7 wordBreak regular color={theme.colors.textSecondary} truncate={MAX_NUM_LINES}>
                             {subtitle}
                         </Text7>
                     </Box>
                 )}
                 {description && (
                     <Box paddingY={isMobile ? 2 : 0}>
-                        <Text7 wordBreak regular color={theme.colors.textSecondary}>
+                        <Text7
+                            wordBreak
+                            regular
+                            color={theme.colors.textSecondary}
+                            truncate={oneLineDescription ? 1 : MAX_NUM_LINES}
+                        >
                             {description}
                         </Text7>
                     </Box>
@@ -341,9 +336,9 @@ const RowContent = (props: RowContentProps) => {
         iconSize,
         headline,
         title,
-        truncateTitle,
+        oneLineTitle,
         subtitle,
-        truncateSubtitle,
+        oneLineDescription,
         description,
         badge,
         role,
@@ -359,8 +354,8 @@ const RowContent = (props: RowContentProps) => {
             subtitle={subtitle}
             description={description}
             badge={badge}
-            truncateTitle={truncateTitle}
-            truncateSubtitle={truncateSubtitle}
+            oneLineTitle={oneLineTitle}
+            oneLineDescription={oneLineDescription}
             {...moreProps}
         />
     );
