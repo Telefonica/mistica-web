@@ -347,9 +347,9 @@ const tabsSnippets = [
             selectedIndex={getState('tabIndex')}
             onChange={setState('tabIndex')}
             tabs={[
-                {text: 'Tab 1', icon: <IconAppointmentFilled />},
-                {text: 'Tab 2', icon: <IconBrainFilled />},
-                {text: 'Tab 3', icon: <IconBusFilled />},
+                {text: 'Tab 1', icon: <IconAppointmentRegular />},
+                {text: 'Tab 2', icon: <IconBrainRegular />},
+                {text: 'Tab 3', icon: <IconBusRegular />},
             ]}
         />`,
     },
