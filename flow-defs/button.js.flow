@@ -50,6 +50,7 @@ declare type ButtonLinkCommonProps = {
   children: React.Node,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   "data-testid"?: string,
+  aligned?: boolean,
 };
 declare type ButtonLinkOnPressProps = {
   ...$Exact<ButtonLinkCommonProps>,
