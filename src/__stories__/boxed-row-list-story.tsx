@@ -29,6 +29,7 @@ export const Default: StoryComponent = () => {
     ]);
     const [withBadge, badgeCheckbox] = useCheckbox('With badge', false);
     const [oneLineTitle, oneLineTitleCheckbox] = useCheckbox('one line title', false);
+    const [oneLineSubtitle, oneLineSubtitleCheckbox] = useCheckbox('one line subtitle ', false);
     const [oneLineDescription, oneLineDescriptionCheckbox] = useCheckbox('one line description ', false);
 
     let controlProps = {};
@@ -83,6 +84,7 @@ export const Default: StoryComponent = () => {
                     {titleTextField}
                     {oneLineTitleCheckbox}
                     {subtitleTextField}
+                    {oneLineSubtitleCheckbox}
                     {descriptionTextField}
                     {oneLineDescriptionCheckbox}
                     {iconSizeSelectField}
@@ -100,6 +102,7 @@ export const Default: StoryComponent = () => {
                             description={description}
                             badge={withBadge}
                             oneLineTitle={oneLineTitle}
+                            oneLineSubtitle={oneLineSubtitle}
                             oneLineDescription={oneLineDescription}
                             {...controlProps}
                         />
@@ -112,6 +115,7 @@ export const Default: StoryComponent = () => {
                             description={description}
                             badge={withBadge ? 2 : undefined}
                             oneLineTitle={oneLineTitle}
+                            oneLineSubtitle={oneLineSubtitle}
                             oneLineDescription={oneLineDescription}
                             {...controlProps}
                         />
@@ -124,6 +128,7 @@ export const Default: StoryComponent = () => {
                             description={description}
                             badge={withBadge ? 22 : undefined}
                             oneLineTitle={oneLineTitle}
+                            oneLineSubtitle={oneLineSubtitle}
                             oneLineDescription={oneLineDescription}
                             {...controlProps}
                         />

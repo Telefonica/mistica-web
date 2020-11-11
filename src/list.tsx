@@ -96,8 +96,9 @@ interface CommonProps {
     title: string;
     oneLineTitle?: boolean;
     subtitle?: string;
-    oneLineDescription?: boolean;
+    oneLineSubtitle?: boolean;
     description?: string | null;
+    oneLineDescription?: boolean;
     icon?: React.ReactElement<any> | string | null;
     iconSize?: 24 | 40;
     badge?: boolean | number;
@@ -115,8 +116,9 @@ const Content: React.FC<ContentProps> = ({
     title,
     oneLineTitle,
     subtitle,
-    oneLineDescription,
+    oneLineSubtitle,
     description,
+    oneLineDescription,
     icon,
     iconSize = 40,
     type = 'basic',
@@ -173,7 +175,12 @@ const Content: React.FC<ContentProps> = ({
                 </Text6>
                 {subtitle && (
                     <Box paddingY={2}>
-                        <Text7 wordBreak regular color={theme.colors.textSecondary} truncate={MAX_NUM_LINES}>
+                        <Text7
+                            wordBreak
+                            regular
+                            color={theme.colors.textSecondary}
+                            truncate={oneLineSubtitle ? 1 : MAX_NUM_LINES}
+                        >
                             {subtitle}
                         </Text7>
                     </Box>
@@ -338,8 +345,9 @@ const RowContent = (props: RowContentProps) => {
         title,
         oneLineTitle,
         subtitle,
-        oneLineDescription,
+        oneLineSubtitle,
         description,
+        oneLineDescription,
         badge,
         role,
     } = props;
@@ -355,6 +363,7 @@ const RowContent = (props: RowContentProps) => {
             description={description}
             badge={badge}
             oneLineTitle={oneLineTitle}
+            oneLineSubtitle={oneLineSubtitle}
             oneLineDescription={oneLineDescription}
             {...moreProps}
         />
