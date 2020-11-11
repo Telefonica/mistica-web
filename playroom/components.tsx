@@ -15,7 +15,6 @@ import {
     Checkbox,
 } from '../src';
 import {Movistar, Vivo, O2, O2_Classic} from './themes';
-import {mediaQueriesConfig} from '../src/theme';
 
 export * from '../src';
 
@@ -84,7 +83,7 @@ type PreviewToolsProps = {
     showPlatformSelector?: boolean;
 };
 
-const PreviewToolsComponent: React.FC<PreviewToolsProps> = ({
+export const PreviewTools: React.FC<PreviewToolsProps> = ({
     children,
     floating,
     position = 'top-right',
@@ -208,13 +207,3 @@ const PreviewToolsComponent: React.FC<PreviewToolsProps> = ({
         );
     }
 };
-
-export const PreviewTools: React.FC<PreviewToolsProps> = (props) => (
-    // Override the media query desktopOrTabletMinHeight to avoid to show the preview tools mobile version
-    // when playroom height is too short.
-    <ThemeContextProvider
-        theme={{...Movistar, mediaQueries: {...mediaQueriesConfig, desktopOrTabletMinHeight: 0}}}
-    >
-        <PreviewToolsComponent {...props} />
-    </ThemeContextProvider>
-);
