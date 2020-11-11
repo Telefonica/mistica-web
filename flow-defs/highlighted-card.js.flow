@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from "react";
-import TextLink from "./text-link";
+import { ButtonLink } from "./button";
 import type { TrackingEvent } from "./utils/types";
 import type { ButtonElement } from "./button";
 declare type CommonProps = {
@@ -16,7 +16,7 @@ declare type CommonProps = {
 declare type BasicProps = { ...$Exact<CommonProps> };
 declare type ButtonProps = {
   ...$Exact<CommonProps>,
-  button?: ButtonElement | React.Element<typeof TextLink> | null,
+  button?: ButtonElement | React.Element<typeof ButtonLink> | null,
 };
 declare type HrefProps = {
   ...$Exact<CommonProps>,
