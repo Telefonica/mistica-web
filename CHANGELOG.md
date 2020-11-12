@@ -1,3 +1,17 @@
+# [7.2.0](https://github.com/Telefonica/mistica-web/compare/v7.1.1...v7.2.0) (2020-11-12)
+
+
+### Bug Fixes
+
+* **Playroom:** update icons in tabs snippet ([7b9f2f8](https://github.com/Telefonica/mistica-web/commit/7b9f2f8ead45a27806399602024ac75afb73a62b))
+
+
+### Features
+
+* **BoxedRow:** allow to select max lines count in title, subtitle and description ([af0a6da](https://github.com/Telefonica/mistica-web/commit/af0a6dacc380b28d64a26d22935ae833a42bcc8f))
+* **HighlightedCard:** Allow to use ButtonLink in HighlightedCard ([58c3822](https://github.com/Telefonica/mistica-web/commit/58c38223b51dd445531fd3a7c3eb64a4bac2d93d))
+* **PreviewTools:** playroom component to allow change theme ([d2b020a](https://github.com/Telefonica/mistica-web/commit/d2b020a1c51d100eabdedd29e0237984e5ab5318))
+
 ## [7.1.1](https://github.com/Telefonica/mistica-web/compare/v7.1.0...v7.1.1) (2020-11-05)
 
 
