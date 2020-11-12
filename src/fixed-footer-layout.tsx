@@ -5,6 +5,7 @@ import {createUseStyles} from './jss';
 import {getIosVersion, isRunningAcceptanceTest} from './utils/platform';
 import compareVersion from 'semver-compare';
 import {useScreenSize, useTheme} from './hooks';
+import Portal from './portal';
 
 import type {Theme} from './theme';
 
@@ -143,16 +144,21 @@ const FixedFooterLayout: React.FC<Props> = ({
             <div ref={childrenRef} className={classnames({[classes.containerMobile]: isMobile})}>
                 {children}
             </div>
-            <div
-                className={classnames(classes.footer, {
-                    [classes.withoutFooter]: !isFooterVisible,
-                    [classes.shadow]: displayShadow,
-                })}
-                style={{height, paddingBottom: isFooterVisible ? 'env(safe-area-inset-bottom)' : 0}}
-                data-testid={`fixed-footer${isFooterVisible ? '-visible' : '-hidden'}`}
-            >
-                {footer}
-            </div>
+            <Portal>
+                <div
+                    className={classnames(classes.footer, {
+                        [classes.withoutFooter]: !isFooterVisible,
+                        [classes.shadow]: displayShadow,
+                    })}
+                    style={{
+                        height,
+                        paddingBottom: isFooterVisible ? 'env(safe-area-inset-bottom)' : 0,
+                    }}
+                    data-testid={`fixed-footer${isFooterVisible ? '-visible' : '-hidden'}`}
+                >
+                    {footer}
+                </div>
+            </Portal>
         </>
     );
 };
