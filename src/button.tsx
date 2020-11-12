@@ -436,12 +436,14 @@ const useButtonLinkStyles = createUseStyles((theme) => ({
             },
         },
     },
+    aligned: {marginLeft: -8},
 }));
 
 interface ButtonLinkCommonProps {
     children: React.ReactNode;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     'data-testid'?: string;
+    aligned?: boolean;
 }
 interface ButtonLinkOnPressProps extends ButtonLinkCommonProps {
     onPress: (event: React.MouseEvent<HTMLElement>) => void;
@@ -469,6 +471,7 @@ export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
     const commonProps = {
         className: classnames(classes.link, {
             [classes.inverse]: isInverse,
+            [classes.aligned]: props.aligned,
         }),
         trackingEvent: props.trackingEvent,
         'data-testid': props['data-testid'],
