@@ -27,6 +27,7 @@ const useStyles = createUseStyles((theme) => ({
         zIndex: 2,
         display: 'flex',
         '& *': {outline: 'none'},
+        justifyContent: 'space-between',
     },
     mobileControls: {
         alignItems: 'center',
@@ -39,7 +40,7 @@ const useStyles = createUseStyles((theme) => ({
         height: 57,
     },
     tabs: {
-        flexBasis: 880,
+        flexBasis: 500,
     },
     desktopControlItem: {
         padding: '0 16px 2px',
@@ -47,6 +48,7 @@ const useStyles = createUseStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         borderLeft: `1px solid ${theme.colors.divider}`,
+        justifyContent: 'flex-end',
     },
     checkbox: {
         display: 'flex',
