@@ -149,7 +149,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
         </div>
     ) : (
         <div className={`${classes.controls} ${classes.desktopControls}`}>
-            <div className={classes.tabs}>
+            <div className={classes.tabs} style={{borderBottom: '2px solid red'}}>
                 <Tabs
                     tabs={Object.values(themesMap).map(({text}) => ({text}))}
                     selectedIndex={Object.keys(themesMap).indexOf(skinName)}
@@ -171,7 +171,9 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                 </div>
             )}
             <div className={classes.desktopControlItem}>
-                <ButtonLink onPress={editStory}>Edit in playroom</ButtonLink>
+                <a href={editStory}>
+                    <IconCodeRegular color="003245" size="32" />
+                </a>
             </div>
         </div>
     );
