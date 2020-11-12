@@ -5,8 +5,11 @@ import type { TrackingEvent } from "./utils/types";
 declare type CommonProps = {
   headline?: string | React.Node,
   title: string,
+  titleLinesMax?: 1 | 2,
   subtitle?: string,
+  subtitleLinesMax?: 1 | 2,
   description?: string | null,
+  descriptionLinesMax?: 1 | 2,
   icon?: React.Element<any> | string | null,
   iconSize?: 24 | 40,
   badge?: boolean | number,

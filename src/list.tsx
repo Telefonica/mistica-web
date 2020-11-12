@@ -92,8 +92,11 @@ const useStyles = createUseStyles((theme) => ({
 interface CommonProps {
     headline?: string | React.ReactNode;
     title: string;
+    titleLinesMax?: 1 | 2;
     subtitle?: string;
+    subtitleLinesMax?: 1 | 2;
     description?: string | null;
+    descriptionLinesMax?: 1 | 2;
     icon?: React.ReactElement<any> | string | null;
     iconSize?: 24 | 40;
     badge?: boolean | number;
@@ -109,8 +112,11 @@ interface ContentProps extends CommonProps {
 const Content: React.FC<ContentProps> = ({
     headline,
     title,
+    titleLinesMax = 2,
     subtitle,
+    subtitleLinesMax = 2,
     description,
+    descriptionLinesMax = 2,
     icon,
     iconSize = 40,
     type = 'basic',
@@ -157,19 +163,29 @@ const Content: React.FC<ContentProps> = ({
                         </Text8>
                     </Box>
                 )}
-                <Text6 wordBreak light color={theme.colors.textPrimary}>
+                <Text6 wordBreak light color={theme.colors.textPrimary} truncate={titleLinesMax}>
                     {title}
                 </Text6>
                 {subtitle && (
                     <Box paddingY={2}>
-                        <Text7 wordBreak regular color={theme.colors.textSecondary}>
+                        <Text7
+                            wordBreak
+                            regular
+                            color={theme.colors.textSecondary}
+                            truncate={subtitleLinesMax}
+                        >
                             {subtitle}
                         </Text7>
                     </Box>
                 )}
                 {description && (
                     <Box paddingY={isMobile ? 2 : 0}>
-                        <Text7 wordBreak regular color={theme.colors.textSecondary}>
+                        <Text7
+                            wordBreak
+                            regular
+                            color={theme.colors.textSecondary}
+                            truncate={descriptionLinesMax}
+                        >
                             {description}
                         </Text7>
                     </Box>
@@ -315,7 +331,19 @@ const useControlState = ({
 
 const RowContent = (props: RowContentProps) => {
     const classes = useStyles();
-    const {icon, iconSize, headline, title, subtitle, description, badge, role} = props;
+    const {
+        icon,
+        iconSize,
+        headline,
+        title,
+        titleLinesMax,
+        subtitle,
+        subtitleLinesMax,
+        description,
+        descriptionLinesMax,
+        badge,
+        role,
+    } = props;
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
     const renderContent = (moreProps: {type: ContentProps['type']; right?: ContentProps['right']}) => (
@@ -327,6 +355,9 @@ const RowContent = (props: RowContentProps) => {
             subtitle={subtitle}
             description={description}
             badge={badge}
+            titleLinesMax={titleLinesMax}
+            subtitleLinesMax={subtitleLinesMax}
+            descriptionLinesMax={descriptionLinesMax}
             {...moreProps}
         />
     );
