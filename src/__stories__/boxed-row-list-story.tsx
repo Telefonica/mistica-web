@@ -101,9 +101,9 @@ export const Default: StoryComponent = () => {
                             subtitle={subtitle}
                             description={description}
                             badge={withBadge}
-                            oneLineTitle={oneLineTitle}
-                            oneLineSubtitle={oneLineSubtitle}
-                            oneLineDescription={oneLineDescription}
+                            titleLinesMax={oneLineTitle ? 1 : 2}
+                            subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                            descriptionLinesMax={oneLineDescription ? 1 : 2}
                             {...controlProps}
                         />
                         <BoxedRow
@@ -114,9 +114,9 @@ export const Default: StoryComponent = () => {
                             subtitle={subtitle}
                             description={description}
                             badge={withBadge ? 2 : undefined}
-                            oneLineTitle={oneLineTitle}
-                            oneLineSubtitle={oneLineSubtitle}
-                            oneLineDescription={oneLineDescription}
+                            titleLinesMax={oneLineTitle ? 1 : 2}
+                            subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                            descriptionLinesMax={oneLineDescription ? 1 : 2}
                             {...controlProps}
                         />
                         <BoxedRow
@@ -127,9 +127,9 @@ export const Default: StoryComponent = () => {
                             subtitle={subtitle}
                             description={description}
                             badge={withBadge ? 22 : undefined}
-                            oneLineTitle={oneLineTitle}
-                            oneLineSubtitle={oneLineSubtitle}
-                            oneLineDescription={oneLineDescription}
+                            titleLinesMax={oneLineTitle ? 1 : 2}
+                            subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                            descriptionLinesMax={oneLineDescription ? 1 : 2}
                             {...controlProps}
                         />
                     </BoxedRowList>

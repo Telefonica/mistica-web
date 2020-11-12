@@ -89,16 +89,14 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-const MAX_NUM_LINES = 2;
-
 interface CommonProps {
     headline?: string | React.ReactNode;
     title: string;
-    oneLineTitle?: boolean;
+    titleLinesMax?: 1 | 2;
     subtitle?: string;
-    oneLineSubtitle?: boolean;
+    subtitleLinesMax?: 1 | 2;
     description?: string | null;
-    oneLineDescription?: boolean;
+    descriptionLinesMax?: 1 | 2;
     icon?: React.ReactElement<any> | string | null;
     iconSize?: 24 | 40;
     badge?: boolean | number;
@@ -114,11 +112,11 @@ interface ContentProps extends CommonProps {
 const Content: React.FC<ContentProps> = ({
     headline,
     title,
-    oneLineTitle,
+    titleLinesMax = 2,
     subtitle,
-    oneLineSubtitle,
+    subtitleLinesMax = 2,
     description,
-    oneLineDescription,
+    descriptionLinesMax = 2,
     icon,
     iconSize = 40,
     type = 'basic',
@@ -165,12 +163,7 @@ const Content: React.FC<ContentProps> = ({
                         </Text8>
                     </Box>
                 )}
-                <Text6
-                    wordBreak
-                    light
-                    color={theme.colors.textPrimary}
-                    truncate={oneLineTitle ? 1 : MAX_NUM_LINES}
-                >
+                <Text6 wordBreak light color={theme.colors.textPrimary} truncate={titleLinesMax}>
                     {title}
                 </Text6>
                 {subtitle && (
@@ -179,7 +172,7 @@ const Content: React.FC<ContentProps> = ({
                             wordBreak
                             regular
                             color={theme.colors.textSecondary}
-                            truncate={oneLineSubtitle ? 1 : MAX_NUM_LINES}
+                            truncate={subtitleLinesMax}
                         >
                             {subtitle}
                         </Text7>
@@ -191,7 +184,7 @@ const Content: React.FC<ContentProps> = ({
                             wordBreak
                             regular
                             color={theme.colors.textSecondary}
-                            truncate={oneLineDescription ? 1 : MAX_NUM_LINES}
+                            truncate={descriptionLinesMax}
                         >
                             {description}
                         </Text7>
@@ -343,11 +336,11 @@ const RowContent = (props: RowContentProps) => {
         iconSize,
         headline,
         title,
-        oneLineTitle,
+        titleLinesMax,
         subtitle,
-        oneLineSubtitle,
+        subtitleLinesMax,
         description,
-        oneLineDescription,
+        descriptionLinesMax,
         badge,
         role,
     } = props;
@@ -362,9 +355,9 @@ const RowContent = (props: RowContentProps) => {
             subtitle={subtitle}
             description={description}
             badge={badge}
-            oneLineTitle={oneLineTitle}
-            oneLineSubtitle={oneLineSubtitle}
-            oneLineDescription={oneLineDescription}
+            titleLinesMax={titleLinesMax}
+            subtitleLinesMax={subtitleLinesMax}
+            descriptionLinesMax={descriptionLinesMax}
             {...moreProps}
         />
     );
