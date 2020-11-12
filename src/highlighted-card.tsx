@@ -3,12 +3,12 @@ import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 import Box from './box';
 import Touchable from './touchable';
-import TextLink from './text-link';
 import IcnClose from './icons/icon-close';
 import {applyAlpha} from './utils/color';
 import {useTheme} from './hooks';
 import {Text5, Text7} from './text';
 import IconButton from './icon-button';
+import {ButtonLink} from './button';
 
 import type {TrackingEvent} from './utils/types';
 import type {ButtonElement} from './button';
@@ -105,7 +105,7 @@ interface BasicProps extends CommonProps {
     href?: undefined;
 }
 interface ButtonProps extends CommonProps {
-    button?: ButtonElement | React.ReactElement<typeof TextLink> | null;
+    button?: ButtonElement | React.ReactElement<typeof ButtonLink> | null;
     onPress?: undefined;
     to?: undefined;
     href?: undefined;

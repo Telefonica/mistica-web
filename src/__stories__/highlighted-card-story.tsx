@@ -1,8 +1,7 @@
 import * as React from 'react';
 import HighlightedCard from '../highlighted-card';
 import {StorySection, useCheckbox, useTextField, useSelect} from './helpers';
-import {ButtonPrimary, ButtonSecondary} from '../button';
-import TextLink from '../text-link';
+import {ButtonPrimary, ButtonSecondary, ButtonLink} from '../button';
 import {Box, Stack, ThemeVariant} from '..';
 
 const imagePlaceholder =
@@ -26,7 +25,7 @@ export const Default: StoryComponent = () => {
     const [button, buttonSelect] = useSelect('Button type', 'ButtonPrimary', [
         'ButtonPrimary',
         'ButtonSecondary',
-        'TextLink',
+        'ButtonLink',
     ]);
     const [imageFit, imageFitSelect] = useSelect('Image fit background-size', 'fit', ['fit', 'fill']);
 
@@ -44,11 +43,11 @@ export const Default: StoryComponent = () => {
                         ButtonSecondary
                     </ButtonSecondary>
                 );
-            case 'TextLink':
+            case 'ButtonLink':
                 return (
-                    <TextLink href="#" small>
+                    <ButtonLink href="#" aligned>
                         TextLink
-                    </TextLink>
+                    </ButtonLink>
                 );
             case 'None':
             default:
