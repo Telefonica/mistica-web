@@ -139,26 +139,28 @@ const FixedFooterLayout: React.FC<Props> = ({
 
     const classes = useStyles({footerBgColor, containerBgColor, height});
 
+    const renderFooter = () => (
+        <div
+            className={classnames(classes.footer, {
+                [classes.withoutFooter]: !isFooterVisible,
+                [classes.shadow]: displayShadow,
+            })}
+            style={{
+                height,
+                paddingBottom: isFooterVisible ? 'env(safe-area-inset-bottom)' : 0,
+            }}
+            data-testid={`fixed-footer${isFooterVisible ? '-visible' : '-hidden'}`}
+        >
+            {footer}
+        </div>
+    );
+
     return (
         <>
             <div ref={childrenRef} className={classnames({[classes.containerMobile]: isMobile})}>
                 {children}
             </div>
-            <Portal>
-                <div
-                    className={classnames(classes.footer, {
-                        [classes.withoutFooter]: !isFooterVisible,
-                        [classes.shadow]: displayShadow,
-                    })}
-                    style={{
-                        height,
-                        paddingBottom: isFooterVisible ? 'env(safe-area-inset-bottom)' : 0,
-                    }}
-                    data-testid={`fixed-footer${isFooterVisible ? '-visible' : '-hidden'}`}
-                >
-                    {footer}
-                </div>
-            </Portal>
+            {isMobile ? <Portal>{renderFooter()}</Portal> : renderFooter()}
         </>
     );
 };
