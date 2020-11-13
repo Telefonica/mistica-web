@@ -1,7 +1,21 @@
 // @flow
 
 import * as React from "react";
-declare type PadSize = 0 | 2 | 4 | 8 | 12 | 16 | 24 | 32 | 40 | 48 | 56 | 64;
+declare type PadSize =
+  | 0
+  | 2
+  | 4
+  | 8
+  | 12
+  | 16
+  | 24
+  | 32
+  | 40
+  | 48
+  | 56
+  | 64
+  | 72
+  | 80;
 declare type Props = {
   width?: number | string,
   padding?: PadSize,
