@@ -30,6 +30,7 @@ export type PropsHref = {
 export type PropsOnPress = {
   ...$Exact<CommonProps>,
   onPress: PressHandler,
+  formId?: string,
 };
 export type PropsTo = {
   ...$Exact<CommonProps>,
@@ -54,6 +55,7 @@ export type PropsMaybeOnPress = {
   ...$Exact<CommonProps>,
   maybe: true,
   onPress?: PressHandler,
+  formId?: string,
 };
 declare type Props =
   | PropsHref
