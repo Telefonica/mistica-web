@@ -14,7 +14,6 @@ import {
     Tabs,
     Checkbox,
 } from '../src';
-import overscrollColorStory from '../src/__stories__/overscroll-color-story';
 import {Movistar, Vivo, O2, O2_Classic} from './themes';
 
 export * from '../src';
