@@ -150,7 +150,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                 />
             )}
             <IconButton size={32} onPress={editStory}>
-                <IconCodeFilled size={32} />
+                <IconCodeFilled size={32} color={colors.iconSecondary} />
             </IconButton>
         </div>
     ) : (
