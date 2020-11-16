@@ -82,8 +82,10 @@ const MisticaTemeProvider = ({Story, context}): React.ReactElement => {
     );
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const withMisticaThemeProvider = (Story, context) => <MisticaTemeProvider Story={Story} context={context} />;
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const withLayoutDecorator = (Story, context): React.ReactElement => {
     const styles = isRunningAcceptanceTest() ? <style>{acceptanceStyles}</style> : null;
 
