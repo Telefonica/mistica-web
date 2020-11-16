@@ -1,6 +1,5 @@
 import {color} from '@storybook/theming';
 import {getPreferredColorScheme} from '@storybook/theming/dist/utils';
-import {constant} from 'lodash';
 import * as React from 'react';
 import {
     ThemeContextProvider,
@@ -98,6 +97,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     const {
         skinName: initialSkinName,
         platformOverrides: {platform: initialOs = 'android'},
+        colors,
     } = useTheme();
     const {isMobile} = useScreenSize();
     const [showOverlay, setShowOverlay] = React.useState(false);
@@ -181,7 +181,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
             <div></div>
             <div className={classes.desktopControlItem}>
                 <IconButton size={32} onPress={editStory}>
-                    <IconCodeFilled size={32} color={theme.colors.divider} />
+                    <IconCodeFilled size={32} color={colors.iconSecondary} />
                 </IconButton>
             </div>
         </div>
