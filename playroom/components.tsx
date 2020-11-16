@@ -40,7 +40,7 @@ const useStyles = createUseStyles((theme) => ({
         height: 57,
     },
     tabs: {
-        flexBasis: 500,
+        flexBasis: 400,
     },
     desktopControlItem: {
         padding: '0 16px 2px',
@@ -48,7 +48,6 @@ const useStyles = createUseStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         borderLeft: `1px solid ${theme.colors.divider}`,
-        justifyContent: 'flex-end',
     },
     checkbox: {
         display: 'flex',
