@@ -306,7 +306,7 @@ export type ButtonProps =
     | HrefButtonProps;
 
 const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButtonStyles>}> = (props) => {
-    const {formStatus} = useForm();
+    const {formStatus, formId} = useForm();
     const isInverse = useIsInverseVariant();
     const {classes, loadingText} = props;
     const isSubmitButton = !!props.submit;
@@ -379,7 +379,7 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
 
     if (props.submit) {
         // using empty onPress handler so it gets rendered as a button
-        return <Touchable type="submit" onPress={() => {}} {...commonProps} />;
+        return <Touchable type="submit" formId={formId} onPress={() => {}} {...commonProps} />;
     }
 
     if (props.onPress) {
@@ -436,12 +436,14 @@ const useButtonLinkStyles = createUseStyles((theme) => ({
             },
         },
     },
+    aligned: {marginLeft: -8},
 }));
 
 interface ButtonLinkCommonProps {
     children: React.ReactNode;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     'data-testid'?: string;
+    aligned?: boolean;
 }
 interface ButtonLinkOnPressProps extends ButtonLinkCommonProps {
     onPress: (event: React.MouseEvent<HTMLElement>) => void;
@@ -469,6 +471,7 @@ export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
     const commonProps = {
         className: classnames(classes.link, {
             [classes.inverse]: isInverse,
+            [classes.aligned]: props.aligned,
         }),
         trackingEvent: props.trackingEvent,
         'data-testid': props['data-testid'],

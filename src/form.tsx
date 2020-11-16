@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useTheme} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import {FormContext} from './form-context';
 import {createUseStyles} from './jss';
 import classnames from 'classnames';
@@ -29,7 +29,7 @@ const Form: React.FC<FormProps> = ({
     onSubmit,
     initialValues = {},
     autoJump = false,
-    id,
+    id: idProp,
 }) => {
     const isMountedRef = React.useRef(true); // https://github.com/facebook/react/issues/14369#issuecomment-468305796
     const [values, setValues] = React.useState(initialValues);
@@ -40,6 +40,7 @@ const Form: React.FC<FormProps> = ({
     const formRef = React.useRef<HTMLFormElement | null>(null);
     const {texts} = useTheme();
     const classes = useStyles();
+    const id = useAriaId(idProp);
 
     React.useEffect(
         () => () => {
@@ -171,6 +172,7 @@ const Form: React.FC<FormProps> = ({
                 jumpToNext,
                 validate: validateFields,
                 submit: handleSubmit,
+                formId: id,
             }}
         >
             <form

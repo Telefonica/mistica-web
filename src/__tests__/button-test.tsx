@@ -54,6 +54,7 @@ test('submit button', () => {
         <DocumentFragment>
           <button
             class="touchable button light"
+            form=""
             role="button"
             type="submit"
           >

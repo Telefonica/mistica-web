@@ -24,6 +24,7 @@ type Context = {
     jumpToNext: (currentName: string) => void;
     submit: () => void;
     validate: () => FormErrors;
+    formId: string;
 };
 
 export const FormContext = React.createContext<Context>({
@@ -38,6 +39,7 @@ export const FormContext = React.createContext<Context>({
     jumpToNext: () => {},
     submit: () => {},
     validate: () => ({}),
+    formId: '',
 });
 
 export const useForm = (): Context => React.useContext(FormContext);
