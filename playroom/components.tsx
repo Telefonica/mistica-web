@@ -1,4 +1,3 @@
-import {getPreferredColorScheme} from '@storybook/theming/dist/utils';
 import * as React from 'react';
 import {
     ThemeContextProvider,
