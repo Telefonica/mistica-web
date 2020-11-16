@@ -1,3 +1,4 @@
+import {getPreferredColorScheme} from '@storybook/theming/dist/utils';
 import * as React from 'react';
 import {
     ThemeContextProvider,
@@ -28,6 +29,7 @@ const useStyles = createUseStyles((theme) => ({
         zIndex: 2,
         display: 'flex',
         '& *': {outline: 'none'},
+        '& > :nth-child(2)': {flex: 2},
         justifyContent: 'space-between',
     },
     mobileControls: {
@@ -41,7 +43,7 @@ const useStyles = createUseStyles((theme) => ({
         height: 57,
     },
     tabs: {
-        flexBasis: 440,
+        flexBasis: 504,
     },
     desktopControlItem: {
         padding: '0 16px 2px',
@@ -145,7 +147,9 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                     )}
                 />
             )}
-            <ButtonLink onPress={editStory}>Edit</ButtonLink>
+            <IconButton size={32} onPress={editStory}>
+                <IconCodeFilled size={32} />
+            </IconButton>
         </div>
     ) : (
         <div className={`${classes.controls} ${classes.desktopControls}`}>
@@ -158,6 +162,8 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                     }}
                 />
             </div>
+
+            <div>{/* Este div suelto me soluciona el espacio */}</div>
             {showPlatformSelector && (
                 <div className={classes.desktopControlItem}>
                     <Checkbox
@@ -170,6 +176,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                     />
                 </div>
             )}
+            <div></div>
             <div className={classes.desktopControlItem}>
                 <IconButton size={32} onPress={editStory}>
                     <IconCodeFilled size={32} />
