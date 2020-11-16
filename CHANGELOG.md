@@ -1,3 +1,10 @@
+## [7.2.1](https://github.com/Telefonica/mistica-web/compare/v7.2.0...v7.2.1) (2020-11-13)
+
+
+### Bug Fixes
+
+* **FixedFooterLayout:** use a Portal to render the fixed footer in mobile ([1aa12ae](https://github.com/Telefonica/mistica-web/commit/1aa12ae36960b16aea80c1716a4adadae3a07c06))
+
 # [7.2.0](https://github.com/Telefonica/mistica-web/compare/v7.1.1...v7.2.0) (2020-11-12)
 
 
