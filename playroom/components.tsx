@@ -13,7 +13,6 @@ import {
     SkinName,
     useScreenSize,
     Tabs,
-    ButtonLink,
     Checkbox,
 } from '../src';
 import {Movistar, Vivo, O2, O2_Classic} from './themes';
@@ -43,7 +42,7 @@ const useStyles = createUseStyles((theme) => ({
         height: 57,
     },
     tabs: {
-        flexBasis: 440,
+        flexBasis: 424,
     },
     desktopControlItem: {
         padding: '0 16px 2px',
