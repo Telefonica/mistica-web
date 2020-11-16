@@ -1,3 +1,15 @@
+# [7.3.0](https://github.com/Telefonica/mistica-web/compare/v7.2.1...v7.3.0) (2020-11-16)
+
+
+### Bug Fixes
+
+* **Form:** allow using submit buttons in Portals ([499e76d](https://github.com/Telefonica/mistica-web/commit/499e76d2e074eda2533accba222e6661dfc1c47a))
+
+
+### Features
+
+* **Stack,Box:** allow space of 72 and 80px ([#149](https://github.com/Telefonica/mistica-web/issues/149)) ([5a9ef44](https://github.com/Telefonica/mistica-web/commit/5a9ef44ef275eae855a4693fbb5b635f79cce212))
+
 ## [7.2.1](https://github.com/Telefonica/mistica-web/compare/v7.2.0...v7.2.1) (2020-11-13)
 
 
