@@ -6,6 +6,7 @@ import {
     createUseStyles,
     IconButton,
     IconSettingsRegular,
+    IconCodeFilled,
     Overlay,
     useTheme,
     SkinName,
@@ -170,7 +171,9 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                 </div>
             )}
             <div className={classes.desktopControlItem}>
-                <ButtonLink onPress={editStory}>Edit in playroom</ButtonLink>
+                <IconButton size={32} onPress={editStory}>
+                    <IconCodeFilled size={32} />
+                </IconButton>
             </div>
         </div>
     );
