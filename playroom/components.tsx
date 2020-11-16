@@ -1,4 +1,6 @@
+import {color} from '@storybook/theming';
 import {getPreferredColorScheme} from '@storybook/theming/dist/utils';
+import {constant} from 'lodash';
 import * as React from 'react';
 import {
     ThemeContextProvider,
@@ -15,6 +17,7 @@ import {
     Tabs,
     Checkbox,
 } from '../src';
+import overscrollColorStory from '../src/__stories__/overscroll-color-story';
 import {Movistar, Vivo, O2, O2_Classic} from './themes';
 
 export * from '../src';
@@ -162,7 +165,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                 />
             </div>
 
-            <div>{/* Este div suelto me soluciona el espacio */}</div>
+            <div></div>
             {showPlatformSelector && (
                 <div className={classes.desktopControlItem}>
                     <Checkbox
@@ -178,7 +181,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
             <div></div>
             <div className={classes.desktopControlItem}>
                 <IconButton size={32} onPress={editStory}>
-                    <IconCodeFilled size={32} />
+                    <IconCodeFilled size={32} color={theme.colors.divider} />
                 </IconButton>
             </div>
         </div>
