@@ -16,6 +16,7 @@ declare type CommonProps = {
   role?: string,
 };
 declare type ControlProps = {
+  name?: string,
   value?: boolean,
   defaultValue?: boolean,
   onChange?: (checked: boolean) => void,

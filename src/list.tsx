@@ -204,6 +204,7 @@ const Content: React.FC<ContentProps> = ({
 };
 
 type ControlProps = {
+    name?: string;
     value?: boolean;
     defaultValue?: boolean;
     onChange?: (checked: boolean) => void;
@@ -345,6 +346,7 @@ const RowContent = (props: RowContentProps) => {
         role,
     } = props;
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
+    const controlName = props.switch?.name ?? props.checkbox?.name;
 
     const renderContent = (moreProps: {type: ContentProps['type']; right?: ContentProps['right']}) => (
         <Content
@@ -424,6 +426,7 @@ const RowContent = (props: RowContentProps) => {
     const renderRowWithControl = (Control: React.FC<any>) => (
         <div className={classes.rowContent}>
             <Control
+                name={controlName}
                 checked={isChecked}
                 onChange={toggle}
                 render={(control: React.ReactElement) => (

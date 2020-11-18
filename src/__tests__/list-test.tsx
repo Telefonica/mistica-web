@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {RowList, Row} from '../list';
 import {RadioGroup} from '../radio-button';
-import {screen, fireEvent, render} from '@testing-library/react';
-import {ThemeContextProvider} from '..';
+import {screen, fireEvent, render, waitFor} from '@testing-library/react';
+import {ButtonPrimary, Form, ThemeContextProvider} from '..';
 import {makeTheme} from './test-utils';
 
 test('Row which navigates', () => {
@@ -111,4 +111,42 @@ test('Row list with radio buttons', () => {
 
     expect(radioBanana).not.toBeChecked();
     expect(radioApple).toBeChecked();
+});
+
+test('RowList inside Form', async () => {
+    const submitSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={submitSpy}>
+                <RadioGroup name="radio">
+                    <RowList>
+                        <Row title="Checkbox 1" checkbox={{name: 'checkbox1'}} />
+                        <Row title="Checkbox 2" checkbox={{name: 'checkbox2'}} />
+                        <Row title="Switch 1" switch={{name: 'switch1'}} />
+                        <Row title="Switch 2" switch={{name: 'switch2'}} />
+                        <Row title="Banana" radioValue="banana" />
+                        <Row title="Apple" radioValue="apple" />
+                    </RowList>
+                </RadioGroup>
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    fireEvent.click(screen.getByRole('radio', {name: 'Banana'}));
+    fireEvent.click(screen.getByRole('checkbox', {name: 'Checkbox 1'}));
+    fireEvent.click(screen.getByRole('switch', {name: 'Switch 1'}));
+
+    fireEvent.click(screen.getByRole('button', {name: 'Submit'}));
+
+    await waitFor(() => {
+        expect(submitSpy).toHaveBeenCalled();
+        expect(submitSpy.mock.calls[0][0]).toEqual({
+            checkbox1: true,
+            checkbox2: false,
+            switch1: true,
+            switch2: false,
+            radio: 'banana',
+        });
+    });
 });
