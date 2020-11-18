@@ -30,6 +30,7 @@ declare type Context = {
   jumpToNext: (currentName: string) => void,
   submit: () => void,
   validate: () => FormErrors,
+  formId: string,
 };
 declare export var FormContext: React.Context<Context>;
 declare export var useForm: () => Context;
