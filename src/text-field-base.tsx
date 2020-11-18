@@ -17,10 +17,18 @@ import type {FieldValidator} from './form-context';
 export type AutoComplete =
     | 'on'
     | 'off'
-    | 'name'
+    | 'name' // full name
+    | 'given-name' // first name
+    | 'additional-name' // middle name
+    | 'family-name' // last name
     | 'email'
     | 'tel'
     | 'street-address'
+    | 'address-line1' // for two address inputs
+    | 'address-line2' // for two address inputs
+    | 'address-level1' // state or province
+    | 'address-level2' // city
+    | 'country'
     | 'postal-code'
     | 'transaction-amount'
     | 'new-password'
