@@ -27,8 +27,10 @@ const useStyles = createUseStyles((theme) => ({
         zIndex: 2,
         display: 'flex',
         '& *': {outline: 'none'},
-        '& > :nth-child(2)': {flex: 2},
         justifyContent: 'space-between',
+    },
+    flexSpacer: {
+        flex: 1,
     },
     mobileControls: {
         alignItems: 'center',
@@ -146,13 +148,13 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                     )}
                 />
             )}
-            <IconButton size={32} onPress={editStory}>
+            <IconButton label="Edit in Playroom" size={32} onPress={editStory}>
                 <IconCodeFilled size={32} color={colors.iconSecondary} />
             </IconButton>
         </div>
     ) : (
         <div className={`${classes.controls} ${classes.desktopControls}`}>
-            <div className={classes.tabs}>
+            <div className={`${classes.tabs} ${classes.flexSpacer}`}>
                 <Tabs
                     tabs={Object.values(themesMap).map(({text}) => ({text}))}
                     selectedIndex={Object.keys(themesMap).indexOf(skinName)}
@@ -162,7 +164,6 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                 />
             </div>
 
-            <div></div>
             {showPlatformSelector && (
                 <div className={classes.desktopControlItem}>
                     <Checkbox
@@ -175,9 +176,8 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                     />
                 </div>
             )}
-            <div></div>
             <div className={classes.desktopControlItem}>
-                <IconButton size={32} onPress={editStory}>
+                <IconButton label="Edit in Playroom" size={32} onPress={editStory}>
                     <IconCodeFilled size={32} color={colors.iconSecondary} />
                 </IconButton>
             </div>
