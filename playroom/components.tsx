@@ -6,12 +6,12 @@ import {
     createUseStyles,
     IconButton,
     IconSettingsRegular,
+    IconCodeFilled,
     Overlay,
     useTheme,
     SkinName,
     useScreenSize,
     Tabs,
-    ButtonLink,
     Checkbox,
 } from '../src';
 import {Movistar, Vivo, O2, O2_Classic} from './themes';
@@ -28,6 +28,9 @@ const useStyles = createUseStyles((theme) => ({
         display: 'flex',
         '& *': {outline: 'none'},
     },
+    flexSpacer: {
+        flex: 1,
+    },
     mobileControls: {
         alignItems: 'center',
         paddingRight: 8,
@@ -39,7 +42,7 @@ const useStyles = createUseStyles((theme) => ({
         height: 57,
     },
     tabs: {
-        flexBasis: 880,
+        flexBasis: 424,
     },
     desktopControlItem: {
         padding: '0 16px 2px',
@@ -92,6 +95,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     const {
         skinName: initialSkinName,
         platformOverrides: {platform: initialOs = 'android'},
+        colors,
     } = useTheme();
     const {isMobile} = useScreenSize();
     const [showOverlay, setShowOverlay] = React.useState(false);
@@ -143,7 +147,9 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                     )}
                 />
             )}
-            <ButtonLink onPress={editStory}>Edit</ButtonLink>
+            <IconButton label="Edit in Playroom" size={32} onPress={editStory}>
+                <IconCodeFilled size={32} color={colors.iconSecondary} />
+            </IconButton>
         </div>
     ) : (
         <div className={`${classes.controls} ${classes.desktopControls}`}>
@@ -156,6 +162,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                     }}
                 />
             </div>
+            <div className={classes.flexSpacer} />
             {showPlatformSelector && (
                 <div className={classes.desktopControlItem}>
                     <Checkbox
@@ -169,7 +176,9 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                 </div>
             )}
             <div className={classes.desktopControlItem}>
-                <ButtonLink onPress={editStory}>Edit in playroom</ButtonLink>
+                <IconButton label="Edit in Playroom" size={32} onPress={editStory}>
+                    <IconCodeFilled size={32} color={colors.iconSecondary} />
+                </IconButton>
             </div>
         </div>
     );
