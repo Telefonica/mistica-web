@@ -27,7 +27,6 @@ const useStyles = createUseStyles((theme) => ({
         zIndex: 2,
         display: 'flex',
         '& *': {outline: 'none'},
-        justifyContent: 'space-between',
     },
     flexSpacer: {
         flex: 1,
@@ -154,7 +153,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
         </div>
     ) : (
         <div className={`${classes.controls} ${classes.desktopControls}`}>
-            <div className={`${classes.tabs} ${classes.flexSpacer}`}>
+            <div className={classes.tabs}>
                 <Tabs
                     tabs={Object.values(themesMap).map(({text}) => ({text}))}
                     selectedIndex={Object.keys(themesMap).indexOf(skinName)}
@@ -163,7 +162,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                     }}
                 />
             </div>
-
+            <div className={classes.flexSpacer} />
             {showPlatformSelector && (
                 <div className={classes.desktopControlItem}>
                     <Checkbox
