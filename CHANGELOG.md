@@ -1,3 +1,10 @@
+## [7.4.1](https://github.com/Telefonica/mistica-web/compare/v7.4.0...v7.4.1) (2020-11-19)
+
+
+### Bug Fixes
+
+* **Checkbox:** fix Flow type definitions ([#156](https://github.com/Telefonica/mistica-web/issues/156)) ([45258f9](https://github.com/Telefonica/mistica-web/commit/45258f94106f8593447c29964439dbe8477cc0ed))
+
 # [7.4.0](https://github.com/Telefonica/mistica-web/compare/v7.3.0...v7.4.0) (2020-11-19)
 
 

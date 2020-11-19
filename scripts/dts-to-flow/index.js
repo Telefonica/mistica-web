@@ -38,6 +38,12 @@ const fixFlowDefinition = (flowFilename) => {
     // `React.ReactNode` => `React.Node`
     src = src.replace(/React.(React)(Node|Element)/g, 'React.$2');
 
+    // `React.Element<>` => `React.Element<any>`
+    src = src.replace(/React\.Element<>/g, 'React.Element<any>');
+
+    // `React.Element<P, T>` => `React.Element<T>`
+    src = src.replace(/React\.Element<(\w+),\s?(\w+)>/g, 'React.Element<$2>');
+
     // `React.RefObject` => `React.Ref`
     src = src.replace(/React.RefObject/g, 'React.Ref');
 
