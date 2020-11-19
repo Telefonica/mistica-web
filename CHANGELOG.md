@@ -1,3 +1,17 @@
+# [7.4.0](https://github.com/Telefonica/mistica-web/compare/v7.3.0...v7.4.0) (2020-11-19)
+
+
+### Bug Fixes
+
+* **Button story:** fix some styles in buttons story ([56b2774](https://github.com/Telefonica/mistica-web/commit/56b277434353045f96fcc8659bab974589840e0a))
+* **PreviewTools:** some style improvements in playroom preview tools ([ebbc329](https://github.com/Telefonica/mistica-web/commit/ebbc32957f8715612f5c6946618c86054907c65f))
+
+
+### Features
+
+* **RowList:** allow use Rows with controls inside Forms ([#154](https://github.com/Telefonica/mistica-web/issues/154)) ([4ac6cf1](https://github.com/Telefonica/mistica-web/commit/4ac6cf11edb2692df59feebdb664e7b5a163cd5b))
+* **TextField:** include more autocomplete options ([aceac35](https://github.com/Telefonica/mistica-web/commit/aceac356fbe41599df3b5ad9be5493f7c5824a42))
+
 # [7.3.0](https://github.com/Telefonica/mistica-web/compare/v7.2.1...v7.3.0) (2020-11-16)
 
 
