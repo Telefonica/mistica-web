@@ -26,8 +26,12 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: ${{ matrix.node-version }}
-            - run: yarn
-            - run: yarn ci
+            - name: Install dependencies
+              env:
+                  PUPPETEER_SKIP_DOWNLOAD: 'true'
+              run: yarn
+            - name: Run build, lint and tests
+              run: yarn ci
             - name: 'Upload failed screenshot diffs'
               uses: './.github/actions/upload-failed-screenshots'
               if: always()
