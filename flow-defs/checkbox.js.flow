@@ -3,7 +3,7 @@
 import * as React from "react";
 declare type Props = {
   name: string,
-  render?: (checkboxElement: React.Element<>) => React.Element<any, any>,
+  render?: (checkboxElement: React.Element<any>) => React.Element<any>,
   defaultChecked?: boolean,
   checked?: boolean,
   onChange?: (value: boolean) => void,
