@@ -16,7 +16,7 @@ type Props = {
 const useStyles = createUseStyles(() => ({
     checkboxContainer: {
         cursor: 'default',
-        display: 'inline',
+        display: 'inline-block',
     },
 }));
 
