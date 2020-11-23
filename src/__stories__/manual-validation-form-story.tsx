@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Stack, Touchable, Form, TextField, useForm, ButtonPrimary} from '..';
 
 export default {
-    title: 'Components/Forms/Form',
+    title: 'Components/Forms/Form examples',
 };
 
 type CardProps = {show: boolean; children: React.ReactNode; onPress: any};
