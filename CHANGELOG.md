@@ -3,6 +3,7 @@
 
 ### Bug Fixes
 
+* **RadioButton, Checkbox, Inline:** Various fixes in RadioButton and Checkbox. Inline component uses `inline-flex` as default display. ([#159](https://github.com/Telefonica/mistica-web/pull/159))
 * **GridLayout:** remove row gap ([#158](https://github.com/Telefonica/mistica-web/issues/158)) ([48dd29c](https://github.com/Telefonica/mistica-web/commit/48dd29c4453dbb11a16874c3f182a33e435a9d49))
 
 ## [7.4.1](https://github.com/Telefonica/mistica-web/compare/v7.4.0...v7.4.1) (2020-11-19)
@@ -11,7 +12,6 @@
 ### Bug Fixes
 
 * **Checkbox:** fix Flow type definitions ([#156](https://github.com/Telefonica/mistica-web/issues/156)) ([45258f9](https://github.com/Telefonica/mistica-web/commit/45258f94106f8593447c29964439dbe8477cc0ed))
-* **RadioButton, Checkbox, Inline:** Various fixes in RadioButton and Checkbox. Inline component uses `inline-flex` as default display. ([#159](https://github.com/Telefonica/mistica-web/pull/159))
 
 # [7.4.0](https://github.com/Telefonica/mistica-web/compare/v7.3.0...v7.4.0) (2020-11-19)
 
