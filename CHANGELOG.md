@@ -1,3 +1,10 @@
+## [7.4.2](https://github.com/Telefonica/mistica-web/compare/v7.4.1...v7.4.2) (2020-11-24)
+
+
+### Bug Fixes
+
+* **GridLayout:** remove row gap ([#158](https://github.com/Telefonica/mistica-web/issues/158)) ([48dd29c](https://github.com/Telefonica/mistica-web/commit/48dd29c4453dbb11a16874c3f182a33e435a9d49))
+
 ## [7.4.1](https://github.com/Telefonica/mistica-web/compare/v7.4.0...v7.4.1) (2020-11-19)
 
 
