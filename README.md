@@ -14,7 +14,7 @@ React components library for Telefonica Design System ([Mistica](https://github.
    packages from the npm `@telefonica` organization:
 
 ```
-//registry.npmjs.org/:_authToken=864bbe83-5a77-4d21-a87f-f56375f06845
+//registry.npmjs.org/:_authToken=1629486b-6c8c-47cc-b32d-4a6d586e828f
 ```
 
 2. Install:
