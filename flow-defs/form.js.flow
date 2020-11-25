@@ -2,12 +2,25 @@
 
 import * as React from "react";
 declare type FormValues = { [name: string]: any, ... };
+/**
+ * This TrackingEvent is not like the one in utils/types, because here the action attribute is optional and
+ * it has a default value of 'inline_error'
+ */
+declare type TrackingEvent = {
+  [key: string]: mixed,
+  +category: string,
+  +action?: string,
+  +label?: string,
+  +value?: number,
+  ...
+};
 declare type FormProps = {
   id?: string,
   onSubmit: (values: FormValues, rawValues: FormValues) => Promise<void> | void,
   initialValues?: FormValues,
   autoJump?: boolean,
   children: React.Node,
+  errorTrackingEvent?: TrackingEvent,
   className?: string,
 };
 declare var Form: React.ComponentType<FormProps>;
