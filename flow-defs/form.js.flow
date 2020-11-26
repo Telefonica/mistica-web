@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from "react";
+import type { FormErrors } from "./form-context";
 declare type FormValues = { [name: string]: any, ... };
 declare type FormProps = {
   id?: string,
@@ -8,6 +9,7 @@ declare type FormProps = {
   initialValues?: FormValues,
   autoJump?: boolean,
   children: React.Node,
+  onValidationErrors?: (errors: FormErrors) => void,
   className?: string,
 };
 declare var Form: React.ComponentType<FormProps>;

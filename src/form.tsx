@@ -20,6 +20,7 @@ type FormProps = {
     initialValues?: FormValues;
     autoJump?: boolean;
     children: React.ReactNode;
+    onValidationErrors?: (errors: FormErrors) => void;
     className?: string;
 };
 
@@ -29,6 +30,7 @@ const Form: React.FC<FormProps> = ({
     onSubmit,
     initialValues = {},
     autoJump = false,
+    onValidationErrors,
     id: idProp,
 }) => {
     const isMountedRef = React.useRef(true); // https://github.com/facebook/react/issues/14369#issuecomment-468305796
@@ -94,8 +96,11 @@ const Form: React.FC<FormProps> = ({
             }
         }
         setFormErrors(errors);
+        if (onValidationErrors) {
+            onValidationErrors(errors);
+        }
         return errors;
-    }, [rawValues, texts, values]);
+    }, [onValidationErrors, rawValues, texts, values]);
 
     const jumpToNext = React.useCallback(
         (currentName: string) => {
