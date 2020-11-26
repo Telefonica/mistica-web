@@ -14,25 +14,13 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-/**
- * This TrackingEvent is not like the one in utils/types, because here the action attribute is optional and
- * it has a default value of 'inline_error'
- */
-type TrackingEvent = {
-    readonly [key: string]: unknown;
-    readonly category: string;
-    readonly action?: string;
-    readonly label?: string;
-    readonly value?: number;
-};
-
 type FormProps = {
     id?: string;
     onSubmit: (values: FormValues, rawValues: FormValues) => Promise<void> | void;
     initialValues?: FormValues;
     autoJump?: boolean;
     children: React.ReactNode;
-    errorTrackingEvent?: TrackingEvent;
+    onValidationErrors?: (errors: FormErrors) => void;
     className?: string;
 };
 
@@ -42,7 +30,7 @@ const Form: React.FC<FormProps> = ({
     onSubmit,
     initialValues = {},
     autoJump = false,
-    errorTrackingEvent,
+    onValidationErrors,
     id: idProp,
 }) => {
     const isMountedRef = React.useRef(true); // https://github.com/facebook/react/issues/14369#issuecomment-468305796
@@ -52,7 +40,7 @@ const Form: React.FC<FormProps> = ({
     const [formErrors, setFormErrors] = React.useState<FormErrors>({});
     const fieldRegistrations = React.useRef(new Map<string, FieldRegistration>());
     const formRef = React.useRef<HTMLFormElement | null>(null);
-    const {texts, analytics} = useTheme();
+    const {texts} = useTheme();
     const classes = useStyles();
     const id = useAriaId(idProp);
 
@@ -108,17 +96,11 @@ const Form: React.FC<FormProps> = ({
             }
         }
         setFormErrors(errors);
-        if (errorTrackingEvent) {
-            Object.keys(errors).forEach((fieldName) => {
-                analytics.logEvent({
-                    action: 'inline_error',
-                    label: fieldName,
-                    ...errorTrackingEvent,
-                });
-            });
+        if (onValidationErrors) {
+            onValidationErrors(errors);
         }
         return errors;
-    }, [analytics, errorTrackingEvent, rawValues, texts, values]);
+    }, [onValidationErrors, rawValues, texts, values]);
 
     const jumpToNext = React.useCallback(
         (currentName: string) => {

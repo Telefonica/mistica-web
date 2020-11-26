@@ -204,12 +204,12 @@ test("if a Field is disabled we skip its validation and don't submit its value",
     expect(validate).not.toHaveBeenCalled();
 });
 
-test('can track form validation errors', async () => {
-    const logEventSpy = jest.fn();
+test('can listen to form validation errors', async () => {
+    const onValidationErrorsSpy = jest.fn();
 
     render(
-        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
-            <Form errorTrackingEvent={{category: 'form'}} onSubmit={() => {}}>
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onValidationErrors={onValidationErrorsSpy} onSubmit={() => {}}>
                 <TextField name="name" label="Name" />
                 <TextField name="surname" label="Surname" />
                 <EmailField name="email" label="Email" />
@@ -222,13 +222,8 @@ test('can track form validation errors', async () => {
     await userEvent.type(screen.getByLabelText('Email'), 'invalidemail');
     userEvent.click(screen.getByText('Submit'));
 
-    await waitFor(() => {
-        expect(logEventSpy).toHaveBeenCalledTimes(2);
-        expect(logEventSpy).toHaveBeenCalledWith({action: 'inline_error', category: 'form', label: 'email'});
-        expect(logEventSpy).toHaveBeenCalledWith({
-            action: 'inline_error',
-            category: 'form',
-            label: 'surname',
-        });
+    expect(onValidationErrorsSpy).toHaveBeenCalledWith({
+        email: 'Email incorrecto',
+        surname: 'Este campo es obligatorio',
     });
 });

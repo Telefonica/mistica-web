@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, Touchable, Form, TextField, useForm, ButtonPrimary} from '..';
+import {Stack, Touchable, Form, TextField, useForm, ButtonPrimary, Text7} from '..';
 
 export default {
     title: 'Components/Forms/Form examples',
@@ -19,9 +19,7 @@ const Card: React.FC<CardProps> = ({show, children, onPress}) => {
 };
 
 const Cards: React.FC<any> = ({activeCard, setActiveCard}) => {
-    const {validate, submit, formErrors, formStatus} = useForm();
-
-    const getCardIndexByFieldName = (name: string) => Number(name.split('-')[0]);
+    const {formErrors} = useForm();
 
     return (
         <Stack space={16}>
@@ -36,29 +34,14 @@ const Cards: React.FC<any> = ({activeCard, setActiveCard}) => {
             <Card show={activeCard === 2} onPress={() => setActiveCard(2)}>
                 <TextField name="2-baz" label="baz" />
             </Card>
-            <ButtonPrimary
-                onPress={() => {
-                    const errors = validate();
-
-                    const fieldNamesWithErrors = Object.keys(errors);
-                    if (fieldNamesWithErrors.length > 0) {
-                        // open first card containing a field with error
-                        setActiveCard(getCardIndexByFieldName(fieldNamesWithErrors[0]));
-                    } else {
-                        submit();
-                    }
-                }}
-                showSpinner={formStatus === 'sending'}
-            >
-                Send
-            </ButtonPrimary>
+            <ButtonPrimary submit>Send</ButtonPrimary>
 
             <pre>ERRORS: {JSON.stringify(formErrors, null, 2)}</pre>
         </Stack>
     );
 };
 
-export const ManualValidationAndSubmit: StoryComponent = () => {
+export const CustomValidationErrorsHandler: StoryComponent = () => {
     const [activeCard, setActiveCard] = React.useState(0);
     const [formData, setFormData] = React.useState<any>({});
 
@@ -72,29 +55,24 @@ export const ManualValidationAndSubmit: StoryComponent = () => {
             }, 1000)
         );
 
-    return (
-        <>
-            <p>This story shows a Form with manual validation and submit</p>
-            <style>{'ul, li{padding-bottom: 8px}'}</style>
-            <ul>
-                <li>
-                    Instead of a <code>Button</code> with <code>submit</code> prop, the form uses a regular{' '}
-                    <code>Button</code> with an <code>onPress</code> handler where the Form is validated and
-                    submitted
-                </li>
-                <li>
-                    See <code>onPress</code> handler of <code>Send</code> Button
-                </li>
-                <li>
-                    <code>formStatus</code> is used to set the spinner
-                </li>
-            </ul>
+    const getCardIndexByFieldName = (name: string) => Number(name.split('-')[0]);
 
-            <Form initialValues={formData} onSubmit={handleSubmit}>
+    return (
+        <Stack space={16}>
+            <Text7 regular>This story shows a Form with a custom handler for validation errors</Text7>
+
+            <Form
+                onValidationErrors={(errors) => {
+                    const firstErrorFieldName = Object.keys(errors)[0];
+                    setActiveCard(getCardIndexByFieldName(firstErrorFieldName));
+                }}
+                initialValues={formData}
+                onSubmit={handleSubmit}
+            >
                 <Cards activeCard={activeCard} setActiveCard={setActiveCard} />
             </Form>
 
             <pre>DATA: {JSON.stringify(formData, null, 2)}</pre>
-        </>
+        </Stack>
     );
 };
