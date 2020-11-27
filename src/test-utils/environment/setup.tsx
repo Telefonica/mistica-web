@@ -53,7 +53,7 @@ export default async (jestConfig: any = {}): Promise<void> => {
     }
 
     if (process.env.NO_SSR) {
-        console.log('⚠️ Skip building SSR client (NO_SSR env var set - use for development only!)');
+        console.log('⚠️ Skip building SSR bundles (NO_SSR env var set - use for development only!)');
     } else {
         console.log('Building SSR client bundles...');
         await compileSsrClient();

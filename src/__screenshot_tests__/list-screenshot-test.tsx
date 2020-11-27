@@ -9,9 +9,11 @@ const screenshotDifferentControls = async (page: PageApi, list: ElementHandle<El
     expect(await list.screenshot()).toMatchImageSnapshot();
 
     await page.select(await screen.findByLabelText('Control type'), 'checkbox');
+    await page.click((await screen.findAllByRole('checkbox'))[4]);
     expect(await list.screenshot()).toMatchImageSnapshot();
 
     await page.select(await screen.findByLabelText('Control type'), 'switch');
+    await page.click((await screen.findAllByRole('switch'))[0]);
     expect(await list.screenshot()).toMatchImageSnapshot();
 
     await page.select(await screen.findByLabelText('Control type'), 'custom element');
