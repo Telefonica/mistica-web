@@ -203,3 +203,27 @@ test("if a Field is disabled we skip its validation and don't submit its value",
     });
     expect(validate).not.toHaveBeenCalled();
 });
+
+test('can listen to form validation errors', async () => {
+    const onValidationErrorsSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onValidationErrors={onValidationErrorsSpy} onSubmit={() => {}}>
+                <TextField name="name" label="Name" />
+                <TextField name="surname" label="Surname" />
+                <EmailField name="email" label="Email" />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.type(screen.getByLabelText('Name'), 'Pepe');
+    await userEvent.type(screen.getByLabelText('Email'), 'invalidemail');
+    userEvent.click(screen.getByText('Submit'));
+
+    expect(onValidationErrorsSpy).toHaveBeenCalledWith({
+        email: 'Email incorrecto',
+        surname: 'Este campo es obligatorio',
+    });
+});
