@@ -105,8 +105,6 @@ interface TextFieldBaseProps {
     multiline?: boolean;
     inputMode?: string;
     readOnly?: boolean;
-    min?: string; // for date fields
-    max?: string; // for date fields
 }
 
 const commonInputStyles = (theme: Theme) => ({
