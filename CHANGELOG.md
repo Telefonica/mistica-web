@@ -1,70 +1,225 @@
-# [6.4.0](https://github.com/Telefonica/mistica-web/compare/v6.3.0...v6.4.0) (2020-10-09)
-
-
-### Bug Fixes
-
-* **FormEmailField:** improve email validation ([#130](https://github.com/Telefonica/mistica-web/issues/130)) ([5c8badf](https://github.com/Telefonica/mistica-web/commit/5c8badf39116f4bbac30f779203d47e3cec041af))
-* **Icons:** Improve icons tree-shaking ([e993755](https://github.com/Telefonica/mistica-web/commit/e99375588faff7cc8ad2a7856a0d375eb7dc02b8))
+# [7.5.0](https://github.com/Telefonica/mistica-web/compare/v7.4.2...v7.5.0) (2020-11-26)
 
 
 ### Features
 
-* **FormTextField:** Add 'username' as valid autoComplete option ([#128](https://github.com/Telefonica/mistica-web/issues/128)) ([969a8f1](https://github.com/Telefonica/mistica-web/commit/969a8f1ad8af4f008b86c318ba3a26ff6624aa5d))
+* **Form:** new onValidationErrors listener ([57c79c3](https://github.com/Telefonica/mistica-web/commit/57c79c3123d3d534dc0414cd961c8d407d1bb422))
+
+## [7.4.2](https://github.com/Telefonica/mistica-web/compare/v7.4.1...v7.4.2) (2020-11-24)
+
+
+### Bug Fixes
+
+* **RadioButton, Checkbox, Inline:** Various fixes in RadioButton and Checkbox. Inline component uses `inline-flex` as default display. ([#159](https://github.com/Telefonica/mistica-web/pull/159))
+* **GridLayout:** remove row gap ([#158](https://github.com/Telefonica/mistica-web/issues/158)) ([48dd29c](https://github.com/Telefonica/mistica-web/commit/48dd29c4453dbb11a16874c3f182a33e435a9d49))
+
+## [7.4.1](https://github.com/Telefonica/mistica-web/compare/v7.4.0...v7.4.1) (2020-11-19)
+
+
+### Bug Fixes
+
+* **Checkbox:** fix Flow type definitions ([#156](https://github.com/Telefonica/mistica-web/issues/156)) ([45258f9](https://github.com/Telefonica/mistica-web/commit/45258f94106f8593447c29964439dbe8477cc0ed))
+
+# [7.4.0](https://github.com/Telefonica/mistica-web/compare/v7.3.0...v7.4.0) (2020-11-19)
+
+
+### Bug Fixes
+
+* **Button story:** fix some styles in buttons story ([56b2774](https://github.com/Telefonica/mistica-web/commit/56b277434353045f96fcc8659bab974589840e0a))
+* **PreviewTools:** some style improvements in playroom preview tools ([ebbc329](https://github.com/Telefonica/mistica-web/commit/ebbc32957f8715612f5c6946618c86054907c65f))
+
+
+### Features
+
+* **RowList:** allow use Rows with controls inside Forms ([#154](https://github.com/Telefonica/mistica-web/issues/154)) ([4ac6cf1](https://github.com/Telefonica/mistica-web/commit/4ac6cf11edb2692df59feebdb664e7b5a163cd5b))
+* **TextField:** include more autocomplete options ([aceac35](https://github.com/Telefonica/mistica-web/commit/aceac356fbe41599df3b5ad9be5493f7c5824a42))
+
+# [7.3.0](https://github.com/Telefonica/mistica-web/compare/v7.2.1...v7.3.0) (2020-11-16)
+
+
+### Bug Fixes
+
+* **Form:** allow using submit buttons in Portals ([499e76d](https://github.com/Telefonica/mistica-web/commit/499e76d2e074eda2533accba222e6661dfc1c47a))
+
+
+### Features
+
+* **Stack,Box:** allow space of 72 and 80px ([#149](https://github.com/Telefonica/mistica-web/issues/149)) ([5a9ef44](https://github.com/Telefonica/mistica-web/commit/5a9ef44ef275eae855a4693fbb5b635f79cce212))
+
+## [7.2.1](https://github.com/Telefonica/mistica-web/compare/v7.2.0...v7.2.1) (2020-11-13)
+
+
+### Bug Fixes
+
+* **FixedFooterLayout:** use a Portal to render the fixed footer in mobile ([1aa12ae](https://github.com/Telefonica/mistica-web/commit/1aa12ae36960b16aea80c1716a4adadae3a07c06))
+
+# [7.2.0](https://github.com/Telefonica/mistica-web/compare/v7.1.1...v7.2.0) (2020-11-12)
+
+
+### Bug Fixes
+
+* **Playroom:** update icons in tabs snippet ([7b9f2f8](https://github.com/Telefonica/mistica-web/commit/7b9f2f8ead45a27806399602024ac75afb73a62b))
+
+
+### Features
+
+* **BoxedRow:** allow to select max lines count in title, subtitle and description ([af0a6da](https://github.com/Telefonica/mistica-web/commit/af0a6dacc380b28d64a26d22935ae833a42bcc8f))
+* **HighlightedCard:** Allow to use ButtonLink in HighlightedCard ([58c3822](https://github.com/Telefonica/mistica-web/commit/58c38223b51dd445531fd3a7c3eb64a4bac2d93d))
+* **PreviewTools:** playroom component to allow change theme ([d2b020a](https://github.com/Telefonica/mistica-web/commit/d2b020a1c51d100eabdedd29e0237984e5ab5318))
+
+## [7.1.1](https://github.com/Telefonica/mistica-web/compare/v7.1.0...v7.1.1) (2020-11-05)
+
+
+### Bug Fixes
+
+* **DateTimePicker:** format time in 24H ([#143](https://github.com/Telefonica/mistica-web/issues/143)) ([2413c16](https://github.com/Telefonica/mistica-web/commit/2413c161ba28ce6087a59c0f3abe297977b00aae))
+
+# [7.1.0](https://github.com/Telefonica/mistica-web/compare/v7.0.2...v7.1.0) (2020-11-05)
+
+
+### Bug Fixes
+
+* **header-story:** translate texts to english ([48f0b22](https://github.com/Telefonica/mistica-web/commit/48f0b22104be72db2c7bee42e609d981b61bb9fa))
+
+
+### Features
+
+* **ButtonLink:** Remove min width ([0915ba9](https://github.com/Telefonica/mistica-web/commit/0915ba9b5fddf58bb6abe5e78e95c58a6b445340))
+* **Dependencies:** upgrade dependencies: typescript, storybook, playroom, babel and more ([#141](https://github.com/Telefonica/mistica-web/issues/141)) ([4b8ce40](https://github.com/Telefonica/mistica-web/commit/4b8ce407845d2e66e14c67910600bb458f3a9817))
+
+## [7.0.2](https://github.com/Telefonica/mistica-web/compare/v7.0.1...v7.0.2) (2020-10-27)
+
+
+### Bug Fixes
+
+* **HighlightedCard:** desktop paddings ([0a8b9bd](https://github.com/Telefonica/mistica-web/commit/0a8b9bde50ad0a1e0f475af2950da926fa90906c))
+
+## [7.0.1](https://github.com/Telefonica/mistica-web/compare/v7.0.0...v7.0.1) (2020-10-22)
+
+
+### Bug Fixes
+
+* **Text:** improve truncate related styles ([27841c2](https://github.com/Telefonica/mistica-web/commit/27841c24d5b816f97f70ec9f3c56f4e0ebf1fb8a))
+
+# [7.0.0](https://github.com/Telefonica/mistica-web/compare/v6.7.0...v7.0.0) (2020-10-21)
+
+
+### Features
+
+* **Controls:** Switch, Checkbox, Radio Buttons. Renamed FormXxxFields to XxxFields ([0119724](https://github.com/Telefonica/mistica-web/commit/011972491ee7dffa95d0b3249112764c7f7a18ae))
+* **ThemeContext:** Refactor skins and colors ([278c073](https://github.com/Telefonica/mistica-web/commit/278c0733d22e6c6533d7f5cfb2049c8873c3f7f9))
+
+
+### BREAKING CHANGES
+
+* **Controls:** renamed FormXxxFields to XxxFields
+* **ThemeContext:** theme context provider initialization has changed
+
+# [6.7.0](https://github.com/Telefonica/mistica-web/compare/v6.6.0...v6.7.0) (2020-10-21)
+
+### Features
+
+- **Text:** Allow to pass a number of lines to `truncate` prop
+  ([0aeb2dc](https://github.com/Telefonica/mistica-web/commit/0aeb2dc4f478e886cfc171154848d1a1b57117f5))
+
+# [6.6.0](https://github.com/Telefonica/mistica-web/compare/v6.5.0...v6.6.0) (2020-10-20)
+
+### Features
+
+- **DateField:** Date and DateTime improvements (custom icon, improved styles and ux)
+  ([#136](https://github.com/Telefonica/mistica-web/issues/136))
+  ([2542185](https://github.com/Telefonica/mistica-web/commit/2542185be9e06e83c2f9a4dd2d509c35b301d564))
+- **Text:** new `wordBreak` prop.
+  ([3895f71](https://github.com/Telefonica/mistica-web/commit/3895f71bbd8e0f09149def7e30783cce8b682e81))
+
+# [6.5.0](https://github.com/Telefonica/mistica-web/compare/v6.4.0...v6.5.0) (2020-10-15)
+
+### Bug Fixes
+
+- **CI:** update vercel action version ([#132](https://github.com/Telefonica/mistica-web/issues/132))
+  ([787033f](https://github.com/Telefonica/mistica-web/commit/787033f69dd27a245f787a99c32b905f4456ea98))
+
+### Features
+
+- **Inline:** support 2, 4 and 12px space
+  ([d7a71c6](https://github.com/Telefonica/mistica-web/commit/d7a71c6620cbfaf3df2fa5094f1630a2b08c4c77))
+- **media queries:** add new isDesktopOrBigger media query
+  ([aca5479](https://github.com/Telefonica/mistica-web/commit/aca5479b518963529a0959b9f7b66e7aa1f774c3))
+
+# [6.4.0](https://github.com/Telefonica/mistica-web/compare/v6.3.0...v6.4.0) (2020-10-09)
+
+### Bug Fixes
+
+- **FormEmailField:** improve email validation ([#130](https://github.com/Telefonica/mistica-web/issues/130))
+  ([5c8badf](https://github.com/Telefonica/mistica-web/commit/5c8badf39116f4bbac30f779203d47e3cec041af))
+- **Icons:** Improve icons tree-shaking
+  ([e993755](https://github.com/Telefonica/mistica-web/commit/e99375588faff7cc8ad2a7856a0d375eb7dc02b8))
+
+### Features
+
+- **FormTextField:** Add 'username' as valid autoComplete option
+  ([#128](https://github.com/Telefonica/mistica-web/issues/128))
+  ([969a8f1](https://github.com/Telefonica/mistica-web/commit/969a8f1ad8af4f008b86c318ba3a26ff6624aa5d))
 
 # [6.3.0](https://github.com/Telefonica/mistica-web/compare/v6.2.0...v6.3.0) (2020-10-06)
 
-
 ### Bug Fixes
 
-* **GridLayout:** fixed styles to avoid horizontal scroll in mobile ([18a2605](https://github.com/Telefonica/mistica-web/commit/18a26052c8ecf31b8df1b1d8b013428d4d87fa3c))
-* **Version:** improve version import from package.json ([f367521](https://github.com/Telefonica/mistica-web/commit/f36752147c7e251c19039524d07f7c8ad407f70e))
-
+- **GridLayout:** fixed styles to avoid horizontal scroll in mobile
+  ([18a2605](https://github.com/Telefonica/mistica-web/commit/18a26052c8ecf31b8df1b1d8b013428d4d87fa3c))
+- **Version:** improve version import from package.json
+  ([f367521](https://github.com/Telefonica/mistica-web/commit/f36752147c7e251c19039524d07f7c8ad407f70e))
 
 ### Features
 
-* **Build:** generate library size stats on build time (see `size-stats.json`) ([b3e8b66](https://github.com/Telefonica/mistica-web/commit/b3e8b6618ac401be8285afa6aab329b6aace6dd9))
+- **Build:** generate library size stats on build time (see `size-stats.json`)
+  ([b3e8b66](https://github.com/Telefonica/mistica-web/commit/b3e8b6618ac401be8285afa6aab329b6aace6dd9))
 
 # [6.2.0](https://github.com/Telefonica/mistica-web/compare/v6.1.2...v6.2.0) (2020-09-21)
 
-
 ### Bug Fixes
 
-* **Tabs:** Some style fixes mainly affecting tablet breakpoint layout ([1ac7d03](https://github.com/Telefonica/mistica-web/commit/1ac7d036fbe25584ba6077deed5a5309d0122e6d))
-
+- **Tabs:** Some style fixes mainly affecting tablet breakpoint layout
+  ([1ac7d03](https://github.com/Telefonica/mistica-web/commit/1ac7d036fbe25584ba6077deed5a5309d0122e6d))
 
 ### Features
 
-* **Icons:** Added all mistica-icons as React Components. See Storybook Icons section ([3d074c4](https://github.com/Telefonica/mistica-web/commit/3d074c473d14052434baaaa27f9341346c868985))
-* **Text:** new TextX components with the allowed texts presets ([c0b36da](https://github.com/Telefonica/mistica-web/commit/c0b36da0193160ff93b4395c63858e887d213b12))
+- **Icons:** Added all mistica-icons as React Components. See Storybook Icons section
+  ([3d074c4](https://github.com/Telefonica/mistica-web/commit/3d074c473d14052434baaaa27f9341346c868985))
+- **Text:** new TextX components with the allowed texts presets
+  ([c0b36da](https://github.com/Telefonica/mistica-web/commit/c0b36da0193160ff93b4395c63858e887d213b12))
 
 ## [6.1.2](https://github.com/Telefonica/mistica-web/compare/v6.1.1...v6.1.2) (2020-09-16)
 
-
 ### Bug Fixes
 
-* **FeedbackIconError:** broken animation ([4e42076](https://github.com/Telefonica/mistica-web/commit/4e42076aaa598df2372d950e86865d78ceabd77a))
+- **FeedbackIconError:** broken animation
+  ([4e42076](https://github.com/Telefonica/mistica-web/commit/4e42076aaa598df2372d950e86865d78ceabd77a))
 
 ## [6.1.1](https://github.com/Telefonica/mistica-web/compare/v6.1.0...v6.1.1) (2020-09-16)
 
-
 ### Bug Fixes
 
-* **Release:** add typedefs to build ([bf3110b](https://github.com/Telefonica/mistica-web/commit/bf3110bfc5a1aee926c8fb8acf3b7e62155fd43a))
+- **Release:** add typedefs to build
+  ([bf3110b](https://github.com/Telefonica/mistica-web/commit/bf3110bfc5a1aee926c8fb8acf3b7e62155fd43a))
 
 # [6.1.0](https://github.com/Telefonica/mistica-web/compare/v6.0.0...v6.1.0) (2020-09-15)
 
-
 ### Bug Fixes
 
-* **FormTextField:** fix multi line FormTextField bottom padding ([1f5c0a8](https://github.com/Telefonica/mistica-web/commit/1f5c0a8fc4e5caae3b2b4324c2023151a8746d2a))
-* **JSS:** use className id generator for client side executed code to avoid class names collision ([e972eaf](https://github.com/Telefonica/mistica-web/commit/e972eaf11f23b1a7c02ef1a046445f5f3395e03e))
-* **Snackbar:** Fix Snackbar styles for mobile and desktop ([f9f8eed](https://github.com/Telefonica/mistica-web/commit/f9f8eedd6dc2ca4bb6f674302ddeba3eda584159))
-
+- **FormTextField:** fix multi line FormTextField bottom padding
+  ([1f5c0a8](https://github.com/Telefonica/mistica-web/commit/1f5c0a8fc4e5caae3b2b4324c2023151a8746d2a))
+- **JSS:** use className id generator for client side executed code to avoid class names collision
+  ([e972eaf](https://github.com/Telefonica/mistica-web/commit/e972eaf11f23b1a7c02ef1a046445f5f3395e03e))
+- **Snackbar:** Fix Snackbar styles for mobile and desktop
+  ([f9f8eed](https://github.com/Telefonica/mistica-web/commit/f9f8eedd6dc2ca4bb6f674302ddeba3eda584159))
 
 ### Features
 
-* **FeedbackScreen:** New FeedbackScreen component ([e22f65c](https://github.com/Telefonica/mistica-web/commit/e22f65ce553716d8c985a623d7c683696935183b))
-* **FormDateTimeField:** new Form Field component for DateTime values ([221d158](https://github.com/Telefonica/mistica-web/commit/221d1583711fd434444560378f3c40dc88a20cf4))
+- **FeedbackScreen:** New FeedbackScreen component
+  ([e22f65c](https://github.com/Telefonica/mistica-web/commit/e22f65ce553716d8c985a623d7c683696935183b))
+- **FormDateTimeField:** new Form Field component for DateTime values
+  ([221d158](https://github.com/Telefonica/mistica-web/commit/221d1583711fd434444560378f3c40dc88a20cf4))
 
 # [6.0.0](https://github.com/Telefonica/mistica-web/compare/v5.3.2...v6.0.0) (2020-09-08)
 

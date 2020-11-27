@@ -7,7 +7,7 @@ const HighlightedCardTest: React.FC = () => (
         description="Usa nuestra herramienta para resolver tus problemas técnicos"
         onClose={() => {}}
         button={
-            <ButtonPrimary href="whatever/url" small>
+            <ButtonPrimary href="#" small>
                 ButtonPrimary
             </ButtonPrimary>
         }

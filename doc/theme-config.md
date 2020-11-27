@@ -5,8 +5,7 @@ The `theme` prop must have the following type:
 
 ```ts
 type ThemeConfig = {
-  skin: 'Movistar' | 'O2' | 'Vivo' | 'O2-classic';
-  colorOverride?: 'prominent';
+  skin: Skin;
   i18n: {
     locale: Locale;
     phoneNumberFormattingRegionCode: RegionCode;
@@ -33,14 +32,12 @@ Only `skin` and `i18n` are mandatory.
 
 Here is a description of every attribute:
 
-- `skin`: determines the color scheme used by the lib.
-- `colorOverride?`: some skins, like `'Movistar'`, have a different color scheme for some customers (Movistar
-  Priority). To enable Movistar Priority color scheme, set `skin` to `'Movistar'` and `colorOverride` to
-  `'prominent'`.
+- `skin`: determines the color scheme used by the lib. You can use `getMovistarSkin`, `getVivoSkin` to use a
+  specific skin or `getSkinByName`.
 - `i18n`: we use this to localize some messages or formatting dates phone numbers, etc.
   - `locale`: a valid locale (language and region codes separated by `'-'`). For example `'es-ES'`.
   - `phoneNumberFormattingRegionCode`: region code used to format phone numbers (for example in
-    `FormPhoneNumberField`).
+    `PhoneNumberField`).
 - `platformOverrides?`:
   - `platform?`: the lib applies some style differences depending on the current platform.
     `@telefonica/mistica` will try to automatically detect the platform, but you can manually set this setting

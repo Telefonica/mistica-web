@@ -8,78 +8,11 @@ import Stack from './stack';
 import Badge from './badge';
 import {useTheme, useScreenSize} from './hooks';
 import IconChevron from './icons/icon-chevron';
-import Switch from './switch';
-import {SPACE} from './utils/key-codes';
+import Switch from './switch-component';
 import RadioButton from './radio-button';
+import Checkbox from './checkbox';
 
 import type {TrackingEvent} from './utils/types';
-
-// This CircularCheckbox component is only intended to be used inside list rows. Please, don't extract it to it's own file and don't export it from the library.
-
-type CircularCheckboxProps = {
-    render?: (checkboxElement: React.ReactElement) => React.ReactNode;
-    checked: boolean;
-    onChange: (checked: boolean) => void;
-    id: string;
-};
-
-const CircularCheckbox = ({checked, onChange, id, render}: CircularCheckboxProps) => {
-    const theme = useTheme();
-
-    const handleClick = () => {
-        onChange(!checked);
-    };
-
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (event.keyCode === SPACE) {
-            event.preventDefault();
-            event.stopPropagation();
-            onChange(!checked);
-        }
-    };
-
-    const checkbox = (
-        <div style={{display: 'inline-flex'}}>
-            {checked ? (
-                <svg role="presentation" width={24} height={24} viewBox="0 0 24 24">
-                    <g fill="none" fillRule="evenodd" transform="translate(1 1)">
-                        <circle cx="11" cy="11" r="11" fill={theme.colors.controlActive} />
-                        <path
-                            fill="#FFF"
-                            fillRule="nonzero"
-                            d="M8.854 14.686c.303.348.843.35 1.15.005l5.387-6.086c.28-.316.25-.8-.066-1.08s-.8-.25-1.08.066l-4.799 5.445-1.688-1.94c-.277-.318-.76-.352-1.079-.074-.318.277-.352.76-.074 1.079l2.249 2.585z"
-                        />
-                    </g>
-                </svg>
-            ) : (
-                <svg role="presentation" width={24} height={24} viewBox="0 0 24 24">
-                    <circle
-                        cx="11"
-                        cy="11"
-                        r="10.5"
-                        fill="none"
-                        fillRule="evenodd"
-                        stroke="#DDD"
-                        transform="translate(1 1)"
-                    />
-                </svg>
-            )}
-        </div>
-    );
-
-    return (
-        <div
-            id={id}
-            role="checkbox"
-            aria-checked={checked}
-            onKeyDown={handleKeyDown}
-            onClick={handleClick}
-            tabIndex={0}
-        >
-            {render ? <>{render(checkbox)}</> : checkbox}
-        </div>
-    );
-};
 
 const useStyles = createUseStyles((theme) => ({
     rowContent: {
@@ -159,8 +92,11 @@ const useStyles = createUseStyles((theme) => ({
 interface CommonProps {
     headline?: string | React.ReactNode;
     title: string;
+    titleLinesMax?: 1 | 2;
     subtitle?: string;
+    subtitleLinesMax?: 1 | 2;
     description?: string | null;
+    descriptionLinesMax?: 1 | 2;
     icon?: React.ReactElement<any> | string | null;
     iconSize?: 24 | 40;
     badge?: boolean | number;
@@ -176,8 +112,11 @@ interface ContentProps extends CommonProps {
 const Content: React.FC<ContentProps> = ({
     headline,
     title,
+    titleLinesMax = 2,
     subtitle,
+    subtitleLinesMax = 2,
     description,
+    descriptionLinesMax = 2,
     icon,
     iconSize = 40,
     type = 'basic',
@@ -219,24 +158,34 @@ const Content: React.FC<ContentProps> = ({
             <div className={classes.rowBody}>
                 {headline && (
                     <Box paddingBottom={8}>
-                        <Text8 as="div" regular color={theme.colors.textSecondary}>
+                        <Text8 wordBreak as="div" regular color={theme.colors.textSecondary}>
                             {headline}
                         </Text8>
                     </Box>
                 )}
-                <Text6 light color={theme.colors.textPrimary}>
+                <Text6 wordBreak light color={theme.colors.textPrimary} truncate={titleLinesMax}>
                     {title}
                 </Text6>
                 {subtitle && (
                     <Box paddingY={2}>
-                        <Text7 regular color={theme.colors.textSecondary}>
+                        <Text7
+                            wordBreak
+                            regular
+                            color={theme.colors.textSecondary}
+                            truncate={subtitleLinesMax}
+                        >
                             {subtitle}
                         </Text7>
                     </Box>
                 )}
                 {description && (
                     <Box paddingY={isMobile ? 2 : 0}>
-                        <Text7 regular color={theme.colors.textSecondary}>
+                        <Text7
+                            wordBreak
+                            regular
+                            color={theme.colors.textSecondary}
+                            truncate={descriptionLinesMax}
+                        >
                             {description}
                         </Text7>
                     </Box>
@@ -255,6 +204,7 @@ const Content: React.FC<ContentProps> = ({
 };
 
 type ControlProps = {
+    name?: string;
     value?: boolean;
     defaultValue?: boolean;
     onChange?: (checked: boolean) => void;
@@ -382,8 +332,21 @@ const useControlState = ({
 
 const RowContent = (props: RowContentProps) => {
     const classes = useStyles();
-    const {icon, iconSize, headline, title, subtitle, description, badge, role} = props;
+    const {
+        icon,
+        iconSize,
+        headline,
+        title,
+        titleLinesMax,
+        subtitle,
+        subtitleLinesMax,
+        description,
+        descriptionLinesMax,
+        badge,
+        role,
+    } = props;
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
+    const controlName = props.switch?.name ?? props.checkbox?.name;
 
     const renderContent = (moreProps: {type: ContentProps['type']; right?: ContentProps['right']}) => (
         <Content
@@ -394,6 +357,9 @@ const RowContent = (props: RowContentProps) => {
             subtitle={subtitle}
             description={description}
             badge={badge}
+            titleLinesMax={titleLinesMax}
+            subtitleLinesMax={subtitleLinesMax}
+            descriptionLinesMax={descriptionLinesMax}
             {...moreProps}
         />
     );
@@ -460,6 +426,7 @@ const RowContent = (props: RowContentProps) => {
     const renderRowWithControl = (Control: React.FC<any>) => (
         <div className={classes.rowContent}>
             <Control
+                name={controlName}
                 checked={isChecked}
                 onChange={toggle}
                 render={(control: React.ReactElement) => (
@@ -479,7 +446,7 @@ const RowContent = (props: RowContentProps) => {
     }
 
     if (props.checkbox) {
-        return renderRowWithControl(CircularCheckbox);
+        return renderRowWithControl(Checkbox);
     }
 
     if (props.radioValue) {

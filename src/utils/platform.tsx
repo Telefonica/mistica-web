@@ -2,14 +2,14 @@ import {isWebViewBridgeAvailable} from '@tef-novum/webview-bridge';
 
 import type {Theme} from '../theme';
 
-const getUserAgent = (platformOverrides: Theme['platformOverrides']): string => {
+const getUserAgent = (platformOverrides: Theme['platformOverrides'] = {}): string => {
     if (typeof self === 'undefined') {
         return platformOverrides.userAgent ?? '';
     }
     return self.navigator?.userAgent ?? '';
 };
 
-export const isInsideNovumNativeApp = (platformOverrides: Theme['platformOverrides']): boolean => {
+export const isInsideNovumNativeApp = (platformOverrides: Theme['platformOverrides'] = {}): boolean => {
     if (typeof platformOverrides.insideNovumNativeApp !== 'undefined') {
         return platformOverrides.insideNovumNativeApp;
     }
@@ -38,6 +38,9 @@ export const isIos = (platformOverrides: Theme['platformOverrides']): boolean =>
 
     return false;
 };
+
+export const isFirefox = (platformOverrides?: Theme['platformOverrides']): boolean =>
+    !!getUserAgent(platformOverrides).match(/Firefox\/([0-9]+)\./);
 
 export const isChrome = (platformOverrides: Theme['platformOverrides']): boolean =>
     !!getUserAgent(platformOverrides).match(/Chrom(e|ium)\/([0-9]+)\./);
@@ -70,7 +73,7 @@ export const getIosVersion = (platformOverrides: Theme['platformOverrides']): st
     return [major, minor, patch].join('.');
 };
 
-export const getPlatform = (platformOverrides: Theme['platformOverrides']): 'ios' | 'android' => {
+export const getPlatform = (platformOverrides: Theme['platformOverrides'] = {}): 'ios' | 'android' => {
     const overridenPlatform = platformOverrides.platform;
     if (overridenPlatform) {
         return overridenPlatform;

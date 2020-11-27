@@ -6,7 +6,7 @@ const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('PromoTag in %s', async (device) => {
     await openStoryPage({
-        section: 'Components|Others/PromoTag',
+        section: 'Components/Others/PromoTag',
         name: 'PromoTag',
         device,
     });

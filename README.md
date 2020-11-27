@@ -14,7 +14,7 @@ React components library for Telefonica Design System ([Mistica](https://github.
    packages from the npm `@telefonica` organization:
 
 ```
-//registry.npmjs.org/:_authToken=864bbe83-5a77-4d21-a87f-f56375f06845
+//registry.npmjs.org/:_authToken=1629486b-6c8c-47cc-b32d-4a6d586e828f
 ```
 
 2. Install:
@@ -36,8 +36,8 @@ import {
   Form,
   Box,
   Stack,
-  FormTextField,
-  FormEmailField,
+  TextField,
+  EmailField,
   ButtonLayout,
   ButtonPrimary,
   alert,
@@ -54,8 +54,8 @@ const App = () => (
   >
     <Box padding={16}>
       <Stack space={16}>
-        <FormTextField name="name" label="Name" />
-        <FormEmailField name="email" label="e-mail" />
+        <TextField name="name" label="Name" />
+        <EmailField name="email" label="e-mail" />
         <ButtonLayout>
           <ButtonPrimary submit>Send</ButtonPrimary>
         </ButtonLayout>

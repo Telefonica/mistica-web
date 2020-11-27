@@ -4,8 +4,9 @@ import classnames from 'classnames';
 
 const useStyles = createUseStyles(() => ({
     inline: {
-        display: 'flex',
+        display: (p) => (p.fullWidth ? 'flex' : 'inline-flex'),
         flexDirection: 'row',
+        alignItems: ({alignItems}) => alignItems,
 
         '& > div:not(:empty) ~ div:not(:empty)': {
             marginLeft: (p) => p.space,
@@ -14,23 +15,28 @@ const useStyles = createUseStyles(() => ({
 }));
 
 type Props = {
-    space: 0 | 8 | 16 | 24 | 32 | 40 | 48 | 56 | 64;
+    space: 0 | 2 | 4 | 8 | 12 | 16 | 24 | 32 | 40 | 48 | 56 | 64;
+    alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
     children: React.ReactNode;
     className?: string;
     role?: string;
     'aria-labelledby'?: string;
+    fullWidth?: boolean;
 };
 
-const Inline: React.FC<Props> = (props) => {
-    const {space, className, children, role} = props;
-    const classes = useStyles({space});
+const Inline: React.FC<Props> = ({
+    space,
+    className,
+    children,
+    role,
+    alignItems = 'stretch',
+    'aria-labelledby': ariaLabelledBy,
+    fullWidth,
+}) => {
+    const classes = useStyles({space, alignItems, fullWidth});
 
     return (
-        <div
-            className={classnames(className, classes.inline)}
-            role={role}
-            aria-labelledby={props['aria-labelledby']}
-        >
+        <div className={classnames(className, classes.inline)} role={role} aria-labelledby={ariaLabelledBy}>
             {React.Children.map(children, (child) => (
                 <div>{child}</div>
             ))}

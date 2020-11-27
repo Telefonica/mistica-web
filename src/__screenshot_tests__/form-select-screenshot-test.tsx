@@ -11,8 +11,8 @@ test.each(devices)(
     'Select elements on the initial state appear properly on %s',
     async (device, userAgent) => {
         const page = await openStoryPage({
-            section: 'Components|Forms/FormSelect',
-            name: 'FormSelect',
+            section: 'Components/Forms/Select',
+            name: 'Select',
             device,
             userAgent,
         });
@@ -24,8 +24,8 @@ test.each(devices)(
 
 test.each(devices)('Select elements on a selected state appear properly on %s', async (device, userAgent) => {
     const page = await openStoryPage({
-        section: 'Components|Forms/FormSelect',
-        name: 'FormSelect',
+        section: 'Components/Forms/Select',
+        name: 'Select',
         device,
         userAgent,
     });

@@ -1,0 +1,13 @@
+// @flow
+
+import * as React from "react";
+declare type RenderSwitch = (switchElement: React.Element<any>) => React.Node;
+declare type Props = {
+  name: string,
+  render?: RenderSwitch,
+  defaultChecked?: boolean,
+  checked?: boolean,
+  onChange?: (value: boolean) => void,
+};
+declare var Switch: React.ComponentType<Props>;
+declare export default typeof Switch;

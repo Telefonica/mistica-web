@@ -1,0 +1,11 @@
+// @flow
+
+import * as React from "react";
+import type { CommonFormFieldProps } from "./text-field-base";
+export type IntegerFieldProps = {
+  ...$Exact<CommonFormFieldProps>,
+
+  onChangeValue?: (value: string, rawValue: string) => void,
+};
+declare var IntegerField: React.ComponentType<IntegerFieldProps>;
+declare export default typeof IntegerField;

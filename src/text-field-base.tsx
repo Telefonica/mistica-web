@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {Label, HelperText, FieldContainer} from './text-field-components';
-import {isIos, isRunningAcceptanceTest, isChrome} from './utils/platform';
+import {isIos, isRunningAcceptanceTest, isChrome, isFirefox} from './utils/platform';
 import {useAriaId, useTheme} from './hooks';
 import classNames from 'classnames';
+import {combineRefs} from './utils/common';
 
 import type {Theme} from './theme';
 import type {InputState} from './text-field-components';
@@ -16,10 +17,18 @@ import type {FieldValidator} from './form-context';
 export type AutoComplete =
     | 'on'
     | 'off'
-    | 'name'
+    | 'name' // full name
+    | 'given-name' // first name
+    | 'additional-name' // middle name
+    | 'family-name' // last name
     | 'email'
     | 'tel'
     | 'street-address'
+    | 'address-line1' // for two address inputs
+    | 'address-line2' // for two address inputs
+    | 'address-level1' // state or province
+    | 'address-level2' // city
+    | 'country'
     | 'postal-code'
     | 'transaction-amount'
     | 'new-password'
@@ -76,6 +85,7 @@ interface TextFieldBaseProps {
     prefix?: React.ReactNode;
     startIcon?: React.ReactNode;
     endIcon?: React.ReactNode;
+    endIconOverlay?: React.ReactNode;
     style?: React.CSSProperties;
     value?: string;
     inputRef?: React.Ref<HTMLInputElement | HTMLSelectElement>;
@@ -137,9 +147,6 @@ const commonInputStyles = (theme: Theme) => ({
     '&:disabled': {
         color: theme.colors.border,
     },
-    '&::-webkit-calendar-picker-indicator': {
-        marginTop: ({label}: {label: string}) => (label ? -12 : 'initial'),
-    },
     boxShadow: 'none', // reset FF red shadow styles for required inputs
 });
 
@@ -163,6 +170,7 @@ const useStyles = createUseStyles((theme) => ({
         ...commonInputStyles(theme),
     },
     input: {
+        position: 'relative',
         paddingTop: ({label}) => (label ? 24 : 16),
         paddingBottom: ({label}) => (label ? 8 : 16),
         height: '100%',
@@ -174,6 +182,30 @@ const useStyles = createUseStyles((theme) => ({
         '&::-webkit-search-decoration': {
             WebkitAppearance: 'none',
         },
+
+        // Chrome: make the native icon invisible and stretch it over the whole field so you can click
+        // anywhere in the input field to trigger the native datepicker
+        '&::-webkit-calendar-picker-indicator': {
+            position: 'absolute',
+            top: 0,
+            left: -24, // to fully cover input area
+            right: 0,
+            bottom: 0,
+            width: 'auto',
+            height: 'auto',
+            opacity: 0,
+            color: 'transparent',
+            background: 'transparent',
+        },
+
+        // Chrome: hide value if not valid or focused
+        '&[type="date"]:not(:valid):not(:focus)::-webkit-datetime-edit': {color: 'transparent'},
+        '&[type="datetime-local"]:not(:valid):not(:focus)::-webkit-datetime-edit': {color: 'transparent'},
+
+        // Firefox: hide value if not valid or focused
+        // Only apply when Firefox, otherwise it breaks styles in safari mobile
+        '&[type="date"]:not(:valid):not(:focus)': isFirefox() ? {color: 'transparent'} : {},
+        '&[type="datetime-local"]:not(:valid):not(:focus)': isFirefox() ? {color: 'transparent'} : {},
     },
     endIcon: {
         paddingLeft: 16,
@@ -207,17 +239,6 @@ const useStyles = createUseStyles((theme) => ({
 const fixAutoComplete = (platformOverrides: Theme['platformOverrides'], autoComplete?: AutoComplete) =>
     autoComplete === 'off' && isChrome(platformOverrides) ? 'nope' : autoComplete;
 
-const updateRef = (ref: React.Ref<any> | undefined, refValue: any) => {
-    if (ref) {
-        if (typeof ref === 'function') {
-            ref(refValue);
-        } else {
-            // @ts-expect-error - current is typed as read-only
-            ref.current = refValue;
-        }
-    }
-};
-
 const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
     (
         {
@@ -234,7 +255,8 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             prefix,
             startIcon,
             endIcon,
-            shrinkLabel,
+            endIconOverlay,
+            shrinkLabel: shrinkLabelProp,
             multiline = false,
             focus,
             fieldRef,
@@ -255,6 +277,11 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const label = rest.required
             ? labelProp
             : `${labelProp || ''} (${texts.formFieldOptionalLabelSuffix})`;
+
+        // this shrinkLabel override is a workaround because I was unable to find a way to hide date
+        // and date-time native placeholders when the input is not required
+        const shrinkLabel =
+            shrinkLabelProp || ((rest.type === 'date' || rest.type === 'datetime-local') && !rest.required);
 
         const classes = useStyles({
             inputState,
@@ -297,10 +324,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const inputRefProps = inputComponent
             ? {inputRef}
             : {
-                  ref: (refValue: HTMLInputElement) => {
-                      updateRef(ref, refValue);
-                      updateRef(inputRef, refValue);
-                  },
+                  ref: combineRefs(ref, inputRef),
               };
 
         const props = {
@@ -369,6 +393,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                     </Label>
                 )}
                 {endIcon && <div className={classes.endIcon}>{endIcon}</div>}
+                {endIconOverlay}
             </FieldContainer>
         );
     }
@@ -445,11 +470,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(({getSuggestions
                 renderInputComponent={(inputProps) => (
                     <TextFieldBaseComponent
                         {...(inputProps as TextFieldBaseProps)}
-                        inputRef={(refValue) => {
-                            updateRef(inputRef, refValue);
-                            updateRef(props.inputRef, refValue);
-                            updateRef(ref, refValue);
-                        }}
+                        inputRef={combineRefs(inputRef, props.inputRef, ref)}
                     />
                 )}
                 suggestions={suggestions}

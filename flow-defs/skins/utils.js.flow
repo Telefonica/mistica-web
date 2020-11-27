@@ -1,0 +1,7 @@
+// @flow
+
+import type { Skin, SkinName } from "./types";
+declare export var getSkinByName: (
+  name: SkinName,
+  variant?: "prominent" | void
+) => Skin;

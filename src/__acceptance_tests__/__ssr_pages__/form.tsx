@@ -3,29 +3,29 @@ import {
     Form,
     Box,
     Stack,
-    FormTextField,
-    FormEmailField,
+    TextField,
+    EmailField,
     ButtonLayout,
     ButtonPrimary,
-    FormPhoneNumberField,
-    FormCreditCardFields,
-    FormDateField,
-    FormDecimalField,
-    FormIntegerField,
-    FormPasswordField,
-    FormCreditCardExpirationField,
-    FormCvvField,
-    FormSearchField,
-    FormSelect,
+    PhoneNumberField,
+    CreditCardFields,
+    DateField,
+    DecimalField,
+    IntegerField,
+    PasswordField,
+    CreditCardExpirationField,
+    CvvField,
+    SearchField,
+    Select,
 } from '../..';
 
 const FormTest: React.FC = () => (
     <Form onSubmit={() => {}}>
         <Box padding={16}>
             <Stack space={16}>
-                <FormTextField name="name" label="Name" />
-                <FormEmailField name="email" label="e-mail" />
-                <FormSelect
+                <TextField name="name" label="Name" />
+                <EmailField name="email" label="e-mail" />
+                <Select
                     name="fruits"
                     label="Choose a fruit"
                     options={[
@@ -33,15 +33,15 @@ const FormTest: React.FC = () => (
                         {value: 'banana', text: 'Banana'},
                     ]}
                 />
-                <FormPhoneNumberField name="phone" label="Phone" />
-                <FormCreditCardFields />
-                <FormDateField name="date" label="Date" />
-                <FormDecimalField name="decimal" label="Decimal" />
-                <FormIntegerField name="integer" label="Integer" />
-                <FormPasswordField name="password" label="Password" />
-                <FormCreditCardExpirationField name="expiration-date" label="Expiration date" />
-                <FormCvvField name="cvv" label="CVV" />
-                <FormSearchField name="search" label="Search" />
+                <PhoneNumberField name="phone" label="Phone" />
+                <CreditCardFields />
+                <DateField name="date" label="Date" />
+                <DecimalField name="decimal" label="Decimal" />
+                <IntegerField name="integer" label="Integer" />
+                <PasswordField name="password" label="Password" />
+                <CreditCardExpirationField name="expiration-date" label="Expiration date" />
+                <CvvField name="cvv" label="CVV" />
+                <SearchField name="search" label="Search" />
                 <ButtonLayout>
                     <ButtonPrimary submit>Send</ButtonPrimary>
                 </ButtonLayout>

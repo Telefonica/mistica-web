@@ -1,16 +1,19 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {useTheme, usePrevious} from './hooks';
+import {useTheme} from './hooks';
 import {getPlatform} from './utils/platform';
 import {SPACE, LEFT, UP, DOWN, RIGHT} from './utils/key-codes';
+import {useControlProps} from './form-context';
+import {combineRefs} from './utils/common';
 
-const useStyles = createUseStyles((theme) => ({
+const useRadioButtonStyles = createUseStyles((theme) => ({
     outerCircle: {
         borderRadius: '50%',
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: ({checked, isIos}) => (checked && isIos ? theme.colors.controlActive : '#fff'),
+        background: ({checked, isIos}) =>
+            checked && isIos ? theme.colors.controlActive : theme.colors.background,
         border: ({checked, isIos}) =>
             checked
                 ? isIos
@@ -24,7 +27,11 @@ const useStyles = createUseStyles((theme) => ({
         borderRadius: '50%',
         width: 12,
         height: 12,
-        background: ({checked, isIos}) => (checked && !isIos ? theme.colors.controlActive : '#fff'),
+        background: ({checked, isIos}) =>
+            checked && !isIos ? theme.colors.controlActive : theme.colors.background,
+    },
+    radioButton: {
+        cursor: 'default',
     },
 }));
 
@@ -55,18 +62,9 @@ const RadioButton: React.FC<Props> = ({value, id, render}) => {
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
     const isFocusable = focusableValue === value;
-    const wasFocusable = usePrevious(isFocusable);
     const theme = useTheme();
     const isIos = getPlatform(theme.platformOverrides) === 'ios';
-    const classes = useStyles({checked, isIos});
-
-    React.useEffect(() => {
-        if (isFocusable && !wasFocusable) {
-            if (ref.current) {
-                ref.current.focus();
-            }
-        }
-    }, [isFocusable, wasFocusable]);
+    const classes = useRadioButtonStyles({checked, isIos});
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         switch (event.keyCode) {
@@ -108,6 +106,7 @@ const RadioButton: React.FC<Props> = ({value, id, render}) => {
             aria-checked={checked}
             onClick={() => select(value)}
             onKeyDown={handleKeyDown}
+            className={classes.radioButton}
         >
             {render ? <>{render(radio)}</> : radio}
         </span>
@@ -115,6 +114,7 @@ const RadioButton: React.FC<Props> = ({value, id, render}) => {
 };
 
 type RadioGroupProps = {
+    name: string;
     'aria-labelledby'?: string;
     children: React.ReactNode;
     value?: string;
@@ -123,9 +123,14 @@ type RadioGroupProps = {
 };
 
 export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
-    const {children, value, defaultValue, onChange} = props;
+    const {value, defaultValue, onChange, focusableRef} = useControlProps({
+        name: props.name,
+        value: props.value,
+        defaultValue: props.defaultValue,
+        onChange: props.onChange,
+    });
     const [selectedValue, select] = React.useState<string | null>(() => value ?? defaultValue ?? null);
-    const [fistRadioValue, setFirstRadioValue] = React.useState<string | null>(null);
+    const [firstRadioValue, setFirstRadioValue] = React.useState<string | null>(null);
     const ref = React.useRef<HTMLDivElement>(null);
 
     const handleSelect = (newValue: string) => {
@@ -149,6 +154,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
             const nextRadio = allRadios[nextIndex];
             const value = nextRadio.dataset.value;
             if (value) {
+                nextRadio.focus();
                 handleSelect(value);
             }
         }
@@ -164,10 +170,11 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
                 return;
             }
             const index = checkedRadio ? allRadios.indexOf(checkedRadio) : 0;
-            const prevIndex = (index - 1) % allRadios.length;
+            const prevIndex = (allRadios.length + index - 1) % allRadios.length;
             const prevRadio = allRadios[prevIndex];
             const value = prevRadio.dataset.value;
             if (value) {
+                prevRadio.focus();
                 handleSelect(value);
             }
         }
@@ -182,14 +189,18 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
         }
     }, []);
 
-    const focusableValue = selectedValue ?? fistRadioValue ?? null;
+    const focusableValue = selectedValue ?? firstRadioValue ?? null;
 
     return (
-        <div ref={ref} role="radiogroup" aria-labelledby={props['aria-labelledby']}>
+        <div
+            ref={combineRefs(ref, focusableRef)}
+            role="radiogroup"
+            aria-labelledby={props['aria-labelledby']}
+        >
             <RadioContext.Provider
                 value={{selectedValue, focusableValue, select: handleSelect, selectNext, selectPrev}}
             >
-                {children}
+                {props.children}
             </RadioContext.Provider>
         </div>
     );

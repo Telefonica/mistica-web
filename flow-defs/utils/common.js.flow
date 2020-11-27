@@ -1,0 +1,6 @@
+// @flow
+
+import * as React from "react";
+declare export var combineRefs: <T>(
+  ...refs: Array<React.Ref<T> | null | void>
+) => (refValue: T | null) => void;

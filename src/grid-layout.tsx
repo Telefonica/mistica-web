@@ -5,20 +5,20 @@ const useStyles = createUseStyles((theme) => ({
     grid: {
         display: 'grid',
         [theme.mq.largeDesktop]: {
-            gridGap: 24,
+            gridColumnGap: 24,
             gridTemplateColumns: 'repeat(12, 1fr)',
         },
         [theme.mq.desktop]: {
             gridTemplateColumns: 'repeat(12, 1fr)',
-            gridGap: 16,
+            gridColumnGap: 16,
         },
         [theme.mq.tablet]: {
             gridTemplateColumns: 'minmax(0, 1fr)',
-            gridGap: 16,
+            gridColumnGap: 16,
         },
         [theme.mq.mobile]: {
             gridTemplateColumns: 'minmax(0, 1fr)',
-            gridGap: 16,
+            gridColumnGap: 16,
         },
     },
 }));

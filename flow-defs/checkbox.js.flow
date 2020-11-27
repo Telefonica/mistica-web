@@ -1,0 +1,13 @@
+// @flow
+
+import * as React from "react";
+declare type Props = {
+  name: string,
+  render?: (checkboxElement: React.Element<any>) => React.Element<any>,
+  defaultChecked?: boolean,
+  checked?: boolean,
+  onChange?: (value: boolean) => void,
+  id?: string,
+};
+declare var Checkbox: React.ComponentType<Props>;
+declare export default typeof Checkbox;

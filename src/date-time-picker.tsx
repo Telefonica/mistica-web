@@ -14,7 +14,7 @@ import {useElementDimensions} from './hooks';
 
 /**
  * Do not use this component!
- * Use FormDateField or FormDateTimeField
+ * Use DateField or FormDateTimeField
  *
  * This component is a fallback for browsers that don't support datetime-local or date inputs
  */
@@ -30,6 +30,7 @@ export interface DateTimePickerProps extends CommonFormFieldProps {
 // styles from "react-datetime/css/react-datetime.css" converted to JSS "as is"
 const useStyles = createUseStyles(() => ({
     reactDatePicker: {
+        '& td, & th': {verticalAlign: 'middle'},
         '& .rdt': {position: 'relative', userSelect: 'none'},
         '& .rdtPicker': {
             display: 'none',
@@ -155,8 +156,9 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, ...rest}) => {
 
     const setValue = (moment: string | Moment.Moment) => {
         const value =
-            typeof moment === 'string' ? moment : moment.format(withTime ? 'yyyy-MM-DD hh:mm' : 'yyyy-MM-DD');
+            typeof moment === 'string' ? moment : moment.format(withTime ? 'yyyy-MM-DD HH:mm' : 'yyyy-MM-DD');
         if (fieldRef.current) {
+            fieldRef.current.focus();
             rest.onChange?.(createChangeEvent(fieldRef.current, value));
         }
     };
@@ -197,7 +199,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, ...rest}) => {
                     >
                         <Datetime
                             initialValue={getValue()}
-                            timeFormat={withTime ? undefined : false}
+                            timeFormat={withTime ? 'HH:mm' : false}
                             locale={browserLocale}
                             input={false}
                             onChange={setValue}

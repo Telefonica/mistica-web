@@ -7,7 +7,7 @@ import {Placeholder} from '../placeholder';
 const texts = ['Tab 1', 'Tab 2', 'Tab 3'];
 
 export default {
-    title: 'Components|Controls/Tabs',
+    title: 'Components/Controls/Tabs',
     component: Tabs,
 };
 

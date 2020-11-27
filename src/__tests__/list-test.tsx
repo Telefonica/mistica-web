@@ -1,13 +1,17 @@
 import * as React from 'react';
 import {RowList, Row} from '../list';
 import {RadioGroup} from '../radio-button';
-import {screen, fireEvent, render} from '@testing-library/react';
+import {screen, fireEvent, render, waitFor} from '@testing-library/react';
+import {ButtonPrimary, Form, ThemeContextProvider} from '..';
+import {makeTheme} from './test-utils';
 
 test('Row which navigates', () => {
     render(
-        <RowList>
-            <Row title="Title" href="/some/url" />
-        </RowList>
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" href="/some/url" />
+            </RowList>
+        </ThemeContextProvider>
     );
 
     const anchor = screen.getByRole('link');
@@ -19,9 +23,11 @@ test('Row which navigates', () => {
 test('Row as a button', () => {
     const spy = jest.fn();
     render(
-        <RowList>
-            <Row title="Title" onPress={spy} />
-        </RowList>
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" onPress={spy} />
+            </RowList>
+        </ThemeContextProvider>
     );
 
     const button = screen.getByRole('button', {name: 'Title'});
@@ -32,12 +38,14 @@ test('Row as a button', () => {
 
 test('Row with switch', () => {
     render(
-        <RowList>
-            <Row title="Title" switch={{defaultValue: false}} />
-        </RowList>
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" switch={{defaultValue: false}} />
+            </RowList>
+        </ThemeContextProvider>
     );
 
-    const switchEl = screen.getByRole('checkbox', {name: 'Title'});
+    const switchEl = screen.getByRole('switch', {name: 'Title'});
 
     expect(switchEl).not.toBeChecked();
 
@@ -48,9 +56,11 @@ test('Row with switch', () => {
 
 test('Row with checkbox', () => {
     render(
-        <RowList>
-            <Row title="Title" checkbox={{defaultValue: false}} />
-        </RowList>
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" checkbox={{defaultValue: false}} />
+            </RowList>
+        </ThemeContextProvider>
     );
 
     const checkboxEl = screen.getByRole('checkbox', {name: 'Title'});
@@ -64,9 +74,11 @@ test('Row with checkbox', () => {
 
 test('Row with custom right element', () => {
     render(
-        <RowList>
-            <Row title="Title" right={<div>custom</div>} />
-        </RowList>
+        <ThemeContextProvider theme={makeTheme()}>
+            <RowList>
+                <Row title="Title" right={<div>custom</div>} />
+            </RowList>
+        </ThemeContextProvider>
     );
 
     expect(screen.getByText('custom')).toBeInTheDocument();
@@ -74,12 +86,14 @@ test('Row with custom right element', () => {
 
 test('Row list with radio buttons', () => {
     render(
-        <RadioGroup>
-            <RowList>
-                <Row title="Banana" radioValue="banana" />
-                <Row title="Apple" radioValue="apple" />
-            </RowList>
-        </RadioGroup>
+        <ThemeContextProvider theme={makeTheme()}>
+            <RadioGroup name="radio-group">
+                <RowList>
+                    <Row title="Banana" radioValue="banana" />
+                    <Row title="Apple" radioValue="apple" />
+                </RowList>
+            </RadioGroup>
+        </ThemeContextProvider>
     );
 
     const radioBanana = screen.getByRole('radio', {name: 'Banana'});
@@ -97,4 +111,42 @@ test('Row list with radio buttons', () => {
 
     expect(radioBanana).not.toBeChecked();
     expect(radioApple).toBeChecked();
+});
+
+test('RowList inside Form', async () => {
+    const submitSpy = jest.fn();
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onSubmit={submitSpy}>
+                <RadioGroup name="radio">
+                    <RowList>
+                        <Row title="Checkbox 1" checkbox={{name: 'checkbox1'}} />
+                        <Row title="Checkbox 2" checkbox={{name: 'checkbox2'}} />
+                        <Row title="Switch 1" switch={{name: 'switch1'}} />
+                        <Row title="Switch 2" switch={{name: 'switch2'}} />
+                        <Row title="Banana" radioValue="banana" />
+                        <Row title="Apple" radioValue="apple" />
+                    </RowList>
+                </RadioGroup>
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    fireEvent.click(screen.getByRole('radio', {name: 'Banana'}));
+    fireEvent.click(screen.getByRole('checkbox', {name: 'Checkbox 1'}));
+    fireEvent.click(screen.getByRole('switch', {name: 'Switch 1'}));
+
+    fireEvent.click(screen.getByRole('button', {name: 'Submit'}));
+
+    await waitFor(() => {
+        expect(submitSpy).toHaveBeenCalled();
+        expect(submitSpy.mock.calls[0][0]).toEqual({
+            checkbox1: true,
+            checkbox2: false,
+            switch1: true,
+            switch2: false,
+            radio: 'banana',
+        });
+    });
 });

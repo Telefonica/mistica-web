@@ -1,0 +1,20 @@
+// @flow
+
+import * as React from "react";
+import type { CommonFormFieldProps } from "./text-field-base";
+declare type ExpirationDateValue = {
+  month: number | null,
+  year: number | null,
+  raw: string,
+};
+export type CreditCardExpirationFieldProps = {
+  ...$Exact<CommonFormFieldProps>,
+
+  validate?: (
+    value: ExpirationDateValue | void,
+    rawValue: string
+  ) => string | void,
+  onChangeValue?: (value: ExpirationDateValue) => void,
+};
+declare var CreditCardExpirationField: React.ComponentType<CreditCardExpirationFieldProps>;
+declare export default typeof CreditCardExpirationField;

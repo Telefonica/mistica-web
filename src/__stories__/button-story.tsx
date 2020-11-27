@@ -2,18 +2,19 @@ import * as React from 'react';
 import {StorySection, useCheckbox} from './helpers';
 import {
     Box,
+    Inline,
     ButtonDanger,
     ButtonLink,
     ButtonPrimary,
     ButtonSecondary,
-    FormTextField,
+    TextField,
     Stack,
     ThemeVariant,
     useTheme,
 } from '..';
 
 export default {
-    title: 'Components|Touchables/Button',
+    title: 'Components/Touchables/Button',
 };
 
 const IcnCamera = () => (
@@ -40,12 +41,12 @@ const BackgroundTheme: StoryComponent = ({children}) => {
     return (
         <ThemeVariant isInverse={isInverseVariantState}>
             <>
-                <p style={{margin: 0, paddingLeft: 8, marginBottom: 16}}>
+                <p style={{margin: 0, marginBottom: 16}}>
                     <input
                         type="checkbox"
                         checked={isInverseVariantState}
                         onChange={({target}) => setIsInverseVariantState(target.checked)}
-                    />
+                    />{' '}
                     Inverse variant
                 </p>
                 <div
@@ -167,53 +168,71 @@ export const LoadingState: StoryComponent = () => {
                 isLoading
             </label>
             <StorySection title="With loading text">
-                <ButtonPrimary loadingText="Sending file" showSpinner={isLoading} onPress={handlePress}>
-                    Send
-                </ButtonPrimary>
-                <ButtonSecondary loadingText="Sending file" showSpinner={isLoading} onPress={handlePress}>
-                    Send
-                </ButtonSecondary>
-                <ButtonDanger loadingText="Sending file" showSpinner={isLoading} onPress={handlePress}>
-                    Send
-                </ButtonDanger>
+                <Inline space={16}>
+                    <ButtonPrimary loadingText="Sending file" showSpinner={isLoading} onPress={handlePress}>
+                        Send
+                    </ButtonPrimary>
+                    <ButtonSecondary loadingText="Sending file" showSpinner={isLoading} onPress={handlePress}>
+                        Send
+                    </ButtonSecondary>
+                    <ButtonDanger loadingText="Sending file" showSpinner={isLoading} onPress={handlePress}>
+                        Send
+                    </ButtonDanger>
+                </Inline>
             </StorySection>
             <StorySection title="Without loading text">
-                <ButtonPrimary showSpinner={isLoading} onPress={handlePress}>
-                    Send
-                </ButtonPrimary>
-                <ButtonSecondary showSpinner={isLoading} onPress={handlePress}>
-                    Send
-                </ButtonSecondary>
-                <ButtonDanger showSpinner={isLoading} onPress={handlePress}>
-                    Send
-                </ButtonDanger>
+                <Inline space={16}>
+                    <ButtonPrimary showSpinner={isLoading} onPress={handlePress}>
+                        Send
+                    </ButtonPrimary>
+                    <ButtonSecondary showSpinner={isLoading} onPress={handlePress}>
+                        Send
+                    </ButtonSecondary>
+                    <ButtonDanger showSpinner={isLoading} onPress={handlePress}>
+                        Send
+                    </ButtonDanger>
+                </Inline>
             </StorySection>
             <StorySection title="Small with loading text">
-                <ButtonPrimary small loadingText="Sending file" showSpinner={isLoading} onPress={handlePress}>
-                    Send
-                </ButtonPrimary>
-                <ButtonSecondary
-                    small
-                    loadingText="Sending file"
-                    showSpinner={isLoading}
-                    onPress={handlePress}
-                >
-                    Send
-                </ButtonSecondary>
-                <ButtonDanger small loadingText="Sending file" showSpinner={isLoading} onPress={handlePress}>
-                    Send
-                </ButtonDanger>
+                <Inline space={16}>
+                    <ButtonPrimary
+                        small
+                        loadingText="Sending file"
+                        showSpinner={isLoading}
+                        onPress={handlePress}
+                    >
+                        Send
+                    </ButtonPrimary>
+                    <ButtonSecondary
+                        small
+                        loadingText="Sending file"
+                        showSpinner={isLoading}
+                        onPress={handlePress}
+                    >
+                        Send
+                    </ButtonSecondary>
+                    <ButtonDanger
+                        small
+                        loadingText="Sending file"
+                        showSpinner={isLoading}
+                        onPress={handlePress}
+                    >
+                        Send
+                    </ButtonDanger>
+                </Inline>
             </StorySection>
             <StorySection title="Small without loading text">
-                <ButtonPrimary small showSpinner={isLoading} onPress={handlePress}>
-                    Send
-                </ButtonPrimary>
-                <ButtonSecondary small showSpinner={isLoading} onPress={handlePress}>
-                    Send
-                </ButtonSecondary>
-                <ButtonDanger small showSpinner={isLoading} onPress={handlePress}>
-                    Send
-                </ButtonDanger>
+                <Inline space={16}>
+                    <ButtonPrimary small showSpinner={isLoading} onPress={handlePress}>
+                        Send
+                    </ButtonPrimary>
+                    <ButtonSecondary small showSpinner={isLoading} onPress={handlePress}>
+                        Send
+                    </ButtonSecondary>
+                    <ButtonDanger small showSpinner={isLoading} onPress={handlePress}>
+                        Send
+                    </ButtonDanger>
+                </Inline>
             </StorySection>
         </BackgroundTheme>
     );
@@ -228,7 +247,7 @@ export const SubmitButton: StoryComponent = () => (
         <form onSubmit={() => window.alert('form submitted')}>
             <Box paddingY={16}>
                 <Stack space={16}>
-                    <FormTextField name="name" label="name" />
+                    <TextField name="name" label="name" />
                     <ButtonPrimary submit>Submit</ButtonPrimary>
                 </Stack>
             </Box>

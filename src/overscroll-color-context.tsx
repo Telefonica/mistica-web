@@ -6,7 +6,7 @@ import {isInsideNovumNativeApp, getPlatform} from './utils/platform';
 
 const {Provider, Getter, useSetValue} = createNestableContext('');
 
-const shouldRender = getPlatform({}) === 'ios';
+const shouldRender = getPlatform() === 'ios';
 
 type ProviderProps = {children: React.ReactNode};
 

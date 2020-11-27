@@ -89,6 +89,7 @@ export interface PropsOnPress extends CommonProps {
     onPress: PressHandler;
     href?: undefined;
     to?: undefined;
+    formId?: string;
 }
 export interface PropsTo extends CommonProps {
     to: string | Location;
@@ -117,6 +118,7 @@ export interface PropsMaybeOnPress extends CommonProps {
     onPress?: PressHandler;
     href?: undefined;
     to?: undefined;
+    formId?: string;
 }
 
 type Props = PropsHref | PropsTo | PropsOnPress | PropsMaybeHref | PropsMaybeTo | PropsMaybeOnPress;
@@ -252,6 +254,11 @@ const Touchable: React.FC<Props> = (props) => {
         return (
             <button
                 {...commonProps}
+                // this "form" attribute is useful when the form's submit button
+                // is located outside the <form> element, for example if you use
+                // a ButtonFixedFooter layout inside a form with the submit
+                // button located at the footer, which is redered using a Portal
+                form={type === 'submit' ? props.formId : undefined}
                 aria-label={props.label}
                 type={type}
                 ref={props.elementRef as React.RefObject<HTMLButtonElement>}

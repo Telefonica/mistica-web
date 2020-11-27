@@ -2,16 +2,16 @@ import * as React from 'react';
 import {StorySection, fruitEntries} from './helpers';
 import {
     DoubleField,
-    FormCreditCardExpirationField,
-    FormCreditCardNumberField,
-    FormCvvField,
-    FormSelect,
-    FormTextField,
+    CreditCardExpirationField,
+    CreditCardNumberField,
+    CvvField,
+    Select,
+    TextField,
     Stack,
 } from '..';
 
 export default {
-    title: 'Components|Forms/DoubleField',
+    title: 'Components/Forms/DoubleField',
     component: DoubleField,
 };
 export const Default: StoryComponent = () => {
@@ -20,18 +20,18 @@ export const Default: StoryComponent = () => {
         <>
             <StorySection title="Credit Card Form">
                 <Stack space={16}>
-                    <FormCreditCardNumberField name="credit-card-number" label="Credit Card Number" />
+                    <CreditCardNumberField name="credit-card-number" label="Credit Card Number" />
                     <DoubleField>
-                        <FormCreditCardExpirationField name="credit-card-expiration" label="Expiration" />
-                        <FormCvvField name="credit-card-cvv" label="CVV" />
+                        <CreditCardExpirationField name="credit-card-expiration" label="Expiration" />
+                        <CvvField name="credit-card-cvv" label="CVV" />
                     </DoubleField>
                 </Stack>
             </StorySection>
 
             <StorySection title="Compositions">
                 <Stack space={16}>
-                    <FormTextField name="text" label="Label" />
-                    <FormSelect
+                    <TextField name="text" label="Label" />
+                    <Select
                         name="fruit1"
                         helperText="Helper text"
                         label="Select fruit"
@@ -40,8 +40,8 @@ export const Default: StoryComponent = () => {
                         options={fruitEntries.map(([text, value]) => ({text, value}))}
                     />
                     <DoubleField>
-                        <FormTextField name="text1" label="Label" />
-                        <FormSelect
+                        <TextField name="text1" label="Label" />
+                        <Select
                             name="fruit2"
                             label="Select fruit"
                             value={selectValue}
@@ -49,9 +49,9 @@ export const Default: StoryComponent = () => {
                             options={fruitEntries.map(([text, value]) => ({text, value}))}
                         />
                     </DoubleField>
-                    <FormTextField name="text2" label="Label" helperText="Helper text" />
+                    <TextField name="text2" label="Label" helperText="Helper text" />
                     <DoubleField>
-                        <FormSelect
+                        <Select
                             name="fruit3"
                             helperText="Helper text"
                             label="Select fruit"
@@ -59,15 +59,15 @@ export const Default: StoryComponent = () => {
                             onChangeValue={setSelectValue}
                             options={fruitEntries.map(([text, value]) => ({text, value}))}
                         />
-                        <FormTextField name="text3" label="Label" />
+                        <TextField name="text3" label="Label" />
                     </DoubleField>
-                    <FormTextField name="text4" label="Label" />
+                    <TextField name="text4" label="Label" />
                     <DoubleField>
-                        <FormTextField name="text5" label="Label" helperText="Single child" />
+                        <TextField name="text5" label="Label" helperText="Single child" />
                     </DoubleField>
                     <DoubleField>
-                        <FormTextField name="text6" label="Label" />
-                        <FormTextField name="text7" label="Label" helperText="Helper text" />
+                        <TextField name="text6" label="Label" />
+                        <TextField name="text7" label="Label" helperText="Helper text" />
                     </DoubleField>
                 </Stack>
             </StorySection>
@@ -75,4 +75,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'Default'};
+Default.storyName = 'Default';

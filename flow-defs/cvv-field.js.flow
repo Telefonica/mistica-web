@@ -1,0 +1,13 @@
+// @flow
+
+import * as React from "react";
+import type { CommonFormFieldProps } from "./text-field-base";
+import type { CardOptions } from "./utils/credit-card";
+export type CvvFieldProps = {
+  ...$Exact<CommonFormFieldProps>,
+
+  acceptedCards?: CardOptions,
+  onChangeValue?: (value: string, rawValue: string) => void,
+};
+declare var CvvField: React.ComponentType<CvvFieldProps>;
+declare export default typeof CvvField;

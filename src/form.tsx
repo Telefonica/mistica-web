@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {useTheme} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import {FormContext} from './form-context';
 import {createUseStyles} from './jss';
 import classnames from 'classnames';
 
-import type {FormStatus, FormErrors, FieldValidator, FieldRegistration} from './form-context';
+import type {FormStatus, FormErrors, FieldRegistration} from './form-context';
 
 type FormValues = {[name: string]: any};
 
@@ -20,6 +20,7 @@ type FormProps = {
     initialValues?: FormValues;
     autoJump?: boolean;
     children: React.ReactNode;
+    onValidationErrors?: (errors: FormErrors) => void;
     className?: string;
 };
 
@@ -29,19 +30,19 @@ const Form: React.FC<FormProps> = ({
     onSubmit,
     initialValues = {},
     autoJump = false,
-    id,
+    onValidationErrors,
+    id: idProp,
 }) => {
     const isMountedRef = React.useRef(true); // https://github.com/facebook/react/issues/14369#issuecomment-468305796
     const [values, setValues] = React.useState(initialValues);
     const [rawValues, setRawValues] = React.useState(initialValues);
     const [formStatus, setFormStatus] = React.useState<FormStatus>('filling');
     const [formErrors, setFormErrors] = React.useState<FormErrors>({});
-    const fieldRefs = React.useRef(new Map<string, HTMLInputElement | HTMLSelectElement>());
-    const fieldValidators = React.useRef(new Map<string, FieldValidator>());
-    const fieldFocusableRefs = React.useRef(new Map<string, HTMLDivElement | HTMLSelectElement>());
+    const fieldRegistrations = React.useRef(new Map<string, FieldRegistration>());
     const formRef = React.useRef<HTMLFormElement | null>(null);
     const {texts} = useTheme();
     const classes = useStyles();
+    const id = useAriaId(idProp);
 
     React.useEffect(
         () => () => {
@@ -50,19 +51,15 @@ const Form: React.FC<FormProps> = ({
         []
     );
 
-    const register = React.useCallback(({name, field, validate, focusableElement}: FieldRegistration) => {
-        if (field) {
-            fieldRefs.current.set(name, field);
-            if (validate) {
-                fieldValidators.current.set(name, validate);
-            }
-            if (focusableElement) {
-                fieldFocusableRefs.current.set(name, focusableElement);
-            }
+    const register = React.useCallback((name, {input, validator, focusableElement}: FieldRegistration) => {
+        if (input || focusableElement) {
+            fieldRegistrations.current.set(name, {
+                input,
+                validator,
+                focusableElement,
+            });
         } else {
-            fieldRefs.current.delete(name);
-            fieldValidators.current.delete(name);
-            fieldFocusableRefs.current.delete(name);
+            fieldRegistrations.current.delete(name);
         }
     }, []);
 
@@ -75,30 +72,35 @@ const Form: React.FC<FormProps> = ({
     const validateFields = React.useCallback((): FormErrors => {
         const errors: FormErrors = {};
         let didFocus = false;
-        for (const [name, input] of fieldRefs.current) {
-            if (input.disabled) {
-                continue;
-            }
-            if (input.required && !input.value.trim()) {
-                errors[name] = texts.formFieldErrorIsMandatory;
-            } else {
-                const error = fieldValidators.current.get(name)?.(values[name], rawValues[name]);
-                if (error) {
-                    errors[name] = error;
+        for (const [name, {input, validator, focusableElement}] of fieldRegistrations.current) {
+            if (input) {
+                if (input.disabled) {
+                    continue;
                 }
-            }
-            if (errors[name] && !didFocus) {
-                didFocus = true;
-                if (fieldFocusableRefs.current.has(name)) {
-                    fieldFocusableRefs.current.get(name)?.focus();
+                if (input.required && !input.value.trim()) {
+                    errors[name] = texts.formFieldErrorIsMandatory;
                 } else {
-                    input.focus();
+                    const error = validator?.(values[name], rawValues[name]);
+                    if (error) {
+                        errors[name] = error;
+                    }
+                }
+                if (errors[name] && !didFocus) {
+                    didFocus = true;
+                    if (focusableElement) {
+                        focusableElement.focus();
+                    } else {
+                        input.focus();
+                    }
                 }
             }
         }
         setFormErrors(errors);
+        if (onValidationErrors) {
+            onValidationErrors(errors);
+        }
         return errors;
-    }, [rawValues, texts, values]);
+    }, [onValidationErrors, rawValues, texts, values]);
 
     const jumpToNext = React.useCallback(
         (currentName: string) => {
@@ -109,7 +111,7 @@ const Form: React.FC<FormProps> = ({
                     const elements: Array<HTMLElement> = Array.from(
                         formRef.current.querySelectorAll('input, select')
                     );
-                    const currentElement = fieldRefs.current.get(currentName);
+                    const currentElement = fieldRegistrations.current.get(currentName)?.input;
                     const currentIndex = elements.indexOf(currentElement as HTMLElement);
                     if (currentIndex >= 0) {
                         const nextElement = elements[currentIndex + 1];
@@ -126,9 +128,11 @@ const Form: React.FC<FormProps> = ({
     );
 
     const getNonDisabledValues = (values: {[name: string]: string}) =>
-        [...fieldRefs.current.entries()].reduce(
-            (nonDisabled, [name, input]) =>
-                input.disabled ? nonDisabled : {...nonDisabled, [name]: values[name]},
+        [...fieldRegistrations.current.keys()].reduce(
+            (nonDisabled, name) =>
+                fieldRegistrations.current.get(name)?.input?.disabled
+                    ? nonDisabled
+                    : {...nonDisabled, [name]: values[name]},
             {}
         );
 
@@ -173,6 +177,7 @@ const Form: React.FC<FormProps> = ({
                 jumpToNext,
                 validate: validateFields,
                 submit: handleSubmit,
+                formId: id,
             }}
         >
             <form

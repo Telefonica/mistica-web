@@ -16,18 +16,14 @@ module.exports = {
                 },
             },
         },
-        './.storybook/theme-selector-addon/register',
+        './theme-selector-addon/register',
+        './platform-selector-addon/register',
     ],
     webpackFinal: async (config) => {
-        config.module.rules.push({
-            test: /\.tsx$/,
-            use: [
-                {
-                    loader: require.resolve('babel-loader'),
-                },
-            ],
-        });
-        config.resolve.extensions.push('.tsx');
+        config.watchOptions = {
+            ...config.watchOptions,
+            ignored: [/node_modules/, /__tests__/, /__acceptance_tests__/, /__screenshot_tests__/],
+        };
         return config;
     },
 };

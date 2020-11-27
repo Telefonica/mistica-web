@@ -9,7 +9,7 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-type PadSize = 0 | 2 | 4 | 8 | 12 | 16 | 24 | 32 | 40 | 48 | 56 | 64;
+type PadSize = 0 | 2 | 4 | 8 | 12 | 16 | 24 | 32 | 40 | 48 | 56 | 64 | 72 | 80;
 
 type Props = {
     width?: number | string;

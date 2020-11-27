@@ -1,0 +1,12 @@
+// @flow
+
+import * as React from "react";
+import type { CardOptions } from "./utils/credit-card";
+declare type CreditCardFieldsProps = {
+  numberFieldName?: string,
+  expirationFieldName?: string,
+  cvvFieldName?: string,
+  acceptedCards?: CardOptions,
+};
+declare var CreditCardFields: React.ComponentType<CreditCardFieldsProps>;
+declare export default typeof CreditCardFields;

@@ -1,27 +1,63 @@
 import * as React from 'react';
-import {Switch, Stack} from '..';
+import {Switch, Stack, Inline, Text6, SectionTitle} from '..';
 
 export default {
-    title: 'Components|Controls/Switch',
+    title: 'Components/Forms/Switch',
 };
 
 export const Default: StoryComponent = () => {
     const [checked, onChange] = React.useState(false);
     return (
-        <Stack space={16}>
-            <Switch defaultChecked={false} />
-            <Switch defaultChecked={false} render={(switchElement) => <span>WiFi {switchElement}</span>} />
-            <Switch
-                checked={checked}
-                onChange={onChange}
-                render={(switchElement) => (
-                    <span>
-                        {checked ? 'on' : 'off'} {switchElement}
-                    </span>
-                )}
-            />
+        <Stack space={32}>
+            <>
+                <SectionTitle id="label">Uncontrolled</SectionTitle>
+                <Switch
+                    name="uncontrolled"
+                    render={(switchElement) => (
+                        <Inline alignItems="center" space={8}>
+                            {switchElement}
+                            <Text6 regular>Switch</Text6>
+                        </Inline>
+                    )}
+                />
+            </>
+            <>
+                <SectionTitle id="label">Controlled</SectionTitle>
+                <Switch
+                    name="controlled"
+                    checked={checked}
+                    onChange={onChange}
+                    render={(switchElement) => (
+                        <Inline alignItems="center" space={8}>
+                            {switchElement}
+                            <Text6 regular uppercase>
+                                {checked ? 'on' : 'off'}
+                            </Text6>
+                        </Inline>
+                    )}
+                />
+            </>
+            <>
+                <SectionTitle id="label">Without children</SectionTitle>
+                <Switch name="no-children" />
+            </>
+            <>
+                <SectionTitle id="label">Without switch</SectionTitle>
+                <Switch
+                    name="no-switch"
+                    checked={checked}
+                    onChange={onChange}
+                    render={() => (
+                        <Inline alignItems="center" space={8}>
+                            <Text6 regular uppercase>
+                                {checked ? 'on' : 'off'}
+                            </Text6>
+                        </Inline>
+                    )}
+                />
+            </>
         </Stack>
     );
 };
 
-Default.story = {name: 'Switch'};
+Default.storyName = 'Switch';

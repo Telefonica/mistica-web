@@ -5,7 +5,7 @@ import {Box, Stack, AvatarPlaceholder} from '..';
 import {RadioGroup} from '../radio-button';
 
 export default {
-    title: 'Components|Lists/RowList',
+    title: 'Components/Lists/RowList',
     parameters: {
         fullScreen: true,
     },
@@ -29,6 +29,9 @@ export const Default: StoryComponent = () => {
         'none',
     ]);
     const [withBadge, badgeCheckbox] = useCheckbox('With badge', false);
+    const [oneLineTitle, oneLineTitleCheckbox] = useCheckbox('one line title', false);
+    const [oneLineSubtitle, oneLineSubtitleCheckbox] = useCheckbox('one line subtitle ', false);
+    const [oneLineDescription, oneLineDescriptionCheckbox] = useCheckbox('one line description ', false);
 
     let controlProps = {};
 
@@ -80,8 +83,11 @@ export const Default: StoryComponent = () => {
                     {badgeCheckbox}
                     {headlineTextField}
                     {titleTextField}
+                    {oneLineTitleCheckbox}
                     {subtitleTextField}
+                    {oneLineSubtitleCheckbox}
                     {descriptionTextField}
+                    {oneLineDescriptionCheckbox}
                     {iconSizeSelectField}
                 </Stack>
             </Box>
@@ -96,6 +102,9 @@ export const Default: StoryComponent = () => {
                             subtitle={subtitle}
                             description={description}
                             badge={withBadge}
+                            titleLinesMax={oneLineTitle ? 1 : 2}
+                            subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                            descriptionLinesMax={oneLineDescription ? 1 : 2}
                             {...controlProps}
                         />
                         <Row
@@ -106,6 +115,9 @@ export const Default: StoryComponent = () => {
                             subtitle={subtitle}
                             description={description}
                             badge={withBadge ? 2 : undefined}
+                            titleLinesMax={oneLineTitle ? 1 : 2}
+                            subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                            descriptionLinesMax={oneLineDescription ? 1 : 2}
                             {...controlProps}
                         />
                         <Row
@@ -116,6 +128,9 @@ export const Default: StoryComponent = () => {
                             subtitle={subtitle}
                             description={description}
                             badge={withBadge ? 22 : undefined}
+                            titleLinesMax={oneLineTitle ? 1 : 2}
+                            subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                            descriptionLinesMax={oneLineDescription ? 1 : 2}
                             {...controlProps}
                         />
                     </RowList>
@@ -125,12 +140,12 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'RowList'};
+Default.storyName = 'RowList';
 
 export const Radio: StoryComponent = () => (
     <div data-testid="radio-row-list">
         <StorySection title="Radio Row List">
-            <RadioGroup defaultValue="apple">
+            <RadioGroup name="radio-group" defaultValue="apple">
                 <RowList>
                     <Row
                         icon={<AvatarPlaceholder size="100%" />}
@@ -159,4 +174,4 @@ export const Radio: StoryComponent = () => (
     </div>
 );
 
-Radio.story = {name: 'RowList (radio button)'};
+Radio.storyName = 'RowList (radio button)';

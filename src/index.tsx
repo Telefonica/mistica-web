@@ -42,7 +42,8 @@ export {default as PromoTag} from './promo-tag';
 export {default as SectionTitle} from './section-title';
 export {Placeholder, AvatarPlaceholder} from './placeholder';
 export {RowList, Row, BoxedRowList, BoxedRow} from './list';
-export {default as Switch} from './switch';
+export {default as Switch} from './switch-component';
+export {default as Checkbox} from './checkbox';
 export {default as RadioButton, RadioGroup} from './radio-button';
 export {default as NegativeBox} from './negative-box';
 export {default as Tabs} from './tabs';
@@ -51,20 +52,20 @@ export {default as HighlightedCard} from './highlighted-card';
 
 // Forms
 export {default as Form} from './form';
-export {default as FormSelect} from './form-select';
-export {default as FormTextField} from './form-text-field';
-export {default as FormSearchField} from './form-search-field';
-export {default as FormEmailField} from './form-email-field';
-export {default as FormPhoneNumberField} from './form-phone-number-field';
-export {default as FormCreditCardNumberField} from './form-credit-card-number-field';
-export {default as FormCreditCardExpirationField} from './form-credit-card-expiration-field';
-export {default as FormCreditCardFields} from './form-credit-card-fields';
-export {default as FormCvvField} from './form-cvv-field';
-export {default as FormDateField} from './form-date-field';
-export {default as FormDateTimeField} from './form-date-time-field';
-export {default as FormIntegerField} from './form-integer-field';
-export {default as FormDecimalField} from './form-decimal-field';
-export {default as FormPasswordField} from './form-password-field';
+export {default as Select} from './select';
+export {default as TextField} from './text-field';
+export {default as SearchField} from './search-field';
+export {default as EmailField} from './email-field';
+export {default as PhoneNumberField} from './phone-number-field';
+export {default as CreditCardNumberField} from './credit-card-number-field';
+export {default as CreditCardExpirationField} from './credit-card-expiration-field';
+export {default as CreditCardFields} from './credit-card-fields';
+export {default as CvvField} from './cvv-field';
+export {default as DateField} from './date-field';
+export {default as DateTimeField} from './date-time-field';
+export {default as IntegerField} from './integer-field';
+export {default as DecimalField} from './decimal-field';
+export {default as PasswordField} from './password-field';
 export {default as DoubleField} from './double-field';
 export {useForm} from './form-context';
 
@@ -89,13 +90,17 @@ export type {ThemeConfig} from './theme';
 
 export {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 
-export {getColors, MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN, O2_CLASSIC_SKIN} from './colors';
-export type {Skin} from './colors';
+export type {Skin, SkinName} from './skins/types';
+export {VIVO_SKIN, O2_CLASSIC_SKIN, O2_SKIN, MOVISTAR_SKIN} from './skins/constants';
+export {getSkinByName} from './skins/utils';
+export {getVivoSkin} from './skins/vivo';
+export {getMovistarSkin} from './skins/movistar';
+export {getO2Skin} from './skins/o2';
+export {getO2ClassicSkin} from './skins/o2-classic';
 
 export type {Locale} from './utils/locale';
 export type {TrackingEvent} from './utils/types';
 export type {RegionCode} from './utils/region-code';
-
 // Check there is only one version of mistica installed in the page.
 if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
     // @ts-expect-error __mistica_version__ does not exist in window

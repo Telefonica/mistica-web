@@ -4,7 +4,7 @@ import LoadingBarComponent from '../loading-bar';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components|Feedbacks/LoadingBar',
+    title: 'Components/Feedbacks/LoadingBar',
 };
 
 const BackgroundTheme: React.FC = ({children}) => {

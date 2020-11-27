@@ -1,0 +1,6 @@
+// @flow
+
+declare export var MOVISTAR_SKIN: "Movistar";
+declare export var O2_SKIN: "O2";
+declare export var O2_CLASSIC_SKIN: "O2-classic";
+declare export var VIVO_SKIN: "Vivo";

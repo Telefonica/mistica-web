@@ -12,7 +12,7 @@ import {
 import {useTextField, useCheckbox} from './helpers';
 
 export default {
-    title: 'Components|Headers/Header',
+    title: 'Components/Headers/Header',
     parameters: {
         fullScreen: true,
     },
@@ -23,19 +23,13 @@ const FieldWithCheckbox: React.FC = ({children}) => (
 );
 
 export const Default: StoryComponent = () => {
-    const [pretitle, pretitleTextField] = useTextField('pretitle', 'Factura de diciembre');
-    const [title, titleTextField] = useTextField(
-        'title',
-        'La última factura de diciembre ya esta disponible'
-    );
-    const [preamount, preamountTextField] = useTextField('preamount', 'Cuota mensual (IVA incluido)');
-    const [amount, amountTextField] = useTextField('amount', '60,44 €');
-    const [buttonLabel, buttonLabelTextField] = useTextField('button', 'Descargar factura');
-    const [secondaryButtonLabel, secondaryButtonLabelTextField] = useTextField(
-        'secondaryButton',
-        'Pagar factura'
-    );
-    const [subtitle, subtitleTextField] = useTextField('subtitle', 'Y esto es un subtitulo');
+    const [pretitle, pretitleTextField] = useTextField('Pretitle', 'Your last bill');
+    const [title, titleTextField] = useTextField('Title', 'December bill is now available');
+    const [preamount, preamountTextField] = useTextField('Pretitle', 'Monthly fee (IVA included)');
+    const [amount, amountTextField] = useTextField('Amount', '60,44 €');
+    const [buttonLabel, buttonLabelTextField] = useTextField('Button', 'Download bill');
+    const [secondaryButtonLabel, secondaryButtonLabelTextField] = useTextField('SecondaryButton', 'Pay bill');
+    const [subtitle, subtitleTextField] = useTextField('Subtitle', 'This is a subtitle');
     const [isInverse, inverseCheckbox] = useCheckbox('Inverse', true);
     const [isErrorAmount, errorAmountCheckbox] = useCheckbox('Error amount', false);
     const [withExtraContent, extraContentCheckbox] = useCheckbox('With extra content', true);
@@ -54,8 +48,8 @@ export const Default: StoryComponent = () => {
                         breadcrumbs={
                             withBreadcrumbs ? (
                                 <NavigationBreadcrumbs
-                                    title="Facturas"
-                                    breadcrumbs={[{title: 'Cuenta', url: '/consumptions'}]}
+                                    title="Bills"
+                                    breadcrumbs={[{title: 'Account', url: '/consumptions'}]}
                                 />
                             ) : undefined
                         }
@@ -105,4 +99,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'Header'};
+Default.storyName = 'Header';

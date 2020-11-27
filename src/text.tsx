@@ -15,6 +15,16 @@ const useStyles = createUseStyles((theme) => {
         [theme.colors.textSecondary]: theme.colors.textButtonPrimaryInverseDisabled,
     };
 
+    const lineClamp = ({truncate}: {truncate: boolean | number}) => {
+        if (truncate === true) {
+            return 1;
+        }
+        if (truncate) {
+            return truncate;
+        }
+        return 'initial';
+    };
+
     return {
         text: {
             lineHeight: ({desktopLineHeight}) => desktopLineHeight,
@@ -25,6 +35,7 @@ const useStyles = createUseStyles((theme) => {
                 isInverse ? inverseColorsMap[color] ?? color : color,
             textDecoration: (p) => p.textDecoration,
             letterSpacing: ({letterSpacing}) => letterSpacing,
+            overflowWrap: ({wordBreak}) => (wordBreak ? 'anywhere' : 'inherit'),
 
             [theme.mq.mobile]: {
                 lineHeight: ({mobileLineHeight}) => mobileLineHeight,
@@ -32,10 +43,12 @@ const useStyles = createUseStyles((theme) => {
             },
         },
         truncate: {
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
+            '-webkit-line-clamp': lineClamp,
+            lineClamp,
+            wordBreak: ({truncate}) => (truncate === 1 || truncate === true ? 'break-all' : 'normal'),
+            display: 'box',
+            boxOrient: 'vertical',
             overflow: 'hidden',
-            display: 'block',
         },
     };
 });
@@ -46,8 +59,9 @@ export interface TextPresetProps {
     color?: string;
     textDecoration?: 'underline' | 'line-through';
     children?: React.ReactNode;
-    truncate?: boolean;
+    truncate?: boolean | number;
     uppercase?: boolean;
+    wordBreak?: boolean;
     id?: string;
     as?: React.ComponentType<any> | string;
     role?: string;
@@ -71,6 +85,7 @@ const Text: React.FC<TextProps> = ({
     textDecoration,
     truncate,
     uppercase,
+    wordBreak,
     as = 'span',
     children,
     size,
@@ -95,13 +110,14 @@ const Text: React.FC<TextProps> = ({
         color,
         textDecoration,
         uppercase,
+        wordBreak,
         letterSpacing,
+        truncate,
     });
     if (!children) {
         return null;
     }
-    const className = classnames(classes.text, {[classes.truncate]: truncate});
-
+    const className = classnames(classes.text, {[classes.truncate]: !!truncate});
     return React.createElement(as, {className, id, role, 'aria-level': otherProps['aria-level']}, children);
 };
 
@@ -134,7 +150,7 @@ const getRegularOrMediumWeight = (props: RegularMediumProps) =>
 const getAllWeights = (props: LightRegularMediumProps) =>
     (props.light && 'light') || (props.regular && 'regular') || (props.medium && 'medium');
 
-const isIos = getPlatform({}) === 'ios';
+const isIos = getPlatform() === 'ios';
 
 export const Text1: React.FC<TextPresetProps> = (props) => (
     <Text

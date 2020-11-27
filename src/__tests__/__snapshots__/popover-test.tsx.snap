@@ -3,7 +3,7 @@
 exports[`popover default(bottom) style 1`] = `
 <div>
   <div
-    class="wrapper-0-2-3"
+    class="wrapper"
   >
     <div>
       <span>
@@ -11,35 +11,35 @@ exports[`popover default(bottom) style 1`] = `
       </span>
     </div>
     <div
-      class="container-0-2-4"
+      class="container"
       style="width: 488px; top: 20px; left: 0px;"
     >
       <div
-        class="arrowWrapper-0-2-2"
+        class="arrowWrapper"
         style="bottom: 100%; left: 0px; transform: translateX(-50%) rotate(180deg);"
       >
         <div
-          class="arrow-0-2-1 arrow-d6-0-2-19"
+          class="arrow arrow-d0"
         />
       </div>
       <div
-        class="boxContainer-0-2-6"
+        class="boxContainer"
       >
         <div
-          class="textContent-0-2-7"
+          class="textContent"
         >
           <span
-            class="text-0-2-9"
+            class="text"
           >
             Content
           </span>
         </div>
         <div
-          class="closeButtonIcon-0-2-10"
+          class="closeButtonIcon"
         >
           <button
             aria-label="Cerrar"
-            class="touchable-0-2-12"
+            class="touchable"
             style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
             type="button"
           >
@@ -66,7 +66,7 @@ exports[`popover default(bottom) style 1`] = `
 exports[`popover left style 1`] = `
 <div>
   <div
-    class="wrapper-0-2-3"
+    class="wrapper"
   >
     <div>
       <span>
@@ -74,35 +74,35 @@ exports[`popover left style 1`] = `
       </span>
     </div>
     <div
-      class="container-0-2-4"
+      class="container"
       style="width: 488px; left: -508px; top: 0px; transform: translateY(-50%);"
     >
       <div
-        class="arrowWrapper-0-2-2"
+        class="arrowWrapper"
         style="left: 100%; top: 50%; transform: translateY(-100%) rotate(-90deg); transform-origin: bottom;"
       >
         <div
-          class="arrow-0-2-1 arrow-d9-0-2-22"
+          class="arrow arrow-d0"
         />
       </div>
       <div
-        class="boxContainer-0-2-6"
+        class="boxContainer"
       >
         <div
-          class="textContent-0-2-7"
+          class="textContent"
         >
           <span
-            class="text-0-2-9"
+            class="text"
           >
             Content
           </span>
         </div>
         <div
-          class="closeButtonIcon-0-2-10"
+          class="closeButtonIcon"
         >
           <button
             aria-label="Cerrar"
-            class="touchable-0-2-12"
+            class="touchable"
             style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
             type="button"
           >
@@ -129,7 +129,7 @@ exports[`popover left style 1`] = `
 exports[`popover right style 1`] = `
 <div>
   <div
-    class="wrapper-0-2-3"
+    class="wrapper"
   >
     <div>
       <span>
@@ -137,35 +137,35 @@ exports[`popover right style 1`] = `
       </span>
     </div>
     <div
-      class="container-0-2-4"
+      class="container"
       style="width: 488px; left: 20px; top: 0px; transform: translateY(-50%);"
     >
       <div
-        class="arrowWrapper-0-2-2"
+        class="arrowWrapper"
         style="right: 100%; top: 50%; transform: translateY(-100%) rotate(90deg); transform-origin: bottom;"
       >
         <div
-          class="arrow-0-2-1 arrow-d8-0-2-21"
+          class="arrow arrow-d0"
         />
       </div>
       <div
-        class="boxContainer-0-2-6"
+        class="boxContainer"
       >
         <div
-          class="textContent-0-2-7"
+          class="textContent"
         >
           <span
-            class="text-0-2-9"
+            class="text"
           >
             Content
           </span>
         </div>
         <div
-          class="closeButtonIcon-0-2-10"
+          class="closeButtonIcon"
         >
           <button
             aria-label="Cerrar"
-            class="touchable-0-2-12"
+            class="touchable"
             style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
             type="button"
           >
@@ -192,7 +192,7 @@ exports[`popover right style 1`] = `
 exports[`popover top style 1`] = `
 <div>
   <div
-    class="wrapper-0-2-3"
+    class="wrapper"
   >
     <div>
       <span>
@@ -200,35 +200,35 @@ exports[`popover top style 1`] = `
       </span>
     </div>
     <div
-      class="container-0-2-4"
+      class="container"
       style="width: 488px; transform: translateY(-100%); top: -20px; left: 0px;"
     >
       <div
-        class="arrowWrapper-0-2-2"
+        class="arrowWrapper"
         style="top: 100%; left: 0px; transform: translateX(-50%);"
       >
         <div
-          class="arrow-0-2-1 arrow-d7-0-2-20"
+          class="arrow arrow-d0"
         />
       </div>
       <div
-        class="boxContainer-0-2-6"
+        class="boxContainer"
       >
         <div
-          class="textContent-0-2-7"
+          class="textContent"
         >
           <span
-            class="text-0-2-9"
+            class="text"
           >
             Content
           </span>
         </div>
         <div
-          class="closeButtonIcon-0-2-10"
+          class="closeButtonIcon"
         >
           <button
             aria-label="Cerrar"
-            class="touchable-0-2-12"
+            class="touchable"
             style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
             type="button"
           >

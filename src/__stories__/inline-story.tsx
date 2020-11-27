@@ -3,7 +3,7 @@ import Inline from '../inline';
 import {StorySection, useSelect} from './helpers';
 
 export default {
-    title: 'Components|Layouts/Inline',
+    title: 'Components/Layouts/Inline',
 };
 
 const Row = ({children}: {children?: any}) =>
@@ -12,7 +12,7 @@ const Row = ({children}: {children?: any}) =>
 const Null = () => null;
 const ComponentThatReturnsNullComponent = () => <Null />;
 
-const options = ['0px', '4px', '8px', '16px', '24px', '32px', '40px', '48px', '56px', '64px'];
+const options = ['0px', '2px', '4px', '8px', '12px', '16px', '24px', '32px', '40px', '48px', '56px', '64px'];
 
 export const Default: StoryComponent = () => {
     const [iconSize, iconSizeSelectField] = useSelect('Space', '32px', options);
@@ -38,4 +38,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.story = {name: 'Inline'};
+Default.storyName = 'Inline';

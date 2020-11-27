@@ -1,0 +1,12 @@
+// @flow
+
+import * as React from "react";
+import type { CommonFormFieldProps } from "./text-field-base";
+export type SearchFieldProps = {
+  ...$Exact<CommonFormFieldProps>,
+
+  onChangeValue?: (value: string, rawValue: string) => void,
+  getSuggestions?: (value: string) => Array<string>,
+};
+declare var SearchField: React.ComponentType<SearchFieldProps>;
+declare export default typeof SearchField;

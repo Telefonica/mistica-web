@@ -1,13 +1,17 @@
 import * as React from 'react';
 import {render, fireEvent, screen} from '@testing-library/react';
 import Tooltip from '../tooltip';
+import {ThemeContextProvider} from '..';
+import {makeTheme} from './test-utils';
 
 type Props = Omit<React.ComponentProps<typeof Tooltip>, 'children' | 'targetLabel' | 'target'>;
 
 const TestTooltip: React.FC<Props> = (props) => (
-    <Tooltip {...props} targetLabel="help text" target={<span className="target">Press me!</span>}>
-        <div className="content">Content</div>
-    </Tooltip>
+    <ThemeContextProvider theme={makeTheme()}>
+        <Tooltip {...props} targetLabel="help text" target={<span className="target">Press me!</span>}>
+            <div className="content">Content</div>
+        </Tooltip>
+    </ThemeContextProvider>
 );
 
 test('target was painted', () => {
@@ -150,14 +154,16 @@ test('click anchor does not close tooltip', async () => {
     const linkSpy = jest.fn();
 
     render(
-        <Tooltip targetLabel="help text" target={<span className="target">Press me!</span>}>
-            <div className="content">
-                Content
-                <a tabIndex={-1} role="link" onClick={() => linkSpy()}>
-                    Link
-                </a>
-            </div>
-        </Tooltip>
+        <ThemeContextProvider theme={makeTheme()}>
+            <Tooltip targetLabel="help text" target={<span className="target">Press me!</span>}>
+                <div className="content">
+                    Content
+                    <a tabIndex={-1} role="link" onClick={() => linkSpy()}>
+                        Link
+                    </a>
+                </div>
+            </Tooltip>
+        </ThemeContextProvider>
     );
 
     fireEvent.pointerDown(screen.getByText('Press me!'));

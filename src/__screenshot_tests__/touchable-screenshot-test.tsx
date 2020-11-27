@@ -2,7 +2,7 @@ import {openStoryPage} from '../test-utils';
 
 test('Touchable', async () => {
     await openStoryPage({
-        section: 'Components|Touchables/Touchable',
+        section: 'Components/Touchables/Touchable',
         name: 'Touchable',
     });
 

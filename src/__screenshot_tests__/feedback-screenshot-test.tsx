@@ -1,12 +1,12 @@
 import {openStoryPage} from '../test-utils';
 import type {Device} from '../test-utils';
-import type {Skin} from '../colors';
+import {MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN} from '../skins/constants';
 
-const testableSkins: Array<Skin> = ['Movistar', 'Vivo', 'O2'];
+const testableSkins = [MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN];
 const testableDevices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 const feedbackTypes = ['Success', 'Error', 'Info'];
 
-const cases: Array<[string, Skin, Device]> = [];
+const cases: Array<[string, string, Device]> = [];
 for (const skin of testableSkins) {
     for (const device of testableDevices) {
         for (const feedbackType of feedbackTypes) {
@@ -17,7 +17,7 @@ for (const skin of testableSkins) {
 
 test.each(cases)('Feedback %s screen appears properly on %s and %s', async (feedbackType, skin, device) => {
     const page = await openStoryPage({
-        section: 'Components|Feedbacks/FeedbackScreen',
+        section: 'Components/Feedbacks/FeedbackScreen',
         name: `${feedbackType}FeedbackScreen`,
         skin,
         device,
