@@ -9,11 +9,13 @@ const screenshotDifferentControls = async (page: PageApi, list: ElementHandle<El
     expect(await list.screenshot()).toMatchImageSnapshot();
 
     await page.select(await screen.findByLabelText('Control type'), 'checkbox');
-    await page.click((await screen.findAllByRole('checkbox'))[4]);
+    const checkboxHandle = (await screen.findAllByRole('checkbox'))[4];
+    await page.click(checkboxHandle);
     expect(await list.screenshot()).toMatchImageSnapshot();
 
     await page.select(await screen.findByLabelText('Control type'), 'switch');
-    await page.click((await screen.findAllByRole('switch'))[0]);
+    const switchHandle = (await screen.findAllByRole('switch'))[0];
+    switchHandle.focus(); // no need to click, state is kept from checkbox
     expect(await list.screenshot()).toMatchImageSnapshot();
 
     await page.select(await screen.findByLabelText('Control type'), 'custom element');
