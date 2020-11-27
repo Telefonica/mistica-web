@@ -3,12 +3,16 @@ import {useFieldProps} from './form-context';
 import TextFieldBase from './text-field-base';
 import {isInputTypeSupported} from './utils/dom';
 import {isServerSide} from './utils/environment';
+import {getLocalDateTimeString} from './utils/time';
+import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
+import {useTheme} from '.';
 
 import type {CommonFormFieldProps} from './text-field-base';
-import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
 
 export interface DateFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
+    min?: Date;
+    max?: Date;
 }
 
 const ReactDateTimePicker = React.lazy(
@@ -21,16 +25,33 @@ const FormDateField: React.FC<DateFieldProps> = ({
     helperText,
     name,
     optional,
-    validate,
+    validate: validateProp,
     onChange,
     onChangeValue,
     onBlur,
     value,
     defaultValue,
+    min,
+    max,
     ...rest
 }) => {
     const hasNativePicker = React.useMemo(() => isInputTypeSupported('datetime-local'), []);
     const processValue = (value: string) => (hasNativePicker ? value : value.replace(/\s/, 'T'));
+    const {texts} = useTheme();
+
+    const validate = (value: string, rawValue: string) => {
+        if (min && value) {
+            if (value < getLocalDateTimeString(min)) {
+                return texts.formDateOutOfRangeError;
+            }
+        }
+        if (max && value) {
+            if (value > getLocalDateTimeString(max)) {
+                return texts.formDateOutOfRangeError;
+            }
+        }
+        return validateProp?.(value, rawValue);
+    };
 
     const fieldProps = useFieldProps({
         name,
