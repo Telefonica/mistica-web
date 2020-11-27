@@ -6,6 +6,8 @@ export type DateFieldProps = {
   ...$Exact<CommonFormFieldProps>,
 
   onChangeValue?: (value: string, rawValue: string) => void,
+  min?: Date,
+  max?: Date,
 };
 declare var FormDateField: React.ComponentType<DateFieldProps>;
 declare export default typeof FormDateField;
