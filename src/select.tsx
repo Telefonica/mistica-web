@@ -117,6 +117,7 @@ export type SelectProps = {
     autoFocus?: boolean;
     value?: string;
     fullWidth?: boolean;
+    native?: boolean;
 };
 
 const Select: React.FC<SelectProps> = ({
@@ -134,6 +135,7 @@ const Select: React.FC<SelectProps> = ({
     inputProps,
     onBlur,
     autoFocus = false,
+    native,
 }) => {
     const inputRef = React.useRef<HTMLSelectElement | HTMLInputElement>(null);
     const focusableRef = React.useRef<HTMLSelectElement | HTMLDivElement>(null);
@@ -160,7 +162,7 @@ const Select: React.FC<SelectProps> = ({
     const {platformOverrides} = useTheme();
 
     const shouldUseNative =
-        process.env.NODE_ENV === 'test' || isAndroid(platformOverrides) || isIos(platformOverrides);
+        native || process.env.NODE_ENV === 'test' || isAndroid(platformOverrides) || isIos(platformOverrides);
 
     const disabled = disabledProp || formStatus === 'sending';
     const error = errorProp || !!formErrors[name];

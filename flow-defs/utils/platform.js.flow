@@ -5,7 +5,7 @@ declare export var isInsideNovumNativeApp: (
   platformOverrides?: $PropertyType<Theme, "platformOverrides">
 ) => boolean;
 declare export var isRunningAcceptanceTest: (
-  platformOverrides: $PropertyType<Theme, "platformOverrides">
+  platformOverrides?: $PropertyType<Theme, "platformOverrides">
 ) => boolean;
 declare export var isAndroid: (
   platformOverrides: $PropertyType<Theme, "platformOverrides">
