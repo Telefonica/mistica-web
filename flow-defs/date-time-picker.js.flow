@@ -2,10 +2,15 @@
 
 import * as React from "react";
 import type { CommonFormFieldProps } from "./text-field-base";
+import Moment from "moment";
 export type DateTimePickerProps = {
   ...$Exact<CommonFormFieldProps>,
 
   inputRef: (field: HTMLInputElement | null) => void,
+  isValidDate?: (
+    currentDate: moment$Moment,
+    selectedDate: moment$Moment
+  ) => boolean,
   withTime?: boolean,
 };
 declare var DateTimePicker: React.ComponentType<DateTimePickerProps>;

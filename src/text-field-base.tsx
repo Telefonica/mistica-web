@@ -202,6 +202,7 @@ const useStyles = createUseStyles((theme) => ({
         },
 
         // Chrome: hide value if not valid or focused
+        // `visibility: 'hidden !important'` is needed when min/max is set and some parts of the date are disabled
         '&[type="date"]:not(:valid):not(:focus)::-webkit-datetime-edit': {
             color: 'transparent',
             visibility: 'hidden !important',
