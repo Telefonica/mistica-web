@@ -105,6 +105,8 @@ interface TextFieldBaseProps {
     multiline?: boolean;
     inputMode?: string;
     readOnly?: boolean;
+    min?: string;
+    max?: string;
 }
 
 const commonInputStyles = (theme: Theme) => ({
@@ -200,8 +202,14 @@ const useStyles = createUseStyles((theme) => ({
         },
 
         // Chrome: hide value if not valid or focused
-        '&[type="date"]:not(:valid):not(:focus)::-webkit-datetime-edit': {color: 'transparent'},
-        '&[type="datetime-local"]:not(:valid):not(:focus)::-webkit-datetime-edit': {color: 'transparent'},
+        '&[type="date"]:not(:valid):not(:focus)::-webkit-datetime-edit': {
+            color: 'transparent',
+            visibility: 'hidden !important',
+        },
+        '&[type="datetime-local"]:not(:valid):not(:focus)::-webkit-datetime-edit': {
+            color: 'transparent',
+            visibility: 'hidden !important',
+        },
 
         // Firefox: hide value if not valid or focused
         // Only apply when Firefox, otherwise it breaks styles in safari mobile

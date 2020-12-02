@@ -27,7 +27,7 @@ const DateField: React.FC<DateFieldProps> = ({
     optional,
     validate: validateProp,
     onChange,
-    onChangeValue,
+    onChangeValue: onChangeValueProp,
     onBlur,
     value,
     defaultValue,
@@ -39,18 +39,28 @@ const DateField: React.FC<DateFieldProps> = ({
     const hasNativePicker = React.useMemo(() => isInputTypeSupported('date'), []);
     const {texts} = useTheme();
 
-    const validate = (value: string, rawValue: string) => {
-        if (min && value) {
-            if (value < getLocalDateString(min)) {
-                return texts.formDateOutOfRangeError;
-            }
+    const isInRange = (value: string): boolean => {
+        if (min && value && value < getLocalDateString(min)) {
+            return false;
         }
-        if (max && value) {
-            if (value > getLocalDateString(max)) {
-                return texts.formDateOutOfRangeError;
-            }
+        if (max && value && value > getLocalDateString(max)) {
+            return false;
+        }
+        return true;
+    };
+
+    const validate = (value: string, rawValue: string) => {
+        if (!isInRange(value)) {
+            return texts.formDateOutOfRangeError;
         }
         return validateProp?.(value, rawValue);
+    };
+
+    const onChangeValue = (value: string, rawValue: string) => {
+        if (isInRange(value)) {
+            onChangeValueProp?.(value, rawValue);
+        }
+        // if not in range, onChangeValue is not called
     };
 
     const fieldProps = useFieldProps({
@@ -72,6 +82,8 @@ const DateField: React.FC<DateFieldProps> = ({
         <TextFieldBase
             {...rest}
             {...fieldProps}
+            min={min ? getLocalDateString(min) : undefined}
+            max={max ? getLocalDateString(max) : undefined}
             type="date"
             endIconOverlay={
                 <div style={{position: 'absolute', top: 16, right: 16, pointerEvents: 'none'}}>
@@ -87,7 +99,11 @@ const DateField: React.FC<DateFieldProps> = ({
 
     return (
         <React.Suspense fallback={nativePicker}>
-            <ReactDateTimePicker {...rest} {...fieldProps} />
+            <ReactDateTimePicker
+                {...rest}
+                {...fieldProps}
+                isValidDate={(currentDate) => isInRange(getLocalDateString(currentDate.toDate()))}
+            />
         </React.Suspense>
     );
 };

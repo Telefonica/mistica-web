@@ -27,7 +27,7 @@ const FormDateField: React.FC<DateFieldProps> = ({
     optional,
     validate: validateProp,
     onChange,
-    onChangeValue,
+    onChangeValue: onChangeValueProp,
     onBlur,
     value,
     defaultValue,
@@ -39,18 +39,29 @@ const FormDateField: React.FC<DateFieldProps> = ({
     const processValue = (value: string) => (hasNativePicker ? value : value.replace(/\s/, 'T'));
     const {texts} = useTheme();
 
-    const validate = (value: string, rawValue: string) => {
-        if (min && value) {
-            if (value < getLocalDateTimeString(min)) {
-                return texts.formDateOutOfRangeError;
-            }
+    const isInRange = (value: string): boolean => {
+        const isoValue = processValue(value);
+        if (min && isoValue && isoValue < getLocalDateTimeString(min)) {
+            return false;
         }
-        if (max && value) {
-            if (value > getLocalDateTimeString(max)) {
-                return texts.formDateOutOfRangeError;
-            }
+        if (max && isoValue && isoValue > getLocalDateTimeString(max)) {
+            return false;
+        }
+        return true;
+    };
+
+    const validate = (value: string, rawValue: string) => {
+        if (!isInRange(value)) {
+            return texts.formDateOutOfRangeError;
         }
         return validateProp?.(value, rawValue);
+    };
+
+    const onChangeValue = (value: string, rawValue: string) => {
+        if (isInRange(value)) {
+            onChangeValueProp?.(value, rawValue);
+        }
+        // if not in range, onChangeValue is not called
     };
 
     const fieldProps = useFieldProps({
@@ -72,6 +83,8 @@ const FormDateField: React.FC<DateFieldProps> = ({
         <TextFieldBase
             {...rest}
             {...fieldProps}
+            min={min ? getLocalDateTimeString(min) : undefined}
+            max={max ? getLocalDateTimeString(max) : undefined}
             type="datetime-local"
             endIconOverlay={
                 <div style={{position: 'absolute', top: 16, right: 16, pointerEvents: 'none'}}>
@@ -87,7 +100,12 @@ const FormDateField: React.FC<DateFieldProps> = ({
 
     return (
         <React.Suspense fallback={nativePicker}>
-            <ReactDateTimePicker {...rest} {...fieldProps} withTime />
+            <ReactDateTimePicker
+                {...rest}
+                {...fieldProps}
+                withTime
+                isValidDate={(currentDate) => isInRange(getLocalDateTimeString(currentDate.toDate()))}
+            />
         </React.Suspense>
     );
 };
