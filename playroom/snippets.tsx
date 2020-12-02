@@ -270,7 +270,7 @@ const headerSnippets = [
             breadcrumbs={
                 <NavigationBreadcrumbs
                     breadcrumbs={[{ title: "Cuenta", url: "/dashboard" }]}
-                    title="Facturas"
+                    title="Invoices"
                 />
             }
             header={
