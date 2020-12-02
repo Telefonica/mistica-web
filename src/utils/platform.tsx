@@ -16,7 +16,7 @@ export const isInsideNovumNativeApp = (platformOverrides: Theme['platformOverrid
     return isWebViewBridgeAvailable();
 };
 
-export const isRunningAcceptanceTest = (platformOverrides: Theme['platformOverrides']): boolean =>
+export const isRunningAcceptanceTest = (platformOverrides: Theme['platformOverrides'] = {}): boolean =>
     getUserAgent(platformOverrides).includes('acceptance-test');
 
 const isEdgeOrIE = Boolean(typeof self !== 'undefined' && self.MSStream);

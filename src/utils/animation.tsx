@@ -32,14 +32,10 @@ export const animateShakeStyles = (platformOverrides: Theme['platformOverrides']
               outerAnimation: {
                   animation: '$shake 0.82s cubic-bezier(.36,.07,.19,.97) both',
                   animationDelay: ({delay}: {delay: number}) => `${delay + 0.04}s`,
-                  marginLeft: '-4px',
-                  transform: 'translate(4px, 0)',
               },
               innerAnimation: {
                   animation: '$shake 0.82s cubic-bezier(.36,.07,.19,.97) both',
                   animationDelay: ({delay}: {delay: number}) => `${delay}s`,
-                  marginLeft: '-4px',
-                  transform: 'translate(4px, 0)',
               },
           }
         : {innerAnimation: {}, outerAnimation: {}};

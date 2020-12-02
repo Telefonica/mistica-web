@@ -20,6 +20,7 @@ export type SelectProps = {
   autoFocus?: boolean,
   value?: string,
   fullWidth?: boolean,
+  native?: boolean,
 };
 declare var Select: React.ComponentType<SelectProps>;
 declare export default typeof Select;
