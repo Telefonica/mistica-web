@@ -1,14 +1,14 @@
-import {mediaQueriesConfig, texts as textsTheme} from '../src/theme';
+import {mediaQueriesConfig, texts as defaultTexts} from '../src/theme';
 import * as themes from '../.storybook/themes';
-import type {ThemeConfig} from '../src/theme';
+import type {ThemeConfig, ThemeTexts} from '../src/theme';
 
 // Override the media query desktopOrTabletMinHeight to avoid to show the components mobile version
 // when playroom height is too short.
 const mediaQueries = {...mediaQueriesConfig, desktopOrTabletMinHeight: 0};
 
 // Override texts
-const texts = {
-    ...textsTheme,
+const texts: ThemeTexts = {
+    ...defaultTexts,
     expirationDatePlaceholder: 'MM/YY',
     togglePasswordVisibilityLabel: 'Show or hide password',
     loading: 'Loading',
