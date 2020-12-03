@@ -24,6 +24,7 @@ import(/* webpackChunkName: "moment-locale" */ `moment/locale/${browserLocale}`)
 
 export interface DateTimePickerProps extends CommonFormFieldProps {
     inputRef: (field: HTMLInputElement | null) => void;
+    isValidDate?: (currentDate: Moment.Moment, selectedDate: Moment.Moment) => boolean;
     withTime?: boolean;
 }
 
@@ -119,7 +120,7 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, ...rest}) => {
+const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, isValidDate, ...rest}) => {
     const [showPicker, setShowPicker] = React.useState(false);
     const classes = useStyles();
     const fieldRef = React.useRef<HTMLInputElement | null>(null);
@@ -203,6 +204,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, ...rest}) => {
                             locale={browserLocale}
                             input={false}
                             onChange={setValue}
+                            isValidDate={isValidDate}
                         />
                     </div>
                 </Overlay>

@@ -119,7 +119,10 @@ const fixFlowDefinition = (flowFilename) => {
     }
 
     // `React.InputHTMLAttributes<HTMLInputElement>` => `any`
-    src = src.replace(/React\.InputHTMLAttributes<HTMLInputElement>/, 'any');
+    src = src.replace(/React\.InputHTMLAttributes<HTMLInputElement>/g, 'any');
+
+    // `Moment.Moment` => `Moment`
+    src = src.replace(/Moment.Moment/g, 'Moment');
 
     // File is written two times, one before applying beautify to be able to check problems if beautify fails
     writeFileSync(flowFilename, src);
