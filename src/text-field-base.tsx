@@ -167,6 +167,7 @@ const useStyles = createUseStyles((theme) => ({
         resize: 'none',
         marginTop: ({label}) => (label ? 24 : 16),
         paddingBottom: 8,
+        lineHeight: '24px',
         ...commonInputStyles(theme),
     },
     input: {
