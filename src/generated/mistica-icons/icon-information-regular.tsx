@@ -12,7 +12,7 @@ type Props = {
     size?: number;
 };
 
-const IconInfomationRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconInformationRegular: React.FC<Props> = ({color, size = 24}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.iconInverse : colors.iconPrimary);
@@ -26,4 +26,4 @@ const IconInfomationRegular: React.FC<Props> = ({color, size = 24}) => {
     );
 };
 
-export default IconInfomationRegular;
+export default IconInformationRegular;
