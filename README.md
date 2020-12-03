@@ -41,6 +41,7 @@ import {
   ButtonLayout,
   ButtonPrimary,
   alert,
+  getMovistarSkin,
 } from '@telefonica/mistica';
 
 const App = () => (
@@ -66,7 +67,7 @@ const App = () => (
 
 ReactDOM.render(
   <ThemeContextProvider
-    theme={{skin: 'Movistar', i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}}}
+    theme={{skin: getMovistarSkin(), i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}}}
   >
     <App />
   </ThemeContextProvider>,
