@@ -41,6 +41,7 @@ import {
   ButtonLayout,
   ButtonPrimary,
   alert,
+  getMovistarSkin,
 } from '@telefonica/mistica';
 
 const App = () => (
@@ -66,7 +67,7 @@ const App = () => (
 
 ReactDOM.render(
   <ThemeContextProvider
-    theme={{skin: 'Movistar', i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}}}
+    theme={{skin: getMovistarSkin(), i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}}}
   >
     <App />
   </ThemeContextProvider>,
@@ -112,8 +113,8 @@ Start prototyping interfaces with Mistica components in the
 
 ### Mistica in other platforms
 
-- [Android (WIP)](https://github.com/Telefonica/mistica-android)
-- [iOS (WIP)](https://github.com/Telefonica/mistica-ios)
+- [Android](https://github.com/Telefonica/mistica-android)
+- [iOS](https://github.com/Telefonica/mistica-ios)
 
 ## Contributing
 

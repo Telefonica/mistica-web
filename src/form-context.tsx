@@ -146,7 +146,7 @@ export const useFieldProps = ({
         value,
         defaultValue: defaultValue ?? (value === undefined ? rawValues[name] ?? '' : undefined),
         name,
-        helperText: helperText ?? formErrors[name],
+        helperText: formErrors[name] || helperText,
         required: !optional,
         error: error || !!formErrors[name],
         disabled: disabled || formStatus === 'sending',

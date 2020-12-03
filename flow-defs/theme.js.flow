@@ -24,6 +24,7 @@ declare export var texts: {
   formCreditCardCvvTooltipAmex: string,
   formCreditCardExpirationError: string,
   formCreditCardNumberError: string,
+  formDateOutOfRangeError: string,
   formEmailError: string,
   closeButtonLabel: string,
   formSearchClear: string,

@@ -24,6 +24,7 @@ export const texts = {
     formCreditCardCvvTooltipAmex: 'Si es American Express, añade los 4 dígitos del anverso',
     formCreditCardExpirationError: 'Fecha no válida',
     formCreditCardNumberError: 'No es un número de tarjeta valido',
+    formDateOutOfRangeError: 'Fecha fuera del rango permitido',
     formEmailError: 'Email incorrecto',
     closeButtonLabel: 'Cerrar',
     formSearchClear: 'Borrar búsqueda',
