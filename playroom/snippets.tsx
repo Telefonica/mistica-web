@@ -414,4 +414,5 @@ export default [
             }
         />`,
     },
+    {group: 'PromoTag', name: 'PromoTag', code: '<PromoTag>PromoTag</PromoTag>'},
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
