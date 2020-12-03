@@ -12,18 +12,18 @@ type Props = {
     size?: number;
 };
 
-const IconFlechaAdelanteRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconArrowForwardRegular: React.FC<Props> = ({color, size = 24}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.iconInverse : colors.iconPrimary);
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
             <path
-                d="M21.608 12.11a.833.833 0 000-.637c-.02-.05-.056-.086-.081-.128-.028-.045-.048-.093-.087-.135l-8.43-8.919a.845.845 0 00-1.227 1.16l7.084 7.493H2.83a.846.846 0 000 1.692h16.04l-7.239 7.652a.847.847 0 00.031 1.194.847.847 0 001.193-.031l8.586-9.081c.039-.04.056-.09.087-.135.025-.042.061-.078.08-.126"
+                d="M19.949 12.195a.676.676 0 000-.517c-.016-.041-.046-.07-.066-.105-.023-.036-.04-.075-.071-.11L12.95 4.216a.686.686 0 10-.999.943l5.767 6.09H4.662a.688.688 0 000 1.375h13.057l-5.893 6.22a.688.688 0 00.025.97.69.69 0 00.972-.026l6.989-7.38c.032-.033.045-.074.07-.11.021-.034.05-.064.067-.102"
                 fill={fillColor}
             />
         </svg>
     );
 };
 
-export default IconFlechaAdelanteRegular;
+export default IconArrowForwardRegular;
