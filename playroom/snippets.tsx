@@ -403,7 +403,7 @@ export default [
         code: `
         <HighlightedCard
             title="Title"
-            description="Some content here"
+            description="Some description here"
             imageUrl="${imagePlaceholder}"
             imageFit="fit"
             onClose={() => {}}
