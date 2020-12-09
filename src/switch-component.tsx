@@ -29,7 +29,7 @@ const useStyles = createUseStyles((theme) => {
             display: 'block',
             overflow: 'hidden',
             cursor: 'pointer',
-            borderRadius: 51,
+            borderRadius: 40,
             '& > *': {pointerEvents: 'none'},
         },
         bar: {
@@ -66,7 +66,7 @@ const useStyles = createUseStyles((theme) => {
                 if (isChecked) {
                     return isIos ? 6 : 1;
                 }
-                return 26;
+                return isIos ? 26 : 21;
             },
             display: 'block',
             width: isIos ? 27 : 20,
