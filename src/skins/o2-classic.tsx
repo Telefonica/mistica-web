@@ -219,7 +219,7 @@ export const getO2ClassicSkin: GetSkin = () => {
             toggleAndroidBackgroundActive: O2_GEM_LIGHT_30,
             toggleIosInactive: WHITE,
             toggleIosBackgroundInactive: GREY_3,
-            toggleIosBackgroundActive: '#4CD964',
+            toggleIosBackgroundActive: O2_GEM,
 
             // CHARTS -- TBD
             progressChart0: O2_GREEN,
