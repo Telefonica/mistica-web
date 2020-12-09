@@ -1,4 +1,4 @@
-import {mediaQueriesConfig, texts as defaultTexts} from '../src/theme';
+import {mediaQueriesConfig} from '../src/theme';
 import * as themes from '../.storybook/themes';
 import type {ThemeConfig, ThemeTexts} from '../src/theme';
 
@@ -8,7 +8,6 @@ const mediaQueries = {...mediaQueriesConfig, desktopOrTabletMinHeight: 0};
 
 // Override texts
 const texts: ThemeTexts = {
-    ...defaultTexts,
     expirationDatePlaceholder: 'MM/YY',
     togglePasswordVisibilityLabel: 'Show or hide password',
     loading: 'Loading',
@@ -27,6 +26,7 @@ const texts: ThemeTexts = {
     formCreditCardCvvTooltipAmex: 'If it is an American Express, add the 4 digits from the back of your card',
     formCreditCardExpirationError: 'Invalid date',
     formCreditCardNumberError: 'Card number not valid',
+    formDateOutOfRangeError: 'Date not allowed',
     formEmailError: 'Wrong email',
     closeButtonLabel: 'Close',
     formSearchClear: 'Clear search',
