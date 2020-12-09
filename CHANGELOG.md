@@ -1,3 +1,19 @@
+# [7.6.0](https://github.com/Telefonica/mistica-web/compare/v7.5.0...v7.6.0) (2020-12-03)
+
+
+### Bug Fixes
+
+* **List,Checkbox:** problem using checkbox control inside a list row ([#161](https://github.com/Telefonica/mistica-web/issues/161)) ([a43c388](https://github.com/Telefonica/mistica-web/commit/a43c388a34cc6cdf1e1e5fad2ec433ba56134862))
+* **TextField:** multi line line-height ([a8bc879](https://github.com/Telefonica/mistica-web/commit/a8bc879aff931d99485c768744f3b639f01be7b1))
+
+
+### Features
+
+* **DateField,DateTimeField:** support max/min props and automatic range validation ([#162](https://github.com/Telefonica/mistica-web/issues/162)) ([50f50be](https://github.com/Telefonica/mistica-web/commit/50f50be7a53218630c1f6fda43b64d076b54beec))
+* **IconError:** update feedback error icon animation ([#164](https://github.com/Telefonica/mistica-web/issues/164)) ([feef4ec](https://github.com/Telefonica/mistica-web/commit/feef4ecca26cded1669d93810e9a2ad5f3f9f893))
+* **Icons:** update mistica-icons collection ([#166](https://github.com/Telefonica/mistica-web/issues/166)) ([8b5758a](https://github.com/Telefonica/mistica-web/commit/8b5758a6cf558b27ae5864ba0cc08e0d39807f33))
+* **PromoTag:** add snippet to playroom ([#165](https://github.com/Telefonica/mistica-web/issues/165)) ([04410b9](https://github.com/Telefonica/mistica-web/commit/04410b9e96f0b59c5b05eebf2ea02dc523f3294b))
+
 # [7.5.0](https://github.com/Telefonica/mistica-web/compare/v7.4.2...v7.5.0) (2020-11-26)
 
 

@@ -93,6 +93,8 @@ declare type TextFieldBaseProps = {
   multiline?: boolean,
   inputMode?: string,
   readOnly?: boolean,
+  min?: string,
+  max?: string,
 };
 declare var TextFieldBase: React.Component<TextFieldBaseProps>;
 declare export default typeof TextFieldBase;
