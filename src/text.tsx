@@ -36,6 +36,7 @@ const useStyles = createUseStyles((theme) => {
             textDecoration: (p) => p.textDecoration,
             letterSpacing: ({letterSpacing}) => letterSpacing,
             overflowWrap: ({wordBreak}) => (wordBreak ? 'anywhere' : 'inherit'),
+            margin: 0,
 
             [theme.mq.mobile]: {
                 lineHeight: ({mobileLineHeight}) => mobileLineHeight,
