@@ -21,7 +21,7 @@ const exampleCode = `
 </Form>`;
 
 const config = {
-    title: 'Novum design system',
+    title: 'Mística Design System',
     components: './playroom/components.tsx',
     outputPath: './public/playroom',
     baseUrl: '/playroom/',
