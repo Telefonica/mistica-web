@@ -251,11 +251,11 @@ const headerSnippets = [
         <HeaderLayout
             header={
                 <Header
-                    title="La última factura de diciembre ya esta disponible"
-                    preamount="Cuota mensual (IVA incluido)"
+                    title="The last invoice is available"
+                    preamount="Some text (text)"
                     amount="60,44 €"
-                    button={<ButtonPrimary href="asdf">Descargar factura</ButtonPrimary>}
-                    subtitle="Y esto es un subtitulo"
+                    button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
+                    subtitle="Subtitle"
                 />
             }
             extra={<Placeholder />}
@@ -270,15 +270,15 @@ const headerSnippets = [
             breadcrumbs={
                 <NavigationBreadcrumbs
                     breadcrumbs={[{ title: "Cuenta", url: "/dashboard" }]}
-                    title="Facturas"
+                    title="Invoices"
                 />
             }
             header={
                 <Header
-                    title="La última factura de diciembre ya esta disponible"
+                    title="The last invoice is available"
                     preamount="Cuota mensual (IVA incluido)"
                     amount="60,44 €"
-                    button={<ButtonPrimary href="asdf">Descargar factura</ButtonPrimary>}
+                    button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
                     subtitle="Y esto es un subtitulo"
                 />
             }
@@ -293,15 +293,15 @@ const headerSnippets = [
         <HeaderLayout
             header={
                 <Header
-                    title="La última factura de diciembre ya esta disponible"
+                    title="The last invoice is available"
                     preamount={{
-                        text: "Ejemplo de texto tachado",
+                        text: "Example of line-through text",
                         textDecoration: "line-through"
                     }}
                     amount="60,44 €"
-                    button={<ButtonPrimary href="asdf">Descargar factura</ButtonPrimary>}
+                    button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
                     subtitle={{
-                        text: "Ejemplo de subtitle con secondary color",
+                        text: "Subtitle with secondary color",
                         color: theme.colors.textSecondary
                     }}
                 />
@@ -315,9 +315,9 @@ const headerSnippets = [
         code: `
         <MainSectionHeaderLayout>
             <MainSectionHeader
-                title="Soporte"
-                description="¿En qué podemos ayudarte?"
-                button={<ButtonPrimary href="asdf">Acción</ButtonPrimary>}
+                title="Title"
+                description="Some text here"
+                button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
             />
         </MainSectionHeaderLayout>
         `,
@@ -402,8 +402,8 @@ export default [
         name: 'HighlightedCard',
         code: `
         <HighlightedCard
-            title="Resolver problema técnico"
-            description="Usa nuestra herramienta para resolver tus problemas técnicos"
+            title="Title"
+            description="Some description here"
             imageUrl="${imagePlaceholder}"
             imageFit="fit"
             onClose={() => {}}

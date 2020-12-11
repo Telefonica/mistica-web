@@ -22,7 +22,7 @@ const useStyles = createUseStyles((theme) => {
         },
         switchCheckboxContainer: {
             position: 'relative',
-            width: isIos ? 40 : 34,
+            width: isIos ? 51 : 34,
             userSelect: 'none',
         },
         switchCheckboxLabel: {
@@ -42,7 +42,7 @@ const useStyles = createUseStyles((theme) => {
                 display: 'block',
                 float: 'left',
                 width: '50%',
-                height: isIos ? 24 : 14,
+                height: isIos ? 31 : 14,
                 boxSizing: 'border-box',
             },
             '&:before': {
@@ -60,17 +60,17 @@ const useStyles = createUseStyles((theme) => {
         },
         ball: {
             position: 'absolute',
-            top: isIos ? 5 : 1,
+            top: isIos ? 6 : 1,
             bottom: 0,
             right: ({isChecked}) => {
                 if (isChecked) {
-                    return isIos ? 5 : 1;
+                    return isIos ? 6 : 1;
                 }
-                return 21;
+                return isIos ? 26 : 21;
             },
             display: 'block',
-            width: isIos ? 22 : 20,
-            height: isIos ? 22 : 20,
+            width: isIos ? 27 : 20,
+            height: isIos ? 27 : 20,
             margin: -4,
             backgroundColor: ({isChecked}) => {
                 if (isChecked) {

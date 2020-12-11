@@ -30,7 +30,7 @@ const useStyles = createUseStyles((theme) => ({
         left: '50%',
         transform: 'translate(-50%, -50%) rotate(45deg)',
         border: `1px solid ${theme.colors.divider}`,
-        borderRadius: 2,
+        borderRadius: 4,
         boxShadow: ({position}) =>
             position === 'bottom' ? 'initial' : `0 0 4px 0 ${applyAlpha(theme.colors.layerDecorations, 0.2)}`,
     },
@@ -79,6 +79,8 @@ const useStyles = createUseStyles((theme) => ({
         margin: 16,
         marginRight: 8,
         justifyContent: 'center',
+        width: '100%',
+        wordBreak: 'break-word',
     },
     assetContent: {
         width: 40,
