@@ -80,7 +80,7 @@ const useStyles = createUseStyles((theme) => ({
         marginRight: 8,
         justifyContent: 'center',
         width: '100%',
-        wordBreak: 'break-all',
+        wordBreak: 'break-word',
     },
     assetContent: {
         width: 40,
