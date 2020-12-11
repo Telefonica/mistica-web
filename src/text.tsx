@@ -36,6 +36,7 @@ const useStyles = createUseStyles((theme) => {
             textDecoration: (p) => p.textDecoration,
             letterSpacing: ({letterSpacing}) => letterSpacing,
             overflowWrap: ({wordBreak}) => (wordBreak ? 'anywhere' : 'inherit'),
+            // Needed to reset the default browser margin that adds to p, h1, h2... elements.
             margin: 0,
 
             [theme.mq.mobile]: {
