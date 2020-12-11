@@ -99,10 +99,13 @@ const main = async () => {
     const stopStorybookServer = await startStorybookServer();
     const stopChrome = await startChrome();
 
-    const result = await runLighthouse(getStoryUrl(stories[0]));
-
-    fs.writeFileSync('/tmp/out.json', JSON.stringify(result.lhr, null, 2));
-    fs.writeFileSync('/tmp/out.html', result.report);
+    const t = Date.now();
+    for (const story of stories) {
+        const result = await runLighthouse(getStoryUrl(story));
+        fs.writeFileSync(`/tmp/${story}.html`, result.report);
+        fs.writeFileSync(`/tmp/${story}.json`, JSON.stringify(result.lhr, null, 2));
+    }
+    console.log('total time:', Date.now() - t, 'ms');
 
     stopStorybookServer();
     stopChrome();
