@@ -61,7 +61,7 @@ export const getO2ClassicSkin: GetSkin = () => {
             dividerSpecial1: O2_BLUE_LIGHT_60,
 
             background,
-            backgroundPromo: O2_PURPLE,
+            backgroundPromo: PINK,
             backgroundDark: GREY_0,
             backgroundAlternative: GREY_5,
             backgroundSelectedDark: WHITE,
