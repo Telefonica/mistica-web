@@ -87,10 +87,12 @@ const Form: React.FC<FormProps> = ({
                 }
                 if (errors[name] && !didFocus) {
                     didFocus = true;
-                    if (focusableElement) {
-                        focusableElement.focus();
-                    } else {
+                    if (input) {
+                        console.log('input focus', input);
                         input.focus();
+                    } else if (focusableElement) {
+                        console.log('focusable element focus', focusableElement);
+                        focusableElement.focus();
                     }
                 }
             }

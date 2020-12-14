@@ -59,7 +59,7 @@ export const AutomaticForm: StoryComponent = () => {
 
                 <Select name="country" label="country" options={countryOptions} />
 
-                <Select autoFocus name="fruit" label="fruit" optional options={fruitOptions} />
+                <Select autoFocus name="fruit" label="fruit" options={fruitOptions} />
 
                 <CreditCardFields />
 
