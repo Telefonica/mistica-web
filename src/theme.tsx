@@ -111,7 +111,7 @@ export type Theme = {
         phoneNumberFormattingRegionCode: RegionCode;
     };
     platformOverrides: {
-        platform?: 'ios' | 'android';
+        platform?: 'ios' | 'android' | 'desktop';
         insideNovumNativeApp?: boolean;
         userAgent?: string;
     };
