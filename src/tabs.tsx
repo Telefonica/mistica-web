@@ -51,10 +51,13 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
         height,
         width: (p: StyleProps) => p.width,
         display: 'flex',
+
+        '& svg': {
+            fill: 'currentColor',
+        },
     },
     tab: {
         flex: '1 0 80px',
-
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -63,6 +66,7 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
         verticalAlign: 'baseline',
         height,
         textAlign: 'center',
+        color: colors.textSecondary,
         borderBottom: '2px solid transparent',
         maxWidth: ({numTabs}) => {
             if (numTabs === 2) {
@@ -72,6 +76,10 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
             }
             return tabMaxWidth;
         },
+        '&:hover': {
+            color: ({hover}) => (hover ? hover : 'currentColor'),
+        },
+
         fallbacks: {
             maxWidth: tabMaxWidth, // max() is not supported by all browsers
         },
@@ -88,8 +96,7 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
             flexBasis: 208,
         },
     },
-    tebText: {
-        color: colors.textSecondary,
+    tabText: {
         lineHeight: 1.5,
         fontSize: 16,
         letterSpacing: getPlatform(platformOverrides) === 'ios' ? -0.32 : 'normal',
@@ -98,10 +105,8 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
         overflow: 'hidden',
         textOverflow: 'ellipsis',
     },
-    tabTextSelected: {
-        color: colors.textPrimary,
-    },
     tabSelected: {
+        color: colors.textPrimary,
         borderBottom: `2px solid ${colors.controlActive}`,
     },
     icon: {
@@ -111,13 +116,20 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
     },
 }));
 
+type IconProps = {
+    active?: boolean;
+    hover?: boolean;
+    disabled?: boolean;
+    color?: string;
+};
+
 export type TabsProps = {
     selectedIndex: number;
     onChange: (selectedIndex: number) => void;
     tabs: ReadonlyArray<{
         readonly text: string;
         readonly trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-        readonly icon?: React.ReactNode;
+        readonly icon?: React.ReactNode | (({active, hover, disabled, color}: IconProps) => React.ReactNode);
         readonly 'aria-controls'?: string;
     }>;
 };
@@ -148,15 +160,14 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) =
                                         aria-controls={ariaControls}
                                         aria-selected={isSelected ? 'true' : 'false'}
                                     >
-                                        {icon && <div className={classes.icon}>{icon}</div>}
-                                        <span
-                                            className={classnames(
-                                                classes.tebText,
-                                                isSelected && classes.tabTextSelected
-                                            )}
-                                        >
-                                            {text}
-                                        </span>
+                                        {icon && (
+                                            <div className={classes.icon}>
+                                                {typeof icon === 'function'
+                                                    ? icon({active: isSelected})
+                                                    : icon}
+                                            </div>
+                                        )}
+                                        <span className={classes.tabText}>{text}</span>
                                     </Touchable>
                                 );
                             })}

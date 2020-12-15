@@ -2,13 +2,19 @@
 
 import * as React from "react";
 import type { TrackingEvent } from "./utils/types";
+declare type IconProps = {
+  active?: boolean,
+  hover?: boolean,
+  disabled?: boolean,
+  color?: string,
+};
 export type TabsProps = {
   selectedIndex: number,
   onChange: (selectedIndex: number) => void,
   tabs: $ReadOnlyArray<{
     +text: string,
     +trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
-    +icon?: React.Node,
+    +icon?: React.Node | ((x: IconProps) => React.Node),
     +"aria-controls"?: string,
   }>,
 };
