@@ -36,7 +36,12 @@ const countryOptions = countriesList.map((text, i) => ({text, value: '' + i}));
 export const AutomaticForm: StoryComponent = () => {
     return (
         <Form
-            initialValues={{email: 'john.doe@gmail.com', decimal: '123', 'save-cc': true}}
+            initialValues={{
+                email: 'john.doe@gmail.com',
+                decimal: '123',
+                country: '',
+                'save-cc': true,
+            }}
             onSubmit={fakeApiCall}
             autoJump
         >

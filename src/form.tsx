@@ -71,8 +71,8 @@ const Form: React.FC<FormProps> = ({
      */
     const validateFields = React.useCallback((): FormErrors => {
         const errors: FormErrors = {};
-        let didFocus = false;
-        for (const [name, {input, validator, focusableElement}] of fieldRegistrations.current) {
+        for (const [name, {input, validator}] of fieldRegistrations.current) {
+            console.log(name);
             if (input) {
                 if (input.disabled) {
                     continue;
@@ -85,18 +85,23 @@ const Form: React.FC<FormProps> = ({
                         errors[name] = error;
                     }
                 }
-                if (errors[name] && !didFocus) {
-                    didFocus = true;
-                    if (input) {
-                        console.log('input focus', input);
-                        input.focus();
-                    } else if (focusableElement) {
-                        console.log('focusable element focus', focusableElement);
-                        focusableElement.focus();
-                    }
-                }
             }
         }
+
+        const elementsWithErrors = Object.keys(errors)
+            .map((name) => {
+                const reg = fieldRegistrations.current.get(name);
+                return reg?.focusableElement || reg?.input;
+            })
+            .filter(Boolean) as Array<HTMLSelectElement | HTMLDivElement>; // casted to remove inferred nulls/undefines
+
+        if (elementsWithErrors.length) {
+            elementsWithErrors.sort((a, b) =>
+                a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1
+            );
+            elementsWithErrors[0].focus();
+        }
+
         setFormErrors(errors);
         if (onValidationErrors) {
             onValidationErrors(errors);
