@@ -72,7 +72,6 @@ const Form: React.FC<FormProps> = ({
     const validateFields = React.useCallback((): FormErrors => {
         const errors: FormErrors = {};
         for (const [name, {input, validator}] of fieldRegistrations.current) {
-            console.log(name);
             if (input) {
                 if (input.disabled) {
                     continue;

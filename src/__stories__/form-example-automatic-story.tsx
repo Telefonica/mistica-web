@@ -40,6 +40,7 @@ export const AutomaticForm: StoryComponent = () => {
                 email: 'john.doe@gmail.com',
                 decimal: '123',
                 country: '',
+                fruit: '',
                 'save-cc': true,
             }}
             onSubmit={fakeApiCall}
