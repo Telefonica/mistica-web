@@ -51,10 +51,6 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
         height,
         width: (p: StyleProps) => p.width,
         display: 'flex',
-
-        '& svg': {
-            fill: 'currentColor',
-        },
     },
     tab: {
         flex: '1 0 80px',
@@ -77,7 +73,7 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
             return tabMaxWidth;
         },
         '&:hover': {
-            color: ({hover}) => (hover ? hover : 'currentColor'),
+            color: 'currentColor',
         },
 
         fallbacks: {
@@ -116,20 +112,13 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
     },
 }));
 
-type IconProps = {
-    active?: boolean;
-    hover?: boolean;
-    disabled?: boolean;
-    color?: string;
-};
-
 export type TabsProps = {
     selectedIndex: number;
     onChange: (selectedIndex: number) => void;
     tabs: ReadonlyArray<{
         readonly text: string;
         readonly trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-        readonly icon?: React.ReactNode | (({active, hover, disabled, color}: IconProps) => React.ReactNode);
+        readonly icon?: React.ReactNode;
         readonly 'aria-controls'?: string;
     }>;
 };
@@ -160,13 +149,7 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) =
                                         aria-controls={ariaControls}
                                         aria-selected={isSelected ? 'true' : 'false'}
                                     >
-                                        {icon && (
-                                            <div className={classes.icon}>
-                                                {typeof icon === 'function'
-                                                    ? icon({active: isSelected})
-                                                    : icon}
-                                            </div>
-                                        )}
+                                        {icon && <div className={classes.icon}>{icon}</div>}
                                         <span className={classes.tabText}>{text}</span>
                                     </Touchable>
                                 );
