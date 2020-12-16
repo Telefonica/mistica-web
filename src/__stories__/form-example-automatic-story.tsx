@@ -82,7 +82,6 @@ export const AutomaticForm: StoryComponent = () => {
                 />
 
                 <ButtonLayout>
-                    <ButtonSecondary onPress={() => window.alert('hello')}>Hello</ButtonSecondary>
                     <ButtonPrimary submit loadingText="Sending">
                         Send
                     </ButtonPrimary>

@@ -1,9 +1,9 @@
 import {openStoryPage, screen} from '../test-utils';
 
-test('Form With Fixed Footer Layout', async () => {
+test('Form with Fixed Footer Layout', async () => {
     await openStoryPage({
-        section: 'Components/Forms/Form examples',
-        name: 'Form With Fixed Footer Layout',
+        section: 'Components/Forms/Example Fixed Footer',
+        name: 'Fixed Footer Form',
         device: 'MOBILE_IOS',
     });
 
@@ -12,4 +12,20 @@ test('Form With Fixed Footer Layout', async () => {
     await (await screen.findByRole('button')).click();
 
     await screen.findByText('Form was submitted 1 times');
+});
+
+test('Form focuses first field with error after submit validation', async () => {
+    await openStoryPage({
+        section: 'Components/Forms/Example Automatic',
+        name: 'Automatic Form',
+        device: 'MOBILE_IOS',
+    });
+
+    await (await screen.findByText('Send')).click();
+
+    const focusedElementHandle = await page.$(':focus');
+    const namePropertyHandle = await focusedElementHandle?.getProperty('name');
+    const name = await namePropertyHandle?.jsonValue();
+
+    expect(name).toBe('phone');
 });
