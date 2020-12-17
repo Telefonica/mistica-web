@@ -49,6 +49,7 @@ export {default as NegativeBox} from './negative-box';
 export {default as Tabs} from './tabs';
 export {default as Inline} from './inline';
 export {default as HighlightedCard} from './highlighted-card';
+export {default as Stepper} from './stepper';
 
 // Forms
 export {default as Form} from './form';
