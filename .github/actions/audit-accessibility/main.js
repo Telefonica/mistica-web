@@ -100,10 +100,12 @@ const generateReport = async (results) => {
     mkdirp.sync(PATH_REPORTS);
 
     let lines = ['**Accessibility report**'];
-    results.forEach(([name, result]) => {
+
+    for (const [name, result] of results) {
         const filename = path.join(PATH_REPORTS, name + '.json');
+
         fs.writeFileSync(filename, JSON.stringify(result, null, 2));
-        const url = uploadFile(filename, 'application/json');
+        const url = await uploadFile(filename, 'application/json');
 
         lines.push(
             `<details>`,
@@ -111,7 +113,8 @@ const generateReport = async (results) => {
             `  [report](${url})`,
             `</details>`
         );
-    });
+    }
+
     if (process.env.CI) {
         require('../utils/github').commentPullRequest(lines.join('\n'));
     } else {
