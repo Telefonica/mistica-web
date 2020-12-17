@@ -6,8 +6,11 @@ const {AxePuppeteer} = require('@axe-core/puppeteer');
 const puppeteer = require('puppeteer');
 const fetch = require('node-fetch').default;
 const fs = require('fs');
+const mkdirp = require('mkdirp');
+const {uploadFile} = require('../utils/azure-storage');
 
 const PATH_REPO_ROOT = path.join(__dirname, '..');
+const PATH_REPORTS = path.join(PATH_REPO_ROOT, 'accessibility');
 const PORT_STORYBOOK = 6006;
 const PORT_CHROME = 9223;
 
@@ -93,20 +96,32 @@ const audit = async (browser, url) => {
 /**
  * @param {Array<[name: string, results: import('axe-core').AxeResults]>} results
  */
-const generateReport = (results) => {
-    let message = '# Accessibility report\n';
+const generateReport = async (results) => {
+    mkdirp.sync(PATH_REPORTS);
+
+    let lines = ['**Accessibility report**'];
     results.forEach(([name, result]) => {
-        message += `* ${name}\n`;
+        const filename = path.join(PATH_REPORTS, name + '.json');
+        fs.writeFileSync(filename, JSON.stringify(result, null, 2));
+        const url = uploadFile(filename, 'application/json');
+
+        lines.push(
+            `<details>`,
+            `  <summary>❌ (${result.violations.length}) <b>${name}</b></summary>`,
+            `  [report](${url})`,
+            `</details>`
+        );
     });
     if (process.env.CI) {
-        require('../utils/github').commentPullRequest(message);
+        require('../utils/github').commentPullRequest(lines.join('\n'));
     } else {
-        console.log(message);
+        console.log(lines);
     }
 };
 
 const main = async () => {
     process.chdir(PATH_REPO_ROOT);
+
     if (!process.env.CI) {
         console.log('⚠️ This script assumes that a static storybook build exists!');
         console.log('Execute `yarn storybook-static` to create or update existing build');
@@ -129,7 +144,7 @@ const main = async () => {
     }
     console.log('total time:', Date.now() - t, 'ms');
 
-    generateReport(results);
+    await generateReport(results);
 
     browser.close();
     stopStorybookServer();
