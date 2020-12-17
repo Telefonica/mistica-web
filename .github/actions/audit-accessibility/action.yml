@@ -1,0 +1,20 @@
+# https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions
+name: 'Set npm token'
+description: 'This action sets a publish npm token (from an env var) in the .npmrc config file to be able to publish.'
+inputs:
+    github-token:
+        description: 'GitHub token, required to comment on PRs'
+        required: true
+    azure-account-name:
+        description: 'Azure Account Name'
+        required: true
+    azure-account-key:
+        description: 'Azure Account Key'
+        required: true
+    # glob:
+    #     description: 'Glob to match diff image files'
+    #     required: false
+    #     default: 'src/**/__diff_output__/*-diff.png'
+runs:
+    using: 'node12'
+    main: 'main.js'

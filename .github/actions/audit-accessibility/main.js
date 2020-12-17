@@ -2,20 +2,29 @@
 const path = require('path');
 const {execSync} = require('child_process');
 const StaticServer = require('static-server');
-const lighthouse = require('lighthouse');
+const {AxePuppeteer} = require('@axe-core/puppeteer');
+const puppeteer = require('puppeteer');
 const fetch = require('node-fetch').default;
 const fs = require('fs');
+const github = require('../utils/github');
 
 const PATH_REPO_ROOT = path.join(__dirname, '..');
 const PORT_STORYBOOK = 6006;
 const PORT_CHROME = 9223;
+
+const STORIES_BLACKLIST = new Set(['welcome-welcome--mistica', 'icons-mistica-icons--catalog']);
+
+process.on('unhandledRejection', (error) => {
+    console.error(error);
+    process.exit(1);
+});
 
 const getStories = () => {
     console.log('Extracting stories information');
     // creates "stories.json" file with stories information
     execSync('yarn sb extract ./public', {stdio: 'inherit'});
     // @ts-ignore
-    return Object.keys(require('../public/stories.json').stories);
+    return Object.keys(require('../../../public/stories.json').stories);
 };
 
 const getStoryUrl = (id) => {
@@ -38,22 +47,29 @@ const startStorybookServer = () =>
         });
     });
 
+/**
+ * @returns function to stop chrome
+ */
 const startChrome = async () => {
     if (process.env.CI) {
-        console.log('Assuming Chrome is already running');
         return () => {};
     }
     console.log('Execute Chrome');
     execSync('yarn up-chromium', {stdio: 'inherit'});
+    return () => {
+        execSync('yarn down-chromium', {stdio: 'inherit'});
+    };
+};
 
+/**
+ * @returns {Promise<string>}
+ */
+const getBrowserWsEndpoint = async () => {
     let retries = 10;
-    // eslint-disable-next-line no-constant-condition
     while (retries--) {
         try {
-            await fetch(`http://localhost:${PORT_CHROME}`);
-            return () => {
-                execSync('yarn down-chromium', {stdio: 'inherit'});
-            };
+            const response = await fetch(`http://localhost:${PORT_CHROME}/json/version`);
+            return (await response.json()).webSocketDebuggerUrl;
         } catch (e) {
             console.log('Waiting for Chrome dev server');
             await new Promise((r) => setTimeout(r, 500));
@@ -63,50 +79,58 @@ const startChrome = async () => {
 };
 
 /**
- * see https://github.com/GoogleChrome/lighthouse/tree/master/docs
- * see https://github.com/GoogleChrome/lighthouse/blob/888bd6dc9d927a734a8e20ea8a0248baa5b425ed/typings/externs.d.ts#L82-L119
+ * @param {import('puppeteer').Browser} browser
+ * @param {string} url
+ * @returns {Promise<import('axe-core').AxeResults>}
  */
-const runLighthouse = async (url) => {
-    console.log('Running lighthouse on', url);
-    const result = await lighthouse(url, {
-        logLevel: 'error',
-        output: 'html',
-        onlyCategories: ['accessibility'],
-        port: PORT_CHROME,
-        disableDeviceEmulation: true,
-        emulatedFormFactor: false,
-        throttlingMethod: 'provided',
-        throttling: {},
-        /*
-            rttMs: 0,
-            throughputKbps: 0,
-            requestLatencyMs: 0,
-            downloadThroughputKbps: 0,
-            uploadThroughputKbps: 0,
-            cpuSlowdownMultiplier: 1,
-
-        */
-    });
+const audit = async (browser, url) => {
+    const page = await browser.newPage();
+    await page.goto(url);
+    const result = await new AxePuppeteer(page).analyze();
+    page.close();
     return result;
+};
+
+/**
+ * @param {Array<[name: string, results: import('axe-core').AxeResults]>} results
+ */
+const generateReport = (results) => {
+    let message = '# Accessibility report\n';
+    results.forEach(([name, result]) => {
+        message += `* ${name}\n`;
+    });
+    github.commentPullRequest(message);
 };
 
 const main = async () => {
     process.chdir(PATH_REPO_ROOT);
-    console.log('⚠️ This script assumes that a static storybook build exists!');
-    console.log('Execute `yarn storybook-static` to create or update existing build');
+    if (!process.env.CI) {
+        console.log('⚠️ This script assumes that a static storybook build exists!');
+        console.log('Execute `yarn storybook-static` to create or update existing build');
+    }
 
-    const stories = getStories();
+    const stories = getStories().filter((story) => !STORIES_BLACKLIST.has(story));
     const stopStorybookServer = await startStorybookServer();
     const stopChrome = await startChrome();
 
+    const browser = await puppeteer.connect({
+        browserWSEndpoint: await getBrowserWsEndpoint(),
+    });
+
+    /** @type Array<[name: string, results: import('axe-core').AxeResults]> */
+    const results = [];
+
     const t = Date.now();
     for (const story of stories) {
-        const result = await runLighthouse(getStoryUrl(story));
-        fs.writeFileSync(`/tmp/${story}.html`, result.report);
-        fs.writeFileSync(`/tmp/${story}.json`, JSON.stringify(result.lhr, null, 2));
+        console.log(story);
+        const result = await audit(browser, getStoryUrl(story));
+        results.push([story, result]);
     }
     console.log('total time:', Date.now() - t, 'ms');
 
+    generateReport(results);
+
+    browser.close();
     stopStorybookServer();
     stopChrome();
 };
