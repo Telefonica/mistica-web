@@ -6,7 +6,6 @@ const {AxePuppeteer} = require('@axe-core/puppeteer');
 const puppeteer = require('puppeteer');
 const fetch = require('node-fetch').default;
 const fs = require('fs');
-const github = require('../utils/github');
 
 const PATH_REPO_ROOT = path.join(__dirname, '..');
 const PORT_STORYBOOK = 6006;
@@ -47,36 +46,36 @@ const startStorybookServer = () =>
         });
     });
 
-/**
- * @returns function to stop chrome
- */
-const startChrome = async () => {
-    if (process.env.CI) {
-        return () => {};
-    }
-    console.log('Execute Chrome');
-    execSync('yarn up-chromium', {stdio: 'inherit'});
-    return () => {
-        execSync('yarn down-chromium', {stdio: 'inherit'});
-    };
-};
+// /**
+//  * @returns function to stop chrome
+//  */
+// const startChrome = async () => {
+//     if (process.env.CI) {
+//         return () => {};
+//     }
+//     console.log('Execute Chrome');
+//     execSync('yarn up-chromium', {stdio: 'inherit'});
+//     return () => {
+//         execSync('yarn down-chromium', {stdio: 'inherit'});
+//     };
+// };
 
-/**
- * @returns {Promise<string>}
- */
-const getBrowserWsEndpoint = async () => {
-    let retries = 10;
-    while (retries--) {
-        try {
-            const response = await fetch(`http://localhost:${PORT_CHROME}/json/version`);
-            return (await response.json()).webSocketDebuggerUrl;
-        } catch (e) {
-            console.log('Waiting for Chrome dev server');
-            await new Promise((r) => setTimeout(r, 500));
-        }
-    }
-    throw Error('Chrome dev server not running');
-};
+// /**
+//  * @returns {Promise<string>}
+//  */
+// const getBrowserWsEndpoint = async () => {
+//     let retries = 10;
+//     while (retries--) {
+//         try {
+//             const response = await fetch(`http://localhost:${PORT_CHROME}/json/version`);
+//             return (await response.json()).webSocketDebuggerUrl;
+//         } catch (e) {
+//             console.log('Waiting for Chrome dev server');
+//             await new Promise((r) => setTimeout(r, 500));
+//         }
+//     }
+//     throw Error('Chrome dev server not running');
+// };
 
 /**
  * @param {import('puppeteer').Browser} browser
@@ -99,7 +98,11 @@ const generateReport = (results) => {
     results.forEach(([name, result]) => {
         message += `* ${name}\n`;
     });
-    github.commentPullRequest(message);
+    if (process.env.CI) {
+        require('../utils/github').commentPullRequest(message);
+    } else {
+        console.log(message);
+    }
 };
 
 const main = async () => {
@@ -111,11 +114,9 @@ const main = async () => {
 
     const stories = getStories().filter((story) => !STORIES_BLACKLIST.has(story));
     const stopStorybookServer = await startStorybookServer();
-    const stopChrome = await startChrome();
+    // const stopChrome = await startChrome();
 
-    const browser = await puppeteer.connect({
-        browserWSEndpoint: await getBrowserWsEndpoint(),
-    });
+    const browser = await puppeteer.launch({args: ['--incognito']});
 
     /** @type Array<[name: string, results: import('axe-core').AxeResults]> */
     const results = [];
@@ -132,7 +133,7 @@ const main = async () => {
 
     browser.close();
     stopStorybookServer();
-    stopChrome();
+    // stopChrome();
 };
 
 main();
