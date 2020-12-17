@@ -12,7 +12,6 @@ const GREY_3 = '#DDDDDD';
 const GREY_4 = '#EEEEEE';
 const GREY_5 = '#F6F6F6';
 const COOL_GREY = '#000033';
-const O2_PURPLE = '#953698';
 const O2_BLUE = '#032B5A';
 const O2_BLUE_DARK = '#04264E';
 const O2_BLUE_LIGHT_60 = '#6C8BAF';
@@ -61,7 +60,7 @@ export const getO2ClassicSkin: GetSkin = () => {
             dividerSpecial1: O2_BLUE_LIGHT_60,
 
             background,
-            backgroundPromo: O2_PURPLE,
+            backgroundPromo: PINK,
             backgroundDark: GREY_0,
             backgroundAlternative: GREY_5,
             backgroundSelectedDark: WHITE,
