@@ -116,7 +116,7 @@ const main = async () => {
     const stopStorybookServer = await startStorybookServer();
     // const stopChrome = await startChrome();
 
-    const browser = await puppeteer.launch({args: ['--incognito']});
+    const browser = await puppeteer.launch({args: ['--incognito', '--no-sandbox']});
 
     /** @type Array<[name: string, results: import('axe-core').AxeResults]> */
     const results = [];
