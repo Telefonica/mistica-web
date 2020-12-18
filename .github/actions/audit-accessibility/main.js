@@ -75,18 +75,6 @@ const audit = async (browser, url) => {
 };
 
 /**
- * @param {number} n
- * @returns {string}
- */
-const numberToEmoji = (n) => {
-    const numbers = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣'];
-    return String(n)
-        .split('')
-        .map((c) => numbers[+c])
-        .join('');
-};
-
-/**
  * @param {Array<[name: string, results: import('axe-core').AxeResults]>} results
  */
 const generateReport = async (results) => {
@@ -121,7 +109,7 @@ const generateReport = async (results) => {
         if (result.violations.length) {
             lines.push(
                 `<details>`,
-                `  <summary>❌ ${numberToEmoji(result.violations.length)} <b>${name}</b></summary>`,
+                `  <summary>❌ [<b>${result.violations.length}</b>] ${name}</summary>`,
                 `  <ul>`,
                 `    <li><a href="${htmlUrl}">HTML Report</a></li>`,
                 `    <li><a href="${jsonUrl}">JSON Data</a></li>`,
