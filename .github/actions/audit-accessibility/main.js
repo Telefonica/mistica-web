@@ -97,7 +97,7 @@ const generateReport = async (results) => {
                 `  <summary>❌ (${result.violations.length}) <b>${name}</b></summary>`,
                 `  <ul>`,
                 `    <li><a href="${htmlUrl}" target="_blank">HTML Report</a></li>`,
-                `    <li><a href="${jsonUrl})" target="_blank">JSON Data</a>`,
+                `    <li><a href="${jsonUrl}" target="_blank">JSON Data</a></li>`,
                 `  </ul>`,
                 `</details>`
             );
