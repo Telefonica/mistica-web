@@ -10,14 +10,18 @@ jobs:
               id: vercel-deploy # identifier to reference this step
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }} # needed to allow comments on prs
-                  vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
-                  vercel-org-id: ${{ secrets.ORG_ID}} #Required
-                  vercel-project-id: ${{ secrets.PROJECT_ID}} #Required
-                  vercel-project-name: mistica-web # Not required by the docs, but the action fails if not specified. See https://github.com/amondnet/vercel-action/issues/30#issuecomment-678608424
+                  vercel-token: ${{ secrets.VERCEL_TOKEN }} # required
+                  vercel-org-id: ${{ secrets.ORG_ID}} # required
+                  vercel-project-id: ${{ secrets.PROJECT_ID}} # required
+                  vercel-project-name: mistica-web # not required by the docs, but the action fails if not specified. See https://github.com/amondnet/vercel-action/issues/30#issuecomment-678608424
                   working-directory: ./
+            - name: 'Install dependencies'
+              run: 'yarn'
+            - name: 'Build storybook' # a static storybook build is required to extract stories information in next step
+              run: 'yarn storybook-static'
             - name: 'Audit accessibility'
               uses: './.github/actions/audit-accessibility'
-              if: always()
+              # if: always()
               with:
                   storybook-url: ${{steps.vercel-deploy.outputs.preview-url}}
                   github-token: ${{ secrets.GITHUB_TOKEN }}
