@@ -3,14 +3,16 @@ const path = require('path');
 const {execSync} = require('child_process');
 const StaticServer = require('static-server');
 const {AxePuppeteer} = require('@axe-core/puppeteer');
+const {createHtmlReport} = require('axe-html-reporter');
 const puppeteer = require('puppeteer');
 const fetch = require('node-fetch').default;
 const fs = require('fs');
 const mkdirp = require('mkdirp');
+const rimraf = require('rimraf');
 const {uploadFile} = require('../utils/azure-storage');
 
-const PATH_REPO_ROOT = path.join(__dirname, '..');
-const PATH_REPORTS = path.join(PATH_REPO_ROOT, 'accessibility');
+const PATH_REPO_ROOT = path.join(__dirname, '../../..');
+const PATH_REPORTS = path.join(PATH_REPO_ROOT, 'reports/accessibility');
 const PORT_STORYBOOK = 6006;
 const PORT_CHROME = 9223;
 
@@ -31,9 +33,9 @@ const getStories = () => {
 
 const getStoryUrl = (id) => {
     let host = 'localhost';
-    if (!process.env.CI) {
-        host = process.platform === 'linux' ? '172.17.0.1' : 'host.docker.internal';
-    }
+    // if (!process.env.CI) {
+    //     host = process.platform === 'linux' ? '172.17.0.1' : 'host.docker.internal';
+    // }
     return `http://${host}:${PORT_STORYBOOK}/iframe.html?viewMode=story&id=${id}`;
 };
 
@@ -97,28 +99,46 @@ const audit = async (browser, url) => {
  * @param {Array<[name: string, results: import('axe-core').AxeResults]>} results
  */
 const generateReport = async (results) => {
+    rimraf.sync(PATH_REPORTS);
     mkdirp.sync(PATH_REPORTS);
 
     let lines = ['**Accessibility report**'];
 
     for (const [name, result] of results) {
-        const filename = path.join(PATH_REPORTS, name + '.json');
+        const jsonFilename = path.join(PATH_REPORTS, name + '.json');
+        const htmlFilename = path.join(PATH_REPORTS, name + '.html');
 
-        fs.writeFileSync(filename, JSON.stringify(result, null, 2));
-        const url = await uploadFile(filename, 'application/json');
+        fs.writeFileSync(jsonFilename, JSON.stringify(result, null, 2));
+        createHtmlReport({
+            results: result,
+            options: {
+                outputDir: path.relative(process.cwd(), PATH_REPORTS),
+                reportFileName: name + '.html',
+            },
+        });
 
-        lines.push(
-            `<details>`,
-            `  <summary>❌ (${result.violations.length}) <b>${name}</b></summary>`,
-            `  [report](${url})`,
-            `</details>`
-        );
+        let jsonUrl = jsonFilename;
+        let htmlUrl = htmlFilename;
+
+        if (process.env.CI) {
+            jsonUrl = await uploadFile(jsonFilename, 'application/json');
+            htmlUrl = await uploadFile(htmlFilename, 'text/html');
+        }
+
+        if (result.violations.length) {
+            lines.push(
+                `<details>`,
+                `  <summary>❌ (${result.violations.length}) <b>${name}</b></summary>`,
+                `  [HTML](${htmlUrl}) - [JSON](${jsonUrl})`,
+                `</details>`
+            );
+        }
     }
 
     if (process.env.CI) {
         require('../utils/github').commentPullRequest(lines.join('\n'));
     } else {
-        console.log(lines);
+        console.log(lines.join('\n'));
     }
 };
 

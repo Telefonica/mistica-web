@@ -17,3 +17,4 @@ storybook-static/
 /public
 .vercel
 src/generated/mistica-icons/index.tsx.txt
+reports
