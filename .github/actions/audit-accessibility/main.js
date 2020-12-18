@@ -85,15 +85,20 @@ const generateReport = async (results) => {
         let htmlUrl = htmlFilename;
 
         if (process.env.CI) {
-            jsonUrl = await uploadFile(jsonFilename, 'application/json');
-            htmlUrl = await uploadFile(htmlFilename, 'text/html');
+            [jsonUrl, htmlUrl] = await Promise.all([
+                uploadFile(jsonFilename, 'application/json'),
+                uploadFile(htmlFilename, 'text/html'),
+            ]);
         }
 
         if (result.violations.length) {
             lines.push(
                 `<details>`,
                 `  <summary>❌ (${result.violations.length}) <b>${name}</b></summary>`,
-                `  <a href="${htmlUrl}" target="_blank">HTML]</a> - <a href="${jsonUrl})" target="_blank">JSON</a>`,
+                `  <ul>`,
+                `    <li><a href="${htmlUrl}" target="_blank">HTML Report</a></li>`,
+                `    <li><a href="${jsonUrl})" target="_blank">JSON Data</a>`,
+                `  </ul>`,
                 `</details>`
             );
         }
