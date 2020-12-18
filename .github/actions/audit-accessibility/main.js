@@ -120,6 +120,7 @@ const generateReport = async (results) => {
     }
 
     if (process.env.CI) {
+        lines.push('\nℹ️ You can run this locally by executing `yarn audit-accessibility`.');
         require('../utils/github').commentPullRequest(lines.join('\n'));
     } else {
         console.log(lines.join('\n'));
