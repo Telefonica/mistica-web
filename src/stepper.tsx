@@ -6,53 +6,66 @@ import {Text7, Text8} from './text';
 import {useTheme, useScreenSize} from './hooks';
 import IconChecked from './icons/icon-checked';
 
-const bigStepStyles = {
-    flex: '0 1 208px',
-    padding: `16px 32px`,
-    maxWidth: 284,
-};
-
-const useStyles = createUseStyles(({colors, mq}) => ({
+const useStyles = createUseStyles(({colors}) => ({
     stepper: {
         display: 'flex',
-        height: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 64 : 32),
     },
     step: {
+        position: 'relative',
         display: 'inline-flex',
         flexDirection: 'column',
-        flex: '1 0 80px',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingLeft: 16,
-        paddingRight: 16,
-        verticalAlign: 'baseline',
-        height: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 64 : 32),
         textAlign: 'center',
-        borderBottom: '2px solid transparent',
-
-        [mq.desktop]: bigStepStyles,
-        [mq.largeDesktop]: bigStepStyles,
 
         '&:first-child': {
-            flex: '1 0 40px',
             alignItems: 'flex-start',
+            textAlign: 'left',
         },
         '&:last-child': {
-            flex: '1 0 40px',
             alignItems: 'flex-end',
+            textAlign: 'right',
         },
     },
-    stepSelected: {
-        borderBottom: `2px solid ${colors.controlActive}`,
+    stepIconNumber: {
+        height: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 32 : 24),
+        width: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 32 : 24),
+    },
+    barContainer: {
+        position: 'absolute',
+        left: 16,
+        height: '100%',
+        width: '100%',
+    },
+    bar: {
+        position: 'relative',
+        top: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 14 : 10),
+        display: 'flex',
+        justifyContent: 'center',
+        height: 4,
+        width: '100%',
+        margin: '0 8px',
+        background: colors.border,
+        borderRadius: 4,
+    },
+    barPassed: {
+        background: colors.primary,
     },
     number: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        height: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 32 : 24),
-        minWidth: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 32 : 24),
         border: `2px solid ${colors.borderDark}`,
         borderRadius: '50%',
+    },
+    numberPassed: {
+        background: colors.primary,
+        borderColor: colors.primary,
+    },
+    textContainer: {
+        position: 'absolute',
+        top: 42,
+        width: 200,
     },
 }));
 
@@ -76,40 +89,77 @@ const Stepper: React.FC<StepperProps> = ({steps, currentStep}: StepperProps) => 
                     {steps.map(({text}, index) => {
                         const stepNumber = index + 1;
                         const currentNumber = stepNumber === currentStep;
+                        const lastStep = index === steps.length - 1;
                         const isPassedStep = stepNumber < currentPosition;
                         const showIcon = index < currentStep - 1;
 
                         return (
-                            <div
-                                key={index}
-                                className={classnames(classes.step, currentNumber && classes.stepSelected)}
-                                aria-label={text}
-                                aria-current={currentNumber ? 'step' : undefined}
-                            >
-                                {showIcon ? (
-                                    <IconChecked size={isDesktopOrBigger ? 32 : 24} />
-                                ) : (
-                                    <div className={classes.number}>
-                                        {isDesktopOrBigger ? (
-                                            <Text7 medium color={colors.textSecondary}>
-                                                {stepNumber}
+                            <>
+                                <div
+                                    key={index}
+                                    className={classes.step}
+                                    aria-label={text}
+                                    aria-current={currentNumber ? 'step' : undefined}
+                                >
+                                    {showIcon ? (
+                                        <div className={classes.stepIconNumber}>
+                                            <IconChecked
+                                                color={colors.primary}
+                                                size={isDesktopOrBigger ? 32 : 24}
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div
+                                            className={classnames(classes.stepIconNumber, classes.number, {
+                                                [classes.numberPassed]: isPassedStep,
+                                            })}
+                                        >
+                                            {isDesktopOrBigger ? (
+                                                <Text7
+                                                    medium
+                                                    color={
+                                                        isPassedStep
+                                                            ? colors.textPrimarySpecial
+                                                            : colors.textSecondary
+                                                    }
+                                                >
+                                                    {stepNumber}
+                                                </Text7>
+                                            ) : (
+                                                <Text8
+                                                    medium
+                                                    color={
+                                                        isPassedStep
+                                                            ? colors.textPrimarySpecial
+                                                            : colors.textSecondary
+                                                    }
+                                                >
+                                                    {stepNumber}
+                                                </Text8>
+                                            )}
+                                        </div>
+                                    )}
+                                    {isDesktopOrBigger && (
+                                        <div className={classes.textContainer}>
+                                            <Text7
+                                                regular
+                                                color={
+                                                    isPassedStep ? colors.textPrimary : colors.textSecondary
+                                                }
+                                            >
+                                                {text}
                                             </Text7>
-                                        ) : (
-                                            <Text8 medium color={colors.textSecondary}>
-                                                {stepNumber}
-                                            </Text8>
-                                        )}
-                                    </div>
+                                        </div>
+                                    )}
+                                </div>
+                                {!lastStep && (
+                                    <div
+                                        className={classnames(classes.bar, {
+                                            [classes.barPassed]: isPassedStep && !currentNumber,
+                                        })}
+                                    />
                                 )}
-                                {isDesktopOrBigger && (
-                                    <Text7
-                                        regular
-                                        color={isPassedStep ? colors.textPrimary : colors.textSecondary}
-                                    >
-                                        {text}
-                                    </Text7>
-                                )}
-                            </div>
+                            </>
                         );
                     })}
                 </div>
