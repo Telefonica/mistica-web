@@ -21,7 +21,6 @@ jobs:
               run: 'yarn storybook-static'
             - name: 'Audit accessibility'
               uses: './.github/actions/audit-accessibility'
-              # if: always()
               with:
                   storybook-url: ${{steps.vercel-deploy.outputs.preview-url}}
                   github-token: ${{ secrets.GITHUB_TOKEN }}
