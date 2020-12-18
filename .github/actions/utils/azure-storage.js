@@ -10,7 +10,7 @@ const core = require('@actions/core');
 const ACCOUNT_NAME = core.getInput('azure-account-name') || process.env.INPUT_AZURE_ACCOUNT_NAME;
 const ACCOUNT_KEY = core.getInput('azure-account-key') || process.env.INPUT_AZURE_ACCOUNT_KEY;
 
-const CONTAINER_NAME = 'ci-mistica-' + Date.now();
+const CONTAINER_NAME = 'mistica-web-' + Date.now();
 
 const DEFAULT_EXPIRY_TIME_MS = 7 * 24 * 60 * 60 * 1000; // one week
 
