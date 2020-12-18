@@ -15,7 +15,7 @@ declare export var isIos: (
 ) => boolean;
 declare export var isFirefox: (
   platformOverrides?: {
-    platform?: "ios" | "android" | void,
+    platform?: "ios" | "android" | "desktop" | void,
     insideNovumNativeApp?: boolean | void,
     userAgent?: string | void,
   } | void
@@ -31,4 +31,4 @@ declare export var getIosVersion: (
 ) => string;
 declare export var getPlatform: (
   platformOverrides?: $PropertyType<Theme, "platformOverrides">
-) => "ios" | "android";
+) => "ios" | "android" | "desktop";

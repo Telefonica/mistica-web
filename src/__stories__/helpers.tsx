@@ -59,7 +59,6 @@ export const phoneNumbersList = [
 ];
 
 export const fruitEntries = [
-    ['- None -', ''],
     ['Orange', 'orange'],
     ['Apple', 'apple'],
     ['Banana', 'banana'],

@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {StorySection, fruitEntries} from './helpers';
-import {Select} from '..';
+import {fruitEntries} from './helpers';
+import {Select, Stack} from '..';
+import SectionTitle from '../section-title';
 
 export default {
     title: 'Components/Forms/Select',
@@ -13,36 +14,91 @@ export const Default: StoryComponent = () => {
     const [value, setValue] = React.useState('');
 
     return (
-        <StorySection title="Select">
-            <Select
-                name="select1"
-                value={value}
-                onChangeValue={setValue}
-                helperText="Helper Text"
-                options={fruitOptions}
-                optional
-            />
+        <>
+            <Stack space={16}>
+                <SectionTitle>Select</SectionTitle>
+                <Select
+                    name="normal"
+                    value={value}
+                    onChangeValue={setValue}
+                    helperText="Normal select"
+                    options={fruitOptions}
+                    label="Select a fruit"
+                    optional
+                />
 
-            <Select
-                name="select2"
-                error
-                value={value}
-                onChangeValue={setValue}
-                helperText="With Error"
-                label="Select a fruit"
-                options={fruitOptions}
-            />
+                <Select
+                    name="with-error"
+                    error
+                    value={value}
+                    onChangeValue={setValue}
+                    helperText="With Error"
+                    label="Select a fruit"
+                    options={fruitOptions}
+                />
 
-            <Select
-                name="select3"
-                disabled
-                value={value}
-                onChangeValue={setValue}
-                helperText="Disabled"
-                label="Select a fruit"
-                options={fruitOptions}
-            />
-        </StorySection>
+                <Select
+                    name="uncontrolled"
+                    onChangeValue={setValue}
+                    helperText="Uncontrolled"
+                    label="Select a fruit"
+                    options={fruitOptions}
+                />
+
+                <Select
+                    name="disabled"
+                    disabled
+                    value={value}
+                    onChangeValue={setValue}
+                    helperText="Disabled"
+                    label="Select a fruit"
+                    options={fruitOptions}
+                />
+
+                <SectionTitle>Native variant</SectionTitle>
+
+                <Select
+                    name="native"
+                    native
+                    value={value}
+                    onChangeValue={setValue}
+                    label="Select a fruit"
+                    helperText="Native select"
+                    options={fruitOptions}
+                />
+
+                <Select
+                    name="native-with-error"
+                    native
+                    error
+                    value={value}
+                    onChangeValue={setValue}
+                    label="Select a fruit"
+                    helperText="Native with error"
+                    options={fruitOptions}
+                />
+
+                <Select
+                    name="native-uncontrolled"
+                    native
+                    label="Select a fruit"
+                    onChangeValue={setValue}
+                    helperText="Native select uncontrolled"
+                    options={fruitOptions}
+                />
+
+                <Select
+                    name="native-disabled"
+                    native
+                    disabled
+                    value={value}
+                    onChangeValue={setValue}
+                    label="Select a fruit"
+                    helperText="Native select disabled"
+                    options={fruitOptions}
+                />
+            </Stack>
+        </>
     );
 };
 
