@@ -35,10 +35,3 @@ jobs:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   azure-account-name: ${{ secrets.AZURE_ACCOUNT_NAME }}
                   azure-account-key: ${{ secrets.AZURE_ACCOUNT_KEY }}
-            - name: 'Audit accessibility'
-              uses: './.github/actions/audit-accessibility'
-              if: always()
-              with:
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
-                  azure-account-name: ${{ secrets.AZURE_ACCOUNT_NAME }}
-                  azure-account-key: ${{ secrets.AZURE_ACCOUNT_KEY }}

@@ -11,10 +11,9 @@ inputs:
     azure-account-key:
         description: 'Azure Account Key'
         required: true
-    # glob:
-    #     description: 'Glob to match diff image files'
-    #     required: false
-    #     default: 'src/**/__diff_output__/*-diff.png'
+    storybook-url:
+        description: 'URL to storybook'
+        required: true
 runs:
     using: 'node12'
     main: 'main.js'

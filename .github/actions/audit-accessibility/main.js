@@ -12,7 +12,6 @@ const {uploadFile} = require('../utils/azure-storage');
 
 const PATH_REPO_ROOT = path.join(__dirname, '../../..');
 const PATH_REPORTS = path.join(PATH_REPO_ROOT, 'reports/accessibility');
-const PORT_STORYBOOK = 6006;
 
 const STORIES_BLACKLIST = new Set(['welcome-welcome--mistica', 'icons-mistica-icons--catalog']);
 
@@ -30,21 +29,37 @@ const getStories = () => {
 };
 
 /**
- * @param {string} id
+ * @returns {Promise<{
+ *     closeStorybook: () => void,
+ *     getStoryUrl: (id: string) => string}
+ * >}
  */
-const getStoryUrl = (id) => `http://localhost:${PORT_STORYBOOK}/iframe.html?viewMode=story&id=${id}`;
-
-const startStorybookServer = () =>
-    new Promise((resolve) => {
-        const storybookServer = new StaticServer({rootPath: 'public', port: PORT_STORYBOOK});
-        storybookServer.start(() => {
-            console.log(`Serving static storybook at: http://localhost:${PORT_STORYBOOK}`);
-            resolve(() => {
-                console.log('Stopping static storybook server');
-                storybookServer.stop();
+const startStorybook = () => {
+    if (process.env.CI) {
+        const baseUrl = require('@actions/core').getInput('storybook-url');
+        return Promise.resolve({
+            getStoryUrl: (id) => {
+                return `${baseUrl}/iframe.html?viewMode=story&id=${id}`;
+            },
+            closeStorybook: () => {},
+        });
+    } else {
+        return new Promise((resolve) => {
+            const port = 6006;
+            const storybookServer = new StaticServer({rootPath: 'public', port: port});
+            storybookServer.start(() => {
+                console.log(`Serving static storybook at: http://localhost:${port}`);
+                resolve({
+                    getStoryUrl: (id) => `http://localhost:${port}/iframe.html?viewMode=story&id=${id}`,
+                    closeStorybook: () => {
+                        console.log('Stopping static storybook server');
+                        storybookServer.stop();
+                    },
+                });
             });
         });
-    });
+    }
+};
 
 /**
  * @param {import('puppeteer').Browser} browser
@@ -96,8 +111,8 @@ const generateReport = async (results) => {
                 `<details>`,
                 `  <summary>❌ <span style="color:red;font-weight:bold;">${result.violations.length}</span> <b>${name}</b></summary>`,
                 `  <ul>`,
-                `    <li><a href="${htmlUrl}" target="_blank">HTML Report</a></li>`,
-                `    <li><a href="${jsonUrl}" target="_blank">JSON Data</a></li>`,
+                `    <li><a href="${htmlUrl}">HTML Report</a></li>`,
+                `    <li><a href="${jsonUrl}">JSON Data</a></li>`,
                 `  </ul>`,
                 `</details>`
             );
@@ -120,7 +135,7 @@ const main = async () => {
     }
 
     const stories = getStories().filter((story) => !STORIES_BLACKLIST.has(story));
-    const stopStorybookServer = await startStorybookServer();
+    const {closeStorybook, getStoryUrl} = await startStorybook();
 
     const browser = await puppeteer.launch({args: ['--incognito', '--no-sandbox']});
 
@@ -138,7 +153,7 @@ const main = async () => {
     await generateReport(results);
 
     browser.close();
-    stopStorybookServer();
+    closeStorybook();
 };
 
 main();
