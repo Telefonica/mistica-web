@@ -140,7 +140,7 @@ const generateReportForGithub = async (results) => {
             if (result.violations.length) {
                 lines.push(
                     `<details>`,
-                    `  <summary>[<b>${result.violations.length}</b>] ${name}</summary>`,
+                    `  <summary><b>${name} (violations)</b> (${result.violations.length} violations)</summary>`,
                     `  <ul>`,
                     `    <li><a href="${htmlUrl}">HTML Report</a></li>`,
                     `    <li><a href="${jsonUrl}">JSON Data</a></li>`,
