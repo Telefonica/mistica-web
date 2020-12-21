@@ -90,12 +90,13 @@ const withLayoutDecorator = (Story, context): React.ReactElement => {
     const styles = isRunningAcceptanceTest() ? <style>{acceptanceStyles}</style> : null;
 
     return (
-        <>
+        // role main required by accessibility rules
+        <div role="main">
             {styles}
             <Box padding={context?.parameters?.fullScreen ? 0 : 16}>
                 <Story {...context} />
             </Box>
-        </>
+        </div>
     );
 };
 
