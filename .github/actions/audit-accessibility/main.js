@@ -83,7 +83,6 @@ const writeReportsToDisk = async (results) => {
     rimraf.sync(PATH_REPORTS);
     mkdirp.sync(PATH_REPORTS);
     const files = new Map();
-
     for (const [name, result] of results) {
         const jsonFilename = path.join(PATH_REPORTS, name + '.json');
         const htmlFilename = path.join(PATH_REPORTS, name + '.html');
@@ -99,7 +98,6 @@ const writeReportsToDisk = async (results) => {
 
         files.set(name, {json: jsonFilename, html: htmlFilename});
     }
-
     return files;
 };
 
@@ -112,9 +110,9 @@ const generateReportForConsole = async (results) => {
     const lines = [];
     for (const [name, result] of results) {
         lines.push(
-            `${result.violations.length} - ${name}`,
-            `    * HTML: ${files.get(name).html}`,
-            `    * JSON: ${files.get(name).json}`
+            `${name} (${result.violations.length} violations)`,
+            `    - HTML: ${files.get(name).html}`,
+            `    - JSON: ${files.get(name).json}`
         );
     }
 
@@ -131,7 +129,7 @@ const generateReportForGithub = async (results) => {
 
     if (files.size) {
         lines.push(`<details>`);
-        lines.push(`<summary><b>${files.size}</b> Stories with problems</summary>`);
+        lines.push(`<summary>❌ <b>${files.size}</b> Stories with problems</summary><br />`);
 
         for (const [name, result] of results) {
             const [jsonUrl, htmlUrl] = await Promise.all([
@@ -142,7 +140,7 @@ const generateReportForGithub = async (results) => {
             if (result.violations.length) {
                 lines.push(
                     `<details>`,
-                    `  <summary>❌ [<b>${result.violations.length}</b>] ${name}</summary>`,
+                    `  <summary>[<b>${result.violations.length}</b>] ${name}</summary>`,
                     `  <ul>`,
                     `    <li><a href="${htmlUrl}">HTML Report</a></li>`,
                     `    <li><a href="${jsonUrl}">JSON Data</a></li>`,
@@ -153,7 +151,7 @@ const generateReportForGithub = async (results) => {
         }
         lines.push(`</details>`);
     } else {
-        lines.push('No issues found');
+        lines.push('✔️ No issues found');
     }
 
     lines.push('\nℹ️ You can run this locally by executing `yarn audit-accessibility`.');
