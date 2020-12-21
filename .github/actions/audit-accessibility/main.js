@@ -9,6 +9,7 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
 const {uploadFile} = require('../utils/azure-storage');
+const {map} = require('lodash');
 
 const PATH_REPO_ROOT = path.join(__dirname, '../../..');
 const PATH_REPORTS = path.join(PATH_REPO_ROOT, 'reports/accessibility');
@@ -76,12 +77,12 @@ const audit = async (browser, url) => {
 
 /**
  * @param {Array<[name: string, results: import('axe-core').AxeResults]>} results
+ * @returns {Promise<Map<string, {json: String, html: string}>>}
  */
-const generateReport = async (results) => {
+const writeReportsToDisk = async (results) => {
     rimraf.sync(PATH_REPORTS);
     mkdirp.sync(PATH_REPORTS);
-
-    let lines = ['**Accessibility report**'];
+    const files = new Map();
 
     for (const [name, result] of results) {
         const jsonFilename = path.join(PATH_REPORTS, name + '.json');
@@ -96,35 +97,67 @@ const generateReport = async (results) => {
             },
         });
 
-        let jsonUrl = jsonFilename;
-        let htmlUrl = htmlFilename;
+        files.set(name, {json: jsonFilename, html: htmlFilename});
+    }
 
-        if (process.env.CI) {
-            [jsonUrl, htmlUrl] = await Promise.all([
-                uploadFile(jsonFilename, 'application/json'),
-                uploadFile(htmlFilename, 'text/html'),
+    return files;
+};
+
+/**
+ * @param {Array<[name: string, results: import('axe-core').AxeResults]>} results
+ */
+const generateReportForConsole = async (results) => {
+    const files = await writeReportsToDisk(results);
+
+    const lines = [];
+    for (const [name, result] of results) {
+        lines.push(
+            `${result.violations.length} - ${name}`,
+            `    * HTML: ${files.get(name).html}`,
+            `    * JSON: ${files.get(name).json}`
+        );
+    }
+
+    console.log(lines.join('\n'));
+};
+
+/**
+ * @param {Array<[name: string, results: import('axe-core').AxeResults]>} results
+ */
+const generateReportForGithub = async (results) => {
+    const files = await writeReportsToDisk(results);
+
+    let lines = ['**Accessibility report**'];
+
+    if (files.size) {
+        lines.push(`<details>`);
+        lines.push(`<summary><b>${files.size}</b> Stories with problems</summary>`);
+
+        for (const [name, result] of results) {
+            const [jsonUrl, htmlUrl] = await Promise.all([
+                uploadFile(files.get(name).json, 'application/json'),
+                uploadFile(files.get(name).html, 'text/html'),
             ]);
-        }
 
-        if (result.violations.length) {
-            lines.push(
-                `<details>`,
-                `  <summary>❌ [<b>${result.violations.length}</b>] ${name}</summary>`,
-                `  <ul>`,
-                `    <li><a href="${htmlUrl}">HTML Report</a></li>`,
-                `    <li><a href="${jsonUrl}">JSON Data</a></li>`,
-                `  </ul>`,
-                `</details>`
-            );
+            if (result.violations.length) {
+                lines.push(
+                    `<details>`,
+                    `  <summary>❌ [<b>${result.violations.length}</b>] ${name}</summary>`,
+                    `  <ul>`,
+                    `    <li><a href="${htmlUrl}">HTML Report</a></li>`,
+                    `    <li><a href="${jsonUrl}">JSON Data</a></li>`,
+                    `  </ul>`,
+                    `</details>`
+                );
+            }
         }
-    }
-
-    if (process.env.CI) {
-        lines.push('\nℹ️ You can run this locally by executing `yarn audit-accessibility`.');
-        require('../utils/github').commentPullRequest(lines.join('\n'));
+        lines.push(`</details>`);
     } else {
-        console.log(lines.join('\n'));
+        lines.push('No issues found');
     }
+
+    lines.push('\nℹ️ You can run this locally by executing `yarn audit-accessibility`.');
+    require('../utils/github').commentPullRequest(lines.join('\n'));
 };
 
 const main = async () => {
@@ -151,7 +184,11 @@ const main = async () => {
     }
     console.log('total time:', Date.now() - t, 'ms');
 
-    await generateReport(results);
+    if (process.env.CI) {
+        await generateReportForGithub(results);
+    } else {
+        await generateReportForConsole(results);
+    }
 
     browser.close();
     closeStorybook();
