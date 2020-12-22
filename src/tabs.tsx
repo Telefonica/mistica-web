@@ -73,7 +73,7 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
             return tabMaxWidth;
         },
         '&:hover': {
-            color: 'currentColor',
+            color: colors.textPrimary,
         },
 
         fallbacks: {
