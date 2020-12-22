@@ -5,13 +5,13 @@ import {IconButton, TooltipLinkList, WithTooltip} from '@storybook/components';
 const PLATFORMS = [
     {id: 'ios', title: 'iOS'},
     {id: 'android', title: 'Android'},
-    {id: undefined, title: 'Desktop'},
+    {id: 'desktop', title: 'Desktop'},
 ];
 
 const PlatformSelectorAddon = ({api}) => {
     const channel = addons.getChannel();
     const [currentPlatform, setCurrentPlatform] = React.useState(
-        () => api.getQueryParam('platform') || undefined
+        () => api.getQueryParam('platform') || 'desktop'
     );
 
     React.useEffect(() => {

@@ -2,17 +2,27 @@ name: deploy-pull-requests
 on: [pull_request]
 jobs:
     deploy:
-        # replace this line with the following 2 comented lines to enable self-hosted github actions
-        # runs-on: ubuntu-latest
         runs-on: self-hosted-novum
         container: docker.tuenti.io/service-inf/mistica-web-builder:1.0.0
         steps:
             - uses: actions/checkout@v2
             - uses: amondnet/vercel-action@master
+              id: vercel-deploy # identifier to reference this step
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }} # needed to allow comments on prs
-                  vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
-                  vercel-org-id: ${{ secrets.ORG_ID}} #Required
-                  vercel-project-id: ${{ secrets.PROJECT_ID}} #Required
-                  vercel-project-name: mistica-web # Not requried by the docs, but the action fails if not specified. See https://github.com/amondnet/vercel-action/issues/30#issuecomment-678608424
+                  vercel-token: ${{ secrets.VERCEL_TOKEN }} # required
+                  vercel-org-id: ${{ secrets.ORG_ID}} # required
+                  vercel-project-id: ${{ secrets.PROJECT_ID}} # required
+                  vercel-project-name: mistica-web # not required by the docs, but the action fails if not specified. See https://github.com/amondnet/vercel-action/issues/30#issuecomment-678608424
                   working-directory: ./
+            - name: 'Install dependencies'
+              run: 'yarn'
+            - name: 'Build storybook' # a static storybook build is required to extract stories information in next step
+              run: 'yarn storybook-static'
+            - name: 'Audit accessibility'
+              uses: './.github/actions/audit-accessibility'
+              with:
+                  storybook-url: ${{steps.vercel-deploy.outputs.preview-url}}
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  azure-account-name: ${{ secrets.AZURE_ACCOUNT_NAME }}
+                  azure-account-key: ${{ secrets.AZURE_ACCOUNT_KEY }}

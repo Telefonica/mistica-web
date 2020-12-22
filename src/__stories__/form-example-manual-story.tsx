@@ -1,97 +1,24 @@
 import * as React from 'react';
-import {fruitEntries, countriesList} from './helpers';
+import {fruitEntries} from './helpers';
 import {
     Stack,
     DoubleField,
     ButtonPrimary,
-    ButtonSecondary,
-    Form,
-    CreditCardFields,
-    EmailField,
     Select,
     ButtonLayout,
-    PhoneNumberField,
     IntegerField,
     CreditCardNumberField,
     CreditCardExpirationField,
     CvvField,
-    DecimalField,
     Switch,
     Text7,
     Checkbox,
     Inline,
-    FixedFooterLayout,
-    Text5,
-    Box,
 } from '..';
 import {getCvvLength} from '../utils/credit-card';
 
 export default {
-    title: 'Components/Forms/Form examples',
-};
-
-const fakeApiCall = (data: any): Promise<void> =>
-    new Promise((r) =>
-        setTimeout(() => {
-            r();
-            window.alert(JSON.stringify(data, null, 2));
-        }, 5000)
-    );
-
-const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
-const countryOptions = countriesList.map((text, i) => ({text, value: '' + i}));
-
-export const AutomaticForm: StoryComponent = () => {
-    return (
-        <Form
-            initialValues={{email: 'john.doe@gmail.com', decimal: '123', 'save-cc': true}}
-            onSubmit={fakeApiCall}
-            autoJump
-        >
-            <Stack space={16}>
-                <EmailField name="email" label="email" />
-
-                <PhoneNumberField name="phone" label="phone" />
-
-                <DecimalField name="decimal" label="Decimal" />
-
-                <IntegerField optional autoComplete="off" name="integer" label="Integer" />
-
-                <Select name="country" label="country" options={countryOptions} />
-
-                <Select autoFocus name="fruit" label="fruit" optional options={fruitOptions} />
-
-                <CreditCardFields />
-
-                <Switch
-                    name="save-cc"
-                    render={(switchElement) => (
-                        <Inline alignItems="center" space={8}>
-                            {switchElement}
-                            <Text7 regular>Save CC</Text7>
-                        </Inline>
-                    )}
-                />
-
-                <Checkbox
-                    name="t&c"
-                    render={(checkboxElement) => (
-                        <Inline alignItems="center" space={8}>
-                            {checkboxElement}
-                            <Text7 regular>Accept Terms and Conditions</Text7>
-                        </Inline>
-                    )}
-                />
-
-                <ButtonLayout>
-                    <ButtonSecondary onPress={() => window.alert('hello')}>Hello</ButtonSecondary>
-                    <ButtonPrimary submit loadingText="Sending">
-                        Send
-                    </ButtonPrimary>
-                </ButtonLayout>
-            </Stack>
-        </Form>
-    );
+    title: 'Components/Forms/Example Manual',
 };
 
 export const ManualForm: StoryComponent = () => {
@@ -185,28 +112,5 @@ export const ManualForm: StoryComponent = () => {
                 </ButtonLayout>
             </Stack>
         </form>
-    );
-};
-
-export const FormWithFixedFooterLayout: StoryComponent = () => {
-    const [count, setCount] = React.useState(0);
-    return (
-        <Form onSubmit={() => setCount((count) => count + 1)}>
-            <FixedFooterLayout
-                footer={
-                    <Box padding={16}>
-                        <ButtonPrimary submit>Submit</ButtonPrimary>
-                    </Box>
-                }
-            >
-                <Stack space={32}>
-                    <Text7 regular>
-                        Use a mobile viewport to check this story. The submit button will be rendered inside a
-                        Portal.
-                    </Text7>
-                    <Text5 medium>Form was submitted {count} times</Text5>
-                </Stack>
-            </FixedFooterLayout>
-        </Form>
     );
 };

@@ -34,9 +34,9 @@ test.each(devices)('Select elements on a selected state appear properly on %s', 
         const select = (await screen.findAllByRole('combobox'))[0];
         await select.select('apple');
     } else {
-        const select = await screen.findByLabelText('(opcional)');
+        const select = await screen.findByLabelText('Select a fruit (opcional)');
         await select.click();
-        const selectOption = await screen.findByText('Apple');
+        const selectOption = (await screen.findAllByText('Apple'))[0];
         await selectOption.click();
     }
 

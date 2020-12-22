@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import Tabs from '../tabs';
 import {StorySection, useCheckbox} from './helpers';

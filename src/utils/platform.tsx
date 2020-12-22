@@ -73,10 +73,18 @@ export const getIosVersion = (platformOverrides: Theme['platformOverrides']): st
     return [major, minor, patch].join('.');
 };
 
-export const getPlatform = (platformOverrides: Theme['platformOverrides'] = {}): 'ios' | 'android' => {
+export const getPlatform = (
+    platformOverrides: Theme['platformOverrides'] = {}
+): 'ios' | 'android' | 'desktop' => {
     const overridenPlatform = platformOverrides.platform;
     if (overridenPlatform) {
         return overridenPlatform;
     }
-    return isIos(platformOverrides) ? 'ios' : 'android';
+    if (isIos(platformOverrides)) {
+        return 'ios';
+    }
+    if (isAndroid(platformOverrides)) {
+        return 'android';
+    }
+    return 'desktop';
 };

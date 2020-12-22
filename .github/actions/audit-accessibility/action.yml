@@ -1,0 +1,19 @@
+# https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions
+name: 'Audit accessibility'
+description: 'This action runs `axe` over Storybook pages'
+inputs:
+    github-token:
+        description: 'GitHub token, required to comment on PRs'
+        required: true
+    azure-account-name:
+        description: 'Azure Account Name'
+        required: true
+    azure-account-key:
+        description: 'Azure Account Key'
+        required: true
+    storybook-url:
+        description: 'URL to storybook'
+        required: true
+runs:
+    using: 'node12'
+    main: 'main.js'

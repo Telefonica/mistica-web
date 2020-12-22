@@ -32,36 +32,36 @@ const acceptanceStyles = `
     height: 0 !important;
 }`;
 
+type Platform = 'android' | 'desktop' | 'ios';
+
 const getSkin = (searchParams: URLSearchParams) => {
     const qsSkin = searchParams.get('skin');
     return [MOVISTAR_SKIN, O2_SKIN, O2_CLASSIC_SKIN, VIVO_SKIN].find((skin) => skin === qsSkin);
 };
 
-const getPlatform = (searchParams: URLSearchParams): 'ios' | 'android' | undefined => {
+const getPlatform = (searchParams: URLSearchParams): Platform => {
     const qsPlatform = searchParams.get('platform');
-    if (qsPlatform === 'ios' || qsPlatform === 'android') {
+    if (qsPlatform === 'ios' || qsPlatform === 'android' || qsPlatform === 'desktop') {
         return qsPlatform;
     }
-    return;
+    return 'desktop';
 };
 
-const getTheme = (selectedSkin: string, platform?: 'ios' | 'android'): ThemeConfig => {
+const getTheme = (selectedSkin: string, platform: Platform): ThemeConfig => {
     const themeConfig = AVAILABLE_THEMES.find(({skin}) => skin.name === selectedSkin) || Movistar;
-    return platform
-        ? {
-              ...themeConfig,
-              platformOverrides: {
-                  platform,
-                  insideNovumNativeApp: true,
-              },
-          }
-        : themeConfig;
+    return {
+        ...themeConfig,
+        platformOverrides: {
+            platform,
+            insideNovumNativeApp: platform !== 'desktop',
+        },
+    };
 };
 
 const MisticaTemeProvider = ({Story, context}): React.ReactElement => {
     const searchParams = new URLSearchParams(location.search);
     const [skin, setSkin] = React.useState(getSkin(searchParams));
-    const [platform, setPlatform] = React.useState(getPlatform(searchParams));
+    const [platform, setPlatform] = React.useState<Platform>(getPlatform(searchParams));
 
     React.useEffect(() => {
         const channel = addons.getChannel();
@@ -90,12 +90,13 @@ const withLayoutDecorator = (Story, context): React.ReactElement => {
     const styles = isRunningAcceptanceTest() ? <style>{acceptanceStyles}</style> : null;
 
     return (
-        <>
+        // role main required by accessibility rules
+        <div role="main">
             {styles}
             <Box padding={context?.parameters?.fullScreen ? 0 : 16}>
                 <Story {...context} />
             </Box>
-        </>
+        </div>
     );
 };
 
