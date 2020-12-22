@@ -13,7 +13,7 @@ export default {
 export const Default: StoryComponent = () => {
     return (
         <StorySection title="Stepper example">
-            <Stepper currentStep={3} steps={texts.map((text) => ({text}))} />
+            <Stepper currentStep={2} steps={texts.map((text) => ({text}))} />
         </StorySection>
     );
 };

@@ -4,7 +4,9 @@ import {createUseStyles} from './jss';
 import ResponsiveLayout from './responsive-layout';
 import {Text7, Text8} from './text';
 import {useTheme, useScreenSize} from './hooks';
-import IconChecked from './icons/icon-checked';
+import IconSuccess from './icons/icon-success';
+
+const transition = '1s cubic-bezier(0.75, 0, 0.27, 1)';
 
 const useStyles = createUseStyles(({colors}) => ({
     stepper: {
@@ -31,26 +33,6 @@ const useStyles = createUseStyles(({colors}) => ({
         height: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 32 : 24),
         width: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 32 : 24),
     },
-    barContainer: {
-        position: 'absolute',
-        left: 16,
-        height: '100%',
-        width: '100%',
-    },
-    bar: {
-        position: 'relative',
-        top: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 14 : 10),
-        display: 'flex',
-        justifyContent: 'center',
-        height: 4,
-        width: '100%',
-        margin: '0 8px',
-        background: colors.border,
-        borderRadius: 4,
-    },
-    barPassed: {
-        background: colors.primary,
-    },
     number: {
         display: 'flex',
         alignItems: 'center',
@@ -66,6 +48,36 @@ const useStyles = createUseStyles(({colors}) => ({
         position: 'absolute',
         top: 42,
         width: 200,
+    },
+    barContainer: {
+        position: 'absolute',
+        left: 16,
+        height: '100%',
+        width: '100%',
+    },
+    bar: {
+        position: 'relative',
+        top: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 14 : 10),
+        display: 'flex',
+        height: 4,
+        width: '100%',
+        margin: '0 8px',
+        background: colors.border,
+        borderRadius: 4,
+    },
+    barFilled: {
+        height: 4,
+        width: '100%',
+        transition: `width ${transition}`,
+        animation: `$filledBar ${transition}`,
+        background: colors.primary,
+        borderRadius: 20,
+    },
+
+    '@keyframes filledBar': {
+        '0%': {
+            width: '0',
+        },
     },
 }));
 
@@ -103,7 +115,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentStep}: StepperProps) => 
                                 >
                                     {showIcon ? (
                                         <div className={classes.stepIconNumber}>
-                                            <IconChecked
+                                            <IconSuccess
                                                 color={colors.primary}
                                                 size={isDesktopOrBigger ? 32 : 24}
                                             />
@@ -153,11 +165,11 @@ const Stepper: React.FC<StepperProps> = ({steps, currentStep}: StepperProps) => 
                                     )}
                                 </div>
                                 {!lastStep && (
-                                    <div
-                                        className={classnames(classes.bar, {
-                                            [classes.barPassed]: isPassedStep && !currentNumber,
-                                        })}
-                                    />
+                                    <div className={classes.bar}>
+                                        {isPassedStep && !currentNumber && (
+                                            <div className={classes.barFilled} />
+                                        )}
+                                    </div>
                                 )}
                             </>
                         );
