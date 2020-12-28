@@ -2,8 +2,7 @@ import {getDocument, queries} from 'pptr-testing-library';
 import jimp from 'jimp';
 import {MOVISTAR_SKIN} from '../skins/constants';
 
-import type {Page, ElementHandle, ClickOptions, ScreenshotOptions, Browser} from 'puppeteer';
-import type {Viewport} from 'puppeteer/DeviceDescriptors';
+import type {Page, ElementHandle, ClickOptions, ScreenshotOptions, Browser, Viewport} from 'puppeteer';
 
 // TODO find a way to define global vars
 const globalBrowser: Browser = (global as any).browser;
