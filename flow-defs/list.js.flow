@@ -40,14 +40,14 @@ declare type RadioRowContentProps = {
 declare type HrefRowContentProps = {
   ...$Exact<CommonProps>,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
-  href?: string,
+  href: string,
   newTab?: boolean,
   right?: React.Node,
 };
 declare type ToRowContentProps = {
   ...$Exact<CommonProps>,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
-  to?: string,
+  to: string,
   fullPageOnWebView?: boolean,
   replace?: boolean,
   right?: React.Node,
@@ -55,7 +55,7 @@ declare type ToRowContentProps = {
 declare type OnPressRowContentProps = {
   ...$Exact<CommonProps>,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
-  onPress?: () => void,
+  onPress: () => void,
   right?: React.Node,
 };
 declare type RowContentProps =
