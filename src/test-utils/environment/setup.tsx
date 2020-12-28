@@ -29,7 +29,7 @@ const serveStaticStorybook = () => {
         port: storybookPort,
     });
 
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
         (global as any).__STORYBOOK_SERVER__.start(() => {
             console.log('Storybook server ready');
             resolve();
