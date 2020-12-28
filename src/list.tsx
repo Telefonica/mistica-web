@@ -90,6 +90,7 @@ const useStyles = createUseStyles((theme) => ({
 }));
 
 interface CommonProps {
+    children?: void; // no children allowed
     headline?: string | React.ReactNode;
     title: string;
     titleLinesMax?: 1 | 2;
@@ -348,7 +349,7 @@ const RowContent = (props: RowContentProps) => {
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
     const controlName = props.switch?.name ?? props.checkbox?.name;
 
-    const renderContent = (moreProps: {type: ContentProps['type']; right?: ContentProps['right']}) => (
+    const renderContent = ({type, right}: {type: ContentProps['type']; right?: ContentProps['right']}) => (
         <Content
             icon={icon}
             iconSize={iconSize}
@@ -360,7 +361,8 @@ const RowContent = (props: RowContentProps) => {
             titleLinesMax={titleLinesMax}
             subtitleLinesMax={subtitleLinesMax}
             descriptionLinesMax={descriptionLinesMax}
-            {...moreProps}
+            type={type}
+            right={right}
         />
     );
 
@@ -512,7 +514,7 @@ export const BoxedRow: React.FC<RowContentProps> = (props) => {
     );
 };
 
-type BoxedRowElement = Array<React.ReactElement<typeof BoxedRow>>;
+type BoxedRowElement = React.ReactElement<typeof BoxedRow>;
 
 type BoxedRowListProps = {
     children: BoxedRowElement | Array<BoxedRowElement>;
