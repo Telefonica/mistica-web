@@ -75,7 +75,7 @@ declare type RowListProps = {
 };
 declare export var RowList: React.ComponentType<RowListProps>;
 declare export var BoxedRow: React.ComponentType<RowContentProps>;
-declare type BoxedRowElement = Array<React.Element<typeof BoxedRow>>;
+declare type BoxedRowElement = React.Element<typeof BoxedRow>;
 declare type BoxedRowListProps = {
   children: BoxedRowElement | Array<BoxedRowElement>,
   ariaLabelledby?: string,
