@@ -77,7 +77,7 @@ import {RowList, BoxedRowList, BoxedRow, Row} from '../list';
     {/* @ts-expect-error - fullPageOnWebView not allowed in href */}
     <BoxedRow title="href" href="/href" fullPageOnWebView />
 
-    {/* OK - href */}
+    {/* OK - onPress */}
     <BoxedRow title="onPress" onPress={() => {}} />
     {/* @ts-expect-error - fullPageOnWebView not allowed in onPress */}
     <BoxedRow title="onPress" onPress={() => {}} fullPageOnWebView />
