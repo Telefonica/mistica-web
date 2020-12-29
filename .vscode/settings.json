@@ -7,19 +7,6 @@
         "**/flow-defs": true,
         "**/flow-typed": true
     },
-    "files.watcherExclude": {
-        "**/.git/objects/**": true,
-        "**/.git/subtree-cache/**": true,
-        "**/node_modules/**": true,
-        // added to avoid 100% CPU usage in VSCode
-        "**/src/generated/**": true
-    },
-    "files.exclude": {
-        "**/.git": true,
-        "**/.DS_Store": true,
-        // added to avoid 100% CPU usage in VSCode
-        "**/src/generated/**": true
-    },
     // required by Markdown TOC extension
     "files.eol": "\n"
 }
