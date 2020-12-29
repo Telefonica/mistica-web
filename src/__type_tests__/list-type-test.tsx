@@ -32,13 +32,16 @@ import {RowList, BoxedRowList, BoxedRow, Row} from '../list';
     {/* OK - to */}
     <Row title="to" to="/to" />
     <Row title="to" to="/to" fullPageOnWebView />
+    {/* @ts-expect-error - newTab not allowed in to */}
+    <Row title="to" to="/to" newTab />
 
     {/* OK - href */}
     <Row title="href" href="/href" />
+    <Row title="href" href="/href" newTab />
     {/* @ts-expect-error - fullPageOnWebView not allowed in href */}
     <Row title="href" href="/href" fullPageOnWebView />
 
-    {/* OK - href */}
+    {/* OK - onPress */}
     <Row title="onPress" onPress={() => {}} />
     {/* @ts-expect-error - fullPageOnWebView not allowed in onPress */}
     <Row title="onPress" onPress={() => {}} fullPageOnWebView />

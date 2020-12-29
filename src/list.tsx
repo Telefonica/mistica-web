@@ -218,6 +218,7 @@ interface BasicRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
+    newTab?: undefined;
 
     right?: React.ReactNode;
 }
@@ -229,6 +230,7 @@ interface SwitchRowContentProps extends CommonProps {
     right?: undefined;
     checkbox?: undefined;
     radioValue?: undefined;
+    newTab?: undefined;
 
     switch: ControlProps;
 }
@@ -240,6 +242,7 @@ interface CheckboxRowContentProps extends CommonProps {
     right?: undefined;
     switch?: undefined;
     radioValue?: undefined;
+    newTab?: undefined;
 
     checkbox: ControlProps;
 }
@@ -251,6 +254,7 @@ interface RadioRowContentProps extends CommonProps {
     right?: undefined;
     switch?: undefined;
     checkbox?: undefined;
+    newTab?: undefined;
 
     radioValue: string;
 }
@@ -272,6 +276,7 @@ interface ToRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
+    newTab?: undefined;
 
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     to: string;
