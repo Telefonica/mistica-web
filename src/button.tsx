@@ -7,6 +7,7 @@ import {useIsInverseVariant} from './theme-variant-context';
 import {applyAlpha} from './utils/color';
 import {useForm} from './form-context';
 import {getPlatform} from './utils/platform';
+import {pxToRem} from './utils/css';
 
 import type {TrackingEvent} from './utils/types';
 import type {Location} from 'history';
@@ -22,10 +23,10 @@ const commonClasses = (theme: Theme) => ({
     button: {
         display: 'inline-block',
         width: 'auto',
-        height: 48,
+        height: pxToRem(48),
         minWidth: BUTTON_MIN_WIDTH,
         padding: '0 16px',
-        fontSize: 16,
+        fontSize: pxToRem(16),
         letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? '-0.3px' : '0',
         textAlign: 'center',
         fontWeight: 500,
@@ -43,36 +44,36 @@ const commonClasses = (theme: Theme) => ({
     small: {
         minWidth: 104,
         padding: '0 8px',
-        fontSize: 14,
+        fontSize: pxToRem(14),
         borderWidth: 1.5,
-        lineHeight: 1.4,
+        lineHeight: '1.4rem',
         fontWeight: 500,
         textTransform: 'inherit',
         borderRadius: 4,
-        height: 32,
+        height: pxToRem(32),
     },
     content: {
         display: 'flex',
         flexDirection: 'column',
         margin: `-${buttonBorderWidth} 0`,
         transition: buttonTransition('transform'),
-        height: 48 * 2,
+        height: pxToRem(48 * 2),
         '$small &': {
-            height: 32 * 2,
+            height: pxToRem(32 * 2),
         },
     },
     loadingContent: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: 48,
-        lineHeight: '48px',
-        marginTop: -16,
+        height: pxToRem(48),
+        lineHeight: pxToRem(48),
+        marginTop: pxToRem(-16),
         opacity: 0,
         transition: buttonTransition('opacity'),
         '$small &': {
-            height: 32,
-            lineHeight: '32px',
+            height: pxToRem(32),
+            lineHeight: pxToRem(32),
             marginTop: 0,
         },
     },
@@ -84,13 +85,13 @@ const commonClasses = (theme: Theme) => ({
         display: 'inline-block',
         alignItems: 'center',
         justifyContent: 'center',
-        height: 48,
-        lineHeight: '48px',
+        height: pxToRem(48),
+        lineHeight: pxToRem(48),
         opacity: 1,
         transition: buttonTransition('opacity'),
         '$small &': {
-            height: 32,
-            lineHeight: '32px',
+            height: pxToRem(32),
+            lineHeight: pxToRem(32),
         },
         '& svg': {
             marginRight: 8,
@@ -100,7 +101,7 @@ const commonClasses = (theme: Theme) => ({
     },
     isLoading: {
         '& $content': {
-            transform: 'translateY(-32px)',
+            transform: `translateY(${pxToRem(-32)})`,
         },
         '& $textContent': {
             opacity: 0,
@@ -326,7 +327,7 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
         }
     }, [showSpinner, shouldRenderSpinner, formStatus]);
 
-    const spinnerSize = props.small ? 16 : 24;
+    const spinnerSize = pxToRem(props.small ? 16 : 24);
 
     const commonProps = {
         className: classnames(classes.button, props.className, {
@@ -404,10 +405,10 @@ const useButtonLinkStyles = createUseStyles((theme) => ({
         whiteSpace: 'nowrap',
         display: 'inline-block',
         width: 'auto',
-        height: 32,
-        lineHeight: '32px',
+        height: pxToRem(32),
+        lineHeight: pxToRem(32),
         padding: `0 8px`,
-        fontSize: 14,
+        fontSize: pxToRem(14),
         textAlign: 'center',
         fontWeight: 500,
         borderRadius: 4,

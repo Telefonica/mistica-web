@@ -62,7 +62,7 @@ const useStyles = createUseStyles(() => ({
 type Props = {
     color?: string;
     delay?: string;
-    size?: number;
+    size?: number | string;
     rolePresentation?: boolean;
     style?: React.CSSProperties;
 };
