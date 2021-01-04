@@ -33,7 +33,7 @@ export const Default: StoryComponent = () => {
     const [oneLineSubtitle, oneLineSubtitleCheckbox] = useCheckbox('one line subtitle ', false);
     const [oneLineDescription, oneLineDescriptionCheckbox] = useCheckbox('one line description ', false);
 
-    let controlProps = {};
+    let controlProps: any = {};
 
     switch (control) {
         case 'chevron':

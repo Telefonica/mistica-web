@@ -100,7 +100,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     const {isMobile} = useScreenSize();
     const [showOverlay, setShowOverlay] = React.useState(false);
     const [skinName, setSkinName] = React.useState<SkinName>(initialSkinName);
-    const [os, setOs] = React.useState<'android' | 'ios'>(initialOs);
+    const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
     const classes = useStyles({position});
 
     const themesMap: {[skinName in SkinName]: {themeConfig: ThemeConfig; text: string}} = {

@@ -1,3 +1,12 @@
+## [7.7.1](https://github.com/Telefonica/mistica-web/compare/v7.7.0...v7.7.1) (2021-01-04)
+
+
+### Bug Fixes
+
+* **List:** improve type definitions ([#177](https://github.com/Telefonica/mistica-web/issues/177)) ([f69de57](https://github.com/Telefonica/mistica-web/commit/f69de5768feb5aef1fa22955ed1df0c8ab82e439))
+* **Tabs:** Tabs with icon bug with color states ([#176](https://github.com/Telefonica/mistica-web/issues/176)) ([8faa7fb](https://github.com/Telefonica/mistica-web/commit/8faa7fb995843812954f6ffc7ef12acfefa47f6a))
+* **VSCode:** high CPU usage caused by typescript.tsserver.experimental.enableProjectDiagnostics ([#179](https://github.com/Telefonica/mistica-web/issues/179)) ([2b65fd0](https://github.com/Telefonica/mistica-web/commit/2b65fd0e2099b562c011dab22a245de02f90f666))
+
 # [7.7.0](https://github.com/Telefonica/mistica-web/compare/v7.6.0...v7.7.0) (2020-12-21)
 
 
