@@ -4,9 +4,10 @@ import {createUseStyles} from './jss';
 import Touchable from './touchable';
 import ResponsiveLayout from './responsive-layout';
 import {useElementDimensions} from './hooks';
-import {getPlatform} from './utils/platform';
 
 import type {TrackingEvent} from './utils/types';
+import {Text6} from '.';
+import {pxToRem} from './utils/css';
 
 const tabMaxWidth = 284;
 
@@ -26,7 +27,7 @@ type StyleProps = {
     width: number;
 };
 
-const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
+const useStyles = createUseStyles(({colors, mq}) => ({
     outerBorder: {
         borderBottom: `1px solid ${colors.divider}`,
         width: '100%',
@@ -92,23 +93,14 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
             flexBasis: 208,
         },
     },
-    tabText: {
-        lineHeight: 1.5,
-        fontSize: 16,
-        letterSpacing: getPlatform(platformOverrides) === 'ios' ? -0.32 : 'normal',
-        fontWeight: 500,
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-    },
     tabSelected: {
         color: colors.textPrimary,
         borderBottom: `2px solid ${colors.controlActive}`,
     },
     icon: {
         marginRight: 8,
-        height: 24,
-        width: 24,
+        height: pxToRem(24),
+        width: pxToRem(24),
     },
 }));
 
@@ -150,7 +142,9 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) =
                                         aria-selected={isSelected ? 'true' : 'false'}
                                     >
                                         {icon && <div className={classes.icon}>{icon}</div>}
-                                        <span className={classes.tabText}>{text}</span>
+                                        <Text6 medium truncate color="inherit">
+                                            {text}
+                                        </Text6>
                                     </Touchable>
                                 );
                             })}

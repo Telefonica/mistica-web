@@ -1,5 +1,6 @@
 // @flow
 import {openStoryPage, screen} from '../test-utils';
+import {setRootFontSize} from '../__tests__/test-utils';
 
 test.each`
     device          | withIcon | withIconCurrentColor
@@ -33,3 +34,16 @@ test.each`
         expect(image).toMatchImageSnapshot();
     }
 );
+
+test('Tabs with large fontSize', async () => {
+    await openStoryPage({
+        section: 'Components/Controls/Tabs',
+        name: 'Default',
+        device: 'MOBILE_IOS',
+    });
+
+    await setRootFontSize(32);
+
+    const image = await (await screen.findByRole('tablist')).screenshot();
+    expect(image).toMatchImageSnapshot();
+});

@@ -56,3 +56,6 @@ export const makeTheme = (overrides: ThemeOverrides = {}): ThemeConfig => ({
     skin: overrides.skin || baseSkin,
     i18n: overrides.i18n || baseTheme.i18n,
 });
+
+export const setRootFontSize = (px: number): Promise<void> =>
+    page.$eval('html', (e, px) => e.setAttribute('style', `font-size: ${px}px;`), px);
