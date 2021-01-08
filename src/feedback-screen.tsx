@@ -42,10 +42,6 @@ const useStyles = createUseStyles((theme) => ({
         height: '100%',
         width: '100%',
         margin: 'auto',
-        [theme.mq.mobile]: {
-            minHeight: ({visibleAreaHeight, primaryButton}) =>
-                primaryButton ? `calc(${visibleAreaHeight} - env(safe-area-inset-bottom))` : 'unset',
-        },
         '& *': {
             zIndex: 1,
         },
@@ -53,14 +49,13 @@ const useStyles = createUseStyles((theme) => ({
 
     backgroundDiv: {
         position: 'fixed',
-        // There is a weird line between the background and the footer if we dont subtract 1 px
-        bottom: ({footerHeight}) => `calc(${footerHeight}px + env(safe-area-inset-bottom) - 1px)`,
+        bottom: ({footerHeight}) => footerHeight,
+        marginBottom: -1, // workaround, whithout this an horizontal line appears at the bottom
         left: 0,
-        // There is a weird line between the background and the header if we dont add 2 px
+        right: 0,
         [theme.mq.mobile]: {
-            height: ({visibleAreaHeight}) => `calc(${visibleAreaHeight} - env(safe-area-inset-bottom) + 2px)`,
+            height: ({contentHeight}) => contentHeight,
         },
-        width: '100%',
         background: ({isInverse}) => (isInverse ? theme.colors.backgroundSpecial1 : theme.colors.background),
     },
 
@@ -83,6 +78,7 @@ const useStyles = createUseStyles((theme) => ({
 
     innerContainer: {
         textAlign: 'left',
+        marginTop: ({topDistance}) => topDistance,
         padding: '64px 24px 16px',
     },
 
@@ -182,13 +178,14 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     const windowHeight = useWindowHeight();
     const {isMobile} = useScreenSize();
     const topDistance = React.useContext(TopDistanceContext);
-    const [isServerSide, setIsServerSide] = React.useState(true);
+    const [isServerSide, setIsServerSide] = React.useState(typeof self !== 'undefined');
     const [footerHeight, setFooterHeight] = React.useState(0);
 
-    const visibleAreaHeightPx = `${windowHeight - topDistance - footerHeight}px`;
+    const contentHeightPx = `${windowHeight - topDistance - footerHeight}px`;
     const classes = useStyles({
+        topDistance,
         isInverse,
-        visibleAreaHeight: isServerSide ? '100vh' : visibleAreaHeightPx,
+        contentHeight: isServerSide ? '100vh' : contentHeightPx,
         footerHeight,
         animateText,
         primaryButton,

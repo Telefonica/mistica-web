@@ -275,7 +275,7 @@ export const openStoryPage = ({
     section: string;
     name: string;
     device?: Device;
-    skin?: string;
+    skin?: 'Movistar' | 'Vivo' | 'O2' | 'O2-classic';
     userAgent?: string;
 }): Promise<PageApi> => {
     const url = buildStoryUrl(section, name, skin, DEVICES[device].platform);
