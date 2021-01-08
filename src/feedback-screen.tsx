@@ -2,7 +2,7 @@ import * as React from 'react';
 import {createUseStyles} from './jss';
 import {useTheme, useScreenSize, useWindowHeight, useIsomorphicLayoutEffect} from './hooks';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
-import ButtonFixedFooterLayout, {getFooterHeight} from './button-fixed-footer-layout';
+import ButtonFixedFooterLayout from './button-fixed-footer-layout';
 import {ButtonPrimary, ButtonSecondary, ButtonLink} from './button';
 import {TopDistanceContext} from './fixed-to-top';
 import OverscrollColor from './overscroll-color-context';
@@ -14,8 +14,9 @@ import {
     isWebViewBridgeAvailable,
     requestVibration as requestVibrationNative,
 } from '@tef-novum/webview-bridge';
-import {getPlatform, isOldChrome, isRunningAcceptanceTest} from './utils/platform';
+import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {Theme} from './theme';
+import {Box, Text3, Text5} from '.';
 
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) && !isRunningAcceptanceTest(platformOverrides);
@@ -92,21 +93,12 @@ const useStyles = createUseStyles((theme) => ({
     title: {
         color: ({isInverse}) => (isInverse ? theme.colors.textPrimarySpecial : theme.colors.textPrimary),
         animation: animateText(theme.platformOverrides),
-        lineHeight: 1.3333333,
-        fontSize: 24,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? 0.36 : 'normal',
-        fontWeight: 300,
         opacity: initialTextOpacity(theme.platformOverrides),
     },
 
     description: {
-        marginTop: 16,
         color: ({isInverse}) => (isInverse ? theme.colors.textPrimarySpecial : theme.colors.textSecondary),
         animation: animateText(theme.platformOverrides),
-        fontSize: 18,
-        fontWeight: 300,
-        lineHeight: 1.3333333,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.45 : 'normal',
         opacity: initialTextOpacity(theme.platformOverrides),
         '& p': {
             marginTop: 0,
@@ -190,8 +182,8 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     const windowHeight = useWindowHeight();
     const {isMobile} = useScreenSize();
     const topDistance = React.useContext(TopDistanceContext);
-    const footerHeight = getFooterHeight(isMobile, link, secondaryButton);
     const [isServerSide, setIsServerSide] = React.useState(true);
+    const [footerHeight, setFooterHeight] = React.useState(0);
 
     const visibleAreaHeightPx = `${windowHeight - topDistance - footerHeight}px`;
     const classes = useStyles({
@@ -218,8 +210,16 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         <div className={classes.container}>
             <div className={classes.innerContainer}>
                 {!!icon && <div className={classes.iconContainer}>{icon}</div>}
-                <span className={classes.title}>{title}</span>
-                {normalizedDescription && <div className={classes.description}>{normalizedDescription}</div>}
+                <Text3>
+                    <span className={classes.title}>{title}</span>
+                </Text3>
+                {normalizedDescription && (
+                    <Box paddingTop={16}>
+                        <Text5 light>
+                            <span className={classes.description}>{normalizedDescription}</span>
+                        </Text5>
+                    </Box>
+                )}
                 {children && <div className={classes.childrenContainer}>{children}</div>}
             </div>
         </div>
@@ -235,6 +235,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                         link={link}
                         footerBgColor={isInverse ? theme.colors.backgroundSpecialBottom : undefined}
                         containerBgColor={isInverse ? theme.colors.overscrollColorTop : undefined}
+                        onChangeFooterHeight={setFooterHeight}
                     >
                         {feedbackBasicContent}
                     </ButtonFixedFooterLayout>

@@ -67,7 +67,7 @@ export const TypeOfButtons: StoryComponent = () => {
     const [newTab, setNewTab] = React.useState(false);
     const [text, setTextInput] = React.useState('Example');
     const [loadingText, setLoadingText] = React.useState('Please wait');
-    const href = 'https://google.com';
+    const href = 'https://example.com';
 
     const props = {disabled, showSpinner, small, loadingText};
 
@@ -153,9 +153,9 @@ export const TypeOfButtons: StoryComponent = () => {
                     </ButtonDanger>
 
                     <SectionTitle>ButtonLink</SectionTitle>
-                    <div>Button:</div>
+                    <div>Button (onPress):</div>
                     <ButtonLink onPress={handleOnPress}>{text}</ButtonLink>
-                    <div>Link:</div>
+                    <div>Link (href):</div>
                     <ButtonLink href={href} newTab={newTab}>
                         {text}
                     </ButtonLink>

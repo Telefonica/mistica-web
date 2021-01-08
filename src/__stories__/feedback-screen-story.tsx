@@ -77,8 +77,11 @@ const IconOrders: React.FC = () => {
 export const Default: StoryComponent = () => {
     const [title, titleTextField] = useTextField('Title', "I'm the title", true);
     const [description, descriptionTextField] = useTextField('Description', "I'm the description");
-    const [primaryButtonText, primaryButtonTextField] = useTextField('Primary button text', '');
-    const [secondaryButtonText, secondaryButtonTextField] = useTextField('Secondary button text', '');
+    const [primaryButtonText, primaryButtonTextField] = useTextField('Primary button text', 'Primary');
+    const [secondaryButtonText, secondaryButtonTextField] = useTextField(
+        'Secondary button text',
+        'Secondary'
+    );
     const [linkText, linkTextField] = useTextField('Link button text', '');
     const [showIcon, showIconCheckbox] = useCheckbox('Show icon', true);
     const [isInverseState, isInverseStateCheckbox] = useCheckbox('Inverse variant', false);

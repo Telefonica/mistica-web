@@ -62,11 +62,10 @@ export const MoreComplexFooter: StoryComponent = () => {
                 </div>
             }
             isFooterVisible={isFooterVisible}
-            footerHeight={80}
         >
             {isFooterVisibleCheckbox}
             <p>
-                When you need a more elavorated thing for your footer (not just buttons), you can use
+                When you need a more elaborated thing for your footer (not just buttons), you can use
                 FixedFooterLayout instead of ButtonFixedFooterLayout
             </p>
             {textLines.map((line, idx) => (

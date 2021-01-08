@@ -15,20 +15,7 @@ type Props = {
     footerBgColor?: string;
     containerBgColor?: string;
     children: React.ReactNode;
-};
-
-export const getFooterHeight = (
-    isMobile: boolean,
-    link?: React.ReactElement<typeof ButtonLink>,
-    secondaryButton?: ButtonElement
-): number => {
-    if (link) {
-        return 128;
-    }
-    if (secondaryButton && isMobile) {
-        return 144;
-    }
-    return 80; // 1 primary button or 2 non-link buttons on desktop or tablet.
+    onChangeFooterHeight?: (heightInPx: number) => void;
 };
 
 const ButtonFixedFooterLayout: React.FC<Props> = ({
@@ -40,11 +27,12 @@ const ButtonFixedFooterLayout: React.FC<Props> = ({
     desktopButtonAlign = 'left',
     footerBgColor,
     containerBgColor,
+    onChangeFooterHeight,
 }) => {
     const {isMobile} = useScreenSize();
     return (
         <FixedFooterLayout
-            footerHeight={getFooterHeight(isMobile, link, secondaryButton)}
+            onChangeFooterHeight={onChangeFooterHeight}
             isFooterVisible={!!button && isFooterVisible}
             footerBgColor={footerBgColor}
             containerBgColor={containerBgColor}

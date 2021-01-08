@@ -28,7 +28,7 @@ test.each(cases)('Feedback %s screen appears properly on %s and %s', async (feed
     expect(image).toMatchImageSnapshot();
 });
 
-test.only('Feedback screen with large fontSize', async () => {
+test('Feedback screen with large fontSize', async () => {
     const page = await openStoryPage({
         section: 'Components/Feedbacks/FeedbackScreen',
         name: `SuccessFeedbackScreen`,
