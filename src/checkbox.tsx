@@ -4,6 +4,7 @@ import {useControlProps} from './form-context';
 import IconCheckbox from './icons/icon-checkbox';
 import {createUseStyles} from './jss';
 import {Text6, Inline} from '.';
+import {useAriaId} from './hooks';
 
 type RenderProps = {
     name: string;
@@ -34,6 +35,7 @@ const useStyles = createUseStyles(() => ({
 
 const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
     const classes = useStyles();
+    const labelId = useAriaId();
     const {defaultValue, value, onChange, focusableRef} = useControlProps({
         name: props.name,
         value: props.checked,
@@ -72,6 +74,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             tabIndex={0}
             ref={focusableRef}
             className={classes.checkboxContainer}
+            aria-labelledby={labelId}
         >
             {props.render ? (
                 props.render(iconCheckbox)
@@ -80,7 +83,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
                     {iconCheckbox}
                     {props.children && (
                         <Text6 regular as="div">
-                            {props.children}
+                            <span id={labelId}>{props.children}</span>
                         </Text6>
                     )}
                 </Inline>

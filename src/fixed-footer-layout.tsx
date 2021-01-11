@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import debounce from 'lodash/debounce';
 import {createUseStyles} from './jss';
 import {isRunningAcceptanceTest} from './utils/platform';
-import {useElementDimensions, useScreenSize, useTheme} from './hooks';
+import {useElementDimensions, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
 import Portal from './portal';
 import {addPassiveEventListener, removePassiveEventListener} from './utils/dom';
 
@@ -72,7 +72,7 @@ const FixedFooterLayout: React.FC<Props> = ({
     const {platformOverrides} = useTheme();
     const {height: realHeight, ref} = useElementDimensions();
 
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(realHeight);
     }, [onChangeFooterHeight, realHeight]);
 

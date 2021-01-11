@@ -39,7 +39,6 @@ const commonClasses = () => ({
     },
     small: {
         minWidth: 104,
-        padding: '0 8px',
         borderWidth: 1.5,
     },
     loadingContent: {
@@ -56,11 +55,11 @@ const commonClasses = () => ({
         transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
     },
     textContent: {
-        padding: '10.5px 16px', // height 48 = (padding: 10.5 * 2) + (border: 1.5 * 2) + (lineHeight: 24)
+        padding: '10.5px 14.5px', // height 48 = (padding: 10.5 * 2) + (border: 1.5 * 2) + (lineHeight: 24)
         opacity: 1,
         transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
         '$small &': {
-            padding: '4.5px 16px', // height 32 = (padding: 4.5 * 2) + (border: 1.5 * 2) + (lineHeight: 20)
+            padding: '4.5px 6.5px', // height 32 = (padding: 4.5 * 2) + (border: 1.5 * 2) + (lineHeight: 20)
         },
         '& svg': {
             marginRight: 8,
@@ -329,7 +328,10 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
                     {/* the following div won't be visible (see loadingFiller class), it is used to set the button width */}
                     <div
                         className={classes.loadingFiller}
-                        style={{paddingLeft: `calc(${spinnerSize} + 8px)`}}
+                        style={{
+                            paddingLeft: `calc(${spinnerSize} + 10px)`,
+                            paddingRight: props.small ? 20 : 32,
+                        }}
                     >
                         {renderText(loadingText)}
                     </div>

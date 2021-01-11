@@ -49,7 +49,7 @@ export const TypeOfButtons: StoryComponent = () => {
     const [small, setSmall] = React.useState(false);
     const [newTab, setNewTab] = React.useState(false);
     const [text, setTextInput] = React.useState('Example');
-    const [loadingText, setLoadingText] = React.useState('Please wait');
+    const [loadingText, setLoadingText] = React.useState('');
     const href = 'https://example.com';
 
     const props = {disabled, showSpinner, small, loadingText};
@@ -65,6 +65,8 @@ export const TypeOfButtons: StoryComponent = () => {
                         <Checkbox name="ShowSpinner" checked={showSpinner} onChange={setShowSpinner}>
                             Show Spinner
                         </Checkbox>
+                    </Inline>
+                    <Inline space={32}>
                         <Checkbox name="Small" checked={small} onChange={setSmall}>
                             Small
                         </Checkbox>
