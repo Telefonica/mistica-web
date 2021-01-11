@@ -6,11 +6,11 @@ import {
     FeedbackScreen,
 } from '../feedback-screen';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from '../button';
-import {useCheckbox, useTextField} from './helpers';
+import {useTextField} from './helpers';
 import Stack from '../stack';
 import {ThemeVariant, useIsInverseVariant} from '../theme-variant-context';
 import {useTheme} from '../hooks';
-import {FixedToTop, Text6} from '..';
+import {Checkbox, FixedToTop, Text6, Text8} from '..';
 
 export default {
     title: 'Components/Feedbacks/FeedbackScreen',
@@ -104,17 +104,17 @@ export const Default: StoryComponent = () => {
         'Secondary'
     );
     const [linkText, linkTextField] = useTextField('Link button text', '');
-    const [showIcon, showIconCheckbox] = useCheckbox('Show icon', true);
-    const [isInverseState, isInverseStateCheckbox] = useCheckbox('Inverse variant', true);
-    const [animateText, animateTextCheckbox] = useCheckbox('Animate text', true);
-    const [withNavbar, withNavbarCheckbox] = useCheckbox('With navbar', true);
+    const [showIcon, setShowIcon] = React.useState(true);
+    const [isInverse, setIsInverse] = React.useState(true);
+    const [animateText, setAnimateText] = React.useState(true);
+    const [withNavbar, setWithNavbar] = React.useState(true);
     return (
         <FixedToTop height={withNavbar ? 80 : 0}>
             {(top) => (
                 <>
                     {withNavbar && <Navbar top={top} />}
                     <Stack space={16}>
-                        <ThemeVariant isInverse={isInverseState}>
+                        <ThemeVariant isInverse={isInverse}>
                             <FeedbackScreen
                                 title={title}
                                 description={description}
@@ -144,14 +144,22 @@ export const Default: StoryComponent = () => {
                                     {primaryButtonTextField}
                                     {primaryButtonText && secondaryButtonTextField}
                                     {primaryButtonText && linkTextField}
-                                    {showIconCheckbox}
-                                    {animateTextCheckbox}
-                                    <span style={{fontSize: 12}}>
+                                    <Checkbox checked={showIcon} onChange={setShowIcon} name="icon">
+                                        Show icon
+                                    </Checkbox>
+                                    <Checkbox checked={animateText} onChange={setAnimateText} name="animate">
+                                        Animate text
+                                    </Checkbox>
+                                    <Checkbox checked={withNavbar} onChange={setWithNavbar} name="navbar">
+                                        With navbar
+                                    </Checkbox>
+                                    <Checkbox checked={isInverse} onChange={setIsInverse} name="inverse">
+                                        Inverse
+                                    </Checkbox>
+                                    <Text8 regular>
                                         * To see the inverse variant use a mobile screen size and add any
                                         button
-                                    </span>
-                                    {isInverseStateCheckbox}
-                                    {withNavbarCheckbox}
+                                    </Text8>
                                 </Stack>
                             </FeedbackScreen>
                         </ThemeVariant>
