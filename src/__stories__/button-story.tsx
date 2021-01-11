@@ -21,38 +21,21 @@ export default {
     title: 'Components/Touchables/Button',
 };
 
-const Check = ({
-    label,
-    checked,
-    onChange,
-}: {
-    label: string;
-    checked: boolean;
-    onChange: (value: boolean) => void;
-}) => (
-    <Checkbox
-        name={label}
-        checked={checked}
-        onChange={onChange}
-        render={(check) => (
-            <Inline space={12} alignItems="center">
-                {check}
-                {label}
-            </Inline>
-        )}
-    />
-);
-
 const BackgroundTheme: StoryComponent = ({children}) => {
     const {colors} = useTheme();
     const [isInverse, setIsInverse] = React.useState(false);
     return (
         <ThemeVariant isInverse={isInverse}>
             <>
-                <Box padding={8}>
-                    <Check label="Inverse variant" checked={isInverse} onChange={setIsInverse} />
-                </Box>
-                <div style={{background: isInverse ? colors.backgroundHeading : 'white'}}>{children}</div>
+                <div style={{background: isInverse ? colors.backgroundHeading : 'white'}}>
+                    <Box padding={8}>
+                        <Checkbox name="inverse" checked={isInverse} onChange={setIsInverse}>
+                            Inverse variant
+                        </Checkbox>
+                    </Box>
+
+                    {children}
+                </div>
             </>
         </ThemeVariant>
     );
@@ -76,10 +59,18 @@ export const TypeOfButtons: StoryComponent = () => {
             <Box padding={8}>
                 <Stack space={16}>
                     <Inline space={32}>
-                        <Check label="Disabled" checked={disabled} onChange={setDisabled} />
-                        <Check label="Show spinner" checked={showSpinner} onChange={setShowSpinner} />
-                        <Check label="Small" checked={small} onChange={setSmall} />
-                        <Check label="newTab" checked={newTab} onChange={setNewTab} />
+                        <Checkbox name="Disabled" checked={disabled} onChange={setDisabled}>
+                            Disabled
+                        </Checkbox>
+                        <Checkbox name="ShowSpinner" checked={showSpinner} onChange={setShowSpinner}>
+                            Show Spinner
+                        </Checkbox>
+                        <Checkbox name="Small" checked={small} onChange={setSmall}>
+                            Small
+                        </Checkbox>
+                        <Checkbox name="newTab" checked={newTab} onChange={setNewTab}>
+                            newTab
+                        </Checkbox>
                     </Inline>
                     <Inline space={16}>
                         <DoubleField>
@@ -185,7 +176,9 @@ export const LoadingState: StoryComponent = () => {
     return (
         <BackgroundTheme>
             <Box padding={8}>
-                <Check checked={isLoading} onChange={setIsLoading} label="isLoading" />
+                <Checkbox checked={isLoading} onChange={setIsLoading} name="isLoading">
+                    isLoading
+                </Checkbox>
             </Box>
             <StorySection title="With loading text">
                 <Inline space={16}>

@@ -3,14 +3,26 @@ import {SPACE} from './utils/key-codes';
 import {useControlProps} from './form-context';
 import IconCheckbox from './icons/icon-checkbox';
 import {createUseStyles} from './jss';
+import {Text6, Inline} from '.';
 
-type Props = {
+type RenderProps = {
     name: string;
-    render?: (checkboxElement: React.ReactElement) => React.ReactElement<any, any>; // Seems like this is the type returned by React.FC
     defaultChecked?: boolean;
     checked?: boolean;
     onChange?: (value: boolean) => void;
     id?: string;
+    render?: (checkboxElement: React.ReactElement) => React.ReactElement<any, any>; // Seems like this is the type returned by React.FC
+    children?: undefined;
+};
+
+type ChildrenProps = {
+    name: string;
+    defaultChecked?: boolean;
+    checked?: boolean;
+    onChange?: (value: boolean) => void;
+    id?: string;
+    render?: undefined;
+    children: React.ReactNode;
 };
 
 const useStyles = createUseStyles(() => ({
@@ -20,7 +32,7 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-const Checkbox: React.FC<Props> = (props) => {
+const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
     const classes = useStyles();
     const {defaultValue, value, onChange, focusableRef} = useControlProps({
         name: props.name,
@@ -61,7 +73,18 @@ const Checkbox: React.FC<Props> = (props) => {
             ref={focusableRef}
             className={classes.checkboxContainer}
         >
-            {props.render ? props.render(iconCheckbox) : iconCheckbox}
+            {props.render ? (
+                props.render(iconCheckbox)
+            ) : (
+                <Inline space={16} alignItems="center">
+                    {iconCheckbox}
+                    {props.children && (
+                        <Text6 regular as="div">
+                            {props.children}
+                        </Text6>
+                    )}
+                </Inline>
+            )}
         </div>
     );
 };

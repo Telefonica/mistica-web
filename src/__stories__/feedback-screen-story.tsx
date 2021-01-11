@@ -10,7 +10,7 @@ import {useCheckbox, useTextField} from './helpers';
 import Stack from '../stack';
 import {ThemeVariant, useIsInverseVariant} from '../theme-variant-context';
 import {useTheme} from '../hooks';
-import {FixedToTop} from '..';
+import {FixedToTop, Text6} from '..';
 
 export default {
     title: 'Components/Feedbacks/FeedbackScreen',
@@ -75,8 +75,27 @@ const IconOrders: React.FC = () => {
     );
 };
 
-export const Default: StoryComponent = () => {
+const Navbar = ({top}: {top: number}) => {
     const {colors} = useTheme();
+    return (
+        <div
+            style={{
+                background: colors.primary,
+                position: 'fixed',
+                zIndex: 100,
+                width: '100%',
+                padding: 16,
+                top,
+            }}
+        >
+            <Text6 medium color={colors.textPrimaryInverse}>
+                Navbar
+            </Text6>
+        </div>
+    );
+};
+
+export const Default: StoryComponent = () => {
     const [title, titleTextField] = useTextField('Title', "I'm the title", true);
     const [description, descriptionTextField] = useTextField('Description', "I'm the description");
     const [primaryButtonText, primaryButtonTextField] = useTextField('Primary button text', 'Primary');
@@ -86,32 +105,14 @@ export const Default: StoryComponent = () => {
     );
     const [linkText, linkTextField] = useTextField('Link button text', '');
     const [showIcon, showIconCheckbox] = useCheckbox('Show icon', true);
-    const [isInverseState, isInverseStateCheckbox] = useCheckbox('Inverse variant', false);
+    const [isInverseState, isInverseStateCheckbox] = useCheckbox('Inverse variant', true);
     const [animateText, animateTextCheckbox] = useCheckbox('Animate text', true);
     const [withNavbar, withNavbarCheckbox] = useCheckbox('With navbar', true);
     return (
         <FixedToTop height={withNavbar ? 80 : 0}>
             {(top) => (
                 <>
-                    {withNavbar && (
-                        <div
-                            style={{
-                                background: colors.navbarBackground,
-                                height: 80,
-                                position: 'fixed',
-                                top,
-                                zIndex: 100,
-                                right: 0,
-                                left: 0,
-                                display: 'flex',
-                                alignItems: 'center',
-                                padding: '0 16px',
-                                color: colors.textPrimaryInverse,
-                            }}
-                        >
-                            Navbar
-                        </div>
-                    )}
+                    {withNavbar && <Navbar top={top} />}
                     <Stack space={16}>
                         <ThemeVariant isInverse={isInverseState}>
                             <FeedbackScreen
