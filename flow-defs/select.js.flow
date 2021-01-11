@@ -6,7 +6,7 @@ export type SelectProps = {
   error?: boolean,
   helperText?: string,
   id?: string,
-  label?: string,
+  label: string,
   name: string,
   optional?: boolean,
   inputProps?: { [prop: string]: string, ... },

@@ -1,6 +1,8 @@
 {
     "javascript.validate.enable": true,
-    "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+    // `enableProjectDiagnostics` causes high CPU usage, eslint goes crazy
+    // if you have a powerful PC, you can enable this on your user configuration
+    "typescript.tsserver.experimental.enableProjectDiagnostics": false,
     "typescript.tsdk": "node_modules/typescript/lib",
     "search.exclude": {
         "**/node_modules": true,

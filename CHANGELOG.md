@@ -1,3 +1,29 @@
+## [7.7.1](https://github.com/Telefonica/mistica-web/compare/v7.7.0...v7.7.1) (2021-01-04)
+
+
+### Bug Fixes
+
+* **List:** improve type definitions ([#177](https://github.com/Telefonica/mistica-web/issues/177)) ([f69de57](https://github.com/Telefonica/mistica-web/commit/f69de5768feb5aef1fa22955ed1df0c8ab82e439))
+* **Tabs:** Tabs with icon bug with color states ([#176](https://github.com/Telefonica/mistica-web/issues/176)) ([8faa7fb](https://github.com/Telefonica/mistica-web/commit/8faa7fb995843812954f6ffc7ef12acfefa47f6a))
+* **VSCode:** high CPU usage caused by typescript.tsserver.experimental.enableProjectDiagnostics ([#179](https://github.com/Telefonica/mistica-web/issues/179)) ([2b65fd0](https://github.com/Telefonica/mistica-web/commit/2b65fd0e2099b562c011dab22a245de02f90f666))
+
+# [7.7.0](https://github.com/Telefonica/mistica-web/compare/v7.6.0...v7.7.0) (2020-12-21)
+
+
+### Bug Fixes
+
+* **Form,Select:** Focus first element with error on submit validation. Improvements and fixes in Select component. Select label is now mandatory. ([#175](https://github.com/Telefonica/mistica-web/issues/175)) ([fef5e7a](https://github.com/Telefonica/mistica-web/commit/fef5e7af3ff08d32e1da0cdad1e48b755266359f))
+* **Skins:** wrong backgroundPromo color in classicO2 ([#174](https://github.com/Telefonica/mistica-web/issues/174)) ([f7f8bf4](https://github.com/Telefonica/mistica-web/commit/f7f8bf4a48354b6fbd59d97c019a01470ea1fbb0))
+* **Text:** added margin reset in text component ([#173](https://github.com/Telefonica/mistica-web/issues/173)) ([2f306fc](https://github.com/Telefonica/mistica-web/commit/2f306fcc57a2b102e9862ada55f2fed61d56f8a6))
+
+
+### Features
+
+* **AuditAccessibility:** github action to audit accessibility using axe and storybook ([#172](https://github.com/Telefonica/mistica-web/issues/172)) ([4c2efcd](https://github.com/Telefonica/mistica-web/commit/4c2efcd7c8d74c11c8c98ef8cdcdbae2fda01833))
+* **Playroom:** changed playroom copies to English ([#167](https://github.com/Telefonica/mistica-web/issues/167)) ([370a20e](https://github.com/Telefonica/mistica-web/commit/370a20e5952711855fc1153f095777715fcd008f))
+* **Popover:** Minor improvements with short texts and long strings. ([#170](https://github.com/Telefonica/mistica-web/issues/170)) ([285dd9d](https://github.com/Telefonica/mistica-web/commit/285dd9d641e7078a7f7a72e184e3f7c17cfab51a))
+* **Switch:** change size in ios variant and color in ios classicO2 ([#169](https://github.com/Telefonica/mistica-web/issues/169)) ([1e5e509](https://github.com/Telefonica/mistica-web/commit/1e5e509d69483e1a525da8da5864ed0154863913))
+
 # [7.6.0](https://github.com/Telefonica/mistica-web/compare/v7.5.0...v7.6.0) (2020-12-03)
 
 

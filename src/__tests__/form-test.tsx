@@ -6,7 +6,7 @@ import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 
 test('happy case', async () => {
-    const handleSubmitSpy = jest.fn();
+    const handleSubmitSpy: any = jest.fn();
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
@@ -79,7 +79,7 @@ test('custom validator', async () => {
 });
 
 test('fields are disabled during submit', async () => {
-    let resolveSubmitPromise = () => {};
+    let resolveSubmitPromise: (value?: unknown) => void = () => {};
     const submitPromise = new Promise((r) => {
         resolveSubmitPromise = r;
     });

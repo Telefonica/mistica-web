@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ButtonPrimary} from '../button';
+import {ButtonPrimary} from '../..';
 
 // @ts-expect-error - no children
 <ButtonPrimary />;

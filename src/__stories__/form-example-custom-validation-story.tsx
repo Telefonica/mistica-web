@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Stack, Touchable, Form, TextField, useForm, ButtonPrimary, Text7} from '..';
 
 export default {
-    title: 'Components/Forms/Form examples',
+    title: 'Components/Forms/Example Custom Validator',
 };
 
 type CardProps = {show: boolean; children: React.ReactNode; onPress: any};
@@ -41,7 +41,7 @@ const Cards: React.FC<any> = ({activeCard, setActiveCard}) => {
     );
 };
 
-export const CustomValidationErrorsHandler: StoryComponent = () => {
+export const CustomValidationForm: StoryComponent = () => {
     const [activeCard, setActiveCard] = React.useState(0);
     const [formData, setFormData] = React.useState<any>({});
 
