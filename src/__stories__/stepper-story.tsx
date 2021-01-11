@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react';
-import Stepper from '../stepper';
-import {StorySection} from './helpers';
+import {Stepper, ButtonPrimary, ButtonLayout, Stack} from '..';
 
 const texts = ['Basic Details', 'Company Details', 'Subscription Plan', 'Payment Details', 'Confirmation'];
 
@@ -11,9 +10,29 @@ export default {
 };
 
 export const Default: StoryComponent = () => {
+    const [step, setStep] = React.useState(3);
+
+    const stepDecrement = () => {
+        setStep((prevStep) => prevStep - 1);
+    };
+
+    const stepIncrement = () => {
+        setStep((prevStep) => prevStep + 1);
+    };
+
     return (
-        <StorySection title="Stepper example">
-            <Stepper currentStep={2} steps={texts.map((text) => ({text}))} />
-        </StorySection>
+        <Stack space={32}>
+            <div data-testid="stepper">
+                <Stepper currentStep={step} steps={texts.map((text) => ({text}))} />
+            </div>
+            <ButtonLayout align="center">
+                <ButtonPrimary onPress={stepDecrement} disabled={step === 1}>
+                    Previous step
+                </ButtonPrimary>
+                <ButtonPrimary onPress={stepIncrement} disabled={step === texts.length}>
+                    Next step
+                </ButtonPrimary>
+            </ButtonLayout>
+        </Stack>
     );
 };

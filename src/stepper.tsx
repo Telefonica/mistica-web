@@ -11,13 +11,14 @@ const transition = '1s cubic-bezier(0.75, 0, 0.27, 1)';
 const useStyles = createUseStyles(({colors}) => ({
     stepper: {
         display: 'flex',
+        height: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 64 : 24),
     },
     step: {
         position: 'relative',
         display: 'inline-flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 'flex-start' : 'center'),
         textAlign: 'center',
 
         '&:first-child': {
