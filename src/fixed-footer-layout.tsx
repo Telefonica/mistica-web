@@ -122,7 +122,7 @@ const FixedFooterLayout: React.FC<Props> = ({
             })}
             data-testid={`fixed-footer${isFooterVisible ? '-visible' : '-hidden'}`}
         >
-            <div style={{height: footerHeight}}>{footer}</div>
+            <div style={{height: footerHeight, marginBottom: 'env(safe-area-inset-bottom)'}}>{footer}</div>
         </div>
     );
 
