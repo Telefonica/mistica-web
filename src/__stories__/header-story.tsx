@@ -2,7 +2,6 @@ import * as React from 'react';
 import {
     Header,
     HeaderLayout,
-    Box,
     ButtonPrimary,
     ButtonSecondary,
     Stack,
