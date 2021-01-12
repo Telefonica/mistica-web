@@ -3,7 +3,7 @@
 import * as React from "react";
 declare type Props = {
   role?: string,
-  size?: number,
+  size?: number | string,
   color?: string,
 };
 declare var IconClose: React.ComponentType<Props>;
