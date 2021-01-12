@@ -31,6 +31,7 @@ test('fake button', () => {
               </div>
               <div
                 class="loadingFiller"
+                style="padding-right: 32px;"
               />
             </div>
             <div
@@ -70,6 +71,7 @@ test('submit button', () => {
               </div>
               <div
                 class="loadingFiller"
+                style="padding-right: 32px;"
               />
             </div>
             <div
@@ -109,6 +111,7 @@ test('<button> is rendered when using "onPress" prop', () => {
               </div>
               <div
                 class="loadingFiller"
+                style="padding-right: 32px;"
               />
             </div>
             <div
@@ -148,6 +151,7 @@ test('<a> is rendered when using "href" prop', () => {
               </div>
               <div
                 class="loadingFiller"
+                style="padding-right: 32px;"
               />
             </div>
             <div
@@ -191,6 +195,7 @@ test('"href" with "newTab" renders required attributes', () => {
               </div>
               <div
                 class="loadingFiller"
+                style="padding-right: 32px;"
               />
             </div>
             <div
@@ -251,6 +256,7 @@ test('<a> is rendered when using "to" prop', () => {
               </div>
               <div
                 class="loadingFiller"
+                style="padding-right: 32px;"
               />
             </div>
             <div
@@ -299,6 +305,7 @@ test('button with spinner', () => {
               </div>
               <div
                 class="loadingFiller"
+                style="padding-right: 32px;"
               />
             </div>
             <div
@@ -324,6 +331,7 @@ test('button with spinner', () => {
               </div>
               <div
                 class="loadingFiller"
+                style="padding-right: 32px;"
               />
             </div>
             <div
@@ -362,6 +370,7 @@ test('dark theme', () => {
               </div>
               <div
                 class="loadingFiller"
+                style="padding-right: 32px;"
               />
             </div>
             <div
