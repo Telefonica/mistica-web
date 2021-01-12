@@ -29,7 +29,7 @@ type ChildrenProps = {
 const useStyles = createUseStyles(() => ({
     checkboxContainer: {
         cursor: 'default',
-        display: 'inline-block',
+        display: 'inline',
     },
 }));
 
