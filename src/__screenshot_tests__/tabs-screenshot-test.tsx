@@ -1,6 +1,5 @@
 // @flow
-import {openStoryPage, screen} from '../test-utils';
-import {setRootFontSize} from '../__tests__/test-utils';
+import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 test.each`
     device          | withIcon | withIconCurrentColor

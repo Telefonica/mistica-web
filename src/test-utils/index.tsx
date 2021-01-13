@@ -320,3 +320,6 @@ export const openSSRPage = async ({
 };
 
 export const screen: Queries = buildQueryMethods();
+
+export const setRootFontSize = (px: number): Promise<void> =>
+    page.$eval('html', (e, px) => e.setAttribute('style', `font-size: ${px}px;`), px);

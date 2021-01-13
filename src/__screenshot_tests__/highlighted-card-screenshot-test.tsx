@@ -1,7 +1,6 @@
-import {openStoryPage, screen} from '../test-utils';
+import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 import type {Device} from '../test-utils';
-import {setRootFontSize} from '../__tests__/test-utils';
 
 const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
