@@ -2,6 +2,7 @@ import * as React from 'react';
 import Tabs from '../tabs';
 import {StorySection, useCheckbox} from './helpers';
 import IconClose from '../icons/icon-close';
+import {pxToRem} from '../utils/css';
 
 const texts = ['Tab 1', 'Tab 2', 'Tab 3'];
 
@@ -24,7 +25,7 @@ export const Default: StoryComponent = () => {
                 tabs={texts.map((text) => ({
                     text,
                     icon: withIcon ? (
-                        <IconClose color={withCurrentColor ? 'currentColor' : undefined} />
+                        <IconClose size={pxToRem(24)} color={withCurrentColor ? 'currentColor' : undefined} />
                     ) : null,
                 }))}
             />

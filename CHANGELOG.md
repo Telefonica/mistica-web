@@ -1,3 +1,10 @@
+# [7.8.0](https://github.com/Telefonica/mistica-web/compare/v7.7.1...v7.8.0) (2021-01-13)
+
+
+### Features
+
+* **Accessibility:** font scaling for Text. Refactored Tabs, Buttons and Feedbacks to support font scaling ([#178](https://github.com/Telefonica/mistica-web/issues/178)) ([68f1752](https://github.com/Telefonica/mistica-web/commit/68f17520089055e5ec686c5b744f8f3dc8238855))
+
 ## [7.7.1](https://github.com/Telefonica/mistica-web/compare/v7.7.0...v7.7.1) (2021-01-04)
 
 

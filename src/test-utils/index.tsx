@@ -275,7 +275,7 @@ export const openStoryPage = ({
     section: string;
     name: string;
     device?: Device;
-    skin?: string;
+    skin?: 'Movistar' | 'Vivo' | 'O2' | 'O2-classic';
     userAgent?: string;
 }): Promise<PageApi> => {
     const url = buildStoryUrl(section, name, skin, DEVICES[device].platform);
@@ -320,3 +320,6 @@ export const openSSRPage = async ({
 };
 
 export const screen: Queries = buildQueryMethods();
+
+export const setRootFontSize = (px: number): Promise<void> =>
+    page.$eval('html', (e, px) => e.setAttribute('style', `font-size: ${px}px;`), px);

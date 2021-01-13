@@ -9,3 +9,13 @@ declare export var createChangeEvent: (
   target: HTMLInputElement,
   value: string
 ) => SyntheticEvent<HTMLInputElement>;
+declare export var addPassiveEventListener: (
+  el: EventTarget,
+  eventName: string,
+  listener: (e: any) => void
+) => void;
+declare export var removePassiveEventListener: (
+  el: EventTarget,
+  eventName: string,
+  listener: (e: any) => void
+) => void;

@@ -10,12 +10,12 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={32}>
             <>
-                <SectionTitle id="label">Uncontrolled</SectionTitle>
+                <SectionTitle id="label">Uncontrolled (render prop)</SectionTitle>
                 <Checkbox
-                    name="second"
+                    name="uncontrolled-render"
                     defaultChecked={false}
                     render={(checkboxElement) => (
-                        <Inline alignItems="center" space={8}>
+                        <Inline alignItems="center" space={16}>
                             {checkboxElement}
                             <Text6 regular>You accept to sell your soul</Text6>
                         </Inline>
@@ -23,13 +23,19 @@ export const Default: StoryComponent = () => {
                 />
             </>
             <>
-                <SectionTitle id="label">Controlled</SectionTitle>
+                <SectionTitle id="label">Uncontrolled (children)</SectionTitle>
+                <Checkbox name="uncontrolled-children" defaultChecked={false}>
+                    You accept to sell your soul
+                </Checkbox>
+            </>
+            <>
+                <SectionTitle id="label">Controlled (render prop)</SectionTitle>
                 <Checkbox
-                    name="third"
+                    name="controlled-render"
                     checked={checked}
                     onChange={onChange}
                     render={(checkboxElement) => (
-                        <Inline alignItems="center" space={8}>
+                        <Inline alignItems="center" space={16}>
                             {checkboxElement}
                             <Text6 regular>You accept to sell your soul: {checked ? 'sure!' : 'nahh'}</Text6>
                         </Inline>
@@ -37,21 +43,23 @@ export const Default: StoryComponent = () => {
                 />
             </>
             <>
+                <SectionTitle id="label">Controlled (children)</SectionTitle>
+                <Checkbox name="controlled-children" checked={checked} onChange={onChange}>
+                    You accept to sell your soul: {checked ? 'sure!' : 'nahh'}
+                </Checkbox>
+            </>
+            <>
                 <SectionTitle id="label">Without box</SectionTitle>
                 <Checkbox
-                    name="third"
+                    name="no-box"
                     checked={checked}
                     onChange={onChange}
                     render={() => (
-                        <Inline alignItems="center" space={8}>
+                        <Inline alignItems="center" space={16}>
                             <Text6 regular>You accept to sell your soul: {checked ? 'sure!' : 'nahh'}</Text6>
                         </Inline>
                     )}
                 />
-            </>
-            <>
-                <SectionTitle id="label">Without children</SectionTitle>
-                <Checkbox name="first" defaultChecked={false} />
             </>
         </Stack>
     );

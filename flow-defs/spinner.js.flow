@@ -4,7 +4,7 @@ import * as React from "react";
 declare type Props = {
   color?: string,
   delay?: string,
-  size?: number,
+  size?: number | string,
   rolePresentation?: boolean,
   style?: CssStyle,
 };
