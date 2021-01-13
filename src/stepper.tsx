@@ -96,88 +96,82 @@ const Stepper: React.FC<StepperProps> = ({steps, currentStep}: StepperProps) => 
     const currentPosition = currentStep + 1;
 
     return (
-        <div role="group" aria-label="progress">
-            <ResponsiveLayout fullWidth>
-                <div className={classes.stepper}>
-                    {steps.map(({text}, index) => {
-                        const stepNumber = index + 1;
-                        const currentNumber = stepNumber === currentStep;
-                        const lastStep = index === steps.length - 1;
-                        const isPassedStep = stepNumber < currentPosition;
-                        const showIcon = index < currentStep - 1;
+        <ResponsiveLayout fullWidth>
+            <div className={classes.stepper} role="group" aria-label="stepper">
+                {steps.map(({text}, index) => {
+                    const stepNumber = index + 1;
+                    const currentNumber = stepNumber === currentStep;
+                    const lastStep = index === steps.length - 1;
+                    const isPassedStep = stepNumber < currentPosition;
+                    const showIcon = index < currentStep - 1;
 
-                        return (
-                            <React.Fragment key={index}>
-                                <div
-                                    key={index}
-                                    className={classes.step}
-                                    aria-label={text}
-                                    aria-current={currentNumber ? 'step' : undefined}
-                                >
-                                    {showIcon ? (
-                                        <div className={classes.stepIconNumber}>
-                                            <IconSuccess
-                                                color={colors.primary}
-                                                size={isDesktopOrBigger ? 32 : 24}
-                                            />
-                                        </div>
-                                    ) : (
-                                        <div
-                                            className={classnames(classes.stepIconNumber, classes.number, {
-                                                [classes.numberPassed]: isPassedStep,
-                                            })}
-                                        >
-                                            {isDesktopOrBigger ? (
-                                                <Text7
-                                                    medium
-                                                    color={
-                                                        isPassedStep
-                                                            ? colors.textPrimarySpecial
-                                                            : colors.textSecondary
-                                                    }
-                                                >
-                                                    {stepNumber}
-                                                </Text7>
-                                            ) : (
-                                                <Text8
-                                                    medium
-                                                    color={
-                                                        isPassedStep
-                                                            ? colors.textPrimarySpecial
-                                                            : colors.textSecondary
-                                                    }
-                                                >
-                                                    {stepNumber}
-                                                </Text8>
-                                            )}
-                                        </div>
-                                    )}
-                                    {isDesktopOrBigger && (
-                                        <div className={classes.textContainer}>
+                    return (
+                        <React.Fragment key={index}>
+                            <div
+                                key={index}
+                                className={classes.step}
+                                aria-label={text}
+                                aria-current={currentNumber ? 'step' : undefined}
+                            >
+                                {showIcon ? (
+                                    <div className={classes.stepIconNumber}>
+                                        <IconSuccess
+                                            color={colors.primary}
+                                            size={isDesktopOrBigger ? 32 : 24}
+                                        />
+                                    </div>
+                                ) : (
+                                    <div
+                                        className={classnames(classes.stepIconNumber, classes.number, {
+                                            [classes.numberPassed]: isPassedStep,
+                                        })}
+                                    >
+                                        {isDesktopOrBigger ? (
                                             <Text7
-                                                regular
+                                                medium
                                                 color={
-                                                    isPassedStep ? colors.textPrimary : colors.textSecondary
+                                                    isPassedStep
+                                                        ? colors.textPrimarySpecial
+                                                        : colors.textSecondary
                                                 }
                                             >
-                                                {text}
+                                                {stepNumber}
                                             </Text7>
-                                        </div>
-                                    )}
-                                </div>
-                                {!lastStep && (
-                                    <div className={classes.bar}>
-                                        {isPassedStep && !currentNumber && (
-                                            <div className={classes.barFilled} />
+                                        ) : (
+                                            <Text8
+                                                medium
+                                                color={
+                                                    isPassedStep
+                                                        ? colors.textPrimarySpecial
+                                                        : colors.textSecondary
+                                                }
+                                            >
+                                                {stepNumber}
+                                            </Text8>
                                         )}
                                     </div>
                                 )}
-                            </React.Fragment>
-                        );
-                    })}
-                </div>
-            </ResponsiveLayout>
-        </div>
+                                {isDesktopOrBigger && (
+                                    <div className={classes.textContainer}>
+                                        <Text7
+                                            regular
+                                            color={isPassedStep ? colors.textPrimary : colors.textSecondary}
+                                        >
+                                            {text}
+                                        </Text7>
+                                    </div>
+                                )}
+                            </div>
+                            {!lastStep && (
+                                <div className={classes.bar}>
+                                    {isPassedStep && !currentNumber && <div className={classes.barFilled} />}
+                                </div>
+                            )}
+                        </React.Fragment>
+                    );
+                })}
+            </div>
+        </ResponsiveLayout>
     );
 };
 
