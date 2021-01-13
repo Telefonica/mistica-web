@@ -107,7 +107,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentStep}: StepperProps) => 
                         const showIcon = index < currentStep - 1;
 
                         return (
-                            <>
+                            <React.Fragment key={index}>
                                 <div
                                     key={index}
                                     className={classes.step}
@@ -172,7 +172,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentStep}: StepperProps) => 
                                         )}
                                     </div>
                                 )}
-                            </>
+                            </React.Fragment>
                         );
                     })}
                 </div>
