@@ -1,5 +1,9 @@
 // @flow
 
 import * as React from "react";
-declare var IconSuccess: React.ComponentType<{}>;
+declare type Props = {
+  size?: number,
+  color?: string,
+};
+declare var IconSuccess: React.ComponentType<Props>;
 declare export default typeof IconSuccess;

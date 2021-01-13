@@ -6,11 +6,10 @@ const texts = ['Basic Details', 'Company Details', 'Subscription Plan', 'Payment
 
 export default {
     title: 'Components/Others/Stepper',
-    component: Stepper,
 };
 
 export const Default: StoryComponent = () => {
-    const [step, setStep] = React.useState(3);
+    const [step, setStep] = React.useState(2);
 
     const stepDecrement = () => {
         setStep((prevStep) => prevStep - 1);
@@ -36,3 +35,5 @@ export const Default: StoryComponent = () => {
         </Stack>
     );
 };
+
+Default.storyName = 'Stepper';

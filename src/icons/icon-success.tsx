@@ -88,9 +88,9 @@ const IconSuccessDefault: React.FC<Props> = ({size = 64, color}) => {
                     vectorEffect="non-scaling-stroke"
                     fill="none"
                     stroke={color ? color : undefined}
-                    strokeWidth="1.3"
+                    strokeWidth="2"
                     strokeMiterlimit="10"
-                    d="M63.2,32c0,20.7-10.6,31.2-31.2,31.2C11.3,63.2,0.8,52.7,0.8,32S11.3,0.8,32,0.8S63.2,11.3,63.2,32z"
+                    d="M61.4,32c0,19.5-10,29.4-29.4,29.4C12.5,61.4,2.6,51.5,2.6,32S12.5,2.6,32,2.6S61.4,12.5,61.4,32z"
                     transform="rotate(90 32 32)"
                     {...getAnimateDrawLineProps('202', '0.2s', platformOverrides)}
                 />
@@ -98,9 +98,9 @@ const IconSuccessDefault: React.FC<Props> = ({size = 64, color}) => {
                     vectorEffect="non-scaling-stroke"
                     fill="none"
                     stroke={color ? color : undefined}
-                    strokeWidth="1.3"
+                    strokeWidth="2"
                     strokeMiterlimit="10"
-                    points="19.3,35.1 27.1,45 46.5,20.3"
+                    points="20,34.9 27.4,44.3 45.6,21"
                     {...mergeProperties(
                         getAnimateDrawLineProps('44', '0.6s', platformOverrides),
                         getAnimateHopInProps('0.6s', platformOverrides)
