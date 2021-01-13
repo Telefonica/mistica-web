@@ -83,7 +83,7 @@ const useStyles = createUseStyles(({colors}) => ({
 }));
 
 type StepperProps = {
-    steps: Array<{
+    steps: ReadonlyArray<{
         readonly text: string;
     }>;
     currentStep: number;

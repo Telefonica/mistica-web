@@ -2,7 +2,13 @@
 import * as React from 'react';
 import {Stepper, ButtonPrimary, ButtonLayout, Stack} from '..';
 
-const texts = ['Basic Details', 'Company Details', 'Subscription Plan', 'Payment Details', 'Confirmation'];
+const texts = [
+    {text: 'Basic Details'},
+    {text: 'Company Details'},
+    {text: 'Subscription Plan'},
+    {text: 'Payment Details'},
+    {text: 'Confirmation'},
+];
 
 export default {
     title: 'Components/Others/Stepper',
@@ -22,7 +28,7 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={32}>
             <div data-testid="stepper">
-                <Stepper currentStep={step} steps={texts.map((text) => ({text}))} />
+                <Stepper currentStep={step} steps={texts} />
             </div>
             <ButtonLayout align="center">
                 <ButtonPrimary onPress={stepDecrement} disabled={step === 1}>
