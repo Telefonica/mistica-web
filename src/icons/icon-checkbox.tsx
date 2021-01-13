@@ -19,6 +19,8 @@ const IconAndroid: React.FC<InternalProps> = ({checked, markedColor}) => {
     const classes = useStyles();
     return checked ? (
         <svg className={classes.checkbox} width="18" height="18" viewBox="0 0 18 18">
+            {/* This circle is a workaround, so the check marck becomes visible on inverse backgrounds */}
+            <circle cx="9" cy="9" r="8" fill="white" />
             <path
                 transform="translate(-3, -3)"
                 d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14l-5-4.808 1.4-1.346 3.6 3.462L17.6 7 19 8.346 10 17z"

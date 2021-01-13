@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 import {getPlatform} from './utils/platform';
+import {pxToRem} from './utils/css';
 
 const useStyles = createUseStyles((theme) => {
     const mapToWeight: Record<string, number> = {
@@ -27,9 +28,9 @@ const useStyles = createUseStyles((theme) => {
 
     return {
         text: {
-            lineHeight: ({desktopLineHeight}) => desktopLineHeight,
+            lineHeight: ({desktopLineHeight}) => pxToRem(desktopLineHeight),
             textTransform: ({uppercase}) => (uppercase ? 'uppercase' : 'inherit'),
-            fontSize: ({desktopSize}) => desktopSize,
+            fontSize: ({desktopSize}) => pxToRem(desktopSize),
             fontWeight: ({weight}) => (weight ? mapToWeight[weight] : 'inherit'),
             color: ({isInverse, color = theme.colors.textPrimary}) =>
                 isInverse ? inverseColorsMap[color] ?? color : color,
@@ -40,8 +41,8 @@ const useStyles = createUseStyles((theme) => {
             margin: 0,
 
             [theme.mq.mobile]: {
-                lineHeight: ({mobileLineHeight}) => mobileLineHeight,
-                fontSize: ({mobileSize}) => mobileSize,
+                lineHeight: ({mobileLineHeight}) => pxToRem(mobileLineHeight),
+                fontSize: ({mobileSize}) => pxToRem(mobileSize),
             },
         },
         truncate: {

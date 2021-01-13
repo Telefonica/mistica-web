@@ -7,6 +7,7 @@ import {MOVISTAR_SKIN} from './skins/constants';
 
 const useStyles = createUseStyles(() => ({
     spinnerDefault: {
+        flexShrink: 0,
         animation: '$rotator 1.4s linear infinite',
     },
     spinnerDefaultPath: {
@@ -17,6 +18,7 @@ const useStyles = createUseStyles(() => ({
         animation: '$dash 1.4s ease-in-out infinite',
     },
     spinnerIos: {
+        flexShrink: 0,
         '& path': {
             animation: '$spinnerIos 1s infinite linear',
             '&:nth-of-type(2)': {animationDelay: '-.080s'},
@@ -62,7 +64,7 @@ const useStyles = createUseStyles(() => ({
 type Props = {
     color?: string;
     delay?: string;
-    size?: number;
+    size?: number | string;
     rolePresentation?: boolean;
     style?: React.CSSProperties;
 };

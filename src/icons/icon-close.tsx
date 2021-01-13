@@ -5,7 +5,7 @@ const ICON_SIZE_1 = 24;
 
 type Props = {
     role?: string;
-    size?: number;
+    size?: number | string;
     color?: string;
 };
 

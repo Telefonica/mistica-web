@@ -1,13 +1,21 @@
 // @flow
 
 import * as React from "react";
-declare type Props = {
+declare type RenderProps = {
   name: string,
-  render?: (checkboxElement: React.Element<any>) => React.Element<any>,
   defaultChecked?: boolean,
   checked?: boolean,
   onChange?: (value: boolean) => void,
   id?: string,
+  render?: (checkboxElement: React.Element<any>) => React.Element<any>,
 };
-declare var Checkbox: React.ComponentType<Props>;
+declare type ChildrenProps = {
+  name: string,
+  defaultChecked?: boolean,
+  checked?: boolean,
+  onChange?: (value: boolean) => void,
+  id?: string,
+  children: React.Node,
+};
+declare var Checkbox: React.ComponentType<RenderProps | ChildrenProps>;
 declare export default typeof Checkbox;

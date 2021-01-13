@@ -1,4 +1,4 @@
-import {openStoryPage, screen} from '../test-utils';
+import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
@@ -64,6 +64,20 @@ test.each(DEVICES)('MainSectionHeader', async (device) => {
 
     const story = await screen.findByTestId('header-layout');
 
+    const image = await story.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(DEVICES)('Header with large text', async (device) => {
+    await openStoryPage({
+        section: 'Components/Headers/MainSectionHeader',
+        name: 'MainSectionHeader',
+        device,
+    });
+
+    await setRootFontSize(32);
+
+    const story = await screen.findByTestId('header-layout');
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
 });

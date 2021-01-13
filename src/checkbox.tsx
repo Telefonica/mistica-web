@@ -3,14 +3,27 @@ import {SPACE} from './utils/key-codes';
 import {useControlProps} from './form-context';
 import IconCheckbox from './icons/icon-checkbox';
 import {createUseStyles} from './jss';
+import {Text6, Inline} from '.';
+import {useAriaId} from './hooks';
 
-type Props = {
+type RenderProps = {
     name: string;
-    render?: (checkboxElement: React.ReactElement) => React.ReactElement<any, any>; // Seems like this is the type returned by React.FC
     defaultChecked?: boolean;
     checked?: boolean;
     onChange?: (value: boolean) => void;
     id?: string;
+    render?: (checkboxElement: React.ReactElement) => React.ReactElement<any, any>; // Seems like this is the type returned by React.FC
+    children?: undefined;
+};
+
+type ChildrenProps = {
+    name: string;
+    defaultChecked?: boolean;
+    checked?: boolean;
+    onChange?: (value: boolean) => void;
+    id?: string;
+    render?: undefined;
+    children: React.ReactNode;
 };
 
 const useStyles = createUseStyles(() => ({
@@ -20,8 +33,9 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-const Checkbox: React.FC<Props> = (props) => {
+const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
     const classes = useStyles();
+    const labelId = useAriaId();
     const {defaultValue, value, onChange, focusableRef} = useControlProps({
         name: props.name,
         value: props.checked,
@@ -60,8 +74,20 @@ const Checkbox: React.FC<Props> = (props) => {
             tabIndex={0}
             ref={focusableRef}
             className={classes.checkboxContainer}
+            aria-labelledby={labelId}
         >
-            {props.render ? props.render(iconCheckbox) : iconCheckbox}
+            {props.render ? (
+                props.render(iconCheckbox)
+            ) : (
+                <Inline space={16} alignItems="center">
+                    {iconCheckbox}
+                    {props.children && (
+                        <Text6 regular as="div">
+                            <span id={labelId}>{props.children}</span>
+                        </Text6>
+                    )}
+                </Inline>
+            )}
         </div>
     );
 };
