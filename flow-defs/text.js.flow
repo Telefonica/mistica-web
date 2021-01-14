@@ -18,26 +18,50 @@ declare type TextProps = {
   ...$Exact<TextPresetProps>,
 
   weight?: FontWeight | boolean,
+
+  /**
+   * in pixels, will be converted to rem in runtime
+   */
   size?: number,
+
+  /**
+   * in pixels, will be converted to rem in runtime
+   */
   mobileSize?: number,
+
+  /**
+   * in pixels, will be converted to rem in runtime
+   */
   desktopSize?: number,
+
+  /**
+   * in pixels, will be converted to rem in runtime
+   */
   lineHeight?: string | number,
+
+  /**
+   * in pixels, will be converted to rem in runtime
+   */
   mobileLineHeight?: string | number,
+
+  /**
+   * in pixels, will be converted to rem in runtime
+   */
   desktopLineHeight?: string | number,
   letterSpacing?: number,
 };
 declare var Text: React.ComponentType<TextProps>;
 declare type LightProps = {
-  ...$Exact<TextPresetProps>,
-  light: boolean,
+ ...$Exact<TextPresetProps>,
+ light: boolean,
 };
 declare type MediumProps = {
-  ...$Exact<TextPresetProps>,
-  medium: boolean,
+ ...$Exact<TextPresetProps>,
+ medium: boolean,
 };
 declare type RegularProps = {
-  ...$Exact<TextPresetProps>,
-  regular: boolean,
+ ...$Exact<TextPresetProps>,
+ regular: boolean,
 };
 declare type LightMediumProps = LightProps | MediumProps;
 declare type RegularMediumProps = RegularProps | MediumProps;
