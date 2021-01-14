@@ -45,14 +45,18 @@ const commonClasses = () => ({
         display: 'inline-flex',
         position: 'absolute',
         top: 0,
-        left: 16,
-        right: 16,
+        left: 14.5,
+        right: 14.5,
         bottom: 0,
         justifyContent: 'center',
         alignItems: 'center',
         opacity: 0,
         transform: 'translateY(2rem)',
         transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
+        '$small &': {
+            left: 6.5,
+            right: 6.5,
+        },
     },
     textContent: {
         padding: '10.5px 14.5px', // height 48 = (padding: 10.5 * 2) + (border: 1.5 * 2) + (lineHeight: 24)
@@ -325,16 +329,17 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
                 {/* text content */}
                 <div aria-hidden={showSpinner ? true : undefined} className={classes.textContent}>
                     {renderText(props.children)}
-                    {/* the following div won't be visible (see loadingFiller class), it is used to set the button width */}
-                    <div
-                        className={classes.loadingFiller}
-                        style={{
-                            paddingLeft: `calc(${spinnerSize} + 10px)`,
-                            paddingRight: props.small ? 20 : 32,
-                        }}
-                    >
-                        {renderText(loadingText)}
-                    </div>
+                </div>
+
+                {/* the following div won't be visible (see loadingFiller class), this is used to force the button width */}
+                <div
+                    className={classes.loadingFiller}
+                    style={{
+                        paddingLeft: `calc(${spinnerSize} + 8px)`, // space for spinner and separation
+                        paddingRight: (props.small ? 16 : 32) - 3, // text paddings, button border is 1.5px
+                    }}
+                >
+                    {renderText(loadingText)}
                 </div>
 
                 {/* loading content */}
