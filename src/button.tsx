@@ -17,6 +17,13 @@ export const BUTTON_MIN_WIDTH = 156;
 
 const transitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
 
+const BORDER_PX = 1.5;
+const SPINNER_MARGIN_PX = 8;
+const X_PADDING_PX = 16 - BORDER_PX;
+const Y_PADDING_PX = 12 - BORDER_PX;
+const X_SMALL_PADDING_PX = 8 - BORDER_PX;
+const Y_SMALL_PADDING_PX = 6 - BORDER_PX;
+
 const commonClasses = () => ({
     button: {
         display: 'inline-block',
@@ -24,7 +31,7 @@ const commonClasses = () => ({
         width: 'auto',
         minWidth: BUTTON_MIN_WIDTH,
         textAlign: 'center',
-        border: '1.5px solid transparent',
+        border: `${BORDER_PX}px solid transparent`,
         borderRadius: 4,
         overflow: 'hidden',
         '&:hover': {
@@ -39,34 +46,33 @@ const commonClasses = () => ({
     },
     small: {
         minWidth: 104,
-        borderWidth: 1.5,
     },
     loadingContent: {
         display: 'inline-flex',
         position: 'absolute',
         top: 0,
-        left: 14.5,
-        right: 14.5,
         bottom: 0,
+        left: X_PADDING_PX,
+        right: X_PADDING_PX,
         justifyContent: 'center',
         alignItems: 'center',
         opacity: 0,
         transform: 'translateY(2rem)',
         transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
         '$small &': {
-            left: 6.5,
-            right: 6.5,
+            left: X_SMALL_PADDING_PX,
+            right: X_SMALL_PADDING_PX,
         },
     },
     textContent: {
-        padding: '10.5px 14.5px', // height 48 = (padding: 10.5 * 2) + (border: 1.5 * 2) + (lineHeight: 24)
+        padding: `${Y_PADDING_PX}px ${X_PADDING_PX}px`, // height 48
         opacity: 1,
         transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
         '$small &': {
-            padding: '4.5px 6.5px', // height 32 = (padding: 4.5 * 2) + (border: 1.5 * 2) + (lineHeight: 20)
+            padding: `${Y_SMALL_PADDING_PX}px ${X_SMALL_PADDING_PX}px`, // height 32
         },
         '& svg': {
-            marginRight: 8,
+            marginRight: SPINNER_MARGIN_PX,
             verticalAlign: 'bottom',
             height: '100%',
         },
@@ -298,7 +304,7 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
         }
     }, [showSpinner, shouldRenderSpinner, formStatus]);
 
-    const spinnerSize = pxToRem(props.small ? 16 : 24);
+    const spinnerSizeRem = pxToRem(props.small ? 16 : 24);
 
     const renderText = (text: React.ReactNode) =>
         props.small ? (
@@ -335,8 +341,9 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
                 <div
                     className={classes.loadingFiller}
                     style={{
-                        paddingLeft: `calc(${spinnerSize} + 8px)`, // space for spinner and separation
-                        paddingRight: (props.small ? 16 : 32) - 3, // text paddings, button border is 1.5px
+                        paddingLeft: spinnerSizeRem,
+                        paddingRight:
+                            SPINNER_MARGIN_PX + 2 * (props.small ? X_SMALL_PADDING_PX : X_PADDING_PX),
                     }}
                 >
                     {renderText(loadingText)}
@@ -357,10 +364,12 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
                             rolePresentation={!!loadingText}
                             color="currentcolor"
                             delay="0s"
-                            size={spinnerSize}
+                            size={spinnerSizeRem}
                         />
                     ) : (
-                        <div style={{display: 'inline-block', width: spinnerSize, height: spinnerSize}} />
+                        <div
+                            style={{display: 'inline-block', width: spinnerSizeRem, height: spinnerSizeRem}}
+                        />
                     )}
                     {loadingText ? <Box paddingLeft={8}>{renderText(loadingText)}</Box> : null}
                 </div>
