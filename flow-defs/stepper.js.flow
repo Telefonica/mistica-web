@@ -2,9 +2,7 @@
 
 import * as React from "react";
 declare type StepperProps = {
-  steps: $ReadOnlyArray<{
-    +text: string,
-  }>,
+  steps: Array<string>,
   currentStep: number,
 };
 declare var Stepper: React.ComponentType<StepperProps>;

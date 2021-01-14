@@ -2,13 +2,7 @@
 import * as React from 'react';
 import {Stepper, ButtonPrimary, ButtonLayout, Stack} from '..';
 
-const texts = [
-    {text: 'Basic Details'},
-    {text: 'Company Details'},
-    {text: 'Subscription Plan'},
-    {text: 'Payment Details'},
-    {text: 'Confirmation'},
-];
+const texts = ['Basic Details', 'Company Details', 'Subscription Plan', 'Payment Details', 'Confirmation'];
 
 export default {
     title: 'Components/Others/Stepper',
