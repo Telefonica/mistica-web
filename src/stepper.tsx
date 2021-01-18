@@ -139,10 +139,10 @@ const useStyles = createUseStyles(({colors, mq}) => ({
 
 type StepperProps = {
     steps: Array<string>;
-    currentStep: number;
+    currentIndex: number;
 };
 
-const Stepper: React.FC<StepperProps> = ({steps, currentStep}: StepperProps) => {
+const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) => {
     const {colors} = useTheme();
     const {isDesktopOrBigger} = useScreenSize();
     const classes = useStyles({isDesktopOrBigger});
@@ -151,10 +151,10 @@ const Stepper: React.FC<StepperProps> = ({steps, currentStep}: StepperProps) => 
         <div className={classes.stepper} role="group" aria-label="stepper">
             {steps.map((text, index) => {
                 const stepNumber = index + 1;
-                const isCurrent = stepNumber === currentStep;
+                const isCurrent = stepNumber === currentIndex;
                 const isLastStep = stepNumber === steps.length;
-                const isCompleted = stepNumber < currentStep + 1;
-                const showIcon = stepNumber < currentStep;
+                const isCompleted = stepNumber < currentIndex + 1;
+                const showIcon = stepNumber < currentIndex;
 
                 return (
                     <React.Fragment key={index}>

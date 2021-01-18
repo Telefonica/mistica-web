@@ -22,7 +22,7 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={32}>
             <div data-testid="stepper">
-                <Stepper currentStep={step} steps={texts} />
+                <Stepper currentIndex={step} steps={texts} />
             </div>
             <ButtonLayout align="center">
                 <ButtonPrimary onPress={stepDecrement} disabled={step === 1}>

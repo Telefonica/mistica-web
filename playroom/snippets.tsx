@@ -432,6 +432,7 @@ export default [
     {
         group: 'Stepper',
         name: 'Stepper',
-        code: '<Stepper currentStep={2} steps={["Basic Details", "Company Details", "Subscription Plan"]} />',
+        code:
+            '<Stepper currentIndex={2} steps={["Basic Details", "Company Details", "Subscription Plan"]} />',
     },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
