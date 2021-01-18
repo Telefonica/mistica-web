@@ -34,8 +34,23 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         },
     },
     stepIconNumber: {
+        position: 'relative',
         height: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 32 : 24),
         width: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 32 : 24),
+    },
+    iconAnimation: {
+        '&:after': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            borderRadius: '50%',
+            animation: '$stepIcon .3s ease-in-out',
+            willChange: 'transform',
+            transition: 'transform .3s ease-in-out',
+        },
     },
     number: {
         display: 'flex',
@@ -47,6 +62,15 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     currentNumber: {
         background: colors.primary,
         borderColor: colors.primary,
+        animation: '$currentNumber .3s ease-in-out',
+        willChange: 'border-color, background-color',
+        transition: 'border-color .3s ease-in-out, background-color .3s ease-in-out',
+
+        '& span': {
+            animation: '$currentNumberText .3s ease-in-out',
+            willChange: 'color',
+            transition: 'color .3s ease-in-out',
+        },
     },
     textContainer: {
         position: 'absolute',
@@ -83,6 +107,34 @@ const useStyles = createUseStyles(({colors, mq}) => ({
             width: '0',
         },
     },
+    '@keyframes currentNumber': {
+        '0%': {
+            borderColor: colors.borderDark,
+            backgroundColor: 'transparent',
+        },
+        '100%': {
+            borderColor: colors.primary,
+            backgroundColor: colors.primary,
+        },
+    },
+    '@keyframes currentNumberText': {
+        '0%': {
+            color: colors.textSecondary,
+        },
+        '100%': {
+            color: colors.textPrimarySpecial,
+        },
+    },
+    '@keyframes stepIcon': {
+        '0%': {
+            backgroundColor: colors.primary,
+            transform: 'scale(1)',
+        },
+        '100%': {
+            backgroundColor: colors.primary,
+            transform: 'scale(0)',
+        },
+    },
 }));
 
 type StepperProps = {
@@ -113,7 +165,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentStep}: StepperProps) => 
                             aria-current={isCurrent ? 'step' : undefined}
                         >
                             {showIcon ? (
-                                <div className={classes.stepIconNumber}>
+                                <div className={classnames(classes.stepIconNumber, classes.iconAnimation)}>
                                     <IconSuccess color={colors.primary} size={isDesktopOrBigger ? 32 : 24} />
                                 </div>
                             ) : (
