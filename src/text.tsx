@@ -73,11 +73,17 @@ export interface TextPresetProps {
 
 interface TextProps extends TextPresetProps {
     weight?: FontWeight | boolean;
+    /** in pixels, will be converted to rem in runtime */
     size?: number;
+    /** in pixels, will be converted to rem in runtime */
     mobileSize?: number;
+    /** in pixels, will be converted to rem in runtime */
     desktopSize?: number;
+    /** in pixels, will be converted to rem in runtime */
     lineHeight?: string | number;
+    /** in pixels, will be converted to rem in runtime */
     mobileLineHeight?: string | number;
+    /** in pixels, will be converted to rem in runtime */
     desktopLineHeight?: string | number;
     letterSpacing?: number;
 }
