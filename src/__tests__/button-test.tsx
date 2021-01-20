@@ -29,11 +29,11 @@ test('fake button', () => {
               >
                 test
               </div>
-              <div
-                class="loadingFiller"
-                style="padding-right: 32px;"
-              />
             </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
             <div
               aria-hidden="true"
               class="loadingContent"
@@ -69,11 +69,11 @@ test('submit button', () => {
               >
                 test
               </div>
-              <div
-                class="loadingFiller"
-                style="padding-right: 32px;"
-              />
             </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
             <div
               aria-hidden="true"
               class="loadingContent"
@@ -109,11 +109,11 @@ test('<button> is rendered when using "onPress" prop', () => {
               >
                 test
               </div>
-              <div
-                class="loadingFiller"
-                style="padding-right: 32px;"
-              />
             </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
             <div
               aria-hidden="true"
               class="loadingContent"
@@ -149,11 +149,11 @@ test('<a> is rendered when using "href" prop', () => {
               >
                 test
               </div>
-              <div
-                class="loadingFiller"
-                style="padding-right: 32px;"
-              />
             </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
             <div
               aria-hidden="true"
               class="loadingContent"
@@ -193,11 +193,11 @@ test('"href" with "newTab" renders required attributes', () => {
               >
                 test
               </div>
-              <div
-                class="loadingFiller"
-                style="padding-right: 32px;"
-              />
             </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
             <div
               aria-hidden="true"
               class="loadingContent"
@@ -254,11 +254,11 @@ test('<a> is rendered when using "to" prop', () => {
               >
                 test
               </div>
-              <div
-                class="loadingFiller"
-                style="padding-right: 32px;"
-              />
             </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
             <div
               aria-hidden="true"
               class="loadingContent"
@@ -303,11 +303,11 @@ test('button with spinner', () => {
               >
                 test
               </div>
-              <div
-                class="loadingFiller"
-                style="padding-right: 32px;"
-              />
             </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
             <div
               class="loadingContent"
             >
@@ -329,11 +329,11 @@ test('button with spinner', () => {
               >
                 test
               </div>
-              <div
-                class="loadingFiller"
-                style="padding-right: 32px;"
-              />
             </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
             <div
               class="loadingContent"
             >
@@ -368,11 +368,11 @@ test('dark theme', () => {
               >
                 test
               </div>
-              <div
-                class="loadingFiller"
-                style="padding-right: 32px;"
-              />
             </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
             <div
               aria-hidden="true"
               class="loadingContent"

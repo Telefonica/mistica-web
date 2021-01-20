@@ -142,7 +142,7 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) =
                                         aria-selected={isSelected ? 'true' : 'false'}
                                     >
                                         {icon && <div className={classes.icon}>{icon}</div>}
-                                        <Text6 medium truncate color="inherit">
+                                        <Text6 medium color="inherit">
                                             {text}
                                         </Text6>
                                     </Touchable>

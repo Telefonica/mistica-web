@@ -1,3 +1,10 @@
+## [7.8.1](https://github.com/Telefonica/mistica-web/compare/v7.8.0...v7.8.1) (2021-01-19)
+
+
+### Bug Fixes
+
+* **Accesibility:** Various fixes after implementing accessibility improvements ([#181](https://github.com/Telefonica/mistica-web/issues/181)) ([75f492e](https://github.com/Telefonica/mistica-web/commit/75f492e945072a75c03eff0aa3c2c73a731bf442))
+
 # [7.8.0](https://github.com/Telefonica/mistica-web/compare/v7.7.1...v7.8.0) (2021-01-13)
 
 

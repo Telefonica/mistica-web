@@ -4,7 +4,6 @@ import {useTheme, useScreenSize, useWindowHeight, useIsomorphicLayoutEffect} fro
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
 import {ButtonPrimary, ButtonSecondary, ButtonLink} from './button';
-import {TopDistanceContext} from './fixed-to-top';
 import OverscrollColor from './overscroll-color-context';
 import {VIVO_SKIN} from './skins/constants';
 import IcnSuccess from './icons/icon-success';
@@ -78,7 +77,6 @@ const useStyles = createUseStyles((theme) => ({
 
     innerContainer: {
         textAlign: 'left',
-        marginTop: ({topDistance}) => topDistance,
         padding: '64px 24px 16px',
     },
 
@@ -177,13 +175,11 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     const theme = useTheme();
     const windowHeight = useWindowHeight();
     const {isMobile} = useScreenSize();
-    const topDistance = React.useContext(TopDistanceContext);
     const [isServerSide, setIsServerSide] = React.useState(typeof self !== 'undefined');
     const [footerHeight, setFooterHeight] = React.useState(0);
 
-    const contentHeightPx = `${windowHeight - topDistance - footerHeight}px`;
+    const contentHeightPx = `${windowHeight - footerHeight}px`;
     const classes = useStyles({
-        topDistance,
         isInverse,
         contentHeight: isServerSide ? '100vh' : contentHeightPx,
         footerHeight,
