@@ -153,8 +153,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                 const stepNumber = index + 1;
                 const isCurrent = stepNumber === currentIndex;
                 const isLastStep = stepNumber === steps.length;
-                const isCompleted = stepNumber < currentIndex + 1;
-                const showIcon = stepNumber < currentIndex;
+                const isCompleted = stepNumber < currentIndex;
 
                 return (
                     <React.Fragment key={index}>
@@ -164,19 +163,19 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                             aria-label={text}
                             aria-current={isCurrent ? 'step' : undefined}
                         >
-                            {showIcon ? (
+                            {isCompleted ? (
                                 <div className={classnames(classes.stepIconNumber, classes.iconAnimation)}>
                                     <IconSuccess color={colors.primary} size={isDesktopOrBigger ? 32 : 24} />
                                 </div>
                             ) : (
                                 <div
                                     className={classnames(classes.stepIconNumber, classes.number, {
-                                        [classes.currentNumber]: isCompleted,
+                                        [classes.currentNumber]: isCurrent,
                                     })}
                                 >
                                     <Text8
                                         medium
-                                        color={isCompleted ? colors.textPrimarySpecial : colors.textSecondary}
+                                        color={isCurrent ? colors.textPrimarySpecial : colors.textSecondary}
                                     >
                                         {stepNumber}
                                     </Text8>
@@ -186,7 +185,11 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                                 <div className={classes.textContainer}>
                                     <Text7
                                         regular
-                                        color={isCompleted ? colors.textPrimary : colors.textSecondary}
+                                        color={
+                                            isCompleted || isCurrent
+                                                ? colors.textPrimary
+                                                : colors.textSecondary
+                                        }
                                     >
                                         {text}
                                     </Text7>
@@ -195,7 +198,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                         </div>
                         {!isLastStep && (
                             <div className={classes.bar}>
-                                {isCompleted && !isCurrent && <div className={classes.barFilled} />}
+                                {isCompleted && <div className={classes.barFilled} />}
                             </div>
                         )}
                     </React.Fragment>
