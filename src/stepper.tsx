@@ -21,7 +21,6 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         display: 'inline-flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 'flex-start' : 'center'),
         textAlign: 'center',
 
         '&:first-child': {
@@ -35,6 +34,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     },
     stepIconNumber: {
         position: 'relative',
+        display: 'flex',
         height: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 32 : 24),
         width: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 32 : 24),
     },
