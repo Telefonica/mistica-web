@@ -2,7 +2,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import {Text7, Text8} from './text';
-import {useTheme, useScreenSize} from './hooks';
+import {useTheme, useScreenSize, useElementDimensions} from './hooks';
 import IconSuccess from './icons/icon-success';
 
 const transition = '1s cubic-bezier(0.75, 0, 0.27, 1)';
@@ -10,10 +10,10 @@ const transition = '1s cubic-bezier(0.75, 0, 0.27, 1)';
 const useStyles = createUseStyles(({colors, mq}) => ({
     stepper: {
         display: 'flex',
-        height: 24,
+        minHeight: 24,
 
         [mq.desktopOrBigger]: {
-            height: 64,
+            minHeight: ({textContainerHeight}) => 40 + textContainerHeight,
         },
     },
     step: {
@@ -145,23 +145,26 @@ type StepperProps = {
 const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) => {
     const {colors} = useTheme();
     const {isDesktopOrBigger} = useScreenSize();
-    const classes = useStyles({isDesktopOrBigger});
+    const {height, ref} = useElementDimensions();
+    const textContainerHeight = height;
+    const classes = useStyles({isDesktopOrBigger, textContainerHeight});
 
     return (
-        <div className={classes.stepper} role="group" aria-label="stepper">
+        <div className={classes.stepper}>
             {steps.map((text, index) => {
-                const stepNumber = index + 1;
-                const isCurrent = stepNumber === currentIndex;
-                const isLastStep = stepNumber === steps.length;
-                const isCompleted = stepNumber < currentIndex;
+                const isCurrent = index === currentIndex;
+                const isLastStep = index === steps.length - 1;
+                const isCompleted = index < currentIndex;
 
                 return (
                     <React.Fragment key={index}>
                         <div
-                            key={index}
                             className={classes.step}
-                            aria-label={text}
-                            aria-current={isCurrent ? 'step' : undefined}
+                            role="progressbar"
+                            aria-valuenow={isCurrent ? index + 1 : undefined}
+                            aria-valuemin={1}
+                            aria-valuemax={steps.length}
+                            aria-valuetext={text}
                         >
                             {isCompleted ? (
                                 <div className={classnames(classes.stepIconNumber, classes.iconAnimation)}>
@@ -176,13 +179,14 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                                     <Text8
                                         medium
                                         color={isCurrent ? colors.textPrimarySpecial : colors.textSecondary}
+                                        role="presentation"
                                     >
-                                        {stepNumber}
+                                        {index + 1}
                                     </Text8>
                                 </div>
                             )}
                             {isDesktopOrBigger && (
-                                <div className={classes.textContainer}>
+                                <div className={classes.textContainer} ref={ref}>
                                     <Text7
                                         regular
                                         color={
@@ -190,6 +194,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                                                 ? colors.textPrimary
                                                 : colors.textSecondary
                                         }
+                                        role="presentation"
                                     >
                                         {text}
                                     </Text7>
