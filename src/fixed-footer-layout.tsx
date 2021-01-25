@@ -19,6 +19,9 @@ const waitForSwitchTransitionToStart = (fn: () => void) => {
 const useStyles = createUseStyles((theme) => ({
     footer: {
         width: '100%',
+        // this high zIndex is needed because the fixed footer must be displayed over
+        // the bottom navbar from movistar.es in mobile
+        zIndex: 25,
     },
 
     shadow: {},
