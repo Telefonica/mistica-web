@@ -1,19 +1,18 @@
 const fetch = require('node-fetch');
 const execSync = require('child_process').execSync;
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
 
-const poll = async (url, attempt = 0) => {
-    try {
-        await fetch(url);
-    } catch (e) {
-        if (attempt > 10) {
-            throw e;
+const PATH_REPO_ROOT = __dirname;
+
+const poll = async (url) => {
+    let tries = 10;
+    while (tries--) {
+        try {
+            return await fetch(url);
+        } catch (e) {
+            await new Promise((r) => setTimeout(r, 500));
         }
-        await new Promise((r) => setTimeout(r, 500));
-        await poll(url, attempt + 1);
     }
+    throw Error(`Error fetching ${url}`);
 };
 
 const getConfig = async () => {
@@ -23,33 +22,36 @@ const getConfig = async () => {
         slowMo: process.env.HEADLESS ? 0 : 50,
     };
 
+    /**
+     * CI => everything runs inside a docker, it has a running chrome at port 9222 (see ci.yml workflow)
+     * Local, headless => uses a dockerized chromium at port 9223 (see docker-compose.yaml)
+     * Local, with UI => uses a local chromium installed by puppetteer
+     */
+
+    const debugPort = process.env.CI ? 9222 : 9223;
+    const isLocal = !process.env.CI;
+    const isHeadless = process.env.HEADLESS;
+
     let connect;
-    const needsChromiumDocker = !process.env.CI && process.env.SCREENSHOT && process.env.HEADLESS;
-    if (needsChromiumDocker) {
-        const dockerChromiumUrl = 'http://localhost:9223';
+
+    if (isLocal && isHeadless) {
+        const dockerChromiumUrl = `http://localhost:${debugPort}`;
+
         try {
             await fetch(dockerChromiumUrl);
         } catch (e) {
-            execSync('yarn up-chromium', {stdio: 'inherit', cwd: __dirname});
+            execSync('yarn up-chromium', {stdio: 'inherit', cwd: PATH_REPO_ROOT});
             await poll(dockerChromiumUrl);
-            const DIR = path.join(os.tmpdir(), 'jest_puppeteer_setup');
-            fs.mkdirSync(DIR, {recursive: true});
-            fs.writeFileSync(path.join(DIR, 'killDocker'), '');
         }
-    }
 
-    try {
-        const {webSocketDebuggerUrl} = await fetch('http://localhost:9223/json/version').then((r) =>
+        const {webSocketDebuggerUrl} = await fetch(`http://localhost:${debugPort}/json/version`).then((r) =>
             r.json()
         );
+
         connect = {
             ...baseConfig,
             browserWSEndpoint: webSocketDebuggerUrl,
         };
-    } catch (e) {
-        if (needsChromiumDocker) {
-            throw e;
-        }
     }
 
     return {

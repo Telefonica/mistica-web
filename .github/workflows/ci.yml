@@ -14,7 +14,7 @@ jobs:
         # replace this line with the following 2 comented lines to enable self-hosted github actions
         #runs-on: ubuntu-latest
         runs-on: self-hosted-novum
-        container: docker.tuenti.io/service-inf/mistica-web-builder:1.0.0
+        container: docker.tuenti.io/service-inf/mistica-web-builder:1.1.0
 
         strategy:
             matrix:
@@ -27,6 +27,8 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
             - run: yarn
+              env:
+                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
             - run: yarn ci
             - name: 'Upload failed screenshot diffs'
               uses: './.github/actions/upload-failed-screenshots'
