@@ -2,7 +2,7 @@
 
 import * as React from "react";
 declare type Props = {
-  size?: number,
+  size?: number | string,
   color?: string,
 };
 declare var IconSuccess: React.ComponentType<Props>;

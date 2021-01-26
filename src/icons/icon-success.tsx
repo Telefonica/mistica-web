@@ -14,7 +14,7 @@ const useStyles = createUseStyles((theme) => ({
 }));
 
 type Props = {
-    size?: number;
+    size?: number | string;
     color?: string;
 };
 

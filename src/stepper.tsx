@@ -5,7 +5,12 @@ import {Text7, Text8} from './text';
 import {useTheme, useScreenSize, useElementDimensions} from './hooks';
 import IconSuccess from './icons/icon-success';
 
+import {pxToRem} from './utils/css';
+
 const transition = '1s cubic-bezier(0.75, 0, 0.27, 1)';
+
+const desktopStepWeight = pxToRem(32);
+const mobileStepWeight = pxToRem(24);
 
 const useStyles = createUseStyles(({colors, mq}) => ({
     stepper: {
@@ -13,7 +18,10 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         minHeight: 24,
 
         [mq.desktopOrBigger]: {
-            minHeight: ({textContainerHeight}) => 40 + textContainerHeight,
+            minHeight: ({textContainerHeight}) => pxToRem(40 + textContainerHeight),
+        },
+        [mq.tabletOrSmaller]: {
+            alignItems: 'center',
         },
     },
     step: {
@@ -35,8 +43,8 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     stepIconNumber: {
         position: 'relative',
         display: 'flex',
-        height: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 32 : 24),
-        width: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 32 : 24),
+        height: ({isDesktopOrBigger}) => (isDesktopOrBigger ? desktopStepWeight : mobileStepWeight),
+        width: ({isDesktopOrBigger}) => (isDesktopOrBigger ? desktopStepWeight : mobileStepWeight),
     },
     iconAnimation: {
         '&:after': {
@@ -74,7 +82,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     },
     textContainer: {
         position: 'absolute',
-        top: 42,
+        top: pxToRem(42),
         width: 200,
     },
     barContainer: {
@@ -84,14 +92,16 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         width: '100%',
     },
     bar: {
-        position: 'relative',
-        top: ({isDesktopOrBigger}) => (isDesktopOrBigger ? 14 : 10),
-        display: 'flex',
         height: 4,
         width: '100%',
         margin: '0 8px',
         background: colors.border,
         borderRadius: 4,
+
+        [mq.desktopOrBigger]: {
+            position: 'relative',
+            top: pxToRem(14),
+        },
     },
     barFilled: {
         height: 4,
@@ -168,7 +178,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                         >
                             {isCompleted ? (
                                 <div className={classnames(classes.stepIconNumber, classes.iconAnimation)}>
-                                    <IconSuccess color={colors.primary} size={isDesktopOrBigger ? 32 : 24} />
+                                    <IconSuccess color={colors.primary} size="100%" />
                                 </div>
                             ) : (
                                 <div
