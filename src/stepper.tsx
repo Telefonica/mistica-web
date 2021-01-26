@@ -9,9 +9,6 @@ import {pxToRem} from './utils/css';
 
 const transition = '1s cubic-bezier(0.75, 0, 0.27, 1)';
 
-const desktopStepWeight = pxToRem(32);
-const mobileStepWeight = pxToRem(24);
-
 const useStyles = createUseStyles(({colors, mq}) => ({
     stepper: {
         display: 'flex',
@@ -43,8 +40,8 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     stepIconNumber: {
         position: 'relative',
         display: 'flex',
-        height: ({isDesktopOrBigger}) => (isDesktopOrBigger ? desktopStepWeight : mobileStepWeight),
-        width: ({isDesktopOrBigger}) => (isDesktopOrBigger ? desktopStepWeight : mobileStepWeight),
+        height: ({isDesktopOrBigger}) => (isDesktopOrBigger ? pxToRem(32) : pxToRem(24)),
+        width: ({isDesktopOrBigger}) => (isDesktopOrBigger ? pxToRem(32) : pxToRem(24)),
     },
     iconAnimation: {
         '&:after': {
