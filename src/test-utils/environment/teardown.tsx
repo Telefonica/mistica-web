@@ -8,6 +8,10 @@ export default async (): Promise<void> => {
         // @ts-expect-error __STORYBOOK_SERVER__ does not exist in global
         global.__STORYBOOK_SERVER__.stop();
     }
-    execSync('yarn down-chromium', {stdio: 'ignore'});
+    try {
+        execSync('yarn down-chromium', {stdio: 'ignore'});
+    } catch (e) {
+        // ignore failures, docker could be not running
+    }
     await puppeteerTeardown();
 };
