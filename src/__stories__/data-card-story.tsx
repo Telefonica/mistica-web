@@ -18,6 +18,7 @@ export default {
 };
 
 export const Default: StoryComponent = () => {
+    const [asset, assetSelect] = useSelect('asset', 'icon', ['icon', 'image', 'none']);
     const [headline, headlineTextField] = useTextField('headline', 'priority', true);
     const [pretitle, pretitleTextField] = useTextField('pretitle', 'Some pretitle', true);
     const [title, titleTextField] = useTextField('title', 'Some title', true);
@@ -33,6 +34,10 @@ export const Default: StoryComponent = () => {
         'none',
     ]);
 
+    const icon = <IconAcademicLight />;
+    const image =
+        'https://cdn.vox-cdn.com/thumbor/lfpXTYMyJpDlMevYNh0PfJu3M6Q=/39x0:3111x2048/920x613/filters:focal(39x0:3111x2048):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/49901753/netflixlogo.0.0.png';
+
     const button = actions.includes('button') ? (
         <ButtonPrimary small href="https://google.com">
             Action
@@ -46,6 +51,7 @@ export const Default: StoryComponent = () => {
     return (
         <>
             <Stack space={16}>
+                {assetSelect}
                 {headlineTextField}
                 {pretitleTextField}
                 {titleTextField}
@@ -59,7 +65,8 @@ export const Default: StoryComponent = () => {
                         pretitle={pretitle}
                         title={title}
                         description={description}
-                        icon={<IconAcademicLight />}
+                        icon={asset === 'icon' ? icon : undefined}
+                        iconBackgroundImage={asset === 'image' ? image : undefined}
                         button={button}
                         buttonLink={buttonLink}
                     />

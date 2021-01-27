@@ -120,7 +120,7 @@ const useMediaCardStyles = createUseStyles((theme) => ({
 }));
 
 type MediaCardProps = {
-    media?: CardMedia;
+    media: CardMedia;
     headline?: string;
     pretitle?: string;
     title?: string;

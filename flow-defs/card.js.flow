@@ -13,7 +13,7 @@ declare type CardMedia =
 }
   | { src: string };
 declare type MediaCardProps = {
-  media?: CardMedia,
+  media: CardMedia,
   headline?: string,
   pretitle?: string,
   title?: string,
