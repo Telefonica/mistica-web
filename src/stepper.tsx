@@ -40,8 +40,8 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     stepIconNumber: {
         position: 'relative',
         display: 'flex',
-        height: ({isDesktopOrBigger}) => (isDesktopOrBigger ? pxToRem(32) : pxToRem(24)),
-        width: ({isDesktopOrBigger}) => (isDesktopOrBigger ? pxToRem(32) : pxToRem(24)),
+        height: ({isDesktopOrBigger}) => (isDesktopOrBigger ? pxToRem(32) : `calc(${pxToRem(8)} + 16px)`),
+        width: ({isDesktopOrBigger}) => (isDesktopOrBigger ? pxToRem(32) : `calc(${pxToRem(8)} + 16px)`),
     },
     iconAnimation: {
         '&:after': {
