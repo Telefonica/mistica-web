@@ -206,7 +206,7 @@ type DataCardProps = {
     description: string;
     body?: React.ReactNode;
     button?: React.ReactElement<typeof ButtonPrimary>;
-    buttonLink?: React.ReactElement<typeof ButtonLink>;
+    buttonLink: React.ReactElement<typeof ButtonLink>;
 };
 
 export const DataCard: React.FC<DataCardProps> = ({

@@ -27,12 +27,7 @@ export const Default: StoryComponent = () => {
         'This is a description for the card',
         true
     );
-    const [actions, actionsSelect] = useSelect('actions', 'button', [
-        'button',
-        'link',
-        'button & link',
-        'none',
-    ]);
+    const [actions, actionsSelect] = useSelect('actions', 'button', ['link', 'button & link']);
 
     const icon = <IconAcademicLight />;
     const image =
@@ -42,10 +37,6 @@ export const Default: StoryComponent = () => {
         <ButtonPrimary small href="https://google.com">
             Action
         </ButtonPrimary>
-    ) : undefined;
-
-    const buttonLink = actions.includes('link') ? (
-        <ButtonLink href="https://google.com">Link</ButtonLink>
     ) : undefined;
 
     return (
@@ -68,7 +59,7 @@ export const Default: StoryComponent = () => {
                         subtitle={subtitle}
                         description={description}
                         button={button}
-                        buttonLink={buttonLink}
+                        buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />
                 </StorySection>
             </div>
