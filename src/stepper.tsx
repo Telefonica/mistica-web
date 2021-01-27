@@ -187,7 +187,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                                     <IconSuccess
                                         color={colors.primary}
                                         size="100%"
-                                        enabledAnimation={hasAnimation || isCurrent}
+                                        skipAnimation={hasAnimation && isCompleted}
                                     />
                                 </div>
                             ) : (
