@@ -23,7 +23,7 @@ declare type MediaCardProps = {
   buttonLink?: React.Element<typeof ButtonLink>,
 };
 declare export var MediaCard: React.ComponentType<MediaCardProps>;
-declare type DataCardProps = {
+declare type CommonDataCardProps = {
   /**
    * Typically a mistica-icons component element
    */
@@ -35,8 +35,24 @@ declare type DataCardProps = {
   subtitle?: string,
   description: string,
   body?: React.Node,
-  button?: React.Element<typeof ButtonPrimary>,
+};
+declare type DataCardWithButtonProps = {
+  ...$Exact<CommonDataCardProps>,
+  button: React.Element<typeof ButtonPrimary>,
+};
+declare type DataCardWithLinkProps = {
+  ...$Exact<CommonDataCardProps>,
   buttonLink: React.Element<typeof ButtonLink>,
 };
+declare type DataCardWithTwoActionsProps = {
+  ...$Exact<CommonDataCardProps>,
+
+  button: React.Element<typeof ButtonPrimary>,
+  buttonLink: React.Element<typeof ButtonLink>,
+};
+declare type DataCardProps =
+  | DataCardWithButtonProps
+  | DataCardWithLinkProps
+  | DataCardWithTwoActionsProps;
 declare export var DataCard: React.ComponentType<DataCardProps>;
 declare export {};
