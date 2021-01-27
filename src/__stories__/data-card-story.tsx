@@ -20,7 +20,7 @@ export default {
 export const Default: StoryComponent = () => {
     const [asset, assetSelect] = useSelect('asset', 'icon', ['icon', 'image', 'none']);
     const [headline, headlineTextField] = useTextField('headline', 'priority', true);
-    const [pretitle, pretitleTextField] = useTextField('pretitle', 'Some pretitle', true);
+    const [subtitle, subtitleTextField] = useTextField('subtitle', 'Some subtitle', true);
     const [title, titleTextField] = useTextField('title', 'Some title', true);
     const [description, descriptionTextField] = useTextField(
         'description',
@@ -53,20 +53,20 @@ export const Default: StoryComponent = () => {
             <Stack space={16}>
                 {assetSelect}
                 {headlineTextField}
-                {pretitleTextField}
                 {titleTextField}
+                {subtitleTextField}
                 {descriptionTextField}
                 {actionsSelect}
             </Stack>
             <div data-testid="data-card">
                 <StorySection title="DataCard">
                     <DataCard
-                        headline={headline}
-                        pretitle={pretitle}
-                        title={title}
-                        description={description}
                         icon={asset === 'icon' ? icon : undefined}
                         iconBackgroundImage={asset === 'image' ? image : undefined}
+                        headline={headline}
+                        title={title}
+                        subtitle={subtitle}
+                        description={description}
                         button={button}
                         buttonLink={buttonLink}
                     />
@@ -81,8 +81,8 @@ Default.storyName = 'DataCard';
 export const WithBody: StoryComponent = () => (
     <DataCard
         headline="headline"
-        pretitle="pretitle"
         title="title"
+        subtitle="subtitle"
         description="description"
         body={<Placeholder />}
         icon={<IconAcademicLight />}
@@ -100,8 +100,8 @@ WithBody.storyName = 'DataCard with body';
 export const WithIconImage: StoryComponent = () => (
     <DataCard
         headline="headline"
-        pretitle="pretitle"
         title="title"
+        subtitle="subtitle"
         description="description"
         iconBackgroundImage="https://fr.movistar-es-dev.svc.dev.mad.tuenti.io/2sP0YWlvvYakK6rvNvr__TpCfL4OZKPBLO4_KOPY-L2cxWaTloZDB0Q"
         button={
@@ -135,8 +135,8 @@ export const Group: StoryComponent = () => {
                 <Inline space={16} className={classes.group}>
                     <DataCard
                         headline="headline"
-                        pretitle="pretitle"
                         title="title"
+                        subtitle="subtitle"
                         description="description"
                         icon={<IconAcademicLight />}
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}

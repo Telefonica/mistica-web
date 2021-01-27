@@ -21,8 +21,8 @@ const CardsTest: React.FC = () => (
         />
         <DataCard
             headline="headline"
-            pretitle="pretitle"
             title="title"
+            subtitle="subtitle"
             description="description"
             icon={<IconAcademicLight />}
             button={

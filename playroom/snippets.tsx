@@ -415,8 +415,8 @@ const cardSnippets = [
         code: `
         <DataCard
             headline="headline"
-            pretitle="pretitle"
             title="title"
+            pretitle="subtitle"
             description="description"
             body={<Placeholder />}
             icon={<IconAcademicLight />}

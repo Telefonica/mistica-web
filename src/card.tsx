@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Inline, Text5, Text7, Text8, createUseStyles, useTheme, ButtonPrimary, ButtonLink} from '.';
+import {Inline, Text5, Text7, Text8, createUseStyles, useTheme, ButtonPrimary, ButtonLink, Box} from '.';
 import PromoTag from './promo-tag';
 import Stack from './stack';
 
@@ -17,6 +17,7 @@ type CardContentProps = {
     headline?: string;
     pretitle?: string;
     title?: string;
+    subtitle?: string;
     description: string;
     body?: React.ReactNode;
     button?: React.ReactElement<typeof ButtonPrimary>;
@@ -27,6 +28,7 @@ const CardContent: React.FC<CardContentProps> = ({
     headline,
     pretitle,
     title,
+    subtitle,
     description,
     body,
     button,
@@ -39,10 +41,15 @@ const CardContent: React.FC<CardContentProps> = ({
         <>
             <Stack space={16}>
                 <Stack space={8}>
-                    {headline && <PromoTag>{headline}</PromoTag>}
                     <Stack space={4}>
-                        <Text8 regular>{pretitle}</Text8>
+                        {headline && <PromoTag>{headline}</PromoTag>}
+                        {pretitle && (
+                            <Box paddingTop={4}>
+                                <Text8 regular>{pretitle}</Text8>
+                            </Box>
+                        )}
                         <Text5 light>{title}</Text5>
+                        <Text7 regular>{subtitle}</Text7>
                     </Stack>
                     <Text7 regular color={theme.colors.textSecondary}>
                         {description}
@@ -131,14 +138,14 @@ type MediaCardProps = {
 };
 
 export const MediaCard: React.FC<MediaCardProps> = ({
+    media,
+    headline,
+    pretitle,
     title,
     description,
-    pretitle,
-    headline,
+    body,
     button,
     buttonLink,
-    media,
-    body,
 }) => {
     const classes = useMediaCardStyles({media});
     return (
@@ -194,8 +201,8 @@ type DataCardProps = {
     iconBackgroundColor?: string;
     iconBackgroundImage?: string;
     headline?: string;
-    pretitle?: string;
     title: string;
+    subtitle?: string;
     description: string;
     body?: React.ReactNode;
     button?: React.ReactElement<typeof ButtonPrimary>;
@@ -203,16 +210,16 @@ type DataCardProps = {
 };
 
 export const DataCard: React.FC<DataCardProps> = ({
-    title,
-    description,
-    pretitle,
-    headline,
-    button,
-    buttonLink,
     icon,
     iconBackgroundColor,
     iconBackgroundImage,
+    headline,
+    title,
+    subtitle,
+    description,
     body,
+    button,
+    buttonLink,
 }) => {
     const classes = useDataCardStyles({iconBackgroundColor, iconBackgroundImage});
     return (
@@ -220,8 +227,8 @@ export const DataCard: React.FC<DataCardProps> = ({
             {(icon || iconBackgroundImage) && <div className={classes.icon}>{icon}</div>}
             <CardContent
                 headline={headline}
-                pretitle={pretitle}
                 title={title}
+                subtitle={subtitle}
                 description={description}
                 body={body}
                 button={button}
