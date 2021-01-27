@@ -36,7 +36,7 @@ declare type DataCardProps = {
   description: string,
   body?: React.Node,
   button?: React.Element<typeof ButtonPrimary>,
-  buttonLink?: React.Element<typeof ButtonLink>,
+  buttonLink: React.Element<typeof ButtonLink>,
 };
 declare export var DataCard: React.ComponentType<DataCardProps>;
 declare export {};
