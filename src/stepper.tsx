@@ -105,10 +105,12 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     barFilled: {
         height: 4,
         width: '100%',
-        transition: `width ${transition}`,
-        animation: `$filledBar ${transition}`,
         background: colors.primary,
         borderRadius: 20,
+    },
+    barFilledAnimation: {
+        transition: `width ${transition}`,
+        animation: `$filledBar ${transition}`,
     },
 
     '@keyframes filledBar': {
@@ -164,6 +166,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                 const isCurrent = index === currentIndex;
                 const isLastStep = index === steps.length - 1;
                 const isCompleted = index < currentIndex;
+                const hasAnimation = index === currentIndex - 1;
 
                 return (
                     <React.Fragment key={index}>
@@ -176,13 +179,21 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                             aria-valuetext={text}
                         >
                             {isCompleted ? (
-                                <div className={classnames(classes.stepIconNumber, classes.iconAnimation)}>
-                                    <IconSuccess color={colors.primary} size="100%" />
+                                <div
+                                    className={classnames(classes.stepIconNumber, {
+                                        [classes.iconAnimation]: hasAnimation || isCurrent,
+                                    })}
+                                >
+                                    <IconSuccess
+                                        color={colors.primary}
+                                        size="100%"
+                                        enabledAnimation={hasAnimation || isCurrent}
+                                    />
                                 </div>
                             ) : (
                                 <div
                                     className={classnames(classes.stepIconNumber, classes.number, {
-                                        [classes.currentNumber]: isCurrent,
+                                        [classes.currentNumber]: isCurrent || isCurrent,
                                     })}
                                 >
                                     <Text8
@@ -212,7 +223,13 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                         </div>
                         {!isLastStep && (
                             <div className={classes.bar}>
-                                {isCompleted && <div className={classes.barFilled} />}
+                                {isCompleted && (
+                                    <div
+                                        className={classnames(classes.barFilled, {
+                                            [classes.barFilledAnimation]: hasAnimation,
+                                        })}
+                                    />
+                                )}
                             </div>
                         )}
                     </React.Fragment>
