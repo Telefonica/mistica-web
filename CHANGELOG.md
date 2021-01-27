@@ -1,3 +1,17 @@
+## [7.8.3](https://github.com/Telefonica/mistica-web/compare/v7.8.2...v7.8.3) (2021-01-25)
+
+
+### Bug Fixes
+
+* **FixedFooter:** set zIndex in mobile layout ([#183](https://github.com/Telefonica/mistica-web/issues/183)) ([ac96e43](https://github.com/Telefonica/mistica-web/commit/ac96e43fea31b09515fb1c2e70df315741a078fc))
+
+## [7.8.2](https://github.com/Telefonica/mistica-web/compare/v7.8.1...v7.8.2) (2021-01-25)
+
+
+### Bug Fixes
+
+* **FixedFooter:** higher z-index to fixed footer ([#182](https://github.com/Telefonica/mistica-web/issues/182)) ([4199ef1](https://github.com/Telefonica/mistica-web/commit/4199ef1d00a35610495ea707b60df2894538b44c))
+
 ## [7.8.1](https://github.com/Telefonica/mistica-web/compare/v7.8.0...v7.8.1) (2021-01-19)
 
 
