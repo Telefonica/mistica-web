@@ -15,7 +15,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         minHeight: 24,
 
         [mq.desktopOrBigger]: {
-            minHeight: ({textContainerHeight}) => pxToRem(40 + textContainerHeight),
+            minHeight: ({textContainerHeight}) => `calc(${pxToRem(40 + textContainerHeight)})`,
         },
         [mq.tabletOrSmaller]: {
             alignItems: 'center',
@@ -40,8 +40,10 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     stepIconNumber: {
         position: 'relative',
         display: 'flex',
-        height: ({isDesktopOrBigger}) => (isDesktopOrBigger ? pxToRem(32) : `calc(${pxToRem(8)} + 16px)`),
-        width: ({isDesktopOrBigger}) => (isDesktopOrBigger ? pxToRem(32) : `calc(${pxToRem(8)} + 16px)`),
+        height: ({isDesktopOrBigger}) =>
+            isDesktopOrBigger ? `calc(${pxToRem(16)} + 16px)` : `calc(${pxToRem(8)} + 16px)`,
+        width: ({isDesktopOrBigger}) =>
+            isDesktopOrBigger ? `calc(${pxToRem(16)} + 16px)` : `calc(${pxToRem(8)} + 16px)`,
     },
     iconAnimation: {
         '&:after': {

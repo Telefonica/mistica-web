@@ -77,6 +77,7 @@ export {default as IconArrowDown} from './icons/icon-arrow-down';
 export {default as IconChevron} from './icons/icon-chevron';
 export {default as IconError} from './icons/icon-error';
 export {default as IconSuccess} from './icons/icon-success';
+export {default as IconSuccessVivo} from './icons/icon-success-vivo';
 
 export {
     useTheme,
