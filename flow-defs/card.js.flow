@@ -1,0 +1,42 @@
+// @flow
+
+import * as React from "react";
+import { ButtonPrimary, ButtonLink } from ".";
+declare type CardMedia =
+  | {
+  src: string,
+  aspectRatio: number,
+}
+  | {
+  src: string,
+  height: number,
+}
+  | { src: string };
+declare type MediaCardProps = {
+  media?: CardMedia,
+  headline?: string,
+  pretitle?: string,
+  title?: string,
+  description: string,
+  body?: React.Node,
+  button?: React.Element<typeof ButtonPrimary>,
+  buttonLink?: React.Element<typeof ButtonLink>,
+};
+declare export var MediaCard: React.ComponentType<MediaCardProps>;
+declare type DataCardProps = {
+  /**
+   * Typically a mistica-icons component element
+   */
+  icon?: React.Element<any>,
+  iconBackgroundColor?: string,
+  iconBackgroundImage?: string,
+  headline?: string,
+  pretitle?: string,
+  title: string,
+  description: string,
+  body?: React.Node,
+  button?: React.Element<typeof ButtonPrimary>,
+  buttonLink?: React.Element<typeof ButtonLink>,
+};
+declare export var DataCard: React.ComponentType<DataCardProps>;
+declare export {};
