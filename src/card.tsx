@@ -176,7 +176,8 @@ const useDataCardStyles = createUseStyles((theme) => ({
         overflow: 'hidden',
         borderRadius: '50%',
         backgroundColor: ({iconBackgroundColor}) => iconBackgroundColor ?? theme.colors.iconDisabled,
-        backgroundImage: ({iconBackgroundImage}) => `url("${iconBackgroundImage}")`,
+        backgroundImage: ({iconBackgroundImage}) =>
+            iconBackgroundImage ? `url("${iconBackgroundImage}")` : 'initial',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         display: 'flex',
