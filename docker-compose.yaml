@@ -10,9 +10,7 @@ services:
         environment:
             - NPM_TOKEN
     chromium:
-        build:
-            context: .
-            dockerfile: chromium.Dockerfile
+        image: docker.tuenti.io/service-inf/mistica-web-builder:1.1.0
         container_name: chromium_mistica
         ports:
             - '9223:9222'

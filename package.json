@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "7.8.0",
+    "version": "7.8.3",
     "license": "UNLICENSED",
     "main": "dist/index.js",
     "module": "dist-es/index.js",
@@ -11,7 +11,7 @@
     ],
     "scripts": {
         "test": "jest --config jest.unit.config.js",
-        "test-acceptance": "cross-env SCREENSHOT=1 HEADLESS=1 yarn test-acceptance-ui",
+        "test-acceptance": "cross-env HEADLESS=1 jest --config jest.acceptance.config.js",
         "test-acceptance-ui": "jest --config jest.acceptance.config.js",
         "prettier-check": "prettier --check \"**/*.js\" \"**/*.tsx\" \"**/*.ts\" \"**/*.json\"",
         "lint": "eslint --report-unused-disable-directives .",

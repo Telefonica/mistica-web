@@ -49,7 +49,7 @@ export const TypeOfButtons: StoryComponent = () => {
     const [small, setSmall] = React.useState(false);
     const [newTab, setNewTab] = React.useState(false);
     const [text, setTextInput] = React.useState('Example');
-    const [loadingText, setLoadingText] = React.useState('');
+    const [loadingText, setLoadingText] = React.useState('Loading Text');
     const href = 'https://example.com';
 
     const props = {disabled, showSpinner, small, loadingText};

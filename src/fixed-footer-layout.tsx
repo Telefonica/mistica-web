@@ -16,9 +16,14 @@ const waitForSwitchTransitionToStart = (fn: () => void) => {
     };
 };
 
+// this high zIndex is needed because the fixed footer must be displayed over
+// the bottom navbar from movistar.es in mobile
+const Z_INDEX = 25;
+
 const useStyles = createUseStyles((theme) => ({
     footer: {
         width: '100%',
+        zIndex: Z_INDEX,
     },
 
     shadow: {},
@@ -37,12 +42,12 @@ const useStyles = createUseStyles((theme) => ({
             position: 'fixed',
             left: 0,
             bottom: 0,
-            zIndex: 1,
+            zIndex: Z_INDEX,
             background: ({footerBgColor}) => footerBgColor || theme.colors.background,
         },
         shadow: {
             boxShadow: '0 -1px 2px 0 rgba(0, 0, 0, 0.2)',
-            zIndex: 1,
+            zIndex: Z_INDEX,
         },
     },
 }));
