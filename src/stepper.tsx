@@ -112,10 +112,20 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         transition: `width ${transition}`,
         animation: `$filledBar ${transition}`,
     },
+    barFilledReverseAnimation: {
+        width: 0,
+        transition: `width ${transition}`,
+        animation: `$reverseFilledBar ${transition}`,
+    },
 
     '@keyframes filledBar': {
         '0%': {
             width: '0',
+        },
+    },
+    '@keyframes reverseFilledBar': {
+        '0%': {
+            width: '100%',
         },
     },
     '@keyframes currentNumber': {
@@ -181,13 +191,13 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                             {isCompleted ? (
                                 <div
                                     className={classnames(classes.stepIconNumber, {
-                                        [classes.iconAnimation]: hasAnimation || isCurrent,
+                                        [classes.iconAnimation]: hasAnimation,
                                     })}
                                 >
                                     <IconSuccess
                                         color={colors.primary}
                                         size="100%"
-                                        skipAnimation={hasAnimation && isCompleted}
+                                        skipAnimation={!hasAnimation}
                                     />
                                 </div>
                             ) : (
@@ -227,6 +237,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                                     <div
                                         className={classnames(classes.barFilled, {
                                             [classes.barFilledAnimation]: hasAnimation,
+                                            //[classes.barFilledReverseAnimation]: foo,
                                         })}
                                     />
                                 )}
