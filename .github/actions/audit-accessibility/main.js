@@ -9,7 +9,6 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
 const {uploadFile} = require('../utils/azure-storage');
-const {map} = require('lodash');
 
 const PATH_REPO_ROOT = path.join(__dirname, '../../..');
 const PATH_REPORTS = path.join(PATH_REPO_ROOT, 'reports/accessibility');
