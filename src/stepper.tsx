@@ -97,6 +97,10 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         background: colors.border,
         borderRadius: 4,
 
+        '&:last-child': {
+            display: 'none',
+        },
+
         [mq.desktopOrBigger]: {
             position: 'relative',
             top: pxToRem(14),
@@ -171,11 +175,9 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
     const classes = useStyles({isDesktopOrBigger, textContainerHeight});
 
     const previousIndexRef = React.useRef(currentIndex);
-    const [isForward, setIsForward] = React.useState(false);
     const [isBack, setIsBack] = React.useState(false);
 
     React.useEffect(() => {
-        setIsForward(previousIndexRef.current < currentIndex);
         setIsBack(previousIndexRef.current > currentIndex);
         previousIndexRef.current = currentIndex;
     }, [previousIndexRef, currentIndex]);
@@ -184,7 +186,6 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
         <div className={classes.stepper}>
             {steps.map((text, index) => {
                 const isCurrent = index === currentIndex;
-                const isLastStep = index === steps.length - 1;
                 const isCompleted = index < currentIndex;
                 const hasAnimation = index === currentIndex - 1;
 
@@ -241,18 +242,17 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                                 </div>
                             )}
                         </div>
-                        {!isLastStep && (
-                            <div className={classes.bar}>
-                                {(isCompleted || isCurrent) && (
-                                    <div
-                                        className={classnames(classes.barFilled, {
-                                            [classes.barFilledAnimation]: hasAnimation && !isBack,
-                                            [classes.barFilledReverseAnimation]: isCurrent && isBack,
-                                        })}
-                                    />
-                                )}
-                            </div>
-                        )}
+                        <div className={classes.bar}>
+                            {(isCompleted || isCurrent) && (
+                                <div
+                                    className={classnames({
+                                        [classes.barFilled]: (isBack && isCurrent) || isCompleted,
+                                        [classes.barFilledAnimation]: hasAnimation && !isBack,
+                                        [classes.barFilledReverseAnimation]: isCurrent && isBack,
+                                    })}
+                                />
+                            )}
+                        </div>
                     </React.Fragment>
                 );
             })}
