@@ -96,6 +96,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         margin: '0 8px',
         background: colors.border,
         borderRadius: 4,
+        overflow: 'hidden',
 
         '&:last-child': {
             display: 'none',
@@ -111,6 +112,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         width: '100%',
         background: colors.primary,
         borderRadius: 20,
+        overflow: 'hidden',
     },
     barFilledAnimation: {
         transition: `width ${transition}`,
@@ -124,7 +126,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
 
     '@keyframes filledBar': {
         '0%': {
-            width: '0',
+            width: 0,
         },
     },
     '@keyframes reverseFilledBar': {
