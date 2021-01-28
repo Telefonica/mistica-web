@@ -170,6 +170,16 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
     const textContainerHeight = height;
     const classes = useStyles({isDesktopOrBigger, textContainerHeight});
 
+    const previousIndexRef = React.useRef(currentIndex);
+    const [isForward, setIsForward] = React.useState(false);
+    const [isBack, setIsBack] = React.useState(false);
+
+    React.useEffect(() => {
+        setIsForward(previousIndexRef.current < currentIndex);
+        setIsBack(previousIndexRef.current > currentIndex);
+        previousIndexRef.current = currentIndex;
+    }, [previousIndexRef, currentIndex]);
+
     return (
         <div className={classes.stepper}>
             {steps.map((text, index) => {
@@ -191,13 +201,13 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                             {isCompleted ? (
                                 <div
                                     className={classnames(classes.stepIconNumber, {
-                                        [classes.iconAnimation]: hasAnimation,
+                                        [classes.iconAnimation]: hasAnimation && !isBack,
                                     })}
                                 >
                                     <IconSuccess
                                         color={colors.primary}
                                         size="100%"
-                                        skipAnimation={!hasAnimation}
+                                        skipAnimation={!hasAnimation || isBack}
                                     />
                                 </div>
                             ) : (
@@ -233,11 +243,11 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                         </div>
                         {!isLastStep && (
                             <div className={classes.bar}>
-                                {isCompleted && (
+                                {(isCompleted || isCurrent) && (
                                     <div
                                         className={classnames(classes.barFilled, {
-                                            [classes.barFilledAnimation]: hasAnimation,
-                                            //[classes.barFilledReverseAnimation]: foo,
+                                            [classes.barFilledAnimation]: hasAnimation && !isBack,
+                                            [classes.barFilledReverseAnimation]: isCurrent && isBack,
                                         })}
                                     />
                                 )}
