@@ -78,6 +78,8 @@ const IconSuccessDefault: React.FC<Props> = ({size = 64, color, skipAnimation = 
                     stroke={color ? color : undefined}
                     strokeWidth="2"
                     strokeMiterlimit="10"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     points="20,34.9 27.4,44.3 45.6,21"
                     {...(!skipAnimation &&
                         mergeProperties(
