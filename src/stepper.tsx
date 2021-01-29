@@ -104,7 +104,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
 
         [mq.desktopOrBigger]: {
             position: 'relative',
-            top: pxToRem(14),
+            top: `calc(${pxToRem(8)} + 6px)`,
         },
     },
     barFilled: {
