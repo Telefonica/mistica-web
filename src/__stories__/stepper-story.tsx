@@ -9,7 +9,7 @@ export default {
 };
 
 export const Default: StoryComponent = () => {
-    const [step, setStep] = React.useState(3);
+    const [step, setStep] = React.useState(1);
 
     const stepDecrement = () => {
         setStep((prevStep) => prevStep - 1);
