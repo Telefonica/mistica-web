@@ -410,7 +410,7 @@ const useButtonLinkStyles = createUseStyles((theme) => ({
         whiteSpace: 'nowrap',
         display: 'inline-block',
         width: 'auto',
-        padding: `5px 6px`,
+        padding: 6,
         textAlign: 'center',
         fontWeight: 500,
         borderRadius: 4,

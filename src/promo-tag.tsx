@@ -6,9 +6,8 @@ import {createUseStyles} from './jss';
 const useStyles = createUseStyles((theme) => ({
     tag: {
         backgroundColor: theme.colors.backgroundPromo,
-        padding: '0 8px',
+        padding: '2px 8px',
         borderRadius: 2,
-        height: 20,
         minWidth: 48,
         display: 'inline-flex',
         alignItems: 'center',
