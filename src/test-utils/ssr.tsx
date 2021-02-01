@@ -127,8 +127,15 @@ export const createServer = (): http.Server => {
             return;
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const Component = require('../__acceptance_tests__/__ssr_pages__/' + moduleName).default;
+        let Component;
+        try {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
+            Component = require('../__acceptance_tests__/__ssr_pages__/' + moduleName).default;
+        } catch (e) {
+            res.writeHead(404);
+            res.end();
+            return;
+        }
 
         const serverSideStyles = new ServerSideStyles();
 

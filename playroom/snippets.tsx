@@ -369,6 +369,67 @@ const tabsSnippets = [
     },
 ];
 
+const cardSnippets = [
+    {
+        group: 'Cards',
+        name: 'HighlightedCard',
+        code: `
+        <HighlightedCard
+            title="Title"
+            description="Some description here"
+            imageUrl="${imagePlaceholder}"
+            imageFit="fit"
+            onClose={() => {}}
+            button={
+                <ButtonPrimary href="#" small>
+                    ButtonPrimary
+                </ButtonPrimary>
+            }
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'MediaCard',
+        code: `
+        <MediaCard
+            headline="headline"
+            pretitle="Pretitle"
+            title="Title"
+            description="Description"
+            body={<Placeholder />}
+            media={{
+                src:
+                    'https://i.imgur.com/flZfkiX.png',
+            }}
+            button={
+                <ButtonPrimary small href="https://google.com">
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'DataCard',
+        code: `
+        <DataCard
+            headline="headline"
+            title="title"
+            pretitle="subtitle"
+            description="description"
+            body={<Placeholder />}
+            icon={<IconAcademicLight />}
+            button={
+                <ButtonPrimary small href="https://google.com">
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+        />`,
+    },
+];
+
 type Snippet = {group: string; name: string; code: string};
 
 export default [
@@ -411,23 +472,7 @@ export default [
     ...listSnippets,
     ...listRowSnippets,
     ...tabsSnippets,
-    {
-        group: 'Cards',
-        name: 'HighlightedCard',
-        code: `
-        <HighlightedCard
-            title="Title"
-            description="Some description here"
-            imageUrl="${imagePlaceholder}"
-            imageFit="fit"
-            onClose={() => {}}
-            button={
-                <ButtonPrimary href="#" small>
-                    ButtonPrimary
-                </ButtonPrimary>
-            }
-        />`,
-    },
+    ...cardSnippets,
     {group: 'PromoTag', name: 'PromoTag', code: '<PromoTag>PromoTag</PromoTag>'},
     {
         group: 'Stepper',
