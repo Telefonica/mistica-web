@@ -4,9 +4,10 @@ import {createUseStyles} from './jss';
 import Touchable from './touchable';
 import ResponsiveLayout from './responsive-layout';
 import {useElementDimensions} from './hooks';
-import {getPlatform} from './utils/platform';
 
 import type {TrackingEvent} from './utils/types';
+import {Text6} from '.';
+import {pxToRem} from './utils/css';
 
 const tabMaxWidth = 284;
 
@@ -26,7 +27,7 @@ type StyleProps = {
     width: number;
 };
 
-const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
+const useStyles = createUseStyles(({colors, mq}) => ({
     outerBorder: {
         borderBottom: `1px solid ${colors.divider}`,
         width: '100%',
@@ -54,7 +55,6 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
     },
     tab: {
         flex: '1 0 80px',
-
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -63,6 +63,7 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
         verticalAlign: 'baseline',
         height,
         textAlign: 'center',
+        color: colors.textSecondary,
         borderBottom: '2px solid transparent',
         maxWidth: ({numTabs}) => {
             if (numTabs === 2) {
@@ -72,6 +73,10 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
             }
             return tabMaxWidth;
         },
+        '&:hover': {
+            color: colors.textPrimary,
+        },
+
         fallbacks: {
             maxWidth: tabMaxWidth, // max() is not supported by all browsers
         },
@@ -88,26 +93,14 @@ const useStyles = createUseStyles(({colors, mq, platformOverrides}) => ({
             flexBasis: 208,
         },
     },
-    tebText: {
-        color: colors.textSecondary,
-        lineHeight: 1.5,
-        fontSize: 16,
-        letterSpacing: getPlatform(platformOverrides) === 'ios' ? -0.32 : 'normal',
-        fontWeight: 500,
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-    },
-    tabTextSelected: {
-        color: colors.textPrimary,
-    },
     tabSelected: {
+        color: colors.textPrimary,
         borderBottom: `2px solid ${colors.controlActive}`,
     },
     icon: {
         marginRight: 8,
-        height: 24,
-        width: 24,
+        height: pxToRem(24),
+        width: pxToRem(24),
     },
 }));
 
@@ -149,14 +142,9 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) =
                                         aria-selected={isSelected ? 'true' : 'false'}
                                     >
                                         {icon && <div className={classes.icon}>{icon}</div>}
-                                        <span
-                                            className={classnames(
-                                                classes.tebText,
-                                                isSelected && classes.tabTextSelected
-                                            )}
-                                        >
+                                        <Text6 medium color="inherit">
                                             {text}
-                                        </span>
+                                        </Text6>
                                     </Touchable>
                                 );
                             })}

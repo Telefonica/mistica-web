@@ -6,7 +6,7 @@ export type SelectProps = {
   error?: boolean,
   helperText?: string,
   id?: string,
-  label?: string,
+  label: string,
   name: string,
   optional?: boolean,
   inputProps?: { [prop: string]: string, ... },
@@ -20,6 +20,7 @@ export type SelectProps = {
   autoFocus?: boolean,
   value?: string,
   fullWidth?: boolean,
+  native?: boolean,
 };
 declare var Select: React.ComponentType<SelectProps>;
 declare export default typeof Select;

@@ -6,7 +6,7 @@ import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 
 test('happy case', async () => {
-    const handleSubmitSpy = jest.fn();
+    const handleSubmitSpy: any = jest.fn();
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
@@ -79,7 +79,7 @@ test('custom validator', async () => {
 });
 
 test('fields are disabled during submit', async () => {
-    let resolveSubmitPromise = () => {};
+    let resolveSubmitPromise: (value?: unknown) => void = () => {};
     const submitPromise = new Promise((r) => {
         resolveSubmitPromise = r;
     });
@@ -202,4 +202,28 @@ test("if a Field is disabled we skip its validation and don't submit its value",
         expect(handleSubmit).toHaveBeenCalledWith({password: '123456'}, {password: '123456'});
     });
     expect(validate).not.toHaveBeenCalled();
+});
+
+test('can listen to form validation errors', async () => {
+    const onValidationErrorsSpy = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Form onValidationErrors={onValidationErrorsSpy} onSubmit={() => {}}>
+                <TextField name="name" label="Name" />
+                <TextField name="surname" label="Surname" />
+                <EmailField name="email" label="Email" />
+                <ButtonPrimary submit>Submit</ButtonPrimary>
+            </Form>
+        </ThemeContextProvider>
+    );
+
+    await userEvent.type(screen.getByLabelText('Name'), 'Pepe');
+    await userEvent.type(screen.getByLabelText('Email'), 'invalidemail');
+    userEvent.click(screen.getByText('Submit'));
+
+    expect(onValidationErrorsSpy).toHaveBeenCalledWith({
+        email: 'Email incorrecto',
+        surname: 'Este campo es obligatorio',
+    });
 });

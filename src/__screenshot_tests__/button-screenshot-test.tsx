@@ -24,7 +24,7 @@ test.each(DEVICES)('Buttons - disabled (%s)', async (device) => {
     });
 
     const story = await screen.findByTestId('content');
-    await page.click(await screen.findByLabelText('disabled'));
+    await page.click(await screen.findByLabelText('Disabled'));
 
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
@@ -38,7 +38,7 @@ test.each(DEVICES)('Buttons - spinner (%s)', async (device) => {
     });
 
     const story = await screen.findByTestId('content');
-    await page.click(await screen.findByLabelText('showSpinner'));
+    await page.click(await screen.findByLabelText('Show Spinner'));
 
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
@@ -52,7 +52,7 @@ test.each(DEVICES)('Buttons - small (%s)', async (device) => {
     });
 
     const story = await screen.findByTestId('content');
-    await page.click(await screen.findByLabelText('small'));
+    await page.click(await screen.findByLabelText('Small'));
 
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();

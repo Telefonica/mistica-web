@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 import {getPlatform} from './utils/platform';
+import {pxToRem} from './utils/css';
 
 const useStyles = createUseStyles((theme) => {
     const mapToWeight: Record<string, number> = {
@@ -27,19 +28,21 @@ const useStyles = createUseStyles((theme) => {
 
     return {
         text: {
-            lineHeight: ({desktopLineHeight}) => desktopLineHeight,
+            lineHeight: ({desktopLineHeight}) => pxToRem(desktopLineHeight),
             textTransform: ({uppercase}) => (uppercase ? 'uppercase' : 'inherit'),
-            fontSize: ({desktopSize}) => desktopSize,
+            fontSize: ({desktopSize}) => pxToRem(desktopSize),
             fontWeight: ({weight}) => (weight ? mapToWeight[weight] : 'inherit'),
             color: ({isInverse, color = theme.colors.textPrimary}) =>
                 isInverse ? inverseColorsMap[color] ?? color : color,
             textDecoration: (p) => p.textDecoration,
             letterSpacing: ({letterSpacing}) => letterSpacing,
             overflowWrap: ({wordBreak}) => (wordBreak ? 'anywhere' : 'inherit'),
+            // Needed to reset the default browser margin that adds to p, h1, h2... elements.
+            margin: 0,
 
             [theme.mq.mobile]: {
-                lineHeight: ({mobileLineHeight}) => mobileLineHeight,
-                fontSize: ({mobileSize}) => mobileSize,
+                lineHeight: ({mobileLineHeight}) => pxToRem(mobileLineHeight),
+                fontSize: ({mobileSize}) => pxToRem(mobileSize),
             },
         },
         truncate: {
@@ -70,11 +73,17 @@ export interface TextPresetProps {
 
 interface TextProps extends TextPresetProps {
     weight?: FontWeight | boolean;
+    /** in pixels, will be converted to rem in runtime */
     size?: number;
+    /** in pixels, will be converted to rem in runtime */
     mobileSize?: number;
+    /** in pixels, will be converted to rem in runtime */
     desktopSize?: number;
+    /** in pixels, will be converted to rem in runtime */
     lineHeight?: string | number;
+    /** in pixels, will be converted to rem in runtime */
     mobileLineHeight?: string | number;
+    /** in pixels, will be converted to rem in runtime */
     desktopLineHeight?: string | number;
     letterSpacing?: number;
 }

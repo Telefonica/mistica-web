@@ -4,7 +4,7 @@ import classnames from 'classnames';
 
 const useStyles = createUseStyles(() => ({
     inline: {
-        display: 'flex',
+        display: (p) => (p.fullWidth ? 'flex' : 'inline-flex'),
         flexDirection: 'row',
         alignItems: ({alignItems}) => alignItems,
 
@@ -21,18 +21,22 @@ type Props = {
     className?: string;
     role?: string;
     'aria-labelledby'?: string;
+    fullWidth?: boolean;
 };
 
-const Inline: React.FC<Props> = (props) => {
-    const {space, className, children, role, alignItems = 'stretch'} = props;
-    const classes = useStyles({space, alignItems});
+const Inline: React.FC<Props> = ({
+    space,
+    className,
+    children,
+    role,
+    alignItems = 'stretch',
+    'aria-labelledby': ariaLabelledBy,
+    fullWidth,
+}) => {
+    const classes = useStyles({space, alignItems, fullWidth});
 
     return (
-        <div
-            className={classnames(className, classes.inline)}
-            role={role}
-            aria-labelledby={props['aria-labelledby']}
-        >
+        <div className={classnames(className, classes.inline)} role={role} aria-labelledby={ariaLabelledBy}>
             {React.Children.map(children, (child) => (
                 <div>{child}</div>
             ))}

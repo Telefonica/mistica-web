@@ -251,11 +251,11 @@ const headerSnippets = [
         <HeaderLayout
             header={
                 <Header
-                    title="La última factura de diciembre ya esta disponible"
-                    preamount="Cuota mensual (IVA incluido)"
+                    title="The last invoice is available"
+                    preamount="Some text (text)"
                     amount="60,44 €"
-                    button={<ButtonPrimary href="asdf">Descargar factura</ButtonPrimary>}
-                    subtitle="Y esto es un subtitulo"
+                    button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
+                    subtitle="Subtitle"
                 />
             }
             extra={<Placeholder />}
@@ -270,15 +270,15 @@ const headerSnippets = [
             breadcrumbs={
                 <NavigationBreadcrumbs
                     breadcrumbs={[{ title: "Cuenta", url: "/dashboard" }]}
-                    title="Facturas"
+                    title="Invoices"
                 />
             }
             header={
                 <Header
-                    title="La última factura de diciembre ya esta disponible"
+                    title="The last invoice is available"
                     preamount="Cuota mensual (IVA incluido)"
                     amount="60,44 €"
-                    button={<ButtonPrimary href="asdf">Descargar factura</ButtonPrimary>}
+                    button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
                     subtitle="Y esto es un subtitulo"
                 />
             }
@@ -293,15 +293,15 @@ const headerSnippets = [
         <HeaderLayout
             header={
                 <Header
-                    title="La última factura de diciembre ya esta disponible"
+                    title="The last invoice is available"
                     preamount={{
-                        text: "Ejemplo de texto tachado",
+                        text: "Example of line-through text",
                         textDecoration: "line-through"
                     }}
                     amount="60,44 €"
-                    button={<ButtonPrimary href="asdf">Descargar factura</ButtonPrimary>}
+                    button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
                     subtitle={{
-                        text: "Ejemplo de subtitle con secondary color",
+                        text: "Subtitle with secondary color",
                         color: theme.colors.textSecondary
                     }}
                 />
@@ -315,9 +315,9 @@ const headerSnippets = [
         code: `
         <MainSectionHeaderLayout>
             <MainSectionHeader
-                title="Soporte"
-                description="¿En qué podemos ayudarte?"
-                button={<ButtonPrimary href="asdf">Acción</ButtonPrimary>}
+                title="Title"
+                description="Some text here"
+                button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
             />
         </MainSectionHeaderLayout>
         `,
@@ -351,6 +351,81 @@ const tabsSnippets = [
                 {text: 'Tab 2', icon: <IconBrainRegular />},
                 {text: 'Tab 3', icon: <IconBusRegular />},
             ]}
+        />`,
+    },
+    {
+        group: 'Tabs',
+        name: 'Tabs (with icons and icons color="currentColor")',
+        code: `
+        <Tabs
+            selectedIndex={getState('tabIndex')}
+            onChange={setState('tabIndex')}
+            tabs={[
+                {text: 'Tab 1', icon: <IconAppointmentRegular color="currentColor" />},
+                {text: 'Tab 2', icon: <IconBrainRegular color="currentColor" />},
+                {text: 'Tab 3', icon: <IconBusRegular color="currentColor" />},
+            ]}
+        />`,
+    },
+];
+
+const cardSnippets = [
+    {
+        group: 'Cards',
+        name: 'HighlightedCard',
+        code: `
+        <HighlightedCard
+            title="Title"
+            description="Some description here"
+            imageUrl="${imagePlaceholder}"
+            imageFit="fit"
+            onClose={() => {}}
+            button={
+                <ButtonPrimary href="#" small>
+                    ButtonPrimary
+                </ButtonPrimary>
+            }
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'MediaCard',
+        code: `
+        <MediaCard
+            headline="headline"
+            pretitle="Pretitle"
+            title="Title"
+            description="Description"
+            body={<Placeholder />}
+            media={{
+                src:
+                    'https://i.imgur.com/flZfkiX.png',
+            }}
+            button={
+                <ButtonPrimary small href="https://google.com">
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'DataCard',
+        code: `
+        <DataCard
+            headline="headline"
+            title="title"
+            pretitle="subtitle"
+            description="description"
+            body={<Placeholder />}
+            icon={<IconAcademicLight />}
+            button={
+                <ButtonPrimary small href="https://google.com">
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
         />`,
     },
 ];
@@ -397,21 +472,6 @@ export default [
     ...listSnippets,
     ...listRowSnippets,
     ...tabsSnippets,
-    {
-        group: 'Cards',
-        name: 'HighlightedCard',
-        code: `
-        <HighlightedCard
-            title="Resolver problema técnico"
-            description="Usa nuestra herramienta para resolver tus problemas técnicos"
-            imageUrl="${imagePlaceholder}"
-            imageFit="fit"
-            onClose={() => {}}
-            button={
-                <ButtonPrimary href="#" small>
-                    ButtonPrimary
-                </ButtonPrimary>
-            }
-        />`,
-    },
+    ...cardSnippets,
+    {group: 'PromoTag', name: 'PromoTag', code: '<PromoTag>PromoTag</PromoTag>'},
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

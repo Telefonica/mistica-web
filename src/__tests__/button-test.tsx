@@ -22,21 +22,25 @@ test('fake button', () => {
             style="cursor: pointer;"
           >
             <div
-              class="content"
+              class="textContent"
             >
               <div
-                class="textContent"
+                class="text text-d0 truncate truncate-d2"
               >
                 test
               </div>
+            </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
+            <div
+              aria-hidden="true"
+              class="loadingContent"
+            >
               <div
-                aria-hidden="true"
-                class="loadingContent"
-              >
-                <div
-                  style="display: inline-block; width: 24px; height: 24px;"
-                />
-              </div>
+                style="display: inline-block; width: 1.500rem; height: 1.500rem;"
+              />
             </div>
           </div>
         </DocumentFragment>
@@ -54,26 +58,29 @@ test('submit button', () => {
         <DocumentFragment>
           <button
             class="touchable button light"
-            form=""
             role="button"
             type="submit"
           >
             <div
-              class="content"
+              class="textContent"
             >
               <div
-                class="textContent"
+                class="text text-d0 truncate truncate-d2"
               >
                 test
               </div>
+            </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
+            <div
+              aria-hidden="true"
+              class="loadingContent"
+            >
               <div
-                aria-hidden="true"
-                class="loadingContent"
-              >
-                <div
-                  style="display: inline-block; width: 24px; height: 24px;"
-                />
-              </div>
+                style="display: inline-block; width: 1.500rem; height: 1.500rem;"
+              />
             </div>
           </button>
         </DocumentFragment>
@@ -95,21 +102,25 @@ test('<button> is rendered when using "onPress" prop', () => {
             type="button"
           >
             <div
-              class="content"
+              class="textContent"
             >
               <div
-                class="textContent"
+                class="text text-d0 truncate truncate-d2"
               >
                 test
               </div>
+            </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
+            <div
+              aria-hidden="true"
+              class="loadingContent"
+            >
               <div
-                aria-hidden="true"
-                class="loadingContent"
-              >
-                <div
-                  style="display: inline-block; width: 24px; height: 24px;"
-                />
-              </div>
+                style="display: inline-block; width: 1.500rem; height: 1.500rem;"
+              />
             </div>
           </button>
         </DocumentFragment>
@@ -131,21 +142,25 @@ test('<a> is rendered when using "href" prop', () => {
             role="button"
           >
             <div
-              class="content"
+              class="textContent"
             >
               <div
-                class="textContent"
+                class="text text-d0 truncate truncate-d2"
               >
                 test
               </div>
+            </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
+            <div
+              aria-hidden="true"
+              class="loadingContent"
+            >
               <div
-                aria-hidden="true"
-                class="loadingContent"
-              >
-                <div
-                  style="display: inline-block; width: 24px; height: 24px;"
-                />
-              </div>
+                style="display: inline-block; width: 1.500rem; height: 1.500rem;"
+              />
             </div>
           </a>
         </DocumentFragment>
@@ -171,21 +186,25 @@ test('"href" with "newTab" renders required attributes', () => {
             target="_blank"
           >
             <div
-              class="content"
+              class="textContent"
             >
               <div
-                class="textContent"
+                class="text text-d0 truncate truncate-d2"
               >
                 test
               </div>
+            </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
+            <div
+              aria-hidden="true"
+              class="loadingContent"
+            >
               <div
-                aria-hidden="true"
-                class="loadingContent"
-              >
-                <div
-                  style="display: inline-block; width: 24px; height: 24px;"
-                />
-              </div>
+                style="display: inline-block; width: 1.500rem; height: 1.500rem;"
+              />
             </div>
             <span
               class="screenReaderOnly"
@@ -228,21 +247,25 @@ test('<a> is rendered when using "to" prop', () => {
             role="button"
           >
             <div
-              class="content"
+              class="textContent"
             >
               <div
-                class="textContent"
+                class="text text-d0 truncate truncate-d2"
               >
                 test
               </div>
+            </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
+            <div
+              aria-hidden="true"
+              class="loadingContent"
+            >
               <div
-                aria-hidden="true"
-                class="loadingContent"
-              >
-                <div
-                  style="display: inline-block; width: 24px; height: 24px;"
-                />
-              </div>
+                style="display: inline-block; width: 1.500rem; height: 1.500rem;"
+              />
             </div>
           </a>
         </DocumentFragment>
@@ -272,19 +295,23 @@ test('button with spinner', () => {
             type="button"
           >
             <div
-              class="content"
+              aria-hidden="true"
+              class="textContent"
             >
               <div
-                aria-hidden="true"
-                class="textContent"
+                class="text text-d0 truncate truncate-d2"
               >
                 test
               </div>
-              <div
-                class="loadingContent"
-              >
-                (Spinner color=currentcolor)
-              </div>
+            </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
+            <div
+              class="loadingContent"
+            >
+              (Spinner color=currentcolor)
             </div>
           </button>
           <button
@@ -294,19 +321,23 @@ test('button with spinner', () => {
             type="button"
           >
             <div
-              class="content"
+              aria-hidden="true"
+              class="textContent"
             >
               <div
-                aria-hidden="true"
-                class="textContent"
+                class="text text-d6 truncate truncate-d8"
               >
                 test
               </div>
-              <div
-                class="loadingContent"
-              >
-                (Spinner color=currentcolor)
-              </div>
+            </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
+            <div
+              class="loadingContent"
+            >
+              (Spinner color=currentcolor)
             </div>
           </button>
         </DocumentFragment>
@@ -330,21 +361,25 @@ test('dark theme', () => {
             role="button"
           >
             <div
-              class="content"
+              class="textContent"
             >
               <div
-                class="textContent"
+                class="text text-d0 truncate truncate-d2"
               >
                 test
               </div>
+            </div>
+            <div
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
+            <div
+              aria-hidden="true"
+              class="loadingContent"
+            >
               <div
-                aria-hidden="true"
-                class="loadingContent"
-              >
-                <div
-                  style="display: inline-block; width: 24px; height: 24px;"
-                />
-              </div>
+                style="display: inline-block; width: 1.500rem; height: 1.500rem;"
+              />
             </div>
           </a>
         </DocumentFragment>

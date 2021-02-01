@@ -6,113 +6,91 @@ import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 import {applyAlpha} from './utils/color';
 import {useForm} from './form-context';
-import {getPlatform} from './utils/platform';
+import {pxToRem} from './utils/css';
 
 import type {TrackingEvent} from './utils/types';
 import type {Location} from 'history';
 import type {Theme} from './theme';
+import {Box, Text6, Text7} from '.';
 
 export const BUTTON_MIN_WIDTH = 156;
 
-const buttonTransition = (property: string) => `${property} 0.3s cubic-bezier(0.77, 0, 0.175, 1)`;
+const transitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
 
-const buttonBorderWidth = '1.5px';
+const BORDER_PX = 1.5;
+const SPINNER_MARGIN_PX = 8;
+const X_PADDING_PX = 16 - BORDER_PX;
+const Y_PADDING_PX = 12 - BORDER_PX;
+const X_SMALL_PADDING_PX = 8 - BORDER_PX;
+const Y_SMALL_PADDING_PX = 6 - BORDER_PX;
 
-const commonClasses = (theme: Theme) => ({
+const commonClasses = () => ({
     button: {
         display: 'inline-block',
+        position: 'relative',
         width: 'auto',
-        height: 48,
         minWidth: BUTTON_MIN_WIDTH,
-        padding: '0 16px',
-        fontSize: 16,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? '-0.3px' : '0',
         textAlign: 'center',
-        fontWeight: 500,
-        border: `${buttonBorderWidth} solid transparent`,
+        border: `${BORDER_PX}px solid transparent`,
         borderRadius: 4,
         overflow: 'hidden',
         '&:hover': {
-            transition: [
-                buttonTransition('background-color'),
-                buttonTransition('color'),
-                buttonTransition('border-color'),
-            ].join(','),
+            transition: `background-color ${transitionTiming}, color ${transitionTiming}, border-color ${transitionTiming}`,
         },
+    },
+    loadingFiller: {
+        display: 'block',
+        height: 0,
+        opacity: 0,
+        overflow: 'hidden',
     },
     small: {
         minWidth: 104,
-        padding: '0 8px',
-        fontSize: 14,
-        borderWidth: 1.5,
-        lineHeight: 1.4,
-        fontWeight: 500,
-        textTransform: 'inherit',
-        borderRadius: 4,
-        height: 32,
-    },
-    content: {
-        display: 'flex',
-        flexDirection: 'column',
-        margin: `-${buttonBorderWidth} 0`,
-        transition: buttonTransition('transform'),
-        height: 48 * 2,
-        '$small &': {
-            height: 32 * 2,
-        },
     },
     loadingContent: {
-        display: 'flex',
+        display: 'inline-flex',
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: X_PADDING_PX,
+        right: X_PADDING_PX,
         justifyContent: 'center',
         alignItems: 'center',
-        height: 48,
-        lineHeight: '48px',
-        marginTop: -16,
         opacity: 0,
-        transition: buttonTransition('opacity'),
+        transform: 'translateY(2rem)',
+        transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
         '$small &': {
-            height: 32,
-            lineHeight: '32px',
-            marginTop: 0,
+            left: X_SMALL_PADDING_PX,
+            right: X_SMALL_PADDING_PX,
         },
     },
     textContent: {
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        width: '100%',
-        overflow: 'hidden',
-        display: 'inline-block',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 48,
-        lineHeight: '48px',
+        padding: `${Y_PADDING_PX}px ${X_PADDING_PX}px`, // height 48
         opacity: 1,
-        transition: buttonTransition('opacity'),
+        transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
         '$small &': {
-            height: 32,
-            lineHeight: '32px',
+            padding: `${Y_SMALL_PADDING_PX}px ${X_SMALL_PADDING_PX}px`, // height 32
         },
         '& svg': {
-            marginRight: 8,
+            marginRight: SPINNER_MARGIN_PX,
             verticalAlign: 'bottom',
             height: '100%',
         },
     },
     isLoading: {
-        '& $content': {
-            transform: 'translateY(-32px)',
-        },
         '& $textContent': {
+            transform: 'translateY(-2rem)',
             opacity: 0,
         },
         '& $loadingContent': {
+            transform: 'translateY(0)',
             opacity: 1,
         },
     },
 });
 
 const usePrimaryButtonStyles = createUseStyles((theme) => ({
-    ...commonClasses(theme),
+    ...commonClasses(),
     light: {
         color: theme.colors.buttonPrimaryText,
         backgroundColor: theme.colors.buttonPrimaryBackground,
@@ -177,7 +155,7 @@ const buttonSecondaryHoverLightStyle = (theme: Theme) => ({
 });
 
 const useSecondaryButtonStyles = createUseStyles((theme) => ({
-    ...commonClasses(theme),
+    ...commonClasses(),
     light: {
         ...buttonSecondaryLightStyle(theme),
 
@@ -240,7 +218,7 @@ const dangerButtonStyles = (theme: Theme) => ({
 });
 
 const useDangerButtonStyles = createUseStyles((theme) => ({
-    ...commonClasses(theme),
+    ...commonClasses(),
     light: dangerButtonStyles(theme),
     inverse: dangerButtonStyles(theme),
 }));
@@ -326,7 +304,18 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
         }
     }, [showSpinner, shouldRenderSpinner, formStatus]);
 
-    const spinnerSize = props.small ? 16 : 24;
+    const spinnerSizeRem = pxToRem(props.small ? 16 : 24);
+
+    const renderText = (text: React.ReactNode) =>
+        props.small ? (
+            <Text7 medium truncate={1} color="inherit" as="div">
+                {text}
+            </Text7>
+        ) : (
+            <Text6 medium truncate={1} color="inherit" as="div">
+                {text}
+            </Text6>
+        );
 
     const commonProps = {
         className: classnames(classes.button, props.className, {
@@ -342,10 +331,25 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
         'aria-expanded': props['aria-expanded'],
         tabIndex: props.tabIndex,
         children: (
-            <div className={classes.content}>
+            <>
+                {/* text content */}
                 <div aria-hidden={showSpinner ? true : undefined} className={classes.textContent}>
-                    {props.children}
+                    {renderText(props.children)}
                 </div>
+
+                {/* the following div won't be visible (see loadingFiller class), this is used to force the button width */}
+                <div
+                    className={classes.loadingFiller}
+                    style={{
+                        paddingLeft: spinnerSizeRem,
+                        paddingRight:
+                            SPINNER_MARGIN_PX + 2 * (props.small ? X_SMALL_PADDING_PX : X_PADDING_PX),
+                    }}
+                >
+                    {renderText(loadingText)}
+                </div>
+
+                {/* loading content */}
                 <div
                     aria-hidden={showSpinner ? undefined : true}
                     className={classes.loadingContent}
@@ -360,14 +364,16 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
                             rolePresentation={!!loadingText}
                             color="currentcolor"
                             delay="0s"
-                            size={spinnerSize}
+                            size={spinnerSizeRem}
                         />
                     ) : (
-                        <div style={{display: 'inline-block', width: spinnerSize, height: spinnerSize}} />
+                        <div
+                            style={{display: 'inline-block', width: spinnerSizeRem, height: spinnerSizeRem}}
+                        />
                     )}
-                    {loadingText ? <div style={{marginLeft: 8}}>{loadingText}</div> : null}
+                    {loadingText ? <Box paddingLeft={8}>{renderText(loadingText)}</Box> : null}
                 </div>
-            </div>
+            </>
         ),
         disabled: props.disabled || showSpinner || isFormSending,
         role: 'button',
@@ -404,15 +410,12 @@ const useButtonLinkStyles = createUseStyles((theme) => ({
         whiteSpace: 'nowrap',
         display: 'inline-block',
         width: 'auto',
-        height: 32,
-        lineHeight: '32px',
-        padding: `0 8px`,
-        fontSize: 14,
+        padding: 6,
         textAlign: 'center',
         fontWeight: 500,
         borderRadius: 4,
         overflow: 'hidden',
-        transition: [buttonTransition('background-color'), buttonTransition('color')].join(','),
+        transition: `background-color ${transitionTiming}, color ${transitionTiming}`,
         color: theme.colors.textLink,
         '&:enabled:active': {
             backgroundColor: theme.colors.buttonLinkBackgroundSelected,
@@ -475,7 +478,11 @@ export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
         }),
         trackingEvent: props.trackingEvent,
         'data-testid': props['data-testid'],
-        children: props.children,
+        children: (
+            <Text7 medium color="inherit">
+                {props.children}
+            </Text7>
+        ),
     };
 
     if (props.onPress) {

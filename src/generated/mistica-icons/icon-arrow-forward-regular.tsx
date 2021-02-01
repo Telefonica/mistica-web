@@ -12,18 +12,18 @@ type Props = {
     size?: number;
 };
 
-const IconInfomationRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconArrowForwardRegular: React.FC<Props> = ({color, size = 24}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.iconInverse : colors.iconPrimary);
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
             <path
-                d="M12 5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm0 5c-.828 0-1.5.717-1.5 1.6v4.8c0 .885.672 1.6 1.5 1.6s1.5-.717 1.5-1.6v-4.8c0-.883-.672-1.6-1.5-1.6zm0-10C5.383 0 0 5.383 0 12c0 6.616 5.383 12 12 12 6.616 0 12-5.384 12-12 0-6.617-5.384-12-12-12zm0 22c-5.52-.005-9.995-4.48-10-10 .005-5.52 4.48-9.995 10-10 5.52.005 9.995 4.48 10 10-.005 5.52-4.48 9.995-10 10z"
+                d="M19.949 12.195a.676.676 0 000-.517c-.016-.041-.046-.07-.066-.105-.023-.036-.04-.075-.071-.11L12.95 4.216a.686.686 0 10-.999.943l5.767 6.09H4.662a.688.688 0 000 1.375h13.057l-5.893 6.22a.688.688 0 00.025.97.69.69 0 00.972-.026l6.989-7.38c.032-.033.045-.074.07-.11.021-.034.05-.064.067-.102"
                 fill={fillColor}
             />
         </svg>
     );
 };
 
-export default IconInfomationRegular;
+export default IconArrowForwardRegular;

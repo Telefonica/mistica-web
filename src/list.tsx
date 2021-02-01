@@ -90,6 +90,7 @@ const useStyles = createUseStyles((theme) => ({
 }));
 
 interface CommonProps {
+    children?: void; // no children allowed
     headline?: string | React.ReactNode;
     title: string;
     titleLinesMax?: 1 | 2;
@@ -217,6 +218,7 @@ interface BasicRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
+    newTab?: undefined;
 
     right?: React.ReactNode;
 }
@@ -228,6 +230,7 @@ interface SwitchRowContentProps extends CommonProps {
     right?: undefined;
     checkbox?: undefined;
     radioValue?: undefined;
+    newTab?: undefined;
 
     switch: ControlProps;
 }
@@ -239,6 +242,7 @@ interface CheckboxRowContentProps extends CommonProps {
     right?: undefined;
     switch?: undefined;
     radioValue?: undefined;
+    newTab?: undefined;
 
     checkbox: ControlProps;
 }
@@ -250,6 +254,7 @@ interface RadioRowContentProps extends CommonProps {
     right?: undefined;
     switch?: undefined;
     checkbox?: undefined;
+    newTab?: undefined;
 
     radioValue: string;
 }
@@ -260,7 +265,7 @@ interface HrefRowContentProps extends CommonProps {
     radioValue?: undefined;
 
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    href?: string;
+    href: string;
     newTab?: boolean;
     onPress?: undefined;
     to?: undefined;
@@ -271,9 +276,10 @@ interface ToRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
+    newTab?: undefined;
 
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    to?: string;
+    to: string;
     fullPageOnWebView?: boolean;
     replace?: boolean;
     href?: undefined;
@@ -287,7 +293,7 @@ interface OnPressRowContentProps extends CommonProps {
     radioValue?: undefined;
 
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    onPress?: () => void;
+    onPress: () => void;
     href?: undefined;
     to?: undefined;
     right?: React.ReactNode;
@@ -348,7 +354,7 @@ const RowContent = (props: RowContentProps) => {
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
     const controlName = props.switch?.name ?? props.checkbox?.name;
 
-    const renderContent = (moreProps: {type: ContentProps['type']; right?: ContentProps['right']}) => (
+    const renderContent = ({type, right}: {type: ContentProps['type']; right?: ContentProps['right']}) => (
         <Content
             icon={icon}
             iconSize={iconSize}
@@ -360,7 +366,8 @@ const RowContent = (props: RowContentProps) => {
             titleLinesMax={titleLinesMax}
             subtitleLinesMax={subtitleLinesMax}
             descriptionLinesMax={descriptionLinesMax}
-            {...moreProps}
+            type={type}
+            right={right}
         />
     );
 
@@ -512,7 +519,7 @@ export const BoxedRow: React.FC<RowContentProps> = (props) => {
     );
 };
 
-type BoxedRowElement = Array<React.ReactElement<typeof BoxedRow>>;
+type BoxedRowElement = React.ReactElement<typeof BoxedRow>;
 
 type BoxedRowListProps = {
     children: BoxedRowElement | Array<BoxedRowElement>;

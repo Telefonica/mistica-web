@@ -2,37 +2,12 @@ import * as React from 'react';
 import classnames from 'classnames';
 import debounce from 'lodash/debounce';
 import {createUseStyles} from './jss';
-import {getIosVersion, isRunningAcceptanceTest} from './utils/platform';
-import compareVersion from 'semver-compare';
-import {useScreenSize, useTheme} from './hooks';
+import {isRunningAcceptanceTest} from './utils/platform';
+import {useElementDimensions, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
 import Portal from './portal';
-
-import type {Theme} from './theme';
+import {addPassiveEventListener, removePassiveEventListener} from './utils/dom';
 
 const getScrollDistanceToBottom = () => document.body.scrollHeight - window.innerHeight - window.scrollY;
-
-/**
- * Detect passive event listeners support
- * @see passiveeventlisteners.js at https://github.com/Modernizr/Modernizr/
- */
-let supportsPassive = false;
-try {
-    const options = Object.defineProperty({}, 'passive', {
-        get() {
-            supportsPassive = true;
-            return undefined;
-        },
-    });
-    window.addEventListener('test' as any, () => {}, options);
-} catch (e) {
-    // does not support passive event listeners :(
-}
-
-const addPassiveEventListener = (el: EventTarget, eventName: string, listener: (e: any) => void): void =>
-    el.addEventListener(eventName, listener, supportsPassive ? {passive: true} : false);
-
-const removePassiveEventListener = (el: EventTarget, eventName: string, listener: (e: any) => void): void =>
-    el.removeEventListener(eventName, listener, false);
 
 const waitForSwitchTransitionToStart = (fn: () => void) => {
     const timeoutId = setTimeout(fn, 0);
@@ -41,9 +16,14 @@ const waitForSwitchTransitionToStart = (fn: () => void) => {
     };
 };
 
+// this high zIndex is needed because the fixed footer must be displayed over
+// the bottom navbar from movistar.es in mobile
+const Z_INDEX = 25;
+
 const useStyles = createUseStyles((theme) => ({
     footer: {
         width: '100%',
+        zIndex: Z_INDEX,
     },
 
     shadow: {},
@@ -62,12 +42,12 @@ const useStyles = createUseStyles((theme) => ({
             position: 'fixed',
             left: 0,
             bottom: 0,
-            zIndex: 1,
+            zIndex: Z_INDEX,
             background: ({footerBgColor}) => footerBgColor || theme.colors.background,
         },
         shadow: {
             boxShadow: '0 -1px 2px 0 rgba(0, 0, 0, 0.2)',
-            zIndex: 1,
+            zIndex: Z_INDEX,
         },
     },
 }));
@@ -75,27 +55,31 @@ const useStyles = createUseStyles((theme) => ({
 type Props = {
     isFooterVisible?: boolean;
     footer: React.ReactNode;
-    footerHeight?: number;
+    footerHeight?: number | string;
     footerBgColor?: string;
     containerBgColor?: string;
     children: React.ReactNode;
+    onChangeFooterHeight?: (heightInPx: number) => void;
 };
-
-const canHaveNotch = (platformOverrides: Theme['platformOverrides']) =>
-    compareVersion(getIosVersion(platformOverrides), '11.4.0') >= 0; // https://caniuse.com/#search=env
 
 const FixedFooterLayout: React.FC<Props> = ({
     isFooterVisible = true,
     footer,
-    footerHeight = 80,
+    footerHeight = 'auto',
     footerBgColor,
     containerBgColor,
     children,
+    onChangeFooterHeight,
 }) => {
     const [displayShadow, setDisplayShadow] = React.useState(false);
     const childrenRef = React.useRef<HTMLDivElement>(null);
     const {isMobile} = useScreenSize();
     const {platformOverrides} = useTheme();
+    const {height: realHeight, ref} = useElementDimensions();
+
+    useIsomorphicLayoutEffect(() => {
+        onChangeFooterHeight?.(realHeight);
+    }, [onChangeFooterHeight, realHeight]);
 
     React.useEffect(() => {
         const shouldDisplayShadow = () => {
@@ -132,26 +116,22 @@ const FixedFooterLayout: React.FC<Props> = ({
         };
     }, [children, childrenRef, platformOverrides]);
 
-    const heightWithNotchInset = canHaveNotch(platformOverrides)
-        ? `calc(${footerHeight}px + env(safe-area-inset-bottom))`
-        : footerHeight;
-    const height = isFooterVisible ? heightWithNotchInset : 0;
-
-    const classes = useStyles({footerBgColor, containerBgColor, height});
+    const classes = useStyles({footerBgColor, containerBgColor, height: realHeight});
 
     const renderFooter = () => (
         <div
+            ref={ref}
             className={classnames(classes.footer, {
                 [classes.withoutFooter]: !isFooterVisible,
                 [classes.shadow]: displayShadow,
             })}
-            style={{
-                height,
-                paddingBottom: isFooterVisible ? 'env(safe-area-inset-bottom)' : 0,
-            }}
             data-testid={`fixed-footer${isFooterVisible ? '-visible' : '-hidden'}`}
         >
-            {footer}
+            {isFooterVisible && (
+                <div style={{height: footerHeight, marginBottom: 'env(safe-area-inset-bottom)'}}>
+                    {footer}
+                </div>
+            )}
         </div>
     );
 

@@ -4,10 +4,11 @@ import * as React from "react";
 declare type Props = {
   isFooterVisible?: boolean,
   footer: React.Node,
-  footerHeight?: number,
+  footerHeight?: number | string,
   footerBgColor?: string,
   containerBgColor?: string,
   children: React.Node,
+  onChangeFooterHeight?: (heightInPx: number) => void,
 };
 declare var FixedFooterLayout: React.ComponentType<Props>;
 declare export default typeof FixedFooterLayout;

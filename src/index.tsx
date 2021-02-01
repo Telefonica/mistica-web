@@ -49,6 +49,7 @@ export {default as NegativeBox} from './negative-box';
 export {default as Tabs} from './tabs';
 export {default as Inline} from './inline';
 export {default as HighlightedCard} from './highlighted-card';
+export {MediaCard, DataCard} from './card';
 
 // Forms
 export {default as Form} from './form';
@@ -111,6 +112,11 @@ if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
         window.__mistica_version__ = PACKAGE_VERSION;
     }
 }
+
+/** @deprecated Added for backwards compatibility. Will be removed in next major release */
+export {default as IconInfomationRegular} from './generated/mistica-icons/icon-information-regular';
+/** @deprecated Added for backwards compatibility. Will be removed in next major release */
+export {default as IconFlechaAdelanteRegular} from './generated/mistica-icons/icon-arrow-forward-regular';
 
 // Exported this way to facilitate tree-shaking
 export {default as IconAcademicFilled} from './generated/mistica-icons/icon-academic-filled';
@@ -176,6 +182,7 @@ export {default as IconArrowDownRightLight} from './generated/mistica-icons/icon
 export {default as IconArrowDownRightRegular} from './generated/mistica-icons/icon-arrow-down-right-regular';
 export {default as IconArrowDropDownFilled} from './generated/mistica-icons/icon-arrow-drop-down-filled';
 export {default as IconArrowDropUpFilled} from './generated/mistica-icons/icon-arrow-drop-up-filled';
+export {default as IconArrowForwardRegular} from './generated/mistica-icons/icon-arrow-forward-regular';
 export {default as IconArrowLeftFilled} from './generated/mistica-icons/icon-arrow-left-filled';
 export {default as IconArrowRightFilled} from './generated/mistica-icons/icon-arrow-right-filled';
 export {default as IconArrowRightLight} from './generated/mistica-icons/icon-arrow-right-light';
@@ -612,7 +619,6 @@ export {default as IconFirstAidKitRegular} from './generated/mistica-icons/icon-
 export {default as IconFlagFilled} from './generated/mistica-icons/icon-flag-filled';
 export {default as IconFlagLight} from './generated/mistica-icons/icon-flag-light';
 export {default as IconFlagRegular} from './generated/mistica-icons/icon-flag-regular';
-export {default as IconFlechaAdelanteRegular} from './generated/mistica-icons/icon-flecha-adelante-regular';
 export {default as IconFlowerFilled} from './generated/mistica-icons/icon-flower-filled';
 export {default as IconFlowerLight} from './generated/mistica-icons/icon-flower-light';
 export {default as IconFlowerRegular} from './generated/mistica-icons/icon-flower-regular';
@@ -691,7 +697,7 @@ export {default as IconImportarRegular} from './generated/mistica-icons/icon-imp
 export {default as IconImportLight} from './generated/mistica-icons/icon-import-light';
 export {default as IconInfinityLight} from './generated/mistica-icons/icon-infinity-light';
 export {default as IconInfinityRegular} from './generated/mistica-icons/icon-infinity-regular';
-export {default as IconInfomationRegular} from './generated/mistica-icons/icon-infomation-regular';
+export {default as IconInformationRegular} from './generated/mistica-icons/icon-information-regular';
 export {default as IconInformationUserFilled} from './generated/mistica-icons/icon-information-user-filled';
 export {default as IconInformationUserLight} from './generated/mistica-icons/icon-information-user-light';
 export {default as IconInformationUserRegular} from './generated/mistica-icons/icon-information-user-regular';

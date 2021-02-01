@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StorySection, useCheckbox} from './helpers';
+import {StorySection} from './helpers';
 import {
     Box,
     Inline,
@@ -11,49 +11,29 @@ import {
     Stack,
     ThemeVariant,
     useTheme,
+    Checkbox,
 } from '..';
+import DoubleField from '../double-field';
+import SectionTitle from '../section-title';
+import {IconPhotoCameraRegular} from '../../playroom/components';
 
 export default {
     title: 'Components/Touchables/Button',
 };
 
-const IcnCamera = () => (
-    <svg role="presentation" width="24" height="24" viewBox="0 0 24 24">
-        <g fill="none" fillRule="evenodd">
-            <path
-                stroke="white"
-                strokeWidth="2"
-                d="M16.688 6.804c.014-.086.026-.172.026-.262v-.27c0-.938-.752-1.272-1.672-1.272H9.958c-.92 0-1.674.334-1.674 1.271v.271c0 .09.013.176.026.262H6.148C4.96 6.804 4 7.784 4 8.99v7.674c0 1.208.961 2.187 2.148 2.187h12.704c1.186 0 2.148-.98 2.148-2.187V8.99c0-1.208-.962-2.187-2.148-2.187h-2.164z"
-            />
-            <ellipse cx="17.91" cy="9.67" fill="white" rx=".77" ry=".78" />
-            <path
-                fill="white"
-                d="M8.41 12.778c0 2.269 1.83 4.11 4.09 4.11s4.09-1.841 4.09-4.11c0-2.27-1.83-4.111-4.09-4.111s-4.09 1.842-4.09 4.11zm2 0a2.1 2.1 0 0 1 2.09-2.111 2.1 2.1 0 0 1 2.09 2.11 2.101 2.101 0 0 1-2.09 2.112 2.101 2.101 0 0 1-2.09-2.111z"
-            />
-            <path d="M0 0h24v24H0z" />
-        </g>
-    </svg>
-);
-
 const BackgroundTheme: StoryComponent = ({children}) => {
     const {colors} = useTheme();
-    const [isInverseVariantState, setIsInverseVariantState] = React.useState(false);
+    const [isInverse, setIsInverse] = React.useState(false);
     return (
-        <ThemeVariant isInverse={isInverseVariantState}>
+        <ThemeVariant isInverse={isInverse}>
             <>
-                <p style={{margin: 0, marginBottom: 16}}>
-                    <input
-                        type="checkbox"
-                        checked={isInverseVariantState}
-                        onChange={({target}) => setIsInverseVariantState(target.checked)}
-                    />{' '}
-                    Inverse variant
-                </p>
-                <div
-                    style={{
-                        background: isInverseVariantState ? colors.backgroundHeading : 'white',
-                    }}
-                >
+                <div style={{background: isInverse ? colors.backgroundHeading : 'white'}}>
+                    <Box padding={8}>
+                        <Checkbox name="inverse" checked={isInverse} onChange={setIsInverse}>
+                            Inverse variant
+                        </Checkbox>
+                    </Box>
+
                     {children}
                 </div>
             </>
@@ -64,81 +44,115 @@ const BackgroundTheme: StoryComponent = ({children}) => {
 const handleOnPress = () => window.alert('pressed!');
 
 export const TypeOfButtons: StoryComponent = () => {
-    const [disabled, disabledCheckbox] = useCheckbox('disabled');
-    const [showSpinner, showSpinnerCheckbox] = useCheckbox('showSpinner');
-    const [small, smallCheckbox] = useCheckbox('small');
-    const [newTab, newTabCheckbox] = useCheckbox('newTab', true);
-    const href = 'https://google.com';
-    const caption = 'text';
+    const [disabled, setDisabled] = React.useState(false);
+    const [showSpinner, setShowSpinner] = React.useState(false);
+    const [small, setSmall] = React.useState(false);
+    const [newTab, setNewTab] = React.useState(false);
+    const [text, setTextInput] = React.useState('Example');
+    const [loadingText, setLoadingText] = React.useState('Loading Text');
+    const href = 'https://example.com';
 
-    const props = {disabled, showSpinner, small};
+    const props = {disabled, showSpinner, small, loadingText};
 
     return (
         <BackgroundTheme>
-            {disabledCheckbox}
-            {showSpinnerCheckbox}
-            {smallCheckbox}
-            {newTabCheckbox}
+            <Box padding={8}>
+                <Stack space={16}>
+                    <Inline space={32}>
+                        <Checkbox name="Disabled" checked={disabled} onChange={setDisabled}>
+                            Disabled
+                        </Checkbox>
+                        <Checkbox name="ShowSpinner" checked={showSpinner} onChange={setShowSpinner}>
+                            Show Spinner
+                        </Checkbox>
+                    </Inline>
+                    <Inline space={32}>
+                        <Checkbox name="Small" checked={small} onChange={setSmall}>
+                            Small
+                        </Checkbox>
+                        <Checkbox name="newTab" checked={newTab} onChange={setNewTab}>
+                            newTab
+                        </Checkbox>
+                    </Inline>
+                    <Inline space={16}>
+                        <DoubleField>
+                            <TextField
+                                name="btn-text"
+                                label="Text"
+                                value={text}
+                                onChangeValue={setTextInput}
+                            />
+                            <TextField
+                                name="btn-loading"
+                                label="Loading Text"
+                                value={loadingText}
+                                onChangeValue={setLoadingText}
+                            />
+                        </DoubleField>
+                    </Inline>
+                </Stack>
+            </Box>
+
             <div data-testid="content">
-                <StorySection title="ButtonPrimary">
+                <Stack space={8}>
+                    <SectionTitle>ButtonPrimary</SectionTitle>
+
                     <div>Button:</div>
                     <ButtonPrimary onPress={handleOnPress} {...props}>
-                        {caption}
+                        {text}
                     </ButtonPrimary>
 
                     <div>Link:</div>
                     <ButtonPrimary href={href} newTab={newTab} {...props}>
-                        {caption}
+                        {text}
                     </ButtonPrimary>
 
                     <div>Fake:</div>
                     <ButtonPrimary fake {...props}>
-                        {caption}
+                        {text}
                     </ButtonPrimary>
-                </StorySection>
 
-                <StorySection title="ButtonSecondary">
+                    <SectionTitle>ButtonSecondary</SectionTitle>
                     <div>Button:</div>
                     <ButtonSecondary onPress={handleOnPress} {...props}>
-                        {caption}
+                        {text}
                     </ButtonSecondary>
 
                     <div>Link:</div>
                     <ButtonSecondary href={href} newTab={newTab} {...props}>
-                        {caption}
+                        {text}
                     </ButtonSecondary>
 
                     <div>Fake:</div>
                     <ButtonSecondary fake {...props}>
-                        {caption}
+                        {text}
                     </ButtonSecondary>
-                </StorySection>
 
-                <StorySection title="ButtonDanger">
+                    <SectionTitle>ButtonDanger</SectionTitle>
+
                     <div>Button:</div>
                     <ButtonDanger onPress={handleOnPress} {...props}>
-                        {caption}
+                        {text}
                     </ButtonDanger>
 
                     <div>Link:</div>
                     <ButtonDanger href={href} newTab={newTab} {...props}>
-                        {caption}
+                        {text}
                     </ButtonDanger>
 
                     <div>Fake:</div>
                     <ButtonDanger fake {...props}>
-                        {caption}
+                        {text}
                     </ButtonDanger>
-                </StorySection>
 
-                <StorySection title="ButtonLink">
-                    <div>Button:</div>
-                    <ButtonLink onPress={handleOnPress}>{caption}</ButtonLink>
-                    <div>Link:</div>
+                    <SectionTitle>ButtonLink</SectionTitle>
+                    <div>Button (onPress):</div>
+                    <ButtonLink onPress={handleOnPress}>{text}</ButtonLink>
+                    <div>Link (href):</div>
                     <ButtonLink href={href} newTab={newTab}>
-                        {caption}
+                        {text}
                     </ButtonLink>
-                </StorySection>
+                </Stack>
             </div>
         </BackgroundTheme>
     );
@@ -147,7 +161,7 @@ export const TypeOfButtons: StoryComponent = () => {
 export const withIcon: StoryComponent = () => (
     <StorySection title="Buttons can have an icon">
         <ButtonPrimary onPress={() => window.alert('photo!')}>
-            <IcnCamera />
+            <IconPhotoCameraRegular color="currentColor" />
             Take a photo
         </ButtonPrimary>
     </StorySection>
@@ -163,10 +177,11 @@ export const LoadingState: StoryComponent = () => {
     };
     return (
         <BackgroundTheme>
-            <label>
-                <input type="checkbox" checked={isLoading} onChange={() => setIsLoading(!isLoading)} />{' '}
-                isLoading
-            </label>
+            <Box padding={8}>
+                <Checkbox checked={isLoading} onChange={setIsLoading} name="isLoading">
+                    isLoading
+                </Checkbox>
+            </Box>
             <StorySection title="With loading text">
                 <Inline space={16}>
                     <ButtonPrimary loadingText="Sending file" showSpinner={isLoading} onPress={handlePress}>

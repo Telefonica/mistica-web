@@ -102,7 +102,7 @@ export type SelectProps = {
     error?: boolean;
     helperText?: string;
     id?: string;
-    label?: string;
+    label: string;
     name: string;
     optional?: boolean;
     // use `inputProps` to pass props (as attributes) to the input element, for example a data-testid
@@ -117,6 +117,7 @@ export type SelectProps = {
     autoFocus?: boolean;
     value?: string;
     fullWidth?: boolean;
+    native?: boolean;
 };
 
 const Select: React.FC<SelectProps> = ({
@@ -134,6 +135,7 @@ const Select: React.FC<SelectProps> = ({
     inputProps,
     onBlur,
     autoFocus = false,
+    native,
 }) => {
     const inputRef = React.useRef<HTMLSelectElement | HTMLInputElement>(null);
     const focusableRef = React.useRef<HTMLSelectElement | HTMLDivElement>(null);
@@ -160,12 +162,13 @@ const Select: React.FC<SelectProps> = ({
     const {platformOverrides} = useTheme();
 
     const shouldUseNative =
-        process.env.NODE_ENV === 'test' || isAndroid(platformOverrides) || isIos(platformOverrides);
+        native || process.env.NODE_ENV === 'test' || isAndroid(platformOverrides) || isIos(platformOverrides);
 
     const disabled = disabledProp || formStatus === 'sending';
     const error = errorProp || !!formErrors[name];
     const helperText = formErrors[name] || helperTextProp;
     const value = valueProp ?? rawValues[name];
+
     const onChangeValue = (value: string) => {
         onChangeValueProp?.(value);
         setFormError({name, error: ''});
@@ -363,7 +366,13 @@ const Select: React.FC<SelectProps> = ({
                 <Label
                     error={error}
                     forId={inputId}
-                    inputState={isFocused ? 'focused' : 'filled'}
+                    inputState={
+                        isFocused
+                            ? 'focused'
+                            : value ?? valueState ?? inputRef.current?.value
+                            ? 'filled'
+                            : 'default'
+                    }
                     disabled={disabled}
                 >
                     {label}
@@ -393,7 +402,17 @@ const Select: React.FC<SelectProps> = ({
                         currentRef.current = actualRef;
                     });
                 }}
+                style={{
+                    // Override default browser opacity when disabled. This opacity also affects the label.
+                    // Without this fix, the label is invisible when disabled
+                    opacity: 1,
+                }}
             >
+                {options.every(({value}) => !!value) && (
+                    // if no "empty" option exists, insert a dummy empty option
+                    // this is needed to allow a native select with no selected option
+                    <option value="" style={{display: 'none'}} />
+                )}
                 {options.map(({value: val, text}) => (
                     <option key={val} value={val}>
                         {text}
@@ -419,7 +438,8 @@ const Select: React.FC<SelectProps> = ({
                     endIcon={<IconArrowDown />}
                     focus={isFocused}
                     label={label}
-                    value={value ?? valueState}
+                    value={value}
+                    shrinkLabel={!!(value || valueState)}
                     name={name}
                     helperText={helperText}
                     required={!optional}

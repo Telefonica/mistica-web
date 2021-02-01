@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {useAriaId, useIsInverseVariant, Select, TextField} from '..';
+import {isRunningAcceptanceTest} from '../utils/platform';
 
 type Props = {
     title: string;
@@ -58,7 +59,6 @@ export const phoneNumbersList = [
 ];
 
 export const fruitEntries = [
-    ['- None -', ''],
     ['Orange', 'orange'],
     ['Apple', 'apple'],
     ['Banana', 'banana'],
@@ -102,6 +102,7 @@ export const useSelect = (
             onChangeValue={setValue}
             label={label}
             options={values.map((type) => ({value: type, text: type}))}
+            native={isRunningAcceptanceTest()}
         />
     );
     return [value, select];

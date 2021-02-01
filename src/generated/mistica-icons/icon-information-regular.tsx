@@ -12,18 +12,18 @@ type Props = {
     size?: number;
 };
 
-const IconFlechaAdelanteRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconInformationRegular: React.FC<Props> = ({color, size = 24}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.iconInverse : colors.iconPrimary);
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
             <path
-                d="M21.608 12.11a.833.833 0 000-.637c-.02-.05-.056-.086-.081-.128-.028-.045-.048-.093-.087-.135l-8.43-8.919a.845.845 0 00-1.227 1.16l7.084 7.493H2.83a.846.846 0 000 1.692h16.04l-7.239 7.652a.847.847 0 00.031 1.194.847.847 0 001.193-.031l8.586-9.081c.039-.04.056-.09.087-.135.025-.042.061-.078.08-.126"
+                d="M12 5.583a1.375 1.375 0 100 2.75 1.375 1.375 0 000-2.75zm0 4.584c-.759 0-1.375.657-1.375 1.466v4.4c0 .811.616 1.467 1.375 1.467s1.375-.657 1.375-1.467v-4.4c0-.809-.616-1.466-1.375-1.466zM12 1C5.935 1 1 5.935 1 12s4.935 11 11 11 11-4.935 11-11S18.065 1 12 1zm0 20.167A9.177 9.177 0 012.833 12 9.177 9.177 0 0112 2.833 9.177 9.177 0 0121.167 12 9.177 9.177 0 0112 21.167z"
                 fill={fillColor}
             />
         </svg>
     );
 };
 
-export default IconFlechaAdelanteRegular;
+export default IconInformationRegular;

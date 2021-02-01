@@ -20,6 +20,7 @@ type FormProps = {
     initialValues?: FormValues;
     autoJump?: boolean;
     children: React.ReactNode;
+    onValidationErrors?: (errors: FormErrors) => void;
     className?: string;
 };
 
@@ -29,6 +30,7 @@ const Form: React.FC<FormProps> = ({
     onSubmit,
     initialValues = {},
     autoJump = false,
+    onValidationErrors,
     id: idProp,
 }) => {
     const isMountedRef = React.useRef(true); // https://github.com/facebook/react/issues/14369#issuecomment-468305796
@@ -69,8 +71,7 @@ const Form: React.FC<FormProps> = ({
      */
     const validateFields = React.useCallback((): FormErrors => {
         const errors: FormErrors = {};
-        let didFocus = false;
-        for (const [name, {input, validator, focusableElement}] of fieldRegistrations.current) {
+        for (const [name, {input, validator}] of fieldRegistrations.current) {
             if (input) {
                 if (input.disabled) {
                     continue;
@@ -83,19 +84,29 @@ const Form: React.FC<FormProps> = ({
                         errors[name] = error;
                     }
                 }
-                if (errors[name] && !didFocus) {
-                    didFocus = true;
-                    if (focusableElement) {
-                        focusableElement.focus();
-                    } else {
-                        input.focus();
-                    }
-                }
             }
         }
+
+        const elementsWithErrors = Object.keys(errors)
+            .map((name) => {
+                const reg = fieldRegistrations.current.get(name);
+                return reg?.focusableElement || reg?.input;
+            })
+            .filter(Boolean) as Array<HTMLSelectElement | HTMLDivElement>; // casted to remove inferred nulls/undefines
+
+        if (elementsWithErrors.length) {
+            elementsWithErrors.sort((a, b) =>
+                a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1
+            );
+            elementsWithErrors[0].focus();
+        }
+
         setFormErrors(errors);
+        if (onValidationErrors) {
+            onValidationErrors(errors);
+        }
         return errors;
-    }, [rawValues, texts, values]);
+    }, [onValidationErrors, rawValues, texts, values]);
 
     const jumpToNext = React.useCallback(
         (currentName: string) => {

@@ -206,14 +206,6 @@ export const useWindowWidth = (): number => {
     return width;
 };
 
-export const usePrevious = <A extends unknown>(value: A, initialValue?: A): A | undefined => {
-    const ref = React.useRef(initialValue);
-    React.useEffect(() => {
-        ref.current = value;
-    }, [value]);
-    return ref.current;
-};
-
 // React currently throws a warning when using useLayoutEffect on the server.
 // To get around it, we can conditionally useEffect on the server (no-op) and
 // useLayoutEffect in the browser

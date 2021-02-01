@@ -8,6 +8,7 @@ declare type Props = {
   className?: string,
   role?: string,
   "aria-labelledby"?: string,
+  fullWidth?: boolean,
 };
 declare var Inline: React.ComponentType<Props>;
 declare export default typeof Inline;

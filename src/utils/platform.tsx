@@ -16,7 +16,7 @@ export const isInsideNovumNativeApp = (platformOverrides: Theme['platformOverrid
     return isWebViewBridgeAvailable();
 };
 
-export const isRunningAcceptanceTest = (platformOverrides: Theme['platformOverrides']): boolean =>
+export const isRunningAcceptanceTest = (platformOverrides: Theme['platformOverrides'] = {}): boolean =>
     getUserAgent(platformOverrides).includes('acceptance-test');
 
 const isEdgeOrIE = Boolean(typeof self !== 'undefined' && self.MSStream);
@@ -73,10 +73,18 @@ export const getIosVersion = (platformOverrides: Theme['platformOverrides']): st
     return [major, minor, patch].join('.');
 };
 
-export const getPlatform = (platformOverrides: Theme['platformOverrides'] = {}): 'ios' | 'android' => {
+export const getPlatform = (
+    platformOverrides: Theme['platformOverrides'] = {}
+): 'ios' | 'android' | 'desktop' => {
     const overridenPlatform = platformOverrides.platform;
     if (overridenPlatform) {
         return overridenPlatform;
     }
-    return isIos(platformOverrides) ? 'ios' : 'android';
+    if (isIos(platformOverrides)) {
+        return 'ios';
+    }
+    if (isAndroid(platformOverrides)) {
+        return 'android';
+    }
+    return 'desktop';
 };

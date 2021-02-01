@@ -25,3 +25,32 @@ export const createChangeEvent = (
     target.value = value;
     return {...event, target, currentTarget: target};
 };
+
+/**
+ * Detect passive event listeners support
+ * @see passiveeventlisteners.js at https://github.com/Modernizr/Modernizr/
+ */
+let supportsPassive = false;
+try {
+    const options = Object.defineProperty({}, 'passive', {
+        get() {
+            supportsPassive = true;
+            return undefined;
+        },
+    });
+    window.addEventListener('test' as any, () => {}, options);
+} catch (e) {
+    // does not support passive event listeners :(
+}
+
+export const addPassiveEventListener = (
+    el: EventTarget,
+    eventName: string,
+    listener: (e: any) => void
+): void => el.addEventListener(eventName, listener, supportsPassive ? {passive: true} : false);
+
+export const removePassiveEventListener = (
+    el: EventTarget,
+    eventName: string,
+    listener: (e: any) => void
+): void => el.removeEventListener(eventName, listener, false);

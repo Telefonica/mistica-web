@@ -12,58 +12,7 @@ declare type Props = {
   footerBgColor?: string,
   containerBgColor?: string,
   children: React.Node,
+  onChangeFooterHeight?: (heightInPx: number) => void,
 };
-declare export var getFooterHeight: (
-  isMobile: boolean,
-  link?: React.Element<
-    React.ComponentType<ButtonLinkProps>,
-    | string
-    | ((
-        props: any
-      ) => React.Element<
-        any,
-        string | any | ((props: any) => React.Component<any, any, any>)
-      > | null)
-    | ((props: any) => React.Component<any, any, any>)
-  > | void,
-  secondaryButton?:
-    | React.Element<
-        React.ComponentType<ButtonProps>,
-        | string
-        | ((
-            props: any
-          ) => React.Element<
-            any,
-            string | any | ((props: any) => React.Component<any, any, any>)
-          > | null)
-        | ((props: any) => React.Component<any, any, any>)
-      >
-    | React.Element<
-        React.ComponentType<ButtonProps>,
-        | string
-        | ((
-            props: any
-          ) => React.Element<
-            any,
-            string | any | ((props: any) => React.Component<any, any, any>)
-          > | null)
-        | ((props: any) => React.Component<any, any, any>)
-      >
-    | React.Element<
-        React.ComponentType<ButtonProps>,
-        | string
-        | ((
-            props: any
-          ) => React.Element<
-            any,
-            string | any | ((props: any) => React.Component<any, any, any>)
-          > | null)
-        | ((props: any) => React.Component<any, any, any>)
-      >
-    | void
-) => number;
 declare var ButtonFixedFooterLayout: React.ComponentType<Props>;
 declare export default typeof ButtonFixedFooterLayout;
-
-import type { ButtonLinkProps } from "./button";
-import type { ButtonProps } from "./button";

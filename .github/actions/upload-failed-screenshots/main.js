@@ -1,10 +1,10 @@
 // https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action
 // @ts-check
 const core = require('@actions/core');
-const storage = require('./azure-storage');
+const storage = require('../utils/azure-storage');
 const {basename} = require('path');
 const glob = require('glob');
-const {commentPullRequest} = require('./github');
+const {commentPullRequest} = require('../utils/github');
 
 const main = async () => {
     const filenames = glob.sync(core.getInput('glob') || process.env.INPUT_GLOB);

@@ -2,12 +2,12 @@ import * as React from 'react';
 import {
     Header,
     HeaderLayout,
-    Box,
     ButtonPrimary,
     ButtonSecondary,
     Stack,
     NavigationBreadcrumbs,
     ResponsiveLayout,
+    Text6,
 } from '..';
 import {useTextField, useCheckbox} from './helpers';
 
@@ -73,7 +73,11 @@ export const Default: StoryComponent = () => {
                                 isErrorAmount={isErrorAmount}
                             />
                         }
-                        extra={withExtraContent ? <Box>some account chart here, for example</Box> : undefined}
+                        extra={
+                            withExtraContent ? (
+                                <Text6 regular>some account chart here, for example</Text6>
+                            ) : undefined
+                        }
                     />
                 </div>
                 <ResponsiveLayout>

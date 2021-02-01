@@ -24,6 +24,7 @@ export const texts = {
     formCreditCardCvvTooltipAmex: 'Si es American Express, añade los 4 dígitos del anverso',
     formCreditCardExpirationError: 'Fecha no válida',
     formCreditCardNumberError: 'No es un número de tarjeta valido',
+    formDateOutOfRangeError: 'Fecha no permitida',
     formEmailError: 'Email incorrecto',
     closeButtonLabel: 'Cerrar',
     formSearchClear: 'Borrar búsqueda',
@@ -86,7 +87,7 @@ export type ThemeConfig = {
         phoneNumberFormattingRegionCode: RegionCode;
     };
     platformOverrides?: {
-        platform?: 'ios' | 'android';
+        platform?: 'ios' | 'android' | 'desktop';
         insideNovumNativeApp?: boolean;
         userAgent?: string;
     };
@@ -110,7 +111,7 @@ export type Theme = {
         phoneNumberFormattingRegionCode: RegionCode;
     };
     platformOverrides: {
-        platform?: 'ios' | 'android';
+        platform?: 'ios' | 'android' | 'desktop';
         insideNovumNativeApp?: boolean;
         userAgent?: string;
     };

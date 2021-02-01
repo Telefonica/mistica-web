@@ -24,6 +24,7 @@ declare export var texts: {
   formCreditCardCvvTooltipAmex: string,
   formCreditCardExpirationError: string,
   formCreditCardNumberError: string,
+  formDateOutOfRangeError: string,
   formEmailError: string,
   closeButtonLabel: string,
   formSearchClear: string,
@@ -74,7 +75,7 @@ export type ThemeConfig = {
     phoneNumberFormattingRegionCode: RegionCode,
   },
   platformOverrides?: {
-    platform?: "ios" | "android",
+    platform?: "ios" | "android" | "desktop",
     insideNovumNativeApp?: boolean,
     userAgent?: string,
   },
@@ -100,7 +101,7 @@ export type Theme = {
     phoneNumberFormattingRegionCode: RegionCode,
   },
   platformOverrides: {
-    platform?: "ios" | "android",
+    platform?: "ios" | "android" | "desktop",
     insideNovumNativeApp?: boolean,
     userAgent?: string,
   },

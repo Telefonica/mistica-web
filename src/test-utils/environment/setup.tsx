@@ -29,7 +29,7 @@ const serveStaticStorybook = () => {
         port: storybookPort,
     });
 
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
         (global as any).__STORYBOOK_SERVER__.start(() => {
             console.log('Storybook server ready');
             resolve();
@@ -52,8 +52,12 @@ export default async (jestConfig: any = {}): Promise<void> => {
         console.log(`Found server on port ${storybookPort}, assuming it's Storybook.`);
     }
 
-    console.log('Building SSR client bundles...');
-    await compileSsrClient();
+    if (process.env.NO_SSR) {
+        console.log('⚠️ Skip building SSR bundles (NO_SSR env var set - use for development only!)');
+    } else {
+        console.log('Building SSR client bundles...');
+        await compileSsrClient();
+    }
 
     await puppeteerSetup(jestConfig);
 };
