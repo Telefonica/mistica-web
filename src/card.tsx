@@ -41,17 +41,21 @@ const CardContent: React.FC<CardContentProps> = ({
         <>
             <Stack space={16}>
                 <Stack space={8}>
-                    <Stack space={4}>
-                        {headline && <PromoTag>{headline}</PromoTag>}
-                        {pretitle && (
-                            <Box paddingTop={4}>
-                                <Text8 regular>{pretitle}</Text8>
-                            </Box>
-                        )}
-                        <Text5 light>{title}</Text5>
-                        <Text7 regular>{subtitle}</Text7>
-                    </Stack>
-                    <Text7 regular color={theme.colors.textSecondary}>
+                    <header>
+                        <Stack space={4}>
+                            {headline && <PromoTag>{headline}</PromoTag>}
+                            {pretitle && (
+                                <Box paddingTop={4}>
+                                    <Text8 regular>{pretitle}</Text8>
+                                </Box>
+                            )}
+                            <Text5 as="h1" light>
+                                {title}
+                            </Text5>
+                            <Text7 regular>{subtitle}</Text7>
+                        </Stack>
+                    </header>
+                    <Text7 as="p" regular color={theme.colors.textSecondary}>
                         {description}
                     </Text7>
                 </Stack>
@@ -149,7 +153,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
 }) => {
     const classes = useMediaCardStyles({media});
     return (
-        <div className={classes.mediaCard}>
+        <article className={classes.mediaCard}>
             <div className={classes.media}></div>
             <div className={classes.content}>
                 <CardContent
@@ -162,7 +166,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
                     buttonLink={buttonLink}
                 />
             </div>
-        </div>
+        </article>
     );
 };
 
@@ -238,7 +242,7 @@ export const DataCard: React.FC<DataCardProps> = ({
 }) => {
     const classes = useDataCardStyles({iconBackgroundColor, iconBackgroundImage});
     return (
-        <div className={classes.dataCard}>
+        <article className={classes.dataCard}>
             {(icon || iconBackgroundImage) && <div className={classes.icon}>{icon}</div>}
             <CardContent
                 headline={headline}
@@ -249,6 +253,6 @@ export const DataCard: React.FC<DataCardProps> = ({
                 button={button}
                 buttonLink={buttonLink}
             />
-        </div>
+        </article>
     );
 };
