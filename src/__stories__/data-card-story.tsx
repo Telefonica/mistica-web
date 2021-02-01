@@ -61,7 +61,7 @@ export const Default: StoryComponent = () => {
                         title={title}
                         subtitle={subtitle}
                         description={description}
-                        button={button}
+                        button={button as any} // button or buttonLink (or both) will be defined
                         buttonLink={buttonLink}
                     />
                 </StorySection>
