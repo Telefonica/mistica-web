@@ -96,13 +96,17 @@ export const Catalog: React.FC = () => {
                             onChangeValue={(v) => setSize(Number(v) || 0)}
                         />
                     </DoubleField>
-                    <Stack space={16}>
-                        <>
-                            {regularCheckbox} {lightCheckbox} {filledCheckbox}
-                        </>
-                        <>
-                            {inverseCheckbox} {showNamesCheckbox} {showIConBackgroundCheckbox}
-                        </>
+                    <Stack space={8}>
+                        <Inline space={16}>
+                            {regularCheckbox}
+                            {lightCheckbox}
+                            {filledCheckbox}
+                        </Inline>
+                        <Inline space={16}>
+                            {inverseCheckbox}
+                            {showNamesCheckbox}
+                            {showIConBackgroundCheckbox}
+                        </Inline>
                     </Stack>
                 </Inline>
             </Box>
