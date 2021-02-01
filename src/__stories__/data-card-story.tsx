@@ -30,8 +30,7 @@ export const Default: StoryComponent = () => {
     const [actions, actionsSelect] = useSelect('actions', 'button', ['button', 'link', 'button & link']);
 
     const icon = <IconAcademicLight />;
-    const image =
-        'https://cdn.vox-cdn.com/thumbor/lfpXTYMyJpDlMevYNh0PfJu3M6Q=/39x0:3111x2048/920x613/filters:focal(39x0:3111x2048):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/49901753/netflixlogo.0.0.png';
+    const image = 'https://i.imgur.com/QwNlo5s.png';
 
     const button = actions.includes('button') ? (
         <ButtonPrimary small href="https://google.com">
