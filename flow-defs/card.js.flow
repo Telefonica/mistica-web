@@ -1,0 +1,58 @@
+// @flow
+
+import * as React from "react";
+import { ButtonPrimary, ButtonLink } from ".";
+declare type CardMedia =
+  | {
+  src: string,
+  aspectRatio: number,
+}
+  | {
+  src: string,
+  height: number,
+}
+  | { src: string };
+declare type MediaCardProps = {
+  media: CardMedia,
+  headline?: string,
+  pretitle?: string,
+  title?: string,
+  description: string,
+  body?: React.Node,
+  button?: React.Element<typeof ButtonPrimary>,
+  buttonLink?: React.Element<typeof ButtonLink>,
+};
+declare export var MediaCard: React.ComponentType<MediaCardProps>;
+declare type CommonDataCardProps = {
+  /**
+   * Typically a mistica-icons component element
+   */
+  icon?: React.Element<any>,
+  iconBackgroundColor?: string,
+  iconBackgroundImage?: string,
+  headline?: string,
+  title: string,
+  subtitle?: string,
+  description: string,
+  body?: React.Node,
+};
+declare type DataCardWithButtonProps = {
+  ...$Exact<CommonDataCardProps>,
+  button: React.Element<typeof ButtonPrimary>,
+};
+declare type DataCardWithLinkProps = {
+  ...$Exact<CommonDataCardProps>,
+  buttonLink: React.Element<typeof ButtonLink>,
+};
+declare type DataCardWithTwoActionsProps = {
+  ...$Exact<CommonDataCardProps>,
+
+  button: React.Element<typeof ButtonPrimary>,
+  buttonLink: React.Element<typeof ButtonLink>,
+};
+declare type DataCardProps =
+  | DataCardWithButtonProps
+  | DataCardWithLinkProps
+  | DataCardWithTwoActionsProps;
+declare export var DataCard: React.ComponentType<DataCardProps>;
+declare export {};
