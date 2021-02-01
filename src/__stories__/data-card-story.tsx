@@ -98,7 +98,7 @@ export const WithIconImage: StoryComponent = () => (
         title="title"
         subtitle="subtitle"
         description="description"
-        iconBackgroundImage="https://fr.movistar-es-dev.svc.dev.mad.tuenti.io/2sP0YWlvvYakK6rvNvr__TpCfL4OZKPBLO4_KOPY-L2cxWaTloZDB0Q"
+        iconBackgroundImage="https://i.imgur.com/flZfkiX.png"
         button={
             <ButtonPrimary small href="https://google.com">
                 Action

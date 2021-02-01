@@ -61,8 +61,7 @@ export const Default: StoryComponent = () => {
                         title={title}
                         description={description}
                         media={{
-                            src:
-                                'https://fr.movistar-es-dev.svc.dev.mad.tuenti.io/2sP0YWlvvYakK6rvNvr__TpCfL4OZKPBLO4_KOPY-L2cxWaTloZDB0Q',
+                            src: 'https://i.imgur.com/flZfkiX.png',
                         }}
                         button={button}
                         buttonLink={buttonLink}
@@ -83,8 +82,7 @@ export const WithBody: StoryComponent = () => (
         description="description"
         body={<Placeholder />}
         media={{
-            src:
-                'https://fr.movistar-es-dev.svc.dev.mad.tuenti.io/2sP0YWlvvYakK6rvNvr__TpCfL4OZKPBLO4_KOPY-L2cxWaTloZDB0Q',
+            src: 'https://i.imgur.com/flZfkiX.png',
         }}
         button={
             <ButtonPrimary small href="https://google.com">
@@ -121,8 +119,7 @@ export const Group: StoryComponent = () => {
                         title="title"
                         description="description"
                         media={{
-                            src:
-                                'https://fr.movistar-es-dev.svc.dev.mad.tuenti.io/2sP0YWlvvYakK6rvNvr__TpCfL4OZKPBLO4_KOPY-L2cxWaTloZDB0Q',
+                            src: 'https://i.imgur.com/flZfkiX.png',
                         }}
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />
@@ -130,8 +127,7 @@ export const Group: StoryComponent = () => {
                         title="title"
                         description="description"
                         media={{
-                            src:
-                                'https://fr.movistar-es-dev.svc.dev.mad.tuenti.io/2sP0YWlvvYakK6rvNvr__TpCfL4OZKPBLO4_KOPY-L2cxWaTloZDB0Q',
+                            src: 'https://i.imgur.com/flZfkiX.png',
                         }}
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />
@@ -182,8 +178,7 @@ export const Carousel: StoryComponent = () => {
                                 title="title"
                                 description="description"
                                 media={{
-                                    src:
-                                        'https://fr.movistar-es-dev.svc.dev.mad.tuenti.io/2sP0YWlvvYakK6rvNvr__TpCfL4OZKPBLO4_KOPY-L2cxWaTloZDB0Q',
+                                    src: 'https://i.imgur.com/flZfkiX.png',
                                 }}
                                 buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                             />,
@@ -192,8 +187,7 @@ export const Carousel: StoryComponent = () => {
                                 title="title"
                                 description="description"
                                 media={{
-                                    src:
-                                        'https://fr.movistar-es-dev.svc.dev.mad.tuenti.io/2sP0YWlvvYakK6rvNvr__TpCfL4OZKPBLO4_KOPY-L2cxWaTloZDB0Q',
+                                    src: 'https://i.imgur.com/flZfkiX.png',
                                 }}
                                 buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                             />,

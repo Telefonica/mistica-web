@@ -399,7 +399,7 @@ const cardSnippets = [
             body={<Placeholder />}
             media={{
                 src:
-                    'https://fr.movistar-es-dev.svc.dev.mad.tuenti.io/2sP0YWlvvYakK6rvNvr__TpCfL4OZKPBLO4_KOPY-L2cxWaTloZDB0Q',
+                    'https://i.imgur.com/flZfkiX.png',
             }}
             button={
                 <ButtonPrimary small href="https://google.com">
