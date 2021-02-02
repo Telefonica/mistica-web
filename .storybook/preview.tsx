@@ -30,6 +30,9 @@ const acceptanceStyles = `
     display: 'none' !important;
     width: 0 !important;
     height: 0 !important;
+}
+*:focus, *:active {
+    outline: none;
 }`;
 
 type Platform = 'android' | 'desktop' | 'ios';

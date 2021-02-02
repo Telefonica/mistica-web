@@ -1,8 +1,7 @@
 import * as React from 'react';
-import Tabs from '../tabs';
 import {StorySection, useCheckbox} from './helpers';
-import IconClose from '../icons/icon-close';
 import {pxToRem} from '../utils/css';
+import {Tabs, IconClose, Inline} from '..';
 
 const texts = ['Tab 1', 'Tab 2', 'Tab 3'];
 
@@ -17,8 +16,10 @@ export const Default: StoryComponent = () => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     return (
         <StorySection title="Tabs example">
-            {withIconCheckbox}
-            {withIcon && withCurrentColorCheckbox}
+            <Inline space={16}>
+                {withIconCheckbox}
+                {withIcon && withCurrentColorCheckbox}
+            </Inline>
             <Tabs
                 selectedIndex={selectedIndex}
                 onChange={setSelectedIndex}
