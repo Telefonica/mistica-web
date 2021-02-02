@@ -7,6 +7,7 @@ import {ButtonPrimary, ButtonSecondary, ButtonLink} from './button';
 import OverscrollColor from './overscroll-color-context';
 import {VIVO_SKIN} from './skins/constants';
 import IcnSuccess from './icons/icon-success';
+import IconSuccessVivo from './icons/icon-success-vivo';
 import IcnError from './icons/icon-error';
 import IcnInfo from './icons/icon-info';
 import {
@@ -104,6 +105,11 @@ const useStyles = createUseStyles((theme) => ({
         marginTop: 16,
         animation: animateText(theme.platformOverrides),
         opacity: initialTextOpacity(theme.platformOverrides),
+    },
+
+    iconColor: {
+        stroke: (isInverse) => (isInverse ? theme.colors.background : theme.colors.buttonPrimaryBackground),
+        fill: (isInverse) => (isInverse ? theme.colors.background : theme.colors.buttonPrimaryBackground),
     },
 
     [theme.mq.tabletOrBigger]: {
@@ -250,9 +256,16 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
 
 export const SuccessFeedbackScreen: React.FC<FeedbackProps> = (props) => {
     const {isMobile} = useScreenSize();
+    const {skinName} = useTheme();
+
     return (
         <ThemeVariant isInverse={isMobile}>
-            <FeedbackScreen {...props} hapticFeedback="success" icon={<IcnSuccess />} animateText />
+            <FeedbackScreen
+                {...props}
+                hapticFeedback="success"
+                icon={skinName === VIVO_SKIN ? <IconSuccessVivo /> : <IcnSuccess />}
+                animateText
+            />
         </ThemeVariant>
     );
 };
