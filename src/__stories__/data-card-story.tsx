@@ -66,7 +66,7 @@ export const Default: StoryComponent = () => {
             <div data-testid="data-card">
                 <StorySection title="DataCard">
                     <DataCard
-                        icon={asset === 'icon' ? icon : undefined}
+                        icon={icon}
                         headline={headline}
                         title={title}
                         subtitle={subtitle}
