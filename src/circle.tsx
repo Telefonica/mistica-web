@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {createUseStyles} from '..';
+import {createUseStyles} from './jss';
 
 const useStyles = createUseStyles(() => ({
     circle: {
