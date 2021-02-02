@@ -106,7 +106,6 @@ export const getAnimateHopInProps = (
               children: (
                   <>
                       <animate
-                          attributeName="stroke-width"
                           from="2.5"
                           to="2"
                           dur="0.7s"

@@ -3,7 +3,7 @@ import {createServer} from './ssr';
 import {configureToMatchImageSnapshot} from 'jest-image-snapshot';
 
 const toMatchImageSnapshot = configureToMatchImageSnapshot({
-    failureThreshold: 0.0005,
+    failureThreshold: 0,
     failureThresholdType: 'percent',
 });
 expect.extend({toMatchImageSnapshot});

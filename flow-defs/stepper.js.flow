@@ -1,0 +1,9 @@
+// @flow
+
+import * as React from "react";
+declare type StepperProps = {
+  steps: Array<string>,
+  currentIndex: number,
+};
+declare var Stepper: React.ComponentType<StepperProps>;
+declare export default typeof Stepper;

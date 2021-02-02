@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useAriaId, useIsInverseVariant, Select, TextField} from '..';
+import {useAriaId, useIsInverseVariant, Select, TextField, Checkbox} from '..';
 import {isRunningAcceptanceTest} from '../utils/platform';
 
 type Props = {
@@ -69,9 +69,9 @@ export const fruitEntries = [
 export const useCheckbox = (label: string, defaultValue = false): [boolean, React.ReactElement<'label'>] => {
     const [isEnabled, setIsEnabled] = React.useState(defaultValue);
     const checkbox = (
-        <label style={{margin: 8}}>
-            <input type="checkbox" checked={isEnabled} onChange={() => setIsEnabled(!isEnabled)} /> {label}
-        </label>
+        <Checkbox name="checkbox" checked={isEnabled} onChange={setIsEnabled}>
+            {label}
+        </Checkbox>
     );
     return [isEnabled, checkbox];
 };
