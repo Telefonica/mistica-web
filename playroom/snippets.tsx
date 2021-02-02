@@ -478,4 +478,10 @@ export default [
     ...tabsSnippets,
     ...cardSnippets,
     {group: 'PromoTag', name: 'PromoTag', code: '<PromoTag>PromoTag</PromoTag>'},
+    {
+        group: 'Stepper',
+        name: 'Stepper',
+        code:
+            '<Stepper currentIndex={2} steps={["Basic Details", "Company Details", "Subscription Plan"]} />',
+    },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

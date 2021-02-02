@@ -49,6 +49,7 @@ export {default as NegativeBox} from './negative-box';
 export {default as Tabs} from './tabs';
 export {default as Inline} from './inline';
 export {default as HighlightedCard} from './highlighted-card';
+export {default as Stepper} from './stepper';
 export {MediaCard, DataCard} from './card';
 
 // Forms
@@ -77,6 +78,8 @@ export {default as IconArrowDown} from './icons/icon-arrow-down';
 export {default as IconChevron} from './icons/icon-chevron';
 export {default as IconError} from './icons/icon-error';
 export {default as IconSuccess} from './icons/icon-success';
+export {default as IconSuccessVivo} from './icons/icon-success-vivo';
+
 export {default as Circle} from './circle';
 
 export {
