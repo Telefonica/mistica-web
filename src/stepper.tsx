@@ -179,10 +179,10 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
     const previousIndexRef = React.useRef(currentIndex);
     const [isBack, setIsBack] = React.useState(false);
 
-    if (previousIndexRef.current !== currentIndex) {
+    React.useLayoutEffect(() => {
         setIsBack(previousIndexRef.current > currentIndex);
         previousIndexRef.current = currentIndex;
-    }
+    }, [previousIndexRef, currentIndex]);
 
     return (
         <div className={classes.stepper}>
