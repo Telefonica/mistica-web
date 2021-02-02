@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-    ThemeContextProvider,
     Select,
     ThemeConfig,
     createUseStyles,
@@ -15,6 +14,7 @@ import {
     Checkbox,
 } from '../src';
 import {Movistar, Vivo, O2, O2_Classic} from './themes';
+import {useOverrideTheme} from './frame-component';
 
 export * from '../src';
 
@@ -86,6 +86,25 @@ type PreviewToolsProps = {
     showPlatformSelector?: boolean;
 };
 
+const themesMap: {[skinName in SkinName]: {themeConfig: ThemeConfig; text: string}} = {
+    Movistar: {
+        text: 'Movistar',
+        themeConfig: Movistar,
+    },
+    Vivo: {
+        text: 'Vivo',
+        themeConfig: Vivo,
+    },
+    O2: {
+        text: 'O2',
+        themeConfig: O2,
+    },
+    'O2-classic': {
+        text: 'O2 (classic)',
+        themeConfig: O2_Classic,
+    },
+};
+
 export const PreviewTools: React.FC<PreviewToolsProps> = ({
     children,
     floating,
@@ -103,24 +122,11 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
     const classes = useStyles({position});
 
-    const themesMap: {[skinName in SkinName]: {themeConfig: ThemeConfig; text: string}} = {
-        Movistar: {
-            text: 'Movistar',
-            themeConfig: Movistar,
-        },
-        Vivo: {
-            text: 'Vivo',
-            themeConfig: Vivo,
-        },
-        O2: {
-            text: 'O2',
-            themeConfig: O2,
-        },
-        'O2-classic': {
-            text: 'O2 (classic)',
-            themeConfig: O2_Classic,
-        },
-    };
+    const overrideTheme = useOverrideTheme();
+
+    React.useEffect(() => {
+        overrideTheme({...themesMap[skinName].themeConfig, platformOverrides: {platform: os}});
+    }, [overrideTheme, os, skinName]);
 
     const editStory = () => {
         if (window.location.href.includes('/preview')) {
@@ -183,16 +189,10 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
         </div>
     );
 
-    const playroom = (
-        <ThemeContextProvider theme={{...themesMap[skinName].themeConfig, platformOverrides: {platform: os}}}>
-            {children}
-        </ThemeContextProvider>
-    );
-
     if (floating) {
         return (
             <>
-                {playroom}
+                {children}
                 {showOverlay ? (
                     <Overlay onPress={() => setShowOverlay(false)}>{controls}</Overlay>
                 ) : (
@@ -211,7 +211,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
             <>
                 {controls}
                 <div style={{height: 56}} />
-                {playroom}
+                {children}
             </>
         );
     }
