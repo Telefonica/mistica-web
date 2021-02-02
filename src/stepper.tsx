@@ -81,7 +81,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     },
     textContainer: {
         position: 'absolute',
-        top: pxToRem(42),
+        top: `calc(${pxToRem(24)} + 18px)`,
         width: 200,
     },
     barContainer: {
@@ -133,6 +133,13 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         '0%': {
             width: '100%',
         },
+        // Needed this opacity trick to avoid a tiny bar that appear when the animation end
+        '99%': {
+            opacity: 1,
+        },
+        '100%': {
+            opacity: 0,
+        },
     },
     '@keyframes currentNumber': {
         '0%': {
@@ -177,12 +184,11 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
     const classes = useStyles({isDesktopOrBigger, textContainerHeight});
 
     const previousIndexRef = React.useRef(currentIndex);
-    const [isBack, setIsBack] = React.useState(false);
+    const isBack = previousIndexRef.current > currentIndex;
 
-    React.useLayoutEffect(() => {
-        setIsBack(previousIndexRef.current > currentIndex);
+    if (currentIndex !== previousIndexRef.current) {
         previousIndexRef.current = currentIndex;
-    }, [previousIndexRef, currentIndex]);
+    }
 
     return (
         <div className={classes.stepper}>
