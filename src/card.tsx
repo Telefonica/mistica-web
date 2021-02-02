@@ -180,21 +180,6 @@ const useDataCardStyles = createUseStyles((theme) => ({
         border: `1px solid ${theme.colors.border}`,
         background: theme.colors.background,
     },
-    icon: {
-        marginBottom: 16,
-        width: 40,
-        height: 40,
-        overflow: 'hidden',
-        borderRadius: '50%',
-        backgroundColor: ({iconBackgroundColor}) => iconBackgroundColor ?? theme.colors.iconDisabled,
-        backgroundImage: ({iconBackgroundImage}) =>
-            iconBackgroundImage ? `url("${iconBackgroundImage}")` : 'initial',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
 }));
 
 interface CommonDataCardProps {
@@ -202,8 +187,6 @@ interface CommonDataCardProps {
      * Typically a mistica-icons component element
      */
     icon?: React.ReactElement<any>;
-    iconBackgroundColor?: string;
-    iconBackgroundImage?: string;
     headline?: string;
     title: string;
     subtitle?: string;
@@ -230,8 +213,6 @@ type DataCardProps = DataCardWithButtonProps | DataCardWithLinkProps | DataCardW
 
 export const DataCard: React.FC<DataCardProps> = ({
     icon,
-    iconBackgroundColor,
-    iconBackgroundImage,
     headline,
     title,
     subtitle,
@@ -240,10 +221,10 @@ export const DataCard: React.FC<DataCardProps> = ({
     button,
     buttonLink,
 }) => {
-    const classes = useDataCardStyles({iconBackgroundColor, iconBackgroundImage});
+    const classes = useDataCardStyles();
     return (
         <article className={classes.dataCard}>
-            {(icon || iconBackgroundImage) && <div className={classes.icon}>{icon}</div>}
+            {icon && <Box paddingBottom={16}>{icon}</Box>}
             <CardContent
                 headline={headline}
                 title={title}

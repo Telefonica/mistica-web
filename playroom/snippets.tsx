@@ -419,7 +419,11 @@ const cardSnippets = [
             pretitle="subtitle"
             description="description"
             body={<Placeholder />}
-            icon={<IconAcademicLight />}
+            icon={
+                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <IconAcademicLight />
+                </Circle>
+            }
             button={
                 <ButtonPrimary small href="https://google.com">
                     Action
