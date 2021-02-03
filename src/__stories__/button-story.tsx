@@ -158,6 +158,34 @@ export const TypeOfButtons: StoryComponent = () => {
     );
 };
 
+export const EllipsisInButtons: StoryComponent = () => {
+    const text = 'Ellipsis text example example';
+    const href = 'https://example.com';
+
+    return (
+        <div data-testid="content" style={{width: 160, border: '1px solid'}}>
+            <Stack space={8}>
+                <SectionTitle>ButtonPrimary</SectionTitle>
+                <ButtonPrimary onPress={handleOnPress}>{text}</ButtonPrimary>
+
+                <SectionTitle>ButtonSecondary</SectionTitle>
+
+                <ButtonSecondary onPress={handleOnPress}>{text}</ButtonSecondary>
+
+                <SectionTitle>ButtonDanger</SectionTitle>
+
+                <ButtonDanger onPress={handleOnPress}>{text}</ButtonDanger>
+
+                <SectionTitle>ButtonLink</SectionTitle>
+                <div>Button (onPress):</div>
+                <ButtonLink onPress={handleOnPress}>{text}</ButtonLink>
+                <div>Link (href):</div>
+                <ButtonLink href={href}>{text}</ButtonLink>
+            </Stack>
+        </div>
+    );
+};
+
 export const withIcon: StoryComponent = () => (
     <StorySection title="Buttons can have an icon">
         <ButtonPrimary onPress={() => window.alert('photo!')}>
