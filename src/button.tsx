@@ -406,12 +406,9 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
 
 const useButtonLinkStyles = createUseStyles((theme) => ({
     link: {
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
         display: 'inline-block',
         width: 'auto',
         padding: 6,
-        textAlign: 'center',
         fontWeight: 500,
         borderRadius: 4,
         overflow: 'hidden',
@@ -479,7 +476,7 @@ export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
         trackingEvent: props.trackingEvent,
         'data-testid': props['data-testid'],
         children: (
-            <Text7 medium color="inherit">
+            <Text7 medium truncate={1} color="inherit">
                 {props.children}
             </Text7>
         ),
