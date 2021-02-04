@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {Stack, SectionTitle, RadioGroup, RadioButton, Inline, Text6} from '..';
-import {IconHandLeftRegular} from '../../playroom/components';
+import {Stack, SectionTitle, RadioGroup, RadioButton, Inline, Text6, IconHandLeftRegular} from '..';
 
 export default {
     title: 'Components/Forms/RadioButton',
