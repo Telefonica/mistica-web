@@ -138,8 +138,8 @@ test.each(STORY_TYPES)('PhoneNumberField (%s)', async (storyType) => {
         // set the caret position after the 654 prefix
         (el as HTMLInputElement).setSelectionRange(3, 3);
     });
-    await field.type('33');
-    await expect(getValue(field)).resolves.toBe('654 33 22 11');
+    await field.type('39');
+    await expect(getValue(field)).resolves.toBe('654 39 22 11');
 });
 
 test.each(STORY_TYPES)('SearchField (%s)', async (storyType) => {
