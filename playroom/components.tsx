@@ -42,7 +42,7 @@ const useStyles = createUseStyles((theme) => ({
         height: 57,
     },
     tabs: {
-        flexBasis: '35em',
+        flexBasis: '30em',
         whiteSpace: 'nowrap',
     },
     desktopControlItem: {
