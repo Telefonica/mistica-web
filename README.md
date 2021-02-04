@@ -1,4 +1,5 @@
-# Mistica web
+<img alt="Mística for Web" src="./img/misticaWeb.svg">
+<br>
 
 ![Mistica loves React](./img/mistica-react-logo.svg)
 
