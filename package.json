@@ -153,6 +153,7 @@
         "react-datetime": "^3.0.4",
         "react-jss": "^10.4.0",
         "react-transition-group": "^2.5.3",
+        "rifm": "^0.12.0",
         "semver-compare": "^1.0.0"
     },
     "peerDependencies": {
