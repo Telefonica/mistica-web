@@ -1,4 +1,4 @@
-<img alt="Mística for Web" src="./img/misticaWeb.svg">
+<img alt="Mística for Web" src="./img/mistica-web.svg">
 <br>
 
 React components library for Telefonica Design System ([Mistica](https://github.com/Telefonica/mistica))
