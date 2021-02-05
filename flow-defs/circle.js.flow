@@ -1,0 +1,11 @@
+// @flow
+
+import * as React from "react";
+declare type Props = {
+  backgroundColor?: string,
+  backgroundImage?: string,
+  size?: number | string,
+  children?: React.Element<any>,
+};
+declare var Circle: React.ComponentType<Props>;
+declare export default typeof Circle;
