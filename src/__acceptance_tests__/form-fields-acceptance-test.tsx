@@ -131,6 +131,15 @@ test.each(STORY_TYPES)('PhoneNumberField (%s)', async (storyType) => {
 
     await clearAndType(page, field, '#1 *2');
     await expect(getValue(field)).resolves.toBe('#1*2');
+
+    await clearAndType(page, field, '6542211');
+    await expect(getValue(field)).resolves.toBe('654 22 11');
+    await field.evaluate((el) => {
+        // set the caret position after the 654 prefix
+        (el as HTMLInputElement).setSelectionRange(3, 3);
+    });
+    await field.type('39');
+    await expect(getValue(field)).resolves.toBe('654 39 22 11');
 });
 
 test.each(STORY_TYPES)('SearchField (%s)', async (storyType) => {
