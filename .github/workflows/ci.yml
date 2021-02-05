@@ -26,7 +26,8 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: ${{ matrix.node-version }}
-            - run: yarn
+            - run: free -h
+            - run: yarn --verbose
             - run: yarn ci
             - name: 'Upload failed screenshot diffs'
               uses: './.github/actions/upload-failed-screenshots'

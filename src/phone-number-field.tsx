@@ -1,9 +1,67 @@
 import * as React from 'react';
+import {useRifm} from 'rifm';
+import {formatAsYouType} from '@telefonica/libphonenumber';
 import {useFieldProps} from './form-context';
 import TextFieldBase from './text-field-base';
-import {PhoneInput} from './phone-input';
+import {useTheme} from './hooks';
 
 import type {CommonFormFieldProps} from './text-field-base';
+import type {RegionCode} from './utils/region-code';
+import {createChangeEvent} from './utils/dom';
+import {combineRefs} from './utils/common';
+
+const formatPhone = (regionCode: RegionCode, number: string): string =>
+    formatAsYouType(number.replace(/[^\d+*#]/g, ''), regionCode);
+
+type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onInput'> & {
+    inputRef?: React.Ref<HTMLInputElement>;
+    value?: string;
+    defaultValue?: string;
+    onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
+};
+
+const PhoneInput: React.FC<Props> = ({inputRef, value, defaultValue, onChange, ...other}) => {
+    const [selfValue, setSelfValue] = React.useState(defaultValue ?? '');
+    const ref = React.useRef<HTMLInputElement | null>(null);
+
+    const isControlledByParent = typeof value !== 'undefined';
+    const controlledValue = (isControlledByParent ? value : selfValue) as string;
+
+    const handleChangeValue = React.useCallback(
+        (newFormattedValue) => {
+            if (!isControlledByParent) {
+                setSelfValue(newFormattedValue);
+            }
+            if (ref.current) {
+                onChange?.(createChangeEvent(ref.current, newFormattedValue));
+            }
+        },
+        [isControlledByParent, onChange]
+    );
+
+    const {i18n} = useTheme();
+    const format = React.useCallback(
+        (val: string): string => formatPhone(i18n.phoneNumberFormattingRegionCode, val),
+        [i18n.phoneNumberFormattingRegionCode]
+    );
+
+    const rifm = useRifm({
+        format,
+        value: controlledValue,
+        onChange: handleChangeValue,
+        accept: /[\d\-()+#*]+/g,
+    });
+
+    return (
+        <input
+            {...other}
+            value={rifm.value}
+            onChange={rifm.onChange}
+            type="tel" // shows telephone keypad in Android and iOS
+            ref={combineRefs(inputRef, ref)}
+        />
+    );
+};
 
 export interface PhoneNumberFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;

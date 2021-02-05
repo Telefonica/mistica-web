@@ -12,10 +12,10 @@ import {
     ThemeVariant,
     useTheme,
     Checkbox,
+    IconPhotoCameraRegular,
 } from '..';
 import DoubleField from '../double-field';
 import SectionTitle from '../section-title';
-import {IconPhotoCameraRegular} from '../../playroom/components';
 
 export default {
     title: 'Components/Touchables/Button',
