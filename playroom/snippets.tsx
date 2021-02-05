@@ -105,21 +105,33 @@ const listSnippets = [
     code: `
         <${listName}>
             <${rowName}
-                icon={<AvatarPlaceholder />}
+                icon={
+                    <Circle backgroundColor={colors.iconDisabled} size={40}>
+                        <IconAcademicLight />
+                    </Circle>
+                }
                 iconSize={40}
                 title="Title"
                 description="Description"
                 onPress={() => {}}
             />
             <${rowName}
-                icon={<AvatarPlaceholder />}
+                icon={
+                    <Circle backgroundColor={colors.iconDisabled} size={40}>
+                        <IconAcademicLight />
+                    </Circle>
+                }
                 iconSize={40}
                 title="Title"
                 description="Description"
                 onPress={() => {}}
             />
             <${rowName}
-                icon={<AvatarPlaceholder />}
+                icon={
+                    <Circle backgroundColor={colors.iconDisabled} size={40}>
+                        <IconAcademicLight />
+                    </Circle>
+                }
                 iconSize={40}
                 title="Title"
                 description="Description"
@@ -136,14 +148,22 @@ listSnippets.push({
     <RadioGroup defaultValue="banana">
         <RowList>
             <Row
-                icon={<AvatarPlaceholder />}
+                icon={
+                    <Circle backgroundColor={colors.iconDisabled} size={40}>
+                        <IconAcademicLight />
+                    </Circle>
+                }
                 iconSize={40}
                 title="Banana"
                 description="Yellow"
                 radioValue="banana"
             />
             <Row
-                icon={<AvatarPlaceholder />}
+                icon={
+                    <Circle backgroundColor={colors.iconDisabled} size={40}>
+                        <IconAcademicLight />
+                    </Circle>
+                }
                 iconSize={40}
                 title="Apple"
                 description="Green"
@@ -160,7 +180,11 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         name: `${rowName} (simple)`,
         code: `
         <${rowName}
-            icon={<AvatarPlaceholder />}
+            icon={
+                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <IconAcademicLight />
+                </Circle>
+            }
             iconSize={40}
             title="Title"
             description="Description"
@@ -172,7 +196,11 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         name: `${rowName} (complex)`,
         code: `
         <${rowName}
-            icon={<AvatarPlaceholder />}
+            icon={
+                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <IconAcademicLight />
+                </Circle>
+            }
             iconSize={40}
             headline="Headline"
             title="Title"
@@ -187,7 +215,11 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         name: `${rowName} (switch)`,
         code: `
         <${rowName}
-            icon={<AvatarPlaceholder />}
+            icon={
+                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <IconAcademicLight />
+                </Circle>
+            }
             iconSize={40}
             title="Title"
             description="Description"
@@ -199,7 +231,11 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         name: `${rowName} (checkbox)`,
         code: `
         <${rowName}
-            icon={<AvatarPlaceholder />}
+            icon={
+                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <IconAcademicLight />
+                </Circle>
+            }
             iconSize={40}
             title="Title"
             description="Description"
@@ -211,7 +247,11 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         name: `${rowName} (radio)`,
         code: `
         <${rowName}
-            icon={<AvatarPlaceholder />}
+            icon={
+                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <IconAcademicLight />
+                </Circle>
+            }
             iconSize={40}
             title="Orange"
             description="orange"
@@ -223,7 +263,11 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         name: `${rowName} (custom element)`,
         code: `
         <${rowName}
-            icon={<AvatarPlaceholder />}
+            icon={
+                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <IconAcademicLight />
+                </Circle>
+            }
             iconSize={40}
             title="Title"
             description="Description"
@@ -419,7 +463,11 @@ const cardSnippets = [
             pretitle="subtitle"
             description="description"
             body={<Placeholder />}
-            icon={<IconAcademicLight />}
+            icon={
+                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <IconAcademicLight />
+                </Circle>
+            }
             button={
                 <ButtonPrimary small href="https://google.com">
                     Action

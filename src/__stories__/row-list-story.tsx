@@ -1,8 +1,16 @@
 import * as React from 'react';
 import {StorySection, useTextField, useCheckbox, useSelect} from './helpers';
-import {RowList, Row} from '../list';
-import {Box, Stack, AvatarPlaceholder} from '..';
-import {RadioGroup} from '../radio-button';
+import {
+    Box,
+    Stack,
+    AvatarPlaceholder,
+    Circle,
+    IconAcademicLight,
+    Row,
+    RowList,
+    RadioGroup,
+    useTheme,
+} from '..';
 
 export default {
     title: 'Components/Lists/RowList',
@@ -14,6 +22,7 @@ export default {
 const url = 'https://www.google.com';
 
 export const Default: StoryComponent = () => {
+    const {colors} = useTheme();
     const [headline, headlineTextField] = useTextField('headline', '');
     const [title, titleTextField] = useTextField('title', 'Title', true);
     const [subtitle, subtitleTextField] = useTextField('subtitle', '');
@@ -108,7 +117,13 @@ export const Default: StoryComponent = () => {
                             {...controlProps}
                         />
                         <Row
-                            icon={iconSize !== 'Without icon' ? <AvatarPlaceholder size="100%" /> : undefined}
+                            icon={
+                                iconSize !== 'Without icon' ? (
+                                    <Circle backgroundColor={colors.iconDisabled} size={40}>
+                                        <IconAcademicLight />
+                                    </Circle>
+                                ) : undefined
+                            }
                             iconSize={iconSize === '40' ? 40 : 24}
                             headline={headline}
                             title={title}
@@ -121,7 +136,11 @@ export const Default: StoryComponent = () => {
                             {...controlProps}
                         />
                         <Row
-                            icon={iconSize !== 'Without icon' ? <AvatarPlaceholder size="100%" /> : undefined}
+                            icon={
+                                iconSize !== 'Without icon' ? (
+                                    <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />
+                                ) : undefined
+                            }
                             iconSize={iconSize === '40' ? 40 : 24}
                             headline={headline}
                             title={title}

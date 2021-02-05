@@ -28,8 +28,6 @@ declare type CommonDataCardProps = {
    * Typically a mistica-icons component element
    */
   icon?: React.Element<any>,
-  iconBackgroundColor?: string,
-  iconBackgroundImage?: string,
   headline?: string,
   title: string,
   subtitle?: string,
