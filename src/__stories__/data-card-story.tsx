@@ -10,6 +10,8 @@ import {
     createUseStyles,
     ResponsiveLayout,
     IconAcademicLight,
+    useTheme,
+    Circle,
 } from '..';
 import {Placeholder} from '../placeholder';
 
@@ -18,6 +20,7 @@ export default {
 };
 
 export const Default: StoryComponent = () => {
+    const {colors} = useTheme();
     const [asset, assetSelect] = useSelect('asset', 'icon', ['icon', 'image', 'none']);
     const [headline, headlineTextField] = useTextField('headline', 'priority', true);
     const [subtitle, subtitleTextField] = useTextField('subtitle', 'Some subtitle', true);
@@ -29,8 +32,16 @@ export const Default: StoryComponent = () => {
     );
     const [actions, actionsSelect] = useSelect('actions', 'button', ['button', 'link', 'button & link']);
 
-    const icon = <IconAcademicLight />;
-    const image = 'https://i.imgur.com/QwNlo5s.png';
+    let icon;
+    if (asset === 'icon') {
+        icon = (
+            <Circle size={40} backgroundColor={colors.iconDisabled}>
+                <IconAcademicLight />
+            </Circle>
+        );
+    } else if (asset === 'image') {
+        icon = <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />;
+    }
 
     const button = actions.includes('button') ? (
         <ButtonPrimary small href="https://google.com">
@@ -55,8 +66,7 @@ export const Default: StoryComponent = () => {
             <div data-testid="data-card">
                 <StorySection title="DataCard">
                     <DataCard
-                        icon={asset === 'icon' ? icon : undefined}
-                        iconBackgroundImage={asset === 'image' ? image : undefined}
+                        icon={icon}
                         headline={headline}
                         title={title}
                         subtitle={subtitle}
@@ -72,22 +82,29 @@ export const Default: StoryComponent = () => {
 
 Default.storyName = 'DataCard';
 
-export const WithBody: StoryComponent = () => (
-    <DataCard
-        headline="headline"
-        title="title"
-        subtitle="subtitle"
-        description="description"
-        body={<Placeholder />}
-        icon={<IconAcademicLight />}
-        button={
-            <ButtonPrimary small href="https://google.com">
-                Action
-            </ButtonPrimary>
-        }
-        buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-    />
-);
+export const WithBody: StoryComponent = () => {
+    const {colors} = useTheme();
+    return (
+        <DataCard
+            headline="headline"
+            title="title"
+            subtitle="subtitle"
+            description="description"
+            body={<Placeholder />}
+            icon={
+                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <IconAcademicLight />
+                </Circle>
+            }
+            button={
+                <ButtonPrimary small href="https://google.com">
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+        />
+    );
+};
 
 WithBody.storyName = 'DataCard with body';
 
@@ -97,7 +114,7 @@ export const WithIconImage: StoryComponent = () => (
         title="title"
         subtitle="subtitle"
         description="description"
-        iconBackgroundImage="https://i.imgur.com/flZfkiX.png"
+        icon={<Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />}
         button={
             <ButtonPrimary small href="https://google.com">
                 Action
@@ -119,6 +136,7 @@ const useCardGroupStyles = createUseStyles(() => ({
 
 export const Group: StoryComponent = () => {
     const classes = useCardGroupStyles();
+    const {colors} = useTheme();
     return (
         <ResponsiveLayout>
             <Stack space={16}>
@@ -132,13 +150,21 @@ export const Group: StoryComponent = () => {
                         title="title"
                         subtitle="subtitle"
                         description="description"
-                        icon={<IconAcademicLight />}
+                        icon={
+                            <Circle size={40} backgroundColor={colors.iconDisabled}>
+                                <IconAcademicLight />
+                            </Circle>
+                        }
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />
                     <DataCard
                         title="title"
                         description="description"
-                        icon={<IconAcademicLight />}
+                        icon={
+                            <Circle size={40} backgroundColor={colors.iconDisabled}>
+                                <IconAcademicLight />
+                            </Circle>
+                        }
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />
                 </Inline>
