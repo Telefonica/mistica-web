@@ -1,4 +1,4 @@
-## [7.9.1](https://github.com/Telefonica/mistica-web/compare/v7.9.0...v7.9.1) (2021-02-08)
+## [7.9.1](https://github.com/Telefonica/mistica-web/compare/v7.8.3...v7.9.1) (2021-02-08)
 
 
 ### Bug Fixes
