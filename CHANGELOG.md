@@ -3,7 +3,18 @@
 
 ### Bug Fixes
 
-* **Nothing:** force release ([0ed7497](https://github.com/Telefonica/mistica-web/commit/0ed74970df1c7b185c68328714cb1b85b670535f))
+* **ButtonLink:** ellipsis ([#188](https://github.com/Telefonica/mistica-web/issues/188)) ([daf4e9c](https://github.com/Telefonica/mistica-web/commit/daf4e9c1df3c72f2552ca32c8d5051d966e74549))
+* **MediaCard:** border around the whole card. `pretitle` uppercase ([05f4ff5](https://github.com/Telefonica/mistica-web/commit/05f4ff525b02bb65625abab52228b454955df77e))
+* **PhoneNumberField:** caret position moves to the end while editing ([b1c24f9](https://github.com/Telefonica/mistica-web/commit/b1c24f971f13f68d75ab437a23dcb86b6dbfa33e))
+* **PreviewTools:** theme overrides should affect global variables ([#190](https://github.com/Telefonica/mistica-web/issues/190)) ([bef04bd](https://github.com/Telefonica/mistica-web/commit/bef04bd5437e18dc151880e8f259dc4e98e088e3))
+
+
+### Features
+
+* **Circle:** to be used with icons inside DataCard of list rows ([#189](https://github.com/Telefonica/mistica-web/issues/189)) ([e913385](https://github.com/Telefonica/mistica-web/commit/e9133851634f69b730b22eec28064aa88133a9ee))
+* **Icons:** Update mistica-icons collection ([#186](https://github.com/Telefonica/mistica-web/issues/186)) ([78f9b19](https://github.com/Telefonica/mistica-web/commit/78f9b191574fe40ed801e107326bed95d0fe7274))
+* **MediaCard,DataCard:** new card components ([#185](https://github.com/Telefonica/mistica-web/issues/185)) ([67da8bb](https://github.com/Telefonica/mistica-web/commit/67da8bba3529e49f5bf5ec6d1827b9e3f5499e34))
+* **Stepper:** New Stepper component ([#180](https://github.com/Telefonica/mistica-web/issues/180)) ([66cb7ba](https://github.com/Telefonica/mistica-web/commit/66cb7ba070d16f9be15667257e63dca6baad6522))
 
 ## [7.8.3](https://github.com/Telefonica/mistica-web/compare/v7.8.2...v7.8.3) (2021-01-25)
 
