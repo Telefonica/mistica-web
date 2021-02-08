@@ -27,7 +27,8 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
             - run: free -h
-            - run: yarn --verbose
+            - run: cat /sys/fs/cgroup/memory/memory.limit_in_bytes
+            - run: yarn
             - run: yarn ci
             - name: 'Upload failed screenshot diffs'
               uses: './.github/actions/upload-failed-screenshots'
