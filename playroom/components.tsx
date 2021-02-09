@@ -85,6 +85,7 @@ type PreviewToolsProps = {
     floating?: boolean;
     position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
     showPlatformSelector?: boolean;
+    forceMobile?: boolean;
 };
 
 const themesMap: {[skinName in SkinName]: {themeConfig: ThemeConfig; text: string}} = {
@@ -111,6 +112,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     floating,
     position = 'top-right',
     showPlatformSelector = false,
+    forceMobile = false,
 }) => {
     const {
         skinName: initialSkinName,
@@ -126,8 +128,20 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     const overrideTheme = useOverrideTheme();
 
     React.useEffect(() => {
-        overrideTheme({...themesMap[skinName].themeConfig, platformOverrides: {platform: os}});
-    }, [overrideTheme, os, skinName]);
+        const imposibleSize = 999999;
+        overrideTheme({
+            ...themesMap[skinName].themeConfig,
+            platformOverrides: {platform: os},
+            mediaQueries: forceMobile
+                ? {
+                      tabletMinWidth: imposibleSize,
+                      desktopMinWidth: imposibleSize,
+                      largeDesktopMinWidth: imposibleSize,
+                      desktopOrTabletMinHeight: imposibleSize,
+                  }
+                : undefined,
+        });
+    }, [overrideTheme, os, skinName, forceMobile]);
 
     const editStory = () => {
         if (window.location.href.includes('/preview')) {
