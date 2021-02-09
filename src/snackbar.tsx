@@ -144,16 +144,21 @@ const Snackbar: React.FC<Props> = ({
     message,
     buttonText,
     duration = buttonText ? 10000 : 5000,
-    onClose = () => {},
+    onClose: onCloseProp = () => {},
     type = 'INFORMATIVE',
 }) => {
     const renderNative = isWebViewBridgeAvailable();
+    const onCloseRef = React.useRef(onCloseProp);
+
+    React.useEffect(() => {
+        onCloseRef.current = onCloseProp;
+    }, [onCloseProp]);
 
     React.useEffect(() => {
         if (renderNative) {
-            nativeMessage({message, duration, buttonText, type}).then(onClose);
+            nativeMessage({message, duration, buttonText, type}).then(onCloseRef.current);
         }
-    }, [buttonText, duration, message, onClose, renderNative, type]);
+    }, [buttonText, duration, message, renderNative, type]);
 
     if (renderNative) {
         return null;
@@ -165,7 +170,7 @@ const Snackbar: React.FC<Props> = ({
             duration={duration}
             buttonText={buttonText}
             type={type}
-            onClose={onClose}
+            onClose={onCloseRef.current}
         />
     );
 };
