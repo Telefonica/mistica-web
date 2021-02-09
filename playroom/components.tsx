@@ -128,16 +128,16 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     const overrideTheme = useOverrideTheme();
 
     React.useEffect(() => {
-        const imposibleSize = 999999;
+        const impossibleSize = 999999;
         overrideTheme({
             ...themesMap[skinName].themeConfig,
             platformOverrides: {platform: os},
             mediaQueries: forceMobile
                 ? {
-                      tabletMinWidth: imposibleSize,
-                      desktopMinWidth: imposibleSize,
-                      largeDesktopMinWidth: imposibleSize,
-                      desktopOrTabletMinHeight: imposibleSize,
+                      tabletMinWidth: impossibleSize,
+                      desktopMinWidth: impossibleSize,
+                      largeDesktopMinWidth: impossibleSize,
+                      desktopOrTabletMinHeight: impossibleSize,
                   }
                 : undefined,
         });
