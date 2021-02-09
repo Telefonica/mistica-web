@@ -161,36 +161,42 @@ export const Default: StoryComponent = () => {
 
 Default.storyName = 'RowList';
 
-export const Radio: StoryComponent = () => (
-    <div data-testid="radio-row-list">
-        <StorySection title="Radio Row List">
-            <RadioGroup name="radio-group" defaultValue="apple">
-                <RowList>
-                    <Row
-                        icon={<AvatarPlaceholder size="100%" />}
-                        iconSize={40}
-                        title="Banana"
-                        description="Yellow"
-                        radioValue="banana"
-                    />
-                    <Row
-                        icon={<AvatarPlaceholder size="100%" />}
-                        iconSize={40}
-                        title="Apple"
-                        description="Green"
-                        radioValue="apple"
-                    />
-                    <Row
-                        icon={<AvatarPlaceholder size="100%" />}
-                        iconSize={40}
-                        title="Orange"
-                        description="Orange"
-                        radioValue="orange"
-                    />
-                </RowList>
-            </RadioGroup>
-        </StorySection>
-    </div>
-);
+export const Radio: StoryComponent = () => {
+    const [disabled, disabledCheckbox] = useCheckbox('Is disabled', false);
+    return (
+        <div data-testid="radio-row-list">
+            <StorySection title="Radio Row List">
+                <Stack space={8}>
+                    {disabledCheckbox}
+                    <RadioGroup disabled={disabled} name="radio-group" defaultValue="apple">
+                        <RowList>
+                            <Row
+                                icon={<AvatarPlaceholder size="100%" />}
+                                iconSize={40}
+                                title="Banana"
+                                description="Yellow"
+                                radioValue="banana"
+                            />
+                            <Row
+                                icon={<AvatarPlaceholder size="100%" />}
+                                iconSize={40}
+                                title="Apple"
+                                description="Green"
+                                radioValue="apple"
+                            />
+                            <Row
+                                icon={<AvatarPlaceholder size="100%" />}
+                                iconSize={40}
+                                title="Orange"
+                                description="Orange"
+                                radioValue="orange"
+                            />
+                        </RowList>
+                    </RadioGroup>
+                </Stack>
+            </StorySection>
+        </div>
+    );
+};
 
 Radio.storyName = 'RowList (radio button)';

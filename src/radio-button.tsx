@@ -12,6 +12,7 @@ const useRadioButtonStyles = createUseStyles((theme) => ({
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
+        opacity: ({disabled}) => (disabled ? 0.5 : 1),
         background: ({checked, isIos}) =>
             checked && isIos ? theme.colors.controlActive : theme.colors.background,
         border: ({checked, isIos}) =>
@@ -36,6 +37,7 @@ const useRadioButtonStyles = createUseStyles((theme) => ({
 }));
 
 type RadioContextType = {
+    disabled: boolean;
     selectedValue: string | null;
     focusableValue: string | null;
     select: (value: string) => void;
@@ -43,6 +45,7 @@ type RadioContextType = {
     selectPrev: () => void;
 };
 const RadioContext = React.createContext<RadioContextType>({
+    disabled: false,
     selectedValue: null,
     focusableValue: null,
     select: () => {},
@@ -54,17 +57,17 @@ export const useRadioContext = (): RadioContextType => React.useContext(RadioCon
 type Props = {
     value: string;
     id?: string;
-    render?: (radioElement: React.ReactElement<any>) => React.ReactNode;
+    render?: (radioElement: React.ReactElement<any>, disabled: boolean) => React.ReactNode;
 };
 
 const RadioButton: React.FC<Props> = ({value, id, render}) => {
-    const {selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
+    const {disabled, selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
-    const isFocusable = focusableValue === value;
+    const isFocusable = focusableValue === value && !disabled;
     const theme = useTheme();
     const isIos = getPlatform(theme.platformOverrides) === 'ios';
-    const classes = useRadioButtonStyles({checked, isIos});
+    const classes = useRadioButtonStyles({disabled, checked, isIos});
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         switch (event.keyCode) {
@@ -104,17 +107,23 @@ const RadioButton: React.FC<Props> = ({value, id, render}) => {
             role="radio"
             data-value={value}
             aria-checked={checked}
-            onClick={() => select(value)}
-            onKeyDown={handleKeyDown}
+            aria-disabled={disabled}
+            onClick={() => {
+                if (!disabled) {
+                    select(value);
+                }
+            }}
+            onKeyDown={!disabled ? handleKeyDown : undefined}
             className={classes.radioButton}
         >
-            {render ? <>{render(radio)}</> : radio}
+            {render ? <>{render(radio, disabled)}</> : radio}
         </span>
     );
 };
 
 type RadioGroupProps = {
     name: string;
+    disabled?: boolean;
     'aria-labelledby'?: string;
     children: React.ReactNode;
     value?: string;
@@ -198,7 +207,14 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
             aria-labelledby={props['aria-labelledby']}
         >
             <RadioContext.Provider
-                value={{selectedValue, focusableValue, select: handleSelect, selectNext, selectPrev}}
+                value={{
+                    disabled: props.disabled || false,
+                    selectedValue,
+                    focusableValue,
+                    select: handleSelect,
+                    selectNext,
+                    selectPrev,
+                }}
             >
                 {props.children}
             </RadioContext.Provider>

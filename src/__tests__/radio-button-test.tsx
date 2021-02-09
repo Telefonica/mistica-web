@@ -71,6 +71,52 @@ test('RadioGroup (controlled)', () => {
     expect(screen.getByText('you have selected banana')).toBeInTheDocument();
 });
 
+test('RadioGroup (disabled)', () => {
+    const setFruit = jest.fn();
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SectionTitle id="label">Choose a fruit</SectionTitle>
+            <RadioGroup
+                disabled
+                name="radio-group"
+                aria-labelledby="label"
+                defaultValue="apple"
+                onChange={setFruit}
+            >
+                <RadioButton value="banana" />
+                <RadioButton value="apple" />
+            </RadioGroup>
+        </ThemeContextProvider>
+    );
+
+    const group = screen.getByLabelText('Choose a fruit');
+    const radios = within(group).getAllByRole('radio');
+
+    expect(radios).toHaveLength(2);
+
+    expect(radios[0]).not.toBeChecked();
+    expect(radios[1]).toBeChecked();
+
+    fireEvent.click(radios[0]);
+
+    expect(radios[0]).not.toBeChecked();
+    expect(radios[1]).toBeChecked();
+    expect(setFruit).not.toHaveBeenCalled();
+    fireEvent.keyDown(radios[0], {key: 'Space', keyCode: 32});
+    expect(radios[0]).not.toBeChecked();
+    expect(radios[1]).toBeChecked();
+    expect(setFruit).not.toHaveBeenCalled();
+    fireEvent.keyDown(radios[1], {key: 'ArrowUp', keyCode: 38});
+    expect(radios[0]).not.toBeChecked();
+    expect(radios[1]).toBeChecked();
+    expect(setFruit).not.toHaveBeenCalled();
+    fireEvent.keyDown(radios[1], {key: 'ArrowDown', keyCode: 40});
+    expect(radios[0]).not.toBeChecked();
+    expect(radios[1]).toBeChecked();
+    expect(setFruit).not.toHaveBeenCalled();
+});
+
 test('Radio custom render', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
