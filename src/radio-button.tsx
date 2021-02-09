@@ -37,7 +37,7 @@ const useRadioButtonStyles = createUseStyles((theme) => ({
 }));
 
 type RadioContextType = {
-    disabled: boolean;
+    disabled?: boolean;
     selectedValue: string | null;
     focusableValue: string | null;
     select: (value: string) => void;
@@ -57,7 +57,7 @@ export const useRadioContext = (): RadioContextType => React.useContext(RadioCon
 type Props = {
     value: string;
     id?: string;
-    render?: (radioElement: React.ReactElement<any>, disabled: boolean) => React.ReactNode;
+    render?: (radioElement: React.ReactElement<any>, disabled?: boolean) => React.ReactNode;
 };
 
 const RadioButton: React.FC<Props> = ({value, id, render}) => {
@@ -108,12 +108,8 @@ const RadioButton: React.FC<Props> = ({value, id, render}) => {
             data-value={value}
             aria-checked={checked}
             aria-disabled={disabled}
-            onClick={() => {
-                if (!disabled) {
-                    select(value);
-                }
-            }}
-            onKeyDown={!disabled ? handleKeyDown : undefined}
+            onClick={disabled ? undefined : () => select(value)}
+            onKeyDown={disabled ? undefined : handleKeyDown}
             className={classes.radioButton}
         >
             {render ? <>{render(radio, disabled)}</> : radio}
@@ -208,7 +204,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
         >
             <RadioContext.Provider
                 value={{
-                    disabled: props.disabled || false,
+                    disabled: props.disabled,
                     selectedValue,
                     focusableValue,
                     select: handleSelect,
