@@ -114,6 +114,9 @@ type Props = {
     targetLabel: string;
 };
 
+/**
+ * @deprecated This component will be removed on the next major mistica release
+ */
 const Tooltip: React.FC<Props> = ({children, description, target, title, targetLabel, ...rest}) => {
     const [isVisible, setIsVisible] = React.useState(false);
     const {isMobile} = useScreenSize();
