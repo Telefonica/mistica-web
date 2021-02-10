@@ -88,14 +88,30 @@ const MisticaTemeProvider = ({Story, context}): React.ReactElement => {
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const withMisticaThemeProvider = (Story, context) => <MisticaTemeProvider Story={Story} context={context} />;
 
+const Styles = () => {
+    const [fontSize, setFontSize] = React.useState(16);
+    React.useEffect(() => {
+        const channel = addons.getChannel();
+        channel.on('font-size-selected', setFontSize);
+
+        return () => {
+            channel.off('font-size-selected', setFontSize);
+        };
+    }, []);
+    const fontSizeStyle = `html {font-size: ${fontSize}px}`;
+    return (
+        <style>
+            {fontSizeStyle} {isRunningAcceptanceTest() && acceptanceStyles}
+        </style>
+    );
+};
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const withLayoutDecorator = (Story, context): React.ReactElement => {
-    const styles = isRunningAcceptanceTest() ? <style>{acceptanceStyles}</style> : null;
-
     return (
         // role main required by accessibility rules
         <div role="main">
-            {styles}
+            <Styles />
             <Box padding={context?.parameters?.fullScreen ? 0 : 16}>
                 <Story {...context} />
             </Box>

@@ -15,7 +15,7 @@ export const UseElementSize: StoryComponent = () => {
             <div
                 ref={ref}
                 style={{
-                    backgroundColor: 'red',
+                    backgroundColor: 'gray',
                     width: 100,
                     height: 100,
                     resize: 'both',

@@ -26,6 +26,20 @@ export const StorySection: React.FC<Props> = ({title, children}) => {
     );
 };
 
+export const DeprecationWarning: React.FC = () => (
+    <div
+        style={{
+            padding: 12,
+            fontSize: 20,
+            margin: '32px 0',
+            color: 'white',
+            background: 'red',
+        }}
+    >
+        ⚠️ This component is deprecated and will be removed in the next major Mística release
+    </div>
+);
+
 export const countriesList = [
     'Afghanistan',
     'Aland Islands',
