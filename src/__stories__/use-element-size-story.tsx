@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StorySection} from './helpers';
+import {DeprecationWarning, StorySection} from './helpers';
 import {useElementSize} from '../hooks';
 
 export default {
@@ -12,11 +12,12 @@ export const UseElementSize: StoryComponent = () => {
 
     return (
         <StorySection title="Get element size. Resize the red element to see the changes">
+            <DeprecationWarning />
             Height: {height}px, Width: {width}px
             <div
                 ref={elementRef}
                 style={{
-                    backgroundColor: 'red',
+                    backgroundColor: 'gray',
                     width: 100,
                     height: 100,
                     resize: 'both',
