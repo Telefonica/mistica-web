@@ -87,6 +87,9 @@ const useStyles = createUseStyles((theme) => ({
         alignItems: 'center',
         height: '100%',
     },
+    inheritOpacity: {
+        opacity: 'inherit',
+    },
 }));
 
 interface CommonProps {
@@ -462,7 +465,7 @@ const RowContent = (props: RowContentProps) => {
                 <RadioButton
                     value={props.radioValue}
                     render={(radio) => (
-                        <Box paddingX={16}>
+                        <Box paddingX={16} className={classes.inheritOpacity}>
                             {renderContent({
                                 type: 'custom',
                                 right: centered(radio),

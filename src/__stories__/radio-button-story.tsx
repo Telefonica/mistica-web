@@ -1,14 +1,5 @@
 import * as React from 'react';
-import {
-    Stack,
-    SectionTitle,
-    RadioGroup,
-    RadioButton,
-    Inline,
-    Text6,
-    IconHandLeftRegular,
-    IconHandRightRegular,
-} from '..';
+import {Stack, SectionTitle, RadioGroup, RadioButton, Inline, Text6, IconHandLeftRegular} from '..';
 import {useCheckbox} from './helpers';
 
 export default {
@@ -69,35 +60,21 @@ export const Default: StoryComponent = () => {
                         <Stack space={8}>
                             <RadioButton
                                 value="banana"
-                                render={(_, disabled) => {
-                                    const icon = disabled ? (
-                                        <IconHandRightRegular size={20} />
-                                    ) : (
-                                        <IconHandLeftRegular size={20} />
-                                    );
-                                    return (
-                                        <Inline space={8}>
-                                            <Text6 regular>Banana</Text6>
-                                            {value === 'banana' && icon}
-                                        </Inline>
-                                    );
-                                }}
+                                render={() => (
+                                    <Inline space={8}>
+                                        <Text6 regular>Banana</Text6>
+                                        {value === 'banana' && <IconHandLeftRegular size={20} />}
+                                    </Inline>
+                                )}
                             />
                             <RadioButton
                                 value="apple"
-                                render={(_, disabled) => {
-                                    const icon = disabled ? (
-                                        <IconHandRightRegular size={20} />
-                                    ) : (
-                                        <IconHandLeftRegular size={20} />
-                                    );
-                                    return (
-                                        <Inline space={8}>
-                                            <Text6 regular>Apple</Text6>
-                                            {value === 'apple' && icon}
-                                        </Inline>
-                                    );
-                                }}
+                                render={() => (
+                                    <Inline space={8}>
+                                        <Text6 regular>Apple</Text6>
+                                        {value === 'apple' && <IconHandLeftRegular size={20} />}
+                                    </Inline>
+                                )}
                             />
                         </Stack>
                     </RadioGroup>

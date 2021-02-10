@@ -12,7 +12,6 @@ const useRadioButtonStyles = createUseStyles((theme) => ({
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        opacity: ({disabled}) => (disabled ? 0.5 : 1),
         background: ({checked, isIos}) =>
             checked && isIos ? theme.colors.controlActive : theme.colors.background,
         border: ({checked, isIos}) =>
@@ -33,6 +32,7 @@ const useRadioButtonStyles = createUseStyles((theme) => ({
     },
     radioButton: {
         cursor: 'default',
+        opacity: ({disabled}) => (disabled ? 0.5 : 1),
     },
 }));
 
@@ -64,7 +64,7 @@ const RadioButton: React.FC<Props> = ({value, id, render}) => {
     const {disabled, selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
-    const isFocusable = focusableValue === value && !disabled;
+    const isFocusableTabIndex = focusableValue === value ? 0 : -1;
     const theme = useTheme();
     const isIos = getPlatform(theme.platformOverrides) === 'ios';
     const classes = useRadioButtonStyles({disabled, checked, isIos});
@@ -100,10 +100,11 @@ const RadioButton: React.FC<Props> = ({value, id, render}) => {
     );
 
     return (
+        // eslint-disable-next-line jsx-a11y/interactive-supports-focus
         <span
             ref={ref}
             id={id}
-            tabIndex={isFocusable ? 0 : -1}
+            tabIndex={disabled ? undefined : isFocusableTabIndex}
             role="radio"
             data-value={value}
             aria-checked={checked}
