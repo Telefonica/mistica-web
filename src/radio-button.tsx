@@ -22,6 +22,7 @@ const useRadioButtonStyles = createUseStyles((theme) => ({
                 : `1px solid ${theme.colors.border}`,
         width: 24,
         height: 24,
+        opacity: ({disabled}) => (disabled ? 0.5 : 1),
     },
     innerCircle: {
         borderRadius: '50%',
@@ -64,7 +65,7 @@ const RadioButton: React.FC<Props> = ({value, id, render}) => {
     const {disabled, selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
-    const isFocusableTabIndex = focusableValue === value ? 0 : -1;
+    const tabIndex = focusableValue === value ? 0 : -1;
     const theme = useTheme();
     const isIos = getPlatform(theme.platformOverrides) === 'ios';
     const classes = useRadioButtonStyles({disabled, checked, isIos});
@@ -104,7 +105,7 @@ const RadioButton: React.FC<Props> = ({value, id, render}) => {
         <span
             ref={ref}
             id={id}
-            tabIndex={disabled ? undefined : isFocusableTabIndex}
+            tabIndex={disabled ? undefined : tabIndex}
             role="radio"
             data-value={value}
             aria-checked={checked}
