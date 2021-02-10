@@ -25,7 +25,7 @@ These are the customizable texts and their default values:
 - `formEmailError`: `'Email incorrecto'`
 - `closeButtonLabel`: `'Cerrar'`
 
-You can customize some (or all) of them in your page. For example:
+You can customize them in your page. For example:
 
 ```js
 <ThemeContextProvider
@@ -34,6 +34,7 @@ You can customize some (or all) of them in your page. For example:
     i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
     texts: {
       formCreditCardExpirationError: 'Fecha incorrecta',
+      // ...
     },
   }}
 >
