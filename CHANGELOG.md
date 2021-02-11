@@ -1,3 +1,17 @@
+# [7.10.0](https://github.com/Telefonica/mistica-web/compare/v7.9.1...v7.10.0) (2021-02-11)
+
+
+### Bug Fixes
+
+* **Snackbar:** avoid calling bridge if snackbar re-renders ([#195](https://github.com/Telefonica/mistica-web/issues/195)) ([1a6f856](https://github.com/Telefonica/mistica-web/commit/1a6f856326b14c7bde26312e3844dd75044ae571))
+
+
+### Features
+
+* **PreviewTools:** allow forcing mobile view ([#197](https://github.com/Telefonica/mistica-web/issues/197)) ([936307d](https://github.com/Telefonica/mistica-web/commit/936307d61649f3aef61bac7c82e5f79ba704b5f9))
+* **RadioGroup:** add disabled state ([#199](https://github.com/Telefonica/mistica-web/issues/199)) ([186eafd](https://github.com/Telefonica/mistica-web/commit/186eafd8eca5c2c718ca78b6df81b51a4097e759))
+* **useElementDimensions,Tooltip,useElementSize:** Expose useElementDimensions hook. Deprecate Tooltip component and useElementSize hook [#196](https://github.com/Telefonica/mistica-web/issues/196) ([e7eba55](https://github.com/Telefonica/mistica-web/commit/e7eba55af9c3dfa6776cffd266b6a3c9d7b3a0e5))
+
 ## [7.9.1](https://github.com/Telefonica/mistica-web/compare/v7.8.3...v7.9.1) (2021-02-08)
 
 
