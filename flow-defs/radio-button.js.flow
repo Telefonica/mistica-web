@@ -2,6 +2,7 @@
 
 import * as React from "react";
 declare type RadioContextType = {
+  disabled?: boolean,
   selectedValue: string | null,
   focusableValue: string | null,
   select: (value: string) => void,
@@ -12,11 +13,12 @@ declare export var useRadioContext: () => RadioContextType;
 declare type Props = {
   value: string,
   id?: string,
-  render?: (radioElement: React.Element<any>) => React.Node,
+  render?: (radioElement: React.Element<any>, disabled?: boolean) => React.Node,
 };
 declare var RadioButton: React.ComponentType<Props>;
 declare type RadioGroupProps = {
   name: string,
+  disabled?: boolean,
   "aria-labelledby"?: string,
   children: React.Node,
   value?: string,
