@@ -287,6 +287,16 @@ const tooltipSnippets = ['Tooltip', 'Popover'].map((name) => ({
     `,
 }));
 
+const boxSnippets = ['Box'].map((name) => ({
+    group: 'Box',
+    name,
+    code: `
+    <${name}
+        padding={16}
+    ><Placeholder /></Box>
+    `,
+}));
+
 const headerSnippets = [
     {
         group: 'Headers',
@@ -500,6 +510,7 @@ export default [
         </ButtonFixedFooterLayout>`,
     },
     ...formSnippets,
+    ...boxSnippets,
     ...feedbackScreenSnippets,
     {group: 'Feedback', name: 'Snackbar', code: '<Snackbar message="Some message here" />'},
     ...tooltipSnippets,
