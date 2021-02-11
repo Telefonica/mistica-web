@@ -1,3 +1,10 @@
+## [7.10.1](https://github.com/Telefonica/mistica-web/compare/v7.10.0...v7.10.1) (2021-02-11)
+
+
+### Bug Fixes
+
+* **size-stats:** include correct size stats ([70d45d5](https://github.com/Telefonica/mistica-web/commit/70d45d51ff53bdaf05407fad3288030e58d3668b))
+
 # [7.10.0](https://github.com/Telefonica/mistica-web/compare/v7.9.1...v7.10.0) (2021-02-11)
 
 
