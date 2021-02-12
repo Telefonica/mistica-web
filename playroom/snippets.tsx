@@ -505,6 +505,11 @@ export default [
     ...tooltipSnippets,
     {
         group: 'Layout',
+        name: 'Box',
+        code: '<Box padding={16}><Placeholder /></Box>',
+    },
+    {
+        group: 'Layout',
         name: 'Stack',
         code: '<Stack space={16}><Placeholder /><Placeholder /><Placeholder /></Stack>',
     },
