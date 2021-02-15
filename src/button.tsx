@@ -408,7 +408,7 @@ const useButtonLinkStyles = createUseStyles((theme) => ({
     link: {
         display: 'inline-block',
         width: 'auto',
-        padding: 6,
+        padding: 8,
         fontWeight: 500,
         borderRadius: 4,
         overflow: 'hidden',
