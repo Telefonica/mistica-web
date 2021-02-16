@@ -2,9 +2,21 @@ import * as React from 'react';
 import {ThemeVariant} from '../theme-variant-context';
 import {ButtonPrimary, ButtonSecondary} from '../button';
 import * as Spinner from '../spinner';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
+
+test('button is accesible', () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <ButtonPrimary onPress={() => {}} loadingText="Hello2">
+                Hello
+            </ButtonPrimary>
+        </ThemeContextProvider>
+    );
+
+    expect(screen.getByRole('button', {name: 'Hello'})).toBeInTheDocument();
+});
 
 test('fake button', () => {
     const {asFragment} = render(
