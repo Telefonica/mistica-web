@@ -1,6 +1,6 @@
 const imagePlaceholder = 'https://i.imgur.com/jeDSXBU.jpg';
 
-const buttonSnippets = ['ButtonPrimary', 'ButtonSecondary', 'ButtonDanger'].map((name) => ({
+const buttonSnippets = ['ButtonPrimary', 'ButtonSecondary', 'ButtonDanger', 'ButtonLink'].map((name) => ({
     group: 'Buttons',
     name,
     code: `

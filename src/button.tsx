@@ -340,6 +340,7 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
                 {/* the following div won't be visible (see loadingFiller class), this is used to force the button width */}
                 <div
                     className={classes.loadingFiller}
+                    aria-hidden
                     style={{
                         paddingLeft: spinnerSizeRem,
                         paddingRight:
