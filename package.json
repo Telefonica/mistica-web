@@ -32,8 +32,7 @@
         "up-chromium": "docker-compose up -d chromium",
         "down-chromium": "docker-compose stop chromium",
         "detect-circular-dependencies": "npx dpdm --circular src/index.tsx",
-        "audit-accessibility": "node .github/actions/audit-accessibility/main.js",
-        "deduplicate": "npx yarn-deduplicate"
+        "audit-accessibility": "node .github/actions/audit-accessibility/main.js"
     },
     "browserslist": [
         "chrome >= 36",
