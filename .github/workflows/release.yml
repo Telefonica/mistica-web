@@ -27,7 +27,7 @@ jobs:
               id: yarn-cache
               with:
                   path: ./node_modules
-                  key: node_modules-${{ hashFiles('**/yarn.lock') }}
+                  key: node_modules-${{ hashFiles('./yarn.lock') }}
             - name: Install dependencies
               # skip yarn install if restored from cache
               # note that the id (yarn-cache) must match the id from actions/cache@v2 step
