@@ -1,4 +1,4 @@
-import './css/roboto.css';
+import './css/on-air.css';
 import {addons} from '@storybook/addons';
 import {createStorybookTheme} from './storybook-manager-theme';
 

@@ -1,0 +1,20 @@
+@font-face {
+    font-family: 'OnAir';
+    font-style: normal;
+    font-weight: 400;
+    src: url(./OnAir-Regular.woff2) format('woff2');
+}
+
+@font-face {
+    font-family: 'OnAir';
+    font-style: normal;
+    font-weight: 300;
+    src: url(./OnAir-Light.woff2) format('woff2');
+}
+
+@font-face {
+    font-family: 'OnAir';
+    font-style: normal;
+    font-weight: 500;
+    src: url(./OnAir-Bold.woff2) format('woff2');
+}
