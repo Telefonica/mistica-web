@@ -1,6 +1,10 @@
 // @flow
 
 import * as React from "react";
+declare type StepperIndeterminedProps = {
+  progress: number,
+};
+declare export var StepperIndetermined: React.ComponentType<StepperIndeterminedProps>;
 declare type StepperProps = {
   steps: Array<string>,
   currentIndex: number,

@@ -123,7 +123,23 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         transition: `width ${transition}`,
         animation: `$reverseFilledBar ${transition}`,
     },
+    indetermined: {
+        height: 8,
+        backgroundColor: colors.chartBackground,
+        borderRadius: 20,
+    },
+    indeterminedProgress: {
+        height: '100%',
+        transition: `max-width ${transition}`,
+        animation: `$stackedBar ${transition}`,
+        borderRadius: 20,
+    },
 
+    '@keyframes stackedBar': {
+        '0%': {
+            maxWidth: '0',
+        },
+    },
     '@keyframes filledBar': {
         '0%': {
             width: 0,
@@ -171,6 +187,24 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     },
 }));
 
+type StepperIndeterminedProps = {
+    progress: number;
+};
+
+export const StepperIndetermined: React.FC<StepperIndeterminedProps> = ({progress}) => {
+    const {colors} = useTheme();
+    const classes = useStyles();
+
+    return (
+        <div data-testid="indetermined" className={classes.indetermined}>
+            <div
+                className={classes.indeterminedProgress}
+                style={{maxWidth: `${(progress * 100) / 1}%`, backgroundColor: colors.primary}}
+            />
+        </div>
+    );
+};
+
 type StepperProps = {
     steps: Array<string>;
     currentIndex: number;
@@ -182,7 +216,6 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
     const {height, ref} = useElementDimensions();
     const textContainerHeight = height;
     const classes = useStyles({isDesktopOrBigger, textContainerHeight});
-
     const previousIndexRef = React.useRef(currentIndex);
     const isBack = previousIndexRef.current > currentIndex;
 
