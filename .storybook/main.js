@@ -26,11 +26,11 @@ module.exports = {
             ignored: [/node_modules/, /__tests__/, /__acceptance_tests__/, /__screenshot_tests__/],
         };
 
-        config.module.rules.push({
-            test: /\.(woff2)$/,
-            loaders: ['file-loader'],
-            include: path.resolve(__dirname, '../'),
-        });
+        // config.module.rules.push({
+        //     test: /\.(woff2)$/,
+        //     loaders: ['file-loader'],
+        //     include: path.resolve(__dirname, '../'),
+        // });
 
         return config;
     },
