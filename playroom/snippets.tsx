@@ -536,6 +536,6 @@ export default [
     {
         group: 'Stepper',
         name: 'StepperIndeterminate',
-        code: '<StepperIndeterminate progress={40} />',
+        code: '<StepperIndeterminate progress={30} />',
     },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
