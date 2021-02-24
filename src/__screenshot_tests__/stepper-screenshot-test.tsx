@@ -32,3 +32,17 @@ test.each(TESTABLE_DEVICES)('Stepper with large fontSize in %s', async (device) 
 
     expect(image).toMatchImageSnapshot();
 });
+
+test.each(TESTABLE_DEVICES)('StepperIndeterminate in %s', async (device) => {
+    await openStoryPage({
+        section: 'Components/Others/Stepper',
+        name: 'StepperIndeterminate',
+        device,
+    });
+
+    const stepper = await screen.findByTestId('stepper-indeterminate');
+
+    const image = await stepper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+});

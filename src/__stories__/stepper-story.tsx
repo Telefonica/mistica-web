@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import {Stepper, ButtonPrimary, ButtonLayout, Stack} from '..';
+import {Stepper, StepperIndeterminate, ButtonPrimary, ButtonLayout, Stack} from '..';
 
 const texts = ['Basic Details', 'Company Details', 'Subscription Plan', 'Payment Details', 'Confirmation'];
 
@@ -37,3 +37,11 @@ export const Default: StoryComponent = () => {
 };
 
 Default.storyName = 'Stepper';
+
+export const Indeterminated: StoryComponent = () => (
+    <div data-testid="stepper-indeterminate">
+        <StepperIndeterminate progress={30} />
+    </div>
+);
+
+Indeterminated.storyName = 'StepperIndeterminate';

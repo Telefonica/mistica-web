@@ -123,23 +123,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         transition: `width ${transition}`,
         animation: `$reverseFilledBar ${transition}`,
     },
-    indetermined: {
-        height: 8,
-        backgroundColor: colors.chartBackground,
-        borderRadius: 20,
-    },
-    indeterminedProgress: {
-        height: '100%',
-        transition: `max-width ${transition}`,
-        animation: `$stackedBar ${transition}`,
-        borderRadius: 20,
-    },
 
-    '@keyframes stackedBar': {
-        '0%': {
-            maxWidth: '0',
-        },
-    },
     '@keyframes filledBar': {
         '0%': {
             width: 0,
@@ -187,19 +171,39 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     },
 }));
 
-type StepperIndeterminedProps = {
+const useStylesIndeterminate = createUseStyles(({colors}) => ({
+    indeterminate: {
+        height: 4,
+        backgroundColor: colors.chartBackground,
+        borderRadius: 20,
+    },
+    indeterminateProgress: {
+        height: '100%',
+        transition: `max-width ${transition}`,
+        animation: `$stackedBar ${transition}`,
+        borderRadius: 20,
+    },
+
+    '@keyframes stackedBar': {
+        '0%': {
+            maxWidth: '0',
+        },
+    },
+}));
+
+type StepperIndeterminateProps = {
     progress: number;
 };
 
-export const StepperIndetermined: React.FC<StepperIndeterminedProps> = ({progress}) => {
+export const StepperIndeterminate: React.FC<StepperIndeterminateProps> = ({progress}) => {
     const {colors} = useTheme();
-    const classes = useStyles();
+    const classes = useStylesIndeterminate();
 
     return (
-        <div data-testid="indetermined" className={classes.indetermined}>
+        <div className={classes.indeterminate}>
             <div
-                className={classes.indeterminedProgress}
-                style={{maxWidth: `${(progress * 100) / 1}%`, backgroundColor: colors.primary}}
+                className={classes.indeterminateProgress}
+                style={{maxWidth: `${progress}%`, backgroundColor: colors.primary}}
             />
         </div>
     );
