@@ -56,7 +56,7 @@ const useStyles = createUseStyles((theme) => ({
         [theme.mq.mobile]: {
             height: ({contentHeight}) => contentHeight,
         },
-        background: ({isInverse}) => (isInverse ? theme.colors.backgroundSpecial1 : theme.colors.background),
+        background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : theme.colors.background),
     },
 
     footer: {
@@ -86,13 +86,13 @@ const useStyles = createUseStyles((theme) => ({
     },
 
     title: {
-        color: ({isInverse}) => (isInverse ? theme.colors.textPrimarySpecial : theme.colors.textPrimary),
+        color: ({isInverse}) => (isInverse ? theme.colors.textPrimaryInverse : theme.colors.textPrimary),
         animation: animateText(theme.platformOverrides),
         opacity: initialTextOpacity(theme.platformOverrides),
     },
 
     description: {
-        color: ({isInverse}) => (isInverse ? theme.colors.textPrimarySpecial : theme.colors.textSecondary),
+        color: ({isInverse}) => (isInverse ? theme.colors.textPrimaryInverse : theme.colors.textSecondary),
         animation: animateText(theme.platformOverrides),
         opacity: initialTextOpacity(theme.platformOverrides),
         '& p': {
@@ -232,8 +232,8 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                         button={primaryButton}
                         secondaryButton={secondaryButton}
                         link={link}
-                        footerBgColor={isInverse ? theme.colors.backgroundSpecialBottom : undefined}
-                        containerBgColor={isInverse ? theme.colors.overscrollColorTop : undefined}
+                        footerBgColor={isInverse ? theme.colors.backgroundFeedbackBottom : undefined}
+                        containerBgColor={isInverse ? theme.colors.navigationBarBackground : undefined}
                         onChangeFooterHeight={setFooterHeight}
                     >
                         {feedbackBasicContent}

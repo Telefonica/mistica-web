@@ -106,7 +106,7 @@ const listSnippets = [
         <${listName}>
             <${rowName}
                 icon={
-                    <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <Circle backgroundColor={colors.neutralLow} size={40}>
                         <IconAcademicLight />
                     </Circle>
                 }
@@ -117,7 +117,7 @@ const listSnippets = [
             />
             <${rowName}
                 icon={
-                    <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <Circle backgroundColor={colors.neutralLow} size={40}>
                         <IconAcademicLight />
                     </Circle>
                 }
@@ -128,7 +128,7 @@ const listSnippets = [
             />
             <${rowName}
                 icon={
-                    <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <Circle backgroundColor={colors.neutralLow} size={40}>
                         <IconAcademicLight />
                     </Circle>
                 }
@@ -149,7 +149,7 @@ listSnippets.push({
         <RowList>
             <Row
                 icon={
-                    <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <Circle backgroundColor={colors.neutralLow} size={40}>
                         <IconAcademicLight />
                     </Circle>
                 }
@@ -160,7 +160,7 @@ listSnippets.push({
             />
             <Row
                 icon={
-                    <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <Circle backgroundColor={colors.neutralLow} size={40}>
                         <IconAcademicLight />
                     </Circle>
                 }
@@ -181,7 +181,7 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         code: `
         <${rowName}
             icon={
-                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconAcademicLight />
                 </Circle>
             }
@@ -197,7 +197,7 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         code: `
         <${rowName}
             icon={
-                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconAcademicLight />
                 </Circle>
             }
@@ -216,7 +216,7 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         code: `
         <${rowName}
             icon={
-                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconAcademicLight />
                 </Circle>
             }
@@ -232,7 +232,7 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         code: `
         <${rowName}
             icon={
-                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconAcademicLight />
                 </Circle>
             }
@@ -248,7 +248,7 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         code: `
         <${rowName}
             icon={
-                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconAcademicLight />
                 </Circle>
             }
@@ -264,7 +264,7 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         code: `
         <${rowName}
             icon={
-                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconAcademicLight />
                 </Circle>
             }
@@ -464,7 +464,7 @@ const cardSnippets = [
             description="description"
             body={<Placeholder />}
             icon={
-                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconAcademicLight />
                 </Circle>
             }

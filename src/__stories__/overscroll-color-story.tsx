@@ -12,7 +12,7 @@ export const Default: StoryComponent = () => {
     const theme = useTheme();
     return (
         <>
-            <div style={{background: theme.colors.backgroundHeading, height: 200}}>
+            <div style={{background: theme.colors.backgroundBrand, height: 200}}>
                 <OverscrollColor />
             </div>
             <Box padding={16}>

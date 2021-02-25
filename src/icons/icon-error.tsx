@@ -6,11 +6,11 @@ import {O2_SKIN, O2_CLASSIC_SKIN} from '../skins/constants';
 
 const useStyles = createUseStyles((theme) => ({
     iconContainerFill: {
-        stroke: theme.colors.iconHighlight,
-        fill: theme.colors.iconHighlight,
+        stroke: theme.colors.error,
+        fill: theme.colors.error,
     },
     iconContainer: {
-        stroke: theme.colors.iconHighlight,
+        stroke: theme.colors.error,
         fill: 'none',
     },
     ...animateShakeStyles(theme.platformOverrides),

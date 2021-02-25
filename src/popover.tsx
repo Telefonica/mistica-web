@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {applyAlpha} from './utils/color';
 import IcnClose from './icons/icon-close';
 import IconButton from './icon-button';
 import {useTheme, useScreenSize} from './hooks';
@@ -31,8 +30,7 @@ const useStyles = createUseStyles((theme) => ({
         transform: 'translate(-50%, -50%) rotate(45deg)',
         border: `1px solid ${theme.colors.divider}`,
         borderRadius: 4,
-        boxShadow: ({position}) =>
-            position === 'bottom' ? 'initial' : `0 0 4px 0 ${applyAlpha(theme.colors.layerDecorations, 0.2)}`,
+        boxShadow: ({position}) => (position === 'bottom' ? 'initial' : '0 0 4px 0 rgba(0, 0, 0, 0.2)'),
     },
 
     arrowWrapper: {
@@ -51,7 +49,7 @@ const useStyles = createUseStyles((theme) => ({
         position: 'absolute',
         width: 'auto',
         zIndex: 9,
-        boxShadow: `0 2px 4px 0 ${applyAlpha(theme.colors.layerDecorations, 0.2)}`,
+        boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)',
         backgroundColor: theme.colors.background,
         border: `1px solid ${theme.colors.divider}`,
         borderRadius: 4,

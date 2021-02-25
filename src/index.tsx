@@ -105,6 +105,10 @@ export {getVivoSkin} from './skins/vivo';
 export {getMovistarSkin} from './skins/movistar';
 export {getO2Skin} from './skins/o2';
 export {getO2ClassicSkin} from './skins/o2-classic';
+export {palette as vivoPalette} from './skins/vivo';
+export {palette as movistarPalette} from './skins/movistar';
+export {palette as o2Palette} from './skins/o2';
+export {palette as o2ClassicPalette} from './skins/o2-classic';
 
 export type {Locale} from './utils/locale';
 export type {TrackingEvent} from './utils/types';

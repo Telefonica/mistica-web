@@ -92,7 +92,7 @@ const commonClasses = () => ({
 const usePrimaryButtonStyles = createUseStyles((theme) => ({
     ...commonClasses(),
     light: {
-        color: theme.colors.buttonPrimaryText,
+        color: theme.colors.textButtonPrimary,
         backgroundColor: theme.colors.buttonPrimaryBackground,
 
         '&:enabled:active': {
@@ -124,17 +124,17 @@ const usePrimaryButtonStyles = createUseStyles((theme) => ({
         backgroundColor: theme.colors.buttonPrimaryBackgroundInverse,
 
         '&:enabled:active': {
-            backgroundColor: theme.colors.buttonPrimaryBackgroundInverseSelected,
+            backgroundColor: theme.colors.buttonPrimaryBackgroundSelectedInverse,
             color: theme.colors.textButtonPrimaryInverseSelected,
         },
         '&[disabled]:not($isLoading)': {
-            backgroundColor: theme.colors.buttonPrimaryBackgroundInverseDisabled,
+            backgroundColor: theme.colors.buttonPrimaryBackgroundDisabledInverse,
             color: theme.colors.textButtonPrimaryInverseDisabled,
         },
 
         '&:hover': {
             color: theme.colors.textButtonPrimaryInverseSelected,
-            backgroundColor: theme.colors.buttonPrimaryBackgroundInverseSelected,
+            backgroundColor: theme.colors.buttonPrimaryBackgroundSelectedInverse,
             '@media (pointer: coarse)': {
                 color: theme.colors.textButtonPrimaryInverse,
                 backgroundColor: theme.colors.buttonPrimaryBackgroundInverse,
@@ -144,14 +144,14 @@ const usePrimaryButtonStyles = createUseStyles((theme) => ({
 }));
 
 const buttonSecondaryLightStyle = (theme: Theme) => ({
-    color: theme.colors.buttonSecondaryText,
-    backgroundColor: theme.colors.buttonSecondaryBackground,
-    borderColor: theme.colors.buttonSecondaryBorder,
+    color: theme.colors.textButtonSecondary,
+    backgroundColor: 'transparent',
+    borderColor: theme.colors.buttonSecondaryBackground,
 });
 
 const buttonSecondaryHoverLightStyle = (theme: Theme) => ({
-    color: theme.colors.buttonSecondaryTextSelected,
-    borderColor: theme.colors.buttonSecondaryBorderSelected,
+    color: theme.colors.textButtonSecondarySelected,
+    borderColor: theme.colors.buttonSecondaryBackgroundSelected,
 });
 
 const useSecondaryButtonStyles = createUseStyles((theme) => ({
@@ -163,8 +163,8 @@ const useSecondaryButtonStyles = createUseStyles((theme) => ({
             ...buttonSecondaryHoverLightStyle(theme),
         },
         '&[disabled]:not($isLoading)': {
-            color: theme.colors.buttonSecondaryTextDisabled,
-            borderColor: theme.colors.buttonSecondaryBorderDisabled,
+            color: theme.colors.textButtonSecondaryDisabled,
+            borderColor: theme.colors.buttonSecondaryBackgroundDisabled,
         },
         '&:hover': {
             ...buttonSecondaryHoverLightStyle(theme),
@@ -178,16 +178,16 @@ const useSecondaryButtonStyles = createUseStyles((theme) => ({
         color: theme.colors.textButtonSecondaryInverse,
 
         '&:enabled:active': {
-            borderColor: theme.colors.buttonSecondaryBorderInverseSelected,
+            borderColor: theme.colors.buttonSecondaryBorderSelectedInverse,
             color: theme.colors.textButtonSecondaryInverseSelected,
         },
         '&[disabled]:not($isLoading)': {
             color: theme.colors.textButtonSecondaryInverseDisabled,
-            borderColor: theme.colors.buttonSecondaryBorderInverseDisabled,
+            borderColor: theme.colors.buttonSecondaryBorderDisabledInverse,
         },
 
         '&:hover': {
-            borderColor: theme.colors.buttonSecondaryBorderInverseSelected,
+            borderColor: theme.colors.buttonSecondaryBorderSelectedInverse,
             color: theme.colors.textButtonSecondaryInverseSelected,
             '@media (pointer: coarse)': {
                 borderColor: theme.colors.buttonSecondaryBorderInverse,
@@ -198,7 +198,7 @@ const useSecondaryButtonStyles = createUseStyles((theme) => ({
 }));
 
 const dangerButtonStyles = (theme: Theme) => ({
-    color: theme.colors.buttonPrimaryText,
+    color: theme.colors.textButtonPrimary,
     backgroundColor: theme.colors.buttonDangerBackground,
 
     '&:enabled:active': {

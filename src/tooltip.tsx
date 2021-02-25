@@ -4,7 +4,6 @@ import {getPlatform} from './utils/platform';
 import {useAriaId, useScreenSize} from './hooks';
 import Portal from './portal';
 import Overlay from './overlay';
-import {applyAlpha} from './utils/color';
 import * as key from './utils/key-codes';
 import {createUseStyles} from './jss';
 
@@ -34,7 +33,7 @@ const useStyles = createUseStyles((theme) => ({
         left: '50%',
         transform: 'translateX(-50%)',
         '& > div': {
-            boxShadow: `0 2px 4px 0 ${applyAlpha(theme.colors.layerDecorations, 0.2)}`,
+            boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)',
         },
     },
     arrowRight: {
@@ -43,7 +42,7 @@ const useStyles = createUseStyles((theme) => ({
         transform: 'translateY(-100%) rotate(90deg)',
         transformOrigin: 'bottom',
         '& > div': {
-            boxShadow: `0 0 4px 0 ${applyAlpha(theme.colors.layerDecorations, 0.2)}`,
+            boxShadow: '0 0 4px 0 rgba(0, 0, 0, 0.2)',
         },
     },
     arrowBottom: {
@@ -57,7 +56,7 @@ const useStyles = createUseStyles((theme) => ({
         transform: 'translateY(-100%) rotate(-90deg)',
         transformOrigin: 'bottom',
         '& > div': {
-            boxShadow: `0 0 4px 0 ${applyAlpha(theme.colors.layerDecorations, 0.2)}`,
+            boxShadow: '0 0 4px 0 rgba(0, 0, 0, 0.2)',
         },
     },
     arrowWrapper: {
@@ -74,7 +73,7 @@ const useStyles = createUseStyles((theme) => ({
         position: 'absolute',
         left: 16,
         width: 'auto',
-        boxShadow: `0 2px 4px 0 ${applyAlpha(theme.colors.layerDecorations, 0.2)}`,
+        boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)',
         padding: 16,
         backgroundColor: theme.colors.background,
         zIndex: 12,

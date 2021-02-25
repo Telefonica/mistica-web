@@ -34,7 +34,7 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={16}>
             {inverseCheckbox}
-            <div style={{background: isInverse ? theme.colors.backgroundHeading : 'transparent'}}>
+            <div style={{background: isInverse ? theme.colors.backgroundBrand : 'transparent'}}>
                 <ThemeVariant isInverse={isInverse}>
                     <OtherComponent />
                 </ThemeVariant>

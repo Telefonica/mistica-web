@@ -26,13 +26,13 @@ const useLabelStyles = createUseStyles((theme) => ({
                   }[inputState],
         color: ({inputState, error, disabled}) => {
             if (inputState === 'default' && disabled) {
-                return theme.colors.textInactive;
+                return theme.colors.textDisabled;
             }
             if (error && inputState !== 'default') {
-                return theme.colors.textError;
+                return theme.colors.error;
             }
             if (inputState === 'focused') {
-                return theme.colors.controlActive;
+                return theme.colors.controlActivated;
             }
             return theme.colors.textSecondary;
         },
@@ -100,7 +100,7 @@ const useHelperTextStyles = createUseStyles((theme) => ({
                 return theme.colors.textPrimaryInverse;
             }
             if (error) {
-                return theme.colors.textError;
+                return theme.colors.error;
             }
             return theme.colors.textSecondary;
         },
