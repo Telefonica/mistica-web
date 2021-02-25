@@ -1,4 +1,33 @@
 // @flow
 
 import type { GetSkin } from "./types";
+declare export var palette: {
+  movistarBlue: string,
+  movistarBlueDark: string,
+  movistarBlueLight50: string,
+  movistarBlueLight30: string,
+  movistarBlueLight10: string,
+  movistarBlueLight50Percent25: string,
+  movistarBlueLight30Percent25: string,
+  movistarGreen: string,
+  movistarGreenDark: string,
+  movistarGreenLight50: string,
+  movistarGreenLight30: string,
+  pepper: string,
+  pepperDark: string,
+  pepperLight30: string,
+  egg: string,
+  eggLight: string,
+  pink: string,
+  purple: string,
+  grey1: string,
+  grey2: string,
+  grey3: string,
+  grey4: string,
+  grey5: string,
+  grey6: string,
+  white: string,
+  movistarProminentBlue: string,
+  movistarProminentBlueDark: string,
+};
 declare export var getMovistarSkin: GetSkin;
