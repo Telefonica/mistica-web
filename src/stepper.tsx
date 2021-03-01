@@ -204,6 +204,9 @@ export const StepperIndeterminate: React.FC<StepperIndeterminateProps> = ({progr
             <div
                 className={classes.indeterminateProgress}
                 style={{maxWidth: `${progress}%`, backgroundColor: colors.primary}}
+                aria-valuenow={progress}
+                aria-valuemin={0}
+                aria-valuemax={100}
             />
         </div>
     );
