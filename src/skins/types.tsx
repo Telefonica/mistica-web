@@ -90,6 +90,7 @@ export type Colors = {
     textPrimary: string;
     textPrimaryInverse: string;
     textSecondary: string;
+    textSecondaryInverse: string;
     textDisabled: string;
     textAmount: string;
 

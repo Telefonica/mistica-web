@@ -136,6 +136,7 @@ export const getO2ClassicSkin: GetSkin = () => {
             textPrimary: palette.grey6,
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
+            textSecondaryInverse: palette.o2SkyBlueLight,
             textDisabled: palette.grey3,
             textAmount: palette.o2SkyBlue,
 
