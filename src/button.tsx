@@ -7,11 +7,12 @@ import {useIsInverseVariant} from './theme-variant-context';
 import {applyAlpha} from './utils/color';
 import {useForm} from './form-context';
 import {pxToRem} from './utils/css';
+import {getPlatform} from './utils/platform';
 
 import type {TrackingEvent} from './utils/types';
 import type {Location} from 'history';
 import type {Theme} from './theme';
-import {Box, Text6, Text7} from '.';
+import {Box, Text6, Text7, Text} from '.';
 
 export const BUTTON_MIN_WIDTH = 156;
 
@@ -289,6 +290,7 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
     const {classes, loadingText} = props;
     const isSubmitButton = !!props.submit;
     const isFormSending = formStatus === 'sending';
+    const isIos = getPlatform() === 'ios';
 
     const showSpinner = props.showSpinner || (isFormSending && isSubmitButton);
 
@@ -308,9 +310,17 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
 
     const renderText = (text: React.ReactNode) =>
         props.small ? (
-            <Text7 medium truncate={1} color="inherit" as="div">
+            <Text
+                size={14}
+                lineHeight={20}
+                weight="medium"
+                truncate={1}
+                color="inherit"
+                as="div"
+                letterSpacing={isIos ? -0.15 : 0}
+            >
                 {text}
-            </Text7>
+            </Text>
         ) : (
             <Text6 medium truncate={1} color="inherit" as="div">
                 {text}
