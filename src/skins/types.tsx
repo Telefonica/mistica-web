@@ -63,6 +63,7 @@ export type Colors = {
 
     // DIVIDERS
     divider: string;
+    dividerInverse: string;
     navigationBarDivider: string;
 
     // FEEDBACKS

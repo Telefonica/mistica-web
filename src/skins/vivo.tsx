@@ -107,6 +107,7 @@ export const getVivoSkin: GetSkin = () => {
 
             // DIVIDERS
             divider: palette.grey2,
+            dividerInverse: applyAlpha(palette.white, 0.2),
             navigationBarDivider: palette.vivoPurple,
 
             // FEEDBACKS

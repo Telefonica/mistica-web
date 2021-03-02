@@ -114,6 +114,7 @@ export const getO2Skin: GetSkin = () => {
 
             // DIVIDERS
             divider: palette.grey2,
+            dividerInverse: applyAlpha(palette.white, 0.2),
             navigationBarDivider: palette.o2BluePrimary,
 
             // FEEDBACKS

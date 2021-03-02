@@ -109,6 +109,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
 
             // DIVIDERS
             divider: palette.grey2,
+            dividerInverse: palette.movistarBlueDark,
             navigationBarDivider: palette.movistarBlue,
 
             // FEEDBACKS
@@ -153,6 +154,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
         skin.colors.navigationBarBackground = palette.movistarProminentBlue;
         skin.colors.backgroundFeedbackBottom = palette.movistarProminentBlue;
         skin.colors.controlActivated = palette.movistarProminentBlue;
+        skin.colors.dividerInverse = palette.movistarProminentBlueDark;
     }
 
     return skin;
