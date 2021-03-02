@@ -51,10 +51,10 @@ const TEXTS_EN: ThemeTexts = {
     formCreditCardCvvTooltipAmex: "If it's American Express, add the 4-digit number on the front of the card",
     formCreditCardExpirationError: 'Invalid date',
     formCreditCardNumberError: 'The card number is not valid',
-    formDateOutOfRangeError: undefined,
+    formDateOutOfRangeError: 'Invalid date',
     formEmailError: 'Invalid email',
     closeButtonLabel: 'Close',
-    formSearchClear: undefined,
+    formSearchClear: 'Clear search',
 };
 
 const TEXTS_DE: ThemeTexts = {
@@ -76,7 +76,7 @@ const TEXTS_DE: ThemeTexts = {
     formCreditCardCvvTooltipAmex: 'Bei American Express 4-stelligen Code auf der Rückseite hinzufügen',
     formCreditCardExpirationError: 'Datum ungültig',
     formCreditCardNumberError: 'Kartennummer ungültig',
-    formDateOutOfRangeError: undefined,
+    formDateOutOfRangeError: 'Unzulässiges Datum',
     formEmailError: 'Falsche E-Mail-Adresse',
     closeButtonLabel: 'Schließen',
     formSearchClear: 'Suche löschen',
@@ -101,10 +101,10 @@ const TEXTS_PT: ThemeTexts = {
     formCreditCardCvvTooltipAmex: 'Se for American Express, adicione os 4 dígitos do anverso',
     formCreditCardExpirationError: 'Data inválida',
     formCreditCardNumberError: 'Não é um número de cartão válido',
-    formDateOutOfRangeError: undefined,
+    formDateOutOfRangeError: 'Data não permitida',
     formEmailError: 'Email incorreto',
     closeButtonLabel: 'Fechar',
-    formSearchClear: undefined,
+    formSearchClear: 'Apagar pesquisa',
 };
 
 export const getTexts = (locale: Locale): typeof TEXTS_ES => {
