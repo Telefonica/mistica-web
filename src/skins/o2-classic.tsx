@@ -142,7 +142,7 @@ export const getO2ClassicSkin: GetSkin = () => {
 
             // STATES
             error: palette.pepper, // antes iconError
-            success: palette.o2Gem, // antes iconSuccess
+            success: palette.o2Green, // antes iconSuccess
             warning: palette.orange, // antes iconWarning
 
             // BARS TEXTS
