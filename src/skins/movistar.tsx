@@ -46,7 +46,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             backgroundSkeletonInverse: palette.movistarBlueDark,
             navigationBarBackground: palette.movistarBlue,
             navigationSearchBarBackground: palette.movistarBlueDark,
-            backgroundAlternative: palette.grey2,
+            backgroundAlternative: palette.grey1,
             backgroundFeedbackBottom: palette.movistarBlue,
 
             // BORDERS

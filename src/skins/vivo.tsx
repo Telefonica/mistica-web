@@ -45,7 +45,7 @@ export const getVivoSkin: GetSkin = () => {
             backgroundFeedbackBottom: palette.vivoPurple,
             navigationBarBackground: palette.vivoPurple,
             navigationSearchBarBackground: palette.vivoPurpleDark,
-            backgroundAlternative: palette.grey2,
+            backgroundAlternative: palette.grey1,
 
             // BORDERS
             borderLight: palette.grey1,

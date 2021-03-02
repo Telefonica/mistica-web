@@ -53,7 +53,7 @@ export const getO2ClassicSkin: GetSkin = () => {
             backgroundSkeletonInverse: applyAlpha(palette.white, 0.2),
             navigationBarBackground: palette.o2Blue,
             navigationSearchBarBackground: palette.o2BlueDark,
-            backgroundAlternative: palette.grey2,
+            backgroundAlternative: palette.grey1,
             backgroundFeedbackBottom: palette.o2GradientFourth,
 
             // BORDERS
