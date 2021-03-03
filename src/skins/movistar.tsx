@@ -9,8 +9,6 @@ export const palette = {
     movistarBlueLight50: '#80CEF9',
     movistarBlueLight30: '#B3E1FB',
     movistarBlueLight10: '#E6F5FD',
-    movistarBlueLight50Percent25: '#E3F4FD',
-    movistarBlueLight30Percent25: '#ECF7FE',
     movistarGreen: '#5CB615',
     movistarGreenDark: '#499110',
     movistarGreenLight50: '#ADDA8A',
@@ -31,6 +29,9 @@ export const palette = {
     white: '#FFFFFF',
     movistarProminentBlue: '#0B2739',
     movistarProminentBlueDark: '#081F2D',
+    movistarProminentBlueLight20: '#CED3D7',
+    movistarProminentBlueLight50: '#85939C',
+    movistarProminentBlueLight70: '#546874',
 };
 
 export const getMovistarSkin: GetSkin = (variant) => {
