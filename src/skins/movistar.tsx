@@ -104,9 +104,9 @@ export const getMovistarSkin: GetSkin = (variant) => {
             loadingBarBackgroundInverse: palette.movistarBlueDark,
             loadingBarInverse: palette.movistarBlueLight50,
 
-            toggleAndroidInactive: palette.grey2, // solo web
-            toggleAndroidBackgroundActive: palette.movistarBlueLight30, // solo web
-            toggleIosInactive: palette.white, // solo web
+            toggleAndroidInactive: palette.grey2, // web only
+            toggleAndroidBackgroundActive: palette.movistarBlueLight30, // web only
+            toggleIosInactive: palette.white, // web only
 
             // DIVIDERS
             divider: palette.grey2,
@@ -119,12 +119,12 @@ export const getMovistarSkin: GetSkin = (variant) => {
             feedbackInfoBackground: palette.grey6,
 
             // GLOBAL
-            brand: palette.movistarBlue, // antes iconBrand
-            inverse: palette.white, // antes iconInverse
-            neutralHigh: palette.grey6, // antes iconPrimary
-            neutralLow: palette.grey3, // antes iconDisabled
-            neutralMedium: palette.grey5, // antes iconSecondary
-            promo: palette.purple, // antes backgroundPromo
+            brand: palette.movistarBlue,
+            inverse: palette.white,
+            neutralHigh: palette.grey6,
+            neutralLow: palette.grey3,
+            neutralMedium: palette.grey5,
+            promo: palette.purple,
             highlight: palette.pink,
 
             textPrimary: palette.grey6,
@@ -135,15 +135,15 @@ export const getMovistarSkin: GetSkin = (variant) => {
             textAmount: palette.movistarBlue,
 
             // STATES
-            error: palette.pepper, // antes iconError
-            success: palette.movistarGreen, // antes iconSuccess
-            warning: palette.egg, // antes iconWarning
+            error: palette.pepper,
+            success: palette.movistarGreen,
+            warning: palette.egg,
 
             // BARS TEXTS
             textNavigationBarPrimary: palette.white,
             textNavigationBarSecondary: palette.movistarBlueLight30,
-            textNavigationSearchBarHint: palette.movistarBlueLight30, // solo en iOS
-            textNavigationSearchBarText: palette.white, // solo en iOS
+            textNavigationSearchBarHint: palette.movistarBlueLight30, // iOS
+            textNavigationSearchBarText: palette.white, // iOS
             textAppBar: palette.grey4,
             textAppBarSelected: palette.movistarBlue,
         },
