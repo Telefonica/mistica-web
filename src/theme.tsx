@@ -5,7 +5,9 @@ import type {Locale} from './utils/locale';
 import type {Skin, Colors, SkinName} from './skins/types';
 import type {TrackingEvent} from './utils/types';
 
-export const texts = {
+export type ThemeTexts = typeof TEXTS_ES;
+
+const TEXTS_ES = {
     expirationDatePlaceholder: 'MM/AA',
     togglePasswordVisibilityLabel: 'Mostrar u ocultar contraseña',
     loading: 'Cargando',
@@ -30,6 +32,101 @@ export const texts = {
     formSearchClear: 'Borrar búsqueda',
 };
 
+const TEXTS_EN: ThemeTexts = {
+    expirationDatePlaceholder: 'MM/YY',
+    togglePasswordVisibilityLabel: 'Toggle password visibility',
+    loading: 'Loading',
+    linkOpensInNewTab: 'Opens in a new window',
+    modalClose: 'Close',
+    dialogCancelButton: 'Cancel',
+    dialogAcceptButton: 'Accept',
+    formFieldOptionalLabelSuffix: 'optional',
+    formFieldErrorIsMandatory: 'This field is required',
+    formCreditCardNumberLabel: 'Card number',
+    formCreditCardExpirationLabel: 'Expiry',
+    formCreditCardCvvLabel: 'CVV',
+    formCreditCardCvvError: 'Incorrect CVV',
+    formCreditCardCvvTooltipVisaMcButton: 'Show CVV help',
+    formCreditCardCvvTooltipVisaMc: 'The CVV is the 3 digits of the back of your card',
+    formCreditCardCvvTooltipAmex: "If it's American Express, add the 4-digit number on the front of the card",
+    formCreditCardExpirationError: 'Invalid date',
+    formCreditCardNumberError: 'The card number is not valid',
+    formDateOutOfRangeError: 'Invalid date',
+    formEmailError: 'Invalid email',
+    closeButtonLabel: 'Close',
+    formSearchClear: 'Clear search',
+};
+
+const TEXTS_DE: ThemeTexts = {
+    expirationDatePlaceholder: 'MM/JJ',
+    togglePasswordVisibilityLabel: 'Passwort un-/sichtbar machen',
+    loading: 'Wird gespeichert',
+    linkOpensInNewTab: 'Wird in neuem Fenster geöffnet',
+    modalClose: 'Schließen',
+    dialogCancelButton: 'Abbrechen',
+    dialogAcceptButton: 'Akzeptieren',
+    formFieldOptionalLabelSuffix: 'optional',
+    formFieldErrorIsMandatory: 'Das ist ein Pflichtfeld',
+    formCreditCardNumberLabel: 'Kartennummer',
+    formCreditCardExpirationLabel: 'Ablaufdatum',
+    formCreditCardCvvLabel: 'CVV',
+    formCreditCardCvvError: 'Falsche CVV',
+    formCreditCardCvvTooltipVisaMcButton: 'CVV-Hilfe anzeigen',
+    formCreditCardCvvTooltipVisaMc: 'Der CVV-Code besteht aus den 3 Ziffern auf der Kartenrückseite',
+    formCreditCardCvvTooltipAmex: 'Bei American Express 4-stelligen Code auf der Rückseite hinzufügen',
+    formCreditCardExpirationError: 'Datum ungültig',
+    formCreditCardNumberError: 'Kartennummer ungültig',
+    formDateOutOfRangeError: 'Unzulässiges Datum',
+    formEmailError: 'Falsche E-Mail-Adresse',
+    closeButtonLabel: 'Schließen',
+    formSearchClear: 'Suche löschen',
+};
+
+const TEXTS_PT: ThemeTexts = {
+    expirationDatePlaceholder: 'MM/AA',
+    togglePasswordVisibilityLabel: 'Mostrar ou ocultar senha',
+    loading: 'Carregando',
+    linkOpensInNewTab: 'Abre em nova janela',
+    modalClose: 'Fechar',
+    dialogCancelButton: 'Cancelar',
+    dialogAcceptButton: 'Aceitar',
+    formFieldOptionalLabelSuffix: 'opcional',
+    formFieldErrorIsMandatory: 'Este campo é obrigatório',
+    formCreditCardNumberLabel: 'Número de cartão',
+    formCreditCardExpirationLabel: 'Expiração',
+    formCreditCardCvvLabel: 'CVV',
+    formCreditCardCvvError: 'CVV incorreto',
+    formCreditCardCvvTooltipVisaMcButton: 'Exibir ajuda CVV',
+    formCreditCardCvvTooltipVisaMc: 'O CVV são os 3  dígitos do reverso de seu cartão',
+    formCreditCardCvvTooltipAmex: 'Se for American Express, adicione os 4 dígitos do anverso',
+    formCreditCardExpirationError: 'Data inválida',
+    formCreditCardNumberError: 'Não é um número de cartão válido',
+    formDateOutOfRangeError: 'Data não permitida',
+    formEmailError: 'Email incorreto',
+    closeButtonLabel: 'Fechar',
+    formSearchClear: 'Apagar pesquisa',
+};
+
+export const getTexts = (locale: Locale): typeof TEXTS_ES => {
+    const lang = locale.toLocaleLowerCase().split(/[-_]/)[0];
+    switch (lang) {
+        case 'es':
+            return TEXTS_ES;
+        case 'pt':
+            return TEXTS_PT;
+        case 'de':
+            return TEXTS_DE;
+        case 'en':
+            return TEXTS_EN;
+        default: {
+            if (process.env.NODE_ENV !== 'production') {
+                console.error(`Invalid locale: ${locale}`);
+            }
+            return TEXTS_EN;
+        }
+    }
+};
+
 export const dimensions = {
     headerMobileHeight: 56,
 };
@@ -40,8 +137,6 @@ export const mediaQueriesConfig = {
     largeDesktopMinWidth: 1366,
     desktopOrTabletMinHeight: 550,
 };
-
-export type ThemeTexts = typeof texts;
 
 type LinkComponent = React.ComponentType<{
     style?: React.CSSProperties;
