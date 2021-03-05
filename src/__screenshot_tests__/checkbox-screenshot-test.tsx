@@ -9,7 +9,11 @@ test('Checkbox', async () => {
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
 
-    await (await screen.findAllByRole('checkbox'))[2].click();
+    const checkboxes = await screen.findAllByRole('checkbox');
+
+    await checkboxes[0].click();
+    await checkboxes[1].click();
+    await checkboxes[2].click();
 
     const imageChecked = await page.screenshot();
     expect(imageChecked).toMatchImageSnapshot();
