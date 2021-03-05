@@ -1,7 +1,7 @@
 import {getPlatform, isInsideNovumNativeApp} from '../utils/platform';
 import {getMovistarSkin} from '..';
 
-import {Theme, ThemeConfig, ThemeTexts, texts, mediaQueriesConfig, dimensions, AnchorLink} from '../theme';
+import {Theme, ThemeConfig, ThemeTexts, getTexts, mediaQueriesConfig, dimensions, AnchorLink} from '../theme';
 import {createMediaQueries} from '../utils/media-queries';
 
 import type {Locale} from '../utils/locale';
@@ -42,7 +42,7 @@ export const baseTheme: Theme = {
         insideNovumNativeApp: isInsideNovumNativeApp(),
     },
     colors: baseSkin.colors,
-    texts,
+    texts: getTexts('es-ES'),
     analytics: {
         logEvent: (): Promise<void> => Promise.resolve(),
     },
@@ -55,4 +55,8 @@ export const makeTheme = (overrides: ThemeOverrides = {}): ThemeConfig => ({
     ...overrides,
     skin: overrides.skin || baseSkin,
     i18n: overrides.i18n || baseTheme.i18n,
+    texts: {
+        ...getTexts(overrides?.i18n?.locale ?? 'es-ES'),
+        ...overrides.texts,
+    },
 });

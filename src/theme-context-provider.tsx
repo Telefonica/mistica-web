@@ -8,7 +8,7 @@ import {createMediaQueries} from './utils/media-queries';
 import {PACKAGE_VERSION} from './package-version';
 import AriaIdGetterContext from './aria-id-getter-context';
 import {isServerSide} from './utils/environment';
-import {AnchorLink, mediaQueriesConfig, dimensions, texts} from './theme';
+import {AnchorLink, mediaQueriesConfig, dimensions, getTexts} from './theme';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
 
@@ -62,7 +62,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
                 ...theme.platformOverrides,
             },
             texts: {
-                ...texts,
+                ...getTexts(theme.i18n.locale),
                 ...theme.texts,
             },
             analytics: {
