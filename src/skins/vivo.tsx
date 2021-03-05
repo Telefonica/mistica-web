@@ -44,8 +44,9 @@ export const getVivoSkin: GetSkin = () => {
             backgroundSkeletonInverse: applyAlpha(palette.white, 0.2),
             backgroundFeedbackBottom: palette.vivoPurple,
             navigationBarBackground: palette.vivoPurple,
-            navigationSearchBarBackground: palette.vivoPurpleDark,
             backgroundAlternative: palette.grey1,
+
+            skeletonWave: palette.grey2,
 
             // BORDERS
             borderLight: palette.grey1,
@@ -59,6 +60,7 @@ export const getVivoSkin: GetSkin = () => {
             buttonDangerBackgroundSelected: palette.pepperDark,
             buttonDangerBackgroundHover: palette.pepperDark,
             buttonLinkBackgroundSelected: palette.vivoPurpleLight10,
+            buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
             buttonPrimaryBackground: palette.vivoPurple,
             buttonPrimaryBackgroundDisabled: palette.vivoPurpleLight20,
             buttonPrimaryBackgroundDisabledInverse: palette.vivoPurpleLight50,
@@ -77,7 +79,6 @@ export const getVivoSkin: GetSkin = () => {
             textButtonPrimaryInverse: palette.vivoPurple,
             textButtonPrimaryInverseDisabled: palette.vivoPurpleLight20,
             textButtonPrimaryInverseSelected: palette.vivoPurple, // iOS & Web
-            textButtonPrimaryInversePressed: palette.vivoPurple, // Android
             textButtonSecondary: palette.vivoPurple,
             textButtonSecondaryDisabled: palette.vivoPurpleLight20,
             textButtonSecondarySelected: palette.vivoPurpleDark, // iOS & Web
@@ -85,7 +86,6 @@ export const getVivoSkin: GetSkin = () => {
             textButtonSecondaryInverse: palette.white,
             textButtonSecondaryInverseDisabled: palette.vivoPurpleLight50,
             textButtonSecondaryInverseSelected: palette.white, // iOS & Web
-            textButtonSecondaryInversePressed: palette.white, // Android
             textLink: palette.vivoPurple,
             textLinkDanger: palette.pepper,
             textLinkDangerDisabled: palette.pepperLight30,
@@ -116,12 +116,13 @@ export const getVivoSkin: GetSkin = () => {
             feedbackInfoBackground: palette.grey6,
 
             // GLOBAL
-            brand: palette.vivoPurple, // antes iconBrand
-            inverse: palette.white, // antes iconInverse
-            neutralHigh: palette.grey6, // antes iconPrimary
-            neutralLow: palette.grey3, // antes iconDisabled
-            neutralMedium: palette.grey5, // antes iconSecondary
-            promo: palette.vivoPurple, // antes backgroundPromo
+            brand: palette.vivoPurple,
+            brandDark: palette.vivoPurpleDark,
+            inverse: palette.white,
+            neutralHigh: palette.grey6,
+            neutralLow: palette.grey3,
+            neutralMedium: palette.grey5,
+            promo: palette.vivoPurple,
             highlight: palette.pink,
 
             textPrimary: palette.grey6,
@@ -132,15 +133,15 @@ export const getVivoSkin: GetSkin = () => {
             textAmount: palette.vivoPurple,
 
             // STATES
-            error: palette.pepper, // antes iconError
-            success: palette.vivoGreen, // antes iconSuccess
-            warning: palette.orange, // antes iconWarning
+            error: palette.pepper,
+            success: palette.vivoGreen,
+            warning: palette.orange,
 
             // BARS TEXTS
             textNavigationBarPrimary: palette.white,
             textNavigationBarSecondary: palette.vivoPurpleLight50,
-            textNavigationSearchBarHint: palette.vivoPurpleLight50, // solo en iOS
-            textNavigationSearchBarText: palette.white, // solo en iOS
+            textNavigationSearchBarHint: palette.vivoPurpleLight50, // iOS only
+            textNavigationSearchBarText: palette.white, // iOS only
             textAppBar: palette.grey4,
             textAppBarSelected: palette.vivoPurple,
         },

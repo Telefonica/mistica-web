@@ -20,7 +20,8 @@ export type Colors = {
     backgroundAlternative: string;
     backgroundFeedbackBottom: string;
     navigationBarBackground: string;
-    navigationSearchBarBackground: string;
+
+    skeletonWave: string;
 
     // BORDERS
     border: string;
@@ -34,6 +35,7 @@ export type Colors = {
     buttonDangerBackgroundSelected: string;
     buttonDangerBackgroundHover: string;
     buttonLinkBackgroundSelected: string;
+    buttonLinkBackgroundSelectedInverse: string;
     buttonPrimaryBackground: string;
     buttonPrimaryBackgroundDisabled: string;
     buttonPrimaryBackgroundDisabledInverse: string;
@@ -73,6 +75,7 @@ export type Colors = {
 
     // GLOBAL
     brand: string;
+    brandDark: string;
     inverse: string;
     neutralHigh: string;
     neutralLow: string;
@@ -84,8 +87,6 @@ export type Colors = {
     highlight: string;
     success: string;
     warning: string;
-
-    // TEXTS COLORS
 
     // TEXT GLOBAL
     textPrimary: string;
@@ -100,7 +101,6 @@ export type Colors = {
     textButtonPrimaryInverse: string;
     textButtonPrimaryInverseDisabled: string;
     textButtonPrimaryInverseSelected: string;
-    textButtonPrimaryInversePressed: string;
     textButtonSecondary: string;
     textButtonSecondaryDisabled: string;
     textButtonSecondarySelected: string;
@@ -108,7 +108,6 @@ export type Colors = {
     textButtonSecondaryInverse: string;
     textButtonSecondaryInverseDisabled: string;
     textButtonSecondaryInverseSelected: string;
-    textButtonSecondaryInversePressed: string;
 
     // TEXT LINKS
     textLink: string;

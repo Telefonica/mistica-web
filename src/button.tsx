@@ -4,7 +4,6 @@ import Spinner from './spinner';
 import Touchable from './touchable';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
-import {applyAlpha} from './utils/color';
 import {useForm} from './form-context';
 import {pxToRem} from './utils/css';
 
@@ -428,10 +427,10 @@ const useButtonLinkStyles = createUseStyles((theme) => ({
     inverse: {
         color: theme.colors.textPrimaryInverse,
         '&:enabled:active': {
-            backgroundColor: applyAlpha(theme.colors.buttonLinkBackgroundSelected, 0.2),
+            backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
         },
         '&:hover': {
-            backgroundColor: applyAlpha(theme.colors.buttonLinkBackgroundSelected, 0.2),
+            backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
             '@media (pointer: coarse)': {
                 backgroundColor: 'initial',
             },

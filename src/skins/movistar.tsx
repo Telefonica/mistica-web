@@ -46,9 +46,10 @@ export const getMovistarSkin: GetSkin = (variant) => {
             backgroundSkeleton: palette.grey1,
             backgroundSkeletonInverse: palette.movistarBlueDark,
             navigationBarBackground: palette.movistarBlue,
-            navigationSearchBarBackground: palette.movistarBlueDark,
             backgroundAlternative: palette.grey1,
             backgroundFeedbackBottom: palette.movistarBlue,
+
+            skeletonWave: palette.grey2,
 
             // BORDERS
             borderLight: palette.grey1,
@@ -62,6 +63,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             buttonDangerBackgroundSelected: palette.pepperDark,
             buttonDangerBackgroundHover: palette.pepperDark,
             buttonLinkBackgroundSelected: palette.movistarBlueLight10,
+            buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
             buttonPrimaryBackground: palette.movistarGreen,
             buttonPrimaryBackgroundDisabled: palette.movistarGreenLight50,
             buttonPrimaryBackgroundDisabledInverse: palette.movistarBlueLight50,
@@ -80,7 +82,6 @@ export const getMovistarSkin: GetSkin = (variant) => {
             textButtonPrimaryInverse: palette.movistarBlue,
             textButtonPrimaryInverseDisabled: palette.movistarBlueLight30,
             textButtonPrimaryInverseSelected: palette.movistarBlue, // iOS & Web
-            textButtonPrimaryInversePressed: palette.movistarBlue, // Android
             textButtonSecondary: palette.movistarGreen,
             textButtonSecondaryDisabled: palette.movistarGreenLight30,
             textButtonSecondarySelected: palette.movistarGreenDark, // iOS & Web
@@ -88,7 +89,6 @@ export const getMovistarSkin: GetSkin = (variant) => {
             textButtonSecondaryInverse: palette.white,
             textButtonSecondaryInverseDisabled: palette.movistarBlueLight50,
             textButtonSecondaryInverseSelected: palette.white, // iOS & Web
-            textButtonSecondaryInversePressed: palette.white, // Android
             textLink: palette.movistarBlue,
             textLinkDanger: palette.pepper,
             textLinkDangerDisabled: palette.pepperLight30,
@@ -120,6 +120,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
 
             // GLOBAL
             brand: palette.movistarBlue,
+            brandDark: palette.movistarBlueDark,
             inverse: palette.white,
             neutralHigh: palette.grey6,
             neutralLow: palette.grey3,
@@ -151,6 +152,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
 
     if (variant === 'prominent') {
         skin.colors.brand = palette.movistarProminentBlue;
+        skin.colors.brandDark = palette.movistarProminentBlueDark;
         skin.colors.backgroundBrand = palette.movistarProminentBlue;
         skin.colors.navigationBarBackground = palette.movistarProminentBlue;
         skin.colors.backgroundFeedbackBottom = palette.movistarProminentBlue;

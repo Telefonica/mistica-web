@@ -50,9 +50,10 @@ export const getO2Skin: GetSkin = () => {
             backgroundSkeleton: palette.grey1,
             backgroundSkeletonInverse: applyAlpha(palette.white, 0.2),
             navigationBarBackground: palette.o2BluePrimary,
-            navigationSearchBarBackground: palette.o2BluePrimaryDark,
             backgroundAlternative: palette.grey1,
             backgroundFeedbackBottom: palette.o2BluePrimary,
+
+            skeletonWave: palette.grey2,
 
             // BORDERS
             borderLight: palette.grey1,
@@ -66,6 +67,8 @@ export const getO2Skin: GetSkin = () => {
             buttonDangerBackgroundSelected: palette.pepperDark,
             buttonDangerBackgroundHover: palette.pepperDark,
             buttonLinkBackgroundSelected: palette.o2BluePrimaryLight10,
+            buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
+
             buttonPrimaryBackground: palette.o2BluePrimary,
             buttonPrimaryBackgroundDisabled: palette.o2BluePrimaryLight10,
             buttonPrimaryBackgroundDisabledInverse: palette.o2BluePrimaryLight50,
@@ -84,7 +87,6 @@ export const getO2Skin: GetSkin = () => {
             textButtonPrimaryInverse: palette.o2BluePrimary,
             textButtonPrimaryInverseDisabled: palette.o2BluePrimaryLight10,
             textButtonPrimaryInverseSelected: palette.o2BluePrimaryDark, // iOS & Web
-            textButtonPrimaryInversePressed: palette.o2BluePrimaryDark, // Android
             textButtonSecondary: palette.o2BluePrimary,
             textButtonSecondaryDisabled: palette.o2BluePrimaryLight10,
             textButtonSecondarySelected: palette.o2BluePrimaryDark, // iOS & Web
@@ -92,7 +94,6 @@ export const getO2Skin: GetSkin = () => {
             textButtonSecondaryInverse: palette.white,
             textButtonSecondaryInverseDisabled: palette.o2BluePrimaryLight50,
             textButtonSecondaryInverseSelected: palette.white, // iOS & Web
-            textButtonSecondaryInversePressed: palette.white, // Android
             textLink: palette.o2BluePrimary,
             textLinkDanger: palette.pepper,
             textLinkDangerDisabled: palette.pepperLight30,
@@ -108,9 +109,9 @@ export const getO2Skin: GetSkin = () => {
             loadingBarBackgroundInverse: palette.grey1,
             loadingBarInverse: palette.o2BluePrimary,
 
-            toggleAndroidInactive: palette.grey2, // solo web
-            toggleAndroidBackgroundActive: '#CCD1ED', // solo web
-            toggleIosInactive: palette.white, // solo web
+            toggleAndroidInactive: palette.grey2, // web only
+            toggleAndroidBackgroundActive: palette.o2BluePrimaryLight10, // web only
+            toggleIosInactive: palette.white, // web only
 
             // DIVIDERS
             divider: palette.grey2,
@@ -123,12 +124,13 @@ export const getO2Skin: GetSkin = () => {
             feedbackInfoBackground: palette.grey6,
 
             // GLOBAL
-            brand: palette.o2BluePrimary, // antes iconBrand
-            inverse: palette.white, // antes iconInverse
-            neutralHigh: palette.grey6, // antes iconPrimary
-            neutralLow: palette.grey3, // antes iconDisabled
-            neutralMedium: palette.grey5, // antes iconSecondary
-            promo: palette.o2Purple, // antes backgroundPromo
+            brand: palette.o2BluePrimary,
+            brandDark: palette.o2BluePrimaryDark,
+            inverse: palette.white,
+            neutralHigh: palette.grey6,
+            neutralLow: palette.grey3,
+            neutralMedium: palette.grey5,
+            promo: palette.o2Purple,
             highlight: palette.o2Pink,
 
             textPrimary: palette.grey6,
@@ -139,15 +141,15 @@ export const getO2Skin: GetSkin = () => {
             textAmount: palette.o2BluePrimary,
 
             // STATES
-            error: palette.pepper, // antes iconError
-            success: palette.o2Green, // antes iconSuccess
-            warning: palette.o2Orange, // antes iconWarning
+            error: palette.pepper,
+            success: palette.o2Green,
+            warning: palette.o2Orange,
 
             // BARS TEXTS
             textNavigationBarPrimary: palette.white,
             textNavigationBarSecondary: palette.o2BluePrimaryLight50,
-            textNavigationSearchBarHint: palette.o2BluePrimaryLight50, // solo en iOS
-            textNavigationSearchBarText: palette.white, // solo en iOS
+            textNavigationSearchBarHint: palette.o2BluePrimaryLight50, // iOS only
+            textNavigationSearchBarText: palette.white, // iOS only
             textAppBar: palette.grey4,
             textAppBarSelected: palette.o2BluePrimary,
         },
