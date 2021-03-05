@@ -88,7 +88,7 @@ interface TextProps extends TextPresetProps {
     letterSpacing?: number;
 }
 
-const Text: React.FC<TextProps> = ({
+export const Text: React.FC<TextProps> = ({
     weight,
     color,
     textDecoration,
