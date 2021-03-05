@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {Text8} from './text';
 import {useTheme} from './hooks';
 import {createUseStyles} from './jss';
+import {Text} from './text';
 
 const useStyles = createUseStyles((theme) => ({
     tag: {
@@ -24,9 +24,9 @@ const PromoTag: React.FC<Props> = ({children}) => {
     const {colors} = useTheme();
     return (
         <span className={classes.tag}>
-            <Text8 color={colors.textPrimaryInverse} regular uppercase>
+            <Text color={colors.textPrimaryInverse} size={12} lineHeight={16} weight="regular" uppercase>
                 {children}
-            </Text8>
+            </Text>
         </span>
     );
 };

@@ -50,7 +50,7 @@ declare type TextProps = {
   desktopLineHeight?: string | number,
   letterSpacing?: number,
 };
-declare var Text: React.ComponentType<TextProps>;
+declare export var Text: React.ComponentType<TextProps>;
 declare type LightProps = {
  ...$Exact<TextPresetProps>,
  light: boolean,
