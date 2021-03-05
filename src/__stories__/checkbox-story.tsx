@@ -63,7 +63,7 @@ export const Default: StoryComponent = () => {
             </>
             <>
                 <SectionTitle id="label">Disabled</SectionTitle>
-                <Checkbox name="uncontrolled-render" checked={checked} onChange={onChange} disabled>
+                <Checkbox name="disabled-children" checked={checked} onChange={onChange} disabled>
                     You accept to sell your soul
                 </Checkbox>
             </>
