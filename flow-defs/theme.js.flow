@@ -5,7 +5,8 @@ import type { RegionCode } from "./utils/region-code";
 import type { Locale } from "./utils/locale";
 import type { Skin, Colors, SkinName } from "./skins/types";
 import type { TrackingEvent } from "./utils/types";
-declare export var texts: {
+export type ThemeTexts = typeof TEXTS_ES;
+declare var TEXTS_ES: {
   expirationDatePlaceholder: string,
   togglePasswordVisibilityLabel: string,
   loading: string,
@@ -29,6 +30,7 @@ declare export var texts: {
   closeButtonLabel: string,
   formSearchClear: string,
 };
+declare export var getTexts: (locale: Locale) => typeof TEXTS_ES;
 declare export var dimensions: {
   headerMobileHeight: number,
 };
@@ -38,7 +40,6 @@ declare export var mediaQueriesConfig: {
   largeDesktopMinWidth: number,
   desktopOrTabletMinHeight: number,
 };
-export type ThemeTexts = typeof texts;
 declare type LinkComponent = React.ComponentType<{
   style?: CssStyle,
   className?: string,
@@ -79,7 +80,7 @@ export type ThemeConfig = {
     insideNovumNativeApp?: boolean,
     userAgent?: string,
   },
-  texts?: $Rest<ThemeTexts, {}>,
+  texts?: $Shape<ThemeTexts>,
   analytics?: {
     logEvent: (trackingEvent: TrackingEvent) => Promise<void>,
   },

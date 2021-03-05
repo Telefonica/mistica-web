@@ -44,6 +44,10 @@ const fixFlowDefinition = (flowFilename) => {
     // `React.Element<P, T>` => `React.Element<T>`
     src = src.replace(/React\.Element<(\w+),\s?(\w+)>/g, 'React.Element<$2>');
 
+    // flowgen replaces `Partial<T>` to `$Rest<T, {}>` which is wrong, this rule fixes that
+    // `$Rest<T, {}>` => `$Shape<T>`
+    src = src.replace(/\$Rest<(\w+),\s*{}>/g, '$Shape<$1>');
+
     // `React.RefObject` => `React.Ref`
     src = src.replace(/React.RefObject/g, 'React.Ref');
 
