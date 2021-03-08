@@ -39,12 +39,14 @@ declare export var useControlProps: <T>(x: {
   value: T | void,
   defaultValue: T | void,
   onChange: ((value: T) => void) | void,
+  disabled?: boolean | void,
 }) => {
   name: string,
   value?: T | void,
   defaultValue?: T | void,
   onChange: (value: T) => void,
   focusableRef: (focusableElement: HTMLDivElement | null) => void,
+  disabled: boolean | void,
 };
 declare export var useFieldProps: (x: {
   name: string,
