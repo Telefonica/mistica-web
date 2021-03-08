@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {SPACE} from './utils/key-codes';
-import {useControlProps} from './form-context';
+import {useControlProps, useForm} from './form-context';
 import IconCheckbox from './icons/icon-checkbox';
 import {createUseStyles} from './jss';
 import {Text6, Inline} from '.';
@@ -41,6 +41,7 @@ const useStyles = createUseStyles(() => ({
 }));
 
 const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
+    const {formStatus} = useForm();
     const classes = useStyles();
     const labelId = useAriaId();
     const {defaultValue, value, onChange, focusableRef} = useControlProps({
@@ -49,6 +50,8 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
         defaultValue: props.defaultChecked,
         onChange: props.onChange,
     });
+
+    const disabled = props.disabled || formStatus === 'sending';
 
     const [checkedState, setCheckedState] = React.useState(!!defaultValue);
 
@@ -72,18 +75,19 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
     const iconCheckbox = <IconCheckbox checked={value ?? checkedState} />;
 
     return (
+        // When the checkbox is disabled, it shouldn't be focusable
         // eslint-disable-next-line jsx-a11y/interactive-supports-focus
         <div
             id={props.id}
             role="checkbox"
             aria-checked={value ?? checkedState}
-            onKeyDown={props.disabled ? undefined : handleKeyDown}
-            onClick={props.disabled ? undefined : handleChange}
-            tabIndex={props.disabled ? undefined : 0}
+            onKeyDown={disabled ? undefined : handleKeyDown}
+            onClick={disabled ? undefined : handleChange}
+            tabIndex={disabled ? undefined : 0}
             ref={focusableRef}
-            className={classnames(classes.checkboxContainer, {[classes.disabled]: props.disabled})}
+            className={classnames(classes.checkboxContainer, {[classes.disabled]: disabled})}
             aria-labelledby={labelId}
-            aria-disabled={props.disabled}
+            aria-disabled={disabled}
         >
             {props.render ? (
                 props.render(iconCheckbox)
