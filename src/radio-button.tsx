@@ -59,7 +59,7 @@ export const useRadioContext = (): RadioContextType => React.useContext(RadioCon
 type PropsRender = {
     value: string;
     id?: string;
-    render?: (radioElement: React.ReactElement<any>, disabled?: boolean) => React.ReactNode;
+    render: (radioElement: React.ReactElement<any>, disabled?: boolean) => React.ReactNode;
     children?: undefined;
 };
 
@@ -109,21 +109,6 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, ...rest}
         </div>
     );
 
-    const renderContent = (): React.ReactNode => {
-        if (rest.render) {
-            return rest.render(radio, disabled);
-        }
-        if (rest.children) {
-            return (
-                <Inline space={16} alignItems="center">
-                    {radio}
-                    {rest.children}
-                </Inline>
-            );
-        }
-        return radio;
-    };
-
     return (
         // eslint-disable-next-line jsx-a11y/interactive-supports-focus
         <span
@@ -138,7 +123,14 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, ...rest}
             onKeyDown={disabled ? undefined : handleKeyDown}
             className={classes.radioButton}
         >
-            {renderContent()}
+            {rest.render ? (
+                rest.render(radio, disabled)
+            ) : (
+                <Inline space={16} alignItems="center">
+                    {radio}
+                    {rest.children}
+                </Inline>
+            )}
         </span>
     );
 };
