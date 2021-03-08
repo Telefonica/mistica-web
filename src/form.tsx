@@ -109,8 +109,13 @@ const Form: React.FC<FormProps> = ({
                 a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1
             );
             elementsWithErrors[0].focus();
-            // polyfilled, see import at the top of this file
-            elementsWithErrors[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});
+            try {
+                // polyfilled, see import at the top of this file
+                elementsWithErrors[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});
+            } catch (e) {
+                // ignore errors
+                // element.scrollIntoView not available in unit test environment
+            }
         }
 
         setFormErrors(errors);
