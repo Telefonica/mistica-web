@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {SPACE} from './utils/key-codes';
-import {useControlProps, useForm} from './form-context';
+import {useControlProps} from './form-context';
 import IconCheckbox from './icons/icon-checkbox';
 import {createUseStyles} from './jss';
 import {Text6, Inline} from '.';
@@ -41,17 +41,15 @@ const useStyles = createUseStyles(() => ({
 }));
 
 const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
-    const {formStatus} = useForm();
     const classes = useStyles();
     const labelId = useAriaId();
-    const {defaultValue, value, onChange, focusableRef} = useControlProps({
+    const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
         value: props.checked,
         defaultValue: props.defaultChecked,
         onChange: props.onChange,
+        disabled: props.disabled,
     });
-
-    const disabled = props.disabled || formStatus === 'sending';
 
     const [checkedState, setCheckedState] = React.useState(!!defaultValue);
 

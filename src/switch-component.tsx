@@ -10,6 +10,7 @@ import {applyAlpha} from './utils/color';
 import debounce from 'lodash/debounce';
 import {SPACE} from './utils/key-codes';
 import {useControlProps} from './form-context';
+import classNames from 'classnames';
 
 const SWITCH_ANIMATION = '0.2s ease-in 0s';
 
@@ -87,6 +88,9 @@ const useStyles = createUseStyles((theme) => {
         container: {
             cursor: 'default',
         },
+        disabled: {
+            opacity: 0.5,
+        },
     };
 });
 
@@ -98,14 +102,16 @@ type Props = {
     defaultChecked?: boolean;
     checked?: boolean;
     onChange?: (value: boolean) => void;
+    disabled?: boolean;
 };
 
 const Switch: React.FC<Props> = (props) => {
-    const {defaultValue, value, onChange, focusableRef} = useControlProps({
+    const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
         value: props.checked,
         defaultValue: props.defaultChecked,
         onChange: props.onChange,
+        disabled: props.disabled,
     });
 
     const [checkedState, setCheckedState] = React.useState(!!defaultValue);
@@ -151,14 +157,17 @@ const Switch: React.FC<Props> = (props) => {
     );
 
     return (
+        // When the switch is disabled, it shouldn't be focusable
+        // eslint-disable-next-line jsx-a11y/interactive-supports-focus
         <span
             role="switch"
             aria-checked={value ?? checkedState}
-            onClick={handleChange}
-            onKeyDown={handleKeyDown}
-            tabIndex={0}
+            onClick={disabled ? undefined : handleChange}
+            onKeyDown={disabled ? undefined : handleKeyDown}
+            tabIndex={disabled ? undefined : 0}
             ref={focusableRef}
-            className={classes.container}
+            className={classNames(classes.container, {[classes.disabled]: disabled})}
+            aria-disabled={disabled}
         >
             {props.render ? <>{props.render(switchEl)}</> : switchEl}
         </span>

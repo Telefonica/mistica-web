@@ -5,6 +5,7 @@ import {getPlatform} from './utils/platform';
 import {SPACE, LEFT, UP, DOWN, RIGHT} from './utils/key-codes';
 import {useControlProps} from './form-context';
 import {combineRefs} from './utils/common';
+import {Inline} from '.';
 
 const useRadioButtonStyles = createUseStyles((theme) => ({
     outerCircle: {
@@ -55,13 +56,21 @@ const RadioContext = React.createContext<RadioContextType>({
 });
 export const useRadioContext = (): RadioContextType => React.useContext(RadioContext);
 
-type Props = {
+type PropsRender = {
     value: string;
     id?: string;
     render?: (radioElement: React.ReactElement<any>, disabled?: boolean) => React.ReactNode;
+    children?: undefined;
 };
 
-const RadioButton: React.FC<Props> = ({value, id, render}) => {
+type PropsChildren = {
+    value: string;
+    id?: string;
+    children?: React.ReactNode;
+    render?: undefined;
+};
+
+const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, ...rest}) => {
     const {disabled, selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
@@ -100,6 +109,21 @@ const RadioButton: React.FC<Props> = ({value, id, render}) => {
         </div>
     );
 
+    const renderContent = (): React.ReactNode => {
+        if (rest.render) {
+            return rest.render(radio, disabled);
+        }
+        if (rest.children) {
+            return (
+                <Inline space={16} alignItems="center">
+                    {radio}
+                    {rest.children}
+                </Inline>
+            );
+        }
+        return radio;
+    };
+
     return (
         // eslint-disable-next-line jsx-a11y/interactive-supports-focus
         <span
@@ -114,7 +138,7 @@ const RadioButton: React.FC<Props> = ({value, id, render}) => {
             onKeyDown={disabled ? undefined : handleKeyDown}
             className={classes.radioButton}
         >
-            {render ? <>{render(radio, disabled)}</> : radio}
+            {renderContent()}
         </span>
     );
 };
@@ -130,11 +154,12 @@ type RadioGroupProps = {
 };
 
 export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
-    const {value, defaultValue, onChange, focusableRef} = useControlProps({
+    const {value, defaultValue, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
         value: props.value,
         defaultValue: props.defaultValue,
         onChange: props.onChange,
+        disabled: props.disabled,
     });
     const [selectedValue, select] = React.useState<string | null>(() => value ?? defaultValue ?? null);
     const [firstRadioValue, setFirstRadioValue] = React.useState<string | null>(null);
@@ -206,7 +231,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
         >
             <RadioContext.Provider
                 value={{
-                    disabled: props.disabled,
+                    disabled,
                     selectedValue,
                     focusableValue,
                     select: handleSelect,
