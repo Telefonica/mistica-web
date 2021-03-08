@@ -45,8 +45,10 @@ const formSnippets = [
     [
         'RadioGroup',
         '<RadioGroup name="juicy-fruit" aria-labelledby="label" defaultValue="banana">\n' +
-            '  <RadioButton value="banana" render={(radio) => <span>Banana {radio}</span>} />\n' +
-            '  <RadioButton value="apple" render={(radio) => <span>Apple {radio}</span>} />\n' +
+            '  <Stack space={16}>\n' +
+            '    <RadioButton value="banana">Banana</RadioButton>\n' +
+            '    <RadioButton value="apple">Apple</RadioButton>\n' +
+            '  </Stack>\n' +
             '</RadioGroup>',
     ],
     [
