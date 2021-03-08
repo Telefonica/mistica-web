@@ -6,6 +6,16 @@ import classnames from 'classnames';
 
 import type {FormStatus, FormErrors, FieldRegistration} from './form-context';
 
+if (
+    process.env.NODE_ENV !== 'test' &&
+    typeof document !== 'undefined' &&
+    !('scrollBehavior' in document.documentElement.style)
+) {
+    // polyfill for element.scrollIntoView
+    // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
+    import('scroll-behavior-polyfill').finally(() => {});
+}
+
 type FormValues = {[name: string]: any};
 
 const useStyles = createUseStyles(() => ({
@@ -99,6 +109,8 @@ const Form: React.FC<FormProps> = ({
                 a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1
             );
             elementsWithErrors[0].focus();
+            // polyfilled, see import at the top of this file
+            elementsWithErrors[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});
         }
 
         setFormErrors(errors);
