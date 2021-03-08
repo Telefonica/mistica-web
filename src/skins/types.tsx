@@ -104,7 +104,6 @@ export type Colors = {
     textButtonSecondary: string;
     textButtonSecondaryDisabled: string;
     textButtonSecondarySelected: string;
-    textButtonSecondaryPressed: string;
     textButtonSecondaryInverse: string;
     textButtonSecondaryInverseDisabled: string;
     textButtonSecondaryInverseSelected: string;

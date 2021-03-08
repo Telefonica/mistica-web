@@ -81,14 +81,13 @@ export const getMovistarSkin: GetSkin = (variant) => {
             textButtonPrimary: palette.white,
             textButtonPrimaryInverse: palette.movistarBlue,
             textButtonPrimaryInverseDisabled: palette.movistarBlueLight30,
-            textButtonPrimaryInverseSelected: palette.movistarBlue, // iOS & Web
+            textButtonPrimaryInverseSelected: palette.movistarBlue,
             textButtonSecondary: palette.movistarGreen,
             textButtonSecondaryDisabled: palette.movistarGreenLight50,
-            textButtonSecondarySelected: palette.movistarGreenDark, // iOS & Web
-            textButtonSecondaryPressed: palette.movistarGreenDark, // Android
+            textButtonSecondarySelected: palette.movistarGreenDark,
             textButtonSecondaryInverse: palette.white,
             textButtonSecondaryInverseDisabled: palette.movistarBlueLight50,
-            textButtonSecondaryInverseSelected: palette.white, // iOS & Web
+            textButtonSecondaryInverseSelected: palette.white,
             textLink: palette.movistarBlue,
             textLinkDanger: palette.pepper,
             textLinkDangerDisabled: palette.pepperLight30,

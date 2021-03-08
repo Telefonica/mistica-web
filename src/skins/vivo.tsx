@@ -78,14 +78,13 @@ export const getVivoSkin: GetSkin = () => {
             textButtonPrimary: palette.white,
             textButtonPrimaryInverse: palette.vivoPurple,
             textButtonPrimaryInverseDisabled: palette.vivoPurpleLight20,
-            textButtonPrimaryInverseSelected: palette.vivoPurple, // iOS & Web
+            textButtonPrimaryInverseSelected: palette.vivoPurple,
             textButtonSecondary: palette.vivoPurple,
             textButtonSecondaryDisabled: palette.vivoPurpleLight20,
-            textButtonSecondarySelected: palette.vivoPurpleDark, // iOS & Web
-            textButtonSecondaryPressed: palette.vivoPurpleDark, // Android
+            textButtonSecondarySelected: palette.vivoPurpleDark,
             textButtonSecondaryInverse: palette.white,
             textButtonSecondaryInverseDisabled: palette.vivoPurpleLight50,
-            textButtonSecondaryInverseSelected: palette.white, // iOS & Web
+            textButtonSecondaryInverseSelected: palette.white,
             textLink: palette.vivoPurple,
             textLinkDanger: palette.pepper,
             textLinkDangerDisabled: palette.pepperLight30,

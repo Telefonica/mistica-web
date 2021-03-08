@@ -87,14 +87,13 @@ export const getO2ClassicSkin: GetSkin = () => {
             textButtonPrimary: palette.white,
             textButtonPrimaryInverse: palette.o2SkyBlue,
             textButtonPrimaryInverseDisabled: palette.o2SkyBlueLight30,
-            textButtonPrimaryInverseSelected: palette.o2SkyBlue, // iOS & Web
+            textButtonPrimaryInverseSelected: palette.o2SkyBlue,
             textButtonSecondary: palette.o2SkyBlue,
             textButtonSecondaryDisabled: palette.o2SkyBlueLight50,
-            textButtonSecondarySelected: palette.o2SkyBlueDark, // iOS & Web
-            textButtonSecondaryPressed: palette.o2SkyBlueDark, // Android
+            textButtonSecondarySelected: palette.o2SkyBlueDark,
             textButtonSecondaryInverse: palette.white,
             textButtonSecondaryInverseDisabled: palette.o2SkyBlueLight50,
-            textButtonSecondaryInverseSelected: palette.white, // iOS & Web
+            textButtonSecondaryInverseSelected: palette.white,
             textLink: palette.o2SkyBlue,
             textLinkDanger: palette.pepper,
             textLinkDangerDisabled: palette.pepperLight30,
