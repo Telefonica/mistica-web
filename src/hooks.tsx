@@ -127,45 +127,6 @@ export const useElementDimensions = (): {
     return {width, height, ref};
 };
 
-/** @deprecated this hook is unreliable, use useElementDimensions */
-export const useElementSize = (elementRef: {
-    current: HTMLElement | null;
-}): {height: number; width: number} => {
-    const [size, setSize] = React.useState({width: 0, height: 0});
-
-    // WARN: don't use a layout effect here, because it breaks page transitions (switch-transition.js)
-    React.useEffect(() => {
-        const element = elementRef.current;
-        if (!element) {
-            return () => {};
-        }
-
-        const update = () => {
-            setSize({height: element.offsetHeight, width: element.offsetWidth});
-        };
-
-        let cancel = false;
-        const observerPromise = getResizeObserverPromise().then((ResizeObserver) => {
-            if (cancel || !ResizeObserver) {
-                return null;
-            }
-
-            const observer = new ResizeObserver(update);
-            observer.observe(element);
-            return observer;
-        });
-
-        update();
-
-        return () => {
-            cancel = true;
-            observerPromise.then((observer) => observer?.disconnect());
-        };
-    }, [elementRef]);
-
-    return size;
-};
-
 export const useAriaId = (id?: string): string => {
     const getAriaId = React.useContext(AriaIdGetterContext);
     return React.useRef(id || getAriaId()).current;

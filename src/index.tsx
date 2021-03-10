@@ -30,8 +30,6 @@ export {confirm, alert} from './dialog';
 export {default as Badge} from './badge';
 export {default as TextLink} from './text-link';
 export {default as Overlay} from './overlay';
-/** @deprecated This component will be removed on the next major mistica release */
-export {default as Tooltip} from './tooltip';
 export {default as Stack} from './stack';
 export {default as Box} from './box';
 export {Header, HeaderLayout, MainSectionHeader, MainSectionHeaderLayout} from './header';
@@ -87,8 +85,6 @@ export {default as Circle} from './circle';
 export {
     useTheme,
     useScreenSize,
-    /** @deprecated */
-    useElementSize,
     useElementDimensions,
     useAriaId,
     useWindowSize,
@@ -120,11 +116,6 @@ if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
         window.__mistica_version__ = PACKAGE_VERSION;
     }
 }
-
-/** @deprecated Added for backwards compatibility. Will be removed in next major release */
-export {default as IconInfomationRegular} from './generated/mistica-icons/icon-information-regular';
-/** @deprecated Added for backwards compatibility. Will be removed in next major release */
-export {default as IconFlechaAdelanteRegular} from './generated/mistica-icons/icon-arrow-forward-regular';
 
 // Exported this way to facilitate tree-shaking
 export {default as IconAcademicFilled} from './generated/mistica-icons/icon-academic-filled';
