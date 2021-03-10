@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Inline, Text5, Text7, Text8, createUseStyles, useTheme, ButtonPrimary, ButtonLink, Box} from '.';
+import {Inline, Text4, Text2, Text1, createUseStyles, useTheme, ButtonPrimary, ButtonLink, Box} from '.';
 import PromoTag from './promo-tag';
 import Stack from './stack';
 
@@ -46,20 +46,20 @@ const CardContent: React.FC<CardContentProps> = ({
                             {headline && <PromoTag>{headline}</PromoTag>}
                             {pretitle && (
                                 <Box paddingTop={4}>
-                                    <Text8 regular uppercase>
+                                    <Text1 regular uppercase>
                                         {pretitle}
-                                    </Text8>
+                                    </Text1>
                                 </Box>
                             )}
-                            <Text5 as="h1" light>
+                            <Text4 as="h1" light>
                                 {title}
-                            </Text5>
-                            <Text7 regular>{subtitle}</Text7>
+                            </Text4>
+                            <Text2 regular>{subtitle}</Text2>
                         </Stack>
                     </header>
-                    <Text7 as="p" regular color={theme.colors.textSecondary}>
+                    <Text2 as="p" regular color={theme.colors.textSecondary}>
                         {description}
-                    </Text7>
+                    </Text2>
                 </Stack>
                 {body && <div>{body}</div>}
             </Stack>

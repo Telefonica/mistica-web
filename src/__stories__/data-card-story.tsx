@@ -6,7 +6,7 @@ import {
     ButtonPrimary,
     ButtonLink,
     Inline,
-    Text7,
+    Text2,
     createUseStyles,
     ResponsiveLayout,
     IconAcademicLight,
@@ -140,10 +140,10 @@ export const Group: StoryComponent = () => {
     return (
         <ResponsiveLayout>
             <Stack space={16}>
-                <Text7 regular>
+                <Text2 regular>
                     We can group multiple cards and they adjust to the same height. The card actions are
                     always fixed on bottom:
-                </Text7>
+                </Text2>
                 <Inline space={16} className={classes.group}>
                     <DataCard
                         headline="headline"

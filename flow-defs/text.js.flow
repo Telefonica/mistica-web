@@ -63,15 +63,16 @@ declare type RegularProps = {
  ...$Exact<TextPresetProps>,
  regular: boolean,
 };
-declare type LightMediumProps = LightProps | MediumProps;
 declare type RegularMediumProps = RegularProps | MediumProps;
 declare type LightRegularMediumProps = LightProps | RegularProps | MediumProps;
-declare export var Text1: React.ComponentType<TextPresetProps>;
-declare export var Text2: React.ComponentType<TextPresetProps>;
-declare export var Text3: React.ComponentType<TextPresetProps>;
-declare export var Text4: React.ComponentType<TextPresetProps>;
-declare export var Text5: React.ComponentType<LightMediumProps>;
-declare export var Text6: React.ComponentType<LightRegularMediumProps>;
-declare export var Text7: React.ComponentType<RegularMediumProps>;
-declare export var Text8: React.ComponentType<RegularMediumProps>;
+declare export var Text10: React.ComponentType<TextPresetProps>;
+declare export var Text9: React.ComponentType<TextPresetProps>;
+declare export var Text8: React.ComponentType<TextPresetProps>;
+declare export var Text7: React.ComponentType<TextPresetProps>;
+declare export var Text6: React.ComponentType<TextPresetProps>;
+declare export var Text5: React.ComponentType<TextPresetProps>;
+declare export var Text4: React.ComponentType<LightRegularMediumProps>;
+declare export var Text3: React.ComponentType<LightRegularMediumProps>;
+declare export var Text2: React.ComponentType<RegularMediumProps>;
+declare export var Text1: React.ComponentType<RegularMediumProps>;
 declare export default typeof Text;

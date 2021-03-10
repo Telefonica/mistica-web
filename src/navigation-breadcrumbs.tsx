@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Text8} from './text';
+import {Text1} from './text';
 import {useTheme} from './hooks';
 
 const BREADCRUMB_SEPARATOR = ' / ';
@@ -20,14 +20,14 @@ const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({title, bre
             {breadcrumbs.map(({title, url}, index) => (
                 <React.Fragment key={index}>
                     <Link style={{textDecoration: 'none'}} to={url}>
-                        <Text8 regular>{title}</Text8>
+                        <Text1 regular>{title}</Text1>
                     </Link>
-                    <Text8 regular>{BREADCRUMB_SEPARATOR}</Text8>
+                    <Text1 regular>{BREADCRUMB_SEPARATOR}</Text1>
                 </React.Fragment>
             ))}
-            <Text8 regular color={theme.colors.textSecondary}>
+            <Text1 regular color={theme.colors.textSecondary}>
                 {title}
-            </Text8>
+            </Text1>
         </div>
     );
 };

@@ -11,7 +11,7 @@ import {
     CreditCardExpirationField,
     CvvField,
     Switch,
-    Text7,
+    Text2,
     Checkbox,
     Inline,
 } from '..';
@@ -90,7 +90,7 @@ export const ManualForm: StoryComponent = () => {
                     render={(switchElement) => (
                         <Inline alignItems="center" space={8}>
                             {switchElement}
-                            <Text7 regular>Save CC</Text7>
+                            <Text2 regular>Save CC</Text2>
                         </Inline>
                     )}
                 />
@@ -101,7 +101,7 @@ export const ManualForm: StoryComponent = () => {
                     render={(checkboxElement) => (
                         <Inline alignItems="center" space={8}>
                             {checkboxElement}
-                            <Text7 regular>Accept Terms and Conditions</Text7>
+                            <Text2 regular>Accept Terms and Conditions</Text2>
                         </Inline>
                     )}
                 />

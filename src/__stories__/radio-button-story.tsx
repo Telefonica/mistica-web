@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, SectionTitle, RadioGroup, RadioButton, Inline, Text6, IconHandLeftRegular} from '..';
+import {Stack, SectionTitle, RadioGroup, RadioButton, Inline, Text3, IconHandLeftRegular} from '..';
 
 export default {
     title: 'Components/Forms/RadioButton',
@@ -14,10 +14,10 @@ export const Default: StoryComponent = () => {
                 <RadioGroup name="juicy-fruit" aria-labelledby="label" value={value} onChange={setValue}>
                     <Stack space={16}>
                         <RadioButton value="banana">
-                            <Text6 regular>Banana</Text6>
+                            <Text3 regular>Banana</Text3>
                         </RadioButton>
                         <RadioButton value="apple">
-                            <Text6 regular>Apple</Text6>
+                            <Text3 regular>Apple</Text3>
                         </RadioButton>
                     </Stack>
                 </RadioGroup>
@@ -30,7 +30,7 @@ export const Default: StoryComponent = () => {
                             value="banana"
                             render={() => (
                                 <Inline space={16}>
-                                    <Text6 regular>Banana</Text6>
+                                    <Text3 regular>Banana</Text3>
                                     {value === 'banana' && <IconHandLeftRegular size={20} />}
                                 </Inline>
                             )}
@@ -39,7 +39,7 @@ export const Default: StoryComponent = () => {
                             value="apple"
                             render={() => (
                                 <Inline space={16}>
-                                    <Text6 regular>Apple</Text6>
+                                    <Text3 regular>Apple</Text3>
                                     {value === 'apple' && <IconHandLeftRegular size={20} />}
                                 </Inline>
                             )}
@@ -58,10 +58,10 @@ export const Default: StoryComponent = () => {
                 >
                     <Stack space={16}>
                         <RadioButton value="banana">
-                            <Text6 regular>Banana</Text6>
+                            <Text3 regular>Banana</Text3>
                         </RadioButton>
                         <RadioButton value="apple">
-                            <Text6 regular>Apple</Text6>
+                            <Text3 regular>Apple</Text3>
                         </RadioButton>
                     </Stack>
                 </RadioGroup>

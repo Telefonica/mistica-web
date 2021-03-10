@@ -6,12 +6,11 @@ import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {pxToRem} from './utils/css';
-import {getPlatform} from './utils/platform';
 
 import type {TrackingEvent} from './utils/types';
 import type {Location} from 'history';
 import type {Theme} from './theme';
-import {Box, Text6, Text7, Text} from '.';
+import {Box, Text3, Text2, Text} from '.';
 
 export const BUTTON_MIN_WIDTH = 156;
 
@@ -289,7 +288,6 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
     const {classes, loadingText} = props;
     const isSubmitButton = !!props.submit;
     const isFormSending = formStatus === 'sending';
-    const isIos = getPlatform() === 'ios';
 
     const showSpinner = props.showSpinner || (isFormSending && isSubmitButton);
 
@@ -309,21 +307,13 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
 
     const renderText = (text: React.ReactNode) =>
         props.small ? (
-            <Text
-                size={14}
-                lineHeight={20}
-                weight="medium"
-                truncate={1}
-                color="inherit"
-                as="div"
-                letterSpacing={isIos ? -0.15 : 0}
-            >
+            <Text size={14} lineHeight={20} weight="medium" truncate={1} color="inherit" as="div">
                 {text}
             </Text>
         ) : (
-            <Text6 medium truncate={1} color="inherit" as="div">
+            <Text3 medium truncate={1} color="inherit" as="div">
                 {text}
-            </Text6>
+            </Text3>
         );
 
     const commonProps = {
@@ -486,9 +476,9 @@ export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
         trackingEvent: props.trackingEvent,
         'data-testid': props['data-testid'],
         children: (
-            <Text7 medium truncate={1} color="inherit">
+            <Text2 medium truncate={1} color="inherit">
                 {props.children}
-            </Text7>
+            </Text2>
         ),
     };
 

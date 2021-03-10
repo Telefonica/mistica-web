@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {createUseStyles} from './jss';
-import {Text7, Text8} from './text';
+import {Text2, Text1} from './text';
 import {useTheme, useScreenSize, useElementDimensions} from './hooks';
 import IconSuccess from './icons/icon-success';
 
@@ -182,7 +182,6 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
     const {height, ref} = useElementDimensions();
     const textContainerHeight = height;
     const classes = useStyles({isDesktopOrBigger, textContainerHeight});
-
     const previousIndexRef = React.useRef(currentIndex);
     const isBack = previousIndexRef.current > currentIndex;
 
@@ -226,18 +225,18 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                                         [classes.currentNumber]: isCurrent || isCurrent,
                                     })}
                                 >
-                                    <Text8
+                                    <Text1
                                         medium
                                         color={isCurrent ? colors.textPrimaryInverse : colors.textSecondary}
                                         role="presentation"
                                     >
                                         {index + 1}
-                                    </Text8>
+                                    </Text1>
                                 </div>
                             )}
                             {isDesktopOrBigger && (
                                 <div className={classes.textContainer} ref={ref}>
-                                    <Text7
+                                    <Text2
                                         regular
                                         color={
                                             isCompleted || isCurrent
@@ -247,7 +246,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                                         role="presentation"
                                     >
                                         {text}
-                                    </Text7>
+                                    </Text2>
                                 </div>
                             )}
                         </div>

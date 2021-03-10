@@ -7,7 +7,7 @@ import ResponsiveLayout from './responsive-layout';
 import GridLayout from './grid-layout';
 import {useScreenSize, useTheme} from './hooks';
 import OverscrollColor from './overscroll-color-context';
-import {Text1, Text2, Text3, Text6} from './text';
+import {Text8, Text7, Text6, Text3} from './text';
 import NavigationBreadcrumbs from './navigation-breadcrumbs';
 import {ButtonPrimary, ButtonSecondary} from './button';
 
@@ -80,16 +80,16 @@ export const Header: React.FC<HeaderProps> = ({
     const renderRichText = (richText: RichText, notOverridableProps: Omit<TextPresetProps, 'children'>) => {
         if (typeof richText === 'string') {
             return (
-                <Text6 regular {...notOverridableProps}>
+                <Text3 regular {...notOverridableProps}>
                     {richText}
-                </Text6>
+                </Text3>
             );
         }
         const {text, ...textProps} = richText;
         return (
-            <Text6 regular {...textProps} {...notOverridableProps}>
+            <Text3 regular {...textProps} {...notOverridableProps}>
                 {richText.text}
-            </Text6>
+            </Text3>
         );
     };
 
@@ -102,9 +102,9 @@ export const Header: React.FC<HeaderProps> = ({
                             truncate: true,
                             color: theme.colors.textPrimary,
                         })}
-                    <Text3 role="heading" aria-level={2}>
+                    <Text6 role="heading" aria-level={2}>
                         {title}
-                    </Text3>
+                    </Text6>
                 </Stack>
             )}
             {(preamount || amount || button || subtitle) && (
@@ -116,7 +116,7 @@ export const Header: React.FC<HeaderProps> = ({
                                     truncate: true,
                                     color: theme.colors.textPrimary,
                                 })}
-                            <Text1
+                            <Text8
                                 truncate
                                 color={
                                     isErrorAmount && !isInverse
@@ -125,7 +125,7 @@ export const Header: React.FC<HeaderProps> = ({
                                 }
                             >
                                 {amount}
-                            </Text1>
+                            </Text8>
                         </Stack>
                     )}
                     {(button || secondaryButton) &&
@@ -160,11 +160,11 @@ export const MainSectionHeader: React.FC<MainSectionHeaderProps> = ({title, desc
         <Stack space={32}>
             <Stack space={isMobile ? 12 : 16}>
                 {title && (
-                    <Text2 role="heading" aria-level={1} truncate>
+                    <Text7 role="heading" aria-level={1} truncate>
                         {title}
-                    </Text2>
+                    </Text7>
                 )}
-                {description && <Text3>{description}</Text3>}
+                {description && <Text6>{description}</Text6>}
             </Stack>
             {button}
         </Stack>

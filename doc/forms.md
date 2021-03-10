@@ -5,20 +5,18 @@
 - [Form example](#form-example)
   - [Important notes](#important-notes)
 - [Form fields](#form-fields)
-  - [CreditCardFields](#formcreditcardfields)
-  - [CreditCardNumberField](#formcreditcardnumberfield)
-  - [CreditCardExpirationField](#formcreditcardexpirationfield)
-  - [CvvField](#formcvvfield)
-  - [DateField](#formdatefield)
-  - [DecimalField](#formdecimalfield)
-  - [IntegerField](#formintegerfield)
-  - [PasswordField](#formpasswordfield)
-  - [EmailField](#formemailfield)
-  - [Select](#formselect)
-  - [PhoneNumberField](#formphonenumberfield)
-  - [<strike>TextField (deprecated)</strike>](#strikeformtextfield-deprecatedstrike)
+  - [CreditCardFields](#creditcardfields)
+  - [CreditCardNumberField](#creditcardnumberfield)
+  - [CreditCardExpirationField](#creditcardexpirationfield)
+  - [CvvField](#cvvfield)
+  - [DateField](#datefield)
+  - [DecimalField](#decimalfield)
+  - [IntegerField](#integerfield)
+  - [PasswordField](#passwordfield)
+  - [EmailField](#emailfield)
+  - [Select](#select)
+  - [PhoneNumberField](#phonenumberfield)
 - [DoubleField](#doublefield)
-- [<strike>Primitive fields (deprecated)</strike>](#strikeprimitive-fields-deprecatedstrike)
 - [useForm Hook](#useform-hook)
 
 <!-- /TOC -->
@@ -151,16 +149,6 @@ To enter phone numbers
 - Uses Google's `libphonenumber` library to format numbers as you type (uses `locale` from theme context to
   format numbers accordingly)
 
-### <strike>TextField (deprecated)</strike>
-
-This field accepts a `type` prop to change its behavior
-
-- `text`: this is the default
-- `password`: to enter passwords, with an "eye" icon to show/hide password
-- `integer`: only accepts integer numbers. Uses an integer keypad on mobile
-- `decimal`: only allows decimal numbers. Uses a decimal keypad on mobile
-- `date`: for dates
-
 ## DoubleField
 
 Use this component to place two fields at the same row
@@ -171,14 +159,6 @@ Use this component to place two fields at the same row
   <TextField name="bar" label="Bar" />
 </DoubleField>
 ```
-
-## <strike>Primitive fields (deprecated)</strike>
-
-Usage of the following components is discouraged and future versions of this library will remove them
-
-- `TextField`
-- `PhoneInput`
-- `Select`
 
 ## useForm Hook
 

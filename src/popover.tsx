@@ -3,7 +3,6 @@ import {createUseStyles} from './jss';
 import IcnClose from './icons/icon-close';
 import IconButton from './icon-button';
 import {useTheme, useScreenSize} from './hooks';
-import {getPlatform} from './utils/platform';
 
 import type {TrackingEvent} from './utils/types';
 
@@ -61,7 +60,6 @@ const useStyles = createUseStyles((theme) => ({
         fontWeight: 500,
         lineHeight: 1.5,
         fontSize: 16,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.32 : undefined,
     },
 
     boxContainer: {
@@ -92,7 +90,6 @@ const useStyles = createUseStyles((theme) => ({
         textAlign: 'left',
         lineHeight: 1.42857142,
         fontSize: 14,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? -0.15 : undefined,
     },
 
     closeButtonIcon: {

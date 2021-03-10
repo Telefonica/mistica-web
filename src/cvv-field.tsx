@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {getPlatform} from './utils/platform';
 import {useTheme} from './hooks';
 import IconCvvVisaMc from './icons/icon-cvv-visa-mc';
 import IconCvvAmex from './icons/icon-cvv-amex';
@@ -21,7 +20,6 @@ const useStyles = createUseStyles((theme) => ({
         color: theme.colors.textPrimary,
         lineHeight: 1.42857142,
         fontSize: 14,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? 1.42857142 : 'normal',
     },
     tooltipContainer: {
         display: 'flex',

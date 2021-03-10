@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useWindowSize, useTheme, Stack, Text7} from '..';
+import {useWindowSize, useTheme, Stack, Text2} from '..';
 
 export default {
     title: 'Hooks/useWindowSize',
@@ -10,9 +10,9 @@ export const UseWindowSize: StoryComponent = () => {
     const size = useWindowSize();
     return (
         <Stack space={16}>
-            <Text7 regular color={theme.colors.textSecondary}>
+            <Text2 regular color={theme.colors.textSecondary}>
                 Resize the window
-            </Text7>
+            </Text2>
             <pre style={{fontFamily: 'monospace'}}>{JSON.stringify(size, null, 2)}</pre>
         </Stack>
     );
