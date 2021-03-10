@@ -15,7 +15,6 @@ export const Default: StoryComponent = () => {
         'When working on a project and the customer has not yet delivered the copy, something is missing...';
     return (
         <StorySection title="Tooltip">
-            <DeprecationWarning />
             <strong>Desktop examples:</strong>
             <div
                 style={{
