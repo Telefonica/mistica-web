@@ -156,8 +156,6 @@ const getRegularOrMediumWeight = (props: RegularMediumProps) =>
 const getWeight = (props: LightRegularMediumProps) =>
     (props.light && 'light') || (props.regular && 'regular') || (props.medium && 'medium');
 
-const isIos = getPlatform() === 'ios';
-
 export const Text10: React.FC<TextPresetProps> = (props) => (
     <Text
         mobileSize={32}
@@ -165,7 +163,6 @@ export const Text10: React.FC<TextPresetProps> = (props) => (
         desktopSize={64}
         desktopLineHeight="72px"
         weight="light"
-        // letterSpacing=TODO: define iOS letter spacing for this preset
         {...props}
     >
         {props.children}
@@ -179,7 +176,6 @@ export const Text9: React.FC<TextPresetProps> = (props) => (
         desktopSize={56}
         desktopLineHeight="64px"
         weight="light"
-        // letterSpacing=TODO: define iOS letter spacing for this preset
         {...props}
     >
         {props.children}
@@ -193,7 +189,6 @@ export const Text8: React.FC<TextPresetProps> = (props) => (
         desktopSize={40}
         desktopLineHeight="48px"
         weight="light"
-        letterSpacing={isIos ? 0.41 : 0}
         {...props}
     >
         {props.children}
@@ -207,7 +202,6 @@ export const Text7: React.FC<TextPresetProps> = (props) => (
         desktopSize={40}
         desktopLineHeight="48px"
         weight="light"
-        letterSpacing={isIos ? 0.38 : 0}
         {...props}
     >
         {props.children}
@@ -221,7 +215,6 @@ export const Text6: React.FC<TextPresetProps> = (props) => (
         desktopSize={32}
         desktopLineHeight="40px"
         weight="light"
-        letterSpacing={isIos ? 0.07 : 0}
         {...props}
     >
         {props.children}
@@ -235,7 +228,6 @@ export const Text5: React.FC<TextPresetProps> = (props) => (
         desktopSize={28}
         desktopLineHeight="32px"
         weight="light"
-        letterSpacing={isIos ? -0.26 : 0}
         {...props}
     >
         {props.children}
@@ -249,7 +241,6 @@ export const Text4: React.FC<LightRegularMediumProps> = (props) => (
         desktopSize={20}
         desktopLineHeight="28px"
         weight={getWeight(props)}
-        letterSpacing={isIos ? -0.44 : 0}
         {...props}
     >
         {props.children}
@@ -257,14 +248,7 @@ export const Text4: React.FC<LightRegularMediumProps> = (props) => (
 );
 
 export const Text3: React.FC<LightRegularMediumProps> = (props) => (
-    <Text
-        mobileSize={16}
-        desktopSize={18}
-        lineHeight="24px"
-        weight={getWeight(props)}
-        letterSpacing={isIos ? -0.31 : 0}
-        {...props}
-    >
+    <Text mobileSize={16} desktopSize={18} lineHeight="24px" weight={getWeight(props)} {...props}>
         {props.children}
     </Text>
 );
@@ -276,7 +260,6 @@ export const Text2: React.FC<RegularMediumProps> = (props) => (
         desktopSize={16}
         desktopLineHeight="24px"
         weight={getRegularOrMediumWeight(props)}
-        letterSpacing={isIos ? -0.15 : 0}
         {...props}
     >
         {props.children}

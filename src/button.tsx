@@ -310,15 +310,7 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
 
     const renderText = (text: React.ReactNode) =>
         props.small ? (
-            <Text
-                size={14}
-                lineHeight={20}
-                weight="medium"
-                truncate={1}
-                color="inherit"
-                as="div"
-                letterSpacing={isIos ? -0.15 : 0}
-            >
+            <Text size={14} lineHeight={20} weight="medium" truncate={1} color="inherit" as="div">
                 {text}
             </Text>
         ) : (
