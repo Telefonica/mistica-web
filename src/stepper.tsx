@@ -182,7 +182,6 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
     const {height, ref} = useElementDimensions();
     const textContainerHeight = height;
     const classes = useStyles({isDesktopOrBigger, textContainerHeight});
-
     const previousIndexRef = React.useRef(currentIndex);
     const isBack = previousIndexRef.current > currentIndex;
 
