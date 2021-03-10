@@ -11,8 +11,5 @@ declare type Props = {
   width?: number,
   targetLabel: string,
 };
-/**
- * @deprecated This component will be removed on the next major mistica release
- */
 declare var Tooltip: React.ComponentType<Props>;
 declare export default typeof Tooltip;
