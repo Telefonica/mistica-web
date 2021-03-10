@@ -30,6 +30,7 @@ export {confirm, alert} from './dialog';
 export {default as Badge} from './badge';
 export {default as TextLink} from './text-link';
 export {default as Overlay} from './overlay';
+export {default as Tooltip} from './tooltip';
 export {default as Stack} from './stack';
 export {default as Box} from './box';
 export {Header, HeaderLayout, MainSectionHeader, MainSectionHeaderLayout} from './header';

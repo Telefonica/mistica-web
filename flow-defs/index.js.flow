@@ -41,6 +41,7 @@ declare export { confirm, alert } from "./dialog";
 declare export { default as Badge } from "./badge";
 declare export { default as TextLink } from "./text-link";
 declare export { default as Overlay } from "./overlay";
+declare export { default as Tooltip } from "./tooltip";
 declare export { default as Stack } from "./stack";
 declare export { default as Box } from "./box";
 declare export {
