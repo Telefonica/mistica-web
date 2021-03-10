@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Tooltip from '../tooltip';
-import {DeprecationWarning, StorySection} from './helpers';
+import {StorySection} from './helpers';
 import IcnClose from '../icons/icon-close';
 import IcnInfo from '../icons/icon-info-cvv';
 import IconVisa from '../icons/icon-visa';
