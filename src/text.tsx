@@ -165,7 +165,7 @@ export const Text10: React.FC<TextPresetProps> = (props) => (
         desktopSize={64}
         desktopLineHeight="72px"
         weight="light"
-        // letterSpacing=TODO: define letter iOS spacing for this preset
+        // letterSpacing=TODO: define iOS letter spacing for this preset
         {...props}
     >
         {props.children}
@@ -179,7 +179,7 @@ export const Text9: React.FC<TextPresetProps> = (props) => (
         desktopSize={56}
         desktopLineHeight="64px"
         weight="light"
-        // letterSpacing=TODO: define letter iOS spacing for this preset
+        // letterSpacing=TODO: define iOS letter spacing for this preset
         {...props}
     >
         {props.children}
