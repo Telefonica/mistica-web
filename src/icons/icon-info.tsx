@@ -5,7 +5,7 @@ import {O2_SKIN, O2_CLASSIC_SKIN} from '../skins/constants';
 
 const useStyles = createUseStyles((theme) => ({
     iconContainer: {
-        fill: theme.colors.iconTertiary,
+        fill: theme.colors.brand,
     },
 }));
 

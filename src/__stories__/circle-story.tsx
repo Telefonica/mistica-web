@@ -14,7 +14,7 @@ export const Default: StoryComponent = () => {
                 <Circle size={32} backgroundColor="red" />
             </div>
             <div data-testid="circle-with-icon">
-                <Circle size={40} backgroundColor={colors.iconDisabled}>
+                <Circle size={40} backgroundColor={colors.neutralLow}>
                     <IconAcademicLight />
                 </Circle>
             </div>

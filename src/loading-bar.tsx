@@ -88,10 +88,10 @@ const useStyles = createUseStyles((theme) => ({
         backgroundColor: theme.colors.loadingBarBackgroundInverse,
     },
     light: {
-        backgroundColor: theme.colors.loadingBarPrimary,
+        backgroundColor: theme.colors.loadingBar,
     },
     inverse: {
-        backgroundColor: theme.colors.loadingBarPrimaryInverse,
+        backgroundColor: theme.colors.loadingBarInverse,
     },
 }));
 

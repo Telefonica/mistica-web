@@ -67,8 +67,8 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         borderRadius: '50%',
     },
     currentNumber: {
-        background: colors.primary,
-        borderColor: colors.primary,
+        background: colors.controlActivated,
+        borderColor: colors.controlActivated,
         animation: '$currentNumber .3s ease-in-out',
         willChange: 'border-color, background-color',
         transition: 'border-color .3s ease-in-out, background-color .3s ease-in-out',
@@ -110,7 +110,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     barFilled: {
         height: 4,
         width: '100%',
-        background: colors.primary,
+        background: colors.controlActivated,
         borderRadius: 20,
         overflow: 'hidden',
     },
@@ -147,8 +147,8 @@ const useStyles = createUseStyles(({colors, mq}) => ({
             backgroundColor: 'transparent',
         },
         '100%': {
-            borderColor: colors.primary,
-            backgroundColor: colors.primary,
+            borderColor: colors.controlActivated,
+            backgroundColor: colors.controlActivated,
         },
     },
     '@keyframes currentNumberText': {
@@ -156,16 +156,16 @@ const useStyles = createUseStyles(({colors, mq}) => ({
             color: colors.textSecondary,
         },
         '100%': {
-            color: colors.textPrimarySpecial,
+            color: colors.textPrimaryInverse,
         },
     },
     '@keyframes stepIcon': {
         '0%': {
-            backgroundColor: colors.primary,
+            backgroundColor: colors.controlActivated,
             transform: 'scale(1)',
         },
         '100%': {
-            backgroundColor: colors.primary,
+            backgroundColor: colors.controlActivated,
             transform: 'scale(0)',
         },
     },
@@ -214,7 +214,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                                     })}
                                 >
                                     <IconSuccess
-                                        color={colors.primary}
+                                        color={colors.controlActivated}
                                         size="100%"
                                         skipAnimation={!hasAnimation || isBack}
                                     />
@@ -227,7 +227,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                                 >
                                     <Text1
                                         medium
-                                        color={isCurrent ? colors.textPrimarySpecial : colors.textSecondary}
+                                        color={isCurrent ? colors.textPrimaryInverse : colors.textSecondary}
                                         role="presentation"
                                     >
                                         {index + 1}

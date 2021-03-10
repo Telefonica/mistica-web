@@ -3,7 +3,6 @@ import {createUseStyles} from './jss';
 import {getPlatform} from './utils/platform';
 import FadeIn from './fade-in';
 import {useAriaId, useTheme} from './hooks';
-import {MOVISTAR_SKIN} from './skins/constants';
 
 const useStyles = createUseStyles(() => ({
     spinnerDefault: {
@@ -70,8 +69,8 @@ type Props = {
 };
 
 const Spinner: React.FC<Props> = ({color, delay = '500ms', size = 24, style, rolePresentation}) => {
-    const {texts, platformOverrides, colors, skinName} = useTheme();
-    color = color || (skinName === MOVISTAR_SKIN ? colors.controlActive : colors.iconAccent);
+    const {texts, platformOverrides, colors} = useTheme();
+    color = color || colors.controlActivated;
     const classes = useStyles();
     const spinnerId = useAriaId();
     const withTitle = !rolePresentation;

@@ -40,7 +40,7 @@ const useStylesModalDialog = createUseStyles((theme) => ({
         justifyContent: 'center',
         minHeight: 0,
         minWidth: 0,
-        background: theme.colors.backgroundOpacity,
+        background: theme.colors.backgroundOverlay,
         animation: '$fadeIn .2s ease-in-out',
         transition: 'opacity .2s ease-in-out',
 
@@ -347,7 +347,7 @@ const ModalDialog = (props: ModalDialogProps) => {
                                         onPress={handleClose}
                                         label={context.texts.modalClose ?? context.texts.closeButtonLabel}
                                     >
-                                        <IcnClose color={context.colors.iconPrimary} />
+                                        <IcnClose color={context.colors.neutralHigh} />
                                     </IconButton>
                                 </div>
                                 <Dialog {...dialogProps} />

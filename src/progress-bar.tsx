@@ -6,12 +6,12 @@ const transition = '1s cubic-bezier(0.75, 0, 0.27, 1)';
 const useStyles = createUseStyles(({colors}) => ({
     barBackground: {
         height: 4,
-        backgroundColor: colors.chartBackground,
+        backgroundColor: colors.border,
         borderRadius: 2,
     },
     bar: {
         height: '100%',
-        backgroundColor: colors.primary,
+        backgroundColor: colors.brand,
         transition: `max-width ${transition}`,
         animation: `$bar ${transition}`,
         borderRadius: 2,

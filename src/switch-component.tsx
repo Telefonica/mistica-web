@@ -6,7 +6,6 @@ https://github.com/storybookjs/storybook/issues/11980
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {getPlatform} from './utils/platform';
-import {applyAlpha} from './utils/color';
 import debounce from 'lodash/debounce';
 import {SPACE} from './utils/key-codes';
 import {useControlProps} from './form-context';
@@ -50,14 +49,12 @@ const useStyles = createUseStyles((theme) => {
             '&:before': {
                 content: '""',
                 backgroundColor: isIos
-                    ? theme.colors.toggleIosBackgroundActive
+                    ? theme.colors.controlActivated
                     : theme.colors.toggleAndroidBackgroundActive,
             },
             '&:after': {
                 content: '""',
-                backgroundColor: isIos
-                    ? theme.colors.toggleIosBackgroundInactive
-                    : theme.colors.toggleAndroidBackgroundInactive,
+                backgroundColor: theme.colors.control,
             },
         },
         ball: {
@@ -76,15 +73,13 @@ const useStyles = createUseStyles((theme) => {
             margin: -4,
             backgroundColor: ({isChecked}) => {
                 if (isChecked) {
-                    return isIos ? theme.colors.toggleIosInactive : theme.colors.toggleAndroidActive;
+                    return isIos ? theme.colors.toggleIosInactive : theme.colors.controlActivated;
                 }
                 return isIos ? theme.colors.toggleIosInactive : theme.colors.toggleAndroidInactive;
             },
             borderRadius: '50%',
             transition: `all ${SWITCH_ANIMATION}`,
-            boxShadow: isIos
-                ? `1px 2px 4px ${applyAlpha(theme.colors.layerDecorations, 0.3)}`
-                : `1px 1px 2px ${applyAlpha(theme.colors.layerDecorations, 0.3)}`,
+            boxShadow: isIos ? '1px 2px 4px rgba(0, 0, 0, 0.3)' : '1px 1px 2px rgba(0, 0, 0, 0.3)',
         },
         container: {
             cursor: 'default',

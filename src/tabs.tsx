@@ -95,7 +95,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     },
     tabSelected: {
         color: colors.textPrimary,
-        borderBottom: `2px solid ${colors.controlActive}`,
+        borderBottom: `2px solid ${colors.controlActivated}`,
     },
     icon: {
         marginRight: 8,
