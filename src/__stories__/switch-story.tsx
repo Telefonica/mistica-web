@@ -14,7 +14,7 @@ export const Default: StoryComponent = () => {
                 <Switch
                     name="uncontrolled"
                     render={(switchElement) => (
-                        <Inline alignItems="center" space={8}>
+                        <Inline alignItems="center" space={16}>
                             {switchElement}
                             <Text6 regular>Switch</Text6>
                         </Inline>
@@ -28,7 +28,7 @@ export const Default: StoryComponent = () => {
                     checked={checked}
                     onChange={onChange}
                     render={(switchElement) => (
-                        <Inline alignItems="center" space={8}>
+                        <Inline alignItems="center" space={16}>
                             {switchElement}
                             <Text6 regular uppercase>
                                 {checked ? 'on' : 'off'}
@@ -48,13 +48,21 @@ export const Default: StoryComponent = () => {
                     checked={checked}
                     onChange={onChange}
                     render={() => (
-                        <Inline alignItems="center" space={8}>
+                        <Inline alignItems="center" space={16}>
                             <Text6 regular uppercase>
                                 {checked ? 'on' : 'off'}
                             </Text6>
                         </Inline>
                     )}
                 />
+            </>
+            <>
+                <SectionTitle id="label">Disabled</SectionTitle>
+                <Switch name="disabled" checked={checked} onChange={onChange} disabled>
+                    <Text6 regular uppercase>
+                        {checked ? 'on' : 'off'}
+                    </Text6>
+                </Switch>
             </>
         </Stack>
     );

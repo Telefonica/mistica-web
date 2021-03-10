@@ -10,12 +10,17 @@ declare type RadioContextType = {
   selectPrev: () => void,
 };
 declare export var useRadioContext: () => RadioContextType;
-declare type Props = {
+declare type PropsRender = {
   value: string,
   id?: string,
-  render?: (radioElement: React.Element<any>, disabled?: boolean) => React.Node,
+  render: (radioElement: React.Element<any>, disabled?: boolean) => React.Node,
 };
-declare var RadioButton: React.ComponentType<Props>;
+declare type PropsChildren = {
+  value: string,
+  id?: string,
+  children?: React.Node,
+};
+declare var RadioButton: React.ComponentType<PropsRender | PropsChildren>;
 declare type RadioGroupProps = {
   name: string,
   disabled?: boolean,

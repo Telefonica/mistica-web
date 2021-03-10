@@ -49,19 +49,22 @@ export const useControlProps = <T,>({
     value,
     defaultValue,
     onChange,
+    disabled,
 }: {
     name: string;
     value: undefined | T;
     defaultValue: undefined | T;
     onChange: undefined | ((value: T) => void);
+    disabled?: boolean;
 }): {
     name: string;
     value?: T;
     defaultValue?: T;
     onChange: (value: T) => void;
     focusableRef: (focusableElement: HTMLDivElement | null) => void;
+    disabled: boolean | undefined;
 } => {
-    const {setRawValue, setValue, rawValues, setFormError, register} = useForm();
+    const {setRawValue, setValue, rawValues, setFormError, register, formStatus} = useForm();
     const rawChecked = value ?? defaultValue ?? rawValues[name] ?? false;
 
     React.useEffect(() => {
@@ -83,6 +86,7 @@ export const useControlProps = <T,>({
             setFormError({name, error: ''});
             onChange?.(value);
         },
+        disabled: formStatus === 'sending' || disabled,
     };
 };
 

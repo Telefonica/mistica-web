@@ -45,8 +45,10 @@ const formSnippets = [
     [
         'RadioGroup',
         '<RadioGroup name="juicy-fruit" aria-labelledby="label" defaultValue="banana">\n' +
-            '  <RadioButton value="banana" render={(radio) => <span>Banana {radio}</span>} />\n' +
-            '  <RadioButton value="apple" render={(radio) => <span>Apple {radio}</span>} />\n' +
+            '  <Stack space={16}>\n' +
+            '    <RadioButton value="banana">Banana</RadioButton>\n' +
+            '    <RadioButton value="apple">Apple</RadioButton>\n' +
+            '  </Stack>\n' +
             '</RadioGroup>',
     ],
     [
@@ -537,5 +539,11 @@ export default [
         group: 'Stepper',
         name: 'StepperIndeterminate',
         code: '<StepperIndeterminate progress={35} />',
+    },
+    {
+        group: 'NavigationBreadcrumbs',
+        name: 'NavigationBreadcrumbs',
+        code:
+            '<NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: "Cuenta", url: "/consumptions"}]} />',
     },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

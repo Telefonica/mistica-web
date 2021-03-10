@@ -2,12 +2,21 @@
 
 import * as React from "react";
 declare type RenderSwitch = (switchElement: React.Element<any>) => React.Node;
-declare type Props = {
+declare type PropsRender = {
   name: string,
-  render?: RenderSwitch,
   defaultChecked?: boolean,
   checked?: boolean,
   onChange?: (value: boolean) => void,
+  disabled?: boolean,
+  render: RenderSwitch,
 };
-declare var Switch: React.ComponentType<Props>;
+declare type PropsChildren = {
+  name: string,
+  defaultChecked?: boolean,
+  checked?: boolean,
+  onChange?: (value: boolean) => void,
+  disabled?: boolean,
+  children?: React.Node,
+};
+declare var Switch: React.ComponentType<PropsRender | PropsChildren>;
 declare export default typeof Switch;
