@@ -11,15 +11,6 @@ declare export var useElementDimensions: () => {
   height: number,
   ref: (node: HTMLElement | null) => void,
 };
-/**
- * @deprecated this hook is unreliable, use useElementDimensions
- */
-declare export var useElementSize: (elementRef: {
-  current: HTMLElement | null,
-}) => {
-  height: number,
-  width: number,
-};
 declare export var useAriaId: (id?: string | void) => string;
 declare export var useWindowSize: () => {
   height: number,

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Tooltip from '../tooltip';
-import {DeprecationWarning, StorySection} from './helpers';
+import {StorySection} from './helpers';
 import IcnClose from '../icons/icon-close';
 import IcnInfo from '../icons/icon-info-cvv';
 import IconVisa from '../icons/icon-visa';
@@ -15,7 +15,6 @@ export const Default: StoryComponent = () => {
         'When working on a project and the customer has not yet delivered the copy, something is missing...';
     return (
         <StorySection title="Tooltip">
-            <DeprecationWarning />
             <strong>Desktop examples:</strong>
             <div
                 style={{

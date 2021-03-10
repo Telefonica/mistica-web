@@ -106,7 +106,6 @@ declare export { default as Circle } from "./circle";
 declare export {
   useTheme,
   useScreenSize,
-  useElementSize,
   useElementDimensions,
   useAriaId,
   useWindowSize,
@@ -133,8 +132,6 @@ declare export { getO2ClassicSkin } from "./skins/o2-classic";
 declare export { Locale } from "./utils/locale";
 declare export { TrackingEvent } from "./utils/types";
 declare export { RegionCode } from "./utils/region-code";
-declare export { default as IconInfomationRegular } from "./generated/mistica-icons/icon-information-regular";
-declare export { default as IconFlechaAdelanteRegular } from "./generated/mistica-icons/icon-arrow-forward-regular";
 declare export { default as IconAcademicFilled } from "./generated/mistica-icons/icon-academic-filled";
 declare export { default as IconAcademicLight } from "./generated/mistica-icons/icon-academic-light";
 declare export { default as IconAcademicRegular } from "./generated/mistica-icons/icon-academic-regular";
