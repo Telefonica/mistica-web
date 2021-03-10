@@ -12,7 +12,7 @@ import {getPlatform} from './utils/platform';
 import type {TrackingEvent} from './utils/types';
 import type {Location} from 'history';
 import type {Theme} from './theme';
-import {Box, Text6, Text7, Text} from '.';
+import {Box, Text3, Text2, Text} from '.';
 
 export const BUTTON_MIN_WIDTH = 156;
 
@@ -322,9 +322,9 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
                 {text}
             </Text>
         ) : (
-            <Text6 medium truncate={1} color="inherit" as="div">
+            <Text3 medium truncate={1} color="inherit" as="div">
                 {text}
-            </Text6>
+            </Text3>
         );
 
     const commonProps = {
@@ -487,9 +487,9 @@ export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
         trackingEvent: props.trackingEvent,
         'data-testid': props['data-testid'],
         children: (
-            <Text7 medium truncate={1} color="inherit">
+            <Text2 medium truncate={1} color="inherit">
                 {props.children}
-            </Text7>
+            </Text2>
         ),
     };
 

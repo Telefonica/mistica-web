@@ -63,6 +63,8 @@ declare export {
   Text6,
   Text7,
   Text8,
+  Text9,
+  Text10,
 } from "./text";
 declare export { default as PromoTag } from "./promo-tag";
 declare export { default as SectionTitle } from "./section-title";

@@ -6,7 +6,7 @@ import Touchable from './touchable';
 import IcnClose from './icons/icon-close';
 import {applyAlpha} from './utils/color';
 import {useTheme} from './hooks';
-import {Text5, Text7} from './text';
+import {Text4, Text2} from './text';
 import IconButton from './icon-button';
 import {ButtonLink} from './button';
 
@@ -142,11 +142,11 @@ const Content: React.FC<Props> = (props) => {
     const content = (
         <div className={classes.container}>
             <div className={classes.textContainer}>
-                <Text5 light>{title}</Text5>
+                <Text4 light>{title}</Text4>
                 <Box paddingTop={8}>
-                    <Text7 regular color={theme.colors.textSecondary}>
+                    <Text2 regular color={theme.colors.textSecondary}>
                         {description}
-                    </Text7>
+                    </Text2>
                 </Box>
                 {props.button && <Box paddingTop={16}>{props.button}</Box>}
             </div>

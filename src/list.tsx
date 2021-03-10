@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import {createUseStyles} from './jss';
 import Touchable from './touchable';
-import {Text6, Text7, Text8} from './text';
+import {Text3, Text2, Text1} from './text';
 import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
@@ -159,36 +159,36 @@ const Content: React.FC<ContentProps> = ({
             <div className={classes.rowBody}>
                 {headline && (
                     <Box paddingBottom={8}>
-                        <Text8 wordBreak as="div" regular color={theme.colors.textSecondary}>
+                        <Text1 wordBreak as="div" regular color={theme.colors.textSecondary}>
                             {headline}
-                        </Text8>
+                        </Text1>
                     </Box>
                 )}
-                <Text6 wordBreak light color={theme.colors.textPrimary} truncate={titleLinesMax}>
+                <Text3 wordBreak light color={theme.colors.textPrimary} truncate={titleLinesMax}>
                     {title}
-                </Text6>
+                </Text3>
                 {subtitle && (
                     <Box paddingY={2}>
-                        <Text7
+                        <Text2
                             wordBreak
                             regular
                             color={theme.colors.textSecondary}
                             truncate={subtitleLinesMax}
                         >
                             {subtitle}
-                        </Text7>
+                        </Text2>
                     </Box>
                 )}
                 {description && (
                     <Box paddingY={isMobile ? 2 : 0}>
-                        <Text7
+                        <Text2
                             wordBreak
                             regular
                             color={theme.colors.textSecondary}
                             truncate={descriptionLinesMax}
                         >
                             {description}
-                        </Text7>
+                        </Text2>
                     </Box>
                 )}
             </div>

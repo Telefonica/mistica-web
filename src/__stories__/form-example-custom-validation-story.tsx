@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, Touchable, Form, TextField, useForm, ButtonPrimary, Text7} from '..';
+import {Stack, Touchable, Form, TextField, useForm, ButtonPrimary, Text2} from '..';
 
 export default {
     title: 'Components/Forms/Example Custom Validator',
@@ -59,7 +59,7 @@ export const CustomValidationForm: StoryComponent = () => {
 
     return (
         <Stack space={16}>
-            <Text7 regular>This story shows a Form with a custom handler for validation errors</Text7>
+            <Text2 regular>This story shows a Form with a custom handler for validation errors</Text2>
 
             <Form
                 onValidationErrors={(errors) => {

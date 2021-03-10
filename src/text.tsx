@@ -148,20 +148,45 @@ interface RegularProps extends TextPresetProps {
     medium?: undefined;
 }
 
-type LightMediumProps = LightProps | MediumProps;
 type RegularMediumProps = RegularProps | MediumProps;
 type LightRegularMediumProps = LightProps | RegularProps | MediumProps;
 
-const getLightOrMediumWeight = (props: LightMediumProps) =>
-    (props.light && 'light') || (props.medium && 'medium');
 const getRegularOrMediumWeight = (props: RegularMediumProps) =>
     (props.regular && 'regular') || (props.medium && 'medium');
-const getAllWeights = (props: LightRegularMediumProps) =>
+const getWeight = (props: LightRegularMediumProps) =>
     (props.light && 'light') || (props.regular && 'regular') || (props.medium && 'medium');
 
 const isIos = getPlatform() === 'ios';
 
-export const Text1: React.FC<TextPresetProps> = (props) => (
+export const Text10: React.FC<TextPresetProps> = (props) => (
+    <Text
+        mobileSize={32}
+        mobileLineHeight="40px"
+        desktopSize={64}
+        desktopLineHeight="72px"
+        weight="light"
+        // letterSpacing=TODO: define letter iOS spacing for this preset
+        {...props}
+    >
+        {props.children}
+    </Text>
+);
+
+export const Text9: React.FC<TextPresetProps> = (props) => (
+    <Text
+        mobileSize={32}
+        mobileLineHeight="40px"
+        desktopSize={56}
+        desktopLineHeight="64px"
+        weight="light"
+        // letterSpacing=TODO: define letter iOS spacing for this preset
+        {...props}
+    >
+        {props.children}
+    </Text>
+);
+
+export const Text8: React.FC<TextPresetProps> = (props) => (
     <Text
         mobileSize={32}
         mobileLineHeight="40px"
@@ -175,7 +200,7 @@ export const Text1: React.FC<TextPresetProps> = (props) => (
     </Text>
 );
 
-export const Text2: React.FC<TextPresetProps> = (props) => (
+export const Text7: React.FC<TextPresetProps> = (props) => (
     <Text
         mobileSize={28}
         mobileLineHeight="32px"
@@ -189,7 +214,7 @@ export const Text2: React.FC<TextPresetProps> = (props) => (
     </Text>
 );
 
-export const Text3: React.FC<TextPresetProps> = (props) => (
+export const Text6: React.FC<TextPresetProps> = (props) => (
     <Text
         mobileSize={24}
         mobileLineHeight="32px"
@@ -203,7 +228,7 @@ export const Text3: React.FC<TextPresetProps> = (props) => (
     </Text>
 );
 
-export const Text4: React.FC<TextPresetProps> = (props) => (
+export const Text5: React.FC<TextPresetProps> = (props) => (
     <Text
         mobileSize={22}
         mobileLineHeight="24px"
@@ -217,13 +242,13 @@ export const Text4: React.FC<TextPresetProps> = (props) => (
     </Text>
 );
 
-export const Text5: React.FC<LightMediumProps> = (props) => (
+export const Text4: React.FC<LightRegularMediumProps> = (props) => (
     <Text
         mobileSize={18}
         mobileLineHeight="24px"
         desktopSize={20}
         desktopLineHeight="28px"
-        weight={getLightOrMediumWeight(props)}
+        weight={getWeight(props)}
         letterSpacing={isIos ? -0.44 : 0}
         {...props}
     >
@@ -231,12 +256,12 @@ export const Text5: React.FC<LightMediumProps> = (props) => (
     </Text>
 );
 
-export const Text6: React.FC<LightRegularMediumProps> = (props) => (
+export const Text3: React.FC<LightRegularMediumProps> = (props) => (
     <Text
         mobileSize={16}
         desktopSize={18}
         lineHeight="24px"
-        weight={getAllWeights(props)}
+        weight={getWeight(props)}
         letterSpacing={isIos ? -0.31 : 0}
         {...props}
     >
@@ -244,7 +269,7 @@ export const Text6: React.FC<LightRegularMediumProps> = (props) => (
     </Text>
 );
 
-export const Text7: React.FC<RegularMediumProps> = (props) => (
+export const Text2: React.FC<RegularMediumProps> = (props) => (
     <Text
         mobileSize={14}
         mobileLineHeight="20px"
@@ -258,7 +283,7 @@ export const Text7: React.FC<RegularMediumProps> = (props) => (
     </Text>
 );
 
-export const Text8: React.FC<RegularMediumProps> = (props) => (
+export const Text1: React.FC<RegularMediumProps> = (props) => (
     <Text
         mobileSize={12}
         mobileLineHeight="16px"

@@ -3,7 +3,7 @@ import {SPACE} from './utils/key-codes';
 import {useControlProps} from './form-context';
 import IconCheckbox from './icons/icon-checkbox';
 import {createUseStyles} from './jss';
-import {Text6, Inline} from '.';
+import {Text3, Inline} from '.';
 import {useAriaId} from './hooks';
 import classnames from 'classnames';
 
@@ -93,9 +93,9 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
                 <Inline space={16} alignItems="center">
                     {iconCheckbox}
                     {props.children && (
-                        <Text6 regular as="div">
+                        <Text3 regular as="div">
                             <span id={labelId}>{props.children}</span>
-                        </Text6>
+                        </Text3>
                     )}
                 </Inline>
             )}

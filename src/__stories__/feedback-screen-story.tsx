@@ -10,7 +10,7 @@ import {useTextField} from './helpers';
 import Stack from '../stack';
 import {ThemeVariant, useIsInverseVariant} from '../theme-variant-context';
 import {useTheme} from '../hooks';
-import {Box, Checkbox, FixedToTop, Text6, Text8} from '..';
+import {Box, Checkbox, FixedToTop, Text3, Text1} from '..';
 
 export default {
     title: 'Components/Feedbacks/FeedbackScreen',
@@ -92,9 +92,9 @@ const Navbar = ({top}: {top: number}) => {
                 paddingLeft: 16,
             }}
         >
-            <Text6 medium color={colors.textPrimaryInverse}>
+            <Text3 medium color={colors.textPrimaryInverse}>
                 Navbar
-            </Text6>
+            </Text3>
         </div>
     );
 };
@@ -159,9 +159,9 @@ export const Default: StoryComponent = () => {
                                 <Checkbox checked={isInverse} onChange={setIsInverse} name="inverse">
                                     Inverse
                                 </Checkbox>
-                                <Text8 as="div" regular>
+                                <Text1 as="div" regular>
                                     * To see the inverse variant use a mobile screen size and add any button
-                                </Text8>
+                                </Text1>
                             </Stack>
                         </FeedbackScreen>
                     </Box>
