@@ -7,7 +7,6 @@ import {useIsInverseVariant} from './theme-variant-context';
 import {applyAlpha} from './utils/color';
 import {useForm} from './form-context';
 import {pxToRem} from './utils/css';
-import {getPlatform} from './utils/platform';
 
 import type {TrackingEvent} from './utils/types';
 import type {Location} from 'history';
@@ -290,7 +289,6 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
     const {classes, loadingText} = props;
     const isSubmitButton = !!props.submit;
     const isFormSending = formStatus === 'sending';
-    const isIos = getPlatform() === 'ios';
 
     const showSpinner = props.showSpinner || (isFormSending && isSubmitButton);
 

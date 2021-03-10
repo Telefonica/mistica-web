@@ -4,7 +4,6 @@ import {applyAlpha} from './utils/color';
 import IcnClose from './icons/icon-close';
 import IconButton from './icon-button';
 import {useTheme, useScreenSize} from './hooks';
-import {getPlatform} from './utils/platform';
 
 import type {TrackingEvent} from './utils/types';
 

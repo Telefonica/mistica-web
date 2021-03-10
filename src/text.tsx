@@ -2,7 +2,6 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
-import {getPlatform} from './utils/platform';
 import {pxToRem} from './utils/css';
 
 const useStyles = createUseStyles((theme) => {

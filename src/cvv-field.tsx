@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {getPlatform} from './utils/platform';
 import {useTheme} from './hooks';
 import IconCvvVisaMc from './icons/icon-cvv-visa-mc';
 import IconCvvAmex from './icons/icon-cvv-amex';
