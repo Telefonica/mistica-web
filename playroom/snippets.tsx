@@ -530,15 +530,15 @@ export default [
     ...cardSnippets,
     {group: 'PromoTag', name: 'PromoTag', code: '<PromoTag>PromoTag</PromoTag>'},
     {
-        group: 'Stepper',
+        group: 'Progress',
         name: 'Stepper',
         code:
             '<Stepper currentIndex={2} steps={["Basic Details", "Company Details", "Subscription Plan"]} />',
     },
     {
-        group: 'Stepper',
-        name: 'StepperIndeterminate',
-        code: '<StepperIndeterminate progress={35} />',
+        group: 'Progress',
+        name: 'ProgressBar',
+        code: '<ProgressBar progressPercent={35} />',
     },
     {
         group: 'NavigationBreadcrumbs',

@@ -171,47 +171,6 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     },
 }));
 
-const useStylesIndeterminate = createUseStyles(({colors}) => ({
-    indeterminate: {
-        height: 4,
-        backgroundColor: colors.chartBackground,
-        borderRadius: 20,
-    },
-    indeterminateProgress: {
-        height: '100%',
-        transition: `max-width ${transition}`,
-        animation: `$stackedBar ${transition}`,
-        borderRadius: 20,
-    },
-
-    '@keyframes stackedBar': {
-        '0%': {
-            maxWidth: '0',
-        },
-    },
-}));
-
-type StepperIndeterminateProps = {
-    progress: number;
-};
-
-export const StepperIndeterminate: React.FC<StepperIndeterminateProps> = ({progress}) => {
-    const {colors} = useTheme();
-    const classes = useStylesIndeterminate();
-
-    return (
-        <div className={classes.indeterminate}>
-            <div
-                className={classes.indeterminateProgress}
-                style={{maxWidth: `${progress}%`, backgroundColor: colors.primary}}
-                aria-valuenow={progress}
-                aria-valuemin={0}
-                aria-valuemax={100}
-            />
-        </div>
-    );
-};
-
 type StepperProps = {
     steps: Array<string>;
     currentIndex: number;

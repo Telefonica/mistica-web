@@ -50,7 +50,8 @@ export {default as NegativeBox} from './negative-box';
 export {default as Tabs} from './tabs';
 export {default as Inline} from './inline';
 export {default as HighlightedCard} from './highlighted-card';
-export {default as Stepper, StepperIndeterminate} from './stepper';
+export {default as Stepper} from './stepper';
+export {default as ProgressBar} from './progress-bar';
 export {MediaCard, DataCard} from './card';
 
 // Forms
