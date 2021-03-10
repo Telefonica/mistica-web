@@ -1,6 +1,5 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import {getPlatform} from './utils/platform';
 import {useAriaId, useScreenSize} from './hooks';
 import Portal from './portal';
 import Overlay from './overlay';
@@ -87,14 +86,12 @@ const useStyles = createUseStyles((theme) => ({
         color: theme.colors.textPrimary,
         lineHeight: 1.42857142,
         fontSize: 14,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? 1.42857142 : 'normal',
     },
     description: {
         margin: 0,
         color: theme.colors.textPrimary,
         lineHeight: 1.42857142,
         fontSize: 14,
-        letterSpacing: getPlatform(theme.platformOverrides) === 'ios' ? 1.42857142 : 'normal',
     },
 }));
 

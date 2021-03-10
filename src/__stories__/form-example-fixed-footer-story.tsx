@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, ButtonPrimary, Form, Text7, FixedFooterLayout, Text5, Box} from '..';
+import {Stack, ButtonPrimary, Form, Text2, FixedFooterLayout, Text4, Box} from '..';
 
 export default {
     title: 'Components/Forms/Example Fixed Footer',
@@ -17,11 +17,11 @@ export const FixedFooterForm: StoryComponent = () => {
                 }
             >
                 <Stack space={32}>
-                    <Text7 regular>
+                    <Text2 regular>
                         Use a mobile viewport to check this story. The submit button will be rendered inside a
                         Portal.
-                    </Text7>
-                    <Text5 medium>Form was submitted {count} times</Text5>
+                    </Text2>
+                    <Text4 medium>Form was submitted {count} times</Text4>
                 </Stack>
             </FixedFooterLayout>
         </Form>

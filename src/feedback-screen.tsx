@@ -16,7 +16,7 @@ import {
 } from '@tef-novum/webview-bridge';
 import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {Theme} from './theme';
-import {Box, Text3, Text5} from '.';
+import {Box, Text6, Text4} from '.';
 
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) && !isRunningAcceptanceTest(platformOverrides);
@@ -209,14 +209,14 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         <div className={classes.container}>
             <div className={classes.innerContainer}>
                 {!!icon && <div className={classes.iconContainer}>{icon}</div>}
-                <Text3>
+                <Text6>
                     <span className={classes.title}>{title}</span>
-                </Text3>
+                </Text6>
                 {normalizedDescription && (
                     <Box paddingTop={16}>
-                        <Text5 light>
+                        <Text4 light>
                             <span className={classes.description}>{normalizedDescription}</span>
-                        </Text5>
+                        </Text4>
                     </Box>
                 )}
                 {children && <div className={classes.childrenContainer}>{children}</div>}

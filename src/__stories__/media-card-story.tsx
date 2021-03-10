@@ -6,7 +6,7 @@ import {
     ButtonPrimary,
     ButtonLink,
     Inline,
-    Text7,
+    Text2,
     useScreenSize,
     Box,
     createUseStyles,
@@ -108,10 +108,10 @@ export const Group: StoryComponent = () => {
     return (
         <ResponsiveLayout>
             <Stack space={16}>
-                <Text7 regular>
+                <Text2 regular>
                     We can group multiple cards and they adjust to the same height. The card actions are
                     always fixed on bottom:
-                </Text7>
+                </Text2>
                 <Inline space={16} className={classes.group}>
                     <MediaCard
                         headline="headline"
@@ -166,7 +166,7 @@ export const Carousel: StoryComponent = () => {
         <Box paddingY={16}>
             <Stack space={16}>
                 <ResponsiveLayout>
-                    <Text7 regular>This is a naive carousel implementation using MediaCards:</Text7>
+                    <Text2 regular>This is a naive carousel implementation using MediaCards:</Text2>
                 </ResponsiveLayout>
                 <ResponsiveLayout fullWidth={isMobile}>
                     <Inline space={16} className={classes.carousel}>

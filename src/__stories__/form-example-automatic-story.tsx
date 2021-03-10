@@ -12,7 +12,7 @@ import {
     IntegerField,
     DecimalField,
     Switch,
-    Text7,
+    Text2,
     Checkbox,
     Inline,
     TextLink,
@@ -62,7 +62,7 @@ export const AutomaticForm: StoryComponent = () => {
                     render={(switchElement) => (
                         <Inline alignItems="center" space={8}>
                             {switchElement}
-                            <Text7 regular>Save CC</Text7>
+                            <Text2 regular>Save CC</Text2>
                         </Inline>
                     )}
                 />

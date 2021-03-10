@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Switch, Stack, Inline, Text6, SectionTitle} from '..';
+import {Switch, Stack, Inline, Text3, SectionTitle} from '..';
 
 export default {
     title: 'Components/Forms/Switch',
@@ -16,7 +16,7 @@ export const Default: StoryComponent = () => {
                     render={(switchElement) => (
                         <Inline alignItems="center" space={16}>
                             {switchElement}
-                            <Text6 regular>Switch</Text6>
+                            <Text3 regular>Switch</Text3>
                         </Inline>
                     )}
                 />
@@ -30,9 +30,9 @@ export const Default: StoryComponent = () => {
                     render={(switchElement) => (
                         <Inline alignItems="center" space={16}>
                             {switchElement}
-                            <Text6 regular uppercase>
+                            <Text3 regular uppercase>
                                 {checked ? 'on' : 'off'}
-                            </Text6>
+                            </Text3>
                         </Inline>
                     )}
                 />
@@ -49,9 +49,9 @@ export const Default: StoryComponent = () => {
                     onChange={onChange}
                     render={() => (
                         <Inline alignItems="center" space={16}>
-                            <Text6 regular uppercase>
+                            <Text3 regular uppercase>
                                 {checked ? 'on' : 'off'}
-                            </Text6>
+                            </Text3>
                         </Inline>
                     )}
                 />
@@ -59,9 +59,9 @@ export const Default: StoryComponent = () => {
             <>
                 <SectionTitle id="label">Disabled</SectionTitle>
                 <Switch name="disabled" checked={checked} onChange={onChange} disabled>
-                    <Text6 regular uppercase>
+                    <Text3 regular uppercase>
                         {checked ? 'on' : 'off'}
-                    </Text6>
+                    </Text3>
                 </Switch>
             </>
         </Stack>

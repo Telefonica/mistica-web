@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Checkbox, Stack, Text6, Inline, SectionTitle} from '..';
+import {Checkbox, Stack, Text3, Inline, SectionTitle} from '..';
 
 export default {
     title: 'Components/Forms/Checkbox',
@@ -17,7 +17,7 @@ export const Default: StoryComponent = () => {
                     render={(checkboxElement) => (
                         <Inline alignItems="center" space={16}>
                             {checkboxElement}
-                            <Text6 regular>You accept to sell your soul</Text6>
+                            <Text3 regular>You accept to sell your soul</Text3>
                         </Inline>
                     )}
                 />
@@ -37,7 +37,7 @@ export const Default: StoryComponent = () => {
                     render={(checkboxElement) => (
                         <Inline alignItems="center" space={16}>
                             {checkboxElement}
-                            <Text6 regular>You accept to sell your soul: {checked ? 'sure!' : 'nahh'}</Text6>
+                            <Text3 regular>You accept to sell your soul: {checked ? 'sure!' : 'nahh'}</Text3>
                         </Inline>
                     )}
                 />
@@ -56,7 +56,7 @@ export const Default: StoryComponent = () => {
                     onChange={onChange}
                     render={() => (
                         <Inline alignItems="center" space={16}>
-                            <Text6 regular>You accept to sell your soul: {checked ? 'sure!' : 'nahh'}</Text6>
+                            <Text3 regular>You accept to sell your soul: {checked ? 'sure!' : 'nahh'}</Text3>
                         </Inline>
                     )}
                 />

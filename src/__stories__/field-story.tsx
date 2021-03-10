@@ -15,7 +15,7 @@ import {
     PhoneNumberField,
     Box,
     DateTimeField,
-    Text8,
+    Text1,
     ButtonPrimary,
     Form,
     SectionTitle,
@@ -90,10 +90,10 @@ const Controlled: React.FC<ControlledProps> = ({title, initialValue, children}) 
 
 const DatePickerWarning: React.FC = () => (
     <Box paddingBottom={8}>
-        <Text8 regular>
+        <Text1 regular>
             ⚠️ Uses browser's native date picker when available. Otherwise renders a React datepicker (eg.
             Safari Desktop)
-        </Text8>
+        </Text1>
     </Box>
 );
 
@@ -608,7 +608,7 @@ export const DateTimeLimits: StoryComponent = () => {
                     helperText={`min: ${getLocalDateString(min)} / max: ${getLocalDateString(max)}`}
                     onChangeValue={setDateValue}
                 />
-                <Text8 regular>Selected value: {dateValue}</Text8>
+                <Text1 regular>Selected value: {dateValue}</Text1>
             </Stack>
 
             <SectionTitle>DateTime Field with range</SectionTitle>
@@ -621,7 +621,7 @@ export const DateTimeLimits: StoryComponent = () => {
                     helperText={`min: ${getLocalDateTimeString(min)} / max: ${getLocalDateTimeString(max)}`}
                     onChangeValue={setDateTimeValue}
                 />
-                <Text8 regular>Selected value: {dateTimeValue}</Text8>
+                <Text1 regular>Selected value: {dateTimeValue}</Text1>
             </Stack>
 
             <Box paddingTop={32}>
