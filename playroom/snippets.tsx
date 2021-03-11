@@ -528,7 +528,7 @@ export default [
     ...listRowSnippets,
     ...tabsSnippets,
     ...cardSnippets,
-    {group: 'PromoTag', name: 'PromoTag', code: '<PromoTag>PromoTag</PromoTag>'},
+    {group: 'Tag', name: 'Tag', code: '<Tag color={colors.promo}>Priority</Tag>'},
     {
         group: 'Progress',
         name: 'Stepper',
