@@ -1,30 +1,3 @@
-# [8.0.0](https://github.com/Telefonica/mistica-web/compare/v7.11.0...v8.0.0) (2021-03-11)
-
-
-### Features
-
-* **colors:** Remove non mistica colors from the library ([4783083](https://github.com/Telefonica/mistica-web/commit/4783083d86edccf4969149e579a5d00b0377a995))
-* **DataCard:** make button and link optional ([#214](https://github.com/Telefonica/mistica-web/issues/214)) ([60cacee](https://github.com/Telefonica/mistica-web/commit/60cacee7ae4f7f99e1dbd2535c5a0081ef97c51f))
-* **Text:** rename text presets and add new Text9 and Text10 ([#212](https://github.com/Telefonica/mistica-web/issues/212)) ([fd11b2c](https://github.com/Telefonica/mistica-web/commit/fd11b2ce2d79e339ad8765cf6f58a98b77eacc15))
-* Remove deprecated components ([#213](https://github.com/Telefonica/mistica-web/issues/213)) ([392e5dd](https://github.com/Telefonica/mistica-web/commit/392e5dd22db89b20b859cd83d0c2adb56e121ba6))
-
-
-### BREAKING CHANGES
-
-* **colors:** the mistica color set has been reduced, some colors from previous versions have been replaced or removed.
-* **Text:** Text components have been renamed.
-
-Text8 -> Text1
-Text7 -> Text2
-Text6 -> Text3
-Text5 -> Text4
-Text4 -> Text5
-Text3 -> Text6
-Text2 -> Text7
-Text1 -> Text8
-New Text9 and Text10 components.
-* Remove useElementSize, IconInfomationRegular and IconFlechaAdelanteRegular
-
 # [7.11.0](https://github.com/Telefonica/mistica-web/compare/v7.10.1...v7.11.0) (2021-03-10)
 
 
