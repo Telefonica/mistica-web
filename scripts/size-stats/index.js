@@ -3,7 +3,6 @@ const fs = require('fs');
 const glob = require('glob');
 const {join} = require('path');
 const {execSync} = require('child_process');
-const isCi = require('is-ci');
 
 const PATH_REPO_ROOT = join(__dirname, '../..');
 const PATH_DIST = join(PATH_REPO_ROOT, 'dist');
@@ -28,22 +27,6 @@ const formatKb = (bytes) => (bytes / 1024).toFixed(2) + ' KB';
 const buildApp = () => {
     execSync('yarn', {cwd: PATH_APP});
     execSync('yarn build', {cwd: PATH_APP});
-};
-
-const assertNoChangesInStatsFile = () => {
-    const stdout = execSync(`git diff "${FILE_NAME_STATS_JSON}"`, {cwd: PATH_REPO_ROOT})
-        .toString('utf-8')
-        .trim();
-
-    if (stdout) {
-        console.log();
-        console.log(stdout);
-        console.log();
-        console.error('Size stats file was not updated!');
-        console.error(`Run yarn build and commit the generated "${FILE_NAME_STATS_JSON}" file`);
-        console.log();
-        process.exit(1);
-    }
 };
 
 const main = () => {
@@ -87,10 +70,6 @@ const main = () => {
     fs.writeFileSync(join(PATH_REPO_ROOT, FILE_NAME_STATS_JSON), result);
 
     console.log('Done in:', Date.now() - t0, 'ms');
-
-    if (isCi) {
-        assertNoChangesInStatsFile();
-    }
 };
 
 main();
