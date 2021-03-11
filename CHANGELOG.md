@@ -1,3 +1,10 @@
+# [8.2.0](https://github.com/Telefonica/mistica-web/compare/v8.1.0...v8.2.0) (2021-03-11)
+
+
+### Features
+
+* **size-stats:** remove CI check for size-stats.json ([d8c68c7](https://github.com/Telefonica/mistica-web/commit/d8c68c777a6cd489ac03b1ea5cf7d768fed46ad9))
+
 # [8.1.0](https://github.com/Telefonica/mistica-web/compare/v8.0.0...v8.1.0) (2021-03-11)
 
 
