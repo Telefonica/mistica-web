@@ -362,6 +362,11 @@ const ModalDialog = (props: ModalDialogProps) => {
 
 let dialogInstance: DialogRoot | null = null;
 
+// This counts the number of instantiated DialogRoots.
+// We only want to use the first instance, created by the initial ThemeContextProvider.
+// Our app could have multiple React trees for example, webapp rendering global-checkout
+let dialogRootInstances = 0;
+
 type DialogRootProps = {children?: React.ReactNode};
 
 type DialogRootState = {
@@ -376,15 +381,19 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
     };
 
     componentDidMount(): void {
-        dialogInstance = this;
-        window.addEventListener('popstate', this.handleBack);
+        dialogRootInstances++;
+        if (dialogRootInstances === 1) {
+            dialogInstance = this;
+            window.addEventListener('popstate', this.handleBack);
+        }
     }
 
     componentWillUnmount(): void {
-        if (dialogInstance === this) {
+        dialogRootInstances--;
+        if (dialogRootInstances === 0) {
             dialogInstance = null;
+            window.removeEventListener('popstate', this.handleBack);
         }
-        window.removeEventListener('popstate', this.handleBack);
     }
 
     show(props: DialogProps): void {
