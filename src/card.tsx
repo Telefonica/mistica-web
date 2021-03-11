@@ -182,7 +182,7 @@ const useDataCardStyles = createUseStyles((theme) => ({
     },
 }));
 
-interface CommonDataCardProps {
+interface DataCardProps {
     /**
      * Typically a mistica-icons component element
      */
@@ -192,24 +192,9 @@ interface CommonDataCardProps {
     subtitle?: string;
     description: string;
     body?: React.ReactNode;
+    button?: React.ReactElement<typeof ButtonPrimary>;
+    buttonLink?: React.ReactElement<typeof ButtonLink>;
 }
-
-interface DataCardWithButtonProps extends CommonDataCardProps {
-    button: React.ReactElement<typeof ButtonPrimary>;
-    buttonLink?: undefined;
-}
-
-interface DataCardWithLinkProps extends CommonDataCardProps {
-    buttonLink: React.ReactElement<typeof ButtonLink>;
-    button?: undefined;
-}
-
-interface DataCardWithTwoActionsProps extends CommonDataCardProps {
-    button: React.ReactElement<typeof ButtonPrimary>;
-    buttonLink: React.ReactElement<typeof ButtonLink>;
-}
-
-type DataCardProps = DataCardWithButtonProps | DataCardWithLinkProps | DataCardWithTwoActionsProps;
 
 export const DataCard: React.FC<DataCardProps> = ({
     icon,
