@@ -23,9 +23,10 @@ type Props = {
 const Tag: React.FC<Props> = ({children, color}) => {
     const classes = useStyles({color});
     const {colors} = useTheme();
+    const textColor = color === colors.inverse ? colors.textPrimary : colors.textPrimaryInverse;
     return (
         <span className={classes.tag}>
-            <Text color={colors.textPrimaryInverse} size={12} lineHeight={16} weight="regular" uppercase>
+            <Text color={textColor} size={12} lineHeight={16} weight="regular" uppercase>
                 {children}
             </Text>
         </span>
