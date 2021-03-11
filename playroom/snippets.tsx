@@ -528,7 +528,11 @@ export default [
     ...listRowSnippets,
     ...tabsSnippets,
     ...cardSnippets,
-    {group: 'PromoTag', name: 'PromoTag', code: '<PromoTag>PromoTag</PromoTag>'},
+    ...['promo', 'brand', 'success', 'warning', 'error', 'inverse'].map((colorName) => ({
+        group: 'Tag',
+        name: `Tag (${colorName})`,
+        code: `<Tag color={colors.${colorName}}>Priority</Tag>`,
+    })),
     {
         group: 'Progress',
         name: 'Stepper',

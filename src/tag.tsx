@@ -3,9 +3,9 @@ import {useTheme} from './hooks';
 import {createUseStyles} from './jss';
 import {Text} from './text';
 
-const useStyles = createUseStyles((theme) => ({
+const useStyles = createUseStyles(() => ({
     tag: {
-        backgroundColor: theme.colors.promo,
+        backgroundColor: ({color}) => color,
         padding: '2px 8px',
         borderRadius: 2,
         minWidth: 48,
@@ -17,18 +17,20 @@ const useStyles = createUseStyles((theme) => ({
 
 type Props = {
     children: string;
+    color: string;
 };
 
-const PromoTag: React.FC<Props> = ({children}) => {
-    const classes = useStyles();
+const Tag: React.FC<Props> = ({children, color}) => {
+    const classes = useStyles({color});
     const {colors} = useTheme();
+    const textColor = color === colors.inverse ? colors.textPrimary : colors.textPrimaryInverse;
     return (
         <span className={classes.tag}>
-            <Text color={colors.textPrimaryInverse} size={12} lineHeight={16} weight="regular" uppercase>
+            <Text color={textColor} size={12} lineHeight={16} weight="regular" uppercase>
                 {children}
             </Text>
         </span>
     );
 };
 
-export default PromoTag;
+export default Tag;
