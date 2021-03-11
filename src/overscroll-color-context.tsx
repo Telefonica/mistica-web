@@ -54,7 +54,7 @@ export const OverscrollColorProvider = shouldRender
 const OverscrollColorComponent = () => {
     const isInverseVariant = useIsInverseVariant();
     const theme = useTheme();
-    useSetValue(isInverseVariant ? theme.colors.overscrollColorTop : theme.colors.background);
+    useSetValue(isInverseVariant ? theme.colors.navigationBarBackground : theme.colors.background);
 
     return null;
 };

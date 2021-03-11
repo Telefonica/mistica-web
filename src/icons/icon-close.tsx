@@ -11,7 +11,7 @@ type Props = {
 
 const IconClose: React.FC<Props> = ({role = 'presentation', size = ICON_SIZE_1, color}) => {
     const {colors} = useTheme();
-    const fillColor = color || colors.iconPrimary;
+    const fillColor = color || colors.neutralHigh;
     return (
         <svg role={role} width={size} height={size} viewBox="0 0 24 24">
             <path

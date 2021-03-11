@@ -14,7 +14,7 @@ const template = (
         const ${componentName}: React.FC<Props> = ({color, size = 24}) => {
             const {colors} = useTheme();
             const isInverse = useIsInverseVariant();
-            const fillColor = color ?? (isInverse ? colors.iconInverse : colors.iconPrimary);
+            const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
 
             return ${jsx};
         }

@@ -55,7 +55,7 @@ const useStyles = createUseStyles((theme) => ({
         left: 12,
         top: ({label}) => (label ? 27 : 17),
         fontSize: 16,
-        color: ({disabled}) => (disabled ? theme.colors.textInactive : theme.colors.textPrimary),
+        color: ({disabled}) => (disabled ? theme.colors.textDisabled : theme.colors.textPrimary),
         maxWidth: '100%',
         textOverflow: 'ellipsis',
     },

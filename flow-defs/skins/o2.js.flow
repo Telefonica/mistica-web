@@ -1,4 +1,38 @@
 // @flow
 
 import type { GetSkin } from "./types";
+declare export var palette: {
+  o2BluePrimary: string,
+  o2BluePrimaryDark: string,
+  o2BluePrimaryLight50: string,
+  o2BluePrimaryLight10: string,
+  o2BlueMid: string,
+  o2BlueMidDark: string,
+  o2BlueLight: string,
+  o2BlueLight60: string,
+  o2BlueLight30: string,
+  o2BlueLight10: string,
+  o2Teal: string,
+  o2TealDark: string,
+  o2TealLight: string,
+  o2Green: string,
+  o2GreenLight: string,
+  o2Yellow: string,
+  o2YellowLight: string,
+  o2Orange: string,
+  o2OrangeLight: string,
+  o2Coral: string,
+  o2Pink: string,
+  o2Purple: string,
+  pepper: string,
+  pepperDark: string,
+  pepperLight30: string,
+  grey1: string,
+  grey2: string,
+  grey3: string,
+  grey4: string,
+  grey5: string,
+  grey6: string,
+  white: string,
+};
 declare export var getO2Skin: GetSkin;

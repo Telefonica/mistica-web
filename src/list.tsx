@@ -195,7 +195,7 @@ const Content: React.FC<ContentProps> = ({
             {renderBadge()}
             {type === 'chevron' ? (
                 <Box paddingLeft={16} className={classes.center}>
-                    <IconChevron size={24} color={theme.colors.iconSecondary} direction="right" />
+                    <IconChevron size={24} color={theme.colors.neutralMedium} direction="right" />
                 </Box>
             ) : right ? (
                 <div className={classes.right}>{right}</div>

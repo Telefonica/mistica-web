@@ -5,7 +5,7 @@ import {Text} from './text';
 
 const useStyles = createUseStyles((theme) => ({
     tag: {
-        backgroundColor: theme.colors.backgroundPromo,
+        backgroundColor: theme.colors.promo,
         padding: '2px 8px',
         borderRadius: 2,
         minWidth: 48,

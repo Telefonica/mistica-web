@@ -27,7 +27,7 @@ const BackgroundTheme: StoryComponent = ({children}) => {
     return (
         <ThemeVariant isInverse={isInverse}>
             <>
-                <div style={{background: isInverse ? colors.backgroundHeading : 'white'}}>
+                <div style={{background: isInverse ? colors.backgroundBrand : 'white'}}>
                     <Box padding={8}>
                         <Checkbox name="inverse" checked={isInverse} onChange={setIsInverse}>
                             Inverse variant

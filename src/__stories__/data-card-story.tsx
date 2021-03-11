@@ -35,7 +35,7 @@ export const Default: StoryComponent = () => {
     let icon;
     if (asset === 'icon') {
         icon = (
-            <Circle size={40} backgroundColor={colors.iconDisabled}>
+            <Circle size={40} backgroundColor={colors.neutralLow}>
                 <IconAcademicLight />
             </Circle>
         );
@@ -92,7 +92,7 @@ export const WithBody: StoryComponent = () => {
             description="description"
             body={<Placeholder />}
             icon={
-                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconAcademicLight />
                 </Circle>
             }
@@ -151,7 +151,7 @@ export const Group: StoryComponent = () => {
                         subtitle="subtitle"
                         description="description"
                         icon={
-                            <Circle size={40} backgroundColor={colors.iconDisabled}>
+                            <Circle size={40} backgroundColor={colors.neutralLow}>
                                 <IconAcademicLight />
                             </Circle>
                         }
@@ -161,7 +161,7 @@ export const Group: StoryComponent = () => {
                         title="title"
                         description="description"
                         icon={
-                            <Circle size={40} backgroundColor={colors.iconDisabled}>
+                            <Circle size={40} backgroundColor={colors.neutralLow}>
                                 <IconAcademicLight />
                             </Circle>
                         }

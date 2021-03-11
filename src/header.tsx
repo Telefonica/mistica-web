@@ -120,7 +120,7 @@ export const Header: React.FC<HeaderProps> = ({
                                 truncate
                                 color={
                                     isErrorAmount && !isInverse
-                                        ? theme.colors.textDanger
+                                        ? theme.colors.highlight
                                         : theme.colors.textPrimary
                                 }
                             >
@@ -173,7 +173,7 @@ export const MainSectionHeader: React.FC<MainSectionHeaderProps> = ({title, desc
 
 const useHeaderLayoutStyles = createUseStyles((theme) => ({
     background: {
-        background: ({isInverse}) => (isInverse ? theme.colors.backgroundHeading : 'initial'),
+        background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : 'initial'),
     },
     gridItem: {
         gridColumn: 'span 6',

@@ -13,7 +13,7 @@ const useStyles = createUseStyles((theme) => ({
         right: -6,
         width: 8,
         height: 8,
-        background: theme.colors.badgeBackground,
+        background: theme.colors.badge,
         borderRadius: '50%',
         boxShadow: `0px 0px 0px 1.5px ${theme.colors.borderLight}`,
     },

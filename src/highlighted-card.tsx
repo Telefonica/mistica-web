@@ -82,7 +82,7 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose = () => {}})
                 style={{display: 'flex', width: 48, height: 48}}
             >
                 <div className={classes.dismissableCircleContainer}>
-                    <IcnClose color={colors.iconPrimary} />
+                    <IcnClose color={colors.neutralHigh} />
                 </div>
             </IconButton>
         </div>

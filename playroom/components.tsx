@@ -146,7 +146,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                     />
                 )}
                 <IconButton label="Edit in Playroom" size={32} onPress={onEditStoryPress}>
-                    <IconCodeFilled size={32} color={colors.iconSecondary} />
+                    <IconCodeFilled size={32} color={colors.neutralMedium} />
                 </IconButton>
             </div>
         );
@@ -177,7 +177,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                 )}
                 <div className={classes.desktopControlItem}>
                     <IconButton label="Edit in Playroom" size={32} onPress={onEditStoryPress}>
-                        <IconCodeFilled size={32} color={colors.iconSecondary} />
+                        <IconCodeFilled size={32} color={colors.neutralMedium} />
                     </IconButton>
                 </div>
             </div>
