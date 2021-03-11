@@ -23,6 +23,8 @@ const getTotalSize = (filenames, exclude = []) => {
     return size;
 };
 
+const formatKb = (bytes) => (bytes / 1024).toFixed(2) + ' KB';
+
 const buildApp = () => {
     execSync('yarn', {cwd: PATH_APP});
     execSync('yarn build', {cwd: PATH_APP});
@@ -58,23 +60,24 @@ const main = () => {
         JSON.stringify(
             {
                 dist: {
-                    js: getTotalSize(distJsFilenames),
-                    jsNoMisticaIcons: getTotalSize(distJsFilenames, [
-                        /\/generated\/mistica-icons\/.*/,
-                        /\/dist\/index.js$/,
-                    ]),
+                    js: formatKb(getTotalSize(distJsFilenames)),
+                    jsNoMisticaIcons: formatKb(
+                        getTotalSize(distJsFilenames, [/\/generated\/mistica-icons\/.*/, /\/dist\/index.js$/])
+                    ),
                 },
                 distEs: {
-                    js: getTotalSize(distEsJsFilenames),
-                    jsNoMisticaIcons: getTotalSize(distEsJsFilenames, [
-                        /\/generated\/mistica-icons\/.*/,
-                        /\/dist-es\/index.js$/,
-                    ]),
+                    js: formatKb(getTotalSize(distEsJsFilenames)),
+                    jsNoMisticaIcons: formatKb(
+                        getTotalSize(distEsJsFilenames, [
+                            /\/generated\/mistica-icons\/.*/,
+                            /\/dist-es\/index.js$/,
+                        ])
+                    ),
                 },
                 libOverhead: {
-                    initial: appInitial,
-                    withMistica: appWithMistica,
-                    difference: appWithMistica - appInitial,
+                    initial: formatKb(appInitial),
+                    withMistica: formatKb(appWithMistica),
+                    difference: formatKb(appWithMistica - appInitial),
                 },
             },
             null,

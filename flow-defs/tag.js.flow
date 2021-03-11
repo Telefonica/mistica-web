@@ -1,0 +1,9 @@
+// @flow
+
+import * as React from "react";
+declare type Props = {
+  children: string,
+  color: string,
+};
+declare var Tag: React.ComponentType<Props>;
+declare export default typeof Tag;

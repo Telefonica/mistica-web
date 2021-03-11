@@ -1,8 +1,0 @@
-// @flow
-
-import * as React from "react";
-declare type Props = {
-  children: string,
-};
-declare var PromoTag: React.ComponentType<Props>;
-declare export default typeof PromoTag;
