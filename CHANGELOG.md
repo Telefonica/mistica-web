@@ -1,3 +1,22 @@
+# [8.2.0](https://github.com/Telefonica/mistica-web/compare/v8.1.0...v8.2.0) (2021-03-11)
+
+
+### Features
+
+* **size-stats:** remove CI check for size-stats.json ([d8c68c7](https://github.com/Telefonica/mistica-web/commit/d8c68c777a6cd489ac03b1ea5cf7d768fed46ad9))
+
+# [8.1.0](https://github.com/Telefonica/mistica-web/compare/v8.0.0...v8.1.0) (2021-03-11)
+
+
+### Features
+
+* **Tag:** new component replacing PromoTag ([#215](https://github.com/Telefonica/mistica-web/issues/215)) ([f3fe284](https://github.com/Telefonica/mistica-web/commit/f3fe2840dcc81ae96620549e58eb81497e585760))
+
+
+### Reverts
+
+* chore(release): 8.0.0 [skip ci] ([dc80676](https://github.com/Telefonica/mistica-web/commit/dc8067623c0c3cf82b3893d4308a3e2ce2b40f97))
+
 # [7.11.0](https://github.com/Telefonica/mistica-web/compare/v7.10.1...v7.11.0) (2021-03-10)
 
 

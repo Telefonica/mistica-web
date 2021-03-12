@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Inline, Text4, Text2, Text1, createUseStyles, useTheme, ButtonPrimary, ButtonLink, Box} from '.';
-import PromoTag from './promo-tag';
+import Tag from './tag';
 import Stack from './stack';
 
 const useCardContentStyles = createUseStyles(() => ({
@@ -43,7 +43,7 @@ const CardContent: React.FC<CardContentProps> = ({
                 <Stack space={8}>
                     <header>
                         <Stack space={4}>
-                            {headline && <PromoTag>{headline}</PromoTag>}
+                            {headline && <Tag color={theme.colors.promo}>{headline}</Tag>}
                             {pretitle && (
                                 <Box paddingTop={4}>
                                     <Text1 regular uppercase>
