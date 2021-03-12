@@ -372,12 +372,14 @@ type DialogRootProps = {children?: React.ReactNode};
 type DialogRootState = {
     dialogProps: DialogProps | null;
     isClosing: boolean;
+    instanceNumber: number;
 };
 
 export default class DialogRoot extends React.Component<DialogRootProps, DialogRootState> {
     state: DialogRootState = {
         dialogProps: null,
         isClosing: false,
+        instanceNumber: dialogRootInstances + 1,
     };
 
     componentDidMount(): void {
@@ -457,7 +459,7 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
     render(): React.ReactNode {
         const {isClosing, dialogProps} = this.state;
 
-        if (!dialogProps) {
+        if (!dialogProps || this.state.instanceNumber !== 1) {
             return this.props.children || null;
         }
 
