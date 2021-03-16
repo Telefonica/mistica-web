@@ -30,5 +30,8 @@ declare export var palette: {
   movistarProminentBlueLight20: string,
   movistarProminentBlueLight50: string,
   movistarProminentBlueLight70: string,
+  darkModeBlack: string,
+  darkModeGrey: string,
+  darkModeMovistarBlueDark: string,
 };
 declare export var getMovistarSkin: GetSkin;
