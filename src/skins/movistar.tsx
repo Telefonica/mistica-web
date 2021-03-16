@@ -111,7 +111,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
 
             toggleAndroidInactive: palette.grey2, // web only
             toggleAndroidBackgroundActive: palette.movistarBlueLight30, // web only
-            toggleIosInactive: palette.white, // web only
+            iosControlKnob: palette.white, // web only
 
             // DIVIDERS
             divider: palette.grey2,
@@ -199,7 +199,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             loadingBarInverse: palette.movistarGreenLight50, // will be deprecated soon
             toggleAndroidInactive: palette.grey5, //web only
             toggleAndroidBackgroundActive: palette.movistarBlueLight30, // web only
-            toggleIosInactive: palette.white, //  web only
+            iosControlKnob: palette.white, //  web only
             divider: palette.darkModeGrey,
             dividerInverse: palette.darkModeGrey,
             navigationBarDivider: palette.darkModeBlack,

@@ -113,7 +113,7 @@ export const getO2ClassicSkin: GetSkin = () => {
 
             toggleAndroidInactive: palette.grey2, // web only
             toggleAndroidBackgroundActive: palette.o2GemLight30, // web only
-            toggleIosInactive: palette.white, // web only
+            iosControlKnob: palette.white, // web only
 
             // DIVIDERS
             divider: palette.grey2,

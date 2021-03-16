@@ -104,7 +104,7 @@ export const getVivoSkin: GetSkin = () => {
 
             toggleAndroidInactive: palette.grey2,
             toggleAndroidBackgroundActive: palette.vivoPurpleLight20,
-            toggleIosInactive: palette.white,
+            iosControlKnob: palette.white,
 
             // DIVIDERS
             divider: palette.grey2,

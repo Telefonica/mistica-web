@@ -63,7 +63,7 @@ export type Colors = {
 
     toggleAndroidInactive: string;
     toggleAndroidBackgroundActive: string;
-    toggleIosInactive: string;
+    iosControlKnob: string;
 
     // DIVIDERS
     divider: string;

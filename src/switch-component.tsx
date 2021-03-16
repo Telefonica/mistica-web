@@ -72,10 +72,11 @@ const useStyles = createUseStyles((theme) => {
             height: isIos ? 27 : 20,
             margin: -4,
             backgroundColor: ({isChecked}) => {
-                if (isChecked) {
-                    return isIos ? theme.colors.toggleIosInactive : theme.colors.controlActivated;
+                if (isIos) {
+                    return theme.colors.iosControlKnob;
+                } else {
+                    return isChecked ? theme.colors.controlActivated : theme.colors.toggleAndroidInactive;
                 }
-                return isIos ? theme.colors.toggleIosInactive : theme.colors.toggleAndroidInactive;
             },
             borderRadius: '50%',
             transition: `all ${SWITCH_ANIMATION}`,

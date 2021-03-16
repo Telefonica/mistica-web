@@ -20,7 +20,7 @@ const useRadioButtonStyles = createUseStyles((theme) => ({
                 ? isIos
                     ? 'initial'
                     : `2px solid ${theme.colors.controlActivated}`
-                : `1px solid ${theme.colors.control}`,
+                : `${isIos ? 1 : 2}px solid ${theme.colors.control}`,
         width: 24,
         height: 24,
         opacity: ({disabled}) => (disabled ? 0.5 : 1),
@@ -29,8 +29,13 @@ const useRadioButtonStyles = createUseStyles((theme) => ({
         borderRadius: '50%',
         width: 12,
         height: 12,
-        background: ({checked, isIos}) =>
-            checked && !isIos ? theme.colors.controlActivated : theme.colors.background,
+        background: ({checked, isIos}) => {
+            if (isIos) {
+                return checked ? theme.colors.iosControlKnob : theme.colors.background;
+            } else {
+                return checked ? theme.colors.controlActivated : theme.colors.background;
+            }
+        },
     },
     radioButton: {
         cursor: 'default',
