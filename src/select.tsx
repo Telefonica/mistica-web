@@ -25,7 +25,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     select: {
         fontFamily: 'inherit',
-        backgroundColor: 'white',
+        backgroundColor: theme.colors.backgroundContainer,
         paddingTop: ({label}) => (label ? 24 : 16),
         paddingBottom: ({label}) => (label ? 8 : 16),
         paddingRight: 0,
@@ -70,7 +70,7 @@ const useStyles = createUseStyles((theme) => ({
         borderRadius: 4,
         boxShadow:
             '0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)',
-        backgroundColor: 'white',
+        backgroundColor: theme.colors.backgroundContainer,
         paddingTop: 8,
         paddingBottom: 8,
         transformOrigin: ({optionsComputedProps}) => optionsComputedProps.transformOrigin,
@@ -84,6 +84,7 @@ const useStyles = createUseStyles((theme) => ({
         backgroundColor: 'rgba(0, 0, 0, 0.14)',
     },
     menuItem: {
+        color: theme.colors.textPrimary,
         lineHeight: 1.5,
         padding: '6px 16px',
         height: 48,

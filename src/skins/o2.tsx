@@ -45,6 +45,7 @@ export const getO2Skin: GetSkin = () => {
             // BACKGROUNDS
             appBarBackground: palette.white,
             background: palette.white,
+            backgroundContainer: palette.white,
             backgroundBrand: palette.o2BluePrimary,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
             backgroundSkeleton: palette.grey1,
@@ -84,6 +85,7 @@ export const getO2Skin: GetSkin = () => {
             buttonSecondaryBorderSelectedInverse: palette.o2BluePrimaryLight50,
 
             textButtonPrimary: palette.white,
+            textButtonPrimaryDisabled: palette.white,
             textButtonPrimaryInverse: palette.o2BluePrimary,
             textButtonPrimaryInverseDisabled: palette.o2BluePrimaryLight10,
             textButtonPrimaryInverseSelected: palette.o2BluePrimaryDark,

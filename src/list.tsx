@@ -40,6 +40,7 @@ const useStyles = createUseStyles((theme) => ({
         border: `1px solid ${theme.colors.border}`,
         borderRadius: 4,
         overflow: 'hidden',
+        background: theme.colors.backgroundContainer,
     },
     content: {
         display: 'flex',

@@ -91,6 +91,7 @@ export {
     useWindowSize,
     useWindowHeight,
     useWindowWidth,
+    useIsDarkMode,
 } from './hooks';
 export type {ThemeConfig} from './theme';
 

@@ -47,6 +47,7 @@ export const getO2ClassicSkin: GetSkin = () => {
             // BACKGROUNDS
             appBarBackground: palette.white,
             background: palette.white,
+            backgroundContainer: palette.white,
             backgroundBrand: `linear-gradient(to bottom, ${palette.o2Blue}, ${palette.o2GradientSecond} 51%, ${palette.o2GradientThird} 72%, ${palette.o2GradientFourth})`,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
             backgroundSkeleton: palette.grey1,
@@ -85,6 +86,7 @@ export const getO2ClassicSkin: GetSkin = () => {
             buttonSecondaryBorderSelectedInverse: palette.o2SkyBlueLight50,
 
             textButtonPrimary: palette.white,
+            textButtonPrimaryDisabled: palette.white,
             textButtonPrimaryInverse: palette.o2SkyBlue,
             textButtonPrimaryInverseDisabled: palette.o2SkyBlueLight30,
             textButtonPrimaryInverseSelected: palette.o2SkyBlue,

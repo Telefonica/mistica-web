@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Stack from '../stack';
+import {Stack, Text2, useTheme} from '..';
 import {StorySection, useSelect} from './helpers';
 import {Placeholder} from '../placeholder';
 
@@ -7,8 +7,14 @@ export default {
     title: 'Components/Layouts/Stack',
 };
 
-const Row = ({children}: {children?: any}) =>
-    children ? <div style={{border: '1px solid red', padding: 16}}>{children}</div> : null;
+const Row = ({children}: {children?: any}) => {
+    const {colors} = useTheme();
+    return children ? (
+        <div style={{border: `1px solid ${colors.error}`, padding: 16}}>
+            <Text2 regular>{children}</Text2>
+        </div>
+    ) : null;
+};
 
 const Null = () => null;
 const ComponentThatReturnsNullComponent = () => <Null />;

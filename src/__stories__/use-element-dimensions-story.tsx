@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StorySection} from './helpers';
-import {useElementDimensions} from '../hooks';
+import {useElementDimensions, Text2} from '..';
 
 export default {
     title: 'Hooks/useElementDimensions',
@@ -11,7 +11,9 @@ export const UseElementSize: StoryComponent = () => {
 
     return (
         <StorySection title="Get element dimensions. Resize the red element to see the changes">
-            Height: {height}px, Width: {width}px
+            <Text2 regular>
+                Height: {height}px, Width: {width}px
+            </Text2>
             <div
                 ref={ref}
                 style={{

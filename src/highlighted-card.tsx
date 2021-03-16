@@ -18,7 +18,8 @@ const useStyles = createUseStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : theme.colors.background),
+        background: ({isInverse}) =>
+            isInverse ? theme.colors.backgroundBrand : theme.colors.backgroundContainer,
         border: ({isInverse}) => (isInverse ? '0' : `1px solid ${theme.colors.border}`),
         borderRadius: 4,
         overflow: 'hidden',

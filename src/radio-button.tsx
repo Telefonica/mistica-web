@@ -5,7 +5,7 @@ import {getPlatform} from './utils/platform';
 import {SPACE, LEFT, UP, DOWN, RIGHT} from './utils/key-codes';
 import {useControlProps} from './form-context';
 import {combineRefs} from './utils/common';
-import {Inline} from '.';
+import {Inline, Text3} from '.';
 
 const useRadioButtonStyles = createUseStyles((theme) => ({
     outerCircle: {
@@ -20,7 +20,7 @@ const useRadioButtonStyles = createUseStyles((theme) => ({
                 ? isIos
                     ? 'initial'
                     : `2px solid ${theme.colors.controlActivated}`
-                : `1px solid ${theme.colors.border}`,
+                : `1px solid ${theme.colors.control}`,
         width: 24,
         height: 24,
         opacity: ({disabled}) => (disabled ? 0.5 : 1),
@@ -128,7 +128,9 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, ...rest}
             ) : (
                 <Inline space={16} alignItems="center">
                     {radio}
-                    {rest.children}
+                    <Text3 regular as="div">
+                        {rest.children}
+                    </Text3>
                 </Inline>
             )}
         </span>

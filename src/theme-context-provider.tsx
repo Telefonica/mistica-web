@@ -11,6 +11,7 @@ import {isServerSide} from './utils/environment';
 import {AnchorLink, mediaQueriesConfig, dimensions, getTexts} from './theme';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
+import {useIsDarkMode} from './hooks';
 
 import type {Theme, ThemeConfig} from './theme';
 
@@ -52,6 +53,8 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
     const nextAriaId = React.useRef(1);
     const getAriaId = React.useCallback((): string => `aria-id-hook-${nextAriaId.current++}`, []);
 
+    const isDarkMode = useIsDarkMode();
+
     const contextTheme: Theme = React.useMemo(
         () => ({
             skinName: theme.skin.name,
@@ -76,10 +79,10 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
             mq: theme.mediaQueries
                 ? createMediaQueries(theme.mediaQueries)
                 : createMediaQueries(mediaQueriesConfig),
-            colors: theme.skin.colors,
+            colors: isDarkMode ? {...theme.skin.colors, ...theme.skin.darkModeColors} : theme.skin.colors,
             Link: theme.Link ?? AnchorLink,
         }),
-        [theme]
+        [theme, isDarkMode]
     );
 
     return (

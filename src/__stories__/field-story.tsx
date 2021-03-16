@@ -47,13 +47,19 @@ const Uncontrolled: React.FC<UncontrolledProps> = ({title, children}) => {
 
     return (
         <StorySection title={title}>
-            {children(onChange, onChangeValue)}
-            <div style={{fontSize: 10, marginTop: 16}}>
-                onChange: {typeof rawValue === 'undefined' ? '' : `(${typeof rawValue}) ${inspect(rawValue)}`}
-            </div>
-            <div style={{fontSize: 10, marginTop: 8}}>
-                onChangeValue: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
-            </div>
+            <Stack space={16}>
+                {children(onChange, onChangeValue)}
+                <Stack space={8}>
+                    <Text1 regular>
+                        onChange:{' '}
+                        {typeof rawValue === 'undefined' ? '' : `(${typeof rawValue}) ${inspect(rawValue)}`}
+                    </Text1>
+                    <Text1 regular>
+                        onChangeValue:{' '}
+                        {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
+                    </Text1>
+                </Stack>
+            </Stack>
         </StorySection>
     );
 };
@@ -77,13 +83,19 @@ const Controlled: React.FC<ControlledProps> = ({title, initialValue, children}) 
 
     return (
         <StorySection title={title}>
-            {children(onChange, onChangeValue, rawValue)}
-            <div style={{fontSize: 10, marginTop: 16}}>
-                onChange: {typeof rawValue === 'undefined' ? '' : `(${typeof rawValue}) ${inspect(rawValue)}`}
-            </div>
-            <div style={{fontSize: 10, marginTop: 8}}>
-                onChangeValue: {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
-            </div>
+            <Stack space={16}>
+                {children(onChange, onChangeValue, rawValue)}
+                <Stack space={8}>
+                    <Text1 regular>
+                        onChange:{' '}
+                        {typeof rawValue === 'undefined' ? '' : `(${typeof rawValue}) ${inspect(rawValue)}`}
+                    </Text1>
+                    <Text1 regular>
+                        onChangeValue:{' '}
+                        {typeof value === 'undefined' ? '' : `(${typeof value}) ${inspect(value)}`}
+                    </Text1>
+                </Stack>
+            </Stack>
         </StorySection>
     );
 };
@@ -171,7 +183,7 @@ export const Variants: StoryComponent = () => {
                 <TextField name="text" disabled label="Disabled" defaultValue="Default value" />
             </StorySection>
 
-            <div style={{backgroundColor: colors.textLink}}>
+            <div style={{backgroundColor: colors.backgroundBrand}}>
                 <ThemeVariant isInverse>
                     <Box padding={16}>
                         <StorySection title="Inverse with helper text">

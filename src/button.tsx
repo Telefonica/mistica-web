@@ -98,6 +98,7 @@ const usePrimaryButtonStyles = createUseStyles((theme) => ({
             backgroundColor: theme.colors.buttonPrimaryBackgroundSelected,
         },
         '&[disabled]:not($isLoading)': {
+            color: theme.colors.textButtonPrimaryDisabled,
             backgroundColor: theme.colors.buttonPrimaryBackgroundDisabled,
         },
 
@@ -204,6 +205,7 @@ const dangerButtonStyles = (theme: Theme) => ({
         backgroundColor: theme.colors.buttonDangerBackgroundSelected,
     },
     '&[disabled]:not($isLoading)': {
+        color: theme.colors.textButtonPrimaryDisabled,
         backgroundColor: theme.colors.buttonDangerBackgroundDisabled,
     },
 

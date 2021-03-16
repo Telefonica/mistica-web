@@ -7,12 +7,14 @@ export type GetSkin = (variant?: SkinVariant) => Skin;
 export type Skin = {
     name: SkinName;
     colors: Colors;
+    darkModeColors?: Partial<Colors>;
 };
 
 export type Colors = {
     // BACKGROUNDS
     appBarBackground: string;
     background: string;
+    backgroundContainer: string;
     backgroundBrand: string;
     backgroundOverlay: string;
     backgroundSkeleton: string;
@@ -98,6 +100,7 @@ export type Colors = {
 
     // TEXT BUTTONS
     textButtonPrimary: string;
+    textButtonPrimaryDisabled: string;
     textButtonPrimaryInverse: string;
     textButtonPrimaryInverseDisabled: string;
     textButtonPrimaryInverseSelected: string;

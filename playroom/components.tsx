@@ -13,11 +13,14 @@ import {
     Tabs,
     Checkbox,
     ThemeContextProvider,
+    useIsDarkMode,
 } from '../src';
 import {Movistar, Vivo, O2, O2_Classic} from './themes';
 import {useOverrideTheme} from './frame-component';
 
 export * from '../src';
+
+const capitalize = (str: string): string => str.charAt(0).toUpperCase() + str.slice(1);
 
 const useControlsStyles = createUseStyles((theme) => ({
     controls: {
@@ -109,6 +112,9 @@ type PreviewToolsControlsProps = {
     onOsChange: (newOs: 'android' | 'ios' | 'desktop') => void;
     skinName: SkinName;
     onSkinNameChange: (newSkinName: SkinName) => void;
+    showColorSchemeSelector: boolean;
+    colorScheme: 'light' | 'dark' | 'auto';
+    onColorSchemeChange: (newColorScheme: 'light' | 'dark' | 'auto') => void;
     onEditStoryPress: () => void;
     showPlatformSelector: boolean;
 };
@@ -119,11 +125,16 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
     showPlatformSelector,
     skinName,
     onSkinNameChange,
+    showColorSchemeSelector,
+    colorScheme,
+    onColorSchemeChange,
     onEditStoryPress,
 }) => {
     const classes = useControlsStyles();
     const {colors} = useTheme();
     const {isMobile} = useScreenSize();
+    const systemColorScheme = useIsDarkMode() ? 'dark' : 'light';
+    const alternativeColorScheme = systemColorScheme === 'dark' ? 'light' : 'dark';
 
     if (isMobile) {
         return (
@@ -135,6 +146,24 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                     value={skinName}
                     onChangeValue={onSkinNameChange as any}
                 />
+                {showColorSchemeSelector && (
+                    <Checkbox
+                        name="colorScheme"
+                        checked={colorScheme === alternativeColorScheme}
+                        onChange={(checked) => {
+                            if (checked) {
+                                onColorSchemeChange(alternativeColorScheme);
+                            } else {
+                                onColorSchemeChange(systemColorScheme);
+                            }
+                        }}
+                        render={(checkboxElement) => (
+                            <div className={classes.checkbox}>
+                                {checkboxElement} {capitalize(alternativeColorScheme)} mode
+                            </div>
+                        )}
+                    />
+                )}
                 {showPlatformSelector && (
                     <Checkbox
                         name="iOS"
@@ -163,6 +192,26 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                     />
                 </div>
                 <div className={classes.flexSpacer} />
+                {showColorSchemeSelector && (
+                    <div className={classes.desktopControlItem}>
+                        <Checkbox
+                            name="colorScheme"
+                            checked={colorScheme === alternativeColorScheme}
+                            onChange={(checked) => {
+                                if (checked) {
+                                    onColorSchemeChange(alternativeColorScheme);
+                                } else {
+                                    onColorSchemeChange(systemColorScheme);
+                                }
+                            }}
+                            render={(checkboxElement) => (
+                                <div className={classes.checkbox}>
+                                    {checkboxElement} {capitalize(alternativeColorScheme)} mode
+                                </div>
+                            )}
+                        />
+                    </div>
+                )}
                 {showPlatformSelector && (
                     <div className={classes.desktopControlItem}>
                         <Checkbox
@@ -189,6 +238,7 @@ type PreviewToolsProps = {
     floating?: boolean;
     position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
     showPlatformSelector?: boolean;
+    showColorSchemeSelector?: boolean;
     forceMobile?: boolean;
 };
 
@@ -197,6 +247,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     floating,
     position = 'top-right',
     showPlatformSelector = false,
+    showColorSchemeSelector = false,
     forceMobile = false,
 }) => {
     const {
@@ -206,14 +257,30 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     const [showOverlay, setShowOverlay] = React.useState(false);
     const [skinName, setSkinName] = React.useState<SkinName>(initialSkinName);
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
+    const [colorScheme, setColorScheme] = React.useState<'light' | 'dark' | 'auto'>('auto');
     const classes = useStyles({position});
 
     const overrideTheme = useOverrideTheme();
 
     React.useEffect(() => {
         const impossibleSize = 999999;
+        const selectedThemeConfig = themesMap[skinName].themeConfig;
+        let selectedSkin = selectedThemeConfig.skin;
+        if (colorScheme === 'dark') {
+            selectedSkin = {
+                ...selectedSkin,
+                colors: {...selectedSkin.colors, ...selectedSkin.darkModeColors},
+            };
+        }
+        if (colorScheme === 'light') {
+            selectedSkin = {
+                ...selectedSkin,
+                darkModeColors: {},
+            };
+        }
         overrideTheme({
-            ...themesMap[skinName].themeConfig,
+            ...selectedThemeConfig,
+            skin: selectedSkin,
             platformOverrides: {platform: os},
             mediaQueries: forceMobile
                 ? {
@@ -224,7 +291,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                   }
                 : undefined,
         });
-    }, [overrideTheme, os, skinName, forceMobile]);
+    }, [overrideTheme, os, skinName, forceMobile, colorScheme]);
 
     const editStory = () => {
         if (window.location.href.includes('/preview')) {
@@ -247,6 +314,9 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                 onOsChange={setOs}
                 showPlatformSelector={showPlatformSelector}
                 onEditStoryPress={editStory}
+                showColorSchemeSelector={showColorSchemeSelector}
+                onColorSchemeChange={setColorScheme}
+                colorScheme={colorScheme}
             />
         </ThemeContextProvider>
     );

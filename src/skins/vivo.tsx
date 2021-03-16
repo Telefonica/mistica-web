@@ -38,6 +38,7 @@ export const getVivoSkin: GetSkin = () => {
             // BACKGROUNDS
             appBarBackground: palette.white,
             background: palette.white,
+            backgroundContainer: palette.white,
             backgroundBrand: palette.vivoPurple,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
             backgroundSkeleton: palette.grey1,
@@ -76,6 +77,7 @@ export const getVivoSkin: GetSkin = () => {
             buttonSecondaryBorderSelectedInverse: palette.vivoPurpleLight50,
 
             textButtonPrimary: palette.white,
+            textButtonPrimaryDisabled: palette.white,
             textButtonPrimaryInverse: palette.vivoPurple,
             textButtonPrimaryInverseDisabled: palette.vivoPurpleLight20,
             textButtonPrimaryInverseSelected: palette.vivoPurple,

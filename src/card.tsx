@@ -122,7 +122,7 @@ const useMediaCardStyles = createUseStyles((theme) => ({
     },
     content: {
         flex: 1,
-        background: theme.colors.background,
+        background: theme.colors.backgroundContainer,
         padding: 16,
         paddingBottom: 24,
         display: 'flex',
@@ -178,7 +178,7 @@ const useDataCardStyles = createUseStyles((theme) => ({
         padding: '24px 16px',
         height: '100%',
         border: `1px solid ${theme.colors.border}`,
-        background: theme.colors.background,
+        background: theme.colors.backgroundContainer,
     },
 }));
 

@@ -13,7 +13,9 @@ export const UseWindowSize: StoryComponent = () => {
             <Text2 regular color={theme.colors.textSecondary}>
                 Resize the window
             </Text2>
-            <pre style={{fontFamily: 'monospace'}}>{JSON.stringify(size, null, 2)}</pre>
+            <Text2 as="pre" regular>
+                {JSON.stringify(size, null, 2)}
+            </Text2>
         </Stack>
     );
 };

@@ -1,35 +1,32 @@
 import * as React from 'react';
-import {ThemeVariant} from '../theme-variant-context';
-import LoadingBarComponent from '../loading-bar';
-import {StorySection} from './helpers';
+import {ThemeVariant, LoadingBar as LoadingBarComponent, Switch, useTheme, Box} from '..';
 
 export default {
     title: 'Components/Feedbacks/LoadingBar',
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 const BackgroundTheme: React.FC = ({children}) => {
     const [isInverseVariant, setIsInverseVariant] = React.useState(false);
+    const {colors} = useTheme();
     return (
         <ThemeVariant isInverse={isInverseVariant}>
-            <>
-                <div>{children}</div>
-                <p style={{paddingLeft: 8, margin: 0, marginBottom: 16}}>
-                    <input
-                        type="checkbox"
-                        checked={isInverseVariant}
-                        onChange={({target}) => setIsInverseVariant(target.checked)}
-                    />
-                    Inverse variant
-                </p>
-            </>
+            <div style={{background: isInverseVariant ? colors.backgroundBrand : colors.background}}>
+                <Box paddingY={32} paddingX={16}>
+                    {children}
+                    <Switch name="isInverse" checked={isInverseVariant} onChange={setIsInverseVariant}>
+                        Inverse variant
+                    </Switch>
+                </Box>
+            </div>
         </ThemeVariant>
     );
 };
 
 export const LoadingBar: StoryComponent = () => (
     <BackgroundTheme>
-        <StorySection title="Loading Bar">
-            <LoadingBarComponent visible />
-        </StorySection>
+        <LoadingBarComponent visible />
     </BackgroundTheme>
 );
