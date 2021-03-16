@@ -289,7 +289,7 @@ const Popover: React.FC<Props> = ({
                             trackingEvent={trackingEvent}
                             label={texts.modalClose}
                         >
-                            <IcnClose color={colors.textPrimary} />
+                            <IcnClose color={colors.neutralHigh} />
                         </IconButton>
                     </div>
                 </div>
