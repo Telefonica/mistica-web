@@ -52,7 +52,7 @@ export type Colors = {
   loadingBarInverse: string,
   toggleAndroidInactive: string,
   toggleAndroidBackgroundActive: string,
-  toggleIosInactive: string,
+  iosControlKnob: string,
   divider: string,
   dividerInverse: string,
   navigationBarDivider: string,
