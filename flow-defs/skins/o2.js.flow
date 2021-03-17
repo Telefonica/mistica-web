@@ -34,5 +34,10 @@ declare export var palette: {
   grey5: string,
   grey6: string,
   white: string,
+  darkModeBlack: string,
+  darkModeGrey: string,
+  darkModeGrey6: string,
+  darkModeO2BluePrimary: string,
+  darkModeO2BluePrimaryDark: string,
 };
 declare export var getO2Skin: GetSkin;

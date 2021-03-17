@@ -27,5 +27,8 @@ declare export var palette: {
   grey5: string,
   grey6: string,
   white: string,
+  darkModeBlack: string,
+  darkModeGrey: string,
+  darkModeGrey6: string,
 };
 declare export var getVivoSkin: GetSkin;
