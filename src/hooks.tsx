@@ -175,20 +175,7 @@ export const useIsomorphicLayoutEffect =
 
 const darkModeMedia = '(prefers-color-scheme: dark)';
 export const useIsDarkMode = (): boolean => {
-    /**
-     * To avoid problems with react hydrate, the server rendered content and the first client render should
-     * be equal. To achieve that, we always do a first render in client with isServerSide state at true, and
-     * then calc media queries and re-render in a second pass. Note that useIsomorphicLayoutEffect only runs
-     * in client side.
-     */
-    const [isServerSide, setIsServerSide] = React.useState(true);
-    useIsomorphicLayoutEffect(() => {
-        setIsServerSide(false);
-    }, []);
-
-    const [isDarkMode, setIsDarkMode] = React.useState(
-        () => !isServerSide && window.matchMedia(darkModeMedia).matches
-    );
+    const [isDarkMode, setIsDarkMode] = React.useState(false);
 
     useIsomorphicLayoutEffect(() => {
         if (!window.matchMedia) {

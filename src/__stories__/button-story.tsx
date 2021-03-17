@@ -98,58 +98,80 @@ export const TypeOfButtons: StoryComponent = () => {
                 <Stack space={8}>
                     <SectionTitle>ButtonPrimary</SectionTitle>
 
-                    <div>Button:</div>
+                    <Text2 regular as="p">
+                        Button:
+                    </Text2>
                     <ButtonPrimary onPress={handleOnPress} {...props}>
                         {text}
                     </ButtonPrimary>
 
-                    <div>Link:</div>
+                    <Text2 regular as="p">
+                        Link:
+                    </Text2>
                     <ButtonPrimary href={href} newTab={newTab} {...props}>
                         {text}
                     </ButtonPrimary>
 
-                    <div>Fake:</div>
+                    <Text2 regular as="p">
+                        Fake:
+                    </Text2>
                     <ButtonPrimary fake {...props}>
                         {text}
                     </ButtonPrimary>
 
                     <SectionTitle>ButtonSecondary</SectionTitle>
-                    <div>Button:</div>
+                    <Text2 regular as="p">
+                        Button:
+                    </Text2>
                     <ButtonSecondary onPress={handleOnPress} {...props}>
                         {text}
                     </ButtonSecondary>
 
-                    <div>Link:</div>
+                    <Text2 regular as="p">
+                        Link:
+                    </Text2>
                     <ButtonSecondary href={href} newTab={newTab} {...props}>
                         {text}
                     </ButtonSecondary>
 
-                    <div>Fake:</div>
+                    <Text2 regular as="p">
+                        Fake:
+                    </Text2>
                     <ButtonSecondary fake {...props}>
                         {text}
                     </ButtonSecondary>
 
                     <SectionTitle>ButtonDanger</SectionTitle>
 
-                    <div>Button:</div>
+                    <Text2 regular as="p">
+                        Button:
+                    </Text2>
                     <ButtonDanger onPress={handleOnPress} {...props}>
                         {text}
                     </ButtonDanger>
 
-                    <div>Link:</div>
+                    <Text2 regular as="p">
+                        Link:
+                    </Text2>
                     <ButtonDanger href={href} newTab={newTab} {...props}>
                         {text}
                     </ButtonDanger>
 
-                    <div>Fake:</div>
+                    <Text2 regular as="p">
+                        Fake:
+                    </Text2>
                     <ButtonDanger fake {...props}>
                         {text}
                     </ButtonDanger>
 
                     <SectionTitle>ButtonLink</SectionTitle>
-                    <div>Button (onPress):</div>
+                    <Text2 regular as="p">
+                        Button (onPress):
+                    </Text2>
                     <ButtonLink onPress={handleOnPress}>{text}</ButtonLink>
-                    <div>Link (href):</div>
+                    <Text2 regular as="p">
+                        Link (href):
+                    </Text2>
                     <ButtonLink href={href} newTab={newTab}>
                         {text}
                     </ButtonLink>
@@ -162,9 +184,10 @@ export const TypeOfButtons: StoryComponent = () => {
 export const EllipsisInButtons: StoryComponent = () => {
     const text = 'Ellipsis text example example';
     const href = 'https://example.com';
+    const {colors} = useTheme();
 
     return (
-        <div data-testid="content" style={{width: 160, border: '1px solid'}}>
+        <div data-testid="content" style={{width: 160, border: `1px solid ${colors.border}`}}>
             <Stack space={8}>
                 <SectionTitle>ButtonPrimary</SectionTitle>
                 <ButtonPrimary onPress={handleOnPress}>{text}</ButtonPrimary>
