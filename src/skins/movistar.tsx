@@ -130,7 +130,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             textPrimary: palette.grey6,
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
-            textSecondaryInverse: palette.movistarBlueLight30,
+            textSecondaryInverse: palette.white,
             textDisabled: palette.grey3,
             textAmount: palette.movistarBlue,
 
