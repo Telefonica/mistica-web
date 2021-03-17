@@ -18,7 +18,7 @@ const arrowWrapperHeight = arrowSize;
 const useStyles = createUseStyles((theme) => ({
     arrow: {
         position: 'absolute',
-        backgroundColor: theme.colors.background,
+        backgroundColor: theme.colors.backgroundContainer,
         width: arrowSize,
         height: arrowSize,
         top: 0,
@@ -60,7 +60,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     arrowWrapper: {
         position: 'absolute',
-        color: theme.colors.background,
+        color: theme.colors.backgroundContainer,
         width: arrowWrapperWidth,
         height: arrowWrapperHeight,
         overflow: 'hidden',
@@ -74,7 +74,7 @@ const useStyles = createUseStyles((theme) => ({
         width: 'auto',
         boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)',
         padding: 16,
-        backgroundColor: theme.colors.background,
+        backgroundColor: theme.colors.backgroundContainer,
         zIndex: 12,
         border: `1px solid ${theme.colors.divider}`,
         borderRadius: 2,

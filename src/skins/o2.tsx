@@ -212,7 +212,7 @@ export const getO2Skin: GetSkin = () => {
             loadingBarBackgroundInverse: palette.grey1,
             loadingBarInverse: palette.darkModeO2BluePrimary,
             toggleAndroidInactive: palette.grey4,
-            toggleAndroidBackgroundActive: palette.o2BlueLight60,
+            toggleAndroidBackgroundActive: palette.o2BlueLight30,
             iosControlKnob: palette.grey2,
             divider: palette.darkModeGrey,
             dividerInverse: palette.darkModeGrey,
