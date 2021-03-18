@@ -198,7 +198,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             textButtonSecondarySelected: palette.grey4,
             textButtonSecondaryInverse: palette.grey2,
             textButtonSecondaryInverseDisabled: palette.grey5,
-            textButtonSecondaryInverseSelected: palette.movistarGreenDark,
+            textButtonSecondaryInverseSelected: palette.grey4,
             textLink: palette.movistarBlue,
             textLinkDisabled: palette.grey6,
             control: palette.grey6,
