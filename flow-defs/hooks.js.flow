@@ -19,4 +19,3 @@ declare export var useWindowSize: () => {
 declare export var useWindowHeight: () => number;
 declare export var useWindowWidth: () => number;
 declare export var useIsomorphicLayoutEffect: typeof React.useLayoutEffect;
-declare export var useIsDarkMode: () => boolean;

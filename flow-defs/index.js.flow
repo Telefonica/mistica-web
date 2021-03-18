@@ -113,9 +113,8 @@ declare export {
   useWindowSize,
   useWindowHeight,
   useWindowWidth,
-  useIsDarkMode,
 } from "./hooks";
-declare export { ThemeConfig } from "./theme";
+declare export { ThemeConfig, ColorScheme } from "./theme";
 declare export {
   ThemeVariant,
   useIsInverseVariant,
