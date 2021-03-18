@@ -1,8 +1,6 @@
-import {getPlatform, isInsideNovumNativeApp} from '../utils/platform';
 import {getMovistarSkin} from '..';
 
-import {Theme, ThemeConfig, ThemeTexts, getTexts, mediaQueriesConfig, dimensions, AnchorLink} from '../theme';
-import {createMediaQueries} from '../utils/media-queries';
+import {ThemeConfig, ThemeTexts, getTexts} from '../theme';
 
 import type {Locale} from '../utils/locale';
 import type {RegionCode} from '../utils/region-code';
@@ -31,30 +29,13 @@ type ThemeOverrides = {
 
 const baseSkin = getMovistarSkin();
 
-export const baseTheme: Theme = {
-    skinName: baseSkin.name,
-    i18n: {
-        locale: 'es-ES',
-        phoneNumberFormattingRegionCode: 'ES',
-    },
-    platformOverrides: {
-        platform: getPlatform(),
-        insideNovumNativeApp: isInsideNovumNativeApp(),
-    },
-    colors: baseSkin.colors,
-    texts: getTexts('es-ES'),
-    analytics: {
-        logEvent: (): Promise<void> => Promise.resolve(),
-    },
-    mq: createMediaQueries(mediaQueriesConfig),
-    dimensions,
-    Link: AnchorLink,
-};
-
 export const makeTheme = (overrides: ThemeOverrides = {}): ThemeConfig => ({
     ...overrides,
     skin: overrides.skin || baseSkin,
-    i18n: overrides.i18n || baseTheme.i18n,
+    i18n: overrides.i18n || {
+        locale: 'es-ES',
+        phoneNumberFormattingRegionCode: 'ES',
+    },
     texts: {
         ...getTexts(overrides?.i18n?.locale ?? 'es-ES'),
         ...overrides.texts,

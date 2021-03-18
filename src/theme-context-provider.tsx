@@ -11,9 +11,34 @@ import {isServerSide} from './utils/environment';
 import {AnchorLink, mediaQueriesConfig, dimensions, getTexts} from './theme';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
-import {useIsDarkMode} from './hooks';
+import {useIsomorphicLayoutEffect} from './hooks';
 
+import type {Colors} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
+
+const darkModeMedia = '(prefers-color-scheme: dark)';
+const useIsDarkMode = (): boolean => {
+    const [isDarkMode, setIsDarkMode] = React.useState(false);
+
+    useIsomorphicLayoutEffect(() => {
+        if (!window.matchMedia) {
+            return;
+        }
+
+        const mq = window.matchMedia(darkModeMedia);
+
+        const listener = () => {
+            setIsDarkMode(mq.matches);
+        };
+
+        mq.addEventListener('change', listener);
+        listener();
+
+        return () => mq.removeEventListener('change', listener);
+    }, []);
+
+    return isDarkMode;
+};
 
 // This counter will increment with every new instance of ThemeContextProvider in the app. In a typical app we don't need more than
 // one instance of ThemeContextProvider. But some apps may depend on libs that use Mistica too, so there may be more than one instance
@@ -55,8 +80,14 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
 
     const isDarkMode = useIsDarkMode();
 
-    const contextTheme: Theme = React.useMemo(
-        () => ({
+    const contextTheme: Theme = React.useMemo(() => {
+        const colorScheme = theme.colorScheme ?? 'auto';
+        const lightColors: Colors = theme.skin.colors;
+        const darkColors: Colors = {...theme.skin.colors, ...theme.skin.darkModeColors};
+        const colors: Colors =
+            colorScheme === 'light' || (colorScheme === 'auto' && !isDarkMode) ? lightColors : darkColors;
+
+        return {
             skinName: theme.skin.name,
             i18n: theme.i18n,
             platformOverrides: {
@@ -79,11 +110,11 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
             mq: theme.mediaQueries
                 ? createMediaQueries(theme.mediaQueries)
                 : createMediaQueries(mediaQueriesConfig),
-            colors: isDarkMode ? {...theme.skin.colors, ...theme.skin.darkModeColors} : theme.skin.colors,
+            colors,
             Link: theme.Link ?? AnchorLink,
-        }),
-        [theme, isDarkMode]
-    );
+            isDarkMode,
+        };
+    }, [theme, isDarkMode]);
 
     return (
         <JssProvider jss={getJss()} classNamePrefix={classNamePrefix} generateId={generateId}>

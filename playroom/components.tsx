@@ -1,22 +1,21 @@
 import * as React from 'react';
 import {
     Select,
-    ThemeConfig,
     createUseStyles,
     IconButton,
     IconSettingsRegular,
     IconCodeFilled,
     Overlay,
     useTheme,
-    SkinName,
     useScreenSize,
     Tabs,
     Checkbox,
     ThemeContextProvider,
-    useIsDarkMode,
 } from '../src';
 import {Movistar, Vivo, O2, O2_Classic} from './themes';
 import {useOverrideTheme} from './frame-component';
+
+import type {ThemeConfig, ColorScheme, SkinName} from '../src';
 
 export * from '../src';
 
@@ -113,8 +112,8 @@ type PreviewToolsControlsProps = {
     skinName: SkinName;
     onSkinNameChange: (newSkinName: SkinName) => void;
     showColorSchemeSelector: boolean;
-    colorScheme: 'light' | 'dark' | 'auto';
-    onColorSchemeChange: (newColorScheme: 'light' | 'dark' | 'auto') => void;
+    colorScheme: ColorScheme;
+    onColorSchemeChange: (newColorScheme: ColorScheme) => void;
     onEditStoryPress: () => void;
     showPlatformSelector: boolean;
 };
@@ -131,9 +130,9 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
     onEditStoryPress,
 }) => {
     const classes = useControlsStyles();
-    const {colors} = useTheme();
+    const {colors, isDarkMode} = useTheme();
     const {isMobile} = useScreenSize();
-    const systemColorScheme = useIsDarkMode() ? 'dark' : 'light';
+    const systemColorScheme = isDarkMode ? 'dark' : 'light';
     const alternativeColorScheme = systemColorScheme === 'dark' ? 'light' : 'dark';
 
     if (isMobile) {
@@ -257,7 +256,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     const [showOverlay, setShowOverlay] = React.useState(false);
     const [skinName, setSkinName] = React.useState<SkinName>(initialSkinName);
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
-    const [colorScheme, setColorScheme] = React.useState<'light' | 'dark' | 'auto'>('auto');
+    const [colorScheme, setColorScheme] = React.useState<ColorScheme>('auto');
     const classes = useStyles({position});
 
     const overrideTheme = useOverrideTheme();
@@ -265,22 +264,9 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     React.useEffect(() => {
         const impossibleSize = 999999;
         const selectedThemeConfig = themesMap[skinName].themeConfig;
-        let selectedSkin = selectedThemeConfig.skin;
-        if (colorScheme === 'dark') {
-            selectedSkin = {
-                ...selectedSkin,
-                colors: {...selectedSkin.colors, ...selectedSkin.darkModeColors},
-            };
-        }
-        if (colorScheme === 'light') {
-            selectedSkin = {
-                ...selectedSkin,
-                darkModeColors: {},
-            };
-        }
         overrideTheme({
             ...selectedThemeConfig,
-            skin: selectedSkin,
+            colorScheme,
             platformOverrides: {platform: os},
             mediaQueries: forceMobile
                 ? {

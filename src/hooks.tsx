@@ -172,27 +172,3 @@ export const useWindowWidth = (): number => {
 // useLayoutEffect in the browser
 export const useIsomorphicLayoutEffect =
     typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
-
-const darkModeMedia = '(prefers-color-scheme: dark)';
-export const useIsDarkMode = (): boolean => {
-    const [isDarkMode, setIsDarkMode] = React.useState(false);
-
-    useIsomorphicLayoutEffect(() => {
-        if (!window.matchMedia) {
-            return;
-        }
-
-        const mq = window.matchMedia(darkModeMedia);
-
-        const listener = () => {
-            setIsDarkMode(mq.matches);
-        };
-
-        mq.addEventListener('change', listener);
-        listener();
-
-        return () => mq.removeEventListener('change', listener);
-    }, []);
-
-    return isDarkMode;
-};

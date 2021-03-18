@@ -8,11 +8,12 @@ import {
     VIVO_SKIN,
     O2_SKIN,
     O2_CLASSIC_SKIN,
-    ThemeConfig,
     useTheme,
 } from '../src';
 import {AVAILABLE_THEMES, Movistar} from './themes';
 import {addons} from '@storybook/addons';
+
+import type {ColorScheme, ThemeConfig} from '../src';
 
 const getUserAgent = () => self.navigator.userAgent || '';
 const isRunningAcceptanceTest = () => getUserAgent().includes('acceptance-test');
@@ -37,7 +38,6 @@ const acceptanceStyles = `
 }`;
 
 type Platform = 'android' | 'desktop' | 'ios';
-type ColorSchemeSetting = 'auto' | 'light' | 'dark';
 
 const getSkin = (searchParams: URLSearchParams) => {
     const qsSkin = searchParams.get('skin');
@@ -52,26 +52,11 @@ const getPlatform = (searchParams: URLSearchParams): Platform => {
     return 'desktop';
 };
 
-const getTheme = (selectedSkin: string, platform: Platform, colorScheme: ColorSchemeSetting): ThemeConfig => {
+const getTheme = (selectedSkin: string, platform: Platform, colorScheme: ColorScheme): ThemeConfig => {
     const themeConfig = AVAILABLE_THEMES.find(({skin}) => skin.name === selectedSkin) || Movistar;
-
-    let skin = themeConfig.skin;
-    if (colorScheme === 'dark') {
-        skin = {
-            ...skin,
-            colors: {...skin.colors, ...skin.darkModeColors},
-        };
-    }
-    if (colorScheme === 'light') {
-        skin = {
-            ...skin,
-            darkModeColors: {},
-        };
-    }
-
     return {
         ...themeConfig,
-        skin,
+        colorScheme,
         platformOverrides: {
             platform,
             insideNovumNativeApp: platform !== 'desktop',
@@ -83,7 +68,7 @@ const MisticaTemeProvider = ({Story, context}): React.ReactElement => {
     const searchParams = new URLSearchParams(location.search);
     const [skin, setSkin] = React.useState(getSkin(searchParams));
     const [platform, setPlatform] = React.useState<Platform>(getPlatform(searchParams));
-    const [colorScheme, setColorScheme] = React.useState<ColorSchemeSetting>('auto');
+    const [colorScheme, setColorScheme] = React.useState<ColorScheme>('auto');
 
     React.useEffect(() => {
         const channel = addons.getChannel();
