@@ -211,7 +211,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             toggleAndroidBackgroundActive: palette.movistarBlueLight30, // web only
             iosControlKnob: palette.grey2, // web only
             divider: palette.darkModeGrey,
-            dividerInverse: palette.grey6,
+            dividerInverse: palette.darkModeGrey,
             navigationBarDivider: palette.darkModeBlack,
             brandDark: palette.grey6,
             inverse: palette.grey2,
