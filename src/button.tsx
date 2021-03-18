@@ -427,7 +427,7 @@ const useButtonLinkStyles = createUseStyles((theme) => ({
         },
     },
     inverse: {
-        color: theme.colors.textPrimaryInverse,
+        color: theme.colors.textLinkInverse,
         '&:enabled:active': {
             backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
         },

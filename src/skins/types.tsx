@@ -113,6 +113,7 @@ export type Colors = {
 
     // TEXT LINKS
     textLink: string;
+    textLinkInverse: string;
     textLinkDanger: string;
     textLinkDangerDisabled: string;
     textLinkDisabled: string;
