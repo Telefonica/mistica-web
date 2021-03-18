@@ -206,7 +206,7 @@ export const getO2Skin: GetSkin = () => {
             textButtonSecondaryInverseSelected: palette.grey4,
             textLink: palette.o2BluePrimaryLight50,
             textLinkInverse: palette.o2BluePrimaryLight50,
-            textLinkDisabled: palette.grey5,
+            textLinkDisabled: palette.darkModeGrey6,
             control: palette.darkModeGrey6,
             controlActivated: palette.o2BluePrimaryLight50,
             loadingBar: palette.darkModeO2BluePrimary,

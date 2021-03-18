@@ -201,7 +201,7 @@ export const getO2ClassicSkin: GetSkin = () => {
             textLink: palette.o2SkyBlueLight,
             textLinkInverse: palette.o2SkyBlueLight,
             textLinkDangerDisabled: palette.grey5,
-            textLinkDisabled: palette.grey5,
+            textLinkDisabled: palette.darkModeGrey6,
             textLinkSnackbar: palette.o2SkyBlueLight,
             control: palette.darkModeGrey6,
             controlActivated: palette.o2SkyBlue,
