@@ -194,7 +194,7 @@ export const getVivoSkin: GetSkin = () => {
             textButtonSecondaryInverseDisabled: palette.grey5,
             textButtonSecondaryInverseSelected: palette.grey4,
             textLink: palette.vivoPurpleLight50,
-            textLinkDisabled: palette.grey5,
+            textLinkDisabled: palette.darkModeGrey6,
             control: palette.darkModeGrey6,
             controlActivated: palette.vivoPurpleLight80,
             loadingBar: palette.vivoPurpleLight80,
