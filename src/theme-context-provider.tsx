@@ -17,7 +17,7 @@ import type {Colors} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
 
 const darkModeMedia = '(prefers-color-scheme: dark)';
-const useIsDarkMode = (): boolean => {
+export const useIsDarkMode = (): boolean => {
     const [isDarkMode, setIsDarkMode] = React.useState(false);
 
     useIsomorphicLayoutEffect(() => {
@@ -78,14 +78,14 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
     const nextAriaId = React.useRef(1);
     const getAriaId = React.useCallback((): string => `aria-id-hook-${nextAriaId.current++}`, []);
 
-    const isDarkMode = useIsDarkMode();
+    const isOsDarkModeEnabled = useIsDarkMode();
 
     const contextTheme: Theme = React.useMemo(() => {
         const colorScheme = theme.colorScheme ?? 'auto';
         const lightColors: Colors = theme.skin.colors;
         const darkColors: Colors = {...theme.skin.colors, ...theme.skin.darkModeColors};
-        const colors: Colors =
-            colorScheme === 'light' || (colorScheme === 'auto' && !isDarkMode) ? lightColors : darkColors;
+        const isDarkModeEnabled = (colorScheme === 'auto' && isOsDarkModeEnabled) || colorScheme === 'dark';
+        const colors: Colors = isDarkModeEnabled ? darkColors : lightColors;
 
         return {
             skinName: theme.skin.name,
@@ -112,9 +112,9 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
                 : createMediaQueries(mediaQueriesConfig),
             colors,
             Link: theme.Link ?? AnchorLink,
-            isDarkMode,
+            isDarkMode: isDarkModeEnabled,
         };
-    }, [theme, isDarkMode]);
+    }, [theme, isOsDarkModeEnabled]);
 
     return (
         <JssProvider jss={getJss()} classNamePrefix={classNamePrefix} generateId={generateId}>

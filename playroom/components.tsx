@@ -11,6 +11,7 @@ import {
     Tabs,
     Checkbox,
     ThemeContextProvider,
+    useIsDarkMode,
 } from '../src';
 import {Movistar, Vivo, O2, O2_Classic} from './themes';
 import {useOverrideTheme} from './frame-component';
@@ -130,9 +131,10 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
     onEditStoryPress,
 }) => {
     const classes = useControlsStyles();
-    const {colors, isDarkMode} = useTheme();
+    const {colors} = useTheme();
+    const isOsDarkModeEnabled = useIsDarkMode();
     const {isMobile} = useScreenSize();
-    const systemColorScheme = isDarkMode ? 'dark' : 'light';
+    const systemColorScheme = isOsDarkModeEnabled ? 'dark' : 'light';
     const alternativeColorScheme = systemColorScheme === 'dark' ? 'light' : 'dark';
 
     if (isMobile) {
