@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import type { ThemeConfig } from "./theme";
+declare export var useIsDarkMode: () => boolean;
 declare type Props = {
   theme: ThemeConfig,
   children?: React.Node,
