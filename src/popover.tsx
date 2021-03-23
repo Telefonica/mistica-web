@@ -18,85 +18,89 @@ const maxWidthDesktop = 488;
 const arrowWrapperWidth = arrowSize * 2;
 const arrowWrapperHeight = arrowSize;
 
-const useStyles = createUseStyles((theme) => ({
-    arrow: {
-        position: 'absolute',
-        backgroundColor: theme.colors.background,
-        width: arrowSize,
-        height: arrowSize,
-        top: 0,
-        left: '50%',
-        transform: 'translate(-50%, -50%) rotate(45deg)',
-        border: `1px solid ${theme.colors.divider}`,
-        borderRadius: 4,
-        boxShadow: ({position}) => (position === 'bottom' ? 'initial' : '0 0 4px 0 rgba(0, 0, 0, 0.2)'),
-    },
+const useStyles = createUseStyles((theme) => {
+    const shadowAlpha = theme.isDarkMode ? 1 : 0.2;
+    return {
+        arrow: {
+            position: 'absolute',
+            backgroundColor: theme.colors.background,
+            width: arrowSize,
+            height: arrowSize,
+            top: 0,
+            left: '50%',
+            transform: 'translate(-50%, -50%) rotate(45deg)',
+            border: `1px solid ${theme.colors.divider}`,
+            borderRadius: 4,
+            boxShadow: ({position}) =>
+                position === 'bottom' ? 'initial' : `0 0 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
+        },
 
-    arrowWrapper: {
-        position: 'absolute',
-        color: theme.colors.background,
-        width: arrowWrapperWidth,
-        height: arrowWrapperHeight,
-        overflow: 'hidden',
-    },
+        arrowWrapper: {
+            position: 'absolute',
+            color: theme.colors.background,
+            width: arrowWrapperWidth,
+            height: arrowWrapperHeight,
+            overflow: 'hidden',
+        },
 
-    wrapper: {
-        position: 'relative',
-    },
+        wrapper: {
+            position: 'relative',
+        },
 
-    container: {
-        position: 'absolute',
-        width: 'auto',
-        zIndex: 9,
-        boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)',
-        backgroundColor: theme.colors.background,
-        border: `1px solid ${theme.colors.divider}`,
-        borderRadius: 4,
-    },
+        container: {
+            position: 'absolute',
+            width: 'auto',
+            zIndex: 9,
+            boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
+            backgroundColor: theme.colors.background,
+            border: `1px solid ${theme.colors.divider}`,
+            borderRadius: 4,
+        },
 
-    title: {
-        marginBottom: 4,
-        color: theme.colors.textPrimary,
-        fontWeight: 500,
-        lineHeight: 1.5,
-        fontSize: 16,
-    },
+        title: {
+            marginBottom: 4,
+            color: theme.colors.textPrimary,
+            fontWeight: 500,
+            lineHeight: 1.5,
+            fontSize: 16,
+        },
 
-    boxContainer: {
-        position: 'relative',
-        display: 'flex',
-        minHeight: 80,
-        justifyContent: 'space-between',
-    },
+        boxContainer: {
+            position: 'relative',
+            display: 'flex',
+            minHeight: 80,
+            justifyContent: 'space-between',
+        },
 
-    textContent: {
-        display: 'flex',
-        flexDirection: 'column',
-        margin: 16,
-        marginRight: 8,
-        justifyContent: 'center',
-        width: '100%',
-        wordBreak: 'break-word',
-    },
-    assetContent: {
-        width: 40,
-        minWidth: 40,
-        height: 40,
-        margin: 16,
-        marginRight: 0,
-    },
-    text: {
-        color: theme.colors.textPrimary,
-        textAlign: 'left',
-        lineHeight: 1.42857142,
-        fontSize: 14,
-    },
+        textContent: {
+            display: 'flex',
+            flexDirection: 'column',
+            margin: 16,
+            marginRight: 8,
+            justifyContent: 'center',
+            width: '100%',
+            wordBreak: 'break-word',
+        },
+        assetContent: {
+            width: 40,
+            minWidth: 40,
+            height: 40,
+            margin: 16,
+            marginRight: 0,
+        },
+        text: {
+            color: theme.colors.textPrimary,
+            textAlign: 'left',
+            lineHeight: 1.42857142,
+            fontSize: 14,
+        },
 
-    closeButtonIcon: {
-        paddingTop: 8,
-        paddingRight: 8,
-    },
-}));
+        closeButtonIcon: {
+            paddingTop: 8,
+            paddingRight: 8,
+        },
+    };
+});
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 

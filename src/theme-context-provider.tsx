@@ -17,7 +17,7 @@ import type {Colors} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
 
 const darkModeMedia = '(prefers-color-scheme: dark)';
-export const useIsDarkMode = (): boolean => {
+export const useIsOsDarkModeEnabled = (): boolean => {
     const [isDarkMode, setIsDarkMode] = React.useState(false);
 
     useIsomorphicLayoutEffect(() => {
@@ -78,7 +78,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
     const nextAriaId = React.useRef(1);
     const getAriaId = React.useCallback((): string => `aria-id-hook-${nextAriaId.current++}`, []);
 
-    const isOsDarkModeEnabled = useIsDarkMode();
+    const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
     const contextTheme: Theme = React.useMemo(() => {
         const colorScheme = theme.colorScheme ?? 'auto';
