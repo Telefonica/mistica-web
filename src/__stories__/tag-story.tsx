@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, Tag, useTheme} from '..';
+import {Stack, Tag, useTheme, Text1} from '..';
 import {useTextField} from './helpers';
 
 export default {
@@ -13,8 +13,10 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={56}>
             <Stack space={16}>
-                Examples
-                <Tag color={colors.promo}>Promotion</Tag>
+                <Text1 medium>Examples</Text1>
+                <div data-testid="tag">
+                    <Tag color={colors.promo}>Promo</Tag>
+                </div>
                 <Tag color={colors.brand}>In progress</Tag>
                 <Tag color={colors.success}>Completed</Tag>
                 <Tag color={colors.warning}>Pending</Tag>
@@ -22,9 +24,8 @@ export const Default: StoryComponent = () => {
                 <Tag color={colors.neutralMedium}>Removed</Tag>
                 <Tag color={colors.inverse}>Priority</Tag>
             </Stack>
-
             <Stack space={16}>
-                Try yourself
+                <Text1 medium>Try yourself</Text1>
                 <Tag color={colors.promo}>{text}</Tag>
                 <Tag color={colors.brand}>{text}</Tag>
                 <Tag color={colors.success}>{text}</Tag>
