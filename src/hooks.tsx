@@ -83,24 +83,27 @@ export const useElementDimensions = (): {
     const [height, setHeight] = React.useState(0);
     const [element, setElement] = React.useState<HTMLElement | null>(null);
 
-    const updateSize = React.useCallback((element) => {
-        if (!element) {
+    const updateSize = React.useCallback((entries) => {
+        if (!entries) {
             setWidth(0);
             setHeight(0);
             return;
         }
-        const rect = element.getBoundingClientRect();
-        setWidth(rect.width);
-        setHeight(rect.height);
+
+        const {width, height} = entries[0].contentRect;
+        setWidth(width);
+        setHeight(height);
     }, []);
 
-    const ref = React.useCallback(
-        (node: HTMLElement | null) => {
-            setElement(node);
-            updateSize(node);
-        },
-        [updateSize]
-    );
+    const ref = React.useCallback((node: HTMLElement | null) => {
+        setElement(node);
+
+        if (node) {
+            const rect = node.getBoundingClientRect();
+            setWidth(rect.width);
+            setHeight(rect.height);
+        }
+    }, []);
 
     React.useEffect(() => {
         if (!element) {
@@ -113,7 +116,7 @@ export const useElementDimensions = (): {
                 return null;
             }
 
-            const observer = new ResizeObserver(() => updateSize(element));
+            const observer = new ResizeObserver(updateSize);
             observer.observe(element);
             return observer;
         });
