@@ -38,18 +38,18 @@ export const Default: StoryComponent = () => (
             <StorySection title="ButtonLayout">
                 <ButtonLayout>
                     <ButtonSecondary fake>ok</ButtonSecondary>
-                    <ButtonPrimary fake>long long long long</ButtonPrimary>
+                    <ButtonPrimary fake>long long long</ButtonPrimary>
                 </ButtonLayout>
                 <ButtonLayout>
                     <ButtonSecondary fake>ok</ButtonSecondary>
-                    <ButtonPrimary fake>long long long long</ButtonPrimary>
+                    <ButtonPrimary fake>long long long</ButtonPrimary>
                 </ButtonLayout>
             </StorySection>
 
             <StorySection title="ButtonLayout (centered)">
                 <ButtonLayout align="center">
                     <ButtonSecondary fake>ok</ButtonSecondary>
-                    <ButtonPrimary fake>long long long long</ButtonPrimary>
+                    <ButtonPrimary fake>long long long</ButtonPrimary>
                 </ButtonLayout>
             </StorySection>
 

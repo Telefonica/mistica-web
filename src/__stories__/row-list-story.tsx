@@ -119,7 +119,7 @@ export const Default: StoryComponent = () => {
                         <Row
                             icon={
                                 iconSize !== 'Without icon' ? (
-                                    <Circle backgroundColor={colors.iconDisabled} size={40}>
+                                    <Circle backgroundColor={colors.neutralLow} size={40}>
                                         <IconAcademicLight />
                                     </Circle>
                                 ) : undefined

@@ -30,7 +30,6 @@ export {confirm, alert} from './dialog';
 export {default as Badge} from './badge';
 export {default as TextLink} from './text-link';
 export {default as Overlay} from './overlay';
-/** @deprecated This component will be removed on the next major mistica release */
 export {default as Tooltip} from './tooltip';
 export {default as Stack} from './stack';
 export {default as Box} from './box';
@@ -38,8 +37,8 @@ export {Header, HeaderLayout, MainSectionHeader, MainSectionHeaderLayout} from '
 export {default as GridLayout} from './grid-layout';
 export {default as ResponsiveLayout} from './responsive-layout';
 export {default as NavigationBreadcrumbs} from './navigation-breadcrumbs';
-export {default as Text, Text1, Text2, Text3, Text4, Text5, Text6, Text7, Text8} from './text';
-export {default as PromoTag} from './promo-tag';
+export {default as Text, Text1, Text2, Text3, Text4, Text5, Text6, Text7, Text8, Text9, Text10} from './text';
+export {default as Tag} from './tag';
 export {default as SectionTitle} from './section-title';
 export {Placeholder, AvatarPlaceholder} from './placeholder';
 export {RowList, Row, BoxedRowList, BoxedRow} from './list';
@@ -51,6 +50,7 @@ export {default as Tabs} from './tabs';
 export {default as Inline} from './inline';
 export {default as HighlightedCard} from './highlighted-card';
 export {default as Stepper} from './stepper';
+export {default as ProgressBar} from './progress-bar';
 export {MediaCard, DataCard} from './card';
 
 // Forms
@@ -86,8 +86,6 @@ export {default as Circle} from './circle';
 export {
     useTheme,
     useScreenSize,
-    /** @deprecated */
-    useElementSize,
     useElementDimensions,
     useAriaId,
     useWindowSize,
@@ -105,6 +103,10 @@ export {getVivoSkin} from './skins/vivo';
 export {getMovistarSkin} from './skins/movistar';
 export {getO2Skin} from './skins/o2';
 export {getO2ClassicSkin} from './skins/o2-classic';
+export {palette as vivoPalette} from './skins/vivo';
+export {palette as movistarPalette} from './skins/movistar';
+export {palette as o2Palette} from './skins/o2';
+export {palette as o2ClassicPalette} from './skins/o2-classic';
 
 export type {Locale} from './utils/locale';
 export type {TrackingEvent} from './utils/types';
@@ -119,11 +121,6 @@ if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
         window.__mistica_version__ = PACKAGE_VERSION;
     }
 }
-
-/** @deprecated Added for backwards compatibility. Will be removed in next major release */
-export {default as IconInfomationRegular} from './generated/mistica-icons/icon-information-regular';
-/** @deprecated Added for backwards compatibility. Will be removed in next major release */
-export {default as IconFlechaAdelanteRegular} from './generated/mistica-icons/icon-arrow-forward-regular';
 
 // Exported this way to facilitate tree-shaking
 export {default as IconAcademicFilled} from './generated/mistica-icons/icon-academic-filled';

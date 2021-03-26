@@ -6,7 +6,7 @@ import {
     ButtonPrimary,
     ButtonLink,
     Inline,
-    Text7,
+    Text2,
     createUseStyles,
     ResponsiveLayout,
     IconAcademicLight,
@@ -35,7 +35,7 @@ export const Default: StoryComponent = () => {
     let icon;
     if (asset === 'icon') {
         icon = (
-            <Circle size={40} backgroundColor={colors.iconDisabled}>
+            <Circle size={40} backgroundColor={colors.neutralLow}>
                 <IconAcademicLight />
             </Circle>
         );
@@ -92,7 +92,7 @@ export const WithBody: StoryComponent = () => {
             description="description"
             body={<Placeholder />}
             icon={
-                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconAcademicLight />
                 </Circle>
             }
@@ -140,10 +140,10 @@ export const Group: StoryComponent = () => {
     return (
         <ResponsiveLayout>
             <Stack space={16}>
-                <Text7 regular>
+                <Text2 regular>
                     We can group multiple cards and they adjust to the same height. The card actions are
                     always fixed on bottom:
-                </Text7>
+                </Text2>
                 <Inline space={16} className={classes.group}>
                     <DataCard
                         headline="headline"
@@ -151,7 +151,7 @@ export const Group: StoryComponent = () => {
                         subtitle="subtitle"
                         description="description"
                         icon={
-                            <Circle size={40} backgroundColor={colors.iconDisabled}>
+                            <Circle size={40} backgroundColor={colors.neutralLow}>
                                 <IconAcademicLight />
                             </Circle>
                         }
@@ -161,7 +161,7 @@ export const Group: StoryComponent = () => {
                         title="title"
                         description="description"
                         icon={
-                            <Circle size={40} backgroundColor={colors.iconDisabled}>
+                            <Circle size={40} backgroundColor={colors.neutralLow}>
                                 <IconAcademicLight />
                             </Circle>
                         }

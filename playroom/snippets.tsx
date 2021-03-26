@@ -37,7 +37,7 @@ const formSnippets = [
             '   render={(checkboxElement) => (\n' +
             '       <Inline alignItems="center" space={8}>\n' +
             '       {checkboxElement}\n' +
-            '       <Text6 regular>Example checkbox</Text6>\n' +
+            '       <Text3 regular>Example checkbox</Text3>\n' +
             '       </Inline>\n' +
             '   )}\n' +
             '/>',
@@ -45,8 +45,10 @@ const formSnippets = [
     [
         'RadioGroup',
         '<RadioGroup name="juicy-fruit" aria-labelledby="label" defaultValue="banana">\n' +
-            '  <RadioButton value="banana" render={(radio) => <span>Banana {radio}</span>} />\n' +
-            '  <RadioButton value="apple" render={(radio) => <span>Apple {radio}</span>} />\n' +
+            '  <Stack space={16}>\n' +
+            '    <RadioButton value="banana">Banana</RadioButton>\n' +
+            '    <RadioButton value="apple">Apple</RadioButton>\n' +
+            '  </Stack>\n' +
             '</RadioGroup>',
     ],
     [
@@ -106,7 +108,7 @@ const listSnippets = [
         <${listName}>
             <${rowName}
                 icon={
-                    <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <Circle backgroundColor={colors.neutralLow} size={40}>
                         <IconAcademicLight />
                     </Circle>
                 }
@@ -117,7 +119,7 @@ const listSnippets = [
             />
             <${rowName}
                 icon={
-                    <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <Circle backgroundColor={colors.neutralLow} size={40}>
                         <IconAcademicLight />
                     </Circle>
                 }
@@ -128,7 +130,7 @@ const listSnippets = [
             />
             <${rowName}
                 icon={
-                    <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <Circle backgroundColor={colors.neutralLow} size={40}>
                         <IconAcademicLight />
                     </Circle>
                 }
@@ -149,7 +151,7 @@ listSnippets.push({
         <RowList>
             <Row
                 icon={
-                    <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <Circle backgroundColor={colors.neutralLow} size={40}>
                         <IconAcademicLight />
                     </Circle>
                 }
@@ -160,7 +162,7 @@ listSnippets.push({
             />
             <Row
                 icon={
-                    <Circle backgroundColor={colors.iconDisabled} size={40}>
+                    <Circle backgroundColor={colors.neutralLow} size={40}>
                         <IconAcademicLight />
                     </Circle>
                 }
@@ -181,7 +183,7 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         code: `
         <${rowName}
             icon={
-                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconAcademicLight />
                 </Circle>
             }
@@ -197,7 +199,7 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         code: `
         <${rowName}
             icon={
-                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconAcademicLight />
                 </Circle>
             }
@@ -216,7 +218,7 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         code: `
         <${rowName}
             icon={
-                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconAcademicLight />
                 </Circle>
             }
@@ -232,7 +234,7 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         code: `
         <${rowName}
             icon={
-                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconAcademicLight />
                 </Circle>
             }
@@ -248,7 +250,7 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         code: `
         <${rowName}
             icon={
-                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconAcademicLight />
                 </Circle>
             }
@@ -264,7 +266,7 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
         code: `
         <${rowName}
             icon={
-                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconAcademicLight />
                 </Circle>
             }
@@ -464,7 +466,7 @@ const cardSnippets = [
             description="description"
             body={<Placeholder />}
             icon={
-                <Circle backgroundColor={colors.iconDisabled} size={40}>
+                <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconAcademicLight />
                 </Circle>
             }
@@ -526,11 +528,26 @@ export default [
     ...listRowSnippets,
     ...tabsSnippets,
     ...cardSnippets,
-    {group: 'PromoTag', name: 'PromoTag', code: '<PromoTag>PromoTag</PromoTag>'},
+    ...['promo', 'brand', 'success', 'warning', 'error', 'inverse'].map((colorName) => ({
+        group: 'Tag',
+        name: `Tag (${colorName})`,
+        code: `<Tag color={colors.${colorName}}>Priority</Tag>`,
+    })),
     {
-        group: 'Stepper',
+        group: 'Progress',
         name: 'Stepper',
         code:
             '<Stepper currentIndex={2} steps={["Basic Details", "Company Details", "Subscription Plan"]} />',
+    },
+    {
+        group: 'Progress',
+        name: 'ProgressBar',
+        code: '<ProgressBar progressPercent={35} />',
+    },
+    {
+        group: 'NavigationBreadcrumbs',
+        name: 'NavigationBreadcrumbs',
+        code:
+            '<NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: "Cuenta", url: "/consumptions"}]} />',
     },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

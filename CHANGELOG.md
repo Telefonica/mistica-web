@@ -1,3 +1,39 @@
+# [8.2.0](https://github.com/Telefonica/mistica-web/compare/v8.1.0...v8.2.0) (2021-03-11)
+
+
+### Features
+
+* **size-stats:** remove CI check for size-stats.json ([d8c68c7](https://github.com/Telefonica/mistica-web/commit/d8c68c777a6cd489ac03b1ea5cf7d768fed46ad9))
+
+# [8.1.0](https://github.com/Telefonica/mistica-web/compare/v8.0.0...v8.1.0) (2021-03-11)
+
+
+### Features
+
+* **Tag:** new component replacing PromoTag ([#215](https://github.com/Telefonica/mistica-web/issues/215)) ([f3fe284](https://github.com/Telefonica/mistica-web/commit/f3fe2840dcc81ae96620549e58eb81497e585760))
+
+
+### Reverts
+
+* chore(release): 8.0.0 [skip ci] ([dc80676](https://github.com/Telefonica/mistica-web/commit/dc8067623c0c3cf82b3893d4308a3e2ce2b40f97))
+
+# [7.11.0](https://github.com/Telefonica/mistica-web/compare/v7.10.1...v7.11.0) (2021-03-10)
+
+
+### Bug Fixes
+
+* **Button:** fix accessibility of loading text ([cb3be00](https://github.com/Telefonica/mistica-web/commit/cb3be001ef81de9825d17a1cd9310c61dffc0a38))
+* **NavigationBreadcrumbs:** text size fixes ([64cab0a](https://github.com/Telefonica/mistica-web/commit/64cab0a578be27b5be21a00c0b51235acaebcba3))
+
+
+### Features
+
+* **Controls:** Read `disable` state from `Form` context in Checkbox, Switch and RadioButton. ([#210](https://github.com/Telefonica/mistica-web/issues/210)) ([6f3df3c](https://github.com/Telefonica/mistica-web/commit/6f3df3c9e7a2908057294c9b5df5220abdb60c87))
+* **Form:** Use scrollIntoView to scroll to field with error ([#211](https://github.com/Telefonica/mistica-web/issues/211)) ([6c25bde](https://github.com/Telefonica/mistica-web/commit/6c25bde127b668a316687bf95f829e62c204a2e6))
+* **I18N:** default translations for supported locales ([#204](https://github.com/Telefonica/mistica-web/issues/204)) ([5f9f473](https://github.com/Telefonica/mistica-web/commit/5f9f4739e234fe9a493e7d3679dfbe89311e02ed))
+* **ProgresBar:** new component ([#206](https://github.com/Telefonica/mistica-web/issues/206)) ([2a4af9e](https://github.com/Telefonica/mistica-web/commit/2a4af9edbc82791ce9042ac47544db67a9bde5f5))
+* **PromoTag, Button:** prevent grow in desktop ([6b7d556](https://github.com/Telefonica/mistica-web/commit/6b7d5569a3e18c0760bd31f9f14fab9a5732e090))
+
 ## [7.10.1](https://github.com/Telefonica/mistica-web/compare/v7.10.0...v7.10.1) (2021-02-11)
 
 

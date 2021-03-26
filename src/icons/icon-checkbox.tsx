@@ -66,9 +66,9 @@ type Props = Omit<InternalProps, 'markedColor'>;
 const IconCheckbox: React.FC<Props> = ({checked}) => {
     const {colors, platformOverrides} = useTheme();
     return getPlatform(platformOverrides) === 'ios' ? (
-        <IconIos checked={checked} markedColor={colors.controlActive} />
+        <IconIos checked={checked} markedColor={colors.controlActivated} />
     ) : (
-        <IconAndroid checked={checked} markedColor={colors.controlActive} />
+        <IconAndroid checked={checked} markedColor={colors.controlActivated} />
     );
 };
 

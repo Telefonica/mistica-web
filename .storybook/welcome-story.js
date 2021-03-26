@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Text7, Text3, Stack, Box, ResponsiveLayout, useTheme, ButtonLink, TextLink} from '../src';
+import {Text2, Text6, Stack, Box, ResponsiveLayout, useTheme, ButtonLink, TextLink} from '../src';
 import logo from '../img/mistica-react-logo.svg';
 
 export default {
@@ -9,9 +9,9 @@ export default {
 const Paragraph = ({children}) => {
     const {colors} = useTheme();
     return (
-        <Text7 as="p" color={colors.textSecondary}>
+        <Text2 as="p" color={colors.textSecondary}>
             {children}
-        </Text7>
+        </Text2>
     );
 };
 
@@ -21,7 +21,7 @@ export const Mistica = () => {
             <Box paddingY={32}>
                 <Stack space={24}>
                     <Stack space={16}>
-                        <Text3 as="h2">Welcome to Mistica Storybook</Text3>
+                        <Text6 as="h2">Welcome to Mistica Storybook</Text6>
                         <img src={logo} alt="Mistica loves react" />
                     </Stack>
                     <Stack space={16}>

@@ -16,7 +16,7 @@ import {
 } from '@tef-novum/webview-bridge';
 import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {Theme} from './theme';
-import {Box, Text3, Text5} from '.';
+import {Box, Text6, Text4} from '.';
 
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) && !isRunningAcceptanceTest(platformOverrides);
@@ -56,7 +56,7 @@ const useStyles = createUseStyles((theme) => ({
         [theme.mq.mobile]: {
             height: ({contentHeight}) => contentHeight,
         },
-        background: ({isInverse}) => (isInverse ? theme.colors.backgroundSpecial1 : theme.colors.background),
+        background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : theme.colors.background),
     },
 
     footer: {
@@ -86,13 +86,13 @@ const useStyles = createUseStyles((theme) => ({
     },
 
     title: {
-        color: ({isInverse}) => (isInverse ? theme.colors.textPrimarySpecial : theme.colors.textPrimary),
+        color: ({isInverse}) => (isInverse ? theme.colors.textPrimaryInverse : theme.colors.textPrimary),
         animation: animateText(theme.platformOverrides),
         opacity: initialTextOpacity(theme.platformOverrides),
     },
 
     description: {
-        color: ({isInverse}) => (isInverse ? theme.colors.textPrimarySpecial : theme.colors.textSecondary),
+        color: ({isInverse}) => (isInverse ? theme.colors.textPrimaryInverse : theme.colors.textSecondary),
         animation: animateText(theme.platformOverrides),
         opacity: initialTextOpacity(theme.platformOverrides),
         '& p': {
@@ -209,14 +209,14 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         <div className={classes.container}>
             <div className={classes.innerContainer}>
                 {!!icon && <div className={classes.iconContainer}>{icon}</div>}
-                <Text3>
+                <Text6>
                     <span className={classes.title}>{title}</span>
-                </Text3>
+                </Text6>
                 {normalizedDescription && (
                     <Box paddingTop={16}>
-                        <Text5 light>
+                        <Text4 light>
                             <span className={classes.description}>{normalizedDescription}</span>
-                        </Text5>
+                        </Text4>
                     </Box>
                 )}
                 {children && <div className={classes.childrenContainer}>{children}</div>}
@@ -232,8 +232,8 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                         button={primaryButton}
                         secondaryButton={secondaryButton}
                         link={link}
-                        footerBgColor={isInverse ? theme.colors.backgroundSpecialBottom : undefined}
-                        containerBgColor={isInverse ? theme.colors.overscrollColorTop : undefined}
+                        footerBgColor={isInverse ? theme.colors.backgroundFeedbackBottom : undefined}
+                        containerBgColor={isInverse ? theme.colors.navigationBarBackground : undefined}
                         onChangeFooterHeight={setFooterHeight}
                     >
                         {feedbackBasicContent}

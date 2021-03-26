@@ -53,7 +53,7 @@ type Props = {
 
 const IconChevron: React.FC<Props> = ({size = 24, color, className, style, direction = 'right'}) => {
     const {colors} = useTheme();
-    const fillColor = color || colors.iconPrimary;
+    const fillColor = color || colors.neutralHigh;
     const props = {
         size,
         color: fillColor,

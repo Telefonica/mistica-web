@@ -6,10 +6,11 @@ https://github.com/storybookjs/storybook/issues/11980
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {getPlatform} from './utils/platform';
-import {applyAlpha} from './utils/color';
 import debounce from 'lodash/debounce';
 import {SPACE} from './utils/key-codes';
 import {useControlProps} from './form-context';
+import classNames from 'classnames';
+import Inline from './inline';
 
 const SWITCH_ANIMATION = '0.2s ease-in 0s';
 
@@ -48,14 +49,12 @@ const useStyles = createUseStyles((theme) => {
             '&:before': {
                 content: '""',
                 backgroundColor: isIos
-                    ? theme.colors.toggleIosBackgroundActive
+                    ? theme.colors.controlActivated
                     : theme.colors.toggleAndroidBackgroundActive,
             },
             '&:after': {
                 content: '""',
-                backgroundColor: isIos
-                    ? theme.colors.toggleIosBackgroundInactive
-                    : theme.colors.toggleAndroidBackgroundInactive,
+                backgroundColor: theme.colors.control,
             },
         },
         ball: {
@@ -74,38 +73,53 @@ const useStyles = createUseStyles((theme) => {
             margin: -4,
             backgroundColor: ({isChecked}) => {
                 if (isChecked) {
-                    return isIos ? theme.colors.toggleIosInactive : theme.colors.toggleAndroidActive;
+                    return isIos ? theme.colors.toggleIosInactive : theme.colors.controlActivated;
                 }
                 return isIos ? theme.colors.toggleIosInactive : theme.colors.toggleAndroidInactive;
             },
             borderRadius: '50%',
             transition: `all ${SWITCH_ANIMATION}`,
-            boxShadow: isIos
-                ? `1px 2px 4px ${applyAlpha(theme.colors.layerDecorations, 0.3)}`
-                : `1px 1px 2px ${applyAlpha(theme.colors.layerDecorations, 0.3)}`,
+            boxShadow: isIos ? '1px 2px 4px rgba(0, 0, 0, 0.3)' : '1px 1px 2px rgba(0, 0, 0, 0.3)',
         },
         container: {
             cursor: 'default',
+        },
+        disabled: {
+            opacity: 0.5,
+            pointerEvents: 'none',
         },
     };
 });
 
 type RenderSwitch = (switchElement: React.ReactElement<any>) => React.ReactNode;
 
-type Props = {
+type PropsRender = {
     name: string;
-    render?: RenderSwitch;
     defaultChecked?: boolean;
     checked?: boolean;
     onChange?: (value: boolean) => void;
+    disabled?: boolean;
+    render: RenderSwitch;
+    children?: undefined;
 };
 
-const Switch: React.FC<Props> = (props) => {
-    const {defaultValue, value, onChange, focusableRef} = useControlProps({
+type PropsChildren = {
+    name: string;
+    defaultChecked?: boolean;
+    checked?: boolean;
+    onChange?: (value: boolean) => void;
+    disabled?: boolean;
+    children?: React.ReactNode;
+    render?: undefined;
+};
+
+const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
+    const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
         value: props.checked,
         defaultValue: props.defaultChecked,
         onChange: props.onChange,
+        disabled: props.disabled,
     });
 
     const [checkedState, setCheckedState] = React.useState(!!defaultValue);
@@ -151,16 +165,26 @@ const Switch: React.FC<Props> = (props) => {
     );
 
     return (
+        // When the switch is disabled, it shouldn't be focusable
+        // eslint-disable-next-line jsx-a11y/interactive-supports-focus
         <span
             role="switch"
             aria-checked={value ?? checkedState}
-            onClick={handleChange}
-            onKeyDown={handleKeyDown}
-            tabIndex={0}
+            onClick={disabled ? undefined : handleChange}
+            onKeyDown={disabled ? undefined : handleKeyDown}
+            tabIndex={disabled ? undefined : 0}
             ref={focusableRef}
-            className={classes.container}
+            className={classNames(classes.container, {[classes.disabled]: disabled})}
+            aria-disabled={disabled}
         >
-            {props.render ? <>{props.render(switchEl)}</> : switchEl}
+            {props.render ? (
+                <>{props.render(switchEl)}</>
+            ) : (
+                <Inline space={16} alignItems="center">
+                    {switchEl}
+                    {props.children}
+                </Inline>
+            )}
         </span>
     );
 };

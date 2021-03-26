@@ -10,7 +10,7 @@ import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/w
 import ThemeContext from './theme-context';
 import {useTheme, useScreenSize} from './hooks';
 import ButtonLayout from './button-layout';
-import {Text5, Text6} from './text';
+import {Text4, Text3} from './text';
 import {ESC} from './utils/key-codes';
 import Box from './box';
 import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
@@ -40,7 +40,7 @@ const useStylesModalDialog = createUseStyles((theme) => ({
         justifyContent: 'center',
         minHeight: 0,
         minWidth: 0,
-        background: theme.colors.backgroundOpacity,
+        background: theme.colors.backgroundOverlay,
         animation: '$fadeIn .2s ease-in-out',
         transition: 'opacity .2s ease-in-out',
 
@@ -158,15 +158,15 @@ const Dialog: React.FC<DialogProps> = (props) => {
             {icon && <Box paddingBottom={24}>{icon}</Box>}
             {title && (
                 <Box paddingBottom={16}>
-                    <Text5 as="h2" light>
+                    <Text4 as="h2" light>
                         {title}
-                    </Text5>
+                    </Text4>
                 </Box>
             )}
             <div className={classes.dialogContent}>
-                <Text6 color={colors.textSecondary} light>
+                <Text3 color={colors.textSecondary} light>
                     {message}
-                </Text6>
+                </Text3>
             </div>
             <Box paddingTop={isMobile ? 24 : 32}>
                 <ButtonLayout>
@@ -347,7 +347,7 @@ const ModalDialog = (props: ModalDialogProps) => {
                                         onPress={handleClose}
                                         label={context.texts.modalClose ?? context.texts.closeButtonLabel}
                                     >
-                                        <IcnClose color={context.colors.iconPrimary} />
+                                        <IcnClose color={context.colors.neutralHigh} />
                                     </IconButton>
                                 </div>
                                 <Dialog {...dialogProps} />
@@ -362,29 +362,40 @@ const ModalDialog = (props: ModalDialogProps) => {
 
 let dialogInstance: DialogRoot | null = null;
 
+// This counts the number of instantiated DialogRoots.
+// We only want to use the first instance, created by the initial ThemeContextProvider.
+// Our app could have multiple React trees for example, webapp rendering global-checkout
+let dialogRootInstances = 0;
+
 type DialogRootProps = {children?: React.ReactNode};
 
 type DialogRootState = {
     dialogProps: DialogProps | null;
     isClosing: boolean;
+    instanceNumber: number;
 };
 
 export default class DialogRoot extends React.Component<DialogRootProps, DialogRootState> {
     state: DialogRootState = {
         dialogProps: null,
         isClosing: false,
+        instanceNumber: dialogRootInstances + 1,
     };
 
     componentDidMount(): void {
-        dialogInstance = this;
-        window.addEventListener('popstate', this.handleBack);
+        dialogRootInstances++;
+        if (dialogRootInstances === 1) {
+            dialogInstance = this;
+            window.addEventListener('popstate', this.handleBack);
+        }
     }
 
     componentWillUnmount(): void {
-        if (dialogInstance === this) {
+        dialogRootInstances--;
+        if (dialogRootInstances === 0) {
             dialogInstance = null;
+            window.removeEventListener('popstate', this.handleBack);
         }
-        window.removeEventListener('popstate', this.handleBack);
     }
 
     show(props: DialogProps): void {
@@ -448,7 +459,7 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
     render(): React.ReactNode {
         const {isClosing, dialogProps} = this.state;
 
-        if (!dialogProps) {
+        if (!dialogProps || this.state.instanceNumber !== 1) {
             return this.props.children || null;
         }
 

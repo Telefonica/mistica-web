@@ -15,7 +15,7 @@ type Props = {
 const IconSmartWifiFilled: React.FC<Props> = ({color, size = 24}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
-    const fillColor = color ?? (isInverse ? colors.iconInverse : colors.iconPrimary);
+    const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
             <path

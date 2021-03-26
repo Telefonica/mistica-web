@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {Inline, Text5, Text7, Text8, createUseStyles, useTheme, ButtonPrimary, ButtonLink, Box} from '.';
-import PromoTag from './promo-tag';
+import {Inline, Text4, Text2, Text1, createUseStyles, useTheme, ButtonPrimary, ButtonLink, Box} from '.';
+import Tag from './tag';
 import Stack from './stack';
 
 const useCardContentStyles = createUseStyles(() => ({
@@ -43,23 +43,23 @@ const CardContent: React.FC<CardContentProps> = ({
                 <Stack space={8}>
                     <header>
                         <Stack space={4}>
-                            {headline && <PromoTag>{headline}</PromoTag>}
+                            {headline && <Tag color={theme.colors.promo}>{headline}</Tag>}
                             {pretitle && (
                                 <Box paddingTop={4}>
-                                    <Text8 regular uppercase>
+                                    <Text1 regular uppercase>
                                         {pretitle}
-                                    </Text8>
+                                    </Text1>
                                 </Box>
                             )}
-                            <Text5 as="h1" light>
+                            <Text4 as="h1" light>
                                 {title}
-                            </Text5>
-                            <Text7 regular>{subtitle}</Text7>
+                            </Text4>
+                            <Text2 regular>{subtitle}</Text2>
                         </Stack>
                     </header>
-                    <Text7 as="p" regular color={theme.colors.textSecondary}>
+                    <Text2 as="p" regular color={theme.colors.textSecondary}>
                         {description}
-                    </Text7>
+                    </Text2>
                 </Stack>
                 {body && <div>{body}</div>}
             </Stack>
@@ -182,7 +182,7 @@ const useDataCardStyles = createUseStyles((theme) => ({
     },
 }));
 
-interface CommonDataCardProps {
+interface DataCardProps {
     /**
      * Typically a mistica-icons component element
      */
@@ -192,24 +192,9 @@ interface CommonDataCardProps {
     subtitle?: string;
     description: string;
     body?: React.ReactNode;
+    button?: React.ReactElement<typeof ButtonPrimary>;
+    buttonLink?: React.ReactElement<typeof ButtonLink>;
 }
-
-interface DataCardWithButtonProps extends CommonDataCardProps {
-    button: React.ReactElement<typeof ButtonPrimary>;
-    buttonLink?: undefined;
-}
-
-interface DataCardWithLinkProps extends CommonDataCardProps {
-    buttonLink: React.ReactElement<typeof ButtonLink>;
-    button?: undefined;
-}
-
-interface DataCardWithTwoActionsProps extends CommonDataCardProps {
-    button: React.ReactElement<typeof ButtonPrimary>;
-    buttonLink: React.ReactElement<typeof ButtonLink>;
-}
-
-type DataCardProps = DataCardWithButtonProps | DataCardWithLinkProps | DataCardWithTwoActionsProps;
 
 export const DataCard: React.FC<DataCardProps> = ({
     icon,

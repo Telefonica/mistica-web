@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {createUseStyles} from './jss';
-import {Text7, Text8} from './text';
+import {Text2, Text1} from './text';
 import {useTheme, useScreenSize, useElementDimensions} from './hooks';
 import IconSuccess from './icons/icon-success';
 
@@ -67,8 +67,8 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         borderRadius: '50%',
     },
     currentNumber: {
-        background: colors.primary,
-        borderColor: colors.primary,
+        background: colors.controlActivated,
+        borderColor: colors.controlActivated,
         animation: '$currentNumber .3s ease-in-out',
         willChange: 'border-color, background-color',
         transition: 'border-color .3s ease-in-out, background-color .3s ease-in-out',
@@ -110,7 +110,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     barFilled: {
         height: 4,
         width: '100%',
-        background: colors.primary,
+        background: colors.controlActivated,
         borderRadius: 20,
         overflow: 'hidden',
     },
@@ -147,8 +147,8 @@ const useStyles = createUseStyles(({colors, mq}) => ({
             backgroundColor: 'transparent',
         },
         '100%': {
-            borderColor: colors.primary,
-            backgroundColor: colors.primary,
+            borderColor: colors.controlActivated,
+            backgroundColor: colors.controlActivated,
         },
     },
     '@keyframes currentNumberText': {
@@ -156,16 +156,16 @@ const useStyles = createUseStyles(({colors, mq}) => ({
             color: colors.textSecondary,
         },
         '100%': {
-            color: colors.textPrimarySpecial,
+            color: colors.textPrimaryInverse,
         },
     },
     '@keyframes stepIcon': {
         '0%': {
-            backgroundColor: colors.primary,
+            backgroundColor: colors.controlActivated,
             transform: 'scale(1)',
         },
         '100%': {
-            backgroundColor: colors.primary,
+            backgroundColor: colors.controlActivated,
             transform: 'scale(0)',
         },
     },
@@ -182,7 +182,6 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
     const {height, ref} = useElementDimensions();
     const textContainerHeight = height;
     const classes = useStyles({isDesktopOrBigger, textContainerHeight});
-
     const previousIndexRef = React.useRef(currentIndex);
     const isBack = previousIndexRef.current > currentIndex;
 
@@ -215,7 +214,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                                     })}
                                 >
                                     <IconSuccess
-                                        color={colors.primary}
+                                        color={colors.controlActivated}
                                         size="100%"
                                         skipAnimation={!hasAnimation || isBack}
                                     />
@@ -226,18 +225,18 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                                         [classes.currentNumber]: isCurrent || isCurrent,
                                     })}
                                 >
-                                    <Text8
+                                    <Text1
                                         medium
-                                        color={isCurrent ? colors.textPrimarySpecial : colors.textSecondary}
+                                        color={isCurrent ? colors.textPrimaryInverse : colors.textSecondary}
                                         role="presentation"
                                     >
                                         {index + 1}
-                                    </Text8>
+                                    </Text1>
                                 </div>
                             )}
                             {isDesktopOrBigger && (
                                 <div className={classes.textContainer} ref={ref}>
-                                    <Text7
+                                    <Text2
                                         regular
                                         color={
                                             isCompleted || isCurrent
@@ -247,7 +246,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                                         role="presentation"
                                     >
                                         {text}
-                                    </Text7>
+                                    </Text2>
                                 </div>
                             )}
                         </div>

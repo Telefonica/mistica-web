@@ -4,14 +4,13 @@ import Spinner from './spinner';
 import Touchable from './touchable';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
-import {applyAlpha} from './utils/color';
 import {useForm} from './form-context';
 import {pxToRem} from './utils/css';
 
 import type {TrackingEvent} from './utils/types';
 import type {Location} from 'history';
 import type {Theme} from './theme';
-import {Box, Text6, Text7} from '.';
+import {Box, Text3, Text2, Text} from '.';
 
 export const BUTTON_MIN_WIDTH = 156;
 
@@ -92,7 +91,7 @@ const commonClasses = () => ({
 const usePrimaryButtonStyles = createUseStyles((theme) => ({
     ...commonClasses(),
     light: {
-        color: theme.colors.buttonPrimaryText,
+        color: theme.colors.textButtonPrimary,
         backgroundColor: theme.colors.buttonPrimaryBackground,
 
         '&:enabled:active': {
@@ -124,17 +123,17 @@ const usePrimaryButtonStyles = createUseStyles((theme) => ({
         backgroundColor: theme.colors.buttonPrimaryBackgroundInverse,
 
         '&:enabled:active': {
-            backgroundColor: theme.colors.buttonPrimaryBackgroundInverseSelected,
+            backgroundColor: theme.colors.buttonPrimaryBackgroundSelectedInverse,
             color: theme.colors.textButtonPrimaryInverseSelected,
         },
         '&[disabled]:not($isLoading)': {
-            backgroundColor: theme.colors.buttonPrimaryBackgroundInverseDisabled,
+            backgroundColor: theme.colors.buttonPrimaryBackgroundDisabledInverse,
             color: theme.colors.textButtonPrimaryInverseDisabled,
         },
 
         '&:hover': {
             color: theme.colors.textButtonPrimaryInverseSelected,
-            backgroundColor: theme.colors.buttonPrimaryBackgroundInverseSelected,
+            backgroundColor: theme.colors.buttonPrimaryBackgroundSelectedInverse,
             '@media (pointer: coarse)': {
                 color: theme.colors.textButtonPrimaryInverse,
                 backgroundColor: theme.colors.buttonPrimaryBackgroundInverse,
@@ -144,14 +143,14 @@ const usePrimaryButtonStyles = createUseStyles((theme) => ({
 }));
 
 const buttonSecondaryLightStyle = (theme: Theme) => ({
-    color: theme.colors.buttonSecondaryText,
-    backgroundColor: theme.colors.buttonSecondaryBackground,
-    borderColor: theme.colors.buttonSecondaryBorder,
+    color: theme.colors.textButtonSecondary,
+    backgroundColor: 'transparent',
+    borderColor: theme.colors.buttonSecondaryBackground,
 });
 
 const buttonSecondaryHoverLightStyle = (theme: Theme) => ({
-    color: theme.colors.buttonSecondaryTextSelected,
-    borderColor: theme.colors.buttonSecondaryBorderSelected,
+    color: theme.colors.textButtonSecondarySelected,
+    borderColor: theme.colors.buttonSecondaryBackgroundSelected,
 });
 
 const useSecondaryButtonStyles = createUseStyles((theme) => ({
@@ -163,8 +162,8 @@ const useSecondaryButtonStyles = createUseStyles((theme) => ({
             ...buttonSecondaryHoverLightStyle(theme),
         },
         '&[disabled]:not($isLoading)': {
-            color: theme.colors.buttonSecondaryTextDisabled,
-            borderColor: theme.colors.buttonSecondaryBorderDisabled,
+            color: theme.colors.textButtonSecondaryDisabled,
+            borderColor: theme.colors.buttonSecondaryBackgroundDisabled,
         },
         '&:hover': {
             ...buttonSecondaryHoverLightStyle(theme),
@@ -178,16 +177,16 @@ const useSecondaryButtonStyles = createUseStyles((theme) => ({
         color: theme.colors.textButtonSecondaryInverse,
 
         '&:enabled:active': {
-            borderColor: theme.colors.buttonSecondaryBorderInverseSelected,
+            borderColor: theme.colors.buttonSecondaryBorderSelectedInverse,
             color: theme.colors.textButtonSecondaryInverseSelected,
         },
         '&[disabled]:not($isLoading)': {
             color: theme.colors.textButtonSecondaryInverseDisabled,
-            borderColor: theme.colors.buttonSecondaryBorderInverseDisabled,
+            borderColor: theme.colors.buttonSecondaryBorderDisabledInverse,
         },
 
         '&:hover': {
-            borderColor: theme.colors.buttonSecondaryBorderInverseSelected,
+            borderColor: theme.colors.buttonSecondaryBorderSelectedInverse,
             color: theme.colors.textButtonSecondaryInverseSelected,
             '@media (pointer: coarse)': {
                 borderColor: theme.colors.buttonSecondaryBorderInverse,
@@ -198,7 +197,7 @@ const useSecondaryButtonStyles = createUseStyles((theme) => ({
 }));
 
 const dangerButtonStyles = (theme: Theme) => ({
-    color: theme.colors.buttonPrimaryText,
+    color: theme.colors.textButtonPrimary,
     backgroundColor: theme.colors.buttonDangerBackground,
 
     '&:enabled:active': {
@@ -308,13 +307,13 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
 
     const renderText = (text: React.ReactNode) =>
         props.small ? (
-            <Text7 medium truncate={1} color="inherit" as="div">
+            <Text size={14} lineHeight={20} weight="medium" truncate={1} color="inherit" as="div">
                 {text}
-            </Text7>
+            </Text>
         ) : (
-            <Text6 medium truncate={1} color="inherit" as="div">
+            <Text3 medium truncate={1} color="inherit" as="div">
                 {text}
-            </Text6>
+            </Text3>
         );
 
     const commonProps = {
@@ -428,10 +427,10 @@ const useButtonLinkStyles = createUseStyles((theme) => ({
     inverse: {
         color: theme.colors.textPrimaryInverse,
         '&:enabled:active': {
-            backgroundColor: applyAlpha(theme.colors.buttonLinkBackgroundSelected, 0.2),
+            backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
         },
         '&:hover': {
-            backgroundColor: applyAlpha(theme.colors.buttonLinkBackgroundSelected, 0.2),
+            backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
             '@media (pointer: coarse)': {
                 backgroundColor: 'initial',
             },
@@ -477,9 +476,9 @@ export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
         trackingEvent: props.trackingEvent,
         'data-testid': props['data-testid'],
         children: (
-            <Text7 medium truncate={1} color="inherit">
+            <Text2 medium truncate={1} color="inherit">
                 {props.children}
-            </Text7>
+            </Text2>
         ),
     };
 

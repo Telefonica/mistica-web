@@ -19,6 +19,7 @@ declare type DialogRootProps = {
 declare type DialogRootState = {
   dialogProps: DialogProps | null,
   isClosing: boolean,
+  instanceNumber: number,
 };
 declare export default class DialogRoot
   mixins React.Component<DialogRootProps, DialogRootState> {

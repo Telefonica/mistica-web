@@ -6,7 +6,7 @@ import ResponsiveLayout from './responsive-layout';
 import {useElementDimensions} from './hooks';
 
 import type {TrackingEvent} from './utils/types';
-import {Text6} from '.';
+import {Text3} from '.';
 import {pxToRem} from './utils/css';
 
 const tabMaxWidth = 284;
@@ -95,7 +95,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     },
     tabSelected: {
         color: colors.textPrimary,
-        borderBottom: `2px solid ${colors.controlActive}`,
+        borderBottom: `2px solid ${colors.controlActivated}`,
     },
     icon: {
         marginRight: 8,
@@ -142,9 +142,9 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) =
                                         aria-selected={isSelected ? 'true' : 'false'}
                                     >
                                         {icon && <div className={classes.icon}>{icon}</div>}
-                                        <Text6 medium color="inherit">
+                                        <Text3 medium color="inherit">
                                             {text}
-                                        </Text6>
+                                        </Text3>
                                     </Touchable>
                                 );
                             })}

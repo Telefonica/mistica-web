@@ -7,7 +7,7 @@ import {
     Stack,
     NavigationBreadcrumbs,
     ResponsiveLayout,
-    Text6,
+    Text3,
 } from '..';
 import {useTextField, useCheckbox} from './helpers';
 
@@ -75,7 +75,7 @@ export const Default: StoryComponent = () => {
                         }
                         extra={
                             withExtraContent ? (
-                                <Text6 regular>some account chart here, for example</Text6>
+                                <Text3 regular>some account chart here, for example</Text3>
                             ) : undefined
                         }
                     />
