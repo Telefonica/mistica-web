@@ -81,7 +81,8 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
     const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
     const contextTheme: Theme = React.useMemo(() => {
-        const colorScheme = theme.colorScheme ?? 'auto';
+        // TODO: In next major version we could change this to "auto" by default
+        const colorScheme = theme.colorScheme ?? 'light';
         const lightColors: Colors = theme.skin.colors;
         const darkColors: Colors = {...theme.skin.colors, ...theme.skin.darkModeColors};
         const isDarkModeEnabled = (colorScheme === 'auto' && isOsDarkModeEnabled) || colorScheme === 'dark';

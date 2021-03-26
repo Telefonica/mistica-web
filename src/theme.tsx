@@ -179,7 +179,7 @@ export type ColorScheme = 'dark' | 'light' | 'auto';
 // This config is provided by the user of the lib
 export type ThemeConfig = {
     skin: Skin;
-    colorScheme?: ColorScheme; // auto by default
+    colorScheme?: ColorScheme; // light by default. TODO: Change to auto by default in next major version
     i18n: {
         locale: Locale;
         phoneNumberFormattingRegionCode: RegionCode;
