@@ -21,7 +21,7 @@
         "postbuild": "yarn gen-ts-defs && yarn gen-flow-defs && node scripts/size-stats",
         "watch": "node scripts/watch.js",
         "clean": "rimraf dist && rimraf dist-es && rimraf dist-ts && rimraf node_modules/.cache",
-        "ci": "yarn lint && yarn prettier-check && yarn build && yarn storybook-static && yarn test --ci && yarn test-acceptance --ci",
+        "ci": "yarn lint && yarn prettier-check && yarn circular-dependencies && yarn build && yarn storybook-static && yarn test --ci && yarn test-acceptance --ci",
         "prepublishOnly": "node scripts/prepublish-only.js && yarn build",
         "storybook": "start-storybook -p 6006",
         "playroom": "playroom start",
@@ -33,7 +33,7 @@
         "down-chromium": "docker-compose stop -t 0 chromium",
         "detect-circular-dependencies": "npx dpdm --circular src/index.tsx",
         "audit-accessibility": "node .github/actions/audit-accessibility/main.js",
-        "circular-dependencies": "npx dpdm src/index.tsx"
+        "circular-dependencies": "yarn dpdm src/index.tsx --tree=false --warning=false --exit-code circular:1"
     },
     "browserslist": [
         "chrome >= 36",
@@ -99,6 +99,7 @@
         "cpx": "^1.5.0",
         "cross-env": "^7.0.2",
         "detect-port": "^1.3.0",
+        "dpdm": "^3.6.0",
         "eslint": "^7.16.0",
         "eslint-plugin-babel": "^5.3.1",
         "eslint-plugin-filenames": "^1.3.2",
