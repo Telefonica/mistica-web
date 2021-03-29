@@ -29,6 +29,7 @@ type Field =
 type Props = {
     fullWidth?: boolean;
     children: Field | [Field, Field];
+    layout?: '50/50' | '40/60' | '60/40';
 };
 
 const useStyles = createUseStyles((theme) => ({
@@ -44,19 +45,32 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-const DoubleField: React.FC<Props> = ({children, fullWidth}) => {
+const DoubleField: React.FC<Props> = ({children, fullWidth, layout}) => {
     const classes = useStyles({fullWidth});
+
+    let rightWidth: string;
+    let leftWidth: string;
+    if (layout === '40/60') {
+        leftWidth = '40%';
+        rightWidth = '60%';
+    } else if (layout === '60/40') {
+        leftWidth = '60%';
+        rightWidth = '40%';
+    } else {
+        leftWidth = '50%';
+        rightWidth = '50%';
+    }
 
     const renderChildren = () => {
         const [first, second]: any = React.Children.toArray(children);
         return (
             <>
-                <Box paddingRight={8} width="50%">
+                <Box paddingRight={8} width={leftWidth}>
                     {React.cloneElement(first, {
                         fullWidth: true,
                     })}
                 </Box>
-                <Box paddingLeft={8} width="50%">
+                <Box paddingLeft={8} width={rightWidth}>
                     {second &&
                         React.cloneElement(second, {
                             fullWidth: true,
