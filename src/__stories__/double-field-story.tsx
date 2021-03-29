@@ -1,6 +1,14 @@
 import * as React from 'react';
 import {StorySection, fruitEntries} from './helpers';
-import {DoubleField, CreditCardExpirationField, CvvField, Select, TextField, Stack} from '..';
+import {
+    DoubleField,
+    CreditCardExpirationField,
+    CvvField,
+    Select,
+    TextField,
+    Stack,
+    CreditCardFields,
+} from '..';
 import SectionTitle from '../section-title';
 
 export default {
@@ -70,6 +78,7 @@ export const Default: StoryComponent = () => {
                         <TextField name="text6" label="Label" />
                         <TextField name="text7" label="Label" helperText="Helper text" />
                     </DoubleField>
+                    <CreditCardFields />
                 </Stack>
             </StorySection>
         </>
