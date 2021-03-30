@@ -36,7 +36,7 @@ export const palette = {
     grey5: '#707070',
     grey6: '#000033',
     white: '#FFFFFF',
-};
+} as const;
 
 export const getO2Skin: GetSkin = () => {
     return {
