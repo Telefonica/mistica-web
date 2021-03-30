@@ -1,3 +1,10 @@
+## [8.2.2](https://github.com/Telefonica/mistica-web/compare/v8.2.1...v8.2.2) (2021-03-30)
+
+
+### Bug Fixes
+
+* **LoadingBar:** Update Movistar colors and remove inverse mode ([#224](https://github.com/Telefonica/mistica-web/issues/224)) ([b098b60](https://github.com/Telefonica/mistica-web/commit/b098b6069ab1ef6bf3f318b9286362541e9c8355))
+
 ## [8.2.1](https://github.com/Telefonica/mistica-web/compare/v8.2.0...v8.2.1) (2021-03-30)
 
 

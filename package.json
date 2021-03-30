@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "8.2.1",
+    "version": "8.2.2",
     "license": "UNLICENSED",
     "main": "dist/index.js",
     "module": "dist-es/index.js",
