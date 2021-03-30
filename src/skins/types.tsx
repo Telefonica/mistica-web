@@ -56,7 +56,9 @@ export type Colors = {
     controlError: string;
     loadingBar: string;
     loadingBarBackground: string;
+    /** @deprecated */
     loadingBarBackgroundInverse: string;
+    /** @deprecated */
     loadingBarInverse: string;
 
     toggleAndroidInactive: string;
