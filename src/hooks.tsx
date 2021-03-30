@@ -110,7 +110,7 @@ export const useElementDimensions = (): {
                 return null;
             }
 
-            const observer = new ResizeObserver(updateSize);
+            const observer = new ResizeObserver((entries) => updateSize(entries));
             observer.observe(element);
             return observer;
         });
