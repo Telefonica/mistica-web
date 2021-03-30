@@ -54,7 +54,7 @@ const createNestableContext = <Value extends any>(defaultValue: Value): Nestable
     it fires an action {type: 'add', value}, when a child component unmounts (or changes the value) it fires
     an action {type: 'remove', value}. See SetterComponent.
 
-    This parent component keeps track of all the setted values, maintaining an array. The last value in the
+    This parent component keeps track of all the set values, maintaining an array. The last value in the
     array is used as current value (fallbacks to defaultValue when the array is empty).
     The array is needed because we need to handle these edge cases:
 
