@@ -5,7 +5,8 @@
  */
 
 import * as React from 'react';
-import {useIsInverseVariant, useTheme} from '../..';
+import {useTheme} from '../../hooks';
+import {useIsInverseVariant} from '../../theme-variant-context';
 
 type Props = {
     color?: string;

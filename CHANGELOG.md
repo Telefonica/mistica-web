@@ -1,3 +1,18 @@
+## [8.2.2](https://github.com/Telefonica/mistica-web/compare/v8.2.1...v8.2.2) (2021-03-30)
+
+
+### Bug Fixes
+
+* **LoadingBar:** Update Movistar colors and remove inverse mode ([#224](https://github.com/Telefonica/mistica-web/issues/224)) ([b098b60](https://github.com/Telefonica/mistica-web/commit/b098b6069ab1ef6bf3f318b9286362541e9c8355))
+
+## [8.2.1](https://github.com/Telefonica/mistica-web/compare/v8.2.0...v8.2.1) (2021-03-30)
+
+
+### Bug Fixes
+
+* **color:** change textSecondaryInverse to white ([#217](https://github.com/Telefonica/mistica-web/issues/217)) ([71d31e4](https://github.com/Telefonica/mistica-web/commit/71d31e48ee2f48312173fd40d73b31ad106121e3))
+* **Dialogs:** Make DialogRoot work with multiple react trees ([#216](https://github.com/Telefonica/mistica-web/issues/216)) ([eca9589](https://github.com/Telefonica/mistica-web/commit/eca95891cef2755e427e970b6ec48b8aff41f158))
+
 # [8.2.0](https://github.com/Telefonica/mistica-web/compare/v8.1.0...v8.2.0) (2021-03-11)
 
 

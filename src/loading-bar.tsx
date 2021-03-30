@@ -1,9 +1,7 @@
 import * as React from 'react';
-import classnames from 'classnames';
 import {CSSTransition} from 'react-transition-group';
 import Portal from './portal';
 import {createUseStyles} from './jss';
-import {useIsInverseVariant} from './theme-variant-context';
 
 const TRANSITION_DURATION_MS = 400;
 
@@ -21,7 +19,7 @@ const useStyles = createUseStyles((theme) => ({
         width: '100%',
         overflow: 'hidden',
         position: 'relative',
-        backgroundColor: theme.colors.loadingBarBackgroundInverse,
+        backgroundColor: theme.colors.loadingBarBackground,
     },
 
     progress: {
@@ -31,6 +29,7 @@ const useStyles = createUseStyles((theme) => ({
         width: '100%',
         animation: '$progressIndicator 1.2s ease-out infinite',
         animationDelay: TRANSITION_DURATION_MS,
+        backgroundColor: theme.colors.loadingBar,
     },
 
     innerProgress: {
@@ -81,25 +80,12 @@ const useStyles = createUseStyles((theme) => ({
             transform: 'scaleX(0.8)',
         },
     },
-    lightContainer: {
-        backgroundColor: theme.colors.loadingBarBackground,
-    },
-    inverseContainer: {
-        backgroundColor: theme.colors.loadingBarBackgroundInverse,
-    },
-    light: {
-        backgroundColor: theme.colors.loadingBar,
-    },
-    inverse: {
-        backgroundColor: theme.colors.loadingBarInverse,
-    },
 }));
 
 type Props = {visible: boolean};
 
 const LoadingBar: React.FC<Props> = ({visible}) => {
     const classes = useStyles();
-    const isInverseVariant = useIsInverseVariant();
 
     return (
         <CSSTransition
@@ -114,19 +100,9 @@ const LoadingBar: React.FC<Props> = ({visible}) => {
             unmountOnExit
         >
             <Portal className={classes.portal}>
-                <div
-                    className={classnames(classes.progressContainer, {
-                        [classes.inverseContainer]: isInverseVariant,
-                        [classes.lightContainer]: !isInverseVariant,
-                    })}
-                >
+                <div className={classes.progressContainer}>
                     <div className={classes.progress}>
-                        <div
-                            className={classnames(classes.innerProgress, {
-                                [classes.inverse]: isInverseVariant,
-                                [classes.light]: !isInverseVariant,
-                            })}
-                        />
+                        <div className={classes.innerProgress} />
                     </div>
                 </div>
             </Portal>

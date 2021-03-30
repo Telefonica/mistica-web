@@ -29,7 +29,7 @@ export const palette = {
     grey5: '#666666',
     grey6: '#000000',
     white: '#FFFFFF',
-};
+} as const;
 
 export const getVivoSkin: GetSkin = () => {
     return {
