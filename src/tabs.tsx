@@ -4,10 +4,10 @@ import {createUseStyles} from './jss';
 import Touchable from './touchable';
 import ResponsiveLayout from './responsive-layout';
 import {useElementDimensions} from './hooks';
+import {Text3} from './text';
+import {pxToRem} from './utils/css';
 
 import type {TrackingEvent} from './utils/types';
-import {Text3} from '.';
-import {pxToRem} from './utils/css';
 
 const tabMaxWidth = 284;
 

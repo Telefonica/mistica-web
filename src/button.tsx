@@ -6,11 +6,12 @@ import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {pxToRem} from './utils/css';
+import {Text, Text2, Text3} from './text';
+import Box from './box';
 
 import type {TrackingEvent} from './utils/types';
 import type {Location} from 'history';
 import type {Theme} from './theme';
-import {Box, Text3, Text2, Text} from '.';
 
 export const BUTTON_MIN_WIDTH = 156;
 
