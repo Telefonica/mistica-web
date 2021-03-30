@@ -97,12 +97,6 @@ export const useElementDimensions = (): {
 
     const ref = React.useCallback((node: HTMLElement | null) => {
         setElement(node);
-
-        if (node) {
-            const rect = node.getBoundingClientRect();
-            setWidth(rect.width);
-            setHeight(rect.height);
-        }
     }, []);
 
     React.useEffect(() => {
