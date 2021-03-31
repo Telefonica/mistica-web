@@ -3,7 +3,8 @@ import {SPACE} from './utils/key-codes';
 import {useControlProps} from './form-context';
 import IconCheckbox from './icons/icon-checkbox';
 import {createUseStyles} from './jss';
-import {Text3, Inline} from '.';
+import Inline from './inline';
+import {Text3} from './text';
 import {useAriaId} from './hooks';
 import classnames from 'classnames';
 

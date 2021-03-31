@@ -32,7 +32,7 @@ export const palette = {
     movistarProminentBlueLight20: '#CED3D7',
     movistarProminentBlueLight50: '#85939C',
     movistarProminentBlueLight70: '#546874',
-};
+} as const;
 
 export const getMovistarSkin: GetSkin = (variant) => {
     const skin: Skin = {
@@ -98,8 +98,8 @@ export const getMovistarSkin: GetSkin = (variant) => {
             control: palette.grey3,
             controlActivated: palette.movistarBlue,
             controlError: palette.pepper,
-            loadingBar: palette.movistarGreen,
-            loadingBarBackground: palette.movistarGreenLight50,
+            loadingBar: palette.movistarBlueLight50,
+            loadingBarBackground: palette.movistarBlueDark,
             loadingBarBackgroundInverse: palette.movistarBlueDark,
             loadingBarInverse: palette.movistarBlueLight50,
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {createUseStyles} from '.';
+import {createUseStyles} from './jss';
 
 const transition = '1s cubic-bezier(0.75, 0, 0.27, 1)';
 
