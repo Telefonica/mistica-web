@@ -34,7 +34,7 @@ const CreditCardFields: React.FC<CreditCardFieldsProps> = ({
                 name={numberFieldName}
                 label={texts.formCreditCardNumberLabel}
             />
-            <DoubleField>
+            <DoubleField layout="60/40">
                 <CreditCardExpirationField
                     name={expirationFieldName}
                     label={texts.formCreditCardExpirationLabel}
