@@ -111,16 +111,13 @@ export const RichTexts: StoryComponent = () => {
                 header={
                     <Header
                         pretitle={{
-                            text: `Pretitle (color override, truncated to one line) ${filler}}`,
-                            color: 'orange',
+                            text: `Pretitle (truncated to one line) ${filler}}`,
                             truncate: true,
                         }}
                         title="Title is always a plain string"
                         subtitle={{
-                            text: `Subtitle (color override, textDecoration, truncated to two lines) ${filler}}`,
-                            color: 'yellow',
+                            text: `Subtitle (truncated to two lines) ${filler}}`,
                             truncate: 2,
-                            textDecoration: 'underline',
                         }}
                     />
                 }

@@ -78,17 +78,17 @@ export const Header: React.FC<HeaderProps> = ({
     const theme = useTheme();
     const isInverse = useIsInverseVariant();
 
-    const renderRichText = (richText: RichText, notOverridableProps: Omit<TextPresetProps, 'children'>) => {
+    const renderRichText = (richText: RichText, baseProps: Omit<TextPresetProps, 'children'>) => {
         if (typeof richText === 'string') {
             return (
-                <Text3 regular {...notOverridableProps}>
+                <Text3 regular {...baseProps}>
                     {richText}
                 </Text3>
             );
         }
         const {text, ...textProps} = richText;
         return (
-            <Text3 regular {...notOverridableProps} {...textProps}>
+            <Text3 regular {...baseProps} {...textProps}>
                 {richText.text}
             </Text3>
         );
