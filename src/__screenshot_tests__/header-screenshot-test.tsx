@@ -81,3 +81,15 @@ test.each(DEVICES)('Header with large text', async (device) => {
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test('Header with truncation and color overrides', async () => {
+    await openStoryPage({
+        section: 'Components/Headers/Header',
+        name: 'Rich Texts',
+        device: 'MOBILE_IOS',
+    });
+
+    const story = await screen.findByTestId('header-layout');
+    const image = await story.screenshot();
+    expect(image).toMatchImageSnapshot();
+});

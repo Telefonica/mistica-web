@@ -37,70 +37,94 @@ export const Default: StoryComponent = () => {
         'Extra content placed on the right in desktop',
         true
     );
-    const [withBreadcrumbs, breadcrumbsCheckbox] = useCheckbox('With breadcrumbs', true);
+    const [withBreadcrumbs, breadcrumbsCheckbox] = useCheckbox('With breadcrumbs (desktop only)', true);
     return (
-        <>
-            <Stack space={16}>
-                <div data-testid="header-layout">
-                    <HeaderLayout
-                        isInverse={isInverse}
-                        sideBySideExtraOnDesktop={extraSideBySide}
-                        breadcrumbs={
-                            withBreadcrumbs ? (
-                                <NavigationBreadcrumbs
-                                    title="Bills"
-                                    breadcrumbs={[{title: 'Account', url: '/consumptions'}]}
-                                />
-                            ) : undefined
-                        }
-                        header={
-                            <Header
-                                pretitle={pretitle}
-                                title={title}
-                                preamount={preamount}
-                                amount={amount}
-                                button={
-                                    buttonLabel ? (
-                                        <ButtonPrimary href="asdf">{buttonLabel}</ButtonPrimary>
-                                    ) : undefined
-                                }
-                                secondaryButton={
-                                    secondaryButtonLabel ? (
-                                        <ButtonSecondary href="asdf">{secondaryButtonLabel}</ButtonSecondary>
-                                    ) : undefined
-                                }
-                                subtitle={subtitle}
-                                isErrorAmount={isErrorAmount}
+        <Stack space={16}>
+            <div data-testid="header-layout">
+                <HeaderLayout
+                    isInverse={isInverse}
+                    sideBySideExtraOnDesktop={extraSideBySide}
+                    breadcrumbs={
+                        withBreadcrumbs ? (
+                            <NavigationBreadcrumbs
+                                title="Bills"
+                                breadcrumbs={[{title: 'Account', url: '/consumptions'}]}
                             />
-                        }
-                        extra={
-                            withExtraContent ? (
-                                <Text3 regular>some account chart here, for example</Text3>
-                            ) : undefined
-                        }
-                    />
-                </div>
-                <ResponsiveLayout>
-                    <Stack space={16}>
-                        {breadcrumbsCheckbox}
-                        {pretitleTextField}
-                        {titleTextField}
-                        {preamountTextField}
-                        <FieldWithCheckbox>
-                            {amountTextField}
-                            {errorAmountCheckbox}
-                        </FieldWithCheckbox>
-                        {buttonLabelTextField}
-                        {secondaryButtonLabelTextField}
-                        {subtitleTextField}
-                        {inverseCheckbox}
-                        {extraContentCheckbox}
-                        {extraSideBySideCheckbox}
-                    </Stack>
-                </ResponsiveLayout>
-            </Stack>
-        </>
+                        ) : undefined
+                    }
+                    header={
+                        <Header
+                            pretitle={pretitle}
+                            title={title}
+                            preamount={preamount}
+                            amount={amount}
+                            button={
+                                buttonLabel ? (
+                                    <ButtonPrimary href="asdf">{buttonLabel}</ButtonPrimary>
+                                ) : undefined
+                            }
+                            secondaryButton={
+                                secondaryButtonLabel ? (
+                                    <ButtonSecondary href="asdf">{secondaryButtonLabel}</ButtonSecondary>
+                                ) : undefined
+                            }
+                            subtitle={subtitle}
+                            isErrorAmount={isErrorAmount}
+                        />
+                    }
+                    extra={
+                        withExtraContent ? (
+                            <Text3 regular>some account chart here, for example</Text3>
+                        ) : undefined
+                    }
+                />
+            </div>
+            <ResponsiveLayout>
+                <Stack space={16}>
+                    {breadcrumbsCheckbox}
+                    {pretitleTextField}
+                    {titleTextField}
+                    {preamountTextField}
+                    <FieldWithCheckbox>
+                        {amountTextField}
+                        {errorAmountCheckbox}
+                    </FieldWithCheckbox>
+                    {buttonLabelTextField}
+                    {secondaryButtonLabelTextField}
+                    {subtitleTextField}
+                    {inverseCheckbox}
+                    {extraContentCheckbox}
+                    {extraSideBySideCheckbox}
+                </Stack>
+            </ResponsiveLayout>
+        </Stack>
     );
 };
 
 Default.storyName = 'Header';
+
+export const RichTexts: StoryComponent = () => {
+    const filler = ' - more text'.repeat(20);
+    return (
+        <div data-testid="header-layout">
+            <HeaderLayout
+                header={
+                    <Header
+                        pretitle={{
+                            text: `Pretitle (color override, truncated to one line) ${filler}}`,
+                            color: 'orange',
+                            truncate: true,
+                        }}
+                        title="Title is always a plain string"
+                        subtitle={{
+                            text: `Subtitle (color override, textDecoration, truncated to two lines) ${filler}}`,
+                            color: 'yellow',
+                            truncate: 2,
+                            textDecoration: 'underline',
+                        }}
+                    />
+                }
+            />
+        </div>
+    );
+};
