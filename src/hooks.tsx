@@ -101,6 +101,8 @@ export const useElementDimensions = (): {
 
     React.useEffect(() => {
         if (!element) {
+            setWidth(0);
+            setHeight(0);
             return;
         }
 
