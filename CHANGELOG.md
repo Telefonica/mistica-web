@@ -1,3 +1,11 @@
+## [8.2.3](https://github.com/Telefonica/mistica-web/compare/v8.2.2...v8.2.3) (2021-04-05)
+
+
+### Bug Fixes
+
+* **Header:** Do not truncate texts by default ([#225](https://github.com/Telefonica/mistica-web/issues/225)) ([f80a78e](https://github.com/Telefonica/mistica-web/commit/f80a78ed78c008fe810fa4f51580546f03bc0c17))
+* **useElementDimensions:** improve hook to avoid reflows ([bc647e0](https://github.com/Telefonica/mistica-web/commit/bc647e0d7c53118258561506cf9421055d8f5783))
+
 ## [8.2.2](https://github.com/Telefonica/mistica-web/compare/v8.2.1...v8.2.2) (2021-03-30)
 
 
