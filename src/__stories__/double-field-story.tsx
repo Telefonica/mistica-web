@@ -3,12 +3,13 @@ import {StorySection, fruitEntries} from './helpers';
 import {
     DoubleField,
     CreditCardExpirationField,
-    CreditCardNumberField,
     CvvField,
     Select,
     TextField,
     Stack,
+    CreditCardFields,
 } from '..';
+import SectionTitle from '../section-title';
 
 export default {
     title: 'Components/Forms/DoubleField',
@@ -18,14 +19,22 @@ export const Default: StoryComponent = () => {
     const [selectValue, setSelectValue] = React.useState('');
     return (
         <>
-            <StorySection title="Credit Card Form">
-                <Stack space={16}>
-                    <CreditCardNumberField name="credit-card-number" label="Credit Card Number" />
-                    <DoubleField>
-                        <CreditCardExpirationField name="credit-card-expiration" label="Expiration" />
-                        <CvvField name="credit-card-cvv" label="CVV" />
-                    </DoubleField>
-                </Stack>
+            <StorySection title="Layouts">
+                <SectionTitle>50/50</SectionTitle>
+                <DoubleField layout="50/50">
+                    <CreditCardExpirationField name="credit-card-expiration" label="Expiration" />
+                    <CvvField name="credit-card-cvv" label="CVV" />
+                </DoubleField>
+                <SectionTitle>60/40</SectionTitle>
+                <DoubleField layout="60/40">
+                    <CreditCardExpirationField name="credit-card-expiration" label="Expiration" />
+                    <CvvField name="credit-card-cvv" label="CVV" />
+                </DoubleField>
+                <SectionTitle>40/60</SectionTitle>
+                <DoubleField layout="40/60">
+                    <CvvField name="credit-card-cvv" label="CVV" />
+                    <CreditCardExpirationField name="credit-card-expiration" label="Expiration" />
+                </DoubleField>
             </StorySection>
 
             <StorySection title="Compositions">
@@ -69,6 +78,7 @@ export const Default: StoryComponent = () => {
                         <TextField name="text6" label="Label" />
                         <TextField name="text7" label="Label" helperText="Helper text" />
                     </DoubleField>
+                    <CreditCardFields />
                 </Stack>
             </StorySection>
         </>
