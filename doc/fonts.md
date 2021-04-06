@@ -141,7 +141,7 @@ you want your web to properly work with dynamic font sizes, we recommend to setu
 100% (which is the same as 16px in most browsers):
 
 ```css
-body {
+html {
   font-size: 16px; /* or 100% */
 }
 ```
