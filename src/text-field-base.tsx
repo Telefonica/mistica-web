@@ -156,7 +156,7 @@ const useStyles = createUseStyles((theme) => ({
     container: {
         display: 'flex',
         flexDirection: 'column',
-        minWidth: 112,
+        minWidth: 96,
     },
     border: {
         border: `1px solid ${theme.colors.border}`,
@@ -219,7 +219,7 @@ const useStyles = createUseStyles((theme) => ({
         '&[type="datetime-local"]:not(:valid):not(:focus)': isFirefox() ? {color: 'transparent'} : {},
     },
     endIcon: {
-        paddingLeft: 16,
+        paddingLeft: 8,
         paddingRight: 16,
         display: 'flex',
         alignItems: 'center',
