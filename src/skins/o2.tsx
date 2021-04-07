@@ -122,7 +122,7 @@ export const getO2Skin: GetSkin = () => {
             iosControlKnob: palette.white, // web only
 
             // DIVIDERS
-            divider: applyAlpha(palette.white, 0.05),
+            divider: palette.grey2,
             dividerInverse: applyAlpha(palette.white, 0.2),
             navigationBarDivider: palette.o2BluePrimary,
 
@@ -216,7 +216,8 @@ export const getO2Skin: GetSkin = () => {
             toggleAndroidInactive: palette.grey4,
             toggleAndroidBackgroundActive: palette.o2BlueLight30,
             iosControlKnob: palette.grey2,
-            dividerInverse: palette.darkModeGrey,
+            divider: applyAlpha(palette.white, 0.05),
+            dividerInverse: applyAlpha(palette.white, 0.05),
             navigationBarDivider: palette.darkModeBlack,
             feedbackInfoBackground: palette.darkModeGrey6,
             brand: palette.o2BluePrimaryLight50,
