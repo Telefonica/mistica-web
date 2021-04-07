@@ -93,6 +93,7 @@ Start prototyping interfaces with Mistica components in the
 - [Customize default texts](./doc/texts.md)
 - [Analytics](./doc/analytics.md)
 - [Style your components](./doc/styles.md)
+- [Fonts](./doc/fonts.md)
 
 ## Development
 
