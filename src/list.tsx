@@ -496,8 +496,8 @@ type RowListProps = {
 
 export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role}) => (
     <div role={role} aria-labelledby={ariaLabelledby}>
-        {(Array.isArray(children) ? children : [children])
-            .filter((child) => child !== null && child !== false)
+        {React.Children.toArray(children)
+            .filter((child) => child !== null && child !== false && child !== '')
             .map((child, index) => (
                 <React.Fragment key={index}>
                     {index > 0 && (
