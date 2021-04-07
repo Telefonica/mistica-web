@@ -1,0 +1,5 @@
+// @flow
+
+import * as React from "react";
+declare var Divider: React.ComponentType<{}>;
+declare export default typeof Divider;
