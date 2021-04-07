@@ -120,7 +120,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             iosControlKnob: palette.white, // web only
 
             // DIVIDERS
-            divider: palette.grey2,
+            divider: applyAlpha(palette.white, 0.05),
             dividerInverse: palette.movistarBlueDark,
             navigationBarDivider: palette.movistarBlue,
 
@@ -212,7 +212,6 @@ export const getMovistarSkin: GetSkin = (variant) => {
             toggleAndroidInactive: palette.grey4, // web only
             toggleAndroidBackgroundActive: palette.movistarBlueLight30, // web only
             iosControlKnob: palette.grey2, // web only
-            divider: palette.darkModeGrey,
             dividerInverse: palette.darkModeGrey,
             navigationBarDivider: palette.darkModeBlack,
             brandDark: palette.grey6,

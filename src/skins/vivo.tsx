@@ -112,7 +112,7 @@ export const getVivoSkin: GetSkin = () => {
             iosControlKnob: palette.white,
 
             // DIVIDERS
-            divider: palette.grey2,
+            divider: applyAlpha(palette.white, 0.05),
             dividerInverse: applyAlpha(palette.white, 0.2),
             navigationBarDivider: palette.vivoPurple,
 
@@ -206,7 +206,6 @@ export const getVivoSkin: GetSkin = () => {
             toggleAndroidInactive: palette.grey4,
             toggleAndroidBackgroundActive: palette.vivoPurpleLight50,
             iosControlKnob: palette.grey2,
-            divider: palette.darkModeGrey,
             dividerInverse: palette.darkModeGrey,
             navigationBarDivider: palette.darkModeBlack,
             feedbackInfoBackground: palette.darkModeGrey6,
