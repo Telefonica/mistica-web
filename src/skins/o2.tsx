@@ -42,7 +42,7 @@ export const palette = {
     darkModeGrey6: '#313235',
     darkModeO2BluePrimary: '#0020D6',
     darkModeO2BluePrimaryDark: '#000099',
-};
+} as const;
 
 export const getO2Skin: GetSkin = () => {
     return {

@@ -1,7 +1,12 @@
 import * as React from 'react';
-import {Inline, Text4, Text2, Text1, createUseStyles, useTheme, ButtonPrimary, ButtonLink, Box} from '.';
 import Tag from './tag';
 import Stack from './stack';
+import {useTheme} from './hooks';
+import Box from './box';
+import {Text1, Text2, Text4} from './text';
+import {createUseStyles} from './jss';
+import Inline from './inline';
+import {ButtonLink, ButtonPrimary} from './button';
 
 const useCardContentStyles = createUseStyles(() => ({
     actions: {

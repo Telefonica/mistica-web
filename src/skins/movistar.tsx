@@ -36,7 +36,7 @@ export const palette = {
     darkModeBlack: '#191919',
     darkModeGrey: '#242424',
     darkModeMovistarBlueDark: '#4C7389',
-};
+} as const;
 
 export const getMovistarSkin: GetSkin = (variant) => {
     const skin: Skin = {
@@ -110,8 +110,8 @@ export const getMovistarSkin: GetSkin = (variant) => {
             control: palette.grey3,
             controlActivated: palette.movistarBlue,
             controlError: palette.pepper,
-            loadingBar: palette.movistarGreen,
-            loadingBarBackground: palette.movistarGreenLight50,
+            loadingBar: palette.movistarBlueLight50,
+            loadingBarBackground: palette.movistarBlueDark,
             loadingBarBackgroundInverse: palette.movistarBlueDark,
             loadingBarInverse: palette.movistarBlueLight50,
 

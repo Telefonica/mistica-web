@@ -5,7 +5,7 @@ import {isInputTypeSupported} from './utils/dom';
 import {isServerSide} from './utils/environment';
 import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
 import {getLocalDateString} from './utils/time';
-import {useTheme} from '.';
+import {useTheme} from './hooks';
 
 import type {CommonFormFieldProps} from './text-field-base';
 

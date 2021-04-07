@@ -5,7 +5,8 @@ import {getPlatform} from './utils/platform';
 import {SPACE, LEFT, UP, DOWN, RIGHT} from './utils/key-codes';
 import {useControlProps} from './form-context';
 import {combineRefs} from './utils/common';
-import {Inline, Text3} from '.';
+import {Text3} from './text';
+import Inline from './inline';
 
 const useRadioButtonStyles = createUseStyles((theme) => ({
     outerCircle: {
