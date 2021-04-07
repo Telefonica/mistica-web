@@ -52,6 +52,7 @@ export {default as HighlightedCard} from './highlighted-card';
 export {default as Stepper} from './stepper';
 export {default as ProgressBar} from './progress-bar';
 export {MediaCard, DataCard} from './card';
+export {default as Divider} from './divider';
 
 // Forms
 export {default as Form} from './form';
