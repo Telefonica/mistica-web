@@ -12,6 +12,7 @@ import {ButtonLink} from './button';
 
 import type {TrackingEvent} from './utils/types';
 import type {ButtonElement} from './button';
+import {Boxed} from './boxed';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -19,9 +20,6 @@ const useStyles = createUseStyles((theme) => ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : theme.colors.background),
-        border: ({isInverse}) => (isInverse ? '0' : `1px solid ${theme.colors.border}`),
-        borderRadius: 4,
-        overflow: 'hidden',
     },
     imageContent: {
         display: 'flex',
@@ -140,7 +138,7 @@ const Content: React.FC<Props> = (props) => {
     const theme = useTheme();
 
     const content = (
-        <div className={classes.container}>
+        <Boxed className={classes.container}>
             <div className={classes.textContainer}>
                 <Text4 light>{title}</Text4>
                 <Box paddingTop={8}>
@@ -160,7 +158,7 @@ const Content: React.FC<Props> = (props) => {
                     }}
                 />
             )}
-        </div>
+        </Boxed>
     );
 
     if (props.button) {

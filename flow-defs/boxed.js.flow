@@ -1,0 +1,12 @@
+// @flow
+
+import * as React from "react";
+declare type Props = {
+  children: React.Node,
+  className?: string,
+  role?: string,
+  "data-testid"?: string,
+  "data-qsysid"?: string,
+};
+declare export var Boxed: React.ComponentType<Props>;
+declare export {};

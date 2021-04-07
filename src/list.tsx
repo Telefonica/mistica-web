@@ -11,6 +11,8 @@ import IconChevron from './icons/icon-chevron';
 import Switch from './switch-component';
 import RadioButton from './radio-button';
 import Checkbox from './checkbox';
+import {Boxed} from './boxed';
+import Divider from './divider';
 
 import type {TrackingEvent} from './utils/types';
 
@@ -26,9 +28,6 @@ const useStyles = createUseStyles((theme) => ({
                 background: 'initial',
             },
         },
-        '&:last-child $content': {
-            borderBottom: 'none',
-        },
     },
     hoverDisabled: {
         cursor: 'initial',
@@ -36,16 +35,10 @@ const useStyles = createUseStyles((theme) => ({
             background: 'none',
         },
     },
-    boxed: {
-        border: `1px solid ${theme.colors.border}`,
-        borderRadius: 4,
-        overflow: 'hidden',
-    },
     content: {
         display: 'flex',
         width: '100%',
         minHeight: 72,
-        borderBottom: `1px solid ${theme.colors.divider}`,
     },
     icon: {
         display: 'flex',
@@ -495,34 +488,37 @@ To avoid this we need different prop type shapes for different row types
 
 export const Row: React.FC<RowContentProps> = (props) => <RowContent {...props} />;
 
-type RowElement = React.ReactElement<typeof Row>;
-
 type RowListProps = {
-    children: RowElement | Array<RowElement>;
+    children: React.ReactNode | ReadonlyArray<React.ReactNode>;
     ariaLabelledby?: string;
     role?: string;
 };
 
 export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role}) => (
     <div role={role} aria-labelledby={ariaLabelledby}>
-        {children}
+        {(Array.isArray(children) ? children : [children])
+            .filter((child) => child !== null && child !== false)
+            .map((child, index) => (
+                <React.Fragment key={index}>
+                    {index > 0 && (
+                        <Box paddingX={16}>
+                            <Divider />
+                        </Box>
+                    )}
+                    {child}
+                </React.Fragment>
+            ))}
     </div>
 );
 
-export const BoxedRow: React.FC<RowContentProps> = (props) => {
-    const classes = useStyles();
-
-    return (
-        <div className={classes.boxed}>
-            <RowContent {...props} />
-        </div>
-    );
-};
-
-type BoxedRowElement = React.ReactElement<typeof BoxedRow>;
+export const BoxedRow: React.FC<RowContentProps> = (props) => (
+    <Boxed>
+        <RowContent {...props} />
+    </Boxed>
+);
 
 type BoxedRowListProps = {
-    children: BoxedRowElement | Array<BoxedRowElement>;
+    children: React.ReactNode | ReadonlyArray<React.ReactNode>;
     ariaLabelledby?: string;
     role?: string;
 };

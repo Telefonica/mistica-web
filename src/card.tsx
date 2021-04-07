@@ -7,6 +7,7 @@ import {Text1, Text2, Text4} from './text';
 import {createUseStyles} from './jss';
 import Inline from './inline';
 import {ButtonLink, ButtonPrimary} from './button';
+import {Boxed} from './boxed';
 
 const useCardContentStyles = createUseStyles(() => ({
     actions: {
@@ -104,10 +105,7 @@ const useMediaCardStyles = createUseStyles((theme) => ({
     mediaCard: {
         display: 'flex',
         flexDirection: 'column',
-        borderRadius: 4,
-        overflow: 'hidden',
         height: '100%',
-        border: `1px solid ${theme.colors.border}`,
     },
     media: {
         width: '100%',
@@ -158,7 +156,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
 }) => {
     const classes = useMediaCardStyles({media});
     return (
-        <article className={classes.mediaCard}>
+        <Boxed role="article" className={classes.mediaCard}>
             <div className={classes.media}></div>
             <div className={classes.content}>
                 <CardContent
@@ -171,7 +169,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
                     buttonLink={buttonLink}
                 />
             </div>
-        </article>
+        </Boxed>
     );
 };
 
@@ -179,10 +177,8 @@ const useDataCardStyles = createUseStyles((theme) => ({
     dataCard: {
         display: 'flex',
         flexDirection: 'column',
-        borderRadius: 4,
         padding: '24px 16px',
         height: '100%',
-        border: `1px solid ${theme.colors.border}`,
         background: theme.colors.background,
     },
 }));
@@ -213,7 +209,7 @@ export const DataCard: React.FC<DataCardProps> = ({
 }) => {
     const classes = useDataCardStyles();
     return (
-        <article className={classes.dataCard}>
+        <Boxed role="article" className={classes.dataCard}>
             {icon && <Box paddingBottom={16}>{icon}</Box>}
             <CardContent
                 headline={headline}
@@ -224,6 +220,6 @@ export const DataCard: React.FC<DataCardProps> = ({
                 button={button}
                 buttonLink={buttonLink}
             />
-        </article>
+        </Boxed>
     );
 };
