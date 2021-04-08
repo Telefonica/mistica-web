@@ -80,6 +80,7 @@ declare export { default as HighlightedCard } from "./highlighted-card";
 declare export { default as Stepper } from "./stepper";
 declare export { default as ProgressBar } from "./progress-bar";
 declare export { MediaCard, DataCard } from "./card";
+declare export { default as Divider } from "./divider";
 declare export { default as Form } from "./form";
 declare export { default as Select } from "./select";
 declare export { default as TextField } from "./text-field";

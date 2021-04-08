@@ -94,11 +94,11 @@ interface CommonProps {
     children?: void; // no children allowed
     headline?: string | React.ReactNode;
     title: string;
-    titleLinesMax?: 1 | 2;
+    titleLinesMax?: number;
     subtitle?: string;
-    subtitleLinesMax?: 1 | 2;
+    subtitleLinesMax?: number;
     description?: string | null;
-    descriptionLinesMax?: 1 | 2;
+    descriptionLinesMax?: number;
     icon?: React.ReactElement<any> | string | null;
     iconSize?: 24 | 40;
     badge?: boolean | number;
@@ -114,11 +114,11 @@ interface ContentProps extends CommonProps {
 const Content: React.FC<ContentProps> = ({
     headline,
     title,
-    titleLinesMax = 2,
+    titleLinesMax,
     subtitle,
-    subtitleLinesMax = 2,
+    subtitleLinesMax,
     description,
-    descriptionLinesMax = 2,
+    descriptionLinesMax,
     icon,
     iconSize = 40,
     type = 'basic',
