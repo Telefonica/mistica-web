@@ -1,5 +1,6 @@
 import * as React from 'react';
-import {Boxed} from '..';
+import {Box, Boxed, Stack, Text8} from '..';
+import {useTheme} from '../hooks';
 import {ThemeVariant} from '../theme-variant-context';
 import {useCheckbox} from './helpers';
 
@@ -8,16 +9,29 @@ export default {
 };
 
 export const Default: StoryComponent = () => {
-    const [isInverse, inverseCheckbox] = useCheckbox('Inverse', false);
+    const [isInverseOutside, inverseOutsideCheckbox] = useCheckbox('Inverse outside', false);
+    const [isInverseInside, inverseInsideCheckbox] = useCheckbox('Inverse inside', false);
+
+    const {colors} = useTheme();
 
     return (
         <>
-            {inverseCheckbox}
-            <ThemeVariant isInverse={isInverse}>
-                <div data-testid="boxed">
-                    <Boxed>
-                        <div style={{backgroundColor: 'lightyellow', width: '100%', height: 150}} />
-                    </Boxed>
+            <Stack space={16}>
+                {inverseOutsideCheckbox}
+                {inverseInsideCheckbox}
+            </Stack>
+            <ThemeVariant isInverse={isInverseOutside}>
+                <div
+                    data-testid="boxed"
+                    style={{backgroundColor: isInverseOutside ? colors.brand : colors.background}}
+                >
+                    <Box padding={16}>
+                        <Boxed isInverse={isInverseInside}>
+                            <Box padding={16}>
+                                <Text8>Text</Text8>
+                            </Box>
+                        </Boxed>
+                    </Box>
                 </div>
             </ThemeVariant>
         </>

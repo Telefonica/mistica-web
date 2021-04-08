@@ -489,7 +489,7 @@ To avoid this we need different prop type shapes for different row types
 export const Row: React.FC<RowContentProps> = (props) => <RowContent {...props} />;
 
 type RowListProps = {
-    children: React.ReactNode | ReadonlyArray<React.ReactNode>;
+    children: React.ReactNode;
     ariaLabelledby?: string;
     role?: string;
 };
@@ -497,7 +497,7 @@ type RowListProps = {
 export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role}) => (
     <div role={role} aria-labelledby={ariaLabelledby}>
         {React.Children.toArray(children)
-            .filter((child) => child !== null && child !== false && child !== '')
+            .filter(Boolean)
             .map((child, index) => (
                 <React.Fragment key={index}>
                     {index > 0 && (
@@ -518,7 +518,7 @@ export const BoxedRow: React.FC<RowContentProps> = (props) => (
 );
 
 type BoxedRowListProps = {
-    children: React.ReactNode | ReadonlyArray<React.ReactNode>;
+    children: React.ReactNode;
     ariaLabelledby?: string;
     role?: string;
 };

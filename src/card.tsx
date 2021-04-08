@@ -102,6 +102,9 @@ type CardMedia =
       };
 
 const useMediaCardStyles = createUseStyles((theme) => ({
+    boxed: {
+        height: '100%',
+    },
     mediaCard: {
         display: 'flex',
         flexDirection: 'column',
@@ -156,24 +159,29 @@ export const MediaCard: React.FC<MediaCardProps> = ({
 }) => {
     const classes = useMediaCardStyles({media});
     return (
-        <Boxed role="article" className={classes.mediaCard}>
-            <div className={classes.media}></div>
-            <div className={classes.content}>
-                <CardContent
-                    headline={headline}
-                    pretitle={pretitle}
-                    title={title}
-                    description={description}
-                    body={body}
-                    button={button}
-                    buttonLink={buttonLink}
-                />
-            </div>
+        <Boxed className={classes.boxed}>
+            <article className={classes.mediaCard}>
+                <div className={classes.media}></div>
+                <div className={classes.content}>
+                    <CardContent
+                        headline={headline}
+                        pretitle={pretitle}
+                        title={title}
+                        description={description}
+                        body={body}
+                        button={button}
+                        buttonLink={buttonLink}
+                    />
+                </div>
+            </article>
         </Boxed>
     );
 };
 
 const useDataCardStyles = createUseStyles((theme) => ({
+    boxed: {
+        height: '100%',
+    },
     dataCard: {
         display: 'flex',
         flexDirection: 'column',
@@ -209,17 +217,19 @@ export const DataCard: React.FC<DataCardProps> = ({
 }) => {
     const classes = useDataCardStyles();
     return (
-        <Boxed role="article" className={classes.dataCard}>
-            {icon && <Box paddingBottom={16}>{icon}</Box>}
-            <CardContent
-                headline={headline}
-                title={title}
-                subtitle={subtitle}
-                description={description}
-                body={body}
-                button={button}
-                buttonLink={buttonLink}
-            />
+        <Boxed className={classes.boxed}>
+            <article className={classes.dataCard}>
+                {icon && <Box paddingBottom={16}>{icon}</Box>}
+                <CardContent
+                    headline={headline}
+                    title={title}
+                    subtitle={subtitle}
+                    description={description}
+                    body={body}
+                    button={button}
+                    buttonLink={buttonLink}
+                />
+            </article>
         </Boxed>
     );
 };
