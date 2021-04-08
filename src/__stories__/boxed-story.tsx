@@ -23,7 +23,7 @@ export const Default: StoryComponent = () => {
             <ThemeVariant isInverse={isInverseOutside}>
                 <div
                     data-testid="boxed"
-                    style={{backgroundColor: isInverseOutside ? colors.brand : colors.background}}
+                    style={{backgroundColor: isInverseOutside ? colors.backgroundBrand : colors.background}}
                 >
                     <Box padding={16}>
                         <Boxed isInverse={isInverseInside}>
