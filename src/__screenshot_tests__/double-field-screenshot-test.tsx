@@ -13,3 +13,13 @@ test.each(DEVICES)('Double Field', async (device) => {
 
     expect(await page.screenshot({fullPage: true})).toMatchImageSnapshot();
 });
+
+test.each(DEVICES)('Double Field', async (device) => {
+    const page = await openStoryPage({
+        section: 'Components/Forms/DoubleField',
+        name: 'Full Width',
+        device,
+    });
+
+    expect(await page.screenshot({fullPage: true})).toMatchImageSnapshot();
+});
