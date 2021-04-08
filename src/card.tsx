@@ -101,7 +101,7 @@ type CardMedia =
           height?: undefined;
       };
 
-const useMediaCardStyles = createUseStyles((theme) => ({
+const useMediaCardStyles = createUseStyles(() => ({
     boxed: {
         height: '100%',
     },
@@ -128,7 +128,6 @@ const useMediaCardStyles = createUseStyles((theme) => ({
     },
     content: {
         flex: 1,
-        background: theme.colors.background,
         padding: 16,
         paddingBottom: 24,
         display: 'flex',
@@ -178,7 +177,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
     );
 };
 
-const useDataCardStyles = createUseStyles((theme) => ({
+const useDataCardStyles = createUseStyles(() => ({
     boxed: {
         height: '100%',
     },
@@ -187,7 +186,6 @@ const useDataCardStyles = createUseStyles((theme) => ({
         flexDirection: 'column',
         padding: '24px 16px',
         height: '100%',
-        background: theme.colors.background,
     },
 }));
 

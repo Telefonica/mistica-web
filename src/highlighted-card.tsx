@@ -19,7 +19,6 @@ const useStyles = createUseStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : theme.colors.background),
     },
     imageContent: {
         display: 'flex',
@@ -95,6 +94,7 @@ interface CommonProps {
     backgroundImageUrl?: string;
     onClose?: () => void;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    isInverse?: boolean;
 }
 interface BasicProps extends CommonProps {
     button?: undefined;
@@ -133,12 +133,13 @@ type Props = BasicProps | ButtonProps | HrefProps | ToProps | OnPressProps;
 
 const Content: React.FC<Props> = (props) => {
     const {title, description, imageUrl, imageFit} = props;
-    const isInverse = useIsInverseVariant();
+    const isInverseOutside = useIsInverseVariant();
+    const isInverse = props.isInverse ?? isInverseOutside;
     const classes = useStyles({isInverse, hasImage: !!imageUrl});
     const theme = useTheme();
 
     const content = (
-        <Boxed className={classes.container}>
+        <Boxed isInverse={isInverse} className={classes.container}>
             <div className={classes.textContainer}>
                 <Text4 light>{title}</Text4>
                 <Box paddingTop={8}>

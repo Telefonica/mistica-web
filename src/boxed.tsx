@@ -11,17 +11,15 @@ type StylesProps = {
 const useStyles = createUseStyles(({colors}) => ({
     boxed: {
         backgroundColor: ({isInverseInside}: StylesProps) =>
-            isInverseInside
-                ? colors.backgroundBrand // TODO: use backgroundContainer instead of background when available
-                : colors.background,
+            isInverseInside ? colors.backgroundBrand : colors.background, // TODO: use backgroundContainer instead of background when available
 
         border: ({isInverseOutside, isInverseInside}: StylesProps) => {
             if (isInverseOutside && !isInverseInside) {
-                return `1px solid ${colors.background}`;
+                return `1px solid ${colors.background}`; // TODO: use backgroundContainer instead of background when available
             }
 
             if (isInverseInside) {
-                return `1px solid ${colors.backgroundBrand}`; // TODO: use backgroundContainer instead of background when available
+                return `1px solid ${colors.backgroundBrand}`;
             }
 
             return `1px solid ${colors.border}`;
