@@ -3,6 +3,7 @@
 import * as React from "react";
 declare type Props = {
   children: React.Node,
+  isInverse?: boolean,
   className?: string,
   role?: string,
   "data-testid"?: string,

@@ -68,14 +68,14 @@ declare type RowContentProps =
   | OnPressRowContentProps;
 declare export var Row: React.ComponentType<RowContentProps>;
 declare type RowListProps = {
-  children: React.Node | $ReadOnlyArray<React.Node>,
+  children: React.Node,
   ariaLabelledby?: string,
   role?: string,
 };
 declare export var RowList: React.ComponentType<RowListProps>;
 declare export var BoxedRow: React.ComponentType<RowContentProps>;
 declare type BoxedRowListProps = {
-  children: React.Node | $ReadOnlyArray<React.Node>,
+  children: React.Node,
   ariaLabelledby?: string,
   role?: string,
 };
