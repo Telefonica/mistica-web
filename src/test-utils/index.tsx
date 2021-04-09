@@ -19,12 +19,14 @@ const HOST = ((): string => {
     return 'localhost';
 })();
 
-const MOBILE_DEVICE_IOS: 'MOBILE_IOS' = 'MOBILE_IOS';
-const MOBILE_DEVICE_ANDROID: 'MOBILE_ANDROID' = 'MOBILE_ANDROID';
-const TABLET_DEVICE: 'TABLET' = 'TABLET';
-const DESKTOP_DEVICE: 'DESKTOP' = 'DESKTOP';
+const MOBILE_DEVICE_IOS_SMALL = 'MOBILE_IOS_SMALL';
+const MOBILE_DEVICE_IOS = 'MOBILE_IOS';
+const MOBILE_DEVICE_ANDROID = 'MOBILE_ANDROID';
+const TABLET_DEVICE = 'TABLET';
+const DESKTOP_DEVICE = 'DESKTOP';
 
 export type Device =
+    | typeof MOBILE_DEVICE_IOS_SMALL
     | typeof MOBILE_DEVICE_IOS
     | typeof MOBILE_DEVICE_ANDROID
     | typeof TABLET_DEVICE
@@ -40,6 +42,19 @@ type DeviceCollection = Record<
 >;
 
 const DEVICES: DeviceCollection = {
+    [MOBILE_DEVICE_IOS_SMALL]: {
+        userAgent:
+            'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
+        platform: 'ios',
+        viewport: {
+            width: 320,
+            height: 480,
+            deviceScaleFactor: 2,
+            isMobile: true,
+            hasTouch: true,
+            isLandscape: false,
+        },
+    },
     [MOBILE_DEVICE_IOS]: {
         userAgent:
             'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',

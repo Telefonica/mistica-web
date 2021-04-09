@@ -20,7 +20,7 @@ const useStyles = createUseStyles((theme) => ({
             width: '100%',
         },
         [theme.mq.tabletOrBigger]: {
-            width: ({fullWidth}) => (fullWidth ? '100%' : 'fit-content'),
+            width: ({fullWidth}) => (fullWidth ? '100%' : 'auto'),
         },
     },
     select: {

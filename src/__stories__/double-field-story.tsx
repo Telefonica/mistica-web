@@ -86,3 +86,56 @@ export const Default: StoryComponent = () => {
 };
 
 Default.storyName = 'Default';
+
+export const FullWidth: StoryComponent = () => (
+    <Stack space={16}>
+        <DoubleField fullWidth layout="60/40">
+            <TextField name="name" label="Name" />
+            <TextField name="name" label="Name" />
+        </DoubleField>
+        <DoubleField fullWidth layout="40/60">
+            <TextField name="name" label="Name" />
+            <Select
+                name="fruits"
+                label="Fruit"
+                options={[
+                    {value: 'orange', text: 'Orange'},
+                    {value: 'banana', text: 'Banana'},
+                ]}
+            />
+        </DoubleField>
+        <DoubleField fullWidth layout="50/50">
+            <TextField name="name" label="Name" />
+            <TextField name="name" label="Name" />
+        </DoubleField>
+        <DoubleField fullWidth layout="50/50">
+            <Select
+                name="fruits"
+                label="Fruit"
+                options={[
+                    {value: 'orange', text: 'Orange'},
+                    {value: 'banana', text: 'Banana'},
+                ]}
+            />
+            <Select
+                name="fruits"
+                label="Fruit"
+                options={[
+                    {value: 'orange', text: 'Orange'},
+                    {value: 'banana', text: 'Banana'},
+                ]}
+            />
+        </DoubleField>
+        <DoubleField fullWidth layout="60/40">
+            <TextField name="name" label="Name" />
+            <Select
+                name="fruits"
+                label="Fruit"
+                options={[
+                    {value: 'orange', text: 'Orange'},
+                    {value: 'banana', text: 'Banana'},
+                ]}
+            />
+        </DoubleField>
+    </Stack>
+);
