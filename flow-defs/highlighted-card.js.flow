@@ -12,6 +12,7 @@ declare type CommonProps = {
   backgroundImageUrl?: string,
   onClose?: () => void,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
+  isInverse?: boolean,
 };
 declare type BasicProps = { ...$Exact<CommonProps> };
 declare type ButtonProps = {

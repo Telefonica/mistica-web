@@ -44,6 +44,7 @@ declare export { default as Overlay } from "./overlay";
 declare export { default as Tooltip } from "./tooltip";
 declare export { default as Stack } from "./stack";
 declare export { default as Box } from "./box";
+declare export { Boxed } from "./boxed";
 declare export {
   Header,
   HeaderLayout,

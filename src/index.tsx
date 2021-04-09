@@ -33,6 +33,7 @@ export {default as Overlay} from './overlay';
 export {default as Tooltip} from './tooltip';
 export {default as Stack} from './stack';
 export {default as Box} from './box';
+export {Boxed} from './boxed';
 export {Header, HeaderLayout, MainSectionHeader, MainSectionHeaderLayout} from './header';
 export {default as GridLayout} from './grid-layout';
 export {default as ResponsiveLayout} from './responsive-layout';

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {StorySection, useTextField, useCheckbox, useSelect} from './helpers';
 import {Box, Stack, AvatarPlaceholder, Circle, IconAcademicLight, BoxedRowList, BoxedRow, useTheme} from '..';
+import {Boxed} from '../boxed';
+import {Placeholder} from '../placeholder';
 
 export default {
     title: 'Components/Lists/BoxedRowList',
@@ -142,6 +144,11 @@ export const Default: StoryComponent = () => {
                             descriptionLinesMax={oneLineDescription ? 1 : 2}
                             {...controlProps}
                         />
+                        <Boxed>
+                            <Box padding={16}>
+                                <Placeholder />
+                            </Box>
+                        </Boxed>
                     </BoxedRowList>
                 </StorySection>
             </div>

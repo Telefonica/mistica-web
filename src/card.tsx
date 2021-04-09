@@ -7,6 +7,7 @@ import {Text1, Text2, Text4} from './text';
 import {createUseStyles} from './jss';
 import Inline from './inline';
 import {ButtonLink, ButtonPrimary} from './button';
+import {Boxed} from './boxed';
 
 const useCardContentStyles = createUseStyles(() => ({
     actions: {
@@ -100,14 +101,14 @@ type CardMedia =
           height?: undefined;
       };
 
-const useMediaCardStyles = createUseStyles((theme) => ({
+const useMediaCardStyles = createUseStyles(() => ({
+    boxed: {
+        height: '100%',
+    },
     mediaCard: {
         display: 'flex',
         flexDirection: 'column',
-        borderRadius: 4,
-        overflow: 'hidden',
         height: '100%',
-        border: `1px solid ${theme.colors.border}`,
     },
     media: {
         width: '100%',
@@ -127,7 +128,6 @@ const useMediaCardStyles = createUseStyles((theme) => ({
     },
     content: {
         flex: 1,
-        background: theme.colors.background,
         padding: 16,
         paddingBottom: 24,
         display: 'flex',
@@ -158,32 +158,34 @@ export const MediaCard: React.FC<MediaCardProps> = ({
 }) => {
     const classes = useMediaCardStyles({media});
     return (
-        <article className={classes.mediaCard}>
-            <div className={classes.media}></div>
-            <div className={classes.content}>
-                <CardContent
-                    headline={headline}
-                    pretitle={pretitle}
-                    title={title}
-                    description={description}
-                    body={body}
-                    button={button}
-                    buttonLink={buttonLink}
-                />
-            </div>
-        </article>
+        <Boxed className={classes.boxed}>
+            <article className={classes.mediaCard}>
+                <div className={classes.media}></div>
+                <div className={classes.content}>
+                    <CardContent
+                        headline={headline}
+                        pretitle={pretitle}
+                        title={title}
+                        description={description}
+                        body={body}
+                        button={button}
+                        buttonLink={buttonLink}
+                    />
+                </div>
+            </article>
+        </Boxed>
     );
 };
 
-const useDataCardStyles = createUseStyles((theme) => ({
+const useDataCardStyles = createUseStyles(() => ({
+    boxed: {
+        height: '100%',
+    },
     dataCard: {
         display: 'flex',
         flexDirection: 'column',
-        borderRadius: 4,
         padding: '24px 16px',
         height: '100%',
-        border: `1px solid ${theme.colors.border}`,
-        background: theme.colors.background,
     },
 }));
 
@@ -213,17 +215,19 @@ export const DataCard: React.FC<DataCardProps> = ({
 }) => {
     const classes = useDataCardStyles();
     return (
-        <article className={classes.dataCard}>
-            {icon && <Box paddingBottom={16}>{icon}</Box>}
-            <CardContent
-                headline={headline}
-                title={title}
-                subtitle={subtitle}
-                description={description}
-                body={body}
-                button={button}
-                buttonLink={buttonLink}
-            />
-        </article>
+        <Boxed className={classes.boxed}>
+            <article className={classes.dataCard}>
+                {icon && <Box paddingBottom={16}>{icon}</Box>}
+                <CardContent
+                    headline={headline}
+                    title={title}
+                    subtitle={subtitle}
+                    description={description}
+                    body={body}
+                    button={button}
+                    buttonLink={buttonLink}
+                />
+            </article>
+        </Boxed>
     );
 };
