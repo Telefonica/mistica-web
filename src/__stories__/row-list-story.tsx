@@ -12,6 +12,7 @@ import {
     Text2,
     useTheme,
 } from '..';
+import {Placeholder} from '../placeholder';
 
 export default {
     title: 'Components/Lists/RowList',
@@ -153,6 +154,9 @@ export const Default: StoryComponent = () => {
                             descriptionLinesMax={oneLineDescription ? 1 : 2}
                             {...controlProps}
                         />
+                        <Box padding={16}>
+                            <Placeholder />
+                        </Box>
                     </RowList>
                 </StorySection>
             </div>

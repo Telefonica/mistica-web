@@ -3,13 +3,12 @@ import * as React from 'react';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 
-const useStyles = createUseStyles((theme) => ({
+const useStyles = createUseStyles(({colors}) => ({
     divider: {
-        height: 1,
-        background: theme.colors.divider,
+        borderBottom: `1px solid ${colors.divider}`,
     },
     dividerInverse: {
-        background: theme.colors.dividerInverse,
+        borderBottom: `1px solid ${colors.dividerInverse}`,
     },
 }));
 

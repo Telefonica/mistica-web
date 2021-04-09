@@ -8,6 +8,8 @@ import {
     IconAcademicLight,
     BoxedRowList,
     BoxedRow,
+    Boxed,
+    Placeholder,
     Text2,
     useTheme,
 } from '..';
@@ -152,6 +154,11 @@ export const Default: StoryComponent = () => {
                             descriptionLinesMax={oneLineDescription ? 1 : 2}
                             {...controlProps}
                         />
+                        <Boxed>
+                            <Box padding={16}>
+                                <Placeholder />
+                            </Box>
+                        </Boxed>
                     </BoxedRowList>
                 </StorySection>
             </div>
