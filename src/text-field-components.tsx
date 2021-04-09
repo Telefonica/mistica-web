@@ -134,7 +134,7 @@ const useFieldContainerStyles = createUseStyles((theme) => ({
     fieldContainer: {
         display: 'flex',
         flexDirection: 'column',
-        minWidth: 112,
+        minWidth: 96,
         [theme.mq.mobile]: {
             width: '100%',
         },

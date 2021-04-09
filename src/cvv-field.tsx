@@ -123,12 +123,21 @@ const CvvField: React.FC<CvvFieldProps> = ({
                     children={<TooltipContent acceptedCards={acceptedCards} />}
                     targetLabel={texts.formCreditCardCvvTooltipVisaMcButton}
                     target={
-                        <IconButton
-                            size={24}
-                            style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}
-                        >
-                            <IcnInfo size={18} />
-                        </IconButton>
+                        <div style={{width: 16, height: 16}}>
+                            <IconButton
+                                size={40}
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    position: 'relative',
+                                    left: -12, // (40 - 16) / 2
+                                    top: -12,
+                                }}
+                            >
+                                <IcnInfo size={20} />
+                            </IconButton>
+                        </div>
                     }
                 />
             }
