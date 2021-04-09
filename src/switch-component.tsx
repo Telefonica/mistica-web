@@ -10,7 +10,8 @@ import debounce from 'lodash/debounce';
 import {SPACE} from './utils/key-codes';
 import {useControlProps} from './form-context';
 import classNames from 'classnames';
-import {Inline, Text3} from '.';
+import {Text3} from './text';
+import Inline from './inline';
 
 const SWITCH_ANIMATION = '0.2s ease-in 0s';
 
