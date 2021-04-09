@@ -112,7 +112,6 @@ type PreviewToolsControlsProps = {
     onOsChange: (newOs: 'android' | 'ios' | 'desktop') => void;
     skinName: SkinName;
     onSkinNameChange: (newSkinName: SkinName) => void;
-    showColorSchemeSelector: boolean;
     colorScheme: ColorScheme;
     onColorSchemeChange: (newColorScheme: ColorScheme) => void;
     onEditStoryPress: () => void;
@@ -125,7 +124,6 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
     showPlatformSelector,
     skinName,
     onSkinNameChange,
-    showColorSchemeSelector,
     colorScheme,
     onColorSchemeChange,
     onEditStoryPress,
@@ -147,24 +145,22 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                     value={skinName}
                     onChangeValue={onSkinNameChange as any}
                 />
-                {showColorSchemeSelector && (
-                    <Checkbox
-                        name="colorScheme"
-                        checked={colorScheme === alternativeColorScheme}
-                        onChange={(checked) => {
-                            if (checked) {
-                                onColorSchemeChange(alternativeColorScheme);
-                            } else {
-                                onColorSchemeChange(systemColorScheme);
-                            }
-                        }}
-                        render={(checkboxElement) => (
-                            <div className={classes.checkbox}>
-                                {checkboxElement} {capitalize(alternativeColorScheme)} mode
-                            </div>
-                        )}
-                    />
-                )}
+                <Checkbox
+                    name="colorScheme"
+                    checked={colorScheme === alternativeColorScheme}
+                    onChange={(checked) => {
+                        if (checked) {
+                            onColorSchemeChange(alternativeColorScheme);
+                        } else {
+                            onColorSchemeChange(systemColorScheme);
+                        }
+                    }}
+                    render={(checkboxElement) => (
+                        <div className={classes.checkbox}>
+                            {checkboxElement} {capitalize(alternativeColorScheme)} mode
+                        </div>
+                    )}
+                />
                 {showPlatformSelector && (
                     <Checkbox
                         name="iOS"
@@ -193,26 +189,24 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                     />
                 </div>
                 <div className={classes.flexSpacer} />
-                {showColorSchemeSelector && (
-                    <div className={classes.desktopControlItem}>
-                        <Checkbox
-                            name="colorScheme"
-                            checked={colorScheme === alternativeColorScheme}
-                            onChange={(checked) => {
-                                if (checked) {
-                                    onColorSchemeChange(alternativeColorScheme);
-                                } else {
-                                    onColorSchemeChange(systemColorScheme);
-                                }
-                            }}
-                            render={(checkboxElement) => (
-                                <div className={classes.checkbox}>
-                                    {checkboxElement} {capitalize(alternativeColorScheme)} mode
-                                </div>
-                            )}
-                        />
-                    </div>
-                )}
+                <div className={classes.desktopControlItem}>
+                    <Checkbox
+                        name="colorScheme"
+                        checked={colorScheme === alternativeColorScheme}
+                        onChange={(checked) => {
+                            if (checked) {
+                                onColorSchemeChange(alternativeColorScheme);
+                            } else {
+                                onColorSchemeChange(systemColorScheme);
+                            }
+                        }}
+                        render={(checkboxElement) => (
+                            <div className={classes.checkbox}>
+                                {checkboxElement} {capitalize(alternativeColorScheme)} mode
+                            </div>
+                        )}
+                    />
+                </div>
                 {showPlatformSelector && (
                     <div className={classes.desktopControlItem}>
                         <Checkbox
@@ -248,7 +242,6 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     floating,
     position = 'top-right',
     showPlatformSelector = false,
-    showColorSchemeSelector = false,
     forceMobile = false,
 }) => {
     const {
@@ -302,7 +295,6 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                 onOsChange={setOs}
                 showPlatformSelector={showPlatformSelector}
                 onEditStoryPress={editStory}
-                showColorSchemeSelector={showColorSchemeSelector}
                 onColorSchemeChange={setColorScheme}
                 colorScheme={colorScheme}
             />
