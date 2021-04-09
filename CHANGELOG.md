@@ -1,3 +1,17 @@
+# [8.3.0](https://github.com/Telefonica/mistica-web/compare/v8.2.3...v8.3.0) (2021-04-09)
+
+
+### Bug Fixes
+
+* **DoubleField:** Adjust styles for small devices ([#228](https://github.com/Telefonica/mistica-web/issues/228)) ([dac53b5](https://github.com/Telefonica/mistica-web/commit/dac53b59f0f0c5d470c10d17456449eae1299a7c))
+* **List:** Remove default text truncation (this feature is still available via props). This improves a11y ([f3c3b10](https://github.com/Telefonica/mistica-web/commit/f3c3b10d0a9c34c6db72366ef8e4094bb094ead9))
+
+
+### Features
+
+* **Boxed:** New Boxed component ([#229](https://github.com/Telefonica/mistica-web/issues/229)) ([8c25c6b](https://github.com/Telefonica/mistica-web/commit/8c25c6b3c8ff1efa509c462ad298113553f7bad0))
+* **Divider:** New Divider component ([25df32f](https://github.com/Telefonica/mistica-web/commit/25df32fdb7ed098acafea8453a963028e052faee))
+
 ## [8.2.3](https://github.com/Telefonica/mistica-web/compare/v8.2.2...v8.2.3) (2021-04-05)
 
 
