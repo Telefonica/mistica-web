@@ -10,6 +10,7 @@ import debounce from 'lodash/debounce';
 import {SPACE} from './utils/key-codes';
 import {useControlProps} from './form-context';
 import classNames from 'classnames';
+import {Text3} from './text';
 import Inline from './inline';
 
 const SWITCH_ANIMATION = '0.2s ease-in 0s';
@@ -72,10 +73,11 @@ const useStyles = createUseStyles((theme) => {
             height: isIos ? 27 : 20,
             margin: -4,
             backgroundColor: ({isChecked}) => {
-                if (isChecked) {
-                    return isIos ? theme.colors.toggleIosInactive : theme.colors.controlActivated;
+                if (isIos) {
+                    return theme.colors.iosControlKnob;
+                } else {
+                    return isChecked ? theme.colors.controlActivated : theme.colors.toggleAndroidInactive;
                 }
-                return isIos ? theme.colors.toggleIosInactive : theme.colors.toggleAndroidInactive;
             },
             borderRadius: '50%',
             transition: `all ${SWITCH_ANIMATION}`,
@@ -182,7 +184,9 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
             ) : (
                 <Inline space={16} alignItems="center">
                     {switchEl}
-                    {props.children}
+                    <Text3 regular as="div">
+                        {props.children}
+                    </Text3>
                 </Inline>
             )}
         </span>

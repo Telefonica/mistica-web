@@ -16,7 +16,9 @@ export const UseAriaId: StoryComponent = () => {
             </Text2>
             <div style={{display: 'flex'}}>
                 <input type="checkbox" id={id} />
-                <label htmlFor={id}>Checkbox label</label>
+                <label htmlFor={id}>
+                    <Text2 regular>Checkbox label</Text2>
+                </label>
             </div>
         </Stack>
     );

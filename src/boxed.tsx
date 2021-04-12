@@ -8,17 +8,17 @@ type StylesProps = {
     isInverseOutside: boolean;
 };
 
-const useStyles = createUseStyles(({colors}) => ({
+const useStyles = createUseStyles(({colors, isDarkMode}) => ({
     boxed: {
         backgroundColor: ({isInverseInside}: StylesProps) =>
-            isInverseInside ? colors.backgroundBrand : colors.background, // TODO: use backgroundContainer instead of background when available
+            isInverseInside && !isDarkMode ? colors.backgroundBrand : colors.backgroundContainer,
 
         border: ({isInverseOutside, isInverseInside}: StylesProps) => {
             if (isInverseOutside && !isInverseInside) {
-                return `1px solid ${colors.background}`; // TODO: use backgroundContainer instead of background when available
+                return `1px solid ${colors.backgroundContainer}`;
             }
 
-            if (isInverseInside) {
+            if (isInverseInside && !isDarkMode) {
                 return `1px solid ${colors.backgroundBrand}`;
             }
 

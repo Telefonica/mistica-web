@@ -150,7 +150,7 @@ const useFieldContainerStyles = createUseStyles((theme) => ({
         display: 'flex',
         position: 'relative',
         lineHeight: '16px',
-        backgroundColor: theme.colors.background,
+        backgroundColor: theme.colors.backgroundContainer,
     },
 }));
 

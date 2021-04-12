@@ -9,6 +9,7 @@ import {
     Row,
     RowList,
     RadioGroup,
+    Text2,
     useTheme,
 } from '..';
 import {Placeholder} from '../placeholder';
@@ -87,7 +88,7 @@ export const Default: StoryComponent = () => {
             <Box paddingX={16}>
                 <Stack space={16}>
                     <Box paddingTop={16}>
-                        <p>List options:</p>
+                        <Text2 regular>List options:</Text2>
                     </Box>
                     {controlSelect}
                     {badgeCheckbox}

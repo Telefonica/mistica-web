@@ -18,7 +18,8 @@ module.exports = {
         },
         './theme-selector-addon/register',
         './platform-selector-addon/register',
-        './font-size-addon/register.js',
+        './dark-mode-addon/register',
+        './font-size-addon/register',
     ],
     webpackFinal: async (config) => {
         config.watchOptions = {

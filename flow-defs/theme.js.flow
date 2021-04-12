@@ -69,8 +69,10 @@ declare type LinkComponent = React.ComponentType<{
   children: React.Node,
 }>;
 declare export var AnchorLink: LinkComponent;
+export type ColorScheme = "dark" | "light" | "auto";
 export type ThemeConfig = {
   skin: Skin,
+  colorScheme?: ColorScheme,
   i18n: {
     locale: Locale,
     phoneNumberFormattingRegionCode: RegionCode,
@@ -124,6 +126,7 @@ export type Theme = {
   },
   colors: Colors,
   Link: LinkComponent,
+  isDarkMode: boolean,
 };
 declare export {};
 

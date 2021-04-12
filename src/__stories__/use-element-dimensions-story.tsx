@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StorySection} from './helpers';
-import {useElementDimensions} from '../hooks';
+import {useElementDimensions, Text2, ButtonPrimary} from '..';
 
 export default {
     title: 'Hooks/useElementDimensions',
@@ -27,11 +27,15 @@ export const UseElementSize: StoryComponent = () => {
 
     return (
         <StorySection title="Get element dimensions. Resize the red element to see the changes">
-            Width: {width} Height: {height}
+            <Text2 regular>
+                Height: {height}px, Width: {width}px
+            </Text2>
             <br />
             {isVisible && <SomeComponent innerRef={ref} />}
             <br />
-            <button onClick={() => setIsVisible((prev) => !prev)}>{isVisible ? 'Unmount' : 'Mount'}</button>
+            <ButtonPrimary onPress={() => setIsVisible((prev) => !prev)}>
+                {isVisible ? 'Unmount' : 'Mount'}
+            </ButtonPrimary>
         </StorySection>
     );
 };

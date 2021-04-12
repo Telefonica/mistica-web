@@ -1,8 +1,18 @@
 import * as React from 'react';
 import {StorySection, useTextField, useCheckbox, useSelect} from './helpers';
-import {Box, Stack, AvatarPlaceholder, Circle, IconAcademicLight, BoxedRowList, BoxedRow, useTheme} from '..';
-import {Boxed} from '../boxed';
-import {Placeholder} from '../placeholder';
+import {
+    Box,
+    Stack,
+    AvatarPlaceholder,
+    Circle,
+    IconAcademicLight,
+    BoxedRowList,
+    BoxedRow,
+    Boxed,
+    Placeholder,
+    Text2,
+    useTheme,
+} from '..';
 
 export default {
     title: 'Components/Lists/BoxedRowList',
@@ -78,7 +88,7 @@ export const Default: StoryComponent = () => {
             <Box paddingX={16}>
                 <Stack space={16}>
                     <Box paddingTop={16}>
-                        <p>List options:</p>
+                        <Text2 regular>List options:</Text2>
                     </Box>
                     {controlSelect}
                     {badgeCheckbox}

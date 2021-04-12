@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Tooltip from '../tooltip';
+import {Tooltip, Text2, Stack, useTheme} from '..';
 import {StorySection} from './helpers';
 import IcnClose from '../icons/icon-close';
 import IcnInfo from '../icons/icon-info-cvv';
@@ -11,11 +11,12 @@ export default {
 };
 
 export const Default: StoryComponent = () => {
+    const {colors} = useTheme();
     const description =
         'When working on a project and the customer has not yet delivered the copy, something is missing...';
     return (
         <StorySection title="Tooltip">
-            <strong>Desktop examples:</strong>
+            <Text2 medium>Desktop examples:</Text2>
             <div
                 style={{
                     display: 'flex',
@@ -28,40 +29,40 @@ export const Default: StoryComponent = () => {
             >
                 <Tooltip
                     targetLabel="help text"
-                    target={<span>Tooltip default (bottom)</span>}
+                    target={<Text2 regular>Tooltip default (bottom)</Text2>}
                     description={description}
                 />
                 <Tooltip
                     targetLabel="help text"
-                    target={<span>Tooltip top</span>}
+                    target={<Text2 regular>Tooltip top</Text2>}
                     position="top"
                     description={description}
                     width={360}
                 />
                 <Tooltip
                     targetLabel="help text"
-                    target={<span>Tooltip bottom</span>}
+                    target={<Text2 regular>Tooltip bottom</Text2>}
                     position="bottom"
                     description={description}
                     width={260}
                 />
                 <Tooltip
                     targetLabel="help text"
-                    target={<span>Tooltip left</span>}
+                    target={<Text2 regular>Tooltip left</Text2>}
                     position="left"
                     description={description}
                     width={100}
                 />
                 <Tooltip
                     targetLabel="help text"
-                    target={<span>Tooltip right</span>}
+                    target={<Text2 regular>Tooltip right</Text2>}
                     position="right"
                     description={description}
                     width={300}
                 />
                 <Tooltip
                     targetLabel="help text"
-                    target={<span>Tooltip with link</span>}
+                    target={<Text2 regular>Tooltip with link</Text2>}
                     position="top"
                     description={description}
                 >
@@ -69,46 +70,46 @@ export const Default: StoryComponent = () => {
                 </Tooltip>
             </div>
             <div style={{width: 600}} />
-            <strong style={{display: 'block', marginBottom: 20}}>
-                Mobile examples: (look on mobile mode)
-            </strong>
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'space-around',
-                    paddingTop: 20,
-                    borderTop: '1px solid',
-                }}
-            >
-                <Tooltip
-                    targetLabel="help text"
-                    target={<IcnClose />}
-                    position="left"
-                    description={description}
-                    width={100}
-                />
-                <Tooltip
-                    targetLabel="help text"
-                    target={<IcnInfo />}
-                    position="right"
-                    description={description}
-                    width={100}
-                />
-                <Tooltip
-                    targetLabel="help text"
-                    target={<IconVisa />}
-                    position="top"
-                    description={description}
-                    width={100}
-                />
-                <Tooltip
-                    targetLabel="help text"
-                    target={<IconMastercard />}
-                    position="bottom"
-                    description={description}
-                    width={100}
-                />
-            </div>
+            <Stack space={16}>
+                <Text2 medium>Mobile examples: (look on mobile mode)</Text2>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-around',
+                        paddingTop: 20,
+                        borderTop: `1px solid ${colors.border}`,
+                    }}
+                >
+                    <Tooltip
+                        targetLabel="help text"
+                        target={<IcnClose />}
+                        position="left"
+                        description={description}
+                        width={100}
+                    />
+                    <Tooltip
+                        targetLabel="help text"
+                        target={<IcnInfo />}
+                        position="right"
+                        description={description}
+                        width={100}
+                    />
+                    <Tooltip
+                        targetLabel="help text"
+                        target={<IconVisa />}
+                        position="top"
+                        description={description}
+                        width={100}
+                    />
+                    <Tooltip
+                        targetLabel="help text"
+                        target={<IconMastercard />}
+                        position="bottom"
+                        description={description}
+                        width={100}
+                    />
+                </div>
+            </Stack>
         </StorySection>
     );
 };

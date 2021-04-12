@@ -32,6 +32,10 @@ export const palette = {
     movistarProminentBlueLight20: '#CED3D7',
     movistarProminentBlueLight50: '#85939C',
     movistarProminentBlueLight70: '#546874',
+    // specific for dark mode:
+    darkModeBlack: '#191919',
+    darkModeGrey: '#242424',
+    darkModeMovistarBlueDark: '#4C7389',
 } as const;
 
 export const getMovistarSkin: GetSkin = (variant) => {
@@ -41,6 +45,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             // BACKGROUNDS
             appBarBackground: palette.white,
             background: palette.white,
+            backgroundContainer: palette.white,
             backgroundBrand: palette.movistarBlue,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
             backgroundSkeleton: palette.grey1,
@@ -61,16 +66,19 @@ export const getMovistarSkin: GetSkin = (variant) => {
             buttonDangerBackground: palette.pepper,
             buttonDangerBackgroundDisabled: palette.pepperLight30,
             buttonDangerBackgroundSelected: palette.pepperDark,
-            buttonDangerBackgroundHover: palette.pepperDark,
+            buttonDangerBackgroundHover: palette.pepperDark, // web only
+
             buttonLinkBackgroundSelected: palette.movistarBlueLight10,
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
+
             buttonPrimaryBackground: palette.movistarGreen,
             buttonPrimaryBackgroundDisabled: palette.movistarGreenLight50,
             buttonPrimaryBackgroundDisabledInverse: palette.movistarBlueLight50,
             buttonPrimaryBackgroundInverse: palette.white,
             buttonPrimaryBackgroundSelected: palette.movistarGreenDark,
-            buttonPrimaryBackgroundHover: palette.movistarGreenDark,
+            buttonPrimaryBackgroundHover: palette.movistarGreenDark, // web only
             buttonPrimaryBackgroundSelectedInverse: palette.movistarBlueLight50,
+
             buttonSecondaryBackground: palette.movistarGreen,
             buttonSecondaryBackgroundDisabled: palette.movistarGreenLight50,
             buttonSecondaryBackgroundSelected: palette.movistarGreenDark,
@@ -79,16 +87,20 @@ export const getMovistarSkin: GetSkin = (variant) => {
             buttonSecondaryBorderSelectedInverse: palette.movistarBlueLight50,
 
             textButtonPrimary: palette.white,
+            textButtonPrimaryDisabled: palette.white,
             textButtonPrimaryInverse: palette.movistarBlue,
             textButtonPrimaryInverseDisabled: palette.movistarBlueLight30,
             textButtonPrimaryInverseSelected: palette.movistarBlue,
+
             textButtonSecondary: palette.movistarGreen,
             textButtonSecondaryDisabled: palette.movistarGreenLight50,
             textButtonSecondarySelected: palette.movistarGreenDark,
             textButtonSecondaryInverse: palette.white,
             textButtonSecondaryInverseDisabled: palette.movistarBlueLight50,
             textButtonSecondaryInverseSelected: palette.white,
+
             textLink: palette.movistarBlue,
+            textLinkInverse: palette.white,
             textLinkDanger: palette.pepper,
             textLinkDangerDisabled: palette.pepperLight30,
             textLinkDisabled: palette.movistarBlueLight50,
@@ -105,7 +117,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
 
             toggleAndroidInactive: palette.grey2, // web only
             toggleAndroidBackgroundActive: palette.movistarBlueLight30, // web only
-            toggleIosInactive: palette.white, // web only
+            iosControlKnob: palette.white, // web only
 
             // DIVIDERS
             divider: palette.grey2,
@@ -122,8 +134,8 @@ export const getMovistarSkin: GetSkin = (variant) => {
             brandDark: palette.movistarBlueDark,
             inverse: palette.white,
             neutralHigh: palette.grey6,
-            neutralLow: palette.grey3,
             neutralMedium: palette.grey5,
+            neutralLow: palette.grey3,
             promo: palette.purple,
             highlight: palette.pink,
 
@@ -146,6 +158,80 @@ export const getMovistarSkin: GetSkin = (variant) => {
             textNavigationSearchBarText: palette.white, // iOS
             textAppBar: palette.grey4,
             textAppBarSelected: palette.movistarBlue,
+        },
+        darkModeColors: {
+            appBarBackground: palette.darkModeGrey,
+            background: palette.darkModeBlack,
+            backgroundContainer: palette.darkModeGrey,
+            backgroundBrand: palette.darkModeBlack,
+            backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
+            backgroundSkeleton: palette.grey6,
+            backgroundSkeletonInverse: palette.grey6,
+            navigationBarBackground: palette.darkModeBlack,
+            backgroundAlternative: palette.darkModeGrey,
+            backgroundFeedbackBottom: palette.darkModeBlack,
+            skeletonWave: palette.grey5,
+            borderLight: palette.darkModeBlack,
+            border: palette.darkModeGrey,
+            buttonDangerBackgroundDisabled: palette.darkModeGrey,
+            buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.05),
+            buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.05),
+            buttonPrimaryBackground: palette.movistarGreen,
+            buttonPrimaryBackgroundDisabled: palette.darkModeGrey,
+            buttonPrimaryBackgroundDisabledInverse: palette.darkModeGrey,
+            buttonPrimaryBackgroundInverse: palette.movistarGreen,
+            buttonPrimaryBackgroundSelected: palette.movistarGreenDark,
+            buttonPrimaryBackgroundHover: palette.movistarGreenDark, // web only
+            buttonPrimaryBackgroundSelectedInverse: palette.movistarGreenDark,
+            buttonSecondaryBackground: palette.movistarGreen,
+            buttonSecondaryBackgroundDisabled: palette.darkModeGrey,
+            buttonSecondaryBackgroundSelected: palette.movistarGreenDark,
+            buttonSecondaryBorderDisabledInverse: palette.darkModeGrey,
+            buttonSecondaryBorderInverse: palette.movistarGreen,
+            buttonSecondaryBorderSelectedInverse: palette.movistarGreenDark,
+            textButtonPrimary: palette.grey2,
+            textButtonPrimaryDisabled: palette.grey5,
+            textButtonPrimaryInverse: palette.grey2,
+            textButtonPrimaryInverseDisabled: palette.grey5,
+            textButtonPrimaryInverseSelected: palette.grey2,
+            textButtonSecondary: palette.grey2,
+            textButtonSecondaryDisabled: palette.grey5,
+            textButtonSecondarySelected: palette.grey4,
+            textButtonSecondaryInverse: palette.grey2,
+            textButtonSecondaryInverseDisabled: palette.grey5,
+            textButtonSecondaryInverseSelected: palette.grey4,
+            textLink: palette.movistarBlue,
+            textLinkInverse: palette.movistarBlue,
+            textLinkDisabled: palette.grey6,
+            control: palette.grey6,
+            controlActivated: palette.movistarBlue,
+            loadingBar: palette.movistarBlue,
+            loadingBarBackground: palette.darkModeGrey,
+            loadingBarBackgroundInverse: palette.movistarGreenDark,
+            loadingBarInverse: palette.movistarGreenLight50,
+            toggleAndroidInactive: palette.grey4, // web only
+            toggleAndroidBackgroundActive: palette.movistarBlueLight30, // web only
+            iosControlKnob: palette.grey2, // web only
+            divider: applyAlpha(palette.white, 0.05),
+            dividerInverse: applyAlpha(palette.white, 0.05),
+            navigationBarDivider: palette.darkModeBlack,
+            brandDark: palette.grey6,
+            inverse: palette.grey2,
+            neutralHigh: palette.grey4,
+            neutralMedium: palette.grey5,
+            neutralLow: palette.grey6,
+            textPrimary: palette.grey2,
+            textPrimaryInverse: palette.grey2,
+            textSecondary: palette.grey4,
+            textSecondaryInverse: palette.grey4,
+            textDisabled: palette.grey5,
+            textAmount: palette.movistarBlueLight50,
+            textNavigationBarPrimary: palette.grey2,
+            textNavigationBarSecondary: palette.grey4,
+            textNavigationSearchBarHint: palette.grey4, // iOS
+            textNavigationSearchBarText: palette.grey2, // iOS
+            textAppBar: palette.grey5,
+            textAppBarSelected: palette.grey2,
         },
     };
 

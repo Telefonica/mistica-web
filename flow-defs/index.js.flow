@@ -116,7 +116,7 @@ declare export {
   useWindowHeight,
   useWindowWidth,
 } from "./hooks";
-declare export { ThemeConfig } from "./theme";
+declare export { ThemeConfig, ColorScheme } from "./theme";
 declare export {
   ThemeVariant,
   useIsInverseVariant,
