@@ -6,8 +6,8 @@ import {useIsInverseVariant} from '../theme-variant-context';
 
 const useStyles = createUseStyles((theme) => ({
     iconColor: {
-        stroke: (isInverse) => (isInverse ? theme.colors.background : theme.colors.buttonPrimaryBackground),
-        fill: (isInverse) => (isInverse ? theme.colors.background : theme.colors.buttonPrimaryBackground),
+        stroke: (isInverse) => (isInverse ? theme.colors.inverse : theme.colors.brand),
+        fill: (isInverse) => (isInverse ? theme.colors.inverse : theme.colors.brand),
     },
 }));
 
