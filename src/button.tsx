@@ -99,6 +99,7 @@ const usePrimaryButtonStyles = createUseStyles((theme) => ({
             backgroundColor: theme.colors.buttonPrimaryBackgroundSelected,
         },
         '&[disabled]:not($isLoading)': {
+            color: theme.colors.textButtonPrimaryDisabled,
             backgroundColor: theme.colors.buttonPrimaryBackgroundDisabled,
         },
 
@@ -205,6 +206,7 @@ const dangerButtonStyles = (theme: Theme) => ({
         backgroundColor: theme.colors.buttonDangerBackgroundSelected,
     },
     '&[disabled]:not($isLoading)': {
+        color: theme.colors.textButtonPrimaryDisabled,
         backgroundColor: theme.colors.buttonDangerBackgroundDisabled,
     },
 
@@ -426,7 +428,7 @@ const useButtonLinkStyles = createUseStyles((theme) => ({
         },
     },
     inverse: {
-        color: theme.colors.textPrimaryInverse,
+        color: theme.colors.textLinkInverse,
         '&:enabled:active': {
             backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
         },

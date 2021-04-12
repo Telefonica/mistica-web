@@ -12,10 +12,16 @@ window.matchMedia =
         const minWidth = getMediaQuerySize('min-width', query, 0);
         const maxWidth = getMediaQuerySize('max-width', query, Infinity);
 
+        const matches = query.includes('(prefers-color-scheme: dark)')
+            ? false
+            : global.window.innerWidth >= minWidth && global.window.innerWidth <= maxWidth;
+
         return {
-            matches: global.window.innerWidth >= minWidth && global.window.innerWidth <= maxWidth,
+            matches,
             addListener: jest.fn(),
             removeListener: jest.fn(),
+            addEventListener: jest.fn(),
+            removeEventListener: jest.fn(),
             media: query,
             onchange: null,
         };

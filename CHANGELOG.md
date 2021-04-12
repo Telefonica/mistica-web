@@ -1,3 +1,17 @@
+## [8.4.1](https://github.com/Telefonica/mistica-web/compare/v8.4.0...v8.4.1) (2021-04-12)
+
+
+### Bug Fixes
+
+* **IconSuccessVivo:** vivinho in dark mode ([#232](https://github.com/Telefonica/mistica-web/issues/232)) ([4d53bbd](https://github.com/Telefonica/mistica-web/commit/4d53bbde6a14c635c2e334599b5387231123f185))
+
+# [8.4.0](https://github.com/Telefonica/mistica-web/compare/v8.3.0...v8.4.0) (2021-04-12)
+
+
+### Features
+
+* **Dark mode:** Dark mode support ([#218](https://github.com/Telefonica/mistica-web/issues/218)) ([78c82bc](https://github.com/Telefonica/mistica-web/commit/78c82bc90a54f92c05051ae2f9e87d79039c7502))
+
 # [8.3.0](https://github.com/Telefonica/mistica-web/compare/v8.2.3...v8.3.0) (2021-04-09)
 
 

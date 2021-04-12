@@ -2,7 +2,7 @@ import * as React from 'react';
 import HighlightedCard from '../highlighted-card';
 import {StorySection, useCheckbox, useTextField, useSelect} from './helpers';
 import {ButtonPrimary, ButtonSecondary, ButtonLink} from '../button';
-import {Box, Stack, ThemeVariant} from '..';
+import {Box, Stack, ThemeVariant, Text1} from '..';
 
 export default {
     title: 'Components/Cards/HighlightedCard',
@@ -69,10 +69,10 @@ export const Default: StoryComponent = () => {
                 {titleTextField}
                 {descriptionTextField}
                 {hrefTextField}
-                <span style={{fontSize: 12}}>
-                    * This could be <b>to | href | onPress</b> prop. If it's empty the card will be not
-                    touchable.
-                </span>
+                <Text1 regular>
+                    * This could be <Text1 medium>to | href | onPress</Text1> prop. If it's empty the card
+                    will be not touchable.
+                </Text1>
                 {buttonSelect}
                 {imageFitSelect}
                 {withImageCheckbox}

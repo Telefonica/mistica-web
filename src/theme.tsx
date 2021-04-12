@@ -173,10 +173,13 @@ export const AnchorLink: LinkComponent = ({to, innerRef, ...props}) => (
     </a>
 );
 
+export type ColorScheme = 'dark' | 'light' | 'auto';
+
 // This is the type expected by ThemeContextProvider theme prop.
 // This config is provided by the user of the lib
 export type ThemeConfig = {
     skin: Skin;
+    colorScheme?: ColorScheme; // light by default. TODO: Change to auto by default in next major version
     i18n: {
         locale: Locale;
         phoneNumberFormattingRegionCode: RegionCode;
@@ -224,4 +227,5 @@ export type Theme = {
     };
     colors: Colors;
     Link: LinkComponent;
+    isDarkMode: boolean;
 };

@@ -12,6 +12,7 @@ import {
     ThemeVariant,
     useTheme,
     Checkbox,
+    Text2,
     IconPhotoCameraRegular,
 } from '..';
 import DoubleField from '../double-field';
@@ -27,7 +28,7 @@ const BackgroundTheme: StoryComponent = ({children}) => {
     return (
         <ThemeVariant isInverse={isInverse}>
             <>
-                <div style={{background: isInverse ? colors.backgroundBrand : 'white'}}>
+                <div style={{background: isInverse ? colors.backgroundBrand : colors.background}}>
                     <Box padding={8}>
                         <Checkbox name="inverse" checked={isInverse} onChange={setIsInverse}>
                             Inverse variant
@@ -97,58 +98,80 @@ export const TypeOfButtons: StoryComponent = () => {
                 <Stack space={8}>
                     <SectionTitle>ButtonPrimary</SectionTitle>
 
-                    <div>Button:</div>
+                    <Text2 regular as="p">
+                        Button:
+                    </Text2>
                     <ButtonPrimary onPress={handleOnPress} {...props}>
                         {text}
                     </ButtonPrimary>
 
-                    <div>Link:</div>
+                    <Text2 regular as="p">
+                        Link:
+                    </Text2>
                     <ButtonPrimary href={href} newTab={newTab} {...props}>
                         {text}
                     </ButtonPrimary>
 
-                    <div>Fake:</div>
+                    <Text2 regular as="p">
+                        Fake:
+                    </Text2>
                     <ButtonPrimary fake {...props}>
                         {text}
                     </ButtonPrimary>
 
                     <SectionTitle>ButtonSecondary</SectionTitle>
-                    <div>Button:</div>
+                    <Text2 regular as="p">
+                        Button:
+                    </Text2>
                     <ButtonSecondary onPress={handleOnPress} {...props}>
                         {text}
                     </ButtonSecondary>
 
-                    <div>Link:</div>
+                    <Text2 regular as="p">
+                        Link:
+                    </Text2>
                     <ButtonSecondary href={href} newTab={newTab} {...props}>
                         {text}
                     </ButtonSecondary>
 
-                    <div>Fake:</div>
+                    <Text2 regular as="p">
+                        Fake:
+                    </Text2>
                     <ButtonSecondary fake {...props}>
                         {text}
                     </ButtonSecondary>
 
                     <SectionTitle>ButtonDanger</SectionTitle>
 
-                    <div>Button:</div>
+                    <Text2 regular as="p">
+                        Button:
+                    </Text2>
                     <ButtonDanger onPress={handleOnPress} {...props}>
                         {text}
                     </ButtonDanger>
 
-                    <div>Link:</div>
+                    <Text2 regular as="p">
+                        Link:
+                    </Text2>
                     <ButtonDanger href={href} newTab={newTab} {...props}>
                         {text}
                     </ButtonDanger>
 
-                    <div>Fake:</div>
+                    <Text2 regular as="p">
+                        Fake:
+                    </Text2>
                     <ButtonDanger fake {...props}>
                         {text}
                     </ButtonDanger>
 
                     <SectionTitle>ButtonLink</SectionTitle>
-                    <div>Button (onPress):</div>
+                    <Text2 regular as="p">
+                        Button (onPress):
+                    </Text2>
                     <ButtonLink onPress={handleOnPress}>{text}</ButtonLink>
-                    <div>Link (href):</div>
+                    <Text2 regular as="p">
+                        Link (href):
+                    </Text2>
                     <ButtonLink href={href} newTab={newTab}>
                         {text}
                     </ButtonLink>
@@ -161,9 +184,10 @@ export const TypeOfButtons: StoryComponent = () => {
 export const EllipsisInButtons: StoryComponent = () => {
     const text = 'Ellipsis text example example';
     const href = 'https://example.com';
+    const {colors} = useTheme();
 
     return (
-        <div data-testid="content" style={{width: 160, border: '1px solid'}}>
+        <div data-testid="content" style={{width: 160, border: `1px solid ${colors.border}`}}>
             <Stack space={8}>
                 <SectionTitle>ButtonPrimary</SectionTitle>
                 <ButtonPrimary onPress={handleOnPress}>{text}</ButtonPrimary>
@@ -177,9 +201,13 @@ export const EllipsisInButtons: StoryComponent = () => {
                 <ButtonDanger onPress={handleOnPress}>{text}</ButtonDanger>
 
                 <SectionTitle>ButtonLink</SectionTitle>
-                <div>Button (onPress):</div>
+                <Text2 as="p" regular>
+                    Button (onPress):
+                </Text2>
                 <ButtonLink onPress={handleOnPress}>{text}</ButtonLink>
-                <div>Link (href):</div>
+                <Text2 as="p" regular>
+                    Link (href):
+                </Text2>
                 <ButtonLink href={href}>{text}</ButtonLink>
             </Stack>
         </div>
@@ -283,10 +311,10 @@ export const LoadingState: StoryComponent = () => {
 
 export const SubmitButton: StoryComponent = () => (
     <StorySection title="Submitbutton">
-        <p>
+        <Text2 as="p" regular>
             A button with submit attribute in a form doesn't need a onPress prop. And clicking on it will fire
             onSubmit event, that should be handled by the form.
-        </p>
+        </Text2>
         <form onSubmit={() => window.alert('form submitted')}>
             <Box paddingY={16}>
                 <Stack space={16}>

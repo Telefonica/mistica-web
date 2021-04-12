@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {ButtonPrimary, ButtonSecondary, ButtonLink} from '../button';
-import ButtonLayout from '../button-layout';
+import {ButtonPrimary, ButtonSecondary, ButtonLink, Text2, ButtonLayout, Stack} from '..';
 import {StorySection} from './helpers';
 
 export default {
@@ -11,28 +10,33 @@ export default {
 export const Default: StoryComponent = () => (
     <>
         <StorySection title="Limitations">
-            <p>
-                There is one limitation with the negative margin we use to implement the ButtonLayout
-                component. A horizontal scroll will appear if a negative margin goes beyond the body. There
-                are 2 available workarounds:
-            </p>
-            <p>
-                1. Applying padding to the parent with at least half the spacing value applied to the child:
-            </p>
-            <pre>
-                <code>
-                    {'<body>'}
-                    <br />
-                    {'  <Box paddingX={16}>'}
-                    <br />
-                    {'      <ButtonLayout>//...</ButtonLayout>'}
-                    <br />
-                    {'  </Box>'}
-                    <br />
-                    {'</body>'}
-                </code>
-            </pre>
-            <p>2. Adding `overflow-x: hidden;` to the parent.</p>
+            <Stack space={16}>
+                <Text2 as="p" regular>
+                    There is one limitation with the negative margin we use to implement the ButtonLayout
+                    component. A horizontal scroll will appear if a negative margin goes beyond the body.
+                    There are 2 available workarounds:
+                </Text2>
+                <Text2 as="p" regular>
+                    1. Applying padding to the parent with at least half the spacing value applied to the
+                    child:
+                </Text2>
+                <Text2 as="pre" regular>
+                    <code>
+                        {'<body>'}
+                        <br />
+                        {'  <Box paddingX={16}>'}
+                        <br />
+                        {'      <ButtonLayout>//...</ButtonLayout>'}
+                        <br />
+                        {'  </Box>'}
+                        <br />
+                        {'</body>'}
+                    </code>
+                </Text2>
+                <Text2 as="p" regular>
+                    2. Adding `overflow-x: hidden;` to the parent.
+                </Text2>
+            </Stack>
         </StorySection>
         <div data-testid="screenshot">
             <StorySection title="ButtonLayout">

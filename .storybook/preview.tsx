@@ -8,10 +8,12 @@ import {
     VIVO_SKIN,
     O2_SKIN,
     O2_CLASSIC_SKIN,
-    ThemeConfig,
+    useTheme,
 } from '../src';
 import {AVAILABLE_THEMES, Movistar} from './themes';
 import {addons} from '@storybook/addons';
+
+import type {ColorScheme, ThemeConfig} from '../src';
 
 const getUserAgent = () => self.navigator.userAgent || '';
 const isRunningAcceptanceTest = () => getUserAgent().includes('acceptance-test');
@@ -50,10 +52,11 @@ const getPlatform = (searchParams: URLSearchParams): Platform => {
     return 'desktop';
 };
 
-const getTheme = (selectedSkin: string, platform: Platform): ThemeConfig => {
+const getTheme = (selectedSkin: string, platform: Platform, colorScheme: ColorScheme): ThemeConfig => {
     const themeConfig = AVAILABLE_THEMES.find(({skin}) => skin.name === selectedSkin) || Movistar;
     return {
         ...themeConfig,
+        colorScheme,
         platformOverrides: {
             platform,
             insideNovumNativeApp: platform !== 'desktop',
@@ -65,21 +68,24 @@ const MisticaTemeProvider = ({Story, context}): React.ReactElement => {
     const searchParams = new URLSearchParams(location.search);
     const [skin, setSkin] = React.useState(getSkin(searchParams));
     const [platform, setPlatform] = React.useState<Platform>(getPlatform(searchParams));
+    const [colorScheme, setColorScheme] = React.useState<ColorScheme>('auto');
 
     React.useEffect(() => {
         const channel = addons.getChannel();
         channel.on('skin-selected', setSkin);
         channel.on('platform-selected', setPlatform);
+        channel.on('color-scheme-selected', setColorScheme);
         channel.emit('story-mounted');
 
         return () => {
             channel.off('skin-selected', setSkin);
             channel.off('platform-selected', setPlatform);
+            channel.off('color-scheme-selected', setColorScheme);
         };
     }, []);
 
     return (
-        <ThemeContextProvider theme={getTheme(skin, platform)}>
+        <ThemeContextProvider theme={getTheme(skin, platform, colorScheme)}>
             <Story {...context} />
         </ThemeContextProvider>
     );
@@ -90,6 +96,7 @@ const withMisticaThemeProvider = (Story, context) => <MisticaTemeProvider Story=
 
 const Styles = () => {
     const [fontSize, setFontSize] = React.useState(16);
+    const {colors} = useTheme();
     React.useEffect(() => {
         const channel = addons.getChannel();
         channel.on('font-size-selected', setFontSize);
@@ -99,9 +106,10 @@ const Styles = () => {
         };
     }, []);
     const fontSizeStyle = `html {font-size: ${fontSize}px}`;
+    const bodyBackground = `body {background: ${colors.background}}`;
     return (
         <style>
-            {fontSizeStyle} {isRunningAcceptanceTest() && acceptanceStyles}
+            {fontSizeStyle} {bodyBackground} {isRunningAcceptanceTest() && acceptanceStyles}
         </style>
     );
 };
@@ -119,7 +127,7 @@ const withLayoutDecorator = (Story, context): React.ReactElement => {
     );
 };
 
-export const decorators = [withMisticaThemeProvider, withLayoutDecorator];
+export const decorators = [withLayoutDecorator, withMisticaThemeProvider];
 
 export const parameters = {
     // https://storybook.js.org/docs/react/configure/story-layout

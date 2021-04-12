@@ -4,6 +4,9 @@ import {StorySection} from './helpers';
 
 export default {
     title: 'Components/Feedbacks/LoadingBar',
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 export const LoadingBar: StoryComponent = () => (

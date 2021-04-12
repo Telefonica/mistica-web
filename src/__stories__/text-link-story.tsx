@@ -1,5 +1,5 @@
 import * as React from 'react';
-import TextLink from '../text-link';
+import {TextLink, Stack, Text2} from '..';
 import {StorySection} from './helpers';
 
 export default {
@@ -21,28 +21,24 @@ export const Default: StoryComponent = () => {
             </StorySection>
 
             <StorySection title="TextLink opened in new tab">
-                <p
-                    style={{
-                        fontSize: 13,
-                        fontWeight: 400,
-                        display: 'block',
-                        marginBottom: 32,
-                        color: 'rgb(102, 102, 102)',
-                    }}
-                >
-                    Use TextLink with 'newTab' prop for all links that takes the user out off webapp. The main
-                    reason is because it's prepared, in terms of accessibility, to inform users that uses a
-                    screen reader, that we are going to open a new tab if they click the link.
-                </p>
-                <TextLink href="https://web.tuenti.com/" newTab>
-                    Text
-                </TextLink>
+                <Stack space={16}>
+                    <Text2 regular as="p">
+                        Use TextLink with 'newTab' prop for all links that takes the user out off webapp. The
+                        main reason is because it's prepared, in terms of accessibility, to inform users that
+                        uses a screen reader, that we are going to open a new tab if they click the link.
+                    </Text2>
+                    <TextLink href="https://web.tuenti.com/" newTab>
+                        Text
+                    </TextLink>
+                </Stack>
             </StorySection>
             <StorySection title="TextLink with onPress">
-                <TextLink style={{fontSize: '16px'}} onPress={() => setCount(count + 1)}>
-                    Text
-                </TextLink>
-                <div style={{marginTop: 16}}>Clicked {count} times</div>
+                <Stack space={16}>
+                    <TextLink style={{fontSize: '16px'}} onPress={() => setCount(count + 1)}>
+                        Text
+                    </TextLink>
+                    <Text2 regular>Clicked {count} times</Text2>
+                </Stack>
             </StorySection>
         </div>
     );

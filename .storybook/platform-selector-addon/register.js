@@ -45,7 +45,7 @@ const PlatformSelectorAddon = ({api}) => {
                 />
             )}
         >
-            <IconButton title="Change theme">
+            <IconButton title="Change platform">
                 <div style={{display: 'flex', alignItems: 'center'}}>
                     <span style={{marginLeft: 8}}>
                         Platform: {PLATFORMS.find(({id}) => id === currentPlatform).title}

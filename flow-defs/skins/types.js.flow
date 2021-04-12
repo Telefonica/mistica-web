@@ -6,10 +6,12 @@ export type GetSkin = (variant?: SkinVariant) => Skin;
 export type Skin = {
   name: SkinName,
   colors: Colors,
+  darkModeColors?: $Shape<Colors>,
 };
 export type Colors = {
   appBarBackground: string,
   background: string,
+  backgroundContainer: string,
   backgroundBrand: string,
   backgroundOverlay: string,
   backgroundSkeleton: string,
@@ -58,7 +60,7 @@ export type Colors = {
   loadingBarInverse: string,
   toggleAndroidInactive: string,
   toggleAndroidBackgroundActive: string,
-  toggleIosInactive: string,
+  iosControlKnob: string,
   divider: string,
   dividerInverse: string,
   navigationBarDivider: string,
@@ -83,6 +85,7 @@ export type Colors = {
   textDisabled: string,
   textAmount: string,
   textButtonPrimary: string,
+  textButtonPrimaryDisabled: string,
   textButtonPrimaryInverse: string,
   textButtonPrimaryInverseDisabled: string,
   textButtonPrimaryInverseSelected: string,
@@ -93,6 +96,7 @@ export type Colors = {
   textButtonSecondaryInverseDisabled: string,
   textButtonSecondaryInverseSelected: string,
   textLink: string,
+  textLinkInverse: string,
   textLinkDanger: string,
   textLinkDangerDisabled: string,
   textLinkDisabled: string,
