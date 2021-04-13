@@ -459,14 +459,10 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
     render(): React.ReactNode {
         const {isClosing, dialogProps} = this.state;
 
-        if (!dialogProps || this.state.instanceNumber !== 1) {
-            return this.props.children || null;
-        }
-
-        const {onCancel, onAccept, ...rest} = dialogProps;
-        return (
-            <>
-                {this.props.children}
+        let dialog = null;
+        if (dialogProps && this.state.instanceNumber === 1) {
+            const {onCancel, onAccept, ...rest} = dialogProps;
+            dialog = (
                 <ModalDialog
                     onCancel={this.createCancelHandler(onCancel)}
                     onAccept={this.createAcceptHandler(onAccept)}
@@ -474,6 +470,13 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
                     onCloseTransitionEnd={isClosing ? this.handleCloseFinished : undefined}
                     {...rest}
                 />
+            );
+        }
+
+        return (
+            <>
+                {this.props.children}
+                {dialog}
             </>
         );
     }
