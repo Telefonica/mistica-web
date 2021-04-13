@@ -521,6 +521,7 @@ export default [
         code: '<Inline space={16}><Placeholder /><Placeholder /><Placeholder /></Inline>',
     },
     {group: 'Spinner', name: 'Spinner', code: '<Spinner />'},
+    {group: 'Divider', name: 'Divider', code: '<Divider />'},
     {group: 'LoadingBar', name: 'LoadingBar', code: '<LoadingBar visible />'},
     {group: 'Text', name: 'Text', code: '<Text>some text</Text>'},
     ...headerSnippets,
