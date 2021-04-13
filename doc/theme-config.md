@@ -6,6 +6,7 @@ The `theme` prop must have the following type:
 ```ts
 type ThemeConfig = {
   skin: Skin;
+  colorScheme?: ColorScheme;
   i18n: {
     locale: Locale;
     phoneNumberFormattingRegionCode: RegionCode;
@@ -32,8 +33,11 @@ Only `skin` and `i18n` are mandatory.
 
 Here is a description of every attribute:
 
-- `skin`: determines the color scheme used by the lib. You can use `getMovistarSkin`, `getVivoSkin` to use a
+- `skin`: determines the color set used by the lib. You can use `getMovistarSkin`, `getVivoSkin` to use a
   specific skin or `getSkinByName`.
+- `colorScheme`: used to enable/disable the dark mode support. It can be `'light'` (default value, force light
+  mode), `'dark'` (force dark mode), or `'auto'` (uses OS/browser settings). We recommend using `'auto'` if
+  you want to support dark mode in your app.
 - `i18n`: we use this to localize some messages or formatting dates phone numbers, etc.
   - `locale`: a valid locale (language and region codes separated by `'-'`). For example `'es-ES'`.
   - `phoneNumberFormattingRegionCode`: region code used to format phone numbers (for example in
