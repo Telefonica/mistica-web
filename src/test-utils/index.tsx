@@ -121,9 +121,9 @@ const waitForPaintEnd = async (
 ) => {
     const t0 = Date.now();
 
-    let buf1 = await element.screenshot({fullPage});
+    let buf1 = (await element.screenshot({fullPage})) as Buffer;
     await new Promise((r) => setTimeout(r, STEP_TIME));
-    let buf2 = await element.screenshot({fullPage});
+    let buf2 = (await element.screenshot({fullPage})) as Buffer;
 
     // buffers are different if compare != 0
     while (buf1.compare(buf2)) {
@@ -132,7 +132,7 @@ const waitForPaintEnd = async (
         }
         buf1 = buf2;
         await new Promise((r) => setTimeout(r, STEP_TIME));
-        buf2 = await element.screenshot({fullPage});
+        buf2 = (await element.screenshot({fullPage})) as Buffer;
     }
 };
 
@@ -219,7 +219,7 @@ const bindToDoc = (fn: (e: ElementHandle | null, method: string) => ElementHandl
 
     const screenshot = async (options: ScreenshotOptions) => {
         await waitForPaintEnd(elementHandle, {fullPage: false});
-        return watermarkIfNeeded(elementHandle.screenshot(options));
+        return watermarkIfNeeded(elementHandle.screenshot(options) as Promise<Buffer>);
     };
 
     const newElementHandle = Object.create(elementHandle);
@@ -263,7 +263,7 @@ const createPageApi = (page: Page): PageApi => {
     api.select = async (selector, ...values) => selector.select(...values);
     api.screenshot = async (options?: ScreenshotOptions) => {
         await waitForPaintEnd(page);
-        return watermarkIfNeeded(page.screenshot(options));
+        return watermarkIfNeeded(page.screenshot(options) as Promise<Buffer>);
     };
 
     return api;
@@ -318,7 +318,7 @@ export const openSSRPage = async ({
     // Capture browser console.error and console.warn calls that React could trigger when calling hydrate()
     page.on('console', async (msg) => {
         const type = msg.type();
-        const args = await Promise.all(msg.args().map((h) => h.jsonValue()));
+        const args = [...(await Promise.all(msg.args().map((h: any) => h.jsonValue())))];
         if (args.length === 0) {
             args.push(msg.text());
         }

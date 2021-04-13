@@ -21,8 +21,8 @@ const createWebpackEntries = (): {[entryName: string]: string} => {
     files.forEach((f) => {
         const moduleName = f.replace('.tsx', ''); //remove file extension
 
-        // create a temporal file for the entry, it'll be removed after webpack compilation
-        const clientSideEntryFile = path.join(__dirname, `temporal-file-do-not-commit-${f}`);
+        // create a temporary file for the entry, it'll be removed after webpack compilation
+        const clientSideEntryFile = path.join(__dirname, `temporary-file-do-not-commit-${f}`);
         fs.writeFileSync(
             clientSideEntryFile,
             `
@@ -86,14 +86,14 @@ export const compileSsrClient = (): Promise<webpack.Stats> => {
 
     const stats = new Promise<webpack.Stats>((resolve, reject) => {
         const compiler = webpack(webpackConfig);
-        compiler.run((err, stats) => {
+        compiler.run((err, stats: any) => {
             if (err || stats.hasErrors()) {
                 reject(stats.compilation.errors);
             }
             resolve(stats);
         });
     }).finally(() => {
-        // remove all temporal entry files
+        // remove all temporary entry files
         Object.values(entries).forEach((file) => {
             fs.unlinkSync(file);
         });
@@ -163,6 +163,7 @@ export const createServer = (): http.Server => {
         );
 
         res.writeHead(200);
+
         res.end(`
             <!DOCTYPE html>
             <html>
