@@ -111,7 +111,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             controlActivated: palette.movistarBlue,
             controlError: palette.pepper,
             loadingBar: palette.movistarBlueLight50,
-            loadingBarBackground: palette.grey6,
+            loadingBarBackground: palette.movistarBlueDark,
             loadingBarBackgroundInverse: palette.movistarBlueDark,
             loadingBarInverse: palette.movistarBlueLight50,
 
