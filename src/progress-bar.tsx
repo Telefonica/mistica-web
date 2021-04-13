@@ -6,7 +6,7 @@ const transition = '1s cubic-bezier(0.75, 0, 0.27, 1)';
 const useStyles = createUseStyles(({colors}) => ({
     barBackground: {
         height: 4,
-        backgroundColor: colors.border,
+        backgroundColor: colors.control,
         borderRadius: 2,
     },
     bar: {
