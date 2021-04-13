@@ -86,7 +86,6 @@
         "@types/react-autosuggest": "^10.1.4",
         "@types/react-router-dom": "^5.1.7",
         "@types/react-transition-group": "^4.4.1",
-        "@types/resize-observer-browser": "^0.1.5",
         "@types/rimraf": "^3.0.0",
         "@types/semver-compare": "^1.0.1",
         "@typescript-eslint/eslint-plugin": "^4.21.0",

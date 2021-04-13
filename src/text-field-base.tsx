@@ -467,10 +467,10 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(({getSuggestions
             }
         >
             <Autosuggest
-                // @ts-expect-error Autosuggest expects slightly different types
                 inputProps={{
                     ...props,
                     autoComplete: fixAutoComplete(platformOverrides, 'off'),
+                    // @ts-expect-error Autosuggest expects slightly different types
                     onChange: (e: React.ChangeEvent<HTMLInputElement>, {newValue}) => {
                         // hack to mutate event value
                         e.target = {...e.target, value: newValue};

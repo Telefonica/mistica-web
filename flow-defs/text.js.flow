@@ -2,7 +2,7 @@
 
 import * as React from "react";
 declare type FontWeight = "light" | "regular" | "medium";
-export type TextPresetProps = {
+export type TextPresetProps = {|
   color?: string,
   textDecoration?: "underline" | "line-through",
   children?: React.Node,
@@ -13,8 +13,8 @@ export type TextPresetProps = {
   as?: React.ComponentType<any> | string,
   role?: string,
   "aria-level"?: number,
-};
-declare type TextProps = {
+|};
+declare type TextProps = {|
   ...$Exact<TextPresetProps>,
 
   weight?: FontWeight | boolean,
@@ -49,20 +49,20 @@ declare type TextProps = {
    */
   desktopLineHeight?: string | number,
   letterSpacing?: number,
-};
+|};
 declare export var Text: React.ComponentType<TextProps>;
-declare type LightProps = {
+declare type LightProps = {|
  ...$Exact<TextPresetProps>,
  light: boolean,
-};
-declare type MediumProps = {
+|};
+declare type MediumProps = {|
  ...$Exact<TextPresetProps>,
  medium: boolean,
-};
-declare type RegularProps = {
+|};
+declare type RegularProps = {|
  ...$Exact<TextPresetProps>,
  regular: boolean,
-};
+|};
 declare type RegularMediumProps = RegularProps | MediumProps;
 declare type LightRegularMediumProps = LightProps | RegularProps | MediumProps;
 declare export var Text10: React.ComponentType<TextPresetProps>;

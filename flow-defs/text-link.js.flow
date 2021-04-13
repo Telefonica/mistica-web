@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import type { TrackingEvent } from "./utils/types";
-declare type CommonProps = {
+declare type CommonProps = {|
   children?: React.Node,
   className?: string,
   style?: CssStyle,
@@ -10,21 +10,21 @@ declare type CommonProps = {
   small?: boolean,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   "data-testid"?: string,
-};
-export type HrefProps = {
+|};
+export type HrefProps = {|
   ...$Exact<CommonProps>,
   href: string,
   newTab?: boolean,
-};
-export type ToProps = {
+|};
+export type ToProps = {|
   ...$Exact<CommonProps>,
   to: string,
   fullPageOnWebView?: boolean,
-};
-export type OnPressProps = {
+|};
+export type OnPressProps = {|
   ...$Exact<CommonProps>,
   onPress: (event: SyntheticMouseEvent<HTMLElement>) => void | boolean,
-};
+|};
 declare type Props = HrefProps | ToProps | OnPressProps;
 declare var TextLink: React.ComponentType<Props>;
 declare export default typeof TextLink;
