@@ -15,84 +15,87 @@ const defaultWidthDesktop = 340;
 const arrowWrapperWidth = arrowSize * 2;
 const arrowWrapperHeight = arrowSize;
 
-const useStyles = createUseStyles((theme) => ({
-    arrow: {
-        position: 'absolute',
-        backgroundColor: theme.colors.background,
-        width: arrowSize,
-        height: arrowSize,
-        top: 0,
-        left: '50%',
-        transform: 'translate(-50%, -50%) rotate(45deg)',
-        border: `1px solid ${theme.colors.divider}`,
-        borderRadius: 2,
-    },
-    arrowTop: {
-        top: '100%',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        '& > div': {
-            boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)',
+const useStyles = createUseStyles((theme) => {
+    const shadowAlpha = theme.isDarkMode ? 1 : 0.2;
+    return {
+        arrow: {
+            position: 'absolute',
+            backgroundColor: theme.colors.background,
+            width: arrowSize,
+            height: arrowSize,
+            top: 0,
+            left: '50%',
+            transform: 'translate(-50%, -50%) rotate(45deg)',
+            border: `1px solid ${theme.colors.divider}`,
+            borderRadius: 2,
         },
-    },
-    arrowRight: {
-        right: '100%',
-        top: '50%',
-        transform: 'translateY(-100%) rotate(90deg)',
-        transformOrigin: 'bottom',
-        '& > div': {
-            boxShadow: '0 0 4px 0 rgba(0, 0, 0, 0.2)',
+        arrowTop: {
+            top: '100%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            '& > div': {
+                boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
+            },
         },
-    },
-    arrowBottom: {
-        bottom: '100%',
-        left: '50%',
-        transform: 'translateX(-50%) rotate(180deg)',
-    },
-    arrowLeft: {
-        left: '100%',
-        top: '50%',
-        transform: 'translateY(-100%) rotate(-90deg)',
-        transformOrigin: 'bottom',
-        '& > div': {
-            boxShadow: '0 0 4px 0 rgba(0, 0, 0, 0.2)',
+        arrowRight: {
+            right: '100%',
+            top: '50%',
+            transform: 'translateY(-100%) rotate(90deg)',
+            transformOrigin: 'bottom',
+            '& > div': {
+                boxShadow: `0 0 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
+            },
         },
-    },
-    arrowWrapper: {
-        position: 'absolute',
-        color: theme.colors.background,
-        width: arrowWrapperWidth,
-        height: arrowWrapperHeight,
-        overflow: 'hidden',
-    },
-    wrapper: {
-        display: 'inline-block',
-    },
-    container: {
-        position: 'absolute',
-        left: 16,
-        width: 'auto',
-        boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2)',
-        padding: 16,
-        backgroundColor: theme.colors.background,
-        zIndex: 12,
-        border: `1px solid ${theme.colors.divider}`,
-        borderRadius: 2,
-    },
-    title: {
-        margin: 0,
-        marginBottom: 12,
-        color: theme.colors.textPrimary,
-        lineHeight: 1.42857142,
-        fontSize: 14,
-    },
-    description: {
-        margin: 0,
-        color: theme.colors.textPrimary,
-        lineHeight: 1.42857142,
-        fontSize: 14,
-    },
-}));
+        arrowBottom: {
+            bottom: '100%',
+            left: '50%',
+            transform: 'translateX(-50%) rotate(180deg)',
+        },
+        arrowLeft: {
+            left: '100%',
+            top: '50%',
+            transform: 'translateY(-100%) rotate(-90deg)',
+            transformOrigin: 'bottom',
+            '& > div': {
+                boxShadow: `0 0 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
+            },
+        },
+        arrowWrapper: {
+            position: 'absolute',
+            color: theme.colors.background,
+            width: arrowWrapperWidth,
+            height: arrowWrapperHeight,
+            overflow: 'hidden',
+        },
+        wrapper: {
+            display: 'inline-block',
+        },
+        container: {
+            position: 'absolute',
+            left: 16,
+            width: 'auto',
+            boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
+            padding: 16,
+            backgroundColor: theme.colors.background,
+            zIndex: 12,
+            border: `1px solid ${theme.colors.divider}`,
+            borderRadius: 2,
+        },
+        title: {
+            margin: 0,
+            marginBottom: 12,
+            color: theme.colors.textPrimary,
+            lineHeight: 1.42857142,
+            fontSize: 14,
+        },
+        description: {
+            margin: 0,
+            color: theme.colors.textPrimary,
+            lineHeight: 1.42857142,
+            fontSize: 14,
+        },
+    };
+});
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 

@@ -1,3 +1,30 @@
+# [8.5.0](https://github.com/Telefonica/mistica-web/compare/v8.4.1...v8.5.0) (2021-04-13)
+
+
+### Bug Fixes
+
+* **Checkbox:** dark mode color ([#233](https://github.com/Telefonica/mistica-web/issues/233)) ([8a38796](https://github.com/Telefonica/mistica-web/commit/8a38796bca57ce85bdc56e65495f26534cb1c1d9))
+* **dark mode:** some color fixes ([#234](https://github.com/Telefonica/mistica-web/issues/234)) ([545745f](https://github.com/Telefonica/mistica-web/commit/545745fbd92f7f91c2949d92a4cd66fe01c82ef5))
+
+
+### Features
+
+* **Divider:** Add snippet to playroom ([07ffbee](https://github.com/Telefonica/mistica-web/commit/07ffbee083b941bbb5dc7f650e689cb1dda5b8e1))
+
+## [8.4.1](https://github.com/Telefonica/mistica-web/compare/v8.4.0...v8.4.1) (2021-04-12)
+
+
+### Bug Fixes
+
+* **IconSuccessVivo:** vivinho in dark mode ([#232](https://github.com/Telefonica/mistica-web/issues/232)) ([4d53bbd](https://github.com/Telefonica/mistica-web/commit/4d53bbde6a14c635c2e334599b5387231123f185))
+
+# [8.4.0](https://github.com/Telefonica/mistica-web/compare/v8.3.0...v8.4.0) (2021-04-12)
+
+
+### Features
+
+* **Dark mode:** Dark mode support ([#218](https://github.com/Telefonica/mistica-web/issues/218)) ([78c82bc](https://github.com/Telefonica/mistica-web/commit/78c82bc90a54f92c05051ae2f9e87d79039c7502))
+
 # [8.3.0](https://github.com/Telefonica/mistica-web/compare/v8.2.3...v8.3.0) (2021-04-09)
 
 

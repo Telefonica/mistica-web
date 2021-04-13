@@ -36,7 +36,9 @@ const Cards: React.FC<any> = ({activeCard, setActiveCard}) => {
             </Card>
             <ButtonPrimary submit>Send</ButtonPrimary>
 
-            <pre>ERRORS: {JSON.stringify(formErrors, null, 2)}</pre>
+            <Text2 as="pre" regular>
+                ERRORS: {JSON.stringify(formErrors, null, 2)}
+            </Text2>
         </Stack>
     );
 };
@@ -72,7 +74,9 @@ export const CustomValidationForm: StoryComponent = () => {
                 <Cards activeCard={activeCard} setActiveCard={setActiveCard} />
             </Form>
 
-            <pre>DATA: {JSON.stringify(formData, null, 2)}</pre>
+            <Text2 as="pre" regular>
+                DATA: {JSON.stringify(formData, null, 2)}
+            </Text2>
         </Stack>
     );
 };

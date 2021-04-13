@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Spinner from '../spinner';
+import {Spinner, IntegerField, Stack} from '..';
 import {StorySection} from './helpers';
 
 export default {
@@ -11,12 +11,15 @@ export const Default: StoryComponent = () => {
     const [size, setSize] = React.useState(24);
     return (
         <StorySection title="Spinner">
-            <label>
-                Size:{' '}
-                <input type="number" value={String(size)} onChange={(e) => setSize(Number(e.target.value))} />
-            </label>
-            <div style={{margin: 16}} />
-            <Spinner size={size} />
+            <Stack space={16}>
+                <IntegerField
+                    name="size"
+                    label="Size"
+                    value={String(size)}
+                    onChangeValue={(newValue) => setSize(Number(newValue))}
+                />
+                <Spinner size={size} />
+            </Stack>
         </StorySection>
     );
 };

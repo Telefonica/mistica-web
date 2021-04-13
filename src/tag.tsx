@@ -22,8 +22,10 @@ type Props = {
 
 const Tag: React.FC<Props> = ({children, color}) => {
     const classes = useStyles({color});
-    const {colors} = useTheme();
-    const textColor = color === colors.inverse ? colors.textPrimary : colors.textPrimaryInverse;
+    const {colors, isDarkMode} = useTheme();
+    // Hardcode black text in darkmode because there isn't a black text color constant that we can use in dark mode
+    const blackText = isDarkMode ? '#313235' : colors.textPrimary;
+    const textColor = color === colors.inverse ? blackText : colors.textPrimaryInverse;
     return (
         <span className={classes.tag}>
             <Text color={textColor} size={12} lineHeight={16} weight="regular" uppercase>

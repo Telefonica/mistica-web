@@ -1,7 +1,5 @@
 import * as React from 'react';
-import {ButtonPrimary, ButtonSecondary} from '../button';
-import FixedFooterLayout from '../fixed-footer-layout';
-import ButtonFixedFooterLayout from '../button-fixed-footer-layout';
+import {ButtonPrimary, ButtonSecondary, Stack, Text2, FixedFooterLayout, ButtonFixedFooterLayout} from '..';
 import {useCheckbox} from './helpers';
 
 export default {
@@ -31,9 +29,13 @@ export const FooterWithButtonsOnly: StoryComponent = () => {
             isFooterVisible={isFooterVisible}
         >
             {isFooterVisibleCheckbox}
-            {textLines.map((line, idx) => (
-                <p key={idx}>{line}</p>
-            ))}
+            <Stack space={16}>
+                {textLines.map((line, idx) => (
+                    <Text2 regular key={idx}>
+                        {line}
+                    </Text2>
+                ))}
+            </Stack>
         </ButtonFixedFooterLayout>
     );
 };
@@ -55,22 +57,26 @@ export const MoreComplexFooter: StoryComponent = () => {
                         padding: 16,
                     }}
                 >
-                    <div>
-                        Lines of text: <strong>{textLines.length}</strong>
-                    </div>
+                    <Text2 regular as="p">
+                        Lines of text: <Text2 medium>{textLines.length}</Text2>
+                    </Text2>
                     <ButtonPrimary onPress={loadMoreText}>Load more text</ButtonPrimary>
                 </div>
             }
             isFooterVisible={isFooterVisible}
         >
             {isFooterVisibleCheckbox}
-            <p>
+            <Text2 regular as="p">
                 When you need a more elaborated thing for your footer (not just buttons), you can use
                 FixedFooterLayout instead of ButtonFixedFooterLayout
-            </p>
-            {textLines.map((line, idx) => (
-                <p key={idx}>{line}</p>
-            ))}
+            </Text2>
+            <Stack space={16}>
+                {textLines.map((line, idx) => (
+                    <Text2 regular key={idx}>
+                        {line}
+                    </Text2>
+                ))}
+            </Stack>
         </FixedFooterLayout>
     );
 };

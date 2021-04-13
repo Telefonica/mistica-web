@@ -1,9 +1,15 @@
 import '../css/roboto.css';
 import '../css/reset.css';
 import * as React from 'react';
-import {ThemeContextProvider} from '../src';
+import {ThemeContextProvider, useTheme} from '../src';
 
 import type {ThemeConfig} from '../src';
+
+const Styles = () => {
+    const {colors} = useTheme();
+    const styles = `body {background: ${colors.background}}`;
+    return <style>{styles}</style>;
+};
 
 type OverrideTheme = (theme: ThemeConfig) => void;
 
@@ -28,7 +34,10 @@ type Props = {children: React.ReactNode; theme: ThemeConfig};
 const FrameComponent = ({children, theme}: Props): React.ReactNode => (
     <ThemeOverriderContextProvider>
         {(overridenTheme) => (
-            <ThemeContextProvider theme={overridenTheme ?? theme}>{children}</ThemeContextProvider>
+            <ThemeContextProvider theme={overridenTheme ?? theme}>
+                <Styles />
+                {children}
+            </ThemeContextProvider>
         )}
     </ThemeOverriderContextProvider>
 );

@@ -20,7 +20,9 @@ export const UseTheme: StoryComponent = () => {
             <Text2 regular color={theme.colors.textSecondary}>
                 Here is a dump of the whole <CodeText>theme</CodeText> object:
             </Text2>
-            <pre style={{fontFamily: 'monospace'}}>{JSON.stringify(theme, null, 2)}</pre>
+            <Text2 regular as="pre">
+                {JSON.stringify(theme, null, 2)}
+            </Text2>
         </Stack>
     );
 };

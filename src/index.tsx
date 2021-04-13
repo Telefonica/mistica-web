@@ -94,7 +94,7 @@ export {
     useWindowHeight,
     useWindowWidth,
 } from './hooks';
-export type {ThemeConfig} from './theme';
+export type {ThemeConfig, ColorScheme} from './theme';
 
 export {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 
