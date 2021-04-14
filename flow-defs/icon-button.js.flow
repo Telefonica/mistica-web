@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import type { TrackingEvent } from "./utils/types";
-declare type CommonProps = {
+declare type CommonProps = {|
   children?: React.Node,
   className?: string,
   disabled?: boolean,
@@ -14,25 +14,25 @@ declare type CommonProps = {
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   "data-testid"?: string,
   newTab?: boolean,
-};
-declare type HrefProps = {
+|};
+declare type HrefProps = {|
   ...$Exact<CommonProps>,
   label: string,
   href: string,
-};
-declare type ToProps = {
+|};
+declare type ToProps = {|
   ...$Exact<CommonProps>,
   label: string,
   to: string,
   fullPageOnWebView?: boolean,
   replace?: boolean,
-};
-declare type OnPressProps = {
+|};
+declare type OnPressProps = {|
   ...$Exact<CommonProps>,
   label: string,
   onPress: (event: SyntheticMouseEvent<HTMLElement>) => void,
-};
-declare type MaybeProps = { ...$Exact<CommonProps> };
+|};
+declare type MaybeProps = {| ...$Exact<CommonProps> |};
 declare type Props = HrefProps | ToProps | OnPressProps | MaybeProps;
 declare var IconButton: React.ComponentType<Props>;
 declare export default typeof IconButton;

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import type { TrackingEvent } from "./utils/types";
-declare type CommonProps = {
+declare type CommonProps = {|
   headline?: string | React.Node,
   title: string,
   titleLinesMax?: number,
@@ -14,50 +14,50 @@ declare type CommonProps = {
   iconSize?: 24 | 40,
   badge?: boolean | number,
   role?: string,
-};
+|};
 declare type ControlProps = {
   name?: string,
   value?: boolean,
   defaultValue?: boolean,
   onChange?: (checked: boolean) => void,
 };
-declare type BasicRowContentProps = {
+declare type BasicRowContentProps = {|
   ...$Exact<CommonProps>,
   right?: React.Node,
-};
-declare type SwitchRowContentProps = {
+|};
+declare type SwitchRowContentProps = {|
   ...$Exact<CommonProps>,
   switch: ControlProps,
-};
-declare type CheckboxRowContentProps = {
+|};
+declare type CheckboxRowContentProps = {|
   ...$Exact<CommonProps>,
   checkbox: ControlProps,
-};
-declare type RadioRowContentProps = {
+|};
+declare type RadioRowContentProps = {|
   ...$Exact<CommonProps>,
   radioValue: string,
-};
-declare type HrefRowContentProps = {
+|};
+declare type HrefRowContentProps = {|
   ...$Exact<CommonProps>,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   href: string,
   newTab?: boolean,
   right?: React.Node,
-};
-declare type ToRowContentProps = {
+|};
+declare type ToRowContentProps = {|
   ...$Exact<CommonProps>,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   to: string,
   fullPageOnWebView?: boolean,
   replace?: boolean,
   right?: React.Node,
-};
-declare type OnPressRowContentProps = {
+|};
+declare type OnPressRowContentProps = {|
   ...$Exact<CommonProps>,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   onPress: () => void,
   right?: React.Node,
-};
+|};
 declare type RowContentProps =
   | BasicRowContentProps
   | SwitchRowContentProps

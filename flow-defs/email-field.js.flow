@@ -2,11 +2,11 @@
 
 import * as React from "react";
 import type { CommonFormFieldProps } from "./text-field-base";
-export type EmailFieldProps = {
+export type EmailFieldProps = {|
   ...$Exact<CommonFormFieldProps>,
 
   onChangeValue?: (value: string, rawValue: string) => void,
   getSuggestions?: (value: string) => Array<string>,
-};
+|};
 declare var EmailField: React.ComponentType<EmailFieldProps>;
 declare export default typeof EmailField;

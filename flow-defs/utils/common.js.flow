@@ -2,5 +2,5 @@
 
 import * as React from "react";
 declare export var combineRefs: <T>(
-  ...refs: Array<React.Ref<T> | null | void>
+  ...refs: Array<React.Ref<T> | void>
 ) => (refValue: T | null) => void;

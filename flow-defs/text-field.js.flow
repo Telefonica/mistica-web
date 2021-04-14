@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import type { CommonFormFieldProps } from "./text-field-base";
-export type TextFieldProps = {
+export type TextFieldProps = {|
   ...$Exact<CommonFormFieldProps>,
 
   onChangeValue?: (value: string, rawValue: string) => void,
@@ -10,6 +10,6 @@ export type TextFieldProps = {
   prefix?: React.Node,
   endIcon?: React.Node,
   getSuggestions?: (value: string) => Array<string>,
-};
+|};
 declare var TextField: React.ComponentType<TextFieldProps>;
 declare export default typeof TextField;
