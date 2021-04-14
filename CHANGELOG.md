@@ -1,3 +1,10 @@
+## [8.5.1](https://github.com/Telefonica/mistica-web/compare/v8.5.0...v8.5.1) (2021-04-13)
+
+
+### Bug Fixes
+
+* **DialogRoot:** avoid possible re-mounts when showing a dialog ([#236](https://github.com/Telefonica/mistica-web/issues/236)) ([89f7459](https://github.com/Telefonica/mistica-web/commit/89f7459aae089440147ebe5e0ab076c21dd1a991))
+
 # [8.5.0](https://github.com/Telefonica/mistica-web/compare/v8.4.1...v8.5.0) (2021-04-13)
 
 
