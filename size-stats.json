@@ -1,11 +1,11 @@
 {
     "dist": {
-        "js": "5090.81 KB",
-        "jsNoMisticaIcons": "681.99 KB"
+        "js": "5090.84 KB",
+        "jsNoMisticaIcons": "682.02 KB"
     },
     "distEs": {
-        "js": "3029.43 KB",
-        "jsNoMisticaIcons": "510.87 KB"
+        "js": "3029.47 KB",
+        "jsNoMisticaIcons": "510.90 KB"
     },
     "libOverhead": {
         "initial": "127.79 KB",
