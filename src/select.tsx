@@ -20,7 +20,7 @@ const useStyles = createUseStyles((theme) => ({
             width: '100%',
         },
         [theme.mq.tabletOrBigger]: {
-            width: ({fullWidth}) => (fullWidth ? '100%' : 'auto'),
+            width: ({fullWidth}) => (fullWidth ? '100%' : 'fit-content'),
         },
     },
     select: {
@@ -336,6 +336,7 @@ const Select: React.FC<SelectProps> = ({
         animateShowOptions,
         helperText,
         disabled,
+        fullWidth,
     });
 
     // When the value is null/undefined/'' we assume it's the default empty option and we don't show any label
