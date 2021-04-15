@@ -1,40 +1,36 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {useTheme} from './hooks';
-import {getPlatform} from './utils/platform';
 import {SPACE, LEFT, UP, DOWN, RIGHT} from './utils/key-codes';
 import {useControlProps} from './form-context';
 import {combineRefs} from './utils/common';
 import {Text3} from './text';
 import Inline from './inline';
 
-const useRadioButtonStyles = createUseStyles((theme) => ({
+const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
     outerCircle: {
         borderRadius: '50%',
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: ({checked, isIos}) =>
-            checked && isIos ? theme.colors.controlActivated : theme.colors.background,
+        background: ({checked}) => (checked && isIos ? colors.controlActivated : colors.background),
         border: ({checked, isIos}) =>
             checked
                 ? isIos
-                    ? 'initial'
-                    : `2px solid ${theme.colors.controlActivated}`
-                : `${isIos ? 1 : 2}px solid ${theme.colors.control}`,
-        width: 24,
-        height: 24,
-        opacity: ({disabled}) => (disabled ? 0.5 : 1),
+                    ? 'none'
+                    : `2px solid ${colors.controlActivated}`
+                : `${isIos ? 1 : 2}px solid ${colors.control}`,
+        width: 20,
+        height: 20,
     },
     innerCircle: {
         borderRadius: '50%',
-        width: 12,
-        height: 12,
-        background: ({checked, isIos}) => {
+        width: 10,
+        height: 10,
+        background: ({checked}) => {
             if (isIos) {
-                return checked ? theme.colors.iosControlKnob : theme.colors.background;
+                return checked ? colors.iosControlKnob : colors.background;
             } else {
-                return checked ? theme.colors.controlActivated : theme.colors.background;
+                return checked ? colors.controlActivated : colors.background;
             }
         },
     },
@@ -81,9 +77,7 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, ...rest}
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
     const tabIndex = focusableValue === value ? 0 : -1;
-    const theme = useTheme();
-    const isIos = getPlatform(theme.platformOverrides) === 'ios';
-    const classes = useRadioButtonStyles({disabled, checked, isIos});
+    const classes = useRadioButtonStyles({disabled, checked});
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         switch (event.keyCode) {
