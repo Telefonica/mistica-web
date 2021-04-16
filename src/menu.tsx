@@ -33,8 +33,6 @@ const useStyles = createUseStyles(({colors}) => ({
         boxShadow:
             '0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)',
         backgroundColor: colors.backgroundContainer,
-        paddingTop: 8,
-        paddingBottom: 8,
         transformOrigin: ({optionsComputedProps}) => optionsComputedProps.transformOrigin,
         transition: 'opacity .03s linear,transform .12s cubic-bezier(0,0,.2,1) .15s',
         opacity: ({animateShowOptions}) => (animateShowOptions ? 1 : 0),
@@ -54,7 +52,7 @@ export const useMenu = (): {
         ref: React.RefCallback<Element>;
         onPress: (event: React.MouseEvent) => void;
     };
-    // closeMenu: () => void;
+    closeMenu: () => void;
     isOpen: boolean;
 } => {
     const [animateShowOptions, setAnimateShowOptions] = React.useState(false);
@@ -146,17 +144,19 @@ export const useMenu = (): {
             isOpen,
             targetProps,
             menuProps,
+            closeMenu: () => {
+                setIsOpen(false);
+            },
         }),
-        [isOpen, targetProps, menuProps]
+        [isOpen, targetProps, menuProps, setIsOpen]
     );
 };
 
 export type MenuProps = {
-    fullWidth?: boolean;
     children: React.ReactNode;
 };
 
-const Menu: React.FC<MenuProps> = ({children, fullWidth}) => {
+const Menu: React.FC<MenuProps> = ({children}) => {
     const {isOpen, setIsOpen} = React.useContext(MenuContext);
 
     React.useEffect(() => {
