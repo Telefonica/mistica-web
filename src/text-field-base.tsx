@@ -217,6 +217,14 @@ const useStyles = createUseStyles((theme) => ({
         // Only apply when Firefox, otherwise it breaks styles in safari mobile
         '&[type="date"]:not(:valid):not(:focus)': isFirefox() ? {color: 'transparent'} : {},
         '&[type="datetime-local"]:not(:valid):not(:focus)': isFirefox() ? {color: 'transparent'} : {},
+
+        // Override Chrome input autocomplete styles:
+        '&:-webkit-autofill': {
+            textFillColor: theme.colors.textPrimary,
+            // The background can not be overriden, but we can delay the background color transition to avoid the change
+            transitionProperty: 'background-color',
+            transitionDelay: '99999s',
+        },
     },
     endIcon: {
         paddingLeft: 8,

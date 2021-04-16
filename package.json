@@ -135,7 +135,8 @@
         "semantic-release": "^17.4.2",
         "static-server": "^2.2.1",
         "typescript": "^4.2.4",
-        "webpack": "4"
+        "webpack": "4",
+        "webpack-dev-server": "^3.11.2"
     },
     "dependencies": {
         "@juggle/resize-observer": "^3.3.0",
