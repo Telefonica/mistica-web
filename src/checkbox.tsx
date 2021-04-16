@@ -16,6 +16,7 @@ const useIconCheckboxStyles = createUseStyles(({colors, isIos}) => ({
         alignItems: 'center',
         userSelect: 'none',
         borderRadius: 2,
+        verticalAlign: 'middle',
         background: colors.background,
         boxShadow: `inset 0 0 0 ${isIos ? 1 : 2}px ${colors.control}`,
         transition: 'box-shadow 0.3s',

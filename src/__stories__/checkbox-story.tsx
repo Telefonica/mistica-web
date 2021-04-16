@@ -1,7 +1,5 @@
 import * as React from 'react';
 import {Checkbox, Stack, Text3, Inline, SectionTitle} from '..';
-import {useTheme} from '../hooks';
-import {ThemeVariant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Forms/Checkbox',
@@ -9,7 +7,6 @@ export default {
 
 export const Default: StoryComponent = () => {
     const [checked, onChange] = React.useState(false);
-    const {colors} = useTheme();
     return (
         <Stack space={32}>
             <>
@@ -70,24 +67,6 @@ export const Default: StoryComponent = () => {
                     You accept to sell your soul
                 </Checkbox>
             </>
-
-            <div style={{background: colors.backgroundBrand}}>
-                <Stack space={32}>
-                    <ThemeVariant isInverse>
-                        <SectionTitle id="label">Inverse</SectionTitle>
-                        <Checkbox name="inverse-children" checked={checked} onChange={onChange}>
-                            You accept to sell your soul
-                        </Checkbox>
-                    </ThemeVariant>
-
-                    <ThemeVariant isInverse>
-                        <SectionTitle id="label">Inverse Disabled</SectionTitle>
-                        <Checkbox name="inverse-disabled-children" checked={checked} onChange={onChange}>
-                            You accept to sell your soul
-                        </Checkbox>
-                    </ThemeVariant>
-                </Stack>
-            </div>
         </Stack>
     );
 };

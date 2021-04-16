@@ -5,34 +5,38 @@ import {useControlProps} from './form-context';
 import {combineRefs} from './utils/common';
 import {Text3} from './text';
 import Inline from './inline';
+import classnames from 'classnames';
+
+// https://easings.net/#easeInOutBack
+const easeInOutBack = 'cubic-bezier(0.68, -0.6, 0.32, 1.6)';
 
 const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
     outerCircle: {
+        width: 20,
+        height: 20,
         borderRadius: '50%',
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: ({checked}) => (checked && isIos ? colors.controlActivated : colors.background),
-        border: ({checked, isIos}) =>
-            checked
-                ? isIos
-                    ? 'none'
-                    : `2px solid ${colors.controlActivated}`
-                : `${isIos ? 1 : 2}px solid ${colors.control}`,
-        width: 20,
-        height: 20,
+        background: colors.background,
+        verticalAlign: 'middle',
+        boxShadow: `inset 0 0 0 ${isIos ? 1 : 2}px ${colors.control}`,
+        transition: 'box-shadow 0.3s',
+    },
+    outerCircleChecked: {
+        boxShadow: `inset 0 0 0 ${isIos ? 10 : 2}px ${colors.controlActivated}`,
     },
     innerCircle: {
+        display: 'flex',
         borderRadius: '50%',
+        width: 0,
+        height: 0,
+        background: isIos ? colors.iosControlKnob : colors.controlActivated,
+        transition: `width 0.3s ${easeInOutBack}, height 0.3s ${easeInOutBack}`,
+    },
+    innerCircleChecked: {
         width: 10,
         height: 10,
-        background: ({checked}) => {
-            if (isIos) {
-                return checked ? colors.iosControlKnob : colors.background;
-            } else {
-                return checked ? colors.controlActivated : colors.background;
-            }
-        },
     },
     radioButton: {
         cursor: 'default',
@@ -104,8 +108,8 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, ...rest}
     };
 
     const radio = (
-        <div className={classes.outerCircle}>
-            <div className={classes.innerCircle} />
+        <div className={classnames(classes.outerCircle, {[classes.outerCircleChecked]: checked})}>
+            <div className={classnames(classes.innerCircle, {[classes.innerCircleChecked]: checked})} />
         </div>
     );
 
