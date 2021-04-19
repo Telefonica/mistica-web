@@ -438,7 +438,7 @@ const cardSnippets = [
         name: 'MediaCard',
         code: `
         <MediaCard
-            headline="headline"
+            headline={<Tag color={colors.promo}>headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             description="Description"
@@ -460,7 +460,7 @@ const cardSnippets = [
         name: 'DataCard',
         code: `
         <DataCard
-            headline="headline"
+            headline={<Tag color={colors.promo}>headline</Tag>}
             title="title"
             pretitle="subtitle"
             description="description"

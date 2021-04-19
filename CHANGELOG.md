@@ -1,3 +1,16 @@
+# [8.6.0](https://github.com/Telefonica/mistica-web/compare/v8.5.1...v8.6.0) (2021-04-19)
+
+
+### Bug Fixes
+
+* **Select:** fix problem in Select component styles ([c5d04c8](https://github.com/Telefonica/mistica-web/commit/c5d04c8bb866548a00d7245ade7bcffa89ad88a0))
+* **TextField:** reset chrome autocomplete styles ([#238](https://github.com/Telefonica/mistica-web/issues/238)) ([a173665](https://github.com/Telefonica/mistica-web/commit/a1736654d4f323683d0a15dd0b1207ef70477d3d))
+
+
+### Features
+
+* **DataCard, MediaCard:** allow tags of any color ([#241](https://github.com/Telefonica/mistica-web/issues/241)) ([50d12a0](https://github.com/Telefonica/mistica-web/commit/50d12a02e1f1f5b5345dbdd06bf64c3a6ae35631))
+
 ## [8.5.1](https://github.com/Telefonica/mistica-web/compare/v8.5.0...v8.5.1) (2021-04-13)
 
 
