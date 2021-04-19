@@ -4,6 +4,8 @@ import Overlay from './overlay';
 import {createUseStyles} from './jss';
 import {cancelEvent} from './utils/dom';
 
+const MAX_HEIGHT_DEFAULT = 416;
+
 type MenuContextState = {
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
@@ -37,35 +39,33 @@ const useStyles = createUseStyles(({colors}) => ({
         transition: 'opacity .03s linear,transform .12s cubic-bezier(0,0,.2,1) .15s',
         opacity: ({animateShowOptions}) => (animateShowOptions ? 1 : 0),
         transform: ({animateShowOptions}) => (animateShowOptions ? 'scale(1)' : 'scale(0)'),
-        maxHeight: ({optionsComputedProps}) => optionsComputedProps.maxHeight ?? '416px',
+        maxHeight: ({optionsComputedProps}) => optionsComputedProps.maxHeight,
         overflowY: 'auto',
     },
 }));
 
 export const useMenu = (): {
     menuProps: {
-        ref: React.RefCallback<Element>;
+        ref: React.RefCallback<HTMLElement>;
         className: string;
-        // onClick: (event: React.MouseEvent) => void;
     };
     targetProps: {
-        ref: React.RefCallback<Element>;
-        onPress: (event: React.MouseEvent) => void;
+        ref: React.RefCallback<HTMLElement>;
+        onPress: (event: React.MouseEvent | React.KeyboardEvent) => void;
     };
     closeMenu: () => void;
     isOpen: boolean;
 } => {
     const [animateShowOptions, setAnimateShowOptions] = React.useState(false);
     const {isOpen, setIsOpen} = React.useContext(MenuContext);
-    const [target, setTarget] = React.useState<Element | null>(null);
+    const [target, setTarget] = React.useState<HTMLElement | null>(null);
     const [menu, setMenu] = React.useState<Element | null>(null);
     const [optionsComputedProps, setOptionsComputedProps] = React.useState({});
 
     React.useEffect(() => {
         const targetRect = target?.getBoundingClientRect();
-        const menuRect = menu?.getBoundingClientRect();
 
-        if (!targetRect || !menuRect || !isOpen) {
+        if (!menu || !targetRect || !isOpen) {
             setAnimateShowOptions(false);
             return;
         }
@@ -73,7 +73,7 @@ export const useMenu = (): {
         const MARGIN_TOP_SIZE = 12;
         const {top: selectTop, width, left, height} = targetRect;
         const top = selectTop + height;
-        const spaceTaken = menuRect.height ?? 0;
+        const spaceTaken = parseInt(window.getComputedStyle(menu).getPropertyValue('height')) ?? 0;
 
         // if it doesn't fit on bottom
         if (top + spaceTaken + MARGIN_TOP_SIZE > window.innerHeight) {
@@ -86,7 +86,6 @@ export const useMenu = (): {
                     top: Math.max(newTop, MARGIN_TOP_SIZE),
                     maxHeight: selectTop - MARGIN_TOP_SIZE,
                     transformOrigin: 'center bottom',
-                    animateShowOptions,
                 });
             } else {
                 setOptionsComputedProps({
@@ -95,7 +94,6 @@ export const useMenu = (): {
                     left,
                     maxHeight: window.innerHeight - top - MARGIN_TOP_SIZE,
                     transformOrigin: 'center top',
-                    animateShowOptions,
                 });
             }
         } else {
@@ -104,9 +102,8 @@ export const useMenu = (): {
                 width,
                 top,
                 left,
-                maxHeight: undefined,
+                maxHeight: Math.min(window.innerHeight - top - MARGIN_TOP_SIZE, MAX_HEIGHT_DEFAULT),
                 transformOrigin: 'center top',
-                animateShowOptions,
             });
         }
 
@@ -115,7 +112,7 @@ export const useMenu = (): {
                 setAnimateShowOptions(true);
             });
         }
-    }, [animateShowOptions, isOpen, menu, target]);
+    }, [isOpen, menu, target]);
 
     const classes = useStyles({
         optionsComputedProps,
@@ -124,7 +121,6 @@ export const useMenu = (): {
 
     const targetProps = React.useMemo(
         () => ({
-            style: {},
             ref: setTarget,
             onPress: () => setIsOpen(!isOpen),
         }),

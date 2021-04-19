@@ -59,6 +59,7 @@ export {default as Menu, MenuProvider, useMenu} from './menu';
 // Forms
 export {default as Form} from './form';
 export {default as Select} from './select';
+export {default as Select2} from './select2';
 export {default as TextField} from './text-field';
 export {default as SearchField} from './search-field';
 export {default as EmailField} from './email-field';
