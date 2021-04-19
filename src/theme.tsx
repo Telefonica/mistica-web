@@ -199,6 +199,7 @@ export type ThemeConfig = {
         desktopOrTabletMinHeight: number;
     };
     Link?: LinkComponent;
+    enableTabFocus?: boolean;
 };
 
 // This is the lib INTERNAL context

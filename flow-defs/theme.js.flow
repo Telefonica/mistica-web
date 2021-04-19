@@ -96,6 +96,7 @@ export type ThemeConfig = {
     desktopOrTabletMinHeight: number,
   },
   Link?: LinkComponent,
+  enableTabFocus?: boolean,
 };
 export type Theme = {
   skinName: SkinName,
