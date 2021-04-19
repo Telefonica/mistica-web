@@ -34,6 +34,10 @@ jobs:
               if: steps.yarn-cache.outputs.cache-hit != 'true'
               run: yarn
 
+            - name: Husky install
+              if: steps.yarn-cache.outputs.cache-hit == 'true'
+              run: yarn husky install
+
             - name: 'Set npm token'
               uses: './.github/actions/set-npm-token'
               with:
