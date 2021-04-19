@@ -66,7 +66,7 @@ const useStyles = createUseStyles((theme) => ({
         color: theme.colors.textPrimary,
         lineHeight: 1.5,
         padding: '6px 16px',
-        height: 48,
+        minHeight: 48,
         transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
         '&:hover': {
             backgroundColor: 'rgba(0, 0, 0, 0.08)',
@@ -98,6 +98,7 @@ export type SelectProps = {
     value?: string;
     fullWidth?: boolean;
     native?: boolean;
+    renderOption?: (text: string) => React.ReactNode;
 };
 
 const SelectInput: React.FC<SelectProps> = ({
@@ -116,6 +117,7 @@ const SelectInput: React.FC<SelectProps> = ({
     onBlur,
     autoFocus = false,
     native,
+    renderOption,
 }) => {
     const inputRef = React.useRef<HTMLSelectElement | HTMLInputElement>(null);
     const focusableRef = React.useRef<HTMLSelectElement | HTMLDivElement>(null);
@@ -359,7 +361,7 @@ const SelectInput: React.FC<SelectProps> = ({
                             onPointerDown={cancelEvent}
                             onClick={() => setValue(val)}
                         >
-                            {text}
+                            {renderOption ? renderOption(text) : text}
                         </li>
                     ))}
                 </ul>
