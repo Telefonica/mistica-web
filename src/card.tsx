@@ -20,7 +20,7 @@ const useCardContentStyles = createUseStyles(() => ({
 }));
 
 type CardContentProps = {
-    headline?: string | React.ReactElement<typeof Tag> | null;
+    headline?: string | React.ReactElement<typeof Tag>;
     pretitle?: string;
     title?: string;
     subtitle?: string;
@@ -146,7 +146,7 @@ const useMediaCardStyles = createUseStyles(() => ({
 
 type MediaCardProps = {
     media: CardMedia;
-    headline?: string | React.ReactElement<typeof Tag> | null;
+    headline?: string | React.ReactElement<typeof Tag>;
     pretitle?: string;
     title?: string;
     description: string;
@@ -203,7 +203,7 @@ interface DataCardProps {
      * Typically a mistica-icons component element
      */
     icon?: React.ReactElement<any>;
-    headline?: string | React.ReactElement<typeof Tag> | null;
+    headline?: string | React.ReactElement<typeof Tag>;
     title: string;
     subtitle?: string;
     description: string;

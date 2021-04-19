@@ -15,7 +15,7 @@ declare type CardMedia =
   | { src: string };
 declare type MediaCardProps = {
   media: CardMedia,
-  headline?: string | React.Element<typeof Tag> | null,
+  headline?: string | React.Element<typeof Tag>,
   pretitle?: string,
   title?: string,
   description: string,
@@ -29,7 +29,7 @@ declare type DataCardProps = {|
    * Typically a mistica-icons component element
    */
   icon?: React.Element<any>,
-  headline?: string | React.Element<typeof Tag> | null,
+  headline?: string | React.Element<typeof Tag>,
   title: string,
   subtitle?: string,
   description: string,
