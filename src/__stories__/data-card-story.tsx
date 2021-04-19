@@ -12,6 +12,7 @@ import {
     IconAcademicLight,
     useTheme,
     Circle,
+    Tag,
 } from '..';
 import {Placeholder} from '../placeholder';
 
@@ -21,8 +22,22 @@ export default {
 
 export const Default: StoryComponent = () => {
     const {colors} = useTheme();
+    const tagColors = {
+        promo: colors.promo,
+        brand: colors.brand,
+        success: colors.success,
+        warning: colors.warning,
+        error: colors.error,
+    };
+    const tagColorNames = Object.keys(tagColors);
     const [asset, assetSelect] = useSelect('asset', 'icon', ['icon', 'image', 'none']);
     const [headline, headlineTextField] = useTextField('headline', 'priority', true);
+    const [headlineColorName, headlineColorNameSelect] = useSelect(
+        'headline color',
+        tagColorNames[0],
+        tagColorNames
+    );
+    const headlineColor = (tagColors as any)[headlineColorName];
     const [subtitle, subtitleTextField] = useTextField('subtitle', 'Some subtitle', true);
     const [title, titleTextField] = useTextField('title', 'Some title', true);
     const [description, descriptionTextField] = useTextField(
@@ -58,6 +73,7 @@ export const Default: StoryComponent = () => {
             <Stack space={16}>
                 {assetSelect}
                 {headlineTextField}
+                {headlineColorNameSelect}
                 {titleTextField}
                 {subtitleTextField}
                 {descriptionTextField}
@@ -67,7 +83,7 @@ export const Default: StoryComponent = () => {
                 <StorySection title="DataCard">
                     <DataCard
                         icon={icon}
-                        headline={headline}
+                        headline={<Tag color={headlineColor}>{headline}</Tag>}
                         title={title}
                         subtitle={subtitle}
                         description={description}
@@ -86,7 +102,7 @@ export const WithBody: StoryComponent = () => {
     const {colors} = useTheme();
     return (
         <DataCard
-            headline="headline"
+            headline={<Tag color={colors.promo}>headline</Tag>}
             title="title"
             subtitle="subtitle"
             description="description"
@@ -108,21 +124,24 @@ export const WithBody: StoryComponent = () => {
 
 WithBody.storyName = 'DataCard with body';
 
-export const WithIconImage: StoryComponent = () => (
-    <DataCard
-        headline="headline"
-        title="title"
-        subtitle="subtitle"
-        description="description"
-        icon={<Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />}
-        button={
-            <ButtonPrimary small href="https://google.com">
-                Action
-            </ButtonPrimary>
-        }
-        buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-    />
-);
+export const WithIconImage: StoryComponent = () => {
+    const {colors} = useTheme();
+    return (
+        <DataCard
+            headline={<Tag color={colors.promo}>headline</Tag>}
+            title="title"
+            subtitle="subtitle"
+            description="description"
+            icon={<Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />}
+            button={
+                <ButtonPrimary small href="https://google.com">
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+        />
+    );
+};
 
 WithIconImage.storyName = 'DataCard with icon image';
 
@@ -146,7 +165,7 @@ export const Group: StoryComponent = () => {
                 </Text2>
                 <Inline space={16} className={classes.group}>
                     <DataCard
-                        headline="headline"
+                        headline={<Tag color={colors.promo}>headline</Tag>}
                         title="title"
                         subtitle="subtitle"
                         description="description"
