@@ -6,9 +6,7 @@ import {combineRefs} from './utils/common';
 import {Text3} from './text';
 import Inline from './inline';
 import classnames from 'classnames';
-
-// https://easings.net/#easeInOutBack
-const easeInOutBack = 'cubic-bezier(0.68, -0.6, 0.32, 1.6)';
+import {useTheme} from './hooks';
 
 const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
     outerCircle: {
@@ -24,15 +22,15 @@ const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
         transition: 'box-shadow 0.3s',
     },
     outerCircleChecked: {
-        boxShadow: `inset 0 0 0 ${isIos ? 10 : 2}px ${colors.controlActivated}`,
+        boxShadow: `inset 0 0 0 ${isIos ? 5 : 2}px ${colors.controlActivated}`,
     },
     innerCircle: {
         display: 'flex',
         borderRadius: '50%',
         width: 0,
         height: 0,
-        background: isIos ? colors.iosControlKnob : colors.controlActivated,
-        transition: `width 0.3s ${easeInOutBack}, height 0.3s ${easeInOutBack}`,
+        background: colors.controlActivated,
+        transition: `width 0.2s, height 0.2s`,
     },
     innerCircleChecked: {
         width: 10,
@@ -80,8 +78,10 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, ...rest}
     const {disabled, selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
+    console.log('checked:', checked, value, selectedValue);
     const tabIndex = focusableValue === value ? 0 : -1;
     const classes = useRadioButtonStyles({disabled, checked});
+    const {isIos} = useTheme();
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         switch (event.keyCode) {
@@ -109,7 +109,9 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, ...rest}
 
     const radio = (
         <div className={classnames(classes.outerCircle, {[classes.outerCircleChecked]: checked})}>
-            <div className={classnames(classes.innerCircle, {[classes.innerCircleChecked]: checked})} />
+            {!isIos && (
+                <div className={classnames(classes.innerCircle, {[classes.innerCircleChecked]: checked})} />
+            )}
         </div>
     );
 
@@ -152,6 +154,8 @@ type RadioGroupProps = {
 };
 
 export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
+    // WIP - FIXME CONTROLLED NOT WORKING!!!
+
     const {value, defaultValue, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
         value: props.value,

@@ -11,7 +11,7 @@ export const Default: StoryComponent = () => {
         <Stack space={32}>
             <>
                 <SectionTitle id="label">Selected fruit: {value}</SectionTitle>
-                <RadioGroup name="juicy-fruit" aria-labelledby="label" value={value} onChange={setValue}>
+                <RadioGroup name="group1" aria-labelledby="label" value={value} onChange={setValue}>
                     <Stack space={16}>
                         <RadioButton value="banana">
                             <Text3 regular>Banana</Text3>
@@ -24,7 +24,7 @@ export const Default: StoryComponent = () => {
             </>
             <>
                 <SectionTitle id="label">Custom render - Selected fruit: {value}</SectionTitle>
-                <RadioGroup name="juicy-fruit" aria-labelledby="label" value={value} onChange={setValue}>
+                <RadioGroup name="group2" aria-labelledby="label" value={value} onChange={setValue}>
                     <Stack space={16}>
                         <RadioButton
                             value="banana"
@@ -49,13 +49,7 @@ export const Default: StoryComponent = () => {
             </>
             <>
                 <SectionTitle id="label">Disabled</SectionTitle>
-                <RadioGroup
-                    disabled
-                    name="juicy-fruit"
-                    aria-labelledby="label"
-                    value={value}
-                    onChange={setValue}
-                >
+                <RadioGroup disabled name="group3" aria-labelledby="label" value={value} onChange={setValue}>
                     <Stack space={16}>
                         <RadioButton value="banana">
                             <Text3 regular>Banana</Text3>
