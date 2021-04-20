@@ -100,7 +100,7 @@ interface TextFieldBaseProps {
     inputComponent?: React.ComponentType<any>;
     shrinkLabel?: boolean;
     focus?: boolean;
-    fieldRef?: React.RefCallback<HTMLDivElement>;
+    fieldRef?: React.RefObject<HTMLDivElement>;
     onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
     multiline?: boolean;
     inputMode?: string;

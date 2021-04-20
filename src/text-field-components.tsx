@@ -159,7 +159,7 @@ type FieldContainerProps = {
     children: React.ReactNode;
     helperText?: React.ReactNode;
     className?: string;
-    fieldRef?: React.RefCallback<HTMLDivElement>;
+    fieldRef?: React.RefObject<HTMLDivElement>;
     fullWidth?: boolean;
 };
 

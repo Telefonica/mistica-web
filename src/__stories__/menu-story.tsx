@@ -1,9 +1,8 @@
 import * as React from 'react';
 import {fruitEntries} from './helpers';
-import {Touchable, Menu, Stack, MenuProvider, useMenu} from '..';
+import {Touchable, Menu, Stack, MenuProvider, useMenu, MenuItems, MenuOption, Box, Text3, Checkbox} from '..';
 import SectionTitle from '../section-title';
 import {ButtonPrimary} from '../button';
-import {DataCard} from '../card';
 
 export default {
     title: 'Components/Forms/Menu',
@@ -15,42 +14,55 @@ const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 const Story: React.FC = () => {
     const {
         isOpen,
+        closeMenu,
         targetProps: {ref: targetRef, onPress: onPressTarget},
         menuProps,
     } = useMenu();
+    const [valuesState, setValuesState] = React.useState<ReadonlyArray<string>>([]);
+
+    const setValues = (val: string) => {
+        if (valuesState.includes(val)) {
+            setValuesState(valuesState.filter((value) => value !== val));
+        } else {
+            setValuesState([...valuesState, val]);
+        }
+    };
 
     return (
         <>
-            <Touchable elementRef={targetRef} onPress={onPressTarget}>
+            <Touchable elementRef={targetRef} onPress={onPressTarget} style={{width: 'auto'}}>
                 <ButtonPrimary fake>{isOpen ? 'Close' : 'Open'}</ButtonPrimary>
             </Touchable>
-            <Menu>
-                <div {...menuProps}>
-                    {fruitOptions.map((item, index) => (
-                        <p key={index}>{item.text}</p>
-                    ))}
-                </div>
-            </Menu>
-        </>
-    );
-};
 
-const StoryDataCard: React.FC = () => {
-    const {
-        isOpen,
-        targetProps: {ref: targetRef, onPress: onPressTarget},
-        menuProps,
-    } = useMenu();
-
-    return (
-        <>
-            <Touchable elementRef={targetRef} onPress={onPressTarget}>
-                <ButtonPrimary fake>{isOpen ? 'Close' : 'Open'}</ButtonPrimary>
-            </Touchable>
             <Menu>
-                <div {...menuProps}>
-                    <DataCard title="Title" description="Description" />
-                </div>
+                <MenuItems
+                    menuProps={menuProps}
+                    options={fruitOptions}
+                    isOpen={isOpen}
+                    closeMenu={closeMenu}
+                    onItemSelectIndex={(index) => {
+                        setValues(fruitOptions[index].value);
+                    }}
+                    renderItem={({index, cursorIndex, text, value: val}) => (
+                        <MenuOption
+                            key={val}
+                            value={val}
+                            text={text}
+                            selected={valuesState.includes(val)}
+                            hover={cursorIndex === index}
+                            onPress={() => setValues(val)}
+                            renderOption={(text, value, selected) => (
+                                <Box paddingY={8}>
+                                    <Text3 medium as="p">
+                                        <Checkbox checked={selected} name={value}>
+                                            {text}
+                                        </Checkbox>
+                                    </Text3>
+                                </Box>
+                            )}
+                        />
+                    )}
+                />
             </Menu>
         </>
     );
@@ -61,15 +73,6 @@ export const Default: StoryComponent = () => (
         <SectionTitle>Menu</SectionTitle>
         <MenuProvider>
             <Story />
-        </MenuProvider>
-    </Stack>
-);
-
-export const DataCardMenu: StoryComponent = () => (
-    <Stack space={16}>
-        <SectionTitle>Menu</SectionTitle>
-        <MenuProvider>
-            <StoryDataCard />
         </MenuProvider>
     </Stack>
 );

@@ -54,12 +54,11 @@ export {default as Stepper} from './stepper';
 export {default as ProgressBar} from './progress-bar';
 export {MediaCard, DataCard} from './card';
 export {default as Divider} from './divider';
-export {default as Menu, MenuProvider, useMenu} from './menu';
+export {default as Menu, MenuItems, MenuOption, MenuProvider, useMenu} from './menu';
 
 // Forms
 export {default as Form} from './form';
 export {default as Select} from './select';
-export {default as Select2} from './select2';
 export {default as TextField} from './text-field';
 export {default as SearchField} from './search-field';
 export {default as EmailField} from './email-field';
