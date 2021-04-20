@@ -1,0 +1,9 @@
+// @flow
+
+import * as React from "react";
+declare type Props = {
+  children: React.Node,
+  disabled: boolean,
+};
+declare var TabFocus: React.ComponentType<Props>;
+declare export default typeof TabFocus;

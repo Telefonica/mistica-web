@@ -113,6 +113,7 @@ export {palette as o2ClassicPalette} from './skins/o2-classic';
 export type {Locale} from './utils/locale';
 export type {TrackingEvent} from './utils/types';
 export type {RegionCode} from './utils/region-code';
+
 // Check there is only one version of mistica installed in the page.
 if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
     // @ts-expect-error __mistica_version__ does not exist in window
