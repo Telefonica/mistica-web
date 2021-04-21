@@ -80,7 +80,6 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, ...rest}
     const {disabled, selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
-    console.log('checked:', checked, value, selectedValue);
     const tabIndex = focusableValue === value ? 0 : -1;
     const classes = useRadioButtonStyles({disabled, checked});
     const {isIos} = useTheme();
