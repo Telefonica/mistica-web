@@ -286,6 +286,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                 ...themesMap[skinName].themeConfig,
                 platformOverrides: {platform: os},
                 // Dont override mediaqueries for PreviewToolsControls, to avoid using Select instead of Tabs in desktop
+                enableTabFocus: false,
             }}
         >
             <PreviewToolsControls

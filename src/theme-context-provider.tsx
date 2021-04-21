@@ -12,6 +12,7 @@ import {AnchorLink, mediaQueriesConfig, dimensions, getTexts} from './theme';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
+import TabFocus from './tab-focus';
 
 import type {Colors} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
@@ -122,13 +123,15 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
 
     return (
         <JssProvider jss={getJss()} classNamePrefix={classNamePrefix} generateId={generateId}>
-            <ThemeContext.Provider value={contextTheme}>
-                <AriaIdGetterContext.Provider value={getAriaId}>
-                    <ScreenSizeContextProvider>
-                        <DialogRoot>{children}</DialogRoot>
-                    </ScreenSizeContextProvider>
-                </AriaIdGetterContext.Provider>
-            </ThemeContext.Provider>
+            <TabFocus disabled={!theme.enableTabFocus}>
+                <ThemeContext.Provider value={contextTheme}>
+                    <AriaIdGetterContext.Provider value={getAriaId}>
+                        <ScreenSizeContextProvider>
+                            <DialogRoot>{children}</DialogRoot>
+                        </ScreenSizeContextProvider>
+                    </AriaIdGetterContext.Provider>
+                </ThemeContext.Provider>
+            </TabFocus>
         </JssProvider>
     );
 };
