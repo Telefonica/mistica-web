@@ -25,7 +25,7 @@ const TabFocus: React.FC<Props> = ({children, disabled}) => {
         }
 
         if (isMounted) {
-            throw Error('Only one instance of this component is allowed');
+            throw Error('Only one enabled TabFocus is allowed');
         }
         isMounted = true;
 
