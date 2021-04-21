@@ -30,9 +30,11 @@ const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
         width: 0,
         height: 0,
         background: colors.controlActivated,
-        transition: `width 0.2s, height 0.2s`,
+        transition: `width 0.2s, height 0.2s, opacity 0.2s`,
+        opacity: 0,
     },
     innerCircleChecked: {
+        opacity: 1,
         width: 10,
         height: 10,
     },
@@ -44,8 +46,8 @@ const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
 
 type RadioContextType = {
     disabled?: boolean;
-    selectedValue: string | null;
-    focusableValue: string | null;
+    selectedValue?: string | null;
+    focusableValue?: string | null;
     select: (value: string) => void;
     selectNext: () => void;
     selectPrev: () => void;
@@ -154,8 +156,6 @@ type RadioGroupProps = {
 };
 
 export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
-    // WIP - FIXME CONTROLLED NOT WORKING!!!
-
     const {value, defaultValue, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
         value: props.value,
@@ -163,7 +163,6 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
         onChange: props.onChange,
         disabled: props.disabled,
     });
-    const [selectedValue, select] = React.useState<string | null>(() => value ?? defaultValue ?? null);
     const [firstRadioValue, setFirstRadioValue] = React.useState<string | null>(null);
     const ref = React.useRef<HTMLDivElement>(null);
 
@@ -171,7 +170,6 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
         if (onChange) {
             onChange(newValue);
         }
-        select(newValue);
     };
 
     const selectNext = () => {
@@ -223,7 +221,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
         }
     }, []);
 
-    const focusableValue = selectedValue ?? firstRadioValue ?? null;
+    const focusableValue = value ?? firstRadioValue ?? null;
 
     return (
         <div
@@ -234,7 +232,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
             <RadioContext.Provider
                 value={{
                     disabled,
-                    selectedValue,
+                    selectedValue: value ?? defaultValue,
                     focusableValue,
                     select: handleSelect,
                     selectNext,
