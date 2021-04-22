@@ -18,26 +18,29 @@ const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
         justifyContent: 'center',
         background: colors.background,
         verticalAlign: 'middle',
-        boxShadow: `inset 0 0 0 ${isIos ? 1 : 2}px ${colors.control}`,
-        transition: 'box-shadow 0.3s, background 0.3s',
+        boxShadow:
+            `inset 0 0 0 ${isIos ? 1 : 2}px ${colors.control}` +
+            `${isIos ? `, inset 0 0 0 10px ${colors.background}` : ''}`,
+        transition: 'box-shadow 0.3s',
     },
     outerCircleChecked: {
-        background: isIos ? colors.iosControlKnob : colors.background,
-        boxShadow: `inset 0 0 0 ${isIos ? 5 : 2}px ${colors.controlActivated}`,
+        boxShadow:
+            `inset 0 0 0 ${isIos ? 5 : 2}px ${colors.controlActivated}` +
+            `${isIos ? `, inset 0 0 0 10px ${colors.iosControlKnob}` : ''}`,
     },
     innerCircle: {
         display: 'flex',
         borderRadius: '50%',
-        width: 0,
-        height: 0,
         background: colors.controlActivated,
-        transition: `width 0.2s, height 0.2s, opacity 0.2s`,
+        transition: `transform 0.2s, opacity 0.2s`,
         opacity: 0,
+        width: 10,
+        height: 10,
+        transform: 'scale(0)',
     },
     innerCircleChecked: {
         opacity: 1,
-        width: 10,
-        height: 10,
+        transform: 'scale(1)',
     },
     radioButton: {
         cursor: 'default',
@@ -156,21 +159,30 @@ type RadioGroupProps = {
 };
 
 export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
-    const {value, defaultValue, onChange, focusableRef, disabled} = useControlProps({
+    const {
+        value: valueContext,
+        defaultValue,
+        onChange: onChangeContext,
+        focusableRef,
+        disabled,
+    } = useControlProps({
         name: props.name,
         value: props.value,
         defaultValue: props.defaultValue,
         onChange: props.onChange,
         disabled: props.disabled,
     });
+
+    // This state is needed because the component should be able to work outside a Form context
+    const [value, setValue] = React.useState<string>(valueContext ?? defaultValue ?? '');
+
+    const onChange = (value: string) => {
+        setValue(value);
+        onChangeContext(value);
+    };
+
     const [firstRadioValue, setFirstRadioValue] = React.useState<string | null>(null);
     const ref = React.useRef<HTMLDivElement>(null);
-
-    const handleSelect = (newValue: string) => {
-        if (onChange) {
-            onChange(newValue);
-        }
-    };
 
     const selectNext = () => {
         if (ref.current) {
@@ -187,7 +199,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
             const value = nextRadio.dataset.value;
             if (value) {
                 nextRadio.focus();
-                handleSelect(value);
+                onChange(value);
             }
         }
     };
@@ -207,7 +219,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
             const value = prevRadio.dataset.value;
             if (value) {
                 prevRadio.focus();
-                handleSelect(value);
+                onChange(value);
             }
         }
     };
@@ -234,7 +246,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
                     disabled,
                     selectedValue: value ?? defaultValue,
                     focusableValue,
-                    select: handleSelect,
+                    select: onChange,
                     selectNext,
                     selectPrev,
                 }}

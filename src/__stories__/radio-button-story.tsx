@@ -7,8 +7,22 @@ export default {
 
 export const Default: StoryComponent = () => {
     const [value, setValue] = React.useState('banana');
+    const [uncontrolledValue, setUncontrolledValue] = React.useState('apple');
     return (
         <Stack space={32}>
+            <>
+                <SectionTitle id="label">Uncontrolled: {uncontrolledValue}</SectionTitle>
+                <RadioGroup name="uncontrolled" aria-labelledby="label" onChange={setUncontrolledValue}>
+                    <Stack space={16}>
+                        <RadioButton value="banana">
+                            <Text3 regular>Banana</Text3>
+                        </RadioButton>
+                        <RadioButton value="apple">
+                            <Text3 regular>Apple</Text3>
+                        </RadioButton>
+                    </Stack>
+                </RadioGroup>
+            </>
             <>
                 <SectionTitle id="label">Selected fruit: {value}</SectionTitle>
                 <RadioGroup name="group1" aria-labelledby="label" value={value} onChange={setValue}>

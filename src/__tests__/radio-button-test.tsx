@@ -6,7 +6,7 @@ import {ButtonPrimary, Form, ThemeContextProvider} from '..';
 import userEvent from '@testing-library/user-event';
 import {makeTheme} from './test-utils';
 
-test('RadioGroup (uncontrolled)', () => {
+test('RadioGroup (uncontrolled)', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <SectionTitle id="label">Choose a fruit</SectionTitle>
@@ -28,7 +28,10 @@ test('RadioGroup (uncontrolled)', () => {
 
     fireEvent.click(radios[1]);
 
-    expect(radios[0]).not.toBeChecked();
+    await waitFor(() => {
+        expect(radios[0]).not.toBeChecked();
+    });
+
     expect(radios[1]).toBeChecked();
 });
 
