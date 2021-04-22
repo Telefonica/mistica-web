@@ -28,10 +28,33 @@ test('RadioGroup (uncontrolled)', async () => {
 
     fireEvent.click(radios[1]);
 
-    await waitFor(() => {
-        expect(radios[0]).not.toBeChecked();
-    });
+    expect(radios[0]).not.toBeChecked();
+    expect(radios[1]).toBeChecked();
+});
 
+test('RadioGroup (uncontrolled, no default value)', async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <SectionTitle id="label">Choose a fruit</SectionTitle>
+            <RadioGroup name="radio-group" aria-labelledby="label">
+                <RadioButton value="banana" />
+                <RadioButton value="apple" />
+            </RadioGroup>
+        </ThemeContextProvider>
+    );
+
+    const group = screen.getByLabelText('Choose a fruit');
+
+    expect(group).toBeInTheDocument();
+    const radios = within(group).getAllByRole('radio');
+
+    expect(radios).toHaveLength(2);
+    expect(radios[0]).not.toBeChecked();
+    expect(radios[1]).not.toBeChecked();
+
+    fireEvent.click(radios[1]);
+
+    expect(radios[0]).not.toBeChecked();
     expect(radios[1]).toBeChecked();
 });
 

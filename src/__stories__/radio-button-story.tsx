@@ -12,7 +12,12 @@ export const Default: StoryComponent = () => {
         <Stack space={32}>
             <>
                 <SectionTitle id="label">Uncontrolled: {uncontrolledValue}</SectionTitle>
-                <RadioGroup name="uncontrolled" aria-labelledby="label" onChange={setUncontrolledValue}>
+                <RadioGroup
+                    name="uncontrolled"
+                    aria-labelledby="label"
+                    onChange={setUncontrolledValue}
+                    defaultValue="apple"
+                >
                     <Stack space={16}>
                         <RadioButton value="banana">
                             <Text3 regular>Banana</Text3>
