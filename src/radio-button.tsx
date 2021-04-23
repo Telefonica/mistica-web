@@ -6,6 +6,7 @@ import {combineRefs} from './utils/common';
 import {Text3} from './text';
 import Inline from './inline';
 import classnames from 'classnames';
+import {useTheme} from './hooks';
 
 const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
     outerCircle: {
@@ -15,29 +16,28 @@ const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: isIos ? 'transparent' : colors.background,
         verticalAlign: 'middle',
-        boxShadow: `inset 0 0 0 ${isIos ? 1 : 2}px ${colors.control}` + '', //`${isIos ? `, inset 0 0 0 10px ${colors.background}` : ''}`,
-        transition: 'box-shadow 0.3s',
+        boxShadow: `inset 0 0 0 ${isIos ? 1 : 2}px ${colors.control}`,
+        transition: 'background 0.3s, box-shadow 0.3s',
     },
     outerCircleChecked: {
-        boxShadow: `inset 0 0 0 ${isIos ? 5 : 2}px ${colors.controlActivated}` + '', //`${isIos ? `, inset 0 0 0 10px ${colors.iosControlKnob}` : ''}`,
+        boxShadow: `inset 0 0 0 ${isIos ? 5 : 2}px ${colors.controlActivated}`,
+        // using a gradient here to not fill until the circle edge, otherwise the radiobutton border looks strange
+        background: isIos
+            ? `radial-gradient(circle, ${colors.iosControlKnob} 0%, ${colors.iosControlKnob} 64%, transparent 64%, transparent 100%)`
+            : colors.background,
     },
     innerCircle: {
         display: 'flex',
         borderRadius: '50%',
-        background: isIos ? colors.background : colors.controlActivated,
-        transition: `transform 0.2s, opacity 0.2s, background 0.2s`,
+        transition: `transform 0.2s, opacity 0.2s`,
         opacity: 0,
-        // width and height in iOS is not 20px to avoid sharp edges in outer circle
-        width: isIos ? 18 : 10,
-        height: isIos ? 18 : 10,
-        transform: isIos ? 'scale(1)' : 'scale(0)',
-        // in iOS the inner circle is shown below the outer circle shadow
-        zIndex: isIos ? -1 : 0,
+        width: 10,
+        height: 10,
+        transform: 'scale(0)',
     },
     innerCircleChecked: {
-        background: isIos ? colors.iosControlKnob : colors.controlActivated,
+        background: colors.controlActivated,
         opacity: 1,
         transform: 'scale(1)',
     },
@@ -85,6 +85,7 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, ...rest}
     const checked = value === selectedValue;
     const tabIndex = focusableValue === value ? 0 : -1;
     const classes = useRadioButtonStyles({disabled, checked});
+    const {isIos} = useTheme();
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         switch (event.keyCode) {
@@ -112,7 +113,9 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, ...rest}
 
     const radio = (
         <div className={classnames(classes.outerCircle, {[classes.outerCircleChecked]: checked})}>
-            <div className={classnames(classes.innerCircle, {[classes.innerCircleChecked]: checked})} />
+            {!isIos && (
+                <div className={classnames(classes.innerCircle, {[classes.innerCircleChecked]: checked})} />
+            )}
         </div>
     );
 
