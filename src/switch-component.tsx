@@ -5,7 +5,6 @@ https://github.com/storybookjs/storybook/issues/11980
 */
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {getPlatform} from './utils/platform';
 import debounce from 'lodash/debounce';
 import {SPACE} from './utils/key-codes';
 import {useControlProps} from './form-context';
@@ -15,8 +14,7 @@ import Inline from './inline';
 
 const SWITCH_ANIMATION = '0.2s ease-in 0s';
 
-const useStyles = createUseStyles((theme) => {
-    const isIos = getPlatform(theme.platformOverrides) === 'ios';
+const useStyles = createUseStyles(({colors, isIos}) => {
     return {
         checkbox: {
             display: 'inline-block',
@@ -36,27 +34,14 @@ const useStyles = createUseStyles((theme) => {
         },
         bar: {
             display: 'block',
-            width: '200%',
-            marginLeft: ({isChecked}) => (isChecked ? 0 : '-100%'),
-            transition: `margin ${SWITCH_ANIMATION}`,
-
-            '&:before, &:after': {
-                display: 'block',
-                float: 'left',
-                width: '50%',
-                height: isIos ? 31 : 14,
-                boxSizing: 'border-box',
-            },
-            '&:before': {
-                content: '""',
-                backgroundColor: isIos
-                    ? theme.colors.controlActivated
-                    : theme.colors.toggleAndroidBackgroundActive,
-            },
-            '&:after': {
-                content: '""',
-                backgroundColor: theme.colors.control,
-            },
+            background: ({isChecked}) =>
+                isChecked
+                    ? isIos
+                        ? colors.controlActivated
+                        : colors.toggleAndroidBackgroundActive
+                    : colors.control,
+            transition: `background ${SWITCH_ANIMATION}`,
+            height: isIos ? 31 : 14,
         },
         ball: {
             position: 'absolute',
@@ -74,9 +59,9 @@ const useStyles = createUseStyles((theme) => {
             margin: -4,
             backgroundColor: ({isChecked}) => {
                 if (isIos) {
-                    return theme.colors.iosControlKnob;
+                    return colors.iosControlKnob;
                 } else {
-                    return isChecked ? theme.colors.controlActivated : theme.colors.toggleAndroidInactive;
+                    return isChecked ? colors.controlActivated : colors.toggleAndroidInactive;
                 }
             },
             borderRadius: '50%',
