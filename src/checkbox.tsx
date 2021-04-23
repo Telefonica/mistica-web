@@ -9,6 +9,7 @@ import classnames from 'classnames';
 
 const useIconCheckboxStyles = createUseStyles(({colors, isIos}) => ({
     box: {
+        flexShrink: 0,
         height: 18,
         width: 18,
         display: 'inline-flex',
