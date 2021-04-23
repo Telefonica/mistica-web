@@ -6,7 +6,6 @@ import {combineRefs} from './utils/common';
 import {Text3} from './text';
 import Inline from './inline';
 import classnames from 'classnames';
-import {useTheme} from './hooks';
 
 const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
     outerCircle: {
@@ -16,29 +15,29 @@ const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: colors.background,
+        background: isIos ? 'transparent' : colors.background,
         verticalAlign: 'middle',
-        boxShadow:
-            `inset 0 0 0 ${isIos ? 1 : 2}px ${colors.control}` +
-            `${isIos ? `, inset 0 0 0 10px ${colors.background}` : ''}`,
+        boxShadow: `inset 0 0 0 ${isIos ? 1 : 2}px ${colors.control}` + '', //`${isIos ? `, inset 0 0 0 10px ${colors.background}` : ''}`,
         transition: 'box-shadow 0.3s',
     },
     outerCircleChecked: {
-        boxShadow:
-            `inset 0 0 0 ${isIos ? 5 : 2}px ${colors.controlActivated}` +
-            `${isIos ? `, inset 0 0 0 10px ${colors.iosControlKnob}` : ''}`,
+        boxShadow: `inset 0 0 0 ${isIos ? 5 : 2}px ${colors.controlActivated}` + '', //`${isIos ? `, inset 0 0 0 10px ${colors.iosControlKnob}` : ''}`,
     },
     innerCircle: {
         display: 'flex',
         borderRadius: '50%',
-        background: colors.controlActivated,
-        transition: `transform 0.2s, opacity 0.2s`,
+        background: isIos ? colors.background : colors.controlActivated,
+        transition: `transform 0.2s, opacity 0.2s, background 0.2s`,
         opacity: 0,
-        width: 10,
-        height: 10,
-        transform: 'scale(0)',
+        // width and height in iOS is not 20px to avoid sharp edges in outer circle
+        width: isIos ? 18 : 10,
+        height: isIos ? 18 : 10,
+        transform: isIos ? 'scale(1)' : 'scale(0)',
+        // in iOS the inner circle is shown below the outer circle shadow
+        zIndex: isIos ? -1 : 0,
     },
     innerCircleChecked: {
+        background: isIos ? colors.iosControlKnob : colors.controlActivated,
         opacity: 1,
         transform: 'scale(1)',
     },
@@ -86,7 +85,6 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, ...rest}
     const checked = value === selectedValue;
     const tabIndex = focusableValue === value ? 0 : -1;
     const classes = useRadioButtonStyles({disabled, checked});
-    const {isIos} = useTheme();
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         switch (event.keyCode) {
@@ -114,9 +112,7 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, ...rest}
 
     const radio = (
         <div className={classnames(classes.outerCircle, {[classes.outerCircleChecked]: checked})}>
-            {!isIos && (
-                <div className={classnames(classes.innerCircle, {[classes.innerCircleChecked]: checked})} />
-            )}
+            <div className={classnames(classes.innerCircle, {[classes.innerCircleChecked]: checked})} />
         </div>
     );
 
@@ -175,6 +171,13 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
 
     // This state is needed because the component should be able to work outside a Form context
     const [value, setValue] = React.useState<string>(valueContext ?? defaultValue ?? '');
+
+    // Propagate context value to inner state
+    React.useEffect(() => {
+        if (valueContext !== undefined) {
+            setValue(valueContext);
+        }
+    }, [valueContext]);
 
     const onChange = (value: string) => {
         setValue(value);
