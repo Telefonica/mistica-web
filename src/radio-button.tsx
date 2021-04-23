@@ -10,6 +10,7 @@ import {useTheme} from './hooks';
 
 const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
     outerCircle: {
+        flexShrink: 0,
         width: 20,
         height: 20,
         borderRadius: '50%',
