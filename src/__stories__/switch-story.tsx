@@ -7,16 +7,20 @@ export default {
 
 export const Default: StoryComponent = () => {
     const [checked, onChange] = React.useState(false);
+    const [uncontrolledChecked, onUncontrolledChange] = React.useState(false);
     return (
         <Stack space={32}>
             <>
                 <SectionTitle id="label">Uncontrolled</SectionTitle>
                 <Switch
                     name="uncontrolled"
+                    onChange={onUncontrolledChange}
                     render={(switchElement) => (
                         <Inline alignItems="center" space={16}>
                             {switchElement}
-                            <Text3 regular>Switch</Text3>
+                            <Text3 regular uppercase>
+                                {uncontrolledChecked ? 'on' : 'off'}
+                            </Text3>
                         </Inline>
                     )}
                 />

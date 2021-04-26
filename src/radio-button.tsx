@@ -1,42 +1,46 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {useTheme} from './hooks';
-import {getPlatform} from './utils/platform';
 import {SPACE, LEFT, UP, DOWN, RIGHT} from './utils/key-codes';
 import {useControlProps} from './form-context';
 import {combineRefs} from './utils/common';
 import {Text3} from './text';
 import Inline from './inline';
+import classnames from 'classnames';
+import {useTheme} from './hooks';
 
-const useRadioButtonStyles = createUseStyles((theme) => ({
+const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
     outerCircle: {
+        flexShrink: 0,
+        width: 20,
+        height: 20,
         borderRadius: '50%',
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: ({checked, isIos}) =>
-            checked && isIos ? theme.colors.controlActivated : theme.colors.background,
-        border: ({checked, isIos}) =>
-            checked
-                ? isIos
-                    ? 'initial'
-                    : `2px solid ${theme.colors.controlActivated}`
-                : `${isIos ? 1 : 2}px solid ${theme.colors.control}`,
-        width: 24,
-        height: 24,
-        opacity: ({disabled}) => (disabled ? 0.5 : 1),
+        verticalAlign: 'middle',
+        boxShadow: `inset 0 0 0 ${isIos ? 1 : 2}px ${colors.control}`,
+        transition: 'background 0.3s, box-shadow 0.3s',
+    },
+    outerCircleChecked: {
+        boxShadow: `inset 0 0 0 ${isIos ? 5 : 2}px ${colors.controlActivated}`,
+        // using a gradient here to not fill until the circle edge, otherwise the radiobutton border looks strange
+        background: isIos
+            ? `radial-gradient(circle, ${colors.iosControlKnob} 0%, ${colors.iosControlKnob} 64%, transparent 64%, transparent 100%)`
+            : colors.background,
     },
     innerCircle: {
+        display: 'flex',
         borderRadius: '50%',
-        width: 12,
-        height: 12,
-        background: ({checked, isIos}) => {
-            if (isIos) {
-                return checked ? theme.colors.iosControlKnob : theme.colors.background;
-            } else {
-                return checked ? theme.colors.controlActivated : theme.colors.background;
-            }
-        },
+        transition: `transform 0.2s, opacity 0.2s`,
+        opacity: 0,
+        width: 10,
+        height: 10,
+        transform: 'scale(0)',
+    },
+    innerCircleChecked: {
+        background: colors.controlActivated,
+        opacity: 1,
+        transform: 'scale(1)',
     },
     radioButton: {
         cursor: 'default',
@@ -46,8 +50,8 @@ const useRadioButtonStyles = createUseStyles((theme) => ({
 
 type RadioContextType = {
     disabled?: boolean;
-    selectedValue: string | null;
-    focusableValue: string | null;
+    selectedValue?: string | null;
+    focusableValue?: string | null;
     select: (value: string) => void;
     selectNext: () => void;
     selectPrev: () => void;
@@ -81,9 +85,8 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, ...rest}
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
     const tabIndex = focusableValue === value ? 0 : -1;
-    const theme = useTheme();
-    const isIos = getPlatform(theme.platformOverrides) === 'ios';
-    const classes = useRadioButtonStyles({disabled, checked, isIos});
+    const classes = useRadioButtonStyles({disabled, checked});
+    const {isIos} = useTheme();
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         switch (event.keyCode) {
@@ -110,8 +113,10 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, ...rest}
     };
 
     const radio = (
-        <div className={classes.outerCircle}>
-            <div className={classes.innerCircle} />
+        <div className={classnames(classes.outerCircle, {[classes.outerCircleChecked]: checked})}>
+            {!isIos && (
+                <div className={classnames(classes.innerCircle, {[classes.innerCircleChecked]: checked})} />
+            )}
         </div>
     );
 
@@ -154,23 +159,37 @@ type RadioGroupProps = {
 };
 
 export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
-    const {value, defaultValue, onChange, focusableRef, disabled} = useControlProps({
+    const {
+        value: valueContext,
+        defaultValue,
+        onChange: onChangeContext,
+        focusableRef,
+        disabled,
+    } = useControlProps({
         name: props.name,
         value: props.value,
         defaultValue: props.defaultValue,
         onChange: props.onChange,
         disabled: props.disabled,
     });
-    const [selectedValue, select] = React.useState<string | null>(() => value ?? defaultValue ?? null);
+
+    // This state is needed because the component should be able to work outside a Form context
+    const [value, setValue] = React.useState<string>(valueContext ?? defaultValue ?? '');
+
+    // Propagate context value to inner state
+    React.useEffect(() => {
+        if (valueContext !== undefined) {
+            setValue(valueContext);
+        }
+    }, [valueContext]);
+
+    const onChange = (value: string) => {
+        setValue(value);
+        onChangeContext(value);
+    };
+
     const [firstRadioValue, setFirstRadioValue] = React.useState<string | null>(null);
     const ref = React.useRef<HTMLDivElement>(null);
-
-    const handleSelect = (newValue: string) => {
-        if (onChange) {
-            onChange(newValue);
-        }
-        select(newValue);
-    };
 
     const selectNext = () => {
         if (ref.current) {
@@ -187,7 +206,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
             const value = nextRadio.dataset.value;
             if (value) {
                 nextRadio.focus();
-                handleSelect(value);
+                onChange(value);
             }
         }
     };
@@ -207,7 +226,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
             const value = prevRadio.dataset.value;
             if (value) {
                 prevRadio.focus();
-                handleSelect(value);
+                onChange(value);
             }
         }
     };
@@ -221,7 +240,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
         }
     }, []);
 
-    const focusableValue = selectedValue ?? firstRadioValue ?? null;
+    const focusableValue = value ?? firstRadioValue ?? null;
 
     return (
         <div
@@ -232,9 +251,9 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
             <RadioContext.Provider
                 value={{
                     disabled,
-                    selectedValue,
+                    selectedValue: value ?? defaultValue,
                     focusableValue,
-                    select: handleSelect,
+                    select: onChange,
                     selectNext,
                     selectPrev,
                 }}

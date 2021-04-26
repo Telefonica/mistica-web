@@ -65,12 +65,14 @@ export const useControlProps = <T,>({
     disabled: boolean | undefined;
 } => {
     const {setRawValue, setValue, rawValues, setFormError, register, formStatus} = useForm();
-    const rawChecked = value ?? defaultValue ?? rawValues[name] ?? false;
 
     React.useEffect(() => {
-        setRawValue({name, value: rawChecked});
-        setValue({name, value: rawChecked});
-    }, [name, rawChecked, setRawValue, setValue]);
+        if (rawValues[name] === undefined) {
+            const initialValue = value ?? defaultValue ?? false;
+            setValue({name, value: initialValue});
+            setRawValue({name, value: initialValue});
+        }
+    }, [value, name, defaultValue, rawValues, setValue, setRawValue]);
 
     return {
         name,
