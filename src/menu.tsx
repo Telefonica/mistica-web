@@ -7,11 +7,11 @@ import {cancelEvent} from './utils/dom';
 
 const MAX_HEIGHT_DEFAULT = 416;
 
-const useStylesMenuOption = createUseStyles((theme) => ({
-    menuItemSelected: {
+const useMenuOptionStyles = createUseStyles((theme) => ({
+    menuOptionSelected: {
         backgroundColor: 'rgba(0, 0, 0, 0.14)',
     },
-    menuItem: {
+    menuOption: {
         color: theme.colors.textPrimary,
         lineHeight: 1.5,
         padding: '6px 16px',
@@ -43,7 +43,7 @@ export const MenuOption: React.FC<MenuOptionProps> = ({
     renderOption,
     onPress,
 }) => {
-    const classes = useStylesMenuOption();
+    const classes = useMenuOptionStyles();
 
     return (
         <li
@@ -51,8 +51,8 @@ export const MenuOption: React.FC<MenuOptionProps> = ({
             aria-selected={selected}
             key={value}
             data-value={value}
-            className={classNames(classes.menuItem, {
-                [classes.menuItemSelected]: hover || selected,
+            className={classNames(classes.menuOption, {
+                [classes.menuOptionSelected]: hover || selected,
             })}
             onPointerDown={cancelEvent}
             onClick={() => onPress(value)}
@@ -67,7 +67,7 @@ type MenuItemsProps = {
         ref: React.RefCallback<HTMLElement>;
         className: string;
     };
-    renderItem: ({
+    renderOptions: ({
         index,
         cursorIndex,
         text,
@@ -89,7 +89,7 @@ type MenuItemsProps = {
 };
 
 export const MenuItems: React.FC<MenuItemsProps> = ({
-    renderItem,
+    renderOptions,
     menuProps,
     options,
     initialIndex,
@@ -137,7 +137,7 @@ export const MenuItems: React.FC<MenuItemsProps> = ({
 
     return (
         <ul {...menuProps} role="listbox" tabIndex={-1}>
-            {options.map(({value, text}, index) => renderItem({index, cursorIndex, text, value}))}
+            {options.map(({value, text}, index) => renderOptions({index, cursorIndex, text, value}))}
         </ul>
     );
 };

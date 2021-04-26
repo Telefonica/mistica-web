@@ -43,7 +43,7 @@ const Story: React.FC = () => {
                     onItemSelectIndex={(index) => {
                         setValues(fruitOptions[index].value);
                     }}
-                    renderItem={({index, cursorIndex, text, value: val}) => (
+                    renderOptions={({index, cursorIndex, text, value: val}) => (
                         <MenuOption
                             key={val}
                             value={val}
