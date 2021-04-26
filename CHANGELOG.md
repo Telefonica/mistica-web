@@ -1,3 +1,10 @@
+## [8.7.1](https://github.com/Telefonica/mistica-web/compare/v8.7.0...v8.7.1) (2021-04-26)
+
+
+### Bug Fixes
+
+* **dark mode colors:** change neutralHigh to grey2 ([#245](https://github.com/Telefonica/mistica-web/issues/245)) ([32ccb13](https://github.com/Telefonica/mistica-web/commit/32ccb13ddf99d28ac4288590195db1cd648d1da8))
+
 # [8.7.0](https://github.com/Telefonica/mistica-web/compare/v8.6.0...v8.7.0) (2021-04-23)
 
 
