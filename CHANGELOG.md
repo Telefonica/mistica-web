@@ -1,3 +1,24 @@
+## [8.7.1](https://github.com/Telefonica/mistica-web/compare/v8.7.0...v8.7.1) (2021-04-26)
+
+
+### Bug Fixes
+
+* **dark mode colors:** change neutralHigh to grey2 ([#245](https://github.com/Telefonica/mistica-web/issues/245)) ([32ccb13](https://github.com/Telefonica/mistica-web/commit/32ccb13ddf99d28ac4288590195db1cd648d1da8))
+
+# [8.7.0](https://github.com/Telefonica/mistica-web/compare/v8.6.0...v8.7.0) (2021-04-23)
+
+
+### Bug Fixes
+
+* **Radio:** Improve radio styles on dark mode ([#246](https://github.com/Telefonica/mistica-web/issues/246)) ([f1737ff](https://github.com/Telefonica/mistica-web/commit/f1737ffb0433dec8ba2213f874a3f90c82554a0d))
+* **TabFocus:** Avoid nested instances in playroom ([#243](https://github.com/Telefonica/mistica-web/issues/243)) ([38aefb8](https://github.com/Telefonica/mistica-web/commit/38aefb84588d3b21b81bcb15f49320a397b7c043))
+
+
+### Features
+
+* **Checkbox, Radio:** Square checkbox for iOS and animations for checkbox and radios ([#240](https://github.com/Telefonica/mistica-web/issues/240)) ([6b3ba04](https://github.com/Telefonica/mistica-web/commit/6b3ba04d9a9aa645db9c73a60b6243967acc6f7a))
+* **TabFocus:** Add TabFocus to mistica provider (disabled by default) ([45df443](https://github.com/Telefonica/mistica-web/commit/45df443e09923199760fb556c767da90ac5c6f84))
+
 # [8.6.0](https://github.com/Telefonica/mistica-web/compare/v8.5.1...v8.6.0) (2021-04-19)
 
 

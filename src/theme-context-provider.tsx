@@ -89,14 +89,16 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
         const isDarkModeEnabled = (colorScheme === 'auto' && isOsDarkModeEnabled) || colorScheme === 'dark';
         const colors: Colors = isDarkModeEnabled ? darkColors : lightColors;
 
+        const platformOverrides = {
+            platform: getPlatform(),
+            insideNovumNativeApp: isInsideNovumNativeApp(),
+            ...theme.platformOverrides,
+        };
+
         return {
             skinName: theme.skin.name,
             i18n: theme.i18n,
-            platformOverrides: {
-                platform: getPlatform(),
-                insideNovumNativeApp: isInsideNovumNativeApp(),
-                ...theme.platformOverrides,
-            },
+            platformOverrides,
             texts: {
                 ...getTexts(theme.i18n.locale),
                 ...theme.texts,
@@ -115,6 +117,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
             colors,
             Link: theme.Link ?? AnchorLink,
             isDarkMode: isDarkModeEnabled,
+            isIos: getPlatform(platformOverrides) === 'ios',
         };
     }, [theme, isOsDarkModeEnabled]);
 

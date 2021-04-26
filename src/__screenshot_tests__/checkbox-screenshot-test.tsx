@@ -1,9 +1,12 @@
 import {openStoryPage, screen} from '../test-utils';
 
-test('Checkbox', async () => {
+const DEVICES = ['MOBILE_IOS', 'MOBILE_ANDROID'] as const;
+
+test.each(DEVICES)('Checkbox', async (device) => {
     await openStoryPage({
         section: 'Components/Forms/Checkbox',
         name: 'Checkbox',
+        device,
     });
 
     const image = await page.screenshot();

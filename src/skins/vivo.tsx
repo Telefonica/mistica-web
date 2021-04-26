@@ -213,7 +213,7 @@ export const getVivoSkin: GetSkin = () => {
             brand: palette.vivoPurpleLight80,
             brandDark: palette.darkModeGrey6,
             inverse: palette.grey2,
-            neutralHigh: palette.grey4,
+            neutralHigh: palette.grey2,
             neutralMedium: palette.grey5,
             neutralLow: palette.darkModeGrey6,
             promo: palette.vivoPurpleLight80,

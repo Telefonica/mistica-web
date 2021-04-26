@@ -229,4 +229,5 @@ export type Theme = {
     colors: Colors;
     Link: LinkComponent;
     isDarkMode: boolean;
+    isIos: boolean;
 };

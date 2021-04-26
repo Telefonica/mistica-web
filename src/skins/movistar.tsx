@@ -217,7 +217,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             navigationBarDivider: palette.darkModeBlack,
             brandDark: palette.grey6,
             inverse: palette.grey2,
-            neutralHigh: palette.grey4,
+            neutralHigh: palette.grey2,
             neutralMedium: palette.grey5,
             neutralLow: palette.grey6,
             textPrimary: palette.grey2,
