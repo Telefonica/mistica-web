@@ -221,7 +221,7 @@ export const useMenu = (): {
                     width,
                     top,
                     left,
-                    maxHeight: window.innerHeight - top - MARGIN_THRESHOLD,
+                    maxHeight: Math.min(window.innerHeight - top - MARGIN_THRESHOLD, MAX_HEIGHT_DEFAULT),
                     transformOrigin: 'center top',
                 });
             }
