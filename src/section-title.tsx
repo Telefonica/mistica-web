@@ -6,11 +6,15 @@ import Inline from './inline';
 import {createUseStyles} from './jss';
 import {pxToRem} from './utils/css';
 
-const useStyles = createUseStyles(() => ({
+const useStyles = createUseStyles((theme) => ({
     right: {
         display: 'flex',
         alignItems: 'center',
-        height: pxToRem(16),
+        paddingLeft: 16,
+        height: pxToRem(20),
+        [theme.mq.mobile]: {
+            height: pxToRem(16),
+        },
     },
 }));
 
@@ -24,7 +28,7 @@ const SectionTitle: React.FC<Props> = ({children, id, right}) => {
     const classes = useStyles();
     const theme = useTheme();
     return (
-        <Inline space="between" alignItems="center">
+        <Inline space="between">
             <Text1 color={theme.colors.textSecondary} uppercase medium as="h3" id={id}>
                 {children}
             </Text1>
