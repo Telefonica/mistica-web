@@ -26,23 +26,16 @@ const useMenuOptionStyles = createUseStyles((theme) => ({
     },
 }));
 
-export type MenuOptionProps = {
+export type MenuItemProps = {
+    children?: React.ReactNode;
     selected?: boolean;
     hover?: boolean;
     value: string;
-    text: string;
     onPress: (value: string) => void;
-    renderOption?: (text: string, value: string, selected?: boolean) => React.ReactNode;
+    render?: (value: string, selected?: boolean) => React.ReactNode;
 };
 
-export const MenuOption: React.FC<MenuOptionProps> = ({
-    value,
-    text,
-    selected,
-    hover,
-    renderOption,
-    onPress,
-}) => {
+export const MenuItem: React.FC<MenuItemProps> = ({children, value, selected, hover, render, onPress}) => {
     const classes = useMenuOptionStyles();
 
     return (
@@ -57,7 +50,7 @@ export const MenuOption: React.FC<MenuOptionProps> = ({
             onPointerDown={cancelEvent}
             onClick={() => onPress(value)}
         >
-            {renderOption ? renderOption(text, value, selected) : text}
+            {children ?? render?.(value, selected) ?? value}
         </li>
     );
 };
@@ -67,7 +60,7 @@ type MenuItemsProps = {
         ref: React.RefCallback<HTMLElement>;
         className: string;
     };
-    renderOptions: ({
+    render: ({
         index,
         cursorIndex,
         text,
@@ -77,7 +70,7 @@ type MenuItemsProps = {
         cursorIndex: number | null;
         text: string;
         value: string;
-    }) => React.ReactElement<typeof MenuOption>;
+    }) => React.ReactElement<typeof MenuItem>;
     options: ReadonlyArray<{
         readonly value: string;
         readonly text: string;
@@ -89,7 +82,7 @@ type MenuItemsProps = {
 };
 
 export const MenuItems: React.FC<MenuItemsProps> = ({
-    renderOptions,
+    render,
     menuProps,
     options,
     initialIndex,
@@ -137,7 +130,7 @@ export const MenuItems: React.FC<MenuItemsProps> = ({
 
     return (
         <ul {...menuProps} role="listbox" tabIndex={-1}>
-            {options.map(({value, text}, index) => renderOptions({index, cursorIndex, text, value}))}
+            {options.map(({value, text}, index) => render({index, cursorIndex, text, value}))}
         </ul>
     );
 };

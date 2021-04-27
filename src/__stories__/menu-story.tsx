@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {fruitEntries} from './helpers';
-import {Touchable, Menu, Stack, MenuProvider, useMenu, MenuItems, MenuOption, Box, Text3, Checkbox} from '..';
+import {Touchable, Menu, Stack, MenuProvider, useMenu, MenuItems, MenuItem, Box, Text3, Checkbox} from '..';
 import SectionTitle from '../section-title';
 import {ButtonPrimary} from '../button';
 
 export default {
-    title: 'Components/Forms/Menu',
+    title: 'Components/Controls/Menu',
     component: Menu,
 };
 
@@ -43,15 +43,14 @@ const Story: React.FC = () => {
                     onItemSelectIndex={(index) => {
                         setValues(fruitOptions[index].value);
                     }}
-                    renderOptions={({index, cursorIndex, text, value: val}) => (
-                        <MenuOption
+                    render={({index, cursorIndex, text, value: val}) => (
+                        <MenuItem
                             key={val}
                             value={val}
-                            text={text}
                             selected={valuesState.includes(val)}
                             hover={cursorIndex === index}
                             onPress={() => setValues(val)}
-                            renderOption={(text, value, selected) => (
+                            render={(value, selected) => (
                                 <Box paddingY={8}>
                                     <Text3 medium as="p">
                                         <Checkbox checked={selected} name={value}>
