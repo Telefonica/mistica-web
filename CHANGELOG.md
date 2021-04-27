@@ -1,3 +1,10 @@
+## [8.7.4](https://github.com/Telefonica/mistica-web/compare/v8.7.3...v8.7.4) (2021-04-27)
+
+
+### Bug Fixes
+
+* **colors:** some wrong o2 classic colors in dark mode ([#249](https://github.com/Telefonica/mistica-web/issues/249)) ([9b96da4](https://github.com/Telefonica/mistica-web/commit/9b96da492177109dfe4f374c0e13403705526939))
+
 ## [8.7.3](https://github.com/Telefonica/mistica-web/compare/v8.7.2...v8.7.3) (2021-04-27)
 
 
