@@ -480,6 +480,18 @@ const cardSnippets = [
     },
 ];
 
+const titlesGroup = [
+    {
+        name: 'SectionTitle',
+        code: '<SectionTitle>Some title</SectionTitle>',
+    },
+    {
+        name: 'SectionTitle (with link)',
+        code:
+            '<SectionTitle right={<TextLink href="https://google.com">Link</TextLink>}>Some title</SectionTitle>',
+    },
+].map((snippet) => ({...snippet, group: 'Titles'}));
+
 type Snippet = {group: string; name: string; code: string};
 
 export default [
@@ -551,4 +563,5 @@ export default [
         code:
             '<NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: "Cuenta", url: "/consumptions"}]} />',
     },
+    ...titlesGroup,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
