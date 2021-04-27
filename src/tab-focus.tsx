@@ -25,8 +25,12 @@ const TabFocus: React.FC<Props> = ({children, disabled}) => {
         }
 
         if (isMounted) {
-            throw Error('Only one enabled TabFocus is allowed');
+            if (process.env.NODE_ENV !== 'production') {
+                console.warn('Multiple TabFocus instances');
+            }
+            return;
         }
+
         isMounted = true;
 
         const handleKeyboardEvent = (e: KeyboardEvent) => {

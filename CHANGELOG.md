@@ -1,3 +1,17 @@
+## [8.7.3](https://github.com/Telefonica/mistica-web/compare/v8.7.2...v8.7.3) (2021-04-27)
+
+
+### Bug Fixes
+
+* **NestableContext:** Allow multiple NestableContext instances. Show warning instead of throwing. ([#248](https://github.com/Telefonica/mistica-web/issues/248)) ([f243ec2](https://github.com/Telefonica/mistica-web/commit/f243ec2ea9f483c612f3e6d09f6f21dd8bd43fc1))
+
+## [8.7.2](https://github.com/Telefonica/mistica-web/compare/v8.7.1...v8.7.2) (2021-04-26)
+
+
+### Bug Fixes
+
+* **TabFocus:** warn instead of throw when already mounted ([#247](https://github.com/Telefonica/mistica-web/issues/247)) ([362ed2b](https://github.com/Telefonica/mistica-web/commit/362ed2b368428d437ab94bb34a5d877e94d1cd8d))
+
 ## [8.7.1](https://github.com/Telefonica/mistica-web/compare/v8.7.0...v8.7.1) (2021-04-26)
 
 
