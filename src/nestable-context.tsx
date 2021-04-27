@@ -47,7 +47,7 @@ const createNestableContext = <Value extends any>(defaultValue: Value): Nestable
     const DispatchContext = React.createContext<Dispatch<Value>>(() => {});
     const ValueContext = React.createContext<Value>(defaultValue);
 
-    let isProviderInstanceMounted = false;
+    let providerInstances = 0;
 
     /*
     This component may have multiple children setting a value at the same time. When a child component mounts,
@@ -78,16 +78,14 @@ const createNestableContext = <Value extends any>(defaultValue: Value): Nestable
 
     const Provider: React.FC<ProviderProps> = ({children}) => {
         React.useEffect(() => {
-            if (!isProviderInstanceMounted) {
-                isProviderInstanceMounted = true;
-            } else {
-                throw new Error('Provider is already mounted. Only one instance is allowed.');
+            providerInstances++;
+
+            if (providerInstances > 1 && process.env.NODE_ENV !== 'production') {
+                console.warn(`Multiple NestableContext instances: ${providerInstances}`);
             }
 
             return () => {
-                if (isProviderInstanceMounted) {
-                    isProviderInstanceMounted = false;
-                }
+                providerInstances--;
             };
         }, []);
 

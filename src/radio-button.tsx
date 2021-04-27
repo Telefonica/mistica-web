@@ -19,6 +19,7 @@ const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
         justifyContent: 'center',
         verticalAlign: 'middle',
         boxShadow: `inset 0 0 0 ${isIos ? 1 : 2}px ${colors.control}`,
+        background: colors.background,
         transition: 'background 0.3s, box-shadow 0.3s',
     },
     outerCircleChecked: {
