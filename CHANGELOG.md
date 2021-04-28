@@ -1,3 +1,15 @@
+# [9.0.0](https://github.com/Telefonica/mistica-web/compare/v8.7.4...v9.0.0) (2021-04-28)
+
+
+### Features
+
+* **SectionTitle:** allow to have a link ([#250](https://github.com/Telefonica/mistica-web/issues/250)) ([040ee09](https://github.com/Telefonica/mistica-web/commit/040ee090df45cbf73084e855dda500196ad8f793))
+
+
+### BREAKING CHANGES
+
+* **SectionTitle:** The `SectionTitle` paddings have been removed
+
 ## [8.7.4](https://github.com/Telefonica/mistica-web/compare/v8.7.3...v8.7.4) (2021-04-27)
 
 
