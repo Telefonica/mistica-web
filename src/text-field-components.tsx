@@ -79,7 +79,6 @@ export const Label: React.FC<LabelProps> = ({
     const classes = useLabelStyles({isShrinked, inputState, error, disabled});
     const [transitionStyle, setTransitionStyle] = React.useState('');
     const {texts} = useTheme();
-    // const label = rest.required ? labelProp : `${labelProp || ''} (${texts.formFieldOptionalLabelSuffix})`;
 
     // This way we prevent animation when field is filled as initial state
     React.useEffect(() => {
