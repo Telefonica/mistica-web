@@ -175,3 +175,22 @@ test('date-time field', async () => {
 
     expect(filledScreenshot).toMatchImageSnapshot();
 });
+
+test('Very long label should show ellipsis', async () => {
+    await openStoryPage({
+        section: 'Components/Forms/Fields',
+        name: 'Variants',
+        device: 'MOBILE_IOS',
+    });
+
+    const fieldWrapper = await screen.findByTestId('long-label');
+
+    expect(await fieldWrapper.screenshot()).toMatchImageSnapshot();
+
+    const field = await screen.findByLabelText(
+        'This TextField has a very long label and should display ellipsis (opcional)'
+    );
+    await field.type('Some text');
+
+    expect(await fieldWrapper.screenshot()).toMatchImageSnapshot();
+});

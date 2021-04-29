@@ -2,13 +2,15 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
+import {useTheme} from './hooks';
 
 export type InputState = 'focused' | 'filled' | 'default';
 
 export const DEFAULT_WIDTH = 328;
 
 const useLabelStyles = createUseStyles((theme) => ({
-    label: {
+    labelContainer: {
+        lineHeight: '1em',
         position: 'absolute',
         pointerEvents: 'none',
         left: 12,
@@ -16,6 +18,8 @@ const useLabelStyles = createUseStyles((theme) => ({
         fontSize: 16,
         transformOrigin: 0,
         height: 16,
+        display: 'flex',
+        flexDirection: 'row',
         transform: ({inputState, shrinkLabel}: {inputState: InputState; shrinkLabel: boolean}) =>
             shrinkLabel
                 ? 'translateY(8px) scale(.75)'
@@ -36,6 +40,23 @@ const useLabelStyles = createUseStyles((theme) => ({
             }
             return theme.colors.textSecondary;
         },
+        width: ({shrinkLabel, inputState}) =>
+            shrinkLabel || inputState === 'focused' || inputState === 'filled'
+                ? 'calc(130% - 24px)'
+                : 'calc(100% - 24px)',
+    },
+    labelText: {
+        '-webkit-line-clamp': 1,
+        lineClamp: 1,
+        wordBreak: 'break-all',
+        display: 'box',
+        overflow: 'hidden',
+        boxOrient: 'vertical',
+        flexShrink: 1,
+        lineHeight: '1.2em',
+        height: '1.2em',
+        position: 'relative',
+        top: '-0.1em',
     },
 }));
 
@@ -70,7 +91,7 @@ export const Label: React.FC<LabelProps> = ({
         const tid = setTimeout(() => {
             // Check environment or we will get a warning if this gets executed outside @testing-library/act
             if (process.env.NODE_ENV !== 'test') {
-                setTransitionStyle('transform 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms');
+                setTransitionStyle('transform 150ms, width 150ms');
             }
         });
         return () => {
@@ -79,8 +100,13 @@ export const Label: React.FC<LabelProps> = ({
     }, []);
 
     return (
-        <label className={classes.label} htmlFor={forId} style={{...style, transition: transitionStyle}}>
-            {children}
+        <label
+            className={classes.labelContainer}
+            htmlFor={forId}
+            style={{...style, transition: transitionStyle}}
+        >
+            <span className={classes.labelText}>{children}</span>
+            {isOptional ? <span>&nbsp;({texts.formFieldOptionalLabelSuffix})</span> : null}
         </label>
     );
 };
