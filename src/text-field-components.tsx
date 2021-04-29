@@ -20,14 +20,9 @@ const useLabelStyles = createUseStyles((theme) => ({
         height: 16,
         display: 'flex',
         flexDirection: 'row',
-        transform: ({inputState, shrinkLabel}: {inputState: InputState; shrinkLabel: boolean}) =>
-            shrinkLabel
-                ? 'translateY(8px) scale(.75)'
-                : {
-                      focused: 'translateY(8px) scale(.75)',
-                      filled: 'translateY(8px) scale(.75)',
-                      default: 'translateY(20px) scale(1)',
-                  }[inputState],
+        transform: ({isShrinked}) =>
+            isShrinked ? 'translateY(8px) scale(.75)' : 'translateY(20px) scale(1)',
+
         color: ({inputState, error, disabled}) => {
             if (inputState === 'default' && disabled) {
                 return theme.colors.textDisabled;
@@ -40,10 +35,7 @@ const useLabelStyles = createUseStyles((theme) => ({
             }
             return theme.colors.textSecondary;
         },
-        width: ({shrinkLabel, inputState}) =>
-            shrinkLabel || inputState === 'focused' || inputState === 'filled'
-                ? 'calc(130% - 24px)'
-                : 'calc(100% - 24px)',
+        width: ({isShrinked}) => (isShrinked ? 'calc(130% - 24px)' : 'calc(100% - 24px)'),
     },
     labelText: {
         '-webkit-line-clamp': 1,
@@ -53,6 +45,8 @@ const useLabelStyles = createUseStyles((theme) => ({
         overflow: 'hidden',
         boxOrient: 'vertical',
         flexShrink: 1,
+        // this is needed because at 1em, font descendants are cutted when using overflow hidden
+        // setting a higher height is not an option because it shows the next line
         lineHeight: '1.2em',
         height: '1.2em',
         position: 'relative',
@@ -81,7 +75,8 @@ export const Label: React.FC<LabelProps> = ({
     style,
     isOptional,
 }) => {
-    const classes = useLabelStyles({shrinkLabel, inputState, error, disabled});
+    const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
+    const classes = useLabelStyles({isShrinked, inputState, error, disabled});
     const [transitionStyle, setTransitionStyle] = React.useState('');
     const {texts} = useTheme();
     // const label = rest.required ? labelProp : `${labelProp || ''} (${texts.formFieldOptionalLabelSuffix})`;
