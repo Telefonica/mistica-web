@@ -11,7 +11,7 @@ declare type LabelProps = {
   children: string,
   disabled?: boolean,
   style?: CssStyle,
-  isOptional?: boolean,
+  optional?: boolean,
 };
 declare export var Label: React.ComponentType<LabelProps>;
 declare type HelperTextProps = {

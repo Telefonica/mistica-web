@@ -405,7 +405,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                         inputState={inputState}
                         shrinkLabel={shrinkLabel}
                         disabled={rest.disabled}
-                        isOptional={!rest.required}
+                        optional={!rest.required}
                     >
                         {label}
                     </Label>

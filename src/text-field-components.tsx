@@ -62,7 +62,7 @@ type LabelProps = {
     children: string;
     disabled?: boolean;
     style?: React.CSSProperties;
-    isOptional?: boolean;
+    optional?: boolean;
 };
 
 export const Label: React.FC<LabelProps> = ({
@@ -73,7 +73,7 @@ export const Label: React.FC<LabelProps> = ({
     children,
     disabled,
     style,
-    isOptional,
+    optional,
 }) => {
     const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
     const classes = useLabelStyles({isShrinked, inputState, error, disabled});
@@ -100,7 +100,7 @@ export const Label: React.FC<LabelProps> = ({
             style={{...style, transition: transitionStyle}}
         >
             <span className={classes.labelText}>{children}</span>
-            {isOptional ? <span>&nbsp;({texts.formFieldOptionalLabelSuffix})</span> : null}
+            {optional ? <span>&nbsp;({texts.formFieldOptionalLabelSuffix})</span> : null}
         </label>
     );
 };
