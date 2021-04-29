@@ -47,6 +47,7 @@ type LabelProps = {
     children: string;
     disabled?: boolean;
     style?: React.CSSProperties;
+    isOptional?: boolean;
 };
 
 export const Label: React.FC<LabelProps> = ({
@@ -57,9 +58,12 @@ export const Label: React.FC<LabelProps> = ({
     children,
     disabled,
     style,
+    isOptional,
 }) => {
     const classes = useLabelStyles({shrinkLabel, inputState, error, disabled});
     const [transitionStyle, setTransitionStyle] = React.useState('');
+    const {texts} = useTheme();
+    // const label = rest.required ? labelProp : `${labelProp || ''} (${texts.formFieldOptionalLabelSuffix})`;
 
     // This way we prevent animation when field is filled as initial state
     React.useEffect(() => {
