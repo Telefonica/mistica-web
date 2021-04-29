@@ -10,7 +10,7 @@ type StylesProps = {
 
 const useStyles = createUseStyles(({colors, isDarkMode}) => ({
     boxed: {
-        backgroundColor: ({isInverseInside}: StylesProps) =>
+        background: ({isInverseInside}: StylesProps) =>
             isInverseInside && !isDarkMode ? colors.backgroundBrand : colors.backgroundContainer,
 
         border: ({isInverseOutside, isInverseInside}: StylesProps) => {
