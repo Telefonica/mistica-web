@@ -13,7 +13,7 @@ const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 
 const Story: React.FC = () => {
     const {
-        isOpen,
+        isMenuOpen,
         closeMenu,
         targetProps: {ref: targetRef, onPress: onPressTarget},
         menuProps,
@@ -31,16 +31,16 @@ const Story: React.FC = () => {
     return (
         <>
             <Touchable elementRef={targetRef} onPress={onPressTarget} style={{width: 'auto'}}>
-                <ButtonPrimary fake>{isOpen ? 'Close' : 'Open'}</ButtonPrimary>
+                <ButtonPrimary fake>{isMenuOpen ? 'Close' : 'Open'}</ButtonPrimary>
             </Touchable>
 
             <Menu>
                 <MenuItems
                     menuProps={menuProps}
-                    options={fruitOptions}
-                    isOpen={isOpen}
+                    items={fruitOptions}
+                    isMenuOpen={isMenuOpen}
                     closeMenu={closeMenu}
-                    onItemSelectIndex={(index) => {
+                    onSelect={(index) => {
                         setValues(fruitOptions[index].value);
                     }}
                     render={({index, cursorIndex, text, value: val}) => (
@@ -48,7 +48,7 @@ const Story: React.FC = () => {
                             key={val}
                             value={val}
                             selected={valuesState.includes(val)}
-                            hover={cursorIndex === index}
+                            hovered={cursorIndex === index}
                             onPress={() => setValues(val)}
                             render={(value, selected) => (
                                 <Box paddingY={8}>

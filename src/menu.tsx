@@ -7,11 +7,11 @@ import {cancelEvent} from './utils/dom';
 
 const MAX_HEIGHT_DEFAULT = 416;
 
-const useMenuOptionStyles = createUseStyles((theme) => ({
-    menuOptionSelected: {
+const useMenuItemStyles = createUseStyles((theme) => ({
+    menuItemSelected: {
         backgroundColor: 'rgba(0, 0, 0, 0.14)',
     },
-    menuOption: {
+    menuItem: {
         color: theme.colors.textPrimary,
         lineHeight: 1.5,
         padding: '6px 16px',
@@ -29,14 +29,14 @@ const useMenuOptionStyles = createUseStyles((theme) => ({
 export type MenuItemProps = {
     children?: React.ReactNode;
     selected?: boolean;
-    hover?: boolean;
+    hovered?: boolean;
     value: string;
     onPress: (value: string) => void;
     render?: (value: string, selected?: boolean) => React.ReactNode;
 };
 
-export const MenuItem: React.FC<MenuItemProps> = ({children, value, selected, hover, render, onPress}) => {
-    const classes = useMenuOptionStyles();
+export const MenuItem: React.FC<MenuItemProps> = ({children, value, selected, hovered, render, onPress}) => {
+    const classes = useMenuItemStyles();
 
     return (
         <li
@@ -44,8 +44,8 @@ export const MenuItem: React.FC<MenuItemProps> = ({children, value, selected, ho
             aria-selected={selected}
             key={value}
             data-value={value}
-            className={classNames(classes.menuOption, {
-                [classes.menuOptionSelected]: hover || selected,
+            className={classNames(classes.menuItem, {
+                [classes.menuItemSelected]: hovered || selected,
             })}
             onPointerDown={cancelEvent}
             onClick={() => onPress(value)}
@@ -71,24 +71,24 @@ type MenuItemsProps = {
         text: string;
         value: string;
     }) => React.ReactElement<typeof MenuItem>;
-    options: ReadonlyArray<{
+    items: ReadonlyArray<{
         readonly value: string;
         readonly text: string;
     }>;
     initialIndex?: number | null;
-    isOpen: boolean;
+    isMenuOpen: boolean;
     closeMenu?: () => void;
-    onItemSelectIndex: (index: number) => void;
+    onSelect: (index: number) => void;
 };
 
 export const MenuItems: React.FC<MenuItemsProps> = ({
     render,
     menuProps,
-    options,
+    items,
     initialIndex,
-    isOpen,
+    isMenuOpen,
     closeMenu,
-    onItemSelectIndex,
+    onSelect,
 }) => {
     const [cursorIndex, setCursorIndex] = React.useState<number | null>(initialIndex || null);
 
@@ -105,20 +105,20 @@ export const MenuItems: React.FC<MenuItemsProps> = ({
         };
 
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (isOpen) {
+            if (isMenuOpen) {
                 if (e.keyCode === TAB) {
                     cancelEvent(e);
                 }
                 if (e.keyCode === ENTER || e.keyCode === SPACE) {
                     cancelEvent(e);
                     if (cursorIndex !== null) {
-                        onItemSelectIndex(cursorIndex);
+                        onSelect(cursorIndex);
                     }
                     closeMenu?.();
                 }
             }
             // so we don't change the cursorIndex while menu is closing
-            if (isOpen) {
+            if (isMenuOpen) {
                 updateCursorIndex(e);
             }
         };
@@ -130,25 +130,25 @@ export const MenuItems: React.FC<MenuItemsProps> = ({
 
     return (
         <ul {...menuProps} role="listbox" tabIndex={-1}>
-            {options.map(({value, text}, index) => render({index, cursorIndex, text, value}))}
+            {items.map(({value, text}, index) => render({index, cursorIndex, text, value}))}
         </ul>
     );
 };
 
 type MenuContextState = {
-    isOpen: boolean;
-    setIsOpen: (isOpen: boolean) => void;
+    isMenuOpen: boolean;
+    setIsMenuOpen: (isOpen: boolean) => void;
 };
 
 const MenuContext = React.createContext<MenuContextState>({
-    isOpen: false,
-    setIsOpen: () => {},
+    isMenuOpen: false,
+    setIsMenuOpen: () => {},
 });
 
 export const MenuProvider: React.FC = ({children}) => {
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-    return <MenuContext.Provider value={{isOpen, setIsOpen}}>{children}</MenuContext.Provider>;
+    return <MenuContext.Provider value={{isMenuOpen, setIsMenuOpen}}>{children}</MenuContext.Provider>;
 };
 
 const useStyles = createUseStyles(({colors}) => ({
@@ -157,18 +157,18 @@ const useStyles = createUseStyles(({colors}) => ({
         padding: 0,
         listStyleType: 'none',
         position: 'absolute',
-        top: ({optionsComputedProps}) => optionsComputedProps.top,
-        left: ({optionsComputedProps}) => optionsComputedProps.left,
-        width: ({optionsComputedProps}) => optionsComputedProps.width,
+        top: ({itemsComputedProps}) => itemsComputedProps.top,
+        left: ({itemsComputedProps}) => itemsComputedProps.left,
+        width: ({itemsComputedProps}) => itemsComputedProps.width,
         borderRadius: 4,
         boxShadow:
             '0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)',
         backgroundColor: colors.backgroundContainer,
-        transformOrigin: ({optionsComputedProps}) => optionsComputedProps.transformOrigin,
+        transformOrigin: ({itemsComputedProps}) => itemsComputedProps.transformOrigin,
         transition: 'opacity .03s linear,transform .12s cubic-bezier(0,0,.2,1) .15s',
-        opacity: ({animateShowOptions}) => (animateShowOptions ? 1 : 0),
-        transform: ({animateShowOptions}) => (animateShowOptions ? 'scale(1)' : 'scale(0)'),
-        maxHeight: ({optionsComputedProps}) => optionsComputedProps.maxHeight,
+        opacity: ({animateShowItems}) => (animateShowItems ? 1 : 0),
+        transform: ({animateShowItems}) => (animateShowItems ? 'scale(1)' : 'scale(0)'),
+        maxHeight: ({itemsComputedProps}) => itemsComputedProps.maxHeight,
         overflowY: 'auto',
     },
 }));
@@ -183,19 +183,19 @@ export const useMenu = (): {
         onPress: (event: React.MouseEvent | React.KeyboardEvent) => void;
     };
     closeMenu: () => void;
-    isOpen: boolean;
+    isMenuOpen: boolean;
 } => {
-    const [animateShowOptions, setAnimateShowOptions] = React.useState(false);
-    const {isOpen, setIsOpen} = React.useContext(MenuContext);
+    const [animateShowItems, setAnimateShowItems] = React.useState(false);
+    const {isMenuOpen, setIsMenuOpen} = React.useContext(MenuContext);
     const [target, setTarget] = React.useState<HTMLElement | null>(null);
     const [menu, setMenu] = React.useState<Element | null>(null);
-    const [optionsComputedProps, setOptionsComputedProps] = React.useState({});
+    const [itemsComputedProps, setitemsComputedProps] = React.useState({});
 
     React.useEffect(() => {
         const targetRect = target?.getBoundingClientRect();
 
-        if (!menu || !targetRect || !isOpen) {
-            setAnimateShowOptions(false);
+        if (!menu || !targetRect || !isMenuOpen) {
+            setAnimateShowItems(false);
             return;
         }
 
@@ -209,7 +209,7 @@ export const useMenu = (): {
             const availableSpaceBottom = window.innerHeight - top;
             if (selectTop /* this is the available space on top */ > availableSpaceBottom) {
                 const newTop = selectTop - spaceTaken;
-                setOptionsComputedProps({
+                setitemsComputedProps({
                     width,
                     left,
                     top: Math.max(newTop, MARGIN_THRESHOLD),
@@ -217,7 +217,7 @@ export const useMenu = (): {
                     transformOrigin: 'center bottom',
                 });
             } else {
-                setOptionsComputedProps({
+                setitemsComputedProps({
                     width,
                     top,
                     left,
@@ -227,7 +227,7 @@ export const useMenu = (): {
             }
         } else {
             // if it fits on bottom
-            setOptionsComputedProps({
+            setitemsComputedProps({
                 width,
                 top,
                 left,
@@ -236,24 +236,24 @@ export const useMenu = (): {
             });
         }
 
-        if (isOpen) {
+        if (isMenuOpen) {
             requestAnimationFrame(() => {
-                setAnimateShowOptions(true);
+                setAnimateShowItems(true);
             });
         }
-    }, [isOpen, menu, target]);
+    }, [isMenuOpen, menu, target]);
 
     const classes = useStyles({
-        optionsComputedProps,
-        animateShowOptions,
+        itemsComputedProps,
+        animateShowItems,
     });
 
     const targetProps = React.useMemo(
         () => ({
             ref: setTarget,
-            onPress: () => setIsOpen(!isOpen),
+            onPress: () => setIsMenuOpen(!isMenuOpen),
         }),
-        [setIsOpen, isOpen]
+        [setIsMenuOpen, isMenuOpen]
     );
 
     const menuProps = React.useMemo(
@@ -266,14 +266,14 @@ export const useMenu = (): {
 
     return React.useMemo(
         () => ({
-            isOpen,
+            isMenuOpen,
             targetProps,
             menuProps,
             closeMenu: () => {
-                setIsOpen(false);
+                setIsMenuOpen(false);
             },
         }),
-        [isOpen, targetProps, menuProps, setIsOpen]
+        [isMenuOpen, targetProps, menuProps, setIsMenuOpen]
     );
 };
 
@@ -282,16 +282,16 @@ export type MenuProps = {
 };
 
 const Menu: React.FC<MenuProps> = ({children}) => {
-    const {isOpen, setIsOpen} = React.useContext(MenuContext);
+    const {isMenuOpen, setIsMenuOpen} = React.useContext(MenuContext);
 
     React.useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (isOpen) {
+            if (isMenuOpen) {
                 if (e.keyCode === TAB) {
                     cancelEvent(e);
                 }
                 if (e.keyCode === ESC) {
-                    setIsOpen(false);
+                    setIsMenuOpen(false);
                 }
             }
         };
@@ -301,10 +301,10 @@ const Menu: React.FC<MenuProps> = ({children}) => {
         };
     });
 
-    return isOpen ? (
+    return isMenuOpen ? (
         <Overlay
             onPress={(e) => {
-                setIsOpen(false);
+                setIsMenuOpen(false);
                 cancelEvent(e);
             }}
             disableScroll
