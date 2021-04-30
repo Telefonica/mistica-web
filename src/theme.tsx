@@ -28,6 +28,7 @@ const TEXTS_ES = {
     formCreditCardNumberError: 'No es un número de tarjeta valido',
     formDateOutOfRangeError: 'Fecha no permitida',
     formEmailError: 'Email incorrecto',
+    formIbanError: 'IBAN incorrecto',
     closeButtonLabel: 'Cerrar',
     formSearchClear: 'Borrar búsqueda',
 };
