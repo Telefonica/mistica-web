@@ -54,6 +54,7 @@ const TEXTS_EN: ThemeTexts = {
     formCreditCardNumberError: 'The card number is not valid',
     formDateOutOfRangeError: 'Invalid date',
     formEmailError: 'Invalid email',
+    formIbanError: 'Invalid IBAN',
     closeButtonLabel: 'Close',
     formSearchClear: 'Clear search',
 };

@@ -15,6 +15,8 @@ const ibanLengthByCountry = {
     BR: 29,
 };
 
+const MAX_IBAN_LENGTH = 32; // The max allowed length is 32 chars, for IBANs from Saint Lucia
+
 /**
  * Big int implementation of module
  */
@@ -78,17 +80,17 @@ const formatIban = (number: string): string => {
 
 const getInputMaxLength = (currentValue: string) => {
     const countryCode = currentValue.substr(0, 2);
+    let expectedLength = MAX_IBAN_LENGTH;
     if (countryCode && isValidCountryCode(countryCode)) {
-        const expectedLength = (ibanLengthByCountry as any)[countryCode];
-        if (expectedLength) {
-            // iban is formatted in groups of 4 chars separated by a space,
-            // so we need to add the spaces count to the allowed max length
-            const numSpaces = Math.ceil(expectedLength / 4) - 1;
-            return expectedLength + numSpaces;
+        const knownCountryLength = (ibanLengthByCountry as any)[countryCode];
+        if (knownCountryLength) {
+            expectedLength = knownCountryLength;
         }
     }
-    // no max length
-    return undefined;
+    // IBAN is formatted in groups of 4 chars separated by a space,
+    // so we need to add the spaces count to the allowed max length
+    const numSpaces = Math.ceil(expectedLength / 4) - 1;
+    return expectedLength + numSpaces;
 };
 
 type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onInput'> & {
