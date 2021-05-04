@@ -8,12 +8,15 @@ export type InputState = 'focused' | 'filled' | 'default';
 
 export const DEFAULT_WIDTH = 328;
 
+const LABEL_LEFT_POSITION = 12;
+const LABEL_SCALE = 0.75;
+
 const useLabelStyles = createUseStyles((theme) => ({
     labelContainer: {
         lineHeight: '1em',
         position: 'absolute',
         pointerEvents: 'none',
-        left: 12,
+        left: LABEL_LEFT_POSITION,
         top: 0,
         fontSize: 16,
         transformOrigin: 0,
@@ -21,7 +24,7 @@ const useLabelStyles = createUseStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         transform: ({isShrinked}) =>
-            isShrinked ? 'translateY(8px) scale(.75)' : 'translateY(20px) scale(1)',
+            isShrinked ? `translateY(8px) scale(${LABEL_SCALE})` : 'translateY(20px) scale(1)',
 
         color: ({inputState, error, disabled}) => {
             if (inputState === 'default' && disabled) {
@@ -35,7 +38,10 @@ const useLabelStyles = createUseStyles((theme) => ({
             }
             return theme.colors.textSecondary;
         },
-        width: ({isShrinked}) => (isShrinked ? 'calc(130% - 24px)' : 'calc(100% - 24px)'),
+        width: ({isShrinked}) =>
+            isShrinked
+                ? `calc((100% - ${LABEL_LEFT_POSITION * 2}px) / ${LABEL_SCALE})`
+                : `calc(100% - ${LABEL_LEFT_POSITION * 2}px)`,
     },
     labelText: {
         '-webkit-line-clamp': 1,
