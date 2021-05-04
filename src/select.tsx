@@ -376,6 +376,7 @@ const Select: React.FC<SelectProps> = ({
                             : 'default'
                     }
                     disabled={disabled}
+                    optional={optional}
                 >
                     {label}
                 </Label>

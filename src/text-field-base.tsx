@@ -167,15 +167,15 @@ const useStyles = createUseStyles((theme) => ({
     },
     textArea: {
         resize: 'none',
-        marginTop: ({label}) => (label ? 24 : 16),
+        marginTop: ({hasLabel}) => (hasLabel ? 24 : 16),
         paddingBottom: 8,
         lineHeight: '24px',
         ...commonInputStyles(theme),
     },
     input: {
         position: 'relative',
-        paddingTop: ({label}) => (label ? 24 : 16),
-        paddingBottom: ({label}) => (label ? 8 : 16),
+        paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
+        paddingBottom: ({hasLabel}) => (hasLabel ? 8 : 16),
         height: '100%',
         ...commonInputStyles(theme),
         WebkitAppearance: 'none',
@@ -242,8 +242,8 @@ const useStyles = createUseStyles((theme) => ({
         position: 'absolute',
     },
     prefix: {
-        paddingTop: ({label}) => (label ? 25 : 16),
-        paddingBottom: ({label}) => (label ? 8 : 16),
+        paddingTop: ({hasLabel}) => (hasLabel ? 25 : 16),
+        paddingBottom: ({hasLabel}) => (hasLabel ? 8 : 16),
         paddingLeft: 12,
         paddingRight: 16,
         display: 'flex',
@@ -263,7 +263,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         {
             error,
             helperText,
-            label: labelProp,
+            label,
             inputProps,
             inputRef,
             defaultValue,
@@ -291,11 +291,9 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
         );
-        const {texts, platformOverrides} = useTheme();
+        const {platformOverrides} = useTheme();
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
-        const label = rest.required
-            ? labelProp
-            : `${labelProp || ''} (${texts.formFieldOptionalLabelSuffix})`;
+        const hasLabel = !!label || !rest.required;
 
         // this shrinkLabel override is a workaround because I was unable to find a way to hide date
         // and date-time native placeholders when the input is not required
@@ -308,7 +306,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             endIcon,
             startIcon,
             shrinkLabel,
-            label,
+            hasLabel,
             prefix,
             multiline,
             type: rest.type,
@@ -407,6 +405,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                         inputState={inputState}
                         shrinkLabel={shrinkLabel}
                         disabled={rest.disabled}
+                        optional={!rest.required}
                     >
                         {label}
                     </Label>
