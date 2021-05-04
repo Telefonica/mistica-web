@@ -76,6 +76,21 @@ const formatIban = (number: string): string => {
     return sanitizedNumber.match(/.{1,4}/g)?.join(' ') ?? sanitizedNumber;
 };
 
+const getInputMaxLength = (currentValue: string) => {
+    const countryCode = currentValue.substr(0, 2);
+    if (countryCode && isValidCountryCode(countryCode)) {
+        const expectedLength = (ibanLengthByCountry as any)[countryCode];
+        if (expectedLength) {
+            // iban is formatted in groups of 4 chars separated by a space,
+            // so we need to add the spaces count to the allowed max length
+            const numSpaces = Math.ceil(expectedLength / 4) - 1;
+            return expectedLength + numSpaces;
+        }
+    }
+    // no max length
+    return undefined;
+};
+
 type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onInput'> & {
     inputRef?: React.Ref<HTMLInputElement>;
     value?: string;
@@ -113,6 +128,7 @@ const IbanInput: React.FC<Props> = ({inputRef, value, defaultValue, onChange, ..
     return (
         <input
             {...other}
+            maxLength={getInputMaxLength(rifm.value)}
             value={rifm.value}
             onChange={rifm.onChange}
             type="text"
