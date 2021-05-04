@@ -544,7 +544,7 @@ export default [
     ...['promo', 'brand', 'success', 'warning', 'error', 'inverse'].map((colorName) => ({
         group: 'Tag',
         name: `Tag (${colorName})`,
-        code: `<Tag color={colors.${colorName}}>Priority</Tag>`,
+        code: `<Tag color={colors.${colorName}}>${colorName}</Tag>`,
     })),
     {
         group: 'Progress',
