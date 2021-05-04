@@ -149,6 +149,16 @@ export const Variants: StoryComponent = () => {
                 <TextField name="text" label="Label" />
             </StorySection>
 
+            <StorySection title="With long label">
+                <div data-testid="long-label">
+                    <TextField
+                        name="long-label"
+                        label="This TextField has a very long label and should display ellipsis"
+                        optional
+                    />
+                </div>
+            </StorySection>
+
             <StorySection title="With label and placeholder">
                 <TextField name="text" label="Label" placeholder="Placeholder" />
             </StorySection>
