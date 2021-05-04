@@ -73,14 +73,7 @@ const isValidIban = (iban: string): boolean => {
 
 const formatIban = (number: string): string => {
     const sanitizedNumber = number.replace(/[^\dA-Za-z]/g, '');
-    const countryCode = sanitizedNumber.substr(0, 2);
-    // const checkDigits = number.substr(2, 2);
-    switch (countryCode) {
-        case 'ES':
-        default:
-            return sanitizedNumber.match(/.{1,4}/g)?.join(' ') ?? sanitizedNumber;
-    }
-    return sanitizedNumber;
+    return sanitizedNumber.match(/.{1,4}/g)?.join(' ') ?? sanitizedNumber;
 };
 
 type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onInput'> & {
