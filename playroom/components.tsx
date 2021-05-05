@@ -13,7 +13,7 @@ import {
     ThemeContextProvider,
 } from '../src';
 import {useIsOsDarkModeEnabled} from '../src/theme-context-provider';
-import {Movistar, Movistar_Prominent, Vivo, O2, O2_Classic} from './themes';
+import {Movistar, Vivo, O2, O2_Classic} from './themes';
 import {useOverrideTheme} from './frame-component';
 
 import type {ThemeConfig, ColorScheme, SkinName} from '../src';
@@ -88,14 +88,10 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-const themesMap: {[skinName: string]: {themeConfig: ThemeConfig; text: string}} = {
+const themesMap: {[skinName in SkinName]: {themeConfig: ThemeConfig; text: string}} = {
     Movistar: {
         text: 'Movistar',
         themeConfig: Movistar,
-    },
-    'Movistar-Prominent': {
-        text: 'Movistar (prominent)',
-        themeConfig: Movistar_Prominent,
     },
     Vivo: {
         text: 'Vivo',

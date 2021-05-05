@@ -7,6 +7,7 @@ const common = {
     // when playroom height is too short.
     mediaQueries: {...mediaQueriesConfig, desktopOrTabletMinHeight: 0},
     enableTabFocus: true,
+    colorScheme: 'auto',
     i18n: {locale: 'en-US', phoneNumberFormattingRegionCode: 'ES'},
 } as const;
 
