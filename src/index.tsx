@@ -99,7 +99,7 @@ export type {ThemeConfig, ColorScheme} from './theme';
 export {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 
 export type {Skin, SkinName} from './skins/types';
-export {VIVO_SKIN, O2_CLASSIC_SKIN, O2_SKIN, MOVISTAR_SKIN} from './skins/constants';
+export {VIVO_SKIN, O2_CLASSIC_SKIN, O2_SKIN, MOVISTAR_SKIN, PROSEGUR_SKIN} from './skins/constants';
 export {getSkinByName} from './skins/utils';
 export {getVivoSkin} from './skins/vivo';
 export {getMovistarSkin} from './skins/movistar';
@@ -110,6 +110,7 @@ export {palette as vivoPalette} from './skins/vivo';
 export {palette as movistarPalette} from './skins/movistar';
 export {palette as o2Palette} from './skins/o2';
 export {palette as o2ClassicPalette} from './skins/o2-classic';
+export {palette as prosegurPalette} from './skins/prosegur';
 
 export type {Locale} from './utils/locale';
 export type {TrackingEvent} from './utils/types';

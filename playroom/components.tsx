@@ -89,6 +89,10 @@ const useStyles = createUseStyles(() => ({
 }));
 
 const themesMap: {[skinName in SkinName]: {themeConfig: ThemeConfig; text: string}} = {
+    Prosegur: {
+        text: 'Prosegur',
+        themeConfig: Prosegur,
+    },
     Movistar: {
         text: 'Movistar',
         themeConfig: Movistar,
