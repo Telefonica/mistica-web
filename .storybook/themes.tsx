@@ -1,4 +1,4 @@
-import {getMovistarSkin, getO2Skin, getO2ClassicSkin, getVivoSkin} from '../src';
+import {getMovistarSkin, getO2Skin, getO2ClassicSkin, getVivoSkin, getProsegurSkin} from '../src';
 
 export const Movistar = {
     i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
@@ -25,4 +25,9 @@ export const Vivo = {
     skin: getVivoSkin(),
 } as const;
 
-export const AVAILABLE_THEMES = [Movistar, O2, O2_Classic, Vivo];
+export const Prosegur = {
+    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+    skin: getProsegurSkin(),
+} as const;
+
+export const AVAILABLE_THEMES = [Movistar, O2, O2_Classic, Vivo, Prosegur];

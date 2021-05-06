@@ -105,6 +105,7 @@ export {getVivoSkin} from './skins/vivo';
 export {getMovistarSkin} from './skins/movistar';
 export {getO2Skin} from './skins/o2';
 export {getO2ClassicSkin} from './skins/o2-classic';
+export {getProsegurSkin} from './skins/prosegur';
 export {palette as vivoPalette} from './skins/vivo';
 export {palette as movistarPalette} from './skins/movistar';
 export {palette as o2Palette} from './skins/o2';
