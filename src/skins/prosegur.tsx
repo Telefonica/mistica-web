@@ -1,5 +1,5 @@
 import {applyAlpha} from '../utils/color';
-import {MOVISTAR_SKIN} from './constants';
+import {PROSEGUR_SKIN} from './constants';
 
 import type {GetSkin, Skin} from './types';
 
@@ -40,7 +40,7 @@ export const palette = {
 
 export const getProsegurSkin: GetSkin = (variant) => {
     const skin: Skin = {
-        name: MOVISTAR_SKIN,
+        name: PROSEGUR_SKIN,
         colors: {
             // BACKGROUNDS
             appBarBackground: palette.white,
