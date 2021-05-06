@@ -4,15 +4,15 @@ import {MOVISTAR_SKIN} from './constants';
 import type {GetSkin, Skin} from './types';
 
 export const palette = {
-    movistarBlue: '#019DF4',
+    movistarBlue: '#019BF2',
     movistarBlueDark: '#008EDD',
     movistarBlueLight50: '#80CEF9',
     movistarBlueLight30: '#B3E1FB',
     movistarBlueLight10: '#E6F5FD',
-    movistarGreen: '#5CB615',
-    movistarGreenDark: '#499110',
-    movistarGreenLight50: '#ADDA8A',
-    movistarGreenLight30: '#CEE9B9',
+    prosegurYellow: '#FFD102',
+    prosegurYellowDark: '#499110',
+    prosegurYellowLight50: '#ADDA8A',
+    prosegurYellowLight30: '#CEE9B9',
     pepper: '#FF374A',
     pepperDark: '#D73241',
     pepperLight30: '#FFC3C8',
@@ -60,7 +60,7 @@ export const getProsegurSkin: GetSkin = (variant) => {
             borderLight: palette.grey1,
             border: palette.grey3,
             borderDark: palette.grey5,
-            borderSelected: palette.movistarGreen,
+            borderSelected: palette.prosegurYellow,
 
             // BUTTONS
             buttonDangerBackground: palette.pepper,
@@ -71,30 +71,30 @@ export const getProsegurSkin: GetSkin = (variant) => {
             buttonLinkBackgroundSelected: palette.movistarBlueLight10,
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
 
-            buttonPrimaryBackground: palette.movistarGreen,
-            buttonPrimaryBackgroundDisabled: palette.movistarGreenLight50,
+            buttonPrimaryBackground: '#FFD102',
+            buttonPrimaryBackgroundDisabled: palette.prosegurYellowLight50,
             buttonPrimaryBackgroundDisabledInverse: palette.movistarBlueLight50,
             buttonPrimaryBackgroundInverse: palette.white,
-            buttonPrimaryBackgroundSelected: palette.movistarGreenDark,
-            buttonPrimaryBackgroundHover: palette.movistarGreenDark, // web only
+            buttonPrimaryBackgroundSelected: palette.prosegurYellowDark,
+            buttonPrimaryBackgroundHover: palette.prosegurYellowDark, // web only
             buttonPrimaryBackgroundSelectedInverse: palette.movistarBlueLight50,
 
-            buttonSecondaryBackground: palette.movistarGreen,
-            buttonSecondaryBackgroundDisabled: palette.movistarGreenLight50,
-            buttonSecondaryBackgroundSelected: palette.movistarGreenDark,
+            buttonSecondaryBackground: palette.prosegurYellow,
+            buttonSecondaryBackgroundDisabled: palette.prosegurYellowLight50,
+            buttonSecondaryBackgroundSelected: palette.prosegurYellowDark,
             buttonSecondaryBorderDisabledInverse: palette.movistarBlueLight50,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.movistarBlueLight50,
 
-            textButtonPrimary: palette.white,
+            textButtonPrimary: '#3A3C3F',
             textButtonPrimaryDisabled: palette.white,
             textButtonPrimaryInverse: palette.movistarBlue,
             textButtonPrimaryInverseDisabled: palette.movistarBlueLight30,
             textButtonPrimaryInverseSelected: palette.movistarBlue,
 
-            textButtonSecondary: palette.movistarGreen,
-            textButtonSecondaryDisabled: palette.movistarGreenLight50,
-            textButtonSecondarySelected: palette.movistarGreenDark,
+            textButtonSecondary: palette.prosegurYellow,
+            textButtonSecondaryDisabled: palette.prosegurYellowLight50,
+            textButtonSecondarySelected: palette.prosegurYellowDark,
             textButtonSecondaryInverse: palette.white,
             textButtonSecondaryInverseDisabled: palette.movistarBlueLight50,
             textButtonSecondaryInverseSelected: palette.white,
@@ -130,7 +130,7 @@ export const getProsegurSkin: GetSkin = (variant) => {
             feedbackInfoBackground: palette.grey6,
 
             // GLOBAL
-            brand: palette.movistarBlue,
+            brand: palette.prosegurYellow,
             brandDark: palette.movistarBlueDark,
             inverse: palette.white,
             neutralHigh: palette.grey6,
@@ -148,7 +148,7 @@ export const getProsegurSkin: GetSkin = (variant) => {
 
             // STATES
             error: palette.pepper,
-            success: palette.movistarGreen,
+            success: palette.prosegurYellow,
             warning: palette.egg,
 
             // BARS TEXTS
@@ -177,19 +177,19 @@ export const getProsegurSkin: GetSkin = (variant) => {
             buttonDangerBackgroundDisabled: applyAlpha(palette.white, 0.05),
             buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.05),
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.05),
-            buttonPrimaryBackground: palette.movistarGreen,
+            buttonPrimaryBackground: palette.prosegurYellow,
             buttonPrimaryBackgroundDisabled: applyAlpha(palette.white, 0.05),
             buttonPrimaryBackgroundDisabledInverse: applyAlpha(palette.white, 0.05),
-            buttonPrimaryBackgroundInverse: palette.movistarGreen,
-            buttonPrimaryBackgroundSelected: palette.movistarGreenDark,
-            buttonPrimaryBackgroundHover: palette.movistarGreenDark, // web only
-            buttonPrimaryBackgroundSelectedInverse: palette.movistarGreenDark,
-            buttonSecondaryBackground: palette.movistarGreen,
+            buttonPrimaryBackgroundInverse: palette.prosegurYellow,
+            buttonPrimaryBackgroundSelected: palette.prosegurYellowDark,
+            buttonPrimaryBackgroundHover: palette.prosegurYellowDark, // web only
+            buttonPrimaryBackgroundSelectedInverse: palette.prosegurYellowDark,
+            buttonSecondaryBackground: palette.prosegurYellow,
             buttonSecondaryBackgroundDisabled: applyAlpha(palette.white, 0.05),
-            buttonSecondaryBackgroundSelected: palette.movistarGreenDark,
+            buttonSecondaryBackgroundSelected: palette.prosegurYellowDark,
             buttonSecondaryBorderDisabledInverse: applyAlpha(palette.white, 0.05),
-            buttonSecondaryBorderInverse: palette.movistarGreen,
-            buttonSecondaryBorderSelectedInverse: palette.movistarGreenDark,
+            buttonSecondaryBorderInverse: palette.prosegurYellow,
+            buttonSecondaryBorderSelectedInverse: palette.prosegurYellowDark,
             textButtonPrimary: palette.grey2,
             textButtonPrimaryDisabled: palette.grey5,
             textButtonPrimaryInverse: palette.grey2,
@@ -208,8 +208,8 @@ export const getProsegurSkin: GetSkin = (variant) => {
             controlActivated: palette.movistarBlue,
             loadingBar: palette.movistarBlue,
             loadingBarBackground: applyAlpha(palette.white, 0.05),
-            loadingBarBackgroundInverse: palette.movistarGreenDark,
-            loadingBarInverse: palette.movistarGreenLight50,
+            loadingBarBackgroundInverse: palette.prosegurYellowDark,
+            loadingBarInverse: palette.prosegurYellowLight50,
             toggleAndroidInactive: palette.grey4, // web only
             toggleAndroidBackgroundActive: palette.movistarBlueLight30, // web only
             iosControlKnob: palette.grey2, // web only
