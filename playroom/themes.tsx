@@ -7,10 +7,12 @@ const common = {
     // when playroom height is too short.
     mediaQueries: {...mediaQueriesConfig, desktopOrTabletMinHeight: 0},
     enableTabFocus: true,
+    colorScheme: 'auto',
     i18n: {locale: 'en-US', phoneNumberFormattingRegionCode: 'ES'},
 } as const;
 
 export const Movistar: ThemeConfig = {...themes.Movistar, ...common};
+export const Movistar_Prominent: ThemeConfig = {...themes.Movistar_Prominent, ...common};
 export const Vivo: ThemeConfig = {...themes.Vivo, ...common};
 export const O2: ThemeConfig = {...themes.O2, ...common};
 export const O2_Classic: ThemeConfig = {...themes.O2_Classic, ...common};
