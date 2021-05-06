@@ -28,6 +28,7 @@ const TEXTS_ES = {
     formCreditCardNumberError: 'No es un número de tarjeta valido',
     formDateOutOfRangeError: 'Fecha no permitida',
     formEmailError: 'Email incorrecto',
+    formIbanError: 'IBAN incorrecto',
     closeButtonLabel: 'Cerrar',
     formSearchClear: 'Borrar búsqueda',
 };
@@ -53,6 +54,7 @@ const TEXTS_EN: ThemeTexts = {
     formCreditCardNumberError: 'The card number is not valid',
     formDateOutOfRangeError: 'Invalid date',
     formEmailError: 'Invalid email',
+    formIbanError: 'Incorrect IBAN',
     closeButtonLabel: 'Close',
     formSearchClear: 'Clear search',
 };
@@ -78,6 +80,7 @@ const TEXTS_DE: ThemeTexts = {
     formCreditCardNumberError: 'Kartennummer ungültig',
     formDateOutOfRangeError: 'Unzulässiges Datum',
     formEmailError: 'Falsche E-Mail-Adresse',
+    formIbanError: 'Falsche IBAN',
     closeButtonLabel: 'Schließen',
     formSearchClear: 'Suche löschen',
 };
@@ -103,6 +106,7 @@ const TEXTS_PT: ThemeTexts = {
     formCreditCardNumberError: 'Não é um número de cartão válido',
     formDateOutOfRangeError: 'Data não permitida',
     formEmailError: 'Email incorreto',
+    formIbanError: 'IBAN incorreto',
     closeButtonLabel: 'Fechar',
     formSearchClear: 'Apagar pesquisa',
 };

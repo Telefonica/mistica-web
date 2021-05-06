@@ -18,6 +18,7 @@ const formSnippets = [
     ['TextField', '<TextField name="name" label="Name"/>'],
     ['EmailField', '<EmailField name="email" label="e-mail"/>'],
     ['PhoneNumberField', '<PhoneNumberField name="phone" label="Phone"/>'],
+    ['IbanField', '<IbanField name="bankAccount" label="IBAN" />'],
     ['CreditCardFields', '<CreditCardFields/>'],
     ['DateField', '<DateField name="date" label="Date"/>'],
     ['DecimalField', '<DecimalField name="decimal" label="Decimal"/>'],

@@ -9,6 +9,7 @@ import {
     Select,
     ButtonLayout,
     PhoneNumberField,
+    IbanField,
     IntegerField,
     DecimalField,
     Switch,
@@ -52,6 +53,7 @@ export const AutomaticForm: StoryComponent = () => {
             <Stack space={16}>
                 <EmailField name="email" label="email" />
                 <PhoneNumberField name="phone" label="phone" />
+                <IbanField name="bankAccount" label="IBAN" />
                 <DecimalField name="decimal" label="Decimal" />
                 <IntegerField optional autoComplete="off" name="integer" label="Integer" />
                 <Select name="country" label="country" options={countryOptions} />

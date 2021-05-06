@@ -13,6 +13,7 @@ import {
     PasswordField,
     DateField,
     PhoneNumberField,
+    IbanField,
     Box,
     DateTimeField,
     Text1,
@@ -388,6 +389,18 @@ export const TypesUncontrolled: StoryComponent = () => (
                 />
             )}
         </Uncontrolled>
+
+        <Uncontrolled title="IbanField">
+            {(handleChange, handleChangeValue) => (
+                <IbanField
+                    name="bankAccount"
+                    label="IBAN"
+                    defaultValue="ES21 1465 0100 72 2030876293"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Uncontrolled>
     </>
 );
 
@@ -603,6 +616,20 @@ export const TypesControlled = (): React.ReactNode => (
                     onChangeValue={handleChangeValue}
                     getSuggestions={getCountrySuggestions}
                 />
+            )}
+        </Controlled>
+
+        <Controlled title="IbanField" initialValue="">
+            {(handleChange, handleChangeValue, value) => (
+                <div data-testid="iban">
+                    <IbanField
+                        name="bankAccount"
+                        label="IBAN"
+                        onChange={handleChange}
+                        onChangeValue={handleChangeValue}
+                        value={value}
+                    />
+                </div>
             )}
         </Controlled>
     </>
