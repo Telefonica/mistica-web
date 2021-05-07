@@ -1,3 +1,17 @@
+# [9.1.0](https://github.com/Telefonica/mistica-web/compare/v9.0.0...v9.1.0) (2021-05-07)
+
+
+### Bug Fixes
+
+* **colors:** make movistar prominent dark equal to movistar dark ([#254](https://github.com/Telefonica/mistica-web/issues/254)) ([ad94996](https://github.com/Telefonica/mistica-web/commit/ad949961cea98aa2882c5f4388070a091be5973d))
+* **Tag:** text color inside inverse context (like headers) ([#251](https://github.com/Telefonica/mistica-web/issues/251)) ([91dcdf1](https://github.com/Telefonica/mistica-web/commit/91dcdf1da1e6b5046b370eeb48f86f9997d89de2))
+* **TextField:** Add ellipsis to long TextField labels ([#252](https://github.com/Telefonica/mistica-web/issues/252)) ([0d9a420](https://github.com/Telefonica/mistica-web/commit/0d9a420e15b3ad825796f15d524f6753b0c69058))
+
+
+### Features
+
+* **IbanField:** new input field for IBAN numbers ([#253](https://github.com/Telefonica/mistica-web/issues/253)) ([b81c57f](https://github.com/Telefonica/mistica-web/commit/b81c57fff00223317183d9c8de78f694f8452111))
+
 # [9.0.0](https://github.com/Telefonica/mistica-web/compare/v8.7.4...v9.0.0) (2021-04-28)
 
 
