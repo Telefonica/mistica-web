@@ -17,7 +17,7 @@ declare export { default as ButtonLayout } from "./button-layout";
 declare export { default as FixedFooterLayout } from "./fixed-footer-layout";
 declare export { default as ButtonFixedFooterLayout } from "./button-fixed-footer-layout";
 declare export { default as Snackbar } from "./snackbar";
-declare export { default as Portal, usePortalNodes } from "./portal";
+declare export { Portal, usePortalNodes } from "./portal";
 declare export { default as LoadingBar } from "./loading-bar";
 declare export {
   default as FixedToTop,

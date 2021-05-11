@@ -13,7 +13,7 @@ import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
 import TabFocus from './tab-focus';
-import PortalNodesProvider from './portal';
+import {PortalNodesProvider} from './portal';
 
 import type {Colors} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';

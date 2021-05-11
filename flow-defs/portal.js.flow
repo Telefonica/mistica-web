@@ -22,5 +22,5 @@ declare type Props = {
   children: React.Node,
   className?: string,
 };
-declare var Portal: React.ComponentType<Props>;
-declare export default typeof Portal;
+declare export var Portal: React.ComponentType<Props>;
+declare export {};

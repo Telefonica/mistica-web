@@ -10,7 +10,7 @@ type PortalNodesContext = {
 
 const PortalNodes = React.createContext<PortalNodesContext>({
     portalNodes: [],
-    setPortalNodes: () => [],
+    setPortalNodes: () => {},
 });
 
 export const PortalNodesProvider: React.FC = ({children}) => {
@@ -43,7 +43,7 @@ type Props = {
     className?: string;
 };
 
-const Portal: React.FC<Props> = ({children, className}) => {
+export const Portal: React.FC<Props> = ({children, className}) => {
     const [container, setContainer] = React.useState<HTMLDivElement | null>(null);
     const {setPortalNodes} = usePortalNodes();
 
@@ -77,4 +77,3 @@ const Portal: React.FC<Props> = ({children, className}) => {
 
     return container && ReactDOM.createPortal(children, container);
 };
-export default Portal;
