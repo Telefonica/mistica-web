@@ -1,7 +1,16 @@
 // @flow
 
 import * as React from "react";
-
+declare type PortalNodesContext = {
+  portalNodes: Array<HTMLDivElement>,
+  setPortalNodes: (
+    nodes:
+      | Array<HTMLDivElement>
+      | ((prevNodes: Array<HTMLDivElement>) => Array<HTMLDivElement>)
+  ) => void,
+};
+declare export var PortalNodesProvider: React.ComponentType<{}>;
+declare export var usePortalNodes: () => PortalNodesContext;
 /**
  * This component renders the children elements outside the parent component.
  *

@@ -3,17 +3,28 @@ import ReactDOM from 'react-dom';
 
 type PortalNodesContext = {
     portalNodes: Array<HTMLDivElement>;
-    setPortalNodes: React.Dispatch<React.SetStateAction<HTMLDivElement[]>>;
+    setPortalNodes: (
+        nodes: Array<HTMLDivElement> | ((prevNodes: Array<HTMLDivElement>) => Array<HTMLDivElement>)
+    ) => void;
 };
 
 const PortalNodes = React.createContext<PortalNodesContext>({
     portalNodes: [],
-    setPortalNodes: () => {},
+    setPortalNodes: () => [],
 });
 
 export const PortalNodesProvider: React.FC = ({children}) => {
     const [portalNodes, setPortalNodes] = React.useState<Array<HTMLDivElement>>([]);
-    return <PortalNodes.Provider value={{portalNodes, setPortalNodes}}>{children}</PortalNodes.Provider>;
+    return (
+        <PortalNodes.Provider
+            value={{
+                portalNodes,
+                setPortalNodes,
+            }}
+        >
+            {children}
+        </PortalNodes.Provider>
+    );
 };
 
 export const usePortalNodes = (): PortalNodesContext => React.useContext(PortalNodes);
