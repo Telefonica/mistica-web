@@ -12,7 +12,7 @@ export {default as ButtonLayout} from './button-layout';
 export {default as FixedFooterLayout} from './fixed-footer-layout';
 export {default as ButtonFixedFooterLayout} from './button-fixed-footer-layout';
 export {default as Snackbar} from './snackbar';
-export {default as Portal} from './portal';
+export {default as Portal, usePortalNodes} from './portal';
 export {default as LoadingBar} from './loading-bar';
 export {default as FixedToTop, TopDistanceContext} from './fixed-to-top';
 export {default as createNestableContext} from './nestable-context';
