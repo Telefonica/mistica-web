@@ -13,18 +13,18 @@ type Props = {
     size?: number;
 };
 
-const IconChevronLeftRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconChevronUpLight: React.FC<Props> = ({color, size = 24}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
             <path
-                d="M15.161 20a.814.814 0 01-.564-.23l-7.32-7.05a.924.924 0 01-.044-1.273c.01-.014.024-.025.037-.04l7.323-7.17a.805.805 0 011.168.029l.017.02a.928.928 0 01-.048 1.257L9.079 12.06l6.646 6.393c.343.33.367.892.055 1.257a.828.828 0 01-.619.291"
+                d="M4 15.388c0-.15.057-.295.16-.404l7.314-7.793A.604.604 0 0111.916 7c.173 0 .337.07.455.191l7.451 7.793a.592.592 0 010 .845.64.64 0 01-.872 0l-7.02-7.354-6.862 7.319a.628.628 0 01-.868.004l-.004-.004A.624.624 0 014 15.388z"
                 fill={fillColor}
             />
         </svg>
     );
 };
 
-export default IconChevronLeftRegular;
+export default IconChevronUpLight;
