@@ -5,10 +5,13 @@
 - [Box](#box)
 - [Stack](#stack)
 - [Inline](#inline)
+  - [numeric space](#numeric-space)
   - [between](#between)
   - [around](#around)
   - [evenly](#evenly)
-- [Lala](#lala)
+- [ResponsiveLayout](#responsivelayout)
+- [GridLayout](#gridlayout)
+- [HeaderLayout](#headerlayout)
 
 <!-- /TOC -->
 
@@ -65,8 +68,10 @@ Vertically distributes its children using the given `space` separation
 
 ## Inline
 
-Horizontally distributes its children using the given `space` separation. This component is like an horizontal
-`Stack`
+Horizontally distributes its children using the given `space` separation. This component can be considered as
+an horizontal `Stack`
+
+### numeric space
 
 ```tsx
 <Inline space={16}>
@@ -82,9 +87,6 @@ Horizontally distributes its children using the given `space` separation. This c
     <rect x="calc(50 + 16)" y ="0" width="100" height="50" fill="lightgray" stroke="black"  />
     <rect x="calc(150 + 32)" y ="0" width="117" height="50" fill="lightgray" stroke="black"  />
 </svg>
-
-You can also use the `fullWidth` prop to use all available horizontal space together with special space
-values:
 
 ### between
 
@@ -143,7 +145,13 @@ Distribute items evenly. Items have equal space around them
     <rect x="332" y ="0" width="117" height="50" fill="lightgray" stroke="black" />
 </svg>
 
-## Lala
+## ResponsiveLayout
+
+## GridLayout
+
+## HeaderLayout
+
+The `HeaderLayout` component is used to
 
 <!--
 https://app.zeplin.io/project/5d653c69f828bf7299c551c1/screen/5f86c28d86f1d96c0f9c601d
