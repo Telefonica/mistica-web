@@ -124,9 +124,10 @@ viewport size.
 </ResponsiveLayout>
 ```
 
-<img style="margin-right:16px" src="./images/layout/responsive-layout-mobile.svg" />
-<img style="margin-right:16px"  src="./images/layout/responsive-layout-tablet.svg" />
-<img src="./images/layout/responsive-layout-desktop.svg" />
+<!-- prettier-ignore -->
+|mobile|tablet|desktop|
+|-|-|-|
+|<img src="./images/layout/responsive-layout-mobile.svg" />|<img src="./images/layout/responsive-layout-tablet.svg" />|<img src="./images/layout/responsive-layout-desktop.svg" />|
 
 ## HeaderLayout
 
@@ -140,11 +141,10 @@ The `HeaderLayout` is responsible to render the page header and related componen
 </ResponsiveLayout>
 ```
 
-<table><tr>
-  <td><img src="./images/layout/header-layout-mobile.svg" />
-  <td><img src="./images/layout/header-layout-tablet.svg" />
-  <td><img src="./images/layout/header-layout-desktop.svg" />
-</table>
+<!-- prettier-ignore -->
+|mobile|tablet|desktop|
+|-|-|-|
+|<img src="./images/layout/header-layout-mobile.svg" />|<img src="./images/layout/header-layout-tablet.svg" />|<img src="./images/layout/header-layout-desktop.svg" />|
 
 ## GridLayout
 
