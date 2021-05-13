@@ -12,6 +12,9 @@
 - [ResponsiveLayout](#responsivelayout)
 - [HeaderLayout](#headerlayout)
 - [GridLayout](#gridlayout)
+- [Basic](#basic)
+  - [Grid template 6+6](#grid-template-66)
+  - [Grid template 8+4](#grid-template-84)
 
 <!-- /TOC -->
 
@@ -125,7 +128,7 @@ viewport size.
 ```
 
 <!-- prettier-ignore -->
-|mobile|tablet|desktop|
+|Mobile|Tablet|Desktop|
 |-|-|-|
 |<img src="./images/layout/responsive-layout-mobile.svg" />|<img src="./images/layout/responsive-layout-tablet.svg" />|<img src="./images/layout/responsive-layout-desktop.svg" />|
 
@@ -142,39 +145,70 @@ The `HeaderLayout` is responsible to render the page header and related componen
 ```
 
 <!-- prettier-ignore -->
-|mobile|tablet|desktop|
+|Mobile|Tablet|Desktop|
 |-|-|-|
 |<img src="./images/layout/header-layout-mobile.svg" />|<img src="./images/layout/header-layout-tablet.svg" />|<img src="./images/layout/header-layout-desktop.svg" />|
 
 ## GridLayout
 
-The `GridLayout` uses CSS grid to define a set of columns where you can place your components.Different screen
-sizes will have different number of columns. This component must be used inside a `ResponsiveLayout`
+The `GridLayout` uses defines a grid with a set of columns where you can place your components. Different
+screen sizes will have different number of columns. This component must be used inside a `ResponsiveLayout`
+
+## Basic
+
+This layout is quite low level and not very useful by its own. When implementing a feature, use one of the
+available grid templates
 
 ```tsx
 <ResponsiveLayout>
   <GridLayout>
-    <MyFeature />
+    <Component1 />
+    <Component2 />
+    {/* ... */}
+    <ComponentN />
   </GridLayout>
 </ResponsiveLayout>
 ```
 
-<svg xmlns="http://www.w3.org/2000/svg" height="163" viewBox="-1 -1 102 162" style="margin-right: 16px">
-  <rect x="0" y="0" height="160" width="100" fill="pink" stroke="black"/>
-  <rect x="8" y="0" height="160" width="calc(100 - 16)" fill="lightgray" stroke="black"/> <text x="16" y="20" >1 column</text>
-</svg>
+<!-- prettier-ignore -->
+|Mobile|Tablet|Desktop|
+|-|-|-|
+|1 column|1 column|12 columns|
+|<img src="./images/layout/grid-layout-mobile.svg" />|<img src="./images/layout/grid-layout-tablet.svg" />|<img src="./images/layout/grid-layout-desktop.svg" />|
 
-<svg xmlns="http://www.w3.org/2000/svg" height="243" viewBox="-1 -1 162 242" style="margin-right: 16px">
-  <rect x="0" y="0" height="240" width="160" fill="pink" stroke="black"/>
-  <rect x="12" y="0" height="240" width="calc(160 - 24)" fill="lightgray" stroke="black"/>
-  <text x="20" y="20" >8 columns</text>
-</svg>
+### Grid template 6+6
 
-<svg xmlns="http://www.w3.org/2000/svg" height="243" viewBox="-1 -1 362 242">
-  <rect x="0" y="0" height="240" width="360" fill="pink" stroke="black"/>
-  <rect x="48" y="0" height="240" width="calc(360 - 96)" fill="lightgray" stroke="black"/>
-  <text x="56" y="20" >12 columns</text>
-</svg>
+```tsx
+<ResponsiveLayout>
+  <GridLayout
+    template="6+6"
+    left={<LeftComponent />}>
+    right={<RightComponent />}>
+  />
+</ResponsiveLayout>
+```
+
+<!-- prettier-ignore -->
+|Mobile|Tablet|Desktop|
+|-|-|-|
+|<img src="./images/layout/grid-layout-mobile-6-6.svg" />|<img src="./images/layout/grid-layout-tablet-6-6.svg" />|<img src="./images/layout/grid-layout-desktop-6-6.svg" />|
+
+### Grid template 8+4
+
+```tsx
+<ResponsiveLayout>
+  <GridLayout
+    template="8+4"
+    left={<LeftComponent />}>
+    right={<RightComponent />}>
+  />
+</ResponsiveLayout>
+```
+
+<!-- prettier-ignore -->
+|Mobile|Tablet|Desktop|
+|-|-|-|
+|<img src="./images/layout/grid-layout-mobile-8-4.svg" />|<img src="./images/layout/grid-layout-tablet-8-4.svg" />|<img src="./images/layout/grid-layout-desktop-8-4.svg" />|
 
 <!--
 https://app.zeplin.io/project/5d653c69f828bf7299c551c1/screen/5f86c28d86f1d96c0f9c601d

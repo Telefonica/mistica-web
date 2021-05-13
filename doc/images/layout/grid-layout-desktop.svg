@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="243" viewBox="-1 -1 362 242">
+  <rect x="0" y="0" height="240" width="360" fill="pink" stroke="black"/>
+  <rect x="48" y="0" height="240" width="calc(360 - 96)" fill="lightgray" stroke="black"/>
+  <rect x="48" y="0" height="240" width="18" fill="rgba(0,0,0,0.3)"/>
+  <rect x="70.3" y="0" height="240" width="18" fill="rgba(0,0,0,0.3)"/>
+  <rect x="92.6" y="0" height="240" width="18" fill="rgba(0,0,0,0.3)"/>
+  <rect x="114.9" y="0" height="240" width="18" fill="rgba(0,0,0,0.3)"/>
+  <rect x="137.2" y="0" height="240" width="18" fill="rgba(0,0,0,0.3)"/>
+  <rect x="159.5" y="0" height="240" width="18" fill="rgba(0,0,0,0.3)"/>
+  <rect x="181.8" y="0" height="240" width="18" fill="rgba(0,0,0,0.3)"/>
+  <rect x="204.1" y="0" height="240" width="18" fill="rgba(0,0,0,0.3)"/>
+  <rect x="226.4" y="0" height="240" width="18" fill="rgba(0,0,0,0.3)"/>
+  <rect x="248.7" y="0" height="240" width="18" fill="rgba(0,0,0,0.3)"/>
+  <rect x="271" y="0" height="240" width="18" fill="rgba(0,0,0,0.3)"/>
+  <rect x="293.3" y="0" height="240" width="18" fill="rgba(0,0,0,0.3)"/>
+</svg>
