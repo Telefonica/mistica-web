@@ -140,9 +140,11 @@ The `HeaderLayout` is responsible to render the page header and related componen
 </ResponsiveLayout>
 ```
 
-<img style="margin-right:16px" src="./images/layout/header-layout-mobile.svg" />
-<img style="margin-right:16px"  src="./images/layout/header-layout-tablet.svg" />
-<img src="./images/layout/header-layout-desktop.svg" />
+<div style="display:flex-row">
+  <img style="margin-right:16px" src="./images/layout/header-layout-mobile.svg" />
+  <img style="margin-right:16px"  src="./images/layout/header-layout-tablet.svg" />
+  <img src="./images/layout/header-layout-desktop.svg" />
+</div>
 
 ## GridLayout
 
