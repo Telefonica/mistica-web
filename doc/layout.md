@@ -36,7 +36,7 @@ Accepted props:
 </Box>
 ```
 
-<svg height="152" viewBox="-1 -1 302 152">
+<svg xmlns="http://www.w3.org/2000/svg" height="152" viewBox="-1 -1 302 152">
     <rect y="0" width="300" height="150" fill="pink" />
     <rect y="32" x="16" width="calc(300 - 32)" height="calc(150 - 64)" fill="lightgray" stroke="black" />
     <text x="130" y="20">32px</text>
@@ -57,7 +57,7 @@ Vertically distributes its children using the given `space` separation
 </Stack>
 ```
 
-<svg height="242" viewBox="-1 -1 302 240">
+<svg xmlns="http://www.w3.org/2000/svg" height="242" viewBox="-1 -1 302 240">
     <rect y="0" width="300" height="200" fill="pink" />
     <rect y="0" width="300" height="50" fill="lightgray" stroke="black" />
     <rect y="calc(50 + 24)" width="300" height="80" fill="lightgray" stroke="black" />
@@ -81,7 +81,7 @@ an horizontal `Stack`
 </Inline>
 ```
 
-<svg height="52" viewBox="-1 -1 302 52">
+<svg xmlns="http://www.w3.org/2000/svg" height="52" viewBox="-1 -1 302 52">
     <rect y="0" width="300" height="50" fill="pink" />
     <rect x="0" y ="0" width="50" height="50" fill="lightgray" stroke="black"  />
     <rect x="calc(50 + 16)" y ="0" width="100" height="50" fill="lightgray" stroke="black"  />
@@ -100,7 +100,7 @@ Distribute items evenly. The first item is flush with the start, the last is flu
 </Inline>
 ```
 
-<svg height="52" viewBox="-1 -1 502 52">
+<svg xmlns="http://www.w3.org/2000/svg" height="52" viewBox="-1 -1 502 52">
     <rect y="0" width="500" height="50" fill="pink" />
     <rect x="0" y ="0" width="50" height="50" fill="lightgray" stroke="black"  />
     <rect x="160" y ="0" width="117" height="50" fill="lightgray" stroke="black" />
@@ -119,7 +119,7 @@ Distribute items evenly. Items have a half-size space on either end
 </Inline>
 ```
 
-<svg height="52" viewBox="-1 -1 502 52">
+<svg xmlns="http://www.w3.org/2000/svg" height="52" viewBox="-1 -1 502 52">
     <rect y="0" width="500" height="50" fill="pink" />
     <rect x="32" y ="0" width="50" height="50" fill="lightgray" stroke="black"  />
     <rect x="160" y ="0" width="117" height="50" fill="lightgray" stroke="black" />
@@ -138,7 +138,7 @@ Distribute items evenly. Items have equal space around them
 </Inline>
 ```
 
-<svg height="52" viewBox="-1 -1 502 52">
+<svg xmlns="http://www.w3.org/2000/svg" height="52" viewBox="-1 -1 502 52">
     <rect y="0" width="500" height="50" fill="pink" />
     <rect x="52" y ="0" width="50" height="50" fill="lightgray" stroke="black"  />
     <rect x="160" y ="0" width="117" height="50" fill="lightgray" stroke="black" />
@@ -156,19 +156,19 @@ viewport size.
 </ResponsiveLayout>
 ```
 
-<svg height="163" viewBox="-1 -1 102 162" style="margin-right: 16px">
+<svg xmlns="http://www.w3.org/2000/svg" height="163" viewBox="-1 -1 102 162" style="margin-right: 16px">
   <rect x="0" y="0" height="160" width="100" fill="pink" stroke="black"/>
   <rect x="8" y="0" height="160" width="calc(100 - 16)" fill="lightgray" stroke="black"/>
   <text x="16" y="20" >mobile</text>
 </svg>
 
-<svg height="243" viewBox="-1 -1 162 242" style="margin-right: 16px">
+<svg xmlns="http://www.w3.org/2000/svg" height="243" viewBox="-1 -1 162 242" style="margin-right: 16px">
   <rect x="0" y="0" height="240" width="160" fill="pink" stroke="black"/>
   <rect x="12" y="0" height="240" width="calc(160 - 24)" fill="lightgray" stroke="black"/>
   <text x="20" y="20" >tablet</text>
 </svg>
 
-<svg height="243" viewBox="-1 -1 362 242">
+<svg xmlns="http://www.w3.org/2000/svg" height="243" viewBox="-1 -1 362 242">
   <rect x="0" y="0" height="240" width="360" fill="pink" stroke="black"/>
   <rect x="48" y="0" height="240" width="calc(360 - 96)" fill="lightgray" stroke="black"/>
   <text x="56" y="20" >desktop</text>
@@ -186,21 +186,21 @@ The `HeaderLayout` is responsible to render the page header and related componen
 </ResponsiveLayout>
 ```
 
-<svg height="163" viewBox="-1 -1 102 162" style="margin-right: 16px">
+<svg xmlns="http://www.w3.org/2000/svg" height="163" viewBox="-1 -1 102 162" style="margin-right: 16px">
   <rect x="0" y="0" height="160" width="100" fill="pink" stroke="black"/>
   <rect x="8" y="0" height="160" width="calc(100 - 16)" fill="lightgray" stroke="black"/>
   <rect x="0" y="0" height="50" width="100" fill="#019df4" stroke="black"/>
   <text x="10" y="32" fill="white" font-size="20">Header</text>
 </svg>
 
-<svg height="243" viewBox="-1 -1 162 242" style="margin-right: 16px">
+<svg xmlns="http://www.w3.org/2000/svg" height="243" viewBox="-1 -1 162 242" style="margin-right: 16px">
   <rect x="0" y="0" height="240" width="160" fill="pink" stroke="black"/>
   <rect x="12" y="0" height="240" width="calc(160 - 24)" fill="lightgray" stroke="black"/>
   <rect x="0" y="0" height="50" width="160" fill="#019df4" stroke="black"/>
   <text x="14" y="32" fill="white" font-size="20">Header</text>
 </svg>
 
-<svg height="243" viewBox="-1 -1 362 242">
+<svg xmlns="http://www.w3.org/2000/svg" height="243" viewBox="-1 -1 362 242">
   <rect x="0" y="0" height="240" width="360" fill="pink" stroke="black"/>
   <rect x="48" y="0" height="240" width="calc(360 - 96)" fill="lightgray" stroke="black"/>
   <rect x="0" y="0" height="50" width="360" fill="#019df4" stroke="black"/>
@@ -220,19 +220,19 @@ sizes will have different number of columns. This component must be used inside 
 </ResponsiveLayout>
 ```
 
-<svg height="163" viewBox="-1 -1 102 162" style="margin-right: 16px">
+<svg xmlns="http://www.w3.org/2000/svg" height="163" viewBox="-1 -1 102 162" style="margin-right: 16px">
   <rect x="0" y="0" height="160" width="100" fill="pink" stroke="black"/>
   <rect x="8" y="0" height="160" width="calc(100 - 16)" fill="lightgray" stroke="black"/>
   <text x="16" y="20" >1 column</text>
 </svg>
 
-<svg height="243" viewBox="-1 -1 162 242" style="margin-right: 16px">
+<svg xmlns="http://www.w3.org/2000/svg" height="243" viewBox="-1 -1 162 242" style="margin-right: 16px">
   <rect x="0" y="0" height="240" width="160" fill="pink" stroke="black"/>
   <rect x="12" y="0" height="240" width="calc(160 - 24)" fill="lightgray" stroke="black"/>
   <text x="20" y="20" >8 columns</text>
 </svg>
 
-<svg height="243" viewBox="-1 -1 362 242">
+<svg xmlns="http://www.w3.org/2000/svg" height="243" viewBox="-1 -1 362 242">
   <rect x="0" y="0" height="240" width="360" fill="pink" stroke="black"/>
   <rect x="48" y="0" height="240" width="calc(360 - 96)" fill="lightgray" stroke="black"/>
   <text x="56" y="20" >12 columns</text>
