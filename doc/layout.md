@@ -220,7 +220,7 @@ sizes will have different number of columns. This component must be used inside 
 </ResponsiveLayout>
 ```
 
-<img src='data:text/plain,<svg xmlns="http://www.w3.org/2000/svg" height="163" viewBox="-1 -1 102 162" style="margin-right: 16px">
+<img src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="163" viewBox="-1 -1 102 162" style="margin-right: 16px">
   <rect x="0" y="0" height="160" width="100" fill="pink" stroke="black"/>
   <rect x="8" y="0" height="160" width="calc(100 - 16)" fill="lightgray" stroke="black"/> <text x="16" y="20" >1 column</text>
 </svg>'
