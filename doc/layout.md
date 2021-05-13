@@ -10,8 +10,8 @@
   - [around](#around)
   - [evenly](#evenly)
 - [ResponsiveLayout](#responsivelayout)
-- [GridLayout](#gridlayout)
 - [HeaderLayout](#headerlayout)
+- [GridLayout](#gridlayout)
 
 <!-- /TOC -->
 
@@ -147,11 +147,96 @@ Distribute items evenly. Items have equal space around them
 
 ## ResponsiveLayout
 
-## GridLayout
+This component creates a responsive container for your page content. The size of this container depends on the
+viewport size.
+
+```tsx
+<ResponsiveLayout>
+  <MyFeature />
+</ResponsiveLayout>
+```
+
+<svg height="163" viewBox="-1 -1 102 162" style="margin-right: 16px">
+  <rect x="0" y="0" height="160" width="100" fill="pink" stroke="black"/>
+  <rect x="8" y="0" height="160" width="calc(100 - 16)" fill="lightgray" stroke="black"/>
+  <text x="16" y="20" >mobile</text>
+</svg>
+
+<svg height="243" viewBox="-1 -1 162 242" style="margin-right: 16px">
+  <rect x="0" y="0" height="240" width="160" fill="pink" stroke="black"/>
+  <rect x="12" y="0" height="240" width="calc(160 - 24)" fill="lightgray" stroke="black"/>
+  <text x="20" y="20" >tablet</text>
+</svg>
+
+<svg height="243" viewBox="-1 -1 362 242">
+  <rect x="0" y="0" height="240" width="360" fill="pink" stroke="black"/>
+  <rect x="48" y="0" height="240" width="calc(360 - 96)" fill="lightgray" stroke="black"/>
+  <text x="56" y="20" >desktop</text>
+</svg>
 
 ## HeaderLayout
 
-The `HeaderLayout` component is used to
+The `HeaderLayout` is responsible to render the page header and related components. It uses the
+`ResponsiveLayout` internally so you must not wrap it inside one.
+
+```tsx
+<HeaderLayout header={<Header title="Header" />} />
+<ResponsiveLayout>
+  <MyFeature />
+</ResponsiveLayout>
+```
+
+<svg height="163" viewBox="-1 -1 102 162" style="margin-right: 16px">
+  <rect x="0" y="0" height="160" width="100" fill="pink" stroke="black"/>
+  <rect x="8" y="0" height="160" width="calc(100 - 16)" fill="lightgray" stroke="black"/>
+  <rect x="0" y="0" height="50" width="100" fill="#019df4" stroke="black"/>
+  <text x="10" y="32" fill="white" font-size="20">Header</text>
+</svg>
+
+<svg height="243" viewBox="-1 -1 162 242" style="margin-right: 16px">
+  <rect x="0" y="0" height="240" width="160" fill="pink" stroke="black"/>
+  <rect x="12" y="0" height="240" width="calc(160 - 24)" fill="lightgray" stroke="black"/>
+  <rect x="0" y="0" height="50" width="160" fill="#019df4" stroke="black"/>
+  <text x="14" y="32" fill="white" font-size="20">Header</text>
+</svg>
+
+<svg height="243" viewBox="-1 -1 362 242">
+  <rect x="0" y="0" height="240" width="360" fill="pink" stroke="black"/>
+  <rect x="48" y="0" height="240" width="calc(360 - 96)" fill="lightgray" stroke="black"/>
+  <rect x="0" y="0" height="50" width="360" fill="#019df4" stroke="black"/>
+  <text x="50" y="32" fill="white" font-size="20">Header</text>
+</svg>
+
+## GridLayout
+
+The `GridLayout` uses CSS grid to define a set of columns where you can place your components.Different screen
+sizes will have different number of columns. This component must be used inside a `ResponsiveLayout`
+
+```tsx
+<ResponsiveLayout>
+  <GridLayout>
+    <MyFeature />
+  </GridLayout>
+</ResponsiveLayout>
+```
+
+<svg height="163" viewBox="-1 -1 102 162" style="margin-right: 16px">
+  <rect x="0" y="0" height="160" width="100" fill="pink" stroke="black"/>
+  <rect x="8" y="0" height="160" width="calc(100 - 16)" fill="lightgray" stroke="black"/>
+  <text x="16" y="20" >1 column</text>
+</svg>
+
+<svg height="243" viewBox="-1 -1 162 242" style="margin-right: 16px">
+  <rect x="0" y="0" height="240" width="160" fill="pink" stroke="black"/>
+  <rect x="12" y="0" height="240" width="calc(160 - 24)" fill="lightgray" stroke="black"/>
+  <text x="20" y="20" >8 columns</text>
+</svg>
+
+<svg height="243" viewBox="-1 -1 362 242">
+  <rect x="0" y="0" height="240" width="360" fill="pink" stroke="black"/>
+  <rect x="48" y="0" height="240" width="calc(360 - 96)" fill="lightgray" stroke="black"/>
+  <text x="56" y="20" >12 columns</text>
+</svg>
 
 <!--
 https://app.zeplin.io/project/5d653c69f828bf7299c551c1/screen/5f86c28d86f1d96c0f9c601d
