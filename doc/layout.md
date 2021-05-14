@@ -15,6 +15,9 @@
 - [Basic](#basic)
   - [Grid template 6+6](#grid-template-66)
   - [Grid template 8+4](#grid-template-84)
+- [NegativeBox](#negativebox)
+- [Without NegativeBox](#without-negativebox)
+- [With NegativeBox](#with-negativebox)
 
 <!-- /TOC -->
 
@@ -26,12 +29,8 @@ spacing.
 Accepted props:
 
 - `padding`
-- `paddingX`
-- `paddingY`
-- `paddingTop`
-- `paddingRight`
-- `paddingBottom`
-- `paddingLeft`
+- `paddingX` / `paddingY`
+- `paddingTop` / `paddingRight` / `paddingBottom` / `paddingLeft`
 
 ```tsx
 <Box paddingX={16} paddingY={32}>
@@ -209,6 +208,42 @@ available grid templates
 |Mobile|Tablet|Desktop|
 |-|-|-|
 |<img src="./images/layout/grid-layout-mobile-8-4.svg" />|<img src="./images/layout/grid-layout-tablet-8-4.svg" />|<img src="./images/layout/grid-layout-desktop-8-4.svg" />|
+
+## NegativeBox
+
+Some components, like non boxed Lists, need to be rendered overflowing its container, because the hover effect
+is larger than the container. This can be achieved using a `NegativeBox`
+
+## Without NegativeBox
+
+<!-- prettier-ignore -->
+|Outline|Preview|
+|-|-|
+|<img src="./images/layout/negative-box-wrong-outline.svg" />|<img src="./images/layout/negative-box-wrong-preview.svg" />|
+
+As you can see there are two problems. The hover is not filling available horizontal space and Row circles are
+not aligned with the content container. These problems are solved using `NegativeBox`.
+
+## With NegativeBox
+
+```tsx
+<ResponsiveLayout>
+  <NegativeBox>
+    <List>
+      <Row1 />
+      <Row2 />
+      <Row3 />
+    </List>
+  </NegativeBox>
+</ResponsiveLayout>
+```
+
+<!-- prettier-ignore -->
+|Outline|Preview|
+|-|-|
+|<img src="./images/layout/negative-box-ok-outline.svg" />|<img src="./images/layout/negative-box-ok-preview.svg" />|
+
+Hover effect fills horizontal space and circles are aligned with the container edge.
 
 <!--
 https://app.zeplin.io/project/5d653c69f828bf7299c551c1/screen/5f86c28d86f1d96c0f9c601d
