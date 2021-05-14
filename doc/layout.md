@@ -80,7 +80,7 @@ an horizontal `Stack`
 Distribute items evenly. The first item is flush with the start, the last is flush with the end
 
 ```tsx
-<Inline fullWidth space="between">
+<Inline space="between">
   <Child1 />
   <Child2 />
   <Child3 />
@@ -94,7 +94,7 @@ Distribute items evenly. The first item is flush with the start, the last is flu
 Distribute items evenly. Items have a half-size space on either end
 
 ```tsx
-<Inline fullWidth space="around">
+<Inline space="around">
   <Child1 />
   <Child2 />
   <Child3 />
@@ -108,7 +108,7 @@ Distribute items evenly. Items have a half-size space on either end
 Distribute items evenly. Items have equal space around them
 
 ```tsx
-<Inline fullWidth space="evenly">
+<Inline space="evenly">
   <Child1 />
   <Child2 />
   <Child3 />
