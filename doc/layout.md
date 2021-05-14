@@ -16,8 +16,8 @@
   - [Grid template 6+6](#grid-template-66)
   - [Grid template 8+4](#grid-template-84)
 - [NegativeBox](#negativebox)
-- [Without NegativeBox](#without-negativebox)
-- [With NegativeBox](#with-negativebox)
+  - [Without NegativeBox](#without-negativebox)
+  - [With NegativeBox](#with-negativebox)
 
 <!-- /TOC -->
 
@@ -133,7 +133,7 @@ viewport size.
 
 ## HeaderLayout
 
-The `HeaderLayout` is responsible to render the page header and related components. It uses the
+The `HeaderLayout` is responsible for render the page header and related components. It uses the
 `ResponsiveLayout` internally so you must not wrap it inside one.
 
 ```tsx
@@ -155,9 +155,6 @@ screen sizes will have different number of columns. This component must be used 
 
 ## Basic
 
-This layout is quite low level and not very useful by its own. When implementing a feature, use one of the
-available grid templates
-
 ```tsx
 <ResponsiveLayout>
   <GridLayout>
@@ -175,14 +172,18 @@ available grid templates
 |1 column|1 column|12 columns|
 |<img src="./images/layout/grid-layout-mobile.svg" />|<img src="./images/layout/grid-layout-tablet.svg" />|<img src="./images/layout/grid-layout-desktop.svg" />|
 
+This layout is quite low level and not very useful by its own. When implementing a feature, use one of the
+available grid templates
+
 ### Grid template 6+6
 
+<!-- prettier-ignore -->
 ```tsx
 <ResponsiveLayout>
   <GridLayout
     template="6+6"
-    left={<LeftComponent />}>
-    right={<RightComponent />}>
+    left={<LeftComponent />}
+    right={<RightComponent />}
   />
 </ResponsiveLayout>
 ```
@@ -194,12 +195,13 @@ available grid templates
 
 ### Grid template 8+4
 
+<!-- prettier-ignore -->
 ```tsx
 <ResponsiveLayout>
   <GridLayout
     template="8+4"
-    left={<LeftComponent />}>
-    right={<RightComponent />}>
+    left={<LeftComponent />}
+    right={<RightComponent />}
   />
 </ResponsiveLayout>
 ```
@@ -214,7 +216,7 @@ available grid templates
 Some components, like non boxed Lists, need to be rendered overflowing its container, because the hover effect
 is larger than the container. This can be achieved using a `NegativeBox`
 
-## Without NegativeBox
+### Without NegativeBox
 
 <!-- prettier-ignore -->
 |Outline|Preview|
@@ -224,7 +226,7 @@ is larger than the container. This can be achieved using a `NegativeBox`
 As you can see there are two problems. The hover is not filling available horizontal space and Row circles are
 not aligned with the content container. These problems are solved using `NegativeBox`.
 
-## With NegativeBox
+### With NegativeBox
 
 ```tsx
 <ResponsiveLayout>
