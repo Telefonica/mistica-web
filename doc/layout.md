@@ -18,6 +18,8 @@
 - [NegativeBox](#negativebox)
   - [Without NegativeBox](#without-negativebox)
   - [With NegativeBox](#with-negativebox)
+- [Vertical ryhthm](#vertical-ryhthm)
+- [Doubts?](#doubts)
 
 <!-- /TOC -->
 
@@ -231,11 +233,11 @@ not aligned with the content container. These problems are solved using `Negativ
 ```tsx
 <ResponsiveLayout>
   <NegativeBox>
-    <List>
+    <RowList>
       <Row1 />
       <Row2 />
       <Row3 />
-    </List>
+    </RowList>
   </NegativeBox>
 </ResponsiveLayout>
 ```
@@ -247,10 +249,52 @@ not aligned with the content container. These problems are solved using `Negativ
 
 Hover effect fills horizontal space and circles are aligned with the container edge.
 
-<!--
-https://app.zeplin.io/project/5d653c69f828bf7299c551c1/screen/5f86c28d86f1d96c0f9c601d
+## Vertical ryhthm
 
-https://mistica-web.vercel.app/playroom#?code=N4Igxg9gJgpiBcIA8AlGBnADhAduglgG4wAyAhgJ4QCuALgHwA6OABC0gEIQAeLmZUKPhwBzAJoBeYACYALAF8mrNuwDKtMmADWLLJphSAjADZFzFSqSqYYWvlwAVfLQA2MeqogBbGLpt3cJAB6a1t7HCdXd3MLdgcYblppFgAnGBFqFzIUpViVdG9fWgTaFgALGDTdQpZixPLKjBq60oqqgp9akob25pKYvLbfDqLuoerOlp7hvvrxka65xomYAdipobW2YPjE6VzYpAA5dLI7Yi5uA7zUCAB3Enx0Bi3DlHvXvPxIHClPvPYAGF8CkwG4WAAjTRaEQpGg4KCAiAuCApKSQFEpdAAOhwMDoKTILhI93kunwAC8DMBZAAGMzKAEApAASR%2BAEEwAIYF5vo8RGVSkFrkzLEFgaC3CKmfJ-hZvrhVJTqXTZYzRXYohJGCBIm4dXKVLB0GAUvhMAFfjqACIYU3my0G9VM3AABTS6HQUgAFABKFgSegsYDyNWiljCw23O6GtgK37AWOWCVg3xQ7Sw%2BGI5Go9E5rG4-G0QnE0nkqlSVXS8PsNm4Tnc3lgfmCiPVpnBFNSpNhmvxpUVmn0pOatza3XOfUgJPG%2B0W8Lj20ms3z3BOmssN0er3AP0BoMh3tMyPOt4fU9fH5-C-Mrtp6GZ6gIpGYvOYnF4glEkl3MkEQdVkmFishyXKwE2LZCu2zLiiCqbQRYR6iv2yqVsON4WKOBg6nqqzThhRp2iulqLkRDrhOuNZbhgO57oGwahoaJ4dkE7wPE8LynsEJwiGcRAwJcIrBOo0IHMEgnMMEaBYLgBDEOQVB0EoIAADQgLQFQ%2BOgCAANogAAakQEAgAAumpdz4FAGnafAOkAMzSLSJnyEAA
+Vertical rhythm is an important concept in web design and development. It makes the page feel consistent and
+visually pleasant. It is important to maintain the rhythm across the site.
 
-https://mistica-web.vercel.app/playroom#?code=N4Igxg9gJgpiBcJgHoBUACATAFgA4A90AjGAFwHcYYA7dACxgENYAndR6qdXRgcxnSRqpGqXSpkAXwA61ADwBlUozABrdAGceYGAF5gOSQD5Z6dHIASTVgBlGATwgBXUqbP1rMFvrfvzV5i90UgBLUgAbPWkQABUGdHDGDTEQ6gA3CBCddBCNdjTGEMSiSOjNJyJQiKiQBQqq0pB0ZBNadxk2lrc5ACUYLQhqDRC0mDtHF1a-FAwFbQESCipaDRgwUMG8iAAzdABmTAJxKV9zJRV1LRU9YAPjU7NFZTVNef0ARgA2e7a-R4U1htqDEwpEjAD1iFBuh3nJkBCgSDqlM-mYZug5tcMYCocDQQIOFwhCJhKJ0DsYZ8jhIOqjHgAFRI6OgQcKsZoovxw85qTnuJ4XV7XD7fPlchG4pFgiXQzDcnGDKUwMX8xnXFlsoJdX5-dGY7KLSg0dAwSIAW1EW12pHiGkYFs0CtoFK%2B1JOOq5auZrPZ2tR3OeqhVApeVx0%2BgAHD86WcnUrwU70OQwnQErlSPLIYr8Sq0WgMfNiGQjbQZXjqugehByDZ0%2BgABTUCDECD4GBQACU5N2EbdtLpcgAcjBeIxQqMAEKt3P8qs19Mzrlzh4xnJCHwe1ePADCIRYYEixAuvBYzk429ZEG8wEg4SvGgAdNQYC4WIxwjZq5JNCEAF43bAAAZoy3AcAEkhAAQTAQIzSyWteDoMQ-VArlkF3fcwRXGN%2B1QrJBgUP8AOA7C6QaGolWiUjUVgDQwBYEJcCBXRogAEX6ejGKBKjNxjQZ6RYfoNH0esu10Ix0GASRcNXFCt16atqL%2BfDqA3VCuQwg8FmPU8nHPS9r1ve8nxfUg3w-L8f3-fQgJA9T%2BQgwZoNg%2BCQkQ5DFwHdC9y0zy-BkrcVMI6zgFspS-HIljYnxHj7NozimNxKL2LohjEsGWL1P4wSNGE4BRPQcTJOk8KOVKhTyFKswVLU%2BzzE0w8iB0s8oAvO9DIMx9n1fd9P3Ib9hhC2y-PAqCYNgOCwAQpCyt41c4Qa5UqvQALVyCoibJIubUUi6JKJAZb4rS5i2I447cUy1DsqEkSxIkqTVtROSvLnWtkhnOFh1HccYCnfBg3hQM%2BQDC4UThPoBiGEYxgcZxSFaEHeVkEAABoQBtGALQ0BAAG0QAAWQgNJ00YFgQAAXTR5MoBtbH4Bxg5AJR95AJwcnJCAA
--->
+Elements inside our page content can be divided in 3 main groups:
+
+- **Container**: should vave a top and bottom space of 24px
+- **Sections**: should have a 32px space between them
+- **Elements**: should have a 16px separation between them
+
+This is how a page layout could look like:
+
+```tsx
+<HeaderLayout header={<Header title="Header" />} />
+<ResponsiveLayout>
+  <Box spaceY={24}>
+    <Stack space={32}>
+      <Stack space={16}>
+        <SectionTitle>Section 1</SectionTitle>
+        <Text2 regular>
+          Some example text
+        </Text2>
+      </Stack>
+
+      <Stack space={16}>
+        <SectionTitle>Section 2</SectionTitle>
+        <NegativeBox>
+          <RowList>
+            <Row1 />
+            <Row2 />
+            <Row3 />
+          </RowList>
+        </NegativeBox>
+      </Stack>
+    </Stack>
+  </Box>
+</ResponsiveLayout>
+```
+
+<img src="./images/layout/vertical-rhythm.png" style="border: 1px solid gray">
+
+:pencil2:
+[View this example in playroom](https://mistica-web.vercel.app/playroom#?code=N4Igxg9gJgpiBcIA8AJGBDWAnAMugnhAK4AuABABYbYC8wq1MWZJAliQDYw0A6IamJnzIB6AHwBfUWJ4A7JACUYAZwAOEWctYA3GHkKkZssmSQAhCAA8yqzFFayA5gE06AJgAsEoyZNIAyiToYADWZGrB3MAAzG7ecr6%2BAUGh4bZgUQCMAGzxxolJ-jBgbBoAKuxcYkUlrBpkmUgiNaWyFZwwPgV%2BZTCWJG5kWDCORBzoWGIAopboALaqXGS9-U0rA12JTYHBIZuFKWERGXQ5ed1%2BLXVtlZ1X9W7bxa3tVQkXSAByI%2BhsuhaWfbdRQQADuOFYyhIQI%2BCjB7wuBVYkFkdCQAGFWFgwEsAEa7RxYYiyKDoiAcCBYOiQClYZQAOlkMFIWHQHBwYKkWgAXlEPAAGKTiCQIxG%2BNgdXggOGghp8UVisgaAAKw2UyjoAAoAJRkGhiMjACQi-KK8QK2Hw02KsjIjRozHYvEEolEElk2nU8mUhlMllsjmgrmsXl0AVCyQWxESrhSmVkNzy62KlVqjXAHV6g1Gk026RRgog0EF7p21H0R04mBkfGhQnE0neqnAGk%2BxnMkis9mc8IhvmC6S5vMsW5xsFkaJJ4dK2SqlTpzP6w3Gku%2Bc3JwsiGUQqEwvwib6OX46GAAmHbQ77C%2B7LpNM9yJpKNQaLS6fTEaFyEAAGhAJCocwqAgADaIAALIQNokJBFgIAALq-qCrBQP%2ByggbE-JwRIQA)
+
+## Doubts?
+
+Don't hesitate to ask at
+[Mistica Teams](https://teams.microsoft.com/l/channel/19%3ad2e3607a32ec411b8bf492f43cd0fe0c%40thread.tacv2/General?groupId=e265fe99-929f-45d1-8154-699649674a40&tenantId=9744600e-3e04-492e-baa1-25ec245c6f10)
