@@ -256,7 +256,7 @@ visually pleasant. It is important to maintain the rhythm across the site.
 
 Elements inside our page content can be divided in 3 main groups:
 
-- **Container**: should vave a top and bottom space of 24px
+- **Container**: should have a top and bottom space of 24px
 - **Sections**: should have a 32px space between them
 - **Elements**: should have a 16px separation between them
 
