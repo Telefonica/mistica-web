@@ -118,7 +118,3 @@ input::-ms-clear,
 input::-ms-reveal {
     display: none;
 }
-
-*[class^='SplashScreen__'] {
-    display: none;
-}
