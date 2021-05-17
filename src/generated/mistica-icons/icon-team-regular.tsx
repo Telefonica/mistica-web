@@ -13,7 +13,7 @@ type Props = {
     size?: number;
 };
 
-const IconDeviceRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconTeamRegular: React.FC<Props> = ({color, size = 24}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
@@ -27,4 +27,4 @@ const IconDeviceRegular: React.FC<Props> = ({color, size = 24}) => {
     );
 };
 
-export default IconDeviceRegular;
+export default IconTeamRegular;
