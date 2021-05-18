@@ -24,6 +24,9 @@ const useStyles = createUseStyles(() => ({
         '& > div:not(:empty) ~ div:not(:empty)': {
             marginLeft: (p) => (typeof p.space === 'number' ? p.space : undefined),
         },
+        '& > div:empty': {
+            display: 'none',
+        },
     },
 }));
 

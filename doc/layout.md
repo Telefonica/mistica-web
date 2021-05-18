@@ -63,6 +63,9 @@ Vertically distributes its children using the given `space` separation
 Horizontally distributes its children using the given `space` separation. This component can be considered as
 an horizontal `Stack`
 
+:information_source: Items can be aligned vertically. Check `Inline` component in
+[Storybook](https://mistica-web.vercel.app/?path=/story/components-layouts-inline) to learn more about it.
+
 ### numeric space
 
 ```tsx
