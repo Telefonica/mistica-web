@@ -526,6 +526,30 @@ const layoutSnippets: Array<Snippet> = [
     },
 ].map((snippet) => ({...snippet, group: 'Layouts'}));
 
+const emptyStatesGroup: Array<Snippet> = [
+    {
+        name: 'EmptyStateScreen',
+        code: `
+        <EmptyStateScreen
+            imageUrl="https://i.imgur.com/yGFKQOy.png"
+            title="Your cart is empty"
+            description="Check our marketplaces and find something for you. Check our marketplaces and find something"
+            button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
+        />`,
+    },
+    {
+        name: 'EmptyState',
+        code: `
+        <EmptyState
+            icon="https://i.imgur.com/o5qympI.png"
+            title="Your cart is empty"
+            description="Check our marketplaces and find something for you"
+            button={<ButtonPrimary small onPress={() => {}}>Explore marketplace</ButtonPrimary>}
+            buttonLink={<ButtonLink onPress={() => {}}>More info</ButtonLink>}
+        />`,
+    },
+].map((snippet) => ({...snippet, group: 'Empty states'}));
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -565,4 +589,5 @@ export default [
             '<NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: "Cuenta", url: "/consumptions"}]} />',
     },
     ...titlesSnippets,
+    ...emptyStatesGroup,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

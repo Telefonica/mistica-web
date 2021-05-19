@@ -31,14 +31,14 @@ export const Default: StoryComponent = () => {
     };
     const tagColorNames = Object.keys(tagColors);
     const [asset, assetSelect] = useSelect('asset', 'icon', ['icon', 'image', 'none']);
-    const [headline, headlineTextField] = useTextField('headline', 'priority', true);
+    const [headline, headlineTextField] = useTextField('headline', 'priority');
     const [headlineColorName, headlineColorNameSelect] = useSelect(
         'headline color',
         tagColorNames[0],
         tagColorNames
     );
     const headlineColor = (tagColors as any)[headlineColorName];
-    const [subtitle, subtitleTextField] = useTextField('subtitle', 'Some subtitle', true);
+    const [subtitle, subtitleTextField] = useTextField('subtitle', 'Some subtitle');
     const [title, titleTextField] = useTextField('title', 'Some title', true);
     const [description, descriptionTextField] = useTextField(
         'description',
@@ -73,7 +73,7 @@ export const Default: StoryComponent = () => {
             <Stack space={16}>
                 {assetSelect}
                 {headlineTextField}
-                {headlineColorNameSelect}
+                {headline && headlineColorNameSelect}
                 {titleTextField}
                 {subtitleTextField}
                 {descriptionTextField}
@@ -83,7 +83,7 @@ export const Default: StoryComponent = () => {
                 <StorySection title="DataCard">
                     <DataCard
                         icon={icon}
-                        headline={<Tag color={headlineColor}>{headline}</Tag>}
+                        headline={headline && <Tag color={headlineColor}>{headline}</Tag>}
                         title={title}
                         subtitle={subtitle}
                         description={description}

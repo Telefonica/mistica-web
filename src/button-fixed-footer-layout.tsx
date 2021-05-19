@@ -30,10 +30,11 @@ const ButtonFixedFooterLayout: React.FC<Props> = ({
     onChangeFooterHeight,
 }) => {
     const {isMobile} = useScreenSize();
+    const hasButton = !!button || !!secondaryButton || !!link;
     return (
         <FixedFooterLayout
             onChangeFooterHeight={onChangeFooterHeight}
-            isFooterVisible={!!button && isFooterVisible}
+            isFooterVisible={hasButton && isFooterVisible}
             footerBgColor={footerBgColor}
             containerBgColor={containerBgColor}
             footer={
