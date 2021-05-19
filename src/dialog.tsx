@@ -2,7 +2,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import {createUseStyles} from './jss';
-import Portal from './portal';
+import {Portal} from './portal';
 import FocusTrap from './focus-trap';
 import IcnClose from './icons/icon-close';
 import IconButton from './icon-button';
