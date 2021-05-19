@@ -1,0 +1,15 @@
+// @flow
+
+import * as React from "react";
+import { ButtonLink, ButtonPrimary, ButtonSecondary } from "./button";
+declare type Props = {
+  title: string,
+  button?:
+    | React.Element<typeof ButtonPrimary>
+    | React.Element<typeof ButtonSecondary>,
+  buttonLink?: React.Element<typeof ButtonLink>,
+  icon: React.Element<any> | string,
+  description?: string,
+};
+declare var EmptyState: React.ComponentType<Props>;
+declare export default typeof EmptyState;
