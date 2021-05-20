@@ -227,7 +227,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
             <div className={classes.footer}>
                 {hasButtons ? (
                     <ButtonFixedFooterLayout
-                        button={primaryButton as any}
+                        button={primaryButton}
                         secondaryButton={secondaryButton}
                         link={link}
                         footerBgColor={isInverse ? theme.colors.backgroundFeedbackBottom : undefined}

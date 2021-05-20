@@ -8,7 +8,7 @@ import type {ButtonElement} from './button';
 
 type Props = {
     isFooterVisible?: boolean;
-    button: ButtonElement;
+    button?: ButtonElement;
     desktopButtonAlign?: 'left' | 'center';
     secondaryButton?: ButtonElement;
     link?: React.ReactElement<typeof ButtonLink>;
