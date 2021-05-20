@@ -538,9 +538,9 @@ const emptyStatesGroup: Array<Snippet> = [
         />`,
     },
     {
-        name: 'EmptyState',
+        name: 'EmptyStateCard',
         code: `
-        <EmptyState
+        <EmptyStateCard
             imageUrl="https://i.imgur.com/o5qympI.png"
             title="Your cart is empty"
             description="Check our marketplaces and find something for you"
