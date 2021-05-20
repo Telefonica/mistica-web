@@ -3,7 +3,7 @@ import {StorySection, useTextField, useSelect} from './helpers';
 import {EmptyState, Stack, ButtonPrimary, ButtonLink, IconBoxLight, useTheme, useScreenSize} from '..';
 
 export default {
-    title: 'Components/EmptyStates/EmptyState',
+    title: 'Components/Cards/EmptyState',
 };
 
 export const Default: StoryComponent = () => {

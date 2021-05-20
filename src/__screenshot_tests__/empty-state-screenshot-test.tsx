@@ -7,7 +7,7 @@ const actionTypes = ['button', 'link', 'button & link'];
 
 test.each(devices)('EmptyState', async (device) => {
     const page = await openStoryPage({
-        section: 'Components/EmptyStates/EmptyState',
+        section: 'Components/Cards/EmptyState',
         name: 'EmptyState',
         device,
     });

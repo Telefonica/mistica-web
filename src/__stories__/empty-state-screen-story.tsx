@@ -2,7 +2,7 @@ import * as React from 'react';
 import {EmptyStateScreen, ButtonPrimary, IconBoxLight, useScreenSize, useTheme, ButtonLink} from '..';
 
 export default {
-    title: 'Components/EmptyStates/EmptyStateScreen',
+    title: 'Components/Screens/EmptyStateScreen',
     parameters: {
         fullScreen: true,
     },
