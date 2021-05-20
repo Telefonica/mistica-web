@@ -17,7 +17,7 @@ declare export { default as ButtonLayout } from "./button-layout";
 declare export { default as FixedFooterLayout } from "./fixed-footer-layout";
 declare export { default as ButtonFixedFooterLayout } from "./button-fixed-footer-layout";
 declare export { default as Snackbar } from "./snackbar";
-declare export { default as Portal } from "./portal";
+declare export { Portal, usePortalNodes } from "./portal";
 declare export { default as LoadingBar } from "./loading-bar";
 declare export {
   default as FixedToTop,
@@ -83,7 +83,7 @@ declare export { default as ProgressBar } from "./progress-bar";
 declare export { MediaCard, DataCard } from "./card";
 declare export { default as Divider } from "./divider";
 declare export { default as EmptyStateScreen } from "./empty-state-screen";
-declare export { default as EmptyState } from "./empty-state";
+declare export { default as EmptyStateCard } from "./empty-state-card";
 declare export { default as Form } from "./form";
 declare export { default as Select } from "./select";
 declare export { default as TextField } from "./text-field";

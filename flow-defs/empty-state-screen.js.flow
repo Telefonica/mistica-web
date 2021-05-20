@@ -14,10 +14,14 @@ declare type ImageProps = {|
   ...$Exact<BaseProps>,
   imageUrl: string,
 |};
+declare type LargeImageProps = {|
+  ...$Exact<BaseProps>,
+  largeImageUrl: string,
+|};
 declare type IconProps = {|
   ...$Exact<BaseProps>,
-  icon: React.Element<any> | string,
+  icon: React.Element<any>,
 |};
-declare type Props = IconProps | ImageProps;
+declare type Props = IconProps | ImageProps | LargeImageProps;
 declare var EmptyStateScreen: React.ComponentType<Props>;
 declare export default typeof EmptyStateScreen;
