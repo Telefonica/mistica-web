@@ -3,13 +3,13 @@ import {StorySection, useTextField, useSelect} from './helpers';
 import {EmptyState, Stack, ButtonPrimary, ButtonLink, IconBoxLight, useTheme, useScreenSize} from '..';
 
 export default {
-    title: 'Components/Cards/EmptyState',
+    title: 'Components/EmptyStates/EmptyState',
 };
 
 export const Default: StoryComponent = () => {
     const {isMobile} = useScreenSize();
     const {colors} = useTheme();
-    const [asset, assetSelect] = useSelect('asset', 'icon', ['icon', 'image']);
+    const [assetType, assetTypeSelect] = useSelect('asset', 'icon', ['icon', 'image']);
     const [title, titleTextField] = useTextField('title', 'Some title', true);
     const [description, descriptionTextField] = useTextField(
         'description',
@@ -18,12 +18,14 @@ export const Default: StoryComponent = () => {
     );
     const [actions, actionsSelect] = useSelect('actions', 'button', ['button', 'link', 'button & link']);
 
-    let icon;
-    if (asset === 'icon') {
-        icon = <IconBoxLight size={isMobile ? 64 : 80} color={colors.brand} />;
-    } else {
-        icon = 'https://i.imgur.com/o5qympI.png';
-    }
+    const assetProps =
+        assetType === 'icon'
+            ? {
+                  icon: <IconBoxLight size={isMobile ? 64 : 80} color={colors.brand} />,
+              }
+            : {
+                  imageUrl: 'https://i.imgur.com/o5qympI.png',
+              };
 
     const button = actions.includes('button') ? (
         <ButtonPrimary small onPress={() => {}}>
@@ -38,7 +40,7 @@ export const Default: StoryComponent = () => {
     return (
         <>
             <Stack space={16}>
-                {assetSelect}
+                {assetTypeSelect}
                 {titleTextField}
                 {descriptionTextField}
                 {actionsSelect}
@@ -46,7 +48,7 @@ export const Default: StoryComponent = () => {
             <StorySection title="EmptyState">
                 <div data-testid="empty-state">
                     <EmptyState
-                        icon={icon}
+                        {...assetProps}
                         title={title}
                         description={description}
                         button={button}

@@ -21,7 +21,7 @@ const useStyles = createUseStyles((theme) => ({
         },
     },
     desktopImage: {
-        backgroundImage: ({imageUrl}) => `url(${imageUrl})`,
+        backgroundImage: ({largeImageUrl}) => `url(${largeImageUrl})`,
         backgroundPosition: 'bottom right',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'contain',
@@ -50,34 +50,53 @@ interface BaseProps {
 
 interface ImageProps extends BaseProps {
     imageUrl: string;
+
+    largeImageUrl?: undefined;
+    icon?: undefined;
+}
+
+interface LargeImageProps extends BaseProps {
+    largeImageUrl: string;
+
+    imageUrl?: undefined;
     icon?: undefined;
 }
 
 interface IconProps extends BaseProps {
-    icon: React.ReactElement<any> | string;
+    icon: React.ReactElement<any>;
+
     imageUrl?: undefined;
+    largeImageUrl?: undefined;
 }
 
-type Props = IconProps | ImageProps;
+type Props = IconProps | ImageProps | LargeImageProps;
 
-const EmptyStateScreen: React.FC<Props> = ({title, description, button, buttonLink, imageUrl, icon}) => {
+const EmptyStateScreen: React.FC<Props> = ({
+    title,
+    description,
+    button,
+    buttonLink,
+    largeImageUrl,
+    imageUrl,
+    icon,
+}) => {
     const {colors} = useTheme();
     const needsButtonLinkAlignment = buttonLink && !button;
-    const classes = useStyles({imageUrl, needsButtonLinkAlignment});
+    const classes = useStyles({largeImageUrl, needsButtonLinkAlignment});
     const {isMobile, isTablet} = useScreenSize();
 
-    let image, smallImage;
-    if (imageUrl) {
-        image = <img className={classes.mobileImage} alt="" src={imageUrl} />;
+    let largeImage, image;
+    if (largeImageUrl) {
+        largeImage = <img className={classes.mobileImage} alt="" src={largeImageUrl} />;
     }
-    if (typeof icon === 'string') {
-        smallImage = <img className={classes.smallImage} alt="" src={icon} />;
+    if (imageUrl) {
+        image = <img className={classes.smallImage} alt="" src={imageUrl} />;
     }
 
     if (isMobile) {
         return (
             <FeedbackScreen
-                icon={image ?? smallImage ?? icon}
+                icon={largeImage ?? image ?? icon}
                 title={title}
                 description={description}
                 primaryButton={button}
@@ -86,9 +105,9 @@ const EmptyStateScreen: React.FC<Props> = ({title, description, button, buttonLi
         );
     }
 
-    if (isTablet && image) {
-        smallImage = image;
-        imageUrl = undefined;
+    if (isTablet && largeImage) {
+        image = largeImage;
+        largeImageUrl = undefined;
     }
 
     return (
@@ -98,7 +117,7 @@ const EmptyStateScreen: React.FC<Props> = ({title, description, button, buttonLi
                     <div className={classes.desktopContent}>
                         <Box padding={64} role="article">
                             <Stack space={24}>
-                                {smallImage ?? icon}
+                                {image ?? icon}
                                 <Stack space={16}>
                                     <Text6 as="h1">{title}</Text6>
                                     <Text4 light as="p" color={colors.textSecondary}>
@@ -116,7 +135,7 @@ const EmptyStateScreen: React.FC<Props> = ({title, description, button, buttonLi
                             </Stack>
                         </Box>
                     </div>
-                    {imageUrl && <div className={classes.desktopImage} />}
+                    {largeImageUrl && <div className={classes.desktopImage} />}
                 </div>
             </Boxed>
         </ResponsiveLayout>

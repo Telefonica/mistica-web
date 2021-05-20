@@ -531,7 +531,7 @@ const emptyStatesGroup: Array<Snippet> = [
         name: 'EmptyStateScreen',
         code: `
         <EmptyStateScreen
-            imageUrl="https://i.imgur.com/yGFKQOy.png"
+            largeImageUrl="https://i.imgur.com/yGFKQOy.png"
             title="Your cart is empty"
             description="Check our marketplaces and find something for you. Check our marketplaces and find something"
             button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
@@ -541,7 +541,7 @@ const emptyStatesGroup: Array<Snippet> = [
         name: 'EmptyState',
         code: `
         <EmptyState
-            icon="https://i.imgur.com/o5qympI.png"
+            imageUrl="https://i.imgur.com/o5qympI.png"
             title="Your cart is empty"
             description="Check our marketplaces and find something for you"
             button={<ButtonPrimary small onPress={() => {}}>Explore marketplace</ButtonPrimary>}

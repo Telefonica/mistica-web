@@ -2,7 +2,7 @@ import * as React from 'react';
 import {EmptyStateScreen, ButtonPrimary, IconBoxLight, useScreenSize, useTheme, ButtonLink} from '..';
 
 export default {
-    title: 'Components/Feedbacks/EmptyStateScreen',
+    title: 'Components/EmptyStates/EmptyStateScreen',
     parameters: {
         fullScreen: true,
     },
@@ -10,7 +10,7 @@ export default {
 
 export const WithImage: StoryComponent = () => (
     <EmptyStateScreen
-        imageUrl="https://i.imgur.com/yGFKQOy.png"
+        largeImageUrl="https://i.imgur.com/yGFKQOy.png"
         title="Your cart is empty"
         description="Check our marketplaces and find something for you. Check our marketplaces and find something"
         button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
@@ -34,7 +34,7 @@ WithIcon.storyName = 'With icon';
 
 export const WithSmallImage: StoryComponent = () => (
     <EmptyStateScreen
-        icon="https://i.imgur.com/o5qympI.png"
+        imageUrl="https://i.imgur.com/o5qympI.png"
         title="Your cart is empty"
         description="Check our marketplaces and find something for you. Check our marketplaces and find something"
         button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
@@ -44,7 +44,7 @@ WithSmallImage.storyName = 'With small image';
 
 export const WithLink: StoryComponent = () => (
     <EmptyStateScreen
-        imageUrl="https://i.imgur.com/yGFKQOy.png"
+        largeImageUrl="https://i.imgur.com/yGFKQOy.png"
         title="Your cart is empty"
         description="Check our marketplaces and find something for you. Check our marketplaces and find something"
         buttonLink={<ButtonLink onPress={() => {}}>Explore marketplace</ButtonLink>}

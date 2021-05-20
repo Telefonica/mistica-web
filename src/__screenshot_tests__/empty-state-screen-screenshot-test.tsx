@@ -5,7 +5,7 @@ const devices: Array<Device> = ['MOBILE_IOS', 'TABLET', 'DESKTOP'];
 
 test.each(devices)('EmptyStateScreen with image', async (device) => {
     const page = await openStoryPage({
-        section: 'Components/Feedbacks/EmptyStateScreen',
+        section: 'Components/EmptyStates/EmptyStateScreen',
         name: 'With image',
         device,
     });
@@ -17,7 +17,7 @@ test.each(devices)('EmptyStateScreen with image', async (device) => {
 
 test.each(devices)('EmptyStateScreen with icon', async (device) => {
     const page = await openStoryPage({
-        section: 'Components/Feedbacks/EmptyStateScreen',
+        section: 'Components/EmptyStates/EmptyStateScreen',
         name: 'With icon',
         device,
     });
@@ -29,7 +29,7 @@ test.each(devices)('EmptyStateScreen with icon', async (device) => {
 
 test.each(devices)('EmptyStateScreen with small image', async (device) => {
     const page = await openStoryPage({
-        section: 'Components/Feedbacks/EmptyStateScreen',
+        section: 'Components/EmptyStates/EmptyStateScreen',
         name: 'With small image',
         device,
     });
@@ -41,7 +41,7 @@ test.each(devices)('EmptyStateScreen with small image', async (device) => {
 
 test.each(devices)('EmptyStateScreen with link', async (device) => {
     const page = await openStoryPage({
-        section: 'Components/Feedbacks/EmptyStateScreen',
+        section: 'Components/EmptyStates/EmptyStateScreen',
         name: 'With link',
         device,
     });

@@ -25,23 +25,34 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-type Props = {
+interface CommonProps {
     title: string;
     button?: React.ReactElement<typeof ButtonPrimary> | React.ReactElement<typeof ButtonSecondary>;
     buttonLink?: React.ReactElement<typeof ButtonLink>;
-    icon: React.ReactElement<any> | string;
     description?: string;
-};
+}
 
-const EmptyState: React.FC<Props> = ({title, description, button, buttonLink, icon}) => {
+interface IconProps extends CommonProps {
+    icon: React.ReactElement<any>;
+    imageUrl?: undefined;
+}
+
+interface ImageProps extends CommonProps {
+    imageUrl: string;
+    icon?: undefined;
+}
+
+type Props = IconProps | ImageProps;
+
+const EmptyState: React.FC<Props> = ({title, description, button, buttonLink, icon, imageUrl}) => {
     const {colors} = useTheme();
     const needsButtonLinkAlignment = buttonLink && !button;
     const classes = useStyles({needsButtonLinkAlignment});
     const {isMobile} = useScreenSize();
 
     let image;
-    if (typeof icon === 'string') {
-        image = <img className={classes.image} alt="" src={icon} />;
+    if (imageUrl) {
+        image = <img className={classes.image} alt="" src={imageUrl} />;
     }
 
     return (
