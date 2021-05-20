@@ -7,8 +7,8 @@ const actionTypes = ['button', 'link', 'button & link'];
 
 test.each(devices)('EmptyState', async (device) => {
     const page = await openStoryPage({
-        section: 'Components/Cards/EmptyState',
-        name: 'EmptyState',
+        section: 'Components/Cards/EmptyStateCard',
+        name: 'EmptyStateCard',
         device,
     });
 
@@ -17,7 +17,7 @@ test.each(devices)('EmptyState', async (device) => {
         for (const actionType of actionTypes) {
             await page.select(await screen.findByLabelText('actions'), actionType);
 
-            const emptyState = await screen.findByTestId('empty-state');
+            const emptyState = await screen.findByTestId('empty-state-card');
             const image = await emptyState.screenshot();
 
             expect(image).toMatchImageSnapshot();

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {StorySection, useTextField, useSelect} from './helpers';
-import {EmptyState, Stack, ButtonPrimary, ButtonLink, IconBoxLight, useTheme, useScreenSize} from '..';
+import {EmptyStateCard, Stack, ButtonPrimary, ButtonLink, IconBoxLight, useTheme, useScreenSize} from '..';
 
 export default {
-    title: 'Components/Cards/EmptyState',
+    title: 'Components/Cards/EmptyStateCard',
 };
 
 export const Default: StoryComponent = () => {
@@ -45,9 +45,9 @@ export const Default: StoryComponent = () => {
                 {descriptionTextField}
                 {actionsSelect}
             </Stack>
-            <StorySection title="EmptyState">
-                <div data-testid="empty-state">
-                    <EmptyState
+            <StorySection title="EmptyStateCard">
+                <div data-testid="empty-state-card">
+                    <EmptyStateCard
                         {...assetProps}
                         title={title}
                         description={description}
@@ -60,4 +60,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.storyName = 'EmptyState';
+Default.storyName = 'EmptyStateCard';

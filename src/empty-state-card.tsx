@@ -44,7 +44,7 @@ interface ImageProps extends CommonProps {
 
 type Props = IconProps | ImageProps;
 
-const EmptyState: React.FC<Props> = ({title, description, button, buttonLink, icon, imageUrl}) => {
+const EmptyStateCard: React.FC<Props> = ({title, description, button, buttonLink, icon, imageUrl}) => {
     const {colors} = useTheme();
     const needsButtonLinkAlignment = buttonLink && !button;
     const classes = useStyles({needsButtonLinkAlignment});
@@ -84,4 +84,4 @@ const EmptyState: React.FC<Props> = ({title, description, button, buttonLink, ic
     );
 };
 
-export default EmptyState;
+export default EmptyStateCard;

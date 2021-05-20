@@ -55,7 +55,7 @@ export {default as ProgressBar} from './progress-bar';
 export {MediaCard, DataCard} from './card';
 export {default as Divider} from './divider';
 export {default as EmptyStateScreen} from './empty-state-screen';
-export {default as EmptyState} from './empty-state';
+export {default as EmptyStateCard} from './empty-state-card';
 
 // Forms
 export {default as Form} from './form';
