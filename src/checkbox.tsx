@@ -101,7 +101,7 @@ const useStyles = createUseStyles(() => ({
 
 const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
     const classes = useStyles();
-    const labelId = useAriaId();
+
     const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
         value: props.checked,
@@ -143,7 +143,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             tabIndex={disabled ? undefined : 0}
             ref={focusableRef}
             className={classnames(classes.checkboxContainer, {[classes.disabled]: disabled})}
-            aria-labelledby={labelId}
+            aria-labelledby={props.name}
             aria-disabled={disabled}
         >
             {props.render ? (
@@ -153,7 +153,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
                     {iconCheckbox}
                     {props.children && (
                         <Text3 regular as="div">
-                            <span id={labelId}>{props.children}</span>
+                            <span id={props.name}>{props.children}</span>
                         </Text3>
                     )}
                 </Inline>
