@@ -137,7 +137,7 @@ const IbanInput: React.FC<Props> = ({inputRef, value, defaultValue, onChange, ..
                 const prevValue = rifm.value;
                 if (
                     newValue.length - prevValue.length > 1 &&
-                    (e.nativeEvent as InputEvent).inputType === 'insertText'
+                    (e.nativeEvent as InputEvent)?.inputType === 'insertText'
                 ) {
                     // Google Android virtual keyboard (GBoard) have some buggy behavior with autosuggestions
                     // and some times repeats the previously inserted caracters. If we detect that, revert
