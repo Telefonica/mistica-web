@@ -132,7 +132,20 @@ const IbanInput: React.FC<Props> = ({inputRef, value, defaultValue, onChange, ..
             {...other}
             maxLength={getInputMaxLength(rifm.value)}
             value={rifm.value}
-            onChange={rifm.onChange}
+            onChange={(e) => {
+                const newValue = e.target.value;
+                const prevValue = rifm.value;
+                if (
+                    newValue.length - prevValue.length > 1 &&
+                    (e.nativeEvent as InputEvent).inputType === 'insertText'
+                ) {
+                    // Google Android virtual keyboard (GBoard) have some buggy behavior with autosuggestions
+                    // and some times repeats the previously inserted caracters. If we detect that, revert
+                    // the input value to the previous one
+                    e.target.value = prevValue;
+                }
+                return rifm.onChange(e);
+            }}
             type="text"
             ref={combineRefs(inputRef, ref)}
         />
