@@ -129,10 +129,12 @@ const generateReportForGithub = async (results) => {
 
     let lines = ['**Accessibility report**'];
 
-    if (files.size) {
+    const problemsCount = results.reduce((acc, [, result]) => acc + result.violations.length, 0);
+
+    if (problemsCount > 0) {
         core.setFailed('Accessibility problems detected');
         lines.push(`<details>`);
-        lines.push(`<summary>❌ <b>${files.size}</b> Stories with problems</summary><br />`);
+        lines.push(`<summary>❌ <b>${problemsCount}</b> Stories with problems</summary><br />`);
 
         for (const [name, result] of results) {
             const [jsonUrl, htmlUrl] = await Promise.all([
