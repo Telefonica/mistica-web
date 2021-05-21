@@ -70,7 +70,9 @@ const startStorybook = () => {
 const audit = async (browser, url) => {
     const page = await browser.newPage();
     await page.goto(url);
-    const result = await new AxePuppeteer(page).analyze();
+    const result = await new AxePuppeteer(page)
+        .disableRules(['color-contrast', 'page-has-heading-one'])
+        .analyze();
     page.close();
     return result;
 };
@@ -181,6 +183,7 @@ const main = async () => {
         const result = await audit(browser, getStoryUrl(story));
         results.push([story, result]);
     }
+
     console.log('total time:', Date.now() - t, 'ms');
 
     if (process.env.CI) {
