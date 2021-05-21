@@ -4,7 +4,7 @@ import {useControlProps} from './form-context';
 import {createUseStyles} from './jss';
 import Inline from './inline';
 import {Text3} from './text';
-import {useAriaId, useTheme} from './hooks';
+import {useTheme} from './hooks';
 import classnames from 'classnames';
 
 const useIconCheckboxStyles = createUseStyles(({colors, isIos}) => ({
