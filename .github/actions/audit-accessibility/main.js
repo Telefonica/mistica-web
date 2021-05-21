@@ -9,6 +9,7 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
 const {uploadFile} = require('../utils/azure-storage');
+const core = require('@actions/core');
 
 const PATH_REPO_ROOT = path.join(__dirname, '../../..');
 const PATH_REPORTS = path.join(PATH_REPO_ROOT, 'reports/accessibility');
@@ -127,6 +128,7 @@ const generateReportForGithub = async (results) => {
     let lines = ['**Accessibility report**'];
 
     if (files.size) {
+        core.setFailed('Accessibility problems detected');
         lines.push(`<details>`);
         lines.push(`<summary>❌ <b>${files.size}</b> Stories with problems</summary><br />`);
 
