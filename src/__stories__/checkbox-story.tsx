@@ -17,7 +17,10 @@ export const Default: StoryComponent = () => {
                     render={(checkboxElement) => (
                         <Inline alignItems="center" space={16}>
                             {checkboxElement}
-                            <Text3 regular>You accept to sell your soul</Text3>
+                            {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility*/}
+                            <Text3 regular id="uncontrolled-render">
+                                You accept to sell your soul
+                            </Text3>
                         </Inline>
                     )}
                 />
@@ -37,7 +40,10 @@ export const Default: StoryComponent = () => {
                     render={(checkboxElement) => (
                         <Inline alignItems="center" space={16}>
                             {checkboxElement}
-                            <Text3 regular>You accept to sell your soul: {checked ? 'sure!' : 'nahh'}</Text3>
+                            {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility*/}
+                            <Text3 regular id="controlled-render">
+                                You accept to sell your soul: {checked ? 'sure!' : 'nahh'}
+                            </Text3>
                         </Inline>
                     )}
                 />
@@ -56,7 +62,10 @@ export const Default: StoryComponent = () => {
                     onChange={onChange}
                     render={() => (
                         <Inline alignItems="center" space={16}>
-                            <Text3 regular>You accept to sell your soul: {checked ? 'sure!' : 'nahh'}</Text3>
+                            {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility*/}
+                            <Text3 regular id="no-box">
+                                You accept to sell your soul: {checked ? 'sure!' : 'nahh'}
+                            </Text3>
                         </Inline>
                     )}
                 />
