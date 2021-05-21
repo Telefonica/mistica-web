@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {Label, HelperText, FieldContainer} from './text-field-components';
-import {isIos, isRunningAcceptanceTest, isChrome, isFirefox} from './utils/platform';
+import {isIos, isRunningAcceptanceTest, isFirefox} from './utils/platform';
 import {useAriaId, useTheme} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
@@ -254,10 +254,6 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-// Chrome ignores 'off': https://bugs.chromium.org/p/chromium/issues/detail?id=468153#c164
-const fixAutoComplete = (platformOverrides: Theme['platformOverrides'], autoComplete?: AutoComplete) =>
-    autoComplete === 'off' && isChrome(platformOverrides) ? 'nope' : autoComplete;
-
 const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
     (
         {
@@ -281,7 +277,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             fieldRef,
             maxLength,
             id: idProp,
-            autoComplete: autoCompleteProp,
+            autoComplete,
             fullWidth,
             ...rest
         },
@@ -291,7 +287,6 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
         );
-        const {platformOverrides} = useTheme();
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
         const hasLabel = !!label || !rest.required;
 
@@ -347,7 +342,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const props = {
             ...rest,
             maxLength,
-            autoComplete: fixAutoComplete(platformOverrides, autoCompleteProp),
+            autoComplete,
             ...inputProps,
         };
 
@@ -468,7 +463,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(({getSuggestions
                     // while the test is typing, the component could be remounted.
                     // By hiding the label, we ensure that the test selects the loaded component
                     label={isRunningAcceptanceTest(platformOverrides) ? '' : props.label}
-                    autoComplete={fixAutoComplete(platformOverrides, 'off') as AutoComplete}
+                    autoComplete="off"
                     ref={ref}
                 />
             }
@@ -476,7 +471,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(({getSuggestions
             <Autosuggest
                 inputProps={{
                     ...props,
-                    autoComplete: fixAutoComplete(platformOverrides, 'off'),
+                    autoComplete: 'off',
                     // @ts-expect-error Autosuggest expects slightly different types
                     onChange: (e: React.ChangeEvent<HTMLInputElement>, {newValue}) => {
                         // hack to mutate event value

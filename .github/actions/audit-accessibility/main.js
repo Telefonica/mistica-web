@@ -71,7 +71,12 @@ const audit = async (browser, url) => {
     const page = await browser.newPage();
     await page.goto(url);
     const result = await new AxePuppeteer(page)
-        .disableRules(['color-contrast', 'page-has-heading-one'])
+        .disableRules([
+            // our colors are designed by brand skins
+            'color-contrast',
+            // disabled because some stories don't include an H1 header
+            'page-has-heading-one',
+        ])
         .analyze();
     page.close();
     return result;
