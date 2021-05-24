@@ -33,7 +33,7 @@ const useStyles = createUseStyles(({colors}) => ({
     hoverDisabled: {
         cursor: 'initial',
         '&:hover': {
-            background: 'none',
+            background: () => 'none',
         },
     },
     content: {
