@@ -31,7 +31,7 @@ export type MenuItemProps = {
     selected?: boolean;
     hovered?: boolean;
     value: string;
-    onPress: (value: string) => void;
+    onPress?: (value: string) => void;
     render?: (value: string, selected?: boolean) => React.ReactNode;
 };
 
@@ -48,107 +48,41 @@ export const MenuItem: React.FC<MenuItemProps> = ({children, value, selected, ho
                 [classes.menuItemSelected]: hovered || selected,
             })}
             onPointerDown={cancelEvent}
-            onClick={() => onPress(value)}
+            onClick={() => onPress?.(value)}
         >
             {children ?? render?.(value, selected) ?? value}
         </li>
     );
 };
 
-type MenuItemsProps = {
-    menuProps: {
-        ref: React.RefCallback<HTMLElement>;
-        className: string;
-    };
-    render: ({
-        index,
-        cursorIndex,
-        text,
-        value,
-    }: {
-        index: number;
-        cursorIndex: number | null;
-        text: string;
-        value: string;
-    }) => React.ReactElement<typeof MenuItem>;
-    items: ReadonlyArray<{
-        readonly value: string;
-        readonly text: string;
-    }>;
-    initialIndex?: number | null;
-    isMenuOpen: boolean;
-    closeMenu?: () => void;
-    onSelect: (index: number) => void;
-};
-
-export const MenuItems: React.FC<MenuItemsProps> = ({
-    render,
-    menuProps,
-    items,
-    initialIndex,
-    isMenuOpen,
-    closeMenu,
-    onSelect,
-}) => {
-    const [cursorIndex, setCursorIndex] = React.useState<number | null>(initialIndex || null);
-
-    React.useEffect(() => {
-        const updateCursorIndex = (e: KeyboardEvent) => {
-            const keyToOperand: Record<number, 1 | -1 | undefined> = {[UP]: -1, [DOWN]: 1};
-            const operand = keyToOperand[e.keyCode];
-            if (operand) {
-                cancelEvent(e);
-                const newIndex = cursorIndex !== null ? cursorIndex + operand : 0;
-
-                setCursorIndex(newIndex);
-            }
-        };
-
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (isMenuOpen) {
-                if (e.keyCode === TAB) {
-                    cancelEvent(e);
-                }
-                if (e.keyCode === ENTER || e.keyCode === SPACE) {
-                    cancelEvent(e);
-                    if (cursorIndex !== null) {
-                        onSelect(cursorIndex);
-                    }
-                    closeMenu?.();
-                }
-            }
-            // so we don't change the cursorIndex while menu is closing
-            if (isMenuOpen) {
-                updateCursorIndex(e);
-            }
-        };
-        document.addEventListener('keydown', handleKeyDown, false);
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown, false);
-        };
-    });
-
-    return (
-        <ul {...menuProps} role="listbox" tabIndex={-1}>
-            {items.map(({value, text}, index) => render({index, cursorIndex, text, value}))}
-        </ul>
-    );
-};
-
 type MenuContextState = {
     isMenuOpen: boolean;
     setIsMenuOpen: (isOpen: boolean) => void;
+    target: HTMLElement | null;
+    setTarget: (target: HTMLElement) => void;
+    menu: HTMLElement | null;
+    setMenu: (target: HTMLElement) => void;
 };
 
 const MenuContext = React.createContext<MenuContextState>({
     isMenuOpen: false,
     setIsMenuOpen: () => {},
+    target: null,
+    setTarget: () => {},
+    menu: null,
+    setMenu: () => {},
 });
 
 export const MenuProvider: React.FC = ({children}) => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const [target, setTarget] = React.useState<HTMLElement | null>(null);
+    const [menu, setMenu] = React.useState<HTMLElement | null>(null);
 
-    return <MenuContext.Provider value={{isMenuOpen, setIsMenuOpen}}>{children}</MenuContext.Provider>;
+    return (
+        <MenuContext.Provider value={{target, setTarget, menu, setMenu, isMenuOpen, setIsMenuOpen}}>
+            {children}
+        </MenuContext.Provider>
+    );
 };
 
 const useStyles = createUseStyles(({colors}) => ({
@@ -173,23 +107,25 @@ const useStyles = createUseStyles(({colors}) => ({
     },
 }));
 
+type Target = {
+    ref: React.RefCallback<HTMLElement>;
+    onPress: (event: React.MouseEvent | React.KeyboardEvent) => void;
+};
+
+type Menu = {
+    ref: React.RefCallback<HTMLElement>;
+    className: string;
+};
+
 export const useMenu = (): {
-    menuProps: {
-        ref: React.RefCallback<HTMLElement>;
-        className: string;
-    };
-    targetProps: {
-        ref: React.RefCallback<HTMLElement>;
-        onPress: (event: React.MouseEvent | React.KeyboardEvent) => void;
-    };
+    menuProps: Menu;
+    targetProps: Target;
     closeMenu: () => void;
     isMenuOpen: boolean;
 } => {
     const [animateShowItems, setAnimateShowItems] = React.useState(false);
-    const {isMenuOpen, setIsMenuOpen} = React.useContext(MenuContext);
-    const [target, setTarget] = React.useState<HTMLElement | null>(null);
-    const [menu, setMenu] = React.useState<Element | null>(null);
-    const [itemsComputedProps, setitemsComputedProps] = React.useState({});
+    const {target, setTarget, menu, setMenu, isMenuOpen, setIsMenuOpen} = React.useContext(MenuContext);
+    const [itemsComputedProps, setItemsComputedProps] = React.useState({});
 
     React.useEffect(() => {
         const targetRect = target?.getBoundingClientRect();
@@ -209,7 +145,7 @@ export const useMenu = (): {
             const availableSpaceBottom = window.innerHeight - top;
             if (selectTop /* this is the available space on top */ > availableSpaceBottom) {
                 const newTop = selectTop - spaceTaken;
-                setitemsComputedProps({
+                setItemsComputedProps({
                     width,
                     left,
                     top: Math.max(newTop, MARGIN_THRESHOLD),
@@ -217,7 +153,7 @@ export const useMenu = (): {
                     transformOrigin: 'center bottom',
                 });
             } else {
-                setitemsComputedProps({
+                setItemsComputedProps({
                     width,
                     top,
                     left,
@@ -227,7 +163,7 @@ export const useMenu = (): {
             }
         } else {
             // if it fits on bottom
-            setitemsComputedProps({
+            setItemsComputedProps({
                 width,
                 top,
                 left,
@@ -251,9 +187,11 @@ export const useMenu = (): {
     const targetProps = React.useMemo(
         () => ({
             ref: setTarget,
-            onPress: () => setIsMenuOpen(!isMenuOpen),
+            onPress: () => {
+                setIsMenuOpen(!isMenuOpen);
+            },
         }),
-        [setIsMenuOpen, isMenuOpen]
+        [setTarget, isMenuOpen, setIsMenuOpen]
     );
 
     const menuProps = React.useMemo(
@@ -261,7 +199,7 @@ export const useMenu = (): {
             ref: setMenu,
             className: classes.menuContainer,
         }),
-        [classes]
+        [classes.menuContainer, setMenu]
     );
 
     return React.useMemo(
@@ -275,6 +213,89 @@ export const useMenu = (): {
         }),
         [isMenuOpen, targetProps, menuProps, setIsMenuOpen]
     );
+};
+
+type MenuItemsProps = {
+    items: ReadonlyArray<{
+        readonly value: string;
+        readonly text: string;
+    }>;
+    renderItem: ({text, value}: {text: string; value: string}) => React.ReactNode;
+    onSelect: (value: string) => void;
+};
+
+export const MenuItems: React.FC<MenuItemsProps> = ({renderItem, items, onSelect}) => {
+    const {isMenuOpen, closeMenu, menuProps} = useMenu();
+    const [cursorIndex, setCursorIndex] = React.useState<number | undefined>();
+
+    React.useEffect(() => {
+        const updateCursorIndex = (e: KeyboardEvent) => {
+            const keyToOperand: Record<number, 1 | -1 | undefined> = {[UP]: -1, [DOWN]: 1};
+            const operand = keyToOperand[e.keyCode];
+            if (operand) {
+                cancelEvent(e);
+                const newIndex = cursorIndex !== undefined ? cursorIndex + operand : 0;
+
+                setCursorIndex(newIndex);
+            }
+        };
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (isMenuOpen) {
+                if (e.keyCode === TAB) {
+                    cancelEvent(e);
+                }
+                if (e.keyCode === ENTER || e.keyCode === SPACE) {
+                    cancelEvent(e);
+                    if (cursorIndex !== undefined) {
+                        onSelect(items[cursorIndex].value);
+                    }
+                    closeMenu?.();
+                }
+            }
+            // so we don't change the cursorIndex while menu is closing
+            if (isMenuOpen) {
+                updateCursorIndex(e);
+            }
+        };
+        document.addEventListener('keydown', handleKeyDown, false);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown, false);
+        };
+    });
+
+    return isMenuOpen ? (
+        <Overlay
+            onPress={(e) => {
+                closeMenu();
+                cancelEvent(e);
+            }}
+            disableScroll
+        >
+            <ul {...menuProps} role="listbox" tabIndex={-1}>
+                {items.map(({value, text}, index) => {
+                    const Item = renderItem({text, value});
+                    return React.isValidElement(Item)
+                        ? React.cloneElement(Item, {
+                              onPress: () => {
+                                  onSelect(value);
+                              },
+                              hovered: index === cursorIndex,
+                          })
+                        : null;
+                })}
+            </ul>
+        </Overlay>
+    ) : null;
+};
+
+type MenuTargetProps = {
+    render: (target: Target & {isMenuOpen: boolean}) => React.ReactElement<any>;
+};
+
+export const MenuTarget: React.FC<MenuTargetProps> = ({render}) => {
+    const {targetProps, isMenuOpen} = useMenu();
+    return render({...targetProps, isMenuOpen});
 };
 
 export type MenuProps = {
@@ -301,17 +322,7 @@ const Menu: React.FC<MenuProps> = ({children}) => {
         };
     });
 
-    return isMenuOpen ? (
-        <Overlay
-            onPress={(e) => {
-                setIsMenuOpen(false);
-                cancelEvent(e);
-            }}
-            disableScroll
-        >
-            {children}
-        </Overlay>
-    ) : null;
+    return <>{children}</>;
 };
 
 export default Menu;

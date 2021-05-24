@@ -1,6 +1,17 @@
 import * as React from 'react';
 import {fruitEntries} from './helpers';
-import {Touchable, Menu, Stack, MenuProvider, useMenu, MenuItems, MenuItem, Box, Text3, Checkbox} from '..';
+import {
+    Touchable,
+    Menu,
+    Stack,
+    MenuProvider,
+    MenuItems,
+    MenuItem,
+    Box,
+    Text3,
+    Checkbox,
+    MenuTarget,
+} from '..';
 import SectionTitle from '../section-title';
 import {ButtonPrimary} from '../button';
 
@@ -12,12 +23,6 @@ export default {
 const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 
 const Story: React.FC = () => {
-    const {
-        isMenuOpen,
-        closeMenu,
-        targetProps: {ref: targetRef, onPress: onPressTarget},
-        menuProps,
-    } = useMenu();
     const [valuesState, setValuesState] = React.useState<ReadonlyArray<string>>([]);
 
     const setValues = (val: string) => {
@@ -29,41 +34,32 @@ const Story: React.FC = () => {
     };
 
     return (
-        <>
-            <Touchable elementRef={targetRef} onPress={onPressTarget} style={{width: 'auto'}}>
-                <ButtonPrimary fake>{isMenuOpen ? 'Close' : 'Open'}</ButtonPrimary>
-            </Touchable>
-
-            <Menu>
-                <MenuItems
-                    menuProps={menuProps}
-                    items={fruitOptions}
-                    isMenuOpen={isMenuOpen}
-                    closeMenu={closeMenu}
-                    onSelect={(index) => {
-                        setValues(fruitOptions[index].value);
-                    }}
-                    render={({index, cursorIndex, text, value: val}) => (
-                        <MenuItem
-                            key={val}
-                            value={val}
-                            selected={valuesState.includes(val)}
-                            hovered={cursorIndex === index}
-                            onPress={() => setValues(val)}
-                            render={(value, selected) => (
-                                <Box paddingY={8}>
-                                    <Text3 medium as="p">
-                                        <Checkbox checked={selected} name={value}>
-                                            {text}
-                                        </Checkbox>
-                                    </Text3>
-                                </Box>
-                            )}
-                        />
-                    )}
-                />
-            </Menu>
-        </>
+        <Menu>
+            <MenuTarget
+                render={({ref, onPress, isMenuOpen}) => (
+                    <Touchable elementRef={ref} onPress={onPress} style={{width: 'auto'}}>
+                        <ButtonPrimary fake>{isMenuOpen ? 'Close' : 'Open'}</ButtonPrimary>
+                    </Touchable>
+                )}
+            />
+            <MenuItems
+                items={fruitOptions}
+                onSelect={(value) => {
+                    setValues(value);
+                }}
+                renderItem={({text, value}) => (
+                    <MenuItem value={value} selected={valuesState.includes(value)}>
+                        <Box paddingY={8}>
+                            <Text3 medium as="p">
+                                <Checkbox checked={valuesState.includes(value)} name={value}>
+                                    {text}
+                                </Checkbox>
+                            </Text3>
+                        </Box>
+                    </MenuItem>
+                )}
+            />
+        </Menu>
     );
 };
 

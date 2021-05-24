@@ -54,7 +54,7 @@ export {default as Stepper} from './stepper';
 export {default as ProgressBar} from './progress-bar';
 export {MediaCard, DataCard} from './card';
 export {default as Divider} from './divider';
-export {default as Menu, MenuItems, MenuItem, MenuProvider, useMenu} from './menu';
+export {default as Menu, MenuItems, MenuItem, MenuProvider, MenuTarget, useMenu} from './menu';
 
 // Forms
 export {default as Form} from './form';
