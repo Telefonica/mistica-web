@@ -4,7 +4,7 @@ import {useControlProps} from './form-context';
 import {createUseStyles} from './jss';
 import Inline from './inline';
 import {Text3} from './text';
-import {useTheme} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import classnames from 'classnames';
 
 const useIconCheckboxStyles = createUseStyles(({colors, isIos}) => ({
@@ -72,7 +72,7 @@ type RenderProps = {
     checked?: boolean;
     onChange?: (value: boolean) => void;
     id?: string;
-    render?: (checkboxElement: React.ReactElement) => React.ReactElement<any, any>; // Seems like this is the type returned by React.FC
+    render?: (checkboxElement: React.ReactElement, labelId: string) => React.ReactElement<any, any>; // Seems like this is the type returned by React.FC
     children?: undefined;
     disabled?: boolean;
 };
@@ -101,6 +101,7 @@ const useStyles = createUseStyles(() => ({
 
 const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
     const classes = useStyles();
+    const labelId = useAriaId();
 
     const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
@@ -147,13 +148,13 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             aria-disabled={disabled}
         >
             {props.render ? (
-                props.render(iconCheckbox)
+                props.render(iconCheckbox, labelId)
             ) : (
                 <Inline space={16} alignItems="center">
                     {iconCheckbox}
                     {props.children && (
-                        <Text3 regular as="div">
-                            <span id={props.name}>{props.children}</span>
+                        <Text3 regular as="div" id={labelId}>
+                            <span>{props.children}</span>
                         </Text3>
                     )}
                 </Inline>

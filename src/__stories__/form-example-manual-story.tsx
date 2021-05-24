@@ -94,17 +94,9 @@ export const ManualForm: StoryComponent = () => {
                         </Inline>
                     )}
                 />
-                <Checkbox
-                    name="t&c"
-                    checked={acceptTC}
-                    onChange={setAcceptTC}
-                    render={(checkboxElement) => (
-                        <Inline alignItems="center" space={8}>
-                            {checkboxElement}
-                            <Text2 regular>Accept Terms and Conditions</Text2>
-                        </Inline>
-                    )}
-                />
+                <Checkbox name="t&c" checked={acceptTC} onChange={setAcceptTC}>
+                    <Text2 regular>Accept Terms and Conditions</Text2>
+                </Checkbox>
                 <ButtonLayout>
                     <ButtonPrimary submit loadingText="Sending">
                         Send

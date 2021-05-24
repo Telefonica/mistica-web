@@ -11,14 +11,14 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={32}>
             <>
-                <SectionTitle id="label">Uncontrolled</SectionTitle>
+                <SectionTitle>Uncontrolled</SectionTitle>
                 <Switch
                     name="uncontrolled"
                     onChange={onUncontrolledChange}
-                    render={(switchElement) => (
+                    render={(switchElement, labelId) => (
                         <Inline alignItems="center" space={16}>
                             {switchElement}
-                            <Text3 regular uppercase>
+                            <Text3 regular uppercase id={labelId}>
                                 {uncontrolledChecked ? 'on' : 'off'}
                             </Text3>
                         </Inline>
@@ -26,15 +26,15 @@ export const Default: StoryComponent = () => {
                 />
             </>
             <>
-                <SectionTitle id="label">Controlled</SectionTitle>
+                <SectionTitle>Controlled</SectionTitle>
                 <Switch
                     name="controlled"
                     checked={checked}
                     onChange={onChange}
-                    render={(switchElement) => (
+                    render={(switchElement, labelId) => (
                         <Inline alignItems="center" space={16}>
                             {switchElement}
-                            <Text3 regular uppercase>
+                            <Text3 regular uppercase id={labelId}>
                                 {checked ? 'on' : 'off'}
                             </Text3>
                         </Inline>
@@ -42,18 +42,18 @@ export const Default: StoryComponent = () => {
                 />
             </>
             <>
-                <SectionTitle id="label">Without children</SectionTitle>
+                <SectionTitle>Without children</SectionTitle>
                 <Switch name="no-children" />
             </>
             <>
-                <SectionTitle id="label">Without switch</SectionTitle>
+                <SectionTitle>Without switch</SectionTitle>
                 <Switch
                     name="no-switch"
                     checked={checked}
                     onChange={onChange}
-                    render={() => (
+                    render={(_, labelId) => (
                         <Inline alignItems="center" space={16}>
-                            <Text3 regular uppercase>
+                            <Text3 regular uppercase id={labelId}>
                                 {checked ? 'on' : 'off'}
                             </Text3>
                         </Inline>
@@ -61,7 +61,7 @@ export const Default: StoryComponent = () => {
                 />
             </>
             <>
-                <SectionTitle id="label">Disabled</SectionTitle>
+                <SectionTitle>Disabled</SectionTitle>
                 <Switch name="disabled" checked={checked} onChange={onChange} disabled>
                     <Text3 regular uppercase>
                         {checked ? 'on' : 'off'}

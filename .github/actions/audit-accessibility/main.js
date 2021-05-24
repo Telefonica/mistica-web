@@ -116,11 +116,13 @@ const generateReportForConsole = async (results) => {
 
     const lines = [];
     for (const [name, result] of results) {
-        lines.push(
-            `${name} (${result.violations.length} violations)`,
-            `    - HTML: ${files.get(name).html}`,
-            `    - JSON: ${files.get(name).json}`
-        );
+        if (result.violations.length) {
+            lines.push(
+                `${name} (${result.violations.length} violations)`,
+                `    - HTML: ${files.get(name).html}`,
+                `    - JSON: ${files.get(name).json}`
+            );
+        }
     }
 
     console.log(lines.join('\n'));

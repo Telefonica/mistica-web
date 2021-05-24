@@ -14,11 +14,11 @@ export const Default: StoryComponent = () => {
                 <Checkbox
                     name="uncontrolled-render"
                     defaultChecked={false}
-                    render={(checkboxElement) => (
+                    render={(checkboxElement, labelId) => (
                         <Inline alignItems="center" space={16}>
                             {checkboxElement}
                             {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility*/}
-                            <Text3 regular id="uncontrolled-render">
+                            <Text3 regular id={labelId}>
                                 You accept to sell your soul
                             </Text3>
                         </Inline>
@@ -37,11 +37,11 @@ export const Default: StoryComponent = () => {
                     name="controlled-render"
                     checked={checked}
                     onChange={onChange}
-                    render={(checkboxElement) => (
+                    render={(checkboxElement, labelId) => (
                         <Inline alignItems="center" space={16}>
                             {checkboxElement}
                             {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility*/}
-                            <Text3 regular id="controlled-render">
+                            <Text3 regular id={labelId}>
                                 You accept to sell your soul: {checked ? 'sure!' : 'nahh'}
                             </Text3>
                         </Inline>
@@ -60,10 +60,10 @@ export const Default: StoryComponent = () => {
                     name="no-box"
                     checked={checked}
                     onChange={onChange}
-                    render={() => (
+                    render={(_, labelId) => (
                         <Inline alignItems="center" space={16}>
                             {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility*/}
-                            <Text3 regular id="no-box">
+                            <Text3 regular id={labelId}>
                                 You accept to sell your soul: {checked ? 'sure!' : 'nahh'}
                             </Text3>
                         </Inline>
