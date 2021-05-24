@@ -33,9 +33,11 @@ const SectionTitle: React.FC<Props> = ({children, id, right, as = 'h3'}) => {
             <Text1 color={theme.colors.textSecondary} uppercase medium as={as} id={id}>
                 {children}
             </Text1>
-            <div className={classes.right}>
-                <Text2 regular>{right}</Text2>
-            </div>
+            {!!right && (
+                <div className={classes.right}>
+                    <Text2 regular>{right}</Text2>
+                </div>
+            )}
         </Inline>
     );
 };
