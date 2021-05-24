@@ -103,7 +103,7 @@ type PropsChildren = {
 
 const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
     const labelId = useAriaId();
-    const {defaultValue, value, onChange, focusableRef, disabled, name} = useControlProps({
+    const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
         value: props.checked,
         defaultValue: props.defaultChecked,

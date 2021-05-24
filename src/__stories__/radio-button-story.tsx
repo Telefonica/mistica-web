@@ -11,10 +11,10 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={32}>
             <>
-                <SectionTitle>Uncontrolled: {uncontrolledValue}</SectionTitle>
+                <SectionTitle id="uncontrolled">Uncontrolled: {uncontrolledValue}</SectionTitle>
                 <RadioGroup
                     name="uncontrolled"
-                    aria-labelledby="label"
+                    aria-labelledby="uncontrolled"
                     onChange={setUncontrolledValue}
                     defaultValue="apple"
                 >
@@ -29,8 +29,8 @@ export const Default: StoryComponent = () => {
                 </RadioGroup>
             </>
             <>
-                <SectionTitle>Selected fruit: {value}</SectionTitle>
-                <RadioGroup name="group1" aria-labelledby="label" value={value} onChange={setValue}>
+                <SectionTitle id="controlled">Selected fruit: {value}</SectionTitle>
+                <RadioGroup name="group1" aria-labelledby="controlled" value={value} onChange={setValue}>
                     <Stack space={16}>
                         <RadioButton value="banana">
                             <Text3 regular>Banana</Text3>
@@ -42,8 +42,8 @@ export const Default: StoryComponent = () => {
                 </RadioGroup>
             </>
             <>
-                <SectionTitle>Custom render - Selected fruit: {value}</SectionTitle>
-                <RadioGroup name="group2" aria-labelledby="label" value={value} onChange={setValue}>
+                <SectionTitle id="custom-render">Custom render - Selected fruit: {value}</SectionTitle>
+                <RadioGroup name="group2" aria-labelledby="custom-render" value={value} onChange={setValue}>
                     <Stack space={16}>
                         <RadioButton
                             value="banana"
@@ -67,8 +67,14 @@ export const Default: StoryComponent = () => {
                 </RadioGroup>
             </>
             <>
-                <SectionTitle>Disabled</SectionTitle>
-                <RadioGroup disabled name="group3" aria-labelledby="label" value={value} onChange={setValue}>
+                <SectionTitle id="disabled">Disabled</SectionTitle>
+                <RadioGroup
+                    disabled
+                    name="group3"
+                    aria-labelledby="disabled"
+                    value={value}
+                    onChange={setValue}
+                >
                     <Stack space={16}>
                         <RadioButton value="banana">
                             <Text3 regular>Banana</Text3>

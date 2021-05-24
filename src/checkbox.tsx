@@ -144,7 +144,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             tabIndex={disabled ? undefined : 0}
             ref={focusableRef}
             className={classnames(classes.checkboxContainer, {[classes.disabled]: disabled})}
-            aria-labelledby={props.name}
+            aria-labelledby={labelId}
             aria-disabled={disabled}
         >
             {props.render ? (

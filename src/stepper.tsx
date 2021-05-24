@@ -174,10 +174,10 @@ const useStyles = createUseStyles(({colors, mq}) => ({
 type StepperProps = {
     steps: Array<string>;
     currentIndex: number;
-    label?: string;
+    'aria-label'?: string;
 };
 
-const Stepper: React.FC<StepperProps> = ({steps, currentIndex, label}: StepperProps) => {
+const Stepper: React.FC<StepperProps> = ({steps, currentIndex, 'aria-label': ariaLabel}: StepperProps) => {
     const {colors} = useTheme();
     const {isDesktopOrBigger} = useScreenSize();
     const {height, ref} = useElementDimensions();
@@ -207,7 +207,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex, label}: StepperPr
                             aria-valuemin={1}
                             aria-valuemax={steps.length}
                             aria-valuetext={text}
-                            aria-label={label}
+                            aria-label={ariaLabel}
                         >
                             {isCompleted ? (
                                 <div
