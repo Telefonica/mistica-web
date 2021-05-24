@@ -74,8 +74,10 @@ const audit = async (browser, url) => {
         .disableRules([
             // our colors are designed by brand skins
             'color-contrast',
-            // disabled because some stories don't include an H1 header
+            // ignored because some stories don't include an H1 header
             'page-has-heading-one',
+            // ignored because we use invented autocomplete values to workaround related chrome issues
+            'autocomplete-valid',
         ])
         .analyze();
     page.close();

@@ -11,14 +11,17 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={32}>
             <>
-                <SectionTitle>Uncontrolled</SectionTitle>
+                <SectionTitle as="h1" id="uncontrolled-label">
+                    Uncontrolled
+                </SectionTitle>
                 <Switch
                     name="uncontrolled"
                     onChange={onUncontrolledChange}
-                    render={(switchElement, labelId) => (
+                    aria-labelledby="uncontrolled-label"
+                    render={(switchElement) => (
                         <Inline alignItems="center" space={16}>
                             {switchElement}
-                            <Text3 regular uppercase id={labelId}>
+                            <Text3 regular uppercase>
                                 {uncontrolledChecked ? 'on' : 'off'}
                             </Text3>
                         </Inline>
@@ -26,15 +29,18 @@ export const Default: StoryComponent = () => {
                 />
             </>
             <>
-                <SectionTitle>Controlled</SectionTitle>
+                <SectionTitle as="h1" id="controlled-label">
+                    Controlled
+                </SectionTitle>
                 <Switch
                     name="controlled"
                     checked={checked}
                     onChange={onChange}
-                    render={(switchElement, labelId) => (
+                    aria-labelledby="controlled-label"
+                    render={(switchElement) => (
                         <Inline alignItems="center" space={16}>
                             {switchElement}
-                            <Text3 regular uppercase id={labelId}>
+                            <Text3 regular uppercase>
                                 {checked ? 'on' : 'off'}
                             </Text3>
                         </Inline>
@@ -42,18 +48,23 @@ export const Default: StoryComponent = () => {
                 />
             </>
             <>
-                <SectionTitle>Without children</SectionTitle>
-                <Switch name="no-children" />
+                <SectionTitle as="h1" id="without-children-label">
+                    Without children
+                </SectionTitle>
+                <Switch name="no-children" aria-labelledby="without-children-label" />
             </>
             <>
-                <SectionTitle>Without switch</SectionTitle>
+                <SectionTitle as="h1" id="no-switch-label">
+                    Without switch
+                </SectionTitle>
                 <Switch
                     name="no-switch"
                     checked={checked}
                     onChange={onChange}
-                    render={(_, labelId) => (
+                    aria-labelledby="no-switch-label"
+                    render={() => (
                         <Inline alignItems="center" space={16}>
-                            <Text3 regular uppercase id={labelId}>
+                            <Text3 regular uppercase>
                                 {checked ? 'on' : 'off'}
                             </Text3>
                         </Inline>
@@ -61,7 +72,7 @@ export const Default: StoryComponent = () => {
                 />
             </>
             <>
-                <SectionTitle>Disabled</SectionTitle>
+                <SectionTitle as="h1">Disabled</SectionTitle>
                 <Switch name="disabled" checked={checked} onChange={onChange} disabled>
                     <Text3 regular uppercase>
                         {checked ? 'on' : 'off'}

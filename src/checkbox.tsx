@@ -75,6 +75,7 @@ type RenderProps = {
     render?: (checkboxElement: React.ReactElement, labelId: string) => React.ReactElement<any, any>; // Seems like this is the type returned by React.FC
     children?: undefined;
     disabled?: boolean;
+    'aria-labelledby'?: string;
 };
 
 type ChildrenProps = {
@@ -86,6 +87,7 @@ type ChildrenProps = {
     render?: undefined;
     children: React.ReactNode;
     disabled?: boolean;
+    'aria-labelledby'?: string;
 };
 
 const useStyles = createUseStyles(() => ({
@@ -101,7 +103,7 @@ const useStyles = createUseStyles(() => ({
 
 const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
     const classes = useStyles();
-    const labelId = useAriaId();
+    const labelId = useAriaId(props['aria-labelledby']);
 
     const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,

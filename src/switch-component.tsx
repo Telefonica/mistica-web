@@ -89,6 +89,7 @@ type PropsRender = {
     disabled?: boolean;
     render: RenderSwitch;
     children?: undefined;
+    'aria-labelledby'?: string;
 };
 
 type PropsChildren = {
@@ -99,10 +100,11 @@ type PropsChildren = {
     disabled?: boolean;
     children?: React.ReactNode;
     render?: undefined;
+    'aria-labelledby'?: string;
 };
 
 const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
-    const labelId = useAriaId();
+    const labelId = useAriaId(props['aria-labelledby']);
     const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
         value: props.checked,

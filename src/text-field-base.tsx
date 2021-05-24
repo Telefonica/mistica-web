@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {Label, HelperText, FieldContainer} from './text-field-components';
-import {isIos, isRunningAcceptanceTest, isFirefox} from './utils/platform';
+import {isIos, isRunningAcceptanceTest, isChrome, isFirefox} from './utils/platform';
 import {useAriaId, useTheme} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
@@ -254,6 +254,10 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
+// Chrome ignores 'off': https://bugs.chromium.org/p/chromium/issues/detail?id=468153#c164
+const fixAutoComplete = (platformOverrides: Theme['platformOverrides'], autoComplete?: AutoComplete) =>
+    autoComplete === 'off' && isChrome(platformOverrides) ? 'nope' : autoComplete;
+
 const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
     (
         {
@@ -277,7 +281,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             fieldRef,
             maxLength,
             id: idProp,
-            autoComplete,
+            autoComplete: autoCompleteProp,
             fullWidth,
             ...rest
         },
@@ -287,6 +291,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
         );
+        const {platformOverrides} = useTheme();
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
         const hasLabel = !!label || !rest.required;
 
@@ -342,7 +347,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const props = {
             ...rest,
             maxLength,
-            autoComplete,
+            autoComplete: fixAutoComplete(platformOverrides, autoCompleteProp),
             ...inputProps,
         };
 
@@ -444,78 +449,86 @@ const useSuggestionsStyles = createUseStyles(() => ({
 
 const Autosuggest = React.lazy(() => import(/* webpackChunkName: "react-autosuggest" */ 'react-autosuggest'));
 
-const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(({getSuggestions, ...props}, ref) => {
-    const [suggestions, setSuggestions] = React.useState<Array<string>>([]);
-    const inputRef = React.useRef<HTMLInputElement>(null);
-    const classes = useSuggestionsStyles();
-    const {platformOverrides} = useTheme();
+const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
+    ({getSuggestions, id: idProp, ...props}, ref) => {
+        const [suggestions, setSuggestions] = React.useState<Array<string>>([]);
+        const inputRef = React.useRef<HTMLInputElement>(null);
+        const classes = useSuggestionsStyles();
+        const {platformOverrides} = useTheme();
+        const id = useAriaId(idProp);
+        const autoSuggestId = useAriaId();
 
-    if (getSuggestions && (props.value === undefined || props.defaultValue !== undefined)) {
-        throw Error('Fields with suggestions must be used in controlled mode');
-    }
+        if (getSuggestions && (props.value === undefined || props.defaultValue !== undefined)) {
+            throw Error('Fields with suggestions must be used in controlled mode');
+        }
 
-    return getSuggestions ? (
-        <React.Suspense
-            fallback={
-                <TextFieldBaseComponent
-                    {...props}
-                    // This label override while loading is needed in acceptance tests because
-                    // while the test is typing, the component could be remounted.
-                    // By hiding the label, we ensure that the test selects the loaded component
-                    label={isRunningAcceptanceTest(platformOverrides) ? '' : props.label}
-                    autoComplete="off"
-                    ref={ref}
-                />
-            }
-        >
-            <Autosuggest
-                inputProps={{
-                    ...props,
-                    autoComplete: 'off',
-                    // @ts-expect-error Autosuggest expects slightly different types
-                    onChange: (e: React.ChangeEvent<HTMLInputElement>, {newValue}) => {
-                        // hack to mutate event value
-                        e.target = {...e.target, value: newValue};
-                        e.currentTarget = {...e.currentTarget, value: newValue};
-                        props.onChange?.(e);
-                    },
-                }}
-                renderInputComponent={(inputProps) => (
+        return getSuggestions ? (
+            <React.Suspense
+                fallback={
                     <TextFieldBaseComponent
-                        {...(inputProps as TextFieldBaseProps)}
-                        inputRef={combineRefs(inputRef, props.inputRef, ref)}
+                        {...props}
+                        // This label override while loading is needed in acceptance tests because
+                        // while the test is typing, the component could be remounted.
+                        // By hiding the label, we ensure that the test selects the loaded component
+                        label={isRunningAcceptanceTest(platformOverrides) ? '' : props.label}
+                        autoComplete={fixAutoComplete(platformOverrides, 'off') as AutoComplete}
+                        ref={ref}
+                        id={id}
                     />
-                )}
-                suggestions={suggestions}
-                onSuggestionsFetchRequested={({value}) => setSuggestions(getSuggestions(value))}
-                onSuggestionsClearRequested={() => setSuggestions([])}
-                getSuggestionValue={(suggestion: any) => suggestion}
-                renderSuggestion={(suggestion: any, {isHighlighted}) => (
-                    <div
-                        role="menuitem"
-                        className={classNames(classes.menuItem, {
-                            [classes.menuItemSelected]: isHighlighted,
-                        })}
-                    >
-                        {suggestion}
-                    </div>
-                )}
-                renderSuggestionsContainer={(options) => (
-                    <div
-                        {...options.containerProps}
-                        style={{
-                            width: inputRef.current ? inputRef.current.clientWidth + 2 : 0, // +2 due to borders (input)
-                        }}
-                        className={classes.suggestionsContainer}
-                    >
-                        {options.children}
-                    </div>
-                )}
-            />
-        </React.Suspense>
-    ) : (
-        <TextFieldBaseComponent {...props} ref={ref} />
-    );
-});
+                }
+            >
+                <Autosuggest
+                    id={autoSuggestId}
+                    inputProps={{
+                        ...props,
+                        id,
+                        autoComplete: fixAutoComplete(platformOverrides, 'off'),
+                        // @ts-expect-error Autosuggest expects slightly different types
+                        onChange: (e: React.ChangeEvent<HTMLInputElement>, {newValue}) => {
+                            // hack to mutate event value
+                            e.target = {...e.target, value: newValue};
+                            e.currentTarget = {...e.currentTarget, value: newValue};
+                            props.onChange?.(e);
+                        },
+                    }}
+                    renderInputComponent={(inputProps) => (
+                        <TextFieldBaseComponent
+                            {...(inputProps as TextFieldBaseProps)}
+                            inputRef={combineRefs(inputRef, props.inputRef, ref)}
+                        />
+                    )}
+                    suggestions={suggestions}
+                    onSuggestionsFetchRequested={({value}) => setSuggestions(getSuggestions(value))}
+                    onSuggestionsClearRequested={() => setSuggestions([])}
+                    getSuggestionValue={(suggestion: any) => suggestion}
+                    renderSuggestion={(suggestion: any, {isHighlighted}) => (
+                        <div
+                            role="menuitem"
+                            className={classNames(classes.menuItem, {
+                                [classes.menuItemSelected]: isHighlighted,
+                            })}
+                        >
+                            {suggestion}
+                        </div>
+                    )}
+                    renderSuggestionsContainer={(options) => (
+                        <div
+                            {...options.containerProps}
+                            style={{
+                                width: inputRef.current ? inputRef.current.clientWidth + 2 : 0, // +2 due to borders (input)
+                            }}
+                            className={classes.suggestionsContainer}
+                            aria-label={props.label}
+                        >
+                            {options.children}
+                        </div>
+                    )}
+                />
+            </React.Suspense>
+        ) : (
+            <TextFieldBaseComponent {...props} id={id} ref={ref} />
+        );
+    }
+);
 
 export default TextFieldBase;
