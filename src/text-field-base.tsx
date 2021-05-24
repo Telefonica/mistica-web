@@ -518,7 +518,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 width: inputRef.current ? inputRef.current.clientWidth + 2 : 0, // +2 due to borders (input)
                             }}
                             className={classes.suggestionsContainer}
-                            aria-label={props.label}
+                            aria-label={`${props.label} menu`}
                         >
                             {options.children}
                         </div>
