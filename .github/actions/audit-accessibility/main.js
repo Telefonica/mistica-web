@@ -72,8 +72,6 @@ const audit = async (browser, url) => {
     await page.goto(url);
     const result = await new AxePuppeteer(page)
         .disableRules([
-            // our colors are designed by brand skins
-            // 'color-contrast',
             // ignored because some stories don't include an H1 header
             'page-has-heading-one',
             // ignored because we use invented autocomplete values to workaround related chrome issues
