@@ -72,9 +72,10 @@ type RenderProps = {
     checked?: boolean;
     onChange?: (value: boolean) => void;
     id?: string;
-    render?: (checkboxElement: React.ReactElement) => React.ReactElement<any, any>; // Seems like this is the type returned by React.FC
+    render?: (checkboxElement: React.ReactElement, labelId: string) => React.ReactElement<any, any>; // Seems like this is the type returned by React.FC
     children?: undefined;
     disabled?: boolean;
+    'aria-labelledby'?: string;
 };
 
 type ChildrenProps = {
@@ -86,6 +87,7 @@ type ChildrenProps = {
     render?: undefined;
     children: React.ReactNode;
     disabled?: boolean;
+    'aria-labelledby'?: string;
 };
 
 const useStyles = createUseStyles(() => ({
@@ -101,7 +103,8 @@ const useStyles = createUseStyles(() => ({
 
 const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
     const classes = useStyles();
-    const labelId = useAriaId();
+    const labelId = useAriaId(props['aria-labelledby']);
+
     const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
         value: props.checked,
@@ -147,13 +150,13 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             aria-disabled={disabled}
         >
             {props.render ? (
-                props.render(iconCheckbox)
+                props.render(iconCheckbox, labelId)
             ) : (
                 <Inline space={16} alignItems="center">
                     {iconCheckbox}
                     {props.children && (
-                        <Text3 regular as="div">
-                            <span id={labelId}>{props.children}</span>
+                        <Text3 regular as="div" id={labelId}>
+                            <span>{props.children}</span>
                         </Text3>
                     )}
                 </Inline>

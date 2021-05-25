@@ -31,6 +31,7 @@ const TEXTS_ES = {
     formIbanError: 'IBAN incorrecto',
     closeButtonLabel: 'Cerrar',
     formSearchClear: 'Borrar búsqueda',
+    menuLabelSuffix: 'menú',
 };
 
 const TEXTS_EN: ThemeTexts = {
@@ -57,6 +58,7 @@ const TEXTS_EN: ThemeTexts = {
     formIbanError: 'Incorrect IBAN',
     closeButtonLabel: 'Close',
     formSearchClear: 'Clear search',
+    menuLabelSuffix: 'menu',
 };
 
 const TEXTS_DE: ThemeTexts = {
@@ -83,6 +85,7 @@ const TEXTS_DE: ThemeTexts = {
     formIbanError: 'Falsche IBAN',
     closeButtonLabel: 'Schließen',
     formSearchClear: 'Suche löschen',
+    menuLabelSuffix: 'Menü',
 };
 
 const TEXTS_PT: ThemeTexts = {
@@ -109,6 +112,7 @@ const TEXTS_PT: ThemeTexts = {
     formIbanError: 'IBAN incorreto',
     closeButtonLabel: 'Fechar',
     formSearchClear: 'Apagar pesquisa',
+    menuLabelSuffix: 'menu',
 };
 
 export const getTexts = (locale: Locale): typeof TEXTS_ES => {
