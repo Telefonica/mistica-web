@@ -14,6 +14,7 @@ export const WithImage: StoryComponent = () => (
         title="Your cart is empty"
         description="Check our marketplaces and find something for you. Check our marketplaces and find something"
         button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
+        buttonLink={<ButtonLink onPress={() => {}}>More info</ButtonLink>}
     />
 );
 WithImage.storyName = 'With image';
@@ -41,13 +42,3 @@ export const WithSmallImage: StoryComponent = () => (
     />
 );
 WithSmallImage.storyName = 'With small image';
-
-export const WithLink: StoryComponent = () => (
-    <EmptyStateScreen
-        largeImageUrl="https://i.imgur.com/yGFKQOy.png"
-        title="Your cart is empty"
-        description="Check our marketplaces and find something for you. Check our marketplaces and find something"
-        buttonLink={<ButtonLink onPress={() => {}}>Explore marketplace</ButtonLink>}
-    />
-);
-WithLink.storyName = 'With link';

@@ -27,9 +27,6 @@ const useStyles = createUseStyles((theme) => ({
         backgroundSize: 'contain',
         flex: 1,
     },
-    desktopActions: {
-        marginLeft: ({needsButtonLinkAlignment}) => (needsButtonLinkAlignment ? -6 : 0),
-    },
     mobileImage: {
         width: '100%',
     },
@@ -124,13 +121,11 @@ const EmptyStateScreen: React.FC<Props> = ({
                                         {description}
                                     </Text4>
                                 </Stack>
-                                {(button || buttonLink) && (
-                                    <div className={classes.desktopActions}>
-                                        <Inline space={16} alignItems="center">
-                                            {button}
-                                            {buttonLink}
-                                        </Inline>
-                                    </div>
+                                {button && (
+                                    <Inline space={16} alignItems="center">
+                                        {button}
+                                        {buttonLink}
+                                    </Inline>
                                 )}
                             </Stack>
                         </Box>

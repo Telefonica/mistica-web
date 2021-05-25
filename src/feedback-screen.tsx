@@ -220,7 +220,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         </div>
     );
 
-    const hasButtons = !!primaryButton || !!secondaryButton || !!link;
+    const hasButtons = !!primaryButton || !!secondaryButton;
 
     const content = (
         <>

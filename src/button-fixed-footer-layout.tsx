@@ -30,7 +30,7 @@ const ButtonFixedFooterLayout: React.FC<Props> = ({
     onChangeFooterHeight,
 }) => {
     const {isMobile} = useScreenSize();
-    const hasButton = !!button || !!secondaryButton || !!link;
+    const hasButton = !!button || !!secondaryButton;
     return (
         <FixedFooterLayout
             onChangeFooterHeight={onChangeFooterHeight}
