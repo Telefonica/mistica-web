@@ -454,7 +454,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         const [suggestions, setSuggestions] = React.useState<Array<string>>([]);
         const inputRef = React.useRef<HTMLInputElement>(null);
         const classes = useSuggestionsStyles();
-        const {platformOverrides} = useTheme();
+        const {platformOverrides, texts} = useTheme();
         const id = useAriaId(idProp);
         const autoSuggestId = useAriaId();
 
@@ -518,7 +518,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 width: inputRef.current ? inputRef.current.clientWidth + 2 : 0, // +2 due to borders (input)
                             }}
                             className={classes.suggestionsContainer}
-                            aria-label={`${props.label} menu`}
+                            aria-label={`${props.label} ${texts.menuLabelSuffix}`}
                         >
                             {options.children}
                         </div>
