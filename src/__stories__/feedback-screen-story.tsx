@@ -13,7 +13,7 @@ import {useTheme} from '../hooks';
 import {Box, Checkbox, FixedToTop, Text3, Text1} from '..';
 
 export default {
-    title: 'Components/Feedbacks/FeedbackScreen',
+    title: 'Components/Screens/FeedbackScreen',
     parameters: {
         fullScreen: true,
     },

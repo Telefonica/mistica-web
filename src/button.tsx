@@ -407,40 +407,43 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
     throw Error('Bad button props');
 };
 
-const useButtonLinkStyles = createUseStyles((theme) => ({
-    link: {
-        display: 'inline-block',
-        width: 'auto',
-        padding: 6,
-        fontWeight: 500,
-        borderRadius: 4,
-        overflow: 'hidden',
-        transition: `background-color ${transitionTiming}, color ${transitionTiming}`,
-        color: theme.colors.textLink,
-        '&:enabled:active': {
-            backgroundColor: theme.colors.buttonLinkBackgroundSelected,
-        },
-        '&:hover': {
-            backgroundColor: theme.colors.buttonLinkBackgroundSelected,
-            '@media (pointer: coarse)': {
-                backgroundColor: 'initial',
+const useButtonLinkStyles = createUseStyles((theme) => {
+    const padding = 6;
+    return {
+        link: {
+            display: 'inline-block',
+            width: 'auto',
+            padding,
+            fontWeight: 500,
+            borderRadius: 4,
+            overflow: 'hidden',
+            transition: `background-color ${transitionTiming}, color ${transitionTiming}`,
+            color: theme.colors.textLink,
+            '&:enabled:active': {
+                backgroundColor: theme.colors.buttonLinkBackgroundSelected,
+            },
+            '&:hover': {
+                backgroundColor: theme.colors.buttonLinkBackgroundSelected,
+                '@media (pointer: coarse)': {
+                    backgroundColor: 'initial',
+                },
             },
         },
-    },
-    inverse: {
-        color: theme.colors.textLinkInverse,
-        '&:enabled:active': {
-            backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
-        },
-        '&:hover': {
-            backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
-            '@media (pointer: coarse)': {
-                backgroundColor: 'initial',
+        inverse: {
+            color: theme.colors.textLinkInverse,
+            '&:enabled:active': {
+                backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
+            },
+            '&:hover': {
+                backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
+                '@media (pointer: coarse)': {
+                    backgroundColor: 'initial',
+                },
             },
         },
-    },
-    aligned: {marginLeft: -8},
-}));
+        aligned: {marginLeft: -padding},
+    };
+});
 
 interface ButtonLinkCommonProps {
     children: React.ReactNode;
