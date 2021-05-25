@@ -73,7 +73,46 @@ declare type RowListProps = {
   role?: string,
 };
 declare export var RowList: React.ComponentType<RowListProps>;
-declare export var BoxedRow: React.ComponentType<RowContentProps>;
+declare type CommonBoxedRowProps = {|
+  isInverse?: boolean,
+|};
+declare type BasicBoxedRowProps = {|
+  ...$Exact<BasicRowContentProps>,
+  ...$Exact<CommonBoxedRowProps>,
+|};
+declare type SwitchBoxedRowProps = {|
+  ...$Exact<SwitchRowContentProps>,
+  ...$Exact<CommonBoxedRowProps>,
+|};
+declare type CheckboxBoxedRowProps = {|
+  ...$Exact<CheckboxRowContentProps>,
+  ...$Exact<CommonBoxedRowProps>,
+|};
+declare type RadioBoxedRowProps = {|
+  ...$Exact<RadioRowContentProps>,
+  ...$Exact<CommonBoxedRowProps>,
+|};
+declare type HrefBoxedRowProps = {|
+  ...$Exact<HrefRowContentProps>,
+  ...$Exact<CommonBoxedRowProps>,
+|};
+declare type ToBoxedRowProps = {|
+  ...$Exact<ToRowContentProps>,
+  ...$Exact<CommonBoxedRowProps>,
+|};
+declare type OnPressBoxedRowProps = {|
+  ...$Exact<OnPressRowContentProps>,
+  ...$Exact<CommonBoxedRowProps>,
+|};
+declare type BoxedRowProps =
+  | BasicBoxedRowProps
+  | SwitchBoxedRowProps
+  | RadioBoxedRowProps
+  | CheckboxBoxedRowProps
+  | HrefBoxedRowProps
+  | ToBoxedRowProps
+  | OnPressBoxedRowProps;
+declare export var BoxedRow: React.ComponentType<BoxedRowProps>;
 declare type BoxedRowListProps = {
   children: React.Node,
   ariaLabelledby?: string,
