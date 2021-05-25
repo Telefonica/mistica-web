@@ -13,13 +13,13 @@ import {
     IntegerField,
     DecimalField,
     Switch,
-    Text2,
     Checkbox,
-    Inline,
     TextLink,
     alert,
     RadioGroup,
     RadioButton,
+    Text3,
+    useTheme,
 } from '..';
 
 export default {
@@ -38,6 +38,7 @@ const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 const countryOptions = countriesList.map((text, i) => ({text, value: '' + i}));
 
 export const AutomaticForm: StoryComponent = () => {
+    const {colors} = useTheme();
     return (
         <Form
             initialValues={{
@@ -59,15 +60,7 @@ export const AutomaticForm: StoryComponent = () => {
                 <Select name="country" label="country" options={countryOptions} />
                 <Select autoFocus name="fruit" label="fruit (autofocus)" options={fruitOptions} />
                 <CreditCardFields />
-                <Switch
-                    name="save-cc"
-                    render={(switchElement) => (
-                        <Inline alignItems="center" space={8}>
-                            {switchElement}
-                            <Text2 regular>Save CC</Text2>
-                        </Inline>
-                    )}
-                />
+                <Switch name="save-cc">Save CC</Switch>
                 <Checkbox name="t&c">
                     Accept{' '}
                     <TextLink
@@ -80,7 +73,10 @@ export const AutomaticForm: StoryComponent = () => {
                     </TextLink>
                 </Checkbox>
 
-                <RadioGroup name="juicy-fruit" aria-labelledby="label" defaultValue="banana">
+                <Text3 regular color={colors.textSecondary} id="fruit-label">
+                    ¿What is your favourite fruit?
+                </Text3>
+                <RadioGroup name="juicy-fruit" aria-labelledby="fruit-label" defaultValue="banana">
                     <Stack space={16}>
                         <RadioButton value="banana">Banana</RadioButton>
                         <RadioButton value="apple">Apple</RadioButton>

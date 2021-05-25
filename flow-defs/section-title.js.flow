@@ -6,6 +6,7 @@ declare type Props = {
   children: React.Node,
   id?: string,
   right?: React.Element<typeof TextLink>,
+  as?: "h1" | "h2" | "h3" | "h4",
 };
 declare var SectionTitle: React.ComponentType<Props>;
 declare export default typeof SectionTitle;

@@ -13,7 +13,6 @@ import {
     Switch,
     Text2,
     Checkbox,
-    Inline,
 } from '..';
 import {getCvvLength} from '../utils/credit-card';
 
@@ -83,28 +82,12 @@ export const ManualForm: StoryComponent = () => {
                         maxLength={cvvLength}
                     />
                 </DoubleField>
-                <Switch
-                    name="save-cc"
-                    checked={saveCC}
-                    onChange={setSaveCC}
-                    render={(switchElement) => (
-                        <Inline alignItems="center" space={8}>
-                            {switchElement}
-                            <Text2 regular>Save CC</Text2>
-                        </Inline>
-                    )}
-                />
-                <Checkbox
-                    name="t&c"
-                    checked={acceptTC}
-                    onChange={setAcceptTC}
-                    render={(checkboxElement) => (
-                        <Inline alignItems="center" space={8}>
-                            {checkboxElement}
-                            <Text2 regular>Accept Terms and Conditions</Text2>
-                        </Inline>
-                    )}
-                />
+                <Switch name="save-cc" checked={saveCC} onChange={setSaveCC}>
+                    Save CC
+                </Switch>
+                <Checkbox name="t&c" checked={acceptTC} onChange={setAcceptTC}>
+                    <Text2 regular>Accept Terms and Conditions</Text2>
+                </Checkbox>
                 <ButtonLayout>
                     <ButtonPrimary submit loadingText="Sending">
                         Send

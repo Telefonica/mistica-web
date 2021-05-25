@@ -11,6 +11,7 @@ import {useControlProps} from './form-context';
 import classNames from 'classnames';
 import {Text3} from './text';
 import Inline from './inline';
+import {useAriaId} from './hooks';
 
 const SWITCH_ANIMATION = '0.2s ease-in 0s';
 
@@ -78,7 +79,7 @@ const useStyles = createUseStyles(({colors, isIos}) => {
     };
 });
 
-type RenderSwitch = (switchElement: React.ReactElement<any>) => React.ReactNode;
+type RenderSwitch = (switchElement: React.ReactElement<any>, labelId: string) => React.ReactNode;
 
 type PropsRender = {
     name: string;
@@ -88,6 +89,7 @@ type PropsRender = {
     disabled?: boolean;
     render: RenderSwitch;
     children?: undefined;
+    'aria-labelledby'?: string;
 };
 
 type PropsChildren = {
@@ -98,9 +100,11 @@ type PropsChildren = {
     disabled?: boolean;
     children?: React.ReactNode;
     render?: undefined;
+    'aria-labelledby'?: string;
 };
 
 const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
+    const labelId = useAriaId(props['aria-labelledby']);
     const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
         value: props.checked,
@@ -163,13 +167,14 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
             ref={focusableRef}
             className={classNames(classes.container, {[classes.disabled]: disabled})}
             aria-disabled={disabled}
+            aria-labelledby={labelId}
         >
             {props.render ? (
-                <>{props.render(switchEl)}</>
+                <>{props.render(switchEl, labelId)}</>
             ) : (
                 <Inline space={16} alignItems="center">
                     {switchEl}
-                    <Text3 regular as="div">
+                    <Text3 regular as="div" id={labelId}>
                         {props.children}
                     </Text3>
                 </Inline>

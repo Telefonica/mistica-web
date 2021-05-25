@@ -1,7 +1,10 @@
 // @flow
 
 import * as React from "react";
-declare type RenderSwitch = (switchElement: React.Element<any>) => React.Node;
+declare type RenderSwitch = (
+  switchElement: React.Element<any>,
+  labelId: string
+) => React.Node;
 declare type PropsRender = {
   name: string,
   defaultChecked?: boolean,
@@ -9,6 +12,7 @@ declare type PropsRender = {
   onChange?: (value: boolean) => void,
   disabled?: boolean,
   render: RenderSwitch,
+  "aria-labelledby"?: string,
 };
 declare type PropsChildren = {
   name: string,
@@ -17,6 +21,7 @@ declare type PropsChildren = {
   onChange?: (value: boolean) => void,
   disabled?: boolean,
   children?: React.Node,
+  "aria-labelledby"?: string,
 };
 declare var Switch: React.ComponentType<PropsRender | PropsChildren>;
 declare export default typeof Switch;

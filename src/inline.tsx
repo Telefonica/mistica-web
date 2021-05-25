@@ -53,9 +53,7 @@ const Inline: React.FC<Props> = ({
 
     return (
         <div className={classnames(className, classes.inline)} role={role} aria-labelledby={ariaLabelledBy}>
-            {React.Children.map(children, (child) => (
-                <div>{child}</div>
-            ))}
+            {React.Children.map(children, (child) => (!!child || child === 0 ? <div>{child}</div> : null))}
         </div>
     );
 };

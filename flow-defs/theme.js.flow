@@ -30,6 +30,7 @@ declare var TEXTS_ES: {
   formIbanError: string,
   closeButtonLabel: string,
   formSearchClear: string,
+  menuLabelSuffix: string,
 };
 declare export var getTexts: (locale: Locale) => typeof TEXTS_ES;
 declare export var dimensions: {
