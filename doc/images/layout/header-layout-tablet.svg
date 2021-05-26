@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="243" viewBox="-1 -1 162 242">
+  <rect x="0" y="0" height="240" width="160" fill="pink" stroke="black"/>
+  <rect x="12" y="0" height="240" width="calc(160 - 24)" fill="lightgray" stroke="black"/>
+  <rect x="0" y="0" height="50" width="160" fill="#019df4" stroke="black"/>
+  <text x="14" y="32" fill="white" font-size="20">Header</text>
+</svg>

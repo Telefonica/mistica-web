@@ -27,8 +27,10 @@ declare var TEXTS_ES: {
   formCreditCardNumberError: string,
   formDateOutOfRangeError: string,
   formEmailError: string,
+  formIbanError: string,
   closeButtonLabel: string,
   formSearchClear: string,
+  menuLabelSuffix: string,
 };
 declare export var getTexts: (locale: Locale) => typeof TEXTS_ES;
 declare export var dimensions: {

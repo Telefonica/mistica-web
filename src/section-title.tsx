@@ -22,19 +22,22 @@ type Props = {
     children: React.ReactNode;
     id?: string;
     right?: React.ReactElement<typeof TextLink>;
+    as?: 'h1' | 'h2' | 'h3' | 'h4';
 };
 
-const SectionTitle: React.FC<Props> = ({children, id, right}) => {
+const SectionTitle: React.FC<Props> = ({children, id, right, as = 'h3'}) => {
     const classes = useStyles();
     const theme = useTheme();
     return (
         <Inline space="between">
-            <Text1 color={theme.colors.textSecondary} uppercase medium as="h3" id={id}>
+            <Text1 color={theme.colors.textSecondary} uppercase medium as={as} id={id}>
                 {children}
             </Text1>
-            <div className={classes.right}>
-                <Text2 regular>{right}</Text2>
-            </div>
+            {!!right && (
+                <div className={classes.right}>
+                    <Text2 regular>{right}</Text2>
+                </div>
+            )}
         </Inline>
     );
 };

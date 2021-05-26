@@ -7,6 +7,7 @@ import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
 import {useTheme, useScreenSize} from './hooks';
+import {useIsInverseVariant} from './theme-variant-context';
 import IconChevron from './icons/icon-chevron';
 import Switch from './switch-component';
 import RadioButton from './radio-button';
@@ -16,23 +17,23 @@ import Divider from './divider';
 
 import type {TrackingEvent} from './utils/types';
 
-const useStyles = createUseStyles((theme) => ({
+const useStyles = createUseStyles(({colors}) => ({
     rowContent: {
         width: '100%',
         cursor: 'pointer',
         '&:hover': {
-            background: theme.colors.backgroundAlternative,
+            background: ({isInverse}) => (isInverse ? 'initial' : colors.backgroundAlternative),
 
             // Revert hover background in touch devices
             '@media (pointer: coarse)': {
-                background: 'initial',
+                background: () => 'initial',
             },
         },
     },
     hoverDisabled: {
         cursor: 'initial',
         '&:hover': {
-            background: 'none',
+            background: () => 'none',
         },
     },
     content: {
@@ -117,8 +118,9 @@ const Content: React.FC<ContentProps> = ({
     badge,
     right,
 }) => {
-    const classes = useStyles();
-    const theme = useTheme();
+    const isInverse = useIsInverseVariant();
+    const classes = useStyles({isInverse});
+    const {colors} = useTheme();
     const numTextLines = [headline, title, subtitle, description].filter(Boolean).length;
     const centerIcon = numTextLines === 1;
     const {isMobile} = useScreenSize();
@@ -152,34 +154,24 @@ const Content: React.FC<ContentProps> = ({
             <div className={classes.rowBody}>
                 {headline && (
                     <Box paddingBottom={8}>
-                        <Text1 wordBreak as="div" regular color={theme.colors.textSecondary}>
+                        <Text1 wordBreak as="div" regular color={colors.textSecondary}>
                             {headline}
                         </Text1>
                     </Box>
                 )}
-                <Text3 wordBreak light color={theme.colors.textPrimary} truncate={titleLinesMax}>
+                <Text3 wordBreak light color={colors.textPrimary} truncate={titleLinesMax}>
                     {title}
                 </Text3>
                 {subtitle && (
                     <Box paddingY={2}>
-                        <Text2
-                            wordBreak
-                            regular
-                            color={theme.colors.textSecondary}
-                            truncate={subtitleLinesMax}
-                        >
+                        <Text2 wordBreak regular color={colors.textSecondary} truncate={subtitleLinesMax}>
                             {subtitle}
                         </Text2>
                     </Box>
                 )}
                 {description && (
                     <Box paddingY={isMobile ? 2 : 0}>
-                        <Text2
-                            wordBreak
-                            regular
-                            color={theme.colors.textSecondary}
-                            truncate={descriptionLinesMax}
-                        >
+                        <Text2 wordBreak regular color={colors.textSecondary} truncate={descriptionLinesMax}>
                             {description}
                         </Text2>
                     </Box>
@@ -188,7 +180,11 @@ const Content: React.FC<ContentProps> = ({
             {renderBadge()}
             {type === 'chevron' ? (
                 <Box paddingLeft={16} className={classes.center}>
-                    <IconChevron size={24} color={theme.colors.neutralMedium} direction="right" />
+                    <IconChevron
+                        size={24}
+                        color={isInverse ? colors.inverse : colors.neutralMedium}
+                        direction="right"
+                    />
                 </Box>
             ) : right ? (
                 <div className={classes.right}>{right}</div>
@@ -330,7 +326,8 @@ const useControlState = ({
 };
 
 const RowContent = (props: RowContentProps) => {
-    const classes = useStyles();
+    const isInverse = useIsInverseVariant();
+    const classes = useStyles({isInverse});
     const {
         icon,
         iconSize,
@@ -476,16 +473,6 @@ const RowContent = (props: RowContentProps) => {
     );
 };
 
-/*
-!!! FIXME !!!
-
-At this moment Row and BoxedRow have the same type (same shape)
-Typescript's check for children is structural (not nominal) so now
-a BoxedRowList can contain Row items and RowLists can contain BoxedRows
-
-To avoid this we need different prop type shapes for different row types
-*/
-
 export const Row: React.FC<RowContentProps> = (props) => <RowContent {...props} />;
 
 type RowListProps = {
@@ -511,8 +498,28 @@ export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role}
     </div>
 );
 
-export const BoxedRow: React.FC<RowContentProps> = (props) => (
-    <Boxed>
+interface CommonBoxedRowProps {
+    isInverse?: boolean;
+}
+interface BasicBoxedRowProps extends BasicRowContentProps, CommonBoxedRowProps {}
+interface SwitchBoxedRowProps extends SwitchRowContentProps, CommonBoxedRowProps {}
+interface CheckboxBoxedRowProps extends CheckboxRowContentProps, CommonBoxedRowProps {}
+interface RadioBoxedRowProps extends RadioRowContentProps, CommonBoxedRowProps {}
+interface HrefBoxedRowProps extends HrefRowContentProps, CommonBoxedRowProps {}
+interface ToBoxedRowProps extends ToRowContentProps, CommonBoxedRowProps {}
+interface OnPressBoxedRowProps extends OnPressRowContentProps, CommonBoxedRowProps {}
+
+type BoxedRowProps =
+    | BasicBoxedRowProps
+    | SwitchBoxedRowProps
+    | RadioBoxedRowProps
+    | CheckboxBoxedRowProps
+    | HrefBoxedRowProps
+    | ToBoxedRowProps
+    | OnPressBoxedRowProps;
+
+export const BoxedRow: React.FC<BoxedRowProps> = (props) => (
+    <Boxed isInverse={props.isInverse}>
         <RowContent {...props} />
     </Boxed>
 );

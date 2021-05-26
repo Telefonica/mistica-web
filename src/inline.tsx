@@ -24,6 +24,9 @@ const useStyles = createUseStyles(() => ({
         '& > div:not(:empty) ~ div:not(:empty)': {
             marginLeft: (p) => (typeof p.space === 'number' ? p.space : undefined),
         },
+        '& > div:empty': {
+            display: 'none',
+        },
     },
 }));
 
@@ -50,9 +53,7 @@ const Inline: React.FC<Props> = ({
 
     return (
         <div className={classnames(className, classes.inline)} role={role} aria-labelledby={ariaLabelledBy}>
-            {React.Children.map(children, (child) => (
-                <div>{child}</div>
-            ))}
+            {React.Children.map(children, (child) => (!!child || child === 0 ? <div>{child}</div> : null))}
         </div>
     );
 };

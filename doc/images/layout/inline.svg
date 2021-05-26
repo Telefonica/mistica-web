@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="52" viewBox="-1 -1 302 52">
+    <rect y="0" width="300" height="50" fill="pink" />
+    <rect x="0" y ="0" width="50" height="50" fill="lightgray" stroke="black"  />
+    <rect x="calc(50 + 16)" y ="0" width="100" height="50" fill="lightgray" stroke="black"  />
+    <rect x="calc(150 + 32)" y ="0" width="117" height="50" fill="lightgray" stroke="black"  />
+</svg>

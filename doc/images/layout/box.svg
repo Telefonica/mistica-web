@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="152" viewBox="-1 -1 302 152">
+    <rect y="0" width="300" height="150" fill="pink" />
+    <rect y="32" x="16" width="calc(300 - 32)" height="calc(150 - 64)" fill="lightgray" stroke="black" />
+    <text x="130" y="20">32px</text>
+    <text x="0" y="80" >16px</text>
+</svg>

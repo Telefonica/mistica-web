@@ -9,32 +9,39 @@ export default {
     },
 };
 
-export const SixAndSix: StoryComponent = () => (
+export const WithoutTemplate: StoryComponent = () => (
     <ResponsiveLayout>
         <GridLayout>
-            <div style={{gridColumn: 'span 6'}}>
-                <Placeholder />
-            </div>
-            <div style={{gridColumn: 'span 6'}}>
-                <Placeholder />
-            </div>
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
+            <Placeholder />
         </GridLayout>
     </ResponsiveLayout>
 );
 
-SixAndSix.storyName = '6 + 6';
+WithoutTemplate.storyName = 'Without template';
+
+export const SixAndSix: StoryComponent = () => (
+    <ResponsiveLayout>
+        <GridLayout template="6+6" left={<Placeholder />} right={<Placeholder />} />
+    </ResponsiveLayout>
+);
+
+SixAndSix.storyName = 'Template 6+6';
 
 export const EightAndFour: StoryComponent = () => (
     <ResponsiveLayout>
-        <GridLayout>
-            <div style={{gridColumn: 'span 8'}}>
-                <Placeholder />
-            </div>
-            <div style={{gridColumn: 'span 4'}}>
-                <Placeholder />
-            </div>
-        </GridLayout>
+        <GridLayout template="8+4" left={<Placeholder />} right={<Placeholder />} />
     </ResponsiveLayout>
 );
 
-EightAndFour.storyName = '8 + 4';
+EightAndFour.storyName = 'Template 8+4';
