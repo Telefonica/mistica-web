@@ -13,7 +13,7 @@ type Props = {
     size?: number;
 };
 
-const IconProgramAlarmRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconBellProgramRegular: React.FC<Props> = ({color, size = 24}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
@@ -27,4 +27,4 @@ const IconProgramAlarmRegular: React.FC<Props> = ({color, size = 24}) => {
     );
 };
 
-export default IconProgramAlarmRegular;
+export default IconBellProgramRegular;
