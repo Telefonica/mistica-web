@@ -60,12 +60,12 @@ export const getTelefonicaSkin: GetSkin = (variant) => {
             borderSelected: palette.telefonicaBlue,
 
             // BUTTONS
-            buttonDangerBackground: palette.pepper,
-            buttonDangerBackgroundDisabled: palette.pepperLight30,
-            buttonDangerBackgroundSelected: palette.pepperDark,
-            buttonDangerBackgroundHover: palette.pepperDark, // web only
+            buttonDangerBackground: palette.coral,
+            buttonDangerBackgroundDisabled: palette.coralLight30,
+            buttonDangerBackgroundSelected: palette.coralDark,
+            buttonDangerBackgroundHover: palette.coralDark, // web only
 
-            buttonLinkBackgroundSelected: palette.telefonicaBlueLight10,
+            buttonLinkBackgroundSelected: palette.grey1,
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
 
             buttonPrimaryBackground: palette.telefonicaBlue,
@@ -98,22 +98,22 @@ export const getTelefonicaSkin: GetSkin = (variant) => {
 
             textLink: palette.telefonicaBlue,
             textLinkInverse: palette.white,
-            textLinkDanger: palette.pepper,
-            textLinkDangerDisabled: palette.pepperLight30,
+            textLinkDanger: palette.coral,
+            textLinkDangerDisabled: palette.coralLight30,
             textLinkDisabled: palette.telefonicaBlueLight50,
             textLinkSnackbar: palette.telefonicaBlueLight50,
 
             // CONTROLS
             control: palette.grey3,
             controlActivated: palette.telefonicaBlue,
-            controlError: palette.pepper,
+            controlError: palette.coral,
             loadingBar: palette.telefonicaBlueLight50,
             loadingBarBackground: palette.telefonicaBlueDark,
             loadingBarBackgroundInverse: palette.telefonicaBlueDark,
             loadingBarInverse: palette.telefonicaBlueLight50,
 
             toggleAndroidInactive: palette.grey2, // web only
-            toggleAndroidBackgroundActive: palette.grey1, // web only
+            toggleAndroidBackgroundActive: palette.grey2, // web only
             iosControlKnob: palette.white, // web only
 
             // DIVIDERS
@@ -122,23 +122,23 @@ export const getTelefonicaSkin: GetSkin = (variant) => {
             navigationBarDivider: palette.telefonicaBlue,
 
             // FEEDBACKS
-            badge: palette.pepperDark,
-            feedbackErrorBackground: palette.pepper,
+            badge: palette.coralDark,
+            feedbackErrorBackground: palette.coral,
             feedbackInfoBackground: palette.grey6,
 
             // GLOBAL
             brand: palette.telefonicaBlue,
             brandDark: palette.telefonicaBlueDark,
-            inverse: palette.grey6,
-            neutralHigh: palette.grey6,
+            inverse: palette.white,
+            neutralHigh: palette.grey9,
             neutralMedium: palette.grey5,
-            neutralLow: palette.telefonicaBlueLight10,
-            promo: palette.purple,
-            highlight: palette.pink,
+            neutralLow: palette.grey1,
+            promo: palette.orchid,
+            highlight: palette.coralLight,
 
-            textPrimary: palette.telefonicaBlue,
+            textPrimary: palette.grey9,
             textPrimaryInverse: palette.white,
-            textSecondary: palette.grey8,
+            textSecondary: palette.grey5,
             textSecondaryInverse: palette.white,
             textDisabled: palette.grey3,
             textAmount: palette.telefonicaBlue,
