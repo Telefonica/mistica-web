@@ -13,7 +13,7 @@ import {
     ThemeContextProvider,
 } from '../src';
 import {useIsOsDarkModeEnabled} from '../src/theme-context-provider';
-import {Movistar, Vivo, O2, O2_Classic, Prosegur} from './themes';
+import {Movistar, Vivo, O2, O2_Classic, Telefonica} from './themes';
 import {useOverrideTheme} from './frame-component';
 
 import type {ThemeConfig, ColorScheme, SkinName} from '../src';
@@ -89,9 +89,9 @@ const useStyles = createUseStyles(() => ({
 }));
 
 const themesMap: {[skinName in SkinName]: {themeConfig: ThemeConfig; text: string}} = {
-    Prosegur: {
-        text: 'Prosegur',
-        themeConfig: Prosegur,
+    Telefonica: {
+        text: 'Telefonica',
+        themeConfig: Telefonica,
     },
     Movistar: {
         text: 'Movistar',
