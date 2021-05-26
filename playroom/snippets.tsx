@@ -378,7 +378,7 @@ const tabsSnippets: Array<Snippet> = [
         name: 'Tabs (without icons)',
         code: `
         <Tabs selectedIndex={0}
-            selectedIndex={getState('tabIndex')}
+            selectedIndex={getState('tabIndex'), 0}
             onChange={setState('tabIndex')}
             tabs={[
                 {text: 'Tab 1'},
@@ -392,7 +392,7 @@ const tabsSnippets: Array<Snippet> = [
         name: 'Tabs (with icons)',
         code: `
         <Tabs
-            selectedIndex={getState('tabIndex')}
+            selectedIndex={getState('tabIndex'), 0}
             onChange={setState('tabIndex')}
             tabs={[
                 {text: 'Tab 1', icon: <IconAppointmentRegular />},
@@ -406,7 +406,7 @@ const tabsSnippets: Array<Snippet> = [
         name: 'Tabs (with icons and icons color="currentColor")',
         code: `
         <Tabs
-            selectedIndex={getState('tabIndex')}
+            selectedIndex={getState('tabIndex'), 0}
             onChange={setState('tabIndex')}
             tabs={[
                 {text: 'Tab 1', icon: <IconAppointmentRegular color="currentColor" />},
