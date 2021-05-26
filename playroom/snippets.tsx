@@ -111,7 +111,7 @@ const listSnippets: Array<Snippet> = [
             <${rowName}
                 icon={
                     <Circle backgroundColor={colors.neutralLow} size={40}>
-                        <IconAcademicLight />
+                        <IconShopRegular />
                     </Circle>
                 }
                 iconSize={40}
@@ -122,7 +122,7 @@ const listSnippets: Array<Snippet> = [
             <${rowName}
                 icon={
                     <Circle backgroundColor={colors.neutralLow} size={40}>
-                        <IconAcademicLight />
+                        <IconShopRegular />
                     </Circle>
                 }
                 iconSize={40}
@@ -133,7 +133,7 @@ const listSnippets: Array<Snippet> = [
             <${rowName}
                 icon={
                     <Circle backgroundColor={colors.neutralLow} size={40}>
-                        <IconAcademicLight />
+                        <IconShopRegular />
                     </Circle>
                 }
                 iconSize={40}
@@ -154,7 +154,7 @@ listSnippets.push({
             <Row
                 icon={
                     <Circle backgroundColor={colors.neutralLow} size={40}>
-                        <IconAcademicLight />
+                        <IconShopRegular />
                     </Circle>
                 }
                 iconSize={40}
@@ -165,7 +165,7 @@ listSnippets.push({
             <Row
                 icon={
                     <Circle backgroundColor={colors.neutralLow} size={40}>
-                        <IconAcademicLight />
+                        <IconShopRegular />
                     </Circle>
                 }
                 iconSize={40}
@@ -186,7 +186,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         <${rowName}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconAcademicLight />
+                    <IconShopRegular />
                 </Circle>
             }
             iconSize={40}
@@ -202,7 +202,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         <${rowName}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconAcademicLight />
+                    <IconShopRegular />
                 </Circle>
             }
             iconSize={40}
@@ -221,7 +221,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         <${rowName}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconAcademicLight />
+                    <IconShopRegular />
                 </Circle>
             }
             iconSize={40}
@@ -237,7 +237,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         <${rowName}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconAcademicLight />
+                    <IconShopRegular />
                 </Circle>
             }
             iconSize={40}
@@ -253,7 +253,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         <${rowName}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconAcademicLight />
+                    <IconShopRegular />
                 </Circle>
             }
             iconSize={40}
@@ -269,7 +269,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         <${rowName}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconAcademicLight />
+                    <IconShopRegular />
                 </Circle>
             }
             iconSize={40}
@@ -469,7 +469,7 @@ const cardSnippets: Array<Snippet> = [
             body={<Placeholder />}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconAcademicLight />
+                    <IconShopRegular />
                 </Circle>
             }
             button={
