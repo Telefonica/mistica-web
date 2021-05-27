@@ -550,6 +550,178 @@ const emptyStatesGroup: Array<Snippet> = [
     },
 ].map((snippet) => ({...snippet, group: 'Empty states'}));
 
+const exampleScreens: Array<Snippet> = [
+    {
+        group: '💎 Example Screens',
+        name: 'Settings',
+        code: `
+        <div
+  style={{
+    background: colors.navigationBarBackground,
+  }}
+>
+  <Box paddingX={6} paddingY={2}>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "50px 50px 50px",
+        justifyItems: "stretch",
+        gridGap: "25.5%",
+      }}
+    >
+      <div style={{ textAlign: "left", background: "rgba(255,255,255,0)" }}>
+        <Text1 color={colors.textNavigationBarPrimary}>Movistar</Text1>
+      </div>
+      <div style={{ textAlign: "center", background: "rgba(255,255,255,0)" }}>
+        <Text1 color={colors.textNavigationBarPrimary}>09:36</Text1>
+      </div>
+      <div style={{ textAlign: "right", background: "rgba(255,255,255,0)" }}>
+        <Text1 color={colors.textNavigationBarPrimary}>100%</Text1>
+      </div>
+    </div>
+  </Box>
+  <Box paddingLeft={8} paddingRight={16} paddingY={10}>
+    <div
+      style={{
+        justifyContent: "space-between",
+        display: "flex",
+      }}
+    >
+      <IconChevronLeftRegular
+        size={24}
+        color={colors.navigationBarBackground}
+      />
+      <Text4 color={colors.textNavigationBarPrimary}> </Text4>
+    </div>
+  </Box>
+
+  <MainSectionHeaderLayout>
+    <MainSectionHeader title="Settings" />
+  </MainSectionHeaderLayout>
+</div>
+<Stack space={24
+             }>
+  <RowList>
+    <Row
+      icon={<IconUserAccountRegular />}
+      iconSize={24}
+      title="Personal details"
+      onPress={() => {}}
+    />
+    <Row
+      icon={<IconLockClosedRegular />}
+      iconSize={24}
+      title="Security"
+      onPress={() => {}}
+    />
+    <Row
+      icon={<IconCreditCardVisaRegular />}
+      iconSize={24}
+      title="Payment methods"
+      onPress={() => {}}
+    />
+  </RowList>
+
+  <RowList>
+    <Row
+      icon={<IconProgramAlarmRegular />}
+      iconSize={24}
+      title="Notifications"
+      onPress={() => {}}
+    />
+    <Row
+      icon={<IconSupportAgentRegular />}
+      iconSize={24}
+      title="FAQs"
+      onPress={() => {}}
+    />
+    <Row
+      icon={<IconInformationUserRegular />}
+      iconSize={24}
+      title="About"
+      onPress={() => {}}
+    />
+  </RowList>
+  <RowList>
+   <Row
+      icon={<IconLogoutRegular />}
+      iconSize={24}
+      title="Logout"
+      onPress={() => {}}
+    />
+  </RowList>
+</Stack>
+`,
+    },
+    {
+        group: '💎 Example Screens',
+        name: 'Login',
+        code: `
+        <div
+  style={{
+    background: colors.navigationBarBackground,
+  }}
+>
+  <Box paddingX={6} paddingY={2}>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "50px 50px 50px",
+        justifyItems: "stretch",
+        gridGap: "25.5%",
+      }}
+    >
+      <div style={{ textAlign: "left", background: "rgba(255,255,255,0)" }}>
+        <Text1 color={colors.textNavigationBarPrimary}>Movistar</Text1>
+      </div>
+      <div style={{ textAlign: "center", background: "rgba(255,255,255,0)" }}>
+        <Text1 color={colors.textNavigationBarPrimary}>09:36</Text1>
+      </div>
+      <div style={{ textAlign: "right", background: "rgba(255,255,255,0)" }}>
+        <Text1 color={colors.textNavigationBarPrimary}>09:36</Text1>
+      </div>
+    </div>
+  </Box>
+  <Box paddingLeft={8} paddingRight={16} paddingY={10}>
+    <div
+      style={{
+        justifyContent: "space-between",
+        display: "flex",
+      }}
+    >
+      <IconChevronLeftRegular
+        size={24}
+        color={colors.textNavigationBarPrimary}
+      />
+      <Text4 color={colors.textNavigationBarPrimary}>Title</Text4>
+      <IconReloadRegular size={24} color={colors.textNavigationBarPrimary} />
+    </div>
+  </Box>
+</div>
+<ButtonFixedFooterLayout
+  button={<ButtonPrimary href="https://google.com">Continuar</ButtonPrimary>}
+  link={<ButtonLink onPress>Not a customer yet? register now!</ButtonLink>}
+>
+  <Box paddingX={16} padding={24}>
+    <Stack space={16}>
+      <Text6>This is a title</Text6>
+      <Text3 color={colors.textSecondary}>
+        Subtitle text, write here an explanation of what the user has to do.
+      </Text3>
+      <TextField name="User" label="User" />
+      <PasswordField
+        name="password"
+        label="Password"
+        helperText="Helper text"
+      />
+      <ButtonLink onPress>I’m having problems with my password</ButtonLink>
+    </Stack>
+  </Box>
+</ButtonFixedFooterLayout>
+`,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -566,6 +738,7 @@ export default [
     ...listRowSnippets,
     ...tabsSnippets,
     ...cardSnippets,
+    ...exampleScreens,
     ...['promo', 'brand', 'success', 'warning', 'error', 'inverse'].map((colorName) => ({
         group: 'Tag',
         name: `Tag (${colorName})`,
