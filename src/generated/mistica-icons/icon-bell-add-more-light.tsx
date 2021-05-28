@@ -13,7 +13,7 @@ type Props = {
     size?: number;
 };
 
-const IconAddMoreAlarmLight: React.FC<Props> = ({color, size = 24}) => {
+const IconBellAddMoreLight: React.FC<Props> = ({color, size = 24}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
@@ -27,4 +27,4 @@ const IconAddMoreAlarmLight: React.FC<Props> = ({color, size = 24}) => {
     );
 };
 
-export default IconAddMoreAlarmLight;
+export default IconBellAddMoreLight;
