@@ -261,7 +261,7 @@ const ModalDialog = (props: ModalDialogProps) => {
     const {platformOverrides} = useTheme();
     const context = React.useContext(ThemeContext);
     const classes = useStylesModalDialog();
-    const canCloseRef = React.useRef(false);
+    const canCloseRef = React.useRef(process.env.NODE_ENV === 'test');
 
     if (!context) {
         throw Error(
