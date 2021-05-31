@@ -1,17 +1,6 @@
 import * as React from 'react';
 import {fruitEntries} from './helpers';
-import {
-    Touchable,
-    Menu,
-    Stack,
-    MenuProvider,
-    MenuItems,
-    MenuItem,
-    Box,
-    Text3,
-    Checkbox,
-    MenuTarget,
-} from '..';
+import {Touchable, Menu, Stack, Inline, Text3, Box, Checkbox} from '..';
 import SectionTitle from '../section-title';
 import {ButtonPrimary} from '../button';
 
@@ -22,7 +11,7 @@ export default {
 
 const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 
-const Story: React.FC = () => {
+export const Default: StoryComponent = () => {
     const [valuesState, setValuesState] = React.useState<ReadonlyArray<string>>([]);
 
     const setValues = (val: string) => {
@@ -32,44 +21,37 @@ const Story: React.FC = () => {
             setValuesState([...valuesState, val]);
         }
     };
-
     return (
-        <Menu>
-            <MenuTarget
-                render={({ref, onPress, isMenuOpen}) => (
+        <Stack space={16}>
+            <SectionTitle>Menu</SectionTitle>
+            <Menu
+                renderTarget={({ref, onPress, isMenuOpen}) => (
                     <Touchable elementRef={ref} onPress={onPress} style={{width: 'auto'}}>
                         <ButtonPrimary fake>{isMenuOpen ? 'Close' : 'Open'}</ButtonPrimary>
                     </Touchable>
                 )}
-            />
-            <MenuItems
-                items={fruitOptions}
-                onSelect={(value) => {
-                    setValues(value);
-                }}
-                renderItem={({text, value}) => (
-                    <MenuItem value={value} selected={valuesState.includes(value)}>
-                        <Box paddingY={8}>
-                            <Text3 medium as="p">
-                                <Checkbox checked={valuesState.includes(value)} name={value}>
-                                    {text}
-                                </Checkbox>
-                            </Text3>
-                        </Box>
-                    </MenuItem>
+                renderMenu={({ref, className}) => (
+                    <div ref={ref} className={className}>
+                        {fruitOptions.map((fruit) => (
+                            <Box paddingX={16} paddingY={8}>
+                                <Checkbox
+                                    name={fruit.text}
+                                    onChange={() => setValues(fruit.value)}
+                                    checked={valuesState.includes(fruit.value)}
+                                    render={(checkboxElement) => (
+                                        <Inline alignItems="center" space={16}>
+                                            {checkboxElement}
+                                            <Text3 regular>{fruit.text}</Text3>
+                                        </Inline>
+                                    )}
+                                />
+                            </Box>
+                        ))}
+                    </div>
                 )}
             />
-        </Menu>
+        </Stack>
     );
 };
-
-export const Default: StoryComponent = () => (
-    <Stack space={16}>
-        <SectionTitle>Menu</SectionTitle>
-        <MenuProvider>
-            <Story />
-        </MenuProvider>
-    </Stack>
-);
 
 Default.storyName = 'Menu';
