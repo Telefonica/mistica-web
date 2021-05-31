@@ -15,6 +15,7 @@ export const palette = {
     grey8: '#2B3447',
     grey9: '#031A34',
     telefonicaBlue: '#0066FF',
+    telefonicaBlueDark: '0356C9',
 
     ambar: '#EAC344',
     ambarLight: '#F5E98A',
