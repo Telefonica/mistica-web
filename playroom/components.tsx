@@ -46,7 +46,8 @@ const useControlsStyles = createUseStyles((theme) => ({
         height: 57,
     },
     tabs: {
-        flexBasis: 448,
+        flexBasis: '100%',
+        marginRight: 96,
         whiteSpace: 'nowrap',
     },
     desktopControlItem: {
@@ -89,10 +90,6 @@ const useStyles = createUseStyles(() => ({
 }));
 
 const themesMap: {[skinName in SkinName]: {themeConfig: ThemeConfig; text: string}} = {
-    Telefonica: {
-        text: 'Telefonica',
-        themeConfig: Telefonica,
-    },
     Movistar: {
         text: 'Movistar',
         themeConfig: Movistar,
@@ -108,6 +105,10 @@ const themesMap: {[skinName in SkinName]: {themeConfig: ThemeConfig; text: strin
     'O2-classic': {
         text: 'O2 (classic)',
         themeConfig: O2_Classic,
+    },
+    Telefonica: {
+        text: 'Telefonica',
+        themeConfig: Telefonica,
     },
 };
 
