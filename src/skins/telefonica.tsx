@@ -37,7 +37,6 @@ export const palette = {
     // specific for dark mode:
     darkModeBlack: '#191919',
     darkModeGrey: '#242424',
-    darkModetelefonicaBlueDark: '#4C7389',
 } as const;
 
 export const getTelefonicaSkin: GetSkin = () => {
@@ -162,7 +161,6 @@ export const getTelefonicaSkin: GetSkin = () => {
             textAppBarSelected: palette.telefonicaBlue,
         },
         darkModeColors: {
-            brand: palette.telefonicaBlue, // this color needs to be in darkModeColors to revert the promient variant
             appBarBackground: palette.darkModeGrey,
             background: palette.darkModeBlack,
             backgroundContainer: palette.darkModeGrey,
