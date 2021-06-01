@@ -1,20 +1,37 @@
-const projectConfig = require('../.babelrc');
+module.exports = {
+    presets: [
+        '@babel/preset-react',
+        [
+            '@babel/preset-typescript',
+            {
+                isTSX: true,
+                allExtensions: true,
+                allowNamespaces: false,
+                allowDeclareFields: true,
+            },
+        ],
+        [
+            '@babel/preset-env',
+            {
+                modules: false,
+                useBuiltIns: false,
+                loose: false,
+            },
+        ],
+    ],
+    plugins: [
+        'lodash',
+        '@babel/plugin-proposal-nullish-coalescing-operator',
+        '@babel/plugin-proposal-optional-chaining',
+        '@babel/plugin-transform-property-literals',
 
-/**
- * Take the project config, but set loose to true for class properties and private methods for Storybook.
- *
- * As Storybook updates, it's probably worth trying to delete this file and seeing if it will run without
- * the workaround.
- *
- * @see https://github.com/storybookjs/storybook/issues/10939#issuecomment-702196647
- */
-projectConfig.plugins = projectConfig.plugins.map((plugin) => {
-    if (
-        ['@babel/plugin-proposal-class-properties', '@babel/plugin-proposal-private-methods'].includes(plugin)
-    ) {
-        return [plugin, {loose: true}];
-    }
-    return plugin;
-});
+        // ['@babel/plugin-proposal-class-properties', {loose: true}],
+        // ['@babel/plugin-proposal-private-methods', {loose: true}],
+        // ['@babel/plugin-proposal-private-property-in-object', {loose: true}],
 
-module.exports = projectConfig;
+        ['@babel/plugin-proposal-class-properties'],
+        ['@babel/plugin-proposal-private-methods'],
+        ['@babel/plugin-proposal-private-property-in-object'],
+    ],
+};
+// https://github.com/storybookjs/storybook/pull/15055

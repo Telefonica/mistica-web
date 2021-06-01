@@ -172,3 +172,56 @@ export const Default: StoryComponent = () => {
 };
 
 Default.storyName = 'FeedbackScreen';
+
+//👇 We create a “template” of how args map to rendering
+type FeedbackScreenArgs = {
+    title: string;
+    primaryButtonText: string;
+    secondaryButtonText: string;
+    linkText: string;
+    description: string;
+    animateText: boolean;
+    showIcon: boolean;
+};
+
+const FeedbackScreenTemplate: StoryComponent<FeedbackScreenArgs> = ({
+    title,
+    primaryButtonText,
+    secondaryButtonText,
+    linkText,
+    description,
+    animateText,
+    showIcon,
+}) => (
+    <FeedbackScreen
+        title={title}
+        description={description}
+        animateText={animateText}
+        icon={showIcon ? <IconOrders /> : undefined}
+        primaryButton={
+            primaryButtonText.length ? (
+                <ButtonPrimary onPress={() => {}}>{primaryButtonText}</ButtonPrimary>
+            ) : undefined
+        }
+        secondaryButton={
+            secondaryButtonText.length ? (
+                <ButtonSecondary onPress={() => {}}>{secondaryButtonText}</ButtonSecondary>
+            ) : undefined
+        }
+        link={linkText.length ? <ButtonLink onPress={() => {}}>{linkText}</ButtonLink> : undefined}
+    >
+        <Stack space={16}>lala</Stack>
+    </FeedbackScreen>
+);
+
+export const FeedbackScreenWithArgs = FeedbackScreenTemplate.bind({});
+
+FeedbackScreenWithArgs.args = {
+    title: 'Title',
+    primaryButtonText: 'Primary',
+    secondaryButtonText: 'Primary',
+    linkText: 'LinkText',
+    description: 'Description',
+    animateText: true,
+    showIcon: true,
+};
