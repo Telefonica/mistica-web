@@ -4,16 +4,6 @@ import {TELEFONICA_SKIN} from './constants';
 import type {GetSkin} from './types';
 
 export const palette = {
-    white: '#FFFFFF',
-    grey1: '#F2F4FF',
-    grey2: '#D1D5E4',
-    grey3: '#B0B6CA',
-    grey4: '#8F97AF',
-    grey5: '#6E7894',
-    grey6: '#58617A',
-    grey7: '#414B61',
-    grey8: '#2B3447',
-    grey9: '#031A34',
     telefonicaBlue: '#0066FF',
     telefonicaBlueDark: '#0356C9',
     telefonicaBlueLight50: '#80B2FF',
@@ -32,6 +22,17 @@ export const palette = {
     turquoise: '#59C2C9',
     turquoiseLight: '#67E0E5',
     turquoiseDark: '#3E8A8A',
+
+    white: '#FFFFFF',
+    grey1: '#F2F4FF',
+    grey2: '#D1D5E4',
+    grey3: '#B0B6CA',
+    grey4: '#8F97AF',
+    grey5: '#6E7894',
+    grey6: '#58617A',
+    grey7: '#414B61',
+    grey8: '#2B3447',
+    grey9: '#031A34',
 
     // specific for dark mode:
     darkModeBlack: '#191919',
