@@ -1,8 +1,7 @@
 import * as React from 'react';
 import {fruitEntries} from './helpers';
-import {Touchable, Menu, Stack, Inline, Text3, Box, Checkbox} from '..';
+import {Touchable, Menu, Stack, Inline, Text3, Box, Checkbox, IconKebabMenuLight} from '..';
 import SectionTitle from '../section-title';
-import {ButtonPrimary} from '../button';
 
 export default {
     title: 'Components/Controls/Menu',
@@ -25,9 +24,13 @@ export const Default: StoryComponent = () => {
         <Stack space={16}>
             <SectionTitle>Menu</SectionTitle>
             <Menu
+                width={200}
                 renderTarget={({ref, onPress, isMenuOpen}) => (
-                    <Touchable elementRef={ref} onPress={onPress} style={{width: 'auto'}}>
-                        <ButtonPrimary fake>{isMenuOpen ? 'Close' : 'Open'}</ButtonPrimary>
+                    <Touchable elementRef={ref} onPress={onPress}>
+                        <Inline space={16}>
+                            <IconKebabMenuLight />
+                            <Text3 regular>{isMenuOpen ? 'Close' : 'Open'}</Text3>
+                        </Inline>
                     </Touchable>
                 )}
                 renderMenu={({ref, className}) => (
@@ -38,13 +41,9 @@ export const Default: StoryComponent = () => {
                                     name={fruit.text}
                                     onChange={() => setValues(fruit.value)}
                                     checked={valuesState.includes(fruit.value)}
-                                    render={(checkboxElement) => (
-                                        <Inline alignItems="center" space={16}>
-                                            {checkboxElement}
-                                            <Text3 regular>{fruit.text}</Text3>
-                                        </Inline>
-                                    )}
-                                />
+                                >
+                                    {fruit.text}
+                                </Checkbox>
                             </Box>
                         ))}
                     </div>
