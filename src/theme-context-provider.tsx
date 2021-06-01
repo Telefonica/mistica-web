@@ -13,6 +13,7 @@ import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
 import TabFocus from './tab-focus';
+import {PortalNodesProvider} from './portal';
 
 import type {Colors} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
@@ -89,14 +90,16 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
         const isDarkModeEnabled = (colorScheme === 'auto' && isOsDarkModeEnabled) || colorScheme === 'dark';
         const colors: Colors = isDarkModeEnabled ? darkColors : lightColors;
 
+        const platformOverrides = {
+            platform: getPlatform(),
+            insideNovumNativeApp: isInsideNovumNativeApp(),
+            ...theme.platformOverrides,
+        };
+
         return {
             skinName: theme.skin.name,
             i18n: theme.i18n,
-            platformOverrides: {
-                platform: getPlatform(),
-                insideNovumNativeApp: isInsideNovumNativeApp(),
-                ...theme.platformOverrides,
-            },
+            platformOverrides,
             texts: {
                 ...getTexts(theme.i18n.locale),
                 ...theme.texts,
@@ -115,21 +118,24 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
             colors,
             Link: theme.Link ?? AnchorLink,
             isDarkMode: isDarkModeEnabled,
+            isIos: getPlatform(platformOverrides) === 'ios',
         };
     }, [theme, isOsDarkModeEnabled]);
 
     return (
-        <JssProvider jss={getJss()} classNamePrefix={classNamePrefix} generateId={generateId}>
-            <TabFocus disabled={!theme.enableTabFocus}>
-                <ThemeContext.Provider value={contextTheme}>
-                    <AriaIdGetterContext.Provider value={getAriaId}>
-                        <ScreenSizeContextProvider>
-                            <DialogRoot>{children}</DialogRoot>
-                        </ScreenSizeContextProvider>
-                    </AriaIdGetterContext.Provider>
-                </ThemeContext.Provider>
-            </TabFocus>
-        </JssProvider>
+        <PortalNodesProvider>
+            <JssProvider jss={getJss()} classNamePrefix={classNamePrefix} generateId={generateId}>
+                <TabFocus disabled={!theme.enableTabFocus}>
+                    <ThemeContext.Provider value={contextTheme}>
+                        <AriaIdGetterContext.Provider value={getAriaId}>
+                            <ScreenSizeContextProvider>
+                                <DialogRoot>{children}</DialogRoot>
+                            </ScreenSizeContextProvider>
+                        </AriaIdGetterContext.Provider>
+                    </ThemeContext.Provider>
+                </TabFocus>
+            </JssProvider>
+        </PortalNodesProvider>
     );
 };
 

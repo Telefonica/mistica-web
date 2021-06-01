@@ -3,8 +3,8 @@
 import * as React from "react";
 declare type RadioContextType = {
   disabled?: boolean,
-  selectedValue: string | null,
-  focusableValue: string | null,
+  selectedValue?: string | null,
+  focusableValue?: string | null,
   select: (value: string) => void,
   selectNext: () => void,
   selectPrev: () => void,

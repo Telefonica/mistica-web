@@ -2,7 +2,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import {createUseStyles} from './jss';
-import Portal from './portal';
+import {Portal} from './portal';
 import FocusTrap from './focus-trap';
 import IcnClose from './icons/icon-close';
 import IconButton from './icon-button';
@@ -261,6 +261,8 @@ const ModalDialog = (props: ModalDialogProps) => {
     const {platformOverrides} = useTheme();
     const context = React.useContext(ThemeContext);
     const classes = useStylesModalDialog();
+    const canCloseRef = React.useRef(process.env.NODE_ENV === 'test');
+
     if (!context) {
         throw Error(
             `To use @telefonica/mistica components you must instantiate <ThemeContextProvider> as their parent.`
@@ -330,8 +332,15 @@ const ModalDialog = (props: ModalDialogProps) => {
             <div className={classes.wrapper}>
                 <FocusTrap>
                     <div
-                        onClick={handleClose}
-                        className={classnames(classes.modalOpacityLayer, {closed: isClosing})}
+                        onClick={(event) => {
+                            // Closing the dialog before the animation has ended leaves the component in a broken state
+                            // To avoid race conditions, we don't allow closing the dialog until the animation has ended
+                            // See onAnimationEnd handler
+                            if (canCloseRef.current) {
+                                handleClose(event);
+                            }
+                        }}
+                        className={classnames(classes.modalOpacityLayer)}
                         role="dialog"
                     >
                         <div onClick={(e) => e.stopPropagation()}>
@@ -339,7 +348,10 @@ const ModalDialog = (props: ModalDialogProps) => {
                                 onTransitionEnd={
                                     isClosing && onCloseTransitionEnd ? onCloseTransitionEnd : undefined
                                 }
-                                onAnimationEnd={addKeyDownListener}
+                                onAnimationEnd={() => {
+                                    canCloseRef.current = true;
+                                    addKeyDownListener();
+                                }}
                                 className={classnames(classes.modalContent, {closed: isClosing})}
                             >
                                 <div className={classes.modalCloseButtonContainer}>

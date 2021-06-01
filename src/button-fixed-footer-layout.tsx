@@ -8,7 +8,7 @@ import type {ButtonElement} from './button';
 
 type Props = {
     isFooterVisible?: boolean;
-    button: ButtonElement;
+    button?: ButtonElement;
     desktopButtonAlign?: 'left' | 'center';
     secondaryButton?: ButtonElement;
     link?: React.ReactElement<typeof ButtonLink>;
@@ -30,10 +30,11 @@ const ButtonFixedFooterLayout: React.FC<Props> = ({
     onChangeFooterHeight,
 }) => {
     const {isMobile} = useScreenSize();
+    const hasButton = !!button || !!secondaryButton;
     return (
         <FixedFooterLayout
             onChangeFooterHeight={onChangeFooterHeight}
-            isFooterVisible={!!button && isFooterVisible}
+            isFooterVisible={hasButton && isFooterVisible}
             footerBgColor={footerBgColor}
             containerBgColor={containerBgColor}
             footer={

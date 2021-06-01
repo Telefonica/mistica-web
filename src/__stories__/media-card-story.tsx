@@ -30,14 +30,14 @@ export const Default: StoryComponent = () => {
         error: colors.error,
     };
     const tagColorNames = Object.keys(tagColors);
-    const [headline, headlineTextField] = useTextField('headline', 'priority', true);
+    const [headline, headlineTextField] = useTextField('headline', 'priority');
     const [headlineColorName, headlineColorNameSelect] = useSelect(
         'headline color',
         tagColorNames[0],
         tagColorNames
     );
     const headlineColor = (tagColors as any)[headlineColorName];
-    const [pretitle, pretitleTextField] = useTextField('pretitle', 'Some pretitle', true);
+    const [pretitle, pretitleTextField] = useTextField('pretitle', 'Some pretitle');
     const [title, titleTextField] = useTextField('title', 'Some title', true);
     const [description, descriptionTextField] = useTextField(
         'description',
@@ -65,7 +65,7 @@ export const Default: StoryComponent = () => {
         <>
             <Stack space={16}>
                 {headlineTextField}
-                {headlineColorNameSelect}
+                {headline && headlineColorNameSelect}
                 {pretitleTextField}
                 {titleTextField}
                 {descriptionTextField}
@@ -74,7 +74,7 @@ export const Default: StoryComponent = () => {
             <div data-testid="media-card">
                 <StorySection title="MediaCard">
                     <MediaCard
-                        headline={<Tag color={headlineColor}>{headline}</Tag>}
+                        headline={headline && <Tag color={headlineColor}>{headline}</Tag>}
                         pretitle={pretitle}
                         title={title}
                         description={description}

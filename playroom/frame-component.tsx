@@ -7,7 +7,13 @@ import type {ThemeConfig} from '../src';
 
 const Styles = () => {
     const {colors} = useTheme();
-    const styles = `body {background: ${colors.background}}`;
+    const styles = `
+        body {background: ${colors.background}}
+
+        *[class^='SplashScreen__'] {
+            display: none;
+        }
+    `;
     return <style>{styles}</style>;
 };
 

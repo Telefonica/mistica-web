@@ -1,15 +1,34 @@
 import * as React from 'react';
 import {Inline, Text2, useTheme} from '..';
+import {Placeholder} from '../placeholder';
 import {StorySection, useSelect} from './helpers';
 
 export default {
     title: 'Components/Layouts/Inline',
 };
 
-const Row = ({children}: {children?: any}) => {
+const Row = ({
+    children,
+    padding = 0,
+    align,
+}: {
+    children?: React.ReactNode;
+    padding?: number;
+    align?: string;
+}) => {
     const {colors} = useTheme();
+
     return children ? (
-        <div style={{border: `1px solid ${colors.error}`, padding: 16}}>
+        <div
+            style={{
+                boxSizing: 'border-box',
+                border: `1px solid ${colors.error}`,
+                padding,
+                height: align === 'stretch' ? '100%' : 'auto',
+                display: 'flex',
+                alignItems: 'center',
+            }}
+        >
             <Text2 regular>{children}</Text2>
         </div>
     ) : null;
@@ -18,27 +37,59 @@ const Row = ({children}: {children?: any}) => {
 const Null = () => null;
 const ComponentThatReturnsNullComponent = () => <Null />;
 
-const options = ['0px', '2px', '4px', '8px', '12px', '16px', '24px', '32px', '40px', '48px', '56px', '64px'];
+const spaceOptions = [
+    'between',
+    'around',
+    'evenly',
+    '0px',
+    '2px',
+    '4px',
+    '8px',
+    '12px',
+    '16px',
+    '24px',
+    '32px',
+    '40px',
+    '48px',
+    '56px',
+    '64px',
+];
+
+const alignOptions = ['flex-start', 'flex-end', 'center', 'baseline', 'stretch'];
 
 export const Default: StoryComponent = () => {
-    const [iconSize, iconSizeSelectField] = useSelect('Space', '32px', options);
+    const [space, spaceSelectField] = useSelect('Space', '32px', spaceOptions);
+    const [align, alignSelectField] = useSelect('Align items', 'center', alignOptions);
 
     return (
         <>
-            {iconSizeSelectField}
+            <Inline space={16}>
+                {spaceSelectField}
+                {alignSelectField}
+            </Inline>
             <StorySection title="Inline example">
-                <Inline space={+iconSize.replace(/[^0-9]/g, '') as any}>
+                <Placeholder />
+                <Inline
+                    space={(space.endsWith('px') ? parseInt(space) : space) as never}
+                    alignItems={align as never}
+                >
                     <ComponentThatReturnsNullComponent />
-                    <Row>One</Row>
+                    <Row padding={6} align={align}>
+                        One
+                    </Row>
                     {null}
                     {false}
-                    <Row>Two</Row>
+                    <Row padding={16} align={align}>
+                        Two
+                    </Row>
                     <Row />
                     <Row />
-                    <Row>Three</Row>
-                    <Row>Four</Row>
+                    <Row padding={32} align={align}>
+                        Three
+                    </Row>
                     <ComponentThatReturnsNullComponent />
                 </Inline>
+                <Placeholder />
             </StorySection>
         </>
     );

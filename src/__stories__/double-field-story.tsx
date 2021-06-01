@@ -20,17 +20,17 @@ export const Default: StoryComponent = () => {
     return (
         <>
             <StorySection title="Layouts">
-                <SectionTitle>50/50</SectionTitle>
+                <SectionTitle as="h2">50/50</SectionTitle>
                 <DoubleField layout="50/50">
                     <CreditCardExpirationField name="credit-card-expiration" label="Expiration" />
                     <CvvField name="credit-card-cvv" label="CVV" />
                 </DoubleField>
-                <SectionTitle>60/40</SectionTitle>
+                <SectionTitle as="h2">60/40</SectionTitle>
                 <DoubleField layout="60/40">
                     <CreditCardExpirationField name="credit-card-expiration" label="Expiration" />
                     <CvvField name="credit-card-cvv" label="CVV" />
                 </DoubleField>
-                <SectionTitle>40/60</SectionTitle>
+                <SectionTitle as="h2">40/60</SectionTitle>
                 <DoubleField layout="40/60">
                     <CvvField name="credit-card-cvv" label="CVV" />
                     <CreditCardExpirationField name="credit-card-expiration" label="Expiration" />

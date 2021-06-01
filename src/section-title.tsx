@@ -1,18 +1,44 @@
 import * as React from 'react';
-import Box from './box';
-import {Text1} from './text';
+import {Text1, Text2} from './text';
 import {useTheme} from './hooks';
+import TextLink from './text-link';
+import Inline from './inline';
+import {createUseStyles} from './jss';
+import {pxToRem} from './utils/css';
 
-type Props = {children: React.ReactNode; id?: string};
+const useStyles = createUseStyles((theme) => ({
+    right: {
+        display: 'flex',
+        alignItems: 'center',
+        paddingLeft: 16,
+        height: pxToRem(20),
+        [theme.mq.mobile]: {
+            height: pxToRem(16),
+        },
+    },
+}));
 
-const SectionTitle: React.FC<Props> = ({children, id}) => {
+type Props = {
+    children: React.ReactNode;
+    id?: string;
+    right?: React.ReactElement<typeof TextLink>;
+    as?: 'h1' | 'h2' | 'h3' | 'h4';
+};
+
+const SectionTitle: React.FC<Props> = ({children, id, right, as = 'h3'}) => {
+    const classes = useStyles();
     const theme = useTheme();
     return (
-        <Box paddingTop={16} paddingBottom={8}>
-            <Text1 color={theme.colors.textSecondary} uppercase medium as="h3" id={id}>
+        <Inline space="between">
+            <Text1 color={theme.colors.textSecondary} uppercase medium as={as} id={id}>
                 {children}
             </Text1>
-        </Box>
+            {!!right && (
+                <div className={classes.right}>
+                    <Text2 regular>{right}</Text2>
+                </div>
+            )}
+        </Inline>
     );
 };
 

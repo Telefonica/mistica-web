@@ -16,6 +16,7 @@
   - [EmailField](#emailfield)
   - [Select](#select)
   - [PhoneNumberField](#phonenumberfield)
+  - [IbanField](#ibanfield)
 - [DoubleField](#doublefield)
 - [useForm Hook](#useform-hook)
 
@@ -148,6 +149,13 @@ To enter phone numbers
 
 - Uses Google's `libphonenumber` library to format numbers as you type (uses `locale` from theme context to
   format numbers accordingly)
+
+### IbanField
+
+To enter bank accounts using the IBAN format
+
+- Formats the IBAN number as you type
+- Validates the number using the checksum
 
 ## DoubleField
 

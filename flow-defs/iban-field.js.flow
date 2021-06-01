@@ -1,0 +1,13 @@
+// @flow
+
+import * as React from "react";
+import type { CommonFormFieldProps } from "./text-field-base";
+export type IbanFieldProps = {|
+  ...$Exact<CommonFormFieldProps>,
+
+  onChangeValue?: (value: string, rawValue: string) => void,
+  prefix?: string,
+  getSuggestions?: (value: string) => Array<string>,
+|};
+declare var IbanField: React.ComponentType<IbanFieldProps>;
+declare export default typeof IbanField;

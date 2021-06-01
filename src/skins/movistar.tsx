@@ -160,6 +160,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             textAppBarSelected: palette.movistarBlue,
         },
         darkModeColors: {
+            brand: palette.movistarBlue, // this color needs to be in darkModeColors to revert the promient variant
             appBarBackground: palette.darkModeGrey,
             background: palette.darkModeBlack,
             backgroundContainer: palette.darkModeGrey,
@@ -217,7 +218,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             navigationBarDivider: palette.darkModeBlack,
             brandDark: palette.grey6,
             inverse: palette.grey2,
-            neutralHigh: palette.grey4,
+            neutralHigh: palette.grey2,
             neutralMedium: palette.grey5,
             neutralLow: palette.grey6,
             textPrimary: palette.grey2,

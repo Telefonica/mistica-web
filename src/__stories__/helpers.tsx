@@ -82,8 +82,9 @@ export const fruitEntries = [
 
 export const useCheckbox = (label: string, defaultValue = false): [boolean, React.ReactElement<'label'>] => {
     const [isEnabled, setIsEnabled] = React.useState(defaultValue);
+    const id = useAriaId();
     const checkbox = (
-        <Checkbox name="checkbox" checked={isEnabled} onChange={setIsEnabled}>
+        <Checkbox name={'checkbox-' + id} checked={isEnabled} onChange={setIsEnabled}>
             {label}
         </Checkbox>
     );

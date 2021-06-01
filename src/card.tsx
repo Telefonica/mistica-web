@@ -56,22 +56,24 @@ const CardContent: React.FC<CardContentProps> = ({
         <>
             <Stack space={16}>
                 <Stack space={8}>
-                    <header>
-                        <Stack space={4}>
-                            {renderHeadline()}
-                            {pretitle && (
-                                <Box paddingTop={4}>
-                                    <Text1 regular uppercase>
-                                        {pretitle}
-                                    </Text1>
-                                </Box>
-                            )}
-                            <Text4 as="h1" regular>
-                                {title}
-                            </Text4>
-                            <Text2 regular>{subtitle}</Text2>
-                        </Stack>
-                    </header>
+                    {(headline || pretitle || title || subtitle) && (
+                        <header>
+                            <Stack space={4}>
+                                {renderHeadline()}
+                                {pretitle && (
+                                    <Box paddingTop={4}>
+                                        <Text1 regular uppercase>
+                                            {pretitle}
+                                        </Text1>
+                                    </Box>
+                                )}
+                                <Text4 as="h1" light>
+                                    {title}
+                                </Text4>
+                                <Text2 regular>{subtitle}</Text2>
+                            </Stack>
+                        </header>
+                    )}
                     <Text2 as="p" regular color={theme.colors.textSecondary}>
                         {description}
                     </Text2>

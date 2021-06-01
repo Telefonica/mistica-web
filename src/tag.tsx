@@ -2,6 +2,7 @@ import * as React from 'react';
 import {useTheme} from './hooks';
 import {createUseStyles} from './jss';
 import {Text} from './text';
+import {ThemeVariant} from './theme-variant-context';
 
 const useStyles = createUseStyles(() => ({
     tag: {
@@ -28,9 +29,11 @@ const Tag: React.FC<Props> = ({children, color}) => {
     const textColor = color === colors.inverse ? blackText : colors.textPrimaryInverse;
     return (
         <span className={classes.tag}>
-            <Text color={textColor} size={12} lineHeight={16} weight="regular" uppercase>
-                {children}
-            </Text>
+            <ThemeVariant isInverse={false}>
+                <Text color={textColor} size={12} lineHeight={16} weight="regular" uppercase>
+                    {children}
+                </Text>
+            </ThemeVariant>
         </span>
     );
 };

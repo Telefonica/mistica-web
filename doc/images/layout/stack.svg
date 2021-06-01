@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="242" viewBox="-1 -1 302 240">
+    <rect y="0" width="300" height="200" fill="pink" />
+    <rect y="0" width="300" height="50" fill="lightgray" stroke="black" />
+    <rect y="calc(50 + 24)" width="300" height="80" fill="lightgray" stroke="black" />
+    <rect y="calc(50 + 80 + 48)" width="300" height="60" fill="lightgray" stroke="black" />
+    <text x="130" y="67">24px</text>
+    <text x="130" y="171">24px</text>
+</svg>

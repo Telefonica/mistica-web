@@ -2,28 +2,30 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
+import {useTheme} from './hooks';
 
 export type InputState = 'focused' | 'filled' | 'default';
 
 export const DEFAULT_WIDTH = 328;
 
+const LABEL_LEFT_POSITION = 12;
+const LABEL_SCALE = 0.75;
+
 const useLabelStyles = createUseStyles((theme) => ({
-    label: {
+    labelContainer: {
+        lineHeight: '1em',
         position: 'absolute',
         pointerEvents: 'none',
-        left: 12,
+        left: LABEL_LEFT_POSITION,
         top: 0,
         fontSize: 16,
         transformOrigin: 0,
         height: 16,
-        transform: ({inputState, shrinkLabel}: {inputState: InputState; shrinkLabel: boolean}) =>
-            shrinkLabel
-                ? 'translateY(8px) scale(.75)'
-                : {
-                      focused: 'translateY(8px) scale(.75)',
-                      filled: 'translateY(8px) scale(.75)',
-                      default: 'translateY(20px) scale(1)',
-                  }[inputState],
+        display: 'flex',
+        flexDirection: 'row',
+        transform: ({isShrinked}) =>
+            isShrinked ? `translateY(8px) scale(${LABEL_SCALE})` : 'translateY(20px) scale(1)',
+
         color: ({inputState, error, disabled}) => {
             if (inputState === 'default' && disabled) {
                 return theme.colors.textDisabled;
@@ -36,6 +38,25 @@ const useLabelStyles = createUseStyles((theme) => ({
             }
             return theme.colors.textSecondary;
         },
+        width: ({isShrinked}) =>
+            isShrinked
+                ? `calc((100% - ${LABEL_LEFT_POSITION * 2}px) / ${LABEL_SCALE})`
+                : `calc(100% - ${LABEL_LEFT_POSITION * 2}px)`,
+    },
+    labelText: {
+        '-webkit-line-clamp': 1,
+        lineClamp: 1,
+        wordBreak: 'break-all',
+        display: 'box',
+        overflow: 'hidden',
+        boxOrient: 'vertical',
+        flexShrink: 1,
+        // this is needed because at 1em, font descendants are cutted when using overflow hidden
+        // setting a higher height is not an option because it shows the next line
+        lineHeight: '1.2em',
+        height: '1.2em',
+        position: 'relative',
+        top: '-0.1em',
     },
 }));
 
@@ -47,6 +68,7 @@ type LabelProps = {
     children: string;
     disabled?: boolean;
     style?: React.CSSProperties;
+    optional?: boolean;
 };
 
 export const Label: React.FC<LabelProps> = ({
@@ -57,16 +79,19 @@ export const Label: React.FC<LabelProps> = ({
     children,
     disabled,
     style,
+    optional,
 }) => {
-    const classes = useLabelStyles({shrinkLabel, inputState, error, disabled});
+    const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
+    const classes = useLabelStyles({isShrinked, inputState, error, disabled});
     const [transitionStyle, setTransitionStyle] = React.useState('');
+    const {texts} = useTheme();
 
     // This way we prevent animation when field is filled as initial state
     React.useEffect(() => {
         const tid = setTimeout(() => {
             // Check environment or we will get a warning if this gets executed outside @testing-library/act
             if (process.env.NODE_ENV !== 'test') {
-                setTransitionStyle('transform 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms');
+                setTransitionStyle('transform 150ms, width 150ms');
             }
         });
         return () => {
@@ -75,8 +100,13 @@ export const Label: React.FC<LabelProps> = ({
     }, []);
 
     return (
-        <label className={classes.label} htmlFor={forId} style={{...style, transition: transitionStyle}}>
-            {children}
+        <label
+            className={classes.labelContainer}
+            htmlFor={forId}
+            style={{...style, transition: transitionStyle}}
+        >
+            <span className={classes.labelText}>{children}</span>
+            {optional ? <span>&nbsp;({texts.formFieldOptionalLabelSuffix})</span> : null}
         </label>
     );
 };

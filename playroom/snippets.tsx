@@ -1,16 +1,30 @@
 const imagePlaceholder = 'https://i.imgur.com/jeDSXBU.jpg';
 
-const buttonSnippets = ['ButtonPrimary', 'ButtonSecondary', 'ButtonDanger', 'ButtonLink'].map((name) => ({
-    group: 'Buttons',
-    name,
-    code: `
-      <${name} onPress={() => {}}>
-        Button
-      </${name}>
-    `,
-}));
+type Snippet = {group: string; name: string; code: string};
 
-const formSnippets = [
+const buttonSnippets: Array<Snippet> = [
+    {name: 'ButtonPrimary', code: '<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>'},
+    {name: 'ButtonSecondary', code: '<ButtonSecondary onPress={() => {}}>Action</ButtonSecondary>'},
+    {name: 'ButtonDanger', code: '<ButtonDanger onPress={() => {}}>Action</ButtonDanger>'},
+    {name: 'ButtonLink', code: '<ButtonLink onPress={() => {}}>Action</ButtonLink>'},
+    {
+        name: 'ButtonLayout',
+        code: `
+        <ButtonLayout>
+            <ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>
+            <ButtonSecondary onPress={() => {}}>Action</ButtonSecondary>
+        </ButtonLayout>`,
+    },
+    {
+        name: 'ButtonFixedFooterLayout',
+        code: `
+        <ButtonFixedFooterLayout button={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}>
+            Some content here
+        </ButtonFixedFooterLayout>`,
+    },
+].map((snippet) => ({...snippet, group: 'Buttons'}));
+
+const formSnippets: Array<Snippet> = [
     [
         'Select',
         `<Select name="fruits" label="Choose a fruit" options={[{value: 'orange', text: 'Orange'}, {value: 'banana', text: 'Banana'}]}/>`,
@@ -18,6 +32,7 @@ const formSnippets = [
     ['TextField', '<TextField name="name" label="Name"/>'],
     ['EmailField', '<EmailField name="email" label="e-mail"/>'],
     ['PhoneNumberField', '<PhoneNumberField name="phone" label="Phone"/>'],
+    ['IbanField', '<IbanField name="bankAccount" label="IBAN" />'],
     ['CreditCardFields', '<CreditCardFields/>'],
     ['DateField', '<DateField name="date" label="Date"/>'],
     ['DecimalField', '<DecimalField name="decimal" label="Decimal"/>'],
@@ -30,18 +45,7 @@ const formSnippets = [
     ['CvvField', '<CvvField name="cvv" label="CVV"/>'],
     ['SearchField', '<SearchField name="search" label="Search"/>'],
     ['Switch', '<Switch name="switch"/>'],
-    [
-        'Checkbox',
-        '<Checkbox\n' +
-            '   name="second"\n' +
-            '   render={(checkboxElement) => (\n' +
-            '       <Inline alignItems="center" space={8}>\n' +
-            '       {checkboxElement}\n' +
-            '       <Text3 regular>Example checkbox</Text3>\n' +
-            '       </Inline>\n' +
-            '   )}\n' +
-            '/>',
-    ],
+    ['Checkbox', '<Checkbox name="checkbox">Checkbox</Checkbox>'],
     [
         'RadioGroup',
         '<RadioGroup name="juicy-fruit" aria-labelledby="label" defaultValue="banana">\n' +
@@ -53,13 +57,9 @@ const formSnippets = [
     ],
     [
         'Form',
-        `
-        <Form
+        `<Form
             onSubmit={formData =>
-                alert({
-                title: "This is your data",
-                message: JSON.stringify(formData, null, 2)
-                })
+                alert({title: "This is your data", message: JSON.stringify(formData, null, 2)})
             }
         >
             <Box padding={16}>
@@ -82,27 +82,29 @@ const formSnippets = [
     code,
 }));
 
-const feedbackScreenSnippets = ['SuccessFeedbackScreen', 'ErrorFeedbackScreen', 'InfoFeedbackScreen'].map(
-    (name) => ({
-        group: 'Feedback',
-        name,
-        code: `
+const feedbackScreenSnippets: Array<Snippet> = [
+    'SuccessFeedbackScreen',
+    'ErrorFeedbackScreen',
+    'InfoFeedbackScreen',
+].map((name) => ({
+    group: 'Feedbacks',
+    name,
+    code: `
         <${name}
             title="Some title"
             description="Some description text"
             primaryButton={
-                <ButtonPrimary href="https://google.com">Action</ButtonPrimary>
+                <ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>
             }
         />
         `,
-    })
-);
+}));
 
-const listSnippets = [
+const listSnippets: Array<Snippet> = [
     ['RowList', 'Row'],
     ['BoxedRowList', 'BoxedRow'],
 ].map(([listName, rowName]) => ({
-    group: 'List',
+    group: 'Lists',
     name: listName,
     code: `
         <${listName}>
@@ -144,7 +146,7 @@ const listSnippets = [
 }));
 
 listSnippets.push({
-    group: 'List',
+    group: 'Lists',
     name: 'Radio list',
     code: `
     <RadioGroup defaultValue="banana">
@@ -176,7 +178,7 @@ listSnippets.push({
     `,
 });
 
-const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
+const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) => [
     {
         group: 'List',
         name: `${rowName} (simple)`,
@@ -190,7 +192,7 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
             iconSize={40}
             title="Title"
             description="Description"
-            href="https://google.com"
+            onPress={() => {}}
         />`,
     },
     {
@@ -209,7 +211,7 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
             subtitle="Subtitle"
             description="Description"
             badge={9}
-            href="https://google.com"
+            onPress={() => {}}
         />`,
     },
     {
@@ -278,7 +280,7 @@ const listRowSnippets = ['Row', 'BoxedRow'].flatMap((rowName) => [
     },
 ]);
 
-const tooltipSnippets = ['Tooltip', 'Popover'].map((name) => ({
+const tooltipSnippets: Array<Snippet> = ['Tooltip', 'Popover'].map((name) => ({
     group: 'Tooltip',
     name,
     code: `
@@ -289,7 +291,7 @@ const tooltipSnippets = ['Tooltip', 'Popover'].map((name) => ({
     `,
 }));
 
-const headerSnippets = [
+const headerSnippets: Array<Snippet> = [
     {
         group: 'Headers',
         name: 'Basic header layout',
@@ -370,7 +372,7 @@ const headerSnippets = [
     },
 ];
 
-const tabsSnippets = [
+const tabsSnippets: Array<Snippet> = [
     {
         group: 'Tabs',
         name: 'Tabs (without icons)',
@@ -415,7 +417,7 @@ const tabsSnippets = [
     },
 ];
 
-const cardSnippets = [
+const cardSnippets: Array<Snippet> = [
     {
         group: 'Cards',
         name: 'HighlightedCard',
@@ -448,11 +450,11 @@ const cardSnippets = [
                     'https://i.imgur.com/flZfkiX.png',
             }}
             button={
-                <ButtonPrimary small href="https://google.com">
+                <ButtonPrimary small onPress={() => {}}>
                     Action
                 </ButtonPrimary>
             }
-            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
         />`,
     },
     {
@@ -471,55 +473,90 @@ const cardSnippets = [
                 </Circle>
             }
             button={
-                <ButtonPrimary small href="https://google.com">
+                <ButtonPrimary small onPress={() => {}}>
                     Action
                 </ButtonPrimary>
             }
-            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
         />`,
     },
 ];
 
-type Snippet = {group: string; name: string; code: string};
+const titlesSnippets: Array<Snippet> = [
+    {
+        name: 'SectionTitle',
+        code: '<SectionTitle>Some title</SectionTitle>',
+    },
+    {
+        name: 'SectionTitle (with link)',
+        code: '<SectionTitle right={<TextLink onPress={() => {}}>Link</TextLink>}>Some title</SectionTitle>',
+    },
+].map((snippet) => ({...snippet, group: 'Titles'}));
 
-export default [
-    ...buttonSnippets,
+const layoutSnippets: Array<Snippet> = [
     {
-        group: 'Buttons',
-        name: 'ButtonLayout',
-        code: `
-        <ButtonLayout>
-            <ButtonPrimary onPress={() => {}}>Button</ButtonPrimary>
-            <ButtonSecondary onPress={() => {}}>Button</ButtonSecondary>
-        </ButtonLayout>`,
-    },
-    {
-        group: 'Buttons',
-        name: 'ButtonFixedFooterLayout',
-        code: `
-        <ButtonFixedFooterLayout button={<ButtonPrimary href="https://google.com">Action</ButtonPrimary>}>
-            Some content here
-        </ButtonFixedFooterLayout>`,
-    },
-    ...formSnippets,
-    ...feedbackScreenSnippets,
-    {group: 'Feedback', name: 'Snackbar', code: '<Snackbar message="Some message here" />'},
-    ...tooltipSnippets,
-    {
-        group: 'Layout',
         name: 'Box',
         code: '<Box padding={16}><Placeholder /></Box>',
     },
     {
-        group: 'Layout',
         name: 'Stack',
         code: '<Stack space={16}><Placeholder /><Placeholder /><Placeholder /></Stack>',
     },
     {
-        group: 'Layout',
         name: 'Inline',
         code: '<Inline space={16}><Placeholder /><Placeholder /><Placeholder /></Inline>',
     },
+    {
+        name: 'Inline space between',
+        code: '<Inline space="between"><Placeholder /><Placeholder /><Placeholder /></Inline>',
+    },
+    {
+        name: 'GridLayout',
+        code: '<ResponsiveLayout><GridLayout><Placeholder /></GridLayout></ResponsiveLayout>',
+    },
+    {
+        name: 'GridLayout 6+6',
+        code:
+            '<ResponsiveLayout><GridLayout template="6+6" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
+    },
+    {
+        name: 'GridLayout 8+4',
+        code:
+            '<ResponsiveLayout><GridLayout template="8+4" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
+    },
+].map((snippet) => ({...snippet, group: 'Layouts'}));
+
+const emptyStatesGroup: Array<Snippet> = [
+    {
+        name: 'EmptyStateScreen',
+        code: `
+        <EmptyStateScreen
+            largeImageUrl="https://i.imgur.com/yGFKQOy.png"
+            title="Your cart is empty"
+            description="Check our marketplaces and find something for you. Check our marketplaces and find something"
+            button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
+        />`,
+    },
+    {
+        name: 'EmptyStateCard',
+        code: `
+        <EmptyStateCard
+            imageUrl="https://i.imgur.com/o5qympI.png"
+            title="Your cart is empty"
+            description="Check our marketplaces and find something for you"
+            button={<ButtonPrimary small onPress={() => {}}>Explore marketplace</ButtonPrimary>}
+            buttonLink={<ButtonLink onPress={() => {}}>More info</ButtonLink>}
+        />`,
+    },
+].map((snippet) => ({...snippet, group: 'Empty states'}));
+
+export default [
+    ...buttonSnippets,
+    ...formSnippets,
+    ...feedbackScreenSnippets,
+    {group: 'Feedbacks', name: 'Snackbar', code: '<Snackbar message="Some message here" />'},
+    ...tooltipSnippets,
+    ...layoutSnippets,
     {group: 'Spinner', name: 'Spinner', code: '<Spinner />'},
     {group: 'Divider', name: 'Divider', code: '<Divider />'},
     {group: 'LoadingBar', name: 'LoadingBar', code: '<LoadingBar visible />'},
@@ -532,7 +569,7 @@ export default [
     ...['promo', 'brand', 'success', 'warning', 'error', 'inverse'].map((colorName) => ({
         group: 'Tag',
         name: `Tag (${colorName})`,
-        code: `<Tag color={colors.${colorName}}>Priority</Tag>`,
+        code: `<Tag color={colors.${colorName}}>${colorName}</Tag>`,
     })),
     {
         group: 'Progress',
@@ -551,4 +588,6 @@ export default [
         code:
             '<NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: "Cuenta", url: "/consumptions"}]} />',
     },
+    ...titlesSnippets,
+    ...emptyStatesGroup,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

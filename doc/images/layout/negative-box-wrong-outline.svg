@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="243" viewBox="-1 -1 162 242">
+  <rect x="0" y="0" height="240" width="160" fill="pink" stroke="black"/>
+  <rect x="12" y="0" height="240" width="calc(160 - 24)" fill="lightgray" stroke="black"/>
+  <rect x="12" y="0" height="30" width="calc(160 - 24)" fill="rgba(0,0,255,0)" stroke="black"/>
+  <rect x="12" y="30" height="30" width="calc(160 - 24)" fill="rgba(0,0,255,0.2)" stroke="black"/>
+  <rect x="12" y="60" height="30" width="calc(160 - 24)" fill="rgba(0,0,255,0)" stroke="black"/>
+  <circle cx="32" cy="15" r="10" fill="rgba(0,0,0,0.2)" stroke="black"/>
+  <circle cx="32" cy="45" r="10" fill="rgba(0,0,0,0.2)" stroke="black"/>
+  <circle cx="32" cy="75" r="10" fill="rgba(0,0,0,0.2)" stroke="black"/>
+  <text x="48" y="20">Row</text>
+  <text x="48" y="50">Row (hover)</text>
+  <text x="48" y="80">Row</text>
+  <text x="18" y="228" fill="brown" font-size="30" font-weight="bold">WRONG!</text>
+</svg>
