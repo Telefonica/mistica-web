@@ -83,7 +83,7 @@ export const getTelefonicaSkin: GetSkin = () => {
             buttonSecondaryBackground: palette.telefonicaBlue,
             buttonSecondaryBackgroundDisabled: palette.grey2,
             buttonSecondaryBackgroundSelected: palette.telefonicaBlueDark,
-            buttonSecondaryBorderDisabledInverse: palette.grey2,
+            buttonSecondaryBorderDisabledInverse: palette.telefonicaBlueLight50,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.telefonicaBlueLight50,
 
@@ -97,8 +97,8 @@ export const getTelefonicaSkin: GetSkin = () => {
             textButtonSecondaryDisabled: palette.grey2,
             textButtonSecondarySelected: palette.telefonicaBlueDark,
             textButtonSecondaryInverse: palette.white,
-            textButtonSecondaryInverseDisabled: palette.grey2,
-            textButtonSecondaryInverseSelected: palette.white,
+            textButtonSecondaryInverseDisabled: palette.telefonicaBlueLight50,
+            textButtonSecondaryInverseSelected: palette.telefonicaBlueLight50,
 
             textLink: palette.telefonicaBlue,
             textLinkInverse: palette.white,
