@@ -102,10 +102,6 @@ const themesMap: {[skinName in SkinName]: {themeConfig: ThemeConfig; text: strin
         text: 'O2',
         themeConfig: O2,
     },
-    'O2-classic': {
-        text: 'O2 (classic)',
-        themeConfig: O2_Classic,
-    },
     Telefonica: {
         text: 'Telefonica',
         themeConfig: Telefonica,
