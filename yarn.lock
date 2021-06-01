@@ -11020,6 +11020,20 @@ flow-typed@^3.3.1:
     which "^2.0.2"
     yargs "^15.1.0"
 
+flowgen@1.13.0:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/flowgen/-/flowgen-1.13.0.tgz#c20319442cd2800a43a0fb625f6dec5d3d2b9add"
+  integrity sha512-xgdbeWfhY5yayQ3PUTaPn9a0tPK21m5SEJSFZDZf0A0TuoLKYVXU3fhhAN9pokjDcb0E0FGh7EO3t3YNf/iXTw==
+  dependencies:
+    "@babel/code-frame" "^7.10.4"
+    "@babel/highlight" "^7.10.4"
+    commander "^6.1.0"
+    lodash "^4.17.20"
+    prettier "^2.1.1"
+    shelljs "^0.8.4"
+    typescript "^4.0.2"
+    typescript-compiler "^1.4.1-2"
+
 flowgen@^1.10.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/flowgen/-/flowgen-1.10.0.tgz#a041ae31d543d22166e7ba7c296b8445deb3c2e4"
@@ -11033,20 +11047,6 @@ flowgen@^1.10.0:
     prettier "^1.16.4"
     shelljs "^0.8.3"
     typescript "^3.4"
-    typescript-compiler "^1.4.1-2"
-
-flowgen@^1.14.1:
-  version "1.14.1"
-  resolved "https://registry.yarnpkg.com/flowgen/-/flowgen-1.14.1.tgz#a1da7cbe78bd3897291257dc60c566e14540c95a"
-  integrity sha512-rpwM75zi4BH5CLHtak0/1wZ40/3eEi2E7CafjiGPnyL2b9y3zznSrgbNTnpkspU1o4C0Ypsvfwi0lFslIVxWVw==
-  dependencies:
-    "@babel/code-frame" "^7.10.4"
-    "@babel/highlight" "^7.10.4"
-    commander "^6.1.0"
-    lodash "^4.17.20"
-    prettier "^2.1.1"
-    shelljs "^0.8.4"
-    typescript "^4.0.2"
     typescript-compiler "^1.4.1-2"
 
 flush-write-stream@^1.0.0:

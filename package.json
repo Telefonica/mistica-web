@@ -112,7 +112,7 @@
         "eslint-plugin-testing-library": "^4.6.0",
         "flow-bin": "^0.152.0",
         "flow-typed": "^3.3.1",
-        "flowgen": "^1.14.1",
+        "flowgen": "1.13.0",
         "glob": "^7.1.7",
         "husky": "^6.0.0",
         "is-ci": "^3.0.0",
