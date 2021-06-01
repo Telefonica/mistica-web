@@ -98,7 +98,6 @@ const Navbar = ({top}: {top: number}) => {
     );
 };
 
-//👇 We create a “template” of how args map to rendering
 type FeedbackScreenArgs = {
     title: string;
     primaryButtonText: string;
