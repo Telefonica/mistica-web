@@ -10,7 +10,7 @@ import {useTextField} from './helpers';
 import Stack from '../stack';
 import {ThemeVariant, useIsInverseVariant} from '../theme-variant-context';
 import {useTheme} from '../hooks';
-import {Box, Checkbox, FixedToTop, Text3, Text1} from '..';
+import {Box, Checkbox, FixedToTop, Text3, Text1, Text2} from '..';
 
 export default {
     title: 'Components/Screens/FeedbackScreen',
@@ -99,80 +99,6 @@ const Navbar = ({top}: {top: number}) => {
     );
 };
 
-export const Default: StoryComponent = () => {
-    const [title, titleTextField] = useTextField('Title', "I'm the title", true);
-    const [description, descriptionTextField] = useTextField('Description', "I'm the description");
-    const [primaryButtonText, primaryButtonTextField] = useTextField('Primary button text', 'Primary');
-    const [secondaryButtonText, secondaryButtonTextField] = useTextField(
-        'Secondary button text',
-        'Secondary'
-    );
-    const [linkText, linkTextField] = useTextField('Link button text', '');
-    const [showIcon, setShowIcon] = React.useState(true);
-    const [isInverse, setIsInverse] = React.useState(true);
-    const [animateText, setAnimateText] = React.useState(true);
-    const [withNavbar, setWithNavbar] = React.useState(true);
-    return (
-        <FixedToTop height={withNavbar ? 56 : 0}>
-            {(top) => (
-                <ThemeVariant isInverse={isInverse}>
-                    {withNavbar && <Navbar top={top} />}
-                    <Box paddingTop={withNavbar ? 56 : 0}>
-                        <FeedbackScreen
-                            title={title}
-                            description={description}
-                            animateText={animateText}
-                            icon={showIcon ? <IconOrders /> : undefined}
-                            primaryButton={
-                                primaryButtonText.length ? (
-                                    <ButtonPrimary onPress={() => {}}>{primaryButtonText}</ButtonPrimary>
-                                ) : undefined
-                            }
-                            secondaryButton={
-                                secondaryButtonText.length ? (
-                                    <ButtonSecondary onPress={() => {}}>
-                                        {secondaryButtonText}
-                                    </ButtonSecondary>
-                                ) : undefined
-                            }
-                            link={
-                                linkText.length ? (
-                                    <ButtonLink onPress={() => {}}>{linkText}</ButtonLink>
-                                ) : undefined
-                            }
-                        >
-                            <Stack space={16}>
-                                {titleTextField}
-                                {descriptionTextField}
-                                {primaryButtonTextField}
-                                {primaryButtonText && secondaryButtonTextField}
-                                {primaryButtonText && linkTextField}
-                                <Checkbox checked={showIcon} onChange={setShowIcon} name="icon">
-                                    Show icon
-                                </Checkbox>
-                                <Checkbox checked={animateText} onChange={setAnimateText} name="animate">
-                                    Animate text
-                                </Checkbox>
-                                <Checkbox checked={withNavbar} onChange={setWithNavbar} name="navbar">
-                                    Show navbar (not part of the component)
-                                </Checkbox>
-                                <Checkbox checked={isInverse} onChange={setIsInverse} name="inverse">
-                                    Inverse
-                                </Checkbox>
-                                <Text1 as="div" regular>
-                                    * To see the inverse variant use a mobile screen size and add any button
-                                </Text1>
-                            </Stack>
-                        </FeedbackScreen>
-                    </Box>
-                </ThemeVariant>
-            )}
-        </FixedToTop>
-    );
-};
-
-Default.storyName = 'FeedbackScreen';
-
 //👇 We create a “template” of how args map to rendering
 type FeedbackScreenArgs = {
     title: string;
@@ -182,6 +108,8 @@ type FeedbackScreenArgs = {
     description: string;
     animateText: boolean;
     showIcon: boolean;
+    withNavbar: boolean;
+    isInverse: boolean;
 };
 
 const FeedbackScreenTemplate: StoryComponent<FeedbackScreenArgs> = ({
@@ -192,36 +120,58 @@ const FeedbackScreenTemplate: StoryComponent<FeedbackScreenArgs> = ({
     description,
     animateText,
     showIcon,
+    withNavbar,
+    isInverse,
 }) => (
-    <FeedbackScreen
-        title={title}
-        description={description}
-        animateText={animateText}
-        icon={showIcon ? <IconOrders /> : undefined}
-        primaryButton={
-            primaryButtonText.length ? (
-                <ButtonPrimary onPress={() => {}}>{primaryButtonText}</ButtonPrimary>
-            ) : undefined
-        }
-        secondaryButton={
-            secondaryButtonText.length ? (
-                <ButtonSecondary onPress={() => {}}>{secondaryButtonText}</ButtonSecondary>
-            ) : undefined
-        }
-        link={linkText.length ? <ButtonLink onPress={() => {}}>{linkText}</ButtonLink> : undefined}
-    >
-        <Stack space={16}>lala</Stack>
-    </FeedbackScreen>
+    <FixedToTop height={withNavbar ? 56 : 0}>
+        {(top) => (
+            <ThemeVariant isInverse={isInverse}>
+                {withNavbar && <Navbar top={top} />}
+                <Box paddingTop={withNavbar ? 56 : 0}>
+                    <FeedbackScreen
+                        title={title}
+                        description={description}
+                        animateText={animateText}
+                        icon={showIcon ? <IconOrders /> : undefined}
+                        primaryButton={
+                            primaryButtonText ? (
+                                <ButtonPrimary fake>{primaryButtonText}</ButtonPrimary>
+                            ) : undefined
+                        }
+                        secondaryButton={
+                            secondaryButtonText ? (
+                                <ButtonSecondary fake>{secondaryButtonText}</ButtonSecondary>
+                            ) : undefined
+                        }
+                        link={linkText ? <ButtonLink href="#">{linkText}</ButtonLink> : undefined}
+                    >
+                        <Stack space={16}>
+                            <Text2 regular as="p">
+                                Your content goes here.
+                            </Text2>
+                            <Text2 regular as="p">
+                                You can customize this story. Check the "Controls" tab.
+                            </Text2>
+                        </Stack>
+                    </FeedbackScreen>
+                </Box>
+            </ThemeVariant>
+        )}
+    </FixedToTop>
 );
 
-export const FeedbackScreenWithArgs = FeedbackScreenTemplate.bind({});
+export const FeedbackScreenStory = FeedbackScreenTemplate.bind({});
 
-FeedbackScreenWithArgs.args = {
+FeedbackScreenStory.storyName = 'FeedbackScreen';
+
+FeedbackScreenStory.args = {
     title: 'Title',
     primaryButtonText: 'Primary',
-    secondaryButtonText: 'Primary',
+    secondaryButtonText: 'Secondary',
     linkText: 'LinkText',
     description: 'Description',
     animateText: true,
     showIcon: true,
+    withNavbar: true,
+    isInverse: false,
 };

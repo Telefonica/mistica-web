@@ -20,7 +20,6 @@ module.exports = {
         './platform-selector-addon/register',
         './dark-mode-addon/register',
         './font-size-addon/register',
-        '@storybook/addon-docs',
         '@storybook/addon-controls',
     ],
     webpackFinal: async (config) => {
