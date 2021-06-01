@@ -6,11 +6,10 @@ import {
     FeedbackScreen,
 } from '../feedback-screen';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from '../button';
-import {useTextField} from './helpers';
 import Stack from '../stack';
 import {ThemeVariant, useIsInverseVariant} from '../theme-variant-context';
 import {useTheme} from '../hooks';
-import {Box, Checkbox, FixedToTop, Text3, Text1, Text2} from '..';
+import {Box, FixedToTop, Text3, Text2} from '..';
 
 export default {
     title: 'Components/Screens/FeedbackScreen',
