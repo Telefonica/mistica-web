@@ -21,12 +21,11 @@ const useStyles = createUseStyles(({colors}) => ({
     rowContent: {
         width: '100%',
         cursor: 'pointer',
-        '&:hover': {
-            background: ({isInverse}) => (isInverse ? 'initial' : colors.backgroundAlternative),
 
-            // Revert hover background in touch devices
-            '@media (pointer: coarse)': {
-                background: () => 'initial',
+        // Only apply hover effect to devices using fine pointer devices (a mouse, for example)
+        '@media (pointer: fine)': {
+            '&:hover': {
+                background: ({isInverse}) => (isInverse ? 'initial' : colors.backgroundAlternative),
             },
         },
     },
