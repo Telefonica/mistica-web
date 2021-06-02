@@ -174,6 +174,8 @@ const generateReportForGithub = async (results) => {
  * @param {Array<[name: string, results: import('axe-core').AxeResults]>} rawResults
  */
 const processResults = (rawResults) => {
+    return rawResults;
+
     // For reference:
     // ButtonPrimary has a contrast ratio of 2.57
     // Tag of type "Pending" has a contrast ratio of 2.44 (which is the current lowest)
