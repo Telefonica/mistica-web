@@ -22,20 +22,17 @@ import Box from './box';
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) && !isRunningAcceptanceTest(platformOverrides);
 
-const animateText = (platformOverrides: Theme['platformOverrides']) => ({
-    animateText,
-}: {
-    animateText: boolean;
-}) =>
-    animateText && areAnimationsSupported(platformOverrides)
-        ? '$sweepIn 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards'
-        : 'initial';
+const animateText =
+    (platformOverrides: Theme['platformOverrides']) =>
+    ({animateText}: {animateText: boolean}) =>
+        animateText && areAnimationsSupported(platformOverrides)
+            ? '$sweepIn 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards'
+            : 'initial';
 
-const initialTextOpacity = (platformOverrides: Theme['platformOverrides']) => ({
-    animateText,
-}: {
-    animateText: boolean;
-}) => (animateText && areAnimationsSupported(platformOverrides) ? 0 : 1);
+const initialTextOpacity =
+    (platformOverrides: Theme['platformOverrides']) =>
+    ({animateText}: {animateText: boolean}) =>
+        animateText && areAnimationsSupported(platformOverrides) ? 0 : 1;
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -106,11 +103,6 @@ const useStyles = createUseStyles((theme) => ({
         marginTop: 16,
         animation: animateText(theme.platformOverrides),
         opacity: initialTextOpacity(theme.platformOverrides),
-    },
-
-    iconColor: {
-        stroke: (isInverse) => (isInverse ? theme.colors.background : theme.colors.buttonPrimaryBackground),
-        fill: (isInverse) => (isInverse ? theme.colors.background : theme.colors.buttonPrimaryBackground),
     },
 
     [theme.mq.tabletOrBigger]: {
@@ -225,10 +217,12 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         </div>
     );
 
+    const hasButtons = !!primaryButton || !!secondaryButton;
+
     const content = (
         <>
             <div className={classes.footer}>
-                {primaryButton ? (
+                {hasButtons ? (
                     <ButtonFixedFooterLayout
                         button={primaryButton}
                         secondaryButton={secondaryButton}
@@ -243,7 +237,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                     feedbackBasicContent
                 )}
             </div>
-            {isMobile && primaryButton && <div className={classes.backgroundDiv} />}
+            {isMobile && hasButtons && <div className={classes.backgroundDiv} />}
         </>
     );
 

@@ -516,15 +516,37 @@ const layoutSnippets: Array<Snippet> = [
     },
     {
         name: 'GridLayout 6+6',
-        code:
-            '<ResponsiveLayout><GridLayout template="6+6" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
+        code: '<ResponsiveLayout><GridLayout template="6+6" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
     },
     {
         name: 'GridLayout 8+4',
-        code:
-            '<ResponsiveLayout><GridLayout template="8+4" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
+        code: '<ResponsiveLayout><GridLayout template="8+4" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
     },
 ].map((snippet) => ({...snippet, group: 'Layouts'}));
+
+const emptyStatesGroup: Array<Snippet> = [
+    {
+        name: 'EmptyStateScreen',
+        code: `
+        <EmptyStateScreen
+            largeImageUrl="https://i.imgur.com/yGFKQOy.png"
+            title="Your cart is empty"
+            description="Check our marketplaces and find something for you. Check our marketplaces and find something"
+            button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
+        />`,
+    },
+    {
+        name: 'EmptyStateCard',
+        code: `
+        <EmptyStateCard
+            imageUrl="https://i.imgur.com/o5qympI.png"
+            title="Your cart is empty"
+            description="Check our marketplaces and find something for you"
+            button={<ButtonPrimary small onPress={() => {}}>Explore marketplace</ButtonPrimary>}
+            buttonLink={<ButtonLink onPress={() => {}}>More info</ButtonLink>}
+        />`,
+    },
+].map((snippet) => ({...snippet, group: 'Empty states'}));
 
 export default [
     ...buttonSnippets,
@@ -550,8 +572,7 @@ export default [
     {
         group: 'Progress',
         name: 'Stepper',
-        code:
-            '<Stepper currentIndex={2} steps={["Basic Details", "Company Details", "Subscription Plan"]} />',
+        code: '<Stepper currentIndex={2} steps={["Basic Details", "Company Details", "Subscription Plan"]} />',
     },
     {
         group: 'Progress',
@@ -561,8 +582,8 @@ export default [
     {
         group: 'NavigationBreadcrumbs',
         name: 'NavigationBreadcrumbs',
-        code:
-            '<NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: "Cuenta", url: "/consumptions"}]} />',
+        code: '<NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: "Cuenta", url: "/consumptions"}]} />',
     },
     ...titlesSnippets,
+    ...emptyStatesGroup,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

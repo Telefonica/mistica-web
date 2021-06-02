@@ -17,7 +17,7 @@ for (const skin of testableSkins) {
 
 test.each(cases)('Feedback %s screen appears properly on %s and %s', async (feedbackType, skin, device) => {
     const page = await openStoryPage({
-        section: 'Components/Feedbacks/FeedbackScreen',
+        section: 'Components/Screens/FeedbackScreen',
         name: `${feedbackType}FeedbackScreen`,
         skin: skin as never,
         device,
@@ -29,7 +29,7 @@ test.each(cases)('Feedback %s screen appears properly on %s and %s', async (feed
 
 test('Feedback screen with large fontSize', async () => {
     const page = await openStoryPage({
-        section: 'Components/Feedbacks/FeedbackScreen',
+        section: 'Components/Screens/FeedbackScreen',
         name: `SuccessFeedbackScreen`,
         skin: MOVISTAR_SKIN,
         device: 'MOBILE_IOS',
