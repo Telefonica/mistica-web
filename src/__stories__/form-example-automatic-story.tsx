@@ -20,6 +20,7 @@ import {
     RadioButton,
     Text3,
     useTheme,
+    Inline,
 } from '..';
 
 export default {
@@ -61,18 +62,14 @@ export const AutomaticForm: StoryComponent = () => {
                 <Select autoFocus name="fruit" label="fruit (autofocus)" options={fruitOptions} />
                 <CreditCardFields />
                 <Switch name="save-cc">Save CC</Switch>
-                <Checkbox name="t&c">
-                    Accept{' '}
-                    <TextLink
-                        onPress={(e) => {
-                            e.stopPropagation();
-                            alert({message: 'TOS'});
-                        }}
-                    >
-                        Terms and Conditions
-                    </TextLink>
-                </Checkbox>
-
+                <Inline space={0}>
+                    <Checkbox name="t&c" aria-label="Accept Terms and Conditions">
+                        Accept&nbsp;
+                    </Checkbox>
+                    <Text3 regular>
+                        <TextLink onPress={() => alert({message: 'TOS'})}>Terms and Conditions</TextLink>
+                    </Text3>
+                </Inline>
                 <Text3 regular color={colors.textSecondary} id="fruit-label">
                     ¿What is your favourite fruit?
                 </Text3>
@@ -82,7 +79,6 @@ export const AutomaticForm: StoryComponent = () => {
                         <RadioButton value="apple">Apple</RadioButton>
                     </Stack>
                 </RadioGroup>
-
                 <ButtonLayout>
                     <ButtonPrimary submit loadingText="Sending">
                         Send
