@@ -494,16 +494,14 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
     }
 }
 
-const showDialog =
-    (showCancel = false) =>
-    (props: DialogProps): void => {
-        if (!dialogInstance) {
-            throw Error(
-                'Tried to show a dialog but the DialogRoot component was not mounted (mount <ThemeContextProvider>)'
-            );
-        }
-        dialogInstance.show({showCancel, ...props});
-    };
+const showDialog = (showCancel = false) => (props: DialogProps): void => {
+    if (!dialogInstance) {
+        throw Error(
+            'Tried to show a dialog but the DialogRoot component was not mounted (mount <ThemeContextProvider>)'
+        );
+    }
+    dialogInstance.show({showCancel, ...props});
+};
 
 /**
  * Shows alert dialog with supplied props
