@@ -7,8 +7,12 @@ declare type RenderProps = {
   checked?: boolean,
   onChange?: (value: boolean) => void,
   id?: string,
-  render?: (checkboxElement: React.Element<any>) => React.Element<any>,
+  render?: (
+    checkboxElement: React.Element<any>,
+    labelId: string
+  ) => React.Element<any>,
   disabled?: boolean,
+  "aria-labelledby"?: string,
 };
 declare type ChildrenProps = {
   name: string,
@@ -18,6 +22,7 @@ declare type ChildrenProps = {
   id?: string,
   children: React.Node,
   disabled?: boolean,
+  "aria-labelledby"?: string,
 };
 declare var Checkbox: React.ComponentType<RenderProps | ChildrenProps>;
 declare export default typeof Checkbox;

@@ -27,8 +27,10 @@ declare var TEXTS_ES: {
   formCreditCardNumberError: string,
   formDateOutOfRangeError: string,
   formEmailError: string,
+  formIbanError: string,
   closeButtonLabel: string,
   formSearchClear: string,
+  menuLabelSuffix: string,
 };
 declare export var getTexts: (locale: Locale) => typeof TEXTS_ES;
 declare export var dimensions: {
@@ -96,6 +98,7 @@ export type ThemeConfig = {
     desktopOrTabletMinHeight: number,
   },
   Link?: LinkComponent,
+  enableTabFocus?: boolean,
 };
 export type Theme = {
   skinName: SkinName,
@@ -127,6 +130,7 @@ export type Theme = {
   colors: Colors,
   Link: LinkComponent,
   isDarkMode: boolean,
+  isIos: boolean,
 };
 declare export {};
 

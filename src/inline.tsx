@@ -6,16 +6,32 @@ const useStyles = createUseStyles(() => ({
     inline: {
         display: (p) => (p.fullWidth ? 'flex' : 'inline-flex'),
         flexDirection: 'row',
+        '@supports (display: grid)': {
+            display: (p) => (p.fullWidth ? 'grid' : 'inline-grid'),
+            gridAutoFlow: 'column',
+        },
         alignItems: ({alignItems}) => alignItems,
-
+        justifyContent: (p) => {
+            switch (p.space) {
+                case 'between':
+                case 'around':
+                case 'evenly':
+                    return `space-${p.space}`;
+                default:
+                    return 'initial';
+            }
+        },
         '& > div:not(:empty) ~ div:not(:empty)': {
-            marginLeft: (p) => p.space,
+            marginLeft: (p) => (typeof p.space === 'number' ? p.space : undefined),
+        },
+        '& > div:empty': {
+            display: 'none',
         },
     },
 }));
 
 type Props = {
-    space: 0 | 2 | 4 | 8 | 12 | 16 | 24 | 32 | 40 | 48 | 56 | 64;
+    space: 0 | 2 | 4 | 8 | 12 | 16 | 24 | 32 | 40 | 48 | 56 | 64 | 'between' | 'around' | 'evenly';
     alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
     children: React.ReactNode;
     className?: string;
@@ -33,13 +49,11 @@ const Inline: React.FC<Props> = ({
     'aria-labelledby': ariaLabelledBy,
     fullWidth,
 }) => {
-    const classes = useStyles({space, alignItems, fullWidth});
+    const classes = useStyles({space, alignItems, fullWidth: fullWidth || typeof space === 'string'});
 
     return (
         <div className={classnames(className, classes.inline)} role={role} aria-labelledby={ariaLabelledBy}>
-            {React.Children.map(children, (child) => (
-                <div>{child}</div>
-            ))}
+            {React.Children.map(children, (child) => (!!child || child === 0 ? <div>{child}</div> : null))}
         </div>
     );
 };

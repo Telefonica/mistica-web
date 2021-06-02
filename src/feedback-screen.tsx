@@ -108,11 +108,6 @@ const useStyles = createUseStyles((theme) => ({
         opacity: initialTextOpacity(theme.platformOverrides),
     },
 
-    iconColor: {
-        stroke: (isInverse) => (isInverse ? theme.colors.background : theme.colors.buttonPrimaryBackground),
-        fill: (isInverse) => (isInverse ? theme.colors.background : theme.colors.buttonPrimaryBackground),
-    },
-
     [theme.mq.tabletOrBigger]: {
         innerContainer: {
             padding: '64px 16px 16px',
@@ -225,10 +220,12 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         </div>
     );
 
+    const hasButtons = !!primaryButton || !!secondaryButton;
+
     const content = (
         <>
             <div className={classes.footer}>
-                {primaryButton ? (
+                {hasButtons ? (
                     <ButtonFixedFooterLayout
                         button={primaryButton}
                         secondaryButton={secondaryButton}
@@ -243,7 +240,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                     feedbackBasicContent
                 )}
             </div>
-            {isMobile && primaryButton && <div className={classes.backgroundDiv} />}
+            {isMobile && hasButtons && <div className={classes.backgroundDiv} />}
         </>
     );
 

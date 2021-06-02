@@ -43,7 +43,6 @@ test('TextField with suggestions', async () => {
     const item = await screen.findByText('Algeria');
 
     await page.click(item);
-    return;
     await expect(getValue(screen.findByLabelText('Text with suggestions'))).resolves.toBe('Algeria');
 });
 

@@ -7,26 +7,36 @@ export default {
 
 export const Default: StoryComponent = () => {
     const [checked, onChange] = React.useState(false);
+    const [uncontrolledChecked, onUncontrolledChange] = React.useState(false);
     return (
         <Stack space={32}>
             <>
-                <SectionTitle id="label">Uncontrolled</SectionTitle>
+                <SectionTitle as="h1" id="uncontrolled-label">
+                    Uncontrolled
+                </SectionTitle>
                 <Switch
                     name="uncontrolled"
+                    onChange={onUncontrolledChange}
+                    aria-labelledby="uncontrolled-label"
                     render={(switchElement) => (
                         <Inline alignItems="center" space={16}>
                             {switchElement}
-                            <Text3 regular>Switch</Text3>
+                            <Text3 regular uppercase>
+                                {uncontrolledChecked ? 'on' : 'off'}
+                            </Text3>
                         </Inline>
                     )}
                 />
             </>
             <>
-                <SectionTitle id="label">Controlled</SectionTitle>
+                <SectionTitle as="h1" id="controlled-label">
+                    Controlled
+                </SectionTitle>
                 <Switch
                     name="controlled"
                     checked={checked}
                     onChange={onChange}
+                    aria-labelledby="controlled-label"
                     render={(switchElement) => (
                         <Inline alignItems="center" space={16}>
                             {switchElement}
@@ -38,15 +48,20 @@ export const Default: StoryComponent = () => {
                 />
             </>
             <>
-                <SectionTitle id="label">Without children</SectionTitle>
-                <Switch name="no-children" />
+                <SectionTitle as="h1" id="without-children-label">
+                    Without children
+                </SectionTitle>
+                <Switch name="no-children" aria-labelledby="without-children-label" />
             </>
             <>
-                <SectionTitle id="label">Without switch</SectionTitle>
+                <SectionTitle as="h1" id="no-switch-label">
+                    Without switch
+                </SectionTitle>
                 <Switch
                     name="no-switch"
                     checked={checked}
                     onChange={onChange}
+                    aria-labelledby="no-switch-label"
                     render={() => (
                         <Inline alignItems="center" space={16}>
                             <Text3 regular uppercase>
@@ -57,7 +72,7 @@ export const Default: StoryComponent = () => {
                 />
             </>
             <>
-                <SectionTitle id="label">Disabled</SectionTitle>
+                <SectionTitle as="h1">Disabled</SectionTitle>
                 <Switch name="disabled" checked={checked} onChange={onChange} disabled>
                     <Text3 regular uppercase>
                         {checked ? 'on' : 'off'}

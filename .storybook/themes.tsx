@@ -5,6 +5,11 @@ export const Movistar = {
     skin: getMovistarSkin(),
 } as const;
 
+export const Movistar_Prominent = {
+    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+    skin: getMovistarSkin('prominent'),
+} as const;
+
 export const O2 = {
     i18n: {locale: 'en-US', phoneNumberFormattingRegionCode: 'GB'},
     skin: getO2Skin(),

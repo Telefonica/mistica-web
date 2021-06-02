@@ -87,6 +87,7 @@ Start prototyping interfaces with Mistica components in the
 
 ## More docs
 
+- [Understanding Mistica's layout components](./doc/layout.md)
 - [Working with forms](./doc/forms.md)
 - [Theme config options](./doc/theme-config.md)
 - [Customize media query break points](./doc/media-queries.md)

@@ -8,6 +8,7 @@ import {
     ButtonLayout,
     ButtonPrimary,
     PhoneNumberField,
+    IbanField,
     CreditCardFields,
     DateField,
     DecimalField,
@@ -34,6 +35,7 @@ const FormTest: React.FC = () => (
                     ]}
                 />
                 <PhoneNumberField name="phone" label="Phone" />
+                <IbanField name="bankAccount" label="IBAN" />
                 <CreditCardFields />
                 <DateField name="date" label="Date" />
                 <DecimalField name="decimal" label="Decimal" />

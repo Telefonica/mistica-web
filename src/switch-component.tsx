@@ -5,18 +5,17 @@ https://github.com/storybookjs/storybook/issues/11980
 */
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {getPlatform} from './utils/platform';
 import debounce from 'lodash/debounce';
 import {SPACE} from './utils/key-codes';
 import {useControlProps} from './form-context';
 import classNames from 'classnames';
 import {Text3} from './text';
 import Inline from './inline';
+import {useAriaId} from './hooks';
 
 const SWITCH_ANIMATION = '0.2s ease-in 0s';
 
-const useStyles = createUseStyles((theme) => {
-    const isIos = getPlatform(theme.platformOverrides) === 'ios';
+const useStyles = createUseStyles(({colors, isIos}) => {
     return {
         checkbox: {
             display: 'inline-block',
@@ -36,27 +35,14 @@ const useStyles = createUseStyles((theme) => {
         },
         bar: {
             display: 'block',
-            width: '200%',
-            marginLeft: ({isChecked}) => (isChecked ? 0 : '-100%'),
-            transition: `margin ${SWITCH_ANIMATION}`,
-
-            '&:before, &:after': {
-                display: 'block',
-                float: 'left',
-                width: '50%',
-                height: isIos ? 31 : 14,
-                boxSizing: 'border-box',
-            },
-            '&:before': {
-                content: '""',
-                backgroundColor: isIos
-                    ? theme.colors.controlActivated
-                    : theme.colors.toggleAndroidBackgroundActive,
-            },
-            '&:after': {
-                content: '""',
-                backgroundColor: theme.colors.control,
-            },
+            background: ({isChecked}) =>
+                isChecked
+                    ? isIos
+                        ? colors.controlActivated
+                        : colors.toggleAndroidBackgroundActive
+                    : colors.control,
+            transition: `background ${SWITCH_ANIMATION}`,
+            height: isIos ? 31 : 14,
         },
         ball: {
             position: 'absolute',
@@ -74,9 +60,9 @@ const useStyles = createUseStyles((theme) => {
             margin: -4,
             backgroundColor: ({isChecked}) => {
                 if (isIos) {
-                    return theme.colors.iosControlKnob;
+                    return colors.iosControlKnob;
                 } else {
-                    return isChecked ? theme.colors.controlActivated : theme.colors.toggleAndroidInactive;
+                    return isChecked ? colors.controlActivated : colors.toggleAndroidInactive;
                 }
             },
             borderRadius: '50%',
@@ -93,7 +79,7 @@ const useStyles = createUseStyles((theme) => {
     };
 });
 
-type RenderSwitch = (switchElement: React.ReactElement<any>) => React.ReactNode;
+type RenderSwitch = (switchElement: React.ReactElement<any>, labelId: string) => React.ReactNode;
 
 type PropsRender = {
     name: string;
@@ -103,6 +89,7 @@ type PropsRender = {
     disabled?: boolean;
     render: RenderSwitch;
     children?: undefined;
+    'aria-labelledby'?: string;
 };
 
 type PropsChildren = {
@@ -113,9 +100,11 @@ type PropsChildren = {
     disabled?: boolean;
     children?: React.ReactNode;
     render?: undefined;
+    'aria-labelledby'?: string;
 };
 
 const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
+    const labelId = useAriaId(props['aria-labelledby']);
     const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
         value: props.checked,
@@ -178,13 +167,14 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
             ref={focusableRef}
             className={classNames(classes.container, {[classes.disabled]: disabled})}
             aria-disabled={disabled}
+            aria-labelledby={labelId}
         >
             {props.render ? (
-                <>{props.render(switchEl)}</>
+                <>{props.render(switchEl, labelId)}</>
             ) : (
                 <Inline space={16} alignItems="center">
                     {switchEl}
-                    <Text3 regular as="div">
+                    <Text3 regular as="div" id={labelId}>
                         {props.children}
                     </Text3>
                 </Inline>

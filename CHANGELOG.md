@@ -1,3 +1,113 @@
+# [9.3.0](https://github.com/Telefonica/mistica-web/compare/v9.2.0...v9.3.0) (2021-05-31)
+
+
+### Bug Fixes
+
+* **Accessibility:** solve all accessibility issues and make CI fails when new issues are detected ([ec52ebc](https://github.com/Telefonica/mistica-web/commit/ec52ebcd2ebc3b2c04f72a78ec834ee42f8569b4))
+* **Dialog:** wait until animation ends to allow closing by clicking outside ([10aec42](https://github.com/Telefonica/mistica-web/commit/10aec428412c4a1ed9bdff02fdde27a880288b7b))
+* **IbanField:** repeated characters in Android with Gboard ([#264](https://github.com/Telefonica/mistica-web/issues/264)) ([7039e5c](https://github.com/Telefonica/mistica-web/commit/7039e5cbecd94d8f84ea25e9eefc0c0ec1f0f88a))
+
+
+### Features
+
+* **BoxedRow:** add isInverse prop ([#265](https://github.com/Telefonica/mistica-web/issues/265)) ([f563fd0](https://github.com/Telefonica/mistica-web/commit/f563fd0380b34fe280b05b23a97792e76e93533c))
+* **EmptyStateCard, EmptyStateScreen:** new components ([#261](https://github.com/Telefonica/mistica-web/issues/261)) ([a71c144](https://github.com/Telefonica/mistica-web/commit/a71c14463f375f87f8cebe416734d1fba2c99d88))
+* **Iconst:** Update Mistica Icons ([#268](https://github.com/Telefonica/mistica-web/issues/268)) ([092aa18](https://github.com/Telefonica/mistica-web/commit/092aa187a11a54e17675e3ae5fe01e88d912f8d4))
+
+# [9.2.0](https://github.com/Telefonica/mistica-web/compare/v9.1.0...v9.2.0) (2021-05-19)
+
+
+### Bug Fixes
+
+* **DataCard:** remove extra top padding in cards without title ([#260](https://github.com/Telefonica/mistica-web/issues/260)) ([e8ac437](https://github.com/Telefonica/mistica-web/commit/e8ac437623dddab707ac98b02160cc636cbe50c9))
+
+
+### Features
+
+* **Icons:** Update Mistica icons ([#257](https://github.com/Telefonica/mistica-web/issues/257)) ([35d811b](https://github.com/Telefonica/mistica-web/commit/35d811b36cf72e25747be249f1bc6a71e95ba606))
+* **Portal:** expose portal nodes via hook ([#256](https://github.com/Telefonica/mistica-web/issues/256)) ([54f7b02](https://github.com/Telefonica/mistica-web/commit/54f7b023cf81da96bd03fe68d17c730a272bc70e))
+
+# [9.1.0](https://github.com/Telefonica/mistica-web/compare/v9.0.0...v9.1.0) (2021-05-07)
+
+
+### Bug Fixes
+
+* **colors:** make movistar prominent dark equal to movistar dark ([#254](https://github.com/Telefonica/mistica-web/issues/254)) ([ad94996](https://github.com/Telefonica/mistica-web/commit/ad949961cea98aa2882c5f4388070a091be5973d))
+* **Tag:** text color inside inverse context (like headers) ([#251](https://github.com/Telefonica/mistica-web/issues/251)) ([91dcdf1](https://github.com/Telefonica/mistica-web/commit/91dcdf1da1e6b5046b370eeb48f86f9997d89de2))
+* **TextField:** Add ellipsis to long TextField labels ([#252](https://github.com/Telefonica/mistica-web/issues/252)) ([0d9a420](https://github.com/Telefonica/mistica-web/commit/0d9a420e15b3ad825796f15d524f6753b0c69058))
+
+
+### Features
+
+* **IbanField:** new input field for IBAN numbers ([#253](https://github.com/Telefonica/mistica-web/issues/253)) ([b81c57f](https://github.com/Telefonica/mistica-web/commit/b81c57fff00223317183d9c8de78f694f8452111))
+
+# [9.0.0](https://github.com/Telefonica/mistica-web/compare/v8.7.4...v9.0.0) (2021-04-28)
+
+
+### Features
+
+* **SectionTitle:** allow to have a link ([#250](https://github.com/Telefonica/mistica-web/issues/250)) ([040ee09](https://github.com/Telefonica/mistica-web/commit/040ee090df45cbf73084e855dda500196ad8f793))
+
+
+### BREAKING CHANGES
+
+* **SectionTitle:** The `SectionTitle` paddings have been removed
+
+## [8.7.4](https://github.com/Telefonica/mistica-web/compare/v8.7.3...v8.7.4) (2021-04-27)
+
+
+### Bug Fixes
+
+* **colors:** some wrong o2 classic colors in dark mode ([#249](https://github.com/Telefonica/mistica-web/issues/249)) ([9b96da4](https://github.com/Telefonica/mistica-web/commit/9b96da492177109dfe4f374c0e13403705526939))
+
+## [8.7.3](https://github.com/Telefonica/mistica-web/compare/v8.7.2...v8.7.3) (2021-04-27)
+
+
+### Bug Fixes
+
+* **NestableContext:** Allow multiple NestableContext instances. Show warning instead of throwing. ([#248](https://github.com/Telefonica/mistica-web/issues/248)) ([f243ec2](https://github.com/Telefonica/mistica-web/commit/f243ec2ea9f483c612f3e6d09f6f21dd8bd43fc1))
+
+## [8.7.2](https://github.com/Telefonica/mistica-web/compare/v8.7.1...v8.7.2) (2021-04-26)
+
+
+### Bug Fixes
+
+* **TabFocus:** warn instead of throw when already mounted ([#247](https://github.com/Telefonica/mistica-web/issues/247)) ([362ed2b](https://github.com/Telefonica/mistica-web/commit/362ed2b368428d437ab94bb34a5d877e94d1cd8d))
+
+## [8.7.1](https://github.com/Telefonica/mistica-web/compare/v8.7.0...v8.7.1) (2021-04-26)
+
+
+### Bug Fixes
+
+* **dark mode colors:** change neutralHigh to grey2 ([#245](https://github.com/Telefonica/mistica-web/issues/245)) ([32ccb13](https://github.com/Telefonica/mistica-web/commit/32ccb13ddf99d28ac4288590195db1cd648d1da8))
+
+# [8.7.0](https://github.com/Telefonica/mistica-web/compare/v8.6.0...v8.7.0) (2021-04-23)
+
+
+### Bug Fixes
+
+* **Radio:** Improve radio styles on dark mode ([#246](https://github.com/Telefonica/mistica-web/issues/246)) ([f1737ff](https://github.com/Telefonica/mistica-web/commit/f1737ffb0433dec8ba2213f874a3f90c82554a0d))
+* **TabFocus:** Avoid nested instances in playroom ([#243](https://github.com/Telefonica/mistica-web/issues/243)) ([38aefb8](https://github.com/Telefonica/mistica-web/commit/38aefb84588d3b21b81bcb15f49320a397b7c043))
+
+
+### Features
+
+* **Checkbox, Radio:** Square checkbox for iOS and animations for checkbox and radios ([#240](https://github.com/Telefonica/mistica-web/issues/240)) ([6b3ba04](https://github.com/Telefonica/mistica-web/commit/6b3ba04d9a9aa645db9c73a60b6243967acc6f7a))
+* **TabFocus:** Add TabFocus to mistica provider (disabled by default) ([45df443](https://github.com/Telefonica/mistica-web/commit/45df443e09923199760fb556c767da90ac5c6f84))
+
+# [8.6.0](https://github.com/Telefonica/mistica-web/compare/v8.5.1...v8.6.0) (2021-04-19)
+
+
+### Bug Fixes
+
+* **Select:** fix problem in Select component styles ([c5d04c8](https://github.com/Telefonica/mistica-web/commit/c5d04c8bb866548a00d7245ade7bcffa89ad88a0))
+* **TextField:** reset chrome autocomplete styles ([#238](https://github.com/Telefonica/mistica-web/issues/238)) ([a173665](https://github.com/Telefonica/mistica-web/commit/a1736654d4f323683d0a15dd0b1207ef70477d3d))
+
+
+### Features
+
+* **DataCard, MediaCard:** allow tags of any color ([#241](https://github.com/Telefonica/mistica-web/issues/241)) ([50d12a0](https://github.com/Telefonica/mistica-web/commit/50d12a02e1f1f5b5345dbdd06bf64c3a6ae35631))
+
 ## [8.5.1](https://github.com/Telefonica/mistica-web/compare/v8.5.0...v8.5.1) (2021-04-13)
 
 

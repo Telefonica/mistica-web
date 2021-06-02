@@ -13,6 +13,7 @@ import {
     PasswordField,
     DateField,
     PhoneNumberField,
+    IbanField,
     Box,
     DateTimeField,
     Text1,
@@ -125,7 +126,7 @@ export const Variants: StoryComponent = () => {
         <>
             <StorySection title="Default">
                 <div data-testid="normal-field">
-                    <TextField optional name="text" label="Normal field" />
+                    <TextField optional name="text" label="Normal field" autoComplete="off" />
                 </div>
             </StorySection>
 
@@ -147,6 +148,16 @@ export const Variants: StoryComponent = () => {
 
             <StorySection title="With label">
                 <TextField name="text" label="Label" />
+            </StorySection>
+
+            <StorySection title="With long label">
+                <div data-testid="long-label">
+                    <TextField
+                        name="long-label"
+                        label="This TextField has a very long label and should display ellipsis"
+                        optional
+                    />
+                </div>
             </StorySection>
 
             <StorySection title="With label and placeholder">
@@ -378,6 +389,18 @@ export const TypesUncontrolled: StoryComponent = () => (
                 />
             )}
         </Uncontrolled>
+
+        <Uncontrolled title="IbanField">
+            {(handleChange, handleChangeValue) => (
+                <IbanField
+                    name="bankAccount"
+                    label="IBAN"
+                    defaultValue="ES21 1465 0100 72 2030876293"
+                    onChange={handleChange}
+                    onChangeValue={handleChangeValue}
+                />
+            )}
+        </Uncontrolled>
     </>
 );
 
@@ -593,6 +616,20 @@ export const TypesControlled = (): React.ReactNode => (
                     onChangeValue={handleChangeValue}
                     getSuggestions={getCountrySuggestions}
                 />
+            )}
+        </Controlled>
+
+        <Controlled title="IbanField" initialValue="">
+            {(handleChange, handleChangeValue, value) => (
+                <div data-testid="iban">
+                    <IbanField
+                        name="bankAccount"
+                        label="IBAN"
+                        onChange={handleChange}
+                        onChangeValue={handleChangeValue}
+                        value={value}
+                    />
+                </div>
             )}
         </Controlled>
     </>

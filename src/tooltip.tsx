@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {useAriaId, useScreenSize} from './hooks';
-import Portal from './portal';
+import {Portal} from './portal';
 import Overlay from './overlay';
 import * as key from './utils/key-codes';
 import {createUseStyles} from './jss';

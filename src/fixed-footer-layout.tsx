@@ -4,7 +4,7 @@ import debounce from 'lodash/debounce';
 import {createUseStyles} from './jss';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {useElementDimensions, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
-import Portal from './portal';
+import {Portal} from './portal';
 import {addPassiveEventListener, removePassiveEventListener} from './utils/dom';
 
 const getScrollDistanceToBottom = () => document.body.scrollHeight - window.innerHeight - window.scrollY;

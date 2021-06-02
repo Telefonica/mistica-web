@@ -1,41 +1,21 @@
 import {mediaQueriesConfig} from '../src/theme';
 import * as themes from '../.storybook/themes';
-import type {ThemeConfig, ThemeTexts} from '../src/theme';
+import type {ThemeConfig} from '../src/theme';
 
-// Override the media query desktopOrTabletMinHeight to avoid to show the components mobile version
-// when playroom height is too short.
-const mediaQueries = {...mediaQueriesConfig, desktopOrTabletMinHeight: 0};
+const common = {
+    // Override the media query desktopOrTabletMinHeight to avoid to show the components mobile version
+    // when playroom height is too short.
+    mediaQueries: {...mediaQueriesConfig, desktopOrTabletMinHeight: 0},
+    enableTabFocus: true,
+    colorScheme: 'auto',
+    i18n: {locale: 'en-US', phoneNumberFormattingRegionCode: 'ES'},
+} as const;
 
-// Override texts
-const texts: ThemeTexts = {
-    expirationDatePlaceholder: 'MM/YY',
-    togglePasswordVisibilityLabel: 'Show or hide password',
-    loading: 'Loading',
-    linkOpensInNewTab: 'Opens in a new window',
-    modalClose: 'Close',
-    dialogCancelButton: 'Cancel',
-    dialogAcceptButton: 'Accept',
-    formFieldOptionalLabelSuffix: 'optional',
-    formFieldErrorIsMandatory: 'Mandatory field',
-    formCreditCardNumberLabel: 'Credit card number',
-    formCreditCardExpirationLabel: 'Expiration',
-    formCreditCardCvvLabel: 'CVV',
-    formCreditCardCvvError: 'Wrong CVV',
-    formCreditCardCvvTooltipVisaMcButton: 'Show help CVV',
-    formCreditCardCvvTooltipVisaMc: 'The CVV code is the 3 last digits from the back of your card',
-    formCreditCardCvvTooltipAmex: 'If it is an American Express, add the 4 digits from the back of your card',
-    formCreditCardExpirationError: 'Invalid date',
-    formCreditCardNumberError: 'Card number not valid',
-    formDateOutOfRangeError: 'Date not allowed',
-    formEmailError: 'Wrong email',
-    closeButtonLabel: 'Close',
-    formSearchClear: 'Clear search',
-};
-
-export const Movistar: ThemeConfig = {...themes.Movistar, mediaQueries, texts};
-export const Vivo: ThemeConfig = {...themes.Vivo, mediaQueries, texts};
-export const O2: ThemeConfig = {...themes.O2, mediaQueries, texts};
-export const O2_Classic: ThemeConfig = {...themes.O2_Classic, mediaQueries, texts};
+export const Movistar: ThemeConfig = {...themes.Movistar, ...common};
+export const Movistar_Prominent: ThemeConfig = {...themes.Movistar_Prominent, ...common};
+export const Vivo: ThemeConfig = {...themes.Vivo, ...common};
+export const O2: ThemeConfig = {...themes.O2, ...common};
+export const O2_Classic: ThemeConfig = {...themes.O2_Classic, ...common};
 
 export const Movistar_iOS: ThemeConfig = {...Movistar, platformOverrides: {platform: 'ios'}};
 export const Vivo_iOS: ThemeConfig = {...Vivo, platformOverrides: {platform: 'ios'}};

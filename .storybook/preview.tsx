@@ -61,6 +61,7 @@ const getTheme = (selectedSkin: string, platform: Platform, colorScheme: ColorSc
             platform,
             insideNovumNativeApp: platform !== 'desktop',
         },
+        enableTabFocus: true,
     };
 };
 

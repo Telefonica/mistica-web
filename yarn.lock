@@ -7649,20 +7649,10 @@ can-use-dom@^0.1.0:
   resolved "https://registry.yarnpkg.com/can-use-dom/-/can-use-dom-0.1.0.tgz#22cc4a34a0abc43950f42c6411024a3f6366b45a"
   integrity sha1-IsxKNKCrxDlQ9CxkEQJKP2NmtFo=
 
-caniuse-lite@^1.0.30001043, caniuse-lite@^1.0.30001061:
-  version "1.0.30001066"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001066.tgz#0a8a58a10108f2b9bf38e7b65c237b12fd9c5f04"
-  integrity sha512-Gfj/WAastBtfxLws0RCh2sDbTK/8rJuSeZMecrSkNGYxPcv7EzblmDGfWQCFEQcSqYE2BRgQiJh8HOD07N5hIw==
-
-caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001125, caniuse-lite@^1.0.30001208:
-  version "1.0.30001208"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001208.tgz#a999014a35cebd4f98c405930a057a0d75352eb9"
-  integrity sha512-OE5UE4+nBOro8Dyvv0lfx+SRtfVIOM9uhKqFmJeUbGriqhhStgp1A0OyBpgy3OUF8AhYCT+PVwPC1gMl2ZcQMA==
-
-caniuse-lite@^1.0.30001164:
-  version "1.0.30001165"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001165.tgz#32955490d2f60290bb186bb754f2981917fa744f"
-  integrity sha512-8cEsSMwXfx7lWSUMA2s08z9dIgsnR5NAqjXP23stdsU3AUWkCr/rr4s4OFtHXn5XXr6+7kam3QFVoYyXNPdJPA==
+caniuse-lite@^1.0.30001043, caniuse-lite@^1.0.30001061, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001125, caniuse-lite@^1.0.30001164, caniuse-lite@^1.0.30001208:
+  version "1.0.30001228"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001228.tgz"
+  integrity sha512-QQmLOGJ3DEgokHbMSA8cj2a+geXqmnpyOFT0lhQV6P3/YOJvGDEwoedcwxEQ30gJIwIIunHIicunJ2rzK5gB2A==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -16732,10 +16722,10 @@ pkg-up@^2.0.0:
   dependencies:
     find-up "^2.1.0"
 
-playroom@^0.23.0:
-  version "0.23.0"
-  resolved "https://registry.yarnpkg.com/playroom/-/playroom-0.23.0.tgz#53c13ffc9797d7133a123d97db1a9694b09d6345"
-  integrity sha512-uS1Ry7zmZUpl2+XFAesHiSEz0y9a0BdR+QlTJ7X8GdLixYarwz8BkTsSp7F21wMiwxxm+3pW9Tens4EvIGS0qw==
+playroom@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/playroom/-/playroom-0.25.0.tgz#0733932ca1b88deae08bb31af426ace20e6b5b40"
+  integrity sha512-cHE9Imc+llsz8qpqIUiuEHuzoRPYsT5o6hDgXvLtlw8dfadtUFNgJmgjxKYliO/l6AOibap0rpFx8JVgZwT4lA==
   dependencies:
     "@babel/cli" "^7.8.3"
     "@babel/core" "^7.8.3"

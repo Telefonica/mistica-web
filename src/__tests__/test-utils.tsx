@@ -21,7 +21,7 @@ type ThemeOverrides = {
         platform?: 'ios' | 'android';
         insideNovumNativeApp?: boolean;
     };
-    texts?: ThemeTexts;
+    texts?: Partial<ThemeTexts>;
     analytics?: {logEvent: (trackingEvent: TrackingEvent) => Promise<void>};
     dimensions?: {headerMobileHeight: number};
     Link?: ThemeConfig['Link'];
