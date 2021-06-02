@@ -28,12 +28,12 @@ const useStyles = createUseStyles(({colors}) => ({
     },
 }));
 
-type Menu = {
+type MenuRenderProps = {
     ref: React.RefCallback<HTMLElement>;
     className: string;
 };
 
-type MenuTargetProps = {
+type TargetRenderProps = {
     ref: React.RefCallback<HTMLElement>;
     onPress: (event: React.MouseEvent | React.KeyboardEvent) => void;
     isMenuOpen: boolean;
@@ -41,8 +41,8 @@ type MenuTargetProps = {
 
 export type MenuProps = {
     width?: number;
-    renderTarget: (props: MenuTargetProps) => React.ReactNode;
-    renderMenu: (props: Menu) => React.ReactNode;
+    renderTarget: (props: TargetRenderProps) => React.ReactNode;
+    renderMenu: (props: MenuRenderProps) => React.ReactNode;
 };
 
 const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width}) => {
