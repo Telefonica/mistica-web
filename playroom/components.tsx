@@ -13,7 +13,7 @@ import {
     ThemeContextProvider,
 } from '../src';
 import {useIsOsDarkModeEnabled} from '../src/theme-context-provider';
-import {Movistar, Vivo, O2, O2_Classic, Telefonica} from './themes';
+import {Movistar, Vivo, O2, Telefonica} from './themes';
 import {useOverrideTheme} from './frame-component';
 
 import type {ThemeConfig, ColorScheme, SkinName} from '../src';
