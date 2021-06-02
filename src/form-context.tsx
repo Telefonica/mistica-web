@@ -130,16 +130,8 @@ export const useFieldProps = ({
     inputRef: (field: HTMLInputElement | null) => void;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 } => {
-    const {
-        setRawValue,
-        setValue,
-        rawValues,
-        values,
-        formErrors,
-        formStatus,
-        setFormError,
-        register,
-    } = useForm();
+    const {setRawValue, setValue, rawValues, values, formErrors, formStatus, setFormError, register} =
+        useForm();
     const rawValue = value ?? defaultValue ?? rawValues[name] ?? '';
     const processValueRef = React.useRef(processValue);
 
