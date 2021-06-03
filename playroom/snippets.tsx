@@ -111,7 +111,7 @@ const listSnippets: Array<Snippet> = [
             <${rowName}
                 icon={
                     <Circle backgroundColor={colors.neutralLow} size={40}>
-                        <IconAcademicLight />
+                        <IconShopRegular />
                     </Circle>
                 }
                 iconSize={40}
@@ -122,7 +122,7 @@ const listSnippets: Array<Snippet> = [
             <${rowName}
                 icon={
                     <Circle backgroundColor={colors.neutralLow} size={40}>
-                        <IconAcademicLight />
+                        <IconShopRegular />
                     </Circle>
                 }
                 iconSize={40}
@@ -133,7 +133,7 @@ const listSnippets: Array<Snippet> = [
             <${rowName}
                 icon={
                     <Circle backgroundColor={colors.neutralLow} size={40}>
-                        <IconAcademicLight />
+                        <IconShopRegular />
                     </Circle>
                 }
                 iconSize={40}
@@ -154,7 +154,7 @@ listSnippets.push({
             <Row
                 icon={
                     <Circle backgroundColor={colors.neutralLow} size={40}>
-                        <IconAcademicLight />
+                        <IconShopRegular />
                     </Circle>
                 }
                 iconSize={40}
@@ -165,7 +165,7 @@ listSnippets.push({
             <Row
                 icon={
                     <Circle backgroundColor={colors.neutralLow} size={40}>
-                        <IconAcademicLight />
+                        <IconShopRegular />
                     </Circle>
                 }
                 iconSize={40}
@@ -186,7 +186,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         <${rowName}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconAcademicLight />
+                    <IconShopRegular />
                 </Circle>
             }
             iconSize={40}
@@ -202,7 +202,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         <${rowName}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconAcademicLight />
+                    <IconShopRegular />
                 </Circle>
             }
             iconSize={40}
@@ -221,7 +221,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         <${rowName}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconAcademicLight />
+                    <IconShopRegular />
                 </Circle>
             }
             iconSize={40}
@@ -237,7 +237,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         <${rowName}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconAcademicLight />
+                    <IconShopRegular />
                 </Circle>
             }
             iconSize={40}
@@ -253,7 +253,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         <${rowName}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconAcademicLight />
+                    <IconShopRegular />
                 </Circle>
             }
             iconSize={40}
@@ -269,7 +269,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         <${rowName}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconAcademicLight />
+                    <IconShopRegular />
                 </Circle>
             }
             iconSize={40}
@@ -378,7 +378,7 @@ const tabsSnippets: Array<Snippet> = [
         name: 'Tabs (without icons)',
         code: `
         <Tabs selectedIndex={0}
-            selectedIndex={getState('tabIndex')}
+            selectedIndex={getState('tabIndex', 0)}
             onChange={setState('tabIndex')}
             tabs={[
                 {text: 'Tab 1'},
@@ -392,7 +392,7 @@ const tabsSnippets: Array<Snippet> = [
         name: 'Tabs (with icons)',
         code: `
         <Tabs
-            selectedIndex={getState('tabIndex')}
+            selectedIndex={getState('tabIndex', 0)}
             onChange={setState('tabIndex')}
             tabs={[
                 {text: 'Tab 1', icon: <IconAppointmentRegular />},
@@ -406,7 +406,7 @@ const tabsSnippets: Array<Snippet> = [
         name: 'Tabs (with icons and icons color="currentColor")',
         code: `
         <Tabs
-            selectedIndex={getState('tabIndex')}
+            selectedIndex={getState('tabIndex', 0)}
             onChange={setState('tabIndex')}
             tabs={[
                 {text: 'Tab 1', icon: <IconAppointmentRegular color="currentColor" />},
@@ -469,7 +469,7 @@ const cardSnippets: Array<Snippet> = [
             body={<Placeholder />}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconAcademicLight />
+                    <IconShopRegular />
                 </Circle>
             }
             button={
@@ -516,13 +516,11 @@ const layoutSnippets: Array<Snippet> = [
     },
     {
         name: 'GridLayout 6+6',
-        code:
-            '<ResponsiveLayout><GridLayout template="6+6" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
+        code: '<ResponsiveLayout><GridLayout template="6+6" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
     },
     {
         name: 'GridLayout 8+4',
-        code:
-            '<ResponsiveLayout><GridLayout template="8+4" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
+        code: '<ResponsiveLayout><GridLayout template="8+4" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
     },
 ].map((snippet) => ({...snippet, group: 'Layouts'}));
 
@@ -574,8 +572,7 @@ export default [
     {
         group: 'Progress',
         name: 'Stepper',
-        code:
-            '<Stepper currentIndex={2} steps={["Basic Details", "Company Details", "Subscription Plan"]} />',
+        code: '<Stepper currentIndex={2} steps={["Basic Details", "Company Details", "Subscription Plan"]} />',
     },
     {
         group: 'Progress',
@@ -585,8 +582,7 @@ export default [
     {
         group: 'NavigationBreadcrumbs',
         name: 'NavigationBreadcrumbs',
-        code:
-            '<NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: "Cuenta", url: "/consumptions"}]} />',
+        code: '<NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: "Cuenta", url: "/consumptions"}]} />',
     },
     ...titlesSnippets,
     ...emptyStatesGroup,

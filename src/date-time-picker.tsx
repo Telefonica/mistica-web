@@ -50,10 +50,11 @@ const useStyles = createUseStyles(() => ({
         '& .rdtPicker table': {width: '100%', margin: 0},
         '& .rdtPicker td, & .rdtPicker th': {textAlign: 'center', height: 28},
         '& .rdtPicker td': {cursor: 'pointer'},
-        '& .rdtPicker td.rdtDay:hover, & .rdtPicker td.rdtHour:hover, & .rdtPicker td.rdtMinute:hover, & .rdtPicker td.rdtSecond:hover, & .rdtPicker .rdtTimeToggle:hover': {
-            background: '#eeeeee',
-            cursor: 'pointer',
-        },
+        '& .rdtPicker td.rdtDay:hover, & .rdtPicker td.rdtHour:hover, & .rdtPicker td.rdtMinute:hover, & .rdtPicker td.rdtSecond:hover, & .rdtPicker .rdtTimeToggle:hover':
+            {
+                background: '#eeeeee',
+                cursor: 'pointer',
+            },
         '& .rdtPicker td.rdtOld, & .rdtPicker td.rdtNew': {color: '#999999'},
         '& .rdtPicker td.rdtToday': {position: 'relative'},
         '& .rdtPicker td.rdtToday:before': {

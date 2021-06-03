@@ -41,7 +41,10 @@ const PhoneInput: React.FC<Props> = ({inputRef, value, defaultValue, onChange, .
 
     const {i18n} = useTheme();
     const format = React.useCallback(
-        (val: string): string => formatPhone(i18n.phoneNumberFormattingRegionCode, val),
+        // The final replacement of "-" to "@" is to workaround a bug in rifm library
+        // otherwise the cursor position is incorrectly positioned
+        // also note the "@" is replaced back to "-" in `replace` param in `useRifm`
+        (val: string): string => formatPhone(i18n.phoneNumberFormattingRegionCode, val).replace(/-/g, '@'),
         [i18n.phoneNumberFormattingRegionCode]
     );
 
@@ -50,6 +53,7 @@ const PhoneInput: React.FC<Props> = ({inputRef, value, defaultValue, onChange, .
         value: controlledValue,
         onChange: handleChangeValue,
         accept: /[\d\-()+#*]+/g,
+        replace: (s) => s.replace(/@/g, '-'),
     });
 
     return (
