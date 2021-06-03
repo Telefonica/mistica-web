@@ -110,7 +110,7 @@ type FeedbackScreenArgs = {
     isInverse: boolean;
 };
 
-const FeedbackScreenTemplate: StoryComponent<FeedbackScreenArgs> = ({
+export const FeedbackScreenStory: StoryComponent<FeedbackScreenArgs> = ({
     title,
     primaryButtonText,
     secondaryButtonText,
@@ -157,8 +157,6 @@ const FeedbackScreenTemplate: StoryComponent<FeedbackScreenArgs> = ({
         )}
     </FixedToTop>
 );
-
-export const FeedbackScreenStory = FeedbackScreenTemplate.bind({});
 
 FeedbackScreenStory.storyName = 'FeedbackScreen';
 
