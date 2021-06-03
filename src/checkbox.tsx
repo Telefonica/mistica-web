@@ -76,6 +76,7 @@ type RenderProps = {
     children?: undefined;
     disabled?: boolean;
     'aria-labelledby'?: string;
+    'aria-label'?: string;
 };
 
 type ChildrenProps = {
@@ -87,6 +88,7 @@ type ChildrenProps = {
     render?: undefined;
     children: React.ReactNode;
     disabled?: boolean;
+    'aria-label'?: string;
     'aria-labelledby'?: string;
 };
 
@@ -104,6 +106,8 @@ const useStyles = createUseStyles(() => ({
 const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
     const classes = useStyles();
     const labelId = useAriaId(props['aria-labelledby']);
+    const ariaLabel = props['aria-label'];
+    const hasExternalLabel = ariaLabel || props['aria-labelledby'];
 
     const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
@@ -146,7 +150,8 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             tabIndex={disabled ? undefined : 0}
             ref={focusableRef}
             className={classnames(classes.checkboxContainer, {[classes.disabled]: disabled})}
-            aria-labelledby={labelId}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabel ? undefined : labelId}
             aria-disabled={disabled}
         >
             {props.render ? (
@@ -155,7 +160,12 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
                 <Inline space={16} alignItems="center">
                     {iconCheckbox}
                     {props.children && (
-                        <Text3 regular as="div" id={labelId}>
+                        <Text3
+                            regular
+                            as="div"
+                            id={labelId}
+                            role={hasExternalLabel ? 'presentation' : undefined}
+                        >
                             <span>{props.children}</span>
                         </Text3>
                     )}

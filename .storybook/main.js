@@ -20,6 +20,7 @@ module.exports = {
         './platform-selector-addon/register',
         './dark-mode-addon/register',
         './font-size-addon/register',
+        '@storybook/addon-controls',
     ],
     webpackFinal: async (config) => {
         config.watchOptions = {
@@ -27,5 +28,9 @@ module.exports = {
             ignored: [/node_modules/, /__tests__/, /__acceptance_tests__/, /__screenshot_tests__/],
         };
         return config;
+    },
+    typescript: {
+        // workaround for https://github.com/storybookjs/storybook/issues/15067
+        reactDocgen: 'none',
     },
 };

@@ -516,13 +516,11 @@ const layoutSnippets: Array<Snippet> = [
     },
     {
         name: 'GridLayout 6+6',
-        code:
-            '<ResponsiveLayout><GridLayout template="6+6" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
+        code: '<ResponsiveLayout><GridLayout template="6+6" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
     },
     {
         name: 'GridLayout 8+4',
-        code:
-            '<ResponsiveLayout><GridLayout template="8+4" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
+        code: '<ResponsiveLayout><GridLayout template="8+4" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
     },
 ].map((snippet) => ({...snippet, group: 'Layouts'}));
 
@@ -574,8 +572,7 @@ export default [
     {
         group: 'Progress',
         name: 'Stepper',
-        code:
-            '<Stepper currentIndex={2} steps={["Basic Details", "Company Details", "Subscription Plan"]} />',
+        code: '<Stepper currentIndex={2} steps={["Basic Details", "Company Details", "Subscription Plan"]} />',
     },
     {
         group: 'Progress',
@@ -585,8 +582,7 @@ export default [
     {
         group: 'NavigationBreadcrumbs',
         name: 'NavigationBreadcrumbs',
-        code:
-            '<NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: "Cuenta", url: "/consumptions"}]} />',
+        code: '<NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: "Cuenta", url: "/consumptions"}]} />',
     },
     ...titlesSnippets,
     ...emptyStatesGroup,
