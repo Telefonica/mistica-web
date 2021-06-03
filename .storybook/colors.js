@@ -31,10 +31,10 @@ export const getColors = (skin) => {
             };
         case 'Telefonica':
             return {
-                primary: '#019DF4',
-                textPrimary: '#313235',
+                primary: '#0066FF',
+                textPrimary: '#031A34',
                 textPrimaryInverse: '#FFFFFF',
-                textSecondary: '#86888C',
+                textSecondary: '#6E7894',
             };
         default:
             throw Error('Unexpected skin: ' + skin);
