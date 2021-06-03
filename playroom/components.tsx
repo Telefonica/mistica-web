@@ -13,7 +13,7 @@ import {
     ThemeContextProvider,
 } from '../src';
 import {useIsOsDarkModeEnabled} from '../src/theme-context-provider';
-import {Movistar, Vivo, O2, O2_Classic, Telefonica} from './themes';
+import {Movistar, Vivo, O2, Telefonica} from './themes';
 import {useOverrideTheme} from './frame-component';
 
 import type {ThemeConfig, ColorScheme, SkinName} from '../src';
@@ -46,7 +46,8 @@ const useControlsStyles = createUseStyles((theme) => ({
         height: 57,
     },
     tabs: {
-        flexBasis: 448,
+        flexBasis: '100%',
+        marginRight: 96,
         whiteSpace: 'nowrap',
     },
     desktopControlItem: {
@@ -89,10 +90,6 @@ const useStyles = createUseStyles(() => ({
 }));
 
 const themesMap: {[skinName in SkinName]: {themeConfig: ThemeConfig; text: string}} = {
-    Telefonica: {
-        text: 'Telefonica',
-        themeConfig: Telefonica,
-    },
     Movistar: {
         text: 'Movistar',
         themeConfig: Movistar,
@@ -105,9 +102,9 @@ const themesMap: {[skinName in SkinName]: {themeConfig: ThemeConfig; text: strin
         text: 'O2',
         themeConfig: O2,
     },
-    'O2-classic': {
-        text: 'O2 (classic)',
-        themeConfig: O2_Classic,
+    Telefonica: {
+        text: 'Telefónica',
+        themeConfig: Telefonica,
     },
 };
 
