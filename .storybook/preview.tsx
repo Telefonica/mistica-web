@@ -8,6 +8,7 @@ import {
     VIVO_SKIN,
     O2_SKIN,
     O2_CLASSIC_SKIN,
+    TELEFONICA_SKIN,
     useTheme,
 } from '../src';
 import {AVAILABLE_THEMES, Movistar} from './themes';
@@ -41,7 +42,9 @@ type Platform = 'android' | 'desktop' | 'ios';
 
 const getSkin = (searchParams: URLSearchParams) => {
     const qsSkin = searchParams.get('skin');
-    return [MOVISTAR_SKIN, O2_SKIN, O2_CLASSIC_SKIN, VIVO_SKIN].find((skin) => skin === qsSkin);
+    return [MOVISTAR_SKIN, O2_SKIN, O2_CLASSIC_SKIN, VIVO_SKIN, TELEFONICA_SKIN].find(
+        (skin) => skin === qsSkin
+    );
 };
 
 const getPlatform = (searchParams: URLSearchParams): Platform => {
