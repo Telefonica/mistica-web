@@ -315,7 +315,7 @@ const headerSnippets: Array<Snippet> = [
         name: 'Basic header layout (white)',
         code: `
         <HeaderLayout
-        isInverse={false}
+                isInverse={false}
             header={
                 <Header
                     title="The last invoice is available"
@@ -358,7 +358,7 @@ const headerSnippets: Array<Snippet> = [
         name: 'Header layout (with breadcrumbs)(white)',
         code: `
         <HeaderLayout
-        isInverse={false}
+                isInverse={false}
             breadcrumbs={
                 <NavigationBreadcrumbs
                     breadcrumbs={[{ title: "Cuenta", url: "/dashboard" }]}
@@ -406,7 +406,7 @@ const headerSnippets: Array<Snippet> = [
         name: 'Header layout (rich text)(white)',
         code: `
         <HeaderLayout
-        isInverse={false}
+                isInverse={false}
             header={
                 <Header
                     title="The last invoice is available"
@@ -442,7 +442,8 @@ const headerSnippets: Array<Snippet> = [
         group: 'Headers',
         name: 'Main section header layout (white)',
         code: `
-        <MainSectionHeaderLayout isInverse={false}>
+        <MainSectionHeaderLayout
+                isInverse={false}>
             <MainSectionHeader
                 title="Title"
                 description="Some text here"
