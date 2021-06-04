@@ -54,6 +54,7 @@ export {default as Stepper} from './stepper';
 export {default as ProgressBar} from './progress-bar';
 export {MediaCard, DataCard} from './card';
 export {default as Divider} from './divider';
+export {default as Menu} from './menu';
 export {default as EmptyStateScreen} from './empty-state-screen';
 export {default as EmptyStateCard} from './empty-state-card';
 
