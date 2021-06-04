@@ -9,6 +9,7 @@ public/
 storybook-static/
 .vercel/
 CHANGELOG.md
+reports
 
 # next.js
 examples/next/.next/

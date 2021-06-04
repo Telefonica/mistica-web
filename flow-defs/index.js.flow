@@ -131,16 +131,19 @@ declare export {
   O2_CLASSIC_SKIN,
   O2_SKIN,
   MOVISTAR_SKIN,
+  TELEFONICA_SKIN,
 } from "./skins/constants";
 declare export { getSkinByName } from "./skins/utils";
 declare export { getVivoSkin } from "./skins/vivo";
 declare export { getMovistarSkin } from "./skins/movistar";
 declare export { getO2Skin } from "./skins/o2";
 declare export { getO2ClassicSkin } from "./skins/o2-classic";
+declare export { getTelefonicaSkin } from "./skins/telefonica";
 declare export { palette as vivoPalette } from "./skins/vivo";
 declare export { palette as movistarPalette } from "./skins/movistar";
 declare export { palette as o2Palette } from "./skins/o2";
 declare export { palette as o2ClassicPalette } from "./skins/o2-classic";
+declare export { palette as telefonicaPalette } from "./skins/telefonica";
 declare export { Locale } from "./utils/locale";
 declare export { TrackingEvent } from "./utils/types";
 declare export { RegionCode } from "./utils/region-code";
