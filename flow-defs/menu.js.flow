@@ -2,11 +2,11 @@
 
 import * as React from "react";
 declare type MenuRenderProps = {
-  ref: React.RefCallback<HTMLElement>,
+  ref: (element: HTMLElement | null) => void,
   className: string,
 };
 declare type TargetRenderProps = {
-  ref: React.RefCallback<HTMLElement>,
+  ref: (element: HTMLElement | null) => void,
   onPress: (event: SyntheticMouseEvent<> | SyntheticKeyboardEvent<>) => void,
   isMenuOpen: boolean,
 };

@@ -29,12 +29,12 @@ const useStyles = createUseStyles(({colors}) => ({
 }));
 
 type MenuRenderProps = {
-    ref: React.RefCallback<HTMLElement>;
+    ref: (element: HTMLElement | null) => void;
     className: string;
 };
 
 type TargetRenderProps = {
-    ref: React.RefCallback<HTMLElement>;
+    ref: (element: HTMLElement | null) => void;
     onPress: (event: React.MouseEvent | React.KeyboardEvent) => void;
     isMenuOpen: boolean;
 };
