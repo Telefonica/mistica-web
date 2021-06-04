@@ -312,9 +312,53 @@ const headerSnippets: Array<Snippet> = [
     },
     {
         group: 'Headers',
+        name: 'Basic header layout (white)',
+        code: `
+        <HeaderLayout
+        isInverse={false}
+            header={
+                <Header
+                    title="The last invoice is available"
+                    preamount="Some text (text)"
+                    amount="60,44 €"
+                    button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
+                    subtitle="Subtitle"
+                />
+            }
+            extra={<Placeholder />}
+        />
+        `,
+    },
+    {
+        group: 'Headers',
         name: 'Header layout (with breadcrumbs)',
         code: `
         <HeaderLayout
+            breadcrumbs={
+                <NavigationBreadcrumbs
+                    breadcrumbs={[{ title: "Cuenta", url: "/dashboard" }]}
+                    title="Invoices"
+                />
+            }
+            header={
+                <Header
+                    title="The last invoice is available"
+                    preamount="Cuota mensual (IVA incluido)"
+                    amount="60,44 €"
+                    button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
+                    subtitle="Y esto es un subtitulo"
+                />
+            }
+            extra={<Placeholder />}
+        />
+        `,
+    },
+    {
+        group: 'Headers',
+        name: 'Header layout (with breadcrumbs)(white)',
+        code: `
+        <HeaderLayout
+        isInverse={false}
             breadcrumbs={
                 <NavigationBreadcrumbs
                     breadcrumbs={[{ title: "Cuenta", url: "/dashboard" }]}
@@ -359,9 +403,46 @@ const headerSnippets: Array<Snippet> = [
     },
     {
         group: 'Headers',
+        name: 'Header layout (rich text)(white)',
+        code: `
+        <HeaderLayout
+        isInverse={false}
+            header={
+                <Header
+                    title="The last invoice is available"
+                    preamount={{
+                        text: "Example of line-through text",
+                        textDecoration: "line-through"
+                    }}
+                    amount="60,44 €"
+                    button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
+                    subtitle={{
+                        text: "Subtitle with secondary color",
+                        color: theme.colors.textSecondary
+                    }}
+                />
+            }
+        />
+        `,
+    },
+    {
+        group: 'Headers',
         name: 'Main section header layout',
         code: `
         <MainSectionHeaderLayout>
+            <MainSectionHeader
+                title="Title"
+                description="Some text here"
+                button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
+            />
+        </MainSectionHeaderLayout>
+        `,
+    },
+    {
+        group: 'Headers',
+        name: 'Main section header layout (white)',
+        code: `
+        <MainSectionHeaderLayout isInverse={false}>
             <MainSectionHeader
                 title="Title"
                 description="Some text here"
