@@ -165,7 +165,8 @@
         "react-dom": "16.x || 17.x"
     },
     "publishConfig": {
-        "registry": "https://registry.npmjs.org"
+        "registry": "https://registry.npmjs.org",
+        "access": "public"
     },
     "sideEffects": [
         "*.css"
