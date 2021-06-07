@@ -22,20 +22,17 @@ import Box from './box';
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) && !isRunningAcceptanceTest(platformOverrides);
 
-const animateText = (platformOverrides: Theme['platformOverrides']) => ({
-    animateText,
-}: {
-    animateText: boolean;
-}) =>
-    animateText && areAnimationsSupported(platformOverrides)
-        ? '$sweepIn 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards'
-        : 'initial';
+const animateText =
+    (platformOverrides: Theme['platformOverrides']) =>
+    ({animateText}: {animateText: boolean}) =>
+        animateText && areAnimationsSupported(platformOverrides)
+            ? '$sweepIn 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards'
+            : 'initial';
 
-const initialTextOpacity = (platformOverrides: Theme['platformOverrides']) => ({
-    animateText,
-}: {
-    animateText: boolean;
-}) => (animateText && areAnimationsSupported(platformOverrides) ? 0 : 1);
+const initialTextOpacity =
+    (platformOverrides: Theme['platformOverrides']) =>
+    ({animateText}: {animateText: boolean}) =>
+        animateText && areAnimationsSupported(platformOverrides) ? 0 : 1;
 
 const useStyles = createUseStyles((theme) => ({
     container: {

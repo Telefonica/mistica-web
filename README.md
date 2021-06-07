@@ -15,6 +15,7 @@ React components library for Telefonica Design System ([Mistica](https://github.
 ```
 //registry.npmjs.org/:_authToken=1629486b-6c8c-47cc-b32d-4a6d586e828f
 ```
+⚠️ This token isn't valid anymore, please contact Novum web core team to get a provisional token
 
 2. Install:
 
