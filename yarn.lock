@@ -5296,10 +5296,10 @@
   resolved "https://registry.yarnpkg.com/@telefonica/eslint-plugin-async-await/-/eslint-plugin-async-await-1.1.0.tgz#f1b728d63b86526d755210099d91a6917de355cd"
   integrity sha512-dUYxafYJzvBJr2f7Z78JLp+21CeNtDQKw1NJNobRDUS2fO1yFPHZYYBYxG/KOJnhqe3yWAardpLLAPs1bL+8XA==
 
-"@telefonica/libphonenumber@^2.7.5":
-  version "2.7.5"
-  resolved "https://registry.yarnpkg.com/@telefonica/libphonenumber/-/libphonenumber-2.7.5.tgz#db47c87c11c86df6be3c8df34f25f7a46571c737"
-  integrity sha512-AgH4FAWh1wYf+JsETApCNdEwFDMZgX5NkNu6J8w4HAnUGJN/r77Sa5Z4ZZVFcVWiwucKbd7auH1tGshhYIebtg==
+"@telefonica/libphonenumber@^2.7.6":
+  version "2.7.6"
+  resolved "https://registry.yarnpkg.com/@telefonica/libphonenumber/-/libphonenumber-2.7.6.tgz#4764b707084a080dd25d83a27c4682c75742fc8f"
+  integrity sha512-R/rJTNUFBlYsx71sxhXYAwXc4XZZdvJAUxWOgcDZiD3u6XUOP/FwXKTvXgbzbrJR/u0EYRc+C3lSa+v9ZKcs0g==
 
 "@telefonica/prettier-config@^1.1.0":
   version "1.1.0"
