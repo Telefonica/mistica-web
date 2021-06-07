@@ -1,3 +1,10 @@
+## [9.4.1](https://github.com/Telefonica/mistica-web/compare/v9.4.0...v9.4.1) (2021-06-07)
+
+
+### Bug Fixes
+
+* **LICENSE:** add license and fix some urls. ([#279](https://github.com/Telefonica/mistica-web/issues/279)) ([0234204](https://github.com/Telefonica/mistica-web/commit/023420493ed10bf0ecc83020f45104c39baf0d26))
+
 # [9.4.0](https://github.com/Telefonica/mistica-web/compare/v9.3.1...v9.4.0) (2021-06-07)
 
 
