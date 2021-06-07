@@ -1,7 +1,12 @@
 {
     "name": "@telefonica/mistica",
     "version": "9.4.0",
-    "license": "UNLICENSED",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Telefonica/mistica-web"
+    },
+    "homepage": "https://github.com/Telefonica/mistica-web",
     "main": "dist/index.js",
     "module": "dist-es/index.js",
     "files": [
