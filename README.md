@@ -9,18 +9,14 @@ React components library for Telefonica Design System ([Mistica](https://github.
 
 ### Install
 
-1. Create or edit your `.npmrc` file to include the telefonica npm token. This will allow you to install
-   packages from the npm `@telefonica` organization:
-
-```
-//registry.npmjs.org/:_authToken=1629486b-6c8c-47cc-b32d-4a6d586e828f
-```
-⚠️ This token isn't valid anymore, please contact Novum web core team to get a provisional token
-
-2. Install:
-
 ```terminal
 yarn add @telefonica/mistica
+```
+
+or
+
+```terminal
+npm install @telefonica/mistica
 ```
 
 ### Start using `@telefonica/mistica`
