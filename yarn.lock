@@ -5291,20 +5291,20 @@
   resolved "https://registry.yarnpkg.com/@tef-novum/webview-bridge/-/webview-bridge-2.20.2.tgz#12869f9cadd4395493a49a40dd1744f0894002f5"
   integrity sha512-NNDkhGU0gci3hSQbZkrw0E6ltltGSBQvX/4fm+2cacuelbM6BKRHjjDdhR4deUlEowO3TeSPXwenSpvy6Zp8Og==
 
-"@telefonica/eslint-plugin-async-await@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@telefonica/eslint-plugin-async-await/-/eslint-plugin-async-await-1.0.0.tgz#2c62332b5eebf59ed266d2b8db164320f907a8ad"
-  integrity sha512-6JTAwmn/DuRyTEu7uN3FQy7bOxfQVPcnjNRHLSbTHBnd14gqgS3TSBfbXxI/oNVPejWsyfDHPXHCimWK0nbpQg==
+"@telefonica/eslint-plugin-async-await@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@telefonica/eslint-plugin-async-await/-/eslint-plugin-async-await-1.1.0.tgz#f1b728d63b86526d755210099d91a6917de355cd"
+  integrity sha512-dUYxafYJzvBJr2f7Z78JLp+21CeNtDQKw1NJNobRDUS2fO1yFPHZYYBYxG/KOJnhqe3yWAardpLLAPs1bL+8XA==
 
-"@telefonica/libphonenumber@^2.7.5":
-  version "2.7.5"
-  resolved "https://registry.yarnpkg.com/@telefonica/libphonenumber/-/libphonenumber-2.7.5.tgz#db47c87c11c86df6be3c8df34f25f7a46571c737"
-  integrity sha512-AgH4FAWh1wYf+JsETApCNdEwFDMZgX5NkNu6J8w4HAnUGJN/r77Sa5Z4ZZVFcVWiwucKbd7auH1tGshhYIebtg==
+"@telefonica/libphonenumber@^2.7.6":
+  version "2.7.6"
+  resolved "https://registry.yarnpkg.com/@telefonica/libphonenumber/-/libphonenumber-2.7.6.tgz#4764b707084a080dd25d83a27c4682c75742fc8f"
+  integrity sha512-R/rJTNUFBlYsx71sxhXYAwXc4XZZdvJAUxWOgcDZiD3u6XUOP/FwXKTvXgbzbrJR/u0EYRc+C3lSa+v9ZKcs0g==
 
-"@telefonica/prettier-config@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@telefonica/prettier-config/-/prettier-config-1.0.0.tgz#ee8f7407c687c7ad85dfcea6038e14b007b77ca2"
-  integrity sha512-hwwTudq/9W9gslu7IzpxJTObpMC+5rKecK/XLaZSpF/HBMdwtHh2E46GETiSDEA4l0gEq0KSLcbzzq/Fv9N16Q==
+"@telefonica/prettier-config@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@telefonica/prettier-config/-/prettier-config-1.1.0.tgz#4304fbdd70296e4c1231d81171d5dc918f191860"
+  integrity sha512-d8bzcTquUgLK1XlO5Me7mhg7jQXkGI6n9l1Hm3EUwleBkvZ8yhHBLD2RMkcrVaMSLCT3VrjXKXIXWNCgYx9E/g==
 
 "@testing-library/dom@^7.22.2":
   version "7.26.5"
