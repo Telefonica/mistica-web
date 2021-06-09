@@ -357,6 +357,7 @@ export const TypesUncontrolled: StoryComponent = () => (
         <Uncontrolled title="PhoneNumberField">
             {(handleChange, handleChangeValue) => (
                 <PhoneNumberField
+                    e164
                     name="phone"
                     label="Phone"
                     defaultValue="654834455"
@@ -369,6 +370,7 @@ export const TypesUncontrolled: StoryComponent = () => (
         <Uncontrolled title="PhoneNumberField (with prefix)">
             {(handleChange, handleChangeValue) => (
                 <PhoneNumberField
+                    e164
                     name="phone"
                     label="Phone with prefix"
                     prefix="+34"
