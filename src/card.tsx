@@ -67,7 +67,7 @@ const CardContent: React.FC<CardContentProps> = ({
                                         </Text1>
                                     </Box>
                                 )}
-                                <Text4 as="h1" light>
+                                <Text4 as="h1" regular>
                                     {title}
                                 </Text4>
                                 <Text2 regular>{subtitle}</Text2>
