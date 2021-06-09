@@ -141,7 +141,7 @@ const Content: React.FC<Props> = (props) => {
     const content = (
         <Boxed isInverse={isInverse} className={classes.container}>
             <div className={classes.textContainer}>
-                <Text4 light>{title}</Text4>
+                <Text4 regular>{title}</Text4>
                 <Box paddingTop={8}>
                     <Text2 regular color={theme.colors.textSecondary}>
                         {description}
