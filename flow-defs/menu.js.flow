@@ -1,0 +1,19 @@
+// @flow
+
+import * as React from "react";
+declare type MenuRenderProps = {
+  ref: (element: HTMLElement | null) => void,
+  className: string,
+};
+declare type TargetRenderProps = {
+  ref: (element: HTMLElement | null) => void,
+  onPress: (event: SyntheticMouseEvent<> | SyntheticKeyboardEvent<>) => void,
+  isMenuOpen: boolean,
+};
+export type MenuProps = {
+  width?: number,
+  renderTarget: (props: TargetRenderProps) => React.Node,
+  renderMenu: (props: MenuRenderProps) => React.Node,
+};
+declare var Menu: React.ComponentType<MenuProps>;
+declare export default typeof Menu;

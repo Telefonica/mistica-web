@@ -8,7 +8,7 @@ const octokit = github.getOctokit(githubToken);
 
 const fetchPullRequestComments = async () => {
     if (context.eventName === 'pull_request') {
-        return octokit.issues.listComments({
+        return octokit.rest.issues.listComments({
             ...context.repo,
             issue_number: context.issue.number,
         });
@@ -35,13 +35,13 @@ const commentPullRequest = async (message, {updateOnly = false} = {}) => {
     const commentId = await findPullRequestComment(firstLine);
 
     if (commentId) {
-        await octokit.issues.updateComment({
+        await octokit.rest.issues.updateComment({
             ...context.repo,
             comment_id: commentId,
             body: message,
         });
     } else if (!updateOnly) {
-        await octokit.issues.createComment({
+        await octokit.rest.issues.createComment({
             ...context.repo,
             issue_number: context.issue.number,
             body: message,
