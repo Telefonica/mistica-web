@@ -8,6 +8,7 @@ export type PhoneNumberFieldProps = {|
   onChangeValue?: (value: string, rawValue: string) => void,
   prefix?: string,
   getSuggestions?: (value: string) => Array<string>,
+  e164?: boolean,
 |};
 declare var PhoneNumberField: React.ComponentType<PhoneNumberFieldProps>;
 declare export default typeof PhoneNumberField;

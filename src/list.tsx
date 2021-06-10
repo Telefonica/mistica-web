@@ -161,7 +161,7 @@ const Content: React.FC<ContentProps> = ({
                         </Text1>
                     </Box>
                 )}
-                <Text3 wordBreak light color={colors.textPrimary} truncate={titleLinesMax}>
+                <Text3 wordBreak regular color={colors.textPrimary} truncate={titleLinesMax}>
                     {title}
                 </Text3>
                 {subtitle && (
