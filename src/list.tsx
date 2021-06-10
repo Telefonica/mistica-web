@@ -489,12 +489,10 @@ export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role}
             .filter(Boolean)
             .map((child, index) => (
                 <React.Fragment key={index}>
-                    {index > 0 && (
-                        <Box paddingX={16}>
-                            <Divider />
-                        </Box>
-                    )}
                     {child}
+                    <Box paddingX={16}>
+                        <Divider />
+                    </Box>
                 </React.Fragment>
             ))}
     </div>
