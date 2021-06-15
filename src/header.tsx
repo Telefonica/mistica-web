@@ -74,7 +74,7 @@ export const Header: React.FC<HeaderProps> = ({
     isErrorAmount,
     secondaryButton,
 }) => {
-    const {isMobile, isTabletOrSmaller} = useScreenSize();
+    const {isMobile} = useScreenSize();
     const theme = useTheme();
     const isInverse = useIsInverseVariant();
 
@@ -97,32 +97,28 @@ export const Header: React.FC<HeaderProps> = ({
     return (
         <Stack space={isMobile ? 24 : 32}>
             {(title || pretitle) && (
-                <Box paddingRight={isTabletOrSmaller ? 16 : 0}>
-                    <Stack space={8}>
-                        {pretitle && renderRichText(pretitle, {color: theme.colors.textPrimary})}
-                        <Text6 role="heading" aria-level={2}>
-                            {title}
-                        </Text6>
-                    </Stack>
-                </Box>
+                <Stack space={8}>
+                    {pretitle && renderRichText(pretitle, {color: theme.colors.textPrimary})}
+                    <Text6 role="heading" aria-level={2}>
+                        {title}
+                    </Text6>
+                </Stack>
             )}
             {(preamount || amount || button || subtitle) && (
                 <Stack space={16}>
                     {(preamount || amount) && (
-                        <Box paddingRight={isTabletOrSmaller ? 16 : 0}>
-                            <Stack space={8}>
-                                {preamount && renderRichText(preamount, {color: theme.colors.textPrimary})}
-                                <Text8
-                                    color={
-                                        isErrorAmount && !isInverse
-                                            ? theme.colors.highlight
-                                            : theme.colors.textPrimary
-                                    }
-                                >
-                                    {amount}
-                                </Text8>
-                            </Stack>
-                        </Box>
+                        <Stack space={8}>
+                            {preamount && renderRichText(preamount, {color: theme.colors.textPrimary})}
+                            <Text8
+                                color={
+                                    isErrorAmount && !isInverse
+                                        ? theme.colors.highlight
+                                        : theme.colors.textPrimary
+                                }
+                            >
+                                {amount}
+                            </Text8>
+                        </Stack>
                     )}
                     {(button || secondaryButton) &&
                         (isMobile ? (
@@ -136,9 +132,7 @@ export const Header: React.FC<HeaderProps> = ({
                                 {secondaryButton}
                             </ButtonLayout>
                         ))}
-                    {subtitle && (
-                        <Box paddingRight={isTabletOrSmaller ? 16 : 0}>{renderRichText(subtitle, {})}</Box>
-                    )}
+                    {subtitle && renderRichText(subtitle, {})}
                 </Stack>
             )}
         </Stack>
@@ -203,7 +197,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                 {isTabletOrSmaller ? (
                     <Box paddingTop={32} paddingBottom={24}>
                         <Stack space={24}>
-                            {header}
+                            <Box paddingRight={16}>{header}</Box>
                             {extra}
                         </Stack>
                     </Box>
