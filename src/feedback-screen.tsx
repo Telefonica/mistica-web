@@ -49,6 +49,7 @@ const useStyles = createUseStyles((theme) => ({
         position: 'fixed',
         bottom: ({footerHeight}) => footerHeight,
         marginBottom: -1, // workaround, whithout this an horizontal line appears at the bottom
+        top: 0,
         left: 0,
         right: 0,
         [theme.mq.mobile]: {
