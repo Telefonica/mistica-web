@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useRifm} from 'rifm';
-import {formatAsYouType, formatToE164, parse} from '@telefonica/libphonenumber';
+import {formatAsYouType, formatToE164, parse, getRegionCodeForCountryCode} from '@telefonica/libphonenumber';
 import {useFieldProps} from './form-context';
 import TextFieldBase from './text-field-base';
 import {useTheme} from './hooks';
@@ -23,19 +23,6 @@ type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'o
 };
 
 const isValidPrefix = (prefix: string): boolean => !!prefix.match(/^\+\d+$/);
-
-/**
- * The complete mapping should be provided by libphonenumber, we will provide that functionality ASAP
- * https://jira.tid.es/browse/WEB-238
- *
- * https://countrycode.org/
- */
-const KNOWN_PREFIX_MAP: {[key: string]: string} = {
-    '+34': 'ES',
-    '+49': 'DE',
-    '+55': 'BR',
-    '+44': 'GB',
-};
 
 const PhoneInput: React.FC<InputProps> = ({
     inputRef,
@@ -138,8 +125,11 @@ const PhoneNumberField: React.FC<PhoneNumberFieldProps> = ({
     const processValue = (value: string) => {
         if (e164) {
             try {
-                const regionCode =
-                    KNOWN_PREFIX_MAP[rest.prefix ?? ''] || i18n.phoneNumberFormattingRegionCode;
+                const numericPrefix = (rest.prefix ?? '').replace(/[^\d]/g, '');
+                let regionCode = getRegionCodeForCountryCode(numericPrefix);
+                if (!regionCode || regionCode === 'ZZ') {
+                    regionCode = i18n.phoneNumberFormattingRegionCode;
+                }
                 return formatToE164(parse(value, regionCode));
             } catch (e) {
                 return '';
