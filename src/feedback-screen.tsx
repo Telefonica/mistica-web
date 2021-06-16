@@ -46,9 +46,10 @@ const useStyles = createUseStyles((theme) => ({
     },
 
     backgroundDiv: {
-        position: 'fixed',
+        position: 'absolute',
         bottom: ({footerHeight}) => footerHeight,
         marginBottom: -1, // workaround, whithout this an horizontal line appears at the bottom
+        top: 0,
         left: 0,
         right: 0,
         [theme.mq.mobile]: {
@@ -220,7 +221,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     const hasButtons = !!primaryButton || !!secondaryButton;
 
     const content = (
-        <>
+        <div style={{position: 'relative'}}>
             <div className={classes.footer}>
                 {hasButtons ? (
                     <ButtonFixedFooterLayout
@@ -238,7 +239,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                 )}
             </div>
             {isMobile && hasButtons && <div className={classes.backgroundDiv} />}
-        </>
+        </div>
     );
 
     return (
