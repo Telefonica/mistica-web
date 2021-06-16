@@ -47,7 +47,3 @@ test.each`
         expect(onChangeValueSpy).toHaveBeenLastCalledWith(expectedValue, expectedValueRaw);
     }
 );
-
-/**
-
- */

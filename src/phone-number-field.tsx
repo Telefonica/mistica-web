@@ -160,7 +160,7 @@ const PhoneNumberField: React.FC<PhoneNumberFieldProps> = ({
             {...rest}
             {...fieldProps}
             type="phone"
-            inputProps={{prefix: rest.prefix}}
+            inputProps={{...rest.inputProps, prefix: rest.prefix}}
             inputComponent={PhoneInput}
         />
     );
