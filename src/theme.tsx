@@ -25,7 +25,7 @@ const TEXTS_ES = {
     formCreditCardCvvTooltipVisaMc: 'El CVV son los 3 últimos dígitos del reverso de tu tarjeta',
     formCreditCardCvvTooltipAmex: 'Si es American Express, añade los 4 dígitos del anverso',
     formCreditCardExpirationError: 'Fecha no válida',
-    formCreditCardNumberError: 'No es un número de tarjeta valido',
+    formCreditCardNumberError: 'No es un número de tarjeta válido',
     formDateOutOfRangeError: 'Fecha no permitida',
     formEmailError: 'Email incorrecto',
     formIbanError: 'IBAN incorrecto',
