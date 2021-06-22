@@ -33,7 +33,7 @@ const useStyles = createUseStyles((theme) => {
             fontWeight: ({weight}) => (weight ? mapToWeight[weight] : 'inherit'),
             color: ({isInverse, color = theme.colors.textPrimary}) =>
                 isInverse ? inverseColorsMap[color] ?? color : color,
-            textDecoration: (p) => p.textDecoration,
+            textDecoration: (p) => p.textDecoration ?? 'inherit',
             letterSpacing: ({letterSpacing}) => letterSpacing,
             overflowWrap: ({wordBreak}) => (wordBreak ? 'anywhere' : 'inherit'),
             // Needed to reset the default browser margin that adds to p, h1, h2... elements.
@@ -59,7 +59,7 @@ type FontWeight = 'light' | 'regular' | 'medium';
 
 export interface TextPresetProps {
     color?: string;
-    textDecoration?: 'underline' | 'line-through';
+    textDecoration?: 'underline' | 'line-through' | 'none';
     children?: React.ReactNode;
     truncate?: boolean | number;
     uppercase?: boolean;
