@@ -4,7 +4,7 @@ import * as React from "react";
 declare type FontWeight = "light" | "regular" | "medium";
 export type TextPresetProps = {|
   color?: string,
-  textDecoration?: "underline" | "line-through",
+  textDecoration?: "underline" | "line-through" | "none",
   children?: React.Node,
   truncate?: boolean | number,
   uppercase?: boolean,
