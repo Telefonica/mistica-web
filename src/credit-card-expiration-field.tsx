@@ -93,7 +93,7 @@ const CreditCardExpirationField: React.FC<CreditCardExpirationFieldProps> = ({
     const {setFormError, jumpToNext} = useForm();
 
     const validate = (value: ExpirationDateValue, rawValue: string): string | undefined => {
-        if (!value) {
+        if (!rawValue) {
             return optional ? '' : texts.formFieldErrorIsMandatory;
         }
         const {month, year} = value;
