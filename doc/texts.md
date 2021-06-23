@@ -21,7 +21,7 @@ These are the customizable texts and their default values:
 - `formCreditCardCvvTooltipVisaMc`: `'El CVV son los 3 últimos dígitos del reverso de tu tarjeta'`
 - `formCreditCardCvvTooltipAmex`: `'Si es American Express, añade los 4 dígitos del anverso'`
 - `formCreditCardExpirationError`: `'Fecha no válida'`
-- `formCreditCardNumberError`: `'No es un número de tarjeta valido'`
+- `formCreditCardNumberError`: `'No es un número de tarjeta válido'`
 - `formEmailError`: `'Email incorrecto'`
 - `closeButtonLabel`: `'Cerrar'`
 
