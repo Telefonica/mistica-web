@@ -628,7 +628,7 @@ export default [
     {group: 'LoadingBar', name: 'LoadingBar', code: '<LoadingBar visible />'},
     {group: 'Badge', name: 'Badge numeric', code: '<Badge value="5" />'},
     {group: 'Badge', name: 'Badge non numeric', code: '<Badge />'},
-    {group: 'Badge', name: 'Badge numeric', code: '<Badge value="5"><IconSettingsRegular /><Badge/>'},
+    {group: 'Badge', name: 'Icon with badge', code: '<Badge value="5"><IconSettingsRegular /></Badge>'},
     {group: 'Text', name: 'Text', code: '<Text>some text</Text>'},
     ...headerSnippets,
     ...listSnippets,
