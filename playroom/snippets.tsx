@@ -477,20 +477,6 @@ const tabsSnippets: Array<Snippet> = [
             selectedIndex={getState('tabIndex', 0)}
             onChange={setState('tabIndex')}
             tabs={[
-                {text: 'Tab 1', icon: <IconAppointmentRegular />},
-                {text: 'Tab 2', icon: <IconBrainRegular />},
-                {text: 'Tab 3', icon: <IconBusRegular />},
-            ]}
-        />`,
-    },
-    {
-        group: 'Tabs',
-        name: 'Tabs (with icons and icons color="currentColor")',
-        code: `
-        <Tabs
-            selectedIndex={getState('tabIndex', 0)}
-            onChange={setState('tabIndex')}
-            tabs={[
                 {text: 'Tab 1', icon: <IconAppointmentRegular color="currentColor" />},
                 {text: 'Tab 2', icon: <IconBrainRegular color="currentColor" />},
                 {text: 'Tab 3', icon: <IconBusRegular color="currentColor" />},
