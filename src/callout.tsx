@@ -19,6 +19,9 @@ const useStyles = createUseStyles(({colors}) => ({
         overflow: 'hidden',
         display: 'flex',
         minHeight: 56,
+        '& > *': {
+            flexShrink: 0,
+        },
     },
     content: {
         alignSelf: 'center',
@@ -28,8 +31,7 @@ const useStyles = createUseStyles(({colors}) => ({
         background: colors.backgroundContainer,
     },
     iconButton: {
-        marginTop: -8,
-        marginRight: -8,
+        marginRight: -4,
     },
     actions: {
         marginLeft: ({needsButtonLinkAlignment}) => (needsButtonLinkAlignment ? -6 : 0),
