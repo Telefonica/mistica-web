@@ -73,7 +73,7 @@ test('Callout only description', async () => {
         section: 'Components/Dialogs/Callout',
         name: 'Callout',
     });
-    await page.clear(await screen.findByLabelText('title'));
+    await page.clear(await screen.findByLabelText('title (opcional)'));
     await page.select(await screen.findByLabelText('actions'), 'none');
     await page.click(await screen.findByLabelText('With icon'));
     await page.click(await screen.findByLabelText('Is closable'));
