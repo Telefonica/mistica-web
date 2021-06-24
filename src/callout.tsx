@@ -24,7 +24,7 @@ const useStyles = createUseStyles(({colors}) => ({
         alignSelf: 'center',
         flex: 1,
     },
-    inverse: {
+    overInverse: {
         background: colors.backgroundContainer,
     },
     iconButton: {
@@ -51,7 +51,7 @@ const Callout: React.FC<Props> = ({title, description, icon, onClose, button, bu
     const classes = useStyles({needsButtonLinkAlignment});
     const {colors, texts} = useTheme();
     return (
-        <section role="alert" className={classNames(classes.container, {[classes.inverse]: isInverse})}>
+        <section role="alert" className={classNames(classes.container, {[classes.overInverse]: isInverse})}>
             <ThemeVariant isInverse={false}>
                 {icon && <Box paddingRight={16}>{icon}</Box>}
                 <div className={classes.content}>
