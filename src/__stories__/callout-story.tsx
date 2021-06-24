@@ -18,11 +18,11 @@ export default {
 
 export const Default: StoryComponent = () => {
     const {colors} = useTheme();
-    const [title, titleTextField] = useTextField('title', 'Some title', true);
+    const [title, titleTextField] = useTextField('title', 'Some title', false);
     const [description, descriptionTextField] = useTextField(
         'description',
         'This is a description for the callout',
-        false
+        true
     );
     const [actions, actionsSelect] = useSelect('actions', 'button & link', [
         'button & link',
