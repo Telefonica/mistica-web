@@ -7,7 +7,6 @@ import {Text2, Text3} from './text';
 import IconClose from './icons/icon-close';
 import IconButton from './icon-button';
 import classNames from 'classnames';
-import Box from './box';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import Inline from './inline';
 
@@ -23,15 +22,16 @@ const useStyles = createUseStyles(({colors}) => ({
             flexShrink: 0,
         },
     },
+    icon: {
+        display: 'flex',
+        marginRight: 16,
+    },
     content: {
         alignSelf: 'center',
         flex: 1,
     },
     overInverse: {
         background: colors.backgroundContainer,
-    },
-    iconButton: {
-        marginRight: -4,
     },
     actions: {
         marginLeft: ({needsButtonLinkAlignment}) => (needsButtonLinkAlignment ? -6 : 0),
@@ -55,7 +55,7 @@ const Callout: React.FC<Props> = ({title, description, icon, onClose, button, bu
     return (
         <section role="alert" className={classNames(classes.container, {[classes.overInverse]: isInverse})}>
             <ThemeVariant isInverse={false}>
-                {icon && <Box paddingRight={16}>{icon}</Box>}
+                {icon && <div className={classes.icon}>{icon}</div>}
                 <div className={classes.content}>
                     <Stack space={16}>
                         <div>
@@ -77,15 +77,19 @@ const Callout: React.FC<Props> = ({title, description, icon, onClose, button, bu
                     </Stack>
                 </div>
                 {onClose && (
-                    <Box paddingLeft={8}>
-                        <IconButton
-                            className={classes.iconButton}
-                            onPress={onClose}
-                            label={texts.closeButtonLabel}
-                        >
-                            <IconClose color={colors.neutralHigh} />
-                        </IconButton>
-                    </Box>
+                    <IconButton
+                        size={40}
+                        style={{
+                            display: 'flex',
+                            margin: '-8px -12px -8px 0',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+                        onPress={onClose}
+                        label={texts.closeButtonLabel}
+                    >
+                        <IconClose color={colors.neutralHigh} />
+                    </IconButton>
                 )}
             </ThemeVariant>
         </section>
