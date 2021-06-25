@@ -3,8 +3,10 @@ import FixedFooterLayout from './fixed-footer-layout';
 import ButtonLayout from './button-layout';
 import {useScreenSize} from './hooks';
 import {ButtonLink} from './button';
+import ResponsiveLayout from './responsive-layout';
 
 import type {ButtonElement} from './button';
+import Box from './box';
 
 type Props = {
     isFooterVisible?: boolean;
@@ -38,10 +40,14 @@ const ButtonFixedFooterLayout: React.FC<Props> = ({
             footerBgColor={footerBgColor}
             containerBgColor={containerBgColor}
             footer={
-                <ButtonLayout withMargins align={isMobile ? 'full-width' : desktopButtonAlign} link={link}>
-                    {button}
-                    {secondaryButton}
-                </ButtonLayout>
+                <ResponsiveLayout>
+                    <Box paddingY={isMobile ? 16 : 0}>
+                        <ButtonLayout align={isMobile ? 'full-width' : desktopButtonAlign} link={link}>
+                            {button}
+                            {secondaryButton}
+                        </ButtonLayout>
+                    </Box>
+                </ResponsiveLayout>
             }
         >
             {children}

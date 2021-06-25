@@ -128,7 +128,7 @@ export const getTelefonicaSkin: GetSkin = () => {
             // FEEDBACKS
             badge: palette.coralDark,
             feedbackErrorBackground: palette.coral,
-            feedbackInfoBackground: palette.grey6,
+            feedbackInfoBackground: palette.grey9,
 
             // GLOBAL
             brand: palette.telefonicaBlue,
@@ -216,6 +216,7 @@ export const getTelefonicaSkin: GetSkin = () => {
             divider: applyAlpha(palette.white, 0.05),
             dividerInverse: applyAlpha(palette.white, 0.05),
             navigationBarDivider: palette.darkModeBlack,
+            feedbackInfoBackground: palette.grey8,
             brandDark: palette.grey6,
             inverse: palette.grey2,
             neutralHigh: palette.grey2,
