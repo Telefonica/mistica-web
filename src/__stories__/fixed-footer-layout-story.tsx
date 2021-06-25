@@ -1,5 +1,15 @@
 import * as React from 'react';
-import {ButtonPrimary, ButtonSecondary, Stack, Text2, FixedFooterLayout, ButtonFixedFooterLayout} from '..';
+import {
+    ButtonPrimary,
+    ButtonSecondary,
+    Stack,
+    Text2,
+    FixedFooterLayout,
+    ButtonFixedFooterLayout,
+    ResponsiveLayout,
+    Box,
+    Inline,
+} from '..';
 import {useCheckbox} from './helpers';
 
 export default {
@@ -28,19 +38,24 @@ export const FooterWithButtonsOnly: StoryComponent = () => {
             secondaryButton={<ButtonSecondary onPress={loadLessText}>Load less text</ButtonSecondary>}
             isFooterVisible={isFooterVisible}
         >
-            {isFooterVisibleCheckbox}
-            <Stack space={16}>
-                {textLines.map((line, idx) => (
-                    <Text2 regular key={idx}>
-                        {line}
-                    </Text2>
-                ))}
-            </Stack>
+            <ResponsiveLayout>
+                <Box paddingY={16}>
+                    <Stack space={16}>
+                        {isFooterVisibleCheckbox}
+                        {textLines.map((line, idx) => (
+                            <Text2 regular key={idx}>
+                                {line}
+                            </Text2>
+                        ))}
+                    </Stack>
+                </Box>
+            </ResponsiveLayout>
         </ButtonFixedFooterLayout>
     );
 };
 
 FooterWithButtonsOnly.storyName = 'ButtonFixedFooterLayout';
+FooterWithButtonsOnly.parameters = {fullScreen: true};
 
 export const MoreComplexFooter: StoryComponent = () => {
     const [textLines, loadMoreText] = useTextLines();
@@ -48,37 +63,36 @@ export const MoreComplexFooter: StoryComponent = () => {
     return (
         <FixedFooterLayout
             footer={
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        height: '100%',
-                        justifyContent: 'space-between',
-                        padding: 16,
-                    }}
-                >
-                    <Text2 regular as="p">
-                        Lines of text: <Text2 medium>{textLines.length}</Text2>
-                    </Text2>
-                    <ButtonPrimary onPress={loadMoreText}>Load more text</ButtonPrimary>
-                </div>
+                <ResponsiveLayout>
+                    <Box paddingY={16}>
+                        <Inline space="between" alignItems="center">
+                            <Text2 regular as="p">
+                                Lines of text: <Text2 medium>{textLines.length}</Text2>
+                            </Text2>
+                            <ButtonPrimary onPress={loadMoreText}>Load more text</ButtonPrimary>
+                        </Inline>
+                    </Box>
+                </ResponsiveLayout>
             }
             isFooterVisible={isFooterVisible}
         >
-            {isFooterVisibleCheckbox}
-            <Text2 regular as="p">
-                When you need a more elaborated thing for your footer (not just buttons), you can use
-                FixedFooterLayout instead of ButtonFixedFooterLayout
-            </Text2>
-            <Stack space={16}>
-                {textLines.map((line, idx) => (
-                    <Text2 regular key={idx}>
-                        {line}
+            <ResponsiveLayout>
+                <Stack space={16}>
+                    {isFooterVisibleCheckbox}
+                    <Text2 regular as="p">
+                        When you need a more elaborated thing for your footer (not just buttons), you can use
+                        FixedFooterLayout instead of ButtonFixedFooterLayout
                     </Text2>
-                ))}
-            </Stack>
+                    {textLines.map((line, idx) => (
+                        <Text2 regular key={idx}>
+                            {line}
+                        </Text2>
+                    ))}
+                </Stack>
+            </ResponsiveLayout>
         </FixedFooterLayout>
     );
 };
 
 MoreComplexFooter.storyName = 'FixedFooterLayout';
+MoreComplexFooter.parameters = {fullScreen: true};
