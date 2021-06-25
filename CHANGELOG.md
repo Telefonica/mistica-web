@@ -1,3 +1,17 @@
+# [9.6.0](https://github.com/Telefonica/mistica-web/compare/v9.5.1...v9.6.0) (2021-06-25)
+
+
+### Bug Fixes
+
+* **ButtonFixedFooterLayout:** align footer buttons in desktop ([#286](https://github.com/Telefonica/mistica-web/issues/286)) ([d7c1445](https://github.com/Telefonica/mistica-web/commit/d7c1445e389c81ba9e614bd50533f6193b7826d8))
+* **CreditCardExpirationField:** show mandatory message when empty ([#287](https://github.com/Telefonica/mistica-web/issues/287)) ([ed6fb2d](https://github.com/Telefonica/mistica-web/commit/ed6fb2dac3ad0d788da5daf5fbd62ba83c9ad598))
+* **Text:** reset textDecoration when switching back to undefined ([#288](https://github.com/Telefonica/mistica-web/issues/288)) ([341188b](https://github.com/Telefonica/mistica-web/commit/341188b49630a74c7a19b0f35a4198cfa139402b))
+
+
+### Features
+
+* **Callout:** new component ([#290](https://github.com/Telefonica/mistica-web/issues/290)) ([63e464d](https://github.com/Telefonica/mistica-web/commit/63e464d8e79991f60a283cb89e31ad7b942fe276))
+
 ## [9.5.1](https://github.com/Telefonica/mistica-web/compare/v9.5.0...v9.5.1) (2021-06-16)
 
 
