@@ -12,7 +12,7 @@ const useStyles = createUseStyles(({colors}) => ({
     },
 }));
 
-const Divider: React.FC = () => {
+const Divider: React.FC<{children?: void}> = () => {
     const classes = useStyles();
     const isInverse = useIsInverseVariant();
     return <div className={classnames(classes.divider, {[classes.dividerInverse]: isInverse})} />;

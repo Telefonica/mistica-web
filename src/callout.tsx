@@ -45,6 +45,7 @@ type Props = {
     icon?: React.ReactElement<any>;
     button?: React.ReactElement<typeof ButtonPrimary> | React.ReactElement<typeof ButtonSecondary>;
     buttonLink?: React.ReactElement<typeof ButtonLink>;
+    children?: void;
 };
 
 const Callout: React.FC<Props> = ({title, description, icon, onClose, button, buttonLink}) => {

@@ -8,7 +8,11 @@ export const AvatarPlaceholder: React.FC<AvatarPlaceholderProps> = ({size = '100
     <div style={{width: size, height: size, borderRadius: '50%', background: 'gray'}} />
 );
 
-type PlaceholderProps = {width?: string | number; height?: string | number};
+type PlaceholderProps = {
+    width?: string | number;
+    height?: string | number;
+    children?: void;
+};
 
 export const Placeholder: React.FC<PlaceholderProps> = ({width = 'auto', height = 120}) => {
     const {colors} = useTheme();

@@ -66,6 +66,7 @@ type Props = {
     size?: number | string;
     rolePresentation?: boolean;
     style?: React.CSSProperties;
+    children?: void;
 };
 
 const Spinner: React.FC<Props> = ({color, delay = '500ms', size = 24, style, rolePresentation}) => {

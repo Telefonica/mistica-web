@@ -15,6 +15,7 @@ type CreditCardFieldsProps = {
     expirationFieldName?: string;
     cvvFieldName?: string;
     acceptedCards?: CardOptions;
+    children?: void;
 };
 
 const CreditCardFields: React.FC<CreditCardFieldsProps> = ({

@@ -178,6 +178,7 @@ type HeaderLayoutProps = {
     header: React.ReactNode; // intentionally not forced to React.ReactElement<typeof Header> to allow skeletons for example
     extra?: React.ReactNode;
     sideBySideExtraOnDesktop?: boolean;
+    children?: void;
 };
 
 export const HeaderLayout: React.FC<HeaderLayoutProps> = ({

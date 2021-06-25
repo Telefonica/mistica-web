@@ -95,6 +95,7 @@ interface CommonProps {
     onClose?: () => void;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     isInverse?: boolean;
+    children?: void;
 }
 interface BasicProps extends CommonProps {
     button?: undefined;

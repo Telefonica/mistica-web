@@ -1,8 +1,6 @@
 // @flow
 
 import * as React from "react";
-declare type Props = {
-  visible: boolean,
-};
+declare type Props = { visible: boolean };
 declare var LoadingBar: React.ComponentType<Props>;
 declare export default typeof LoadingBar;
