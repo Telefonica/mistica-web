@@ -58,14 +58,14 @@ const Callout: React.FC<Props> = ({title, description, icon, onClose, button, bu
                 {icon && <div className={classes.icon}>{icon}</div>}
                 <div className={classes.content}>
                     <Stack space={16}>
-                        <div>
+                        <>
                             <Text3 as="h2" regular>
                                 {title}
                             </Text3>
                             <Text2 as="p" regular color={colors.textSecondary}>
                                 {description}
                             </Text2>
-                        </div>
+                        </>
                         {(button || buttonLink) && (
                             <div className={classes.actions}>
                                 <Inline space={16} alignItems="center">
