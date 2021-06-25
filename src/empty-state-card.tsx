@@ -30,6 +30,7 @@ interface CommonProps {
     button?: React.ReactElement<typeof ButtonPrimary> | React.ReactElement<typeof ButtonSecondary>;
     buttonLink?: React.ReactElement<typeof ButtonLink>;
     description?: string;
+    children?: void;
 }
 
 interface IconProps extends CommonProps {

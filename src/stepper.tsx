@@ -175,6 +175,7 @@ type StepperProps = {
     steps: Array<string>;
     currentIndex: number;
     'aria-label'?: string;
+    children?: void;
 };
 
 const Stepper: React.FC<StepperProps> = ({steps, currentIndex, 'aria-label': ariaLabel}: StepperProps) => {

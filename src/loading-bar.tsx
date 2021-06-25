@@ -82,7 +82,7 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-type Props = {visible: boolean};
+type Props = {visible: boolean; children?: void};
 
 const LoadingBar: React.FC<Props> = ({visible}) => {
     const classes = useStyles();

@@ -43,6 +43,7 @@ interface BaseProps {
     button?: React.ReactElement<typeof ButtonPrimary> | React.ReactElement<typeof ButtonSecondary>;
     buttonLink?: React.ReactElement<typeof ButtonLink>;
     description?: string;
+    children?: void;
 }
 
 interface ImageProps extends BaseProps {
