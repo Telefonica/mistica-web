@@ -82,7 +82,7 @@ const CardContent: React.FC<CardContentProps> = ({
             </Stack>
             {(button || buttonLink) && (
                 <div className={classes.actions}>
-                    <Inline space={16}>
+                    <Inline space={16} alignItems="center">
                         {button}
                         {buttonLink}
                     </Inline>

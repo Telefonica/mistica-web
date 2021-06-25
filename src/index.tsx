@@ -57,6 +57,7 @@ export {default as Divider} from './divider';
 export {default as Menu} from './menu';
 export {default as EmptyStateScreen} from './empty-state-screen';
 export {default as EmptyStateCard} from './empty-state-card';
+export {default as Callout} from './callout';
 
 // Forms
 export {default as Form} from './form';

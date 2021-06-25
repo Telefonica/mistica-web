@@ -657,4 +657,21 @@ export default [
     },
     ...titlesSnippets,
     ...emptyStatesGroup,
+    {
+        group: 'Callout',
+        name: 'Callout',
+        code: `
+            <Callout
+                icon={<IconBoxLight />}
+                onClose={() => {}}
+                title="Some title"
+                description="This is a description for the callout"
+                button={
+                <ButtonPrimary small onPress={() => {}}>
+                    Action
+                </ButtonPrimary>
+                }
+                buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+            />`,
+    },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
