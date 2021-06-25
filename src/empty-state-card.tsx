@@ -63,7 +63,7 @@ const EmptyStateCard: React.FC<Props> = ({title, description, button, buttonLink
                         {image ?? icon}
                         <Box paddingRight={isMobile ? 48 : 0}>
                             <Stack space={8}>
-                                <Text4 light>{title}</Text4>
+                                <Text4 regular>{title}</Text4>
                                 <Text2 regular color={colors.textSecondary}>
                                     {description}
                                 </Text2>

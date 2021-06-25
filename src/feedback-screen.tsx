@@ -18,6 +18,7 @@ import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {Theme} from './theme';
 import {Text6, Text4} from './text';
 import Box from './box';
+import ResponsiveLayout from './responsive-layout';
 
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) && !isRunningAcceptanceTest(platformOverrides);
@@ -46,9 +47,10 @@ const useStyles = createUseStyles((theme) => ({
     },
 
     backgroundDiv: {
-        position: 'fixed',
+        position: 'absolute',
         bottom: ({footerHeight}) => footerHeight,
         marginBottom: -1, // workaround, whithout this an horizontal line appears at the bottom
+        top: 0,
         left: 0,
         right: 0,
         [theme.mq.mobile]: {
@@ -76,7 +78,7 @@ const useStyles = createUseStyles((theme) => ({
 
     innerContainer: {
         textAlign: 'left',
-        padding: '64px 24px 16px',
+        padding: '64px 8px 16px',
     },
 
     iconContainer: {
@@ -107,7 +109,7 @@ const useStyles = createUseStyles((theme) => ({
 
     [theme.mq.tabletOrBigger]: {
         innerContainer: {
-            padding: '64px 16px 16px',
+            padding: '64px 0 32px',
         },
         description: {
             maxWidth: 456,
@@ -200,27 +202,29 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
 
     const feedbackBasicContent = (
         <div className={classes.container}>
-            <div className={classes.innerContainer}>
-                {!!icon && <div className={classes.iconContainer}>{icon}</div>}
-                <Text6>
-                    <span className={classes.title}>{title}</span>
-                </Text6>
-                {normalizedDescription && (
-                    <Box paddingTop={16}>
-                        <Text4 light>
-                            <span className={classes.description}>{normalizedDescription}</span>
-                        </Text4>
-                    </Box>
-                )}
-                {children && <div className={classes.childrenContainer}>{children}</div>}
-            </div>
+            <ResponsiveLayout>
+                <div className={classes.innerContainer}>
+                    {!!icon && <div className={classes.iconContainer}>{icon}</div>}
+                    <Text6>
+                        <span className={classes.title}>{title}</span>
+                    </Text6>
+                    {normalizedDescription && (
+                        <Box paddingTop={16}>
+                            <Text4 light>
+                                <span className={classes.description}>{normalizedDescription}</span>
+                            </Text4>
+                        </Box>
+                    )}
+                    {children && <div className={classes.childrenContainer}>{children}</div>}
+                </div>
+            </ResponsiveLayout>
         </div>
     );
 
     const hasButtons = !!primaryButton || !!secondaryButton;
 
     const content = (
-        <>
+        <div style={{position: 'relative'}}>
             <div className={classes.footer}>
                 {hasButtons ? (
                     <ButtonFixedFooterLayout
@@ -238,7 +242,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                 )}
             </div>
             {isMobile && hasButtons && <div className={classes.backgroundDiv} />}
-        </>
+        </div>
     );
 
     return (

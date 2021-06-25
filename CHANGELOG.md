@@ -1,3 +1,24 @@
+## [9.5.1](https://github.com/Telefonica/mistica-web/compare/v9.5.0...v9.5.1) (2021-06-16)
+
+
+### Bug Fixes
+
+* **PhoneNumberField:** propagate inputProps ([#285](https://github.com/Telefonica/mistica-web/issues/285)) ([11460ff](https://github.com/Telefonica/mistica-web/commit/11460ff642b919855f96984e5a2c32a5809be365))
+
+# [9.5.0](https://github.com/Telefonica/mistica-web/compare/v9.4.1...v9.5.0) (2021-06-16)
+
+
+### Bug Fixes
+
+* **HeaderLayout:** remove right padding from extra ([#283](https://github.com/Telefonica/mistica-web/issues/283)) ([450686f](https://github.com/Telefonica/mistica-web/commit/450686f5d3b5a92128df7d48ed766e5d422a45a0))
+
+
+### Features
+
+* **List:** Add divider to last row ([2f85bc3](https://github.com/Telefonica/mistica-web/commit/2f85bc36648be1bb2c8e3a76c9d6f3f09859530b))
+* **PhoneNumberField:** Improve formatting with prefix. Add e164 prop to get E164 formated numbers in onChangeValue event ([f7506bb](https://github.com/Telefonica/mistica-web/commit/f7506bb0696f41289e762baad7d3d1f529d8c242))
+* **Rows,Cards:** change title font weight from light to regular ([8d4c520](https://github.com/Telefonica/mistica-web/commit/8d4c520651bc50d18ff9fa95f569c01f74c02dca))
+
 ## [9.4.1](https://github.com/Telefonica/mistica-web/compare/v9.4.0...v9.4.1) (2021-06-07)
 
 

@@ -161,7 +161,7 @@ const Content: React.FC<ContentProps> = ({
                         </Text1>
                     </Box>
                 )}
-                <Text3 wordBreak light color={colors.textPrimary} truncate={titleLinesMax}>
+                <Text3 wordBreak regular color={colors.textPrimary} truncate={titleLinesMax}>
                     {title}
                 </Text3>
                 {subtitle && (
@@ -489,12 +489,10 @@ export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role}
             .filter(Boolean)
             .map((child, index) => (
                 <React.Fragment key={index}>
-                    {index > 0 && (
-                        <Box paddingX={16}>
-                            <Divider />
-                        </Box>
-                    )}
                     {child}
+                    <Box paddingX={16}>
+                        <Divider />
+                    </Box>
                 </React.Fragment>
             ))}
     </div>

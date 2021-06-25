@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useRifm} from 'rifm';
-import {formatAsYouType} from '@telefonica/libphonenumber';
+import {formatAsYouType, formatToE164, parse, getRegionCodeForCountryCode} from '@telefonica/libphonenumber';
 import {useFieldProps} from './form-context';
 import TextFieldBase from './text-field-base';
 import {useTheme} from './hooks';
@@ -13,17 +13,31 @@ import {combineRefs} from './utils/common';
 const formatPhone = (regionCode: RegionCode, number: string): string =>
     formatAsYouType(number.replace(/[^\d+*#]/g, ''), regionCode);
 
-type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onInput'> & {
+type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onInput'> & {
     inputRef?: React.Ref<HTMLInputElement>;
     value?: string;
     defaultValue?: string;
     onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
+    prefix?: string;
+    e164?: boolean;
 };
 
-const PhoneInput: React.FC<Props> = ({inputRef, value, defaultValue, onChange, ...other}) => {
+const isValidPrefix = (prefix: string): boolean => !!prefix.match(/^\+\d+$/);
+
+const PhoneInput: React.FC<InputProps> = ({
+    inputRef,
+    value,
+    defaultValue,
+    onChange,
+    prefix,
+    e164,
+    ...other
+}) => {
     const [selfValue, setSelfValue] = React.useState(defaultValue ?? '');
     const ref = React.useRef<HTMLInputElement | null>(null);
+    const {i18n} = useTheme();
 
+    const regionCode = i18n.phoneNumberFormattingRegionCode;
     const isControlledByParent = typeof value !== 'undefined';
     const controlledValue = (isControlledByParent ? value : selfValue) as string;
 
@@ -39,13 +53,30 @@ const PhoneInput: React.FC<Props> = ({inputRef, value, defaultValue, onChange, .
         [isControlledByParent, onChange]
     );
 
-    const {i18n} = useTheme();
     const format = React.useCallback(
         // The final replacement of "-" to "@" is to workaround a bug in rifm library
         // otherwise the cursor position is incorrectly positioned
         // also note the "@" is replaced back to "-" in `replace` param in `useRifm`
-        (val: string): string => formatPhone(i18n.phoneNumberFormattingRegionCode, val).replace(/-/g, '@'),
-        [i18n.phoneNumberFormattingRegionCode]
+        (value: string): string => {
+            let result = '';
+
+            // If a prefix is defined, we format the concatenation of prefix + value and
+            // then remove the prefix from the result
+            if (prefix && isValidPrefix(prefix)) {
+                const prefixedValue = prefix + value;
+                result = formatPhone(regionCode, prefixedValue);
+                if (result.startsWith(prefix)) {
+                    result = result.slice(prefix.length).trim();
+                } else {
+                    // fallback to regular formatting
+                    result = formatPhone(regionCode, value);
+                }
+            } else {
+                result = formatPhone(regionCode, value);
+            }
+            return result.replace(/-/g, '@');
+        },
+        [regionCode, prefix]
     );
 
     const rifm = useRifm({
@@ -71,6 +102,7 @@ export interface PhoneNumberFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
     prefix?: string;
     getSuggestions?: (value: string) => Array<string>;
+    e164?: boolean;
 }
 
 const PhoneNumberField: React.FC<PhoneNumberFieldProps> = ({
@@ -85,9 +117,28 @@ const PhoneNumberField: React.FC<PhoneNumberFieldProps> = ({
     onBlur,
     value,
     defaultValue,
+    e164,
     ...rest
 }) => {
-    const processValue = (s: string) => s.replace(/[^\d]/g, ''); // keep only digits
+    const {i18n} = useTheme();
+
+    const processValue = (value: string) => {
+        if (e164) {
+            try {
+                const numericPrefix = (rest.prefix ?? '').replace(/[^\d]/g, '');
+                let regionCode = getRegionCodeForCountryCode(numericPrefix);
+                if (!regionCode || regionCode === 'ZZ') {
+                    regionCode = i18n.phoneNumberFormattingRegionCode;
+                }
+                return formatToE164(parse(value, regionCode));
+            } catch (e) {
+                return '';
+            }
+        } else {
+            // keep only digits
+            return value.replace(/[^\d]/g, '');
+        }
+    };
 
     const fieldProps = useFieldProps({
         name,
@@ -104,7 +155,15 @@ const PhoneNumberField: React.FC<PhoneNumberFieldProps> = ({
         onChangeValue,
     });
 
-    return <TextFieldBase {...rest} {...fieldProps} type="phone" inputComponent={PhoneInput} />;
+    return (
+        <TextFieldBase
+            {...rest}
+            {...fieldProps}
+            type="phone"
+            inputProps={{...rest.inputProps, prefix: rest.prefix}}
+            inputComponent={PhoneInput}
+        />
+    );
 };
 
 export default PhoneNumberField;
