@@ -726,7 +726,7 @@ const exampleScreens: Array<Snippet> = [
                     label="Password"
                     helperText="Helper text"
                   />
-                  <ButtonLink onPress>
+                  <ButtonLink aligned onPress>
                     I’m having problems with my password
                   </ButtonLink>
                 </Stack>
@@ -739,7 +739,9 @@ const exampleScreens: Array<Snippet> = [
                   </Text3>
                   <TextField name="phone" label="Phone number" prefix="+34" />
       
-                  <ButtonLink onPress>I’m having access problems</ButtonLink>
+                  <ButtonLink aligned onPress>
+                    I’m having access problems
+                  </ButtonLink>
                 </Stack>
               )}
             </ResponsiveLayout>
