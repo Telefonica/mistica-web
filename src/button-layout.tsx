@@ -4,6 +4,7 @@ import {useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 import {BUTTON_MIN_WIDTH, ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 
 import type {ButtonElement} from './button';
+import classNames from 'classnames';
 
 type MaybeButtonElement = ButtonElement | void | false;
 
@@ -62,6 +63,9 @@ const useStyles = createUseStyles((theme) => ({
         display: 'flex',
         width: '100%',
         justifyContent: 'inherit',
+    },
+    linkAlignment: {
+        marginLeft: buttonLayoutSpacing / 2 - 6,
     },
 }));
 
@@ -163,9 +167,15 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         return range1 - range2;
     });
 
+    const needsLinkAlignment = !isMobile && align === 'left';
+
     const content = (
         <div ref={wrapperElRef} className={classes.container}>
-            {link ? <div className={classes.link}>{link}</div> : null}
+            {link ? (
+                <div className={classNames(classes.link, {[classes.linkAlignment]: needsLinkAlignment})}>
+                    {link}
+                </div>
+            ) : null}
             {sortedButtons}
         </div>
     );
