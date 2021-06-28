@@ -635,98 +635,116 @@ const exampleScreens: Array<Snippet> = [
         group: '💎 Example Screens',
         name: 'Settings',
         code: `
-    <MainSectionHeaderLayout>
-        <MainSectionHeader title="Settings" />
-    </MainSectionHeaderLayout>
-      
-    <Box paddingY={24}>
-    <Stack space={32}>
-        <Stack space={0}>
-            <Box paddingX={16}>
-                <SectionTitle>Personal information</SectionTitle>
+            <MainSectionHeaderLayout>
+                <MainSectionHeader title="Settings" />
+            </MainSectionHeaderLayout>
+            
+            <Box paddingY={24}>
+            <Stack space={32}>
+                <Stack space={0}>
+                    <Box paddingX={16}>
+                        <SectionTitle>Personal information</SectionTitle>
+                    </Box>
+                    <RowList>
+                        <Row
+                        icon={<IconUserAccountRegular />}
+                        iconSize={24}
+                        title="Personal details"
+                        onPress={() => {}}
+                        />
+                        <Row
+                        icon={<IconLockClosedRegular />}
+                        iconSize={24}
+                        title="Security"
+                        onPress={() => {}}
+                        />
+                        <Row
+                        icon={<IconCreditCardVisaRegular />}
+                        iconSize={24}
+                        title="Payment methods"
+                        onPress={() => {}}
+                        />
+                    </RowList>
+                </Stack>
+                <Stack space={0}>
+                    <Box paddingX={16}>
+                        <SectionTitle>Configuration</SectionTitle>
+                    </Box>
+                    <RowList>
+                        <Row
+                        icon={<IconProgramAlarmRegular />}
+                        iconSize={24}
+                        title="Notifications"
+                        onPress={() => {}}
+                        />
+                        <Row
+                        icon={<IconSupportAgentRegular />}
+                        iconSize={24}
+                        title="FAQs"
+                        onPress={() => {}}
+                        />
+                        <Row
+                        icon={<IconInformationUserRegular />}
+                        iconSize={24}
+                        title="About"
+                        onPress={() => {}}
+                        />
+                        <Row
+                        icon={<IconLogoutRegular />}
+                        iconSize={24}
+                        title="Logout"
+                        onPress={() => {}}
+                        />
+                    </RowList>
+                </Stack>
+            </Stack>
             </Box>
-            <RowList>
-                <Row
-                icon={<IconUserAccountRegular />}
-                iconSize={24}
-                title="Personal details"
-                onPress={() => {}}
-                />
-                <Row
-                icon={<IconLockClosedRegular />}
-                iconSize={24}
-                title="Security"
-                onPress={() => {}}
-                />
-                <Row
-                icon={<IconCreditCardVisaRegular />}
-                iconSize={24}
-                title="Payment methods"
-                onPress={() => {}}
-                />
-            </RowList>
-        </Stack>
-        <Stack space={0}>
-            <Box paddingX={16}>
-                <SectionTitle>Configuration</SectionTitle>
-            </Box>
-            <RowList>
-                <Row
-                icon={<IconProgramAlarmRegular />}
-                iconSize={24}
-                title="Notifications"
-                onPress={() => {}}
-                />
-                <Row
-                icon={<IconSupportAgentRegular />}
-                iconSize={24}
-                title="FAQs"
-                onPress={() => {}}
-                />
-                <Row
-                icon={<IconInformationUserRegular />}
-                iconSize={24}
-                title="About"
-                onPress={() => {}}
-                />
-                <Row
-                icon={<IconLogoutRegular />}
-                iconSize={24}
-                title="Logout"
-                onPress={() => {}}
-                />
-            </RowList>
-        </Stack>
-    </Stack>
-    </Box>
-      
 `,
     },
     {
         group: '💎 Example Screens',
         name: 'Login',
         code: `
+            <ButtonFixedFooterLayout
+            button={<ButtonPrimary href="https://google.com">Continuar</ButtonPrimary>}
+            link={<ButtonLink onPress>Not a customer yet? register now!</ButtonLink>}
+        >
+            <Tabs
+            selectedIndex={0}
+            selectedIndex={getState("tabIndex", 0)}
+            onChange={setState("tabIndex")}
+            tabs={[{ text: "Password" }, { text: "Phone number" }]}
+            />
         
-<ButtonFixedFooterLayout
-  button={<ButtonPrimary href="https://google.com">Continuar</ButtonPrimary>}
-  link={<ButtonLink onPress>Not a customer yet? register now!</ButtonLink>}
->
-  <Box paddingX={16} padding={24}>
-    <Stack space={16}>
-      <Text6>This is a title</Text6>
-      <Text3 color={colors.textSecondary}>
-        Subtitle text, write here an explanation of what the user has to do.
-      </Text3>
-      <TextField name="User" label="User" />
-      <PasswordField
-        name="password"
-        label="Password"
-        helperText="Helper text"
-      />
-      <ButtonLink onPress>I’m having problems with my password</ButtonLink>
-    </Stack>
-  </Box>
-</ButtonFixedFooterLayout>
+            <Box paddingX={16} padding={24}>
+            {getState("tabIndex", 0) === 0 && (
+                <Stack space={16}>
+                <Text6>This is a title</Text6>
+                <Text3 color={colors.textSecondary}>
+                    Subtitle text, write here an explanation of what the user has to do.
+                </Text3>
+                <TextField name="User" label="User" />
+                <PasswordField
+                    name="password"
+                    label="Password"
+                    helperText="Helper text"
+                />
+                <ButtonLink onPress>I’m having problems with my password</ButtonLink>
+                </Stack>
+            )}
+            {getState("tabIndex", 0) === 1 && (
+                <Stack space={16}>
+                <Text6>This is a title</Text6>
+                <Text3 color={colors.textSecondary}>
+                    Introduce your phone number below.
+                </Text3>
+                <TextField name="Phone number" label="Phone number" prefix="+34" />
+        
+                <ButtonLink onPress>I’m having access problems</ButtonLink>
+                </Stack>
+            )}
+            </Box>
+        </ButtonFixedFooterLayout>
 `,
     },
 ];
