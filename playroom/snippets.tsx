@@ -616,6 +616,141 @@ const emptyStatesGroup: Array<Snippet> = [
     },
 ].map((snippet) => ({...snippet, group: 'Empty states'}));
 
+const exampleScreens: Array<Snippet> = [
+    {
+        group: '💎 Example Screens',
+        name: 'Settings',
+        code: `
+      <MainSectionHeaderLayout>
+        <MainSectionHeader title="Settings" />
+      </MainSectionHeaderLayout>
+      
+      <Box paddingY={24}>
+        <ResponsiveLayout>
+          <Stack space={32}>
+            <Stack space={8}>
+              <SectionTitle>Personal information</SectionTitle>
+              <NegativeBox>
+                <RowList>
+                  <Row
+                    icon={<IconUserAccountRegular />}
+                    iconSize={24}
+                    title="Personal details"
+                    onPress={() => {}}
+                  />
+                  <Row
+                    icon={<IconLockClosedRegular />}
+                    iconSize={24}
+                    title="Security"
+                    onPress={() => {}}
+                  />
+                  <Row
+                    icon={<IconCreditCardVisaRegular />}
+                    iconSize={24}
+                    title="Payment methods"
+                    onPress={() => {}}
+                  />
+                </RowList>
+              </NegativeBox>
+            </Stack>
+      
+            <Stack space={8}>
+              <SectionTitle>Configuration</SectionTitle>
+              <NegativeBox>
+                <RowList>
+                  <Row
+                    icon={<IconProgramAlarmRegular />}
+                    iconSize={24}
+                    title="Notifications"
+                    onPress={() => {}}
+                  />
+                  <Row
+                    icon={<IconSupportAgentRegular />}
+                    iconSize={24}
+                    title="FAQs"
+                    onPress={() => {}}
+                  />
+                  <Row
+                    icon={<IconInformationUserRegular />}
+                    iconSize={24}
+                    title="About"
+                    onPress={() => {}}
+                  />
+                  <Row
+                    icon={<IconLogoutRegular />}
+                    iconSize={24}
+                    title="Logout"
+                    onPress={() => {}}
+                  />
+                </RowList>
+              </NegativeBox>
+            </Stack>
+          </Stack>
+        </ResponsiveLayout>
+      </Box>
+      `,
+    },
+    {
+        group: '💎 Example Screens',
+        name: 'Login',
+        code: `
+      <Form
+        onSubmit={(formData) => {
+          alert({
+            title: "Form data",
+            message: JSON.stringify(formData, null, 2),
+          });
+        }}
+      >
+        <ButtonFixedFooterLayout
+          button={<ButtonPrimary submit>Continuar</ButtonPrimary>}
+          link={<ButtonLink onPress>Not a customer yet? register now!</ButtonLink>}
+        >
+          <Tabs
+            selectedIndex={getState("tabIndex", 0)}
+            onChange={setState("tabIndex")}
+            tabs={[{ text: "Password" }, { text: "Phone number" }]}
+          />
+          <Box paddingY={24}>
+            <ResponsiveLayout>
+              {getState("tabIndex", 0) === 0 && (
+                <Stack space={16}>
+                  <Text6>This is a title</Text6>
+                  <Text3 color={colors.textSecondary}>
+                    Subtitle text, write here an explanation of what the user has to
+                    do.
+                  </Text3>
+                  <TextField name="user" label="User" />
+                  <PasswordField
+                    name="password"
+                    label="Password"
+                    helperText="Helper text"
+                  />
+                  <ButtonLink aligned onPress>
+                    I’m having problems with my password
+                  </ButtonLink>
+                </Stack>
+              )}
+              {getState("tabIndex", 0) === 1 && (
+                <Stack space={16}>
+                  <Text6>This is a title</Text6>
+                  <Text3 color={colors.textSecondary}>
+                    Introduce your phone number below.
+                  </Text3>
+                  <TextField name="phone" label="Phone number" prefix="+34" />
+      
+                  <ButtonLink aligned onPress>
+                    I’m having access problems
+                  </ButtonLink>
+                </Stack>
+              )}
+            </ResponsiveLayout>
+          </Box>
+        </ButtonFixedFooterLayout>
+      </Form>`,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -635,6 +770,7 @@ export default [
     ...listRowSnippets,
     ...tabsSnippets,
     ...cardSnippets,
+    ...exampleScreens,
     ...['promo', 'brand', 'success', 'warning', 'error', 'inverse'].map((colorName) => ({
         group: 'Tag',
         name: `Tag (${colorName})`,
