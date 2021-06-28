@@ -173,6 +173,8 @@ const buildStoryUrl = (section: string, name: string, skin?: string, platform?: 
 };
 
 export type PageApi = {
+    clear: (selector: ElementHandle) => Promise<void>;
+
     // Following methods are inherited from Puppeteer.Page:
 
     // These are overridden:
@@ -258,12 +260,16 @@ const buildQueryMethods = () =>
 const createPageApi = (page: Page): PageApi => {
     const api: PageApi = Object.create(page);
 
-    api.type = async (selector, text, options) => selector.type(text, options);
-    api.click = async (selector, options) => selector.click(options);
-    api.select = async (selector, ...values) => selector.select(...values);
+    api.type = async (elementHandle, text, options) => elementHandle.type(text, options);
+    api.click = async (elementHandle, options) => elementHandle.click(options);
+    api.select = async (elementHandle, ...values) => elementHandle.select(...values);
     api.screenshot = async (options?: ScreenshotOptions) => {
         await waitForPaintEnd(page);
         return watermarkIfNeeded(page.screenshot(options) as Promise<Buffer>);
+    };
+    api.clear = async (elementHandle) => {
+        await api.click(elementHandle, {clickCount: 3});
+        await elementHandle.press('Delete');
     };
 
     return api;

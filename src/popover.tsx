@@ -213,6 +213,7 @@ type Props = {
     width?: number;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     isVisible?: boolean;
+    children?: void;
 };
 
 const Popover: React.FC<Props> = ({

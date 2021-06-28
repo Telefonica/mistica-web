@@ -27,6 +27,7 @@ const useStyles = createUseStyles(({colors}) => ({
 
 type Props = {
     progressPercent: number;
+    children?: void;
 };
 
 const ProgressBar: React.FC<Props> = ({progressPercent}) => {

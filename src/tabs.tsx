@@ -113,6 +113,7 @@ export type TabsProps = {
         readonly icon?: React.ReactNode;
         readonly 'aria-controls'?: string;
     }>;
+    children?: void;
 };
 
 const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) => {

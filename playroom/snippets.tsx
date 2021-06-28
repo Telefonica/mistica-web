@@ -477,20 +477,6 @@ const tabsSnippets: Array<Snippet> = [
             selectedIndex={getState('tabIndex', 0)}
             onChange={setState('tabIndex')}
             tabs={[
-                {text: 'Tab 1', icon: <IconAppointmentRegular />},
-                {text: 'Tab 2', icon: <IconBrainRegular />},
-                {text: 'Tab 3', icon: <IconBusRegular />},
-            ]}
-        />`,
-    },
-    {
-        group: 'Tabs',
-        name: 'Tabs (with icons and icons color="currentColor")',
-        code: `
-        <Tabs
-            selectedIndex={getState('tabIndex', 0)}
-            onChange={setState('tabIndex')}
-            tabs={[
                 {text: 'Tab 1', icon: <IconAppointmentRegular color="currentColor" />},
                 {text: 'Tab 2', icon: <IconBrainRegular color="currentColor" />},
                 {text: 'Tab 3', icon: <IconBusRegular color="currentColor" />},
@@ -759,6 +745,9 @@ export default [
     {group: 'Spinner', name: 'Spinner', code: '<Spinner />'},
     {group: 'Divider', name: 'Divider', code: '<Divider />'},
     {group: 'LoadingBar', name: 'LoadingBar', code: '<LoadingBar visible />'},
+    {group: 'Badge', name: 'Badge numeric', code: '<Badge value="5" />'},
+    {group: 'Badge', name: 'Badge non numeric', code: '<Badge />'},
+    {group: 'Badge', name: 'Icon with badge', code: '<Badge value="5"><IconSettingsRegular /></Badge>'},
     {group: 'Text', name: 'Text', code: '<Text>some text</Text>'},
     ...headerSnippets,
     ...listSnippets,
@@ -788,4 +777,21 @@ export default [
     },
     ...titlesSnippets,
     ...emptyStatesGroup,
+    {
+        group: 'Callout',
+        name: 'Callout',
+        code: `
+            <Callout
+                icon={<IconBoxLight />}
+                onClose={() => {}}
+                title="Some title"
+                description="This is a description for the callout"
+                button={
+                <ButtonPrimary small onPress={() => {}}>
+                    Action
+                </ButtonPrimary>
+                }
+                buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+            />`,
+    },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

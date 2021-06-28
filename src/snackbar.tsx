@@ -86,6 +86,7 @@ type Props = {
     message: string;
     onClose?: () => unknown;
     type?: SnackbarType;
+    children?: void;
 };
 
 const SnackbarComponent: React.FC<Props> = ({

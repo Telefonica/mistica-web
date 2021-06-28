@@ -43,6 +43,7 @@ export type MenuProps = {
     width?: number;
     renderTarget: (props: TargetRenderProps) => React.ReactNode;
     renderMenu: (props: MenuRenderProps) => React.ReactNode;
+    children?: void;
 };
 
 const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width}) => {

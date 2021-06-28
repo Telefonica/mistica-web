@@ -82,7 +82,7 @@ const CardContent: React.FC<CardContentProps> = ({
             </Stack>
             {(button || buttonLink) && (
                 <div className={classes.actions}>
-                    <Inline space={16}>
+                    <Inline space={16} alignItems="center">
                         {button}
                         {buttonLink}
                     </Inline>
@@ -155,6 +155,7 @@ type MediaCardProps = {
     body?: React.ReactNode;
     button?: React.ReactElement<typeof ButtonPrimary>;
     buttonLink?: React.ReactElement<typeof ButtonLink>;
+    children?: void;
 };
 
 export const MediaCard: React.FC<MediaCardProps> = ({
@@ -212,6 +213,7 @@ interface DataCardProps {
     body?: React.ReactNode;
     button?: React.ReactElement<typeof ButtonPrimary>;
     buttonLink?: React.ReactElement<typeof ButtonLink>;
+    children?: void;
 }
 
 export const DataCard: React.FC<DataCardProps> = ({

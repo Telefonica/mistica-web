@@ -10,6 +10,7 @@ type NavigationBreadcrumbsProps = {
         readonly title: string;
         readonly url: string;
     }>;
+    children?: void;
 };
 
 const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({title, breadcrumbs}) => {

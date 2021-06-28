@@ -85,6 +85,7 @@ declare export { default as Divider } from "./divider";
 declare export { default as Menu } from "./menu";
 declare export { default as EmptyStateScreen } from "./empty-state-screen";
 declare export { default as EmptyStateCard } from "./empty-state-card";
+declare export { default as Callout } from "./callout";
 declare export { default as Form } from "./form";
 declare export { default as Select } from "./select";
 declare export { default as TextField } from "./text-field";

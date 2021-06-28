@@ -119,6 +119,7 @@ export type SelectProps = {
     value?: string;
     fullWidth?: boolean;
     native?: boolean;
+    children?: void;
 };
 
 const Select: React.FC<SelectProps> = ({

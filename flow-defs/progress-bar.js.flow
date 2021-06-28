@@ -1,8 +1,6 @@
 // @flow
 
 import * as React from "react";
-declare type Props = {
-  progressPercent: number,
-};
+declare type Props = { progressPercent: number };
 declare var ProgressBar: React.ComponentType<Props>;
 declare export default typeof ProgressBar;
