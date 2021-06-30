@@ -92,6 +92,7 @@ Start prototyping interfaces with Mistica components in the
 - [Analytics](https://github.com/Telefonica/mistica-web/blob/master/doc/analytics.md)
 - [Style your components](https://github.com/Telefonica/mistica-web/blob/master/doc/styles.md)
 - [Fonts](https://github.com/Telefonica/mistica-web/blob/master/doc/fonts.md)
+- [Testing notes](https://github.com/Telefonica/mistica-web/blob/master/doc/testing.md)
 
 ## Development
 
