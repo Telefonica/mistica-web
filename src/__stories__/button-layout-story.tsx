@@ -41,58 +41,58 @@ export const Default: StoryComponent = () => (
         <div data-testid="screenshot">
             <StorySection title="ButtonLayout">
                 <ButtonLayout>
-                    <ButtonSecondary fake>ok</ButtonSecondary>
-                    <ButtonPrimary fake>long long long</ButtonPrimary>
+                    <ButtonSecondary fake>Ok</ButtonSecondary>
+                    <ButtonPrimary fake>The text in this button is very long</ButtonPrimary>
                 </ButtonLayout>
                 <ButtonLayout>
-                    <ButtonSecondary fake>ok</ButtonSecondary>
-                    <ButtonPrimary fake>long long long</ButtonPrimary>
+                    <ButtonSecondary fake>The text in this button is very long</ButtonSecondary>
+                    <ButtonPrimary fake>The text in this button is very long</ButtonPrimary>
                 </ButtonLayout>
             </StorySection>
 
             <StorySection title="ButtonLayout (centered)">
                 <ButtonLayout align="center">
-                    <ButtonSecondary fake>ok</ButtonSecondary>
-                    <ButtonPrimary fake>long long long</ButtonPrimary>
+                    <ButtonSecondary fake>Ok</ButtonSecondary>
+                    <ButtonPrimary fake>The text in this button is very long</ButtonPrimary>
                 </ButtonLayout>
             </StorySection>
 
             <StorySection title="One button (default)">
                 <ButtonLayout>
-                    <ButtonPrimary fake>Text</ButtonPrimary>
+                    <ButtonPrimary fake>The text in this button is very long</ButtonPrimary>
                 </ButtonLayout>
             </StorySection>
 
             <StorySection title="Two buttons (default)">
                 <ButtonLayout>
-                    <ButtonPrimary fake>Text </ButtonPrimary>
-                    <ButtonSecondary fake>Text</ButtonSecondary>
+                    <ButtonPrimary fake>Text</ButtonPrimary>
+                    <ButtonSecondary fake>The text in this button is very long</ButtonSecondary>
                 </ButtonLayout>
             </StorySection>
 
             <StorySection title="One button (centered)">
                 <ButtonLayout align="center">
-                    <ButtonPrimary fake>Text</ButtonPrimary>
+                    <ButtonPrimary fake>The text in this button is very long</ButtonPrimary>
                 </ButtonLayout>
             </StorySection>
 
             <StorySection title="Two buttons (centered)">
                 <ButtonLayout align="center">
                     <ButtonPrimary fake>Text</ButtonPrimary>
-                    <ButtonSecondary fake>Text</ButtonSecondary>
+                    <ButtonSecondary fake>The text in this button is very long</ButtonSecondary>
                 </ButtonLayout>
             </StorySection>
 
             <StorySection title="One button (centered) with link">
-                <ButtonLayout align="center" link={<ButtonLink href={' '}>Text link</ButtonLink>}>
+                <ButtonLayout align="center" link={<ButtonLink href="#">Text link</ButtonLink>}>
                     <ButtonPrimary fake>Text</ButtonPrimary>
                 </ButtonLayout>
             </StorySection>
 
             <StorySection title="Two buttons (centered) with link">
-                <ButtonLayout align="center" link={<ButtonLink href={' '}>Text link</ButtonLink>}>
+                <ButtonLayout align="center" link={<ButtonLink href="#">Text link</ButtonLink>}>
                     <ButtonPrimary fake>Text</ButtonPrimary>
-                    <ButtonSecondary fake>Text</ButtonSecondary>
+                    <ButtonSecondary fake>The text in this button is very long</ButtonSecondary>
                 </ButtonLayout>
             </StorySection>
         </div>
