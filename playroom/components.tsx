@@ -131,10 +131,9 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
 }) => {
     const classes = useControlsStyles();
     const {colors} = useTheme();
-    const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
     const {isMobile} = useScreenSize();
-    const systemColorScheme = isOsDarkModeEnabled ? 'dark' : 'light';
-    const alternativeColorScheme = systemColorScheme === 'dark' ? 'light' : 'dark';
+    const systemColorScheme = 'light';
+    const alternativeColorScheme = 'dark';
 
     if (isMobile) {
         return (
@@ -288,6 +287,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                 platformOverrides: {platform: os},
                 // Dont override mediaqueries for PreviewToolsControls, to avoid using Select instead of Tabs in desktop
                 enableTabFocus: false,
+                colorScheme: 'light',
             }}
         >
             <PreviewToolsControls
