@@ -252,7 +252,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     const [showOverlay, setShowOverlay] = React.useState(false);
     const [skinName, setSkinName] = React.useState<SkinName>(initialSkinName);
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
-    const [colorScheme, setColorScheme] = React.useState<ColorScheme>('auto');
+    const [colorScheme, setColorScheme] = React.useState<ColorScheme>('light');
     const classes = useStyles({position});
 
     const overrideTheme = useOverrideTheme();

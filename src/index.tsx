@@ -217,6 +217,7 @@ export {default as IconArrowDownRightLight} from './generated/mistica-icons/icon
 export {default as IconArrowDownRightRegular} from './generated/mistica-icons/icon-arrow-down-right-regular';
 export {default as IconArrowDropDownFilled} from './generated/mistica-icons/icon-arrow-drop-down-filled';
 export {default as IconArrowDropUpFilled} from './generated/mistica-icons/icon-arrow-drop-up-filled';
+export {default as IconArrowForwardLight} from './generated/mistica-icons/icon-arrow-forward-light';
 export {default as IconArrowForwardRegular} from './generated/mistica-icons/icon-arrow-forward-regular';
 export {default as IconArrowLeftFilled} from './generated/mistica-icons/icon-arrow-left-filled';
 export {default as IconArrowRightFilled} from './generated/mistica-icons/icon-arrow-right-filled';
