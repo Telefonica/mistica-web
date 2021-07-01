@@ -12,7 +12,6 @@ import {
     Checkbox,
     ThemeContextProvider,
 } from '../src';
-import {useIsOsDarkModeEnabled} from '../src/theme-context-provider';
 import {Movistar, Vivo, O2, Telefonica} from './themes';
 import {useOverrideTheme} from './frame-component';
 
@@ -89,7 +88,7 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-const themesMap: {[skinName in SkinName]: {themeConfig: ThemeConfig; text: string}} = {
+const themesMap: {[skinName: string]: {themeConfig: ThemeConfig; text: string}} = {
     Movistar: {
         text: 'Movistar',
         themeConfig: Movistar,
