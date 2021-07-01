@@ -532,7 +532,7 @@ const cardSnippets: Array<Snippet> = [
         <DataCard
             headline={<Tag color={colors.promo}>headline</Tag>}
             title="title"
-            pretitle="subtitle"
+            subtitle="subtitle"
             description="description"
             body={<Placeholder />}
             icon={
