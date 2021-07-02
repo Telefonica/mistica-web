@@ -15,29 +15,29 @@ type Props = {
 const Template: React.FC<Props> = ({align = 'full-width'}) => (
     <StorySection title={`ButtonLayout (align = ${align})`}>
         <Stack space={16}>
-            <SectionTitle>One button</SectionTitle>
+            <SectionTitle as="h2">One button</SectionTitle>
             <ButtonLayout align={align}>
                 <ButtonPrimary fake>Ok</ButtonPrimary>
             </ButtonLayout>
 
-            <SectionTitle>Two buttons</SectionTitle>
+            <SectionTitle as="h2">Two buttons</SectionTitle>
             <ButtonLayout align={align}>
                 <ButtonSecondary fake>Cancel</ButtonSecondary>
                 <ButtonPrimary fake>Ok</ButtonPrimary>
             </ButtonLayout>
 
-            <SectionTitle>Long captions</SectionTitle>
+            <SectionTitle as="h2">Long captions</SectionTitle>
             <ButtonLayout align={align}>
                 <ButtonSecondary fake>The text in this button is very long</ButtonSecondary>
                 <ButtonPrimary fake>The text in this button is very long</ButtonPrimary>
             </ButtonLayout>
 
-            <SectionTitle>One button with link</SectionTitle>
+            <SectionTitle as="h2">One button with link</SectionTitle>
             <ButtonLayout align={align} link={<ButtonLink href="#">Text link</ButtonLink>}>
                 <ButtonPrimary fake>Ok</ButtonPrimary>
             </ButtonLayout>
 
-            <SectionTitle>Two buttons with link</SectionTitle>
+            <SectionTitle as="h2">Two buttons with link</SectionTitle>
             <ButtonLayout align={align} link={<ButtonLink href="#">Text link</ButtonLink>}>
                 <ButtonSecondary fake>Cancel</ButtonSecondary>
                 <ButtonPrimary fake>Ok</ButtonPrimary>
