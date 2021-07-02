@@ -103,9 +103,6 @@ type ButtonLayoutProps = {
     align?: 'center' | 'left' | 'right' | 'full-width';
     link?: React.ReactElement<typeof ButtonLink> | null;
     withMargins?: boolean;
-
-    /** Change this number to force a layout calculation */
-    layoutCalculationKey?: number;
 };
 
 const buttonsRange = [ButtonSecondary, ButtonDanger, ButtonPrimary];
@@ -115,7 +112,6 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     align = 'full-width',
     link,
     withMargins = false,
-    layoutCalculationKey = 0,
 }) => {
     const {isMobile} = useScreenSize();
     const [isMeasuring, setIsMeasuring] = React.useState(true);
@@ -180,13 +176,6 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
             document.removeEventListener('visibilitychange', calcLayout);
         };
     }, [calcLayout]);
-
-    /**
-     * Force a layout calculation when the prop layoutCalculationKey changes
-     */
-    React.useEffect(() => {
-        calcLayout();
-    }, [calcLayout, layoutCalculationKey]);
 
     const sortedButtons = React.Children.toArray(children).sort((b1: any, b2: any) => {
         const range1 = buttonsRange.indexOf(b1.type);

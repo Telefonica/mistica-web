@@ -169,7 +169,7 @@ const Dialog: React.FC<DialogProps & {buttonLayoutCalculationKey?: number}> = (p
                 </Text3>
             </div>
             <Box paddingTop={isMobile ? 24 : 32}>
-                <ButtonLayout layoutCalculationKey={props.buttonLayoutCalculationKey}>
+                <ButtonLayout key={props.buttonLayoutCalculationKey}>
                     {destructive ? (
                         <ButtonDanger tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
                     ) : (
