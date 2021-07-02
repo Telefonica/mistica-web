@@ -11,7 +11,15 @@ export default {
 export const Default: StoryComponent = () => (
     <>
         <ButtonLayout>
-            <ButtonPrimary onPress={() => alert({title: 'title', message: 'message'})}>
+            <ButtonPrimary
+                onPress={() =>
+                    alert({
+                        title: 'title',
+                        message: 'message',
+                        acceptText: 'Accept terms and conditions',
+                    })
+                }
+            >
                 Open one button
             </ButtonPrimary>
         </ButtonLayout>

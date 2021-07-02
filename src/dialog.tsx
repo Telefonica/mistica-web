@@ -129,7 +129,7 @@ interface DialogProps {
     destructive?: boolean;
 }
 
-const Dialog: React.FC<DialogProps> = (props) => {
+const Dialog: React.FC<DialogProps & {buttonLayoutCalculationKey?: number}> = (props) => {
     const {texts, colors} = useTheme();
     const {
         className,
@@ -169,7 +169,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
                 </Text3>
             </div>
             <Box paddingTop={isMobile ? 24 : 32}>
-                <ButtonLayout>
+                <ButtonLayout layoutCalculationKey={props.buttonLayoutCalculationKey}>
                     {destructive ? (
                         <ButtonDanger tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
                     ) : (
@@ -262,6 +262,7 @@ const ModalDialog = (props: ModalDialogProps) => {
     const context = React.useContext(ThemeContext);
     const classes = useStylesModalDialog();
     const canCloseRef = React.useRef(process.env.NODE_ENV === 'test');
+    const [buttonLayoutCalculationKey, setButtonLayoutCalculationKey] = React.useState(1);
 
     if (!context) {
         throw Error(
@@ -351,6 +352,7 @@ const ModalDialog = (props: ModalDialogProps) => {
                                 onAnimationEnd={() => {
                                     canCloseRef.current = true;
                                     addKeyDownListener();
+                                    setButtonLayoutCalculationKey((k) => k + 1);
                                 }}
                                 className={classnames(classes.modalContent, {closed: isClosing})}
                             >
@@ -362,7 +364,10 @@ const ModalDialog = (props: ModalDialogProps) => {
                                         <IcnClose color={context.colors.neutralHigh} />
                                     </IconButton>
                                 </div>
-                                <Dialog {...dialogProps} />
+                                <Dialog
+                                    {...dialogProps}
+                                    buttonLayoutCalculationKey={buttonLayoutCalculationKey}
+                                />
                             </div>
                         </div>
                     </div>

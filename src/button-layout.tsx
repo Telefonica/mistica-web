@@ -103,6 +103,9 @@ type ButtonLayoutProps = {
     align?: 'center' | 'left' | 'right' | 'full-width';
     link?: React.ReactElement<typeof ButtonLink> | null;
     withMargins?: boolean;
+
+    /** Change this number to force a layout calculation */
+    layoutCalculationKey?: number;
 };
 
 const buttonsRange = [ButtonSecondary, ButtonDanger, ButtonPrimary];
@@ -112,6 +115,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     align = 'full-width',
     link,
     withMargins = false,
+    layoutCalculationKey = 0,
 }) => {
     const {isMobile} = useScreenSize();
     const [isMeasuring, setIsMeasuring] = React.useState(true);
@@ -162,9 +166,6 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     useOnFontsReadyEffect(calcLayout);
 
     /**
-     * Listening to resize to force a layout calculation when the available space changes
-     * otherwise it can happen that small buttons with ellipsis keep the ellipsis when the screen size is increased
-     *
      * Listening to focus/visibility change solves a corner that can be reproduced in Novum iOS webviews. Just after logging in,
      * wait until everything loads (including hidden tabs), after a while, open Account tab (Mis productos) and the button appears
      * with ellipsis, even it has enough space.
@@ -179,6 +180,13 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
             document.removeEventListener('visibilitychange', calcLayout);
         };
     }, [calcLayout]);
+
+    /**
+     * Force a layout calculation when the prop layoutCalculationKey changes
+     */
+    React.useEffect(() => {
+        calcLayout();
+    }, [calcLayout, layoutCalculationKey]);
 
     const sortedButtons = React.Children.toArray(children).sort((b1: any, b2: any) => {
         const range1 = buttonsRange.indexOf(b1.type);
