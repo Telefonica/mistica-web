@@ -138,9 +138,16 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         if (isMeasuring) {
             const req = window.requestAnimationFrame(() => {
                 if (wrapperElRef.current) {
-                    const childrenWidths = Array.from(wrapperElRef.current.children).map((el) =>
-                        el.classList.contains(classes.link) ? 0 : el.getBoundingClientRect().width
-                    );
+                    const childrenWidths = Array.from(wrapperElRef.current.children).map((el) => {
+                        /*
+                        We are using offsetWidth instead of getBoundingClientRect().width because
+                        getBoundingClientRect returns the scaled size when the element has some CSS transform applied.
+
+                        getBoundingClientRect returns a float (eg: 268.65625) and offsetWidth an integer (eg: 268)
+                        The `+1` is important, it rounds up the size to avoid unwanted text truncation with ellipsis.
+                        */
+                        return el.classList.contains(classes.link) ? 0 : (el as HTMLElement).offsetWidth + 1;
+                    });
                     const maxChildWidth = Math.ceil(Math.max(...childrenWidths, BUTTON_MIN_WIDTH));
                     updateButtonWidth(maxChildWidth);
                     updateIsMeasuring(false);

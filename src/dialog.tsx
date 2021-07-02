@@ -169,7 +169,11 @@ const Dialog: React.FC<DialogProps & {buttonLayoutCalculationKey?: number}> = (p
                 </Text3>
             </div>
             <Box paddingTop={isMobile ? 24 : 32}>
-                <ButtonLayout key={props.buttonLayoutCalculationKey}>
+                {/*
+                    This key is set to force a layout calculation once the animation ends.
+                    This fixes a problem in dialog buttons with long texts.
+                 */}
+                <ButtonLayout>
                     {destructive ? (
                         <ButtonDanger tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
                     ) : (
@@ -262,7 +266,6 @@ const ModalDialog = (props: ModalDialogProps) => {
     const context = React.useContext(ThemeContext);
     const classes = useStylesModalDialog();
     const canCloseRef = React.useRef(process.env.NODE_ENV === 'test');
-    const [buttonLayoutCalculationKey, setButtonLayoutCalculationKey] = React.useState(1);
 
     if (!context) {
         throw Error(
@@ -352,7 +355,6 @@ const ModalDialog = (props: ModalDialogProps) => {
                                 onAnimationEnd={() => {
                                     canCloseRef.current = true;
                                     addKeyDownListener();
-                                    setButtonLayoutCalculationKey((k) => k + 1);
                                 }}
                                 className={classnames(classes.modalContent, {closed: isClosing})}
                             >
@@ -364,10 +366,7 @@ const ModalDialog = (props: ModalDialogProps) => {
                                         <IcnClose color={context.colors.neutralHigh} />
                                     </IconButton>
                                 </div>
-                                <Dialog
-                                    {...dialogProps}
-                                    buttonLayoutCalculationKey={buttonLayoutCalculationKey}
-                                />
+                                <Dialog {...dialogProps} />
                             </div>
                         </div>
                     </div>
