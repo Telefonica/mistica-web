@@ -129,7 +129,7 @@ interface DialogProps {
     destructive?: boolean;
 }
 
-const Dialog: React.FC<DialogProps & {buttonLayoutCalculationKey?: number}> = (props) => {
+const Dialog: React.FC<DialogProps> = (props) => {
     const {texts, colors} = useTheme();
     const {
         className,
