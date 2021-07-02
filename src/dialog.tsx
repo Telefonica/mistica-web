@@ -169,10 +169,6 @@ const Dialog: React.FC<DialogProps> = (props) => {
                 </Text3>
             </div>
             <Box paddingTop={isMobile ? 24 : 32}>
-                {/*
-                    This key is set to force a layout calculation once the animation ends.
-                    This fixes a problem in dialog buttons with long texts.
-                 */}
                 <ButtonLayout>
                     {destructive ? (
                         <ButtonDanger tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
