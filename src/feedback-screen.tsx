@@ -86,13 +86,11 @@ const useStyles = createUseStyles((theme) => ({
     },
 
     title: {
-        color: ({isInverse}) => (isInverse ? theme.colors.textPrimaryInverse : theme.colors.textPrimary),
         animation: animateText(theme.platformOverrides),
         opacity: initialTextOpacity(theme.platformOverrides),
     },
 
     description: {
-        color: ({isInverse}) => (isInverse ? theme.colors.textPrimaryInverse : theme.colors.textSecondary),
         animation: animateText(theme.platformOverrides),
         opacity: initialTextOpacity(theme.platformOverrides),
         '& p': {
@@ -173,7 +171,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
 }) => {
     useHapticFeedback(hapticFeedback);
     const isInverse = useIsInverseVariant();
-    const theme = useTheme();
+    const {colors} = useTheme();
     const windowHeight = useWindowHeight();
     const {isMobile} = useScreenSize();
     const [isServerSide, setIsServerSide] = React.useState(typeof self !== 'undefined');
@@ -205,13 +203,13 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
             <ResponsiveLayout>
                 <div className={classes.innerContainer}>
                     {!!icon && <div className={classes.iconContainer}>{icon}</div>}
-                    <Text6>
-                        <span className={classes.title}>{title}</span>
-                    </Text6>
+                    <div className={classes.title}>
+                        <Text6 as="h1">{title}</Text6>
+                    </div>
                     {normalizedDescription && (
-                        <Box paddingTop={16}>
-                            <Text4 light>
-                                <span className={classes.description}>{normalizedDescription}</span>
+                        <Box paddingTop={16} className={classes.description}>
+                            <Text4 light color={colors.textSecondary}>
+                                {normalizedDescription}
                             </Text4>
                         </Box>
                     )}
@@ -231,8 +229,8 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                         button={primaryButton}
                         secondaryButton={secondaryButton}
                         link={link}
-                        footerBgColor={isInverse ? theme.colors.backgroundFeedbackBottom : undefined}
-                        containerBgColor={isInverse ? theme.colors.navigationBarBackground : undefined}
+                        footerBgColor={isInverse ? colors.backgroundFeedbackBottom : undefined}
+                        containerBgColor={isInverse ? colors.navigationBarBackground : undefined}
                         onChangeFooterHeight={setFooterHeight}
                     >
                         {feedbackBasicContent}
