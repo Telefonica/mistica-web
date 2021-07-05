@@ -139,7 +139,14 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
             const req = window.requestAnimationFrame(() => {
                 if (wrapperElRef.current) {
                     const childrenWidths = Array.from(wrapperElRef.current.children).map((el) =>
-                        el.classList.contains(classes.link) ? 0 : el.getBoundingClientRect().width
+                        /*
+                        We are using offsetWidth instead of getBoundingClientRect().width because
+                        getBoundingClientRect returns the scaled size when the element has some CSS transform applied.
+
+                        getBoundingClientRect returns a float (eg: 268.65625) and offsetWidth an integer (eg: 268)
+                        The `+1` is important, it rounds up the size to avoid unwanted text truncation with ellipsis.
+                        */
+                        el.classList.contains(classes.link) ? 0 : (el as HTMLElement).offsetWidth + 1
                     );
                     const maxChildWidth = Math.ceil(Math.max(...childrenWidths, BUTTON_MIN_WIDTH));
                     updateButtonWidth(maxChildWidth);
@@ -160,6 +167,22 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
 
     useOnChildrenChangeEffect(wrapperElRef.current, calcLayout);
     useOnFontsReadyEffect(calcLayout);
+
+    /**
+     * Listening to focus/visibility change solves a corner that can be reproduced in Novum iOS webviews. Just after logging in,
+     * wait until everything loads (including hidden tabs), after a while, open Account tab (Mis productos) and the button appears
+     * with ellipsis, even it has enough space.
+     */
+    React.useEffect(() => {
+        window.addEventListener('resize', calcLayout);
+        window.addEventListener('focus', calcLayout);
+        document.addEventListener('visibilitychange', calcLayout);
+        return () => {
+            window.removeEventListener('resize', calcLayout);
+            window.removeEventListener('focus', calcLayout);
+            document.removeEventListener('visibilitychange', calcLayout);
+        };
+    }, [calcLayout]);
 
     const sortedButtons = React.Children.toArray(children).sort((b1: any, b2: any) => {
         const range1 = buttonsRange.indexOf(b1.type);

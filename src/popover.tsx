@@ -68,7 +68,6 @@ const useStyles = createUseStyles((theme) => {
         boxContainer: {
             position: 'relative',
             display: 'flex',
-            minHeight: 80,
             justifyContent: 'space-between',
         },
 
