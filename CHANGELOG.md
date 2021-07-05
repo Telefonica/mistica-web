@@ -1,3 +1,18 @@
+# [9.7.0](https://github.com/Telefonica/mistica-web/compare/v9.6.0...v9.7.0) (2021-07-05)
+
+
+### Bug Fixes
+
+* **ButtonLayout:** solve different issues where button text was truncated ([61b2d33](https://github.com/Telefonica/mistica-web/commit/61b2d33272d1bad435a7f27a5686dfaf2e4c13fb))
+* **FeedbackScreen:** text animation ([#294](https://github.com/Telefonica/mistica-web/issues/294)) ([1bb3264](https://github.com/Telefonica/mistica-web/commit/1bb3264ad823aab4c00e3e7bc6df51160bd9d384))
+* **Popover:** asset alignment ([#296](https://github.com/Telefonica/mistica-web/issues/296)) ([5657c8b](https://github.com/Telefonica/mistica-web/commit/5657c8bb99a6e1ebc0b53c650e6614c8f2479912))
+* **types:** remove implicit children prop from some components ([#291](https://github.com/Telefonica/mistica-web/issues/291)) ([fd29b06](https://github.com/Telefonica/mistica-web/commit/fd29b06adb83c53b8333bd0e547bf06548b637c7))
+
+
+### Features
+
+* **Icons:** Update mistica icons ([7186574](https://github.com/Telefonica/mistica-web/commit/718657498659f42b20dfcf2db08aed558470aa4f))
+
 # [9.6.0](https://github.com/Telefonica/mistica-web/compare/v9.5.1...v9.6.0) (2021-06-25)
 
 
