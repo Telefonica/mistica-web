@@ -10,6 +10,7 @@ declare type FeedbackProps = {|
   link?: React.Element<typeof ButtonLink>,
   description?: string | Array<string>,
   children?: React.Node,
+  unstable_inlineInDesktop?: boolean,
 |};
 declare type FeedbackScreenProps = {|
   ...$Exact<FeedbackProps>,

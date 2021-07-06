@@ -19,6 +19,9 @@ import {Theme} from './theme';
 import {Text6, Text4} from './text';
 import Box from './box';
 import ResponsiveLayout from './responsive-layout';
+import GridLayout from './grid-layout';
+import ButtonLayout from './button-layout';
+import Stack from './stack';
 
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) && !isRunningAcceptanceTest(platformOverrides);
@@ -79,6 +82,9 @@ const useStyles = createUseStyles((theme) => ({
     innerContainer: {
         textAlign: 'left',
         padding: '64px 8px 16px',
+        [theme.mq.tabletOrBigger]: {
+            padding: '64px 0 32px',
+        },
     },
 
     iconContainer: {
@@ -103,18 +109,6 @@ const useStyles = createUseStyles((theme) => ({
         marginTop: 16,
         animation: animateText(theme.platformOverrides),
         opacity: initialTextOpacity(theme.platformOverrides),
-    },
-
-    [theme.mq.tabletOrBigger]: {
-        innerContainer: {
-            padding: '64px 0 32px',
-        },
-        description: {
-            maxWidth: 456,
-        },
-        title: {
-            maxWidth: 344,
-        },
     },
 }));
 
@@ -150,6 +144,7 @@ interface FeedbackProps {
     link?: React.ReactElement<typeof ButtonLink>;
     description?: string | Array<string>;
     children?: React.ReactNode;
+    unstable_inlineInDesktop?: boolean;
 }
 
 interface FeedbackScreenProps extends FeedbackProps {
@@ -168,6 +163,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     hapticFeedback,
     icon,
     animateText = false,
+    unstable_inlineInDesktop,
 }) => {
     useHapticFeedback(hapticFeedback);
     const isInverse = useIsInverseVariant();
@@ -198,56 +194,72 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
             ? description.map((paragraph, i) => <p key={i}>{paragraph}</p>)
             : description;
 
-    const feedbackBasicContent = (
+    const feedbackBody = (
+        <>
+            {!!icon && <div className={classes.iconContainer}>{icon}</div>}
+            <div className={classes.title}>
+                <Text6 as="h1">{title}</Text6>
+            </div>
+            {normalizedDescription && (
+                <Box paddingTop={16} className={classes.description}>
+                    <Text4 light color={colors.textSecondary}>
+                        {normalizedDescription}
+                    </Text4>
+                </Box>
+            )}
+            {children && <div className={classes.childrenContainer}>{children}</div>}
+        </>
+    );
+
+    if (!isMobile && unstable_inlineInDesktop) {
+        return (
+            <Stack space={32}>
+                <>{feedbackBody}</>
+                <ButtonLayout link={link}>
+                    {primaryButton}
+                    {secondaryButton}
+                </ButtonLayout>
+            </Stack>
+        );
+    }
+
+    const feedbackContent = (
         <div className={classes.container}>
             <ResponsiveLayout>
-                <div className={classes.innerContainer}>
-                    {!!icon && <div className={classes.iconContainer}>{icon}</div>}
-                    <div className={classes.title}>
-                        <Text6 as="h1">{title}</Text6>
-                    </div>
-                    {normalizedDescription && (
-                        <Box paddingTop={16} className={classes.description}>
-                            <Text4 light color={colors.textSecondary}>
-                                {normalizedDescription}
-                            </Text4>
-                        </Box>
-                    )}
-                    {children && <div className={classes.childrenContainer}>{children}</div>}
-                </div>
+                <GridLayout
+                    template="6+6"
+                    left={<div className={classes.innerContainer}>{feedbackBody}</div>}
+                    right={null}
+                ></GridLayout>
             </ResponsiveLayout>
         </div>
     );
 
     const hasButtons = !!primaryButton || !!secondaryButton;
 
-    const content = (
-        <div style={{position: 'relative'}}>
-            <div className={classes.footer}>
-                {hasButtons ? (
-                    <ButtonFixedFooterLayout
-                        button={primaryButton}
-                        secondaryButton={secondaryButton}
-                        link={link}
-                        footerBgColor={isInverse ? colors.backgroundFeedbackBottom : undefined}
-                        containerBgColor={isInverse ? colors.navigationBarBackground : undefined}
-                        onChangeFooterHeight={setFooterHeight}
-                    >
-                        {feedbackBasicContent}
-                    </ButtonFixedFooterLayout>
-                ) : (
-                    feedbackBasicContent
-                )}
-            </div>
-            {isMobile && hasButtons && <div className={classes.backgroundDiv} />}
-        </div>
-    );
-
     return (
-        <ThemeVariant isInverse={isInverse}>
+        <>
             {isInverse && <OverscrollColor />}
-            {content}
-        </ThemeVariant>
+            <div style={{position: 'relative'}}>
+                <div className={classes.footer}>
+                    {hasButtons ? (
+                        <ButtonFixedFooterLayout
+                            button={primaryButton}
+                            secondaryButton={secondaryButton}
+                            link={link}
+                            footerBgColor={isInverse ? colors.backgroundFeedbackBottom : undefined}
+                            containerBgColor={isInverse ? colors.navigationBarBackground : undefined}
+                            onChangeFooterHeight={setFooterHeight}
+                        >
+                            {feedbackContent}
+                        </ButtonFixedFooterLayout>
+                    ) : (
+                        feedbackContent
+                    )}
+                </div>
+                {isMobile && hasButtons && <div className={classes.backgroundDiv} />}
+            </div>
+        </>
     );
 };
 
