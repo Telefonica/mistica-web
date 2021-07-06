@@ -1,3 +1,10 @@
+# [9.8.0](https://github.com/Telefonica/mistica-web/compare/v9.7.0...v9.8.0) (2021-07-06)
+
+
+### Features
+
+* **FeedbackScreen:** unstable inlineInDesktop prop ([#297](https://github.com/Telefonica/mistica-web/issues/297)) ([1dfb8e8](https://github.com/Telefonica/mistica-web/commit/1dfb8e8a3ac996acfe3418cbbbd1f7f2454fc00d))
+
 # [9.7.0](https://github.com/Telefonica/mistica-web/compare/v9.6.0...v9.7.0) (2021-07-05)
 
 
