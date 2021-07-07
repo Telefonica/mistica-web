@@ -6,7 +6,7 @@ import {useTheme} from './hooks';
 import {isInsideNovumNativeApp} from './utils/platform';
 import {ENTER, SPACE} from './utils/key-codes';
 
-import type {TrackingEvent} from './utils/types';
+import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
 
 const redirect = (url: string, external = false): void => {
@@ -65,6 +65,8 @@ interface CommonProps {
     label?: string;
     /** @deprecated use dataAttributes */
     'data-testid'?: string;
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid",  */
+    dataAttributes?: DataAttributes;
     'aria-checked'?: 'true' | 'false' | boolean;
     'aria-controls'?: string;
     'aria-expanded'?: 'true' | 'false' | boolean;
@@ -73,8 +75,6 @@ interface CommonProps {
     role?: string;
     type?: 'button' | 'submit';
     tabIndex?: number;
-    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid",  */
-    dataAttributes: {[name: string]: string | number};
 }
 
 /*
@@ -126,8 +126,8 @@ export interface PropsMaybeOnPress extends CommonProps {
 
 type Props = PropsHref | PropsTo | PropsOnPress | PropsMaybeHref | PropsMaybeTo | PropsMaybeOnPress;
 
-const getDataAttributes = (attrs?: {[name: string]: string | number}) => {
-    const result: {[name: string]: string | number} = {};
+const getPrefixedDataAttributes = (attrs?: DataAttributes) => {
+    const result: DataAttributes = {};
     if (attrs) {
         Object.keys(attrs).forEach((key) => {
             result['data-' + key] = attrs[key];
@@ -163,7 +163,7 @@ const Touchable: React.FC<Props> = (props) => {
         'aria-hidden': props['aria-hidden'],
         'aria-selected': props['aria-selected'],
         tabIndex: props.tabIndex,
-        ...getDataAttributes(props.dataAttributes),
+        ...getPrefixedDataAttributes(props.dataAttributes),
     };
 
     const type = props.type ? props.type : 'button';

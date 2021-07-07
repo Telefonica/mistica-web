@@ -2,29 +2,26 @@
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 test.each`
-    device          | withIcon | useCurrentColorInIcon
-    ${'MOBILE_IOS'} | ${true}  | ${true}
-    ${'TABLET'}     | ${true}  | ${true}
-    ${'DESKTOP'}    | ${true}  | ${true}
-    ${'MOBILE_IOS'} | ${true}  | ${false}
-    ${'TABLET'}     | ${true}  | ${false}
-    ${'DESKTOP'}    | ${true}  | ${false}
-    ${'MOBILE_IOS'} | ${false} | ${false}
-    ${'TABLET'}     | ${false} | ${false}
-    ${'DESKTOP'}    | ${false} | ${false}
-`(
-    'Tabs in $device withIcon ($withIcon) and useCurrentColorInIcon ($useCurrentColorInIcon)',
-    async ({device, withIcon, useCurrentColorInIcon}) => {
-        await openStoryPage({
-            section: 'Components/Controls/Tabs',
-            name: 'Tabs',
-            device,
-            args: {withIcon, useCurrentColorInIcon},
-        });
-        const image = await (await screen.findByRole('tablist')).screenshot();
-        expect(image).toMatchImageSnapshot();
-    }
-);
+    device          | withIcon
+    ${'MOBILE_IOS'} | ${true}
+    ${'TABLET'}     | ${true}
+    ${'DESKTOP'}    | ${true}
+    ${'MOBILE_IOS'} | ${true}
+    ${'TABLET'}     | ${true}
+    ${'DESKTOP'}    | ${true}
+    ${'MOBILE_IOS'} | ${false}
+    ${'TABLET'}     | ${false}
+    ${'DESKTOP'}    | ${false}
+`('Tabs in $device withIcon ($withIcon)', async ({device, withIcon}) => {
+    await openStoryPage({
+        section: 'Components/Controls/Tabs',
+        name: 'Tabs',
+        device,
+        args: {withIcon},
+    });
+    const image = await (await screen.findByRole('tablist')).screenshot();
+    expect(image).toMatchImageSnapshot();
+});
 
 test('Tabs with large fontSize', async () => {
     await openStoryPage({
