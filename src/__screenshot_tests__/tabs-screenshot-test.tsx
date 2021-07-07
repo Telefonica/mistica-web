@@ -4,13 +4,10 @@ import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 test.each`
     device          | withIcon
     ${'MOBILE_IOS'} | ${true}
-    ${'TABLET'}     | ${true}
-    ${'DESKTOP'}    | ${true}
-    ${'MOBILE_IOS'} | ${true}
-    ${'TABLET'}     | ${true}
-    ${'DESKTOP'}    | ${true}
     ${'MOBILE_IOS'} | ${false}
+    ${'TABLET'}     | ${true}
     ${'TABLET'}     | ${false}
+    ${'DESKTOP'}    | ${true}
     ${'DESKTOP'}    | ${false}
 `('Tabs in $device withIcon ($withIcon)', async ({device, withIcon}) => {
     await openStoryPage({
