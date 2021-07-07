@@ -63,6 +63,7 @@ interface CommonProps {
     style?: React.CSSProperties;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     label?: string;
+    /** @deprecated use dataAttributes */
     'data-testid'?: string;
     'aria-checked'?: 'true' | 'false' | boolean;
     'aria-controls'?: string;
@@ -72,6 +73,8 @@ interface CommonProps {
     role?: string;
     type?: 'button' | 'submit';
     tabIndex?: number;
+    /** name should be "testid" instead of "data-testid", the "data-" prefix is automatically added */
+    dataAttributes: {[name: string]: string | number};
 }
 
 /*
@@ -123,6 +126,16 @@ export interface PropsMaybeOnPress extends CommonProps {
 
 type Props = PropsHref | PropsTo | PropsOnPress | PropsMaybeHref | PropsMaybeTo | PropsMaybeOnPress;
 
+const getDataAttributes = (attrs?: {[name: string]: string | number}) => {
+    const result: {[name: string]: string | number} = {};
+    if (attrs) {
+        Object.keys(attrs).forEach((key) => {
+            result['data-' + key] = attrs[key];
+        });
+    }
+    return result;
+};
+
 const Touchable: React.FC<Props> = (props) => {
     const {texts, analytics, platformOverrides, Link} = useTheme();
     const classes = useStyles();
@@ -150,6 +163,7 @@ const Touchable: React.FC<Props> = (props) => {
         'aria-hidden': props['aria-hidden'],
         'aria-selected': props['aria-selected'],
         tabIndex: props.tabIndex,
+        ...getDataAttributes(props.dataAttributes),
     };
 
     const type = props.type ? props.type : 'button';

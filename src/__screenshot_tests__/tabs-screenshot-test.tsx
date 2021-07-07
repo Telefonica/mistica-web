@@ -2,7 +2,7 @@
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 test.each`
-    device          | withIcon | withIconCurrentColor
+    device          | withIcon | useCurrentColorInIcon
     ${'MOBILE_IOS'} | ${true}  | ${true}
     ${'TABLET'}     | ${true}  | ${true}
     ${'DESKTOP'}    | ${true}  | ${true}
@@ -13,22 +13,14 @@ test.each`
     ${'TABLET'}     | ${false} | ${false}
     ${'DESKTOP'}    | ${false} | ${false}
 `(
-    'Tabs in $device withIcon ($withIcon) and withIconCurrentColor ($withIconCurrentColor)',
-    async ({device, withIcon, withIconCurrentColor}) => {
-        const page = await openStoryPage({
+    'Tabs in $device withIcon ($withIcon) and useCurrentColorInIcon ($useCurrentColorInIcon)',
+    async ({device, withIcon, useCurrentColorInIcon}) => {
+        await openStoryPage({
             section: 'Components/Controls/Tabs',
-            name: 'Default',
+            name: 'Tabs',
             device,
+            args: {withIcon, useCurrentColorInIcon},
         });
-
-        if (withIcon) {
-            await page.click(await screen.findByText('With icons'));
-        }
-
-        if (withIconCurrentColor) {
-            await page.click(await screen.findByText('With icon color="currentColor"'));
-        }
-
         const image = await (await screen.findByRole('tablist')).screenshot();
         expect(image).toMatchImageSnapshot();
     }
@@ -37,7 +29,7 @@ test.each`
 test('Tabs with large fontSize', async () => {
     await openStoryPage({
         section: 'Components/Controls/Tabs',
-        name: 'Default',
+        name: 'Tabs',
         device: 'MOBILE_IOS',
     });
 
