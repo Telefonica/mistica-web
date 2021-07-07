@@ -73,7 +73,7 @@ interface CommonProps {
     role?: string;
     type?: 'button' | 'submit';
     tabIndex?: number;
-    /** name should be "testid" instead of "data-testid", the "data-" prefix is automatically added */
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid",  */
     dataAttributes: {[name: string]: string | number};
 }
 
