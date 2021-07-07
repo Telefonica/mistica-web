@@ -89,6 +89,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         width: pxToRem(24),
     },
     animatedLine: {
+        display: 'none', // will be overriden by inline styles in animateLine function
         position: 'absolute',
         left: 0,
         bottom: 0,
