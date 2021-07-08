@@ -52,12 +52,13 @@ const useStyles = createUseStyles((theme) => ({
     backgroundDiv: {
         position: 'absolute',
         bottom: ({footerHeight}) => footerHeight,
-        marginBottom: -1, // workaround, whithout this an horizontal line appears at the bottom
         top: 0,
         left: 0,
         right: 0,
         [theme.mq.mobile]: {
-            height: ({contentHeight}) => contentHeight,
+            // This + 1px is a workaround to make sure the background div is displayed *under* the fixed footer.
+            // Otherwise in some devices (Galaxy S20+) the background and the fixed footer have some distance
+            height: ({contentHeight}) => `calc(${contentHeight} + 1px)`,
         },
         background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : theme.colors.background),
     },
