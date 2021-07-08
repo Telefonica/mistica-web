@@ -5,3 +5,5 @@ export type TrackingEvent = {
     readonly label?: string;
     readonly value?: number;
 };
+
+export type DataAttributes = {[name: string]: string | number | boolean | undefined};

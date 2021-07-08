@@ -8,3 +8,4 @@ export type TrackingEvent = {
   +value?: number,
   ...
 };
+export type DataAttributes = { [name: string]: string | number | boolean | void, ... };

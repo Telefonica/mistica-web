@@ -6,7 +6,7 @@ import {useTheme} from './hooks';
 import {isInsideNovumNativeApp} from './utils/platform';
 import {ENTER, SPACE} from './utils/key-codes';
 
-import type {TrackingEvent} from './utils/types';
+import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
 
 const redirect = (url: string, external = false): void => {
@@ -63,7 +63,10 @@ interface CommonProps {
     style?: React.CSSProperties;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     label?: string;
+    /** @deprecated use dataAttributes */
     'data-testid'?: string;
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid",  */
+    dataAttributes?: DataAttributes;
     'aria-checked'?: 'true' | 'false' | boolean;
     'aria-controls'?: string;
     'aria-expanded'?: 'true' | 'false' | boolean;
@@ -123,6 +126,16 @@ export interface PropsMaybeOnPress extends CommonProps {
 
 type Props = PropsHref | PropsTo | PropsOnPress | PropsMaybeHref | PropsMaybeTo | PropsMaybeOnPress;
 
+const getPrefixedDataAttributes = (attrs?: DataAttributes) => {
+    const result: DataAttributes = {};
+    if (attrs) {
+        Object.keys(attrs).forEach((key) => {
+            result['data-' + key] = attrs[key];
+        });
+    }
+    return result;
+};
+
 const Touchable: React.FC<Props> = (props) => {
     const {texts, analytics, platformOverrides, Link} = useTheme();
     const classes = useStyles();
@@ -150,6 +163,7 @@ const Touchable: React.FC<Props> = (props) => {
         'aria-hidden': props['aria-hidden'],
         'aria-selected': props['aria-selected'],
         tabIndex: props.tabIndex,
+        ...getPrefixedDataAttributes(props.dataAttributes),
     };
 
     const type = props.type ? props.type : 'button';

@@ -4,6 +4,8 @@ import {MOVISTAR_SKIN} from '../skins/constants';
 
 import type {Page, ElementHandle, ClickOptions, ScreenshotOptions, Browser, Viewport} from 'puppeteer';
 
+type StoryArgs = {[key: string]: string | number | boolean};
+
 // TODO find a way to define global vars
 const globalBrowser: Browser = (global as any).browser;
 const globalPage: Page = (global as any).page;
@@ -159,7 +161,7 @@ const watermarkIfNeeded = async (bufferPromise: Promise<Buffer | string>): Promi
     return image.getBufferAsync(jimp.MIME_PNG);
 };
 
-const buildStoryUrl = (section: string, name: string, skin?: string, platform?: string) => {
+const buildStoryUrl = (section: string, name: string, skin?: string, platform?: string, args?: StoryArgs) => {
     const params = new URLSearchParams();
     params.set('selectedKind', section);
     params.set('selectedStory', name);
@@ -169,7 +171,12 @@ const buildStoryUrl = (section: string, name: string, skin?: string, platform?: 
     if (platform) {
         params.set('platform', platform);
     }
-    return `http://${HOST}:6006/iframe.html?${params.toString()}`;
+    const argsParam = args
+        ? `&args=${Object.entries(args)
+              .map(([key, value]) => encodeURIComponent(`${key}:${value}`))
+              .join(';')}`
+        : '';
+    return `http://${HOST}:6006/iframe.html?${params.toString()}${argsParam}`;
 };
 
 export type PageApi = {
@@ -292,14 +299,16 @@ export const openStoryPage = ({
     device = TABLET_DEVICE,
     skin = 'Movistar',
     userAgent,
+    args,
 }: {
     section: string;
     name: string;
     device?: Device;
     skin?: 'Movistar' | 'Vivo' | 'O2' | 'O2-classic';
     userAgent?: string;
+    args?: StoryArgs;
 }): Promise<PageApi> => {
-    const url = buildStoryUrl(section, name, skin, DEVICES[device].platform);
+    const url = buildStoryUrl(section, name, skin, DEVICES[device].platform, args);
     return openPage({url, device, userAgent});
 };
 
