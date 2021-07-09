@@ -56,8 +56,8 @@ const useStyles = createUseStyles((theme) => ({
         left: 0,
         right: 0,
         [theme.mq.mobile]: {
-            // This + 1px is a workaround to make sure the background div is displayed *under* the fixed footer.
-            // Otherwise in some devices (Galaxy S20+) the background and the fixed footer have some distance
+            // This extra height is a workaround to make sure the background div is displayed *under* the fixed footer.
+            // Otherwise in some devices (Galaxy S20+) the background and the fixed footer are rendered with some distance between them
             height: ({contentHeight}) => `calc(${contentHeight} + 1px)`,
         },
         background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : theme.colors.background),
