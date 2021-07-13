@@ -1,3 +1,15 @@
+# [9.9.0](https://github.com/Telefonica/mistica-web/compare/v9.8.0...v9.9.0) (2021-07-13)
+
+
+### Bug Fixes
+
+* **FeedbackScreen:** avoid separation between background and fixed part ([2e21a79](https://github.com/Telefonica/mistica-web/commit/2e21a795955fe32d94681eb854bf1646daad3dc2))
+
+
+### Features
+
+* **Tabs:** Animate bottom line on tab change ([b8bed33](https://github.com/Telefonica/mistica-web/commit/b8bed3373605ec4861caed029e731795b75b7866))
+
 # [9.8.0](https://github.com/Telefonica/mistica-web/compare/v9.7.0...v9.8.0) (2021-07-06)
 
 
