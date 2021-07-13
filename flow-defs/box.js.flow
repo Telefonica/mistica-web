@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from "react";
+import type { DataAttributes } from "./utils/types";
 declare type PadSize =
   | 0
   | 2
@@ -30,6 +31,7 @@ declare type Props = {
   role?: string,
   "data-testid"?: string,
   "data-qsysid"?: string,
+  dataAttributes?: DataAttributes,
 };
 declare var Box: React.ComponentType<Props>;
 declare export default typeof Box;

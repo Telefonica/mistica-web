@@ -2,8 +2,9 @@ import * as React from 'react';
 import classNames from 'classnames';
 import {createUseStyles} from './jss';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
-import {DataAttributes} from './utils/types';
 import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 type StylesProps = {
     isInverseInside: boolean;

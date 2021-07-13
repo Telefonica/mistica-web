@@ -1,5 +1,6 @@
 import {isServerSide} from './environment';
-import {DataAttributes} from './types';
+
+import type {DataAttributes} from './types';
 
 /**
  * Returns true if provided type is supported <input> type
