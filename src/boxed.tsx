@@ -2,6 +2,8 @@ import * as React from 'react';
 import classNames from 'classnames';
 import {createUseStyles} from './jss';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import {DataAttributes} from './utils/types';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 type StylesProps = {
     isInverseInside: boolean;
@@ -34,8 +36,12 @@ type Props = {
     isInverse?: boolean;
     className?: string;
     role?: string;
+    // @deprecated use dataAttributes
     'data-testid'?: string;
+    // @deprecated use dataAttributes
     'data-qsysid'?: string;
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid",  */
+    dataAttributes?: DataAttributes;
 };
 
 export const Boxed: React.FC<Props> = ({
@@ -43,13 +49,21 @@ export const Boxed: React.FC<Props> = ({
     isInverse: isInverseInside = false,
     className,
     role,
-    ...dataProps
+    'data-testid': dataTestId,
+    'data-qsysid': dataQsysId,
+    dataAttributes,
 }) => {
     const isInverseOutside = useIsInverseVariant();
     const classes = useStyles({isInverseOutside, isInverseInside} as StylesProps);
 
     return (
-        <div className={classNames(className, classes.boxed)} role={role} {...dataProps}>
+        <div
+            className={classNames(className, classes.boxed)}
+            role={role}
+            data-testid={dataTestId}
+            data-qsysid={dataQsysId}
+            {...getPrefixedDataAttributes(dataAttributes)}
+        >
             <ThemeVariant isInverse={isInverseInside}>{children}</ThemeVariant>
         </div>
     );

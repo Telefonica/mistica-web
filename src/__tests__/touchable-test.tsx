@@ -178,7 +178,12 @@ test('<a> element is rendered when "href" prop is passed and trackingEvent', asy
 
     render(
         <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
-            <Touchable data-testid="touchable-events" href={href} newTab trackingEvent={trackingEvent}>
+            <Touchable
+                dataAttributes={{testid: 'touchable-events'}}
+                href={href}
+                newTab
+                trackingEvent={trackingEvent}
+            >
                 Test
             </Touchable>
         </ThemeContextProvider>
@@ -203,7 +208,7 @@ test('<a> element is rendered when "href" prop is passed and multiple trackingEv
     render(
         <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
             <Touchable
-                data-testid="touchable-events"
+                dataAttributes={{testid: 'touchable-events'}}
                 href={href}
                 newTab
                 trackingEvent={[trackingEvent, trackingEvent]}

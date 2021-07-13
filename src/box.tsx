@@ -1,6 +1,9 @@
 import React from 'react';
 import {createUseStyles} from './jss';
 import classnames from 'classnames';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 const useStyles = createUseStyles(() => ({
     box: {
@@ -23,8 +26,11 @@ type Props = {
     children?: React.ReactNode;
     className?: string;
     role?: string;
+    // @deprecated use dataAttributes
     'data-testid'?: string;
+    // @deprecated use dataAttributes
     'data-qsysid'?: string;
+    dataAttributes?: DataAttributes;
 };
 
 const Box: React.FC<Props> = ({
@@ -39,7 +45,9 @@ const Box: React.FC<Props> = ({
     paddingLeft = paddingX,
     paddingRight = paddingX,
     role,
-    ...dataProps
+    'data-testid': dataTestId,
+    'data-qsysid': dataQsysId,
+    dataAttributes,
 }) => {
     const classes = useStyles({
         padding: `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`,
@@ -48,8 +56,9 @@ const Box: React.FC<Props> = ({
 
     return (
         <div
-            data-testid={dataProps['data-testid']}
-            data-qsysid={dataProps['data-qsysid']}
+            data-testid={dataTestId}
+            data-qsysid={dataQsysId}
+            {...getPrefixedDataAttributes(dataAttributes)}
             className={classnames(className, classes.box)}
             role={role}
         >
