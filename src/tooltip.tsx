@@ -262,7 +262,6 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
                 <Portal>
                     <Overlay onPress={handleClickOutside} />
                     <div
-                        data-testid="tooltip-container"
                         role="tooltip"
                         id={ariaId}
                         className={classes.container}

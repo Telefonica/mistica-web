@@ -1,5 +1,7 @@
 // @flow
 
+import type { DataAttributes } from "./types";
+
 /**
  * Returns true if provided type is supported <input> type
  */
@@ -19,3 +21,11 @@ declare export var removePassiveEventListener: (
   eventName: string,
   listener: (e: any) => void
 ) => void;
+/**
+ * Prefixes given attributes with `data-`
+ *
+ * For example: `{foo: 'bar'}` => `{data-foo: 'bar'}`
+ */
+declare export var getPrefixedDataAttributes: (
+  attrs?: DataAttributes | void
+) => DataAttributes;

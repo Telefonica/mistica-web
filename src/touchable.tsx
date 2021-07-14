@@ -8,6 +8,7 @@ import {ENTER, SPACE} from './utils/key-codes';
 
 import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 const redirect = (url: string, external = false): void => {
     if (external) {
@@ -65,7 +66,7 @@ interface CommonProps {
     label?: string;
     /** @deprecated use dataAttributes */
     'data-testid'?: string;
-    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid",  */
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-checked'?: 'true' | 'false' | boolean;
     'aria-controls'?: string;
@@ -125,16 +126,6 @@ export interface PropsMaybeOnPress extends CommonProps {
 }
 
 type Props = PropsHref | PropsTo | PropsOnPress | PropsMaybeHref | PropsMaybeTo | PropsMaybeOnPress;
-
-const getPrefixedDataAttributes = (attrs?: DataAttributes) => {
-    const result: DataAttributes = {};
-    if (attrs) {
-        Object.keys(attrs).forEach((key) => {
-            result['data-' + key] = attrs[key];
-        });
-    }
-    return result;
-};
 
 const Touchable: React.FC<Props> = (props) => {
     const {texts, analytics, platformOverrides, Link} = useTheme();

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import Touchable from './touchable';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {TrackingEvent} from './utils/types';
+import type {DataAttributes, TrackingEvent} from './utils/types';
 
 const ICON_SIZE_1 = 24;
 
@@ -39,7 +40,10 @@ interface CommonProps {
     size?: number | string;
     style?: React.CSSProperties;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    /** @deprecated use dataAttributes */
     'data-testid'?: string;
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
+    dataAttributes?: DataAttributes;
     newTab?: boolean;
 }
 
@@ -93,17 +97,13 @@ const IconButton: React.FC<Props> = (props) => {
             ...props.style,
         },
         trackingEvent: props.trackingEvent,
+        'data-testid': props['data-testid'],
+        ...getPrefixedDataAttributes(props.dataAttributes),
     };
 
     if (props.href) {
         return (
-            <Touchable
-                data-testid={props['data-testid']}
-                {...commonProps}
-                href={props.href}
-                newTab={props.newTab}
-                label={props.label}
-            >
+            <Touchable {...commonProps} href={props.href} newTab={props.newTab} label={props.label}>
                 {!icon && React.Children.only(children)}
             </Touchable>
         );
@@ -111,7 +111,6 @@ const IconButton: React.FC<Props> = (props) => {
     if (props.to) {
         return (
             <Touchable
-                data-testid={props['data-testid']}
                 {...commonProps}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
@@ -125,19 +124,14 @@ const IconButton: React.FC<Props> = (props) => {
 
     if (props.onPress) {
         return (
-            <Touchable
-                data-testid={props['data-testid']}
-                {...commonProps}
-                onPress={props.onPress}
-                label={props.label}
-            >
+            <Touchable {...commonProps} onPress={props.onPress} label={props.label}>
                 {!icon && React.Children.only(children)}
             </Touchable>
         );
     }
 
     return (
-        <Touchable {...commonProps} maybe data-testid={props['data-testid']}>
+        <Touchable {...commonProps} maybe>
             {!icon && React.Children.only(children)}
         </Touchable>
     );

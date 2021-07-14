@@ -50,7 +50,7 @@ export interface CommonFormFieldProps {
     name: string;
     optional?: boolean;
     maxLength?: number;
-    // use `inputProps` to pass props (as attributes) to the input element, for example a data-testid
+    /** @deprecated */
     inputProps?: {[prop: string]: string | number | undefined};
     validate?: FieldValidator;
     autoComplete?: AutoComplete;
@@ -95,7 +95,6 @@ interface TextFieldBaseProps {
     onBlur?: (event: React.FocusEvent) => void;
     onFocus?: (event: React.FocusEvent) => void;
     onKeyDown?: (event: React.KeyboardEvent) => void;
-    // to pass custom props (eg: data attributes) to input element,
     inputProps?: {[name: string]: string | number | undefined};
     inputComponent?: React.ComponentType<any>;
     shrinkLabel?: boolean;

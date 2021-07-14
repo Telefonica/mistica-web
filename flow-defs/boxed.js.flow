@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from "react";
+import type { DataAttributes } from "./utils/types";
 declare type Props = {
   children: React.Node,
   isInverse?: boolean,
@@ -8,6 +9,11 @@ declare type Props = {
   role?: string,
   "data-testid"?: string,
   "data-qsysid"?: string,
+
+  /**
+   * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
+   */
+  dataAttributes?: DataAttributes,
 };
 declare export var Boxed: React.ComponentType<Props>;
 declare export {};

@@ -236,7 +236,7 @@ interface CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     /** @deprecated use dataAttributes */
     'data-testid'?: string;
-    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid",  */
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-controls'?: string;
     'aria-expanded'?: 'true' | 'false';
@@ -454,7 +454,7 @@ interface ButtonLinkCommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     /** @deprecated use dataAttributes */
     'data-testid'?: string;
-    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid",  */
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     aligned?: boolean;
 }

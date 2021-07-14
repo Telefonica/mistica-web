@@ -89,23 +89,23 @@ test('fields are disabled during submit', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <Form onSubmit={handleSubmitSpy}>
-                <TextField inputProps={{'data-testid': 'username'}} label="Username" name="username" />
+                <TextField label="Username" name="username" />
                 <ButtonPrimary submit>Submit</ButtonPrimary>
             </Form>
         </ThemeContextProvider>
     );
 
-    await userEvent.type(screen.getByTestId('username'), 'pepito');
+    await userEvent.type(screen.getByLabelText('Username'), 'pepito');
     userEvent.click(screen.getByText('Submit'));
 
-    expect(screen.getByTestId('username')).toBeDisabled();
+    expect(screen.getByLabelText('Username')).toBeDisabled();
     expect(screen.getByRole('button')).toBeDisabled();
     expect(screen.getByText('Submit')).not.toBeVisible();
 
     resolveSubmitPromise();
 
     await waitFor(() => {
-        expect(screen.getByTestId('username')).not.toBeDisabled();
+        expect(screen.getByLabelText('Username')).not.toBeDisabled();
         expect(screen.getByText('Submit')).not.toBeDisabled();
     });
 });

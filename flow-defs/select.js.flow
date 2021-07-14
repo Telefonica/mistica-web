@@ -9,6 +9,9 @@ export type SelectProps = {
   label: string,
   name: string,
   optional?: boolean,
+  /**
+   * @deprecated
+   */
   inputProps?: { [prop: string]: string, ... },
   validate?: (value: string | void, rawValue: string | void) => string | void,
   onChangeValue?: (value: string) => void,

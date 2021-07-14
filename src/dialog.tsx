@@ -149,7 +149,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
 
     const mainButtonProps = {
         onPress: handleAccept ? handleAccept : () => {},
-        'data-testid': 'dialog-accept-button',
+        dataAttributes: {testid: 'dialog-accept-button'},
         children: acceptText,
     };
 
@@ -179,7 +179,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
                         <ButtonSecondary
                             tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
                             onPress={handleCancel}
-                            data-testid="dialog-cancel-button"
+                            dataAttributes={{testid: 'dialog-cancel-button'}}
                         >
                             {cancelText}
                         </ButtonSecondary>

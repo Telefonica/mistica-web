@@ -1,5 +1,7 @@
 import {isServerSide} from './environment';
 
+import type {DataAttributes} from './types';
+
 /**
  * Returns true if provided type is supported <input> type
  */
@@ -54,3 +56,18 @@ export const removePassiveEventListener = (
     eventName: string,
     listener: (e: any) => void
 ): void => el.removeEventListener(eventName, listener, false);
+
+/**
+ * Prefixes given attributes with `data-`
+ *
+ * For example: `{foo: 'bar'}` => `{data-foo: 'bar'}`
+ */
+export const getPrefixedDataAttributes = (attrs?: DataAttributes): DataAttributes => {
+    const result: DataAttributes = {};
+    if (attrs) {
+        Object.keys(attrs).forEach((key) => {
+            result['data-' + key] = attrs[key];
+        });
+    }
+    return result;
+};
