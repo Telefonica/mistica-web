@@ -41,7 +41,7 @@ type Props = {
     'data-testid'?: string;
     // @deprecated use dataAttributes
     'data-qsysid'?: string;
-    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid",  */
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
 };
 

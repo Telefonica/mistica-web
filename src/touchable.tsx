@@ -66,7 +66,7 @@ interface CommonProps {
     label?: string;
     /** @deprecated use dataAttributes */
     'data-testid'?: string;
-    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid",  */
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-checked'?: 'true' | 'false' | boolean;
     'aria-controls'?: string;

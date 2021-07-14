@@ -42,7 +42,7 @@ interface CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     /** @deprecated use dataAttributes */
     'data-testid'?: string;
-    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid",  */
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     newTab?: boolean;
 }
