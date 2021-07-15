@@ -12,7 +12,7 @@
 - [ResponsiveLayout](#responsivelayout)
 - [HeaderLayout](#headerlayout)
 - [GridLayout](#gridlayout)
-- [Basic](#basic)
+  - [Basic](#basic)
   - [Grid template 6+6](#grid-template-66)
   - [Grid template 8+4](#grid-template-84)
 - [MasterDetailLayout](#masterdetaillayout)
@@ -159,7 +159,7 @@ The `HeaderLayout` is responsible for render the page header and related compone
 The `GridLayout` uses defines a grid with a set of columns where you can place your components. Different
 screen sizes will have different number of columns. This component must be used inside a `ResponsiveLayout`
 
-## Basic
+### Basic
 
 ```tsx
 <ResponsiveLayout>
