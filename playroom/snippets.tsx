@@ -590,6 +590,82 @@ const layoutSnippets: Array<Snippet> = [
         name: 'GridLayout 8+4',
         code: '<ResponsiveLayout><GridLayout template="8+4" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
     },
+    {
+        name: 'MasterDetailLayout',
+        code: `
+<Box paddingY={24}>
+  <MasterDetailLayout
+    isOpen={!!getState("selectedItem")}
+    master={
+      <Stack space={32}>
+        {[
+          {
+            categoryName: "Personal information",
+            settings: [
+              { title: "Personal details", icon: <IconUserAccountRegular /> },
+              { title: "Security", icon: <IconLockClosedRegular /> },
+              {
+                title: "Payment methods",
+                icon: <IconCreditCardVisaRegular />,
+              },
+            ],
+          },
+          {
+            categoryName: "Configuration",
+            settings: [
+              { title: "Notifications", icon: <IconProgramAlarmRegular /> },
+              { title: "FAQs", icon: <IconSupportAgentRegular /> },
+              { title: "About", icon: <IconInformationUserRegular /> },
+            ],
+          },
+        ].map((category) => (
+          <Stack key={category.categoryName} space={8}>
+            <SectionTitle>{category.categoryName}</SectionTitle>
+            <NegativeBox>
+              <RowList>
+                {category.settings.map((setting) => (
+                  <Row
+                    key={setting.title}
+                    title={setting.title}
+                    icon={setting.icon}
+                    iconSize={24}
+                    onPress={() => {
+                      setState("selectedItem", setting.title);
+                    }}
+                  />
+                ))}
+              </RowList>
+            </NegativeBox>
+          </Stack>
+        ))}
+      </Stack>
+    }
+    detail={
+      getState("selectedItem") ? (
+        <Stack space={16}>
+          <Text4 as="h2" medium>
+            {getState("selectedItem")}
+          </Text4>
+          <Text2 regular>
+            You are inside {getState("selectedItem")} section
+          </Text2>
+          <Placeholder />
+          <ButtonPrimary
+            small
+            onPress={() => {
+              setState("selectedItem", null);
+            }}
+          >
+            Close
+          </ButtonPrimary>
+        </Stack>
+      ) : (
+        <Text2 regular>Select one of the sections from the sidebar</Text2>
+      )
+    }
+  />
+</Box>`,
+    },
 ].map((snippet) => ({...snippet, group: 'Layouts'}));
 
 const emptyStatesGroup: Array<Snippet> = [
@@ -626,67 +702,79 @@ const exampleScreens: Array<Snippet> = [
       </MainSectionHeaderLayout>
       
       <Box paddingY={24}>
-        <ResponsiveLayout>
-          <Stack space={32}>
-            <Stack space={8}>
-              <SectionTitle>Personal information</SectionTitle>
-              <NegativeBox>
-                <RowList>
-                  <Row
-                    icon={<IconUserAccountRegular />}
-                    iconSize={24}
-                    title="Personal details"
-                    onPress={() => {}}
-                  />
-                  <Row
-                    icon={<IconLockClosedRegular />}
-                    iconSize={24}
-                    title="Security"
-                    onPress={() => {}}
-                  />
-                  <Row
-                    icon={<IconCreditCardVisaRegular />}
-                    iconSize={24}
-                    title="Payment methods"
-                    onPress={() => {}}
-                  />
-                </RowList>
-              </NegativeBox>
+        <MasterDetailLayout
+          isOpen={!!getState("selectedItem")}
+          master={
+            <Stack space={32}>
+              {[
+                {
+                  categoryName: "Personal information",
+                  settings: [
+                    {
+                      title: "Personal details",
+                      icon: <IconUserAccountRegular />,
+                    },
+                    { title: "Security", icon: <IconLockClosedRegular /> },
+                    {
+                      title: "Payment methods",
+                      icon: <IconCreditCardVisaRegular />,
+                    },
+                  ],
+                },
+                {
+                  categoryName: "Configuration",
+                  settings: [
+                    { title: "Notifications", icon: <IconProgramAlarmRegular /> },
+                    { title: "FAQs", icon: <IconSupportAgentRegular /> },
+                    { title: "About", icon: <IconInformationUserRegular /> },
+                  ],
+                },
+              ].map((category) => (
+                <Stack key={category.categoryName} space={8}>
+                  <SectionTitle>{category.categoryName}</SectionTitle>
+                  <NegativeBox>
+                    <RowList>
+                      {category.settings.map((setting) => (
+                        <Row
+                          key={setting.title}
+                          title={setting.title}
+                          icon={setting.icon}
+                          iconSize={24}
+                          onPress={() => {
+                            setState("selectedItem", setting.title);
+                          }}
+                        />
+                      ))}
+                    </RowList>
+                  </NegativeBox>
+                </Stack>
+              ))}
             </Stack>
-      
-            <Stack space={8}>
-              <SectionTitle>Configuration</SectionTitle>
-              <NegativeBox>
-                <RowList>
-                  <Row
-                    icon={<IconProgramAlarmRegular />}
-                    iconSize={24}
-                    title="Notifications"
-                    onPress={() => {}}
-                  />
-                  <Row
-                    icon={<IconSupportAgentRegular />}
-                    iconSize={24}
-                    title="FAQs"
-                    onPress={() => {}}
-                  />
-                  <Row
-                    icon={<IconInformationUserRegular />}
-                    iconSize={24}
-                    title="About"
-                    onPress={() => {}}
-                  />
-                  <Row
-                    icon={<IconLogoutRegular />}
-                    iconSize={24}
-                    title="Logout"
-                    onPress={() => {}}
-                  />
-                </RowList>
-              </NegativeBox>
-            </Stack>
-          </Stack>
-        </ResponsiveLayout>
+          }
+          detail={
+            getState("selectedItem") ? (
+              <Stack space={16}>
+                <Text4 as="h2" medium>
+                  {getState("selectedItem")}
+                </Text4>
+                <Text2 regular>
+                  You are inside {getState("selectedItem")} section
+                </Text2>
+                <Placeholder />
+                <ButtonPrimary
+                  small
+                  onPress={() => {
+                    setState("selectedItem", null);
+                  }}
+                >
+                  Close
+                </ButtonPrimary>
+              </Stack>
+            ) : (
+              <Text2 regular>Select one of the sections from the sidebar</Text2>
+            )
+          }
+        />
       </Box>
       `,
     },
