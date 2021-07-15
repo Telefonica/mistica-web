@@ -15,6 +15,7 @@
 - [Basic](#basic)
   - [Grid template 6+6](#grid-template-66)
   - [Grid template 8+4](#grid-template-84)
+- [MasterDetailLayout](#masterdetaillayout)
 - [NegativeBox](#negativebox)
   - [Without NegativeBox](#without-negativebox)
   - [With NegativeBox](#with-negativebox)
@@ -215,6 +216,31 @@ available grid templates
 |Mobile|Tablet|Desktop|
 |-|-|-|
 |<img src="./images/layout/grid-layout-mobile-8-4.svg" />|<img src="./images/layout/grid-layout-tablet-8-4.svg" />|<img src="./images/layout/grid-layout-desktop-8-4.svg" />|
+
+## MasterDetailLayout
+
+The master detail layout is a common layout pattern in applications where you have a list of items in a left
+sidebar and a detail view inside a main content area in the right. When you select an item from the sidebar,
+the detail of that item is shown in the main content area. In mobile, this translates to a navigation of 2
+levels, a first screen with the list and a second screen with the content.
+
+```tsx
+<MasterDetailLayout isOpen={isOpen} master={listView} detail={detailView} />
+```
+
+The `isOpen` prop controls whether the master (when `false`) or detail (when `true`) view is shown in mobile.
+
+Take into account that the `detail` view is always visible in desktop, so if you want to show an emtpy state
+in desktop when there isn't any selected item from the aside list, you can do something like this:
+
+```tsx
+<MasterDetailLayout isOpen={isOpen} master={listView} detail={isOpen ? detailView : emptyCase} />
+```
+
+<!-- prettier-ignore -->
+|Mobile Master|Mobile Detail|Desktop|
+|-|-|-|
+|<img src="./images/layout/master-detail-layout-mobile-master.svg" />|<img src="./images/layout/master-detail-layout-mobile-detail.svg" />|<img src="./images/layout/master-detail-layout-desktop.svg" />|
 
 ## NegativeBox
 
