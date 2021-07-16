@@ -2,8 +2,7 @@ import {openStoryPage} from '../test-utils';
 
 test('Badge UI package', async () => {
     const page = await openStoryPage({
-        section: 'Components/Hints/Badge',
-        name: 'Badge',
+        id: 'components-hints-badge--badge-story',
         device: 'MOBILE_IOS',
     });
 

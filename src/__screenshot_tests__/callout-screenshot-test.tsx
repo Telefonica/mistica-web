@@ -18,8 +18,7 @@ const disableCheckbox = async (element: ElementHandle) => {
 
 test('Callout', async () => {
     await openStoryPage({
-        section: 'Components/Dialogs/Callout',
-        name: 'Callout',
+        id: 'components-dialogs-callout--default',
     });
 
     const callout = await screen.findByRole('alert');
@@ -30,8 +29,7 @@ test('Callout', async () => {
 
 test('Callout over inverse', async () => {
     await openStoryPage({
-        section: 'Components/Dialogs/Callout',
-        name: 'Callout',
+        id: 'components-dialogs-callout--default',
     });
 
     await enableCheckbox(await screen.findByLabelText('Over inverse'));
@@ -44,8 +42,7 @@ test('Callout over inverse', async () => {
 
 test('Callout not closable', async () => {
     await openStoryPage({
-        section: 'Components/Dialogs/Callout',
-        name: 'Callout',
+        id: 'components-dialogs-callout--default',
     });
 
     await disableCheckbox(await screen.findByLabelText('Is closable'));
@@ -58,8 +55,7 @@ test('Callout not closable', async () => {
 
 test('Callout with ButtonLink', async () => {
     const page = await openStoryPage({
-        section: 'Components/Dialogs/Callout',
-        name: 'Callout',
+        id: 'components-dialogs-callout--default',
     });
 
     await page.select(await screen.findByLabelText('actions'), 'link');
@@ -72,8 +68,7 @@ test('Callout with ButtonLink', async () => {
 
 test('Callout without actions', async () => {
     const page = await openStoryPage({
-        section: 'Components/Dialogs/Callout',
-        name: 'Callout',
+        id: 'components-dialogs-callout--default',
     });
 
     await page.select(await screen.findByLabelText('actions'), 'none');
@@ -86,8 +81,7 @@ test('Callout without actions', async () => {
 
 test('Callout only description', async () => {
     const page = await openStoryPage({
-        section: 'Components/Dialogs/Callout',
-        name: 'Callout',
+        id: 'components-dialogs-callout--default',
     });
     await page.clear(await screen.findByLabelText('title (opcional)'));
     await page.select(await screen.findByLabelText('actions'), 'none');
@@ -102,8 +96,7 @@ test('Callout only description', async () => {
 
 test('Callout only description and closable', async () => {
     const page = await openStoryPage({
-        section: 'Components/Dialogs/Callout',
-        name: 'Callout',
+        id: 'components-dialogs-callout--default',
     });
     await page.clear(await screen.findByLabelText('title (opcional)'));
     await page.select(await screen.findByLabelText('actions'), 'none');

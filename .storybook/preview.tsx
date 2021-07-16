@@ -3,7 +3,6 @@ import './css/main.css';
 import * as React from 'react';
 import {
     ThemeContextProvider,
-    Box,
     MOVISTAR_SKIN,
     VIVO_SKIN,
     O2_SKIN,
@@ -120,14 +119,18 @@ const Styles = () => {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const withLayoutDecorator = (Story, context): React.ReactElement => {
+    const isFullscreen = !!context?.parameters?.fullscreen;
     return (
-        // role main required by accessibility rules
-        <div role="main">
+        <>
             <Styles />
-            <Box padding={context?.parameters?.fullScreen ? 0 : 16}>
+            <div
+                // role main required by accessibility rules
+                role="main"
+                style={{padding: isFullscreen ? 0 : 16, boxSizing: 'border-box'}}
+            >
                 <Story {...context} />
-            </Box>
-        </div>
+            </div>
+        </>
     );
 };
 

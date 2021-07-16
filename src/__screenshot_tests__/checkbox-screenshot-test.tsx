@@ -5,7 +5,7 @@ const DEVICES = ['MOBILE_IOS', 'MOBILE_ANDROID'] as const;
 test.each(DEVICES)('Checkbox', async (device) => {
     await openStoryPage({
         section: 'Components/Forms/Checkbox',
-        name: 'Checkbox',
+        name: 'Default',
         device,
     });
 

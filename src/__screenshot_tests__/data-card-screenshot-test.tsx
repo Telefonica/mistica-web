@@ -6,8 +6,7 @@ const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('DataCard in %s', async (device) => {
     await openStoryPage({
-        section: 'Components/Cards/DataCard',
-        name: 'DataCard',
+        id: 'components-cards-datacard--default',
         device,
     });
 
@@ -20,8 +19,7 @@ test.each(TESTABLE_DEVICES)('DataCard in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('DataCard with large fontSize in %s', async (device) => {
     await openStoryPage({
-        section: 'Components/Cards/DataCard',
-        name: 'DataCard',
+        id: 'components-cards-datacard--default',
         device,
     });
 
@@ -36,8 +34,7 @@ test.each(TESTABLE_DEVICES)('DataCard with large fontSize in %s', async (device)
 
 test('DataCard group', async () => {
     const page = await openStoryPage({
-        section: 'Components/Cards/DataCard',
-        name: 'DataCard group',
+        id: 'components-cards-datacard--group',
     });
 
     const image = await page.screenshot({fullPage: true});
@@ -47,8 +44,7 @@ test('DataCard group', async () => {
 
 test('DataCard with body ', async () => {
     const page = await openStoryPage({
-        section: 'Components/Cards/DataCard',
-        name: 'DataCard with body',
+        id: 'components-cards-datacard--with-body',
         device: 'MOBILE_IOS',
     });
 

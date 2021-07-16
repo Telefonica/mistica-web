@@ -27,8 +27,7 @@ const screenshotDifferentControls = async (page: PageApi, list: ElementHandle<El
 
 test.each(testDevices)('Row list - %s', async (device) => {
     const page = await openStoryPage({
-        section: 'Components/Lists/RowList',
-        name: 'RowList',
+        id: 'components-lists-rowlist--default',
         device,
     });
 
@@ -42,8 +41,7 @@ test.each(testDevices)('Row list - %s', async (device) => {
 
 test.each(testDevices)('Boxed row list - %s', async (device) => {
     const page = await openStoryPage({
-        section: 'Components/Lists/BoxedRowList',
-        name: 'BoxedRowList',
+        id: 'components-lists-rowlist--default',
         device,
     });
 
