@@ -2,8 +2,7 @@ import {openStoryPage, screen} from '../test-utils';
 
 test('Form with Fixed Footer Layout', async () => {
     await openStoryPage({
-        section: 'Components/Forms/Example Fixed Footer',
-        name: 'Fixed Footer Form',
+        id: 'components-forms-example-fixed-footer--fixed-footer-form',
         device: 'MOBILE_IOS',
     });
 
@@ -16,8 +15,7 @@ test('Form with Fixed Footer Layout', async () => {
 
 test('Form focuses first field with error after submit validation', async () => {
     await openStoryPage({
-        section: 'Components/Forms/Example Automatic',
-        name: 'Automatic Form',
+        id: 'components-forms-example-automatic--automatic-form',
         device: 'MOBILE_IOS',
     });
 
