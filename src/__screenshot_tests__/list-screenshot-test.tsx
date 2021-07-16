@@ -41,7 +41,7 @@ test.each(testDevices)('Row list - %s', async (device) => {
 
 test.each(testDevices)('Boxed row list - %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-lists-rowlist--default',
+        id: 'components-lists-boxedrowlist--default',
         device,
     });
 

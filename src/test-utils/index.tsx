@@ -316,7 +316,6 @@ export const openStoryPage = ({
     args?: StoryArgs;
 }): Promise<PageApi> => {
     const url = buildStoryUrl(id, skin, DEVICES[device].platform, args);
-    console.log(url);
     return openPage({url, device, userAgent});
 };
 
