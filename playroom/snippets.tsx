@@ -591,6 +591,10 @@ const layoutSnippets: Array<Snippet> = [
         code: '<ResponsiveLayout><GridLayout template="8+4" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
     },
     {
+        name: 'GridLayout 4+6',
+        code: '<ResponsiveLayout><GridLayout template="4+6" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
+    },
+    {
         name: 'MasterDetailLayout',
         code: `
 <Box paddingY={24}>

@@ -45,3 +45,11 @@ export const EightAndFour: StoryComponent = () => (
 );
 
 EightAndFour.storyName = 'Template 8+4';
+
+export const FourAndSix: StoryComponent = () => (
+    <ResponsiveLayout>
+        <GridLayout template="4+6" left={<Placeholder />} right={<Placeholder />} />
+    </ResponsiveLayout>
+);
+
+FourAndSix.storyName = 'Template 4+6';
