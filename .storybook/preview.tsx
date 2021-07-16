@@ -119,7 +119,7 @@ const Styles = () => {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const withLayoutDecorator = (Story, context): React.ReactElement => {
-    const isFullscreen = !!context?.parameters?.fullscreen;
+    const isFullscreen = !!context?.parameters?.fullScreen;
     return (
         <>
             <Styles />
