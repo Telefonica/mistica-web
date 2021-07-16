@@ -2,7 +2,7 @@ import {openStoryPage, screen} from '../test-utils';
 
 test('Icons catalog', async () => {
     const page = await openStoryPage({
-        id: 'story/icons-mistica-icons--catalog',
+        id: 'icons-mistica-icons--catalog',
         device: 'DESKTOP',
     });
 
