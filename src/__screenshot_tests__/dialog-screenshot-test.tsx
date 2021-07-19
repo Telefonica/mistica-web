@@ -12,8 +12,7 @@ test.each`
     ${'DESKTOP'}    | ${'Open two buttons destructive'}
 `('ButtonLayout UI package, device: $device, action: $action', async ({device, action}) => {
     const page = await openStoryPage({
-        section: 'Components/Dialogs/Alert',
-        name: 'alert() and confirm()',
+        id: 'components-dialogs-alert--default',
         device,
     });
 

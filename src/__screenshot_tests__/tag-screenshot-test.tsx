@@ -6,8 +6,7 @@ const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('Tag in %s', async (device) => {
     await openStoryPage({
-        section: 'Components/Others/Tag',
-        name: 'Tag',
+        id: 'components-others-tag--default',
         device,
     });
 
@@ -19,8 +18,7 @@ test.each(TESTABLE_DEVICES)('Tag in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('Tag with large fontSize in %s', async (device) => {
     await openStoryPage({
-        section: 'Components/Others/Tag',
-        name: 'Tag',
+        id: 'components-others-tag--default',
         device,
     });
 
