@@ -2,7 +2,23 @@
 
 import * as React from "react";
 declare type Props = {
-  space: 0 | 4 | 8 | 12 | 16 | 24 | 32 | 40 | 48 | 56 | 64 | 72 | 80,
+  space:
+    | 0
+    | 4
+    | 8
+    | 12
+    | 16
+    | 24
+    | 32
+    | 40
+    | 48
+    | 56
+    | 64
+    | 72
+    | 80
+    | "between"
+    | "around"
+    | "evenly",
   children: React.Node,
   className?: string,
   role?: string,

@@ -22,8 +22,7 @@ test.each`
         isErrorAmount: boolean;
     }) => {
         const {click} = await openStoryPage({
-            section: 'Components/Headers/Header',
-            name: 'Header',
+            id: 'components-headers-header--default',
             device,
         });
 
@@ -43,8 +42,7 @@ test.each`
 
 test('Header vertical extra in desktop', async () => {
     const {click} = await openStoryPage({
-        section: 'Components/Headers/Header',
-        name: 'Header',
+        id: 'components-headers-header--default',
         device: 'DESKTOP',
     });
 
@@ -57,8 +55,7 @@ test('Header vertical extra in desktop', async () => {
 
 test.each(DEVICES)('MainSectionHeader', async (device) => {
     await openStoryPage({
-        section: 'Components/Headers/MainSectionHeader',
-        name: 'MainSectionHeader',
+        id: 'components-headers-mainsectionheader--default',
         device,
     });
 
@@ -70,8 +67,7 @@ test.each(DEVICES)('MainSectionHeader', async (device) => {
 
 test.each(DEVICES)('Header with large text', async (device) => {
     await openStoryPage({
-        section: 'Components/Headers/MainSectionHeader',
-        name: 'MainSectionHeader',
+        id: 'components-headers-mainsectionheader--default',
         device,
     });
 
@@ -84,8 +80,7 @@ test.each(DEVICES)('Header with large text', async (device) => {
 
 test('Header with truncation and color overrides', async () => {
     await openStoryPage({
-        section: 'Components/Headers/Header',
-        name: 'Rich Texts',
+        id: 'components-headers-header--rich-texts',
         device: 'MOBILE_IOS',
     });
 

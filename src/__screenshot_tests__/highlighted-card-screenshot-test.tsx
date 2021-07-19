@@ -6,8 +6,7 @@ const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('HighlightedCard in %s', async (device) => {
     await openStoryPage({
-        section: 'Components/Cards/HighlightedCard',
-        name: 'HighlightedCard',
+        id: 'components-cards-highlightedcard--default',
         device,
     });
 
@@ -20,8 +19,7 @@ test.each(TESTABLE_DEVICES)('HighlightedCard in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('HighlightedCard with large fontSize in %s', async (device) => {
     await openStoryPage({
-        section: 'Components/Cards/HighlightedCard',
-        name: 'HighlightedCard',
+        id: 'components-cards-highlightedcard--default',
         device,
     });
 

@@ -3,8 +3,7 @@ import {openStoryPage, screen} from '../test-utils';
 
 test('Circle', async () => {
     await openStoryPage({
-        section: 'Components/Others/Circle',
-        name: 'Circle',
+        id: 'components-others-circle--default',
     });
 
     const circle = (await (await screen.findByTestId('circle')).$('div')) as ElementHandle;
