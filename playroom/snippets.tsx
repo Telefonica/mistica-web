@@ -705,7 +705,7 @@ const exampleScreens: Array<Snippet> = [
         group: '💎 Example Screens',
         name: 'Settings',
         code: `
-      <MainSectionHeaderLayout>
+        <MainSectionHeaderLayout>
         <MainSectionHeader title="Settings" />
       </MainSectionHeaderLayout>
       
@@ -719,8 +719,11 @@ const exampleScreens: Array<Snippet> = [
                 : undefined,
             }}
           >
-            <Box paddingY={24}>
-              <Stack space={32}>
+            <Box
+              paddingTop={isDesktopOrBigger ? 40 : 24}
+              paddingBottom={isDesktopOrBigger ? 80 : 24}
+            >
+              <Stack space={isDesktopOrBigger ? 48 : 32}>
                 {[
                   {
                     categoryName: "Personal information",
@@ -769,16 +772,47 @@ const exampleScreens: Array<Snippet> = [
           </div>
         }
         detail={
-          getState("selectedItem") ? (
-            <Box paddingY={24}>
-              <Stack space={16}>
-                <Text4 as="h2" medium>
-                  {getState("selectedItem")}
-                </Text4>
-                <Text2 regular>
-                  You are inside {getState("selectedItem")} section
-                </Text2>
-                <Placeholder />
+          <Box
+            paddingTop={isDesktopOrBigger ? 40 : 24}
+            paddingBottom={isDesktopOrBigger ? 80 : 24}
+          >
+            <Stack space={isDesktopOrBigger ? 48 : 32}>
+              <Stack space={isDesktopOrBigger ? 24 : 16}>
+                <Text5 as="h2">
+                  {getState("selectedItem", "Personal details")}
+                </Text5>
+                <Text3 regular color={colors.textSecondary}>
+                  You are inside {getState("selectedItem", "Personal details")}{" "}
+                  section
+                </Text3>
+              </Stack>
+              <Stack space={8}>
+                <SectionTitle>Section 1</SectionTitle>
+                <NegativeBox>
+                  <RowList>
+                    <Row title="Title" switch={{ defaultValue: false }} />
+                    <Row title="Title" onPress={() => {}} />
+                  </RowList>
+                </NegativeBox>
+              </Stack>
+              <Stack space={8}>
+                <SectionTitle>Section 2</SectionTitle>
+                <NegativeBox>
+                  <RowList>
+                    <Row
+                      title="Title"
+                      description="Description"
+                      switch={{ defaultValue: true }}
+                    />
+                    <Row
+                      title="Title"
+                      description="Description"
+                      switch={{ defaultValue: false }}
+                    />
+                  </RowList>
+                </NegativeBox>
+              </Stack>
+              {isTabletOrSmaller && (
                 <ButtonPrimary
                   small
                   onPress={() => {
@@ -787,13 +821,12 @@ const exampleScreens: Array<Snippet> = [
                 >
                   Close
                 </ButtonPrimary>
-              </Stack>
-            </Box>
-          ) : (
-            <Text2 regular>Select one of the sections from the sidebar</Text2>
-          )
+              )}
+            </Stack>
+          </Box>
         }
-      />`,
+      />
+      `,
     },
     {
         group: '💎 Example Screens',
