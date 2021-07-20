@@ -37,6 +37,7 @@ export {Boxed} from './boxed';
 export {Header, HeaderLayout, MainSectionHeader, MainSectionHeaderLayout} from './header';
 export {default as GridLayout} from './grid-layout';
 export {default as ResponsiveLayout} from './responsive-layout';
+export {default as MasterDetailLayout} from './master-detail-layout';
 export {default as NavigationBreadcrumbs} from './navigation-breadcrumbs';
 export {default as Text, Text1, Text2, Text3, Text4, Text5, Text6, Text7, Text8, Text9, Text10} from './text';
 export {default as Tag} from './tag';

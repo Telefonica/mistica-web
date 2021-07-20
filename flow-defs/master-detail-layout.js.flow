@@ -1,0 +1,10 @@
+// @flow
+
+import * as React from "react";
+declare type Props = {
+  isOpen: boolean,
+  master: React.Node,
+  detail?: React.Node,
+};
+declare var MasterDetailLayout: React.ComponentType<Props>;
+declare export default typeof MasterDetailLayout;
