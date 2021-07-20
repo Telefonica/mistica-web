@@ -15,6 +15,7 @@
   - [Basic](#basic)
   - [Grid template 6+6](#grid-template-66)
   - [Grid template 8+4](#grid-template-84)
+  - [Grid template 6+4](#grid-template-64)
 - [MasterDetailLayout](#masterdetaillayout)
 - [NegativeBox](#negativebox)
   - [Without NegativeBox](#without-negativebox)
@@ -216,6 +217,24 @@ available grid templates
 |Mobile|Tablet|Desktop|
 |-|-|-|
 |<img src="./images/layout/grid-layout-mobile-8-4.svg" />|<img src="./images/layout/grid-layout-tablet-8-4.svg" />|<img src="./images/layout/grid-layout-desktop-8-4.svg" />|
+
+### Grid template 6+4
+
+<!-- prettier-ignore -->
+```tsx
+<ResponsiveLayout>
+  <GridLayout
+    template="6+4"
+    left={<LeftComponent />}
+    right={<RightComponent />}
+  />
+</ResponsiveLayout>
+```
+
+<!-- prettier-ignore -->
+|Mobile|Tablet|Desktop|
+|-|-|-|
+|<img src="./images/layout/grid-layout-mobile-6-4.svg" />|<img src="./images/layout/grid-layout-tablet-6-4.svg" />|<img src="./images/layout/grid-layout-desktop-6-4.svg" />|
 
 ## MasterDetailLayout
 
