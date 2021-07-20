@@ -705,7 +705,7 @@ const exampleScreens: Array<Snippet> = [
         group: '💎 Example Screens',
         name: 'Settings',
         code: `
-        <MainSectionHeaderLayout>
+      <MainSectionHeaderLayout>
         <MainSectionHeader title="Settings" />
       </MainSectionHeaderLayout>
       
