@@ -709,58 +709,68 @@ const exampleScreens: Array<Snippet> = [
         <MainSectionHeader title="Settings" />
       </MainSectionHeaderLayout>
       
-      <Box paddingY={24}>
-        <MasterDetailLayout
-          isOpen={!!getState("selectedItem")}
-          master={
-            <Stack space={32}>
-              {[
-                {
-                  categoryName: "Personal information",
-                  settings: [
-                    {
-                      title: "Personal details",
-                      icon: <IconUserAccountRegular />,
-                    },
-                    { title: "Security", icon: <IconLockClosedRegular /> },
-                    {
-                      title: "Payment methods",
-                      icon: <IconCreditCardVisaRegular />,
-                    },
-                  ],
-                },
-                {
-                  categoryName: "Configuration",
-                  settings: [
-                    { title: "Notifications", icon: <IconProgramAlarmRegular /> },
-                    { title: "FAQs", icon: <IconSupportAgentRegular /> },
-                    { title: "About", icon: <IconInformationUserRegular /> },
-                  ],
-                },
-              ].map((category) => (
-                <Stack key={category.categoryName} space={8}>
-                  <SectionTitle>{category.categoryName}</SectionTitle>
-                  <NegativeBox>
-                    <RowList>
-                      {category.settings.map((setting) => (
-                        <Row
-                          key={setting.title}
-                          title={setting.title}
-                          icon={setting.icon}
-                          iconSize={24}
-                          onPress={() => {
-                            setState("selectedItem", setting.title);
-                          }}
-                        />
-                      ))}
-                    </RowList>
-                  </NegativeBox>
-                </Stack>
-              ))}
-            </Stack>
-          }
-          detail={
-            getState("selectedItem") ? (
+      <MasterDetailLayout
+        isOpen={!!getState("selectedItem")}
+        master={
+          <div
+            style={{
+              borderRight: isDesktopOrBigger
+                ? \`1px solid \${colors.divider}\`
+                : undefined,
+            }}
+          >
+            <Box paddingY={24}>
+              <Stack space={32}>
+                {[
+                  {
+                    categoryName: "Personal information",
+                    settings: [
+                      {
+                        title: "Personal details",
+                        icon: <IconUserAccountRegular />,
+                      },
+                      { title: "Security", icon: <IconLockClosedRegular /> },
+                      {
+                        title: "Payment methods",
+                        icon: <IconCreditCardVisaRegular />,
+                      },
+                    ],
+                  },
+                  {
+                    categoryName: "Configuration",
+                    settings: [
+                      { title: "Notifications", icon: <IconProgramAlarmRegular /> },
+                      { title: "FAQs", icon: <IconSupportAgentRegular /> },
+                      { title: "About", icon: <IconInformationUserRegular /> },
+                    ],
+                  },
+                ].map((category) => (
+                  <Stack key={category.categoryName} space={8}>
+                    <SectionTitle>{category.categoryName}</SectionTitle>
+                    <NegativeBox left right={!isDesktopOrBigger}>
+                      <RowList>
+                        {category.settings.map((setting) => (
+                          <Row
+                            key={setting.title}
+                            title={setting.title}
+                            icon={setting.icon}
+                            iconSize={24}
+                            onPress={() => {
+                              setState("selectedItem", setting.title);
+                            }}
+                          />
+                        ))}
+                      </RowList>
+                    </NegativeBox>
+                  </Stack>
+                ))}
+              </Stack>
+            </Box>
+          </div>
+        }
+        detail={
+          getState("selectedItem") ? (
+            <Box paddingY={24}>
               <Stack space={16}>
                 <Text4 as="h2" medium>
                   {getState("selectedItem")}
@@ -778,13 +788,12 @@ const exampleScreens: Array<Snippet> = [
                   Close
                 </ButtonPrimary>
               </Stack>
-            ) : (
-              <Text2 regular>Select one of the sections from the sidebar</Text2>
-            )
-          }
-        />
-      </Box>
-      `,
+            </Box>
+          ) : (
+            <Text2 regular>Select one of the sections from the sidebar</Text2>
+          )
+        }
+      />`,
     },
     {
         group: '💎 Example Screens',

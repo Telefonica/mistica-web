@@ -1,5 +1,5 @@
 import React from 'react';
-import {useTheme} from '../src';
+import {useScreenSize, useTheme} from '../src';
 import curry from 'lodash/curry';
 
 import type {Colors} from '../src/skins/types';
@@ -45,12 +45,14 @@ const usePlayroomState = () => {
 
 const useScope = (): {theme: Theme; colors: Colors} => {
     const theme = useTheme();
+    const screenSize = useScreenSize();
     const playroomState = usePlayroomState();
 
     return {
         theme,
         colors: theme.colors,
         ...playroomState,
+        ...screenSize,
     };
 };
 
