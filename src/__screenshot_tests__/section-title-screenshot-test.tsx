@@ -4,8 +4,7 @@ const DEVICES = ['DESKTOP', 'MOBILE_ANDROID'] as const;
 
 test.each(DEVICES)(`SectionTitle`, async (device) => {
     await openStoryPage({
-        section: 'Components/Others/SectionTitle',
-        name: 'SectionTitle',
+        id: 'components-others-sectiontitle--default',
         device,
     });
 

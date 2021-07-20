@@ -161,22 +161,31 @@ const watermarkIfNeeded = async (bufferPromise: Promise<Buffer | string>): Promi
     return image.getBufferAsync(jimp.MIME_PNG);
 };
 
-const buildStoryUrl = (section: string, name: string, skin?: string, platform?: string, args?: StoryArgs) => {
+const buildStoryUrl = (id: string, skin?: string, platform?: string, args?: StoryArgs) => {
     const params = new URLSearchParams();
-    params.set('selectedKind', section);
-    params.set('selectedStory', name);
+
+    params.set('id', id);
+
+    params.set('viewMode', 'story');
+
     if (skin) {
         params.set('skin', skin);
     }
+
     if (platform) {
         params.set('platform', platform);
     }
-    const argsParam = args
-        ? `&args=${Object.entries(args)
-              .map(([key, value]) => encodeURIComponent(`${key}:${value}`))
-              .join(';')}`
-        : '';
-    return `http://${HOST}:6006/iframe.html?${params.toString()}${argsParam}`;
+
+    if (args) {
+        params.set(
+            'args',
+            Object.entries(args)
+                .map(([key, value]) => `${key}:${value}`)
+                .join(';')
+        );
+    }
+
+    return `http://${HOST}:6006/iframe.html?${params.toString()}`;
 };
 
 export type PageApi = {
@@ -294,21 +303,19 @@ const openPage = async ({url, device, userAgent}: {url: string; device: Device; 
 };
 
 export const openStoryPage = ({
-    section,
-    name,
+    id,
     device = TABLET_DEVICE,
     skin = 'Movistar',
     userAgent,
     args,
 }: {
-    section: string;
-    name: string;
+    id: string;
     device?: Device;
     skin?: 'Movistar' | 'Vivo' | 'O2' | 'O2-classic';
     userAgent?: string;
     args?: StoryArgs;
 }): Promise<PageApi> => {
-    const url = buildStoryUrl(section, name, skin, DEVICES[device].platform, args);
+    const url = buildStoryUrl(id, skin, DEVICES[device].platform, args);
     return openPage({url, device, userAgent});
 };
 
