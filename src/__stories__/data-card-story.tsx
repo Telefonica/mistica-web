@@ -20,7 +20,13 @@ export default {
     title: 'Components/Cards/DataCard',
 };
 
-export const Default: StoryComponent = () => {
+type DataCardArgs = {
+    asset: 'icon' | 'image' | 'none';
+    headlineColor: 'promo' | 'brand' | 'success' | 'warning' | 'error';
+    headline: 'priority';
+};
+
+export const Default: StoryComponent<DataCardArgs> = ({asset, headline}) => {
     const {colors} = useTheme();
     const tagColors = {
         promo: colors.promo,
@@ -30,8 +36,8 @@ export const Default: StoryComponent = () => {
         error: colors.error,
     };
     const tagColorNames = Object.keys(tagColors);
-    const [asset, assetSelect] = useSelect('asset', 'icon', ['icon', 'image', 'none']);
-    const [headline, headlineTextField] = useTextField('headline', 'priority');
+    // const [asset, assetSelect] = useSelect('asset', 'icon', ['icon', 'image', 'none']);
+    // const [headline, headlineTextField] = useTextField('headline', 'priority');
     const [headlineColorName, headlineColorNameSelect] = useSelect(
         'headline color',
         tagColorNames[0],
@@ -59,19 +65,17 @@ export const Default: StoryComponent = () => {
     }
 
     const button = actions.includes('button') ? (
-        <ButtonPrimary small href="https://google.com">
+        <ButtonPrimary small fake>
             Action
         </ButtonPrimary>
     ) : undefined;
 
-    const buttonLink = actions.includes('link') ? (
-        <ButtonLink href="https://google.com">Link</ButtonLink>
-    ) : undefined;
+    const buttonLink = actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined;
 
     return (
         <>
             <Stack space={16}>
-                {assetSelect}
+                {/* {assetSelect} */}
                 {headlineTextField}
                 {headline && headlineColorNameSelect}
                 {titleTextField}
@@ -97,6 +101,9 @@ export const Default: StoryComponent = () => {
 };
 
 Default.storyName = 'DataCard';
+Default.args = {
+    asset: 'icon',
+};
 
 export const WithBody: StoryComponent = () => {
     const {colors} = useTheme();
