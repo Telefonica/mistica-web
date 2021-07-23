@@ -8,6 +8,7 @@ import {createUseStyles} from './jss';
 import Inline from './inline';
 import {ButtonLink, ButtonPrimary} from './button';
 import {Boxed} from './boxed';
+import {DataAttributes} from '../dist/utils/types';
 
 const useCardContentStyles = createUseStyles(() => ({
     actions: {
@@ -214,6 +215,8 @@ interface DataCardProps {
     button?: React.ReactElement<typeof ButtonPrimary>;
     buttonLink?: React.ReactElement<typeof ButtonLink>;
     children?: void;
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
+    dataAttributes?: DataAttributes;
 }
 
 export const DataCard: React.FC<DataCardProps> = ({
@@ -225,10 +228,11 @@ export const DataCard: React.FC<DataCardProps> = ({
     body,
     button,
     buttonLink,
+    dataAttributes,
 }) => {
     const classes = useDataCardStyles();
     return (
-        <Boxed className={classes.boxed}>
+        <Boxed className={classes.boxed} dataAttributes={dataAttributes}>
             <article className={classes.dataCard}>
                 {icon && <Box paddingBottom={16}>{icon}</Box>}
                 <CardContent
