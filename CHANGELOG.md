@@ -1,3 +1,13 @@
+# [9.10.0](https://github.com/Telefonica/mistica-web/compare/v9.9.0...v9.10.0) (2021-07-23)
+
+
+### Features
+
+* **Components:** expose dataAttributes. Deprecation of `data-testid` and `data-qsysid` props ([#300](https://github.com/Telefonica/mistica-web/issues/300)) ([6584164](https://github.com/Telefonica/mistica-web/commit/658416480d268f6992a9c1e401ba6dbdd97ea533))
+* **MasterDetailLayout:** new component. 6+4 and 4+6 GridLayout ([#301](https://github.com/Telefonica/mistica-web/issues/301)) ([039e47e](https://github.com/Telefonica/mistica-web/commit/039e47ef1993ff75ddc2e94aeff186d463d15eb0))
+* **Stack:** Support `between`, `evenly` and `around` space ([#303](https://github.com/Telefonica/mistica-web/issues/303)) ([94bd7e3](https://github.com/Telefonica/mistica-web/commit/94bd7e3d0e5d9c9b20d594cb57826eabca937229))
+* **webview bridge:** Upgrade webview-bridge ([#304](https://github.com/Telefonica/mistica-web/issues/304)) ([770ff1d](https://github.com/Telefonica/mistica-web/commit/770ff1d0f1d42d2076187d44f1cfdc3ca5e4bf62))
+
 # [9.9.0](https://github.com/Telefonica/mistica-web/compare/v9.8.0...v9.9.0) (2021-07-13)
 
 
