@@ -157,6 +157,7 @@ type MediaCardProps = {
     button?: React.ReactElement<typeof ButtonPrimary>;
     buttonLink?: React.ReactElement<typeof ButtonLink>;
     children?: void;
+    'aria-label'?: string;
 };
 
 export const MediaCard: React.FC<MediaCardProps> = ({
@@ -168,11 +169,12 @@ export const MediaCard: React.FC<MediaCardProps> = ({
     body,
     button,
     buttonLink,
+    'aria-label': ariaLabel,
 }) => {
     const classes = useMediaCardStyles({media});
     return (
         <Boxed className={classes.boxed}>
-            <article className={classes.mediaCard}>
+            <article className={classes.mediaCard} aria-label={ariaLabel}>
                 <div className={classes.media}></div>
                 <div className={classes.content}>
                     <CardContent
@@ -217,6 +219,7 @@ interface DataCardProps {
     children?: void;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
+    'aria-label'?: string;
 }
 
 export const DataCard: React.FC<DataCardProps> = ({
@@ -229,11 +232,12 @@ export const DataCard: React.FC<DataCardProps> = ({
     button,
     buttonLink,
     dataAttributes,
+    'aria-label': ariaLabel,
 }) => {
     const classes = useDataCardStyles();
     return (
         <Boxed className={classes.boxed} dataAttributes={dataAttributes}>
-            <article className={classes.dataCard}>
+            <article className={classes.dataCard} aria-label={ariaLabel}>
                 {icon && <Box paddingBottom={16}>{icon}</Box>}
                 <CardContent
                     headline={headline}

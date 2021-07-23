@@ -7,6 +7,7 @@ import Inline from './inline';
 import {createUseStyles} from './jss';
 import Stack from './stack';
 import {Text2, Text4} from './text';
+import {DataAttributes} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -31,6 +32,9 @@ interface CommonProps {
     buttonLink?: React.ReactElement<typeof ButtonLink>;
     description?: string;
     children?: void;
+    'aria-label'?: string;
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
+    dataAttributes?: DataAttributes;
 }
 
 interface IconProps extends CommonProps {
@@ -45,7 +49,16 @@ interface ImageProps extends CommonProps {
 
 type Props = IconProps | ImageProps;
 
-const EmptyStateCard: React.FC<Props> = ({title, description, button, buttonLink, icon, imageUrl}) => {
+const EmptyStateCard: React.FC<Props> = ({
+    title,
+    description,
+    button,
+    buttonLink,
+    icon,
+    imageUrl,
+    'aria-label': ariaLabel,
+    dataAttributes,
+}) => {
     const {colors} = useTheme();
     const needsButtonLinkAlignment = buttonLink && !button;
     const classes = useStyles({needsButtonLinkAlignment});
@@ -57,9 +70,9 @@ const EmptyStateCard: React.FC<Props> = ({title, description, button, buttonLink
     }
 
     return (
-        <Boxed>
+        <Boxed dataAttributes={dataAttributes}>
             <Box paddingY={isMobile ? 24 : 40} paddingX={isMobile ? 16 : 40}>
-                <div className={classes.container}>
+                <article className={classes.container} aria-label={ariaLabel}>
                     <Stack space={16}>
                         {image ?? icon}
                         <Box paddingRight={isMobile ? 48 : 0}>
@@ -79,7 +92,7 @@ const EmptyStateCard: React.FC<Props> = ({title, description, button, buttonLink
                             </div>
                         )}
                     </Stack>
-                </div>
+                </article>
             </Box>
         </Boxed>
     );

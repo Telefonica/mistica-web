@@ -31,7 +31,7 @@ export const BadgeStory: StoryComponent = () => (
         </StorySection>
 
         <StorySection title="Badge (numeric, value 14)">
-            <Badge value={14}>
+            <Badge value={14} aria-label="14 unread notifications">
                 <IcnSettings />
             </Badge>
         </StorySection>

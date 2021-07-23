@@ -83,6 +83,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
             button={button}
             buttonLink={buttonLink}
             dataAttributes={{testid: 'data-card'}}
+            aria-label="Data card label"
         />
     );
 };

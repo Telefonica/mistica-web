@@ -39,9 +39,10 @@ const useStyles = createUseStyles((theme) => ({
 type Props = {
     children?: React.ReactNode;
     value?: number;
+    'aria-label'?: string;
 };
 
-const Badge: React.FC<Props> = ({children, value}) => {
+const Badge: React.FC<Props> = ({children, value, 'aria-label': ariaLabel}) => {
     const hasChildren = !!children;
     const classes = useStyles({hasChildren});
 
@@ -54,7 +55,7 @@ const Badge: React.FC<Props> = ({children, value}) => {
     }
 
     return (
-        <div className={classes.container}>
+        <div className={classes.container} aria-label={ariaLabel}>
             {value ? (
                 <div
                     className={classnames(classes.badge, classes.badgeNumber, {
