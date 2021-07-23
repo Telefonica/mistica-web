@@ -7,7 +7,8 @@ import Inline from './inline';
 import {createUseStyles} from './jss';
 import Stack from './stack';
 import {Text2, Text4} from './text';
-import {DataAttributes} from './utils/types';
+
+import type {DataAttributes} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
     container: {

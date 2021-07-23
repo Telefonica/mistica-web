@@ -8,7 +8,8 @@ import {createUseStyles} from './jss';
 import Inline from './inline';
 import {ButtonLink, ButtonPrimary} from './button';
 import {Boxed} from './boxed';
-import {DataAttributes} from '../dist/utils/types';
+
+import type {DataAttributes} from './utils/types';
 
 const useCardContentStyles = createUseStyles(() => ({
     actions: {
