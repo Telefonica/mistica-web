@@ -5286,10 +5286,10 @@
   dependencies:
     defer-to-connect "^2.0.0"
 
-"@tef-novum/webview-bridge@^2.20.2":
-  version "2.20.2"
-  resolved "https://registry.yarnpkg.com/@tef-novum/webview-bridge/-/webview-bridge-2.20.2.tgz#12869f9cadd4395493a49a40dd1744f0894002f5"
-  integrity sha512-NNDkhGU0gci3hSQbZkrw0E6ltltGSBQvX/4fm+2cacuelbM6BKRHjjDdhR4deUlEowO3TeSPXwenSpvy6Zp8Og==
+"@tef-novum/webview-bridge@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@tef-novum/webview-bridge/-/webview-bridge-3.0.0.tgz#60995bf3a5297cb079a601f97ede940e09701cb7"
+  integrity sha512-pnIA8tLtwV2fJpJL6M2Vo8Li95UEWAHjYUx12b0U6yAPzyGznOJkdjqxlZOLORz5AUGhWBNNCUdXVGKli5PN/A==
 
 "@telefonica/eslint-plugin-async-await@^1.1.0":
   version "1.1.0"
