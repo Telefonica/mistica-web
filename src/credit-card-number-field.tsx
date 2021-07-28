@@ -17,39 +17,57 @@ import {createUseStyles} from './jss';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type {CardOptions} from './utils/credit-card';
+import {useRifm} from 'rifm';
+import {createChangeEvent} from './utils/dom';
+import {combineRefs} from './utils/common';
 
-const CreditCardInput = ({inputRef, defaultValue, value, maxLength, onInput, ...rest}: any) => {
-    // Naive implementation, some issues in cursor position when editing
-    const format = (s?: string) => {
-        const chars = String(s ?? '')
-            .replace(/[^\d]/g, '')
-            .slice(0, 16)
-            .split('');
+const format = (s?: string) => {
+    const sanitizedNumber = String(s ?? '').replace(/[^\d]/g, '');
+    return sanitizedNumber.match(/.{1,4}/g)?.join(' ') ?? sanitizedNumber;
+};
 
-        const result = [];
+type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onInput'> & {
+    inputRef?: React.Ref<HTMLInputElement>;
+    value?: string;
+    defaultValue?: string;
+    onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
+};
 
-        // separate in groups of 4 numbers
-        while (chars.length) {
-            result.push(...chars.splice(0, 4));
-            if (chars.length) result.push(' ');
-        }
+const CreditCardInput: React.FC<Props> = ({inputRef, value, defaultValue, onChange, ...other}) => {
+    const [selfValue, setSelfValue] = React.useState(defaultValue ?? '');
+    const ref = React.useRef<HTMLInputElement | null>(null);
 
-        return result.join('');
-    };
+    const isControlledByParent = typeof value !== 'undefined';
+    const controlledValue = (isControlledByParent ? value : selfValue) as string;
+
+    const handleChangeValue = React.useCallback(
+        (newFormattedValue) => {
+            if (!isControlledByParent) {
+                setSelfValue(newFormattedValue);
+            }
+            if (ref.current) {
+                onChange?.(createChangeEvent(ref.current, newFormattedValue));
+            }
+        },
+        [isControlledByParent, onChange]
+    );
+
+    const rifm = useRifm({
+        format,
+        value: controlledValue,
+        onChange: handleChangeValue,
+        accept: /[\d]+/g,
+    });
 
     return (
         <input
-            {...rest}
+            {...other}
             type="text"
             inputMode="decimal"
-            maxLength={maxLength ?? '19'} // 16 digits + 3 spaces
-            onInput={(e) => {
-                e.currentTarget.value = format(e.currentTarget.value);
-                onInput?.(e);
-            }}
-            value={value === undefined ? undefined : format(value)}
-            defaultValue={defaultValue === undefined ? undefined : format(defaultValue)}
-            ref={inputRef}
+            maxLength={getCreditCardNumberLength(rifm.value) + 3} // We have to take in account formatting spaces
+            onChange={rifm.onChange}
+            value={rifm.value}
+            ref={combineRefs(inputRef, ref)}
         />
     );
 };
@@ -170,7 +188,7 @@ const CreditCardNumberField: React.FC<CreditCardNumberFieldProps> = ({
     ...rest
 }) => {
     const {texts} = useTheme();
-    const {jumpToNext, rawValues, values, setFormError} = useForm();
+    const {jumpToNext, rawValues, setFormError} = useForm();
 
     const validate = (value: string | undefined, rawValue: string) => {
         const error = texts.formCreditCardNumberError;
@@ -216,7 +234,6 @@ const CreditCardNumberField: React.FC<CreditCardNumberFieldProps> = ({
         <TextFieldBase
             {...rest}
             {...fieldProps}
-            maxLength={getCreditCardNumberLength(values[name]) + 3} // We have to take in account formatting spaces
             onChange={(event) => {
                 fieldProps.onChange(event);
                 const rawValue = event.currentTarget.value;

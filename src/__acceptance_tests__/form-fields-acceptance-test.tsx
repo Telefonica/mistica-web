@@ -74,6 +74,15 @@ test.each(STORY_TYPES)('CreditCardNumberField (%s)', async (storyType) => {
 
     await clearAndType(page, field, '1234-567.8 9012/34abc567 890');
     await expect(getValue(field)).resolves.toBe('1234 5678 9012 3456');
+
+    await clearAndType(page, field, '123456789012');
+    await expect(getValue(field)).resolves.toBe('1234 5678 9012');
+    await field.evaluate((el) => {
+        // set the caret position after the first block
+        (el as HTMLInputElement).setSelectionRange(4, 4);
+    });
+    await field.type('1234');
+    await expect(getValue(field)).resolves.toBe('1234 1234 5678 9012');
 });
 
 test.each(STORY_TYPES)('CreditCardExpirationField (%s)', async (storyType) => {
