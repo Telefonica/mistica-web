@@ -99,11 +99,18 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width}) => {
             });
         }
 
+        let requestAnimationFrameId: number;
         if (isMenuOpen) {
-            requestAnimationFrame(() => {
+            requestAnimationFrameId = requestAnimationFrame(() => {
                 setAnimateShowItems(true);
             });
         }
+
+        return () => {
+            if (requestAnimationFrameId) {
+                cancelAnimationFrame(requestAnimationFrameId);
+            }
+        };
     }, [isMenuOpen, menu, target]);
 
     const classes = useStyles({
