@@ -1,3 +1,10 @@
+## [9.10.1](https://github.com/Telefonica/mistica-web/compare/v9.10.0...v9.10.1) (2021-07-29)
+
+
+### Bug Fixes
+
+* **Menu:** clear animation frame on effect ([bfa3f29](https://github.com/Telefonica/mistica-web/commit/bfa3f297fc40c134e4ab9524557ebed3128db8b3))
+
 # [9.10.0](https://github.com/Telefonica/mistica-web/compare/v9.9.0...v9.10.0) (2021-07-23)
 
 
