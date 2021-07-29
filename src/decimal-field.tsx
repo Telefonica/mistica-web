@@ -5,6 +5,9 @@ import TextFieldBase from './text-field-base';
 import {Locale} from './utils/locale';
 
 import type {CommonFormFieldProps} from './text-field-base';
+import {createChangeEvent} from './utils/dom';
+import {useRifm} from 'rifm';
+import {combineRefs} from './utils/common';
 
 const getLocalDecimalChar = (locale: Locale): string => {
     try {
@@ -24,14 +27,19 @@ const getLocalDecimalChar = (locale: Locale): string => {
  */
 type DecimalInputProps = any;
 
-export const DecimalInput: React.FC<DecimalInputProps> = ({inputRef, value, defaultValue, ...rest}) => {
+export const DecimalInput: React.FC<DecimalInputProps> = ({
+    inputRef,
+    value,
+    defaultValue,
+    onChange,
+    ...rest
+}) => {
     const {i18n} = useTheme();
     const localDecimalChar = getLocalDecimalChar(i18n.locale);
 
     const format = (value: any) => {
         const parts = String(value ?? '')
             .replace(/[^.,\d]/g, '') // remove non digits or decimal separator chars
-            .replace(/[.,]/g, localDecimalChar) // use local decimal char
             .split(localDecimalChar);
 
         if (parts.length === 0) {
@@ -48,6 +56,34 @@ export const DecimalInput: React.FC<DecimalInputProps> = ({inputRef, value, defa
         return parts.shift() + localDecimalChar + parts.join('');
     };
 
+    const replace = (value: any) => String(value ?? '').replace(/[.,]/g, localDecimalChar); // use local decimal char
+
+    const [selfValue, setSelfValue] = React.useState(defaultValue ?? '');
+    const ref = React.useRef<HTMLInputElement | null>(null);
+
+    const isControlledByParent = typeof value !== 'undefined';
+    const controlledValue = (isControlledByParent ? value : selfValue) as string;
+
+    const handleChangeValue = React.useCallback(
+        (newFormattedValue) => {
+            if (!isControlledByParent) {
+                setSelfValue(newFormattedValue);
+            }
+            if (ref.current) {
+                onChange?.(createChangeEvent(ref.current, newFormattedValue));
+            }
+        },
+        [isControlledByParent, onChange]
+    );
+
+    const rifm = useRifm({
+        format,
+        replace,
+        value: controlledValue,
+        onChange: handleChangeValue,
+        accept: /[\d.,]+/g,
+    });
+
     return (
         <input
             {...rest}
@@ -55,12 +91,9 @@ export const DecimalInput: React.FC<DecimalInputProps> = ({inputRef, value, defa
             inputMode="decimal" // shows decimal keypad in Chrome for Android
             // shows regular keypad in iOS < 12.2 (there's no way to show a decimal keypad in those versions)
             // https://bugs.webkit.org/show_bug.cgi?id=183621
-            value={value === undefined ? undefined : format(value)}
-            defaultValue={defaultValue === undefined ? undefined : format(defaultValue)}
-            onInput={(e) => {
-                e.currentTarget.value = format(e.currentTarget.value);
-            }}
-            ref={inputRef}
+            value={rifm.value}
+            onChange={rifm.onChange}
+            ref={combineRefs(inputRef, ref)}
         />
     );
 };

@@ -64,7 +64,7 @@ const CreditCardInput: React.FC<Props> = ({inputRef, value, defaultValue, onChan
             {...other}
             type="text"
             inputMode="decimal"
-            maxLength={getCreditCardNumberLength(rifm.value) + 3} // We have to take in account formatting spaces
+            maxLength={getCreditCardNumberLength(rifm.value) + 3} // We have to take into account formatting spaces
             onChange={rifm.onChange}
             value={rifm.value}
             ref={combineRefs(inputRef, ref)}

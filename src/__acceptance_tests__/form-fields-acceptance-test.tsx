@@ -62,6 +62,15 @@ test.each(STORY_TYPES)('DecimalField (%s)', async (storyType) => {
 
     await clearAndType(page, field, '+-123e.4,5.6i');
     await expect(getValue(field)).resolves.toBe('123,456');
+
+    await clearAndType(page, field, '124,5');
+    await expect(getValue(field)).resolves.toBe('124,5');
+    await field.evaluate((el) => {
+        // set the caret position after the first block
+        (el as HTMLInputElement).setSelectionRange(2, 2);
+    });
+    await field.type('.3');
+    await expect(getValue(field)).resolves.toBe('12,345');
 });
 
 test.each(STORY_TYPES)('CreditCardNumberField (%s)', async (storyType) => {
