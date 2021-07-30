@@ -18,6 +18,8 @@ const getLocalDecimalChar = (locale: Locale): string => {
 };
 
 const format = (value: any) => {
+    // do not make the localDecimalChar replacement here. Instead, keep the one the user typed.
+    // Make that replacement in `replace` prost-processor. It is what rifm lib expects.
     const sanitized = String(value ?? '').replace(/[^.,\d]/g, ''); // remove non digits or decimal separator chars;
     const firstSeparator = /[.,]/.exec(sanitized);
     const parts = sanitized.split(/[.,]/);
