@@ -5,12 +5,7 @@ import TextFieldBase from './text-field-base';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
-type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onInput'> & {
-    inputRef?: React.Ref<HTMLInputElement>;
-    value?: string;
-};
-
-export const IntegerInput: React.FC<Props> = ({inputRef, value, defaultValue, ...rest}: any) => {
+export const IntegerInput: React.FC<any> = ({inputRef, value, defaultValue, ...rest}: any) => {
     const format = (v?: string) => String(v ?? '').replace(/[^\d]/g, '');
 
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {

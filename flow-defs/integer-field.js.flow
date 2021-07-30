@@ -2,11 +2,7 @@
 
 import * as React from "react";
 import type { CommonFormFieldProps } from "./text-field-base";
-declare type Props = $Diff<any, { value: *, onInput: * }> & {
-  inputRef?: React.Ref<HTMLInputElement>,
-  value?: string,
-};
-declare export var IntegerInput: React.ComponentType<Props>;
+declare export var IntegerInput: React.ComponentType<any>;
 export type IntegerFieldProps = {|
   ...$Exact<CommonFormFieldProps>,
 
