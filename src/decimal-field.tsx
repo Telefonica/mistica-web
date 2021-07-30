@@ -17,6 +17,25 @@ const getLocalDecimalChar = (locale: Locale): string => {
     }
 };
 
+const format = (value: any) => {
+    const sanitized = String(value ?? '').replace(/[^.,\d]/g, ''); // remove non digits or decimal separator chars;
+    const firstSeparator = /[.,]/.exec(sanitized);
+    const parts = sanitized.split(/[.,]/);
+
+    if (parts.length === 0) {
+        // empty
+        return '';
+    }
+
+    if (firstSeparator) {
+        // value includes one or more decimal separators, keep the first one
+        return parts.shift() + firstSeparator[0] + parts.join('');
+    } else {
+        // no fractional part, return "as is"
+        return parts[0];
+    }
+};
+
 /**
  * typed as `any` because `React.HTMLProps<>` has no equivalent in flowtype
  * not a big problem because this component is not exported to the public API
@@ -36,25 +55,6 @@ export const DecimalInput: React.FC<DecimalInputProps> = ({
 }) => {
     const {i18n} = useTheme();
     const localDecimalChar = getLocalDecimalChar(i18n.locale);
-
-    const format = (value: any) => {
-        const parts = String(value ?? '')
-            .replace(/[^.,\d]/g, '') // remove non digits or decimal separator chars
-            .split(localDecimalChar);
-
-        if (parts.length === 0) {
-            // empty
-            return '';
-        }
-
-        if (parts.length === 1) {
-            // no fractional part, return "as is"
-            return parts[0];
-        }
-
-        // value includes one or more decimal separators, keep the first one
-        return parts.shift() + localDecimalChar + parts.join('');
-    };
 
     const replace = (value: any) => String(value ?? '').replace(/[.,]/g, localDecimalChar); // use local decimal char
 
