@@ -8,7 +8,7 @@ import IconButton from './icon-button';
 import IcnInfo from './icons/icon-info-cvv';
 import {useFieldProps, useForm} from './form-context';
 import TextFieldBase from './text-field-base';
-import {DecimalInput} from './decimal-field';
+import {IntegerInput} from './integer-field';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type {CardOptions} from './utils/credit-card';
@@ -142,7 +142,7 @@ const CvvField: React.FC<CvvFieldProps> = ({
                 />
             }
             autoComplete={autoComplete}
-            inputComponent={DecimalInput}
+            inputComponent={IntegerInput}
         />
     );
 };
