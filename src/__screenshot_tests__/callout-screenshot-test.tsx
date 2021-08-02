@@ -9,8 +9,11 @@ test.each`
     ${'none'}            | ${'Some title'} | ${false}      | ${true}    | ${true}  | ${'without actions'}
     ${'none'}            | ${''}           | ${false}      | ${false}   | ${false} | ${'only description'}
     ${'none'}            | ${''}           | ${false}      | ${true}    | ${false} | ${'only description and closable'}
-`('Callout $case', async (args) => {
-    await openStoryPage({id: 'components-dialogs-callout--default', args});
+`('Callout $case', async ({actions, title, isOverInverse, isClosable, withIcon}) => {
+    await openStoryPage({
+        id: 'components-dialogs-callout--default',
+        args: {actions, title, isOverInverse, isClosable, withIcon},
+    });
 
     const callout = await screen.findByRole('complementary');
     const image = await callout.screenshot();
