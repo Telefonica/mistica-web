@@ -5,7 +5,7 @@ import TextFieldBase from './text-field-base';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
-const IntegerInput = ({inputRef, value, defaultValue, ...rest}: any) => {
+export const IntegerInput: React.FC<any> = ({inputRef, value, defaultValue, ...rest}: any) => {
     const format = (v?: string) => String(v ?? '').replace(/[^\d]/g, '');
 
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
