@@ -1,16 +1,26 @@
 import * as React from 'react';
-import {fruitEntries} from './helpers';
 import {Touchable, Menu, Stack, Inline, Text3, Box, Checkbox, IconKebabMenuLight} from '..';
 import SectionTitle from '../section-title';
-import IcnInfo from '../icons/icon-info';
-import {confirm} from '../dialog';
 
 export default {
     title: 'Components/Controls/Menu',
     component: Menu,
 };
 
-const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
+const options = [
+    {
+        text: 'Option 1',
+        value: 'option1',
+    },
+    {
+        text: 'Option 2',
+        value: 'option2',
+    },
+    {
+        text: 'Option 3 (checking this will close the menu)',
+        value: 'option3',
+    },
+];
 
 export const Default: StoryComponent = () => {
     const [valuesState, setValuesState] = React.useState<ReadonlyArray<string>>([]);
@@ -26,36 +36,7 @@ export const Default: StoryComponent = () => {
         <Stack space={16}>
             <SectionTitle>Menu</SectionTitle>
             <Menu
-                width={200}
-                renderTarget={({ref, onPress, isMenuOpen}) => (
-                    <Touchable elementRef={ref} onPress={onPress}>
-                        <Inline space={16}>
-                            <IconKebabMenuLight />
-                            <Text3 regular>{isMenuOpen ? 'Close' : 'Open'}</Text3>
-                        </Inline>
-                    </Touchable>
-                )}
-                renderMenu={({ref, className}) => (
-                    <div ref={ref} className={className}>
-                        {fruitOptions.map((fruit) => (
-                            <Box paddingX={16} paddingY={8}>
-                                <Checkbox
-                                    name={fruit.text}
-                                    onChange={() => {
-                                        setValues(fruit.value);
-                                    }}
-                                    checked={valuesState.includes(fruit.value)}
-                                >
-                                    {fruit.text}
-                                </Checkbox>
-                            </Box>
-                        ))}
-                    </div>
-                )}
-            />
-            <SectionTitle>Menu with close option</SectionTitle>
-            <Menu
-                width={200}
+                width={400}
                 renderTarget={({ref, onPress, isMenuOpen}) => (
                     <Touchable elementRef={ref} onPress={onPress}>
                         <Inline space={16}>
@@ -66,20 +47,20 @@ export const Default: StoryComponent = () => {
                 )}
                 renderMenu={({ref, className, close}) => (
                     <div ref={ref} className={className}>
-                        {fruitOptions.map((fruit) => (
-                            <Box paddingX={16} key={fruit.text} paddingY={8}>
-                                <Touchable
-                                    onPress={() => {
-                                        close();
-                                        confirm({
-                                            title: 'Title',
-                                            message: 'This is the dialog message',
-                                            icon: <IcnInfo />,
-                                        });
+                        {options.map((option) => (
+                            <Box paddingX={16} paddingY={8} key={option.value}>
+                                <Checkbox
+                                    name={option.text}
+                                    onChange={() => {
+                                        if (option.value === 'option3') {
+                                            close();
+                                        }
+                                        setValues(option.value);
                                     }}
+                                    checked={valuesState.includes(option.value)}
                                 >
-                                    {fruit.text}
-                                </Touchable>
+                                    {option.text}
+                                </Checkbox>
                             </Box>
                         ))}
                     </div>
