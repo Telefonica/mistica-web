@@ -62,6 +62,26 @@ test.each(STORY_TYPES)('DecimalField (%s)', async (storyType) => {
 
     await clearAndType(page, field, '+-123e.4,5.6i');
     await expect(getValue(field)).resolves.toBe('123,456');
+
+    // test editing the number to set the decimal char in a previous pos
+    await clearAndType(page, field, '124,5');
+    await expect(getValue(field)).resolves.toBe('124,5');
+    await field.evaluate((el) => {
+        // set the caret position on a digit before the ,
+        (el as HTMLInputElement).setSelectionRange(2, 2);
+    });
+    await field.type('.3');
+    await expect(getValue(field)).resolves.toBe('12,345');
+
+    // test editing the number to set the decimal char in a later pos
+    await clearAndType(page, field, '1,24');
+    await expect(getValue(field)).resolves.toBe('1,24');
+    await field.evaluate((el) => {
+        // set the caret position on a digit after the ,
+        (el as HTMLInputElement).setSelectionRange(3, 3);
+    });
+    await field.type('.3');
+    await expect(getValue(field)).resolves.toBe('1,234'); // only the first , should be considered.
 });
 
 test.each(STORY_TYPES)('CreditCardNumberField (%s)', async (storyType) => {
@@ -74,6 +94,15 @@ test.each(STORY_TYPES)('CreditCardNumberField (%s)', async (storyType) => {
 
     await clearAndType(page, field, '1234-567.8 9012/34abc567 890');
     await expect(getValue(field)).resolves.toBe('1234 5678 9012 3456');
+
+    await clearAndType(page, field, '123456789012');
+    await expect(getValue(field)).resolves.toBe('1234 5678 9012');
+    await field.evaluate((el) => {
+        // set the caret position after the first block
+        (el as HTMLInputElement).setSelectionRange(4, 4);
+    });
+    await field.type('1234');
+    await expect(getValue(field)).resolves.toBe('1234 1234 5678 9012');
 });
 
 test.each(STORY_TYPES)('CreditCardExpirationField (%s)', async (storyType) => {
