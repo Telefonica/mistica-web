@@ -9,7 +9,7 @@ export default {
             control: {type: 'select'},
         },
         actions: {
-            options: ['button', 'link', 'button + link'],
+            options: ['button', 'link', 'button and link'],
             control: {type: 'select'},
         },
     },

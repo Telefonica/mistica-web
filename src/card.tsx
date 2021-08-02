@@ -238,7 +238,7 @@ export const DataCard: React.FC<DataCardProps> = ({
     const classes = useDataCardStyles();
     return (
         <Boxed className={classes.boxed} dataAttributes={dataAttributes}>
-            <article className={classes.dataCard} aria-label={ariaLabel}>
+            <article className={classes.dataCard} aria-label={ariaLabel ?? title}>
                 {icon && <Box paddingBottom={16}>{icon}</Box>}
                 <CardContent
                     headline={headline}

@@ -70,7 +70,7 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose = () => {}})
     const {colors, texts} = useTheme();
 
     return (
-        <div className={classes.dismissableContainer}>
+        <aside className={classes.dismissableContainer}>
             {children}
             <IconButton
                 className={classes.dismissableButton}
@@ -82,7 +82,7 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose = () => {}})
                     <IcnClose color={colors.neutralHigh} />
                 </div>
             </IconButton>
-        </div>
+        </aside>
     );
 };
 
@@ -96,6 +96,7 @@ interface CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     isInverse?: boolean;
     children?: void;
+    'aria-label'?: string;
 }
 interface BasicProps extends CommonProps {
     button?: undefined;
@@ -141,7 +142,7 @@ const Content: React.FC<Props> = (props) => {
 
     const content = (
         <Boxed isInverse={isInverse} className={classes.container}>
-            <div className={classes.textContainer}>
+            <article className={classes.textContainer} aria-label={props['aria-label'] ?? props.title}>
                 <Text4 regular>{title}</Text4>
                 <Box paddingTop={8}>
                     <Text2 regular color={theme.colors.textSecondary}>
@@ -149,7 +150,7 @@ const Content: React.FC<Props> = (props) => {
                     </Text2>
                 </Box>
                 {props.button && <Box paddingTop={16}>{props.button}</Box>}
-            </div>
+            </article>
             {imageUrl && (
                 <div
                     className={classes.imageContent}

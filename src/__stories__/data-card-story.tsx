@@ -27,7 +27,7 @@ export default {
             control: {type: 'select'},
         },
         actions: {
-            options: ['button', 'link', 'button + link'],
+            options: ['button', 'link', 'button and link'],
             control: {type: 'select'},
         },
     },
@@ -40,7 +40,7 @@ type DataCardArgs = {
     title: string;
     subtitle: string;
     description: string;
-    actions: 'button' | 'link' | 'button + link';
+    actions: 'button' | 'link' | 'button and link';
 };
 
 export const Default: StoryComponent<DataCardArgs> = ({
