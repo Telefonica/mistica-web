@@ -1,3 +1,11 @@
+# [9.11.0](https://github.com/Telefonica/mistica-web/compare/v9.10.1...v9.11.0) (2021-08-02)
+
+
+### Features
+
+* **FormFields:** use rifm to format CreditCard and Decimal fields ([dd2f8ff](https://github.com/Telefonica/mistica-web/commit/dd2f8ffec50e1e1cb80cc05700398a564ea02964))
+* **Menu:** Expose function to close menu ([#308](https://github.com/Telefonica/mistica-web/issues/308)) ([2a70326](https://github.com/Telefonica/mistica-web/commit/2a7032612e25e86999c74041e1cb27465bbb5445))
+
 ## [9.10.1](https://github.com/Telefonica/mistica-web/compare/v9.10.0...v9.10.1) (2021-07-29)
 
 
