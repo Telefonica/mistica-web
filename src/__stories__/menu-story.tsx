@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {fruitEntries} from './helpers';
 import {Touchable, Menu, Stack, Inline, Text3, Box, Checkbox, IconKebabMenuLight} from '..';
 import SectionTitle from '../section-title';
 
@@ -8,7 +7,20 @@ export default {
     component: Menu,
 };
 
-const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
+const options = [
+    {
+        text: 'Option 1',
+        value: 'option1',
+    },
+    {
+        text: 'Option 2',
+        value: 'option2',
+    },
+    {
+        text: 'Option 3 (checking this will close the menu)',
+        value: 'option3',
+    },
+];
 
 export const Default: StoryComponent = () => {
     const [valuesState, setValuesState] = React.useState<ReadonlyArray<string>>([]);
@@ -24,7 +36,7 @@ export const Default: StoryComponent = () => {
         <Stack space={16}>
             <SectionTitle>Menu</SectionTitle>
             <Menu
-                width={200}
+                width={400}
                 renderTarget={({ref, onPress, isMenuOpen}) => (
                     <Touchable elementRef={ref} onPress={onPress}>
                         <Inline space={16}>
@@ -33,16 +45,23 @@ export const Default: StoryComponent = () => {
                         </Inline>
                     </Touchable>
                 )}
-                renderMenu={({ref, className}) => (
+                renderMenu={({ref, className, close}) => (
                     <div ref={ref} className={className}>
-                        {fruitOptions.map((fruit) => (
-                            <Box paddingX={16} paddingY={8}>
+                        {options.map((option) => (
+                            <Box paddingX={16} paddingY={8} key={option.value}>
                                 <Checkbox
-                                    name={fruit.text}
-                                    onChange={() => setValues(fruit.value)}
-                                    checked={valuesState.includes(fruit.value)}
+                                    name={option.text}
+                                    onChange={() => {
+                                        if (option.value === 'option3') {
+                                            setTimeout(() => {
+                                                close();
+                                            }, 400);
+                                        }
+                                        setValues(option.value);
+                                    }}
+                                    checked={valuesState.includes(option.value)}
                                 >
-                                    {fruit.text}
+                                    {option.text}
                                 </Checkbox>
                             </Box>
                         ))}

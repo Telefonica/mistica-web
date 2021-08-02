@@ -21,6 +21,9 @@ Don't hesitate to ask any questions and share your ideas
 We would love to accept your Pull Requests but please, before starting your development,
 [create an issue](https://github.com/Telefonica/mistica-web/issues/new/choose).
 
+Remember to add to your PR the result of run `yarn build` (This generates flow types and updates
+size-stats.json).
+
 ## Bug reports
 
 If something is broken or not working as expected, let us know!
