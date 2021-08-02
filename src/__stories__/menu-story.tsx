@@ -53,7 +53,9 @@ export const Default: StoryComponent = () => {
                                     name={option.text}
                                     onChange={() => {
                                         if (option.value === 'option3') {
-                                            close();
+                                            setTimeout(() => {
+                                                close();
+                                            }, 400);
                                         }
                                         setValues(option.value);
                                     }}
