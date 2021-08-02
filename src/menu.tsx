@@ -31,6 +31,7 @@ const useStyles = createUseStyles(({colors}) => ({
 type MenuRenderProps = {
     ref: (element: HTMLElement | null) => void;
     className: string;
+    closeMenu: () => void;
 };
 
 type TargetRenderProps = {
@@ -40,6 +41,7 @@ type TargetRenderProps = {
 };
 
 export type MenuProps = {
+    open: boolean;
     width?: number;
     renderTarget: (props: TargetRenderProps) => React.ReactNode;
     renderMenu: (props: MenuRenderProps) => React.ReactNode;
@@ -133,6 +135,9 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width}) => {
         () => ({
             ref: setMenu,
             className: classes.menuContainer,
+            closeMenu: () => {
+                setIsMenuOpen(false);
+            },
         }),
         [classes.menuContainer, setMenu]
     );
