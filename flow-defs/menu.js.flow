@@ -4,6 +4,7 @@ import * as React from "react";
 declare type MenuRenderProps = {
   ref: (element: HTMLElement | null) => void,
   className: string,
+  close: () => void,
 };
 declare type TargetRenderProps = {
   ref: (element: HTMLElement | null) => void,
