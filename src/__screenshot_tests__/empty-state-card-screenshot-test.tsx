@@ -18,11 +18,11 @@ const createCases = () => {
     return cases;
 };
 
-test.each(createCases())('EmptyState %p %p %p', async (device, asset, action) => {
+test.each(createCases())('EmptyState %p %p %p', async (device, asset, actions) => {
     await openStoryPage({
         id: 'components-cards-emptystatecard--default',
         device: device as Device,
-        args: {asset, action},
+        args: {asset, actions},
     });
 
     const emptyState = await screen.findByTestId('empty-state-card');

@@ -184,7 +184,7 @@ const buildStoryUrl = (id: string, skin?: string, platform?: string, args?: Stor
                 .join(';')
         );
     }
-    console.log(params.toString());
+
     return `http://${HOST}:6006/iframe.html?${params.toString()}`;
 };
 
