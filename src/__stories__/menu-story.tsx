@@ -42,11 +42,6 @@ export const Default: StoryComponent = () => {
                                 <Checkbox
                                     name={fruit.text}
                                     onChange={() => {
-                                        confirm({
-                                            title: 'Title',
-                                            message: 'This is the dialog message',
-                                            icon: <IcnInfo />,
-                                        });
                                         setValues(fruit.value);
                                     }}
                                     checked={valuesState.includes(fruit.value)}
