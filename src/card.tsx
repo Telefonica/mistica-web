@@ -175,7 +175,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
     const classes = useMediaCardStyles({media});
     return (
         <Boxed className={classes.boxed}>
-            <article className={classes.mediaCard} aria-label={ariaLabel}>
+            <article className={classes.mediaCard} aria-label={ariaLabel ?? title}>
                 <div className={classes.media}></div>
                 <div className={classes.content}>
                     <CardContent
