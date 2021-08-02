@@ -31,6 +31,7 @@ const useStyles = createUseStyles(({colors}) => ({
 type MenuRenderProps = {
     ref: (element: HTMLElement | null) => void;
     className: string;
+    close: () => void;
 };
 
 type TargetRenderProps = {
@@ -99,11 +100,18 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width}) => {
             });
         }
 
+        let requestAnimationFrameId: number;
         if (isMenuOpen) {
-            requestAnimationFrame(() => {
+            requestAnimationFrameId = requestAnimationFrame(() => {
                 setAnimateShowItems(true);
             });
         }
+
+        return () => {
+            if (requestAnimationFrameId) {
+                cancelAnimationFrame(requestAnimationFrameId);
+            }
+        };
     }, [isMenuOpen, menu, target]);
 
     const classes = useStyles({
@@ -126,6 +134,9 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width}) => {
         () => ({
             ref: setMenu,
             className: classes.menuContainer,
+            close: () => {
+                setIsMenuOpen(false);
+            },
         }),
         [classes.menuContainer, setMenu]
     );
