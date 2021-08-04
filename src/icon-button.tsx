@@ -1,4 +1,3 @@
-import {string} from 'prop-types';
 import * as React from 'react';
 import Touchable from './touchable';
 import {getPrefixedDataAttributes} from './utils/dom';
