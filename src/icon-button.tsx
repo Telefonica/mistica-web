@@ -45,7 +45,6 @@ interface CommonProps {
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     newTab?: boolean;
-    'aria-labelledby'?: string;
 }
 
 /** @deprecated */
@@ -150,13 +149,7 @@ const IconButton: React.FC<Props> = (props) => {
     if (props.href) {
         const label = props['aria-label'] ?? props.label;
         return (
-            <Touchable
-                {...commonProps}
-                href={props.href}
-                newTab={props.newTab}
-                aria-label={label}
-                aria-labelledby={props['aria-labelledby']}
-            >
+            <Touchable {...commonProps} href={props.href} newTab={props.newTab} aria-label={label}>
                 {!icon && React.Children.only(children)}
             </Touchable>
         );
@@ -170,7 +163,6 @@ const IconButton: React.FC<Props> = (props) => {
                 fullPageOnWebView={props.fullPageOnWebView}
                 replace={props.replace}
                 aria-label={label}
-                aria-labelledby={props['aria-labelledby']}
             >
                 {!icon && React.Children.only(children)}
             </Touchable>
@@ -180,12 +172,7 @@ const IconButton: React.FC<Props> = (props) => {
     if (props.onPress) {
         const label = props['aria-label'] ?? props.label;
         return (
-            <Touchable
-                {...commonProps}
-                onPress={props.onPress}
-                aria-label={label}
-                aria-labelledby={props['aria-labelledby']}
-            >
+            <Touchable {...commonProps} onPress={props.onPress} aria-label={label}>
                 {!icon && React.Children.only(children)}
             </Touchable>
         );
