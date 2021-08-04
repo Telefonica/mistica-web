@@ -39,10 +39,19 @@ const useStyles = createUseStyles((theme) => ({
 type Props = {
     children?: React.ReactNode;
     value?: number;
-    'aria-label'?: string;
 };
 
-const Badge: React.FC<Props> = ({children, value, 'aria-label': ariaLabel}) => {
+/**
+ * This Component is decorative and won't be read by screenreaders, to make it accessible,
+ * set the label to the child element
+ *
+ * <Badge value={2}>
+ *   <IconButton aria-label="Shopping Cart with 2 items">
+ *     <IconShoppingCartFilled />
+ *   </IconButton>
+ * </Badge>
+ */
+const Badge: React.FC<Props> = ({children, value}) => {
     const hasChildren = !!children;
     const classes = useStyles({hasChildren});
 
@@ -55,9 +64,11 @@ const Badge: React.FC<Props> = ({children, value, 'aria-label': ariaLabel}) => {
     }
 
     return (
-        <div className={classes.container} aria-label={ariaLabel}>
+        <div className={classes.container}>
             {value ? (
                 <div
+                    role="presentation"
+                    aria-hidden="true"
                     className={classnames(classes.badge, classes.badgeNumber, {
                         [classes.badgeBigNumber]: value > 9,
                     })}

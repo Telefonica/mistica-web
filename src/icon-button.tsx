@@ -1,3 +1,4 @@
+import {string} from 'prop-types';
 import * as React from 'react';
 import Touchable from './touchable';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -45,35 +46,81 @@ interface CommonProps {
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     newTab?: boolean;
+    'aria-labelledby'?: string;
 }
 
-interface HrefProps extends CommonProps {
+/** @deprecated */
+interface HrefPropsDeprecated extends CommonProps {
+    /** @deprecated use aria-label */
     label: string;
+    'aria-label'?: undefined;
     href: string;
     to?: undefined;
     onPress?: undefined;
 }
-interface ToProps extends CommonProps {
+
+interface HrefProps extends CommonProps {
+    label?: undefined;
+    'aria-label': string;
+    href: string;
+    to?: undefined;
+    onPress?: undefined;
+}
+
+/** @deprecated */
+interface ToPropsDeprecated extends CommonProps {
+    /** @deprecated use aria-label */
     label: string;
+    'aria-label'?: undefined;
     to: string;
     fullPageOnWebView?: boolean;
     replace?: boolean;
     href?: undefined;
     onPress?: undefined;
 }
-interface OnPressProps extends CommonProps {
+
+interface ToProps extends CommonProps {
+    label?: undefined;
+    'aria-label': string;
+    to: string;
+    fullPageOnWebView?: boolean;
+    replace?: boolean;
+    href?: undefined;
+    onPress?: undefined;
+}
+
+/** @deprecated */
+interface OnPressPropsDeprecated extends CommonProps {
+    /** @deprecated use aria-label */
     label: string;
+    'aria-label'?: undefined;
     onPress: (event: React.MouseEvent<HTMLElement>) => void;
     href?: undefined;
     to?: undefined;
 }
+
+interface OnPressProps extends CommonProps {
+    label?: undefined;
+    'aria-label': string;
+    onPress: (event: React.MouseEvent<HTMLElement>) => void;
+    href?: undefined;
+    to?: undefined;
+}
+
 interface MaybeProps extends CommonProps {
     onPress?: undefined;
     href?: undefined;
     to?: undefined;
 }
 
-type Props = HrefProps | ToProps | OnPressProps | MaybeProps;
+type Props =
+    | HrefProps
+    | HrefPropsDeprecated
+    | ToProps
+    | ToPropsDeprecated
+    | OnPressProps
+    | OnPressPropsDeprecated
+    | MaybeProps;
 
 /*
  * Examples:
@@ -102,20 +149,29 @@ const IconButton: React.FC<Props> = (props) => {
     };
 
     if (props.href) {
+        const label = props['aria-label'] ?? props.label;
         return (
-            <Touchable {...commonProps} href={props.href} newTab={props.newTab} label={props.label}>
+            <Touchable
+                {...commonProps}
+                href={props.href}
+                newTab={props.newTab}
+                aria-label={label}
+                aria-labelledby={props['aria-labelledby']}
+            >
                 {!icon && React.Children.only(children)}
             </Touchable>
         );
     }
     if (props.to) {
+        const label = props['aria-label'] ?? props.label;
         return (
             <Touchable
                 {...commonProps}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
                 replace={props.replace}
-                label={props.label}
+                aria-label={label}
+                aria-labelledby={props['aria-labelledby']}
             >
                 {!icon && React.Children.only(children)}
             </Touchable>
@@ -123,8 +179,14 @@ const IconButton: React.FC<Props> = (props) => {
     }
 
     if (props.onPress) {
+        const label = props['aria-label'] ?? props.label;
         return (
-            <Touchable {...commonProps} onPress={props.onPress} label={props.label}>
+            <Touchable
+                {...commonProps}
+                onPress={props.onPress}
+                aria-label={label}
+                aria-labelledby={props['aria-labelledby']}
+            >
                 {!icon && React.Children.only(children)}
             </Touchable>
         );

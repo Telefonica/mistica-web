@@ -63,7 +63,7 @@ const Callout: React.FC<Props> = ({
     const classes = useStyles({needsButtonLinkAlignment});
     const {colors, texts} = useTheme();
     return (
-        <aside
+        <section
             className={classNames(classes.container, {[classes.overInverse]: isInverse})}
             aria-label={ariaLabel ?? title}
         >
@@ -105,7 +105,7 @@ const Callout: React.FC<Props> = ({
                     </IconButton>
                 )}
             </ThemeVariant>
-        </aside>
+        </section>
     );
 };
 

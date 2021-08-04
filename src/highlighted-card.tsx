@@ -70,7 +70,7 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose = () => {}})
     const {colors, texts} = useTheme();
 
     return (
-        <aside className={classes.dismissableContainer}>
+        <section className={classes.dismissableContainer}>
             {children}
             <IconButton
                 className={classes.dismissableButton}
@@ -82,7 +82,7 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose = () => {}})
                     <IcnClose color={colors.neutralHigh} />
                 </div>
             </IconButton>
-        </aside>
+        </section>
     );
 };
 
