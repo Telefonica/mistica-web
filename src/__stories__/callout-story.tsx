@@ -61,33 +61,7 @@ export const Default: StoryComponent<Args> = ({
                             description={description}
                             button={button}
                             buttonLink={buttonLink}
-                            aria-label="This is the aria label 1"
-                        />
-                    </Box>
-                </ResponsiveLayout>
-
-                <ResponsiveLayout>
-                    <Box paddingY={24}>
-                        <Callout
-                            icon={withIcon ? <IconBoxLight /> : undefined}
-                            onClose={isClosable ? () => {} : undefined}
-                            title={title}
-                            description={description}
-                            button={button}
-                            buttonLink={buttonLink}
-                        />
-                    </Box>
-                </ResponsiveLayout>
-
-                <ResponsiveLayout>
-                    <Box paddingY={24}>
-                        <Callout
-                            icon={withIcon ? <IconBoxLight /> : undefined}
-                            onClose={isClosable ? () => {} : undefined}
-                            title={title}
-                            description={description}
-                            button={button}
-                            buttonLink={buttonLink}
+                            aria-label="Callout label"
                         />
                     </Box>
                 </ResponsiveLayout>

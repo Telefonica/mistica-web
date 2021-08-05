@@ -15,7 +15,7 @@ test.each`
         args: {actions, title, isOverInverse, isClosable, withIcon},
     });
 
-    const callout = await screen.findByRole('complementary');
+    const callout = await screen.findByRole('region');
     const image = await callout.screenshot();
 
     expect(image).toMatchImageSnapshot();

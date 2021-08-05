@@ -4,7 +4,16 @@ import * as React from "react";
 declare type Props = {
   children?: React.Node,
   value?: number,
-  "aria-label"?: string,
 };
+/**
+ * This Component is decorative and won't be read by screenreaders, to make it accessible,
+ * set the label to the child element
+ *
+ * <Badge value={2}>
+ *    <IconButton aria-label="Shopping Cart with 2 items">
+ *      <IconShoppingCartFilled />
+ *    </IconButton>
+ * </Badge>
+ */
 declare var Badge: React.ComponentType<Props>;
 declare export default typeof Badge;
