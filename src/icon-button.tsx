@@ -47,7 +47,7 @@ interface CommonProps {
     newTab?: boolean;
     /** @deprecated use aria-label */
     label?: string;
-    'aria-label'?: undefined;
+    'aria-label'?: string;
 }
 
 interface HrefProps extends CommonProps {
