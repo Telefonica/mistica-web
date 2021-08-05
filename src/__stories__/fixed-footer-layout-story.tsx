@@ -4,12 +4,15 @@ import {
     ButtonSecondary,
     Stack,
     Text2,
+    Text6,
     FixedFooterLayout,
     ButtonFixedFooterLayout,
     ResponsiveLayout,
     Box,
     Inline,
+    alert,
 } from '..';
+
 import {useCheckbox} from './helpers';
 
 export default {
@@ -96,3 +99,30 @@ export const MoreComplexFooter: StoryComponent = () => {
 
 MoreComplexFooter.storyName = 'FixedFooterLayout';
 MoreComplexFooter.parameters = {fullScreen: true};
+
+export const DialogOverFixedFooter: StoryComponent = () => {
+    return (
+        <ButtonFixedFooterLayout
+            button={<ButtonPrimary onPress={() => alert({message: 'Message'})}>Open dialog</ButtonPrimary>}
+        >
+            <ResponsiveLayout>
+                <Box paddingY={16}>
+                    <Stack space={16}>
+                        <Text6 as="p">
+                            Open this story using a mobile viewport, then press the footer button to open a
+                            dialog.
+                        </Text6>
+                        <Text6 as="p">The dialog backdrop should cover the fixed footer.</Text6>
+                        <div style={{paddingTop: '100vh'}}>
+                            <Text2 regular as="p">
+                                This content adds scroll to the page.
+                            </Text2>
+                        </div>
+                    </Stack>
+                </Box>
+            </ResponsiveLayout>
+        </ButtonFixedFooterLayout>
+    );
+};
+
+DialogOverFixedFooter.parameters = {fullScreen: true};
