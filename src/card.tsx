@@ -175,7 +175,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
     const classes = useMediaCardStyles({media});
     return (
         <Boxed className={classes.boxed}>
-            <article className={classes.mediaCard} aria-label={ariaLabel}>
+            <section className={classes.mediaCard} aria-label={ariaLabel}>
                 <div className={classes.media}></div>
                 <div className={classes.content}>
                     <CardContent
@@ -188,7 +188,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
                         buttonLink={buttonLink}
                     />
                 </div>
-            </article>
+            </section>
         </Boxed>
     );
 };
@@ -238,7 +238,7 @@ export const DataCard: React.FC<DataCardProps> = ({
     const classes = useDataCardStyles();
     return (
         <Boxed className={classes.boxed} dataAttributes={dataAttributes}>
-            <article className={classes.dataCard} aria-label={ariaLabel}>
+            <section className={classes.dataCard} aria-label={ariaLabel}>
                 {icon && <Box paddingBottom={16}>{icon}</Box>}
                 <CardContent
                     headline={headline}
@@ -249,7 +249,7 @@ export const DataCard: React.FC<DataCardProps> = ({
                     button={button}
                     buttonLink={buttonLink}
                 />
-            </article>
+            </section>
         </Boxed>
     );
 };

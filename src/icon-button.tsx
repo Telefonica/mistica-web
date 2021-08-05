@@ -45,41 +45,18 @@ interface CommonProps {
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     newTab?: boolean;
-}
-
-/** @deprecated */
-interface HrefPropsDeprecated extends CommonProps {
     /** @deprecated use aria-label */
-    label: string;
+    label?: string;
     'aria-label'?: undefined;
-    href: string;
-    to?: undefined;
-    onPress?: undefined;
 }
 
 interface HrefProps extends CommonProps {
-    label?: undefined;
-    'aria-label': string;
     href: string;
     to?: undefined;
-    onPress?: undefined;
-}
-
-/** @deprecated */
-interface ToPropsDeprecated extends CommonProps {
-    /** @deprecated use aria-label */
-    label: string;
-    'aria-label'?: undefined;
-    to: string;
-    fullPageOnWebView?: boolean;
-    replace?: boolean;
-    href?: undefined;
     onPress?: undefined;
 }
 
 interface ToProps extends CommonProps {
-    label?: undefined;
-    'aria-label': string;
     to: string;
     fullPageOnWebView?: boolean;
     replace?: boolean;
@@ -87,19 +64,7 @@ interface ToProps extends CommonProps {
     onPress?: undefined;
 }
 
-/** @deprecated */
-interface OnPressPropsDeprecated extends CommonProps {
-    /** @deprecated use aria-label */
-    label: string;
-    'aria-label'?: undefined;
-    onPress: (event: React.MouseEvent<HTMLElement>) => void;
-    href?: undefined;
-    to?: undefined;
-}
-
 interface OnPressProps extends CommonProps {
-    label?: undefined;
-    'aria-label': string;
     onPress: (event: React.MouseEvent<HTMLElement>) => void;
     href?: undefined;
     to?: undefined;
@@ -111,25 +76,20 @@ interface MaybeProps extends CommonProps {
     to?: undefined;
 }
 
-type Props =
-    | HrefProps
-    | HrefPropsDeprecated
-    | ToProps
-    | ToPropsDeprecated
-    | OnPressProps
-    | OnPressPropsDeprecated
-    | MaybeProps;
+type Props = HrefProps | ToProps | OnPressProps | MaybeProps;
 
 /*
  * Examples:
  *
  * IconButton with image url:
  *
- *     <IconButton icon="http://my.image.jpg" />
+ *     <IconButton icon="http://my.image.jpg" aria-label="label" />
  *
  * IconButton with SVG component as icon. Child ignored if `icon` prop is set. Only one child is accepted!
  *
- *     <IconButton><MySvgIconComponent /></IconButton />
+ *     <IconButton aria-label="label">
+ *         <MySvgIconComponent />
+ *     </IconButton />
  *
  */
 const IconButton: React.FC<Props> = (props) => {
@@ -147,22 +107,25 @@ const IconButton: React.FC<Props> = (props) => {
     };
 
     if (props.href) {
-        const label = props['aria-label'] ?? props.label;
         return (
-            <Touchable {...commonProps} href={props.href} newTab={props.newTab} aria-label={label}>
+            <Touchable
+                {...commonProps}
+                href={props.href}
+                newTab={props.newTab}
+                aria-label={props['aria-label'] ?? props.label}
+            >
                 {!icon && React.Children.only(children)}
             </Touchable>
         );
     }
     if (props.to) {
-        const label = props['aria-label'] ?? props.label;
         return (
             <Touchable
                 {...commonProps}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
                 replace={props.replace}
-                aria-label={label}
+                aria-label={props['aria-label'] ?? props.label}
             >
                 {!icon && React.Children.only(children)}
             </Touchable>
@@ -170,9 +133,12 @@ const IconButton: React.FC<Props> = (props) => {
     }
 
     if (props.onPress) {
-        const label = props['aria-label'] ?? props.label;
         return (
-            <Touchable {...commonProps} onPress={props.onPress} aria-label={label}>
+            <Touchable
+                {...commonProps}
+                onPress={props.onPress}
+                aria-label={props['aria-label'] ?? props.label}
+            >
                 {!icon && React.Children.only(children)}
             </Touchable>
         );

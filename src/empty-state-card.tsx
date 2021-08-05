@@ -73,7 +73,7 @@ const EmptyStateCard: React.FC<Props> = ({
     return (
         <Boxed dataAttributes={dataAttributes}>
             <Box paddingY={isMobile ? 24 : 40} paddingX={isMobile ? 16 : 40}>
-                <article className={classes.container} aria-label={ariaLabel}>
+                <section className={classes.container} aria-label={ariaLabel}>
                     <Stack space={16}>
                         {image ?? icon}
                         <Box paddingRight={isMobile ? 48 : 0}>
@@ -93,7 +93,7 @@ const EmptyStateCard: React.FC<Props> = ({
                             </div>
                         )}
                     </Stack>
-                </article>
+                </section>
             </Box>
         </Boxed>
     );

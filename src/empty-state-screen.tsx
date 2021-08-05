@@ -78,7 +78,6 @@ const EmptyStateScreen: React.FC<Props> = ({
     largeImageUrl,
     imageUrl,
     icon,
-    'aria-label': ariaLabel,
 }) => {
     const {colors} = useTheme();
     const needsButtonLinkAlignment = buttonLink && !button;
@@ -115,7 +114,7 @@ const EmptyStateScreen: React.FC<Props> = ({
             <Boxed>
                 <div className={classes.desktopContainer}>
                     <div className={classes.desktopContent}>
-                        <Box padding={64} role="article" aria-label={ariaLabel}>
+                        <Box padding={64}>
                             <Stack space={24}>
                                 {image ?? icon}
                                 <Stack space={16}>
