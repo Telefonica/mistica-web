@@ -68,7 +68,7 @@ const Badge: React.FC<Props> = ({children, value}) => {
             {value ? (
                 <div
                     role="presentation"
-                    aria-hidden="true"
+                    aria-hidden="true" // otherwise OSX VoiceOver reads this number
                     className={classnames(classes.badge, classes.badgeNumber, {
                         [classes.badgeBigNumber]: value > 9,
                     })}

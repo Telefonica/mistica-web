@@ -22,10 +22,13 @@ const animationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     process.env.NODE_ENV !== 'test' &&
     !isRunningAcceptanceTest(platformOverrides);
 
+/** Must be higher than the fixed footer's z-index */
+const Z_INDEX = 26;
+
 const useStylesModalDialog = createUseStyles((theme) => ({
     wrapper: {
         position: 'relative',
-        zIndex: 11,
+        zIndex: Z_INDEX,
     },
     modalOpacityLayer: {
         display: 'flex',
@@ -35,7 +38,7 @@ const useStylesModalDialog = createUseStyles((theme) => ({
         right: 0,
         bottom: 0,
         left: 0,
-        zIndex: 11,
+        zIndex: Z_INDEX,
         alignItems: 'center',
         justifyContent: 'center',
         minHeight: 0,
