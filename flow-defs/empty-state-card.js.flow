@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { ButtonLink, ButtonPrimary, ButtonSecondary } from "./button";
+import type { DataAttributes } from "./utils/types";
 declare type CommonProps = {|
   title: string,
   button?:
@@ -9,6 +10,11 @@ declare type CommonProps = {|
     | React.Element<typeof ButtonSecondary>,
   buttonLink?: React.Element<typeof ButtonLink>,
   description?: string,
+  "aria-label"?: string,
+  /**
+   * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
+   */
+  dataAttributes?: DataAttributes,
 |};
 declare type IconProps = {|
   ...$Exact<CommonProps>,

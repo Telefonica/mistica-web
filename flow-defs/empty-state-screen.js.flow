@@ -9,6 +9,7 @@ declare type BaseProps = {|
     | React.Element<typeof ButtonSecondary>,
   buttonLink?: React.Element<typeof ButtonLink>,
   description?: string,
+  "aria-label"?: string,
 |};
 declare type ImageProps = {|
   ...$Exact<BaseProps>,

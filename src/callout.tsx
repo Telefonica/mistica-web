@@ -46,15 +46,27 @@ type Props = {
     button?: React.ReactElement<typeof ButtonPrimary> | React.ReactElement<typeof ButtonSecondary>;
     buttonLink?: React.ReactElement<typeof ButtonLink>;
     children?: void;
+    'aria-label'?: string;
 };
 
-const Callout: React.FC<Props> = ({title, description, icon, onClose, button, buttonLink}) => {
+const Callout: React.FC<Props> = ({
+    title,
+    description,
+    icon,
+    onClose,
+    button,
+    buttonLink,
+    'aria-label': ariaLabel,
+}) => {
     const needsButtonLinkAlignment = buttonLink && !button;
     const isInverse = useIsInverseVariant();
     const classes = useStyles({needsButtonLinkAlignment});
     const {colors, texts} = useTheme();
     return (
-        <section role="alert" className={classNames(classes.container, {[classes.overInverse]: isInverse})}>
+        <section
+            className={classNames(classes.container, {[classes.overInverse]: isInverse})}
+            aria-label={ariaLabel ?? title}
+        >
             <ThemeVariant isInverse={false}>
                 {icon && <div className={classes.icon}>{icon}</div>}
                 <div className={classes.content}>

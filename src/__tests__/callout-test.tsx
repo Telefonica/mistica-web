@@ -13,7 +13,7 @@ test('renders an accesible and clossable Callout', () => {
         </ThemeContextProvider>
     );
 
-    const callout = screen.getByRole('alert');
+    const callout = screen.getByRole('region');
     expect(callout).toBeInTheDocument();
 
     const closeButton = within(callout).getByRole('button', {name: 'Cerrar'});
