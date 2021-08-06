@@ -1,25 +1,33 @@
 import * as React from 'react';
-import {StorySection, useTextField, useSelect} from './helpers';
-import {EmptyStateCard, Stack, ButtonPrimary, ButtonLink, IconBoxLight, useTheme, useScreenSize} from '..';
+import {EmptyStateCard, ButtonPrimary, ButtonLink, IconBoxLight, useTheme, useScreenSize} from '..';
 
 export default {
     title: 'Components/Cards/EmptyStateCard',
+    argTypes: {
+        asset: {
+            options: ['icon', 'image'],
+            control: {type: 'select'},
+        },
+        actions: {
+            options: ['button', 'link', 'button and link'],
+            control: {type: 'select'},
+        },
+    },
 };
 
-export const Default: StoryComponent = () => {
+type Args = {
+    actions: string;
+    title: string;
+    asset: string;
+    description: string;
+};
+
+export const Default: StoryComponent<Args> = ({actions, title, description, asset}) => {
     const {isMobile} = useScreenSize();
     const {colors} = useTheme();
-    const [assetType, assetTypeSelect] = useSelect('asset', 'icon', ['icon', 'image']);
-    const [title, titleTextField] = useTextField('title', 'Some title', true);
-    const [description, descriptionTextField] = useTextField(
-        'description',
-        'This is a description for the empty state',
-        false
-    );
-    const [actions, actionsSelect] = useSelect('actions', 'button', ['button', 'link', 'button & link']);
 
     const assetProps =
-        assetType === 'icon'
+        asset === 'icon'
             ? {
                   icon: <IconBoxLight size={isMobile ? 64 : 80} color={colors.brand} />,
               }
@@ -38,26 +46,22 @@ export const Default: StoryComponent = () => {
     ) : undefined;
 
     return (
-        <>
-            <Stack space={16}>
-                {assetTypeSelect}
-                {titleTextField}
-                {descriptionTextField}
-                {actionsSelect}
-            </Stack>
-            <StorySection title="EmptyStateCard">
-                <div data-testid="empty-state-card">
-                    <EmptyStateCard
-                        {...assetProps}
-                        title={title}
-                        description={description}
-                        button={button}
-                        buttonLink={buttonLink}
-                    />
-                </div>
-            </StorySection>
-        </>
+        <EmptyStateCard
+            {...assetProps}
+            title={title}
+            description={description}
+            button={button}
+            buttonLink={buttonLink}
+            aria-label="Empty state card label"
+            dataAttributes={{testid: 'empty-state-card'}}
+        />
     );
 };
 
 Default.storyName = 'EmptyStateCard';
+Default.args = {
+    asset: 'icon',
+    actions: 'button',
+    title: 'Some title',
+    description: 'This is a description for the empty state',
+};

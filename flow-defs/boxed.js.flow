@@ -14,6 +14,7 @@ declare type Props = {
    * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
    */
   dataAttributes?: DataAttributes,
+  "aria-label"?: string,
 };
 declare export var Boxed: React.ComponentType<Props>;
 declare export {};

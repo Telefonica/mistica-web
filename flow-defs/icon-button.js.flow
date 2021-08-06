@@ -23,22 +23,25 @@ declare type CommonProps = {|
    */
   dataAttributes?: DataAttributes,
   newTab?: boolean,
+
+  /**
+   * @deprecated use aria-label
+   */
+  label?: string,
+  "aria-label"?: string,
 |};
 declare type HrefProps = {|
   ...$Exact<CommonProps>,
-  label: string,
   href: string,
 |};
 declare type ToProps = {|
   ...$Exact<CommonProps>,
-  label: string,
   to: string,
   fullPageOnWebView?: boolean,
   replace?: boolean,
 |};
 declare type OnPressProps = {|
   ...$Exact<CommonProps>,
-  label: string,
   onPress: (event: SyntheticMouseEvent<HTMLElement>) => void,
 |};
 declare type MaybeProps = {| ...$Exact<CommonProps> |};

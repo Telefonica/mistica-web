@@ -63,7 +63,9 @@ interface CommonProps {
     elementRef?: React.Ref<HTMLButtonElement | HTMLAnchorElement | HTMLDivElement>;
     style?: React.CSSProperties;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    /** @deprecated use aria-label */
     label?: string;
+    'aria-label'?: string;
     /** @deprecated use dataAttributes */
     'data-testid'?: string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
@@ -73,6 +75,7 @@ interface CommonProps {
     'aria-expanded'?: 'true' | 'false' | boolean;
     'aria-hidden'?: 'true' | 'false' | boolean;
     'aria-selected'?: 'true' | 'false' | boolean;
+    'aria-labelledby'?: string;
     role?: string;
     type?: 'button' | 'submit';
     tabIndex?: number;
@@ -222,7 +225,8 @@ const Touchable: React.FC<Props> = (props) => {
         return (
             <a
                 {...commonProps}
-                aria-label={props.label}
+                aria-label={props['aria-label'] ?? props.label}
+                aria-labelledby={props['aria-labelledby']}
                 onClick={handleHrefClick}
                 onKeyDown={handleKeyDown}
                 href={props.disabled ? '' : getHref()}
@@ -243,7 +247,8 @@ const Touchable: React.FC<Props> = (props) => {
         return (
             <Link
                 {...commonProps}
-                aria-label={props.label}
+                aria-label={props['aria-label'] ?? props.label}
+                aria-labelledby={props['aria-labelledby']}
                 innerRef={props.elementRef as React.RefObject<HTMLAnchorElement>}
                 to={props.disabled ? '' : props.to}
                 replace={props.replace}
@@ -264,7 +269,8 @@ const Touchable: React.FC<Props> = (props) => {
                 // a ButtonFixedFooter layout inside a form with the submit
                 // button located at the footer, which is redered using a Portal
                 form={type === 'submit' && props.formId ? props.formId : undefined}
-                aria-label={props.label}
+                aria-label={props['aria-label'] ?? props.label}
+                aria-labelledby={props['aria-labelledby']}
                 type={type}
                 ref={props.elementRef as React.RefObject<HTMLButtonElement>}
                 onClick={handleButtonClick}

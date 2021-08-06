@@ -1,25 +1,31 @@
 import {openStoryPage, screen} from '../test-utils';
+
 import type {Device} from '../test-utils';
 
 const devices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
-const assetTypes = ['icon', 'image'];
-const actionTypes = ['button', 'link', 'button & link'];
+const assets = ['icon', 'image'];
+const actions = ['button', 'link', 'button and link'];
 
-test.each(devices)('EmptyState', async (device) => {
-    const page = await openStoryPage({
-        id: 'components-cards-emptystatecard--default',
-        device,
-    });
-
-    for (const assetType of assetTypes) {
-        await page.select(await screen.findByLabelText('asset'), assetType);
-        for (const actionType of actionTypes) {
-            await page.select(await screen.findByLabelText('actions'), actionType);
-
-            const emptyState = await screen.findByTestId('empty-state-card');
-            const image = await emptyState.screenshot();
-
-            expect(image).toMatchImageSnapshot();
+const createCases = () => {
+    const cases = [];
+    for (const device of devices) {
+        for (const asset of assets) {
+            for (const action of actions) {
+                cases.push([device, asset, action]);
+            }
         }
     }
+    return cases;
+};
+
+test.each(createCases())('EmptyState %p %p %p', async (device, asset, actions) => {
+    await openStoryPage({
+        id: 'components-cards-emptystatecard--default',
+        device: device as Device,
+        args: {asset, actions},
+    });
+
+    const emptyState = await screen.findByTestId('empty-state-card');
+    const image = await emptyState.screenshot();
+    expect(image).toMatchImageSnapshot();
 });
