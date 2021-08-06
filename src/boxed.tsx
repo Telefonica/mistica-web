@@ -43,6 +43,7 @@ type Props = {
     'data-qsysid'?: string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
+    'aria-label'?: string;
 };
 
 export const Boxed: React.FC<Props> = ({
@@ -53,6 +54,7 @@ export const Boxed: React.FC<Props> = ({
     'data-testid': dataTestId,
     'data-qsysid': dataQsysId,
     dataAttributes,
+    'aria-label': ariaLabel,
 }) => {
     const isInverseOutside = useIsInverseVariant();
     const classes = useStyles({isInverseOutside, isInverseInside} as StylesProps);
@@ -64,6 +66,7 @@ export const Boxed: React.FC<Props> = ({
             data-testid={dataTestId}
             data-qsysid={dataQsysId}
             {...getPrefixedDataAttributes(dataAttributes)}
+            aria-label={ariaLabel}
         >
             <ThemeVariant isInverse={isInverseInside}>{children}</ThemeVariant>
         </div>

@@ -5297,9 +5297,9 @@
   integrity sha512-dUYxafYJzvBJr2f7Z78JLp+21CeNtDQKw1NJNobRDUS2fO1yFPHZYYBYxG/KOJnhqe3yWAardpLLAPs1bL+8XA==
 
 "@telefonica/libphonenumber@^2.8.0":
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/@telefonica/libphonenumber/-/libphonenumber-2.8.0.tgz#d461c466a735d6e81a11a94bfa0af8bf4304223c"
-  integrity sha512-fmf+857uliQaMr6MToy/QljR3x+GU+ABVkUJ5jJcbw8Pkeh0sYW2C6Z1rlFywhQUPLcQKc1wODD7LSjq1Gq7KA==
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/@telefonica/libphonenumber/-/libphonenumber-2.8.1.tgz#61e2561f5ba1a64e97ea96897b263888657c99b7"
+  integrity sha512-lS4jqWXA7tuDrlkF1kgNVAqB+loDwgwQbw2s4D2FwIjRzjAzJJyvLULu/dcd1iPVd1bhT8Eep+jZLUu1G9mkYA==
 
 "@telefonica/prettier-config@^1.1.0":
   version "1.1.0"

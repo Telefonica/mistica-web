@@ -44,6 +44,7 @@ interface BaseProps {
     buttonLink?: React.ReactElement<typeof ButtonLink>;
     description?: string;
     children?: void;
+    'aria-label'?: string;
 }
 
 interface ImageProps extends BaseProps {
@@ -113,7 +114,7 @@ const EmptyStateScreen: React.FC<Props> = ({
             <Boxed>
                 <div className={classes.desktopContainer}>
                     <div className={classes.desktopContent}>
-                        <Box padding={64} role="article">
+                        <Box padding={64}>
                             <Stack space={24}>
                                 {image ?? icon}
                                 <Stack space={16}>

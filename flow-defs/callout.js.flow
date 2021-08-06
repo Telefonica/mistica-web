@@ -11,6 +11,7 @@ declare type Props = {
     | React.Element<typeof ButtonPrimary>
     | React.Element<typeof ButtonSecondary>,
   buttonLink?: React.Element<typeof ButtonLink>,
+  "aria-label"?: string,
 };
 declare var Callout: React.ComponentType<Props>;
 declare export default typeof Callout;
