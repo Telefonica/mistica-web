@@ -148,7 +148,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
 
             // STATES
             error: palette.pepper,
-            success: palette.movistarGreen,
+            success: palette.movistarGreenDark,
             warning: palette.egg,
 
             // BARS TEXTS

@@ -140,8 +140,8 @@ export const getVivoSkin: GetSkin = () => {
 
             // STATES
             error: palette.pepper,
-            success: palette.vivoGreen,
-            warning: palette.orange,
+            success: palette.vivoGreenDark,
+            warning: palette.orangeDark,
 
             // BARS TEXTS
             textNavigationBarPrimary: palette.white,
