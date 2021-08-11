@@ -3,12 +3,13 @@ import {useTheme} from './hooks';
 import {createUseStyles} from './jss';
 import {Text} from './text';
 import {ThemeVariant} from './theme-variant-context';
+import {applyAlpha} from './utils/color';
 
 const useStyles = createUseStyles(() => ({
     tag: {
-        backgroundColor: ({color}) => color,
-        padding: '2px 8px',
-        borderRadius: 2,
+        backgroundColor: ({color}) => applyAlpha(color, 0.1),
+        padding: '4px 10px',
+        borderRadius: 50,
         minWidth: 48,
         display: 'inline-flex',
         alignItems: 'center',
@@ -26,11 +27,11 @@ const Tag: React.FC<Props> = ({children, color}) => {
     const {colors, isDarkMode} = useTheme();
     // Hardcode black text in darkmode because there isn't a black text color constant that we can use in dark mode
     const blackText = isDarkMode ? '#313235' : colors.textPrimary;
-    const textColor = color === colors.inverse ? blackText : colors.textPrimaryInverse;
+    const textColor = color === colors.textPrimary ? blackText : colors.textPrimary;
     return (
         <span className={classes.tag}>
             <ThemeVariant isInverse={false}>
-                <Text color={textColor} size={12} lineHeight={16} weight="regular" uppercase>
+                <Text color={color} size={14} lineHeight={16} weight="medium">
                     {children}
                 </Text>
             </ThemeVariant>
