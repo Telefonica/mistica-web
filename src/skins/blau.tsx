@@ -51,7 +51,7 @@ export const getBlauSkin: GetSkin = () => {
 
             // BORDERS
             borderLight: palette.grey1,
-            border: palette.grey3,
+            border: palette.grey2,
             borderDark: palette.grey5,
             borderSelected: palette.blauBlue,
 
@@ -64,7 +64,7 @@ export const getBlauSkin: GetSkin = () => {
             buttonLinkBackgroundSelected: palette.blauBlueLight10,
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
 
-            buttonPrimaryBackground: palette.blauViolet,
+            buttonPrimaryBackground: palette.blauBlue,
             buttonPrimaryBackgroundDisabled: palette.blauBlueLight60,
             buttonPrimaryBackgroundDisabledInverse: palette.blauBlueLight60,
             buttonPrimaryBackgroundInverse: palette.white,
