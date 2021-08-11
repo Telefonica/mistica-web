@@ -174,9 +174,11 @@ const useStyles = createUseStyles(({colors, mq}) => ({
 type StepperProps = {
     steps: Array<string>;
     currentIndex: number;
+    'aria-label'?: string;
+    children?: void;
 };
 
-const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) => {
+const Stepper: React.FC<StepperProps> = ({steps, currentIndex, 'aria-label': ariaLabel}: StepperProps) => {
     const {colors} = useTheme();
     const {isDesktopOrBigger} = useScreenSize();
     const {height, ref} = useElementDimensions();
@@ -206,12 +208,14 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                             aria-valuemin={1}
                             aria-valuemax={steps.length}
                             aria-valuetext={text}
+                            aria-label={ariaLabel}
                         >
                             {isCompleted ? (
                                 <div
                                     className={classnames(classes.stepIconNumber, {
                                         [classes.iconAnimation]: hasAnimation && !isBack,
                                     })}
+                                    role="presentation"
                                 >
                                     <IconSuccess
                                         color={colors.controlActivated}
@@ -235,7 +239,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                                 </div>
                             )}
                             {isDesktopOrBigger && (
-                                <div className={classes.textContainer} ref={ref}>
+                                <div className={classes.textContainer} ref={ref} role="presentation">
                                     <Text2
                                         regular
                                         color={
@@ -243,7 +247,6 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                                                 ? colors.textPrimary
                                                 : colors.textSecondary
                                         }
-                                        role="presentation"
                                     >
                                         {text}
                                     </Text2>
@@ -251,7 +254,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex}: StepperProps) =>
                             )}
                         </div>
                         {!isLastStep && (
-                            <div className={classes.bar}>
+                            <div className={classes.bar} role="presentation">
                                 {(isCompleted || isCurrent) && (
                                     <div
                                         className={classnames({

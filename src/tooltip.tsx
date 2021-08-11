@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {useAriaId, useScreenSize} from './hooks';
-import Portal from './portal';
+import {Portal} from './portal';
 import Overlay from './overlay';
 import * as key from './utils/key-codes';
 import {createUseStyles} from './jss';
@@ -262,7 +262,6 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
                 <Portal>
                     <Overlay onPress={handleClickOutside} />
                     <div
-                        data-testid="tooltip-container"
                         role="tooltip"
                         id={ariaId}
                         className={classes.container}

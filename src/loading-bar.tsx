@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {CSSTransition} from 'react-transition-group';
-import Portal from './portal';
+import {Portal} from './portal';
 import {createUseStyles} from './jss';
 
 const TRANSITION_DURATION_MS = 400;
@@ -82,7 +82,7 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-type Props = {visible: boolean};
+type Props = {visible: boolean; children?: void};
 
 const LoadingBar: React.FC<Props> = ({visible}) => {
     const classes = useStyles();

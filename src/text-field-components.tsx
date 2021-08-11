@@ -146,6 +146,7 @@ type HelperTextProps = {
     leftText?: string;
     rightText?: string;
     error?: boolean;
+    children?: void;
 };
 
 export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, error}) => {

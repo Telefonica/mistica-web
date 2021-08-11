@@ -21,7 +21,7 @@ const SomeComponent = ({innerRef}: {innerRef?: (node: HTMLElement | null) => voi
     );
 };
 
-export const UseElementSize: StoryComponent = () => {
+export const UseElementDimensions: StoryComponent = () => {
     const [isVisible, setIsVisible] = React.useState(true);
     const {height, width, ref} = useElementDimensions();
 
@@ -40,4 +40,4 @@ export const UseElementSize: StoryComponent = () => {
     );
 };
 
-UseElementSize.storyName = 'useElementDimensions';
+UseElementDimensions.storyName = 'useElementDimensions';

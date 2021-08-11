@@ -1,4 +1,4 @@
-<img alt="Mística for Web" src="./img/mistica-web.svg">
+<img alt="Mística for Web" src="https://raw.githubusercontent.com/Telefonica/mistica-web/master/img/mistica-web.svg">
 <br>
 
 React components library for Telefonica Design System ([Mistica](https://github.com/Telefonica/mistica))
@@ -9,17 +9,14 @@ React components library for Telefonica Design System ([Mistica](https://github.
 
 ### Install
 
-1. Create or edit your `.npmrc` file to include the telefonica npm token. This will allow you to install
-   packages from the npm `@telefonica` organization:
-
-```
-//registry.npmjs.org/:_authToken=1629486b-6c8c-47cc-b32d-4a6d586e828f
-```
-
-2. Install:
-
 ```terminal
 yarn add @telefonica/mistica
+```
+
+or
+
+```terminal
+npm install @telefonica/mistica
 ```
 
 ### Start using `@telefonica/mistica`
@@ -76,7 +73,7 @@ ReactDOM.render(
 
 The `theme` prop in `ThemeContextProvider` is **mandatory**, and you can use it to configure some aspects of
 the library. There are multiple settings but the only two mandatory fields are `skin` and `i18n`. Read the
-[theme config doc](./doc/theme-config.md) for more info.
+[theme config doc](https://github.com/Telefonica/mistica-web/blob/master/doc/theme-config.md) for more info.
 
 ## Components
 
@@ -87,13 +84,15 @@ Start prototyping interfaces with Mistica components in the
 
 ## More docs
 
-- [Working with forms](./doc/forms.md)
-- [Theme config options](./doc/theme-config.md)
-- [Customize media query break points](./doc/media-queries.md)
-- [Customize default texts](./doc/texts.md)
-- [Analytics](./doc/analytics.md)
-- [Style your components](./doc/styles.md)
-- [Fonts](./doc/fonts.md)
+- [Understanding Mistica's layout components](https://github.com/Telefonica/mistica-web/blob/master/doc/layout.md)
+- [Working with forms](https://github.com/Telefonica/mistica-web/blob/master/doc/forms.md)
+- [Theme config options](https://github.com/Telefonica/mistica-web/blob/master/doc/theme-config.md)
+- [Customize media query break points](https://github.com/Telefonica/mistica-web/blob/master/doc/media-queries.md)
+- [Customize default texts](https://github.com/Telefonica/mistica-web/blob/master/doc/texts.md)
+- [Analytics](https://github.com/Telefonica/mistica-web/blob/master/doc/analytics.md)
+- [Style your components](https://github.com/Telefonica/mistica-web/blob/master/doc/styles.md)
+- [Fonts](https://github.com/Telefonica/mistica-web/blob/master/doc/fonts.md)
+- [Testing notes](https://github.com/Telefonica/mistica-web/blob/master/doc/testing.md)
 
 ## Development
 
@@ -118,4 +117,4 @@ Start prototyping interfaces with Mistica components in the
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md)
+See [CONTRIBUTING.md](https://github.com/Telefonica/mistica-web/blob/master/CONTRIBUTING.md)

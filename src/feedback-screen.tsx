@@ -18,24 +18,25 @@ import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {Theme} from './theme';
 import {Text6, Text4} from './text';
 import Box from './box';
+import ResponsiveLayout from './responsive-layout';
+import GridLayout from './grid-layout';
+import ButtonLayout from './button-layout';
+import Stack from './stack';
 
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) && !isRunningAcceptanceTest(platformOverrides);
 
-const animateText = (platformOverrides: Theme['platformOverrides']) => ({
-    animateText,
-}: {
-    animateText: boolean;
-}) =>
-    animateText && areAnimationsSupported(platformOverrides)
-        ? '$sweepIn 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards'
-        : 'initial';
+const animateText =
+    (platformOverrides: Theme['platformOverrides']) =>
+    ({animateText}: {animateText: boolean}) =>
+        animateText && areAnimationsSupported(platformOverrides)
+            ? '$sweepIn 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards'
+            : 'initial';
 
-const initialTextOpacity = (platformOverrides: Theme['platformOverrides']) => ({
-    animateText,
-}: {
-    animateText: boolean;
-}) => (animateText && areAnimationsSupported(platformOverrides) ? 0 : 1);
+const initialTextOpacity =
+    (platformOverrides: Theme['platformOverrides']) =>
+    ({animateText}: {animateText: boolean}) =>
+        animateText && areAnimationsSupported(platformOverrides) ? 0 : 1;
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -49,13 +50,15 @@ const useStyles = createUseStyles((theme) => ({
     },
 
     backgroundDiv: {
-        position: 'fixed',
+        position: 'absolute',
         bottom: ({footerHeight}) => footerHeight,
-        marginBottom: -1, // workaround, whithout this an horizontal line appears at the bottom
+        top: 0,
         left: 0,
         right: 0,
         [theme.mq.mobile]: {
-            height: ({contentHeight}) => contentHeight,
+            // This extra height is a workaround to make sure the background div is displayed *under* the fixed footer.
+            // Otherwise in some devices (Galaxy S20+) the background and the fixed footer are rendered with some distance between them
+            height: ({contentHeight}) => `calc(${contentHeight} + 1px)`,
         },
         background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : theme.colors.background),
     },
@@ -79,7 +82,10 @@ const useStyles = createUseStyles((theme) => ({
 
     innerContainer: {
         textAlign: 'left',
-        padding: '64px 24px 16px',
+        padding: '64px 8px 16px',
+        [theme.mq.tabletOrBigger]: {
+            padding: '64px 0 32px',
+        },
     },
 
     iconContainer: {
@@ -87,13 +93,11 @@ const useStyles = createUseStyles((theme) => ({
     },
 
     title: {
-        color: ({isInverse}) => (isInverse ? theme.colors.textPrimaryInverse : theme.colors.textPrimary),
         animation: animateText(theme.platformOverrides),
         opacity: initialTextOpacity(theme.platformOverrides),
     },
 
     description: {
-        color: ({isInverse}) => (isInverse ? theme.colors.textPrimaryInverse : theme.colors.textSecondary),
         animation: animateText(theme.platformOverrides),
         opacity: initialTextOpacity(theme.platformOverrides),
         '& p': {
@@ -106,23 +110,6 @@ const useStyles = createUseStyles((theme) => ({
         marginTop: 16,
         animation: animateText(theme.platformOverrides),
         opacity: initialTextOpacity(theme.platformOverrides),
-    },
-
-    iconColor: {
-        stroke: (isInverse) => (isInverse ? theme.colors.background : theme.colors.buttonPrimaryBackground),
-        fill: (isInverse) => (isInverse ? theme.colors.background : theme.colors.buttonPrimaryBackground),
-    },
-
-    [theme.mq.tabletOrBigger]: {
-        innerContainer: {
-            padding: '64px 16px 16px',
-        },
-        description: {
-            maxWidth: 456,
-        },
-        title: {
-            maxWidth: 344,
-        },
     },
 }));
 
@@ -158,6 +145,7 @@ interface FeedbackProps {
     link?: React.ReactElement<typeof ButtonLink>;
     description?: string | Array<string>;
     children?: React.ReactNode;
+    unstable_inlineInDesktop?: boolean;
 }
 
 interface FeedbackScreenProps extends FeedbackProps {
@@ -176,10 +164,11 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     hapticFeedback,
     icon,
     animateText = false,
+    unstable_inlineInDesktop,
 }) => {
     useHapticFeedback(hapticFeedback);
     const isInverse = useIsInverseVariant();
-    const theme = useTheme();
+    const {colors} = useTheme();
     const windowHeight = useWindowHeight();
     const {isMobile} = useScreenSize();
     const [isServerSide, setIsServerSide] = React.useState(typeof self !== 'undefined');
@@ -206,52 +195,72 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
             ? description.map((paragraph, i) => <p key={i}>{paragraph}</p>)
             : description;
 
-    const feedbackBasicContent = (
-        <div className={classes.container}>
-            <div className={classes.innerContainer}>
-                {!!icon && <div className={classes.iconContainer}>{icon}</div>}
-                <Text6>
-                    <span className={classes.title}>{title}</span>
-                </Text6>
-                {normalizedDescription && (
-                    <Box paddingTop={16}>
-                        <Text4 light>
-                            <span className={classes.description}>{normalizedDescription}</span>
-                        </Text4>
-                    </Box>
-                )}
-                {children && <div className={classes.childrenContainer}>{children}</div>}
-            </div>
-        </div>
-    );
-
-    const content = (
+    const feedbackBody = (
         <>
-            <div className={classes.footer}>
-                {primaryButton ? (
-                    <ButtonFixedFooterLayout
-                        button={primaryButton}
-                        secondaryButton={secondaryButton}
-                        link={link}
-                        footerBgColor={isInverse ? theme.colors.backgroundFeedbackBottom : undefined}
-                        containerBgColor={isInverse ? theme.colors.navigationBarBackground : undefined}
-                        onChangeFooterHeight={setFooterHeight}
-                    >
-                        {feedbackBasicContent}
-                    </ButtonFixedFooterLayout>
-                ) : (
-                    feedbackBasicContent
-                )}
+            {!!icon && <div className={classes.iconContainer}>{icon}</div>}
+            <div className={classes.title}>
+                <Text6 as="h1">{title}</Text6>
             </div>
-            {isMobile && primaryButton && <div className={classes.backgroundDiv} />}
+            {normalizedDescription && (
+                <Box paddingTop={16} className={classes.description}>
+                    <Text4 light color={colors.textSecondary}>
+                        {normalizedDescription}
+                    </Text4>
+                </Box>
+            )}
+            {children && <div className={classes.childrenContainer}>{children}</div>}
         </>
     );
 
+    if (!isMobile && unstable_inlineInDesktop) {
+        return (
+            <Stack space={32}>
+                <>{feedbackBody}</>
+                <ButtonLayout link={link}>
+                    {primaryButton}
+                    {secondaryButton}
+                </ButtonLayout>
+            </Stack>
+        );
+    }
+
+    const feedbackContent = (
+        <div className={classes.container}>
+            <ResponsiveLayout>
+                <GridLayout
+                    template="6+6"
+                    left={<div className={classes.innerContainer}>{feedbackBody}</div>}
+                    right={null}
+                ></GridLayout>
+            </ResponsiveLayout>
+        </div>
+    );
+
+    const hasButtons = !!primaryButton || !!secondaryButton;
+
     return (
-        <ThemeVariant isInverse={isInverse}>
+        <>
             {isInverse && <OverscrollColor />}
-            {content}
-        </ThemeVariant>
+            <div style={{position: 'relative'}}>
+                <div className={classes.footer}>
+                    {hasButtons ? (
+                        <ButtonFixedFooterLayout
+                            button={primaryButton}
+                            secondaryButton={secondaryButton}
+                            link={link}
+                            footerBgColor={isInverse ? colors.backgroundFeedbackBottom : undefined}
+                            containerBgColor={isInverse ? colors.navigationBarBackground : undefined}
+                            onChangeFooterHeight={setFooterHeight}
+                        >
+                            {feedbackContent}
+                        </ButtonFixedFooterLayout>
+                    ) : (
+                        feedbackContent
+                    )}
+                </div>
+                {isMobile && hasButtons && <div className={classes.backgroundDiv} />}
+            </div>
+        </>
     );
 };
 

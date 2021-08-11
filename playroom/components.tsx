@@ -12,8 +12,7 @@ import {
     Checkbox,
     ThemeContextProvider,
 } from '../src';
-import {useIsOsDarkModeEnabled} from '../src/theme-context-provider';
-import {Movistar, Vivo, O2, O2_Classic, Prosegur} from './themes';
+import {Movistar, Vivo, O2, Telefonica, Blau} from './themes';
 import {useOverrideTheme} from './frame-component';
 
 import type {ThemeConfig, ColorScheme, SkinName} from '../src';
@@ -46,7 +45,8 @@ const useControlsStyles = createUseStyles((theme) => ({
         height: 57,
     },
     tabs: {
-        flexBasis: 448,
+        flexBasis: '100%',
+        marginRight: 96,
         whiteSpace: 'nowrap',
     },
     desktopControlItem: {
@@ -88,11 +88,7 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-const themesMap: {[skinName in SkinName]: {themeConfig: ThemeConfig; text: string}} = {
-    Prosegur: {
-        text: 'Prosegur',
-        themeConfig: Prosegur,
-    },
+const themesMap: {[skinName: string]: {themeConfig: ThemeConfig; text: string}} = {
     Movistar: {
         text: 'Movistar',
         themeConfig: Movistar,
@@ -105,9 +101,13 @@ const themesMap: {[skinName in SkinName]: {themeConfig: ThemeConfig; text: strin
         text: 'O2',
         themeConfig: O2,
     },
-    'O2-classic': {
-        text: 'O2 (classic)',
-        themeConfig: O2_Classic,
+    Telefonica: {
+        text: 'Telefónica',
+        themeConfig: Telefonica,
+    },
+    Blau: {
+        text: 'Blau',
+        themeConfig: Blau,
     },
 };
 
@@ -134,10 +134,9 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
 }) => {
     const classes = useControlsStyles();
     const {colors} = useTheme();
-    const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
     const {isMobile} = useScreenSize();
-    const systemColorScheme = isOsDarkModeEnabled ? 'dark' : 'light';
-    const alternativeColorScheme = systemColorScheme === 'dark' ? 'light' : 'dark';
+    const systemColorScheme = 'light';
+    const alternativeColorScheme = 'dark';
 
     if (isMobile) {
         return (
@@ -255,7 +254,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     const [showOverlay, setShowOverlay] = React.useState(false);
     const [skinName, setSkinName] = React.useState<SkinName>(initialSkinName);
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
-    const [colorScheme, setColorScheme] = React.useState<ColorScheme>('auto');
+    const [colorScheme, setColorScheme] = React.useState<ColorScheme>('light');
     const classes = useStyles({position});
 
     const overrideTheme = useOverrideTheme();
@@ -291,6 +290,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                 platformOverrides: {platform: os},
                 // Dont override mediaqueries for PreviewToolsControls, to avoid using Select instead of Tabs in desktop
                 enableTabFocus: false,
+                colorScheme: 'light',
             }}
         >
             <PreviewToolsControls

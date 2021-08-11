@@ -13,6 +13,7 @@ declare type CommonProps = {|
   onClose?: () => void,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   isInverse?: boolean,
+  "aria-label"?: string,
 |};
 declare type BasicProps = {| ...$Exact<CommonProps> |};
 declare type ButtonProps = {|

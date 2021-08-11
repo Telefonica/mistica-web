@@ -82,12 +82,17 @@ export const Default: StoryComponent = () => {
             <div data-testid="highlighted-card">
                 <StorySection title="HighlightedCard - With button">
                     <ThemeVariant isInverse={isInverse}>
-                        <HighlightedCard {...commonProps} button={getButton(button)} />
+                        <HighlightedCard
+                            aria-label="With button"
+                            {...commonProps}
+                            button={getButton(button)}
+                        />
                     </ThemeVariant>
                 </StorySection>
+
                 <StorySection title="HighlightedCard - Fully touchable card">
                     <ThemeVariant isInverse={isInverse}>
-                        <HighlightedCard {...commonProps} href={href} />
+                        <HighlightedCard aria-label="Fully touchable" {...commonProps} href={href} />
                     </ThemeVariant>
                 </StorySection>
             </div>

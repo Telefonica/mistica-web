@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="243" viewBox="-1 -1 362 242">
+  <rect x="0" y="0" height="240" width="360" fill="pink" stroke="black"/>
+  <rect x="48" y="0" height="240" width="calc(360 - 96)" fill="lightgray" stroke="black"/>
+  <rect x="48" y="0" height="240" width="82" stroke="black" fill="rgba(255,0,0,0.3)"/>
+  <rect x="159.5" y="0" height="240" width="128" stroke="black" fill="rgba(0,0,255,0.3)"/>
+  <text x="56" y="20">Master</text>
+  <text x="168" y="20">Detail</text>
+</svg>

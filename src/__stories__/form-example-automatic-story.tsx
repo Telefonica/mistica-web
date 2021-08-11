@@ -9,16 +9,18 @@ import {
     Select,
     ButtonLayout,
     PhoneNumberField,
+    IbanField,
     IntegerField,
     DecimalField,
     Switch,
-    Text2,
     Checkbox,
-    Inline,
     TextLink,
     alert,
     RadioGroup,
     RadioButton,
+    Text3,
+    useTheme,
+    Inline,
 } from '..';
 
 export default {
@@ -37,6 +39,7 @@ const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 const countryOptions = countriesList.map((text, i) => ({text, value: '' + i}));
 
 export const AutomaticForm: StoryComponent = () => {
+    const {colors} = useTheme();
     return (
         <Form
             initialValues={{
@@ -52,39 +55,30 @@ export const AutomaticForm: StoryComponent = () => {
             <Stack space={16}>
                 <EmailField name="email" label="email" />
                 <PhoneNumberField name="phone" label="phone" />
+                <IbanField name="bankAccount" label="IBAN" />
                 <DecimalField name="decimal" label="Decimal" />
                 <IntegerField optional autoComplete="off" name="integer" label="Integer" />
                 <Select name="country" label="country" options={countryOptions} />
                 <Select autoFocus name="fruit" label="fruit (autofocus)" options={fruitOptions} />
                 <CreditCardFields />
-                <Switch
-                    name="save-cc"
-                    render={(switchElement) => (
-                        <Inline alignItems="center" space={8}>
-                            {switchElement}
-                            <Text2 regular>Save CC</Text2>
-                        </Inline>
-                    )}
-                />
-                <Checkbox name="t&c">
-                    Accept{' '}
-                    <TextLink
-                        onPress={(e) => {
-                            e.stopPropagation();
-                            alert({message: 'TOS'});
-                        }}
-                    >
-                        Terms and Conditions
-                    </TextLink>
-                </Checkbox>
-
-                <RadioGroup name="juicy-fruit" aria-labelledby="label" defaultValue="banana">
+                <Switch name="save-cc">Save CC</Switch>
+                <Inline space={0}>
+                    <Checkbox name="t&c" aria-label="Accept Terms and Conditions">
+                        Accept&nbsp;
+                    </Checkbox>
+                    <Text3 regular>
+                        <TextLink onPress={() => alert({message: 'TOS'})}>Terms and Conditions</TextLink>
+                    </Text3>
+                </Inline>
+                <Text3 regular color={colors.textSecondary} id="fruit-label">
+                    ¿What is your favourite fruit?
+                </Text3>
+                <RadioGroup name="juicy-fruit" aria-labelledby="fruit-label" defaultValue="banana">
                     <Stack space={16}>
                         <RadioButton value="banana">Banana</RadioButton>
                         <RadioButton value="apple">Apple</RadioButton>
                     </Stack>
                 </RadioGroup>
-
                 <ButtonLayout>
                     <ButtonPrimary submit loadingText="Sending">
                         Send

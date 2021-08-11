@@ -70,7 +70,7 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose = () => {}})
     const {colors, texts} = useTheme();
 
     return (
-        <div className={classes.dismissableContainer}>
+        <section className={classes.dismissableContainer}>
             {children}
             <IconButton
                 className={classes.dismissableButton}
@@ -82,7 +82,7 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose = () => {}})
                     <IcnClose color={colors.neutralHigh} />
                 </div>
             </IconButton>
-        </div>
+        </section>
     );
 };
 
@@ -95,6 +95,8 @@ interface CommonProps {
     onClose?: () => void;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     isInverse?: boolean;
+    children?: void;
+    'aria-label'?: string;
 }
 interface BasicProps extends CommonProps {
     button?: undefined;
@@ -140,8 +142,13 @@ const Content: React.FC<Props> = (props) => {
 
     const content = (
         <Boxed isInverse={isInverse} className={classes.container}>
-            <div className={classes.textContainer}>
-                <Text4 light>{title}</Text4>
+            <div
+                // don't create another region when the Content is inside a Dismissable wrapper
+                role={props['aria-label'] ? 'region' : undefined}
+                className={classes.textContainer}
+                aria-label={props['aria-label']}
+            >
+                <Text4 regular>{title}</Text4>
                 <Box paddingTop={8}>
                     <Text2 regular color={theme.colors.textSecondary}>
                         {description}
@@ -194,13 +201,15 @@ const Content: React.FC<Props> = (props) => {
     return content;
 };
 
-const HighlightedCard: React.FC<Props> = (props) =>
-    props.onClose ? (
-        <Dismissable onClose={props.onClose}>
+const HighlightedCard: React.FC<Props> = ({'aria-label': ariaLabel, ...props}) => {
+    const label = ariaLabel ?? props.title;
+    return props.onClose ? (
+        <Dismissable onClose={props.onClose} aria-label={label}>
             <Content {...props} />
         </Dismissable>
     ) : (
-        <Content {...props} />
+        <Content {...props} aria-label={label} />
     );
+};
 
 export default HighlightedCard;

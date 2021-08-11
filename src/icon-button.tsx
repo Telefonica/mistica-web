@@ -1,7 +1,8 @@
 import * as React from 'react';
 import Touchable from './touchable';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {TrackingEvent} from './utils/types';
+import type {DataAttributes, TrackingEvent} from './utils/types';
 
 const ICON_SIZE_1 = 24;
 
@@ -39,30 +40,36 @@ interface CommonProps {
     size?: number | string;
     style?: React.CSSProperties;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    /** @deprecated use dataAttributes */
     'data-testid'?: string;
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
+    dataAttributes?: DataAttributes;
     newTab?: boolean;
+    /** @deprecated use aria-label */
+    label?: string;
+    'aria-label'?: string;
 }
 
 interface HrefProps extends CommonProps {
-    label: string;
     href: string;
     to?: undefined;
     onPress?: undefined;
 }
+
 interface ToProps extends CommonProps {
-    label: string;
     to: string;
     fullPageOnWebView?: boolean;
     replace?: boolean;
     href?: undefined;
     onPress?: undefined;
 }
+
 interface OnPressProps extends CommonProps {
-    label: string;
     onPress: (event: React.MouseEvent<HTMLElement>) => void;
     href?: undefined;
     to?: undefined;
 }
+
 interface MaybeProps extends CommonProps {
     onPress?: undefined;
     href?: undefined;
@@ -76,11 +83,13 @@ type Props = HrefProps | ToProps | OnPressProps | MaybeProps;
  *
  * IconButton with image url:
  *
- *     <IconButton icon="http://my.image.jpg" />
+ *     <IconButton icon="http://my.image.jpg" aria-label="label" />
  *
  * IconButton with SVG component as icon. Child ignored if `icon` prop is set. Only one child is accepted!
  *
- *     <IconButton><MySvgIconComponent /></IconButton />
+ *     <IconButton aria-label="label">
+ *         <MySvgIconComponent />
+ *     </IconButton />
  *
  */
 const IconButton: React.FC<Props> = (props) => {
@@ -93,16 +102,17 @@ const IconButton: React.FC<Props> = (props) => {
             ...props.style,
         },
         trackingEvent: props.trackingEvent,
+        'data-testid': props['data-testid'],
+        ...getPrefixedDataAttributes(props.dataAttributes),
     };
 
     if (props.href) {
         return (
             <Touchable
-                data-testid={props['data-testid']}
                 {...commonProps}
                 href={props.href}
                 newTab={props.newTab}
-                label={props.label}
+                aria-label={props['aria-label'] ?? props.label}
             >
                 {!icon && React.Children.only(children)}
             </Touchable>
@@ -111,12 +121,11 @@ const IconButton: React.FC<Props> = (props) => {
     if (props.to) {
         return (
             <Touchable
-                data-testid={props['data-testid']}
                 {...commonProps}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
                 replace={props.replace}
-                label={props.label}
+                aria-label={props['aria-label'] ?? props.label}
             >
                 {!icon && React.Children.only(children)}
             </Touchable>
@@ -126,10 +135,9 @@ const IconButton: React.FC<Props> = (props) => {
     if (props.onPress) {
         return (
             <Touchable
-                data-testid={props['data-testid']}
                 {...commonProps}
                 onPress={props.onPress}
-                label={props.label}
+                aria-label={props['aria-label'] ?? props.label}
             >
                 {!icon && React.Children.only(children)}
             </Touchable>
@@ -137,7 +145,7 @@ const IconButton: React.FC<Props> = (props) => {
     }
 
     return (
-        <Touchable {...commonProps} maybe data-testid={props['data-testid']}>
+        <Touchable {...commonProps} maybe>
             {!icon && React.Children.only(children)}
         </Touchable>
     );

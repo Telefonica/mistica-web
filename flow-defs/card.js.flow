@@ -3,6 +3,7 @@
 import * as React from "react";
 import Tag from "./tag";
 import { ButtonLink, ButtonPrimary } from "./button";
+import type { DataAttributes } from "./utils/types";
 declare type CardMedia =
   | {
   src: string,
@@ -22,6 +23,7 @@ declare type MediaCardProps = {
   body?: React.Node,
   button?: React.Element<typeof ButtonPrimary>,
   buttonLink?: React.Element<typeof ButtonLink>,
+  "aria-label"?: string,
 };
 declare export var MediaCard: React.ComponentType<MediaCardProps>;
 declare type DataCardProps = {|
@@ -36,6 +38,11 @@ declare type DataCardProps = {|
   body?: React.Node,
   button?: React.Element<typeof ButtonPrimary>,
   buttonLink?: React.Element<typeof ButtonLink>,
+  /**
+   * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
+   */
+  dataAttributes?: DataAttributes,
+  "aria-label"?: string,
 |};
 declare export var DataCard: React.ComponentType<DataCardProps>;
 declare export {};

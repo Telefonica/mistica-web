@@ -1,0 +1,10 @@
+dist
+dist-es
+reports
+flow-defs
+flow-typed
+doc
+scripts
+.git
+.github
+.vscode

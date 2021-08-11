@@ -2,7 +2,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import {createUseStyles} from './jss';
-import Portal from './portal';
+import {Portal} from './portal';
 import FocusTrap from './focus-trap';
 import IcnClose from './icons/icon-close';
 import IconButton from './icon-button';
@@ -22,10 +22,13 @@ const animationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     process.env.NODE_ENV !== 'test' &&
     !isRunningAcceptanceTest(platformOverrides);
 
+/** Must be higher than the fixed footer's z-index */
+const Z_INDEX = 26;
+
 const useStylesModalDialog = createUseStyles((theme) => ({
     wrapper: {
         position: 'relative',
-        zIndex: 11,
+        zIndex: Z_INDEX,
     },
     modalOpacityLayer: {
         display: 'flex',
@@ -35,7 +38,7 @@ const useStylesModalDialog = createUseStyles((theme) => ({
         right: 0,
         bottom: 0,
         left: 0,
-        zIndex: 11,
+        zIndex: Z_INDEX,
         alignItems: 'center',
         justifyContent: 'center',
         minHeight: 0,
@@ -149,7 +152,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
 
     const mainButtonProps = {
         onPress: handleAccept ? handleAccept : () => {},
-        'data-testid': 'dialog-accept-button',
+        dataAttributes: {testid: 'dialog-accept-button'},
         children: acceptText,
     };
 
@@ -179,7 +182,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
                         <ButtonSecondary
                             tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
                             onPress={handleCancel}
-                            data-testid="dialog-cancel-button"
+                            dataAttributes={{testid: 'dialog-cancel-button'}}
                         >
                             {cancelText}
                         </ButtonSecondary>
@@ -261,6 +264,8 @@ const ModalDialog = (props: ModalDialogProps) => {
     const {platformOverrides} = useTheme();
     const context = React.useContext(ThemeContext);
     const classes = useStylesModalDialog();
+    const canCloseRef = React.useRef(process.env.NODE_ENV === 'test');
+
     if (!context) {
         throw Error(
             `To use @telefonica/mistica components you must instantiate <ThemeContextProvider> as their parent.`
@@ -330,8 +335,15 @@ const ModalDialog = (props: ModalDialogProps) => {
             <div className={classes.wrapper}>
                 <FocusTrap>
                     <div
-                        onClick={handleClose}
-                        className={classnames(classes.modalOpacityLayer, {closed: isClosing})}
+                        onClick={(event) => {
+                            // Closing the dialog before the animation has ended leaves the component in a broken state
+                            // To avoid race conditions, we don't allow closing the dialog until the animation has ended
+                            // See onAnimationEnd handler
+                            if (canCloseRef.current) {
+                                handleClose(event);
+                            }
+                        }}
+                        className={classnames(classes.modalOpacityLayer)}
                         role="dialog"
                     >
                         <div onClick={(e) => e.stopPropagation()}>
@@ -339,7 +351,10 @@ const ModalDialog = (props: ModalDialogProps) => {
                                 onTransitionEnd={
                                     isClosing && onCloseTransitionEnd ? onCloseTransitionEnd : undefined
                                 }
-                                onAnimationEnd={addKeyDownListener}
+                                onAnimationEnd={() => {
+                                    canCloseRef.current = true;
+                                    addKeyDownListener();
+                                }}
                                 className={classnames(classes.modalContent, {closed: isClosing})}
                             >
                                 <div className={classes.modalCloseButtonContainer}>
@@ -482,14 +497,16 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
     }
 }
 
-const showDialog = (showCancel = false) => (props: DialogProps): void => {
-    if (!dialogInstance) {
-        throw Error(
-            'Tried to show a dialog but the DialogRoot component was not mounted (mount <ThemeContextProvider>)'
-        );
-    }
-    dialogInstance.show({showCancel, ...props});
-};
+const showDialog =
+    (showCancel = false) =>
+    (props: DialogProps): void => {
+        if (!dialogInstance) {
+            throw Error(
+                'Tried to show a dialog but the DialogRoot component was not mounted (mount <ThemeContextProvider>)'
+            );
+        }
+        dialogInstance.show({showCancel, ...props});
+    };
 
 /**
  * Shows alert dialog with supplied props

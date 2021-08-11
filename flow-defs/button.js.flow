@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from "react";
-import type { TrackingEvent } from "./utils/types";
+import type { DataAttributes, TrackingEvent } from "./utils/types";
 import type { Location } from "history";
 declare export var BUTTON_MIN_WIDTH: 156;
 declare type CommonProps = {|
@@ -13,7 +13,16 @@ declare type CommonProps = {|
   loadingText?: string,
   disabled?: boolean,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
+
+  /**
+   * @deprecated use dataAttributes
+   */
   "data-testid"?: string,
+
+  /**
+   * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
+   */
+  dataAttributes?: DataAttributes,
   "aria-controls"?: string,
   "aria-expanded"?: "true" | "false",
   tabIndex?: number,
@@ -49,7 +58,16 @@ export type ButtonProps =
 declare type ButtonLinkCommonProps = {|
   children: React.Node,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
+
+  /**
+   * @deprecated use dataAttributes
+   */
   "data-testid"?: string,
+
+  /**
+   * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
+   */
+  dataAttributes?: DataAttributes,
   aligned?: boolean,
 |};
 declare type ButtonLinkOnPressProps = {|

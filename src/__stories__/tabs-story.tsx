@@ -1,35 +1,34 @@
 import * as React from 'react';
-import {StorySection, useCheckbox} from './helpers';
 import {pxToRem} from '../utils/css';
-import {Tabs, IconClose, Inline} from '..';
-
-const texts = ['Tab 1', 'Tab 2', 'Tab 3'];
+import {Tabs, IconClose} from '..';
 
 export default {
     title: 'Components/Controls/Tabs',
     component: Tabs,
 };
 
-export const Default: StoryComponent = () => {
-    const [withIcon, withIconCheckbox] = useCheckbox('With icons', false);
-    const [withCurrentColor, withCurrentColorCheckbox] = useCheckbox('With icon color="currentColor"', false);
+type Args = {
+    tabs: string;
+    withIcon: boolean;
+};
+
+export const Default: StoryComponent<Args> = ({tabs, withIcon}) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const texts = tabs.trim().split(/\s*\n+\s*/);
     return (
-        <StorySection title="Tabs example">
-            <Inline space={16}>
-                {withIconCheckbox}
-                {withIcon && withCurrentColorCheckbox}
-            </Inline>
-            <Tabs
-                selectedIndex={selectedIndex}
-                onChange={setSelectedIndex}
-                tabs={texts.map((text) => ({
-                    text,
-                    icon: withIcon ? (
-                        <IconClose size={pxToRem(24)} color={withCurrentColor ? 'currentColor' : undefined} />
-                    ) : null,
-                }))}
-            />
-        </StorySection>
+        <Tabs
+            selectedIndex={selectedIndex}
+            onChange={setSelectedIndex}
+            tabs={texts.map((text) => ({
+                text,
+                icon: withIcon ? <IconClose size={pxToRem(24)} color="currentColor" /> : null,
+            }))}
+        />
     );
+};
+
+Default.storyName = 'Tabs';
+Default.args = {
+    tabs: ['First Tab', 'Second Tab', 'Third Tab'].join('\n'),
+    withIcon: true,
 };

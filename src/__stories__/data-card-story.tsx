@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {StorySection, useTextField, useSelect} from './helpers';
 import {
     Stack,
     DataCard,
@@ -18,34 +17,42 @@ import {Placeholder} from '../placeholder';
 
 export default {
     title: 'Components/Cards/DataCard',
+    argTypes: {
+        asset: {
+            options: ['icon', 'image', 'none'],
+            control: {type: 'select'},
+        },
+        headlineColor: {
+            options: ['promo', 'brand', 'success', 'warning', 'error'],
+            control: {type: 'select'},
+        },
+        actions: {
+            options: ['button', 'link', 'button and link'],
+            control: {type: 'select'},
+        },
+    },
 };
 
-export const Default: StoryComponent = () => {
+type DataCardArgs = {
+    asset: 'icon' | 'image' | 'none';
+    headlineColor: 'promo' | 'brand' | 'success' | 'warning' | 'error';
+    headline: string;
+    title: string;
+    subtitle: string;
+    description: string;
+    actions: 'button' | 'link' | 'button and link';
+};
+
+export const Default: StoryComponent<DataCardArgs> = ({
+    asset,
+    headline,
+    headlineColor,
+    title,
+    subtitle,
+    description,
+    actions,
+}) => {
     const {colors} = useTheme();
-    const tagColors = {
-        promo: colors.promo,
-        brand: colors.brand,
-        success: colors.success,
-        warning: colors.warning,
-        error: colors.error,
-    };
-    const tagColorNames = Object.keys(tagColors);
-    const [asset, assetSelect] = useSelect('asset', 'icon', ['icon', 'image', 'none']);
-    const [headline, headlineTextField] = useTextField('headline', 'priority', true);
-    const [headlineColorName, headlineColorNameSelect] = useSelect(
-        'headline color',
-        tagColorNames[0],
-        tagColorNames
-    );
-    const headlineColor = (tagColors as any)[headlineColorName];
-    const [subtitle, subtitleTextField] = useTextField('subtitle', 'Some subtitle', true);
-    const [title, titleTextField] = useTextField('title', 'Some title', true);
-    const [description, descriptionTextField] = useTextField(
-        'description',
-        'This is a description for the card',
-        true
-    );
-    const [actions, actionsSelect] = useSelect('actions', 'button', ['button', 'link', 'button & link']);
 
     let icon;
     if (asset === 'icon') {
@@ -59,44 +66,38 @@ export const Default: StoryComponent = () => {
     }
 
     const button = actions.includes('button') ? (
-        <ButtonPrimary small href="https://google.com">
+        <ButtonPrimary small fake>
             Action
         </ButtonPrimary>
     ) : undefined;
 
-    const buttonLink = actions.includes('link') ? (
-        <ButtonLink href="https://google.com">Link</ButtonLink>
-    ) : undefined;
+    const buttonLink = actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined;
 
     return (
-        <>
-            <Stack space={16}>
-                {assetSelect}
-                {headlineTextField}
-                {headlineColorNameSelect}
-                {titleTextField}
-                {subtitleTextField}
-                {descriptionTextField}
-                {actionsSelect}
-            </Stack>
-            <div data-testid="data-card">
-                <StorySection title="DataCard">
-                    <DataCard
-                        icon={icon}
-                        headline={<Tag color={headlineColor}>{headline}</Tag>}
-                        title={title}
-                        subtitle={subtitle}
-                        description={description}
-                        button={button as any} // button or buttonLink (or both) will be defined
-                        buttonLink={buttonLink}
-                    />
-                </StorySection>
-            </div>
-        </>
+        <DataCard
+            icon={icon}
+            headline={headline && <Tag color={colors[headlineColor]}>{headline}</Tag>}
+            title={title}
+            subtitle={subtitle}
+            description={description}
+            button={button}
+            buttonLink={buttonLink}
+            dataAttributes={{testid: 'data-card'}}
+            aria-label="Data card label"
+        />
     );
 };
 
 Default.storyName = 'DataCard';
+Default.args = {
+    asset: 'icon',
+    headlineColor: 'promo',
+    headline: 'priority',
+    title: 'Some title',
+    subtitle: 'Some subtitle',
+    description: 'This is a description for the card',
+    actions: 'button',
+};
 
 export const WithBody: StoryComponent = () => {
     const {colors} = useTheme();

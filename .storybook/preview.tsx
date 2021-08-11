@@ -3,12 +3,12 @@ import './css/main.css';
 import * as React from 'react';
 import {
     ThemeContextProvider,
-    Box,
     MOVISTAR_SKIN,
     VIVO_SKIN,
     O2_SKIN,
     O2_CLASSIC_SKIN,
-    PROSEGUR_SKIN,
+    TELEFONICA_SKIN,
+    BLAU_SKIN,
     useTheme,
 } from '../src';
 import {AVAILABLE_THEMES, Movistar} from './themes';
@@ -42,7 +42,7 @@ type Platform = 'android' | 'desktop' | 'ios';
 
 const getSkin = (searchParams: URLSearchParams) => {
     const qsSkin = searchParams.get('skin');
-    return [MOVISTAR_SKIN, O2_SKIN, O2_CLASSIC_SKIN, VIVO_SKIN, PROSEGUR_SKIN].find(
+    return [MOVISTAR_SKIN, O2_SKIN, O2_CLASSIC_SKIN, VIVO_SKIN, TELEFONICA_SKIN, BLAU_SKIN].find(
         (skin) => skin === qsSkin
     );
 };
@@ -120,14 +120,18 @@ const Styles = () => {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const withLayoutDecorator = (Story, context): React.ReactElement => {
+    const isFullscreen = !!context?.parameters?.fullScreen;
     return (
-        // role main required by accessibility rules
-        <div role="main">
+        <>
             <Styles />
-            <Box padding={context?.parameters?.fullScreen ? 0 : 16}>
+            <div
+                // role main required by accessibility rules
+                role="main"
+                style={{padding: isFullscreen ? 0 : 16}}
+            >
                 <Story {...context} />
-            </Box>
-        </div>
+            </div>
+        </>
     );
 };
 

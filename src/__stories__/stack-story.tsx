@@ -1,16 +1,29 @@
 import * as React from 'react';
-import {Stack, Text2, useTheme} from '..';
-import {StorySection, useSelect} from './helpers';
-import {Placeholder} from '../placeholder';
+import {Stack, Text2} from '..';
 
 export default {
     title: 'Components/Layouts/Stack',
+    component: Stack,
+    argTypes: {
+        space: {
+            options: ['between', 'around', 'evenly', '0', '4', '8', '16', '24', '32', '40', '48', '56', '64'],
+            control: {type: 'select'},
+        },
+    },
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 const Row = ({children}: {children?: any}) => {
-    const {colors} = useTheme();
     return children ? (
-        <div style={{border: `1px solid ${colors.error}`, padding: 16}}>
+        <div
+            style={{
+                padding: 16,
+                border: `2px solid gray`,
+                background: 'lightgray',
+            }}
+        >
             <Text2 regular>{children}</Text2>
         </div>
     ) : null;
@@ -19,32 +32,29 @@ const Row = ({children}: {children?: any}) => {
 const Null = () => null;
 const ComponentThatReturnsNullComponent = () => <Null />;
 
-const options = ['0px', '4px', '8px', '16px', '24px', '32px', '40px', '48px', '56px', '64px'];
-
-export const Default: StoryComponent = () => {
-    const [iconSize, iconSizeSelectField] = useSelect('Space', '32px', options);
-
-    return (
-        <>
-            {iconSizeSelectField}
-            <StorySection title="Stack example">
-                <Placeholder height={48} />
-                <Stack space={+iconSize.replace(/[^0-9]/g, '') as any}>
-                    <ComponentThatReturnsNullComponent />
-                    <Row>One</Row>
-                    {null}
-                    {false}
-                    <Row>Two</Row>
-                    <Row />
-                    <Row />
-                    <Row>Three</Row>
-                    <Row>Four</Row>
-                    <ComponentThatReturnsNullComponent />
-                </Stack>
-                <Placeholder height={48} />
-            </StorySection>
-        </>
-    );
+type Args = {
+    space: string;
 };
 
+export const Default: StoryComponent<Args> = ({space}) => (
+    <div style={{height: '100vh'}}>
+        <Stack space={(Number.isInteger(+space) ? +space : space) as never}>
+            <ComponentThatReturnsNullComponent />
+            <Row>One</Row>
+            {null}
+            {false}
+            <Row>Two</Row>
+            <Row />
+            <Row />
+            <Row>Three</Row>
+            <Row>Four</Row>
+            <ComponentThatReturnsNullComponent />
+        </Stack>
+    </div>
+);
+
 Default.storyName = 'Stack';
+
+Default.args = {
+    space: '32',
+};

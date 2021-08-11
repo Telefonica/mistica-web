@@ -4,6 +4,8 @@ import {MOVISTAR_SKIN} from '../skins/constants';
 
 import type {Page, ElementHandle, ClickOptions, ScreenshotOptions, Browser, Viewport} from 'puppeteer';
 
+type StoryArgs = {[key: string]: string | number | boolean};
+
 // TODO find a way to define global vars
 const globalBrowser: Browser = (global as any).browser;
 const globalPage: Page = (global as any).page;
@@ -159,20 +161,36 @@ const watermarkIfNeeded = async (bufferPromise: Promise<Buffer | string>): Promi
     return image.getBufferAsync(jimp.MIME_PNG);
 };
 
-const buildStoryUrl = (section: string, name: string, skin?: string, platform?: string) => {
+const buildStoryUrl = (id: string, skin?: string, platform?: string, args?: StoryArgs) => {
     const params = new URLSearchParams();
-    params.set('selectedKind', section);
-    params.set('selectedStory', name);
+
+    params.set('id', id);
+
+    params.set('viewMode', 'story');
+
     if (skin) {
         params.set('skin', skin);
     }
+
     if (platform) {
         params.set('platform', platform);
     }
+
+    if (args) {
+        params.set(
+            'args',
+            Object.entries(args)
+                .map(([key, value]) => `${key}:${value}`)
+                .join(';')
+        );
+    }
+
     return `http://${HOST}:6006/iframe.html?${params.toString()}`;
 };
 
 export type PageApi = {
+    clear: (selector: ElementHandle) => Promise<void>;
+
     // Following methods are inherited from Puppeteer.Page:
 
     // These are overridden:
@@ -258,12 +276,16 @@ const buildQueryMethods = () =>
 const createPageApi = (page: Page): PageApi => {
     const api: PageApi = Object.create(page);
 
-    api.type = async (selector, text, options) => selector.type(text, options);
-    api.click = async (selector, options) => selector.click(options);
-    api.select = async (selector, ...values) => selector.select(...values);
+    api.type = async (elementHandle, text, options) => elementHandle.type(text, options);
+    api.click = async (elementHandle, options) => elementHandle.click(options);
+    api.select = async (elementHandle, ...values) => elementHandle.select(...values);
     api.screenshot = async (options?: ScreenshotOptions) => {
         await waitForPaintEnd(page);
         return watermarkIfNeeded(page.screenshot(options) as Promise<Buffer>);
+    };
+    api.clear = async (elementHandle) => {
+        await api.click(elementHandle, {clickCount: 3});
+        await elementHandle.press('Delete');
     };
 
     return api;
@@ -281,19 +303,19 @@ const openPage = async ({url, device, userAgent}: {url: string; device: Device; 
 };
 
 export const openStoryPage = ({
-    section,
-    name,
+    id,
     device = TABLET_DEVICE,
     skin = 'Movistar',
     userAgent,
+    args,
 }: {
-    section: string;
-    name: string;
+    id: string;
     device?: Device;
     skin?: 'Movistar' | 'Vivo' | 'O2' | 'O2-classic';
     userAgent?: string;
+    args?: StoryArgs;
 }): Promise<PageApi> => {
-    const url = buildStoryUrl(section, name, skin, DEVICES[device].platform);
+    const url = buildStoryUrl(id, skin, DEVICES[device].platform, args);
     return openPage({url, device, userAgent});
 };
 

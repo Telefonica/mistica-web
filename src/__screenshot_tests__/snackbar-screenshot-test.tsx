@@ -25,8 +25,7 @@ const updateSnackbar = async ({
 
 test('informative', async () => {
     const page = await openStoryPage({
-        section: 'Components/Feedbacks/Snackbar',
-        name: 'Snackbar',
+        id: 'components-dialogs-snackbar--default',
         device: 'MOBILE_ANDROID',
     });
 
@@ -39,8 +38,7 @@ test('informative', async () => {
 
 test('critical', async () => {
     const page = await openStoryPage({
-        section: 'Components/Feedbacks/Snackbar',
-        name: 'Snackbar',
+        id: 'components-dialogs-snackbar--default',
         device: 'MOBILE_ANDROID',
     });
 
@@ -53,8 +51,7 @@ test('critical', async () => {
 
 test('long message', async () => {
     const page = await openStoryPage({
-        section: 'Components/Feedbacks/Snackbar',
-        name: 'Snackbar',
+        id: 'components-dialogs-snackbar--default',
         device: 'MOBILE_ANDROID',
     });
 
@@ -70,8 +67,7 @@ test('long message', async () => {
 
 test('long action', async () => {
     const page = await openStoryPage({
-        section: 'Components/Feedbacks/Snackbar',
-        name: 'Snackbar',
+        id: 'components-dialogs-snackbar--default',
         device: 'MOBILE_ANDROID',
     });
 
@@ -87,8 +83,7 @@ test('long action', async () => {
 
 test('long action and message', async () => {
     const page = await openStoryPage({
-        section: 'Components/Feedbacks/Snackbar',
-        name: 'Snackbar',
+        id: 'components-dialogs-snackbar--default',
         device: 'MOBILE_ANDROID',
     });
 

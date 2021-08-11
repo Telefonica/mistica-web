@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import type { CommonFormFieldProps } from "./text-field-base";
+declare export var IntegerInput: React.ComponentType<any>;
 export type IntegerFieldProps = {|
   ...$Exact<CommonFormFieldProps>,
 

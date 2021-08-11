@@ -1,10 +1,7 @@
 import {openStoryPage} from '../test-utils';
 
 test('Touchable', async () => {
-    await openStoryPage({
-        section: 'Components/Touchables/Touchable',
-        name: 'Touchable',
-    });
+    await openStoryPage({id: 'components-touchables-touchable--default'});
 
     const image = await page.screenshot({fullPage: true});
 

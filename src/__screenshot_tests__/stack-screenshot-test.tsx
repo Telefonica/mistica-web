@@ -1,11 +1,18 @@
 import {openStoryPage} from '../test-utils';
 
-test('Stack ', async () => {
+test.each`
+    space
+    ${0}
+    ${32}
+    ${'between'}
+    ${'evenly'}
+`('Stack space: $space', async ({space}) => {
     const page = await openStoryPage({
-        section: 'Components/Layouts/Stack',
-        name: 'Stack',
+        id: 'components-layouts-stack--default',
+        args: {space},
+        device: 'MOBILE_IOS',
     });
 
-    const image = await page.screenshot();
+    const image = await page.screenshot({fullPage: true});
     expect(image).toMatchImageSnapshot();
 });

@@ -41,6 +41,16 @@ type Props = {
     value?: number;
 };
 
+/**
+ * This Component is decorative and won't be read by screenreaders, to make it accessible,
+ * set the label to the child element
+ *
+ * <Badge value={2}>
+ *   <IconButton aria-label="Shopping Cart with 2 items">
+ *     <IconShoppingCartFilled />
+ *   </IconButton>
+ * </Badge>
+ */
 const Badge: React.FC<Props> = ({children, value}) => {
     const hasChildren = !!children;
     const classes = useStyles({hasChildren});
@@ -57,6 +67,8 @@ const Badge: React.FC<Props> = ({children, value}) => {
         <div className={classes.container}>
             {value ? (
                 <div
+                    role="presentation"
+                    aria-hidden="true" // otherwise OSX VoiceOver reads this number
                     className={classnames(classes.badge, classes.badgeNumber, {
                         [classes.badgeBigNumber]: value > 9,
                     })}

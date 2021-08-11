@@ -1,0 +1,17 @@
+// @flow
+
+import * as React from "react";
+import { ButtonLink, ButtonPrimary, ButtonSecondary } from "./button";
+declare type Props = {
+  title?: string,
+  description: string,
+  onClose?: () => void,
+  icon?: React.Element<any>,
+  button?:
+    | React.Element<typeof ButtonPrimary>
+    | React.Element<typeof ButtonSecondary>,
+  buttonLink?: React.Element<typeof ButtonLink>,
+  "aria-label"?: string,
+};
+declare var Callout: React.ComponentType<Props>;
+declare export default typeof Callout;

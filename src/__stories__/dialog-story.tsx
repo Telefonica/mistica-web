@@ -5,18 +5,26 @@ import ButtonLayout from '../button-layout';
 import IcnInfo from '../icons/icon-info';
 
 export default {
-    title: 'Components/Feedbacks/Dialogs',
+    title: 'Components/Dialogs/Alert',
 };
 
 export const Default: StoryComponent = () => (
     <>
         <ButtonLayout>
-            <ButtonPrimary onPress={() => alert({title: 'title', message: 'message'})}>
+            <ButtonPrimary
+                onPress={() =>
+                    alert({
+                        title: 'Title',
+                        message: 'Message',
+                        acceptText: 'Accept terms and conditions',
+                    })
+                }
+            >
                 Open one button
             </ButtonPrimary>
         </ButtonLayout>
         <ButtonLayout>
-            <ButtonPrimary onPress={() => confirm({message: 'Hello', title: 'title'})}>
+            <ButtonPrimary onPress={() => confirm({message: 'Message', title: 'Title'})}>
                 Open two buttons
             </ButtonPrimary>
         </ButtonLayout>
@@ -24,9 +32,8 @@ export const Default: StoryComponent = () => (
             <ButtonPrimary
                 onPress={() =>
                     confirm({
-                        title: 'Introduce tu numero de linea',
-                        message:
-                            'Esta cuenta ya está asociada a una cuenta Movistar. Si ya te has registrado antes, debes iniciar sesión.',
+                        title: 'Title',
+                        message: 'This is the dialog message',
                         icon: <IcnInfo />,
                     })
                 }
@@ -35,7 +42,7 @@ export const Default: StoryComponent = () => (
             </ButtonPrimary>
         </ButtonLayout>
         <ButtonLayout>
-            <ButtonPrimary onPress={() => confirm({message: 'Hello', destructive: true})}>
+            <ButtonPrimary onPress={() => confirm({message: 'Message', destructive: true})}>
                 Open two buttons destructive
             </ButtonPrimary>
         </ButtonLayout>

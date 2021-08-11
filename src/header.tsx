@@ -178,6 +178,7 @@ type HeaderLayoutProps = {
     header: React.ReactNode; // intentionally not forced to React.ReactElement<typeof Header> to allow skeletons for example
     extra?: React.ReactNode;
     sideBySideExtraOnDesktop?: boolean;
+    children?: void;
 };
 
 export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
@@ -195,9 +196,9 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
             <ThemeVariant isInverse={isInverse}>
                 <OverscrollColor />
                 {isTabletOrSmaller ? (
-                    <Box paddingTop={32} paddingBottom={24} paddingRight={16}>
+                    <Box paddingTop={32} paddingBottom={24}>
                         <Stack space={24}>
-                            {header}
+                            <Box paddingRight={16}>{header}</Box>
                             {extra}
                         </Stack>
                     </Box>

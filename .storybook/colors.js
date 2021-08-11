@@ -3,7 +3,7 @@
 // This module replaces the required parts from ./src/skins
 
 /**
- * @param {'Movistar' | 'Vivo' | 'O2' | 'O2-classic' | 'Prosegur'} skin
+ * @param {'Movistar' | 'Vivo' | 'O2' | 'O2-classic' | 'Telefonica' | 'Blau'} skin
  */
 export const getColors = (skin) => {
     switch (skin) {
@@ -29,12 +29,19 @@ export const getColors = (skin) => {
                 textPrimaryInverse: '#FFFFFF',
                 textSecondary: '#757575',
             };
-        case 'Prosegur':
+        case 'Telefonica':
             return {
-                primary: '#019DF4',
-                textPrimary: '#313235',
+                primary: '#0066FF',
+                textPrimary: '#031A34',
                 textPrimaryInverse: '#FFFFFF',
-                textSecondary: '#86888C',
+                textSecondary: '#6E7894',
+            };
+        case 'Blau':
+            return {
+                primary: '#0066FF',
+                textPrimary: '#031A34',
+                textPrimaryInverse: '#FFFFFF',
+                textSecondary: '#6E7894',
             };
         default:
             throw Error('Unexpected skin: ' + skin);

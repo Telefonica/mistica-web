@@ -1,10 +1,7 @@
 import {openStoryPage, screen} from '../test-utils';
 
 test('Divider', async () => {
-    await openStoryPage({
-        section: 'Components/Others/Divider',
-        name: 'Divider',
-    });
+    await openStoryPage({id: 'components-others-divider--default'});
 
     const story = await screen.findByTestId('divider-story');
 

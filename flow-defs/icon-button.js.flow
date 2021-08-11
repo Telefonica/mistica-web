@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from "react";
-import type { TrackingEvent } from "./utils/types";
+import type { DataAttributes, TrackingEvent } from "./utils/types";
 declare type CommonProps = {|
   children?: React.Node,
   className?: string,
@@ -12,24 +12,36 @@ declare type CommonProps = {|
   size?: number | string,
   style?: CssStyle,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
+
+  /**
+   * @deprecated use dataAttributes
+   */
   "data-testid"?: string,
+
+  /**
+   * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
+   */
+  dataAttributes?: DataAttributes,
   newTab?: boolean,
+
+  /**
+   * @deprecated use aria-label
+   */
+  label?: string,
+  "aria-label"?: string,
 |};
 declare type HrefProps = {|
   ...$Exact<CommonProps>,
-  label: string,
   href: string,
 |};
 declare type ToProps = {|
   ...$Exact<CommonProps>,
-  label: string,
   to: string,
   fullPageOnWebView?: boolean,
   replace?: boolean,
 |};
 declare type OnPressProps = {|
   ...$Exact<CommonProps>,
-  label: string,
   onPress: (event: SyntheticMouseEvent<HTMLElement>) => void,
 |};
 declare type MaybeProps = {| ...$Exact<CommonProps> |};

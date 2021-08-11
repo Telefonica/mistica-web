@@ -9,7 +9,7 @@ import {pxToRem} from './utils/css';
 import {Text, Text2, Text3} from './text';
 import Box from './box';
 
-import type {TrackingEvent} from './utils/types';
+import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
 import type {Theme} from './theme';
 
@@ -234,7 +234,10 @@ interface CommonProps {
     loadingText?: string;
     disabled?: boolean;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    /** @deprecated use dataAttributes */
     'data-testid'?: string;
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
+    dataAttributes?: DataAttributes;
     'aria-controls'?: string;
     'aria-expanded'?: 'true' | 'false';
     tabIndex?: number;
@@ -329,6 +332,7 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
         style: {cursor: props.fake ? 'pointer' : undefined, ...props.style},
         trackingEvent: props.trackingEvent,
         'data-testid': props['data-testid'],
+        dataAttributes: props.dataAttributes,
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
         tabIndex: props.tabIndex,
@@ -407,45 +411,51 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
     throw Error('Bad button props');
 };
 
-const useButtonLinkStyles = createUseStyles((theme) => ({
-    link: {
-        display: 'inline-block',
-        width: 'auto',
-        padding: 6,
-        fontWeight: 500,
-        borderRadius: 4,
-        overflow: 'hidden',
-        transition: `background-color ${transitionTiming}, color ${transitionTiming}`,
-        color: theme.colors.textLink,
-        '&:enabled:active': {
-            backgroundColor: theme.colors.buttonLinkBackgroundSelected,
-        },
-        '&:hover': {
-            backgroundColor: theme.colors.buttonLinkBackgroundSelected,
-            '@media (pointer: coarse)': {
-                backgroundColor: 'initial',
+const useButtonLinkStyles = createUseStyles((theme) => {
+    const padding = 6;
+    return {
+        link: {
+            display: 'inline-block',
+            width: 'auto',
+            padding,
+            fontWeight: 500,
+            borderRadius: 4,
+            overflow: 'hidden',
+            transition: `background-color ${transitionTiming}, color ${transitionTiming}`,
+            color: theme.colors.textLink,
+            '&:enabled:active': {
+                backgroundColor: theme.colors.buttonLinkBackgroundSelected,
+            },
+            '&:hover': {
+                backgroundColor: theme.colors.buttonLinkBackgroundSelected,
+                '@media (pointer: coarse)': {
+                    backgroundColor: 'initial',
+                },
             },
         },
-    },
-    inverse: {
-        color: theme.colors.textLinkInverse,
-        '&:enabled:active': {
-            backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
-        },
-        '&:hover': {
-            backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
-            '@media (pointer: coarse)': {
-                backgroundColor: 'initial',
+        inverse: {
+            color: theme.colors.textLinkInverse,
+            '&:enabled:active': {
+                backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
+            },
+            '&:hover': {
+                backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
+                '@media (pointer: coarse)': {
+                    backgroundColor: 'initial',
+                },
             },
         },
-    },
-    aligned: {marginLeft: -8},
-}));
+        aligned: {marginLeft: -padding},
+    };
+});
 
 interface ButtonLinkCommonProps {
     children: React.ReactNode;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    /** @deprecated use dataAttributes */
     'data-testid'?: string;
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
+    dataAttributes?: DataAttributes;
     aligned?: boolean;
 }
 interface ButtonLinkOnPressProps extends ButtonLinkCommonProps {
@@ -478,6 +488,7 @@ export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
         }),
         trackingEvent: props.trackingEvent,
         'data-testid': props['data-testid'],
+        dataAttributes: props.dataAttributes,
         children: (
             <Text2 medium truncate={1} color="inherit">
                 {props.children}

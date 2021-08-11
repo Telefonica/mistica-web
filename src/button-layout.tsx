@@ -4,6 +4,7 @@ import {useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 import {BUTTON_MIN_WIDTH, ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 
 import type {ButtonElement} from './button';
+import classNames from 'classnames';
 
 type MaybeButtonElement = ButtonElement | void | false;
 
@@ -62,6 +63,9 @@ const useStyles = createUseStyles((theme) => ({
         display: 'flex',
         width: '100%',
         justifyContent: 'inherit',
+    },
+    linkAlignment: {
+        marginLeft: buttonLayoutSpacing / 2 - 6,
     },
 }));
 
@@ -135,7 +139,14 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
             const req = window.requestAnimationFrame(() => {
                 if (wrapperElRef.current) {
                     const childrenWidths = Array.from(wrapperElRef.current.children).map((el) =>
-                        el.classList.contains(classes.link) ? 0 : el.getBoundingClientRect().width
+                        /*
+                        We are using offsetWidth instead of getBoundingClientRect().width because
+                        getBoundingClientRect returns the scaled size when the element has some CSS transform applied.
+
+                        getBoundingClientRect returns a float (eg: 268.65625) and offsetWidth an integer (eg: 268)
+                        The `+1` is important, it rounds up the size to avoid unwanted text truncation with ellipsis.
+                        */
+                        el.classList.contains(classes.link) ? 0 : (el as HTMLElement).offsetWidth + 1
                     );
                     const maxChildWidth = Math.ceil(Math.max(...childrenWidths, BUTTON_MIN_WIDTH));
                     updateButtonWidth(maxChildWidth);
@@ -157,15 +168,37 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     useOnChildrenChangeEffect(wrapperElRef.current, calcLayout);
     useOnFontsReadyEffect(calcLayout);
 
+    /**
+     * Listening to focus/visibility change solves a corner that can be reproduced in Novum iOS webviews. Just after logging in,
+     * wait until everything loads (including hidden tabs), after a while, open Account tab (Mis productos) and the button appears
+     * with ellipsis, even it has enough space.
+     */
+    React.useEffect(() => {
+        window.addEventListener('resize', calcLayout);
+        window.addEventListener('focus', calcLayout);
+        document.addEventListener('visibilitychange', calcLayout);
+        return () => {
+            window.removeEventListener('resize', calcLayout);
+            window.removeEventListener('focus', calcLayout);
+            document.removeEventListener('visibilitychange', calcLayout);
+        };
+    }, [calcLayout]);
+
     const sortedButtons = React.Children.toArray(children).sort((b1: any, b2: any) => {
         const range1 = buttonsRange.indexOf(b1.type);
         const range2 = buttonsRange.indexOf(b2.type);
         return range1 - range2;
     });
 
+    const needsLinkAlignment = !isMobile && align === 'left';
+
     const content = (
         <div ref={wrapperElRef} className={classes.container}>
-            {link ? <div className={classes.link}>{link}</div> : null}
+            {link ? (
+                <div className={classNames(classes.link, {[classes.linkAlignment]: needsLinkAlignment})}>
+                    {link}
+                </div>
+            ) : null}
             {sortedButtons}
         </div>
     );

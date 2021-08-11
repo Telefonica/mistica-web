@@ -9,6 +9,8 @@ import Inline from './inline';
 import {ButtonLink, ButtonPrimary} from './button';
 import {Boxed} from './boxed';
 
+import type {DataAttributes} from './utils/types';
+
 const useCardContentStyles = createUseStyles(() => ({
     actions: {
         marginLeft: ({needsButtonLinkAlignment}) => (needsButtonLinkAlignment ? -6 : 0),
@@ -56,22 +58,24 @@ const CardContent: React.FC<CardContentProps> = ({
         <>
             <Stack space={16}>
                 <Stack space={8}>
-                    <header>
-                        <Stack space={4}>
-                            {renderHeadline()}
-                            {pretitle && (
-                                <Box paddingTop={4}>
-                                    <Text1 regular uppercase>
-                                        {pretitle}
-                                    </Text1>
-                                </Box>
-                            )}
-                            <Text4 as="h1" light>
-                                {title}
-                            </Text4>
-                            <Text2 regular>{subtitle}</Text2>
-                        </Stack>
-                    </header>
+                    {(headline || pretitle || title || subtitle) && (
+                        <header>
+                            <Stack space={4}>
+                                {renderHeadline()}
+                                {pretitle && (
+                                    <Box paddingTop={4}>
+                                        <Text1 regular uppercase>
+                                            {pretitle}
+                                        </Text1>
+                                    </Box>
+                                )}
+                                <Text4 as="h1" regular>
+                                    {title}
+                                </Text4>
+                                <Text2 regular>{subtitle}</Text2>
+                            </Stack>
+                        </header>
+                    )}
                     <Text2 as="p" regular color={theme.colors.textSecondary}>
                         {description}
                     </Text2>
@@ -80,7 +84,7 @@ const CardContent: React.FC<CardContentProps> = ({
             </Stack>
             {(button || buttonLink) && (
                 <div className={classes.actions}>
-                    <Inline space={16}>
+                    <Inline space={16} alignItems="center">
                         {button}
                         {buttonLink}
                     </Inline>
@@ -153,6 +157,8 @@ type MediaCardProps = {
     body?: React.ReactNode;
     button?: React.ReactElement<typeof ButtonPrimary>;
     buttonLink?: React.ReactElement<typeof ButtonLink>;
+    children?: void;
+    'aria-label'?: string;
 };
 
 export const MediaCard: React.FC<MediaCardProps> = ({
@@ -164,11 +170,12 @@ export const MediaCard: React.FC<MediaCardProps> = ({
     body,
     button,
     buttonLink,
+    'aria-label': ariaLabel,
 }) => {
     const classes = useMediaCardStyles({media});
     return (
         <Boxed className={classes.boxed}>
-            <article className={classes.mediaCard}>
+            <section className={classes.mediaCard} aria-label={ariaLabel}>
                 <div className={classes.media}></div>
                 <div className={classes.content}>
                     <CardContent
@@ -181,7 +188,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
                         buttonLink={buttonLink}
                     />
                 </div>
-            </article>
+            </section>
         </Boxed>
     );
 };
@@ -210,6 +217,10 @@ interface DataCardProps {
     body?: React.ReactNode;
     button?: React.ReactElement<typeof ButtonPrimary>;
     buttonLink?: React.ReactElement<typeof ButtonLink>;
+    children?: void;
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
+    dataAttributes?: DataAttributes;
+    'aria-label'?: string;
 }
 
 export const DataCard: React.FC<DataCardProps> = ({
@@ -221,11 +232,13 @@ export const DataCard: React.FC<DataCardProps> = ({
     body,
     button,
     buttonLink,
+    dataAttributes,
+    'aria-label': ariaLabel,
 }) => {
     const classes = useDataCardStyles();
     return (
-        <Boxed className={classes.boxed}>
-            <article className={classes.dataCard}>
+        <Boxed className={classes.boxed} dataAttributes={dataAttributes}>
+            <section className={classes.dataCard} aria-label={ariaLabel}>
                 {icon && <Box paddingBottom={16}>{icon}</Box>}
                 <CardContent
                     headline={headline}
@@ -236,7 +249,7 @@ export const DataCard: React.FC<DataCardProps> = ({
                     button={button}
                     buttonLink={buttonLink}
                 />
-            </article>
+            </section>
         </Boxed>
     );
 };

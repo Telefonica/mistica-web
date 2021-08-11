@@ -3,54 +3,41 @@ import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import Touchable from './touchable';
 import ResponsiveLayout from './responsive-layout';
-import {useElementDimensions} from './hooks';
+import {useAriaId, useElementDimensions} from './hooks';
 import {Text3} from './text';
 import {pxToRem} from './utils/css';
 
 import type {TrackingEvent} from './utils/types';
+import {isRunningAcceptanceTest} from './utils/platform';
 
-const tabMaxWidth = 284;
-
-const smallOuterStyles = {
-    display: 'flex',
-};
-
-const bigTabStyles = {
-    flex: '0 1 208px',
-    padding: `16px 32px`,
-    maxWidth: tabMaxWidth,
-};
-
-const height = 56;
-
-type StyleProps = {
-    width: number;
-};
+const TAB_MAX_WIDTH = 284;
+const TAB_HEIGHT = 56;
+const LINE_ANIMATION_DURATION_MS = isRunningAcceptanceTest() ? 0 : 300;
 
 const useStyles = createUseStyles(({colors, mq}) => ({
     outerBorder: {
         borderBottom: `1px solid ${colors.divider}`,
-        width: '100%',
     },
     outer: {
-        height,
-
+        height: TAB_HEIGHT,
         position: 'relative',
         overflow: 'hidden',
-
-        [mq.mobile]: smallOuterStyles,
-        [mq.tablet]: smallOuterStyles,
+        [mq.tabletOrSmaller]: {
+            display: 'flex',
+        },
     },
     inner: {
         position: 'absolute',
         left: 0,
+        right: 0,
+        // if tabs don't fit horizontally they can be scrolled
         overflowX: 'scroll',
-        overflowY: 'hidden',
+        // this height is to hide the scrollbar
         height: 80,
+        overflowY: 'hidden',
     },
     tabsContainer: {
-        height,
-        width: (p: StyleProps) => p.width,
+        height: TAB_HEIGHT,
         display: 'flex',
     },
     tab: {
@@ -61,46 +48,53 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         paddingLeft: 16,
         paddingRight: 16,
         verticalAlign: 'baseline',
-        height,
+        height: TAB_HEIGHT,
         textAlign: 'center',
         color: colors.textSecondary,
         borderBottom: '2px solid transparent',
         maxWidth: ({numTabs}) => {
             if (numTabs === 2) {
-                return `max(50%, ${tabMaxWidth}px)`;
+                return `max(50%, ${TAB_MAX_WIDTH}px)`;
             } else if (numTabs === 3) {
-                return `max(33.33%, ${tabMaxWidth}px)`;
+                return `max(33.33%, ${TAB_MAX_WIDTH}px)`;
             }
-            return tabMaxWidth;
+            return TAB_MAX_WIDTH;
         },
         '&:hover': {
             color: colors.textPrimary,
         },
-
         fallbacks: {
-            maxWidth: tabMaxWidth, // max() is not supported by all browsers
+            maxWidth: TAB_MAX_WIDTH, // max() is not supported by all browsers
         },
-
-        [mq.desktop]: bigTabStyles,
-        [mq.largeDesktop]: bigTabStyles,
+        [mq.desktopOrBigger]: {
+            flex: '0 1 208px',
+            padding: `16px 32px`,
+            maxWidth: TAB_MAX_WIDTH,
+        },
     },
     tabWithIcon: {
         flexBasis: 112,
-        [mq.desktop]: {
-            flexBasis: 208,
-        },
-        [mq.largeDesktop]: {
+        [mq.desktopOrBigger]: {
             flexBasis: 208,
         },
     },
     tabSelected: {
         color: colors.textPrimary,
-        borderBottom: `2px solid ${colors.controlActivated}`,
+        borderBottom: ({isAnimating}) =>
+            isAnimating ? '2px solid transparent' : `2px solid ${colors.controlActivated}`,
     },
     icon: {
         marginRight: 8,
         height: pxToRem(24),
         width: pxToRem(24),
+    },
+    animatedLine: {
+        display: 'none', // will be overriden by inline styles in animateLine function
+        position: 'absolute',
+        left: 0,
+        bottom: 0,
+        height: 2,
+        background: colors.controlActivated,
     },
 }));
 
@@ -113,21 +107,54 @@ export type TabsProps = {
         readonly icon?: React.ReactNode;
         readonly 'aria-controls'?: string;
     }>;
+    children?: void;
 };
 
 const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) => {
+    const id = useAriaId();
     const {width, ref} = useElementDimensions();
-    const classes = useStyles({width, numTabs: tabs.length});
+    const animatedLineRef = React.useRef<HTMLDivElement>(null);
+    const scrollableContainerRef = React.useRef<HTMLDivElement>(null);
+    const [isAnimating, setIsAnimating] = React.useState(false);
+    const classes = useStyles({width, numTabs: tabs.length, isAnimating});
+
+    const animateLine = (fromIndex: number, toIndex: number) => {
+        const tabFrom = document.querySelector<HTMLElement>(`#${id} [data-tabindex="${fromIndex}"]`);
+        const tabTo = document.querySelector<HTMLElement>(`#${id} [data-tabindex="${toIndex}"]`);
+        const line = animatedLineRef.current;
+        const scrollable = scrollableContainerRef.current;
+        if (tabFrom && tabTo && line && scrollable) {
+            setIsAnimating(true);
+            // set initial line styles
+            line.style.display = 'block';
+            line.style.width = `${tabFrom.offsetWidth}px`;
+            line.style.transform = `translate(${tabFrom.offsetLeft - scrollable.scrollLeft}px, 0)`;
+            Promise.resolve().then(() => {
+                // set final line styles
+                line.style.width = `${tabTo.offsetWidth}px`;
+                line.style.transform = `translate(${tabTo.offsetLeft - scrollable.scrollLeft}px, 0)`;
+                line.style.transition = `transform ${LINE_ANIMATION_DURATION_MS}ms, width ${LINE_ANIMATION_DURATION_MS}ms`;
+            });
+            setTimeout(() => {
+                // hide line
+                line.style.transition = '';
+                line.style.display = 'none';
+                setIsAnimating(false);
+            }, LINE_ANIMATION_DURATION_MS);
+        }
+    };
+
     return (
-        <div role="tablist" ref={ref} className={classes.outerBorder}>
+        <div id={id} role="tablist" ref={ref} className={classes.outerBorder}>
             <ResponsiveLayout fullWidth>
                 <div className={classes.outer}>
-                    <div className={classes.inner}>
+                    <div ref={scrollableContainerRef} className={classes.inner}>
                         <div className={classes.tabsContainer}>
                             {tabs.map(({text, trackingEvent, icon, 'aria-controls': ariaControls}, index) => {
                                 const isSelected = index === selectedIndex;
                                 return (
                                     <Touchable
+                                        dataAttributes={{tabindex: index}}
                                         key={index}
                                         className={classnames(
                                             classes.tab,
@@ -135,7 +162,12 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) =
                                             icon && classes.tabWithIcon
                                         )}
                                         disabled={isSelected}
-                                        onPress={() => onChange(index)}
+                                        onPress={() => {
+                                            if (!isAnimating && selectedIndex !== index) {
+                                                onChange(index);
+                                                animateLine(selectedIndex, index);
+                                            }
+                                        }}
                                         trackingEvent={trackingEvent}
                                         role="tab"
                                         aria-controls={ariaControls}
@@ -150,6 +182,7 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) =
                             })}
                         </div>
                     </div>
+                    <div ref={animatedLineRef} className={classes.animatedLine} />
                 </div>
             </ResponsiveLayout>
         </div>

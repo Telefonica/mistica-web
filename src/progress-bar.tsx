@@ -11,7 +11,7 @@ const useStyles = createUseStyles(({colors}) => ({
     },
     bar: {
         height: '100%',
-        backgroundColor: colors.brand,
+        backgroundColor: colors.controlActivated,
         transition: `max-width ${transition}`,
         animation: `$bar ${transition}`,
         borderRadius: 2,
@@ -27,6 +27,7 @@ const useStyles = createUseStyles(({colors}) => ({
 
 type Props = {
     progressPercent: number;
+    children?: void;
 };
 
 const ProgressBar: React.FC<Props> = ({progressPercent}) => {

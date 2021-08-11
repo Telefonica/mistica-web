@@ -106,7 +106,7 @@ export type SelectProps = {
     label: string;
     name: string;
     optional?: boolean;
-    // use `inputProps` to pass props (as attributes) to the input element, for example a data-testid
+    /** @deprecated */
     inputProps?: {[prop: string]: string};
     validate?: (value: string | void, rawValue: string | void) => string | void;
     onChangeValue?: (value: string) => void;
@@ -119,6 +119,7 @@ export type SelectProps = {
     value?: string;
     fullWidth?: boolean;
     native?: boolean;
+    children?: void;
 };
 
 const Select: React.FC<SelectProps> = ({

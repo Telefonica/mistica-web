@@ -4,7 +4,7 @@ import debounce from 'lodash/debounce';
 import {createUseStyles} from './jss';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {useElementDimensions, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
-import Portal from './portal';
+import {Portal} from './portal';
 import {addPassiveEventListener, removePassiveEventListener} from './utils/dom';
 
 const getScrollDistanceToBottom = () => document.body.scrollHeight - window.innerHeight - window.scrollY;
@@ -43,11 +43,9 @@ const useStyles = createUseStyles((theme) => ({
             left: 0,
             bottom: 0,
             zIndex: Z_INDEX,
-            background: ({footerBgColor}) => footerBgColor || theme.colors.background,
         },
         shadow: {
             boxShadow: '0 -1px 2px 0 rgba(0, 0, 0, 0.2)',
-            zIndex: Z_INDEX,
         },
     },
 }));
@@ -76,6 +74,7 @@ const FixedFooterLayout: React.FC<Props> = ({
     const {isMobile} = useScreenSize();
     const {platformOverrides} = useTheme();
     const {height: realHeight, ref} = useElementDimensions();
+    const {colors} = useTheme();
 
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(realHeight);
@@ -125,6 +124,9 @@ const FixedFooterLayout: React.FC<Props> = ({
                 [classes.withoutFooter]: !isFooterVisible,
                 [classes.shadow]: displayShadow,
             })}
+            // this style is inline to avoid creating a class  that may collide with
+            // other fixed footers during the page animation transition
+            style={{background: isMobile ? footerBgColor || colors.background : undefined}}
             data-testid={`fixed-footer${isFooterVisible ? '-visible' : '-hidden'}`}
         >
             {isFooterVisible && (
