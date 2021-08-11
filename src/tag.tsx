@@ -8,8 +8,8 @@ import {applyAlpha} from './utils/color';
 const useStyles = createUseStyles(() => ({
     tag: {
         backgroundColor: ({color}) => applyAlpha(color, 0.1),
-        padding: '8px 13px',
-        borderRadius: 50,
+        padding: '4px 10px',
+        borderRadius: 4,
         minWidth: 48,
         display: 'inline-flex',
         alignItems: 'center',
