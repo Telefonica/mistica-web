@@ -149,8 +149,8 @@ export const getTelefonicaSkin: GetSkin = () => {
 
             // STATES
             error: palette.coral,
-            success: palette.turquoise,
-            warning: palette.ambar,
+            success: palette.turquoiseDark,
+            warning: palette.ambarDark,
 
             // BARS TEXTS
             textNavigationBarPrimary: palette.white,
