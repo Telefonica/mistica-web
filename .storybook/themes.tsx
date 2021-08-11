@@ -39,7 +39,7 @@ export const Telefonica = {
 
 export const Blau = {
     i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
-    skin: getTelefonicaSkin(),
+    skin: getBlauSkin(),
 } as const;
 
 export const AVAILABLE_THEMES = [Movistar, O2, O2_Classic, Vivo, Telefonica, Blau];
