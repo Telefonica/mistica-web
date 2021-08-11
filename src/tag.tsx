@@ -32,7 +32,7 @@ const Tag: React.FC<Props> = ({children, color}) => {
     return (
         <span className={classes.tag}>
             <ThemeVariant isInverse={false}>
-                <Text color={color} size={14} lineHeight={14} weight="medium">
+                <Text color={color} size={14} lineHeight={10} weight="medium">
                     {children}
                 </Text>
             </ThemeVariant>
