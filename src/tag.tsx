@@ -4,7 +4,6 @@ import {createUseStyles} from './jss';
 import {Text} from './text';
 import {ThemeVariant} from './theme-variant-context';
 import {applyAlpha} from './utils/color';
-import Inline from './inline';
 
 const useStyles = createUseStyles(() => ({
     tag: {
