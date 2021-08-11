@@ -74,7 +74,7 @@ export const Header: React.FC<HeaderProps> = ({
     isErrorAmount,
     secondaryButton,
 }) => {
-    const {isMobile} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
     const theme = useTheme();
     const isInverse = useIsInverseVariant();
 
@@ -95,7 +95,7 @@ export const Header: React.FC<HeaderProps> = ({
     };
 
     return (
-        <Stack space={isMobile ? 24 : 32}>
+        <Stack space={isTabletOrSmaller ? 24 : 32}>
             {(title || pretitle) && (
                 <Stack space={8}>
                     {pretitle && renderRichText(pretitle, {color: theme.colors.textPrimary})}
@@ -121,7 +121,7 @@ export const Header: React.FC<HeaderProps> = ({
                         </Stack>
                     )}
                     {(button || secondaryButton) &&
-                        (isMobile ? (
+                        (isTabletOrSmaller ? (
                             <MobileHeaderButtonLayout>
                                 {button}
                                 {secondaryButton}
@@ -146,11 +146,11 @@ type MainSectionHeaderProps = {
 };
 
 export const MainSectionHeader: React.FC<MainSectionHeaderProps> = ({title, description, button}) => {
-    const {isMobile} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
 
     return (
         <Stack space={32}>
-            <Stack space={isMobile ? 12 : 16}>
+            <Stack space={isTabletOrSmaller ? 12 : 16}>
                 {title && (
                     <Text7 role="heading" aria-level={1}>
                         {title}
@@ -244,13 +244,13 @@ export const MainSectionHeaderLayout: React.FC<MainSectionHeaderLayoutProps> = (
     children,
 }) => {
     const classes = useHeaderLayoutStyles({isInverse});
-    const {isMobile} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
 
     return (
         <ResponsiveLayout className={classes.background}>
             <ThemeVariant isInverse={isInverse}>
                 <OverscrollColor />
-                {isMobile ? (
+                {isTabletOrSmaller ? (
                     <Box paddingTop={12} paddingBottom={24}>
                         {children}
                     </Box>

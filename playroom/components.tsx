@@ -130,11 +130,11 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
 }) => {
     const classes = useControlsStyles();
     const {colors} = useTheme();
-    const {isMobile} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
     const systemColorScheme = 'light';
     const alternativeColorScheme = 'dark';
 
-    if (isMobile) {
+    if (isTabletOrSmaller) {
         return (
             <div className={`${classes.controls} ${classes.mobileControls}`}>
                 <Select

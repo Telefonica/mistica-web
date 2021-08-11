@@ -32,12 +32,12 @@ const useStyles = createUseStyles((theme) => ({
         display: 'none',
     },
 
-    containerMobile: {
+    containerSmall: {
         paddingBottom: ({height}) => height,
         backgroundColor: ({containerBgColor}) => containerBgColor || theme.colors.background,
     },
 
-    [theme.mq.mobile]: {
+    [theme.mq.tabletOrSmaller]: {
         footer: {
             position: 'fixed',
             left: 0,
@@ -71,7 +71,7 @@ const FixedFooterLayout: React.FC<Props> = ({
 }) => {
     const [displayShadow, setDisplayShadow] = React.useState(false);
     const childrenRef = React.useRef<HTMLDivElement>(null);
-    const {isMobile} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
     const {platformOverrides} = useTheme();
     const {height: realHeight, ref} = useElementDimensions();
     const {colors} = useTheme();
@@ -126,7 +126,7 @@ const FixedFooterLayout: React.FC<Props> = ({
             })}
             // this style is inline to avoid creating a class  that may collide with
             // other fixed footers during the page animation transition
-            style={{background: isMobile ? footerBgColor || colors.background : undefined}}
+            style={{background: isTabletOrSmaller ? footerBgColor || colors.background : undefined}}
             data-testid={`fixed-footer${isFooterVisible ? '-visible' : '-hidden'}`}
         >
             {isFooterVisible && (
@@ -139,10 +139,10 @@ const FixedFooterLayout: React.FC<Props> = ({
 
     return (
         <>
-            <div ref={childrenRef} className={classnames({[classes.containerMobile]: isMobile})}>
+            <div ref={childrenRef} className={classnames({[classes.containerSmall]: isTabletOrSmaller})}>
                 {children}
             </div>
-            {isMobile ? <Portal>{renderFooter()}</Portal> : renderFooter()}
+            {isTabletOrSmaller ? <Portal>{renderFooter()}</Portal> : renderFooter()}
         </>
     );
 };

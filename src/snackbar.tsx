@@ -57,7 +57,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     snackbarButton: {
         marginTop: ({isLongButton}) => (isLongButton ? 18 : -6),
-        marginLeft: ({isLongButton, isTabletOrBigger}) => (isLongButton ? 0 : isTabletOrBigger ? 48 : 16),
+        marginLeft: ({isLongButton, isDesktopOrBigger}) => (isLongButton ? 0 : isDesktopOrBigger ? 48 : 16),
         marginBottom: -6,
         marginRight: -8,
         fontWeight: 500,
@@ -70,7 +70,7 @@ const useStyles = createUseStyles((theme) => ({
         color: ({type}) =>
             type === 'INFORMATIVE' ? theme.colors.textLinkSnackbar : theme.colors.textPrimaryInverse,
     },
-    [theme.mq.mobile]: {
+    [theme.mq.tabletOrSmaller]: {
         snackbarWrapper: {
             left: 8,
             right: 8,
@@ -98,9 +98,14 @@ const SnackbarComponent: React.FC<Props> = ({
 }) => {
     const [isOpen, setIsOpen] = React.useState(false);
     const {width: buttonWidth, ref: buttonRef} = useElementDimensions();
-    const {isTabletOrBigger} = useScreenSize();
-    const longButtonWidth = isTabletOrBigger ? 160 : 128;
-    const classes = useStyles({type, isOpen, isTabletOrBigger, isLongButton: buttonWidth >= longButtonWidth});
+    const {isDesktopOrBigger} = useScreenSize();
+    const longButtonWidth = isDesktopOrBigger ? 160 : 128;
+    const classes = useStyles({
+        type,
+        isOpen,
+        isDesktopOrBigger,
+        isLongButton: buttonWidth >= longButtonWidth,
+    });
 
     const close = React.useCallback(() => {
         setIsOpen(false);

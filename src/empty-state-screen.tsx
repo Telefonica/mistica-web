@@ -32,7 +32,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     smallImage: {
         height: 128,
-        [theme.mq.mobile]: {
+        [theme.mq.tabletOrSmaller]: {
             height: 112,
         },
     },
@@ -82,7 +82,7 @@ const EmptyStateScreen: React.FC<Props> = ({
     const {colors} = useTheme();
     const needsButtonLinkAlignment = buttonLink && !button;
     const classes = useStyles({largeImageUrl, needsButtonLinkAlignment});
-    const {isMobile, isTablet} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
 
     let largeImage, image;
     if (largeImageUrl) {
@@ -92,7 +92,7 @@ const EmptyStateScreen: React.FC<Props> = ({
         image = <img className={classes.smallImage} alt="" src={imageUrl} />;
     }
 
-    if (isMobile) {
+    if (isTabletOrSmaller) {
         return (
             <FeedbackScreen
                 icon={largeImage ?? image ?? icon}
@@ -102,11 +102,6 @@ const EmptyStateScreen: React.FC<Props> = ({
                 link={buttonLink}
             />
         );
-    }
-
-    if (isTablet && largeImage) {
-        image = largeImage;
-        largeImageUrl = undefined;
     }
 
     return (
