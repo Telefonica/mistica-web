@@ -1,3 +1,15 @@
+# [9.12.0](https://github.com/Telefonica/mistica-web/compare/v9.11.0...v9.12.0) (2021-08-12)
+
+
+### Bug Fixes
+
+* **Dialog:** backdrop over fixed footer ([#309](https://github.com/Telefonica/mistica-web/issues/309)) ([156134c](https://github.com/Telefonica/mistica-web/commit/156134c4ba2dc287d7f96c7b22a76889e8e015bd))
+
+
+### Features
+
+* **a11y:** Accessibility improvements in several components ([#305](https://github.com/Telefonica/mistica-web/issues/305)) ([0d10787](https://github.com/Telefonica/mistica-web/commit/0d1078769f01ebd4ddabe387b691342f37f90b88))
+
 # [9.11.0](https://github.com/Telefonica/mistica-web/compare/v9.10.1...v9.11.0) (2021-08-02)
 
 
