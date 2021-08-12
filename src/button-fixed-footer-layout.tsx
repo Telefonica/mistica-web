@@ -31,7 +31,7 @@ const ButtonFixedFooterLayout: React.FC<Props> = ({
     containerBgColor,
     onChangeFooterHeight,
 }) => {
-    const {isTabletOrSmaller} = useScreenSize();
+    const {isTabletOrSmaller, isTablet} = useScreenSize();
     const hasButton = !!button || !!secondaryButton;
     return (
         <FixedFooterLayout
@@ -41,7 +41,7 @@ const ButtonFixedFooterLayout: React.FC<Props> = ({
             containerBgColor={containerBgColor}
             footer={
                 <ResponsiveLayout>
-                    <Box paddingY={isTabletOrSmaller ? 16 : 0}>
+                    <Box paddingY={isTablet ? 32 : isTabletOrSmaller ? 16 : 0}>
                         <ButtonLayout
                             align={isTabletOrSmaller ? 'full-width' : desktopButtonAlign}
                             link={link}
