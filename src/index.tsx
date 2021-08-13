@@ -66,6 +66,7 @@ export {
     FunnelNavigationBar,
     NavigationBarActionGroup,
     NavigationBarAction,
+    NavigationBarLogo,
 } from './navigation-bar';
 
 // Forms

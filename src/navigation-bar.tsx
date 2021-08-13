@@ -291,7 +291,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                                             </IconButton>
                                             {logo}
                                         </Inline>
-                                        {!isMenuOpen && right}
+                                        {right}
                                     </Inline>
                                 </ResponsiveLayout>
                             </div>
