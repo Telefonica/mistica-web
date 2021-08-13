@@ -18,6 +18,7 @@ import GridLayout from './grid-layout';
 import {useSetModalState} from './modal-context-provider';
 
 import type {Props as TouchableProps} from './touchable';
+import {classes} from 'istanbul-lib-coverage';
 
 type LogoProps = {size: number};
 
@@ -137,6 +138,42 @@ export const NavigationBarLogo: React.FC<NavigationBarLogoProps> = ({size}) => {
     }
 };
 
+const useBurgerStyles = createUseStyles(() => ({
+    burgerIconContainer: {
+        position: 'relative',
+        width: 24,
+        height: 24,
+        '& > *': {
+            position: 'absolute',
+            opacity: 1,
+            transform: 'rotate(0) scale(1)',
+            transition: 'transform 300ms, opacity 100ms',
+        },
+    },
+    iconCloseHidden: {
+        opacity: 0,
+        transform: 'rotate(-45deg) scale(0.9)',
+    },
+    iconMenuHidden: {
+        opacity: 0,
+        transform: 'rotate(0deg) scale(0.7)',
+    },
+}));
+
+const BurgerMenuIcon = ({isOpen}: {isOpen: boolean}) => {
+    const classes = useBurgerStyles();
+    return (
+        <div className={classes.burgerIconContainer} role="presentation">
+            <div className={isOpen ? '' : classes.iconCloseHidden}>
+                <IconCloseRegular />
+            </div>
+            <div className={isOpen ? classes.iconMenuHidden : ''}>
+                <IconMenuRegular />
+            </div>
+        </div>
+    );
+};
+
 const NAVBAR_ZINDEX = 25;
 const BURGER_ZINDEX = 26;
 
@@ -181,7 +218,7 @@ const useStyles = createUseStyles((theme) => {
             alignItems: 'center',
             padding: '0 8px',
             borderBottom: `2px solid transparent`,
-            transition: 'border-color 0.3s ease-in-out',
+            transition: 'border-color 300ms ease-in-out',
         },
         selectedSection: {
             borderColor: ({isInverse}) => (isInverse ? theme.colors.inverse : theme.colors.controlActivated),
@@ -198,26 +235,24 @@ const useStyles = createUseStyles((theme) => {
             top: MOBILE_NAVBAR_HEIGHT,
             left: 0,
             right: 0,
-            bottom: 0,
+            height: `calc(100vh - ${MOBILE_NAVBAR_HEIGHT}px)`,
             overflowY: 'auto',
             background: theme.colors.background,
             boxShadow: ({menuTransitionState}) =>
                 menuTransitionState !== 'closed' ? `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})` : 'none',
-            transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms ease-in-out`,
+            transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms ease-out`,
         },
         burgerMenuEnter: {
             transform: 'translate(-100vw)',
         },
         burgerMenuEnterActive: {
             transform: 'translate(0)',
-            transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms ease-in-out`,
         },
         burgerMenuExit: {
             transform: 'translate(0)',
         },
         burgerMenuExitActive: {
             transform: 'translate(-100vw)',
-            transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms ease-in-out`,
         },
     };
 });
@@ -289,7 +324,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                                                 aria-controls={menuId}
                                                 onPress={isMenuOpen ? closeMenu : openMenu}
                                             >
-                                                {isMenuOpen ? <IconCloseRegular /> : <IconMenuRegular />}
+                                                <BurgerMenuIcon isOpen={isMenuOpen} />
                                             </IconButton>
                                             {logo}
                                         </Inline>

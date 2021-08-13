@@ -29,6 +29,8 @@ const App: React.FC = ({children}) => {
     const styles = `
         body {background: ${colors.background}}
 
+        ${isModalOpen ? 'body {overflow-y: hidden}' : ''}
+
         *[class^='SplashScreen__'] {
             display: none;
         }
