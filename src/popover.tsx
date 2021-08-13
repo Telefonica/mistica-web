@@ -113,17 +113,17 @@ type TargetPosition = {
 
 const getWidthDesktop = (customWidth?: number): number => (customWidth ? customWidth : maxWidthDesktop);
 
-const getPosition = (position: Position = defaultPositionDesktop, isMobile: boolean) =>
-    isMobile && (position === 'left' || position === 'right') ? defaultPositionMobile : position;
+const getPosition = (position: Position = defaultPositionDesktop, isTabletOrSmaller: boolean) =>
+    isTabletOrSmaller && (position === 'left' || position === 'right') ? defaultPositionMobile : position;
 
-const getWidth = (isMobile: boolean, width?: number): number =>
-    isMobile ? window.innerWidth - marginLeftRightMobile * 2 : getWidthDesktop(width);
+const getWidth = (isTabletOrSmaller: boolean, width?: number): number =>
+    isTabletOrSmaller ? window.innerWidth - marginLeftRightMobile * 2 : getWidthDesktop(width);
 
 const getPositionStyles = (
     position: Position,
     width: number,
     targetPosition: TargetPosition,
-    isMobile: boolean
+    isTabletOrSmaller: boolean
 ) => {
     const containerStylesByPos: Record<Position, React.CSSProperties> = {
         right: {
@@ -142,13 +142,13 @@ const getPositionStyles = (
             transform: 'translateY(-100%)',
             WebkitTransform: 'translateY(-100%)',
             top: -distanceToTarget,
-            left: isMobile
+            left: isTabletOrSmaller
                 ? marginLeftRightMobile - targetPosition.parentLeft
                 : Math.max(targetPosition.width / 2 - width / 2, 0),
         },
         bottom: {
             top: targetPosition.height + distanceToTarget,
-            left: isMobile
+            left: isTabletOrSmaller
                 ? marginLeftRightMobile - targetPosition.parentLeft
                 : Math.max(targetPosition.width / 2 - width / 2, 0),
         },
@@ -183,7 +183,7 @@ const getPositionStyles = (
 
     const arrowStyles = arrowStylesByPos[position];
 
-    if (isMobile) {
+    if (isTabletOrSmaller) {
         arrowStyles.left = targetPosition.parentLeft + targetPosition.width / 2 - marginLeftRightMobile;
     }
 
@@ -227,13 +227,13 @@ const Popover: React.FC<Props> = ({
     isVisible = true,
 }) => {
     const {texts, colors} = useTheme();
-    const {isMobile} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
     const [targetPosition, setTargetPosition] = React.useState<TargetPosition | null>(null);
 
     const targetWrapperRef = React.useRef<HTMLDivElement | null>(null);
 
-    position = getPosition(position, isMobile);
-    const innerWidth = getWidth(isMobile, width);
+    position = getPosition(position, isTabletOrSmaller);
+    const innerWidth = getWidth(isTabletOrSmaller, width);
     const classes = useStyles({position});
 
     React.useEffect(() => {
@@ -267,7 +267,7 @@ const Popover: React.FC<Props> = ({
             position,
             innerWidth,
             targetPosition,
-            isMobile
+            isTabletOrSmaller
         );
 
         popoverContainer = (

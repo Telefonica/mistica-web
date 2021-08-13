@@ -55,7 +55,7 @@ const useStyles = createUseStyles((theme) => ({
         top: 0,
         left: 0,
         right: 0,
-        [theme.mq.mobile]: {
+        [theme.mq.tabletOrSmaller]: {
             // This extra height is a workaround to make sure the background div is displayed *under* the fixed footer.
             // Otherwise in some devices (Galaxy S20+) the background and the fixed footer are rendered with some distance between them
             height: ({contentHeight}) => `calc(${contentHeight} + 1px)`,
@@ -64,7 +64,7 @@ const useStyles = createUseStyles((theme) => ({
     },
 
     footer: {
-        [theme.mq.tabletOrBigger]: {
+        [theme.mq.desktopOrBigger]: {
             padding: '0px 32px',
         },
     },
@@ -83,7 +83,7 @@ const useStyles = createUseStyles((theme) => ({
     innerContainer: {
         textAlign: 'left',
         padding: '64px 8px 16px',
-        [theme.mq.tabletOrBigger]: {
+        [theme.mq.desktopOrBigger]: {
             padding: '64px 0 32px',
         },
     },
@@ -170,7 +170,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     const isInverse = useIsInverseVariant();
     const {colors} = useTheme();
     const windowHeight = useWindowHeight();
-    const {isMobile} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
     const [isServerSide, setIsServerSide] = React.useState(typeof self !== 'undefined');
     const [footerHeight, setFooterHeight] = React.useState(0);
 
@@ -212,7 +212,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         </>
     );
 
-    if (!isMobile && unstable_inlineInDesktop) {
+    if (!isTabletOrSmaller && unstable_inlineInDesktop) {
         return (
             <Stack space={32}>
                 <>{feedbackBody}</>
@@ -258,18 +258,18 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                         feedbackContent
                     )}
                 </div>
-                {isMobile && hasButtons && <div className={classes.backgroundDiv} />}
+                {isTabletOrSmaller && hasButtons && <div className={classes.backgroundDiv} />}
             </div>
         </>
     );
 };
 
 export const SuccessFeedbackScreen: React.FC<FeedbackProps> = (props) => {
-    const {isMobile} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
     const {skinName} = useTheme();
 
     return (
-        <ThemeVariant isInverse={isMobile}>
+        <ThemeVariant isInverse={isTabletOrSmaller}>
             <FeedbackScreen
                 {...props}
                 hapticFeedback="success"

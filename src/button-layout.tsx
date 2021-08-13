@@ -15,7 +15,7 @@ const useStyles = createUseStyles((theme) => ({
         margin: '16px 0',
         padding: '0 16px',
     },
-    [theme.mq.tabletOrBigger]: {
+    [theme.mq.desktopOrBigger]: {
         margins: {
             padding: 0,
             margin: 16,
@@ -23,11 +23,11 @@ const useStyles = createUseStyles((theme) => ({
     },
     container: {
         display: 'flex',
-        justifyContent: ({align, childrenCount, isMobile}) => {
-            if (align === 'center' || (align === 'full-width' && isMobile)) {
+        justifyContent: ({align, childrenCount, isTabletOrSmaller}) => {
+            if (align === 'center' || (align === 'full-width' && isTabletOrSmaller)) {
                 return 'center';
             }
-            if (childrenCount > 1 && isMobile) {
+            if (childrenCount > 1 && isTabletOrSmaller) {
                 return 'center';
             }
             if (align === 'right') {
@@ -42,11 +42,11 @@ const useStyles = createUseStyles((theme) => ({
             margin: 0,
         },
         '& > *:not($link)': {
-            width: ({buttonWidth, isMobile, align}) => {
+            width: ({buttonWidth, isTabletOrSmaller, align}) => {
                 if (!buttonWidth) {
                     return 'auto';
                 }
-                if (!isMobile) {
+                if (!isTabletOrSmaller) {
                     return buttonWidth;
                 }
                 if (align === 'full-width') {
@@ -113,7 +113,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     link,
     withMargins = false,
 }) => {
-    const {isMobile} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
     const [isMeasuring, setIsMeasuring] = React.useState(true);
     const childrenCount = React.Children.count(children);
 
@@ -131,7 +131,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         }
     };
 
-    const classes = useStyles({buttonWidth, isMobile, align, childrenCount});
+    const classes = useStyles({buttonWidth, isTabletOrSmaller, align, childrenCount});
 
     const wrapperElRef = React.useRef<HTMLDivElement | null>(null);
     useIsomorphicLayoutEffect(() => {
@@ -190,7 +190,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         return range1 - range2;
     });
 
-    const needsLinkAlignment = !isMobile && align === 'left';
+    const needsLinkAlignment = !isTabletOrSmaller && align === 'left';
 
     const content = (
         <div ref={wrapperElRef} className={classes.container}>

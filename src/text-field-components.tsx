@@ -166,10 +166,10 @@ const useFieldContainerStyles = createUseStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         minWidth: 96,
-        [theme.mq.mobile]: {
+        [theme.mq.tabletOrSmaller]: {
             width: '100%',
         },
-        [theme.mq.tabletOrBigger]: {
+        [theme.mq.desktopOrBigger]: {
             width: ({fullWidth}) => (fullWidth ? '100%' : DEFAULT_WIDTH),
         },
     },
