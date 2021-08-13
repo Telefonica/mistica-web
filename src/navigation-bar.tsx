@@ -164,6 +164,7 @@ const useStyles = createUseStyles((theme) => {
                 isInverse ? theme.colors.navigationBarBackground : theme.colors.background,
             height: DESKTOP_NAVBAR_HEIGHT,
             padding: '16px 0',
+            transition: 'border 300ms',
             borderBottom: `1px solid ${theme.colors.divider}`,
             borderColor: ({isInverse}) =>
                 isInverse && !theme.isDarkMode ? 'transparent' : theme.colors.divider,
@@ -198,6 +199,7 @@ const useStyles = createUseStyles((theme) => {
             left: 0,
             right: 0,
             bottom: 0,
+            overflowY: 'auto',
             background: theme.colors.background,
             boxShadow: ({menuTransitionState}) =>
                 menuTransitionState !== 'closed' ? `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})` : 'none',
