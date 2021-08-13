@@ -12,7 +12,7 @@ const useStyles = createUseStyles((theme) => ({
         alignItems: 'center',
         paddingLeft: 16,
         height: pxToRem(20),
-        [theme.mq.mobile]: {
+        [theme.mq.tabletOrSmaller]: {
             height: pxToRem(16),
         },
     },

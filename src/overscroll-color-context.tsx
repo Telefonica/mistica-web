@@ -14,9 +14,9 @@ const OverscrollColorProviderNoOp: React.FC<ProviderProps> = ({children}) => <>{
 
 const OverscrollColorProviderComponent: React.FC<ProviderProps> = ({children}) => {
     const {platformOverrides} = useTheme();
-    const {isMobile} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
     const theme = useTheme();
-    return isMobile ? (
+    return isTabletOrSmaller ? (
         <Provider>
             <Getter>
                 {(color) => (

@@ -167,7 +167,7 @@ const useCarouselStyles = createUseStyles((theme) => ({
         width: '100%',
         scrollSnapType: 'x mandatory',
         scrollbarWidth: 'none',
-        [theme.mq.mobile]: {
+        [theme.mq.tabletOrSmaller]: {
             padding: '0 16px',
         },
         '&::-webkit-scrollbar': {
@@ -182,7 +182,7 @@ const useCarouselStyles = createUseStyles((theme) => ({
 }));
 
 export const Carousel: StoryComponent = () => {
-    const {isMobile} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
     const {colors} = useTheme();
     const classes = useCarouselStyles();
     return (
@@ -191,7 +191,7 @@ export const Carousel: StoryComponent = () => {
                 <ResponsiveLayout>
                     <Text2 regular>This is a naive carousel implementation using MediaCards:</Text2>
                 </ResponsiveLayout>
-                <ResponsiveLayout fullWidth={isMobile}>
+                <ResponsiveLayout fullWidth={isTabletOrSmaller}>
                     <Inline space={16} className={classes.carousel}>
                         {Array.from({length: 5}).flatMap((_, idx) => [
                             <MediaCard
