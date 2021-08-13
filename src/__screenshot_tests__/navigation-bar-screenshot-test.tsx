@@ -10,7 +10,7 @@ test.each`
     'MainNavigationBar desktop. isInverse={$isInverse} isDarkMode={$isDarkMode}',
     async ({isInverse, isDarkMode}) => {
         await openStoryPage({
-            id: 'components-others-mainnavigationbar--default',
+            id: 'components-navigationbar-mainnavigationbar--default',
             device: 'DESKTOP',
             args: {isInverse},
             isDarkMode,
@@ -32,7 +32,7 @@ test.each`
     'MainNavigationBar mobile. isInverse={$isInverse} isDarkMode={$isDarkMode}',
     async ({isInverse, isDarkMode}) => {
         const page = await openStoryPage({
-            id: 'components-others-mainnavigationbar--default',
+            id: 'components-navigationbar-mainnavigationbar--default',
             device: 'MOBILE_IOS',
             args: {isInverse},
             isDarkMode,
@@ -45,5 +45,57 @@ test.each`
 
         const menuOpenImage = await page.screenshot();
         expect(menuOpenImage).toMatchImageSnapshot();
+    }
+);
+
+test.each`
+    isInverse | isDarkMode | device
+    ${false}  | ${false}   | ${'DESKTOP'}
+    ${false}  | ${true}    | ${'DESKTOP'}
+    ${true}   | ${false}   | ${'DESKTOP'}
+    ${true}   | ${true}    | ${'DESKTOP'}
+    ${false}  | ${false}   | ${'MOBILE_IOS'}
+    ${false}  | ${true}    | ${'MOBILE_IOS'}
+    ${true}   | ${false}   | ${'MOBILE_IOS'}
+    ${true}   | ${true}    | ${'MOBILE_IOS'}
+`(
+    'NavigationBar. isInverse={$isInverse} isDarkMode={$isDarkMode} device={$device}',
+    async ({isInverse, isDarkMode, device}) => {
+        await openStoryPage({
+            id: 'components-navigationbar-navigationbar--default',
+            device,
+            args: {isInverse},
+            isDarkMode,
+        });
+
+        const image = await page.screenshot();
+
+        expect(image).toMatchImageSnapshot();
+    }
+);
+
+test.each`
+    isInverse | isDarkMode | device
+    ${false}  | ${false}   | ${'DESKTOP'}
+    ${false}  | ${true}    | ${'DESKTOP'}
+    ${true}   | ${false}   | ${'DESKTOP'}
+    ${true}   | ${true}    | ${'DESKTOP'}
+    ${false}  | ${false}   | ${'MOBILE_IOS'}
+    ${false}  | ${true}    | ${'MOBILE_IOS'}
+    ${true}   | ${false}   | ${'MOBILE_IOS'}
+    ${true}   | ${true}    | ${'MOBILE_IOS'}
+`(
+    'FunnelNavigationBar. isInverse={$isInverse} isDarkMode={$isDarkMode} device={$device}',
+    async ({isInverse, isDarkMode, device}) => {
+        await openStoryPage({
+            id: 'components-navigationbar-funnelnavigationbar--default',
+            device,
+            args: {isInverse},
+            isDarkMode,
+        });
+
+        const image = await page.screenshot();
+
+        expect(image).toMatchImageSnapshot();
     }
 );

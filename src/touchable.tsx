@@ -20,6 +20,7 @@ const redirect = (url: string, external = false): void => {
 
 const useStyles = createUseStyles(() => ({
     touchable: {
+        lineHeight: 'inherit',
         color: 'inherit',
         verticalAlign: 'bottom', // required to remove bottom gap when rendered as inline-block div
         fontFamily: 'inherit',
