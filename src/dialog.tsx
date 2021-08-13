@@ -16,6 +16,7 @@ import Box from './box';
 import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 
 import type {Theme} from './theme';
+import {useSetModalState} from './modal-context-provider';
 
 const animationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) &&
@@ -327,6 +328,14 @@ const ModalDialog = (props: ModalDialogProps) => {
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, [addKeyDownListener, handleKeyDown, props, renderNative, platformOverrides]);
+
+    const setModalState = useSetModalState();
+    React.useEffect(() => {
+        setModalState({isModalOpen: true});
+        return () => {
+            setModalState({isModalOpen: false});
+        };
+    }, [setModalState]);
 
     const {isClosing, onCloseTransitionEnd, ...dialogProps} = props;
     /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions */
