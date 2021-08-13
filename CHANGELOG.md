@@ -1,3 +1,10 @@
+# [9.13.0](https://github.com/Telefonica/mistica-web/compare/v9.12.0...v9.13.0) (2021-08-13)
+
+
+### Features
+
+* **Breakpoints:** use mobile styles in tablet breakpoint ([#312](https://github.com/Telefonica/mistica-web/issues/312)) ([919fc12](https://github.com/Telefonica/mistica-web/commit/919fc12b15a1d6eb496011b5d7f03424ee4c18ad))
+
 # [9.12.0](https://github.com/Telefonica/mistica-web/compare/v9.11.0...v9.12.0) (2021-08-12)
 
 
