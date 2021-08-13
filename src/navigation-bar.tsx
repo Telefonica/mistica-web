@@ -143,7 +143,7 @@ const BURGER_ZINDEX = 26;
 const DESKTOP_NAVBAR_HEIGHT = 80;
 const MOBILE_NAVBAR_HEIGHT = 56;
 
-const BURGER_MENU_ANIMATION_DURATION_MS = 300;
+const BURGER_MENU_ANIMATION_DURATION_MS = 400;
 
 const useStyles = createUseStyles((theme) => {
     const shadowAlpha = theme.isDarkMode ? 1 : 0.2;
@@ -208,14 +208,14 @@ const useStyles = createUseStyles((theme) => {
         },
         burgerMenuEnterActive: {
             transform: 'translate(0)',
-            transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms ease-in-out`,
+            transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms cubic-bezier(.19,.15,.21,1);`,
         },
         burgerMenuExit: {
             transform: 'translate(0)',
         },
         burgerMenuExitActive: {
             transform: 'translate(-100vw)',
-            transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms ease-in-out`,
+            transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms cubic-bezier(.78,.01,.83,.91)`,
         },
     };
 });
