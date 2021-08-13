@@ -90,6 +90,7 @@ export {default as IbanField} from './iban-field';
 export {useForm} from './form-context';
 
 // Icons
+// @deprecated use IconCloseRegular instead
 export {default as IconClose} from './icons/icon-close';
 export {default as IconInfo} from './icons/icon-info';
 export {default as IconArrowDown} from './icons/icon-arrow-down';

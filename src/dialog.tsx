@@ -4,7 +4,7 @@ import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import {createUseStyles} from './jss';
 import {Portal} from './portal';
 import FocusTrap from './focus-trap';
-import IcnClose from './icons/icon-close';
+import IcnCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/webview-bridge';
 import ThemeContext from './theme-context';
@@ -371,7 +371,7 @@ const ModalDialog = (props: ModalDialogProps) => {
                                         onPress={handleClose}
                                         label={context.texts.modalClose ?? context.texts.closeButtonLabel}
                                     >
-                                        <IcnClose color={context.colors.neutralHigh} />
+                                        <IcnCloseRegular color={context.colors.neutralHigh} />
                                     </IconButton>
                                 </div>
                                 <Dialog {...dialogProps} />
