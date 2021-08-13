@@ -33,6 +33,7 @@ declare type CommonProps = {|
   "aria-hidden"?: "true" | "false" | boolean,
   "aria-selected"?: "true" | "false" | boolean,
   "aria-labelledby"?: string,
+  "aria-live"?: "polite" | "off" | "assertive",
   role?: string,
   type?: "button" | "submit",
   tabIndex?: number,
@@ -72,7 +73,7 @@ export type PropsMaybeOnPress = {|
   onPress?: PressHandler,
   formId?: string,
 |};
-declare type Props =
+export type Props =
   | PropsHref
   | PropsTo
   | PropsOnPress

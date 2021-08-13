@@ -29,6 +29,7 @@ declare type CommonProps = {|
    */
   label?: string,
   "aria-label"?: string,
+  "aria-live"?: "polite" | "off" | "assertive",
 |};
 declare type HrefProps = {|
   ...$Exact<CommonProps>,
