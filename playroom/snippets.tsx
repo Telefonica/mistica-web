@@ -986,13 +986,17 @@ export default [
 <FunnelNavigationBar
   right={
     <NavigationBarActionGroup>
-      <NavigationBarAction>
+      <NavigationBarAction aria-label="need help?" href="/help">
         <IconQuestionRegular />
-        <TextLink href="/help">Need help?</TextLink>
+        {isDesktopOrBigger && (
+          <Text2 color={colors.textLink} href="/help">
+            Need help?
+          </Text2>
+        )}
       </NavigationBarAction>
       <NavigationBarAction aria-label="exit" onPress={() => {}}>
         {isDesktopOrBigger && "Exit"}
-        <IconClose />
+        <IconCloseRegular />
       </NavigationBarAction>
     </NavigationBarActionGroup>
   }
