@@ -20,11 +20,11 @@ export const WithImage: StoryComponent = () => (
 WithImage.storyName = 'With image';
 
 export const WithIcon: StoryComponent = () => {
-    const {isMobile} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
     const {colors} = useTheme();
     return (
         <EmptyStateScreen
-            icon={<IconBoxLight size={isMobile ? 64 : 80} color={colors.brand} />}
+            icon={<IconBoxLight size={isTabletOrSmaller ? 64 : 80} color={colors.brand} />}
             title="Your cart is empty"
             description="Check our marketplaces and find something for you. Check our marketplaces and find something"
             button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}

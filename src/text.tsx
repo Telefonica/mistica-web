@@ -39,7 +39,7 @@ const useStyles = createUseStyles((theme) => {
             // Needed to reset the default browser margin that adds to p, h1, h2... elements.
             margin: 0,
 
-            [theme.mq.mobile]: {
+            [theme.mq.tabletOrSmaller]: {
                 lineHeight: ({mobileLineHeight}) => pxToRem(mobileLineHeight),
                 fontSize: ({mobileSize}) => pxToRem(mobileSize),
             },

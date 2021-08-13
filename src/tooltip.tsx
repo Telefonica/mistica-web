@@ -115,7 +115,7 @@ type Props = {
 
 const Tooltip: React.FC<Props> = ({children, description, target, title, targetLabel, ...rest}) => {
     const [isVisible, setIsVisible] = React.useState(false);
-    const {isMobile} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
     const ariaId = useAriaId();
     const targetBoundingClientRect = React.useRef({
         top: 0,
@@ -196,7 +196,7 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
                 transform: 'translateY(-100%)',
                 WebKitTransform: 'translateY(-100%)',
                 top: window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
-                left: isMobile
+                left: isTabletOrSmaller
                     ? marginLeftRightMobile
                     : window.pageXOffset +
                       targetBoundingClientRect.current.left +
@@ -205,7 +205,7 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
             },
             bottom: {
                 top: window.pageYOffset + targetBoundingClientRect.current.bottom + distanceToTarget,
-                left: isMobile
+                left: isTabletOrSmaller
                     ? marginLeftRightMobile
                     : window.pageXOffset +
                       targetBoundingClientRect.current.left +
@@ -217,10 +217,10 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
     };
 
     const getPosition = (position: Position = defaultPositionDesktop) =>
-        isMobile && (position === 'left' || position === 'right') ? defaultPositionMobile : position;
+        isTabletOrSmaller && (position === 'left' || position === 'right') ? defaultPositionMobile : position;
 
     const getCustomStylesForMobile = () =>
-        isMobile
+        isTabletOrSmaller
             ? {
                   left:
                       targetBoundingClientRect.current.left +
@@ -230,7 +230,7 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
             : {};
 
     const getWidth = () =>
-        isMobile ? window.innerWidth - marginLeftRightMobile * 2 : getWidthDesktop(rest.width);
+        isTabletOrSmaller ? window.innerWidth - marginLeftRightMobile * 2 : getWidthDesktop(rest.width);
 
     const position = getPosition(rest.position);
     const width = getWidth();

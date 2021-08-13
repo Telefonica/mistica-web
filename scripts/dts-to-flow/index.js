@@ -2,7 +2,7 @@ const {execSync} = require('child_process');
 const {join, relative, dirname} = require('path');
 const {promisify} = require('util');
 const glob = promisify(require('glob'));
-const {writeFileSync, readFileSync, readdirSync} = require('fs');
+const {writeFileSync, readFileSync, readdirSync, existsSync} = require('fs');
 const rimraf = require('rimraf');
 const {beautify} = require('flowgen');
 const cpx = require('cpx');
@@ -151,6 +151,12 @@ const applyOverrides = () => {
 };
 
 const hasFlowDefChanges = () => {
+    if (!existsSync(join(PATH_ROOT, '.git'))) {
+        // Skip this check if not a git repository.
+        // This can happen when building from a downloaded zip from github
+        return false;
+    }
+
     const output = String(execSync('git status --porcelain'));
     if (output) {
         const lines = output

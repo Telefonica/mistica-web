@@ -75,7 +75,7 @@ const useStylesModalDialog = createUseStyles((theme) => ({
             transform: 'scale(.8)',
         },
     },
-    [theme.mq.mobile]: {
+    [theme.mq.tabletOrSmaller]: {
         modalCloseButtonContainer: {
             padding: 16,
         },
@@ -109,7 +109,7 @@ const useDialogStyles = createUseStyles((theme) => ({
         overflowY: 'auto',
     },
 
-    [theme.mq.mobile]: {
+    [theme.mq.tabletOrSmaller]: {
         dialogContainer: {
             minHeight: 298,
             width: 'calc(100vw - 48px)',
@@ -146,7 +146,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
         showCancel = false,
         destructive = false,
     } = props;
-    const {isMobile} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
     const withSecondaryButton = showCancel && !!handleCancel;
     const classes = useDialogStyles({withSecondaryButton});
 
@@ -171,7 +171,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
                     {message}
                 </Text3>
             </div>
-            <Box paddingTop={isMobile ? 24 : 32}>
+            <Box paddingTop={isTabletOrSmaller ? 24 : 32}>
                 <ButtonLayout>
                     {destructive ? (
                         <ButtonDanger tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive

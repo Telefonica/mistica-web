@@ -125,7 +125,7 @@ const Content: React.FC<ContentProps> = ({
     const {colors} = useTheme();
     const numTextLines = [headline, title, subtitle, description].filter(Boolean).length;
     const centerIcon = numTextLines === 1;
-    const {isMobile} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
 
     const renderBadge = () => {
         if (!badge) {
@@ -172,7 +172,7 @@ const Content: React.FC<ContentProps> = ({
                     </Box>
                 )}
                 {description && (
-                    <Box paddingY={isMobile ? 2 : 0}>
+                    <Box paddingY={isTabletOrSmaller ? 2 : 0}>
                         <Text2 wordBreak regular color={colors.textSecondary} truncate={descriptionLinesMax}>
                             {description}
                         </Text2>
