@@ -18,7 +18,6 @@ import GridLayout from './grid-layout';
 import {useSetModalState} from './modal-context-provider';
 
 import type {Props as TouchableProps} from './touchable';
-import {classes} from 'istanbul-lib-coverage';
 
 type LogoProps = {size: number};
 
