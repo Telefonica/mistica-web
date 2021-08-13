@@ -230,20 +230,22 @@ const wait = <T extends any>(
     });
 };
 
-const bindToDoc = (fn: (e: ElementHandle | null, method: string) => ElementHandle) => async (m: string) => {
-    const doc = await getDocument(globalPage);
-    const body = await doc.$('body');
-    const elementHandle = await wait(() => fn(body, m));
+const bindToDoc =
+    (fn: (e: ElementHandle | null, query: string, queryOptions: any) => ElementHandle) =>
+    async (m: string, queryOptions: any) => {
+        const doc = await getDocument(globalPage);
+        const body = await doc.$('body');
+        const elementHandle = await wait(() => fn(body, m, queryOptions));
 
-    const screenshot = async (options: ScreenshotOptions) => {
-        await waitForPaintEnd(elementHandle, {fullPage: false});
-        return watermarkIfNeeded(elementHandle.screenshot(options) as Promise<Buffer>);
+        const screenshot = async (options: ScreenshotOptions) => {
+            await waitForPaintEnd(elementHandle, {fullPage: false});
+            return watermarkIfNeeded(elementHandle.screenshot(options) as Promise<Buffer>);
+        };
+
+        const newElementHandle = Object.create(elementHandle);
+        newElementHandle.screenshot = screenshot;
+        return newElementHandle;
     };
-
-    const newElementHandle = Object.create(elementHandle);
-    newElementHandle.screenshot = screenshot;
-    return newElementHandle;
-};
 
 type Query = (m: string) => Promise<ElementHandle>;
 type AllQuery = (m: string) => Promise<Array<ElementHandle>>;
@@ -255,7 +257,7 @@ type Queries = {
     findAllByTestId: AllQuery;
     findByTitle: Query;
     findAllByTitle: AllQuery;
-    findByRole: Query;
+    findByRole: (role: string, options?: {name?: string | RegExp}) => Promise<ElementHandle>;
     findAllByRole: AllQuery;
     findByPlaceholderText: Query;
     findAllByPlaceholderText: AllQuery;
@@ -291,12 +293,23 @@ const createPageApi = (page: Page): PageApi => {
     return api;
 };
 
-const openPage = async ({url, device, userAgent}: {url: string; device: Device; userAgent?: string}) => {
+const openPage = async ({
+    url,
+    device,
+    userAgent,
+    isDarkMode,
+}: {
+    url: string;
+    device: Device;
+    userAgent?: string;
+    isDarkMode?: boolean;
+}) => {
     const currentUserAgent = userAgent || DEVICES[device].userAgent || (await globalBrowser.userAgent());
     const page = globalPage;
     await page.bringToFront();
     await page.setViewport(DEVICES[device].viewport);
     await page.setUserAgent(`${currentUserAgent} acceptance-test`);
+    await page.emulateMediaFeatures([{name: 'prefers-color-scheme', value: isDarkMode ? 'dark' : 'light'}]);
     await page.goto(url);
 
     return createPageApi(page);
@@ -308,15 +321,17 @@ export const openStoryPage = ({
     skin = 'Movistar',
     userAgent,
     args,
+    isDarkMode,
 }: {
     id: string;
     device?: Device;
     skin?: 'Movistar' | 'Vivo' | 'O2' | 'O2-classic';
     userAgent?: string;
     args?: StoryArgs;
+    isDarkMode?: boolean;
 }): Promise<PageApi> => {
     const url = buildStoryUrl(id, skin, DEVICES[device].platform, args);
-    return openPage({url, device, userAgent});
+    return openPage({url, device, userAgent, isDarkMode});
 };
 
 /**

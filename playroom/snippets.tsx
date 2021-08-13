@@ -948,4 +948,71 @@ export default [
                 buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
             />`,
     },
+    {
+        group: 'Navigation',
+        name: 'MainNavigationBar',
+        code: `
+<MainNavigationBar
+  sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
+    title,
+    onPress: () => setState("index", idx),
+  }))}
+  selectedIndex={getState("index", 0)}
+  right={
+    <NavigationBarActionGroup>
+      <NavigationBarAction
+        onPress={() => {}}
+        aria-label="shopping cart with 2 items"
+      >
+        <Badge value={2}>
+          <IconShoppingCartRegular />
+        </Badge>
+      </NavigationBarAction>
+      <NavigationBarAction onPress={() => {}} aria-label="Open profile">
+        <Circle
+          backgroundImage="https://i.pravatar.cc/100?img=31"
+          size={32}
+        />
+        {isDesktopOrBigger && "María López Serrano"}
+      </NavigationBarAction>
+    </NavigationBarActionGroup>
+  }
+/>`,
+    },
+    {
+        group: 'Navigation',
+        name: 'FunnelNavigationBar',
+        code: `
+<FunnelNavigationBar
+  right={
+    <NavigationBarActionGroup>
+      <NavigationBarAction>
+        <IconQuestionRegular />
+        <TextLink href="/help">Need help?</TextLink>
+      </NavigationBarAction>
+      <NavigationBarAction aria-label="exit" onPress={() => {}}>
+        {isDesktopOrBigger && "Exit"}
+        <IconClose />
+      </NavigationBarAction>
+    </NavigationBarActionGroup>
+  }
+/>`,
+    },
+    {
+        group: 'Navigation',
+        name: 'NavigationBar',
+        code: `
+<NavigationBar
+  onBack={() => {}}
+  title="Settings"
+  right={
+    <NavigationBarActionGroup>
+      <NavigationBarAction aria-label="search" onPress={() => {}}>
+        <IconSearchRegular />
+        {isDesktopOrBigger && "Search"}
+      </NavigationBarAction>
+    </NavigationBarActionGroup>
+  }
+/>`,
+    },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

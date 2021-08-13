@@ -48,6 +48,14 @@ const useStyles = createUseStyles((theme) => ({
             gridColumn: 'span 1',
         },
     },
+    span10: {
+        [theme.mq.desktopOrBigger]: {
+            gridColumn: 'span 10',
+        },
+        [theme.mq.tabletOrSmaller]: {
+            gridColumn: 'span 1',
+        },
+    },
 }));
 
 type PropsChildren = {
@@ -83,7 +91,18 @@ type PropsTemplate6_4 = {
     children?: undefined;
 };
 
-type Props = PropsChildren | PropsTemplate6_6 | PropsTemplate8_4 | PropsTemplate4_6 | PropsTemplate6_4;
+type PropsTemplate10 = {
+    template: '10';
+    children: React.ReactNode;
+};
+
+type Props =
+    | PropsChildren
+    | PropsTemplate6_6
+    | PropsTemplate8_4
+    | PropsTemplate4_6
+    | PropsTemplate6_4
+    | PropsTemplate10;
 
 const GridLayout: React.FC<Props> = (props) => {
     const classes = useStyles();
@@ -123,6 +142,16 @@ const GridLayout: React.FC<Props> = (props) => {
                 <div className={classes.span1} />
                 <div className={classes.span6}>{props.left}</div>
                 <div className={classes.span4}>{props.right}</div>
+                <div className={classes.span1} />
+            </div>
+        );
+    }
+
+    if (props.template === '10') {
+        return (
+            <div className={classes.grid}>
+                <div className={classes.span1} />
+                <div className={classes.span10}>{props.children}</div>
                 <div className={classes.span1} />
             </div>
         );
