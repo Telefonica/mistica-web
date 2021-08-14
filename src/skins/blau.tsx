@@ -1,30 +1,42 @@
 import {applyAlpha} from '../utils/color';
 import {BLAU_SKIN} from './constants';
 
-import type {GetSkin, Skin} from './types';
+import type {GetSkin} from './types';
 
 export const palette = {
-    blauBlue: '#0070BF',
-    blauBlueDark: '#004779',
-    blauBlueLight90: '#1A7EC5',
-    blauBlueLight60: '#66A9D9',
-    blauBlueLight30: '#B3D4EC',
-    blauBlueLight10: '#E5F1F9',
+    blauBlueDark30: '#3B7398',
+    blauBlueDark20: '#0092C1',
     blauBlueLight: '#00B6F1',
+    blauBlueLight60: '#66D3F7',
+    blauBlueLight30: '#B3E9FB',
+    blauBlueLight10: '#F7FDFF',
+    blauBlueDark: '#0068B6',
+    blauBlue: '#0070BF',
+    blauBlue90: '#1A7EC5',
+    blauBlue60: '#66A9D9',
+    blauBlue30: '#B3D4EC',
+    blauBlue10: '#E5F1F9',
 
+    blauPurpleDark: '#570080',
     blauPurple: '#7814B3',
-    blauViolet: '#5F108D',
-    blauLavande: '#AE72D1',
-    blauOrange: '#FFA922',
-    blauGreen: '',
-    blauRed: '',
+    blauPurpleLight60: '#AE72D1',
+    blauPurpleLight10: '#F1E7F7',
+    blauYellowDark: '#F2A120',
+    blauYellow: '#FFA922',
+    blauGreen: '#30D300',
+    blauRedDark: '#E03308',
+    blauRed: '#F64417',
+    blauRedLight60: '#F78C71',
+    blauRedLight20: '#FDDAD1',
 
-    grey1: '#F6F6F6',
-    grey2: '#E6E6E7',
-    grey3: '#BFC0C2',
-    grey4: '#808285',
-    grey5: '#000000',
+    grey1: '#F3F5F6',
+    grey2: '#F2F2F2',
+    grey3: '#EEEEEE',
+    grey4: '#E6E6E7',
+    grey5: '#BFC0C2',
+    grey6: '#808285',
     white: '#FFFFFF',
+    black: '#000000',
 
     // specific for dark mode:
     darkModeBlack: '#191919',
@@ -32,123 +44,121 @@ export const palette = {
 } as const;
 
 export const getBlauSkin: GetSkin = () => {
-    const skin: Skin = {
+    return {
         name: BLAU_SKIN,
         colors: {
             // BACKGROUNDS
             appBarBackground: palette.white,
             background: palette.white,
             backgroundContainer: palette.white,
-            backgroundBrand: palette.blauBlue,
-            backgroundOverlay: applyAlpha(palette.grey5, 0.6),
+            backgroundBrand: palette.blauBlueLight,
+            backgroundOverlay: applyAlpha(palette.blauBlue, 0.75),
             backgroundSkeleton: palette.grey1,
-            backgroundSkeletonInverse: palette.blauBlueDark,
-            navigationBarBackground: palette.blauBlue,
-            backgroundAlternative: palette.grey1,
-            backgroundFeedbackBottom: palette.blauBlue,
+            backgroundSkeletonInverse: palette.white,
+            navigationBarBackground: palette.blauBlueLight,
+            backgroundAlternative: palette.blauBlue10,
+            backgroundFeedbackBottom: palette.blauBlueLight,
 
-            skeletonWave: palette.grey2,
+            skeletonWave: palette.grey3,
 
             // BORDERS
             borderLight: palette.grey1,
-            border: palette.grey2,
-            borderDark: palette.grey5,
+            border: palette.grey4,
+            borderDark: palette.grey6,
             borderSelected: palette.blauBlue,
 
             // BUTTONS
             buttonDangerBackground: palette.blauRed,
-            buttonDangerBackgroundDisabled: palette.blauRed,
-            buttonDangerBackgroundSelected: palette.blauRed,
-            buttonDangerBackgroundHover: palette.blauRed, // web only
+            buttonDangerBackgroundDisabled: palette.blauRedLight60,
+            buttonDangerBackgroundSelected: palette.blauRedDark,
+            buttonDangerBackgroundHover: palette.blauRedDark,
 
-            buttonLinkBackgroundSelected: palette.blauBlueLight10,
+            buttonLinkBackgroundSelected: palette.blauPurpleLight10,
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
 
             buttonPrimaryBackground: palette.blauBlue,
-            buttonPrimaryBackgroundDisabled: palette.blauBlueLight60,
-            buttonPrimaryBackgroundDisabledInverse: palette.blauBlueLight60,
+            buttonPrimaryBackgroundDisabled: palette.grey2,
+            buttonPrimaryBackgroundDisabledInverse: palette.blauBlue60,
             buttonPrimaryBackgroundInverse: palette.white,
             buttonPrimaryBackgroundSelected: palette.blauBlueDark,
-            buttonPrimaryBackgroundHover: palette.blauBlueDark, // web only
-            buttonPrimaryBackgroundSelectedInverse: palette.blauBlueLight60,
+            buttonPrimaryBackgroundHover: palette.blauBlueDark,
+            buttonPrimaryBackgroundSelectedInverse: palette.blauBlue60,
 
             buttonSecondaryBackground: palette.blauBlue,
-            buttonSecondaryBackgroundDisabled: palette.blauBlueLight60,
+            buttonSecondaryBackgroundDisabled: palette.grey2,
             buttonSecondaryBackgroundSelected: palette.blauBlueDark,
-            buttonSecondaryBorderDisabledInverse: palette.blauBlueLight60,
+            buttonSecondaryBorderDisabledInverse: palette.grey4,
             buttonSecondaryBorderInverse: palette.white,
-            buttonSecondaryBorderSelectedInverse: palette.blauBlueLight60,
+            buttonSecondaryBorderSelectedInverse: palette.blauBlue60,
 
             textButtonPrimary: palette.white,
-            textButtonPrimaryDisabled: palette.white,
+            textButtonPrimaryDisabled: palette.grey4,
             textButtonPrimaryInverse: palette.blauBlue,
-            textButtonPrimaryInverseDisabled: palette.blauBlueLight30,
+            textButtonPrimaryInverseDisabled: palette.grey4,
             textButtonPrimaryInverseSelected: palette.blauBlue,
 
-            textButtonSecondary: palette.blauBlue,
-            textButtonSecondaryDisabled: palette.blauBlueLight60,
+            textButtonSecondary: palette.blauYellow,
+            textButtonSecondaryDisabled: palette.grey4,
             textButtonSecondarySelected: palette.blauBlueDark,
             textButtonSecondaryInverse: palette.white,
-            textButtonSecondaryInverseDisabled: palette.blauBlueLight60,
+            textButtonSecondaryInverseDisabled: palette.grey4,
             textButtonSecondaryInverseSelected: palette.white,
 
-            textLink: palette.blauBlue,
+            textLink: palette.blauPurple,
             textLinkInverse: palette.white,
             textLinkDanger: palette.blauRed,
-            textLinkDangerDisabled: palette.blauRed,
-            textLinkDisabled: palette.blauBlueLight60,
-            textLinkSnackbar: palette.blauBlueLight60,
+            textLinkDangerDisabled: palette.blauRedLight20,
+            textLinkDisabled: palette.grey4,
+            textLinkSnackbar: palette.blauPurpleLight60,
 
             // CONTROLS
-            control: palette.grey3,
+            control: palette.grey4,
             controlActivated: palette.blauBlue,
             controlError: palette.blauRed,
-            loadingBar: palette.blauBlueLight60,
+            loadingBar: palette.blauBlue,
             loadingBarBackground: palette.blauBlueDark,
-            loadingBarBackgroundInverse: palette.blauBlueDark,
-            loadingBarInverse: palette.blauBlueLight60,
 
-            toggleAndroidInactive: palette.grey2, // web only
-            toggleAndroidBackgroundActive: palette.blauBlueLight30, // web only
-            iosControlKnob: palette.white, // web only
+            toggleAndroidInactive: palette.grey2,
+            toggleAndroidBackgroundActive: palette.grey2,
+            iosControlKnob: palette.white,
 
             // DIVIDERS
             divider: palette.grey2,
-            dividerInverse: palette.blauBlueDark,
+            dividerInverse: applyAlpha(palette.white, 0.2),
             navigationBarDivider: palette.blauBlue,
 
             // FEEDBACKS
-            badge: palette.blauRed,
+            badge: palette.blauRedDark,
             feedbackErrorBackground: palette.blauRed,
-            feedbackInfoBackground: palette.grey5,
+            feedbackInfoBackground: palette.black,
 
             // GLOBAL
-            brand: palette.blauBlue,
-            brandDark: palette.blauBlueDark,
+            brand: palette.blauBlueLight,
+            brandDark: palette.blauBlue,
             inverse: palette.white,
-            neutralHigh: palette.grey5,
-            neutralMedium: palette.grey3,
-            neutralLow: palette.grey1,
-            promo: palette.blauLavande,
-            highlight: palette.blauViolet,
+            neutralHigh: palette.black,
+            neutralMedium: palette.grey6,
+            neutralLow: palette.grey4,
 
-            textPrimary: palette.grey5,
+            textPrimary: palette.black,
             textPrimaryInverse: palette.white,
-            textSecondary: palette.grey4,
+            textSecondary: palette.grey6,
             textSecondaryInverse: palette.white,
-            textDisabled: palette.grey3,
+            textDisabled: palette.grey4,
             textAmount: palette.blauBlue,
 
             // STATES
             error: palette.blauRed,
-            success: palette.blauBlue,
-            warning: palette.blauOrange,
+            success: palette.blauGreen,
+            warning: palette.blauYellow,
+            promo: palette.blauPurple,
+            highlight: palette.blauBlueLight,
 
             // BARS TEXTS
             textNavigationBarPrimary: palette.white,
-            textNavigationBarSecondary: palette.blauBlueLight30,
-            textNavigationSearchBarHint: palette.blauBlueLight30, // iOS
-            textNavigationSearchBarText: palette.white, // iOS
+            textNavigationBarSecondary: palette.grey1,
+            textNavigationSearchBarHint: palette.grey1,
+            textNavigationSearchBarText: palette.white,
             textAppBar: palette.grey4,
             textAppBarSelected: palette.blauBlue,
         },
@@ -201,8 +211,6 @@ export const getBlauSkin: GetSkin = () => {
             controlActivated: palette.blauBlue,
             loadingBar: palette.blauBlue,
             loadingBarBackground: applyAlpha(palette.white, 0.05),
-            loadingBarBackgroundInverse: palette.blauBlueDark,
-            loadingBarInverse: palette.blauBlueLight60,
             toggleAndroidInactive: palette.grey4, // web only
             toggleAndroidBackgroundActive: palette.blauBlueLight30, // web only
             iosControlKnob: palette.grey2, // web only
@@ -228,6 +236,4 @@ export const getBlauSkin: GetSkin = () => {
             textAppBarSelected: palette.grey2,
         },
     };
-
-    return skin;
 };
