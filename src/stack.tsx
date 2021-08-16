@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import classnames from 'classnames';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
-import {getPrefixedDataAttributes} from './utils/dom';
 
 const useStyles = createUseStyles(() => ({
     marginStack: {
