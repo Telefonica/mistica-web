@@ -111,7 +111,7 @@ export const Default: StoryComponent<Args> = ({
     };
 
     const list = (
-        <RowList data-testid="row-list">
+        <RowList dataAttributes={{testid: 'row-list'}}>
             <Row
                 icon={iconSize !== 'Without icon' ? <AvatarPlaceholder size="100%" /> : undefined}
                 iconSize={iconSize === '40' ? 40 : 24}

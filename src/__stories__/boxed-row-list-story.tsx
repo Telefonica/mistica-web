@@ -111,7 +111,7 @@ export const Default: StoryComponent<Args> = ({
     };
 
     const list = (
-        <BoxedRowList data-testid="row-list">
+        <BoxedRowList dataAttributes={{testid: 'boxed-row-list'}}>
             <BoxedRow
                 icon={iconSize !== 'Without icon' ? <AvatarPlaceholder size="100%" /> : undefined}
                 iconSize={iconSize === '40' ? 40 : 24}
