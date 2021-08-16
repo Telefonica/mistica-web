@@ -6,7 +6,7 @@ import {Text3, Text2, Text1} from './text';
 import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
-import {useTheme, useScreenSize} from './hooks';
+import {useTheme} from './hooks';
 import {useIsInverseVariant} from './theme-variant-context';
 import IconChevron from './icons/icon-chevron';
 import Switch from './switch-component';
@@ -14,8 +14,9 @@ import RadioButton from './radio-button';
 import Checkbox from './checkbox';
 import {Boxed} from './boxed';
 import Divider from './divider';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {TrackingEvent} from './utils/types';
+import type {DataAttributes, TrackingEvent} from './utils/types';
 
 const useStyles = createUseStyles(({colors}) => ({
     rowContent: {
@@ -46,17 +47,11 @@ const useStyles = createUseStyles(({colors}) => ({
     icon: {
         display: 'flex',
         alignItems: 'center',
-
+        flexShrink: 0,
         '& img': {
             display: 'flex',
             width: '100%',
         },
-    },
-    rowBody: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        flex: 1,
     },
     center: {
         display: 'flex',
@@ -66,6 +61,7 @@ const useStyles = createUseStyles(({colors}) => ({
         justifyContent: 'center',
         minWidth: 16,
         height: '100%',
+        flexShrink: 0,
     },
     control: {
         marginLeft: 16,
@@ -94,10 +90,11 @@ interface CommonProps {
     subtitleLinesMax?: number;
     description?: string | null;
     descriptionLinesMax?: number;
-    icon?: React.ReactElement<any> | string | null;
+    icon?: React.ReactNode;
     iconSize?: 24 | 40;
     badge?: boolean | number;
     role?: string;
+    extra?: React.ReactNode;
 }
 
 interface ContentProps extends CommonProps {
@@ -119,13 +116,13 @@ const Content: React.FC<ContentProps> = ({
     type = 'basic',
     badge,
     right,
+    extra,
 }) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
     const {colors} = useTheme();
     const numTextLines = [headline, title, subtitle, description].filter(Boolean).length;
     const centerIcon = numTextLines === 1;
-    const {isTabletOrSmaller} = useScreenSize();
 
     const renderBadge = () => {
         if (!badge) {
@@ -153,31 +150,35 @@ const Content: React.FC<ContentProps> = ({
                     </div>
                 </Box>
             )}
-            <div className={classes.rowBody}>
-                {headline && (
-                    <Box paddingBottom={8}>
-                        <Text1 wordBreak as="div" regular color={colors.textSecondary}>
+            <div style={{flexGrow: 1}}>
+                <Stack space={4}>
+                    {headline && (
+                        <Text1 wordBreak regular color={colors.textPrimary}>
                             {headline}
                         </Text1>
-                    </Box>
-                )}
-                <Text3 wordBreak regular color={colors.textPrimary} truncate={titleLinesMax}>
-                    {title}
-                </Text3>
-                {subtitle && (
-                    <Box paddingY={2}>
-                        <Text2 wordBreak regular color={colors.textSecondary} truncate={subtitleLinesMax}>
-                            {subtitle}
-                        </Text2>
-                    </Box>
-                )}
-                {description && (
-                    <Box paddingY={isTabletOrSmaller ? 2 : 0}>
-                        <Text2 wordBreak regular color={colors.textSecondary} truncate={descriptionLinesMax}>
-                            {description}
-                        </Text2>
-                    </Box>
-                )}
+                    )}
+                    <Stack space={2}>
+                        <Text3 wordBreak regular color={colors.textPrimary} truncate={titleLinesMax}>
+                            {title}
+                        </Text3>
+                        {subtitle && (
+                            <Text2 wordBreak regular color={colors.textSecondary} truncate={subtitleLinesMax}>
+                                {subtitle}
+                            </Text2>
+                        )}
+                        {description && (
+                            <Text2
+                                wordBreak
+                                regular
+                                color={colors.textSecondary}
+                                truncate={descriptionLinesMax}
+                            >
+                                {description}
+                            </Text2>
+                        )}
+                        {extra}
+                    </Stack>
+                </Stack>
             </div>
             {renderBadge()}
             {type === 'chevron' ? (
@@ -342,6 +343,7 @@ const RowContent = (props: RowContentProps) => {
         descriptionLinesMax,
         badge,
         role,
+        extra,
     } = props;
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
     const controlName = props.switch?.name ?? props.checkbox?.name;
@@ -360,6 +362,7 @@ const RowContent = (props: RowContentProps) => {
             descriptionLinesMax={descriptionLinesMax}
             type={type}
             right={right}
+            extra={extra}
         />
     );
 
@@ -481,10 +484,11 @@ type RowListProps = {
     children: React.ReactNode;
     ariaLabelledby?: string;
     role?: string;
+    dataAttributes?: DataAttributes;
 };
 
-export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role}) => (
-    <div role={role} aria-labelledby={ariaLabelledby}>
+export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role, dataAttributes}) => (
+    <div role={role} aria-labelledby={ariaLabelledby} {...getPrefixedDataAttributes(dataAttributes)}>
         {React.Children.toArray(children)
             .filter(Boolean)
             .map((child, index) => (
@@ -528,10 +532,16 @@ type BoxedRowListProps = {
     children: React.ReactNode;
     ariaLabelledby?: string;
     role?: string;
+    dataAttributes?: DataAttributes;
 };
 
-export const BoxedRowList: React.FC<BoxedRowListProps> = ({children, ariaLabelledby, role}) => (
-    <Stack space={16} role={role} aria-labelledby={ariaLabelledby}>
+export const BoxedRowList: React.FC<BoxedRowListProps> = ({
+    children,
+    ariaLabelledby,
+    role,
+    dataAttributes,
+}) => (
+    <Stack space={16} role={role} aria-labelledby={ariaLabelledby} dataAttributes={dataAttributes}>
         {children}
     </Stack>
 );
