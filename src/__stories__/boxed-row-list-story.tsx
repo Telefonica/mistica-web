@@ -19,10 +19,12 @@ export default {
                 'chevron',
                 'navigates without chevron',
                 'switch',
+                'switch and onPress',
                 'checkbox',
+                'checkbox and onPress',
+                'radio',
                 'custom element',
                 'action with custom element',
-                'radio',
                 'none',
             ],
             control: {type: 'select'},
@@ -68,6 +70,7 @@ export const Default: StoryComponent<Args> = ({
 
     const getControlProps = (index: number) => {
         let controlProps: any = {};
+        const onPress = () => alert('Pressed');
         switch (control) {
             case 'chevron':
                 controlProps = {href: 'https://example.org', newTab: true};
@@ -78,8 +81,20 @@ export const Default: StoryComponent<Args> = ({
             case 'switch':
                 controlProps = {switch: {defaultValue: true, onChange: () => {}}};
                 break;
+            case 'switch and onPress':
+                controlProps = {
+                    switch: {defaultValue: true, onChange: () => {}},
+                    onPress,
+                };
+                break;
             case 'checkbox':
                 controlProps = {checkbox: {defaultValue: true, onChange: () => {}}};
+                break;
+            case 'checkbox and onPress':
+                controlProps = {
+                    checkbox: {defaultValue: true, onChange: () => {}},
+                    onPress,
+                };
                 break;
             case 'custom element':
                 controlProps = {
@@ -92,7 +107,7 @@ export const Default: StoryComponent<Args> = ({
                 break;
             case 'action with custom element':
                 controlProps = {
-                    onPress: () => alert('pressed'),
+                    onPress,
                     right: (
                         <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
                             <div style={{width: 32, height: 32, borderRadius: '50%', background: 'pink'}} />

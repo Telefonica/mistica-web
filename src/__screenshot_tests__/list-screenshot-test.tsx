@@ -2,7 +2,15 @@ import {openStoryPage, screen} from '../test-utils';
 import type {Device} from '../test-utils';
 
 const devices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
-const controls = ['chevron', 'checkbox', 'switch', 'radio', 'custom element'];
+const controls = [
+    'chevron',
+    'checkbox',
+    'checkbox and onPress',
+    'switch',
+    'switch and onPress',
+    'radio',
+    'custom element',
+];
 
 const getCases = () => {
     const cases = [];
