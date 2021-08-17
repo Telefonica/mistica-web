@@ -35,7 +35,11 @@ declare type DataCardProps = {|
   title: string,
   subtitle?: string,
   description: string,
+  /**
+   * @deprecated use extra
+   */
   body?: React.Node,
+  extra?: React.Node,
   button?: React.Element<typeof ButtonPrimary>,
   buttonLink?: React.Element<typeof ButtonLink>,
   /**
