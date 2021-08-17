@@ -36,6 +36,7 @@ const Stack: React.FC<Props> = (props) => {
     const classes = useStyles({space});
 
     const isNumeric = typeof space === 'number';
+
     return (
         <div
             className={classnames(className, isNumeric ? classes.marginStack : classes.flexStack)}

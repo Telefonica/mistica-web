@@ -54,6 +54,12 @@ const useStyles = createUseStyles(({colors}) => ({
             width: '100%',
         },
     },
+    rowBody: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        flex: 1,
+    },
     center: {
         display: 'flex',
         alignItems: 'center',
@@ -151,7 +157,7 @@ const Content: React.FC<ContentProps> = ({
                     </div>
                 </Box>
             )}
-            <div style={{flexGrow: 1}}>
+            <div className={classes.rowBody}>
                 <Stack space={4}>
                     {headline && (
                         <Text1 wordBreak regular color={colors.textPrimary}>
