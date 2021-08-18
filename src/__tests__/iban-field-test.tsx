@@ -53,6 +53,7 @@ test('IbanField', async () => {
     userEvent.click(submitButton);
 
     await waitFor(() => {
+        expect(onValidationErrorsSpy).not.toHaveBeenCalled();
         expect(onSubmitSpy).toHaveBeenCalledTimes(1);
         expect(onSubmitSpy).toHaveBeenCalledWith(
             {
