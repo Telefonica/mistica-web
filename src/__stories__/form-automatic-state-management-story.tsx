@@ -24,7 +24,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components/Forms/Example Automatic',
+    title: 'Components/Forms/Form with automatic state management',
 };
 
 const fakeApiCall = (data: any): Promise<void> =>
@@ -38,7 +38,7 @@ const fakeApiCall = (data: any): Promise<void> =>
 const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 const countryOptions = countriesList.map((text, i) => ({text, value: '' + i}));
 
-export const AutomaticForm: StoryComponent = () => {
+export const Default: StoryComponent = () => {
     const {colors} = useTheme();
     return (
         <Form
@@ -88,3 +88,5 @@ export const AutomaticForm: StoryComponent = () => {
         </Form>
     );
 };
+
+Default.storyName = 'Form with automatic state management';

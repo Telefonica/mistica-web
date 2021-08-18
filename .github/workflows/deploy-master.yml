@@ -12,9 +12,9 @@ jobs:
             - uses: amondnet/vercel-action@master
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }} # needed to allow comments on prs
-                  vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
-                  vercel-org-id: ${{ secrets.ORG_ID}} #Required
-                  vercel-project-id: ${{ secrets.PROJECT_ID}} #Required
+                  vercel-token: ${{ secrets.VERCEL_TOKEN_PLADARIA }} # Required
+                  vercel-org-id: ${{ secrets.ORG_ID_PLADARIA}} #Required
+                  vercel-project-id: ${{ secrets.PROJECT_ID_PLADARIA}} #Required
                   vercel-project-name: mistica-web # Not requried by the docs, but the action fails if not specified. See https://github.com/amondnet/vercel-action/issues/30#issuecomment-678608424
                   vercel-args: '--prod'
                   working-directory: ./
