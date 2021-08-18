@@ -10,9 +10,9 @@ jobs:
               id: vercel-deploy # identifier to reference this step
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }} # needed to allow comments on prs
-                  vercel-token: ${{ secrets.VERCEL_TOKEN }} # required
-                  vercel-org-id: ${{ secrets.ORG_ID}} # required
-                  vercel-project-id: ${{ secrets.PROJECT_ID}} # required
+                  vercel-token: ${{ secrets.VERCEL_TOKEN_PLADARIA }} # required
+                  vercel-org-id: ${{ secrets.ORG_ID_PLADARIA}} # required
+                  vercel-project-id: ${{ secrets.PROJECT_ID_PLADARIA}} # required
                   vercel-project-name: mistica-web # not required by the docs, but the action fails if not specified. See https://github.com/amondnet/vercel-action/issues/30#issuecomment-678608424
                   working-directory: ./
 

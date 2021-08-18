@@ -121,9 +121,9 @@ test('RowList inside Form', async () => {
                 <RadioGroup name="radio">
                     <RowList>
                         <Row title="Checkbox 1" checkbox={{name: 'checkbox1'}} />
-                        <Row title="Checkbox 2" checkbox={{name: 'checkbox2'}} />
+                        <Row title="Checkbox 2" onPress={() => {}} checkbox={{name: 'checkbox2'}} />
                         <Row title="Switch 1" switch={{name: 'switch1'}} />
-                        <Row title="Switch 2" switch={{name: 'switch2'}} />
+                        <Row title="Switch 2" onPress={() => {}} switch={{name: 'switch2'}} />
                         <Row title="Banana" radioValue="banana" />
                         <Row title="Apple" radioValue="apple" />
                     </RowList>

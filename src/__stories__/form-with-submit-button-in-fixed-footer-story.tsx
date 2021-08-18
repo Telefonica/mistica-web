@@ -2,10 +2,10 @@ import * as React from 'react';
 import {Stack, ButtonPrimary, Form, Text2, FixedFooterLayout, Text4, Box} from '..';
 
 export default {
-    title: 'Components/Forms/Example Fixed Footer',
+    title: 'Components/Forms/Form with submit button in fixed footer',
 };
 
-export const FixedFooterForm: StoryComponent = () => {
+export const Default: StoryComponent = () => {
     const [count, setCount] = React.useState(0);
     return (
         <Form onSubmit={() => setCount((count) => count + 1)}>
@@ -27,3 +27,5 @@ export const FixedFooterForm: StoryComponent = () => {
         </Form>
     );
 };
+
+Default.storyName = 'Form with submit button in fixed footer';

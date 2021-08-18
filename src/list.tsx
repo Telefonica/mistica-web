@@ -1,4 +1,8 @@
-// spec: https://www.figma.com/file/Be8QB9onmHunKCCAkIBAVr/Lists-Component-Specs?node-id=0%3A2
+/*
+ * Specs:
+ *   - Structure: https://www.figma.com/file/Be8QB9onmHunKCCAkIBAVr/Lists-Component-Specs?node-id=0%3A2
+ *   - Behavior: https://www.figma.com/file/Be8QB9onmHunKCCAkIBAVr/Lists-Component-Specs?node-id=0%3A608
+ */
 import * as React from 'react';
 import classNames from 'classnames';
 import {createUseStyles} from './jss';
@@ -7,7 +11,7 @@ import {Text3, Text2, Text1} from './text';
 import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
-import {useTheme} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import {useIsInverseVariant} from './theme-variant-context';
 import IconChevron from './icons/icon-chevron';
 import Switch from './switch-component';
@@ -20,10 +24,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import type {DataAttributes, TrackingEvent} from './utils/types';
 
 const useStyles = createUseStyles(({colors}) => ({
-    rowContent: {
-        width: '100%',
-        cursor: 'pointer',
-
+    hover: {
         // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
         // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.
         // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
@@ -33,6 +34,10 @@ const useStyles = createUseStyles(({colors}) => ({
                 background: ({isInverse}) => (isInverse ? 'initial' : colors.backgroundAlternative),
             },
         },
+    },
+    rowContent: {
+        width: '100%',
+        cursor: 'pointer',
     },
     hoverDisabled: {
         cursor: 'initial',
@@ -86,6 +91,24 @@ const useStyles = createUseStyles(({colors}) => ({
         alignItems: 'center',
         height: '100%',
     },
+    dualActionContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    dualActionLeft: {
+        flexGrow: 1,
+        padding: '0 16px',
+    },
+    dualActionRight: {
+        padding: '0 16px',
+        margin: '16px 0',
+        borderLeft: `1px solid ${colors.divider}`,
+        display: 'flex',
+        alignItems: 'center',
+        flexGrow: 0,
+        width: 'auto',
+        lineHeight: 0,
+    },
 }));
 
 interface CommonProps {
@@ -108,6 +131,8 @@ interface ContentProps extends CommonProps {
     isClickable?: boolean;
     type?: 'chevron' | 'basic' | 'custom';
     right?: React.ReactNode;
+    /** This id is to link the title with the related control */
+    labelId?: string;
 }
 
 const Content: React.FC<ContentProps> = ({
@@ -124,6 +149,7 @@ const Content: React.FC<ContentProps> = ({
     badge,
     right,
     extra,
+    labelId,
 }) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
@@ -165,7 +191,13 @@ const Content: React.FC<ContentProps> = ({
                         </Text1>
                     )}
                     <Stack space={2}>
-                        <Text3 wordBreak regular color={colors.textPrimary} truncate={titleLinesMax}>
+                        <Text3
+                            wordBreak
+                            regular
+                            color={colors.textPrimary}
+                            truncate={titleLinesMax}
+                            id={labelId}
+                        >
                             {title}
                         </Text3>
                         {subtitle && (
@@ -224,7 +256,7 @@ interface BasicRowContentProps extends CommonProps {
 
 interface SwitchRowContentProps extends CommonProps {
     href?: undefined;
-    onPress?: undefined;
+    onPress?: () => void;
     to?: undefined;
     right?: undefined;
     checkbox?: undefined;
@@ -236,7 +268,7 @@ interface SwitchRowContentProps extends CommonProps {
 
 interface CheckboxRowContentProps extends CommonProps {
     href?: undefined;
-    onPress?: undefined;
+    onPress?: () => void;
     to?: undefined;
     right?: undefined;
     switch?: undefined;
@@ -336,6 +368,7 @@ const useControlState = ({
 };
 
 const RowContent = (props: RowContentProps) => {
+    const id = useAriaId();
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
     const {
@@ -353,9 +386,16 @@ const RowContent = (props: RowContentProps) => {
         extra,
     } = props;
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
-    const controlName = props.switch?.name ?? props.checkbox?.name;
 
-    const renderContent = ({type, right}: {type: ContentProps['type']; right?: ContentProps['right']}) => (
+    const renderContent = ({
+        type,
+        right,
+        labelId,
+    }: {
+        type: ContentProps['type'];
+        right?: ContentProps['right'];
+        labelId?: string;
+    }) => (
         <Content
             icon={icon}
             iconSize={iconSize}
@@ -370,6 +410,7 @@ const RowContent = (props: RowContentProps) => {
             type={type}
             right={right}
             extra={extra}
+            labelId={labelId}
         />
     );
 
@@ -389,10 +430,15 @@ const RowContent = (props: RowContentProps) => {
         return <Box paddingX={16}>{renderContent({type, right: props.right})}</Box>;
     };
 
-    if (props.onPress) {
+    if (
+        props.onPress &&
+        props.switch === undefined &&
+        props.radioValue === undefined &&
+        props.checkbox === undefined
+    ) {
         return (
             <Touchable
-                className={classes.rowContent}
+                className={classNames(classes.rowContent, classes.hover)}
                 trackingEvent={props.trackingEvent}
                 onPress={props.onPress}
                 role={role}
@@ -405,7 +451,7 @@ const RowContent = (props: RowContentProps) => {
     if (props.to) {
         return (
             <Touchable
-                className={classes.rowContent}
+                className={classNames(classes.rowContent, classes.hover)}
                 trackingEvent={props.trackingEvent}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
@@ -419,7 +465,7 @@ const RowContent = (props: RowContentProps) => {
     if (props.href) {
         return (
             <Touchable
-                className={classes.rowContent}
+                className={classNames(classes.rowContent, classes.hover)}
                 trackingEvent={props.trackingEvent}
                 href={props.href}
                 newTab={props.newTab}
@@ -430,25 +476,40 @@ const RowContent = (props: RowContentProps) => {
         );
     }
 
-    const centered = (el: React.ReactElement<any>) => <div className={classes.centeredControl}>{el}</div>;
-
-    const renderRowWithControl = (Control: React.FC<any>) => (
-        <div className={classes.rowContent}>
-            <Control
-                name={controlName}
-                checked={isChecked}
-                onChange={toggle}
-                render={(control: React.ReactElement) => (
-                    <Box paddingX={16} role={role}>
-                        {renderContent({
-                            type: 'custom',
-                            right: centered(control),
-                        })}
-                    </Box>
-                )}
-            />
-        </div>
-    );
+    const renderRowWithControl = (Control: typeof Switch | typeof Checkbox) => {
+        const name = props.switch?.name ?? props.checkbox?.name ?? id;
+        return props.onPress ? (
+            <div className={classes.dualActionContainer}>
+                <Touchable
+                    onPress={props.onPress}
+                    role={role}
+                    className={classNames(classes.dualActionLeft, classes.hover)}
+                >
+                    {renderContent({type: 'custom'})}
+                </Touchable>
+                <Touchable className={classes.dualActionRight} onPress={toggle}>
+                    <Control name={name} checked={isChecked} />
+                </Touchable>
+            </div>
+        ) : (
+            <div className={classNames(classes.rowContent, classes.hover)}>
+                <Control
+                    name={name}
+                    checked={isChecked}
+                    onChange={toggle}
+                    render={(control: React.ReactElement, labelId) => (
+                        <Box paddingX={16} role={role}>
+                            {renderContent({
+                                labelId,
+                                type: 'custom',
+                                right: <Stack space="around">{control}</Stack>,
+                            })}
+                        </Box>
+                    )}
+                />
+            </div>
+        );
+    };
 
     if (props.switch) {
         return renderRowWithControl(Switch);
@@ -460,14 +521,14 @@ const RowContent = (props: RowContentProps) => {
 
     if (props.radioValue) {
         return (
-            <div className={classes.rowContent} role={role}>
+            <div className={classNames(classes.rowContent, classes.hover)} role={role}>
                 <RadioButton
                     value={props.radioValue}
                     render={(radio) => (
                         <Box paddingX={16}>
                             {renderContent({
                                 type: 'custom',
-                                right: centered(radio),
+                                right: <Stack space="around">{radio}</Stack>,
                             })}
                         </Box>
                     )}
@@ -477,7 +538,11 @@ const RowContent = (props: RowContentProps) => {
     }
 
     return (
-        <Box paddingX={16} className={classNames(classes.rowContent, classes.hoverDisabled)} role={role}>
+        <Box
+            paddingX={16}
+            className={classNames(classNames(classes.rowContent, classes.hover), classes.hoverDisabled)}
+            role={role}
+        >
             {props.right
                 ? renderContent({type: 'custom', right: props.right})
                 : renderContent({type: 'basic'})}
