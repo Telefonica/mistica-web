@@ -17,10 +17,10 @@ import {
 import {getCvvLength} from '../utils/credit-card';
 
 export default {
-    title: 'Components/Forms/Example Manual',
+    title: 'Components/Forms/Example Manual Form',
 };
 
-export const ManualForm: StoryComponent = () => {
+export const Default: StoryComponent = () => {
     const [fruit, setFruit] = React.useState('');
     const [quantity, setQuantity] = React.useState('');
     const [creditCardNumber, setCreditCardNumber] = React.useState('');
@@ -97,3 +97,5 @@ export const ManualForm: StoryComponent = () => {
         </form>
     );
 };
+
+Default.storyName = 'Example Manual Form';

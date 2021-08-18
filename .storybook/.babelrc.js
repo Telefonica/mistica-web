@@ -19,5 +19,9 @@ module.exports = {
             },
         ],
     ],
+    assumptions: {
+        arrayLikeIsIterable: false,
+        iterableIsArray: false,
+    },
     plugins: ['lodash'],
 };

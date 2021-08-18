@@ -43,19 +43,19 @@ const Cards: React.FC<any> = ({activeCard, setActiveCard}) => {
     );
 };
 
-export const CustomValidationForm: StoryComponent = () => {
+export const Default: StoryComponent = () => {
     const [activeCard, setActiveCard] = React.useState(0);
     const [formData, setFormData] = React.useState<any>({});
 
     const handleSubmit = (data: any): Promise<void> =>
         // just a little delay to simulate a network call so you can see the
         // form disabled state and spinner
-        new Promise((resolve) =>
+        new Promise((resolve) => {
             setTimeout(() => {
                 setFormData(data);
                 resolve();
-            }, 1000)
-        );
+            }, 1000);
+        });
 
     const getCardIndexByFieldName = (name: string) => Number(name.split('-')[0]);
 
@@ -80,3 +80,5 @@ export const CustomValidationForm: StoryComponent = () => {
         </Stack>
     );
 };
+
+Default.storyName = 'Example Custom Validator';

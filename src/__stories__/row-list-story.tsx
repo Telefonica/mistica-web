@@ -9,11 +9,7 @@ import {
     useTheme,
     Placeholder,
     Tag,
-    Form,
-    Checkbox,
-    TextField,
 } from '..';
-import {ButtonPrimary} from '../button';
 
 export default {
     title: 'Components/Lists/RowList',
@@ -189,24 +185,17 @@ export const Default: StoryComponent<Args> = ({
         </RowList>
     );
 
-    return (
-        <Form onSubmit={(...v) => alert(JSON.stringify(v))}>
-            {control === 'radio' ? (
-                <RadioGroup
-                    disabled={disableRadioGroup}
-                    name="radio-group"
-                    defaultValue="apple"
-                    data-testid="radio-row-list"
-                >
-                    {list}
-                </RadioGroup>
-            ) : (
-                list
-            )}
-            <Checkbox name="lala">check</Checkbox>
-            <TextField name="text" label="lala" defaultValue="lala" />
-            <ButtonPrimary submit>Submit</ButtonPrimary>
-        </Form>
+    return control === 'radio' ? (
+        <RadioGroup
+            disabled={disableRadioGroup}
+            name="radio-group"
+            defaultValue="apple"
+            data-testid="radio-row-list"
+        >
+            {list}
+        </RadioGroup>
+    ) : (
+        list
     );
 };
 
