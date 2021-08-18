@@ -478,7 +478,6 @@ const RowContent = (props: RowContentProps) => {
 
     const renderRowWithControl = (Control: typeof Switch | typeof Checkbox) => {
         const name = props.switch?.name ?? props.checkbox?.name ?? id;
-        console.log('name', name);
         return props.onPress ? (
             <div className={classes.dualActionContainer}>
                 <Touchable

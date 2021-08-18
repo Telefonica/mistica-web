@@ -24,7 +24,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components/Forms/Example Automatic Form',
+    title: 'Components/Forms/Form with automatic state management',
 };
 
 const fakeApiCall = (data: any): Promise<void> =>
@@ -89,4 +89,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.storyName = 'Example Automatic Form';
+Default.storyName = 'Form with automatic state management';

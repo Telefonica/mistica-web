@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Stack, Touchable, Form, TextField, useForm, ButtonPrimary, Text2} from '..';
 
 export default {
-    title: 'Components/Forms/Example Custom Validator',
+    title: 'Components/Forms/Form with error handler',
 };
 
 type CardProps = {show: boolean; children: React.ReactNode; onPress: any};
@@ -81,4 +81,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.storyName = 'Example Custom Validator';
+Default.storyName = 'Form with error handler';
