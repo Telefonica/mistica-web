@@ -142,7 +142,7 @@ export const dimensions = {
 export const mediaQueriesConfig = {
     tabletMinWidth: 768,
     desktopMinWidth: 1024,
-    largeDesktopMinWidth: 1366,
+    largeDesktopMinWidth: 1368,
     desktopOrTabletMinHeight: 550,
 };
 
