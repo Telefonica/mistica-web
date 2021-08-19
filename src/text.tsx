@@ -105,7 +105,7 @@ export const Text: React.FC<TextProps> = ({
     letterSpacing,
     id,
     role,
-    ...otherProps
+    'aria-level': ariaLevel,
 }) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({
@@ -126,7 +126,7 @@ export const Text: React.FC<TextProps> = ({
         return null;
     }
     const className = classnames(classes.text, {[classes.truncate]: !!truncate});
-    return React.createElement(as, {className, id, role, 'aria-level': otherProps['aria-level']}, children);
+    return React.createElement(as, {className, id, role, 'aria-level': ariaLevel}, children);
 };
 
 interface LightProps extends TextPresetProps {
