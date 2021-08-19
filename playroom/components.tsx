@@ -16,7 +16,6 @@ import {Movistar, Vivo, O2, Telefonica} from './themes';
 import {useOverrideTheme} from './frame-component';
 
 import type {ThemeConfig, ColorScheme, SkinName} from '../src';
-import overscrollColorStory from '../src/__stories__/overscroll-color-story';
 
 export * from '../src';
 
