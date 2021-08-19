@@ -1,3 +1,11 @@
+# [9.14.0](https://github.com/Telefonica/mistica-web/compare/v9.13.0...v9.14.0) (2021-08-19)
+
+
+### Features
+
+* **Rows:** Allow double interactions: onPress + switch/checkbox ([095008d](https://github.com/Telefonica/mistica-web/commit/095008d0cb838100b21684c0c6ff4bff5b414b10))
+* **Rows:** Allow extra content in rows ([ecc3b50](https://github.com/Telefonica/mistica-web/commit/ecc3b50f134205bf11328978412fbe82a63a4347))
+
 # [9.13.0](https://github.com/Telefonica/mistica-web/compare/v9.12.0...v9.13.0) (2021-08-13)
 
 
