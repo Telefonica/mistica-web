@@ -1,3 +1,10 @@
+## [9.14.1](https://github.com/Telefonica/mistica-web/compare/v9.14.0...v9.14.1) (2021-08-20)
+
+
+### Bug Fixes
+
+* **Rows:** Improve accessibility ([#318](https://github.com/Telefonica/mistica-web/issues/318)) ([24bdea5](https://github.com/Telefonica/mistica-web/commit/24bdea55d492f9cc7353d1e01a95ed5663a30938))
+
 # [9.14.0](https://github.com/Telefonica/mistica-web/compare/v9.13.0...v9.14.0) (2021-08-19)
 
 
