@@ -368,7 +368,7 @@ const useControlState = ({
 };
 
 const RowContent = (props: RowContentProps) => {
-    const id = useAriaId();
+    const titleId = useAriaId();
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
     const {
@@ -477,7 +477,7 @@ const RowContent = (props: RowContentProps) => {
     }
 
     const renderRowWithControl = (Control: typeof Switch | typeof Checkbox) => {
-        const name = props.switch?.name ?? props.checkbox?.name ?? id;
+        const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
         return props.onPress ? (
             <div className={classes.dualActionContainer}>
                 <Touchable
@@ -485,10 +485,10 @@ const RowContent = (props: RowContentProps) => {
                     role={role}
                     className={classNames(classes.dualActionLeft, classes.hover)}
                 >
-                    {renderContent({type: 'custom'})}
+                    {renderContent({type: 'custom', labelId: titleId})}
                 </Touchable>
                 <Touchable className={classes.dualActionRight} onPress={toggle}>
-                    <Control name={name} checked={isChecked} />
+                    <Control name={name} checked={isChecked} aria-labelledby={titleId} />
                 </Touchable>
             </div>
         ) : (
@@ -524,6 +524,7 @@ const RowContent = (props: RowContentProps) => {
             <div className={classNames(classes.rowContent, classes.hover)} role={role}>
                 <RadioButton
                     value={props.radioValue}
+                    aria-labelledby={titleId}
                     render={(radio) => (
                         <Box paddingX={16}>
                             {renderContent({
