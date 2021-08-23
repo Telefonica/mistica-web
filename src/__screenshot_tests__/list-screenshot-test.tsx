@@ -32,7 +32,7 @@ test.each(getCases())(
     'Row list - %s %s extra %s badge %s',
     async (device, control, extraContent, withBadge) => {
         await openStoryPage({
-            id: 'components-lists-rowlist--default',
+            id: 'components-lists--row-list-story',
             device: device as Device,
             args: {
                 control,
@@ -42,7 +42,7 @@ test.each(getCases())(
             },
         });
 
-        const list = await screen.findByTestId('row-list');
+        const list = await screen.findByTestId('list');
         const image = await list.screenshot();
         expect(image).toMatchImageSnapshot();
     }
@@ -52,7 +52,7 @@ test.each(getCases())(
     'Boxed row list - %s %s extra %s badge %s',
     async (device, control, extraContent, withBadge) => {
         await openStoryPage({
-            id: 'components-lists-boxedrowlist--default',
+            id: 'components-lists--boxed-row-list-story',
             device: device as Device,
             args: {
                 control,
@@ -62,7 +62,7 @@ test.each(getCases())(
             },
         });
 
-        const list = await screen.findByTestId('boxed-row-list');
+        const list = await screen.findByTestId('list');
         const image = await list.screenshot();
         expect(image).toMatchImageSnapshot();
     }

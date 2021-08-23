@@ -128,7 +128,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
 
     let row = 1;
     const list = (
-        <ListComponent dataAttributes={{testid: 'row-list'}}>
+        <ListComponent dataAttributes={{testid: 'list'}}>
             <RowComponent
                 headline={headline}
                 title={title}
