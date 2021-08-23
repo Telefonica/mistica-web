@@ -1,18 +1,21 @@
 import * as React from 'react';
 import {
-    AvatarPlaceholder,
     Circle,
-    IconAcademicLight,
+    Row,
     BoxedRow,
+    RowList,
     BoxedRowList,
+    RadioGroup,
     useTheme,
     Placeholder,
     Tag,
-    RadioGroup,
+    IconLikeFilled,
+    IconLightningRegular,
+    Image,
 } from '..';
 
 export default {
-    title: 'Components/Lists/BoxedRowList',
+    title: 'Components/Lists',
     argTypes: {
         control: {
             options: [
@@ -29,10 +32,6 @@ export default {
             ],
             control: {type: 'select'},
         },
-        iconSize: {
-            options: ['40', '24', 'Without icon'],
-            control: {type: 'select'},
-        },
     },
 };
 
@@ -42,7 +41,6 @@ type Args = {
     subtitle: string;
     description: string;
     control: string;
-    iconSize: string;
     withBadge: boolean;
     oneLineTitle: boolean;
     oneLineSubtitle: boolean;
@@ -51,13 +49,13 @@ type Args = {
     disableRadioGroup: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({
+const Template: StoryComponent<Args & {boxed?: boolean}> = ({
+    boxed,
     headline,
     title,
     subtitle,
     description,
     control,
-    iconSize,
     withBadge,
     oneLineTitle,
     oneLineSubtitle,
@@ -116,7 +114,7 @@ export const Default: StoryComponent<Args> = ({
                 };
                 break;
             case 'radio':
-                controlProps = {radioValue: ['banana', 'apple', 'orange'][index]};
+                controlProps = {radioValue: 'radio-value-' + index};
                 break;
             case 'none':
             default:
@@ -125,11 +123,13 @@ export const Default: StoryComponent<Args> = ({
         return controlProps;
     };
 
+    const ListComponent = boxed ? BoxedRowList : RowList;
+    const RowComponent = boxed ? BoxedRow : Row;
+
+    let row = 1;
     const list = (
-        <BoxedRowList dataAttributes={{testid: 'boxed-row-list'}}>
-            <BoxedRow
-                icon={iconSize !== 'Without icon' ? <AvatarPlaceholder size="100%" /> : undefined}
-                iconSize={iconSize === '40' ? 40 : 24}
+        <ListComponent dataAttributes={{testid: 'row-list'}}>
+            <RowComponent
                 headline={headline}
                 title={title}
                 subtitle={subtitle}
@@ -139,17 +139,10 @@ export const Default: StoryComponent<Args> = ({
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
-                {...getControlProps(0)}
+                {...getControlProps(row++)}
             />
-            <BoxedRow
-                icon={
-                    iconSize !== 'Without icon' ? (
-                        <Circle backgroundColor={colors.neutralLow} size={iconSize === '40' ? 40 : 24}>
-                            <IconAcademicLight />
-                        </Circle>
-                    ) : undefined
-                }
-                iconSize={iconSize === '40' ? 40 : 24}
+            <RowComponent
+                asset={<IconLikeFilled size={24} />}
                 headline={headline && <Tag color={colors.promo}>{headline}</Tag>}
                 title={title}
                 subtitle={subtitle}
@@ -159,18 +152,14 @@ export const Default: StoryComponent<Args> = ({
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
-                {...getControlProps(1)}
+                {...getControlProps(row++)}
             />
-            <BoxedRow
-                icon={
-                    iconSize !== 'Without icon' ? (
-                        <Circle
-                            size={iconSize === '40' ? 40 : 24}
-                            backgroundImage="https://i.imgur.com/QwNlo5s.png"
-                        />
-                    ) : undefined
+            <RowComponent
+                asset={
+                    <Circle backgroundColor={colors.neutralLow} size={40}>
+                        <IconLightningRegular />
+                    </Circle>
                 }
-                iconSize={iconSize === '40' ? 40 : 24}
                 headline={headline}
                 title={title}
                 subtitle={subtitle}
@@ -180,9 +169,61 @@ export const Default: StoryComponent<Args> = ({
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
-                {...getControlProps(2)}
+                {...getControlProps(row++)}
             />
-        </BoxedRowList>
+            <RowComponent
+                asset={<Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />}
+                headline={headline}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                badge={withBadge ? 22 : undefined}
+                titleLinesMax={oneLineTitle ? 1 : 2}
+                subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                descriptionLinesMax={oneLineDescription ? 1 : 2}
+                extra={extra}
+                {...getControlProps(row++)}
+            />
+            <RowComponent
+                asset={<Image url="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
+                headline={headline}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                badge={withBadge ? 22 : undefined}
+                titleLinesMax={oneLineTitle ? 1 : 2}
+                subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                descriptionLinesMax={oneLineDescription ? 1 : 2}
+                extra={extra}
+                {...getControlProps(row++)}
+            />
+            <RowComponent
+                asset={<Image url="https://i.imgur.com/G8aJDhB.jpeg" width={80} aspectRatio="7:10" />}
+                headline={headline}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                badge={withBadge ? 22 : undefined}
+                titleLinesMax={oneLineTitle ? 1 : 2}
+                subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                descriptionLinesMax={oneLineDescription ? 1 : 2}
+                extra={extra}
+                {...getControlProps(row++)}
+            />
+            <RowComponent
+                asset={<Image url="https://i.imgur.com/0T2IYB2.jpeg" width={80} />}
+                headline={headline}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                badge={withBadge ? 22 : undefined}
+                titleLinesMax={oneLineTitle ? 1 : 2}
+                subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                descriptionLinesMax={oneLineDescription ? 1 : 2}
+                extra={extra}
+                {...getControlProps(row++)}
+            />
+        </ListComponent>
     );
 
     return control === 'radio' ? (
@@ -199,14 +240,12 @@ export const Default: StoryComponent<Args> = ({
     );
 };
 
-Default.storyName = 'BoxedRowList';
-Default.args = {
+const defaultArgs = {
     headline: '',
     title: 'Title',
     subtitle: '',
     description: 'Description',
     control: 'chevron',
-    iconSize: '40',
     withBadge: false,
     oneLineTitle: false,
     oneLineSubtitle: false,
@@ -214,3 +253,11 @@ Default.args = {
     extraContent: false,
     disableRadioGroup: false,
 };
+
+export const RowListStory: StoryComponent<Args> = (args) => <Template {...args} />;
+RowListStory.storyName = 'RowList';
+RowListStory.args = defaultArgs;
+
+export const BoxedRowListStory: StoryComponent<Args> = (args) => <Template boxed {...args} />;
+BoxedRowListStory.storyName = 'BoxedRowList';
+BoxedRowListStory.args = defaultArgs;

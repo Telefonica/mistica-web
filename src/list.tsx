@@ -2,6 +2,7 @@
  * Specs:
  *   - Structure: https://www.figma.com/file/Be8QB9onmHunKCCAkIBAVr/Lists-Component-Specs?node-id=0%3A2
  *   - Behavior: https://www.figma.com/file/Be8QB9onmHunKCCAkIBAVr/Lists-Component-Specs?node-id=0%3A608
+ *   - Assets: https://www.figma.com/file/Be8QB9onmHunKCCAkIBAVr/Lists-Component-Specs?node-id=0%3A1
  */
 import * as React from 'react';
 import classNames from 'classnames';
@@ -50,19 +51,20 @@ const useStyles = createUseStyles(({colors}) => ({
         width: '100%',
         minHeight: 72,
     },
-    icon: {
-        display: 'flex',
-        alignItems: 'center',
+    asset: {
+        // display: 'flex',
+        // alignItems: 'center',
+        // flexShrink: 0,
+        // '& img': {
+        //     display: 'flex',
+        //     width: '100%',
+        // },
         flexShrink: 0,
-        '& img': {
-            display: 'flex',
-            width: '100%',
-        },
+        flexGrow: 0,
     },
     rowBody: {
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
         flex: 1,
     },
     center: {
@@ -120,8 +122,11 @@ interface CommonProps {
     subtitleLinesMax?: number;
     description?: string | null;
     descriptionLinesMax?: number;
+    // @deprecated use asset prop
     icon?: React.ReactNode;
+    // @deprecated this is ignored
     iconSize?: 24 | 40;
+    asset?: React.ReactNode;
     badge?: boolean | number;
     role?: string;
     extra?: React.ReactNode;
@@ -144,8 +149,7 @@ const Content: React.FC<ContentProps> = ({
     subtitleLinesMax,
     description,
     descriptionLinesMax,
-    icon,
-    iconSize = 40,
+    asset,
     type = 'basic',
     badge,
     right,
@@ -155,8 +159,8 @@ const Content: React.FC<ContentProps> = ({
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
     const {colors} = useTheme();
-    const numTextLines = [headline, title, subtitle, description].filter(Boolean).length;
-    const centerIcon = numTextLines === 1;
+    const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
+    const shouldCenter = numTextLines === 1;
 
     const renderBadge = () => {
         if (!badge) {
@@ -173,18 +177,12 @@ const Content: React.FC<ContentProps> = ({
 
     return (
         <Box paddingY={16} className={classes.content}>
-            {icon && (
-                <Box
-                    paddingRight={16}
-                    paddingY={!centerIcon ? 4 : 0}
-                    className={classNames({[classes.center]: centerIcon})}
-                >
-                    <div className={classes.icon} style={{width: iconSize, height: iconSize}}>
-                        {icon}
-                    </div>
+            {asset && (
+                <Box paddingRight={16} className={classNames({[classes.center]: shouldCenter})}>
+                    <div className={classes.asset}>{asset}</div>
                 </Box>
             )}
-            <div className={classes.rowBody}>
+            <div className={classes.rowBody} style={{justifyContent: shouldCenter ? 'center' : 'flex-start'}}>
                 <Stack space={4}>
                     {headline && (
                         <Text1 wordBreak regular color={colors.textPrimary}>
@@ -373,8 +371,7 @@ const RowContent = (props: RowContentProps) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
     const {
-        icon,
-        iconSize,
+        asset = props.icon,
         headline,
         title,
         titleLinesMax,
@@ -399,8 +396,7 @@ const RowContent = (props: RowContentProps) => {
         labelId?: string;
     }) => (
         <Content
-            icon={icon}
-            iconSize={iconSize}
+            asset={asset}
             headline={headline}
             title={title}
             subtitle={subtitle}
