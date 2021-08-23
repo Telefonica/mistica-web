@@ -1,3 +1,10 @@
+# [9.15.0](https://github.com/Telefonica/mistica-web/compare/v9.14.1...v9.15.0) (2021-08-23)
+
+
+### Features
+
+* **Rows:** dataAttributes support ([#319](https://github.com/Telefonica/mistica-web/issues/319)) ([abd6284](https://github.com/Telefonica/mistica-web/commit/abd628483c49654460a67779aaa502922dc40626))
+
 ## [9.14.1](https://github.com/Telefonica/mistica-web/compare/v9.14.0...v9.14.1) (2021-08-20)
 
 
