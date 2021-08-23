@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from "react";
+import type { DataAttributes } from "./utils/types";
 declare type RadioContextType = {
   disabled?: boolean,
   selectedValue?: string | null,
@@ -14,11 +15,13 @@ declare type PropsRender = {
   value: string,
   id?: string,
   render: (radioElement: React.Element<any>, disabled?: boolean) => React.Node,
+  dataAttributes?: DataAttributes,
 };
 declare type PropsChildren = {
   value: string,
   id?: string,
   children?: React.Node,
+  dataAttributes?: DataAttributes,
 };
 declare var RadioButton: React.ComponentType<PropsRender | PropsChildren>;
 declare type RadioGroupProps = {

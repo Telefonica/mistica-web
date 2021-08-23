@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from "react";
+import type { DataAttributes } from "./utils/types";
 declare type RenderProps = {
   name: string,
   defaultChecked?: boolean,
@@ -14,6 +15,7 @@ declare type RenderProps = {
   disabled?: boolean,
   "aria-labelledby"?: string,
   "aria-label"?: string,
+  dataAttributes?: DataAttributes,
 };
 declare type ChildrenProps = {
   name: string,
@@ -25,6 +27,7 @@ declare type ChildrenProps = {
   disabled?: boolean,
   "aria-label"?: string,
   "aria-labelledby"?: string,
+  dataAttributes?: DataAttributes,
 };
 declare var Checkbox: React.ComponentType<RenderProps | ChildrenProps>;
 declare export default typeof Checkbox;

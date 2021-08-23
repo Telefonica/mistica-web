@@ -12,6 +12,9 @@ import classNames from 'classnames';
 import {Text3} from './text';
 import Inline from './inline';
 import {useAriaId} from './hooks';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 const SWITCH_ANIMATION = '0.2s ease-in 0s';
 
@@ -90,6 +93,7 @@ type PropsRender = {
     render: RenderSwitch;
     children?: undefined;
     'aria-labelledby'?: string;
+    dataAttributes?: DataAttributes;
 };
 
 type PropsChildren = {
@@ -101,6 +105,7 @@ type PropsChildren = {
     children?: React.ReactNode;
     render?: undefined;
     'aria-labelledby'?: string;
+    dataAttributes?: DataAttributes;
 };
 
 const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
@@ -168,6 +173,7 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
             className={classNames(classes.container, {[classes.disabled]: disabled})}
             aria-disabled={disabled}
             aria-labelledby={labelId}
+            {...getPrefixedDataAttributes(props.dataAttributes)}
         >
             {props.render ? (
                 <>{props.render(switchEl, labelId)}</>

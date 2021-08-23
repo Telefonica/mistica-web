@@ -7,6 +7,9 @@ import {Text3} from './text';
 import Inline from './inline';
 import classnames from 'classnames';
 import {useTheme} from './hooks';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
     outerCircle: {
@@ -72,6 +75,7 @@ type PropsRender = {
     id?: string;
     render: (radioElement: React.ReactElement<any>, disabled?: boolean) => React.ReactNode;
     children?: undefined;
+    dataAttributes?: DataAttributes;
 };
 
 type PropsChildren = {
@@ -79,9 +83,10 @@ type PropsChildren = {
     id?: string;
     children?: React.ReactNode;
     render?: undefined;
+    dataAttributes?: DataAttributes;
 };
 
-const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, ...rest}) => {
+const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, dataAttributes, ...rest}) => {
     const {disabled, selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
@@ -134,6 +139,7 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, ...rest}
             onClick={disabled ? undefined : () => select(value)}
             onKeyDown={disabled ? undefined : handleKeyDown}
             className={classes.radioButton}
+            {...getPrefixedDataAttributes(dataAttributes)}
         >
             {rest.render ? (
                 rest.render(radio, disabled)
