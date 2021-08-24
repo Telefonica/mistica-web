@@ -125,6 +125,7 @@ interface CommonProps {
     badge?: boolean | number;
     role?: string;
     extra?: React.ReactNode;
+    dataAttributes?: DataAttributes;
 }
 
 interface ContentProps extends CommonProps {
@@ -368,7 +369,7 @@ const useControlState = ({
 };
 
 const RowContent = (props: RowContentProps) => {
-    const id = useAriaId();
+    const titleId = useAriaId();
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
     const {
@@ -384,6 +385,7 @@ const RowContent = (props: RowContentProps) => {
         badge,
         role,
         extra,
+        dataAttributes,
     } = props;
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
@@ -442,6 +444,7 @@ const RowContent = (props: RowContentProps) => {
                 trackingEvent={props.trackingEvent}
                 onPress={props.onPress}
                 role={role}
+                dataAttributes={dataAttributes}
             >
                 {renderTouchableContent(props)}
             </Touchable>
@@ -456,6 +459,7 @@ const RowContent = (props: RowContentProps) => {
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
                 role={role}
+                dataAttributes={dataAttributes}
             >
                 {renderTouchableContent(props)}
             </Touchable>
@@ -470,6 +474,7 @@ const RowContent = (props: RowContentProps) => {
                 href={props.href}
                 newTab={props.newTab}
                 role={role}
+                dataAttributes={dataAttributes}
             >
                 {renderTouchableContent(props)}
             </Touchable>
@@ -477,7 +482,7 @@ const RowContent = (props: RowContentProps) => {
     }
 
     const renderRowWithControl = (Control: typeof Switch | typeof Checkbox) => {
-        const name = props.switch?.name ?? props.checkbox?.name ?? id;
+        const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
         return props.onPress ? (
             <div className={classes.dualActionContainer}>
                 <Touchable
@@ -485,15 +490,20 @@ const RowContent = (props: RowContentProps) => {
                     role={role}
                     className={classNames(classes.dualActionLeft, classes.hover)}
                 >
-                    {renderContent({type: 'custom'})}
+                    {renderContent({type: 'custom', labelId: titleId})}
                 </Touchable>
-                <Touchable className={classes.dualActionRight} onPress={toggle}>
-                    <Control name={name} checked={isChecked} />
+                <Touchable
+                    className={classes.dualActionRight}
+                    onPress={toggle}
+                    dataAttributes={dataAttributes}
+                >
+                    <Control name={name} checked={isChecked} aria-labelledby={titleId} />
                 </Touchable>
             </div>
         ) : (
             <div className={classNames(classes.rowContent, classes.hover)}>
                 <Control
+                    dataAttributes={dataAttributes}
                     name={name}
                     checked={isChecked}
                     onChange={toggle}
@@ -523,7 +533,9 @@ const RowContent = (props: RowContentProps) => {
         return (
             <div className={classNames(classes.rowContent, classes.hover)} role={role}>
                 <RadioButton
+                    dataAttributes={dataAttributes}
                     value={props.radioValue}
+                    aria-labelledby={titleId}
                     render={(radio) => (
                         <Box paddingX={16}>
                             {renderContent({

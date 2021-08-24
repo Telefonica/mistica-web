@@ -15,6 +15,7 @@ declare type CommonProps = {|
   badge?: boolean | number,
   role?: string,
   extra?: React.Node,
+  dataAttributes?: DataAttributes,
 |};
 declare type ControlProps = {
   name?: string,
