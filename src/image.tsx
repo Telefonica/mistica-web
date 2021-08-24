@@ -25,6 +25,7 @@ type Props =
           height?: undefined;
           /** defaults to 1:1 */
           aspectRatio?: AspectRatio;
+          /** defaults to empty string */
           alt?: string;
           children?: void;
       }
@@ -34,6 +35,7 @@ type Props =
           height: number;
           /** defaults to 1:1 */
           aspectRatio?: AspectRatio;
+          /** defaults to empty string */
           alt?: string;
           children?: void;
       };
