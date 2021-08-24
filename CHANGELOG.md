@@ -1,3 +1,10 @@
+# [9.16.0](https://github.com/Telefonica/mistica-web/compare/v9.15.0...v9.16.0) (2021-08-24)
+
+
+### Features
+
+* **Rows:** images with aspect ratio in rows ([#320](https://github.com/Telefonica/mistica-web/issues/320)) ([86be151](https://github.com/Telefonica/mistica-web/commit/86be1512d513f363a52f3e08872d075e43e2765f))
+
 # [9.15.0](https://github.com/Telefonica/mistica-web/compare/v9.14.1...v9.15.0) (2021-08-23)
 
 
