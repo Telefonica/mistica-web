@@ -67,3 +67,20 @@ test.each(getCases())(
         expect(image).toMatchImageSnapshot();
     }
 );
+
+test('Rows with only a Title content are centered', async () => {
+    await openStoryPage({
+        id: 'components-lists--boxed-row-list-story',
+        device: 'MOBILE_IOS',
+        args: {
+            title: 'Title',
+            subtitle: '',
+            headline: '',
+            description: '',
+        },
+    });
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
