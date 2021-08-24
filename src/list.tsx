@@ -52,13 +52,6 @@ const useStyles = createUseStyles(({colors}) => ({
         minHeight: 72,
     },
     asset: {
-        // display: 'flex',
-        // alignItems: 'center',
-        // flexShrink: 0,
-        // '& img': {
-        //     display: 'flex',
-        //     width: '100%',
-        // },
         flexShrink: 0,
         flexGrow: 0,
     },
@@ -122,9 +115,9 @@ interface CommonProps {
     subtitleLinesMax?: number;
     description?: string | null;
     descriptionLinesMax?: number;
-    // @deprecated use asset prop
+    /** @deprecated use asset prop */
     icon?: React.ReactNode;
-    // @deprecated this is ignored
+    /** @deprecated this prop is ignored */
     iconSize?: 24 | 40;
     asset?: React.ReactNode;
     badge?: boolean | number;
