@@ -25,6 +25,7 @@ type Props =
           height?: undefined;
           /** defaults to 1:1 */
           aspectRatio?: AspectRatio;
+          alt?: string;
           children?: void;
       }
     | {
@@ -33,10 +34,11 @@ type Props =
           height: number;
           /** defaults to 1:1 */
           aspectRatio?: AspectRatio;
+          alt?: string;
           children?: void;
       };
 
-const Image: React.FC<Props> = ({url, aspectRatio = '1:1', ...props}) => {
+const Image: React.FC<Props> = ({url, aspectRatio = '1:1', alt = '', ...props}) => {
     const classes = useStyles();
     let width = props.width;
     let height = props.height;
@@ -47,7 +49,7 @@ const Image: React.FC<Props> = ({url, aspectRatio = '1:1', ...props}) => {
         width = props.height * RATIO[aspectRatio];
     }
 
-    return <img src={url} className={classes.image} width={width} height={height} />;
+    return <img src={url} className={classes.image} alt={alt} width={width} height={height} />;
 };
 
 export default Image;
