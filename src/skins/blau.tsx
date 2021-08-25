@@ -116,6 +116,8 @@ export const getBlauSkin: GetSkin = () => {
             controlError: palette.blauRed,
             loadingBar: palette.blauBlue,
             loadingBarBackground: palette.blauBlue10,
+            loadingBarInverse: palette.blauBlue,
+            loadingBarBackgroundInverse: palette.blauBlue10,
 
             toggleAndroidInactive: palette.grey2,
             toggleAndroidBackgroundActive: palette.blauBlue10,
