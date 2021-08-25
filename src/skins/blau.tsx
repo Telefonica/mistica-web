@@ -10,7 +10,7 @@ export const palette = {
     blauBlueLight60: '#66D3F7',
     blauBlueLight30: '#B3E9FB',
     blauBlueLight10: '#F7FDFF',
-    blauBlueDark: '#0068B6',
+    blauBlueDark: '#0065AC',
     blauBlue: '#0070BF',
     blauBlue90: '#1A7EC5',
     blauBlue60: '#66A9D9',
@@ -19,7 +19,7 @@ export const palette = {
 
     blauPurpleDark: '#570080',
     blauPurple: '#7814B3',
-    blauPurpleLight60: '#AE72D1',
+    blauPurpleLight50: '#B280CC',
     blauPurpleLight10: '#F1E7F7',
     blauYellowDark: '#F2A120',
     blauYellow: '#FFA922',
@@ -31,12 +31,11 @@ export const palette = {
 
     grey1: '#F3F5F6',
     grey2: '#F2F2F2',
-    grey3: '#EEEEEE',
-    grey4: '#E6E6E7',
-    grey5: '#BFC0C2',
-    grey6: '#808285',
+    grey3: '#E6E6E7',
+    grey4: '#BFC0C2',
+    grey5: '#808285',
+    grey6: '#000000',
     white: '#FFFFFF',
-    black: '#000000',
 
     // specific for dark mode:
     darkModeBlack: '#191919',
