@@ -10,8 +10,15 @@ declare type CommonProps = {|
   subtitleLinesMax?: number,
   description?: string | null,
   descriptionLinesMax?: number,
+  /**
+   * @deprecated use asset prop
+   */
   icon?: React.Node,
+  /**
+   * @deprecated this prop is ignored
+   */
   iconSize?: 24 | 40,
+  asset?: React.Node,
   badge?: boolean | number,
   role?: string,
   extra?: React.Node,
