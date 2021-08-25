@@ -1,3 +1,9 @@
+/*
+ * Specs:
+ *   - Structure: https://www.figma.com/file/Be8QB9onmHunKCCAkIBAVr/Lists-Component-Specs?node-id=0%3A2
+ *   - Behavior: https://www.figma.com/file/Be8QB9onmHunKCCAkIBAVr/Lists-Component-Specs?node-id=0%3A608
+ *   - Assets: https://www.figma.com/file/Be8QB9onmHunKCCAkIBAVr/Lists-Component-Specs?node-id=0%3A1
+ */
 import * as React from 'react';
 import classNames from 'classnames';
 import {createUseStyles} from './jss';
@@ -6,7 +12,7 @@ import {Text3, Text2, Text1} from './text';
 import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
-import {useTheme, useScreenSize} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import {useIsInverseVariant} from './theme-variant-context';
 import IconChevron from './icons/icon-chevron';
 import Switch from './switch-component';
@@ -14,14 +20,12 @@ import RadioButton from './radio-button';
 import Checkbox from './checkbox';
 import {Boxed} from './boxed';
 import Divider from './divider';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {TrackingEvent} from './utils/types';
+import type {DataAttributes, TrackingEvent} from './utils/types';
 
 const useStyles = createUseStyles(({colors}) => ({
-    rowContent: {
-        width: '100%',
-        cursor: 'pointer',
-
+    hover: {
         // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
         // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.
         // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
@@ -31,6 +35,10 @@ const useStyles = createUseStyles(({colors}) => ({
                 background: ({isInverse}) => (isInverse ? 'initial' : colors.backgroundAlternative),
             },
         },
+    },
+    rowContent: {
+        width: '100%',
+        cursor: 'pointer',
     },
     hoverDisabled: {
         cursor: 'initial',
@@ -43,19 +51,13 @@ const useStyles = createUseStyles(({colors}) => ({
         width: '100%',
         minHeight: 72,
     },
-    icon: {
-        display: 'flex',
-        alignItems: 'center',
-
-        '& img': {
-            display: 'flex',
-            width: '100%',
-        },
+    asset: {
+        flexShrink: 0,
+        flexGrow: 0,
     },
     rowBody: {
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
         flex: 1,
     },
     center: {
@@ -66,6 +68,7 @@ const useStyles = createUseStyles(({colors}) => ({
         justifyContent: 'center',
         minWidth: 16,
         height: '100%',
+        flexShrink: 0,
     },
     control: {
         marginLeft: 16,
@@ -83,6 +86,24 @@ const useStyles = createUseStyles(({colors}) => ({
         alignItems: 'center',
         height: '100%',
     },
+    dualActionContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
+    dualActionLeft: {
+        flexGrow: 1,
+        padding: '0 16px',
+    },
+    dualActionRight: {
+        padding: '0 16px',
+        margin: '16px 0',
+        borderLeft: `1px solid ${colors.divider}`,
+        display: 'flex',
+        alignItems: 'center',
+        flexGrow: 0,
+        width: 'auto',
+        lineHeight: 0,
+    },
 }));
 
 interface CommonProps {
@@ -94,16 +115,23 @@ interface CommonProps {
     subtitleLinesMax?: number;
     description?: string | null;
     descriptionLinesMax?: number;
-    icon?: React.ReactElement<any> | string | null;
+    /** @deprecated use asset prop */
+    icon?: React.ReactNode;
+    /** @deprecated this prop is ignored */
     iconSize?: 24 | 40;
+    asset?: React.ReactNode;
     badge?: boolean | number;
     role?: string;
+    extra?: React.ReactNode;
+    dataAttributes?: DataAttributes;
 }
 
 interface ContentProps extends CommonProps {
     isClickable?: boolean;
     type?: 'chevron' | 'basic' | 'custom';
     right?: React.ReactNode;
+    /** This id is to link the title with the related control */
+    labelId?: string;
 }
 
 const Content: React.FC<ContentProps> = ({
@@ -114,18 +142,18 @@ const Content: React.FC<ContentProps> = ({
     subtitleLinesMax,
     description,
     descriptionLinesMax,
-    icon,
-    iconSize = 40,
+    asset,
     type = 'basic',
     badge,
     right,
+    extra,
+    labelId,
 }) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
     const {colors} = useTheme();
-    const numTextLines = [headline, title, subtitle, description].filter(Boolean).length;
-    const centerIcon = numTextLines === 1;
-    const {isMobile} = useScreenSize();
+    const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
+    const shouldCenter = numTextLines === 1;
 
     const renderBadge = () => {
         if (!badge) {
@@ -142,42 +170,46 @@ const Content: React.FC<ContentProps> = ({
 
     return (
         <Box paddingY={16} className={classes.content}>
-            {icon && (
-                <Box
-                    paddingRight={16}
-                    paddingY={!centerIcon ? 4 : 0}
-                    className={classNames({[classes.center]: centerIcon})}
-                >
-                    <div className={classes.icon} style={{width: iconSize, height: iconSize}}>
-                        {icon}
-                    </div>
+            {asset && (
+                <Box paddingRight={16} className={classNames({[classes.center]: shouldCenter})}>
+                    <div className={classes.asset}>{asset}</div>
                 </Box>
             )}
-            <div className={classes.rowBody}>
-                {headline && (
-                    <Box paddingBottom={8}>
-                        <Text1 wordBreak as="div" regular color={colors.textSecondary}>
+            <div className={classes.rowBody} style={{justifyContent: shouldCenter ? 'center' : 'flex-start'}}>
+                <Stack space={4}>
+                    {headline && (
+                        <Text1 wordBreak regular color={colors.textPrimary}>
                             {headline}
                         </Text1>
-                    </Box>
-                )}
-                <Text3 wordBreak regular color={colors.textPrimary} truncate={titleLinesMax}>
-                    {title}
-                </Text3>
-                {subtitle && (
-                    <Box paddingY={2}>
-                        <Text2 wordBreak regular color={colors.textSecondary} truncate={subtitleLinesMax}>
-                            {subtitle}
-                        </Text2>
-                    </Box>
-                )}
-                {description && (
-                    <Box paddingY={isMobile ? 2 : 0}>
-                        <Text2 wordBreak regular color={colors.textSecondary} truncate={descriptionLinesMax}>
-                            {description}
-                        </Text2>
-                    </Box>
-                )}
+                    )}
+                    <Stack space={2}>
+                        <Text3
+                            wordBreak
+                            regular
+                            color={colors.textPrimary}
+                            truncate={titleLinesMax}
+                            id={labelId}
+                        >
+                            {title}
+                        </Text3>
+                        {subtitle && (
+                            <Text2 wordBreak regular color={colors.textSecondary} truncate={subtitleLinesMax}>
+                                {subtitle}
+                            </Text2>
+                        )}
+                        {description && (
+                            <Text2
+                                wordBreak
+                                regular
+                                color={colors.textSecondary}
+                                truncate={descriptionLinesMax}
+                            >
+                                {description}
+                            </Text2>
+                        )}
+                        {extra}
+                    </Stack>
+                </Stack>
             </div>
             {renderBadge()}
             {type === 'chevron' ? (
@@ -216,7 +248,7 @@ interface BasicRowContentProps extends CommonProps {
 
 interface SwitchRowContentProps extends CommonProps {
     href?: undefined;
-    onPress?: undefined;
+    onPress?: () => void;
     to?: undefined;
     right?: undefined;
     checkbox?: undefined;
@@ -228,7 +260,7 @@ interface SwitchRowContentProps extends CommonProps {
 
 interface CheckboxRowContentProps extends CommonProps {
     href?: undefined;
-    onPress?: undefined;
+    onPress?: () => void;
     to?: undefined;
     right?: undefined;
     switch?: undefined;
@@ -328,11 +360,11 @@ const useControlState = ({
 };
 
 const RowContent = (props: RowContentProps) => {
+    const titleId = useAriaId();
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
     const {
-        icon,
-        iconSize,
+        asset = props.icon,
         headline,
         title,
         titleLinesMax,
@@ -342,14 +374,22 @@ const RowContent = (props: RowContentProps) => {
         descriptionLinesMax,
         badge,
         role,
+        extra,
+        dataAttributes,
     } = props;
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
-    const controlName = props.switch?.name ?? props.checkbox?.name;
 
-    const renderContent = ({type, right}: {type: ContentProps['type']; right?: ContentProps['right']}) => (
+    const renderContent = ({
+        type,
+        right,
+        labelId,
+    }: {
+        type: ContentProps['type'];
+        right?: ContentProps['right'];
+        labelId?: string;
+    }) => (
         <Content
-            icon={icon}
-            iconSize={iconSize}
+            asset={asset}
             headline={headline}
             title={title}
             subtitle={subtitle}
@@ -360,6 +400,8 @@ const RowContent = (props: RowContentProps) => {
             descriptionLinesMax={descriptionLinesMax}
             type={type}
             right={right}
+            extra={extra}
+            labelId={labelId}
         />
     );
 
@@ -379,13 +421,19 @@ const RowContent = (props: RowContentProps) => {
         return <Box paddingX={16}>{renderContent({type, right: props.right})}</Box>;
     };
 
-    if (props.onPress) {
+    if (
+        props.onPress &&
+        props.switch === undefined &&
+        props.radioValue === undefined &&
+        props.checkbox === undefined
+    ) {
         return (
             <Touchable
-                className={classes.rowContent}
+                className={classNames(classes.rowContent, classes.hover)}
                 trackingEvent={props.trackingEvent}
                 onPress={props.onPress}
                 role={role}
+                dataAttributes={dataAttributes}
             >
                 {renderTouchableContent(props)}
             </Touchable>
@@ -395,11 +443,12 @@ const RowContent = (props: RowContentProps) => {
     if (props.to) {
         return (
             <Touchable
-                className={classes.rowContent}
+                className={classNames(classes.rowContent, classes.hover)}
                 trackingEvent={props.trackingEvent}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
                 role={role}
+                dataAttributes={dataAttributes}
             >
                 {renderTouchableContent(props)}
             </Touchable>
@@ -409,36 +458,57 @@ const RowContent = (props: RowContentProps) => {
     if (props.href) {
         return (
             <Touchable
-                className={classes.rowContent}
+                className={classNames(classes.rowContent, classes.hover)}
                 trackingEvent={props.trackingEvent}
                 href={props.href}
                 newTab={props.newTab}
                 role={role}
+                dataAttributes={dataAttributes}
             >
                 {renderTouchableContent(props)}
             </Touchable>
         );
     }
 
-    const centered = (el: React.ReactElement<any>) => <div className={classes.centeredControl}>{el}</div>;
-
-    const renderRowWithControl = (Control: React.FC<any>) => (
-        <div className={classes.rowContent}>
-            <Control
-                name={controlName}
-                checked={isChecked}
-                onChange={toggle}
-                render={(control: React.ReactElement) => (
-                    <Box paddingX={16} role={role}>
-                        {renderContent({
-                            type: 'custom',
-                            right: centered(control),
-                        })}
-                    </Box>
-                )}
-            />
-        </div>
-    );
+    const renderRowWithControl = (Control: typeof Switch | typeof Checkbox) => {
+        const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
+        return props.onPress ? (
+            <div className={classes.dualActionContainer}>
+                <Touchable
+                    onPress={props.onPress}
+                    role={role}
+                    className={classNames(classes.dualActionLeft, classes.hover)}
+                >
+                    {renderContent({type: 'custom', labelId: titleId})}
+                </Touchable>
+                <Touchable
+                    className={classes.dualActionRight}
+                    onPress={toggle}
+                    dataAttributes={dataAttributes}
+                >
+                    <Control name={name} checked={isChecked} aria-labelledby={titleId} />
+                </Touchable>
+            </div>
+        ) : (
+            <div className={classNames(classes.rowContent, classes.hover)}>
+                <Control
+                    dataAttributes={dataAttributes}
+                    name={name}
+                    checked={isChecked}
+                    onChange={toggle}
+                    render={(control: React.ReactElement, labelId) => (
+                        <Box paddingX={16} role={role}>
+                            {renderContent({
+                                labelId,
+                                type: 'custom',
+                                right: <Stack space="around">{control}</Stack>,
+                            })}
+                        </Box>
+                    )}
+                />
+            </div>
+        );
+    };
 
     if (props.switch) {
         return renderRowWithControl(Switch);
@@ -450,14 +520,16 @@ const RowContent = (props: RowContentProps) => {
 
     if (props.radioValue) {
         return (
-            <div className={classes.rowContent} role={role}>
+            <div className={classNames(classes.rowContent, classes.hover)} role={role}>
                 <RadioButton
+                    dataAttributes={dataAttributes}
                     value={props.radioValue}
+                    aria-labelledby={titleId}
                     render={(radio) => (
                         <Box paddingX={16}>
                             {renderContent({
                                 type: 'custom',
-                                right: centered(radio),
+                                right: <Stack space="around">{radio}</Stack>,
                             })}
                         </Box>
                     )}
@@ -467,7 +539,11 @@ const RowContent = (props: RowContentProps) => {
     }
 
     return (
-        <Box paddingX={16} className={classNames(classes.rowContent, classes.hoverDisabled)} role={role}>
+        <Box
+            paddingX={16}
+            className={classNames(classNames(classes.rowContent, classes.hover), classes.hoverDisabled)}
+            role={role}
+        >
             {props.right
                 ? renderContent({type: 'custom', right: props.right})
                 : renderContent({type: 'basic'})}
@@ -481,10 +557,11 @@ type RowListProps = {
     children: React.ReactNode;
     ariaLabelledby?: string;
     role?: string;
+    dataAttributes?: DataAttributes;
 };
 
-export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role}) => (
-    <div role={role} aria-labelledby={ariaLabelledby}>
+export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role, dataAttributes}) => (
+    <div role={role} aria-labelledby={ariaLabelledby} {...getPrefixedDataAttributes(dataAttributes)}>
         {React.Children.toArray(children)
             .filter(Boolean)
             .map((child, index) => (
@@ -528,10 +605,16 @@ type BoxedRowListProps = {
     children: React.ReactNode;
     ariaLabelledby?: string;
     role?: string;
+    dataAttributes?: DataAttributes;
 };
 
-export const BoxedRowList: React.FC<BoxedRowListProps> = ({children, ariaLabelledby, role}) => (
-    <Stack space={16} role={role} aria-labelledby={ariaLabelledby}>
+export const BoxedRowList: React.FC<BoxedRowListProps> = ({
+    children,
+    ariaLabelledby,
+    role,
+    dataAttributes,
+}) => (
+    <Stack space={16} role={role} aria-labelledby={ariaLabelledby} dataAttributes={dataAttributes}>
         {children}
     </Stack>
 );

@@ -195,7 +195,7 @@ test("if a Field is disabled we skip its validation and don't submit its value",
         </ThemeContextProvider>
     );
 
-    await userEvent.type(screen.getByLabelText('password'), '123456');
+    userEvent.type(screen.getByLabelText('password'), '123456');
     userEvent.click(screen.getByText('Send'));
 
     await waitFor(() => {
@@ -218,8 +218,8 @@ test('can listen to form validation errors', async () => {
         </ThemeContextProvider>
     );
 
-    await userEvent.type(screen.getByLabelText('Name'), 'Pepe');
-    await userEvent.type(screen.getByLabelText('Email'), 'invalidemail');
+    userEvent.type(screen.getByLabelText('Name'), 'Pepe');
+    userEvent.type(screen.getByLabelText('Email'), 'invalidemail');
     userEvent.click(screen.getByText('Submit'));
 
     expect(onValidationErrorsSpy).toHaveBeenCalledWith({

@@ -1,3 +1,51 @@
+# [9.16.0](https://github.com/Telefonica/mistica-web/compare/v9.15.0...v9.16.0) (2021-08-24)
+
+
+### Features
+
+* **Rows:** images with aspect ratio in rows ([#320](https://github.com/Telefonica/mistica-web/issues/320)) ([86be151](https://github.com/Telefonica/mistica-web/commit/86be1512d513f363a52f3e08872d075e43e2765f))
+
+# [9.15.0](https://github.com/Telefonica/mistica-web/compare/v9.14.1...v9.15.0) (2021-08-23)
+
+
+### Features
+
+* **Rows:** dataAttributes support ([#319](https://github.com/Telefonica/mistica-web/issues/319)) ([abd6284](https://github.com/Telefonica/mistica-web/commit/abd628483c49654460a67779aaa502922dc40626))
+
+## [9.14.1](https://github.com/Telefonica/mistica-web/compare/v9.14.0...v9.14.1) (2021-08-20)
+
+
+### Bug Fixes
+
+* **Rows:** Improve accessibility ([#318](https://github.com/Telefonica/mistica-web/issues/318)) ([24bdea5](https://github.com/Telefonica/mistica-web/commit/24bdea55d492f9cc7353d1e01a95ed5663a30938))
+
+# [9.14.0](https://github.com/Telefonica/mistica-web/compare/v9.13.0...v9.14.0) (2021-08-19)
+
+
+### Features
+
+* **Rows:** Allow double interactions: onPress + switch/checkbox ([095008d](https://github.com/Telefonica/mistica-web/commit/095008d0cb838100b21684c0c6ff4bff5b414b10))
+* **Rows:** Allow extra content in rows ([ecc3b50](https://github.com/Telefonica/mistica-web/commit/ecc3b50f134205bf11328978412fbe82a63a4347))
+
+# [9.13.0](https://github.com/Telefonica/mistica-web/compare/v9.12.0...v9.13.0) (2021-08-13)
+
+
+### Features
+
+* **Breakpoints:** use mobile styles in tablet breakpoint ([#312](https://github.com/Telefonica/mistica-web/issues/312)) ([919fc12](https://github.com/Telefonica/mistica-web/commit/919fc12b15a1d6eb496011b5d7f03424ee4c18ad))
+
+# [9.12.0](https://github.com/Telefonica/mistica-web/compare/v9.11.0...v9.12.0) (2021-08-12)
+
+
+### Bug Fixes
+
+* **Dialog:** backdrop over fixed footer ([#309](https://github.com/Telefonica/mistica-web/issues/309)) ([156134c](https://github.com/Telefonica/mistica-web/commit/156134c4ba2dc287d7f96c7b22a76889e8e015bd))
+
+
+### Features
+
+* **a11y:** Accessibility improvements in several components ([#305](https://github.com/Telefonica/mistica-web/issues/305)) ([0d10787](https://github.com/Telefonica/mistica-web/commit/0d1078769f01ebd4ddabe387b691342f37f90b88))
+
 # [9.11.0](https://github.com/Telefonica/mistica-web/compare/v9.10.1...v9.11.0) (2021-08-02)
 
 

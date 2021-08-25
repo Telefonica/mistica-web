@@ -68,7 +68,7 @@ test.each`
                     },
                     {ccNum: expect.any(String), ccExp: '11/50', ccCvv: cvv}
                 );
-                expect(onValidationErrorsSpy).toHaveBeenCalledWith({});
+                expect(onValidationErrorsSpy).not.toHaveBeenCalled();
             });
         } else {
             await waitFor(() => {
@@ -122,7 +122,7 @@ test.each`
                     },
                     {ccNum: '4321 4321 4321 4321', ccExp: expirationDate, ccCvv: '123'}
                 );
-                expect(onValidationErrorsSpy).toHaveBeenCalledWith({});
+                expect(onValidationErrorsSpy).not.toHaveBeenCalled();
             });
         } else {
             await waitFor(() => {
@@ -199,7 +199,7 @@ test.each`
                 },
                 {ccNum: expect.any(String), ccExp: '11/50', ccCvv: cvv}
             );
-            expect(onValidationErrorsSpy).toHaveBeenCalledWith({});
+            expect(onValidationErrorsSpy).not.toHaveBeenCalled();
         });
     } else {
         await waitFor(() => {

@@ -1,51 +1,86 @@
-import {openStoryPage, PageApi, screen} from '../test-utils';
+import {openStoryPage, screen} from '../test-utils';
 import type {Device} from '../test-utils';
-import {ElementHandle} from 'puppeteer';
 
-const testDevices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
+const devices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
+const controls = [
+    'chevron',
+    'checkbox',
+    'checkbox and onPress',
+    'switch',
+    'switch and onPress',
+    'radio',
+    'custom element',
+];
 
-const screenshotDifferentControls = async (page: PageApi, list: ElementHandle<Element>) => {
-    await page.select(await screen.findByLabelText('Control type'), 'chevron');
-    expect(await list.screenshot()).toMatchImageSnapshot();
-
-    await page.select(await screen.findByLabelText('Control type'), 'checkbox');
-    const checkboxHandle = (await screen.findAllByRole('checkbox'))[4];
-    await page.click(checkboxHandle);
-    expect(await list.screenshot()).toMatchImageSnapshot();
-
-    await page.select(await screen.findByLabelText('Control type'), 'switch');
-    const switchHandle = (await screen.findAllByRole('switch'))[0];
-    switchHandle.focus(); // no need to click, state is kept from checkbox
-    expect(await list.screenshot()).toMatchImageSnapshot();
-
-    await page.select(await screen.findByLabelText('Control type'), 'custom element');
-    expect(await list.screenshot()).toMatchImageSnapshot();
-
-    await page.select(await screen.findByLabelText('Control type'), 'none');
-    expect(await list.screenshot()).toMatchImageSnapshot();
+const getCases = () => {
+    const cases = [];
+    for (const device of devices) {
+        for (const control of controls) {
+            const extraContent = false;
+            const withBadge = true;
+            cases.push([device, control, extraContent, withBadge]);
+        }
+        for (const extraContent of [true, false]) {
+            const withBadge = false;
+            cases.push([device, 'none', extraContent, withBadge]);
+        }
+    }
+    return cases;
 };
 
-test.each(testDevices)('Row list - %s', async (device) => {
-    const page = await openStoryPage({
-        id: 'components-lists-rowlist--default',
-        device,
+test.each(getCases())(
+    'Row list - %s %s extra %s badge %s',
+    async (device, control, extraContent, withBadge) => {
+        await openStoryPage({
+            id: 'components-lists--row-list-story',
+            device: device as Device,
+            args: {
+                control,
+                extraContent,
+                withBadge,
+                headline: 'Headline',
+            },
+        });
+
+        const list = await screen.findByTestId('list');
+        const image = await list.screenshot();
+        expect(image).toMatchImageSnapshot();
+    }
+);
+
+test.each(getCases())(
+    'Boxed row list - %s %s extra %s badge %s',
+    async (device, control, extraContent, withBadge) => {
+        await openStoryPage({
+            id: 'components-lists--boxed-row-list-story',
+            device: device as Device,
+            args: {
+                control,
+                extraContent,
+                withBadge,
+                headline: 'Headline',
+            },
+        });
+
+        const list = await screen.findByTestId('list');
+        const image = await list.screenshot();
+        expect(image).toMatchImageSnapshot();
+    }
+);
+
+test('Rows with only a Title content are centered', async () => {
+    await openStoryPage({
+        id: 'components-lists--boxed-row-list-story',
+        device: 'MOBILE_IOS',
+        args: {
+            title: 'Title',
+            subtitle: '',
+            headline: '',
+            description: '',
+        },
     });
 
-    const badgeCheckbox = await screen.findByLabelText('With badge');
-    await badgeCheckbox.click();
-
-    const list = await screen.findByTestId('row-list');
-
-    await screenshotDifferentControls(page, list);
-});
-
-test.each(testDevices)('Boxed row list - %s', async (device) => {
-    const page = await openStoryPage({
-        id: 'components-lists-boxedrowlist--default',
-        device,
-    });
-
-    const list = await screen.findByTestId('row-list');
-
-    await screenshotDifferentControls(page, list);
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
 });

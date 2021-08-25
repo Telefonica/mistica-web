@@ -36,10 +36,10 @@ const useStyles = createUseStyles((theme) => ({
     container: {
         display: 'flex',
         flexDirection: 'row',
-        [theme.mq.mobile]: {
+        [theme.mq.tabletOrSmaller]: {
             width: '100%',
         },
-        [theme.mq.tabletOrBigger]: {
+        [theme.mq.desktopOrBigger]: {
             width: ({fullWidth}) => (fullWidth ? '100%' : DEFAULT_WIDTH),
         },
     },

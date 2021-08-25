@@ -1,6 +1,9 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import classnames from 'classnames';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 const useStyles = createUseStyles(() => ({
     inline: {
@@ -38,6 +41,7 @@ type Props = {
     role?: string;
     'aria-labelledby'?: string;
     fullWidth?: boolean;
+    dataAttributes?: DataAttributes;
 };
 
 const Inline: React.FC<Props> = ({
@@ -48,11 +52,17 @@ const Inline: React.FC<Props> = ({
     alignItems = 'stretch',
     'aria-labelledby': ariaLabelledBy,
     fullWidth,
+    dataAttributes,
 }) => {
     const classes = useStyles({space, alignItems, fullWidth: fullWidth || typeof space === 'string'});
 
     return (
-        <div className={classnames(className, classes.inline)} role={role} aria-labelledby={ariaLabelledBy}>
+        <div
+            className={classnames(className, classes.inline)}
+            role={role}
+            aria-labelledby={ariaLabelledBy}
+            {...getPrefixedDataAttributes(dataAttributes)}
+        >
             {React.Children.map(children, (child) => (!!child || child === 0 ? <div>{child}</div> : null))}
         </div>
     );

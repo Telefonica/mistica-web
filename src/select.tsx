@@ -16,10 +16,10 @@ const useStyles = createUseStyles((theme) => ({
         cursor: ({disabled}) => (disabled ? 'auto' : 'pointer'),
         position: 'relative',
         outline: 0,
-        [theme.mq.mobile]: {
+        [theme.mq.tabletOrSmaller]: {
             width: '100%',
         },
-        [theme.mq.tabletOrBigger]: {
+        [theme.mq.desktopOrBigger]: {
             width: ({fullWidth}) => (fullWidth ? '100%' : 'fit-content'),
         },
     },

@@ -6,6 +6,9 @@ import Inline from './inline';
 import {Text3} from './text';
 import {useAriaId, useTheme} from './hooks';
 import classnames from 'classnames';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 const useIconCheckboxStyles = createUseStyles(({colors, isIos}) => ({
     box: {
@@ -77,6 +80,7 @@ type RenderProps = {
     disabled?: boolean;
     'aria-labelledby'?: string;
     'aria-label'?: string;
+    dataAttributes?: DataAttributes;
 };
 
 type ChildrenProps = {
@@ -90,6 +94,7 @@ type ChildrenProps = {
     disabled?: boolean;
     'aria-label'?: string;
     'aria-labelledby'?: string;
+    dataAttributes?: DataAttributes;
 };
 
 const useStyles = createUseStyles(() => ({
@@ -153,6 +158,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : labelId}
             aria-disabled={disabled}
+            {...getPrefixedDataAttributes(props.dataAttributes)}
         >
             {props.render ? (
                 props.render(iconCheckbox, labelId)

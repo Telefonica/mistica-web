@@ -42,9 +42,9 @@ test('DataCard group', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('DataCard with body ', async () => {
+test('DataCard with extra content', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-datacard--with-body',
+        id: 'components-cards-datacard--with-extra-content',
         device: 'MOBILE_IOS',
     });
 
