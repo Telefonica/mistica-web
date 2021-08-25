@@ -1,0 +1,38 @@
+// @flow
+
+import type { GetSkin } from "./types";
+declare export var palette: {
+  +blauBlueDark30: "#3B7398",
+  +blauBlueDark20: "#0092C1",
+  +blauBlueLight: "#00B6F1",
+  +blauBlueLight60: "#66D3F7",
+  +blauBlueLight30: "#B3E9FB",
+  +blauBlueLight10: "#F7FDFF",
+  +blauBlueDark: "#0065AC",
+  +blauBlue: "#0070BF",
+  +blauBlue90: "#1A7EC5",
+  +blauBlue60: "#66A9D9",
+  +blauBlue30: "#B3D4EC",
+  +blauBlue10: "#E5F1F9",
+  +blauPurpleDark: "#570080",
+  +blauPurple: "#7814B3",
+  +blauPurpleLight50: "#B280CC",
+  +blauPurpleLight10: "#F1E7F7",
+  +blauYellowDark: "#F2A120",
+  +blauYellow: "#FFA922",
+  +blauGreen: "#30D300",
+  +blauRedDark: "#E03308",
+  +blauRed: "#F64417",
+  +blauRedLight60: "#F78C71",
+  +blauRedLight20: "#FDDAD1",
+  +grey1: "#F3F5F6",
+  +grey2: "#F2F2F2",
+  +grey3: "#E6E6E7",
+  +grey4: "#BFC0C2",
+  +grey5: "#808285",
+  +grey6: "#000000",
+  +white: "#FFFFFF",
+  +darkModeBlack: "#191919",
+  +darkModeGrey: "#242424",
+};
+declare export var getBlauSkin: GetSkin;
