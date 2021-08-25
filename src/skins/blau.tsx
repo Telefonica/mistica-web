@@ -174,8 +174,10 @@ export const getBlauSkin: GetSkin = () => {
             backgroundAlternative: palette.darkModeGrey,
             backgroundFeedbackBottom: palette.darkModeBlack,
             skeletonWave: palette.grey5,
+
             borderLight: palette.darkModeBlack,
             border: palette.darkModeGrey,
+
             buttonDangerBackgroundDisabled: applyAlpha(palette.white, 0.05),
             buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.05),
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.05),
@@ -192,6 +194,7 @@ export const getBlauSkin: GetSkin = () => {
             buttonSecondaryBorderDisabledInverse: applyAlpha(palette.white, 0.05),
             buttonSecondaryBorderInverse: palette.blauBlue,
             buttonSecondaryBorderSelectedInverse: palette.blauBlueDark,
+
             textButtonPrimary: palette.grey2,
             textButtonPrimaryDisabled: palette.grey5,
             textButtonPrimaryInverse: palette.grey2,
@@ -206,6 +209,7 @@ export const getBlauSkin: GetSkin = () => {
             textLink: palette.blauBlue,
             textLinkInverse: palette.blauBlue,
             textLinkDisabled: palette.grey5,
+
             control: palette.grey5,
             controlActivated: palette.blauBlue,
             loadingBar: palette.blauBlue,
@@ -213,20 +217,24 @@ export const getBlauSkin: GetSkin = () => {
             toggleAndroidInactive: palette.grey4, // web only
             toggleAndroidBackgroundActive: palette.blauBlueLight30, // web only
             iosControlKnob: palette.grey2, // web only
+
             divider: applyAlpha(palette.white, 0.05),
             dividerInverse: applyAlpha(palette.white, 0.05),
             navigationBarDivider: palette.darkModeBlack,
+
             brandDark: palette.grey5,
             inverse: palette.grey2,
             neutralHigh: palette.grey2,
             neutralMedium: palette.grey5,
             neutralLow: palette.grey5,
+
             textPrimary: palette.grey2,
             textPrimaryInverse: palette.grey2,
             textSecondary: palette.grey4,
             textSecondaryInverse: palette.grey4,
             textDisabled: palette.grey5,
             textAmount: palette.blauBlueLight60,
+
             textNavigationBarPrimary: palette.grey2,
             textNavigationBarSecondary: palette.grey4,
             textNavigationSearchBarHint: palette.grey4, // iOS
