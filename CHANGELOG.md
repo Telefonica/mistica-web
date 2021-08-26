@@ -1,3 +1,10 @@
+## [9.16.1](https://github.com/Telefonica/mistica-web/compare/v9.16.0...v9.16.1) (2021-08-26)
+
+
+### Bug Fixes
+
+* **Rows:** add flex container for asset ([#321](https://github.com/Telefonica/mistica-web/issues/321)) ([ee57715](https://github.com/Telefonica/mistica-web/commit/ee57715770dd152f6b8a62286d5356e52d7d9e00))
+
 # [9.16.0](https://github.com/Telefonica/mistica-web/compare/v9.15.0...v9.16.0) (2021-08-24)
 
 
