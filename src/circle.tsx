@@ -7,7 +7,7 @@ const useStyles = createUseStyles(() => ({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: ({backgroundColor}) => backgroundColor,
-        backgroundImage: ({backgroundImage}) => `url(${backgroundImage})`,
+        backgroundImage: ({backgroundImage}) => (backgroundImage ? `url(${backgroundImage})` : 'none'),
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         width: ({size}) => size,

@@ -27,7 +27,9 @@ type CardContentProps = {
     title?: string;
     subtitle?: string;
     description: string;
+    /** @deprecated use extra prop */
     body?: React.ReactNode;
+    extra?: React.ReactNode;
     button?: React.ReactElement<typeof ButtonPrimary>;
     buttonLink?: React.ReactElement<typeof ButtonLink>;
 };
@@ -39,6 +41,7 @@ const CardContent: React.FC<CardContentProps> = ({
     subtitle,
     description,
     body,
+    extra,
     button,
     buttonLink,
 }) => {
@@ -80,7 +83,7 @@ const CardContent: React.FC<CardContentProps> = ({
                         {description}
                     </Text2>
                 </Stack>
-                {body && <div>{body}</div>}
+                {(extra ?? body) && <div>{extra ?? body}</div>}
             </Stack>
             {(button || buttonLink) && (
                 <div className={classes.actions}>
@@ -214,7 +217,9 @@ interface DataCardProps {
     title: string;
     subtitle?: string;
     description: string;
+    /** @deprecated use extra */
     body?: React.ReactNode;
+    extra?: React.ReactNode;
     button?: React.ReactElement<typeof ButtonPrimary>;
     buttonLink?: React.ReactElement<typeof ButtonLink>;
     children?: void;
@@ -230,6 +235,7 @@ export const DataCard: React.FC<DataCardProps> = ({
     subtitle,
     description,
     body,
+    extra,
     button,
     buttonLink,
     dataAttributes,
@@ -245,7 +251,7 @@ export const DataCard: React.FC<DataCardProps> = ({
                     title={title}
                     subtitle={subtitle}
                     description={description}
-                    body={body}
+                    extra={extra ?? body}
                     button={button}
                     buttonLink={buttonLink}
                 />

@@ -120,12 +120,30 @@ test('RowList inside Form', async () => {
             <Form onSubmit={submitSpy}>
                 <RadioGroup name="radio">
                     <RowList>
-                        <Row title="Checkbox 1" checkbox={{name: 'checkbox1'}} />
-                        <Row title="Checkbox 2" checkbox={{name: 'checkbox2'}} />
-                        <Row title="Switch 1" switch={{name: 'switch1'}} />
-                        <Row title="Switch 2" switch={{name: 'switch2'}} />
-                        <Row title="Banana" radioValue="banana" />
-                        <Row title="Apple" radioValue="apple" />
+                        <Row
+                            dataAttributes={{testid: 'check1'}}
+                            title="Checkbox 1"
+                            checkbox={{name: 'checkbox1'}}
+                        />
+                        <Row
+                            dataAttributes={{testid: 'check2'}}
+                            title="Checkbox 2"
+                            onPress={() => {}}
+                            checkbox={{name: 'checkbox2'}}
+                        />
+                        <Row
+                            dataAttributes={{testid: 'switch1'}}
+                            title="Switch 1"
+                            switch={{name: 'switch1'}}
+                        />
+                        <Row
+                            dataAttributes={{testid: 'switch2'}}
+                            title="Switch 2"
+                            onPress={() => {}}
+                            switch={{name: 'switch2'}}
+                        />
+                        <Row dataAttributes={{testid: 'banana'}} title="Banana" radioValue="banana" />
+                        <Row dataAttributes={{testid: 'apple'}} title="Apple" radioValue="apple" />
                     </RowList>
                 </RadioGroup>
                 <ButtonPrimary submit>Submit</ButtonPrimary>
@@ -136,8 +154,14 @@ test('RowList inside Form', async () => {
     fireEvent.click(screen.getByRole('radio', {name: 'Banana'}));
     fireEvent.click(screen.getByRole('checkbox', {name: 'Checkbox 1'}));
     fireEvent.click(screen.getByRole('switch', {name: 'Switch 1'}));
-
     fireEvent.click(screen.getByRole('button', {name: 'Submit'}));
+
+    expect(screen.getByTestId('check1')).toBeChecked();
+    expect(screen.getByTestId('check2')).not.toBeChecked();
+    expect(screen.getByTestId('switch1')).toBeChecked();
+    expect(screen.getByTestId('switch2')).not.toBeChecked();
+    expect(screen.getByTestId('banana')).toBeChecked();
+    expect(screen.getByTestId('apple')).not.toBeChecked();
 
     await waitFor(() => {
         expect(submitSpy).toHaveBeenCalled();

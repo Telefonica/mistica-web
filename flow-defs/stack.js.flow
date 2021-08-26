@@ -1,9 +1,11 @@
 // @flow
 
 import * as React from "react";
+import type { DataAttributes } from "./utils/types";
 declare type Props = {
   space:
     | 0
+    | 2
     | 4
     | 8
     | 12
@@ -23,6 +25,7 @@ declare type Props = {
   className?: string,
   role?: string,
   "aria-labelledby"?: string,
+  dataAttributes?: DataAttributes,
 };
 declare var Stack: React.ComponentType<Props>;
 declare export default typeof Stack;
