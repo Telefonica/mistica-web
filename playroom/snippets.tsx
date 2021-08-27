@@ -689,6 +689,16 @@ const emptyStatesGroup: Array<Snippet> = [
         />`,
     },
     {
+        name: 'EmptyState',
+        code: `
+        <EmptyState
+            largeImageUrl="https://i.imgur.com/yGFKQOy.png"
+            title="Your cart is empty"
+            description="Check our marketplaces and find something for you. Check our marketplaces and find something"
+            button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
+        />`,
+    },
+    {
         name: 'EmptyStateCard',
         code: `
         <EmptyStateCard

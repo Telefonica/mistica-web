@@ -58,6 +58,7 @@ export {default as Divider} from './divider';
 export {default as Menu} from './menu';
 /** @deprecated This component will be removed on the next major mistica release */
 export {default as EmptyStateScreen} from './empty-state-screen';
+export {default as EmptyState} from './empty-state';
 export {default as EmptyStateCard} from './empty-state-card';
 export {default as Callout} from './callout';
 export {default as Image} from './image';
