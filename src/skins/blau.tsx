@@ -20,7 +20,7 @@ export const palette = {
     blauPurpleDark: '#570080',
     blauPurple: '#7814B3',
     blauPurpleLight50: '#B280CC',
-    blauPurpleLight10: '#F1E7F7',
+    blauPurpleLight10: '#F2E8F8',
     blauYellowDark: '#F2A120',
     blauYellow: '#FFA922',
     blauGreen: '#30D300',
@@ -55,7 +55,7 @@ export const getBlauSkin: GetSkin = () => {
             backgroundSkeleton: palette.grey1,
             backgroundSkeletonInverse: palette.white,
             navigationBarBackground: palette.blauBlueLight,
-            backgroundAlternative: palette.blauBlue10,
+            backgroundAlternative: palette.grey2,
             backgroundFeedbackBottom: palette.blauBlueLight,
 
             skeletonWave: palette.grey3,
@@ -124,7 +124,7 @@ export const getBlauSkin: GetSkin = () => {
             // DIVIDERS
             divider: palette.grey2,
             dividerInverse: applyAlpha(palette.white, 0.2),
-            navigationBarDivider: palette.blauBlue,
+            navigationBarDivider: palette.blauBlueLight,
 
             // FEEDBACKS
             badge: palette.blauRedDark,
