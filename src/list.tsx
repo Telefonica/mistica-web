@@ -52,6 +52,7 @@ const useStyles = createUseStyles(({colors}) => ({
         minHeight: 72,
     },
     asset: {
+        display: 'flex',
         flexShrink: 0,
         flexGrow: 0,
     },
