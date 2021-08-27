@@ -679,7 +679,7 @@ const layoutSnippets: Array<Snippet> = [
 
 const emptyStatesGroup: Array<Snippet> = [
     {
-        name: 'EmptyStateScreen',
+        name: 'EmptyStateScreen (deprecated)',
         code: `
         <EmptyStateScreen
             largeImageUrl="https://i.imgur.com/yGFKQOy.png"

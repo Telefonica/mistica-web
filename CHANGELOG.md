@@ -1,3 +1,9 @@
+## Release pending
+
+- EmptyState refactor:
+  - Deprecate `EmptyStateScreen` (will be removed in a future release)
+  - New `EmptyState` component added
+
 # [9.16.0](https://github.com/Telefonica/mistica-web/compare/v9.15.0...v9.16.0) (2021-08-24)
 
 

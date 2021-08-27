@@ -1,3 +1,9 @@
+/*
+!!! IMPORTANT !!!
+Do not add new features here!
+This component is deprecated and will be removed
+*/
+
 import * as React from 'react';
 import Box from './box';
 import {Boxed} from './boxed';
@@ -84,6 +90,15 @@ const EmptyStateScreen: React.FC<Props> = ({
     const classes = useStyles({largeImageUrl, needsButtonLinkAlignment});
     const {isTabletOrSmaller} = useScreenSize();
 
+    React.useEffect(() => {
+        if (process.env.NODE_ENV !== 'production') {
+            console.error(
+                'EmptyStateScreen component is deprecated and will be removed, please use EmptyState component:' +
+                    '\nSee: '
+            );
+        }
+    }, []);
+
     let largeImage, image;
     if (largeImageUrl) {
         largeImage = <img className={classes.mobileImage} alt="" src={largeImageUrl} />;
@@ -134,4 +149,7 @@ const EmptyStateScreen: React.FC<Props> = ({
     );
 };
 
+/**
+ * @deprecated
+ */
 export default EmptyStateScreen;
