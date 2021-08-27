@@ -24,8 +24,5 @@ declare type IconProps = {|
   icon: React.Element<any>,
 |};
 declare type Props = IconProps | ImageProps | LargeImageProps;
-/**
- * @deprecated This component will be removed on the next major mistica release
- */
 declare var EmptyStateScreen: React.ComponentType<Props>;
 declare export default typeof EmptyStateScreen;
