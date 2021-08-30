@@ -45,9 +45,10 @@ export type MenuProps = {
     renderTarget: (props: TargetRenderProps) => React.ReactNode;
     renderMenu: (props: MenuRenderProps) => React.ReactNode;
     children?: void;
+    align?: 'left' | 'right';
 };
 
-const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width}) => {
+const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, align = 'left'}) => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [target, setTarget] = React.useState<HTMLElement | null>(null);
     const [menu, setMenu] = React.useState<HTMLElement | null>(null);
@@ -64,27 +65,29 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width}) => {
         }
 
         const MARGIN_THRESHOLD = 12;
-        const {top: selectTop, width, left, height} = targetRect;
-        const top = selectTop + height;
+        const {top: topTarget, width: widthTarget, left, right, height} = targetRect;
+        const top = topTarget + height;
         const spaceTaken = parseInt(window.getComputedStyle(menu).getPropertyValue('height')) ?? 0;
+
+        const leftAligned = align === 'left' ? left : right - (width ?? widthTarget);
 
         // if it doesn't fit on bottom
         if (top + spaceTaken + MARGIN_THRESHOLD > window.innerHeight) {
             const availableSpaceBottom = window.innerHeight - top;
-            if (selectTop /* this is the available space on top */ > availableSpaceBottom) {
-                const newTop = selectTop - spaceTaken;
+            if (topTarget /* this is the available space on top */ > availableSpaceBottom) {
+                const newTop = topTarget - spaceTaken;
                 setItemsComputedProps({
-                    width,
-                    left,
+                    width: widthTarget,
+                    left: leftAligned,
                     top: Math.max(newTop, MARGIN_THRESHOLD),
-                    maxHeight: selectTop - MARGIN_THRESHOLD,
+                    maxHeight: topTarget - MARGIN_THRESHOLD,
                     transformOrigin: 'center bottom',
                 });
             } else {
                 setItemsComputedProps({
-                    width,
+                    width: widthTarget,
                     top,
-                    left,
+                    left: leftAligned,
                     maxHeight: Math.min(window.innerHeight - top - MARGIN_THRESHOLD, MAX_HEIGHT_DEFAULT),
                     transformOrigin: 'center top',
                 });
@@ -92,9 +95,9 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width}) => {
         } else {
             // if it fits on bottom
             setItemsComputedProps({
-                width,
+                width: widthTarget,
                 top,
-                left,
+                left: leftAligned,
                 maxHeight: Math.min(window.innerHeight - top - MARGIN_THRESHOLD, MAX_HEIGHT_DEFAULT),
                 transformOrigin: 'center top',
             });
@@ -112,7 +115,7 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width}) => {
                 cancelAnimationFrame(requestAnimationFrameId);
             }
         };
-    }, [isMenuOpen, menu, target]);
+    }, [align, isMenuOpen, menu, target, width]);
 
     const classes = useStyles({
         itemsComputedProps,
