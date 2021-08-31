@@ -45,10 +45,10 @@ export type MenuProps = {
     renderTarget: (props: TargetRenderProps) => React.ReactNode;
     renderMenu: (props: MenuRenderProps) => React.ReactNode;
     children?: void;
-    align?: 'left' | 'right';
+    direction?: 'left' | 'right';
 };
 
-const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, align = 'left'}) => {
+const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, direction = 'left'}) => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [target, setTarget] = React.useState<HTMLElement | null>(null);
     const [menu, setMenu] = React.useState<HTMLElement | null>(null);
@@ -69,7 +69,7 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, align = 'le
         const top = topTarget + height;
         const spaceTaken = parseInt(window.getComputedStyle(menu).getPropertyValue('height')) ?? 0;
 
-        const leftAligned = align === 'left' ? left : right - (width ?? widthTarget);
+        const leftDirection = direction === 'left' ? left : right - (width ?? widthTarget);
 
         // if it doesn't fit on bottom
         if (top + spaceTaken + MARGIN_THRESHOLD > window.innerHeight) {
@@ -78,7 +78,7 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, align = 'le
                 const newTop = topTarget - spaceTaken;
                 setItemsComputedProps({
                     width: widthTarget,
-                    left: leftAligned,
+                    left: leftDirection,
                     top: Math.max(newTop, MARGIN_THRESHOLD),
                     maxHeight: topTarget - MARGIN_THRESHOLD,
                     transformOrigin: 'center bottom',
@@ -87,7 +87,7 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, align = 'le
                 setItemsComputedProps({
                     width: widthTarget,
                     top,
-                    left: leftAligned,
+                    left: leftDirection,
                     maxHeight: Math.min(window.innerHeight - top - MARGIN_THRESHOLD, MAX_HEIGHT_DEFAULT),
                     transformOrigin: 'center top',
                 });
@@ -97,7 +97,7 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, align = 'le
             setItemsComputedProps({
                 width: widthTarget,
                 top,
-                left: leftAligned,
+                left: leftDirection,
                 maxHeight: Math.min(window.innerHeight - top - MARGIN_THRESHOLD, MAX_HEIGHT_DEFAULT),
                 transformOrigin: 'center top',
             });
@@ -115,7 +115,7 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, align = 'le
                 cancelAnimationFrame(requestAnimationFrameId);
             }
         };
-    }, [align, isMenuOpen, menu, target, width]);
+    }, [direction, isMenuOpen, menu, target, width]);
 
     const classes = useStyles({
         itemsComputedProps,
