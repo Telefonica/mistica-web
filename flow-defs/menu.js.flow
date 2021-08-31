@@ -15,6 +15,7 @@ export type MenuProps = {
   width?: number,
   renderTarget: (props: TargetRenderProps) => React.Node,
   renderMenu: (props: MenuRenderProps) => React.Node,
+  direction?: "left" | "right",
 };
 declare var Menu: React.ComponentType<MenuProps>;
 declare export default typeof Menu;
