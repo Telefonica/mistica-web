@@ -68,6 +68,7 @@ export {
     NavigationBarAction,
     NavigationBarLogo,
 } from './navigation-bar';
+export {default as Image} from './image';
 
 // Forms
 export {default as Form} from './form';
