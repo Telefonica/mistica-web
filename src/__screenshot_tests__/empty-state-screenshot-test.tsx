@@ -1,37 +1,40 @@
-import {openStoryPage} from '../test-utils';
+import {openStoryPage, screen} from '../test-utils';
 import type {Device} from '../test-utils';
 
 const devices: Array<Device> = ['MOBILE_IOS', 'TABLET', 'DESKTOP'];
 
 test.each(devices)('EmptyState with image', async (device) => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-others-emptystate--with-image',
         device,
     });
 
-    const image = await page.screenshot({fullPage: true});
+    const emptyState = await screen.findByTestId('empty-state-with-image');
+    const image = await emptyState.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });
 
 test.each(devices)('EmptyState with icon', async (device) => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-others-emptystate--with-icon',
         device,
     });
 
-    const image = await page.screenshot({fullPage: true});
+    const emptyState = await screen.findByTestId('empty-state-with-icon');
+    const image = await emptyState.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });
 
 test.each(devices)('EmptyState with small image', async (device) => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-others-emptystate--with-small-image',
         device,
     });
 
-    const image = await page.screenshot({fullPage: true});
+    const emptyState = await screen.findByTestId('empty-state-with-small-image');
+    const image = await emptyState.screenshot();
 
     expect(image).toMatchImageSnapshot();
 });

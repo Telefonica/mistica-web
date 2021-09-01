@@ -5,9 +5,11 @@ import {ButtonPrimary, ButtonSecondary, ButtonLink} from './button';
 import {useScreenSize, useTheme} from './hooks';
 import Stack from './stack';
 import {Text2, Text4, Text6} from './text';
-import ResponsiveLayout from './responsive-layout';
 import {createUseStyles} from './jss';
 import Inline from './inline';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -34,6 +36,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     largeImage: {
         width: '100%',
+        aspectRatio: '16/9',
     },
     smallImage: {
         height: 128,
@@ -50,6 +53,8 @@ interface BaseProps {
     description?: string;
     children?: void;
     'aria-label'?: string;
+    // "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
+    dataAttributes?: DataAttributes;
 }
 
 interface ImageProps extends BaseProps {
@@ -84,6 +89,7 @@ const EmptyState: React.FC<Props> = ({
     imageUrl,
     icon,
     'aria-label': ariaLabel,
+    dataAttributes,
 }) => {
     const {colors} = useTheme();
     const needsButtonLinkAlignment = buttonLink && !button;
@@ -100,7 +106,11 @@ const EmptyState: React.FC<Props> = ({
 
     if (isTabletOrSmaller) {
         return (
-            <section className={classes.container} aria-label={ariaLabel}>
+            <section
+                className={classes.container}
+                aria-label={ariaLabel}
+                {...getPrefixedDataAttributes(dataAttributes)}
+            >
                 <Stack space={24}>
                     {largeImage ?? image ?? icon}
                     <Stack space={16}>
@@ -121,32 +131,30 @@ const EmptyState: React.FC<Props> = ({
     }
 
     return (
-        <ResponsiveLayout>
-            <Boxed>
-                <div className={classes.desktopContainer}>
-                    <div className={classes.desktopContent}>
-                        <Box padding={64}>
-                            <Stack space={24}>
-                                {image ?? icon}
-                                <Stack space={16}>
-                                    <Text6 as="h1">{title}</Text6>
-                                    <Text4 light as="p" color={colors.textSecondary}>
-                                        {description}
-                                    </Text4>
-                                </Stack>
-                                {button && (
-                                    <Inline space={16} alignItems="center">
-                                        {button}
-                                        {buttonLink}
-                                    </Inline>
-                                )}
+        <Boxed dataAttributes={dataAttributes}>
+            <div className={classes.desktopContainer}>
+                <div className={classes.desktopContent}>
+                    <Box padding={64}>
+                        <Stack space={24}>
+                            {image ?? icon}
+                            <Stack space={16}>
+                                <Text6 as="h1">{title}</Text6>
+                                <Text4 light as="p" color={colors.textSecondary}>
+                                    {description}
+                                </Text4>
                             </Stack>
-                        </Box>
-                    </div>
-                    {largeImageUrl && <div className={classes.desktopImage} />}
+                            {button && (
+                                <Inline space={16} alignItems="center">
+                                    {button}
+                                    {buttonLink}
+                                </Inline>
+                            )}
+                        </Stack>
+                    </Box>
                 </div>
-            </Boxed>
-        </ResponsiveLayout>
+                {largeImageUrl && <div className={classes.desktopImage} />}
+            </div>
+        </Boxed>
     );
 };
 

@@ -15,6 +15,7 @@ export const WithImage: StoryComponent = () => (
         description="Check our marketplaces and find something for you. Check our marketplaces and find something"
         button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
         buttonLink={<ButtonLink onPress={() => {}}>More info</ButtonLink>}
+        dataAttributes={{testid: 'empty-state-with-image'}}
     />
 );
 WithImage.storyName = 'With image';
@@ -28,6 +29,7 @@ export const WithIcon: StoryComponent = () => {
             title="Your cart is empty"
             description="Check our marketplaces and find something for you. Check our marketplaces and find something"
             button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
+            dataAttributes={{testid: 'empty-state-with-icon'}}
         />
     );
 };
@@ -39,6 +41,7 @@ export const WithSmallImage: StoryComponent = () => (
         title="Your cart is empty"
         description="Check our marketplaces and find something for you. Check our marketplaces and find something"
         button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
+        dataAttributes={{testid: 'empty-state-with-small-image'}}
     />
 );
 WithSmallImage.storyName = 'With small image';
