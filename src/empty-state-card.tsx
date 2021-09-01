@@ -8,6 +8,7 @@ import {createUseStyles} from './jss';
 import Stack from './stack';
 import {Text2, Text4} from './text';
 
+import type {ButtonProps} from './button';
 import type {DataAttributes} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
@@ -29,7 +30,9 @@ const useStyles = createUseStyles((theme) => ({
 
 interface CommonProps {
     title: string;
-    button?: React.ReactElement<typeof ButtonPrimary> | React.ReactElement<typeof ButtonSecondary>;
+    button?:
+        | React.ReactElement<ButtonProps, typeof ButtonPrimary>
+        | React.ReactElement<ButtonProps, typeof ButtonSecondary>;
     buttonLink?: React.ReactElement<typeof ButtonLink>;
     description?: string;
     children?: void;
@@ -69,7 +72,9 @@ const EmptyStateCard: React.FC<Props> = ({
     if (imageUrl) {
         image = <img className={classes.image} alt="" src={imageUrl} />;
     }
-
+    if (process.env.NODE_ENV !== 'production' && !button?.props?.small) {
+        console.error('button property in EmptyStateCard must be a a small Button. Set small prop to true');
+    }
     return (
         <Boxed dataAttributes={dataAttributes}>
             <Box paddingY={isTabletOrSmaller ? 24 : 40} paddingX={isTabletOrSmaller ? 16 : 40}>
