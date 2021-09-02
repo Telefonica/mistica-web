@@ -41,7 +41,7 @@ test.each`
         const menuCloseImage = await page.screenshot();
         expect(menuCloseImage).toMatchImageSnapshot();
 
-        await page.click(await screen.findByRole('button', {name: 'open navigation menu'}));
+        await page.click(await screen.findByRole('button', {name: 'Abrir menú de navegación'}));
 
         const menuOpenImage = await page.screenshot();
         expect(menuOpenImage).toMatchImageSnapshot();
