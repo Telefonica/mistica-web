@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { ButtonPrimary, ButtonSecondary, ButtonLink } from "./button";
+import type { ButtonProps } from "./button";
 import type { DataAttributes } from "./utils/types";
 declare type BaseProps = {|
   title: string,

@@ -33,7 +33,7 @@ interface CommonProps {
     button?:
         | React.ReactElement<ButtonProps, typeof ButtonPrimary>
         | React.ReactElement<ButtonProps, typeof ButtonSecondary>;
-    buttonLink?: React.ReactElement<typeof ButtonLink>;
+    buttonLink?: React.ReactElement<ButtonProps, typeof ButtonLink>;
     description?: string;
     children?: void;
     'aria-label'?: string;

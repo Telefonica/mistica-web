@@ -9,6 +9,7 @@ import {createUseStyles} from './jss';
 import Inline from './inline';
 import {getPrefixedDataAttributes} from './utils/dom';
 
+import type {ButtonProps} from './button';
 import type {DataAttributes} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
@@ -48,8 +49,10 @@ const useStyles = createUseStyles((theme) => ({
 
 interface BaseProps {
     title: string;
-    button?: React.ReactElement<typeof ButtonPrimary> | React.ReactElement<typeof ButtonSecondary>;
-    buttonLink?: React.ReactElement<typeof ButtonLink>;
+    button?:
+        | React.ReactElement<ButtonProps, typeof ButtonPrimary>
+        | React.ReactElement<ButtonProps, typeof ButtonSecondary>;
+    buttonLink?: React.ReactElement<ButtonProps, typeof ButtonLink>;
     description?: string;
     children?: void;
     'aria-label'?: string;
