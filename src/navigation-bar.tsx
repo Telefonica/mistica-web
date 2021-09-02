@@ -220,6 +220,17 @@ const useStyles = createUseStyles((theme) => {
             padding: '0 8px',
             borderBottom: `2px solid transparent`,
             transition: 'border-color 300ms ease-in-out',
+
+            // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
+            // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.
+            // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
+            // See: https://hover-pointer-media-query.glitch.me/ and https://github.com/mui-org/material-ui/issues/15736
+            '@media (pointer: fine), (pointer: none)': {
+                '&:hover span': {
+                    color: ({isInverse}) =>
+                        isInverse ? theme.colors.textSecondaryInverse : theme.colors.textSecondary,
+                },
+            },
         },
         selectedSection: {
             borderColor: ({isInverse}) => (isInverse ? theme.colors.inverse : theme.colors.controlActivated),
@@ -513,12 +524,39 @@ export const NavigationBarActionGroup: React.FC = ({children}) => {
 
 type NavigationBarActionProps = TouchableProps;
 
-export const NavigationBarAction: React.FC<NavigationBarActionProps> = ({children, ...touchableProps}) => (
-    <Touchable {...touchableProps}>
-        <Inline space={16} alignItems="center">
-            {React.Children.map(children, (child) =>
-                typeof child === 'string' ? <Text2 regular>{child}</Text2> : child
-            )}
-        </Inline>
-    </Touchable>
-);
+const useNavigationBarActionStyles = createUseStyles((theme) => ({
+    touchable: {
+        lineHeight: 0,
+        '& svg': {
+            color: ({isInverse}) => (isInverse ? theme.colors.inverse : theme.colors.neutralHigh),
+        },
+
+        // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
+        // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.
+        // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
+        // See: https://hover-pointer-media-query.glitch.me/ and https://github.com/mui-org/material-ui/issues/15736
+        '@media (pointer: fine), (pointer: none)': {
+            '&:hover span': {
+                color: ({isInverse}) =>
+                    isInverse ? theme.colors.textSecondaryInverse : theme.colors.textSecondary,
+            },
+            '&:hover svg': {
+                color: ({isInverse}) => (isInverse ? theme.colors.inverse : theme.colors.neutralMedium),
+            },
+        },
+    },
+}));
+
+export const NavigationBarAction: React.FC<NavigationBarActionProps> = ({children, ...touchableProps}) => {
+    const isInverse = useIsInverseVariant();
+    const classes = useNavigationBarActionStyles({isInverse});
+    return (
+        <Touchable {...touchableProps} className={classes.touchable}>
+            <Inline space={16} alignItems="center">
+                {React.Children.map(children, (child) =>
+                    typeof child === 'string' ? <Text2 regular>{child}</Text2> : child
+                )}
+            </Inline>
+        </Touchable>
+    );
+};

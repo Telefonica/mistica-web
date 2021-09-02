@@ -908,7 +908,7 @@ const navigationBarSnippets = [
         aria-label="shopping cart with 2 items"
       >
         <Badge value={2}>
-          <IconShoppingCartRegular />
+          <IconShoppingCartRegular color="currentColor" />
         </Badge>
       </NavigationBarAction>
       <NavigationBarAction onPress={() => {}} aria-label="Open profile">
