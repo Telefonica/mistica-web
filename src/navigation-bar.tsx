@@ -294,6 +294,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     isInverse = false,
     topFixed = true,
 }) => {
+    const {texts} = useTheme();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [menuTransitionState, setMenuTransitionState] = React.useState<MenuTransitionState>('closed');
     const menuId = useAriaId();
@@ -329,8 +330,8 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                                                 aria-live="polite"
                                                 aria-label={
                                                     isMenuOpen
-                                                        ? 'close navigation menu'
-                                                        : 'open navigation menu'
+                                                        ? texts.closeNavigationMenu
+                                                        : texts.openNavigationMenu
                                                 }
                                                 aria-expanded={isMenuOpen}
                                                 aria-controls={menuId}
