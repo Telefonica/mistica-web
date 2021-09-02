@@ -123,13 +123,10 @@ const withLayoutDecorator = (Story, context): React.ReactElement => {
     return (
         <>
             <Styles />
-            <div
-                // role main required by accessibility rules
-                role="main"
-                style={{padding: isFullscreen ? 0 : 16}}
-            >
+            {/* role main required by accessibility rules */}
+            <main style={{padding: isFullscreen ? 0 : 16}}>
                 <Story {...context} />
-            </div>
+            </main>
         </>
     );
 };
