@@ -29,8 +29,6 @@ declare type Props = {
   children?: React.Node,
   className?: string,
   role?: string,
-  "data-testid"?: string,
-  "data-qsysid"?: string,
 
   /**
    * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
