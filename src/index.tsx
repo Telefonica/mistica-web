@@ -134,33 +134,6 @@ if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
     }
 }
 
-// @deprecated This icon was renamed to IconImportRegular
-export {default as IconImportarRegular} from './generated/mistica-icons/icon-import-regular';
-// @deprecated This icon was renamed to IconDeviceRegular
-export {default as IconDeviceRegular} from './generated/mistica-icons/icon-team-regular';
-// @deprecated This icon was renamed to IconDeviceFilled
-export {default as IconDeviceFilled} from './generated/mistica-icons/icon-team-filled';
-// @deprecated This icon was renamed to IconDeviceLight
-export {default as IconDeviceLight} from './generated/mistica-icons/icon-team-light';
-// @deprecated This icon was renamed to IconBellAddMoreFilled
-export {default as IconAddMoreAlarmFilled} from './generated/mistica-icons/icon-bell-add-more-filled';
-// @deprecated This icon was renamed to IconBellAddMoreLight
-export {default as IconAddMoreAlarmLight} from './generated/mistica-icons/icon-bell-add-more-light';
-// @deprecated This icon was renamed to IconBellAddMoreRegular
-export {default as IconAddMoreAlarmRegular} from './generated/mistica-icons/icon-bell-add-more-regular';
-// @deprecated This icon was renamed to IconBellOffFilled
-export {default as IconAlarmOffFilled} from './generated/mistica-icons/icon-bell-off-filled';
-// @deprecated This icon was renamed to IconBellOffLight
-export {default as IconAlarmOffLight} from './generated/mistica-icons/icon-bell-off-light';
-// @deprecated This icon was renamed to IconBellOffRegular
-export {default as IconAlarmOffRegular} from './generated/mistica-icons/icon-bell-off-regular';
-// @deprecated This icon was renamed to IconBellOffFilled
-export {default as IconProgramAlarmFilled} from './generated/mistica-icons/icon-bell-program-filled';
-// @deprecated This icon was renamed to IconBellOffLight
-export {default as IconProgramAlarmLight} from './generated/mistica-icons/icon-bell-program-light';
-// @deprecated This icon was renamed to IconBellOffRegular
-export {default as IconProgramAlarmRegular} from './generated/mistica-icons/icon-bell-program-regular';
-
 // Exported this way to facilitate tree-shaking
 export {default as IconAcademicFilled} from './generated/mistica-icons/icon-academic-filled';
 export {default as IconAcademicLight} from './generated/mistica-icons/icon-academic-light';

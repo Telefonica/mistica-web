@@ -11,7 +11,7 @@ import {
     IconCreditCardVisaRegular,
     IconInformationUserRegular,
     IconLockClosedRegular,
-    IconProgramAlarmRegular,
+    IconBellOffRegular,
     IconSupportAgentRegular,
     IconUserAccountRegular,
     Text4,
@@ -40,7 +40,7 @@ export const Default: StoryComponent = () => {
         {
             categoryName: 'Configuration',
             settings: [
-                {title: 'Notifications', icon: <IconProgramAlarmRegular />},
+                {title: 'Notifications', icon: <IconBellOffRegular />},
                 {title: 'FAQs', icon: <IconSupportAgentRegular />},
                 {title: 'About', icon: <IconInformationUserRegular />},
             ],
