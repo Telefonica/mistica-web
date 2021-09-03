@@ -61,8 +61,7 @@ export const Default: StoryComponent = () => {
                                             <Row
                                                 key={setting.title}
                                                 title={setting.title}
-                                                icon={setting.icon}
-                                                iconSize={24}
+                                                asset={setting.icon}
                                                 onPress={() => {
                                                     setSelectedItem(setting.title);
                                                 }}

@@ -40,13 +40,9 @@ interface CommonProps {
     size?: number | string;
     style?: React.CSSProperties;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    /** @deprecated use dataAttributes */
-    'data-testid'?: string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     newTab?: boolean;
-    /** @deprecated use aria-label */
-    label?: string;
     'aria-label'?: string;
 }
 
@@ -102,7 +98,6 @@ const IconButton: React.FC<Props> = (props) => {
             ...props.style,
         },
         trackingEvent: props.trackingEvent,
-        'data-testid': props['data-testid'],
         ...getPrefixedDataAttributes(props.dataAttributes),
     };
 
@@ -112,7 +107,7 @@ const IconButton: React.FC<Props> = (props) => {
                 {...commonProps}
                 href={props.href}
                 newTab={props.newTab}
-                aria-label={props['aria-label'] ?? props.label}
+                aria-label={props['aria-label']}
             >
                 {!icon && React.Children.only(children)}
             </Touchable>
@@ -125,7 +120,7 @@ const IconButton: React.FC<Props> = (props) => {
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
                 replace={props.replace}
-                aria-label={props['aria-label'] ?? props.label}
+                aria-label={props['aria-label']}
             >
                 {!icon && React.Children.only(children)}
             </Touchable>
@@ -134,11 +129,7 @@ const IconButton: React.FC<Props> = (props) => {
 
     if (props.onPress) {
         return (
-            <Touchable
-                {...commonProps}
-                onPress={props.onPress}
-                aria-label={props['aria-label'] ?? props.label}
-            >
+            <Touchable {...commonProps} onPress={props.onPress} aria-label={props['aria-label']}>
                 {!icon && React.Children.only(children)}
             </Touchable>
         );
