@@ -23,13 +23,13 @@ type Args = {
 };
 
 export const Default: StoryComponent<Args> = ({actions, title, description, asset}) => {
-    const {isMobile} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
     const {colors} = useTheme();
 
     const assetProps =
         asset === 'icon'
             ? {
-                  icon: <IconBoxLight size={isMobile ? 64 : 80} color={colors.brand} />,
+                  icon: <IconBoxLight size={isTabletOrSmaller ? 64 : 80} color={colors.brand} />,
               }
             : {
                   imageUrl: 'https://i.imgur.com/o5qympI.png',

@@ -123,7 +123,7 @@ export const WithBody: StoryComponent = () => {
     );
 };
 
-WithBody.storyName = 'DataCard with body';
+WithBody.storyName = 'DataCard with extra content';
 
 export const WithIconImage: StoryComponent = () => {
     const {colors} = useTheme();

@@ -119,7 +119,7 @@ const Form: React.FC<FormProps> = ({
         }
 
         setFormErrors(errors);
-        if (onValidationErrors) {
+        if (onValidationErrors && Object.keys(errors).length > 0) {
             onValidationErrors(errors);
         }
         return errors;

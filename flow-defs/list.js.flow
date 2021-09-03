@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from "react";
-import type { TrackingEvent } from "./utils/types";
+import type { DataAttributes, TrackingEvent } from "./utils/types";
 declare type CommonProps = {|
   headline?: string | React.Node,
   title: string,
@@ -10,10 +10,19 @@ declare type CommonProps = {|
   subtitleLinesMax?: number,
   description?: string | null,
   descriptionLinesMax?: number,
-  icon?: React.Element<any> | string | null,
+  /**
+   * @deprecated use asset prop
+   */
+  icon?: React.Node,
+  /**
+   * @deprecated this prop is ignored
+   */
   iconSize?: 24 | 40,
+  asset?: React.Node,
   badge?: boolean | number,
   role?: string,
+  extra?: React.Node,
+  dataAttributes?: DataAttributes,
 |};
 declare type ControlProps = {
   name?: string,
@@ -27,10 +36,12 @@ declare type BasicRowContentProps = {|
 |};
 declare type SwitchRowContentProps = {|
   ...$Exact<CommonProps>,
+  onPress?: () => void,
   switch: ControlProps,
 |};
 declare type CheckboxRowContentProps = {|
   ...$Exact<CommonProps>,
+  onPress?: () => void,
   checkbox: ControlProps,
 |};
 declare type RadioRowContentProps = {|
@@ -71,6 +82,7 @@ declare type RowListProps = {
   children: React.Node,
   ariaLabelledby?: string,
   role?: string,
+  dataAttributes?: DataAttributes,
 };
 declare export var RowList: React.ComponentType<RowListProps>;
 declare type CommonBoxedRowProps = {|
@@ -117,6 +129,7 @@ declare type BoxedRowListProps = {
   children: React.Node,
   ariaLabelledby?: string,
   role?: string,
+  dataAttributes?: DataAttributes,
 };
 declare export var BoxedRowList: React.ComponentType<BoxedRowListProps>;
 declare export {};

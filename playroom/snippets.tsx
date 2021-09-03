@@ -2,6 +2,54 @@ const imagePlaceholder = 'https://i.imgur.com/jeDSXBU.jpg';
 
 type Snippet = {group: string; name: string; code: string};
 
+const menuSnippet = {
+    name: 'Menu',
+    code: `
+    <Menu
+      width={400}
+      renderTarget={({ ref, onPress, isMenuOpen }) => (
+        <Touchable elementRef={ref} onPress={onPress} style={{ width: 100 }}>
+          <Inline space={16}>
+            <IconKebabMenuLight />
+            <Text3 regular>{isMenuOpen ? "Close" : "Open"}</Text3>
+          </Inline>
+        </Touchable>
+      )}
+      renderMenu={({ ref, className, close }) => (
+        <div ref={ref} className={className}>
+          {[
+            {
+              text: "Option 1",
+              value: "option1",
+            },
+            {
+              text: "Option 2",
+              value: "option2",
+            },
+          ].map((option) => (
+            <Box paddingX={16} paddingY={8} key={option.value}>
+              <Checkbox
+                name={option.text}
+                onChange={() => {
+                  if (option.value === "option3") {
+                    setTimeout(() => {
+                      close();
+                    }, 400);
+                  }
+                  setState("setValues", option.value);
+                }}
+                checked={getState("setValues", []).includes(option.value)}
+              >
+                {option.text}
+              </Checkbox>
+            </Box>
+          ))}
+        </div>
+      )}
+    />`,
+    group: 'Menu',
+};
+
 const buttonSnippets: Array<Snippet> = [
     {name: 'ButtonPrimary', code: '<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>'},
     {name: 'ButtonSecondary', code: '<ButtonSecondary onPress={() => {}}>Action</ButtonSecondary>'},
@@ -109,34 +157,37 @@ const listSnippets: Array<Snippet> = [
     code: `
         <${listName}>
             <${rowName}
-                icon={
+                asset={
                     <Circle backgroundColor={colors.neutralLow} size={40}>
                         <IconShopRegular />
                     </Circle>
                 }
-                iconSize={40}
                 title="Title"
                 description="Description"
                 onPress={() => {}}
             />
             <${rowName}
-                icon={
+                asset={
                     <Circle backgroundColor={colors.neutralLow} size={40}>
                         <IconShopRegular />
                     </Circle>
                 }
-                iconSize={40}
                 title="Title"
                 description="Description"
                 onPress={() => {}}
             />
             <${rowName}
-                icon={
+                asset={
                     <Circle backgroundColor={colors.neutralLow} size={40}>
                         <IconShopRegular />
                     </Circle>
                 }
-                iconSize={40}
+                title="Title"
+                description="Description"
+                onPress={() => {}}
+            />
+            <${rowName}
+                asset={<Image url="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
                 title="Title"
                 description="Description"
                 onPress={() => {}}
@@ -152,23 +203,21 @@ listSnippets.push({
     <RadioGroup defaultValue="banana">
         <RowList>
             <Row
-                icon={
+                asset={
                     <Circle backgroundColor={colors.neutralLow} size={40}>
                         <IconShopRegular />
                     </Circle>
                 }
-                iconSize={40}
                 title="Banana"
                 description="Yellow"
                 radioValue="banana"
             />
             <Row
-                icon={
+                asset={
                     <Circle backgroundColor={colors.neutralLow} size={40}>
                         <IconShopRegular />
                     </Circle>
                 }
-                iconSize={40}
                 title="Apple"
                 description="Green"
                 radioValue="apple"
@@ -184,12 +233,17 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         name: `${rowName} (simple)`,
         code: `
         <${rowName}
-            icon={
-                <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconShopRegular />
-                </Circle>
-            }
-            iconSize={40}
+            title="Title"
+            description="Description"
+            onPress={() => {}}
+        />`,
+    },
+    {
+        group: 'List',
+        name: `${rowName} (image)`,
+        code: `
+        <${rowName}
+            asset={<Image url="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
             title="Title"
             description="Description"
             onPress={() => {}}
@@ -200,12 +254,11 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         name: `${rowName} (complex)`,
         code: `
         <${rowName}
-            icon={
+            asset={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconShopRegular />
                 </Circle>
             }
-            iconSize={40}
             headline="Headline"
             title="Title"
             subtitle="Subtitle"
@@ -219,12 +272,11 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         name: `${rowName} (switch)`,
         code: `
         <${rowName}
-            icon={
+            asset={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconShopRegular />
                 </Circle>
             }
-            iconSize={40}
             title="Title"
             description="Description"
             switch={{defaultValue: false}}
@@ -235,12 +287,11 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         name: `${rowName} (checkbox)`,
         code: `
         <${rowName}
-            icon={
+            asset={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconShopRegular />
                 </Circle>
             }
-            iconSize={40}
             title="Title"
             description="Description"
             checkbox={{defaultValue: false}}
@@ -251,12 +302,11 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         name: `${rowName} (radio)`,
         code: `
         <${rowName}
-            icon={
+            asset={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconShopRegular />
                 </Circle>
             }
-            iconSize={40}
             title="Orange"
             description="orange"
             radioValue="orange"
@@ -267,12 +317,11 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         name: `${rowName} (custom element)`,
         code: `
         <${rowName}
-            icon={
+            asset={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconShopRegular />
                 </Circle>
             }
-            iconSize={40}
             title="Title"
             description="Description"
             right={<Placeholder width={32} height={32} />}
@@ -535,7 +584,7 @@ const cardSnippets: Array<Snippet> = [
             subtitle="subtitle"
             description="description"
             body={<Placeholder />}
-            icon={
+            asset={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconShopRegular />
                 </Circle>
@@ -635,7 +684,7 @@ const layoutSnippets: Array<Snippet> = [
                         <Row
                             key={setting.title}
                             title={setting.title}
-                            icon={setting.icon}
+                            asset={setting.icon}
                             iconSize={24}
                             onPress={() => {
                             setState("selectedItem", setting.title);
@@ -708,7 +757,7 @@ const exampleScreens: Array<Snippet> = [
       <MainSectionHeaderLayout>
         <MainSectionHeader title="Settings" />
       </MainSectionHeaderLayout>
-      
+
       <MasterDetailLayout
         isOpen={!!getState("selectedItem")}
         master={
@@ -756,7 +805,7 @@ const exampleScreens: Array<Snippet> = [
                           <Row
                             key={setting.title}
                             title={setting.title}
-                            icon={setting.icon}
+                            asset={setting.icon}
                             iconSize={24}
                             onPress={() => {
                               setState("selectedItem", setting.title);
@@ -876,7 +925,7 @@ const exampleScreens: Array<Snippet> = [
                     Introduce your phone number below.
                   </Text3>
                   <TextField name="phone" label="Phone number" prefix="+34" />
-      
+
                   <ButtonLink aligned onPress>
                     I’m having access problems
                   </ButtonLink>
@@ -936,7 +985,7 @@ export default [
         name: 'Callout',
         code: `
             <Callout
-                icon={<IconBoxLight />}
+                asset={<IconBoxLight />}
                 onClose={() => {}}
                 title="Some title"
                 description="This is a description for the callout"
@@ -948,4 +997,5 @@ export default [
                 buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
             />`,
     },
+    menuSnippet,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

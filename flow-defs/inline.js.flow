@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from "react";
+import type { DataAttributes } from "./utils/types";
 declare type Props = {
   space:
     | 0
@@ -24,6 +25,7 @@ declare type Props = {
   role?: string,
   "aria-labelledby"?: string,
   fullWidth?: boolean,
+  dataAttributes?: DataAttributes,
 };
 declare var Inline: React.ComponentType<Props>;
 declare export default typeof Inline;
