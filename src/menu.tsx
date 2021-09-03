@@ -45,10 +45,10 @@ export type MenuProps = {
     renderTarget: (props: TargetRenderProps) => React.ReactNode;
     renderMenu: (props: MenuRenderProps) => React.ReactNode;
     children?: void;
-    direction?: 'left' | 'right';
+    position?: 'left' | 'right';
 };
 
-const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, direction = 'left'}) => {
+const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 'left'}) => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [target, setTarget] = React.useState<HTMLElement | null>(null);
     const [menu, setMenu] = React.useState<HTMLElement | null>(null);
@@ -69,7 +69,7 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, direction =
         const top = topTarget + height;
         const spaceTaken = parseInt(window.getComputedStyle(menu).getPropertyValue('height')) ?? 0;
 
-        const leftDirection = direction === 'left' ? left : right - (width ?? widthTarget);
+        const leftDirection = position === 'left' ? left : right - (width ?? widthTarget);
 
         // if it doesn't fit on bottom
         if (top + spaceTaken + MARGIN_THRESHOLD > window.innerHeight) {
@@ -115,7 +115,7 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, direction =
                 cancelAnimationFrame(requestAnimationFrameId);
             }
         };
-    }, [direction, isMenuOpen, menu, target, width]);
+    }, [position, isMenuOpen, menu, target, width]);
 
     const classes = useStyles({
         itemsComputedProps,

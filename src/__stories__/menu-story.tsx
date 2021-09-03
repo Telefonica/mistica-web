@@ -6,7 +6,7 @@ export default {
     title: 'Components/Controls/Menu',
     component: Menu,
     argTypes: {
-        direction: {
+        position: {
             options: ['right', 'left'],
             control: {type: 'select'},
         },
@@ -29,10 +29,10 @@ const options = [
 ];
 
 type MenuArgs = {
-    direction: 'right' | 'left';
+    position: 'right' | 'left';
 };
 
-export const Default: StoryComponent<MenuArgs> = ({direction}) => {
+export const Default: StoryComponent<MenuArgs> = ({position}) => {
     const [valuesState, setValuesState] = React.useState<ReadonlyArray<string>>([]);
 
     const setValues = (val: string) => {
@@ -47,7 +47,7 @@ export const Default: StoryComponent<MenuArgs> = ({direction}) => {
             <SectionTitle>Menu</SectionTitle>
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <Menu
-                    direction={direction}
+                    position={position}
                     width={400}
                     renderTarget={({ref, onPress, isMenuOpen}) => (
                         <Touchable elementRef={ref} onPress={onPress} style={{width: 100}}>
