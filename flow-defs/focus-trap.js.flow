@@ -3,8 +3,9 @@
 import * as React from "react";
 declare type Props = {
   children: React.Node,
-  clickOutsideDeactivates?: boolean,
   className?: string,
+  disabled?: boolean,
+  group?: string,
 };
 declare var FocusTrap: React.ComponentType<Props>;
 declare export default typeof FocusTrap;
