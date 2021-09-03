@@ -1,22 +1,17 @@
 import * as React from 'react';
-import FocusTrapReact from 'focus-trap-react';
+import ReactFocusLock from 'react-focus-lock';
 
 type Props = {
     children: React.ReactNode;
-    clickOutsideDeactivates?: boolean;
     className?: string;
+    disabled?: boolean;
+    group?: string;
 };
 
-const FocusTrap: React.FC<Props> = ({children, clickOutsideDeactivates = false, className}) => (
-    <FocusTrapReact
-        focusTrapOptions={{
-            escapeDeactivates: false,
-            clickOutsideDeactivates,
-        }}
-        className={className}
-    >
+const FocusTrap: React.FC<Props> = ({children, disabled, className, group}) => (
+    <ReactFocusLock noFocusGuards disabled={disabled} className={className} group={group}>
         {children}
-    </FocusTrapReact>
+    </ReactFocusLock>
 );
 
 export default FocusTrap;
