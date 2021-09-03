@@ -27,7 +27,7 @@ export const Default: StoryComponent<Args> = ({isInverse}) => {
             right={
                 <NavigationBarActionGroup>
                     <NavigationBarAction aria-label="search" onPress={() => {}}>
-                        <IconSearchRegular />
+                        <IconSearchRegular color="currentColor" />
                         {isDesktopOrBigger && 'Search'}
                     </NavigationBarAction>
                 </NavigationBarActionGroup>

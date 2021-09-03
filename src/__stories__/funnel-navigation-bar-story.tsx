@@ -29,7 +29,7 @@ export const Default: StoryComponent<Args> = ({isInverse}) => {
             right={
                 <NavigationBarActionGroup>
                     <NavigationBarAction aria-label="need help?" href="/help">
-                        <IconQuestionRegular />
+                        <IconQuestionRegular color="currentColor" />
                         {isDesktopOrBigger && (
                             <Text2 regular color={colors.textLink}>
                                 Need help?
@@ -38,7 +38,7 @@ export const Default: StoryComponent<Args> = ({isInverse}) => {
                     </NavigationBarAction>
                     <NavigationBarAction aria-label="exit" onPress={() => {}}>
                         {isDesktopOrBigger && 'Exit'}
-                        <IconCloseRegular />
+                        <IconCloseRegular color="currentColor" />
                     </NavigationBarAction>
                 </NavigationBarActionGroup>
             }

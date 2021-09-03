@@ -914,7 +914,7 @@ const navigationBarSnippets = [
       <NavigationBarAction onPress={() => {}} aria-label="Open profile">
         <Circle
           backgroundImage="https://i.pravatar.cc/100?img=31"
-          size={32}
+          size={isDesktopOrBigger ? 32 : 24}
         />
         {isDesktopOrBigger && "María López Serrano"}
       </NavigationBarAction>
@@ -930,7 +930,7 @@ const navigationBarSnippets = [
   right={
     <NavigationBarActionGroup>
       <NavigationBarAction aria-label="need help?" href="/help">
-        <IconQuestionRegular />
+        <IconQuestionRegular color="currentColor" />
         {isDesktopOrBigger && (
           <Text2 regular color={colors.textLink}>
             Need help?
@@ -939,7 +939,7 @@ const navigationBarSnippets = [
       </NavigationBarAction>
       <NavigationBarAction aria-label="exit" onPress={() => {}}>
         {isDesktopOrBigger && "Exit"}
-        <IconCloseRegular />
+        <IconCloseRegular color="currentColor" />
       </NavigationBarAction>
     </NavigationBarActionGroup>
   }
@@ -955,7 +955,7 @@ const navigationBarSnippets = [
   right={
     <NavigationBarActionGroup>
       <NavigationBarAction aria-label="search" onPress={() => {}}>
-        <IconSearchRegular />
+        <IconSearchRegular color="currentColor" />
         {isDesktopOrBigger && "Search"}
       </NavigationBarAction>
     </NavigationBarActionGroup>
