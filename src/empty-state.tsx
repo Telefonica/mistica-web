@@ -45,6 +45,14 @@ const useStyles = createUseStyles((theme) => ({
             height: 112,
         },
     },
+    iconContainer: {
+        width: 80,
+        height: 80,
+        [theme.mq.tabletOrSmaller]: {
+            width: 64,
+            height: 64,
+        },
+    },
 }));
 
 interface BaseProps {
@@ -115,7 +123,7 @@ const EmptyState: React.FC<Props> = ({
                 {...getPrefixedDataAttributes(dataAttributes)}
             >
                 <Stack space={24}>
-                    {largeImage ?? image ?? icon}
+                    {largeImage ?? image ?? (icon && <div className={classes.iconContainer}>{icon}</div>)}
                     <Stack space={16}>
                         <Text4 regular>{title}</Text4>
                         <Text2 regular color={colors.textSecondary}>
@@ -139,7 +147,7 @@ const EmptyState: React.FC<Props> = ({
                 <div className={classes.desktopContent}>
                     <Box padding={64}>
                         <Stack space={24}>
-                            {image ?? icon}
+                            {image ?? (icon && <div className={classes.iconContainer}>{icon}</div>)}
                             <Stack space={16}>
                                 <Text6 as="h1">{title}</Text6>
                                 <Text4 light as="p" color={colors.textSecondary}>

@@ -1,12 +1,20 @@
 import * as React from 'react';
-import {EmptyState, ButtonPrimary, IconBoxLight, useScreenSize, useTheme, ButtonLink} from '..';
+import {EmptyState, ButtonPrimary, IconBoxLight, useTheme, ButtonLink, Image} from '..';
 
 export default {
     title: 'Components/Others/EmptyState',
     parameters: {
         fullScreen: true,
     },
+    argTypes: {
+        asset: {
+            options: ['Icon', 'Image', 'img'],
+            control: {type: 'select'},
+        },
+    },
 };
+
+type Args = {asset: string};
 
 export const WithImage: StoryComponent = () => (
     <EmptyState
@@ -20,12 +28,27 @@ export const WithImage: StoryComponent = () => (
 );
 WithImage.storyName = 'With image';
 
-export const WithIcon: StoryComponent = () => {
-    const {isTabletOrSmaller} = useScreenSize();
+export const WithIcon: StoryComponent<Args> = ({asset}) => {
     const {colors} = useTheme();
+
+    let assetProps;
+    if (asset === 'Icon') {
+        assetProps = {
+            icon: <IconBoxLight size="100%" color={colors.brand} />,
+        };
+    } else if (asset === 'Image') {
+        assetProps = {
+            icon: <Image url="https://i.imgur.com/o5qympI.png" />,
+        };
+    } else {
+        assetProps = {
+            icon: <img src="https://i.imgur.com/o5qympI.png" width="100%" />,
+        };
+    }
+
     return (
         <EmptyState
-            icon={<IconBoxLight size={isTabletOrSmaller ? 64 : 80} color={colors.brand} />}
+            {...assetProps}
             title="Your cart is empty"
             description="Check our marketplaces and find something for you. Check our marketplaces and find something"
             button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
@@ -34,6 +57,9 @@ export const WithIcon: StoryComponent = () => {
     );
 };
 WithIcon.storyName = 'With icon';
+WithIcon.args = {
+    asset: 'Icon',
+};
 
 export const WithSmallImage: StoryComponent = () => (
     <EmptyState
