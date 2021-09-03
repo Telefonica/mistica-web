@@ -5,6 +5,12 @@ import SectionTitle from '../section-title';
 export default {
     title: 'Components/Controls/Menu',
     component: Menu,
+    argTypes: {
+        position: {
+            options: ['right', 'left'],
+            control: {type: 'select'},
+        },
+    },
 };
 
 const options = [
@@ -22,7 +28,11 @@ const options = [
     },
 ];
 
-export const Default: StoryComponent = () => {
+type MenuArgs = {
+    position: 'right' | 'left';
+};
+
+export const Default: StoryComponent<MenuArgs> = ({position}) => {
     const [valuesState, setValuesState] = React.useState<ReadonlyArray<string>>([]);
 
     const setValues = (val: string) => {
@@ -35,39 +45,42 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={16}>
             <SectionTitle>Menu</SectionTitle>
-            <Menu
-                width={400}
-                renderTarget={({ref, onPress, isMenuOpen}) => (
-                    <Touchable elementRef={ref} onPress={onPress}>
-                        <Inline space={16}>
-                            <IconKebabMenuLight />
-                            <Text3 regular>{isMenuOpen ? 'Close' : 'Open'}</Text3>
-                        </Inline>
-                    </Touchable>
-                )}
-                renderMenu={({ref, className, close}) => (
-                    <div ref={ref} className={className}>
-                        {options.map((option) => (
-                            <Box paddingX={16} paddingY={8} key={option.value}>
-                                <Checkbox
-                                    name={option.text}
-                                    onChange={() => {
-                                        if (option.value === 'option3') {
-                                            setTimeout(() => {
-                                                close();
-                                            }, 400);
-                                        }
-                                        setValues(option.value);
-                                    }}
-                                    checked={valuesState.includes(option.value)}
-                                >
-                                    {option.text}
-                                </Checkbox>
-                            </Box>
-                        ))}
-                    </div>
-                )}
-            />
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <Menu
+                    position={position}
+                    width={400}
+                    renderTarget={({ref, onPress, isMenuOpen}) => (
+                        <Touchable elementRef={ref} onPress={onPress} style={{width: 100}}>
+                            <Inline space={16}>
+                                <IconKebabMenuLight />
+                                <Text3 regular>{isMenuOpen ? 'Close' : 'Open'}</Text3>
+                            </Inline>
+                        </Touchable>
+                    )}
+                    renderMenu={({ref, className, close}) => (
+                        <div ref={ref} className={className}>
+                            {options.map((option) => (
+                                <Box paddingX={16} paddingY={8} key={option.value}>
+                                    <Checkbox
+                                        name={option.text}
+                                        onChange={() => {
+                                            if (option.value === 'option3') {
+                                                setTimeout(() => {
+                                                    close();
+                                                }, 400);
+                                            }
+                                            setValues(option.value);
+                                        }}
+                                        checked={valuesState.includes(option.value)}
+                                    >
+                                        {option.text}
+                                    </Checkbox>
+                                </Box>
+                            ))}
+                        </div>
+                    )}
+                />
+            </div>
         </Stack>
     );
 };
