@@ -754,7 +754,6 @@ const exampleScreens: Array<Snippet> = [
         name: 'Settings',
         code: `
       <MainNavigationBar
-        isInverse={true}
         sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
           title,
           onPress: () => setState("index", idx),
