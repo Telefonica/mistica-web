@@ -100,7 +100,7 @@ export const WithBody: StoryComponent = () => {
             pretitle="pretitle"
             title="title"
             description="description"
-            body={<Placeholder />}
+            extra={<Placeholder />}
             media={{
                 src: 'https://i.imgur.com/flZfkiX.png',
             }}

@@ -27,8 +27,6 @@ type CardContentProps = {
     title?: string;
     subtitle?: string;
     description: string;
-    /** @deprecated use extra prop */
-    body?: React.ReactNode;
     extra?: React.ReactNode;
     button?: React.ReactElement<typeof ButtonPrimary>;
     buttonLink?: React.ReactElement<typeof ButtonLink>;
@@ -40,7 +38,6 @@ const CardContent: React.FC<CardContentProps> = ({
     title,
     subtitle,
     description,
-    body,
     extra,
     button,
     buttonLink,
@@ -83,7 +80,7 @@ const CardContent: React.FC<CardContentProps> = ({
                         {description}
                     </Text2>
                 </Stack>
-                {(extra ?? body) && <div>{extra ?? body}</div>}
+                {extra && <div>{extra}</div>}
             </Stack>
             {(button || buttonLink) && (
                 <div className={classes.actions}>
@@ -157,7 +154,7 @@ type MediaCardProps = {
     pretitle?: string;
     title?: string;
     description: string;
-    body?: React.ReactNode;
+    extra?: React.ReactNode;
     button?: React.ReactElement<typeof ButtonPrimary>;
     buttonLink?: React.ReactElement<typeof ButtonLink>;
     children?: void;
@@ -170,7 +167,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
     pretitle,
     title,
     description,
-    body,
+    extra,
     button,
     buttonLink,
     'aria-label': ariaLabel,
@@ -186,7 +183,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
                         pretitle={pretitle}
                         title={title}
                         description={description}
-                        body={body}
+                        extra={extra}
                         button={button}
                         buttonLink={buttonLink}
                     />
@@ -217,8 +214,6 @@ interface DataCardProps {
     title: string;
     subtitle?: string;
     description: string;
-    /** @deprecated use extra */
-    body?: React.ReactNode;
     extra?: React.ReactNode;
     button?: React.ReactElement<typeof ButtonPrimary>;
     buttonLink?: React.ReactElement<typeof ButtonLink>;
@@ -234,7 +229,6 @@ export const DataCard: React.FC<DataCardProps> = ({
     title,
     subtitle,
     description,
-    body,
     extra,
     button,
     buttonLink,
@@ -251,7 +245,7 @@ export const DataCard: React.FC<DataCardProps> = ({
                     title={title}
                     subtitle={subtitle}
                     description={description}
-                    extra={extra ?? body}
+                    extra={extra}
                     button={button}
                     buttonLink={buttonLink}
                 />

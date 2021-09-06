@@ -561,7 +561,7 @@ const cardSnippets: Array<Snippet> = [
             pretitle="Pretitle"
             title="Title"
             description="Description"
-            body={<Placeholder />}
+            extra={<Placeholder />}
             media={{
                 src:
                     'https://i.imgur.com/flZfkiX.png',
@@ -583,7 +583,7 @@ const cardSnippets: Array<Snippet> = [
             title="title"
             subtitle="subtitle"
             description="description"
-            body={<Placeholder />}
+            extra={<Placeholder />}
             asset={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconShopRegular />
@@ -685,7 +685,6 @@ const layoutSnippets: Array<Snippet> = [
                             key={setting.title}
                             title={setting.title}
                             asset={setting.icon}
-                            iconSize={24}
                             onPress={() => {
                             setState("selectedItem", setting.title);
                             }}
@@ -806,7 +805,6 @@ const exampleScreens: Array<Snippet> = [
                             key={setting.title}
                             title={setting.title}
                             asset={setting.icon}
-                            iconSize={24}
                             onPress={() => {
                               setState("selectedItem", setting.title);
                             }}

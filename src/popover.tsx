@@ -291,7 +291,7 @@ const Popover: React.FC<Props> = ({
                         <IconButton
                             onPress={handleClose}
                             trackingEvent={trackingEvent}
-                            label={texts.modalClose}
+                            aria-label={texts.modalClose}
                         >
                             <IcnClose color={colors.neutralHigh} />
                         </IconButton>
