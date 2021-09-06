@@ -75,13 +75,12 @@ const useStyles = createUseStyles(() => ({
         '& *': {outline: 'none'},
         '&:hover': {
             opacity: 1,
-            transform: 'rotateZ(30deg)',
+            transform: 'rotateZ(45deg)',
         },
         transition: 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out',
     },
     floattingButtonBackground: {
         borderRadius: '50%',
-        background: 'white',
         display: 'inline-block',
         width: 32,
         height: 32,
@@ -256,7 +255,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
     const [colorScheme, setColorScheme] = React.useState<ColorScheme>('light');
     const classes = useStyles({position});
-
+    const {colors} = useTheme();
     const overrideTheme = useOverrideTheme();
 
     React.useEffect(() => {
@@ -316,7 +315,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                     <div className={classes.floattingButton}>
                         <IconButton size={56} label="settings" onPress={() => setShowOverlay(true)}>
                             <div className={classes.floattingButtonBackground}>
-                                <IconSettingsRegular size={32} />
+                                <IconSettingsRegular size={32} color={colors.neutralHigh} />
                             </div>
                         </IconButton>
                     </div>
