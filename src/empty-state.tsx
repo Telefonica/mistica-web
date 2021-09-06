@@ -37,10 +37,12 @@ const useStyles = createUseStyles((theme) => ({
     },
     largeImage: {
         width: '100%',
+        display: 'block', // to avoid letter's descenders bottom space
         aspectRatio: '16/9',
     },
     smallImage: {
         height: 128,
+        display: 'block', // to avoid letter's descenders bottom space
         [theme.mq.tabletOrSmaller]: {
             height: 112,
         },

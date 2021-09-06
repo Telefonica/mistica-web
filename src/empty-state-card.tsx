@@ -19,6 +19,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     image: {
         height: 80,
+        display: 'block', // to avoid letter's descenders bottom space
         [theme.mq.tabletOrSmaller]: {
             height: 64,
         },
