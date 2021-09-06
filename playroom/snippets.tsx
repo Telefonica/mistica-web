@@ -753,6 +753,34 @@ const exampleScreens: Array<Snippet> = [
         group: '💎 Example Screens',
         name: 'Settings',
         code: `
+      <MainNavigationBar
+        isInverse={true}
+        sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
+          title,
+          onPress: () => setState("index", idx),
+        }))}
+        selectedIndex={getState("index", 0)}
+        right={
+          <NavigationBarActionGroup>
+            <NavigationBarAction
+              onPress={() => {}}
+              aria-label="shopping cart with 2 items"
+            >
+              <Badge value={2}>
+                <IconShoppingCartRegular color="currentColor" />
+              </Badge>
+            </NavigationBarAction>
+            <NavigationBarAction onPress={() => {}} aria-label="Open profile">
+              <Circle
+                backgroundImage="https://i.pravatar.cc/100?img=31"
+                size={isDesktopOrBigger ? 32 : 24}
+              />
+              {isDesktopOrBigger && "María López Serrano"}
+            </NavigationBarAction>
+          </NavigationBarActionGroup>
+        }
+      />
+
       <MainSectionHeaderLayout>
         <MainSectionHeader title="Settings" />
       </MainSectionHeaderLayout>
