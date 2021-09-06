@@ -20,7 +20,7 @@ declare type MediaCardProps = {
   pretitle?: string,
   title?: string,
   description: string,
-  body?: React.Node,
+  extra?: React.Node,
   button?: React.Element<typeof ButtonPrimary>,
   buttonLink?: React.Element<typeof ButtonLink>,
   "aria-label"?: string,
@@ -35,10 +35,6 @@ declare type DataCardProps = {|
   title: string,
   subtitle?: string,
   description: string,
-  /**
-   * @deprecated use extra
-   */
-  body?: React.Node,
   extra?: React.Node,
   button?: React.Element<typeof ButtonPrimary>,
   buttonLink?: React.Element<typeof ButtonLink>,

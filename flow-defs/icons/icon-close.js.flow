@@ -6,5 +6,8 @@ declare type Props = {
   size?: number | string,
   color?: string,
 };
+/**
+ * @deprecated use IconCloseRegular instead
+ */
 declare var IconClose: React.ComponentType<Props>;
 declare export default typeof IconClose;

@@ -174,7 +174,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, isValidDate, .
                 onFocus={onFocus}
                 shrinkLabel={!!getValue()}
                 endIcon={
-                    <IconButton label="" size={32} onPress={() => setShowPicker(!showPicker)}>
+                    <IconButton aria-label="" size={32} onPress={() => setShowPicker(!showPicker)}>
                         <IconCalendarRegular size={24} />
                     </IconButton>
                 }

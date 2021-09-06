@@ -16,16 +16,14 @@ const ListTest: React.FC = () => (
         <NegativeBox>
             <RowList>
                 <Row
-                    icon={<AvatarPlaceholder />}
-                    iconSize={40}
+                    asset={<AvatarPlaceholder size={40} />}
                     title="Title"
                     description="Description"
                     onPress={() => {}}
                 />
 
                 <Row
-                    icon={<AvatarPlaceholder />}
-                    iconSize={40}
+                    asset={<AvatarPlaceholder size={40} />}
                     headline="Headline"
                     title="Title"
                     subtitle="Subtitle"
@@ -35,16 +33,14 @@ const ListTest: React.FC = () => (
                 />
 
                 <Row
-                    icon={<AvatarPlaceholder />}
-                    iconSize={40}
+                    asset={<AvatarPlaceholder size={40} />}
                     title="Title"
                     description="Description"
                     switch={{defaultValue: false}}
                 />
 
                 <Row
-                    icon={<AvatarPlaceholder />}
-                    iconSize={40}
+                    asset={<AvatarPlaceholder size={40} />}
                     title="Title"
                     description="Description"
                     checkbox={{defaultValue: true}}
@@ -55,16 +51,14 @@ const ListTest: React.FC = () => (
         <SectionTitle>Boxed rows list</SectionTitle>
         <BoxedRowList>
             <BoxedRow
-                icon={<AvatarPlaceholder />}
-                iconSize={40}
+                asset={<AvatarPlaceholder size={40} />}
                 title="Title"
                 description="Description"
                 onPress={() => {}}
             />
 
             <BoxedRow
-                icon={<AvatarPlaceholder />}
-                iconSize={40}
+                asset={<AvatarPlaceholder size={40} />}
                 headline="Headline"
                 title="Title"
                 subtitle="Subtitle"
@@ -74,16 +68,14 @@ const ListTest: React.FC = () => (
             />
 
             <BoxedRow
-                icon={<AvatarPlaceholder />}
-                iconSize={40}
+                asset={<AvatarPlaceholder size={40} />}
                 title="Title"
                 description="Description"
                 switch={{defaultValue: false}}
             />
 
             <BoxedRow
-                icon={<AvatarPlaceholder />}
-                iconSize={40}
+                asset={<AvatarPlaceholder size={40} />}
                 title="Title"
                 description="Description"
                 checkbox={{defaultValue: true}}

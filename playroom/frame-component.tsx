@@ -1,21 +1,9 @@
 import '../css/roboto.css';
 import '../css/reset.css';
 import * as React from 'react';
-import {ThemeContextProvider, useTheme} from '../src';
+import {ThemeContextProvider, useTheme, useModalState} from '../src';
 
 import type {ThemeConfig} from '../src';
-
-const Styles = () => {
-    const {colors} = useTheme();
-    const styles = `
-        body {background: ${colors.background}}
-
-        *[class^='SplashScreen__'] {
-            display: none;
-        }
-    `;
-    return <style>{styles}</style>;
-};
 
 type OverrideTheme = (theme: ThemeConfig) => void;
 
@@ -35,14 +23,34 @@ const ThemeOverriderContextProvider = ({children}: ThemeOverriderContextProvider
 
 export const useOverrideTheme = (): OverrideTheme => React.useContext(ThemeOverriderContext);
 
+const App: React.FC = ({children}) => {
+    const {isModalOpen} = useModalState();
+    const {colors} = useTheme();
+    const styles = `
+        body {background: ${colors.background}}
+
+        ${isModalOpen ? 'body {overflow-y: hidden}' : ''}
+
+        *[class^='SplashScreen__'] {
+            display: none;
+        }
+    `;
+
+    return (
+        <div aria-hidden={isModalOpen}>
+            <style>{styles}</style>
+            {children}
+        </div>
+    );
+};
+
 type Props = {children: React.ReactNode; theme: ThemeConfig};
 
 const FrameComponent = ({children, theme}: Props): React.ReactNode => (
     <ThemeOverriderContextProvider>
         {(overridenTheme) => (
             <ThemeContextProvider theme={overridenTheme ?? theme}>
-                <Styles />
-                {children}
+                <App>{children}</App>
             </ThemeContextProvider>
         )}
     </ThemeOverriderContextProvider>

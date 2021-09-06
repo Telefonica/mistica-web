@@ -61,6 +61,15 @@ export {default as EmptyStateScreen} from './empty-state-screen';
 export {default as EmptyState} from './empty-state';
 export {default as EmptyStateCard} from './empty-state-card';
 export {default as Callout} from './callout';
+export {useModalState} from './modal-context-provider';
+export {
+    NavigationBar,
+    MainNavigationBar,
+    FunnelNavigationBar,
+    NavigationBarActionGroup,
+    NavigationBarAction,
+    NavigationBarLogo,
+} from './navigation-bar';
 export {default as Image} from './image';
 
 // Forms
@@ -84,6 +93,7 @@ export {default as IbanField} from './iban-field';
 export {useForm} from './form-context';
 
 // Icons
+// @deprecated use IconCloseRegular instead
 export {default as IconClose} from './icons/icon-close';
 export {default as IconInfo} from './icons/icon-info';
 export {default as IconArrowDown} from './icons/icon-arrow-down';
@@ -135,33 +145,6 @@ if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
         window.__mistica_version__ = PACKAGE_VERSION;
     }
 }
-
-// @deprecated This icon was renamed to IconImportRegular
-export {default as IconImportarRegular} from './generated/mistica-icons/icon-import-regular';
-// @deprecated This icon was renamed to IconDeviceRegular
-export {default as IconDeviceRegular} from './generated/mistica-icons/icon-team-regular';
-// @deprecated This icon was renamed to IconDeviceFilled
-export {default as IconDeviceFilled} from './generated/mistica-icons/icon-team-filled';
-// @deprecated This icon was renamed to IconDeviceLight
-export {default as IconDeviceLight} from './generated/mistica-icons/icon-team-light';
-// @deprecated This icon was renamed to IconBellAddMoreFilled
-export {default as IconAddMoreAlarmFilled} from './generated/mistica-icons/icon-bell-add-more-filled';
-// @deprecated This icon was renamed to IconBellAddMoreLight
-export {default as IconAddMoreAlarmLight} from './generated/mistica-icons/icon-bell-add-more-light';
-// @deprecated This icon was renamed to IconBellAddMoreRegular
-export {default as IconAddMoreAlarmRegular} from './generated/mistica-icons/icon-bell-add-more-regular';
-// @deprecated This icon was renamed to IconBellOffFilled
-export {default as IconAlarmOffFilled} from './generated/mistica-icons/icon-bell-off-filled';
-// @deprecated This icon was renamed to IconBellOffLight
-export {default as IconAlarmOffLight} from './generated/mistica-icons/icon-bell-off-light';
-// @deprecated This icon was renamed to IconBellOffRegular
-export {default as IconAlarmOffRegular} from './generated/mistica-icons/icon-bell-off-regular';
-// @deprecated This icon was renamed to IconBellOffFilled
-export {default as IconProgramAlarmFilled} from './generated/mistica-icons/icon-bell-program-filled';
-// @deprecated This icon was renamed to IconBellOffLight
-export {default as IconProgramAlarmLight} from './generated/mistica-icons/icon-bell-program-light';
-// @deprecated This icon was renamed to IconBellOffRegular
-export {default as IconProgramAlarmRegular} from './generated/mistica-icons/icon-bell-program-regular';
 
 // Exported this way to facilitate tree-shaking
 export {default as IconAcademicFilled} from './generated/mistica-icons/icon-academic-filled';
@@ -311,6 +294,9 @@ export {default as IconBugFilled} from './generated/mistica-icons/icon-bug-fille
 export {default as IconBugLight} from './generated/mistica-icons/icon-bug-light';
 export {default as IconBugRegular} from './generated/mistica-icons/icon-bug-regular';
 export {default as IconBusFilled} from './generated/mistica-icons/icon-bus-filled';
+export {default as IconBushFilled} from './generated/mistica-icons/icon-bush-filled';
+export {default as IconBushLight} from './generated/mistica-icons/icon-bush-light';
+export {default as IconBushRegular} from './generated/mistica-icons/icon-bush-regular';
 export {default as IconBusLight} from './generated/mistica-icons/icon-bus-light';
 export {default as IconBusRegular} from './generated/mistica-icons/icon-bus-regular';
 export {default as IconBuyDataFilled} from './generated/mistica-icons/icon-buy-data-filled';
@@ -344,6 +330,9 @@ export {default as IconCancelFilled} from './generated/mistica-icons/icon-cancel
 export {default as IconCancelLight} from './generated/mistica-icons/icon-cancel-light';
 export {default as IconCancelRegular} from './generated/mistica-icons/icon-cancel-regular';
 export {default as IconCareFilled} from './generated/mistica-icons/icon-care-filled';
+export {default as IconCareHealthFilled} from './generated/mistica-icons/icon-care-health-filled';
+export {default as IconCareHealthLight} from './generated/mistica-icons/icon-care-health-light';
+export {default as IconCareHealthRegular} from './generated/mistica-icons/icon-care-health-regular';
 export {default as IconCareLight} from './generated/mistica-icons/icon-care-light';
 export {default as IconCareRegular} from './generated/mistica-icons/icon-care-regular';
 export {default as IconCareShieldFilled} from './generated/mistica-icons/icon-care-shield-filled';
@@ -426,6 +415,8 @@ export {default as IconCocktailRegular} from './generated/mistica-icons/icon-coc
 export {default as IconCodeFilled} from './generated/mistica-icons/icon-code-filled';
 export {default as IconCodeLight} from './generated/mistica-icons/icon-code-light';
 export {default as IconCodeRegular} from './generated/mistica-icons/icon-code-regular';
+export {default as IconComputerAcademicFilled} from './generated/mistica-icons/icon-computer-academic-filled';
+export {default as IconComputerAcademicRegular} from './generated/mistica-icons/icon-computer-academic-regular';
 export {default as IconComputerFilled} from './generated/mistica-icons/icon-computer-filled';
 export {default as IconComputerLight} from './generated/mistica-icons/icon-computer-light';
 export {default as IconComputerRegular} from './generated/mistica-icons/icon-computer-regular';
@@ -572,6 +563,9 @@ export {default as IconEmergencyCrossWithCircleRegular} from './generated/mistic
 export {default as IconErrorFilled} from './generated/mistica-icons/icon-error-filled';
 export {default as IconErrorLight} from './generated/mistica-icons/icon-error-light';
 export {default as IconErrorRegular} from './generated/mistica-icons/icon-error-regular';
+export {default as IconEuroSymbolCircleFilled} from './generated/mistica-icons/icon-euro-symbol-circle-filled';
+export {default as IconEuroSymbolCircleLight} from './generated/mistica-icons/icon-euro-symbol-circle-light';
+export {default as IconEuroSymbolCircleRegular} from './generated/mistica-icons/icon-euro-symbol-circle-regular';
 export {default as IconEuroSymbolFilled} from './generated/mistica-icons/icon-euro-symbol-filled';
 export {default as IconEuroSymbolLight} from './generated/mistica-icons/icon-euro-symbol-light';
 export {default as IconEuroSymbolRegular} from './generated/mistica-icons/icon-euro-symbol-regular';
@@ -886,6 +880,8 @@ export {default as IconMusicFilled} from './generated/mistica-icons/icon-music-f
 export {default as IconMusicLight} from './generated/mistica-icons/icon-music-light';
 export {default as IconMusicRegular} from './generated/mistica-icons/icon-music-regular';
 export {default as IconNeuralNetworkFilled} from './generated/mistica-icons/icon-neural-network-filled';
+export {default as IconNeuralNetworkHumanFilled} from './generated/mistica-icons/icon-neural-network-human-filled';
+export {default as IconNeuralNetworkHumanRegular} from './generated/mistica-icons/icon-neural-network-human-regular';
 export {default as IconNeuralNetworkLight} from './generated/mistica-icons/icon-neural-network-light';
 export {default as IconNeuralNetworkRegular} from './generated/mistica-icons/icon-neural-network-regular';
 export {default as IconNotConexionFilled} from './generated/mistica-icons/icon-not-conexion-filled';

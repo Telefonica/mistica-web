@@ -1,0 +1,12 @@
+// @flow
+
+import * as React from "react";
+declare type ModalState = {
+  isModalOpen: boolean,
+};
+declare var ModalContextProvider: React.ComponentType<{}>;
+declare export var useSetModalState: () => (
+  newModalState: $Shape<ModalState>
+) => void;
+declare export var useModalState: () => ModalState;
+declare export default typeof ModalContextProvider;
