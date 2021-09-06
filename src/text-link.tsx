@@ -36,8 +36,6 @@ interface CommonProps {
     classes?: {[className: string]: string};
     small?: boolean;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    /** @deprecated use dataAttributes */
-    'data-testid'?: string;
 }
 
 export interface HrefProps extends CommonProps {

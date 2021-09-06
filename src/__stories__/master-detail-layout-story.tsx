@@ -11,7 +11,7 @@ import {
     IconCreditCardVisaRegular,
     IconInformationUserRegular,
     IconLockClosedRegular,
-    IconProgramAlarmRegular,
+    IconBellProgramRegular,
     IconSupportAgentRegular,
     IconUserAccountRegular,
     Text4,
@@ -40,7 +40,7 @@ export const Default: StoryComponent = () => {
         {
             categoryName: 'Configuration',
             settings: [
-                {title: 'Notifications', icon: <IconProgramAlarmRegular />},
+                {title: 'Notifications', icon: <IconBellProgramRegular />},
                 {title: 'FAQs', icon: <IconSupportAgentRegular />},
                 {title: 'About', icon: <IconInformationUserRegular />},
             ],
@@ -61,8 +61,7 @@ export const Default: StoryComponent = () => {
                                             <Row
                                                 key={setting.title}
                                                 title={setting.title}
-                                                icon={setting.icon}
-                                                iconSize={24}
+                                                asset={setting.icon}
                                                 onPress={() => {
                                                     setSelectedItem(setting.title);
                                                 }}

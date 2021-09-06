@@ -37,10 +37,6 @@ type Props = {
     isInverse?: boolean;
     className?: string;
     role?: string;
-    // @deprecated use dataAttributes
-    'data-testid'?: string;
-    // @deprecated use dataAttributes
-    'data-qsysid'?: string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
@@ -51,8 +47,6 @@ export const Boxed: React.FC<Props> = ({
     isInverse: isInverseInside = false,
     className,
     role,
-    'data-testid': dataTestId,
-    'data-qsysid': dataQsysId,
     dataAttributes,
     'aria-label': ariaLabel,
 }) => {
@@ -63,8 +57,6 @@ export const Boxed: React.FC<Props> = ({
         <div
             className={classNames(className, classes.boxed)}
             role={role}
-            data-testid={dataTestId}
-            data-qsysid={dataQsysId}
             {...getPrefixedDataAttributes(dataAttributes)}
             aria-label={ariaLabel}
         >

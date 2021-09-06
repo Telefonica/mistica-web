@@ -9,7 +9,7 @@ These are the default values:
 
 - `tabletMinWidth`: `768`
 - `desktopMinWidth`: `1024`
-- `largeDesktopMinWidth`: `1366`
+- `largeDesktopMinWidth`: `1368`
 - `desktopOrTabletMinHeight`: `550`
 
 And you can customize them by setting up the `mediaQueries` field in [`theme` prop](./theme-config.md):

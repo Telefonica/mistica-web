@@ -234,8 +234,6 @@ interface CommonProps {
     loadingText?: string;
     disabled?: boolean;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    /** @deprecated use dataAttributes */
-    'data-testid'?: string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-controls'?: string;
@@ -331,7 +329,6 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
         }),
         style: {cursor: props.fake ? 'pointer' : undefined, ...props.style},
         trackingEvent: props.trackingEvent,
-        'data-testid': props['data-testid'],
         dataAttributes: props.dataAttributes,
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
@@ -452,8 +449,6 @@ const useButtonLinkStyles = createUseStyles((theme) => {
 interface ButtonLinkCommonProps {
     children: React.ReactNode;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    /** @deprecated use dataAttributes */
-    'data-testid'?: string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     aligned?: boolean;
@@ -487,7 +482,6 @@ export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
             [classes.aligned]: props.aligned,
         }),
         trackingEvent: props.trackingEvent,
-        'data-testid': props['data-testid'],
         dataAttributes: props.dataAttributes,
         children: (
             <Text2 medium truncate={1} color="inherit">

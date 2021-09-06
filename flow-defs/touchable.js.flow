@@ -11,17 +11,7 @@ declare type CommonProps = {|
   elementRef?: React.Ref<"button" | "a" | "div">,
   style?: CssStyle,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
-
-  /**
-   * @deprecated use aria-label
-   */
-  label?: string,
   "aria-label"?: string,
-
-  /**
-   * @deprecated use dataAttributes
-   */
-  "data-testid"?: string,
 
   /**
    * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"

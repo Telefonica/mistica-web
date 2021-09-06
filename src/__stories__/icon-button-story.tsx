@@ -13,12 +13,12 @@ export const Default: StoryComponent = () => (
             <IconButton
                 onPress={() => {}}
                 icon="https://imrl.tuenti.net/1gIGjpc4i4R8x6O0HA-AmhQA"
-                label="Icon"
+                aria-label="Icon"
             />
         </StorySection>
 
         <StorySection title="Icon Button SVG component">
-            <IconButton onPress={() => {}} label="Icon">
+            <IconButton onPress={() => {}} aria-label="Icon">
                 <IcnCloseRegular />
             </IconButton>
         </StorySection>

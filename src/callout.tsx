@@ -99,7 +99,7 @@ const Callout: React.FC<Props> = ({
                             justifyContent: 'center',
                         }}
                         onPress={onClose}
-                        label={texts.closeButtonLabel}
+                        aria-label={texts.closeButtonLabel}
                     >
                         <IconClose color={colors.neutralHigh} />
                     </IconButton>

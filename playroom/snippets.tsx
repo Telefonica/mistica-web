@@ -2,6 +2,54 @@ const imagePlaceholder = 'https://i.imgur.com/jeDSXBU.jpg';
 
 type Snippet = {group: string; name: string; code: string};
 
+const menuSnippet = {
+    name: 'Menu',
+    code: `
+    <Menu
+      width={400}
+      renderTarget={({ ref, onPress, isMenuOpen }) => (
+        <Touchable elementRef={ref} onPress={onPress} style={{ width: 100 }}>
+          <Inline space={16}>
+            <IconKebabMenuLight />
+            <Text3 regular>{isMenuOpen ? "Close" : "Open"}</Text3>
+          </Inline>
+        </Touchable>
+      )}
+      renderMenu={({ ref, className, close }) => (
+        <div ref={ref} className={className}>
+          {[
+            {
+              text: "Option 1",
+              value: "option1",
+            },
+            {
+              text: "Option 2",
+              value: "option2",
+            },
+          ].map((option) => (
+            <Box paddingX={16} paddingY={8} key={option.value}>
+              <Checkbox
+                name={option.text}
+                onChange={() => {
+                  if (option.value === "option3") {
+                    setTimeout(() => {
+                      close();
+                    }, 400);
+                  }
+                  setState("setValues", option.value);
+                }}
+                checked={getState("setValues", []).includes(option.value)}
+              >
+                {option.text}
+              </Checkbox>
+            </Box>
+          ))}
+        </div>
+      )}
+    />`,
+    group: 'Menu',
+};
+
 const buttonSnippets: Array<Snippet> = [
     {name: 'ButtonPrimary', code: '<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>'},
     {name: 'ButtonSecondary', code: '<ButtonSecondary onPress={() => {}}>Action</ButtonSecondary>'},
@@ -513,7 +561,7 @@ const cardSnippets: Array<Snippet> = [
             pretitle="Pretitle"
             title="Title"
             description="Description"
-            body={<Placeholder />}
+            extra={<Placeholder />}
             media={{
                 src:
                     'https://i.imgur.com/flZfkiX.png',
@@ -535,7 +583,7 @@ const cardSnippets: Array<Snippet> = [
             title="title"
             subtitle="subtitle"
             description="description"
-            body={<Placeholder />}
+            extra={<Placeholder />}
             asset={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconShopRegular />
@@ -637,7 +685,6 @@ const layoutSnippets: Array<Snippet> = [
                             key={setting.title}
                             title={setting.title}
                             asset={setting.icon}
-                            iconSize={24}
                             onPress={() => {
                             setState("selectedItem", setting.title);
                             }}
@@ -758,7 +805,6 @@ const exampleScreens: Array<Snippet> = [
                             key={setting.title}
                             title={setting.title}
                             asset={setting.icon}
-                            iconSize={24}
                             onPress={() => {
                               setState("selectedItem", setting.title);
                             }}
@@ -1024,4 +1070,5 @@ export default [
             />`,
     },
     ...navigationBarSnippets,
+    menuSnippet,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
