@@ -4,7 +4,7 @@ import {Boxed} from './boxed';
 import {ButtonPrimary, ButtonSecondary, ButtonLink} from './button';
 import {useScreenSize, useTheme} from './hooks';
 import Stack from './stack';
-import {Text2, Text4, Text6} from './text';
+import {Text4, Text6} from './text';
 import {createUseStyles} from './jss';
 import Inline from './inline';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -127,10 +127,10 @@ const EmptyState: React.FC<Props> = ({
                 <Stack space={24}>
                     {largeImage ?? image ?? (icon && <div className={classes.iconContainer}>{icon}</div>)}
                     <Stack space={16}>
-                        <Text4 regular>{title}</Text4>
-                        <Text2 regular color={colors.textSecondary}>
+                        <Text6 as="h1">{title}</Text6>
+                        <Text4 light as="p" color={colors.textSecondary}>
                             {description}
-                        </Text2>
+                        </Text4>
                     </Stack>
                     {button && (
                         <Inline space={16} alignItems="center">
