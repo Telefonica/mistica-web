@@ -1,3 +1,15 @@
+# [9.17.0](https://github.com/Telefonica/mistica-web/compare/v9.16.1...v9.17.0) (2021-09-03)
+
+
+### Bug Fixes
+
+* **media queries:** change large desktop breakpoint from 1366 to 1368 ([f3bf2d4](https://github.com/Telefonica/mistica-web/commit/f3bf2d47aede1cbb2304fc42d51a1d95dc578dd0))
+
+
+### Features
+
+* **Menu:** new direction prop ([4890839](https://github.com/Telefonica/mistica-web/commit/489083923486c9a05d9a42d18d89156aa8d1a6b5))
+
 ## [9.16.1](https://github.com/Telefonica/mistica-web/compare/v9.16.0...v9.16.1) (2021-08-26)
 
 
