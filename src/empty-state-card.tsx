@@ -23,6 +23,14 @@ const useStyles = createUseStyles((theme) => ({
             height: 64,
         },
     },
+    iconContainer: {
+        width: 80,
+        height: 80,
+        [theme.mq.tabletOrSmaller]: {
+            width: 64,
+            height: 64,
+        },
+    },
     actions: {
         marginLeft: ({needsButtonLinkAlignment}) => (needsButtonLinkAlignment ? -6 : 0),
     },
@@ -80,7 +88,7 @@ const EmptyStateCard: React.FC<Props> = ({
             <Box paddingY={isTabletOrSmaller ? 24 : 40} paddingX={isTabletOrSmaller ? 16 : 40}>
                 <section className={classes.container} aria-label={ariaLabel}>
                     <Stack space={16}>
-                        {image ?? icon}
+                        {image ?? (icon && <div className={classes.iconContainer}>{icon}</div>)}
                         <Box paddingRight={isTabletOrSmaller ? 48 : 0}>
                             <Stack space={8}>
                                 <Text4 regular>{title}</Text4>
