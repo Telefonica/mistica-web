@@ -3,7 +3,7 @@
 import * as React from "react";
 declare type Props = {
   color?: string,
-  size?: number,
+  size?: string | number,
 };
 declare var IconSniperScopeLight: React.ComponentType<Props>;
 declare export default typeof IconSniperScopeLight;
