@@ -726,16 +726,6 @@ const layoutSnippets: Array<Snippet> = [
 
 const emptyStatesGroup: Array<Snippet> = [
     {
-        name: 'EmptyStateScreen (deprecated)',
-        code: `
-        <EmptyStateScreen
-            largeImageUrl="https://i.imgur.com/yGFKQOy.png"
-            title="Your cart is empty"
-            description="Check our marketplaces and find something for you. Check our marketplaces and find something"
-            button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
-        />`,
-    },
-    {
         name: 'EmptyState',
         code: `
         <EmptyState
