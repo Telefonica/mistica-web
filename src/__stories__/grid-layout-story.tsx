@@ -54,10 +54,10 @@ export const FourAndSix: StoryComponent = () => (
 
 FourAndSix.storyName = 'Template 4+6';
 
-export const SixAndFour: StoryComponent = () => (
+export const FiveAndFour: StoryComponent = () => (
     <ResponsiveLayout>
         <GridLayout template="5+4" left={<Placeholder />} right={<Placeholder />} />
     </ResponsiveLayout>
 );
 
-SixAndFour.storyName = 'Template 5+4';
+FiveAndFour.storyName = 'Template 5+4';
