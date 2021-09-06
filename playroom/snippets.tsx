@@ -699,12 +699,12 @@ const layoutSnippets: Array<Snippet> = [
             detail={
             getState("selectedItem") ? (
                 <Stack space={16}>
-                <Text4 as="h2" medium>
+                <Text5 as="h2" medium>
                     {getState("selectedItem")}
-                </Text4>
-                <Text2 regular>
+                </Text54>
+                <Text3 regular color={colors.textSecondary}>
                     You are inside {getState("selectedItem")} section
-                </Text2>
+                </Text3>
                 <Placeholder />
                 <ButtonPrimary
                     small
