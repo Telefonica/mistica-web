@@ -44,6 +44,7 @@ interface CommonProps {
     dataAttributes?: DataAttributes;
     newTab?: boolean;
     'aria-label'?: string;
+    'aria-live'?: 'polite' | 'off' | 'assertive';
 }
 
 interface HrefProps extends CommonProps {
@@ -98,6 +99,7 @@ const IconButton: React.FC<Props> = (props) => {
             ...props.style,
         },
         trackingEvent: props.trackingEvent,
+        'aria-live': props['aria-live'],
         ...getPrefixedDataAttributes(props.dataAttributes),
     };
 

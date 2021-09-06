@@ -1,6 +1,6 @@
 import * as React from 'react';
 import IconButton from '../icon-button';
-import IcnClose from '../icons/icon-close';
+import IcnCloseRegular from '../generated/mistica-icons/icon-close-regular';
 import {StorySection} from './helpers';
 
 export default {
@@ -19,7 +19,7 @@ export const Default: StoryComponent = () => (
 
         <StorySection title="Icon Button SVG component">
             <IconButton onPress={() => {}} aria-label="Icon">
-                <IcnClose />
+                <IcnCloseRegular />
             </IconButton>
         </StorySection>
     </>

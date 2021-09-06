@@ -22,11 +22,16 @@ declare type PropsTemplate6_4 = {
   left: React.Node,
   right: React.Node,
 };
+declare type PropsTemplate10 = {
+  template: "10",
+  children: React.Node,
+};
 declare type Props =
   | PropsChildren
   | PropsTemplate6_6
   | PropsTemplate8_4
   | PropsTemplate4_6
-  | PropsTemplate6_4;
+  | PropsTemplate6_4
+  | PropsTemplate10;
 declare var GridLayout: React.ComponentType<Props>;
 declare export default typeof GridLayout;

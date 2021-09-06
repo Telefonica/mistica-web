@@ -936,6 +936,80 @@ const exampleScreens: Array<Snippet> = [
     },
 ];
 
+const navigationBarSnippets = [
+    {
+        group: 'NavigationBar',
+        name: 'MainNavigationBar',
+        code: `
+<MainNavigationBar
+  sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
+    title,
+    onPress: () => setState("index", idx),
+  }))}
+  selectedIndex={getState("index", 0)}
+  right={
+    <NavigationBarActionGroup>
+      <NavigationBarAction
+        onPress={() => {}}
+        aria-label="shopping cart with 2 items"
+      >
+        <Badge value={2}>
+          <IconShoppingCartRegular color="currentColor" />
+        </Badge>
+      </NavigationBarAction>
+      <NavigationBarAction onPress={() => {}} aria-label="Open profile">
+        <Circle
+          backgroundImage="https://i.pravatar.cc/100?img=31"
+          size={isDesktopOrBigger ? 32 : 24}
+        />
+        {isDesktopOrBigger && "María López Serrano"}
+      </NavigationBarAction>
+    </NavigationBarActionGroup>
+  }
+/>`,
+    },
+    {
+        group: 'NavigationBar',
+        name: 'FunnelNavigationBar',
+        code: `
+<FunnelNavigationBar
+  right={
+    <NavigationBarActionGroup>
+      <NavigationBarAction aria-label="need help?" href="/help">
+        <IconQuestionRegular color="currentColor" />
+        {isDesktopOrBigger && (
+          <Text2 regular color={colors.textLink}>
+            Need help?
+          </Text2>
+        )}
+      </NavigationBarAction>
+      <NavigationBarAction aria-label="exit" onPress={() => {}}>
+        {isDesktopOrBigger && "Exit"}
+        <IconCloseRegular color="currentColor" />
+      </NavigationBarAction>
+    </NavigationBarActionGroup>
+  }
+/>`,
+    },
+    {
+        group: 'NavigationBar',
+        name: 'NavigationBar',
+        code: `
+<NavigationBar
+  onBack={() => {}}
+  title="Settings"
+  right={
+    <NavigationBarActionGroup>
+      <NavigationBarAction aria-label="search" onPress={() => {}}>
+        <IconSearchRegular color="currentColor" />
+        {isDesktopOrBigger && "Search"}
+      </NavigationBarAction>
+    </NavigationBarActionGroup>
+  }
+/>`,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -995,5 +1069,6 @@ export default [
                 buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
             />`,
     },
+    ...navigationBarSnippets,
     menuSnippet,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

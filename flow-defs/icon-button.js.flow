@@ -19,6 +19,7 @@ declare type CommonProps = {|
   dataAttributes?: DataAttributes,
   newTab?: boolean,
   "aria-label"?: string,
+  "aria-live"?: "polite" | "off" | "assertive",
 |};
 declare type HrefProps = {|
   ...$Exact<CommonProps>,

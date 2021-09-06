@@ -4,7 +4,7 @@ import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import {createUseStyles} from './jss';
 import {Portal} from './portal';
 import FocusTrap from './focus-trap';
-import IcnClose from './icons/icon-close';
+import IcnCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/webview-bridge';
 import ThemeContext from './theme-context';
@@ -16,6 +16,7 @@ import Box from './box';
 import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 
 import type {Theme} from './theme';
+import {useSetModalState} from './modal-context-provider';
 
 const animationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) &&
@@ -328,6 +329,14 @@ const ModalDialog = (props: ModalDialogProps) => {
         };
     }, [addKeyDownListener, handleKeyDown, props, renderNative, platformOverrides]);
 
+    const setModalState = useSetModalState();
+    React.useEffect(() => {
+        setModalState({isModalOpen: true});
+        return () => {
+            setModalState({isModalOpen: false});
+        };
+    }, [setModalState]);
+
     const {isClosing, onCloseTransitionEnd, ...dialogProps} = props;
     /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions */
     return renderNative ? null : (
@@ -364,7 +373,7 @@ const ModalDialog = (props: ModalDialogProps) => {
                                             context.texts.modalClose ?? context.texts.closeButtonLabel
                                         }
                                     >
-                                        <IcnClose color={context.colors.neutralHigh} />
+                                        <IcnCloseRegular color={context.colors.neutralHigh} />
                                     </IconButton>
                                 </div>
                                 <Dialog {...dialogProps} />

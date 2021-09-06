@@ -72,6 +72,7 @@ interface CommonProps {
     'aria-hidden'?: 'true' | 'false' | boolean;
     'aria-selected'?: 'true' | 'false' | boolean;
     'aria-labelledby'?: string;
+    'aria-live'?: 'polite' | 'off' | 'assertive';
     role?: string;
     type?: 'button' | 'submit';
     tabIndex?: number;
@@ -124,7 +125,7 @@ export interface PropsMaybeOnPress extends CommonProps {
     formId?: string;
 }
 
-type Props = PropsHref | PropsTo | PropsOnPress | PropsMaybeHref | PropsMaybeTo | PropsMaybeOnPress;
+export type Props = PropsHref | PropsTo | PropsOnPress | PropsMaybeHref | PropsMaybeTo | PropsMaybeOnPress;
 
 const Touchable: React.FC<Props> = (props) => {
     const {texts, analytics, platformOverrides, Link} = useTheme();
@@ -151,6 +152,7 @@ const Touchable: React.FC<Props> = (props) => {
         'aria-expanded': props['aria-expanded'],
         'aria-hidden': props['aria-hidden'],
         'aria-selected': props['aria-selected'],
+        'aria-live': props['aria-live'],
         tabIndex: props.tabIndex,
         ...getPrefixedDataAttributes(props.dataAttributes),
     };
