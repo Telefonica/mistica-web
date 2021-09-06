@@ -701,7 +701,7 @@ const layoutSnippets: Array<Snippet> = [
                 <Stack space={16}>
                 <Text5 as="h2" medium>
                     {getState("selectedItem")}
-                </Text54>
+                </Text5>
                 <Text3 regular color={colors.textSecondary}>
                     You are inside {getState("selectedItem")} section
                 </Text3>
