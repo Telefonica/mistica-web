@@ -650,84 +650,77 @@ const layoutSnippets: Array<Snippet> = [
     {
         name: 'MasterDetailLayout',
         code: `
+        <Box paddingY={24}>
         <MasterDetailLayout
-  isOpen={!!getState("selectedItem")}
-  master={
-    <Stack space={32}>
-      {[
-        {
-          categoryName: "Personal information",
-          settings: [
-            { title: "Personal details", icon: <IconUserAccountRegular /> },
-            { title: "Security", icon: <IconLockClosedRegular /> },
-            {
-              title: "Payment methods",
-              icon: <IconCreditCardVisaRegular />,
-            },
-          ],
-        },
-        {
-          categoryName: "Configuration",
-          settings: [
-            { title: "Notifications", icon: <IconAcademicRegular /> },
-            { title: "FAQs", icon: <IconSupportAgentRegular /> },
-            { title: "About", icon: <IconInformationUserRegular /> },
-          ],
-        },
-      ].map((category) => (
-        <Stack key={category.categoryName} space={8}>
-          <SectionTitle>{category.categoryName}</SectionTitle>
-          <NegativeBox>
-            <RowList>
-              {category.settings.map((setting) => (
-                <Row
-                  key={setting.title}
-                  title={setting.title}
-                  asset={setting.icon}
-                  onPress={() => {
-                    setState("selectedItem", setting.title);
-                  }}
-                />
-              ))}
-            </RowList>
-          </NegativeBox>
-        </Stack>
-      ))}
-    </Stack>
-  }
-  detail={
-    getState("selectedItem") ? (
-      <Stack space={16}>
-        <Text5 as="h2" medium>
-          {getState("selectedItem")}
-        </Text5>
-        <Text3 regular color={colors.textSecondary}>
-          You are inside {getState("selectedItem")} section
-        </Text3>
-        <BoxedRow
-          asset={<IconShopRegular />}
-          title="Title"
-          switch={{ defaultValue: false }}
+            isOpen={!!getState("selectedItem")}
+            master={
+            <Stack space={32}>
+                {[
+                {
+                    categoryName: "Personal information",
+                    settings: [
+                    { title: "Personal details", icon: <IconUserAccountRegular /> },
+                    { title: "Security", icon: <IconLockClosedRegular /> },
+                    {
+                        title: "Payment methods",
+                        icon: <IconCreditCardVisaRegular />,
+                    },
+                    ],
+                },
+                {
+                    categoryName: "Configuration",
+                    settings: [
+                    { title: "Notifications", icon: <IconBellRegular /> },
+                    { title: "FAQs", icon: <IconSupportAgentRegular /> },
+                    { title: "About", icon: <IconInformationUserRegular /> },
+                    ],
+                },
+                ].map((category) => (
+                <Stack key={category.categoryName} space={8}>
+                    <SectionTitle>{category.categoryName}</SectionTitle>
+                    <NegativeBox>
+                    <RowList>
+                        {category.settings.map((setting) => (
+                        <Row
+                            key={setting.title}
+                            title={setting.title}
+                            asset={setting.icon}
+                            onPress={() => {
+                            setState("selectedItem", setting.title);
+                            }}
+                        />
+                        ))}
+                    </RowList>
+                    </NegativeBox>
+                </Stack>
+                ))}
+            </Stack>
+            }
+            detail={
+            getState("selectedItem") ? (
+                <Stack space={16}>
+                <Text4 as="h2" medium>
+                    {getState("selectedItem")}
+                </Text4>
+                <Text2 regular>
+                    You are inside {getState("selectedItem")} section
+                </Text2>
+                <Placeholder />
+                <ButtonPrimary
+                    small
+                    onPress={() => {
+                    setState("selectedItem", null);
+                    }}
+                >
+                    Close
+                </ButtonPrimary>
+                </Stack>
+            ) : (
+                <Text2 regular>Select one of the sections from the sidebar</Text2>
+            )
+            }
         />
-        <BoxedRow
-          asset={<IconShopRegular />}
-          title="Title"
-          switch={{ defaultValue: true }}
-        />
-        <ButtonPrimary
-          small
-          onPress={() => {
-            setState("selectedItem", null);
-          }}
-        >
-          Close
-        </ButtonPrimary>
-      </Stack>
-    ) : (
-      <Text2 regular>Select one of the sections from the sidebar</Text2>
-    )
-  }
-/>
+        </Box>
 `,
     },
 ].map((snippet) => ({...snippet, group: 'Layouts'}));
