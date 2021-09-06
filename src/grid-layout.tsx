@@ -32,6 +32,14 @@ const useStyles = createUseStyles((theme) => ({
             gridColumn: 'span 1',
         },
     },
+    span5: {
+        [theme.mq.desktopOrBigger]: {
+            gridColumn: 'span 5',
+        },
+        [theme.mq.tabletOrSmaller]: {
+            gridColumn: 'span 1',
+        },
+    },
     span6: {
         [theme.mq.desktopOrBigger]: {
             gridColumn: 'span 6',
@@ -140,7 +148,7 @@ const GridLayout: React.FC<Props> = (props) => {
         return (
             <div className={classes.grid}>
                 <div className={classes.span1} />
-                <div className={classes.span6}>{props.left}</div>
+                <div className={classes.span5}>{props.left}</div>
                 <div className={classes.span1} />
                 <div className={classes.span4}>{props.right}</div>
                 <div className={classes.span1} />
