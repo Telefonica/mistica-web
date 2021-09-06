@@ -86,11 +86,11 @@ const EmptyStateCard: React.FC<Props> = ({
     }
     return (
         <Boxed dataAttributes={dataAttributes}>
-            <Box paddingX={isTabletOrSmaller ? 16 : 40}>
+            <Box paddingY={isTabletOrSmaller ? 24 : 40} paddingX={isTabletOrSmaller ? 16 : 40}>
                 <section className={classes.container} aria-label={ariaLabel}>
                     <Stack space={16}>
                         {image ?? (icon && <div className={classes.iconContainer}>{icon}</div>)}
-                        <Box paddingRight={isTabletOrSmaller ? 48 : 0}>
+                        <Box>
                             <Stack space={8}>
                                 <Text4 regular>{title}</Text4>
                                 <Text2 regular color={colors.textSecondary}>
