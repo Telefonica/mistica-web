@@ -720,8 +720,7 @@ const layoutSnippets: Array<Snippet> = [
             )
             }
         />
-        </Box>
-`,
+        </Box>`,
     },
 ].map((snippet) => ({...snippet, group: 'Layouts'}));
 
