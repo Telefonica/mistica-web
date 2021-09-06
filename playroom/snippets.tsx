@@ -644,8 +644,8 @@ const layoutSnippets: Array<Snippet> = [
         code: '<ResponsiveLayout><GridLayout template="4+6" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
     },
     {
-        name: 'GridLayout 6+4',
-        code: '<ResponsiveLayout><GridLayout template="6+4" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
+        name: 'GridLayout 5+4',
+        code: '<ResponsiveLayout><GridLayout template="5+4" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
     },
     {
         name: 'MasterDetailLayout',

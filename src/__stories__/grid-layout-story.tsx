@@ -56,8 +56,8 @@ FourAndSix.storyName = 'Template 4+6';
 
 export const SixAndFour: StoryComponent = () => (
     <ResponsiveLayout>
-        <GridLayout template="6+4" left={<Placeholder />} right={<Placeholder />} />
+        <GridLayout template="5+4" left={<Placeholder />} right={<Placeholder />} />
     </ResponsiveLayout>
 );
 
-SixAndFour.storyName = 'Template 6+4';
+SixAndFour.storyName = 'Template 5+4';
