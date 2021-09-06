@@ -360,7 +360,9 @@ const ModalDialog = (props: ModalDialogProps) => {
                                 <div className={classes.modalCloseButtonContainer}>
                                     <IconButton
                                         onPress={handleClose}
-                                        label={context.texts.modalClose ?? context.texts.closeButtonLabel}
+                                        aria-label={
+                                            context.texts.modalClose ?? context.texts.closeButtonLabel
+                                        }
                                     >
                                         <IcnClose color={context.colors.neutralHigh} />
                                     </IconButton>

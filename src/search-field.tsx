@@ -78,7 +78,7 @@ const SearchField: React.FC<SearchFieldProps> = ({
                     <IconButton
                         size={48}
                         style={{display: 'flex', padding: 12, margin: -12}}
-                        label={theme.texts.formSearchClear}
+                        aria-label={theme.texts.formSearchClear}
                         onPress={clearInput}
                     >
                         <IconClose />

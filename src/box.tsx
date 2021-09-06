@@ -26,10 +26,6 @@ type Props = {
     children?: React.ReactNode;
     className?: string;
     role?: string;
-    // @deprecated use dataAttributes
-    'data-testid'?: string;
-    // @deprecated use dataAttributes
-    'data-qsysid'?: string;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
@@ -47,8 +43,6 @@ const Box: React.FC<Props> = ({
     paddingLeft = paddingX,
     paddingRight = paddingX,
     role,
-    'data-testid': dataTestId,
-    'data-qsysid': dataQsysId,
     dataAttributes,
     'aria-label': ariaLabel,
 }) => {
@@ -59,8 +53,6 @@ const Box: React.FC<Props> = ({
 
     return (
         <div
-            data-testid={dataTestId}
-            data-qsysid={dataQsysId}
             {...getPrefixedDataAttributes(dataAttributes)}
             className={classnames(className, classes.box)}
             role={role}

@@ -107,7 +107,7 @@ export const WithBody: StoryComponent = () => {
             title="title"
             subtitle="subtitle"
             description="description"
-            body={<Placeholder />}
+            extra={<Placeholder />}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconAcademicLight />

@@ -106,8 +106,6 @@ export type SelectProps = {
     label: string;
     name: string;
     optional?: boolean;
-    /** @deprecated */
-    inputProps?: {[prop: string]: string};
     validate?: (value: string | void, rawValue: string | void) => string | void;
     onChangeValue?: (value: string) => void;
     onBlur?: (event: React.FocusEvent<any>) => void;
@@ -134,7 +132,6 @@ const Select: React.FC<SelectProps> = ({
     optional,
     disabled: disabledProp,
     error: errorProp,
-    inputProps,
     onBlur,
     autoFocus = false,
     native,
@@ -383,7 +380,6 @@ const Select: React.FC<SelectProps> = ({
                 </Label>
             )}
             <select
-                {...inputProps}
                 className={classes.select}
                 id={inputId}
                 aria-invalid={!!error}
@@ -450,7 +446,6 @@ const Select: React.FC<SelectProps> = ({
                     disabled={disabled}
                     id={inputId}
                     error={error}
-                    inputProps={inputProps}
                     inputRef={inputRef}
                     fieldRef={fieldRef}
                 />

@@ -9,11 +9,6 @@ declare type CommonProps = {|
   classes?: { [className: string]: string, ... },
   small?: boolean,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
-
-  /**
-   * @deprecated use dataAttributes
-   */
-  "data-testid"?: string,
 |};
 export type HrefProps = {|
   ...$Exact<CommonProps>,
