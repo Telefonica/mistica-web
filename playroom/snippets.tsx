@@ -670,7 +670,7 @@ const layoutSnippets: Array<Snippet> = [
                 {
                     categoryName: "Configuration",
                     settings: [
-                    { title: "Notifications", icon: <IconProgramAlarmRegular /> },
+                    { title: "Notifications", icon: <IconBellRegular /> },
                     { title: "FAQs", icon: <IconSupportAgentRegular /> },
                     { title: "About", icon: <IconInformationUserRegular /> },
                     ],
@@ -699,12 +699,12 @@ const layoutSnippets: Array<Snippet> = [
             detail={
             getState("selectedItem") ? (
                 <Stack space={16}>
-                <Text4 as="h2" medium>
+                <Text5 as="h2" medium>
                     {getState("selectedItem")}
-                </Text4>
-                <Text2 regular>
+                </Text5>
+                <Text3 regular color={colors.textSecondary}>
                     You are inside {getState("selectedItem")} section
-                </Text2>
+                </Text3>
                 <Placeholder />
                 <ButtonPrimary
                     small
@@ -753,6 +753,33 @@ const exampleScreens: Array<Snippet> = [
         group: '💎 Example Screens',
         name: 'Settings',
         code: `
+      <MainNavigationBar
+        sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
+          title,
+          onPress: () => setState("index", idx),
+        }))}
+        selectedIndex={getState("index", 0)}
+        right={
+          <NavigationBarActionGroup>
+            <NavigationBarAction
+              onPress={() => {}}
+              aria-label="shopping cart with 2 items"
+            >
+              <Badge value={2}>
+                <IconShoppingCartRegular color="currentColor" />
+              </Badge>
+            </NavigationBarAction>
+            <NavigationBarAction onPress={() => {}} aria-label="Open profile">
+              <Circle
+                backgroundImage="https://i.pravatar.cc/100?img=31"
+                size={isDesktopOrBigger ? 32 : 24}
+              />
+              {isDesktopOrBigger && "María López Serrano"}
+            </NavigationBarAction>
+          </NavigationBarActionGroup>
+        }
+      />
+
       <MainSectionHeaderLayout>
         <MainSectionHeader title="Settings" />
       </MainSectionHeaderLayout>
@@ -790,7 +817,7 @@ const exampleScreens: Array<Snippet> = [
                   {
                     categoryName: "Configuration",
                     settings: [
-                      { title: "Notifications", icon: <IconProgramAlarmRegular /> },
+                      { title: "Notifications", icon: <IconBellRegular /> },
                       { title: "FAQs", icon: <IconSupportAgentRegular /> },
                       { title: "About", icon: <IconInformationUserRegular /> },
                     ],
