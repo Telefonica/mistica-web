@@ -7,6 +7,8 @@ const useStyles = createUseStyles(() => ({
         borderRadius: 4,
         display: 'block',
         objectFit: 'cover',
+        maxWidth: '100%',
+        maxHeight: '100%',
     },
 }));
 
@@ -18,27 +20,16 @@ const RATIO = {
     '7:10': 7 / 10,
 };
 
-type Props =
-    | {
-          url: string;
-          width: number;
-          height?: undefined;
-          /** defaults to 1:1 */
-          aspectRatio?: AspectRatio;
-          /** defaults to empty string */
-          alt?: string;
-          children?: void;
-      }
-    | {
-          url: string;
-          width?: undefined;
-          height: number;
-          /** defaults to 1:1 */
-          aspectRatio?: AspectRatio;
-          /** defaults to empty string */
-          alt?: string;
-          children?: void;
-      };
+type Props = {
+    url: string;
+    width?: number;
+    height?: number;
+    /** defaults to 1:1 */
+    aspectRatio?: AspectRatio;
+    /** defaults to empty string */
+    alt?: string;
+    children?: void;
+};
 
 const Image: React.FC<Props> = ({url, aspectRatio = '1:1', alt = '', ...props}) => {
     const classes = useStyles();
@@ -47,7 +38,7 @@ const Image: React.FC<Props> = ({url, aspectRatio = '1:1', alt = '', ...props}) 
 
     if (props.width !== undefined) {
         height = props.width / RATIO[aspectRatio];
-    } else {
+    } else if (props.height !== undefined) {
         width = props.height * RATIO[aspectRatio];
     }
 

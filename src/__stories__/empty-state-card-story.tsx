@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {EmptyStateCard, ButtonPrimary, ButtonLink, IconBoxLight, useTheme, useScreenSize} from '..';
+import {EmptyStateCard, ButtonPrimary, ButtonLink, IconBoxLight, useTheme, Image} from '..';
 
 export default {
     title: 'Components/Cards/EmptyStateCard',
     argTypes: {
         asset: {
-            options: ['icon', 'image'],
+            options: ['Icon', 'icon as Image', 'icon as img', 'image'],
             control: {type: 'select'},
         },
         actions: {
@@ -23,17 +23,27 @@ type Args = {
 };
 
 export const Default: StoryComponent<Args> = ({actions, title, description, asset}) => {
-    const {isTabletOrSmaller} = useScreenSize();
     const {colors} = useTheme();
 
-    const assetProps =
-        asset === 'icon'
-            ? {
-                  icon: <IconBoxLight size={isTabletOrSmaller ? 64 : 80} color={colors.brand} />,
-              }
-            : {
-                  imageUrl: 'https://i.imgur.com/o5qympI.png',
-              };
+    let assetProps;
+
+    if (asset === 'Icon') {
+        assetProps = {
+            icon: <IconBoxLight size="100%" color={colors.brand} />,
+        };
+    } else if (asset === 'icon as Image') {
+        assetProps = {
+            icon: <Image url="https://i.imgur.com/o5qympI.png" />,
+        };
+    } else if (asset === 'icon as img') {
+        assetProps = {
+            icon: <img src="https://i.imgur.com/o5qympI.png" width="100%" />,
+        };
+    } else {
+        assetProps = {
+            imageUrl: 'https://i.imgur.com/o5qympI.png',
+        };
+    }
 
     const button = actions.includes('button') ? (
         <ButtonPrimary small onPress={() => {}}>
@@ -60,7 +70,7 @@ export const Default: StoryComponent<Args> = ({actions, title, description, asse
 
 Default.storyName = 'EmptyStateCard';
 Default.args = {
-    asset: 'icon',
+    asset: 'Icon',
     actions: 'button',
     title: 'Some title',
     description: 'This is a description for the empty state',

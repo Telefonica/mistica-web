@@ -8,6 +8,7 @@ import {createUseStyles} from './jss';
 import Stack from './stack';
 import {Text2, Text4} from './text';
 
+import type {ButtonProps} from './button';
 import type {DataAttributes} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
@@ -18,7 +19,16 @@ const useStyles = createUseStyles((theme) => ({
     },
     image: {
         height: 80,
+        display: 'block', // to avoid letter's descenders bottom space
         [theme.mq.tabletOrSmaller]: {
+            height: 64,
+        },
+    },
+    iconContainer: {
+        width: 80,
+        height: 80,
+        [theme.mq.tabletOrSmaller]: {
+            width: 64,
             height: 64,
         },
     },
@@ -29,8 +39,10 @@ const useStyles = createUseStyles((theme) => ({
 
 interface CommonProps {
     title: string;
-    button?: React.ReactElement<typeof ButtonPrimary> | React.ReactElement<typeof ButtonSecondary>;
-    buttonLink?: React.ReactElement<typeof ButtonLink>;
+    button?:
+        | React.ReactElement<ButtonProps, typeof ButtonPrimary>
+        | React.ReactElement<ButtonProps, typeof ButtonSecondary>;
+    buttonLink?: React.ReactElement<ButtonProps, typeof ButtonLink>;
     description?: string;
     children?: void;
     'aria-label'?: string;
@@ -69,14 +81,16 @@ const EmptyStateCard: React.FC<Props> = ({
     if (imageUrl) {
         image = <img className={classes.image} alt="" src={imageUrl} />;
     }
-
+    if (process.env.NODE_ENV !== 'production' && !button?.props?.small) {
+        console.error('button property in EmptyStateCard must be a a small Button. Set small prop to true');
+    }
     return (
         <Boxed dataAttributes={dataAttributes}>
             <Box paddingY={isTabletOrSmaller ? 24 : 40} paddingX={isTabletOrSmaller ? 16 : 40}>
                 <section className={classes.container} aria-label={ariaLabel}>
                     <Stack space={16}>
-                        {image ?? icon}
-                        <Box paddingRight={isTabletOrSmaller ? 48 : 0}>
+                        {image ?? (icon && <div className={classes.iconContainer}>{icon}</div>)}
+                        <Box>
                             <Stack space={8}>
                                 <Text4 regular>{title}</Text4>
                                 <Text2 regular color={colors.textSecondary}>
