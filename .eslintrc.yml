@@ -217,6 +217,7 @@ overrides:
           no-use-before-define: off
           import/no-duplicates: off
           no-undef: off
+          no-unused-vars: off
     - files:
           - '**/*+(screenshot|acceptance)-test.tsx'
       rules:

@@ -237,6 +237,7 @@ type PreviewToolsProps = {
     showPlatformSelector?: boolean;
     showColorSchemeSelector?: boolean;
     forceMobile?: boolean;
+    forceDesktop?: boolean;
 };
 
 export const PreviewTools: React.FC<PreviewToolsProps> = ({
@@ -245,6 +246,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     position = 'top-right',
     showPlatformSelector = false,
     forceMobile = false,
+    forceDesktop = false,
 }) => {
     const {
         skinName: initialSkinName,
@@ -261,20 +263,29 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     React.useEffect(() => {
         const impossibleSize = 999999;
         const selectedThemeConfig = themesMap[skinName].themeConfig;
+        let mediaQueries;
+        if (forceMobile) {
+            mediaQueries = {
+                tabletMinWidth: impossibleSize,
+                desktopMinWidth: impossibleSize,
+                largeDesktopMinWidth: impossibleSize,
+                desktopOrTabletMinHeight: impossibleSize,
+            };
+        } else if (forceDesktop) {
+            mediaQueries = {
+                tabletMinWidth: 0,
+                desktopMinWidth: 0,
+                largeDesktopMinWidth: impossibleSize,
+                desktopOrTabletMinHeight: 0,
+            };
+        }
         overrideTheme({
             ...selectedThemeConfig,
             colorScheme,
             platformOverrides: {platform: os},
-            mediaQueries: forceMobile
-                ? {
-                      tabletMinWidth: impossibleSize,
-                      desktopMinWidth: impossibleSize,
-                      largeDesktopMinWidth: impossibleSize,
-                      desktopOrTabletMinHeight: impossibleSize,
-                  }
-                : undefined,
+            mediaQueries,
         });
-    }, [overrideTheme, os, skinName, forceMobile, colorScheme]);
+    }, [overrideTheme, os, skinName, forceMobile, colorScheme, forceDesktop]);
 
     const editStory = () => {
         if (window.location.href.includes('/preview')) {

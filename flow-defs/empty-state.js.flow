@@ -2,6 +2,8 @@
 
 import * as React from "react";
 import { ButtonPrimary, ButtonSecondary, ButtonLink } from "./button";
+import type { ButtonProps } from "./button";
+import type { DataAttributes } from "./utils/types";
 declare type BaseProps = {|
   title: string,
   button?:
@@ -10,6 +12,7 @@ declare type BaseProps = {|
   buttonLink?: React.Element<typeof ButtonLink>,
   description?: string,
   "aria-label"?: string,
+  dataAttributes?: DataAttributes,
 |};
 declare type ImageProps = {|
   ...$Exact<BaseProps>,
@@ -24,5 +27,5 @@ declare type IconProps = {|
   icon: React.Element<any>,
 |};
 declare type Props = IconProps | ImageProps | LargeImageProps;
-declare var EmptyStateScreen: React.ComponentType<Props>;
-declare export default typeof EmptyStateScreen;
+declare var EmptyState: React.ComponentType<Props>;
+declare export default typeof EmptyState;

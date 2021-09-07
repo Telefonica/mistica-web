@@ -4,7 +4,7 @@ import Touchable from './touchable';
 import classnames from 'classnames';
 import {useIsInverseVariant} from './theme-variant-context';
 
-import type {TrackingEvent} from './utils/types';
+import type {TrackingEvent, DataAttributes} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
     textLink: {
@@ -36,6 +36,8 @@ interface CommonProps {
     classes?: {[className: string]: string};
     small?: boolean;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
+    dataAttributes?: DataAttributes;
 }
 
 export interface HrefProps extends CommonProps {
