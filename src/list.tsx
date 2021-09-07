@@ -116,10 +116,6 @@ interface CommonProps {
     subtitleLinesMax?: number;
     description?: string | null;
     descriptionLinesMax?: number;
-    /** @deprecated use asset prop */
-    icon?: React.ReactNode;
-    /** @deprecated this prop is ignored */
-    iconSize?: 24 | 40;
     asset?: React.ReactNode;
     badge?: boolean | number;
     role?: string;
@@ -365,7 +361,7 @@ const RowContent = (props: RowContentProps) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
     const {
-        asset = props.icon,
+        asset,
         headline,
         title,
         titleLinesMax,

@@ -13,6 +13,7 @@ const useStyles = createUseStyles((theme) => {
     const inverseColorsMap: Record<string, string> = {
         [theme.colors.textPrimary]: theme.colors.textPrimaryInverse,
         [theme.colors.textSecondary]: theme.colors.textSecondaryInverse,
+        [theme.colors.textLink]: theme.colors.textLinkInverse,
     };
 
     const lineClamp = ({truncate}: {truncate: boolean | number}) => {

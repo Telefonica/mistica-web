@@ -10,7 +10,7 @@ import {useIsInverseVariant} from '../../theme-variant-context';
 
 type Props = {
     color?: string;
-    size?: number;
+    size?: string | number;
 };
 
 const IconDownloadCloudRegular: React.FC<Props> = ({color, size = 24}) => {

@@ -1,0 +1,9 @@
+// @flow
+
+import * as React from "react";
+declare type Props = {
+  color?: string,
+  size?: string | number,
+};
+declare var IconCareHealthRegular: React.ComponentType<Props>;
+declare export default typeof IconCareHealthRegular;

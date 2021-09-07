@@ -31,6 +31,8 @@ declare var TEXTS_ES: {
   closeButtonLabel: string,
   formSearchClear: string,
   menuLabelSuffix: string,
+  openNavigationMenu: string,
+  closeNavigationMenu: string,
 };
 declare export var getTexts: (locale: Locale) => typeof TEXTS_ES;
 declare export var dimensions: {

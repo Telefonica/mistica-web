@@ -39,7 +39,7 @@ const PasswordAdornment: React.FC<{
     };
     return (
         <IconButton
-            label={texts.togglePasswordVisibilityLabel}
+            aria-label={texts.togglePasswordVisibilityLabel}
             onPress={() => {
                 setVisibility(!isVisible);
                 focus();

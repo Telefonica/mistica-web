@@ -112,8 +112,6 @@ export const getMovistarSkin: GetSkin = (variant) => {
             controlError: palette.pepper,
             loadingBar: palette.movistarBlueLight50,
             loadingBarBackground: palette.movistarBlueDark,
-            loadingBarBackgroundInverse: palette.movistarBlueDark,
-            loadingBarInverse: palette.movistarBlueLight50,
 
             toggleAndroidInactive: palette.grey2, // web only
             toggleAndroidBackgroundActive: palette.movistarBlueLight30, // web only
@@ -208,8 +206,6 @@ export const getMovistarSkin: GetSkin = (variant) => {
             controlActivated: palette.movistarBlue,
             loadingBar: palette.movistarBlue,
             loadingBarBackground: applyAlpha(palette.white, 0.05),
-            loadingBarBackgroundInverse: palette.movistarGreenDark,
-            loadingBarInverse: palette.movistarGreenLight50,
             toggleAndroidInactive: palette.grey4, // web only
             toggleAndroidBackgroundActive: palette.movistarBlueLight30, // web only
             iosControlKnob: palette.grey2, // web only

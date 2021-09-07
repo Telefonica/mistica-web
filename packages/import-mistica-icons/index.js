@@ -111,7 +111,7 @@ const main = async () => {
 
         type Props = {
             color?: string;
-            size?: number;
+            size?: string | number;
         };
 
     `;

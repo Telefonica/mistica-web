@@ -75,7 +75,7 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose = () => {}})
             <IconButton
                 className={classes.dismissableButton}
                 onPress={onClose}
-                label={texts.closeButtonLabel}
+                aria-label={texts.closeButtonLabel}
                 style={{display: 'flex', width: 48, height: 48}}
             >
                 <div className={classes.dismissableCircleContainer}>

@@ -173,7 +173,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                         )}
                     />
                 )}
-                <IconButton label="Edit in Playroom" size={32} onPress={onEditStoryPress}>
+                <IconButton aria-label="Edit in Playroom" size={32} onPress={onEditStoryPress}>
                     <IconCodeFilled size={32} color={colors.neutralMedium} />
                 </IconButton>
             </div>
@@ -222,7 +222,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                     </div>
                 )}
                 <div className={classes.desktopControlItem}>
-                    <IconButton label="Edit in Playroom" size={32} onPress={onEditStoryPress}>
+                    <IconButton aria-label="Edit in Playroom" size={32} onPress={onEditStoryPress}>
                         <IconCodeFilled size={32} color={colors.neutralMedium} />
                     </IconButton>
                 </div>
@@ -313,7 +313,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                     <Overlay onPress={() => setShowOverlay(false)}>{controls}</Overlay>
                 ) : (
                     <div className={classes.floattingButton}>
-                        <IconButton size={56} label="settings" onPress={() => setShowOverlay(true)}>
+                        <IconButton size={56} aria-label="settings" onPress={() => setShowOverlay(true)}>
                             <div className={classes.floattingButtonBackground}>
                                 <IconSettingsRegular size={32} color={colors.neutralHigh} />
                             </div>

@@ -10,7 +10,7 @@ import {useIsInverseVariant} from '../../theme-variant-context';
 
 type Props = {
     color?: string;
-    size?: number;
+    size?: string | number;
 };
 
 const IconPlantRegular: React.FC<Props> = ({color, size = 24}) => {
