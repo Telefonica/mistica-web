@@ -1,3 +1,10 @@
+## [10.0.1](https://github.com/Telefonica/mistica-web/compare/v10.0.0...v10.0.1) (2021-09-07)
+
+
+### Bug Fixes
+
+* **TextLink:** add missing dataAttributes to Props type ([#331](https://github.com/Telefonica/mistica-web/issues/331)) ([666cbeb](https://github.com/Telefonica/mistica-web/commit/666cbeb694ceb01a9611c55d6372401c4585be37))
+
 # [10.0.0](https://github.com/Telefonica/mistica-web/compare/v9.17.0...v10.0.0) (2021-09-07)
 
 
