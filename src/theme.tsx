@@ -32,6 +32,8 @@ const TEXTS_ES = {
     closeButtonLabel: 'Cerrar',
     formSearchClear: 'Borrar búsqueda',
     menuLabelSuffix: 'menú',
+    openNavigationMenu: 'Abrir menú de navegación',
+    closeNavigationMenu: 'Cerrar menú de navegación',
 };
 
 const TEXTS_EN: ThemeTexts = {
@@ -59,6 +61,8 @@ const TEXTS_EN: ThemeTexts = {
     closeButtonLabel: 'Close',
     formSearchClear: 'Clear search',
     menuLabelSuffix: 'menu',
+    openNavigationMenu: 'Open navigation menu',
+    closeNavigationMenu: 'Close navigation menu',
 };
 
 const TEXTS_DE: ThemeTexts = {
@@ -86,6 +90,8 @@ const TEXTS_DE: ThemeTexts = {
     closeButtonLabel: 'Schließen',
     formSearchClear: 'Suche löschen',
     menuLabelSuffix: 'Menü',
+    openNavigationMenu: 'Navigationsmenü öffnen',
+    closeNavigationMenu: 'Navigationsmenü schließen',
 };
 
 const TEXTS_PT: ThemeTexts = {
@@ -113,6 +119,8 @@ const TEXTS_PT: ThemeTexts = {
     closeButtonLabel: 'Fechar',
     formSearchClear: 'Apagar pesquisa',
     menuLabelSuffix: 'menu',
+    openNavigationMenu: 'Abrir menu de navegação',
+    closeNavigationMenu: 'Fechar menu de navegação',
 };
 
 export const getTexts = (locale: Locale): typeof TEXTS_ES => {

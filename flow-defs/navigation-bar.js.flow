@@ -1,0 +1,47 @@
+// @flow
+
+import * as React from "react";
+import type { Props as TouchableProps } from "./touchable";
+declare type NavigationBarLogoProps = { size?: number };
+declare export var NavigationBarLogo: React.ComponentType<NavigationBarLogoProps>;
+declare type MainNavigationBarSection =
+  | {
+  href: string,
+  title: string,
+}
+  | {
+  to: string,
+  title: string,
+}
+  | {
+  onPress: () => void,
+  title: string,
+};
+declare type MainNavigationBarProps = {
+  sections: Array<MainNavigationBarSection>,
+  selectedIndex?: number,
+  right?: React.Element<any>,
+  logo?: React.Element<any>,
+  isInverse?: boolean,
+  topFixed?: boolean,
+};
+declare export var MainNavigationBar: React.ComponentType<MainNavigationBarProps>;
+declare type NavigationBarProps = {
+  isInverse?: boolean,
+  onBack?: () => void,
+  title?: string,
+  right?: React.Element<any>,
+  topFixed?: boolean,
+};
+declare export var NavigationBar: React.ComponentType<NavigationBarProps>;
+declare type FunnelNavigationBarProps = {
+  isInverse?: boolean,
+  logo?: React.Element<any>,
+  right?: React.Element<any>,
+  topFixed?: boolean,
+};
+declare export var FunnelNavigationBar: React.ComponentType<FunnelNavigationBarProps>;
+declare export var NavigationBarActionGroup: React.ComponentType<{}>;
+declare type NavigationBarActionProps = TouchableProps;
+declare export var NavigationBarAction: React.ComponentType<NavigationBarActionProps>;
+declare export {};

@@ -42,10 +42,6 @@ export type CommonFormFieldProps = {|
   name: string,
   optional?: boolean,
   maxLength?: number,
-  /**
-   * @deprecated
-   */
-  inputProps?: { [prop: string]: string | number | void, ... },
   validate?: FieldValidator,
   autoComplete?: AutoComplete,
   onFocus?: (event: SyntheticFocusEvent<>) => void,

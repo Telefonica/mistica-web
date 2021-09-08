@@ -2,8 +2,9 @@ import * as React from 'react';
 import {createUseStyles} from './jss';
 import Touchable from './touchable';
 import classnames from 'classnames';
+import {useIsInverseVariant} from './theme-variant-context';
 
-import type {TrackingEvent} from './utils/types';
+import type {TrackingEvent, DataAttributes} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
     textLink: {
@@ -20,6 +21,9 @@ const useStyles = createUseStyles((theme) => ({
             },
         },
     },
+    inverse: {
+        color: theme.colors.textLinkInverse,
+    },
     small: {
         fontSize: 14,
     },
@@ -32,8 +36,8 @@ interface CommonProps {
     classes?: {[className: string]: string};
     small?: boolean;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
-    /** @deprecated use dataAttributes */
-    'data-testid'?: string;
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
+    dataAttributes?: DataAttributes;
 }
 
 export interface HrefProps extends CommonProps {
@@ -59,9 +63,16 @@ type Props = HrefProps | ToProps | OnPressProps;
 
 const TextLink: React.FC<Props> = ({children, className = '', small, ...props}) => {
     const classes = useStyles();
+    const isInverse = useIsInverseVariant();
 
     return (
-        <Touchable {...props} className={classnames(classes.textLink, className, {[classes.small]: small})}>
+        <Touchable
+            {...props}
+            className={classnames(classes.textLink, className, {
+                [classes.small]: small,
+                [classes.inverse]: isInverse,
+            })}
+        >
             {children}
         </Touchable>
     );

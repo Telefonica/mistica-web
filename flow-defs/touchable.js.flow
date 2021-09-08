@@ -11,17 +11,7 @@ declare type CommonProps = {|
   elementRef?: React.Ref<"button" | "a" | "div">,
   style?: CssStyle,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
-
-  /**
-   * @deprecated use aria-label
-   */
-  label?: string,
   "aria-label"?: string,
-
-  /**
-   * @deprecated use dataAttributes
-   */
-  "data-testid"?: string,
 
   /**
    * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
@@ -33,6 +23,7 @@ declare type CommonProps = {|
   "aria-hidden"?: "true" | "false" | boolean,
   "aria-selected"?: "true" | "false" | boolean,
   "aria-labelledby"?: string,
+  "aria-live"?: "polite" | "off" | "assertive",
   role?: string,
   type?: "button" | "submit",
   tabIndex?: number,
@@ -72,7 +63,7 @@ export type PropsMaybeOnPress = {|
   onPress?: PressHandler,
   formId?: string,
 |};
-declare type Props =
+export type Props =
   | PropsHref
   | PropsTo
   | PropsOnPress

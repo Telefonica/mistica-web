@@ -1,3 +1,36 @@
+## [10.0.1](https://github.com/Telefonica/mistica-web/compare/v10.0.0...v10.0.1) (2021-09-07)
+
+
+### Bug Fixes
+
+* **TextLink:** add missing dataAttributes to Props type ([#331](https://github.com/Telefonica/mistica-web/issues/331)) ([666cbeb](https://github.com/Telefonica/mistica-web/commit/666cbeb694ceb01a9611c55d6372401c4585be37))
+
+# [10.0.0](https://github.com/Telefonica/mistica-web/compare/v9.17.0...v10.0.0) (2021-09-07)
+
+
+### Bug Fixes
+
+* **snippets:** change some deprecated icons ([70286a0](https://github.com/Telefonica/mistica-web/commit/70286a0459bf947b7881f6b12267379595d6dfa1))
+
+
+### Features
+
+* **deprecate:** remove deprecated props and icons ([#326](https://github.com/Telefonica/mistica-web/issues/326)) ([b06894e](https://github.com/Telefonica/mistica-web/commit/b06894ef241de7324e4cc9958c01c23dcdf03a52))
+* **EmptyState:** new component ([f367dfd](https://github.com/Telefonica/mistica-web/commit/f367dfdbe46acb8339ba9c097cd37ab6d76cb423))
+* **FocusTrap:** allow focus trap to work cross Portals ([#327](https://github.com/Telefonica/mistica-web/issues/327)) ([d07e409](https://github.com/Telefonica/mistica-web/commit/d07e4097dde542b49d8889b2400f28cc88f9455a))
+* **GridLayout:** add 5+4 and remove 6+4 template ([#328](https://github.com/Telefonica/mistica-web/issues/328)) ([ab3f0b0](https://github.com/Telefonica/mistica-web/commit/ab3f0b051260745f55acbb66b25e97d5eea692c6))
+* **icons:** allow icons size prop to be a string ('100%' for example) ([444d4a9](https://github.com/Telefonica/mistica-web/commit/444d4a91a88dd8d8defded0c356d6106f69daf5d))
+* **NavigationBar:** new navigation bar components ([6ccbcac](https://github.com/Telefonica/mistica-web/commit/6ccbcac64d7992741aa4676d2cd7839879aac8bb))
+* **Playroom:** add forceDesktop prop to PreviewTools ([#330](https://github.com/Telefonica/mistica-web/issues/330)) ([e70db3e](https://github.com/Telefonica/mistica-web/commit/e70db3ec3266b39032b9505cdf5cca07412536f8))
+
+
+### BREAKING CHANGES
+
+* **EmptyState:** remove EmptyStateScreen component
+* **GridLayout:** removed 6+4 template from GridLayout
+* **deprecate:** Removed data-xxx props. Removed IconButton label prop (use aria-label instead). Removed deprecated icons. Removed some other deprecated stuff
+* **FocusTrap:** removed clickOutsideDeactivates feature from FocusTrap
+
 # [9.17.0](https://github.com/Telefonica/mistica-web/compare/v9.16.1...v9.17.0) (2021-09-03)
 
 

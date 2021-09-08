@@ -9,6 +9,7 @@ type Props = {
     color?: string;
 };
 
+/** @deprecated use IconCloseRegular instead */
 const IconClose: React.FC<Props> = ({role = 'presentation', size = ICON_SIZE_1, color}) => {
     const {colors} = useTheme();
     const fillColor = color || colors.neutralHigh;

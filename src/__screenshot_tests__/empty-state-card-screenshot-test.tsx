@@ -3,7 +3,7 @@ import {openStoryPage, screen} from '../test-utils';
 import type {Device} from '../test-utils';
 
 const devices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
-const assets = ['icon', 'image'];
+const assets = ['Icon', 'icon as Image', 'icon as img', 'image'];
 const actions = ['button', 'link', 'button and link'];
 
 const createCases = () => {

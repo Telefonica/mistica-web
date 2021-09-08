@@ -10,7 +10,7 @@ import {useIsInverseVariant} from '../../theme-variant-context';
 
 type Props = {
     color?: string;
-    size?: number;
+    size?: string | number;
 };
 
 const IconLockOpenFilled: React.FC<Props> = ({color, size = 24}) => {

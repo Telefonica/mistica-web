@@ -50,8 +50,6 @@ export interface CommonFormFieldProps {
     name: string;
     optional?: boolean;
     maxLength?: number;
-    /** @deprecated */
-    inputProps?: {[prop: string]: string | number | undefined};
     validate?: FieldValidator;
     autoComplete?: AutoComplete;
     onFocus?: (event: React.FocusEvent) => void;

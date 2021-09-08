@@ -14,6 +14,7 @@ import ThemeContext from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
 import TabFocus from './tab-focus';
 import {PortalNodesProvider} from './portal';
+import ModalContextProvider from './modal-context-provider';
 
 import type {Colors} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
@@ -126,13 +127,15 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
         <PortalNodesProvider>
             <JssProvider jss={getJss()} classNamePrefix={classNamePrefix} generateId={generateId}>
                 <TabFocus disabled={!theme.enableTabFocus}>
-                    <ThemeContext.Provider value={contextTheme}>
-                        <AriaIdGetterContext.Provider value={getAriaId}>
-                            <ScreenSizeContextProvider>
-                                <DialogRoot>{children}</DialogRoot>
-                            </ScreenSizeContextProvider>
-                        </AriaIdGetterContext.Provider>
-                    </ThemeContext.Provider>
+                    <ModalContextProvider>
+                        <ThemeContext.Provider value={contextTheme}>
+                            <AriaIdGetterContext.Provider value={getAriaId}>
+                                <ScreenSizeContextProvider>
+                                    <DialogRoot>{children}</DialogRoot>
+                                </ScreenSizeContextProvider>
+                            </AriaIdGetterContext.Provider>
+                        </ThemeContext.Provider>
+                    </ModalContextProvider>
                 </TabFocus>
             </JssProvider>
         </PortalNodesProvider>

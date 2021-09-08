@@ -561,7 +561,7 @@ const cardSnippets: Array<Snippet> = [
             pretitle="Pretitle"
             title="Title"
             description="Description"
-            body={<Placeholder />}
+            extra={<Placeholder />}
             media={{
                 src:
                     'https://i.imgur.com/flZfkiX.png',
@@ -583,7 +583,7 @@ const cardSnippets: Array<Snippet> = [
             title="title"
             subtitle="subtitle"
             description="description"
-            body={<Placeholder />}
+            extra={<Placeholder />}
             asset={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconShopRegular />
@@ -644,8 +644,8 @@ const layoutSnippets: Array<Snippet> = [
         code: '<ResponsiveLayout><GridLayout template="4+6" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
     },
     {
-        name: 'GridLayout 6+4',
-        code: '<ResponsiveLayout><GridLayout template="6+4" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
+        name: 'GridLayout 5+4',
+        code: '<ResponsiveLayout><GridLayout template="5+4" left={<Placeholder />} right={<Placeholder />} /></ResponsiveLayout>',
     },
     {
         name: 'MasterDetailLayout',
@@ -670,7 +670,7 @@ const layoutSnippets: Array<Snippet> = [
                 {
                     categoryName: "Configuration",
                     settings: [
-                    { title: "Notifications", icon: <IconProgramAlarmRegular /> },
+                    { title: "Notifications", icon: <IconBellRegular /> },
                     { title: "FAQs", icon: <IconSupportAgentRegular /> },
                     { title: "About", icon: <IconInformationUserRegular /> },
                     ],
@@ -685,7 +685,6 @@ const layoutSnippets: Array<Snippet> = [
                             key={setting.title}
                             title={setting.title}
                             asset={setting.icon}
-                            iconSize={24}
                             onPress={() => {
                             setState("selectedItem", setting.title);
                             }}
@@ -700,12 +699,12 @@ const layoutSnippets: Array<Snippet> = [
             detail={
             getState("selectedItem") ? (
                 <Stack space={16}>
-                <Text4 as="h2" medium>
+                <Text5 as="h2" medium>
                     {getState("selectedItem")}
-                </Text4>
-                <Text2 regular>
+                </Text5>
+                <Text3 regular color={colors.textSecondary}>
                     You are inside {getState("selectedItem")} section
-                </Text2>
+                </Text3>
                 <Placeholder />
                 <ButtonPrimary
                     small
@@ -727,9 +726,9 @@ const layoutSnippets: Array<Snippet> = [
 
 const emptyStatesGroup: Array<Snippet> = [
     {
-        name: 'EmptyStateScreen',
+        name: 'EmptyState',
         code: `
-        <EmptyStateScreen
+        <EmptyState
             largeImageUrl="https://i.imgur.com/yGFKQOy.png"
             title="Your cart is empty"
             description="Check our marketplaces and find something for you. Check our marketplaces and find something"
@@ -754,6 +753,33 @@ const exampleScreens: Array<Snippet> = [
         group: '💎 Example Screens',
         name: 'Settings',
         code: `
+      <MainNavigationBar
+        sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
+          title,
+          onPress: () => setState("index", idx),
+        }))}
+        selectedIndex={getState("index", 0)}
+        right={
+          <NavigationBarActionGroup>
+            <NavigationBarAction
+              onPress={() => {}}
+              aria-label="shopping cart with 2 items"
+            >
+              <Badge value={2}>
+                <IconShoppingCartRegular color="currentColor" />
+              </Badge>
+            </NavigationBarAction>
+            <NavigationBarAction onPress={() => {}} aria-label="Open profile">
+              <Circle
+                backgroundImage="https://i.pravatar.cc/100?img=31"
+                size={isDesktopOrBigger ? 32 : 24}
+              />
+              {isDesktopOrBigger && "María López Serrano"}
+            </NavigationBarAction>
+          </NavigationBarActionGroup>
+        }
+      />
+
       <MainSectionHeaderLayout>
         <MainSectionHeader title="Settings" />
       </MainSectionHeaderLayout>
@@ -791,7 +817,7 @@ const exampleScreens: Array<Snippet> = [
                   {
                     categoryName: "Configuration",
                     settings: [
-                      { title: "Notifications", icon: <IconProgramAlarmRegular /> },
+                      { title: "Notifications", icon: <IconBellRegular /> },
                       { title: "FAQs", icon: <IconSupportAgentRegular /> },
                       { title: "About", icon: <IconInformationUserRegular /> },
                     ],
@@ -806,7 +832,6 @@ const exampleScreens: Array<Snippet> = [
                             key={setting.title}
                             title={setting.title}
                             asset={setting.icon}
-                            iconSize={24}
                             onPress={() => {
                               setState("selectedItem", setting.title);
                             }}
@@ -938,6 +963,80 @@ const exampleScreens: Array<Snippet> = [
     },
 ];
 
+const navigationBarSnippets = [
+    {
+        group: 'NavigationBar',
+        name: 'MainNavigationBar',
+        code: `
+<MainNavigationBar
+  sections={["Start", "Account", "Explore", "Support"].map((title, idx) => ({
+    title,
+    onPress: () => setState("index", idx),
+  }))}
+  selectedIndex={getState("index", 0)}
+  right={
+    <NavigationBarActionGroup>
+      <NavigationBarAction
+        onPress={() => {}}
+        aria-label="shopping cart with 2 items"
+      >
+        <Badge value={2}>
+          <IconShoppingCartRegular color="currentColor" />
+        </Badge>
+      </NavigationBarAction>
+      <NavigationBarAction onPress={() => {}} aria-label="Open profile">
+        <Circle
+          backgroundImage="https://i.pravatar.cc/100?img=31"
+          size={isDesktopOrBigger ? 32 : 24}
+        />
+        {isDesktopOrBigger && "María López Serrano"}
+      </NavigationBarAction>
+    </NavigationBarActionGroup>
+  }
+/>`,
+    },
+    {
+        group: 'NavigationBar',
+        name: 'FunnelNavigationBar',
+        code: `
+<FunnelNavigationBar
+  right={
+    <NavigationBarActionGroup>
+      <NavigationBarAction aria-label="need help?" href="/help">
+        <IconQuestionRegular color="currentColor" />
+        {isDesktopOrBigger && (
+          <Text2 regular color={colors.textLink}>
+            Need help?
+          </Text2>
+        )}
+      </NavigationBarAction>
+      <NavigationBarAction aria-label="exit" onPress={() => {}}>
+        {isDesktopOrBigger && "Exit"}
+        <IconCloseRegular color="currentColor" />
+      </NavigationBarAction>
+    </NavigationBarActionGroup>
+  }
+/>`,
+    },
+    {
+        group: 'NavigationBar',
+        name: 'NavigationBar',
+        code: `
+<NavigationBar
+  onBack={() => {}}
+  title="Settings"
+  right={
+    <NavigationBarActionGroup>
+      <NavigationBarAction aria-label="search" onPress={() => {}}>
+        <IconSearchRegular color="currentColor" />
+        {isDesktopOrBigger && "Search"}
+      </NavigationBarAction>
+    </NavigationBarActionGroup>
+  }
+/>`,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -997,5 +1096,6 @@ export default [
                 buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
             />`,
     },
+    ...navigationBarSnippets,
     menuSnippet,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
