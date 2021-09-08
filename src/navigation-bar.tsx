@@ -512,7 +512,11 @@ const useNavigationBarActionGroupStyles = createUseStyles(() => ({
     },
 }));
 
-export const NavigationBarActionGroup: React.FC = ({children}) => {
+type NavigationBarActionGroupProps = {
+    children: React.ReactNode;
+};
+
+export const NavigationBarActionGroup: React.FC<NavigationBarActionGroupProps> = ({children}) => {
     const classes = useNavigationBarActionGroupStyles();
     return (
         <div className={classes.lineHeightFix}>
