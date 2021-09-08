@@ -29,8 +29,8 @@ export type OnPressProps = {|
   ...$Exact<CommonProps>,
   onPress: (event: SyntheticMouseEvent<HTMLElement>) => void | boolean,
 |};
-declare type Props = HrefProps | ToProps | OnPressProps;
-declare var TextLink: React.ComponentType<Props>;
+export type TextLinkProps = HrefProps | ToProps | OnPressProps;
+declare var TextLink: React.ComponentType<TextLinkProps>;
 declare export default typeof TextLink;
 
 import { type CssStyle } from "./__types__.js.flow";

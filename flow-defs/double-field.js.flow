@@ -1,6 +1,16 @@
 // @flow
 
 import * as React from "react";
+import CreditCardExpirationField from "./credit-card-expiration-field";
+import CvvField from "./cvv-field";
+import DateField from "./date-field";
+import DecimalField from "./decimal-field";
+import EmailField from "./email-field";
+import IntegerField from "./integer-field";
+import PasswordField from "./password-field";
+import PhoneNumberField from "./phone-number-field";
+import Select from "./select";
+import TextField from "./text-field";
 import type { TextFieldProps } from "./text-field";
 import type { SelectProps } from "./select";
 import type { CvvFieldProps } from "./cvv-field";
@@ -12,16 +22,16 @@ import type { PasswordFieldProps } from "./password-field";
 import type { PhoneNumberFieldProps } from "./phone-number-field";
 import type { EmailFieldProps } from "./email-field";
 declare type Field =
-  | React.Element<TextFieldProps>
-  | React.Element<SelectProps>
-  | React.Element<CvvFieldProps>
-  | React.Element<CreditCardExpirationFieldProps>
-  | React.Element<DecimalFieldProps>
-  | React.Element<IntegerFieldProps>
-  | React.Element<DateFieldProps>
-  | React.Element<PhoneNumberFieldProps>
-  | React.Element<PasswordFieldProps>
-  | React.Element<EmailFieldProps>;
+  | React.Element<typeof TextField>
+  | React.Element<typeof Select>
+  | React.Element<typeof CvvField>
+  | React.Element<typeof CreditCardExpirationField>
+  | React.Element<typeof DecimalField>
+  | React.Element<typeof IntegerField>
+  | React.Element<typeof DateField>
+  | React.Element<typeof PhoneNumberField>
+  | React.Element<typeof PasswordField>
+  | React.Element<typeof EmailField>;
 declare type Props = {
   fullWidth?: boolean,
   children: Field | [Field, Field],

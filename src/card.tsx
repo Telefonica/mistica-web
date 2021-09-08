@@ -9,7 +9,9 @@ import Inline from './inline';
 import {ButtonLink, ButtonPrimary} from './button';
 import {Boxed} from './boxed';
 
+import type {ButtonProps, ButtonLinkProps} from './button';
 import type {DataAttributes} from './utils/types';
+import type {TagProps} from './tag';
 
 const useCardContentStyles = createUseStyles(() => ({
     actions: {
@@ -22,14 +24,14 @@ const useCardContentStyles = createUseStyles(() => ({
 }));
 
 type CardContentProps = {
-    headline?: string | React.ReactElement<typeof Tag>;
+    headline?: string | React.ReactElement<TagProps, typeof Tag>;
     pretitle?: string;
     title?: string;
     subtitle?: string;
     description: string;
     extra?: React.ReactNode;
-    button?: React.ReactElement<typeof ButtonPrimary>;
-    buttonLink?: React.ReactElement<typeof ButtonLink>;
+    button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
+    buttonLink?: React.ReactElement<ButtonProps, typeof ButtonLink>;
 };
 
 const CardContent: React.FC<CardContentProps> = ({
@@ -150,13 +152,13 @@ const useMediaCardStyles = createUseStyles(() => ({
 
 type MediaCardProps = {
     media: CardMedia;
-    headline?: string | React.ReactElement<typeof Tag>;
+    headline?: string | React.ReactElement<TagProps, typeof Tag>;
     pretitle?: string;
     title?: string;
     description: string;
     extra?: React.ReactNode;
-    button?: React.ReactElement<typeof ButtonPrimary>;
-    buttonLink?: React.ReactElement<typeof ButtonLink>;
+    button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
+    buttonLink?: React.ReactElement<ButtonProps, typeof ButtonLink>;
     children?: void;
     'aria-label'?: string;
 };
@@ -210,13 +212,13 @@ interface DataCardProps {
      * Typically a mistica-icons component element
      */
     icon?: React.ReactElement<any>;
-    headline?: string | React.ReactElement<typeof Tag>;
+    headline?: string | React.ReactElement<TagProps, typeof Tag>;
     title: string;
     subtitle?: string;
     description: string;
     extra?: React.ReactNode;
-    button?: React.ReactElement<typeof ButtonPrimary>;
-    buttonLink?: React.ReactElement<typeof ButtonLink>;
+    button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
+    buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
     children?: void;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;

@@ -3,7 +3,7 @@ import {createUseStyles} from './jss';
 import {useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 import {BUTTON_MIN_WIDTH, ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 
-import type {ButtonElement} from './button';
+import type {ButtonElement, ButtonLinkProps} from './button';
 import classNames from 'classnames';
 
 type MaybeButtonElement = ButtonElement | void | false;
@@ -101,7 +101,7 @@ const useOnChildrenChangeEffect = (el: HTMLElement | null, effect: MutationCallb
 type ButtonLayoutProps = {
     children?: MaybeButtonElement | [MaybeButtonElement, MaybeButtonElement];
     align?: 'center' | 'left' | 'right' | 'full-width';
-    link?: React.ReactElement<typeof ButtonLink> | null;
+    link?: React.ReactElement<ButtonLinkProps, typeof ButtonLink> | null;
     withMargins?: boolean;
 };
 

@@ -5,7 +5,7 @@ import {useScreenSize} from './hooks';
 import {ButtonLink} from './button';
 import ResponsiveLayout from './responsive-layout';
 
-import type {ButtonElement} from './button';
+import type {ButtonElement, ButtonLinkProps} from './button';
 import Box from './box';
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
     button?: ButtonElement;
     desktopButtonAlign?: 'left' | 'center';
     secondaryButton?: ButtonElement;
-    link?: React.ReactElement<typeof ButtonLink>;
+    link?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
     footerBgColor?: string;
     containerBgColor?: string;
     children: React.ReactNode;

@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import TextLink from "./text-link";
+import type { TextLinkProps } from "./text-link";
 declare type Props = {
   children: React.Node,
   id?: string,

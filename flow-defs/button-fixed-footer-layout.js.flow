@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { ButtonLink } from "./button";
-import type { ButtonElement } from "./button";
+import type { ButtonElement, ButtonLinkProps } from "./button";
 declare type Props = {
   isFooterVisible?: boolean,
   button?: ButtonElement,

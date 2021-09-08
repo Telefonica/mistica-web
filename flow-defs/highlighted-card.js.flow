@@ -3,7 +3,7 @@
 import * as React from "react";
 import { ButtonLink } from "./button";
 import type { TrackingEvent } from "./utils/types";
-import type { ButtonElement } from "./button";
+import type { ButtonElement, ButtonLinkProps } from "./button";
 declare type CommonProps = {|
   title: string,
   description: string,

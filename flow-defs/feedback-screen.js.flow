@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { ButtonPrimary, ButtonSecondary, ButtonLink } from "./button";
+import type { ButtonProps, ButtonLinkProps } from "./button";
 declare type HapticFeedback = "error" | "success";
 declare type FeedbackProps = {|
   title: string,
