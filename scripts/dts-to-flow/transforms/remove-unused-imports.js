@@ -14,7 +14,6 @@ module.exports = (file, api) => {
 
     const removeIfUnused = (importSpecifier, importDeclaration) => {
         const varName = importSpecifier.value.local.name;
-        console.log(importSpecifier);
 
         const isUsedInScopes = () => {
             return (
@@ -22,7 +21,6 @@ module.exports = (file, api) => {
                     .closestScope()
                     .find(j.Identifier, {name: varName})
                     .filter((p) => {
-                        console.log(p.parentPath.value);
                         return p.parentPath.value !== importSpecifier.value;
                     })
                     .size() > 0
