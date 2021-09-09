@@ -351,7 +351,9 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         let labelStyle = {};
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
         if (startIcon) {
-            labelStyle = {marginLeft: 48, left: 0};
+            labelStyle = isShrinked
+                ? {left: 48, right: 0, width: 'auto'}
+                : {left: 48, right: 12, width: 'auto'};
         } else if (endIcon && !isShrinked) {
             labelStyle = {paddingRight: 36};
         }
