@@ -11,16 +11,6 @@ import PasswordField from "./password-field";
 import PhoneNumberField from "./phone-number-field";
 import Select from "./select";
 import TextField from "./text-field";
-import type { TextFieldProps } from "./text-field";
-import type { SelectProps } from "./select";
-import type { CvvFieldProps } from "./cvv-field";
-import type { CreditCardExpirationFieldProps } from "./credit-card-expiration-field";
-import type { DecimalFieldProps } from "./decimal-field";
-import type { IntegerFieldProps } from "./integer-field";
-import type { DateFieldProps } from "./date-field";
-import type { PasswordFieldProps } from "./password-field";
-import type { PhoneNumberFieldProps } from "./phone-number-field";
-import type { EmailFieldProps } from "./email-field";
 declare type Field =
   | React.Element<typeof TextField>
   | React.Element<typeof Select>

@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { ButtonLink, ButtonPrimary, ButtonSecondary } from "./button";
-import type { ButtonProps, ButtonLinkProps } from "./button";
 declare type Props = {
   title?: string,
   description: string,

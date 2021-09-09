@@ -3,9 +3,7 @@
 import * as React from "react";
 import Tag from "./tag";
 import { ButtonLink, ButtonPrimary } from "./button";
-import type { ButtonProps, ButtonLinkProps } from "./button";
 import type { DataAttributes } from "./utils/types";
-import type { TagProps } from "./tag";
 declare type CardMedia =
   | {
   src: string,

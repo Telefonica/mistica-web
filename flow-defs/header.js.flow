@@ -3,9 +3,7 @@
 import * as React from "react";
 import NavigationBreadcrumbs from "./navigation-breadcrumbs";
 import { ButtonPrimary, ButtonSecondary } from "./button";
-import type { ButtonProps } from "./button";
 import type { TextPresetProps } from "./text";
-import type { NavigationBreadcrumbsProps } from "./navigation-breadcrumbs";
 declare type OverridableTextProps = {
   color?: $PropertyType<TextPresetProps, "color">,
   textDecoration?: $PropertyType<TextPresetProps, "textDecoration">,
