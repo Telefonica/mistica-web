@@ -60,6 +60,7 @@ const useStyles = createUseStyles((theme) => ({
         color: ({disabled}) => (disabled ? theme.colors.textDisabled : theme.colors.textPrimary),
         maxWidth: '100%',
         textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
     },
     optionsContainer: {
         margin: 0,
