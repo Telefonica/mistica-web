@@ -9,6 +9,7 @@ export const palette = {
     blauBlueLight: '#00B6F1',
     blauBlueLight60: '#66D3F7',
     blauBlueLight30: '#B3E9FB',
+    blauBlueLight20: '#E5F6FD',
     blauBlueLight10: '#F7FDFF',
     blauBlueDark: '#0065AC',
     blauBlue: '#0070BF',
@@ -55,7 +56,7 @@ export const getBlauSkin: GetSkin = () => {
             backgroundSkeleton: palette.grey1,
             backgroundSkeletonInverse: palette.white,
             navigationBarBackground: palette.blauBlueLight,
-            backgroundAlternative: palette.grey2,
+            backgroundAlternative: palette.blauBlueLight20,
             backgroundFeedbackBottom: palette.blauBlueLight,
 
             skeletonWave: palette.grey3,
