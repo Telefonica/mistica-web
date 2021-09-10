@@ -9,7 +9,7 @@ import {useScreenSize, useTheme, useAriaId} from './hooks';
 import {createUseStyles} from './jss';
 import IconMenuRegular from './generated/mistica-icons/icon-menu-regular';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
+import IconArrowBackRegular from './generated/mistica-icons/icon-arrow-back-regular';
 import IconButton from './icon-button';
 import NegativeBox from './negative-box';
 import {Row, RowList} from './list';
@@ -193,6 +193,10 @@ const useStyles = createUseStyles((theme) => {
             left: 0,
             right: 0,
             zIndex: NAVBAR_ZINDEX,
+        },
+        notFixedPadding: {
+            width: '100%',
+            padding: ({paddingX}) => `0 ${paddingX}px`,
         },
         navbar: {
             width: '100%',
@@ -432,29 +436,41 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     );
 };
 
-type NavigationBarProps = {
+interface NavigationBarCommonProps {
     isInverse?: boolean;
     onBack?: () => void;
     title?: string;
     right?: React.ReactElement;
-    topFixed?: boolean;
     children?: undefined;
-};
+}
+
+interface NavigationBarTopFixedProps extends NavigationBarCommonProps {
+    topFixed?: true;
+    paddingX?: undefined;
+}
+
+interface NavigationBarNotFixedProps extends NavigationBarCommonProps {
+    topFixed: false;
+    paddingX?: number;
+}
+
+type NavigationBarProps = NavigationBarTopFixedProps | NavigationBarNotFixedProps;
 
 export const NavigationBar: React.FC<NavigationBarProps> = ({
     onBack,
     title,
     right,
     isInverse = false,
-    topFixed = true,
+    topFixed = false,
+    paddingX,
 }) => {
-    const classes = useStyles({isInverse});
+    const classes = useStyles({isInverse, paddingX: paddingX ?? 0});
     const content = (
         <Inline space="between" alignItems="center">
             <Inline space={24} alignItems="center">
                 {onBack && (
                     <IconButton aria-label="back" onPress={onBack}>
-                        <IconChevronLeftRegular />
+                        <IconArrowBackRegular />
                     </IconButton>
                 )}
                 <Text3 regular>{title}</Text3>
@@ -465,7 +481,11 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     return (
         <ThemeVariant isInverse={isInverse}>
             <header className={classnames(classes.navbar, {[classes.topFixed]: topFixed})}>
-                {topFixed ? <ResponsiveLayout>{content}</ResponsiveLayout> : content}
+                {topFixed ? (
+                    <ResponsiveLayout>{content}</ResponsiveLayout>
+                ) : (
+                    <div className={classes.notFixedPadding}>{content}</div>
+                )}
             </header>
             {topFixed && <div className={classes.spacer} />}
         </ThemeVariant>
