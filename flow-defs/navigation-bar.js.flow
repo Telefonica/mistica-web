@@ -41,7 +41,10 @@ declare type FunnelNavigationBarProps = {
   topFixed?: boolean,
 };
 declare export var FunnelNavigationBar: React.ComponentType<FunnelNavigationBarProps>;
-declare export var NavigationBarActionGroup: React.ComponentType<{}>;
+declare type NavigationBarActionGroupProps = {
+  children: React.Node,
+};
+declare export var NavigationBarActionGroup: React.ComponentType<NavigationBarActionGroupProps>;
 declare type NavigationBarActionProps = TouchableProps;
 declare export var NavigationBarAction: React.ComponentType<NavigationBarActionProps>;
 declare export {};
