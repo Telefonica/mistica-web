@@ -51,7 +51,7 @@ interface CommonProps {
 }
 
 interface IconProps extends CommonProps {
-    icon: React.ReactElement<any>;
+    icon: React.ReactElement;
     imageUrl?: undefined;
 }
 

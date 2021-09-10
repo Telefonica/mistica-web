@@ -73,7 +73,7 @@ export const useRadioContext = (): RadioContextType => React.useContext(RadioCon
 type PropsRender = {
     value: string;
     id?: string;
-    render: (radioElement: React.ReactElement<any>, disabled?: boolean) => React.ReactNode;
+    render: (radioElement: React.ReactElement, disabled?: boolean) => React.ReactNode;
     children?: undefined;
     dataAttributes?: DataAttributes;
 };

@@ -211,7 +211,7 @@ interface DataCardProps {
     /**
      * Typically a mistica-icons component element
      */
-    icon?: React.ReactElement<any>;
+    icon?: React.ReactElement;
     headline?: string | React.ReactElement<TagProps, typeof Tag>;
     title: string;
     subtitle?: string;

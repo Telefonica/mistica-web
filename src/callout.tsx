@@ -44,7 +44,7 @@ type Props = {
     title?: string;
     description: string;
     onClose?: () => void;
-    icon?: React.ReactElement<any>;
+    icon?: React.ReactElement;
     button?:
         | React.ReactElement<ButtonProps, typeof ButtonPrimary>
         | React.ReactElement<ButtonProps, typeof ButtonSecondary>;

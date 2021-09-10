@@ -22,7 +22,7 @@ const ScreenReaderOnly: React.FC<Props> = ({children}) => {
     if (React.Children.count(children) === 1) {
         const element = React.Children.only(children);
         if (React.isValidElement(element)) {
-            return React.cloneElement(element as React.ReactElement<any>, {
+            return React.cloneElement(element as React.ReactElement, {
                 className: element.props.className
                     ? element.props.className + ' ' + classes.screenReaderOnly
                     : classes.screenReaderOnly,
