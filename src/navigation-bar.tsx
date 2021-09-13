@@ -461,7 +461,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     title,
     right,
     isInverse = false,
-    topFixed = false,
+    topFixed = true,
     paddingX,
 }) => {
     const classes = useStyles({isInverse, paddingX: paddingX ?? 0});
