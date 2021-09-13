@@ -477,12 +477,17 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     topFixed = true,
     paddingX,
 }) => {
+    const {texts} = useTheme();
     const classes = useStyles({isInverse, paddingX: paddingX ?? 0});
     const content = (
         <Inline space="between" alignItems="center">
             <Inline space={24} alignItems="center">
                 {onBack && (
-                    <IconButton aria-label="back" onPress={onBack} className={classes.iconButton}>
+                    <IconButton
+                        aria-label={texts.backNavigationBar}
+                        onPress={onBack}
+                        className={classes.iconButton}
+                    >
                         <IconArrowBackRegular color="currentColor" />
                     </IconButton>
                 )}
