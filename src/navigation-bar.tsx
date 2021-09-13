@@ -3,6 +3,7 @@ import {CSSTransition} from 'react-transition-group';
 import classnames from 'classnames';
 import ResponsiveLayout from './responsive-layout';
 import Inline from './inline';
+import Box from './box';
 import Touchable from './touchable';
 import {Text2, Text3} from './text';
 import {useScreenSize, useTheme, useAriaId} from './hooks';
@@ -270,6 +271,18 @@ const useStyles = createUseStyles((theme) => {
         burgerMenuExitActive: {
             transform: 'translate(-100vw)',
         },
+        iconButton: {
+            color: ({isInverse}) => (isInverse ? theme.colors.inverse : theme.colors.neutralHigh),
+            // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
+            // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.
+            // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
+            // See: https://hover-pointer-media-query.glitch.me/ and https://github.com/mui-org/material-ui/issues/15736
+            '@media (pointer: fine), (pointer: none)': {
+                '&:hover': {
+                    color: ({isInverse}) => (isInverse ? theme.colors.inverse : theme.colors.neutralMedium),
+                },
+            },
+        },
     };
 });
 
@@ -469,13 +482,15 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
         <Inline space="between" alignItems="center">
             <Inline space={24} alignItems="center">
                 {onBack && (
-                    <IconButton aria-label="back" onPress={onBack}>
-                        <IconArrowBackRegular />
+                    <IconButton aria-label="back" onPress={onBack} className={classes.iconButton}>
+                        <IconArrowBackRegular color="currentColor" />
                     </IconButton>
                 )}
-                <Text3 regular>{title}</Text3>
+                <Text3 regular truncate>
+                    {title}
+                </Text3>
             </Inline>
-            {right}
+            <Box paddingLeft={24}>{right}</Box>
         </Inline>
     );
     return (
