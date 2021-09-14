@@ -1084,7 +1084,7 @@ export default [
         name: 'Callout',
         code: `
             <Callout
-                asset={<IconBoxLight />}
+                icon={<IconBoxRegular />}
                 onClose={() => {}}
                 title="Some title"
                 description="This is a description for the callout"
