@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { ButtonLink, ButtonPrimary, ButtonSecondary } from "./button";
-import type { ButtonProps } from "./button";
 import type { DataAttributes } from "./utils/types";
 declare type CommonProps = {|
   title: string,

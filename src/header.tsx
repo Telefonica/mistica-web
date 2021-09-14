@@ -11,7 +11,9 @@ import {Text8, Text7, Text6, Text3} from './text';
 import NavigationBreadcrumbs from './navigation-breadcrumbs';
 import {ButtonPrimary, ButtonSecondary} from './button';
 
+import type {ButtonProps} from './button';
 import type {TextPresetProps} from './text';
+import type {NavigationBreadcrumbsProps} from './navigation-breadcrumbs';
 import ButtonLayout from './button-layout';
 
 const useButtonLayoutStyles = createUseStyles(() => ({
@@ -58,8 +60,8 @@ type HeaderProps = {
     title?: string;
     preamount?: RichText;
     amount?: string;
-    button?: React.ReactElement<typeof ButtonPrimary>;
-    secondaryButton?: React.ReactElement<typeof ButtonSecondary>;
+    button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
+    secondaryButton?: React.ReactElement<ButtonProps, typeof ButtonSecondary>;
     subtitle?: RichText;
     isErrorAmount?: boolean;
 };
@@ -142,7 +144,9 @@ export const Header: React.FC<HeaderProps> = ({
 type MainSectionHeaderProps = {
     title: string;
     description?: string;
-    button?: React.ReactElement<typeof ButtonPrimary> | React.ReactElement<typeof ButtonSecondary>;
+    button?:
+        | React.ReactElement<ButtonProps, typeof ButtonPrimary>
+        | React.ReactElement<ButtonProps, typeof ButtonSecondary>;
 };
 
 export const MainSectionHeader: React.FC<MainSectionHeaderProps> = ({title, description, button}) => {
@@ -174,7 +178,7 @@ const useHeaderLayoutStyles = createUseStyles((theme) => ({
 
 type HeaderLayoutProps = {
     isInverse?: boolean;
-    breadcrumbs?: React.ReactElement<typeof NavigationBreadcrumbs>;
+    breadcrumbs?: React.ReactElement<NavigationBreadcrumbsProps, typeof NavigationBreadcrumbs>;
     header: React.ReactNode; // intentionally not forced to React.ReactElement<typeof Header> to allow skeletons for example
     extra?: React.ReactNode;
     sideBySideExtraOnDesktop?: boolean;
@@ -236,7 +240,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
 
 type MainSectionHeaderLayoutProps = {
     isInverse?: boolean;
-    children: React.ReactElement<typeof MainSectionHeader>;
+    children: React.ReactElement<MainSectionHeaderProps, typeof MainSectionHeader>;
 };
 
 export const MainSectionHeaderLayout: React.FC<MainSectionHeaderLayoutProps> = ({

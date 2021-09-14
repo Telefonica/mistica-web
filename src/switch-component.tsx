@@ -82,7 +82,7 @@ const useStyles = createUseStyles(({colors, isIos}) => {
     };
 });
 
-type RenderSwitch = (switchElement: React.ReactElement<any>, labelId: string) => React.ReactNode;
+type RenderSwitch = (switchElement: React.ReactElement, labelId: string) => React.ReactNode;
 
 type PropsRender = {
     name: string;
