@@ -16,12 +16,12 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-type Props = {
+export type TagProps = {
     children: string;
     color: string;
 };
 
-const Tag: React.FC<Props> = ({children, color}) => {
+const Tag: React.FC<TagProps> = ({children, color}) => {
     const classes = useStyles({color});
     const {colors, isDarkMode} = useTheme();
     // Hardcode black text in darkmode because there isn't a black text color constant that we can use in dark mode

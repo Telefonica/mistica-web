@@ -522,6 +522,6 @@ export const ButtonDanger: React.FC<ButtonProps> = (props) => {
 };
 
 export type ButtonElement =
-    | React.ReactElement<typeof ButtonPrimary>
-    | React.ReactElement<typeof ButtonSecondary>
-    | React.ReactElement<typeof ButtonDanger>;
+    | React.ReactElement<ButtonProps, typeof ButtonPrimary>
+    | React.ReactElement<ButtonProps, typeof ButtonSecondary>
+    | React.ReactElement<ButtonProps, typeof ButtonDanger>;

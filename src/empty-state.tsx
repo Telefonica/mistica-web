@@ -85,7 +85,7 @@ interface LargeImageProps extends BaseProps {
 }
 
 interface IconProps extends BaseProps {
-    icon: React.ReactElement<any>;
+    icon: React.ReactElement;
 
     imageUrl?: undefined;
     largeImageUrl?: undefined;
