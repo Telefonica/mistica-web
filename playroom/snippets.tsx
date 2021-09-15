@@ -56,6 +56,10 @@ const buttonSnippets: Array<Snippet> = [
     {name: 'ButtonDanger', code: '<ButtonDanger onPress={() => {}}>Action</ButtonDanger>'},
     {name: 'ButtonLink', code: '<ButtonLink onPress={() => {}}>Action</ButtonLink>'},
     {
+        name: 'Button with icon',
+        code: '<ButtonPrimary onPress={() => {}}><IconLockClosedRegular color="currentColor" />Action</ButtonPrimary>',
+    },
+    {
         name: 'ButtonLayout',
         code: `
         <ButtonLayout>
