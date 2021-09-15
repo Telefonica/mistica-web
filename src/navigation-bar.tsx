@@ -10,7 +10,7 @@ import {useScreenSize, useTheme, useAriaId} from './hooks';
 import {createUseStyles} from './jss';
 import IconMenuRegular from './generated/mistica-icons/icon-menu-regular';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import IconArrowBackRegular from './generated/mistica-icons/icon-arrow-back-regular';
+import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconButton from './icon-button';
 import NegativeBox from './negative-box';
 import {Row, RowList} from './list';
@@ -488,7 +488,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                         onPress={onBack}
                         className={classes.iconButton}
                     >
-                        <IconArrowBackRegular color="currentColor" />
+                        <IconChevronLeftRegular color="currentColor" />
                     </IconButton>
                 )}
                 <Text3 regular truncate>
