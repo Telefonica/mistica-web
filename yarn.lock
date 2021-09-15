@@ -25,11 +25,11 @@
     tunnel "0.0.6"
 
 "@axe-core/puppeteer@^4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@axe-core/puppeteer/-/puppeteer-4.2.1.tgz#5b7a191e4f4f3d56f975fdf5c2682eed3ad306a7"
-  integrity sha512-2JDELbLCKK2KqBvLOpsROtJU0i+zqyseMCd8S86S1H8loxy30/v7xJQo32WWbAa+x8xABQcejO1U4Kk1VEVssw==
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@axe-core/puppeteer/-/puppeteer-4.2.2.tgz#97cf74ee4b2ee95f181b4e1adc05e7ba4df66c96"
+  integrity sha512-kBB+e0ndxuIWSF7kLEmsPVhxHh6nRKKP7OgZbBbS3HobZ4h7hyg+q9Lu8N4WOWN6jlqEcrJC95ORT7ZZkGbYBg==
   dependencies:
-    axe-core "^4.2.1"
+    axe-core "^4.2.3"
 
 "@azure/abort-controller@^1.0.0":
   version "1.0.1"
@@ -6915,10 +6915,10 @@ axe-core@^4.0.2:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.0.2.tgz#c7cf7378378a51fcd272d3c09668002a4990b1cb"
   integrity sha512-arU1h31OGFu+LPrOLGZ7nB45v940NMDMEJeNmbutu57P+UFDVnkZg3e+J1I2HJRZ9hT7gO8J91dn/PMrAiKakA==
 
-axe-core@^4.2.1:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.2.1.tgz#2e50bcf10ee5b819014f6e342e41e45096239e34"
-  integrity sha512-evY7DN8qSIbsW2H/TWQ1bX3sXN1d4MNb5Vb4n7BzPuCwRHdkZ1H2eNLuSh73EoQqkGKUtju2G2HCcjCfhvZIAA==
+axe-core@^4.2.3:
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.3.3.tgz#b55cd8e8ddf659fe89b064680e1c6a4dceab0325"
+  integrity sha512-/lqqLAmuIPi79WYfRpy2i8z+x+vxU3zX2uAm0gs1q52qTuKwolOj1P8XbufpXcsydrpKx2yGn2wzAnxCMV86QA==
 
 axe-html-reporter@^2.2.2:
   version "2.2.2"
