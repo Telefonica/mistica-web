@@ -584,7 +584,7 @@ const cardSnippets: Array<Snippet> = [
             subtitle="subtitle"
             description="description"
             extra={<Placeholder />}
-            asset={
+            icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconShopRegular />
                 </Circle>
