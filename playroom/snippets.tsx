@@ -70,7 +70,7 @@ const buttonSnippets: Array<Snippet> = [
     {
         name: 'ButtonFixedFooterLayout',
         code: `
-        <ButtonFixedFooterLayout button={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}>
+        <ButtonFixedFooterLayout button={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>} secondaryButton={<ButtonSecondary onPress={() => {}}>Action</ButtonSecondary>}>
             Some content here
         </ButtonFixedFooterLayout>`,
     },
@@ -1048,6 +1048,11 @@ export default [
     {group: 'Feedbacks', name: 'Snackbar', code: '<Snackbar message="Some message here" />'},
     ...tooltipSnippets,
     ...layoutSnippets,
+    {
+        group: 'Layout',
+        name: 'FixedFooterLayout',
+        code: '<FixedFooterLayout footer={<Box padding={16}><Placeholder /></Box>}>Some content here</FixedFooterLayout>',
+    },
     {group: 'Spinner', name: 'Spinner', code: '<Spinner />'},
     {group: 'Divider', name: 'Divider', code: '<Divider />'},
     {group: 'LoadingBar', name: 'LoadingBar', code: '<LoadingBar visible />'},
