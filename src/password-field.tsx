@@ -39,6 +39,7 @@ const PasswordAdornment: React.FC<{
     };
     return (
         <IconButton
+            dataAttributes={{testid: 'visibility-button'}}
             aria-label={texts.togglePasswordVisibilityLabel}
             onPress={() => {
                 setVisibility(!isVisible);
@@ -69,7 +70,12 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
     ...rest
 }) => {
     const [isVisible, setIsVisible] = React.useState(false);
+    const caretPositionRef = React.useRef<number>();
     const inputRef = React.useRef<HTMLInputElement>(null);
+    const input = inputRef.current;
+    if (input?.selectionStart) {
+        caretPositionRef.current = input.selectionStart;
+    }
 
     const processValue = (value: string) => value;
 
@@ -77,14 +83,16 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
         const input = inputRef.current;
         if (input) {
             input.focus();
-            // neeeded to place the caret at the end
-            setTimeout(() => {
-                const v = input.value;
-                input.value = '';
-                input.value = v;
-            }, 0);
+            setTimeout(() => {}, 0);
         }
     };
+
+    React.useEffect(() => {
+        if (input && caretPositionRef.current) {
+            input.selectionStart = caretPositionRef.current;
+            input.selectionEnd = caretPositionRef.current;
+        }
+    }, [isVisible, caretPositionRef, input]);
 
     const fieldProps = useFieldProps({
         name,
