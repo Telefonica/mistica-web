@@ -15,7 +15,11 @@ export interface PasswordFieldProps extends CommonFormFieldProps {
 
 const usePasswordAdornmentStyles = createUseStyles(() => ({
     shadow: {
-        ['@media (hover: hover)']: {
+        // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
+        // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.
+        // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
+        // See: https://hover-pointer-media-query.glitch.me/ and https://github.com/mui-org/material-ui/issues/15736
+        ['@media (pointer: fine), (pointer: none)']: {
             '&:hover': {
                 backgroundColor: 'rgba(0, 0, 0, 0.08)',
             },
@@ -83,7 +87,6 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
         const input = inputRef.current;
         if (input) {
             input.focus();
-            setTimeout(() => {}, 0);
         }
     };
 
