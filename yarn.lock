@@ -6921,9 +6921,9 @@ axe-core@^4.2.3:
   integrity sha512-/lqqLAmuIPi79WYfRpy2i8z+x+vxU3zX2uAm0gs1q52qTuKwolOj1P8XbufpXcsydrpKx2yGn2wzAnxCMV86QA==
 
 axe-html-reporter@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/axe-html-reporter/-/axe-html-reporter-2.2.2.tgz#e566adcafe168c00e1e77b65fcdd0e1bd6247f7b"
-  integrity sha512-AEmVfpMD5ylopH9lwO8RFjWcq0dZoKxBR+DwaHDIU99iW6IGpq2TijrRCup+Y98LIQvII9coohI3iDDCZcj8IQ==
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/axe-html-reporter/-/axe-html-reporter-2.2.3.tgz#2d56e239fe9bd1f09ba0735d94596bf79dd389a7"
+  integrity sha512-io8aCEt4fJvv43W+33n3zEa8rdplH5Ti2v5fOnth3GBKLhLHarNs7jj46xGfpnGnpaNrz23/tXPHC3HbwTzwwA==
   dependencies:
     mustache "^4.0.1"
     rimraf "^3.0.2"
@@ -11570,7 +11570,7 @@ glob2base@^0.0.12:
   dependencies:
     find-index "^0.1.1"
 
-glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
+glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2, glob@^7.1.4, glob@^7.1.6:
   version "7.1.6"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.6.tgz#141f33b81a7c2492e125594307480c46679278a6"
   integrity sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==
@@ -11582,7 +11582,7 @@ glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, gl
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.1.7:
+glob@^7.1.3, glob@^7.1.7:
   version "7.1.7"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.7.tgz#3b193e9233f01d42d0b3f78294bbeeb418f94a90"
   integrity sha512-OvD9ENzPLbegENnYP5UUfJIirTg4+XwMWGaQfQTY0JenxNvvIKP3U3/tAQSPIu/lHxXYSZmpXlUHeqAIdKzBLQ==
@@ -15530,9 +15530,9 @@ multicast-dns@^6.0.1:
     thunky "^1.0.2"
 
 mustache@^4.0.1:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/mustache/-/mustache-4.1.0.tgz#8c1b042238a982d2eb2d30efc6c14296ae3f699d"
-  integrity sha512-0FsgP/WVq4mKyjolIyX+Z9Bd+3WS8GOwoUTyKXT5cTYMGeauNTi2HPCwERqseC1IHAy0Z7MDZnJBfjabd4O8GQ==
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/mustache/-/mustache-4.2.0.tgz#e5892324d60a12ec9c2a73359edca52972bf6f64"
+  integrity sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==
 
 mute-stream@~0.0.4:
   version "0.0.8"
