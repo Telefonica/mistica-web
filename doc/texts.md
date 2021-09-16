@@ -22,8 +22,14 @@ These are the customizable texts and their default values:
 - `formCreditCardCvvTooltipAmex`: `'Si es American Express, añade los 4 dígitos del anverso'`
 - `formCreditCardExpirationError`: `'Fecha no válida'`
 - `formCreditCardNumberError`: `'No es un número de tarjeta válido'`
+- `formDateOutOfRangeError`: `'Fecha no permitida'`
 - `formEmailError`: `'Email incorrecto'`
+- `formIbanError`: `'IBAN incorrecto'`
 - `closeButtonLabel`: `'Cerrar'`
+- `formSearchClear`: `'Borrar búsqueda'`
+- `menuLabelSuffix`: `'menú'`
+- `openNavigationMenu`: `'Abrir menú de navegación'`
+- `closeNavigationMenu`: `'Cerrar menú de navegación'`
 
 You can customize them in your page. For example:
 
