@@ -73,16 +73,15 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
     ...rest
 }) => {
     const [isVisible, setIsVisible] = React.useState(false);
-    const caretPositionRef = React.useRef<number>();
+    const caretPositionRef = React.useRef<number>(0);
     const inputRef = React.useRef<HTMLInputElement>(null);
-    const input = inputRef.current;
 
     const processValue = (value: string) => value;
 
     const focus = () => {
         const input = inputRef.current;
         if (input) {
-            if (input.selectionStart) {
+            if (input.selectionStart !== null) {
                 caretPositionRef.current = input.selectionStart;
             }
             input.focus();
@@ -90,11 +89,12 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
     };
 
     React.useEffect(() => {
-        if (input && caretPositionRef.current) {
+        const input = inputRef.current;
+        if (input) {
             input.selectionStart = caretPositionRef.current;
             input.selectionEnd = caretPositionRef.current;
         }
-    }, [isVisible, caretPositionRef, input]);
+    }, [isVisible, caretPositionRef, inputRef]);
 
     const fieldProps = useFieldProps({
         name,
