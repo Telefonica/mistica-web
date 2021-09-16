@@ -43,7 +43,6 @@ const PasswordAdornment: React.FC<{
     };
     return (
         <IconButton
-            dataAttributes={{testid: 'visibility-button'}}
             aria-label={texts.togglePasswordVisibilityLabel}
             onPress={() => {
                 setVisibility(!isVisible);
@@ -77,15 +76,15 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
     const caretPositionRef = React.useRef<number>();
     const inputRef = React.useRef<HTMLInputElement>(null);
     const input = inputRef.current;
-    if (input?.selectionStart) {
-        caretPositionRef.current = input.selectionStart;
-    }
 
     const processValue = (value: string) => value;
 
     const focus = () => {
         const input = inputRef.current;
         if (input) {
+            if (input.selectionStart) {
+                caretPositionRef.current = input.selectionStart;
+            }
             input.focus();
         }
     };

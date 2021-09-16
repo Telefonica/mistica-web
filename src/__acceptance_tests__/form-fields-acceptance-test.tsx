@@ -135,7 +135,7 @@ test.each(STORY_TYPES)('PasswordField (%s)', async (storyType) => {
         // move the caret
         (el as HTMLInputElement).setSelectionRange(6, 6);
     });
-    await page.click(await screen.findByTestId('visibility-button'));
+    await page.click(await screen.findByLabelText('Mostrar u ocultar contraseña'));
 
     await expect((await field).getProperty('selectionStart').then((t) => t.jsonValue())).resolves.toBe(6);
 });
