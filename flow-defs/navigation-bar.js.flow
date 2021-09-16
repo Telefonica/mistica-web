@@ -26,13 +26,25 @@ declare type MainNavigationBarProps = {
   topFixed?: boolean,
 };
 declare export var MainNavigationBar: React.ComponentType<MainNavigationBarProps>;
-declare type NavigationBarProps = {
+declare type NavigationBarCommonProps = {|
   isInverse?: boolean,
   onBack?: () => void,
   title?: string,
   right?: React.Element<any>,
-  topFixed?: boolean,
-};
+|};
+declare type NavigationBarTopFixedProps = {|
+  ...$Exact<NavigationBarCommonProps>,
+  topFixed?: true,
+|};
+declare type NavigationBarNotFixedProps = {|
+  ...$Exact<NavigationBarCommonProps>,
+
+  topFixed: false,
+  paddingX?: number,
+|};
+declare type NavigationBarProps =
+  | NavigationBarTopFixedProps
+  | NavigationBarNotFixedProps;
 declare export var NavigationBar: React.ComponentType<NavigationBarProps>;
 declare type FunnelNavigationBarProps = {
   isInverse?: boolean,
