@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {isElement} from 'react-is';
 import {createUseStyles} from './jss';
 import {Label, HelperText, FieldContainer} from './text-field-components';
 import {isIos, isRunningAcceptanceTest, isChrome, isFirefox} from './utils/platform';
@@ -288,7 +289,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
         );
-        const {platformOverrides} = useTheme();
+        const {colors, platformOverrides} = useTheme();
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
         const hasLabel = !!label || !rest.required;
 
@@ -358,6 +359,21 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             labelStyle = {paddingRight: 36};
         }
 
+        // render icons of disabled fields with neutralLow color
+        const renderIcon = (icon: React.ReactNode) => {
+            if (!rest.disabled) {
+                return icon;
+            }
+            if (!isElement(icon)) {
+                return icon;
+            }
+            if (icon.props.color) {
+                // if a explicit color is set, use it
+                return icon;
+            }
+            return React.cloneElement(icon, {color: colors.neutralLow});
+        };
+
         return (
             <FieldContainer
                 helperText={
@@ -371,7 +387,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                 fullWidth={fullWidth}
                 fieldRef={fieldRef}
             >
-                {startIcon && <div className={classes.startIcon}>{startIcon}</div>}
+                {startIcon && <div className={classes.startIcon}>{renderIcon(startIcon)}</div>}
                 {prefix && <div className={classes.prefix}>{prefix}</div>}
                 {React.createElement(inputComponent || defaultInputElement, {
                     ...inputRefProps,
@@ -417,7 +433,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                         {label}
                     </Label>
                 )}
-                {endIcon && <div className={classes.endIcon}>{endIcon}</div>}
+                {endIcon && <div className={classes.endIcon}>{renderIcon(endIcon)}</div>}
                 {endIconOverlay}
             </FieldContainer>
         );

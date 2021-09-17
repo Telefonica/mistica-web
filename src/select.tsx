@@ -359,8 +359,6 @@ const Select: React.FC<SelectProps> = ({
         },
     };
 
-    const arrowIcon = <IconArrowDown color={disabledProp ? colors.neutralLow : undefined} />;
-
     return shouldUseNative ? (
         <FieldContainer
             helperText={<HelperText error={error} leftText={helperText} />}
@@ -425,7 +423,7 @@ const Select: React.FC<SelectProps> = ({
                 ))}
             </select>
             <div className={classes.arrowDown} aria-hidden>
-                {arrowIcon}
+                <IconArrowDown color={disabledProp ? colors.neutralLow : undefined} />
             </div>
         </FieldContainer>
     ) : (
@@ -440,7 +438,7 @@ const Select: React.FC<SelectProps> = ({
                 <TextFieldBase
                     style={{visibility: 'hidden'}}
                     fullWidth={fullWidth}
-                    endIcon={arrowIcon}
+                    endIcon={<IconArrowDown />}
                     focus={isFocused}
                     label={label}
                     value={value}
