@@ -584,9 +584,9 @@ const cardSnippets: Array<Snippet> = [
         code: `
         <DataCard
             headline={<Tag color={colors.promo}>headline</Tag>}
-            title="title"
-            subtitle="subtitle"
-            description="description"
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
             extra={<Placeholder />}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>

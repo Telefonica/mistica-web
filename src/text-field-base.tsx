@@ -144,7 +144,7 @@ const commonInputStyles = (theme: Theme) => ({
         },
     },
     '&:disabled': {
-        color: theme.colors.border,
+        color: theme.colors.textDisabled,
     },
     boxShadow: 'none', // reset FF red shadow styles for required inputs
 });
