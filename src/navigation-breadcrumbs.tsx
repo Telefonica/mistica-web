@@ -4,7 +4,7 @@ import {useTheme} from './hooks';
 
 const BREADCRUMB_SEPARATOR = ' / ';
 
-type NavigationBreadcrumbsProps = {
+export type NavigationBreadcrumbsProps = {
     title: string;
     breadcrumbs: ReadonlyArray<{
         readonly title: string;

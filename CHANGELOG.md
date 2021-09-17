@@ -1,3 +1,17 @@
+# [10.1.0](https://github.com/Telefonica/mistica-web/compare/v10.0.1...v10.1.0) (2021-09-15)
+
+
+### Bug Fixes
+
+* **NavigationBarActionGroup:** add missing children prop type ([#333](https://github.com/Telefonica/mistica-web/issues/333)) ([a6d1a79](https://github.com/Telefonica/mistica-web/commit/a6d1a79f7a6e9146aaa9fb83634ae8d69f2b50c4))
+* **Select, TextField:** fix label text overflow ([#335](https://github.com/Telefonica/mistica-web/issues/335)) ([2e647b4](https://github.com/Telefonica/mistica-web/commit/2e647b4301f1ace758656c40f9793150bcf19c2e))
+* **types:** review wrong usages of TS React.ReactElement ([#332](https://github.com/Telefonica/mistica-web/issues/332)) ([9ea483f](https://github.com/Telefonica/mistica-web/commit/9ea483f26b0d070fc5237949dba4f2acd68185ff))
+
+
+### Features
+
+* **NavigationBar:** allow custom paddingX when not fixed ([#336](https://github.com/Telefonica/mistica-web/issues/336)) ([b09c6dc](https://github.com/Telefonica/mistica-web/commit/b09c6dc03a8e71c2eb16684c399cc16b55c61513))
+
 ## [10.0.1](https://github.com/Telefonica/mistica-web/compare/v10.0.0...v10.0.1) (2021-09-07)
 
 

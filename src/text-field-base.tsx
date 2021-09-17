@@ -348,6 +348,16 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             ...inputProps,
         };
 
+        let labelStyle = {};
+        const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
+        if (startIcon) {
+            labelStyle = isShrinked
+                ? {left: 48, right: 0, width: 'auto'}
+                : {left: 48, right: 12, width: 'auto'};
+        } else if (endIcon && !isShrinked) {
+            labelStyle = {paddingRight: 36};
+        }
+
         return (
             <FieldContainer
                 helperText={
@@ -396,7 +406,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                 })}
                 {label && (
                     <Label
-                        style={startIcon ? {marginLeft: 48, left: 0} : {}}
+                        style={labelStyle}
                         error={error}
                         forId={id}
                         inputState={inputState}

@@ -52,12 +52,15 @@ const useStyles = createUseStyles((theme) => ({
     selectText: {
         position: 'absolute',
         pointerEvents: 'none',
-        left: 12,
+        left: 12 + 1, // 12 for select paddingLeft and +1 for border
+        right: 48 + 1, // 48 for icon and +1 for border
+        overflow: 'hidden',
         top: ({label}) => (label ? 27 : 17),
         fontSize: 16,
         color: ({disabled}) => (disabled ? theme.colors.textDisabled : theme.colors.textPrimary),
         maxWidth: '100%',
         textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
     },
     optionsContainer: {
         margin: 0,
@@ -66,7 +69,7 @@ const useStyles = createUseStyles((theme) => ({
         position: 'absolute',
         top: ({optionsComputedProps}) => optionsComputedProps.top,
         left: ({optionsComputedProps}) => optionsComputedProps.left,
-        width: ({optionsComputedProps}) => optionsComputedProps.width,
+        minWidth: ({optionsComputedProps}) => optionsComputedProps.width,
         borderRadius: 4,
         boxShadow:
             '0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)',

@@ -59,9 +59,9 @@ export interface OnPressProps extends CommonProps {
     to?: undefined;
 }
 
-type Props = HrefProps | ToProps | OnPressProps;
+export type TextLinkProps = HrefProps | ToProps | OnPressProps;
 
-const TextLink: React.FC<Props> = ({children, className = '', small, ...props}) => {
+const TextLink: React.FC<TextLinkProps> = ({children, className = '', small, ...props}) => {
     const classes = useStyles();
     const isInverse = useIsInverseVariant();
 

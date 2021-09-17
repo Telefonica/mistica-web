@@ -15,7 +15,11 @@ export interface PasswordFieldProps extends CommonFormFieldProps {
 
 const usePasswordAdornmentStyles = createUseStyles(() => ({
     shadow: {
-        ['@media (hover: hover)']: {
+        // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
+        // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.
+        // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
+        // See: https://hover-pointer-media-query.glitch.me/ and https://github.com/mui-org/material-ui/issues/15736
+        ['@media (pointer: fine), (pointer: none)']: {
             '&:hover': {
                 backgroundColor: 'rgba(0, 0, 0, 0.08)',
             },
@@ -69,6 +73,7 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
     ...rest
 }) => {
     const [isVisible, setIsVisible] = React.useState(false);
+    const caretPositionRef = React.useRef<number>(0);
     const inputRef = React.useRef<HTMLInputElement>(null);
 
     const processValue = (value: string) => value;
@@ -76,15 +81,20 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
     const focus = () => {
         const input = inputRef.current;
         if (input) {
+            if (input.selectionStart !== null) {
+                caretPositionRef.current = input.selectionStart;
+            }
             input.focus();
-            // neeeded to place the caret at the end
-            setTimeout(() => {
-                const v = input.value;
-                input.value = '';
-                input.value = v;
-            }, 0);
         }
     };
+
+    React.useEffect(() => {
+        const input = inputRef.current;
+        if (input) {
+            input.selectionStart = caretPositionRef.current;
+            input.selectionEnd = caretPositionRef.current;
+        }
+    }, [isVisible, caretPositionRef, inputRef]);
 
     const fieldProps = useFieldProps({
         name,

@@ -23,6 +23,8 @@ import GridLayout from './grid-layout';
 import ButtonLayout from './button-layout';
 import Stack from './stack';
 
+import type {ButtonProps, ButtonLinkProps} from './button';
+
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) && !isRunningAcceptanceTest(platformOverrides);
 
@@ -140,9 +142,9 @@ const useHapticFeedback = (type?: HapticFeedback) => {
 
 interface FeedbackProps {
     title: string;
-    primaryButton?: React.ReactElement<typeof ButtonPrimary>;
-    secondaryButton?: React.ReactElement<typeof ButtonSecondary>;
-    link?: React.ReactElement<typeof ButtonLink>;
+    primaryButton?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
+    secondaryButton?: React.ReactElement<ButtonProps, typeof ButtonSecondary>;
+    link?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
     description?: string | Array<string>;
     children?: React.ReactNode;
     unstable_inlineInDesktop?: boolean;

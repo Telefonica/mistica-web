@@ -123,7 +123,7 @@ const useDialogStyles = createUseStyles((theme) => ({
 interface DialogProps {
     className?: string;
     title?: string;
-    icon?: React.ReactElement<any>;
+    icon?: React.ReactElement;
     message: string;
     cancelText?: string;
     acceptText?: string;

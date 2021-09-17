@@ -68,7 +68,7 @@ const getTheme = (selectedSkin: string, platform: Platform, colorScheme: ColorSc
     };
 };
 
-const MisticaTemeProvider = ({Story, context}): React.ReactElement => {
+const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
     const searchParams = new URLSearchParams(location.search);
     const [skin, setSkin] = React.useState(getSkin(searchParams));
     const [platform, setPlatform] = React.useState<Platform>(getPlatform(searchParams));
@@ -96,7 +96,7 @@ const MisticaTemeProvider = ({Story, context}): React.ReactElement => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const withMisticaThemeProvider = (Story, context) => <MisticaTemeProvider Story={Story} context={context} />;
+const withMisticaThemeProvider = (Story, context) => <MisticaThemeProvider Story={Story} context={context} />;
 
 const Styles = () => {
     const [fontSize, setFontSize] = React.useState(16);

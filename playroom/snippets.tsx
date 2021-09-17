@@ -56,6 +56,10 @@ const buttonSnippets: Array<Snippet> = [
     {name: 'ButtonDanger', code: '<ButtonDanger onPress={() => {}}>Action</ButtonDanger>'},
     {name: 'ButtonLink', code: '<ButtonLink onPress={() => {}}>Action</ButtonLink>'},
     {
+        name: 'Button with icon',
+        code: '<ButtonPrimary onPress={() => {}}><IconLockClosedRegular color="currentColor" />Action</ButtonPrimary>',
+    },
+    {
         name: 'ButtonLayout',
         code: `
         <ButtonLayout>
@@ -66,7 +70,7 @@ const buttonSnippets: Array<Snippet> = [
     {
         name: 'ButtonFixedFooterLayout',
         code: `
-        <ButtonFixedFooterLayout button={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}>
+        <ButtonFixedFooterLayout button={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>} secondaryButton={<ButtonSecondary onPress={() => {}}>Action</ButtonSecondary>}>
             Some content here
         </ButtonFixedFooterLayout>`,
     },
@@ -584,7 +588,7 @@ const cardSnippets: Array<Snippet> = [
             subtitle="subtitle"
             description="description"
             extra={<Placeholder />}
-            asset={
+            icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
                     <IconShopRegular />
                 </Circle>
@@ -1044,6 +1048,11 @@ export default [
     {group: 'Feedbacks', name: 'Snackbar', code: '<Snackbar message="Some message here" />'},
     ...tooltipSnippets,
     ...layoutSnippets,
+    {
+        group: 'Layout',
+        name: 'FixedFooterLayout',
+        code: '<FixedFooterLayout footer={<Box padding={16}><Placeholder /></Box>}>Some content here</FixedFooterLayout>',
+    },
     {group: 'Spinner', name: 'Spinner', code: '<Spinner />'},
     {group: 'Divider', name: 'Divider', code: '<Divider />'},
     {group: 'LoadingBar', name: 'LoadingBar', code: '<LoadingBar visible />'},
@@ -1084,7 +1093,7 @@ export default [
         name: 'Callout',
         code: `
             <Callout
-                asset={<IconBoxLight />}
+                icon={<IconBoxRegular />}
                 onClose={() => {}}
                 title="Some title"
                 description="This is a description for the callout"

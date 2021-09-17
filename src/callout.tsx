@@ -10,6 +10,8 @@ import classNames from 'classnames';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import Inline from './inline';
 
+import type {ButtonProps, ButtonLinkProps} from './button';
+
 const useStyles = createUseStyles(({colors}) => ({
     container: {
         background: colors.backgroundAlternative,
@@ -42,9 +44,11 @@ type Props = {
     title?: string;
     description: string;
     onClose?: () => void;
-    icon?: React.ReactElement<any>;
-    button?: React.ReactElement<typeof ButtonPrimary> | React.ReactElement<typeof ButtonSecondary>;
-    buttonLink?: React.ReactElement<typeof ButtonLink>;
+    icon?: React.ReactElement;
+    button?:
+        | React.ReactElement<ButtonProps, typeof ButtonPrimary>
+        | React.ReactElement<ButtonProps, typeof ButtonSecondary>;
+    buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
     children?: void;
     'aria-label'?: string;
 };
