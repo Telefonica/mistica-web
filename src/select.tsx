@@ -38,7 +38,7 @@ const useStyles = createUseStyles((theme) => ({
         height: '100%',
         textOverflow: 'ellipsis',
         '&:disabled': {
-            color: theme.colors.border,
+            color: theme.colors.textDisabled,
         },
         appearance: 'none',
         cursor: ({disabled}) => (disabled ? 'initial' : 'pointer'),
@@ -161,7 +161,7 @@ const Select: React.FC<SelectProps> = ({
         setFormError,
         register,
     } = useForm();
-    const {platformOverrides} = useTheme();
+    const {platformOverrides, colors} = useTheme();
 
     const shouldUseNative =
         native || process.env.NODE_ENV === 'test' || isAndroid(platformOverrides) || isIos(platformOverrides);
@@ -359,6 +359,8 @@ const Select: React.FC<SelectProps> = ({
         },
     };
 
+    const arrowIcon = <IconArrowDown color={disabledProp ? colors.neutralLow : undefined} />;
+
     return shouldUseNative ? (
         <FieldContainer
             helperText={<HelperText error={error} leftText={helperText} />}
@@ -423,7 +425,7 @@ const Select: React.FC<SelectProps> = ({
                 ))}
             </select>
             <div className={classes.arrowDown} aria-hidden>
-                <IconArrowDown />
+                {arrowIcon}
             </div>
         </FieldContainer>
     ) : (
@@ -438,7 +440,7 @@ const Select: React.FC<SelectProps> = ({
                 <TextFieldBase
                     style={{visibility: 'hidden'}}
                     fullWidth={fullWidth}
-                    endIcon={<IconArrowDown />}
+                    endIcon={arrowIcon}
                     focus={isFocused}
                     label={label}
                     value={value}
