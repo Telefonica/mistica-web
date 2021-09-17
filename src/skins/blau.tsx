@@ -160,71 +160,85 @@ export const getBlauSkin: GetSkin = () => {
             textAppBarSelected: palette.blauBlueDark,
         },
         darkModeColors: {
-            brand: palette.blauBlue, // this color needs to be in darkModeColors to revert the promient variant
-            appBarBackground: palette.darkModeGrey,
             background: palette.darkModeBlack,
-            backgroundContainer: palette.darkModeGrey,
-            backgroundBrand: palette.darkModeBlack,
-            backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
-            backgroundSkeleton: palette.grey5,
-            backgroundSkeletonInverse: palette.grey5,
-            navigationBarBackground: palette.darkModeBlack,
             backgroundAlternative: palette.darkModeGrey,
+            backgroundBrand: palette.darkModeBlack,
+            backgroundContainer: palette.darkModeGrey,
+            backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
+            backgroundSkeleton: palette.darkModeGrey,
+            backgroundSkeletonInverse: palette.darkModeGrey,
             backgroundFeedbackBottom: palette.darkModeBlack,
+            appBarBackground: palette.darkModeGrey,
+            navigationBarBackground: palette.darkModeBlack,
             skeletonWave: palette.grey5,
+
             borderLight: palette.darkModeBlack,
             border: palette.darkModeGrey,
-            buttonDangerBackgroundDisabled: applyAlpha(palette.white, 0.05),
-            buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.05),
+
+            buttonDangerBackgroundDisabled: palette.darkModeGrey,
+
+            buttonLinkBackgroundSelected: applyAlpha(palette.blauPurple, 0.05),
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.05),
+
             buttonPrimaryBackground: palette.blauBlue,
-            buttonPrimaryBackgroundDisabled: applyAlpha(palette.white, 0.05),
-            buttonPrimaryBackgroundDisabledInverse: applyAlpha(palette.white, 0.05),
+            buttonPrimaryBackgroundDisabled: palette.darkModeGrey,
+            buttonPrimaryBackgroundDisabledInverse: palette.darkModeGrey,
             buttonPrimaryBackgroundInverse: palette.blauBlue,
             buttonPrimaryBackgroundSelected: palette.blauBlueDark,
             buttonPrimaryBackgroundHover: palette.blauBlueDark, // web only
             buttonPrimaryBackgroundSelectedInverse: palette.blauBlueDark,
+
             buttonSecondaryBackground: palette.blauBlue,
-            buttonSecondaryBackgroundDisabled: applyAlpha(palette.white, 0.05),
+            buttonSecondaryBackgroundDisabled: palette.darkModeGrey,
             buttonSecondaryBackgroundSelected: palette.blauBlueDark,
-            buttonSecondaryBorderDisabledInverse: applyAlpha(palette.white, 0.05),
+            buttonSecondaryBorderDisabledInverse: palette.darkModeGrey,
             buttonSecondaryBorderInverse: palette.blauBlue,
             buttonSecondaryBorderSelectedInverse: palette.blauBlueDark,
+            
             textButtonPrimary: palette.grey2,
             textButtonPrimaryDisabled: palette.grey5,
             textButtonPrimaryInverse: palette.grey2,
             textButtonPrimaryInverseDisabled: palette.grey5,
             textButtonPrimaryInverseSelected: palette.grey2,
+            
             textButtonSecondary: palette.grey2,
             textButtonSecondaryDisabled: palette.grey5,
-            textButtonSecondarySelected: palette.grey4,
+            textButtonSecondarySelected: palette.blauBlueDark,
             textButtonSecondaryInverse: palette.grey2,
             textButtonSecondaryInverseDisabled: palette.grey5,
-            textButtonSecondaryInverseSelected: palette.grey4,
-            textLink: palette.blauPurple,
-            textLinkInverse: palette.blauPurple,
+            textButtonSecondaryInverseSelected: palette.blauBlueDark,
+
+            textLink: palette.blauPurpleLight50,
+            textLinkInverse: palette.blauPurpleLight50,
             textLinkDisabled: palette.grey5,
+
             control: palette.grey5,
             controlActivated: palette.blauBlue,
             loadingBar: palette.blauBlue,
-            loadingBarBackground: applyAlpha(palette.white, 0.05),
-            toggleAndroidInactive: palette.grey4, // web only
-            toggleAndroidBackgroundActive: palette.blauBlueLight30, // web only
+            loadingBarBackground: palette.darkModeGrey,
+
+            toggleAndroidInactive: palette.grey5, // web only
+            toggleAndroidBackgroundActive: palette.blauBlue60, // web only
             iosControlKnob: palette.grey2, // web only
+
             divider: applyAlpha(palette.white, 0.05),
             dividerInverse: applyAlpha(palette.white, 0.05),
             navigationBarDivider: palette.darkModeBlack,
-            brandDark: palette.grey5,
+
+            brand: palette.blauBlue, // this color needs to be in darkModeColors to revert the promient variant
+            brandDark: palette.darkModeGrey,
             inverse: palette.grey2,
             neutralHigh: palette.grey2,
-            neutralMedium: palette.grey4,
-            neutralLow: palette.grey5,
+            neutralMedium: palette.grey5,
+            neutralLow: palette.darkModeGrey,
+
             textPrimary: palette.grey2,
             textPrimaryInverse: palette.grey2,
             textSecondary: palette.grey4,
             textSecondaryInverse: palette.grey4,
             textDisabled: palette.grey5,
             textAmount: palette.blauBlue,
+
             textNavigationBarPrimary: palette.grey2,
             textNavigationBarSecondary: palette.grey4,
             textNavigationSearchBarHint: palette.grey4, // iOS
