@@ -38,10 +38,10 @@ export const getColors = (skin) => {
             };
         case 'Blau':
             return {
-                primary: '#0066FF',
-                textPrimary: '#031A34',
+                primary: '#0070BF',
+                textPrimary: '#000000',
                 textPrimaryInverse: '#FFFFFF',
-                textSecondary: '#6E7894',
+                textSecondary: '#808285',
             };
         default:
             throw Error('Unexpected skin: ' + skin);
