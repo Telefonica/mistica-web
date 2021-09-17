@@ -130,6 +130,23 @@ test.each(STORY_TYPES)('PasswordField (%s)', async (storyType) => {
 
     await clearAndType(page, field, 'patata123');
     await expect(getValue(field)).resolves.toBe('patata123');
+
+    await field.evaluate((el) => {
+        // move the caret
+        (el as HTMLInputElement).setSelectionRange(6, 6);
+    });
+    await page.click(await screen.findByLabelText('Mostrar u ocultar contraseña'));
+
+    await expect((await field).getProperty('selectionStart').then((t) => t.jsonValue())).resolves.toBe(6);
+
+    await field.evaluate((el) => {
+        // move the caret
+        (el as HTMLInputElement).setSelectionRange(0, 0);
+    });
+
+    await page.click(await screen.findByLabelText('Mostrar u ocultar contraseña'));
+
+    await expect((await field).getProperty('selectionStart').then((t) => t.jsonValue())).resolves.toBe(0);
 });
 
 test.each(STORY_TYPES)('DateField (%s)', async (storyType) => {

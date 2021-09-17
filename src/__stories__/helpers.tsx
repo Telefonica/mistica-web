@@ -80,7 +80,10 @@ export const fruitEntries = [
     ['Lemon', 'lemon'],
 ];
 
-export const useCheckbox = (label: string, defaultValue = false): [boolean, React.ReactElement<'label'>] => {
+export const useCheckbox = (
+    label: string,
+    defaultValue = false
+): [boolean, React.ReactElement<any, typeof Checkbox>] => {
     const [isEnabled, setIsEnabled] = React.useState(defaultValue);
     const id = useAriaId();
     const checkbox = (

@@ -3,6 +3,7 @@ import {CSSTransition} from 'react-transition-group';
 import classnames from 'classnames';
 import ResponsiveLayout from './responsive-layout';
 import Inline from './inline';
+import Box from './box';
 import Touchable from './touchable';
 import {Text2, Text3} from './text';
 import {useScreenSize, useTheme, useAriaId} from './hooks';
@@ -194,6 +195,10 @@ const useStyles = createUseStyles((theme) => {
             right: 0,
             zIndex: NAVBAR_ZINDEX,
         },
+        notFixedPadding: {
+            width: '100%',
+            padding: ({paddingX}) => `0 ${paddingX}px`,
+        },
         navbar: {
             width: '100%',
             display: 'flex',
@@ -265,6 +270,18 @@ const useStyles = createUseStyles((theme) => {
         },
         burgerMenuExitActive: {
             transform: 'translate(-100vw)',
+        },
+        iconButton: {
+            color: ({isInverse}) => (isInverse ? theme.colors.inverse : theme.colors.neutralHigh),
+            // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
+            // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.
+            // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
+            // See: https://hover-pointer-media-query.glitch.me/ and https://github.com/mui-org/material-ui/issues/15736
+            '@media (pointer: fine), (pointer: none)': {
+                '&:hover': {
+                    color: ({isInverse}) => (isInverse ? theme.colors.inverse : theme.colors.neutralMedium),
+                },
+            },
         },
     };
 });
@@ -432,14 +449,25 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     );
 };
 
-type NavigationBarProps = {
+interface NavigationBarCommonProps {
     isInverse?: boolean;
     onBack?: () => void;
     title?: string;
     right?: React.ReactElement;
-    topFixed?: boolean;
     children?: undefined;
-};
+}
+
+interface NavigationBarTopFixedProps extends NavigationBarCommonProps {
+    topFixed?: true;
+    paddingX?: undefined;
+}
+
+interface NavigationBarNotFixedProps extends NavigationBarCommonProps {
+    topFixed: false;
+    paddingX?: number;
+}
+
+type NavigationBarProps = NavigationBarTopFixedProps | NavigationBarNotFixedProps;
 
 export const NavigationBar: React.FC<NavigationBarProps> = ({
     onBack,
@@ -447,25 +475,37 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     right,
     isInverse = false,
     topFixed = true,
+    paddingX,
 }) => {
-    const classes = useStyles({isInverse});
+    const {texts} = useTheme();
+    const classes = useStyles({isInverse, paddingX: paddingX ?? 0});
     const content = (
         <Inline space="between" alignItems="center">
             <Inline space={24} alignItems="center">
                 {onBack && (
-                    <IconButton aria-label="back" onPress={onBack}>
-                        <IconChevronLeftRegular />
+                    <IconButton
+                        aria-label={texts.backNavigationBar}
+                        onPress={onBack}
+                        className={classes.iconButton}
+                    >
+                        <IconChevronLeftRegular color="currentColor" />
                     </IconButton>
                 )}
-                <Text3 regular>{title}</Text3>
+                <Text3 regular truncate>
+                    {title}
+                </Text3>
             </Inline>
-            {right}
+            <Box paddingLeft={24}>{right}</Box>
         </Inline>
     );
     return (
         <ThemeVariant isInverse={isInverse}>
             <header className={classnames(classes.navbar, {[classes.topFixed]: topFixed})}>
-                {topFixed ? <ResponsiveLayout>{content}</ResponsiveLayout> : content}
+                {topFixed ? (
+                    <ResponsiveLayout>{content}</ResponsiveLayout>
+                ) : (
+                    <div className={classes.notFixedPadding}>{content}</div>
+                )}
             </header>
             {topFixed && <div className={classes.spacer} />}
         </ThemeVariant>

@@ -20,7 +20,7 @@ type Props = {
     backgroundColor?: string;
     backgroundImage?: string;
     size?: number | string;
-    children?: React.ReactElement<any>;
+    children?: React.ReactElement;
 };
 
 const Circle: React.FC<Props> = ({children, backgroundColor, backgroundImage, size}) => {

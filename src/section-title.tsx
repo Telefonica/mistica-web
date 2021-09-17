@@ -6,6 +6,8 @@ import Inline from './inline';
 import {createUseStyles} from './jss';
 import {pxToRem} from './utils/css';
 
+import type {TextLinkProps} from './text-link';
+
 const useStyles = createUseStyles((theme) => ({
     right: {
         display: 'flex',
@@ -21,7 +23,7 @@ const useStyles = createUseStyles((theme) => ({
 type Props = {
     children: React.ReactNode;
     id?: string;
-    right?: React.ReactElement<typeof TextLink>;
+    right?: React.ReactElement<TextLinkProps, typeof TextLink>;
     as?: 'h1' | 'h2' | 'h3' | 'h4';
 };
 
