@@ -92,8 +92,10 @@ const useStyles = createUseStyles((theme) => ({
         padding: '6px 16px',
         height: 48,
         transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-        '&:hover': {
-            backgroundColor: 'rgba(0, 0, 0, 0.08)',
+        [theme.mq.supportsHover]: {
+            '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, 0.08)',
+            },
         },
         display: 'flex',
         alignItems: 'center',

@@ -13,4 +13,5 @@ declare export var createMediaQueries: (x: {
   tabletOrBigger: string,
   tabletOrSmaller: string,
   desktopOrBigger: string,
+  supportsHover: string,
 };

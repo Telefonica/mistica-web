@@ -63,7 +63,7 @@ const useControlsStyles = createUseStyles((theme) => ({
     },
 }));
 
-const useStyles = createUseStyles(() => ({
+const useStyles = createUseStyles((theme) => ({
     floattingButton: {
         position: 'fixed',
         zIndex: 1,
@@ -73,9 +73,11 @@ const useStyles = createUseStyles(() => ({
         left: ({position}) => (position.endsWith('left') ? 0 : 'initial'),
         opacity: 0.3,
         '& *': {outline: 'none'},
-        '&:hover': {
-            opacity: 1,
-            transform: 'rotateZ(45deg)',
+        [theme.mq.supportsHover]: {
+            '&:hover': {
+                opacity: 1,
+                transform: 'rotateZ(45deg)',
+            },
         },
         transition: 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out',
     },

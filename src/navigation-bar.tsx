@@ -226,11 +226,7 @@ const useStyles = createUseStyles((theme) => {
             borderBottom: `2px solid transparent`,
             transition: 'border-color 300ms ease-in-out',
 
-            // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
-            // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.
-            // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
-            // See: https://hover-pointer-media-query.glitch.me/ and https://github.com/mui-org/material-ui/issues/15736
-            '@media (pointer: fine), (pointer: none)': {
+            [theme.mq.supportsHover]: {
                 '&:hover span': {
                     color: ({isInverse}) =>
                         isInverse ? theme.colors.textSecondaryInverse : theme.colors.textSecondary,
@@ -273,11 +269,7 @@ const useStyles = createUseStyles((theme) => {
         },
         iconButton: {
             color: ({isInverse}) => (isInverse ? theme.colors.inverse : theme.colors.neutralHigh),
-            // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
-            // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.
-            // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
-            // See: https://hover-pointer-media-query.glitch.me/ and https://github.com/mui-org/material-ui/issues/15736
-            '@media (pointer: fine), (pointer: none)': {
+            [theme.mq.supportsHover]: {
                 '&:hover': {
                     color: ({isInverse}) => (isInverse ? theme.colors.inverse : theme.colors.neutralMedium),
                 },
@@ -576,11 +568,7 @@ const useNavigationBarActionStyles = createUseStyles((theme) => ({
             color: ({isInverse}) => (isInverse ? theme.colors.inverse : theme.colors.neutralHigh),
         },
 
-        // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
-        // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.
-        // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
-        // See: https://hover-pointer-media-query.glitch.me/ and https://github.com/mui-org/material-ui/issues/15736
-        '@media (pointer: fine), (pointer: none)': {
+        [theme.mq.supportsHover]: {
             '&:hover span': {
                 color: ({isInverse}) =>
                     isInverse ? theme.colors.textSecondaryInverse : theme.colors.textSecondary,
