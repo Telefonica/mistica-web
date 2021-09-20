@@ -24,13 +24,9 @@ import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes, TrackingEvent} from './utils/types';
 
-const useStyles = createUseStyles(({colors}) => ({
+const useStyles = createUseStyles(({colors, mq}) => ({
     hover: {
-        // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
-        // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.
-        // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
-        // See: https://hover-pointer-media-query.glitch.me/ and https://github.com/mui-org/material-ui/issues/15736
-        '@media (pointer: fine), (pointer: none)': {
+        [mq.supportsHover]: {
             '&:hover': {
                 background: ({isInverse}) => (isInverse ? 'initial' : colors.backgroundAlternative),
             },
@@ -538,7 +534,7 @@ const RowContent = (props: RowContentProps) => {
     return (
         <Box
             paddingX={16}
-            className={classNames(classNames(classes.rowContent, classes.hover), classes.hoverDisabled)}
+            className={classNames(classes.rowContent, classes.hover, classes.hoverDisabled)}
             role={role}
         >
             {props.right

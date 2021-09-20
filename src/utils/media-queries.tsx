@@ -16,6 +16,7 @@ export const createMediaQueries = ({
     tabletOrBigger: string;
     tabletOrSmaller: string;
     desktopOrBigger: string;
+    supportsHover: string;
 } => ({
     mobile:
         `@media only screen and (max-width: ${tabletMinWidth - 1}px), ` +
@@ -48,4 +49,10 @@ export const createMediaQueries = ({
         `@media only screen ` +
         `and (min-height: ${desktopOrTabletMinHeight}px) ` +
         `and (min-width: ${desktopMinWidth}px)`,
+
+    // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
+    // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.
+    // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
+    // See: https://hover-pointer-media-query.glitch.me/ and https://github.com/mui-org/material-ui/issues/15736
+    supportsHover: '@media (pointer: fine), (pointer: none)',
 });

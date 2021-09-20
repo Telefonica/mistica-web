@@ -60,8 +60,10 @@ const useStyles = createUseStyles(({colors, mq}) => ({
             }
             return TAB_MAX_WIDTH;
         },
-        '&:hover': {
-            color: colors.textPrimary,
+        [mq.supportsHover]: {
+            '&:hover': {
+                color: colors.textPrimary,
+            },
         },
         fallbacks: {
             maxWidth: TAB_MAX_WIDTH, // max() is not supported by all browsers
