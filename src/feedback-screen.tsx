@@ -20,7 +20,6 @@ import {Text6, Text4} from './text';
 import Box from './box';
 import {Boxed} from './boxed';
 import ResponsiveLayout from './responsive-layout';
-import GridLayout from './grid-layout';
 import Stack from './stack';
 import Inline from './inline';
 
@@ -101,10 +100,6 @@ const useStyles = createUseStyles((theme) => ({
         [theme.mq.desktopOrBigger]: {
             padding: '64px 0 32px',
         },
-    },
-
-    iconContainer: {
-        //TODO: remove if icon size is not controlled
     },
 
     feedbackItems: {
@@ -209,7 +204,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
 
     const feedbackBody = (
         <Stack space={24}>
-            {!!icon && <div className={classes.iconContainer}>{icon}</div>}
+            {icon}
             <Stack space={16} className={classes.feedbackItems}>
                 <Text6 as="h1">{title}</Text6>
                 {normalizedDescription && (
@@ -244,11 +239,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     const feedbackContent = (
         <div className={classes.container}>
             <ResponsiveLayout>
-                <GridLayout
-                    template="6+6"
-                    left={<div className={classes.innerContainer}>{feedbackBody}</div>}
-                    right={null}
-                ></GridLayout>
+                <div className={classes.innerContainer}>{feedbackBody}</div>
             </ResponsiveLayout>
         </div>
     );
