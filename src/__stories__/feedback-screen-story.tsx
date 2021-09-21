@@ -37,6 +37,17 @@ export const Success: StoryComponent = () => (
 );
 Success.storyName = 'SuccessFeedbackScreen';
 
+export const SuccessWithAsset: StoryComponent = () => (
+    <SuccessFeedbackScreen
+        title={defaultTitle}
+        description={defaultDescription}
+        primaryButton={primaryButton}
+        secondaryButton={secondaryButton}
+        imageUrl="https://i.imgur.com/yGFKQOy.png"
+    />
+);
+SuccessWithAsset.storyName = 'SuccessFeedbackScreen (with asset)';
+
 export const Error: StoryComponent = () => (
     <ErrorFeedbackScreen
         title={defaultTitle}
