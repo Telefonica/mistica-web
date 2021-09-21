@@ -208,7 +208,7 @@ const useStyles = createUseStyles((theme) => {
             height: DESKTOP_NAVBAR_HEIGHT,
             padding: '16px 0',
             transition: 'border 300ms',
-            borderBottom: `1px solid ${theme.colors.divider}`,
+            borderBottom: ({withBorder}) => (withBorder ? `1px solid ${theme.colors.divider}` : 'none'),
             borderColor: ({isInverse}) =>
                 isInverse && !theme.isDarkMode ? 'transparent' : theme.colors.divider,
             [theme.mq.tabletOrSmaller]: {
@@ -307,7 +307,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [menuTransitionState, setMenuTransitionState] = React.useState<MenuTransitionState>('closed');
     const menuId = useAriaId();
-    const classes = useStyles({isMenuOpen, isInverse, menuTransitionState});
+    const classes = useStyles({isMenuOpen, isInverse, menuTransitionState, withBorder: true});
     const {isTabletOrSmaller} = useScreenSize();
     const setModalState = useSetModalState();
 
@@ -446,6 +446,7 @@ interface NavigationBarCommonProps {
     onBack?: () => void;
     title?: string;
     right?: React.ReactElement;
+    withBorder?: boolean;
     children?: undefined;
 }
 
@@ -468,9 +469,10 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     isInverse = false,
     topFixed = true,
     paddingX,
+    withBorder = true,
 }) => {
     const {texts} = useTheme();
-    const classes = useStyles({isInverse, paddingX: paddingX ?? 0});
+    const classes = useStyles({isInverse, paddingX: paddingX ?? 0, withBorder});
     const content = (
         <Inline space="between" alignItems="center">
             <Inline space={24} alignItems="center">
@@ -518,7 +520,7 @@ export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
     isInverse = false,
     topFixed = true,
 }) => {
-    const classes = useStyles({isInverse});
+    const classes = useStyles({isInverse, withBorder: true});
     return (
         <ThemeVariant isInverse={isInverse}>
             <header className={classnames(classes.navbar, {[classes.topFixed]: topFixed})}>
