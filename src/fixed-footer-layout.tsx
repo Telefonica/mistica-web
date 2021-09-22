@@ -9,6 +9,13 @@ import {useTopDistance} from './fixed-to-top';
 
 const getScrollDistanceToBottom = () => document.body.scrollHeight - window.innerHeight - window.scrollY;
 
+const waitForSwitchTransitionToStart = (fn: () => void) => {
+    const timeoutId = setTimeout(fn, 0);
+    return {
+        cancel: () => clearTimeout(timeoutId),
+    };
+};
+
 // this high zIndex is needed because the fixed footer must be displayed over
 // the bottom navbar from movistar.es in mobile
 const Z_INDEX = 25;
@@ -98,12 +105,14 @@ const FixedFooterLayout: React.FC<Props> = ({
             {leading: true}
         );
 
+        const transitionAwaiter = waitForSwitchTransitionToStart(checkDisplayShadow);
         addPassiveEventListener(window, 'resize', checkDisplayShadow);
         addPassiveEventListener(window, 'scroll', checkDisplayShadow);
         return () => {
             checkDisplayShadow.cancel();
             removePassiveEventListener(window, 'scroll', checkDisplayShadow);
             removePassiveEventListener(window, 'resize', checkDisplayShadow);
+            transitionAwaiter.cancel();
         };
     }, [children, childrenRef, platformOverrides]);
 
