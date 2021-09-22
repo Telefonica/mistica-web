@@ -2,6 +2,7 @@
 
 import * as React from "react";
 declare export var TopDistanceContext: React.Context<number>;
+declare export var useTopDistance: () => number;
 declare type Props = {
   children: (topDistance: number) => React.Node,
   height: number,
