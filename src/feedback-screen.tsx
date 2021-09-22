@@ -53,9 +53,9 @@ const useStyles = createUseStyles((theme) => ({
     },
     desktopImage: {
         backgroundImage: ({imageUrl}) => `url(${imageUrl})`,
-        backgroundPosition: 'bottom right',
+        backgroundPosition: ({imageFit}) => (imageFit === 'fit' ? 'bottom right' : 'center right'),
         backgroundRepeat: 'no-repeat',
-        backgroundSize: 'contain',
+        backgroundSize: ({imageFit}) => (imageFit === 'fit' ? 'contain' : 'cover'),
         flex: 1,
         maxWidth: 600,
     },
@@ -151,6 +151,7 @@ interface FeedbackProps {
 
 interface AssetFeedbackProps extends FeedbackProps {
     imageUrl?: string;
+    imageFit?: 'fit' | 'fill';
 }
 
 interface FeedbackScreenProps extends AssetFeedbackProps {
@@ -170,6 +171,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     animateText = false,
     unstable_inlineInDesktop,
     imageUrl,
+    imageFit,
     dataAttributes,
 }) => {
     useHapticFeedback(hapticFeedback);
@@ -188,6 +190,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         animateText,
         primaryButton,
         imageUrl,
+        imageFit,
     });
 
     // This trick along with the 100vh measure allows us to perform a first meaningful render on the server side.
@@ -290,6 +293,7 @@ export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = (props) => {
                 icon={skinName === VIVO_SKIN ? <IconSuccessVivo /> : <IcnSuccess />}
                 animateText
                 imageUrl={props.imageUrl}
+                imageFit={props.imageFit}
             />
         </ThemeVariant>
     );
