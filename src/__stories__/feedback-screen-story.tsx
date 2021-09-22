@@ -24,7 +24,7 @@ export default {
     },
 };
 
-type SuccessFeedbackScreenArgs = {imageUrl: string; imageFit: 'fit' | 'fill'};
+type SuccessFeedbackScreenArgs = {imageUrl: string | null; imageFit: 'fit' | 'fill'};
 
 const primaryButton = <ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>;
 
@@ -51,7 +51,7 @@ export const SuccessWithAsset: StoryComponent<SuccessFeedbackScreenArgs> = ({ima
         description={defaultDescription}
         primaryButton={primaryButton}
         secondaryButton={secondaryButton}
-        imageUrl={imageUrl}
+        imageUrl={imageUrl ?? undefined}
         imageFit={imageFit}
     />
 );
@@ -119,7 +119,7 @@ const Navbar = ({top}: {top: number}) => {
     );
 };
 
-type FeedbackScreenArgs = {
+type FeedbackScreenArgs = SuccessFeedbackScreenArgs & {
     title: string;
     primaryButtonText: string;
     secondaryButtonText: string;
@@ -141,6 +141,8 @@ export const FeedbackScreenStory: StoryComponent<FeedbackScreenArgs> = ({
     showIcon,
     withNavbar,
     isInverse,
+    imageUrl,
+    imageFit,
 }) => (
     <FixedToTop height={withNavbar ? 56 : 0}>
         {(top) => (
@@ -152,6 +154,8 @@ export const FeedbackScreenStory: StoryComponent<FeedbackScreenArgs> = ({
                         description={description}
                         animateText={animateText}
                         icon={showIcon ? <IconOrders /> : undefined}
+                        imageUrl={imageUrl ?? undefined}
+                        imageFit={imageFit}
                         primaryButton={
                             primaryButtonText ? (
                                 <ButtonPrimary fake>{primaryButtonText}</ButtonPrimary>
@@ -191,4 +195,6 @@ FeedbackScreenStory.args = {
     showIcon: true,
     withNavbar: true,
     isInverse: false,
+    imageUrl: null,
+    imageFit: 'fit',
 };
