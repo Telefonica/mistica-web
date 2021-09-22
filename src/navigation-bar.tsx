@@ -208,7 +208,7 @@ const useStyles = createUseStyles((theme) => {
             height: DESKTOP_NAVBAR_HEIGHT,
             padding: '16px 0',
             transition: 'border 300ms',
-            borderBottom: `1px solid ${theme.colors.divider}`,
+            borderBottom: ({withBorder}) => (withBorder ? `1px solid ${theme.colors.divider}` : 'none'),
             borderColor: ({isInverse}) =>
                 isInverse && !theme.isDarkMode ? 'transparent' : theme.colors.divider,
             [theme.mq.tabletOrSmaller]: {
@@ -226,11 +226,7 @@ const useStyles = createUseStyles((theme) => {
             borderBottom: `2px solid transparent`,
             transition: 'border-color 300ms ease-in-out',
 
-            // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
-            // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.
-            // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
-            // See: https://hover-pointer-media-query.glitch.me/ and https://github.com/mui-org/material-ui/issues/15736
-            '@media (pointer: fine), (pointer: none)': {
+            [theme.mq.supportsHover]: {
                 '&:hover span': {
                     color: ({isInverse}) =>
                         isInverse ? theme.colors.textSecondaryInverse : theme.colors.textSecondary,
@@ -273,11 +269,7 @@ const useStyles = createUseStyles((theme) => {
         },
         iconButton: {
             color: ({isInverse}) => (isInverse ? theme.colors.inverse : theme.colors.neutralHigh),
-            // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
-            // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.
-            // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
-            // See: https://hover-pointer-media-query.glitch.me/ and https://github.com/mui-org/material-ui/issues/15736
-            '@media (pointer: fine), (pointer: none)': {
+            [theme.mq.supportsHover]: {
                 '&:hover': {
                     color: ({isInverse}) => (isInverse ? theme.colors.inverse : theme.colors.neutralMedium),
                 },
@@ -315,7 +307,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [menuTransitionState, setMenuTransitionState] = React.useState<MenuTransitionState>('closed');
     const menuId = useAriaId();
-    const classes = useStyles({isMenuOpen, isInverse, menuTransitionState});
+    const classes = useStyles({isMenuOpen, isInverse, menuTransitionState, withBorder: true});
     const {isTabletOrSmaller} = useScreenSize();
     const setModalState = useSetModalState();
 
@@ -454,6 +446,7 @@ interface NavigationBarCommonProps {
     onBack?: () => void;
     title?: string;
     right?: React.ReactElement;
+    withBorder?: boolean;
     children?: undefined;
 }
 
@@ -476,9 +469,10 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     isInverse = false,
     topFixed = true,
     paddingX,
+    withBorder = true,
 }) => {
     const {texts} = useTheme();
-    const classes = useStyles({isInverse, paddingX: paddingX ?? 0});
+    const classes = useStyles({isInverse, paddingX: paddingX ?? 0, withBorder});
     const content = (
         <Inline space="between" alignItems="center">
             <Inline space={24} alignItems="center">
@@ -526,7 +520,7 @@ export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
     isInverse = false,
     topFixed = true,
 }) => {
-    const classes = useStyles({isInverse});
+    const classes = useStyles({isInverse, withBorder: true});
     return (
         <ThemeVariant isInverse={isInverse}>
             <header className={classnames(classes.navbar, {[classes.topFixed]: topFixed})}>
@@ -576,11 +570,7 @@ const useNavigationBarActionStyles = createUseStyles((theme) => ({
             color: ({isInverse}) => (isInverse ? theme.colors.inverse : theme.colors.neutralHigh),
         },
 
-        // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
-        // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.
-        // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
-        // See: https://hover-pointer-media-query.glitch.me/ and https://github.com/mui-org/material-ui/issues/15736
-        '@media (pointer: fine), (pointer: none)': {
+        [theme.mq.supportsHover]: {
             '&:hover span': {
                 color: ({isInverse}) =>
                     isInverse ? theme.colors.textSecondaryInverse : theme.colors.textSecondary,

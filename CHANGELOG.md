@@ -1,3 +1,17 @@
+# [10.2.0](https://github.com/Telefonica/mistica-web/compare/v10.1.0...v10.2.0) (2021-09-21)
+
+
+### Bug Fixes
+
+* **form fields:** change disabled color ([#334](https://github.com/Telefonica/mistica-web/issues/334)) ([fdb9f89](https://github.com/Telefonica/mistica-web/commit/fdb9f890677d4fb5e5d6d1a6980efe6287e4d533))
+* **PasswordField:** keep caret position when switching visibility ([#339](https://github.com/Telefonica/mistica-web/issues/339)) ([6d4b67b](https://github.com/Telefonica/mistica-web/commit/6d4b67b3bbfa935936fb456fa97d760af4522b0c))
+* **snippets:** wrong icon prop in Callout ([#337](https://github.com/Telefonica/mistica-web/issues/337)) ([a974a12](https://github.com/Telefonica/mistica-web/commit/a974a128107f7ce46ab9379ebe7155da160f0efc))
+
+
+### Features
+
+* **mq.suportsHover:** include mq for devices that support hover ([#341](https://github.com/Telefonica/mistica-web/issues/341)) ([b6b6389](https://github.com/Telefonica/mistica-web/commit/b6b638965b2253bd813ff42af4ef596949c59120))
+
 # [10.1.0](https://github.com/Telefonica/mistica-web/compare/v10.0.1...v10.1.0) (2021-09-15)
 
 

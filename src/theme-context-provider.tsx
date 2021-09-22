@@ -113,9 +113,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
                 ...dimensions,
                 ...theme.dimensions,
             },
-            mq: theme.mediaQueries
-                ? createMediaQueries(theme.mediaQueries)
-                : createMediaQueries(mediaQueriesConfig),
+            mq: createMediaQueries(theme.mediaQueries ?? mediaQueriesConfig),
             colors,
             Link: theme.Link ?? AnchorLink,
             isDarkMode: isDarkModeEnabled,
