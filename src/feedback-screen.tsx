@@ -151,7 +151,7 @@ interface FeedbackProps {
 
 interface AssetFeedbackProps extends FeedbackProps {
     imageUrl?: string;
-    imageFit?: 'fit' | 'fill';
+    imageFit?: 'fit' | 'fill'; // defaults to 'fill'
 }
 
 interface FeedbackScreenProps extends AssetFeedbackProps {
