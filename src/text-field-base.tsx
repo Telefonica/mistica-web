@@ -146,6 +146,7 @@ const commonInputStyles = (theme: Theme) => ({
     },
     '&:disabled': {
         color: theme.colors.textDisabled,
+        cursor: 'not-allowed',
     },
     boxShadow: 'none', // reset FF red shadow styles for required inputs
 });
@@ -368,7 +369,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                 return icon;
             }
             if (icon.props.color) {
-                // if a explicit color is set, use it
+                // if an explicit color is set, use it
                 return icon;
             }
             return React.cloneElement(icon, {color: colors.neutralLow});
@@ -376,6 +377,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
 
         return (
             <FieldContainer
+                disabled={rest.disabled}
                 helperText={
                     <HelperText
                         error={error}
