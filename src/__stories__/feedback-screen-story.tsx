@@ -16,7 +16,15 @@ export default {
     parameters: {
         fullScreen: true,
     },
+    argTypes: {
+        imageFit: {
+            options: ['fit', 'fill'],
+            control: {type: 'select'},
+        },
+    },
 };
+
+type SuccessFeedbackScreenArgs = {imageUrl: string; imageFit: 'fit' | 'fill'};
 
 const primaryButton = <ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>;
 
@@ -37,16 +45,18 @@ export const Success: StoryComponent = () => (
 );
 Success.storyName = 'SuccessFeedbackScreen';
 
-export const SuccessWithAsset: StoryComponent = () => (
+export const SuccessWithAsset: StoryComponent<SuccessFeedbackScreenArgs> = ({imageUrl, imageFit}) => (
     <SuccessFeedbackScreen
         title={defaultTitle}
         description={defaultDescription}
         primaryButton={primaryButton}
         secondaryButton={secondaryButton}
-        imageUrl="https://i.imgur.com/yGFKQOy.png"
+        imageUrl={imageUrl}
+        imageFit={imageFit}
     />
 );
 SuccessWithAsset.storyName = 'SuccessFeedbackScreen (with asset)';
+SuccessWithAsset.args = {imageUrl: 'https://i.imgur.com/yGFKQOy.png', imageFit: 'fit'};
 
 export const Error: StoryComponent = () => (
     <ErrorFeedbackScreen
