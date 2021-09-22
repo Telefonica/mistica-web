@@ -75,11 +75,9 @@ const useStyles = createUseStyles((theme) => ({
         top: 0,
         left: 0,
         right: 0,
-        [theme.mq.tabletOrSmaller]: {
-            // This extra height is a workaround to make sure the background div is displayed *under* the fixed footer.
-            // Otherwise in some devices (Galaxy S20+) the background and the fixed footer are rendered with some distance between them
-            height: ({contentHeight}) => `calc(${contentHeight} + 1px)`,
-        },
+        // This extra height is a workaround to make sure the background div is displayed *under* the fixed footer.
+        // Otherwise in some devices (Galaxy S20+) the background and the fixed footer are rendered with some distance between them
+        height: ({contentHeight}) => `calc(${contentHeight} + 1px)`,
         background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : theme.colors.background),
     },
 
@@ -97,9 +95,6 @@ const useStyles = createUseStyles((theme) => ({
     innerContainer: {
         textAlign: 'left',
         padding: '64px 8px 16px',
-        [theme.mq.desktopOrBigger]: {
-            padding: '64px 0 32px',
-        },
     },
 
     feedbackItems: {
@@ -270,14 +265,16 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         </>
     ) : (
         <ResponsiveLayout>
-            <Boxed isInverse={isInverse} dataAttributes={dataAttributes}>
-                <div className={classes.desktopContainer}>
-                    <div className={classes.desktopContent}>
-                        <Box padding={64}>{inlineFeedbackBody}</Box>
+            <Box paddingTop={64}>
+                <Boxed isInverse={isInverse} dataAttributes={dataAttributes}>
+                    <div className={classes.desktopContainer}>
+                        <div className={classes.desktopContent}>
+                            <Box padding={64}>{inlineFeedbackBody}</Box>
+                        </div>
+                        {imageUrl && <div className={classes.desktopImage} />}
                     </div>
-                    {imageUrl && <div className={classes.desktopImage} />}
-                </div>
-            </Boxed>
+                </Boxed>
+            </Box>
         </ResponsiveLayout>
     );
 };
