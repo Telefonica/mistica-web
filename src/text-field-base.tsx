@@ -145,6 +145,7 @@ const commonInputStyles = (theme: Theme) => ({
     },
     '&:disabled': {
         color: theme.colors.textDisabled,
+        cursor: 'not-allowed',
     },
     boxShadow: 'none', // reset FF red shadow styles for required inputs
 });
@@ -228,6 +229,7 @@ const useStyles = createUseStyles((theme) => ({
         paddingRight: 16,
         display: 'flex',
         alignItems: 'center',
+        opacity: ({disabled}) => (disabled ? 0.3 : 1),
     },
     startIcon: {
         pointerEvents: 'none', // passthrough click events to the input
@@ -237,6 +239,7 @@ const useStyles = createUseStyles((theme) => ({
         alignItems: 'center',
         height: '100%',
         position: 'absolute',
+        opacity: ({disabled}) => (disabled ? 0.3 : 1),
     },
     prefix: {
         paddingTop: ({hasLabel}) => (hasLabel ? 25 : 16),
@@ -245,7 +248,7 @@ const useStyles = createUseStyles((theme) => ({
         paddingRight: 16,
         display: 'flex',
         alignItems: 'center',
-        color: theme.colors.textSecondary,
+        color: ({disabled}) => (disabled ? theme.colors.textDisabled : theme.colors.textSecondary),
         opacity: ({inputState}) => (inputState === 'default' ? 0 : 1),
         transition: 'opacity 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms',
     },
@@ -307,6 +310,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             prefix,
             multiline,
             type: rest.type,
+            disabled: rest.disabled,
         });
 
         React.useEffect(() => {
@@ -360,6 +364,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
 
         return (
             <FieldContainer
+                disabled={rest.disabled}
                 helperText={
                     <HelperText
                         error={error}

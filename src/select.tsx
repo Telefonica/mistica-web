@@ -25,7 +25,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     select: {
         fontFamily: 'inherit',
-        backgroundColor: theme.colors.backgroundContainer,
+        backgroundColor: 'transparent', // FieldContainer gives the correct background color
         paddingTop: ({label}) => (label ? 24 : 16),
         paddingBottom: ({label}) => (label ? 8 : 16),
         paddingRight: 0,
@@ -41,13 +41,14 @@ const useStyles = createUseStyles((theme) => ({
             color: theme.colors.textDisabled,
         },
         appearance: 'none',
-        cursor: ({disabled}) => (disabled ? 'initial' : 'pointer'),
+        cursor: ({disabled}) => (disabled ? 'inherit' : 'pointer'),
     },
     arrowDown: {
         position: 'absolute',
         right: 16,
         top: 'calc(50% - 12px)',
         pointerEvents: 'none',
+        opacity: ({disabled}) => (disabled ? 0.3 : 1),
     },
     selectText: {
         position: 'absolute',
@@ -163,7 +164,7 @@ const Select: React.FC<SelectProps> = ({
         setFormError,
         register,
     } = useForm();
-    const {platformOverrides, colors} = useTheme();
+    const {platformOverrides} = useTheme();
 
     const shouldUseNative =
         native || process.env.NODE_ENV === 'test' || isAndroid(platformOverrides) || isIos(platformOverrides);
@@ -361,10 +362,9 @@ const Select: React.FC<SelectProps> = ({
         },
     };
 
-    const arrowIcon = <IconArrowDown color={disabledProp ? colors.neutralLow : undefined} />;
-
     return shouldUseNative ? (
         <FieldContainer
+            disabled={disabled}
             helperText={<HelperText error={error} leftText={helperText} />}
             fieldRef={fieldRef}
             fullWidth={fullWidth}
@@ -427,7 +427,7 @@ const Select: React.FC<SelectProps> = ({
                 ))}
             </select>
             <div className={classes.arrowDown} aria-hidden>
-                {arrowIcon}
+                <IconArrowDown />
             </div>
         </FieldContainer>
     ) : (
@@ -442,7 +442,7 @@ const Select: React.FC<SelectProps> = ({
                 <TextFieldBase
                     style={{visibility: 'hidden'}}
                     fullWidth={fullWidth}
-                    endIcon={arrowIcon}
+                    endIcon={<IconArrowDown />}
                     focus={isFocused}
                     label={label}
                     value={value}
