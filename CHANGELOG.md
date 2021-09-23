@@ -1,3 +1,10 @@
+## [10.3.1](https://github.com/Telefonica/mistica-web/compare/v10.3.0...v10.3.1) (2021-09-23)
+
+
+### Bug Fixes
+
+* **NavigationBar:** remove wrong border transition in desktop ([b58d46c](https://github.com/Telefonica/mistica-web/commit/b58d46ccf14c5cebbfe95b5c62d7644525fddb86))
+
 # [10.3.0](https://github.com/Telefonica/mistica-web/compare/v10.2.0...v10.3.0) (2021-09-23)
 
 
