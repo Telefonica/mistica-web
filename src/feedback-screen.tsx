@@ -21,7 +21,6 @@ import Box from './box';
 import {Boxed} from './boxed';
 import ResponsiveLayout from './responsive-layout';
 import Stack from './stack';
-import Inline from './inline';
 
 import type {ButtonProps, ButtonLinkProps} from './button';
 import type {DataAttributes} from './utils/types';
@@ -40,6 +39,8 @@ const initialTextOpacity =
     (platformOverrides: Theme['platformOverrides']) =>
     ({animateText}: {animateText: boolean}) =>
         animateText && areAnimationsSupported(platformOverrides) ? 0 : 1;
+
+const buttonLayoutSpacing = 16;
 
 const useStyles = createUseStyles((theme) => ({
     desktopContainer: {
@@ -105,6 +106,18 @@ const useStyles = createUseStyles((theme) => ({
         },
         maxWidth: 496,
         overflowWrap: 'break-word',
+    },
+    buttonsContainer: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        flexWrap: 'wrap',
+        margin: -buttonLayoutSpacing / 2,
+        '& > *': {
+            margin: buttonLayoutSpacing / 2,
+        },
+    },
+    link: {
+        width: '100%',
     },
 }));
 
@@ -221,11 +234,11 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         <Stack space={24}>
             {feedbackBody}
             {hasButtons && (
-                <Inline space={16} alignItems="center">
+                <div className={classes.buttonsContainer}>
                     {primaryButton}
                     {secondaryButton}
-                    {link}
-                </Inline>
+                    {link && <div className={classes.link}>{link}</div>}
+                </div>
             )}
         </Stack>
     );
