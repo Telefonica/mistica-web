@@ -1,3 +1,11 @@
+# [10.3.0](https://github.com/Telefonica/mistica-web/compare/v10.2.0...v10.3.0) (2021-09-23)
+
+
+### Features
+
+* **Form fields:** change style of disabled fields ([#340](https://github.com/Telefonica/mistica-web/issues/340)) ([bdced15](https://github.com/Telefonica/mistica-web/commit/bdced15cc48fe3baf417f72fc6d453f91d172a62))
+* **NavigationBar:** make border optional ([#342](https://github.com/Telefonica/mistica-web/issues/342)) ([2b63b96](https://github.com/Telefonica/mistica-web/commit/2b63b962b87600f972485eea268721e074047533))
+
 # [10.2.0](https://github.com/Telefonica/mistica-web/compare/v10.1.0...v10.2.0) (2021-09-21)
 
 
