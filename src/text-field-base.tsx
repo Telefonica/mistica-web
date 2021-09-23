@@ -248,7 +248,7 @@ const useStyles = createUseStyles((theme) => ({
         paddingRight: 16,
         display: 'flex',
         alignItems: 'center',
-        color: theme.colors.textSecondary,
+        color: ({disabled}) => (disabled ? theme.colors.textDisabled : theme.colors.textSecondary),
         opacity: ({inputState}) => (inputState === 'default' ? 0 : 1),
         transition: 'opacity 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms',
     },
