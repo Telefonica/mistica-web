@@ -78,7 +78,8 @@ const useStyles = createUseStyles((theme) => ({
         right: 0,
         // This extra height is a workaround to make sure the background div is displayed *under* the fixed footer.
         // Otherwise in some devices (Galaxy S20+) the background and the fixed footer are rendered with some distance between them
-        height: ({contentHeight}) => `calc(${contentHeight} + 1px)`,
+        height: ({contentHeight, hasButtons}) =>
+            hasButtons ? `calc(${contentHeight} + 1px)` : `calc(${contentHeight})`,
         background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : theme.colors.background),
     },
 
@@ -191,6 +192,8 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     const [footerHeight, setFooterHeight] = React.useState(0);
 
     const contentHeightPx = `${windowHeight - footerHeight}px`;
+    const hasButtons = !!primaryButton || !!secondaryButton;
+
     const classes = useStyles({
         isInverse,
         contentHeight: isServerSide ? '100vh' : contentHeightPx,
@@ -199,6 +202,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         primaryButton,
         imageUrl,
         imageFit,
+        hasButtons,
     });
 
     // This trick along with the 100vh measure allows us to perform a first meaningful render on the server side.
@@ -227,8 +231,6 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
             </Stack>
         </Stack>
     );
-
-    const hasButtons = !!primaryButton || !!secondaryButton;
 
     const inlineFeedbackBody = (
         <Stack space={24}>
@@ -259,22 +261,19 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         <>
             {isInverse && <OverscrollColor />}
             <div style={{position: 'relative'}}>
-                {hasButtons ? (
-                    <ButtonFixedFooterLayout
-                        button={primaryButton}
-                        secondaryButton={secondaryButton}
-                        link={link}
-                        footerBgColor={isInverse ? colors.backgroundFeedbackBottom : undefined}
-                        containerBgColor={isInverse ? colors.navigationBarBackground : undefined}
-                        onChangeFooterHeight={setFooterHeight}
-                    >
-                        {feedbackContent}
-                    </ButtonFixedFooterLayout>
-                ) : (
-                    feedbackContent
-                )}
+                <ButtonFixedFooterLayout
+                    isFooterVisible={hasButtons}
+                    button={primaryButton}
+                    secondaryButton={secondaryButton}
+                    link={link}
+                    footerBgColor={isInverse ? colors.backgroundFeedbackBottom : undefined}
+                    containerBgColor={isInverse ? colors.navigationBarBackground : undefined}
+                    onChangeFooterHeight={setFooterHeight}
+                >
+                    {feedbackContent}
+                </ButtonFixedFooterLayout>
             </div>
-            {hasButtons && <div className={classes.backgroundDiv} />}
+            <div className={classes.backgroundDiv} />
         </>
     ) : (
         <ResponsiveLayout>
