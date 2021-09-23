@@ -24,7 +24,7 @@ export default {
     },
 };
 
-type SuccessFeedbackScreenArgs = {imageUrl: string | null; imageFit: 'fit' | 'fill'};
+type SuccessWithAssetArgs = {imageUrl: string | null; imageFit: 'fit' | 'fill'};
 
 const primaryButton = <ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>;
 
@@ -45,7 +45,7 @@ export const Success: StoryComponent = () => (
 );
 Success.storyName = 'SuccessFeedbackScreen';
 
-export const SuccessWithAsset: StoryComponent<SuccessFeedbackScreenArgs> = ({imageUrl, imageFit}) => (
+export const SuccessWithAsset: StoryComponent<SuccessWithAssetArgs> = ({imageUrl, imageFit}) => (
     <SuccessFeedbackScreen
         title={defaultTitle}
         description={defaultDescription}
@@ -119,7 +119,7 @@ const Navbar = ({top}: {top: number}) => {
     );
 };
 
-type FeedbackScreenArgs = SuccessFeedbackScreenArgs & {
+type FeedbackScreenArgs = SuccessWithAssetArgs & {
     title: string;
     primaryButtonText: string;
     secondaryButtonText: string;
@@ -195,6 +195,6 @@ FeedbackScreenStory.args = {
     showIcon: true,
     withNavbar: true,
     isInverse: false,
-    imageUrl: null,
+    imageUrl: '',
     imageFit: 'fit',
 };
