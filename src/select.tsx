@@ -48,6 +48,7 @@ const useStyles = createUseStyles((theme) => ({
         right: 16,
         top: 'calc(50% - 12px)',
         pointerEvents: 'none',
+        opacity: ({disabled}) => (disabled ? 0.3 : 1),
     },
     selectText: {
         position: 'absolute',
@@ -163,7 +164,7 @@ const Select: React.FC<SelectProps> = ({
         setFormError,
         register,
     } = useForm();
-    const {platformOverrides, colors} = useTheme();
+    const {platformOverrides} = useTheme();
 
     const shouldUseNative =
         native || process.env.NODE_ENV === 'test' || isAndroid(platformOverrides) || isIos(platformOverrides);
@@ -426,7 +427,7 @@ const Select: React.FC<SelectProps> = ({
                 ))}
             </select>
             <div className={classes.arrowDown} aria-hidden>
-                <IconArrowDown color={disabledProp ? colors.neutralLow : undefined} />
+                <IconArrowDown />
             </div>
         </FieldContainer>
     ) : (

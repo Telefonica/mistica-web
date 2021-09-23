@@ -91,7 +91,6 @@
         "@types/mkdirp": "^1.0.1",
         "@types/puppeteer": "^5.4.3",
         "@types/react-autosuggest": "^10.1.4",
-        "@types/react-is": "^17.0.2",
         "@types/react-router-dom": "^5.1.7",
         "@types/react-transition-group": "^4.4.1",
         "@types/rimraf": "^3.0.0",
