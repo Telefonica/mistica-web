@@ -1,6 +1,10 @@
 // @flow
 
 import * as React from "react";
+
+/**
+ * @deprecated - to be removed in next major
+ */
 declare type PortalNodesContext = {
   portalNodes: Array<HTMLDivElement>,
   setPortalNodes: (
@@ -9,7 +13,13 @@ declare type PortalNodesContext = {
       | ((prevNodes: Array<HTMLDivElement>) => Array<HTMLDivElement>)
   ) => void,
 };
+/**
+ * @deprecated - to be removed in next major
+ */
 declare export var PortalNodesProvider: React.ComponentType<{}>;
+/**
+ * @deprecated - to be removed in next major
+ */
 declare export var usePortalNodes: () => PortalNodesContext;
 /**
  * This component renders the children elements outside the parent component.

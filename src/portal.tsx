@@ -1,6 +1,9 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 
+/**
+ * @deprecated - to be removed in next major
+ */
 type PortalNodesContext = {
     portalNodes: Array<HTMLDivElement>;
     setPortalNodes: (
@@ -8,11 +11,17 @@ type PortalNodesContext = {
     ) => void;
 };
 
+/**
+ * @deprecated - to be removed in next major
+ */
 const PortalNodes = React.createContext<PortalNodesContext>({
     portalNodes: [],
     setPortalNodes: () => {},
 });
 
+/**
+ * @deprecated - to be removed in next major
+ */
 export const PortalNodesProvider: React.FC = ({children}) => {
     const [portalNodes, setPortalNodes] = React.useState<Array<HTMLDivElement>>([]);
     return (
@@ -27,6 +36,9 @@ export const PortalNodesProvider: React.FC = ({children}) => {
     );
 };
 
+/**
+ * @deprecated - to be removed in next major
+ */
 export const usePortalNodes = (): PortalNodesContext => React.useContext(PortalNodes);
 
 /**
