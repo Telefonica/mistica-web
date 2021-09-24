@@ -7,30 +7,44 @@ export const palette = {
     o2Blue: '#032B5A',
     o2BlueDark: '#04264E',
     o2BlueLight60: '#6C8BAF',
+    o2BlueLight10: '#E6EAEE',
+
     o2SkyBlue: '#0090D0',
     o2SkyBlueDark: '#057DB2',
     o2SkyBlueLight: '#65B4E4',
     o2SkyBlueLight50: '#80C7E7',
     o2SkyBlueLight30: '#D0E8F6',
     o2SkyBlueLight10: '#E9F5FB',
+
     o2DeepSkyBlue: '#7FD4FE',
+
     o2Gem: '#01B7B4',
     o2GemDark: '#099E9B',
     o2GemLight30: '#99E2E1',
+
     o2Yellow: '#FFCC00',
-    o2Green: '#84B50F',
-    o2GreenLight: '#DAE8B7',
+
+    o2Green: '#4D621D',
+    o2GreenLight10: '#F3F8E7',
+
     pepper: '#FF374A',
     pepperDark: '#D73241',
     pepperLight30: '#FFC3C8',
-    orange: '#FF7F41',
-    orangeLight: '#FFD6C2',
+    pepperLight10: '#FFEBED',
+
+    orange: '#73391D',
+    orangeLight10: '#FFF2EC',
+
     coral: '#FF706E',
+
     pink: '#EB3C7D',
+    pinkLight10: '#FDEBF2',
+
     o2GradientFirst: '#102550',
     o2GradientSecond: '#0B4680',
     o2GradientThird: '#0D71AD',
     o2GradientFourth: '#449ED0',
+
     grey1: '#F6F6F6',
     grey2: '#EEEEEE',
     grey3: '#DDDDDD',
@@ -48,6 +62,14 @@ export const getO2ClassicSkin: GetSkin = () => {
     return {
         name: O2_CLASSIC_SKIN,
         colors: {
+            // TAGS
+            tagBackgroundPromo: palette.pinkLight10,
+            tagBackgroundSuccess: palette.o2GreenLight10,
+            tagBackgroundWarning: palette.orangeLight10,
+            tagBackgroundError: palette.pepperLight10,
+            tagBackgroundActive: palette.o2BlueLight10,
+            tagBackgroundInactive: palette.grey1,
+
             // BACKGROUNDS
             appBarBackground: palette.white,
             background: palette.white,

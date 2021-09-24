@@ -8,27 +8,37 @@ export const palette = {
     o2BluePrimaryDark: '#000066',
     o2BluePrimaryLight50: '#808CD2',
     o2BluePrimaryLight10: '#CCD1ED',
+
     o2BlueMid: '#007BB2',
     o2BlueMidDark: '#006795',
+
     o2BlueLight: '#41B6E6',
     o2BlueLight60: '#8DD3F0',
     o2BlueLight30: '#C6E9F7',
     o2BlueLight10: '#ECF7FC',
+
     o2Teal: '#01B7B4',
     o2TealDark: '#099E9B',
     o2TealLight: '#B1E4E3',
-    o2Green: '#91C90E',
-    o2GreenLight: '#DEEEB7',
+
+    o2Green: '#577908',
+    o2GreenLight10: '#F4FAE7',
+
     o2Yellow: '#FEDB00',
-    o2YellowLight: '#FEF6C3',
-    o2Orange: '#FF7F41',
-    o2OrangeLight: '#FFD6C2',
+
+    o2Orange: '#994C27',
+    o2OrangeLight10: '#FFF2EC',
+
     o2Coral: '#FF706E',
     o2Pink: '#CB31A0',
     o2Purple: '#953698',
+    o2PurpleLight10: '#F4EBF5',
+
     pepper: '#FF374A',
     pepperDark: '#D73241',
     pepperLight30: '#FFC3C8',
+    pepperLight10: '#FFEBED',
+
     grey1: '#F6F6F6',
     grey2: '#EEEEEE',
     grey3: '#DDDDDD',
@@ -48,6 +58,14 @@ export const getO2Skin: GetSkin = () => {
     return {
         name: O2_SKIN,
         colors: {
+            // TAGS
+            tagBackgroundPromo: palette.o2PurpleLight10,
+            tagBackgroundSuccess: palette.o2GreenLight10,
+            tagBackgroundWarning: palette.o2OrangeLight10,
+            tagBackgroundError: palette.pepperLight10,
+            tagBackgroundActive: palette.o2BlueLight10,
+            tagBackgroundInactive: palette.grey1,
+
             // BACKGROUNDS
             appBarBackground: palette.white,
             background: palette.white,
@@ -149,7 +167,7 @@ export const getO2Skin: GetSkin = () => {
             textAmount: palette.o2BluePrimary,
 
             // STATES
-            error: palette.pepper,
+            error: palette.pepperDark,
             success: palette.o2Green,
             warning: palette.o2Orange,
 

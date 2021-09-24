@@ -11,16 +11,19 @@ export const palette = {
     telefonicaBlueLight20: '#EBF3FF',
 
     ambar: '#EAC344',
-    ambarLight: '#F5E98A',
+    ambarLight10: '#FDF9EC',
     ambarDark: '#AD842D',
+
     coral: '#E66C64',
-    coralLight: '#E3A19A',
+    coralLight10: '#FCF0EF',
     coralDark: '#912C31',
+
     orchid: '#C466EF',
     orchidDark: '#8A1A93',
-    orchidLight: '#E7C2F8',
+    orchidLight10: '#F9F0FD',
+
     turquoise: '#59C2C9',
-    turquoiseLight: '#67E0E5',
+    turquoiseLight10: '#EEF9FA',
     turquoiseDark: '#3E8A8A',
 
     white: '#FFFFFF',
@@ -43,6 +46,14 @@ export const getTelefonicaSkin: GetSkin = () => {
     return {
         name: TELEFONICA_SKIN,
         colors: {
+            // TAGS
+            tagBackgroundPromo: palette.orchidLight10,
+            tagBackgroundSuccess: palette.turquoiseLight10,
+            tagBackgroundWarning: palette.ambarLight10,
+            tagBackgroundError: palette.coralLight10,
+            tagBackgroundActive: palette.telefonicaBlueLight20,
+            tagBackgroundInactive: palette.grey1,
+
             // BACKGROUNDS
             appBarBackground: palette.white,
             background: palette.white,

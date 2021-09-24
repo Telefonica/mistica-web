@@ -9,17 +9,26 @@ export const palette = {
     movistarBlueLight50: '#80CEF9',
     movistarBlueLight30: '#B3E1FB',
     movistarBlueLight10: '#E6F5FD',
+
     movistarGreen: '#5CB615',
     movistarGreenDark: '#499110',
     movistarGreenLight50: '#ADDA8A',
     movistarGreenLight30: '#CEE9B9',
+    movistarGreenLight10: '#EFF8E8',
+
     pepper: '#FF374A',
     pepperDark: '#D73241',
     pepperLight30: '#FFC3C8',
+    pepperLight10: '#FFEBED',
+
     egg: '#F28D15',
-    eggLight: '#F8D2B3',
+    eggDark: '#6D3F09',
+    eggLight10: '#FEF4E8',
     pink: '#E63780',
+
     purple: '#A13EA1',
+    purpleLight10: '#F6ECF6',
+
     grey1: '#F6F6F6',
     grey2: '#EEEEEE',
     grey3: '#DDDDDD',
@@ -27,11 +36,13 @@ export const palette = {
     grey5: '#86888C',
     grey6: '#313235',
     white: '#FFFFFF',
+
     movistarProminentBlue: '#0B2739',
     movistarProminentBlueDark: '#081F2D',
     movistarProminentBlueLight20: '#CED3D7',
     movistarProminentBlueLight50: '#85939C',
     movistarProminentBlueLight70: '#546874',
+
     // specific for dark mode:
     darkModeBlack: '#191919',
     darkModeGrey: '#242424',
@@ -42,6 +53,14 @@ export const getMovistarSkin: GetSkin = (variant) => {
     const skin: Skin = {
         name: MOVISTAR_SKIN,
         colors: {
+            // TAGS
+            tagBackgroundPromo: palette.purpleLight10,
+            tagBackgroundSuccess: palette.movistarGreenLight10,
+            tagBackgroundWarning: palette.eggLight10,
+            tagBackgroundError: palette.pepperLight10,
+            tagBackgroundActive: palette.movistarBlueLight10,
+            tagBackgroundInactive: palette.grey1,
+
             // BACKGROUNDS
             appBarBackground: palette.white,
             background: palette.white,
@@ -147,7 +166,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             // STATES
             error: palette.pepper,
             success: palette.movistarGreenDark,
-            warning: palette.egg,
+            warning: palette.eggDark,
 
             // BARS TEXTS
             textNavigationBarPrimary: palette.white,

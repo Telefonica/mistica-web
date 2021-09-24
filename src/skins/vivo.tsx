@@ -11,23 +11,33 @@ export const palette = {
     vivoPurpleLight50: '#B280CC',
     vivoPurpleLight20: '#E0CCEB',
     vivoPurpleLight10: '#EFE5F4',
+
     vivoGreen: '#99CC33',
-    vivoGreenDark: '#33A14A',
-    vivoGreenLight40: '#D6EAAD',
+    vivoGreenDark: '#225C3D',
+    vivoGreenLight40: '#D6EAAD', // no se usa?
+    vivoGreenLight10: '#EDF8E8',
+
     vivoBlue: '#00ABDB',
+
     orange: '#FF9900',
-    orangeDark: '#FA6324',
-    orangeLight: '#FFD699',
+    orangeDark: '#A42E20',
+    orangeLight: '#FFD699', // no se usa?
+    orangeLight10: '#FFEFE1',
+
     pink: '#EB3D7D',
+
     pepper: '#CC1F59',
     pepperDark: '#B71D63',
     pepperLight30: '#F7B1CB',
+    pepperLight10: '#FCE4EF',
+
     grey1: '#F6F6F6',
     grey2: '#EEEEEE',
     grey3: '#DDDDDD',
     grey4: '#999999',
     grey5: '#666666',
     grey6: '#000000',
+
     white: '#FFFFFF',
     // specific for dark mode:
     darkModeBlack: '#191919',
@@ -39,6 +49,14 @@ export const getVivoSkin: GetSkin = () => {
     return {
         name: VIVO_SKIN,
         colors: {
+            // TAGS
+            tagBackgroundPromo: palette.vivoPurpleLight10,
+            tagBackgroundSuccess: palette.vivoGreenLight10,
+            tagBackgroundWarning: palette.orangeLight10,
+            tagBackgroundError: palette.pepperLight10,
+            tagBackgroundActive: palette.vivoPurpleLight10,
+            tagBackgroundInactive: palette.grey1,
+
             // BACKGROUNDS
             appBarBackground: palette.white,
             background: palette.white,
