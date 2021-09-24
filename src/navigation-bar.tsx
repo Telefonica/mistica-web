@@ -207,11 +207,12 @@ const useStyles = createUseStyles((theme) => {
                 isInverse ? theme.colors.navigationBarBackground : theme.colors.background,
             height: DESKTOP_NAVBAR_HEIGHT,
             padding: '16px 0',
-            transition: 'border 300ms',
-            borderBottom: ({withBorder}) => (withBorder ? `1px solid ${theme.colors.divider}` : 'none'),
+            borderBottomStyle: 'solid',
+            borderBottomWidth: ({withBorder}) => (withBorder ? 1 : 0),
             borderColor: ({isInverse}) =>
                 isInverse && !theme.isDarkMode ? 'transparent' : theme.colors.divider,
             [theme.mq.tabletOrSmaller]: {
+                transition: 'border-color 300ms',
                 borderColor: ({isMenuOpen, isInverse}) =>
                     isMenuOpen || (isInverse && !theme.isDarkMode) ? 'transparent' : theme.colors.divider,
                 height: MOBILE_NAVBAR_HEIGHT,

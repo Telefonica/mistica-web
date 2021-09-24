@@ -45,7 +45,7 @@ those kind of changes must be evaluated, approved and documented by the `Design 
 ## Documentation and help requests
 
 Is something in our documentation not well explained? Do you need help using a component? Should we create a
-new [Storybook](https://mistica-web.now.sh/) story as example?
+new [Storybook](https://mistica-web.vercel.app/) story as example?
 
 :blue_book:
 [Open an Documentation issue](https://github.com/Telefonica/mistica-web/issues/new?assignees=&labels=documentation&template=documentation-request.md&title=)
