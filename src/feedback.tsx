@@ -24,6 +24,7 @@ import Stack from './stack';
 
 import type {ButtonProps, ButtonLinkProps} from './button';
 import type {DataAttributes} from './utils/types';
+import {Colors} from './skins/types';
 
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) && !isRunningAcceptanceTest(platformOverrides);
@@ -40,9 +41,15 @@ const initialTextOpacity =
     ({animateText}: {animateText: boolean}) =>
         animateText && areAnimationsSupported(platformOverrides) ? 0 : 1;
 
+const checkHasButtons = ({primaryButton, secondaryButton}: FeedbackButtonsProps) =>
+    !!primaryButton || !!secondaryButton;
+
 const buttonLayoutSpacing = 16;
 
 const useStyles = createUseStyles((theme) => ({
+    background: {
+        background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : 'initial'),
+    },
     desktopContainer: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -96,10 +103,10 @@ const useStyles = createUseStyles((theme) => ({
 
     innerContainer: {
         textAlign: 'left',
-        padding: '64px 8px 16px',
+        padding: '64px 8px 0',
     },
 
-    feedbackItems: {
+    feedbackData: {
         animation: animateText(theme.platformOverrides),
         opacity: initialTextOpacity(theme.platformOverrides),
         '& p:not(:first-child)': {
@@ -147,11 +154,64 @@ const useHapticFeedback = (type?: HapticFeedback) => {
     }, [type]);
 };
 
-interface FeedbackProps {
-    title: string;
+const renderFeedbackBody = (
+    {
+        icon,
+        title,
+        description,
+        children,
+    }: Pick<FeedbackScreenProps, 'icon' | 'title' | 'description' | 'children'>,
+    classes: any,
+    colors: Colors
+) => {
+    const normalizedDescription =
+        description && Array.isArray(description)
+            ? description.map((paragraph, i) => <p key={i}>{paragraph}</p>)
+            : description;
+    return (
+        <Stack space={24}>
+            {icon}
+            <Stack space={16} className={classes.feedbackData}>
+                <Text6 as="h1">{title}</Text6>
+                {normalizedDescription && (
+                    <Text4 light color={colors.textSecondary}>
+                        {normalizedDescription}
+                    </Text4>
+                )}
+                {children}
+            </Stack>
+        </Stack>
+    );
+};
+
+const renderInlineFeedbackBody = (
+    feedbackBody: React.ReactNode,
+    {primaryButton, secondaryButton, link}: FeedbackButtonsProps,
+    classes: any
+) => {
+    const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
+    return (
+        <Stack space={24}>
+            {feedbackBody}
+            {hasButtons && (
+                <div className={classes.buttonsContainer}>
+                    {primaryButton}
+                    {secondaryButton}
+                    {link && <div className={classes.link}>{link}</div>}
+                </div>
+            )}
+        </Stack>
+    );
+};
+
+type FeedbackButtonsProps = {
     primaryButton?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
     secondaryButton?: React.ReactElement<ButtonProps, typeof ButtonSecondary>;
     link?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
+};
+
+interface FeedbackProps extends FeedbackButtonsProps {
+    title: string;
     description?: string | Array<string>;
     children?: React.ReactNode;
     unstable_inlineInDesktop?: boolean;
@@ -168,6 +228,7 @@ interface FeedbackScreenProps extends AssetFeedbackProps {
     icon?: React.ReactNode;
     animateText?: boolean;
 }
+
 export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     title,
     description,
@@ -192,7 +253,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     const [footerHeight, setFooterHeight] = React.useState(0);
 
     const contentHeightPx = `${windowHeight - footerHeight}px`;
-    const hasButtons = !!primaryButton || !!secondaryButton;
+    const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
 
     const classes = useStyles({
         isInverse,
@@ -212,37 +273,15 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         setIsServerSide(false);
     }, []);
 
-    const normalizedDescription =
-        description && Array.isArray(description)
-            ? description.map((paragraph, i) => <p key={i}>{paragraph}</p>)
-            : description;
-
-    const feedbackBody = (
-        <Stack space={24}>
-            {icon}
-            <Stack space={16} className={classes.feedbackItems}>
-                <Text6 as="h1">{title}</Text6>
-                {normalizedDescription && (
-                    <Text4 light color={colors.textSecondary}>
-                        {normalizedDescription}
-                    </Text4>
-                )}
-                {children}
-            </Stack>
-        </Stack>
-    );
-
-    const inlineFeedbackBody = (
-        <Stack space={24}>
-            {feedbackBody}
-            {hasButtons && (
-                <div className={classes.buttonsContainer}>
-                    {primaryButton}
-                    {secondaryButton}
-                    {link && <div className={classes.link}>{link}</div>}
-                </div>
-            )}
-        </Stack>
+    const feedbackBody = renderFeedbackBody({icon, title, description, children}, classes, colors);
+    const inlineFeedbackBody = renderInlineFeedbackBody(
+        feedbackBody,
+        {
+            primaryButton,
+            secondaryButton,
+            link,
+        },
+        classes
     );
 
     if (!isTabletOrSmaller && unstable_inlineInDesktop) {
@@ -323,4 +362,64 @@ export const InfoFeedbackScreen: React.FC<FeedbackProps> = (props) => {
     const {skinName} = useTheme();
     const hasIcon = skinName !== VIVO_SKIN;
     return <FeedbackScreen {...props} icon={hasIcon ? <IcnInfo /> : undefined} />;
+};
+
+export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
+    title,
+    description,
+    children,
+    primaryButton,
+    secondaryButton,
+    link,
+    imageUrl,
+    imageFit,
+    dataAttributes,
+}) => {
+    useHapticFeedback('success');
+    const {isTabletOrSmaller} = useScreenSize();
+    const {skinName} = useTheme();
+    const {colors} = useTheme();
+    const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
+
+    const classes = useStyles({
+        isInverse: true,
+        animateText,
+        primaryButton,
+        imageUrl,
+        imageFit,
+        hasButtons,
+    });
+    const icon = skinName === VIVO_SKIN ? <IconSuccessVivo /> : <IcnSuccess />;
+    const feedbackBody = renderFeedbackBody({icon, title, description, children}, classes, colors);
+    const inlineFeedbackBody = renderInlineFeedbackBody(
+        feedbackBody,
+        {
+            primaryButton,
+            secondaryButton,
+            link,
+        },
+        classes
+    );
+
+    return (
+        <ThemeVariant isInverse>
+            {isTabletOrSmaller ? (
+                <ResponsiveLayout className={classes.background}>
+                    <OverscrollColor />
+                    <Box paddingBottom={48}>
+                        <div className={classes.innerContainer}>{inlineFeedbackBody}</div>
+                    </Box>
+                </ResponsiveLayout>
+            ) : (
+                <Boxed isInverse dataAttributes={dataAttributes}>
+                    <div className={classes.desktopContainer}>
+                        <div className={classes.desktopContent}>
+                            <Box padding={64}>{inlineFeedbackBody}</Box>
+                        </div>
+                        {imageUrl && <div className={classes.desktopImage} />}
+                    </div>
+                </Boxed>
+            )}
+        </ThemeVariant>
+    );
 };

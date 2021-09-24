@@ -22,7 +22,8 @@ export {
     ErrorFeedbackScreen,
     InfoFeedbackScreen,
     SuccessFeedbackScreen,
-} from './feedback-screen';
+    SuccessFeedback,
+} from './feedback';
 export {default as IconButton} from './icon-button';
 export {default as Popover} from './popover';
 export {default as FocusTrap} from './focus-trap';
