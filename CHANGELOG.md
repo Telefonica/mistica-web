@@ -1,3 +1,46 @@
+## [10.3.1](https://github.com/Telefonica/mistica-web/compare/v10.3.0...v10.3.1) (2021-09-23)
+
+
+### Bug Fixes
+
+* **NavigationBar:** remove wrong border transition in desktop ([b58d46c](https://github.com/Telefonica/mistica-web/commit/b58d46ccf14c5cebbfe95b5c62d7644525fddb86))
+
+# [10.3.0](https://github.com/Telefonica/mistica-web/compare/v10.2.0...v10.3.0) (2021-09-23)
+
+
+### Features
+
+* **Form fields:** change style of disabled fields ([#340](https://github.com/Telefonica/mistica-web/issues/340)) ([bdced15](https://github.com/Telefonica/mistica-web/commit/bdced15cc48fe3baf417f72fc6d453f91d172a62))
+* **NavigationBar:** make border optional ([#342](https://github.com/Telefonica/mistica-web/issues/342)) ([2b63b96](https://github.com/Telefonica/mistica-web/commit/2b63b962b87600f972485eea268721e074047533))
+
+# [10.2.0](https://github.com/Telefonica/mistica-web/compare/v10.1.0...v10.2.0) (2021-09-21)
+
+
+### Bug Fixes
+
+* **form fields:** change disabled color ([#334](https://github.com/Telefonica/mistica-web/issues/334)) ([fdb9f89](https://github.com/Telefonica/mistica-web/commit/fdb9f890677d4fb5e5d6d1a6980efe6287e4d533))
+* **PasswordField:** keep caret position when switching visibility ([#339](https://github.com/Telefonica/mistica-web/issues/339)) ([6d4b67b](https://github.com/Telefonica/mistica-web/commit/6d4b67b3bbfa935936fb456fa97d760af4522b0c))
+* **snippets:** wrong icon prop in Callout ([#337](https://github.com/Telefonica/mistica-web/issues/337)) ([a974a12](https://github.com/Telefonica/mistica-web/commit/a974a128107f7ce46ab9379ebe7155da160f0efc))
+
+
+### Features
+
+* **mq.suportsHover:** include mq for devices that support hover ([#341](https://github.com/Telefonica/mistica-web/issues/341)) ([b6b6389](https://github.com/Telefonica/mistica-web/commit/b6b638965b2253bd813ff42af4ef596949c59120))
+
+# [10.1.0](https://github.com/Telefonica/mistica-web/compare/v10.0.1...v10.1.0) (2021-09-15)
+
+
+### Bug Fixes
+
+* **NavigationBarActionGroup:** add missing children prop type ([#333](https://github.com/Telefonica/mistica-web/issues/333)) ([a6d1a79](https://github.com/Telefonica/mistica-web/commit/a6d1a79f7a6e9146aaa9fb83634ae8d69f2b50c4))
+* **Select, TextField:** fix label text overflow ([#335](https://github.com/Telefonica/mistica-web/issues/335)) ([2e647b4](https://github.com/Telefonica/mistica-web/commit/2e647b4301f1ace758656c40f9793150bcf19c2e))
+* **types:** review wrong usages of TS React.ReactElement ([#332](https://github.com/Telefonica/mistica-web/issues/332)) ([9ea483f](https://github.com/Telefonica/mistica-web/commit/9ea483f26b0d070fc5237949dba4f2acd68185ff))
+
+
+### Features
+
+* **NavigationBar:** allow custom paddingX when not fixed ([#336](https://github.com/Telefonica/mistica-web/issues/336)) ([b09c6dc](https://github.com/Telefonica/mistica-web/commit/b09c6dc03a8e71c2eb16684c399cc16b55c61513))
+
 ## [10.0.1](https://github.com/Telefonica/mistica-web/compare/v10.0.0...v10.0.1) (2021-09-07)
 
 

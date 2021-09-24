@@ -34,6 +34,7 @@ const TEXTS_ES = {
     menuLabelSuffix: 'menú',
     openNavigationMenu: 'Abrir menú de navegación',
     closeNavigationMenu: 'Cerrar menú de navegación',
+    backNavigationBar: 'Atrás',
 };
 
 const TEXTS_EN: ThemeTexts = {
@@ -63,6 +64,7 @@ const TEXTS_EN: ThemeTexts = {
     menuLabelSuffix: 'menu',
     openNavigationMenu: 'Open navigation menu',
     closeNavigationMenu: 'Close navigation menu',
+    backNavigationBar: 'Back',
 };
 
 const TEXTS_DE: ThemeTexts = {
@@ -92,6 +94,7 @@ const TEXTS_DE: ThemeTexts = {
     menuLabelSuffix: 'Menü',
     openNavigationMenu: 'Navigationsmenü öffnen',
     closeNavigationMenu: 'Navigationsmenü schließen',
+    backNavigationBar: 'Zurück',
 };
 
 const TEXTS_PT: ThemeTexts = {
@@ -121,6 +124,7 @@ const TEXTS_PT: ThemeTexts = {
     menuLabelSuffix: 'menu',
     openNavigationMenu: 'Abrir menu de navegação',
     closeNavigationMenu: 'Fechar menu de navegação',
+    backNavigationBar: 'Voltar',
 };
 
 export const getTexts = (locale: Locale): typeof TEXTS_ES => {
@@ -241,6 +245,7 @@ export type Theme = {
         tabletOrBigger: string;
         tabletOrSmaller: string;
         desktopOrBigger: string;
+        supportsHover: string;
     };
     colors: Colors;
     Link: LinkComponent;

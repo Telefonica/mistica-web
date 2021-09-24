@@ -153,7 +153,7 @@ export const getVivoSkin: GetSkin = () => {
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
             textSecondaryInverse: palette.white,
-            textDisabled: palette.grey3,
+            textDisabled: palette.grey4,
             textAmount: palette.vivoPurple,
 
             // STATES

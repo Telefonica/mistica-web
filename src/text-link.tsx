@@ -13,11 +13,9 @@ const useStyles = createUseStyles((theme) => ({
         display: 'inline-block',
         color: theme.colors.textLink,
         wordBreak: 'break-word',
-        '&:hover': {
-            textDecoration: 'underline',
-            // Revert hover effect in touch devices
-            '@media (pointer: coarse)': {
-                textDecoration: 'initial',
+        [theme.mq.supportsHover]: {
+            '&:hover': {
+                textDecoration: 'underline',
             },
         },
     },
@@ -59,9 +57,9 @@ export interface OnPressProps extends CommonProps {
     to?: undefined;
 }
 
-type Props = HrefProps | ToProps | OnPressProps;
+export type TextLinkProps = HrefProps | ToProps | OnPressProps;
 
-const TextLink: React.FC<Props> = ({children, className = '', small, ...props}) => {
+const TextLink: React.FC<TextLinkProps> = ({children, className = '', small, ...props}) => {
     const classes = useStyles();
     const isInverse = useIsInverseVariant();
 

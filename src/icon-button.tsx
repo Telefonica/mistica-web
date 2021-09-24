@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Touchable from './touchable';
-import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes, TrackingEvent} from './utils/types';
 
@@ -100,7 +99,7 @@ const IconButton: React.FC<Props> = (props) => {
         },
         trackingEvent: props.trackingEvent,
         'aria-live': props['aria-live'],
-        ...getPrefixedDataAttributes(props.dataAttributes),
+        dataAttributes: props.dataAttributes,
     };
 
     if (props.href) {

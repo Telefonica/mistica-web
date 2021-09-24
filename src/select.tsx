@@ -25,7 +25,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     select: {
         fontFamily: 'inherit',
-        backgroundColor: theme.colors.backgroundContainer,
+        backgroundColor: 'transparent', // FieldContainer gives the correct background color
         paddingTop: ({label}) => (label ? 24 : 16),
         paddingBottom: ({label}) => (label ? 8 : 16),
         paddingRight: 0,
@@ -38,26 +38,30 @@ const useStyles = createUseStyles((theme) => ({
         height: '100%',
         textOverflow: 'ellipsis',
         '&:disabled': {
-            color: theme.colors.border,
+            color: theme.colors.textDisabled,
         },
         appearance: 'none',
-        cursor: ({disabled}) => (disabled ? 'initial' : 'pointer'),
+        cursor: ({disabled}) => (disabled ? 'inherit' : 'pointer'),
     },
     arrowDown: {
         position: 'absolute',
         right: 16,
         top: 'calc(50% - 12px)',
         pointerEvents: 'none',
+        opacity: ({disabled}) => (disabled ? 0.3 : 1),
     },
     selectText: {
         position: 'absolute',
         pointerEvents: 'none',
-        left: 12,
+        left: 12 + 1, // 12 for select paddingLeft and +1 for border
+        right: 48 + 1, // 48 for icon and +1 for border
+        overflow: 'hidden',
         top: ({label}) => (label ? 27 : 17),
         fontSize: 16,
         color: ({disabled}) => (disabled ? theme.colors.textDisabled : theme.colors.textPrimary),
         maxWidth: '100%',
         textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
     },
     optionsContainer: {
         margin: 0,
@@ -66,7 +70,7 @@ const useStyles = createUseStyles((theme) => ({
         position: 'absolute',
         top: ({optionsComputedProps}) => optionsComputedProps.top,
         left: ({optionsComputedProps}) => optionsComputedProps.left,
-        width: ({optionsComputedProps}) => optionsComputedProps.width,
+        minWidth: ({optionsComputedProps}) => optionsComputedProps.width,
         borderRadius: 4,
         boxShadow:
             '0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)',
@@ -89,8 +93,10 @@ const useStyles = createUseStyles((theme) => ({
         padding: '6px 16px',
         height: 48,
         transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-        '&:hover': {
-            backgroundColor: 'rgba(0, 0, 0, 0.08)',
+        [theme.mq.supportsHover]: {
+            '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, 0.08)',
+            },
         },
         display: 'flex',
         alignItems: 'center',
@@ -358,6 +364,7 @@ const Select: React.FC<SelectProps> = ({
 
     return shouldUseNative ? (
         <FieldContainer
+            disabled={disabled}
             helperText={<HelperText error={error} leftText={helperText} />}
             fieldRef={fieldRef}
             fullWidth={fullWidth}
