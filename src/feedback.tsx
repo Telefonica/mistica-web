@@ -204,6 +204,29 @@ const renderInlineFeedbackBody = (
     );
 };
 
+const renderFeedbackInDesktop = ({
+    isInverse,
+    inlineFeedbackBody,
+    classes,
+    imageUrl,
+    dataAttributes,
+}: {
+    isInverse: boolean;
+    inlineFeedbackBody: React.ReactNode;
+    classes: any;
+    imageUrl?: string;
+    dataAttributes?: DataAttributes;
+}) => (
+    <Boxed isInverse={isInverse} dataAttributes={dataAttributes}>
+        <div className={classes.desktopContainer}>
+            <div className={classes.desktopContent}>
+                <Box padding={64}>{inlineFeedbackBody}</Box>
+            </div>
+            {imageUrl && <div className={classes.desktopImage} />}
+        </div>
+    </Boxed>
+);
+
 type FeedbackButtonsProps = {
     primaryButton?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
     secondaryButton?: React.ReactElement<ButtonProps, typeof ButtonSecondary>;
@@ -317,14 +340,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     ) : (
         <ResponsiveLayout>
             <Box paddingTop={64}>
-                <Boxed isInverse={isInverse} dataAttributes={dataAttributes}>
-                    <div className={classes.desktopContainer}>
-                        <div className={classes.desktopContent}>
-                            <Box padding={64}>{inlineFeedbackBody}</Box>
-                        </div>
-                        {imageUrl && <div className={classes.desktopImage} />}
-                    </div>
-                </Boxed>
+                {renderFeedbackInDesktop({isInverse, inlineFeedbackBody, classes, imageUrl, dataAttributes})}
             </Box>
         </ResponsiveLayout>
     );
@@ -411,14 +427,13 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
                     </Box>
                 </ResponsiveLayout>
             ) : (
-                <Boxed isInverse dataAttributes={dataAttributes}>
-                    <div className={classes.desktopContainer}>
-                        <div className={classes.desktopContent}>
-                            <Box padding={64}>{inlineFeedbackBody}</Box>
-                        </div>
-                        {imageUrl && <div className={classes.desktopImage} />}
-                    </div>
-                </Boxed>
+                renderFeedbackInDesktop({
+                    isInverse: true,
+                    inlineFeedbackBody,
+                    classes,
+                    imageUrl,
+                    dataAttributes,
+                })
             )}
         </ThemeVariant>
     );
