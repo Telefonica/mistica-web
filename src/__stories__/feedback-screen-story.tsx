@@ -1,10 +1,5 @@
 import * as React from 'react';
-import {
-    ErrorFeedbackScreen,
-    InfoFeedbackScreen,
-    SuccessFeedbackScreen,
-    FeedbackScreen,
-} from '../feedback-screen';
+import {FeedbackScreen} from '../feedback-screen';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from '../button';
 import Stack from '../stack';
 import {ThemeVariant, useIsInverseVariant} from '../theme-variant-context';
@@ -12,7 +7,7 @@ import {useTheme} from '../hooks';
 import {Box, FixedToTop, Text3, Text2} from '..';
 
 export default {
-    title: 'Components/Screens/FeedbackScreen',
+    title: 'Components/Screens/FeedbackScreen/FeedbackScreen',
     parameters: {
         fullScreen: true,
     },
@@ -23,64 +18,6 @@ export default {
         },
     },
 };
-
-type SuccessWithAssetArgs = {imageUrl: string | null; imageFit: 'fit' | 'fill'};
-
-const primaryButton = <ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>;
-
-const secondaryButton = <ButtonSecondary onPress={() => {}}>Action2</ButtonSecondary>;
-
-const linkButton = <ButtonLink onPress={() => {}}>Action2</ButtonLink>;
-
-const defaultTitle = "I'm the title",
-    defaultDescription = "I'm the description";
-
-export const Success: StoryComponent = () => (
-    <SuccessFeedbackScreen
-        title={defaultTitle}
-        description={defaultDescription}
-        primaryButton={primaryButton}
-        secondaryButton={secondaryButton}
-    />
-);
-Success.storyName = 'SuccessFeedbackScreen';
-
-export const SuccessWithAsset: StoryComponent<SuccessWithAssetArgs> = ({imageUrl, imageFit}) => (
-    <SuccessFeedbackScreen
-        title={defaultTitle}
-        description={defaultDescription}
-        primaryButton={primaryButton}
-        secondaryButton={secondaryButton}
-        imageUrl={imageUrl ?? undefined}
-        imageFit={imageFit}
-    />
-);
-SuccessWithAsset.storyName = 'SuccessFeedbackScreen (with asset)';
-SuccessWithAsset.args = {imageUrl: 'https://i.imgur.com/yGFKQOy.png', imageFit: 'fit'};
-
-export const Error: StoryComponent = () => (
-    <ErrorFeedbackScreen
-        title={defaultTitle}
-        description={defaultDescription}
-        primaryButton={primaryButton}
-        link={linkButton}
-    />
-);
-Error.storyName = 'ErrorFeedbackScreen';
-
-export const Info: StoryComponent = () => (
-    <InfoFeedbackScreen title={defaultTitle} description={defaultDescription} primaryButton={primaryButton} />
-);
-Info.storyName = 'InfoFeedbackScreen';
-
-export const multipleParagraphs: StoryComponent = () => (
-    <SuccessFeedbackScreen
-        title={defaultTitle}
-        description={[defaultDescription, "I'm the second paragraph"]}
-        primaryButton={primaryButton}
-        secondaryButton={secondaryButton}
-    />
-);
 
 const IconOrders: React.FC = () => {
     const {inverse, brand} = useTheme().colors;
@@ -119,7 +56,7 @@ const Navbar = ({top}: {top: number}) => {
     );
 };
 
-type FeedbackScreenArgs = SuccessWithAssetArgs & {
+type FeedbackScreenArgs = {
     title: string;
     primaryButtonText: string;
     secondaryButtonText: string;
@@ -129,6 +66,9 @@ type FeedbackScreenArgs = SuccessWithAssetArgs & {
     showIcon: boolean;
     withNavbar: boolean;
     isInverse: boolean;
+    imageUrl: string | null;
+    imageFit: 'fit' | 'fill';
+    multipleParagraphs: boolean;
 };
 
 export const FeedbackScreenStory: StoryComponent<FeedbackScreenArgs> = ({
@@ -137,6 +77,7 @@ export const FeedbackScreenStory: StoryComponent<FeedbackScreenArgs> = ({
     secondaryButtonText,
     linkText,
     description,
+    multipleParagraphs,
     animateText,
     showIcon,
     withNavbar,
@@ -151,7 +92,9 @@ export const FeedbackScreenStory: StoryComponent<FeedbackScreenArgs> = ({
                 <Box paddingTop={withNavbar ? 56 : 0}>
                     <FeedbackScreen
                         title={title}
-                        description={description}
+                        description={
+                            multipleParagraphs ? [description, 'paragraph 2', 'paragraph 3'] : description
+                        }
                         animateText={animateText}
                         icon={showIcon ? <IconOrders /> : undefined}
                         imageUrl={imageUrl ?? undefined}
@@ -191,6 +134,7 @@ FeedbackScreenStory.args = {
     secondaryButtonText: 'Secondary',
     linkText: 'LinkText',
     description: 'Description',
+    multipleParagraphs: false,
     animateText: true,
     showIcon: true,
     withNavbar: true,

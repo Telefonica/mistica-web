@@ -1,0 +1,40 @@
+import * as React from 'react';
+import {SuccessFeedbackScreen} from '../feedback-screen';
+import {ButtonPrimary, ButtonSecondary} from '../button';
+
+export default {
+    title: 'Components/Screens/FeedbackScreen',
+    parameters: {
+        fullScreen: true,
+    },
+    argTypes: {
+        imageFit: {
+            options: ['fit', 'fill'],
+            control: {type: 'select'},
+        },
+    },
+};
+
+type SuccessArgs = {imageUrl: string | null; imageFit: 'fit' | 'fill'; multipleParagraphs: boolean};
+
+const primaryButton = <ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>;
+
+const secondaryButton = <ButtonSecondary onPress={() => {}}>Action2</ButtonSecondary>;
+
+const defaultTitle = "I'm the title",
+    defaultDescription = "I'm the description";
+
+export const Success: StoryComponent<SuccessArgs> = ({imageUrl, imageFit, multipleParagraphs}) => (
+    <SuccessFeedbackScreen
+        title={defaultTitle}
+        description={
+            multipleParagraphs ? [defaultDescription, 'paragraph 2', 'paragraph 3'] : defaultDescription
+        }
+        primaryButton={primaryButton}
+        secondaryButton={secondaryButton}
+        imageUrl={imageUrl ?? undefined}
+        imageFit={imageFit}
+    />
+);
+Success.storyName = 'SuccessFeedbackScreen';
+Success.args = {imageUrl: 'https://i.imgur.com/yGFKQOy.png', imageFit: 'fit', multipleParagraphs: false};

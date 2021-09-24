@@ -4,7 +4,7 @@ import {MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN} from '../skins/constants';
 
 const testableSkins = [MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN];
 const testableDevices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
-const feedbackTypes = ['success', 'success-with-asset', 'error', 'info'];
+const feedbackTypes = ['success', 'error', 'info'];
 
 const cases: Array<[string, string, Device]> = [];
 for (const skin of testableSkins) {
