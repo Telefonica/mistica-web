@@ -16,3 +16,4 @@ export const Info: StoryComponent = () => (
         primaryButton={<ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>}
     />
 );
+Info.storyName = 'InfoFeedbackScreen';
