@@ -12,11 +12,11 @@ export const palette = {
 
     ambar: '#EAC344',
     ambarLight10: '#FDF9EC',
-    ambarDark: '#AD842D',
+    ambarDark: '#775C08',
 
     coral: '#E66C64',
-    coralLight10: '#FCF0EF',
-    coralDark: '#912C31',
+    coralLight10: '#FDF0EF',
+    coralDark: '#D50000',
 
     orchid: '#C466EF',
     orchidDark: '#8A1A93',
@@ -24,7 +24,7 @@ export const palette = {
 
     turquoise: '#59C2C9',
     turquoiseLight10: '#EEF9FA',
-    turquoiseDark: '#3E8A8A',
+    turquoiseDark: '#357479',
 
     white: '#FFFFFF',
     grey1: '#F2F4FF',
@@ -148,7 +148,7 @@ export const getTelefonicaSkin: GetSkin = () => {
             neutralHigh: palette.grey9,
             neutralMedium: palette.grey5,
             neutralLow: palette.grey1,
-            promo: palette.orchid,
+            promo: palette.orchidDark,
             highlight: palette.coralLight,
 
             textPrimary: palette.grey9,
@@ -159,7 +159,7 @@ export const getTelefonicaSkin: GetSkin = () => {
             textAmount: palette.telefonicaBlue,
 
             // STATES
-            error: palette.coral,
+            error: palette.coralDark,
             success: palette.turquoiseDark,
             warning: palette.ambarDark,
 
