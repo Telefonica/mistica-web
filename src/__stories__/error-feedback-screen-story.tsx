@@ -3,7 +3,7 @@ import {ErrorFeedbackScreen} from '../feedback-screen';
 import {ButtonLink, ButtonPrimary} from '../button';
 
 export default {
-    title: 'Components/Screens/FeedbackScreen',
+    title: 'Components/Screens/FeedbackScreen/ErrorFeedbackScreen',
     parameters: {
         fullScreen: true,
     },

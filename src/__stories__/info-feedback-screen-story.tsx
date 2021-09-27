@@ -3,7 +3,7 @@ import {InfoFeedbackScreen} from '../feedback-screen';
 import {ButtonPrimary} from '../button';
 
 export default {
-    title: 'Components/Screens/FeedbackScreen',
+    title: 'Components/Screens/FeedbackScreen/InfoFeedbackScreen',
     parameters: {
         fullScreen: true,
     },
@@ -16,4 +16,3 @@ export const Info: StoryComponent = () => (
         primaryButton={<ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>}
     />
 );
-Info.storyName = 'InfoFeedbackScreen';
