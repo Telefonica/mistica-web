@@ -29,3 +29,9 @@ declare export var removePassiveEventListener: (
 declare export var getPrefixedDataAttributes: (
   attrs?: DataAttributes | void
 ) => DataAttributes;
+declare type ScrollAxis = "X" | "Y";
+declare export var getScrollableParentElement: (
+  el?: HTMLElement | null | void,
+  axis?: ScrollAxis
+) => HTMLElement;
+declare export {};
