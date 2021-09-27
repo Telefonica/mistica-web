@@ -7,7 +7,7 @@ import {useTheme} from '../hooks';
 import {Box, FixedToTop, Text3, Text2} from '..';
 
 export default {
-    title: 'Components/Screens/FeedbackScreen/FeedbackScreen',
+    title: 'Components/Screens/FeedbackScreen',
     parameters: {
         fullScreen: true,
     },

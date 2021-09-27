@@ -17,21 +17,16 @@ export default {
 
 type SuccessArgs = {imageUrl: string | null; imageFit: 'fit' | 'fill'; multipleParagraphs: boolean};
 
-const primaryButton = <ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>;
-
-const secondaryButton = <ButtonSecondary onPress={() => {}}>Action2</ButtonSecondary>;
-
-const defaultTitle = "I'm the title",
-    defaultDescription = "I'm the description";
+const defaultDescription = "I'm the description";
 
 export const Success: StoryComponent<SuccessArgs> = ({imageUrl, imageFit, multipleParagraphs}) => (
     <SuccessFeedbackScreen
-        title={defaultTitle}
+        title="I'm the title"
         description={
             multipleParagraphs ? [defaultDescription, 'paragraph 2', 'paragraph 3'] : defaultDescription
         }
-        primaryButton={primaryButton}
-        secondaryButton={secondaryButton}
+        primaryButton={<ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>}
+        secondaryButton={<ButtonSecondary onPress={() => {}}>Action2</ButtonSecondary>}
         imageUrl={imageUrl ?? undefined}
         imageFit={imageFit}
     />
