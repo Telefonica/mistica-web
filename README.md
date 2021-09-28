@@ -77,10 +77,10 @@ the library. There are multiple settings but the only two mandatory fields are `
 
 ## Components
 
-Explore the components in [Mistica storybook](https://mistica-web.now.sh)
+Explore the components in [Mistica storybook](https://mistica-web.vercel.app)
 
 Start prototyping interfaces with Mistica components in the
-[Mistica playroom](https://mistica-web.now.sh/playroom)
+[Mistica playroom](https://mistica-web.vercel.app/playroom)
 
 ## More docs
 
