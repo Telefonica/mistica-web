@@ -128,10 +128,18 @@ const FixedFooterLayout: React.FC<Props> = ({
                     [classes.withoutFooter]: !isFooterVisible,
                     [classes.shadow]: displayShadow,
                 })}
-                // this style is inline to avoid creating a class that may collide with
-                // other fixed footers during the page animation transition
+                /**
+                 * This style is inline to avoid creating a class that may collide with
+                 * other fixed footers during the page animation transition
+                 */
                 style={{background: isTabletOrSmaller ? footerBgColor || colors.background : undefined}}
                 data-testid={`fixed-footer${isFooterVisible ? '-visible' : '-hidden'}`}
+                /**
+                 * This hints about the position of the fixed element. Other components could select nodes
+                 * with this data attribute to correctly position it while transitioning. For example in
+                 * WebApp's PageTransition (see `switch-transition.js` in webapp repo)
+                 */
+                data-position-fixed="bottom"
             >
                 {isFooterVisible && (
                     <aside style={{height: footerHeight, marginBottom: 'env(safe-area-inset-bottom)'}}>
