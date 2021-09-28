@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ErrorFeedbackScreen} from '../feedback-screen';
+import {ErrorFeedbackScreen} from '../feedback';
 import {ButtonLink, ButtonPrimary} from '../button';
 
 export default {

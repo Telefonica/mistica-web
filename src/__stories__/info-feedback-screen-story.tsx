@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {InfoFeedbackScreen} from '../feedback-screen';
+import {InfoFeedbackScreen} from '../feedback';
 import {ButtonPrimary} from '../button';
 
 export default {
