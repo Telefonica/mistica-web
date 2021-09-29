@@ -150,10 +150,10 @@ const useAppearStatus = (): boolean => {
     // A state to manage the text animation with transitions instead of keyframes
     const [appear, setAppear] = React.useState(false);
 
-    React.useEffect(() => {
-        setTimeout(() => {
+    useIsomorphicLayoutEffect(() => {
+        window.requestAnimationFrame(() => {
             setAppear(true);
-        }, 0);
+        });
     }, []);
 
     return appear;
