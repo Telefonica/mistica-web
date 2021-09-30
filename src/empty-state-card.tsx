@@ -81,7 +81,7 @@ const EmptyStateCard: React.FC<Props> = ({
     if (imageUrl) {
         image = <img className={classes.image} alt="" src={imageUrl} />;
     }
-    if (process.env.NODE_ENV !== 'production' && !button?.props?.small) {
+    if (process.env.NODE_ENV !== 'production' && button && !button?.props?.small) {
         console.error('button property in EmptyStateCard must be a a small Button. Set small prop to true');
     }
     return (
