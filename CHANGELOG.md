@@ -1,3 +1,10 @@
+# [10.4.0](https://github.com/Telefonica/mistica-web/compare/v10.3.1...v10.4.0) (2021-09-30)
+
+
+### Features
+
+* **MediaCard:** make description optional ([#346](https://github.com/Telefonica/mistica-web/issues/346)) ([ce5a653](https://github.com/Telefonica/mistica-web/commit/ce5a653c099e830e7cb60fb1b8ce8db62d8ffa3a))
+
 ## [10.3.1](https://github.com/Telefonica/mistica-web/compare/v10.3.0...v10.3.1) (2021-09-23)
 
 
