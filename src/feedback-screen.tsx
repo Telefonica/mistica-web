@@ -42,6 +42,8 @@ const initialTextOpacity =
 
 const useStyles = createUseStyles((theme) => ({
     container: {
+        /** This value is important, it must be higher than the zIndex from movistar.es bottom navbar (25) */
+        zIndex: 26,
         display: 'flex',
         height: '100%',
         width: '100%',
