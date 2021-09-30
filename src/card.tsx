@@ -28,7 +28,7 @@ type CardContentProps = {
     pretitle?: string;
     title?: string;
     subtitle?: string;
-    description: string;
+    description?: string;
     extra?: React.ReactNode;
     button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
     buttonLink?: React.ReactElement<ButtonProps, typeof ButtonLink>;
@@ -78,9 +78,11 @@ const CardContent: React.FC<CardContentProps> = ({
                             </Stack>
                         </header>
                     )}
-                    <Text2 as="p" regular color={theme.colors.textSecondary}>
-                        {description}
-                    </Text2>
+                    {description && (
+                        <Text2 as="p" regular color={theme.colors.textSecondary}>
+                            {description}
+                        </Text2>
+                    )}
                 </Stack>
                 {extra && <div>{extra}</div>}
             </Stack>
@@ -155,7 +157,7 @@ type MediaCardProps = {
     headline?: string | React.ReactElement<TagProps, typeof Tag>;
     pretitle?: string;
     title?: string;
-    description: string;
+    description?: string;
     extra?: React.ReactNode;
     button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
     buttonLink?: React.ReactElement<ButtonProps, typeof ButtonLink>;
