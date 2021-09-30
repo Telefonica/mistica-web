@@ -19,7 +19,7 @@ declare type MediaCardProps = {
   headline?: string | React.Element<typeof Tag>,
   pretitle?: string,
   title?: string,
-  description: string,
+  description?: string,
   extra?: React.Node,
   button?: React.Element<typeof ButtonPrimary>,
   buttonLink?: React.Element<typeof ButtonLink>,
