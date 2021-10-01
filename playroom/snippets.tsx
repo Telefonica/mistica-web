@@ -134,10 +134,11 @@ const formSnippets: Array<Snippet> = [
     code,
 }));
 
-const feedbackScreenSnippets: Array<Snippet> = [
+const feedbackSnippets: Array<Snippet> = [
     'SuccessFeedbackScreen',
     'ErrorFeedbackScreen',
     'InfoFeedbackScreen',
+    'SuccessFeedback',
 ].map((name) => ({
     group: 'Feedbacks',
     name,
@@ -1044,7 +1045,7 @@ const navigationBarSnippets = [
 export default [
     ...buttonSnippets,
     ...formSnippets,
-    ...feedbackScreenSnippets,
+    ...feedbackSnippets,
     {group: 'Feedbacks', name: 'Snackbar', code: '<Snackbar message="Some message here" />'},
     ...tooltipSnippets,
     ...layoutSnippets,

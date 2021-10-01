@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {SuccessFeedbackScreen} from '../feedback-screen';
+import {SuccessFeedbackScreen} from '../feedback';
 import {ButtonPrimary, ButtonSecondary} from '../button';
 
 export default {

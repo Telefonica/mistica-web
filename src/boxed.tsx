@@ -13,8 +13,9 @@ type StylesProps = {
 
 const useStyles = createUseStyles(({colors, isDarkMode}) => ({
     boxed: {
-        background: ({isInverseInside}: StylesProps) =>
+        backgroundColor: ({isInverseInside}: StylesProps) =>
             isInverseInside && !isDarkMode ? colors.backgroundBrand : colors.backgroundContainer,
+        backgroundClip: ({isInverseInside}: StylesProps) => (isInverseInside ? 'padding-box' : 'border-box'), // for transparent borders, no background is drawn beneath the border.
 
         border: ({isInverseOutside, isInverseInside}: StylesProps) => {
             if (isInverseOutside && !isInverseInside) {
@@ -22,7 +23,7 @@ const useStyles = createUseStyles(({colors, isDarkMode}) => ({
             }
 
             if (isInverseInside) {
-                return 'none';
+                return '1px solid transparent';
             }
 
             return `1px solid ${colors.border}`;

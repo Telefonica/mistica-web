@@ -1,0 +1,39 @@
+// @flow
+
+import * as React from "react";
+import { ButtonPrimary, ButtonSecondary, ButtonLink } from "./button";
+import type { DataAttributes } from "./utils/types";
+declare type HapticFeedback = "error" | "success";
+declare type FeedbackButtonsProps = {
+  primaryButton?: React.Element<typeof ButtonPrimary>,
+  secondaryButton?: React.Element<typeof ButtonSecondary>,
+  link?: React.Element<typeof ButtonLink>,
+};
+declare type FeedbackProps = {|
+  ...$Exact<FeedbackButtonsProps>,
+
+  title: string,
+  description?: string | Array<string>,
+  children?: React.Node,
+  unstable_inlineInDesktop?: boolean,
+  dataAttributes?: DataAttributes,
+|};
+declare type AssetFeedbackProps = {|
+  ...$Exact<FeedbackProps>,
+
+  imageUrl?: string,
+  imageFit?: "fit" | "fill",
+|};
+declare type FeedbackScreenProps = {|
+  ...$Exact<AssetFeedbackProps>,
+
+  hapticFeedback?: HapticFeedback,
+  icon?: React.Node,
+  animateText?: boolean,
+|};
+declare export var FeedbackScreen: React.ComponentType<FeedbackScreenProps>;
+declare export var SuccessFeedbackScreen: React.ComponentType<AssetFeedbackProps>;
+declare export var ErrorFeedbackScreen: React.ComponentType<FeedbackProps>;
+declare export var InfoFeedbackScreen: React.ComponentType<FeedbackProps>;
+declare export var SuccessFeedback: React.ComponentType<AssetFeedbackProps>;
+declare export {};
