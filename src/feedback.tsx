@@ -369,10 +369,11 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
 };
 
 export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = (props) => {
+    const {isTabletOrSmaller} = useScreenSize();
     const {skinName} = useTheme();
 
     return (
-        <ThemeVariant isInverse={!props.unstable_inlineInDesktop}>
+        <ThemeVariant isInverse={!props.unstable_inlineInDesktop || isTabletOrSmaller}>
             <FeedbackScreen
                 {...props}
                 hapticFeedback="success"
