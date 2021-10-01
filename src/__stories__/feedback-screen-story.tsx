@@ -1,10 +1,5 @@
 import * as React from 'react';
-import {
-    ErrorFeedbackScreen,
-    InfoFeedbackScreen,
-    SuccessFeedbackScreen,
-    FeedbackScreen,
-} from '../feedback-screen';
+import {FeedbackScreen} from '../feedback';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from '../button';
 import Stack from '../stack';
 import {ThemeVariant, useIsInverseVariant} from '../theme-variant-context';
@@ -16,50 +11,13 @@ export default {
     parameters: {
         fullScreen: true,
     },
+    argTypes: {
+        imageFit: {
+            options: ['fit', 'fill'],
+            control: {type: 'select'},
+        },
+    },
 };
-
-const primaryButton = <ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>;
-
-const secondaryButton = <ButtonSecondary onPress={() => {}}>Action2</ButtonSecondary>;
-
-const linkButton = <ButtonLink onPress={() => {}}>Action2</ButtonLink>;
-
-const defaultTitle = "I'm the title",
-    defaultDescription = "I'm the description";
-
-export const Success: StoryComponent = () => (
-    <SuccessFeedbackScreen
-        title={defaultTitle}
-        description={defaultDescription}
-        primaryButton={primaryButton}
-        secondaryButton={secondaryButton}
-    />
-);
-Success.storyName = 'SuccessFeedbackScreen';
-
-export const Error: StoryComponent = () => (
-    <ErrorFeedbackScreen
-        title={defaultTitle}
-        description={defaultDescription}
-        primaryButton={primaryButton}
-        link={linkButton}
-    />
-);
-Error.storyName = 'ErrorFeedbackScreen';
-
-export const Info: StoryComponent = () => (
-    <InfoFeedbackScreen title={defaultTitle} description={defaultDescription} primaryButton={primaryButton} />
-);
-Info.storyName = 'InfoFeedbackScreen';
-
-export const multipleParagraphs: StoryComponent = () => (
-    <SuccessFeedbackScreen
-        title={defaultTitle}
-        description={[defaultDescription, "I'm the second paragraph"]}
-        primaryButton={primaryButton}
-        secondaryButton={secondaryButton}
-    />
-);
 
 const IconOrders: React.FC = () => {
     const {inverse, brand} = useTheme().colors;
@@ -108,6 +66,9 @@ type FeedbackScreenArgs = {
     showIcon: boolean;
     withNavbar: boolean;
     isInverse: boolean;
+    imageUrl: string | null;
+    imageFit: 'fit' | 'fill';
+    multipleParagraphs: boolean;
 };
 
 export const FeedbackScreenStory: StoryComponent<FeedbackScreenArgs> = ({
@@ -116,10 +77,13 @@ export const FeedbackScreenStory: StoryComponent<FeedbackScreenArgs> = ({
     secondaryButtonText,
     linkText,
     description,
+    multipleParagraphs,
     animateText,
     showIcon,
     withNavbar,
     isInverse,
+    imageUrl,
+    imageFit,
 }) => (
     <FixedToTop height={withNavbar ? 56 : 0}>
         {(top) => (
@@ -128,9 +92,13 @@ export const FeedbackScreenStory: StoryComponent<FeedbackScreenArgs> = ({
                 <Box paddingTop={withNavbar ? 56 : 0}>
                     <FeedbackScreen
                         title={title}
-                        description={description}
+                        description={
+                            multipleParagraphs ? [description, 'paragraph 2', 'paragraph 3'] : description
+                        }
                         animateText={animateText}
                         icon={showIcon ? <IconOrders /> : undefined}
+                        imageUrl={imageUrl ?? undefined}
+                        imageFit={imageFit}
                         primaryButton={
                             primaryButtonText ? (
                                 <ButtonPrimary fake>{primaryButtonText}</ButtonPrimary>
@@ -166,8 +134,11 @@ FeedbackScreenStory.args = {
     secondaryButtonText: 'Secondary',
     linkText: 'LinkText',
     description: 'Description',
+    multipleParagraphs: false,
     animateText: true,
     showIcon: true,
     withNavbar: true,
     isInverse: false,
+    imageUrl: '',
+    imageFit: 'fit',
 };

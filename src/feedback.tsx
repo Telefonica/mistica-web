@@ -24,25 +24,21 @@ import Stack from './stack';
 
 import type {ButtonProps, ButtonLinkProps} from './button';
 import type {DataAttributes} from './utils/types';
+import {Colors} from './skins/types';
+import classnames from 'classnames';
 
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) && !isRunningAcceptanceTest(platformOverrides);
 
-const animateText =
-    (platformOverrides: Theme['platformOverrides']) =>
-    ({animateText}: {animateText: boolean}) =>
-        animateText && areAnimationsSupported(platformOverrides)
-            ? '$sweepIn 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s forwards'
-            : 'initial';
-
-const initialTextOpacity =
-    (platformOverrides: Theme['platformOverrides']) =>
-    ({animateText}: {animateText: boolean}) =>
-        animateText && areAnimationsSupported(platformOverrides) ? 0 : 1;
+const checkHasButtons = ({primaryButton, secondaryButton}: FeedbackButtonsProps) =>
+    !!primaryButton || !!secondaryButton;
 
 const buttonLayoutSpacing = 16;
 
 const useStyles = createUseStyles((theme) => ({
+    background: {
+        background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : 'initial'),
+    },
     desktopContainer: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -83,31 +79,28 @@ const useStyles = createUseStyles((theme) => ({
         background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : theme.colors.background),
     },
 
-    '@keyframes sweepIn': {
-        '0%': {
-            opacity: 0,
-            transform: 'translate(0, 20px)',
-        },
-        '100%': {
-            opacity: 1,
-            transform: 'translate(0, 0)',
-        },
-    },
-
     innerContainer: {
         textAlign: 'left',
-        padding: '64px 8px 16px',
+        padding: '64px 8px 0',
     },
 
-    feedbackItems: {
-        animation: animateText(theme.platformOverrides),
-        opacity: initialTextOpacity(theme.platformOverrides),
+    feedbackData: {
         '& p:not(:first-child)': {
             marginTop: 16,
         },
         maxWidth: 496,
         overflowWrap: 'break-word',
     },
+    feedbackDataAppear: {opacity: 0, transform: 'translate(0, 20px)'},
+    feedbackDataAppearActive: {
+        transitionProperty: 'opacity, transform',
+        transitionDuration: '0.8s',
+        transitionTimingFunction: 'cubic-bezier(0.215, 0.61, 0.355, 1)',
+        transitionDelay: '0.6s',
+        opacity: 1,
+        transform: 'translate(0, 0)',
+    },
+
     buttonsContainer: {
         display: 'flex',
         justifyContent: 'flex-start',
@@ -147,11 +140,115 @@ const useHapticFeedback = (type?: HapticFeedback) => {
     }, [type]);
 };
 
-interface FeedbackProps {
-    title: string;
+/**
+ * Manage transitions manually in order to reach 'opacity: 1, translate: (0,0)'
+ * even if animations/transitions are disabled by css
+ * (CSSTransition does not work here when running in Storybook)
+ * @returns boolean whether the transition should start
+ */
+const useAppearStatus = (): boolean => {
+    // A state to manage the text animation with transitions instead of keyframes
+    const [appear, setAppear] = React.useState(false);
+
+    useIsomorphicLayoutEffect(() => {
+        window.requestAnimationFrame(() => {
+            setAppear(true);
+        });
+    }, []);
+
+    return appear;
+};
+
+const renderFeedbackBody = (
+    {
+        icon,
+        title,
+        description,
+        children,
+    }: Pick<FeedbackScreenProps, 'icon' | 'title' | 'description' | 'children'>,
+    animateText: boolean,
+    appear: boolean,
+    classes: any,
+    colors: Colors
+) => {
+    const normalizedDescription =
+        description && Array.isArray(description)
+            ? description.map((paragraph, i) => <p key={i}>{paragraph}</p>)
+            : description;
+    return (
+        <Stack space={24}>
+            {icon}
+            <Stack
+                space={16}
+                className={classnames(
+                    classes.feedbackData,
+                    animateText && classes.feedbackDataAppear,
+                    animateText && appear && classes.feedbackDataAppearActive
+                )}
+            >
+                <Text6 as="h1">{title}</Text6>
+                {normalizedDescription && (
+                    <Text4 light color={colors.textSecondary}>
+                        {normalizedDescription}
+                    </Text4>
+                )}
+                {children}
+            </Stack>
+        </Stack>
+    );
+};
+
+const renderInlineFeedbackBody = (
+    feedbackBody: React.ReactNode,
+    {primaryButton, secondaryButton, link}: FeedbackButtonsProps,
+    classes: any
+) => {
+    const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
+    return (
+        <Stack space={24}>
+            {feedbackBody}
+            {hasButtons && (
+                <div className={classes.buttonsContainer}>
+                    {primaryButton}
+                    {secondaryButton}
+                    {link && <div className={classes.link}>{link}</div>}
+                </div>
+            )}
+        </Stack>
+    );
+};
+
+const renderFeedbackInDesktop = ({
+    isInverse,
+    inlineFeedbackBody,
+    classes,
+    imageUrl,
+    dataAttributes,
+}: {
+    isInverse: boolean;
+    inlineFeedbackBody: React.ReactNode;
+    classes: any;
+    imageUrl?: string;
+    dataAttributes?: DataAttributes;
+}) => (
+    <Boxed isInverse={isInverse} dataAttributes={dataAttributes}>
+        <div className={classes.desktopContainer}>
+            <div className={classes.desktopContent}>
+                <Box padding={64}>{inlineFeedbackBody}</Box>
+            </div>
+            {imageUrl && <div className={classes.desktopImage} />}
+        </div>
+    </Boxed>
+);
+
+type FeedbackButtonsProps = {
     primaryButton?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
     secondaryButton?: React.ReactElement<ButtonProps, typeof ButtonSecondary>;
     link?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
+};
+
+interface FeedbackProps extends FeedbackButtonsProps {
+    title: string;
     description?: string | Array<string>;
     children?: React.ReactNode;
     unstable_inlineInDesktop?: boolean;
@@ -168,6 +265,7 @@ interface FeedbackScreenProps extends AssetFeedbackProps {
     icon?: React.ReactNode;
     animateText?: boolean;
 }
+
 export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     title,
     description,
@@ -185,14 +283,14 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
 }) => {
     useHapticFeedback(hapticFeedback);
     const isInverse = useIsInverseVariant();
-    const {colors} = useTheme();
+    const {colors, platformOverrides} = useTheme();
     const windowHeight = useWindowHeight();
     const {isTabletOrSmaller} = useScreenSize();
     const [isServerSide, setIsServerSide] = React.useState(typeof self !== 'undefined');
     const [footerHeight, setFooterHeight] = React.useState(0);
 
     const contentHeightPx = `${windowHeight - footerHeight}px`;
-    const hasButtons = !!primaryButton || !!secondaryButton;
+    const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
 
     const classes = useStyles({
         isInverse,
@@ -205,6 +303,8 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         hasButtons,
     });
 
+    const appear = useAppearStatus();
+
     // This trick along with the 100vh measure allows us to perform a first meaningful render on the server side.
     // We can't use vh on client side because it causes problems with iOS (as sometimes the height is calculated as
     // if there were no OS buttons on bottom): https://bugs.webkit.org/show_bug.cgi?id=141832
@@ -212,37 +312,21 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         setIsServerSide(false);
     }, []);
 
-    const normalizedDescription =
-        description && Array.isArray(description)
-            ? description.map((paragraph, i) => <p key={i}>{paragraph}</p>)
-            : description;
-
-    const feedbackBody = (
-        <Stack space={24}>
-            {icon}
-            <Stack space={16} className={classes.feedbackItems}>
-                <Text6 as="h1">{title}</Text6>
-                {normalizedDescription && (
-                    <Text4 light color={colors.textSecondary}>
-                        {normalizedDescription}
-                    </Text4>
-                )}
-                {children}
-            </Stack>
-        </Stack>
+    const feedbackBody = renderFeedbackBody(
+        {icon, title, description, children},
+        animateText && areAnimationsSupported(platformOverrides),
+        appear,
+        classes,
+        colors
     );
-
-    const inlineFeedbackBody = (
-        <Stack space={24}>
-            {feedbackBody}
-            {hasButtons && (
-                <div className={classes.buttonsContainer}>
-                    {primaryButton}
-                    {secondaryButton}
-                    {link && <div className={classes.link}>{link}</div>}
-                </div>
-            )}
-        </Stack>
+    const inlineFeedbackBody = renderInlineFeedbackBody(
+        feedbackBody,
+        {
+            primaryButton,
+            secondaryButton,
+            link,
+        },
+        classes
     );
 
     if (!isTabletOrSmaller && unstable_inlineInDesktop) {
@@ -278,14 +362,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     ) : (
         <ResponsiveLayout>
             <Box paddingTop={64}>
-                <Boxed isInverse={isInverse} dataAttributes={dataAttributes}>
-                    <div className={classes.desktopContainer}>
-                        <div className={classes.desktopContent}>
-                            <Box padding={64}>{inlineFeedbackBody}</Box>
-                        </div>
-                        {imageUrl && <div className={classes.desktopImage} />}
-                    </div>
-                </Boxed>
+                {renderFeedbackInDesktop({isInverse, inlineFeedbackBody, classes, imageUrl, dataAttributes})}
             </Box>
         </ResponsiveLayout>
     );
@@ -323,4 +400,71 @@ export const InfoFeedbackScreen: React.FC<FeedbackProps> = (props) => {
     const {skinName} = useTheme();
     const hasIcon = skinName !== VIVO_SKIN;
     return <FeedbackScreen {...props} icon={hasIcon ? <IcnInfo /> : undefined} />;
+};
+
+export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
+    title,
+    description,
+    children,
+    primaryButton,
+    secondaryButton,
+    link,
+    imageUrl,
+    imageFit,
+    dataAttributes,
+}) => {
+    useHapticFeedback('success');
+    const {isTabletOrSmaller} = useScreenSize();
+    const {skinName, platformOverrides, colors} = useTheme();
+    const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
+
+    const classes = useStyles({
+        isInverse: true,
+        animateText: true,
+        primaryButton,
+        imageUrl,
+        imageFit,
+        hasButtons,
+    });
+
+    const appear = useAppearStatus();
+
+    const icon = skinName === VIVO_SKIN ? <IconSuccessVivo /> : <IcnSuccess />;
+    const feedbackBody = renderFeedbackBody(
+        {icon, title, description, children},
+        areAnimationsSupported(platformOverrides),
+        appear,
+        classes,
+        colors
+    );
+    const inlineFeedbackBody = renderInlineFeedbackBody(
+        feedbackBody,
+        {
+            primaryButton,
+            secondaryButton,
+            link,
+        },
+        classes
+    );
+
+    return (
+        <ThemeVariant isInverse>
+            {isTabletOrSmaller ? (
+                <ResponsiveLayout className={classes.background}>
+                    <OverscrollColor />
+                    <Box paddingBottom={48}>
+                        <div className={classes.innerContainer}>{inlineFeedbackBody}</div>
+                    </Box>
+                </ResponsiveLayout>
+            ) : (
+                renderFeedbackInDesktop({
+                    isInverse: true,
+                    inlineFeedbackBody,
+                    classes,
+                    imageUrl,
+                    dataAttributes,
+                })
+            )}
+        </ThemeVariant>
+    );
 };
