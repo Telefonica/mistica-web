@@ -71,3 +71,24 @@ export const getPrefixedDataAttributes = (attrs?: DataAttributes): DataAttribute
     }
     return result;
 };
+
+type ScrollAxis = 'X' | 'Y';
+
+const isScrollable = (el: Element, axis: ScrollAxis): boolean => {
+    const overflowKey: 'overflowX' | 'overflowY' = `overflow${axis}`;
+    const overflowValue = window.getComputedStyle(el)[overflowKey];
+    return ['auto', 'scroll', 'overlay'].includes(overflowValue);
+};
+
+export const getScrollableParentElement = (el?: HTMLElement | null, axis: ScrollAxis = 'Y'): HTMLElement => {
+    let result = el?.parentElement;
+    while (result && !isScrollable(result, axis)) {
+        result = result.parentElement;
+    }
+    return result || document.documentElement;
+};
+
+export const getScrollDistanceToBottom = (el: HTMLElement): number =>
+    el.scrollHeight - el.scrollTop - el.clientHeight;
+
+export const hasScroll = (el: HTMLElement): boolean => el.scrollHeight > el.clientHeight;
