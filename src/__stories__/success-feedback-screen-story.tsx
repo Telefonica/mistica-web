@@ -32,4 +32,4 @@ export const Success: StoryComponent<SuccessArgs> = ({imageUrl, imageFit, multip
     />
 );
 Success.storyName = 'SuccessFeedbackScreen';
-Success.args = {imageUrl: 'https://i.imgur.com/yGFKQOy.png', imageFit: 'fit', multipleParagraphs: false};
+Success.args = {imageUrl: 'https://i.imgur.com/k5tDSNx.png', imageFit: 'fit', multipleParagraphs: false};
