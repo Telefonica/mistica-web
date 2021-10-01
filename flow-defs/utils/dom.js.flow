@@ -34,4 +34,6 @@ declare export var getScrollableParentElement: (
   el?: HTMLElement | null | void,
   axis?: ScrollAxis
 ) => HTMLElement;
+declare export var getScrollDistanceToBottom: (el: HTMLElement) => number;
+declare export var hasScroll: (el: HTMLElement) => boolean;
 declare export {};
