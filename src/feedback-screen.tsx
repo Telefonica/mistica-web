@@ -18,12 +18,12 @@ import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {Theme} from './theme';
 import {Text6, Text4} from './text';
 import Box from './box';
+import {Boxed} from './boxed';
 import ResponsiveLayout from './responsive-layout';
-import GridLayout from './grid-layout';
-import ButtonLayout from './button-layout';
 import Stack from './stack';
 
 import type {ButtonProps, ButtonLinkProps} from './button';
+import type {DataAttributes} from './utils/types';
 
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) && !isRunningAcceptanceTest(platformOverrides);
@@ -40,7 +40,26 @@ const initialTextOpacity =
     ({animateText}: {animateText: boolean}) =>
         animateText && areAnimationsSupported(platformOverrides) ? 0 : 1;
 
+const buttonLayoutSpacing = 16;
+
 const useStyles = createUseStyles((theme) => ({
+    desktopContainer: {
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+    desktopContent: {
+        [theme.mq.desktopOrBigger]: {
+            width: '50%',
+        },
+    },
+    desktopImage: {
+        backgroundImage: ({imageUrl}) => `url(${imageUrl})`,
+        backgroundPosition: ({imageFit}) => (imageFit === 'fit' ? 'bottom right' : 'center right'),
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: ({imageFit}) => (imageFit === 'fit' ? 'contain' : 'cover'),
+        flex: 1,
+        maxWidth: 600,
+    },
     container: {
         display: 'flex',
         height: '100%',
@@ -57,18 +76,11 @@ const useStyles = createUseStyles((theme) => ({
         top: 0,
         left: 0,
         right: 0,
-        [theme.mq.tabletOrSmaller]: {
-            // This extra height is a workaround to make sure the background div is displayed *under* the fixed footer.
-            // Otherwise in some devices (Galaxy S20+) the background and the fixed footer are rendered with some distance between them
-            height: ({contentHeight}) => `calc(${contentHeight} + 1px)`,
-        },
+        // This extra height is a workaround to make sure the background div is displayed *under* the fixed footer.
+        // Otherwise in some devices (Galaxy S20+) the background and the fixed footer are rendered with some distance between them
+        height: ({contentHeight, hasButtons}) =>
+            hasButtons ? `calc(${contentHeight} + 1px)` : `calc(${contentHeight})`,
         background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : theme.colors.background),
-    },
-
-    footer: {
-        [theme.mq.desktopOrBigger]: {
-            padding: '0px 32px',
-        },
     },
 
     '@keyframes sweepIn': {
@@ -85,33 +97,28 @@ const useStyles = createUseStyles((theme) => ({
     innerContainer: {
         textAlign: 'left',
         padding: '64px 8px 16px',
-        [theme.mq.desktopOrBigger]: {
-            padding: '64px 0 32px',
+    },
+
+    feedbackItems: {
+        animation: animateText(theme.platformOverrides),
+        opacity: initialTextOpacity(theme.platformOverrides),
+        '& p:not(:first-child)': {
+            marginTop: 16,
+        },
+        maxWidth: 496,
+        overflowWrap: 'break-word',
+    },
+    buttonsContainer: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        flexWrap: 'wrap',
+        margin: -buttonLayoutSpacing / 2,
+        '& > *': {
+            margin: buttonLayoutSpacing / 2,
         },
     },
-
-    iconContainer: {
-        marginBottom: 24,
-    },
-
-    title: {
-        animation: animateText(theme.platformOverrides),
-        opacity: initialTextOpacity(theme.platformOverrides),
-    },
-
-    description: {
-        animation: animateText(theme.platformOverrides),
-        opacity: initialTextOpacity(theme.platformOverrides),
-        '& p': {
-            marginTop: 0,
-            marginBottom: 16,
-        },
-    },
-
-    childrenContainer: {
-        marginTop: 16,
-        animation: animateText(theme.platformOverrides),
-        opacity: initialTextOpacity(theme.platformOverrides),
+    link: {
+        width: '100%',
     },
 }));
 
@@ -148,14 +155,19 @@ interface FeedbackProps {
     description?: string | Array<string>;
     children?: React.ReactNode;
     unstable_inlineInDesktop?: boolean;
+    dataAttributes?: DataAttributes;
 }
 
-interface FeedbackScreenProps extends FeedbackProps {
+interface AssetFeedbackProps extends FeedbackProps {
+    imageUrl?: string;
+    imageFit?: 'fit' | 'fill'; // defaults to 'fill'
+}
+
+interface FeedbackScreenProps extends AssetFeedbackProps {
     hapticFeedback?: HapticFeedback;
     icon?: React.ReactNode;
     animateText?: boolean;
 }
-
 export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     title,
     description,
@@ -167,6 +179,9 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     icon,
     animateText = false,
     unstable_inlineInDesktop,
+    imageUrl,
+    imageFit,
+    dataAttributes,
 }) => {
     useHapticFeedback(hapticFeedback);
     const isInverse = useIsInverseVariant();
@@ -177,12 +192,17 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     const [footerHeight, setFooterHeight] = React.useState(0);
 
     const contentHeightPx = `${windowHeight - footerHeight}px`;
+    const hasButtons = !!primaryButton || !!secondaryButton;
+
     const classes = useStyles({
         isInverse,
         contentHeight: isServerSide ? '100vh' : contentHeightPx,
         footerHeight,
         animateText,
         primaryButton,
+        imageUrl,
+        imageFit,
+        hasButtons,
     });
 
     // This trick along with the 100vh measure allows us to perform a first meaningful render on the server side.
@@ -198,85 +218,91 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
             : description;
 
     const feedbackBody = (
-        <>
-            {!!icon && <div className={classes.iconContainer}>{icon}</div>}
-            <div className={classes.title}>
+        <Stack space={24}>
+            {icon}
+            <Stack space={16} className={classes.feedbackItems}>
                 <Text6 as="h1">{title}</Text6>
-            </div>
-            {normalizedDescription && (
-                <Box paddingTop={16} className={classes.description}>
+                {normalizedDescription && (
                     <Text4 light color={colors.textSecondary}>
                         {normalizedDescription}
                     </Text4>
-                </Box>
+                )}
+                {children}
+            </Stack>
+        </Stack>
+    );
+
+    const inlineFeedbackBody = (
+        <Stack space={24}>
+            {feedbackBody}
+            {hasButtons && (
+                <div className={classes.buttonsContainer}>
+                    {primaryButton}
+                    {secondaryButton}
+                    {link && <div className={classes.link}>{link}</div>}
+                </div>
             )}
-            {children && <div className={classes.childrenContainer}>{children}</div>}
-        </>
+        </Stack>
     );
 
     if (!isTabletOrSmaller && unstable_inlineInDesktop) {
-        return (
-            <Stack space={32}>
-                <>{feedbackBody}</>
-                <ButtonLayout link={link}>
-                    {primaryButton}
-                    {secondaryButton}
-                </ButtonLayout>
-            </Stack>
-        );
+        return inlineFeedbackBody;
     }
 
     const feedbackContent = (
         <div className={classes.container}>
             <ResponsiveLayout>
-                <GridLayout
-                    template="6+6"
-                    left={<div className={classes.innerContainer}>{feedbackBody}</div>}
-                    right={null}
-                ></GridLayout>
+                <div className={classes.innerContainer}>{feedbackBody}</div>
             </ResponsiveLayout>
         </div>
     );
 
-    const hasButtons = !!primaryButton || !!secondaryButton;
-
-    return (
+    return isTabletOrSmaller ? (
         <>
             {isInverse && <OverscrollColor />}
             <div style={{position: 'relative'}}>
-                <div className={classes.footer}>
-                    {hasButtons ? (
-                        <ButtonFixedFooterLayout
-                            button={primaryButton}
-                            secondaryButton={secondaryButton}
-                            link={link}
-                            footerBgColor={isInverse ? colors.backgroundFeedbackBottom : undefined}
-                            containerBgColor={isInverse ? colors.navigationBarBackground : undefined}
-                            onChangeFooterHeight={setFooterHeight}
-                        >
-                            {feedbackContent}
-                        </ButtonFixedFooterLayout>
-                    ) : (
-                        feedbackContent
-                    )}
-                </div>
-                {isTabletOrSmaller && hasButtons && <div className={classes.backgroundDiv} />}
+                <ButtonFixedFooterLayout
+                    isFooterVisible={hasButtons}
+                    button={primaryButton}
+                    secondaryButton={secondaryButton}
+                    link={link}
+                    footerBgColor={isInverse ? colors.backgroundFeedbackBottom : undefined}
+                    containerBgColor={isInverse ? colors.navigationBarBackground : undefined}
+                    onChangeFooterHeight={setFooterHeight}
+                >
+                    {feedbackContent}
+                </ButtonFixedFooterLayout>
             </div>
+            <div className={classes.backgroundDiv} />
         </>
+    ) : (
+        <ResponsiveLayout>
+            <Box paddingTop={64}>
+                <Boxed isInverse={isInverse} dataAttributes={dataAttributes}>
+                    <div className={classes.desktopContainer}>
+                        <div className={classes.desktopContent}>
+                            <Box padding={64}>{inlineFeedbackBody}</Box>
+                        </div>
+                        {imageUrl && <div className={classes.desktopImage} />}
+                    </div>
+                </Boxed>
+            </Box>
+        </ResponsiveLayout>
     );
 };
 
-export const SuccessFeedbackScreen: React.FC<FeedbackProps> = (props) => {
-    const {isTabletOrSmaller} = useScreenSize();
+export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = (props) => {
     const {skinName} = useTheme();
 
     return (
-        <ThemeVariant isInverse={isTabletOrSmaller}>
+        <ThemeVariant isInverse={!props.unstable_inlineInDesktop}>
             <FeedbackScreen
                 {...props}
                 hapticFeedback="success"
                 icon={skinName === VIVO_SKIN ? <IconSuccessVivo /> : <IcnSuccess />}
                 animateText
+                imageUrl={props.imageUrl}
+                imageFit={props.imageFit}
             />
         </ThemeVariant>
     );

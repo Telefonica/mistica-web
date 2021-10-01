@@ -21,8 +21,8 @@ const useStyles = createUseStyles(({colors, isDarkMode}) => ({
                 return `1px solid ${colors.backgroundContainer}`;
             }
 
-            if (isInverseInside && !isDarkMode) {
-                return `1px solid ${colors.backgroundBrand}`;
+            if (isInverseInside) {
+                return 'none';
             }
 
             return `1px solid ${colors.border}`;
