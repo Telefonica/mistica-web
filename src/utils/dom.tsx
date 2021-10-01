@@ -87,3 +87,8 @@ export const getScrollableParentElement = (el?: HTMLElement | null, axis: Scroll
     }
     return result || document.documentElement;
 };
+
+export const getScrollDistanceToBottom = (el: HTMLElement): number =>
+    el.scrollHeight - el.scrollTop - el.clientHeight;
+
+export const hasScroll = (el: HTMLElement): boolean => el.scrollHeight > el.clientHeight;

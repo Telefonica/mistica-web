@@ -4,13 +4,15 @@ import debounce from 'lodash/debounce';
 import {createUseStyles} from './jss';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {useElementDimensions, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
-import {addPassiveEventListener, getScrollableParentElement, removePassiveEventListener} from './utils/dom';
-
-const getScrollDistanceToBottom = (el: HTMLElement) => el.scrollHeight - el.scrollTop - el.clientHeight;
+import {
+    addPassiveEventListener,
+    getScrollableParentElement,
+    getScrollDistanceToBottom,
+    hasScroll,
+    removePassiveEventListener,
+} from './utils/dom';
 
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
-
-const hasScroll = (el: HTMLElement) => el.scrollHeight > el.clientHeight;
 
 const waitForSwitchTransitionToStart = (fn: () => void) => {
     const timeoutId = setTimeout(fn, 0);
