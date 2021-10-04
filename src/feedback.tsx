@@ -151,9 +151,10 @@ const useAppearStatus = (): boolean => {
     const [appear, setAppear] = React.useState(false);
 
     useIsomorphicLayoutEffect(() => {
-        window.requestAnimationFrame(() => {
+        const requestId = window.requestAnimationFrame(() => {
             setAppear(true);
         });
+        return () => window.cancelAnimationFrame(requestId);
     }, []);
 
     return appear;
