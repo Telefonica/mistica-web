@@ -1,3 +1,18 @@
+# [10.5.0](https://github.com/Telefonica/mistica-web/compare/v10.4.0...v10.5.0) (2021-10-04)
+
+
+### Bug Fixes
+
+* **EmptyStateCard:** do not log error if button is not configured ([#347](https://github.com/Telefonica/mistica-web/issues/347)) ([76127e7](https://github.com/Telefonica/mistica-web/commit/76127e701a016667bb80198bc1d0230ef27984ae))
+* **SuccessfeedbackScreen:** wrong background in mobile with unstable_inlineInDesktop ([a15d8aa](https://github.com/Telefonica/mistica-web/commit/a15d8aac59a7ee6393a600d905a5d7c07101f78a))
+
+
+### Features
+
+* **FeedbackScreen:** update desktop mode ([#343](https://github.com/Telefonica/mistica-web/issues/343)) ([cc246d2](https://github.com/Telefonica/mistica-web/commit/cc246d2c7d67659240161924a692f8e5cc602f4e))
+* **FixedFooterLayout:** stop using Portal for the fixed part ([560914c](https://github.com/Telefonica/mistica-web/commit/560914c9106a4e5f8bf4dd1975fdd5870e955eda))
+* **SuccessFeedback:** new component ([#345](https://github.com/Telefonica/mistica-web/issues/345)) ([00c51cb](https://github.com/Telefonica/mistica-web/commit/00c51cb72a662685db3c85cfad6e50ab33061feb))
+
 # [10.4.0](https://github.com/Telefonica/mistica-web/compare/v10.3.1...v10.4.0) (2021-09-30)
 
 
