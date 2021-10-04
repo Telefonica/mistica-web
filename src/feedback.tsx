@@ -81,7 +81,7 @@ const useStyles = createUseStyles((theme) => ({
 
     innerContainer: {
         textAlign: 'left',
-        padding: '64px 8px 0',
+        padding: '64px 8px 16px',
     },
 
     feedbackData: {
@@ -454,7 +454,7 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
             {isTabletOrSmaller ? (
                 <ResponsiveLayout className={classes.background}>
                     <OverscrollColor />
-                    <Box paddingBottom={48}>
+                    <Box paddingBottom={32}>
                         <div className={classes.innerContainer}>{inlineFeedbackBody}</div>
                     </Box>
                 </ResponsiveLayout>
