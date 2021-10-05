@@ -1,3 +1,11 @@
+## [10.5.1](https://github.com/Telefonica/mistica-web/compare/v10.5.0...v10.5.1) (2021-10-05)
+
+
+### Bug Fixes
+
+* **Feedback:** clean layout effect ([#349](https://github.com/Telefonica/mistica-web/issues/349)) ([8549082](https://github.com/Telefonica/mistica-web/commit/8549082d9c617fbeff78f1d81ed0e7b29f3d1ae7))
+* **Feedback:** styling issues ([#350](https://github.com/Telefonica/mistica-web/issues/350)) ([1979ebc](https://github.com/Telefonica/mistica-web/commit/1979ebc130cca9d65e3133a3e9cad5c0c1032e5c))
+
 # [10.5.0](https://github.com/Telefonica/mistica-web/compare/v10.4.0...v10.5.0) (2021-10-04)
 
 
