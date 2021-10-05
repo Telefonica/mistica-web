@@ -18,6 +18,7 @@ import {useOverrideTheme} from './frame-component';
 import type {ThemeConfig, ColorScheme, SkinName} from '../src';
 
 export * from '../src';
+export {default as ButtonGroup} from '../src/button-group';
 
 const capitalize = (str: string): string => str.charAt(0).toUpperCase() + str.slice(1);
 
