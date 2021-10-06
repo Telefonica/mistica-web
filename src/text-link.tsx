@@ -13,11 +13,9 @@ const useStyles = createUseStyles((theme) => ({
         display: 'inline-block',
         color: theme.colors.textLink,
         wordBreak: 'break-word',
-        '&:hover': {
-            textDecoration: 'underline',
-            // Revert hover effect in touch devices
-            '@media (pointer: coarse)': {
-                textDecoration: 'initial',
+        [theme.mq.supportsHover]: {
+            '&:hover': {
+                textDecoration: 'underline',
             },
         },
     },

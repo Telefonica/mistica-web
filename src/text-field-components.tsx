@@ -181,12 +181,15 @@ const useFieldContainerStyles = createUseStyles((theme) => ({
         display: 'flex',
         position: 'relative',
         lineHeight: '16px',
-        backgroundColor: theme.colors.backgroundContainer,
+        backgroundColor: ({disabled}) =>
+            disabled ? theme.colors.backgroundAlternative : theme.colors.backgroundContainer,
+        cursor: ({disabled}) => (disabled ? 'not-allowed' : 'initial'),
     },
 }));
 
 type FieldContainerProps = {
     multiline?: boolean;
+    disabled?: boolean;
     children: React.ReactNode;
     helperText?: React.ReactNode;
     className?: string;
@@ -196,13 +199,14 @@ type FieldContainerProps = {
 
 export const FieldContainer: React.FC<FieldContainerProps> = ({
     multiline,
+    disabled,
     children,
     helperText,
     className,
     fieldRef,
     fullWidth,
 }) => {
-    const classes = useFieldContainerStyles({multiline, fullWidth});
+    const classes = useFieldContainerStyles({multiline, fullWidth, disabled});
 
     return (
         <div className={classes.fieldContainer}>

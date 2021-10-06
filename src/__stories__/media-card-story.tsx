@@ -38,11 +38,10 @@ export const Default: StoryComponent = () => {
     );
     const headlineColor = (tagColors as any)[headlineColorName];
     const [pretitle, pretitleTextField] = useTextField('pretitle', 'Some pretitle');
-    const [title, titleTextField] = useTextField('title', 'Some title', true);
+    const [title, titleTextField] = useTextField('title', 'Some title');
     const [description, descriptionTextField] = useTextField(
         'description',
-        'This is a description for the card',
-        true
+        'This is a description for the card'
     );
     const [actions, actionsSelect] = useSelect('actions', 'button', [
         'button',

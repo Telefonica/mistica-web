@@ -33,7 +33,8 @@ declare export {
   ErrorFeedbackScreen,
   InfoFeedbackScreen,
   SuccessFeedbackScreen,
-} from "./feedback-screen";
+  SuccessFeedback,
+} from "./feedback";
 declare export { default as IconButton } from "./icon-button";
 declare export { default as Popover } from "./popover";
 declare export { default as FocusTrap } from "./focus-trap";

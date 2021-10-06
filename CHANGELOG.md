@@ -1,3 +1,62 @@
+## [10.5.1](https://github.com/Telefonica/mistica-web/compare/v10.5.0...v10.5.1) (2021-10-05)
+
+
+### Bug Fixes
+
+* **Feedback:** clean layout effect ([#349](https://github.com/Telefonica/mistica-web/issues/349)) ([8549082](https://github.com/Telefonica/mistica-web/commit/8549082d9c617fbeff78f1d81ed0e7b29f3d1ae7))
+* **Feedback:** styling issues ([#350](https://github.com/Telefonica/mistica-web/issues/350)) ([1979ebc](https://github.com/Telefonica/mistica-web/commit/1979ebc130cca9d65e3133a3e9cad5c0c1032e5c))
+
+# [10.5.0](https://github.com/Telefonica/mistica-web/compare/v10.4.0...v10.5.0) (2021-10-04)
+
+
+### Bug Fixes
+
+* **EmptyStateCard:** do not log error if button is not configured ([#347](https://github.com/Telefonica/mistica-web/issues/347)) ([76127e7](https://github.com/Telefonica/mistica-web/commit/76127e701a016667bb80198bc1d0230ef27984ae))
+* **SuccessfeedbackScreen:** wrong background in mobile with unstable_inlineInDesktop ([a15d8aa](https://github.com/Telefonica/mistica-web/commit/a15d8aac59a7ee6393a600d905a5d7c07101f78a))
+
+
+### Features
+
+* **FeedbackScreen:** update desktop mode ([#343](https://github.com/Telefonica/mistica-web/issues/343)) ([cc246d2](https://github.com/Telefonica/mistica-web/commit/cc246d2c7d67659240161924a692f8e5cc602f4e))
+* **FixedFooterLayout:** stop using Portal for the fixed part ([560914c](https://github.com/Telefonica/mistica-web/commit/560914c9106a4e5f8bf4dd1975fdd5870e955eda))
+* **SuccessFeedback:** new component ([#345](https://github.com/Telefonica/mistica-web/issues/345)) ([00c51cb](https://github.com/Telefonica/mistica-web/commit/00c51cb72a662685db3c85cfad6e50ab33061feb))
+
+# [10.4.0](https://github.com/Telefonica/mistica-web/compare/v10.3.1...v10.4.0) (2021-09-30)
+
+
+### Features
+
+* **MediaCard:** make description optional ([#346](https://github.com/Telefonica/mistica-web/issues/346)) ([ce5a653](https://github.com/Telefonica/mistica-web/commit/ce5a653c099e830e7cb60fb1b8ce8db62d8ffa3a))
+
+## [10.3.1](https://github.com/Telefonica/mistica-web/compare/v10.3.0...v10.3.1) (2021-09-23)
+
+
+### Bug Fixes
+
+* **NavigationBar:** remove wrong border transition in desktop ([b58d46c](https://github.com/Telefonica/mistica-web/commit/b58d46ccf14c5cebbfe95b5c62d7644525fddb86))
+
+# [10.3.0](https://github.com/Telefonica/mistica-web/compare/v10.2.0...v10.3.0) (2021-09-23)
+
+
+### Features
+
+* **Form fields:** change style of disabled fields ([#340](https://github.com/Telefonica/mistica-web/issues/340)) ([bdced15](https://github.com/Telefonica/mistica-web/commit/bdced15cc48fe3baf417f72fc6d453f91d172a62))
+* **NavigationBar:** make border optional ([#342](https://github.com/Telefonica/mistica-web/issues/342)) ([2b63b96](https://github.com/Telefonica/mistica-web/commit/2b63b962b87600f972485eea268721e074047533))
+
+# [10.2.0](https://github.com/Telefonica/mistica-web/compare/v10.1.0...v10.2.0) (2021-09-21)
+
+
+### Bug Fixes
+
+* **form fields:** change disabled color ([#334](https://github.com/Telefonica/mistica-web/issues/334)) ([fdb9f89](https://github.com/Telefonica/mistica-web/commit/fdb9f890677d4fb5e5d6d1a6980efe6287e4d533))
+* **PasswordField:** keep caret position when switching visibility ([#339](https://github.com/Telefonica/mistica-web/issues/339)) ([6d4b67b](https://github.com/Telefonica/mistica-web/commit/6d4b67b3bbfa935936fb456fa97d760af4522b0c))
+* **snippets:** wrong icon prop in Callout ([#337](https://github.com/Telefonica/mistica-web/issues/337)) ([a974a12](https://github.com/Telefonica/mistica-web/commit/a974a128107f7ce46ab9379ebe7155da160f0efc))
+
+
+### Features
+
+* **mq.suportsHover:** include mq for devices that support hover ([#341](https://github.com/Telefonica/mistica-web/issues/341)) ([b6b6389](https://github.com/Telefonica/mistica-web/commit/b6b638965b2253bd813ff42af4ef596949c59120))
+
 # [10.1.0](https://github.com/Telefonica/mistica-web/compare/v10.0.1...v10.1.0) (2021-09-15)
 
 

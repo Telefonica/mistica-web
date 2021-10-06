@@ -13,13 +13,9 @@ export interface PasswordFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const usePasswordAdornmentStyles = createUseStyles(() => ({
+const usePasswordAdornmentStyles = createUseStyles((theme) => ({
     shadow: {
-        // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
-        // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.
-        // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
-        // See: https://hover-pointer-media-query.glitch.me/ and https://github.com/mui-org/material-ui/issues/15736
-        ['@media (pointer: fine), (pointer: none)']: {
+        [theme.mq.supportsHover]: {
             '&:hover': {
                 backgroundColor: 'rgba(0, 0, 0, 0.08)',
             },

@@ -245,6 +245,7 @@ export type Theme = {
         tabletOrBigger: string;
         tabletOrSmaller: string;
         desktopOrBigger: string;
+        supportsHover: string;
     };
     colors: Colors;
     Link: LinkComponent;

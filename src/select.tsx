@@ -25,7 +25,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     select: {
         fontFamily: 'inherit',
-        backgroundColor: theme.colors.backgroundContainer,
+        backgroundColor: 'transparent', // FieldContainer gives the correct background color
         paddingTop: ({label}) => (label ? 24 : 16),
         paddingBottom: ({label}) => (label ? 8 : 16),
         paddingRight: 0,
@@ -38,16 +38,17 @@ const useStyles = createUseStyles((theme) => ({
         height: '100%',
         textOverflow: 'ellipsis',
         '&:disabled': {
-            color: theme.colors.border,
+            color: theme.colors.textDisabled,
         },
         appearance: 'none',
-        cursor: ({disabled}) => (disabled ? 'initial' : 'pointer'),
+        cursor: ({disabled}) => (disabled ? 'inherit' : 'pointer'),
     },
     arrowDown: {
         position: 'absolute',
         right: 16,
         top: 'calc(50% - 12px)',
         pointerEvents: 'none',
+        opacity: ({disabled}) => (disabled ? 0.3 : 1),
     },
     selectText: {
         position: 'absolute',
@@ -92,8 +93,10 @@ const useStyles = createUseStyles((theme) => ({
         padding: '6px 16px',
         height: 48,
         transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-        '&:hover': {
-            backgroundColor: 'rgba(0, 0, 0, 0.08)',
+        [theme.mq.supportsHover]: {
+            '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, 0.08)',
+            },
         },
         display: 'flex',
         alignItems: 'center',
@@ -361,6 +364,7 @@ const Select: React.FC<SelectProps> = ({
 
     return shouldUseNative ? (
         <FieldContainer
+            disabled={disabled}
             helperText={<HelperText error={error} leftText={helperText} />}
             fieldRef={fieldRef}
             fullWidth={fullWidth}

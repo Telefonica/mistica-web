@@ -191,7 +191,25 @@ export const Variants: StoryComponent = () => {
             </StorySection>
 
             <StorySection title="Disabled">
-                <TextField name="text" disabled label="Disabled" defaultValue="Default value" />
+                <Stack space={16}>
+                    <TextField name="text" disabled label="Disabled" defaultValue="Default value" />
+                    <TextField
+                        name="text"
+                        disabled
+                        label="Disabled"
+                        defaultValue="Default value"
+                        endIcon={<Icon />}
+                    />
+                    <SearchField name="search" disabled label="Search" />
+                    <PhoneNumberField
+                        e164
+                        name="phone"
+                        label="Phone with prefix"
+                        prefix="+34"
+                        defaultValue="654834455"
+                        disabled
+                    />
+                </Stack>
             </StorySection>
 
             <div style={{backgroundColor: colors.backgroundBrand}}>
