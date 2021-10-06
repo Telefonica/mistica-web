@@ -1,5 +1,22 @@
 const path = require('path');
 
+const replaceBabelWithSwc = (config) => {
+    // Replace default webpack babel-loader with swc-loader
+    config.module.rules.forEach((rule) => {
+        if (rule.use) {
+            rule.use = rule.use.map((loaderConfig) => {
+                if (loaderConfig.loader?.includes('babel-loader')) {
+                    return {
+                        loader: require.resolve('swc-loader'),
+                    };
+                }
+                return loaderConfig;
+            });
+        }
+    });
+    return config;
+};
+
 module.exports = {
     stories: ['./welcome-story.js', '../src/**/__stories__/*-story.tsx'],
     addons: [
@@ -27,7 +44,11 @@ module.exports = {
             ...config.watchOptions,
             ignored: [/node_modules/, /__tests__/, /__acceptance_tests__/, /__screenshot_tests__/],
         };
-        return config;
+
+        return replaceBabelWithSwc(config);
+    },
+    managerWebpack: async (config) => {
+        return replaceBabelWithSwc(config);
     },
     typescript: {
         // workaround for https://github.com/storybookjs/storybook/issues/15067

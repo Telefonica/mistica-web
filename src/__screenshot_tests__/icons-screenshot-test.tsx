@@ -10,20 +10,20 @@ test('Icons catalog', async () => {
     const filledCheckbox = await screen.findByLabelText('Filled');
     const regularCheckbox = await screen.findByLabelText('Regular');
 
-    filledCheckbox.click();
-    regularCheckbox.click();
+    await filledCheckbox.click();
+    await regularCheckbox.click();
 
     const light = await page.screenshot({fullPage: true});
     expect(light).toMatchImageSnapshot();
 
-    lightCheckbox.click();
-    regularCheckbox.click();
+    await lightCheckbox.click();
+    await regularCheckbox.click();
 
     const regular = await page.screenshot({fullPage: true});
     expect(regular).toMatchImageSnapshot();
 
-    regularCheckbox.click();
-    filledCheckbox.click();
+    await regularCheckbox.click();
+    await filledCheckbox.click();
 
     const filled = await page.screenshot({fullPage: true});
     expect(filled).toMatchImageSnapshot();

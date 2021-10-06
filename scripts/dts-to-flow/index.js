@@ -140,7 +140,7 @@ const applyJscodeshift = () => {
         console.log('Apply codemod:', transform);
         const transformPath = join(PATH_TRANSFORMS, transform);
         execSync(
-            `yarn jscodeshift -c 1 --transform=${transformPath} --extensions=flow --parser=flow --silent ${PATH_DIST}`,
+            `yarn jscodeshift --transform=${transformPath} --extensions=flow --parser=flow --silent ${PATH_DIST}`,
             {stdio: 'inherit'}
         );
     });
@@ -173,7 +173,7 @@ const hasFlowDefChanges = () => {
     return false;
 };
 
-const main = async () => {
+module.exports = async () => {
     process.chdir(PATH_ROOT);
 
     // clean
@@ -182,17 +182,22 @@ const main = async () => {
 
     // generate .js.flow files
     cpx.copySync(join(__dirname, '__types__.js.flow'), PATH_DIST);
+    const time0 = Date.now();
     execSync('yarn flowgen --no-inexact --interface-records ./dist', {
         stdio: 'inherit',
     });
+    const time1 = Date.now();
+    console.log('TIME flowgen,', time1 - time0);
 
     //  patch
     const flowFilenames = await glob('./dist/**/*.js.flow');
     flowFilenames.forEach(fixFlowDefinition);
-
+    const time2 = Date.now();
+    console.log('TIME regexps,', time2 - time1);
     // codemods
     applyJscodeshift();
-
+    const time3 = Date.now();
+    console.log('TIME codemods,', time3 - time2);
     // overrides
     applyOverrides();
 
@@ -206,5 +211,3 @@ const main = async () => {
         process.exit(1);
     }
 };
-
-main();
