@@ -7,15 +7,10 @@ const buttonLayoutSpacing = 16;
 const buttonLinkPadding = 6;
 
 const useStyles = createUseStyles(() => ({
-    buttonsContainer: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-    },
     fullWidthLink: {
         marginLeft: -buttonLinkPadding,
         width: '100%',
-        marginTop: buttonLayoutSpacing,
+        marginTop: ({bothButtons}) => (bothButtons ? buttonLayoutSpacing : 0),
     },
 }));
 
@@ -26,18 +21,21 @@ export interface ButtonGroupProps {
 }
 
 const ButtonGroup: React.FC<ButtonGroupProps> = ({primaryButton, secondaryButton, link}) => {
-    const fullWidthLink = (!!primaryButton && !!secondaryButton) || (!primaryButton && !secondaryButton);
+    const anyButton = !!primaryButton || !!secondaryButton;
+    const bothButtons = !!primaryButton && !!secondaryButton;
 
-    const classes = useStyles({});
+    const classes = useStyles({bothButtons});
 
     return (
-        <div className={classes.buttonsContainer}>
-            <Inline space={buttonLayoutSpacing} alignItems="center">
-                {primaryButton}
-                {secondaryButton}
-                {!fullWidthLink && link}
-            </Inline>
-            {link && fullWidthLink && <div className={classes.fullWidthLink}>{link}</div>}
+        <div>
+            {anyButton && (
+                <Inline space={buttonLayoutSpacing} alignItems="center">
+                    {primaryButton}
+                    {secondaryButton}
+                    {!bothButtons && link}
+                </Inline>
+            )}
+            {link && (bothButtons || !anyButton) && <div className={classes.fullWidthLink}>{link}</div>}
         </div>
     );
 };
