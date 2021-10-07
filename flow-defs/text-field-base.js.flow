@@ -83,7 +83,9 @@ declare type TextFieldBaseProps = {|
   onBlur?: (event: SyntheticFocusEvent<>) => void,
   onFocus?: (event: SyntheticFocusEvent<>) => void,
   onKeyDown?: (event: SyntheticKeyboardEvent<>) => void,
-  inputProps?: { [name: string]: string | number | void, ... },
+  inputProps?: {
+    [name: string]: string | number | void,
+  },
   inputComponent?: React.ComponentType<any>,
   shrinkLabel?: boolean,
   focus?: boolean,

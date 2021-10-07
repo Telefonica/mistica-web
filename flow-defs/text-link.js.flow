@@ -6,7 +6,9 @@ declare type CommonProps = {|
   children?: React.Node,
   className?: string,
   style?: CssStyle,
-  classes?: { [className: string]: string, ... },
+  classes?: {
+    [className: string]: string,
+  },
   small?: boolean,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
 

@@ -29,9 +29,7 @@ const buildApp = () => {
     execSync('yarn build', {cwd: PATH_APP});
 };
 
-const main = () => {
-    const t0 = Date.now();
-    console.log('Creating size stats...');
+module.exports = () => {
     buildApp();
     const appInitial = 130857; // precalculated - see webpack.config.js
     const appWithMistica = getTotalSize(glob.sync(join(PATH_APP_BUILD, '**/*.js')));
@@ -68,8 +66,4 @@ const main = () => {
         ) + '\n';
 
     fs.writeFileSync(join(PATH_REPO_ROOT, FILE_NAME_STATS_JSON), result);
-
-    console.log('Done in:', Date.now() - t0, 'ms');
 };
-
-main();

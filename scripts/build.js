@@ -1,31 +1,43 @@
-const util = require('util');
 const childProcess = require('child_process');
-const exec = util.promisify(childProcess.exec);
+const rimraf = require('rimraf');
 const execSync = childProcess.execSync;
 const dtsToFlow = require('./dts-to-flow');
+const genSizeStats = require('./size-stats');
 
-const exclude = `--ignore '__tests__/**/*'`;
+const run = (command) => {
+    execSync(command, {stdio: 'inherit'});
+};
+
+const compile = () => {
+    run(`yarn swc src --out-dir dist-es --extensions .tsx`);
+
+    [
+        '__tests__',
+        '__acceptance_tests__',
+        '__screenshot_tests__',
+        '__type_tests__',
+        '__stories__',
+        'test-utils',
+    ].forEach((dirName) => {
+        rimraf.sync(`dist-es/${dirName}`);
+    });
+
+    run(`yarn swc dist-es --out-dir dist -C module.type=commonjs`);
+};
 
 (async () => {
-    const t0 = Date.now();
-    execSync(`yarn swc src --out-dir dist-es --extensions .tsx ${exclude}`, {stdio: 'inherit'});
-    const t1 = Date.now();
-    console.log('TIME swc: ', t1 - t0);
-    execSync(`yarn swc dist-es --out-dir dist -C module.type=commonjs ${exclude}`, {stdio: 'inherit'});
-    const t2 = Date.now();
-    console.log('TIME swc2:', t2 - t1);
+    console.log('\nCompile:');
+    compile();
 
-    await exec(`yarn gen-ts-defs`);
-    const t3 = Date.now();
-    console.log('TIME gen ts defs', t3 - t2);
+    console.log('\nGenerate TS defs:');
+    run('yarn gen-ts-defs');
 
+    console.log('\nGenerate Flow defs:');
     await dtsToFlow();
-    const t4 = Date.now();
-    console.log('TIME gen flow defs', t4 - t3);
-    execSync(`yarn flow check`, {stdio: 'inherit'});
-    const t5 = Date.now();
-    console.log('TIME flow check', t5 - t4);
 
-    await exec(`node scripts/size-stats`);
-    console.log('TIME size stats:', Date.now() - t5);
+    console.log('\nFlow check:');
+    run('yarn flow check');
+
+    console.log('\nGenerate size stats:');
+    await genSizeStats();
 })();

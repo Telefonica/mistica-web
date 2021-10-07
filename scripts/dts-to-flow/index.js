@@ -2,7 +2,7 @@ const {execSync} = require('child_process');
 const {join, relative, dirname} = require('path');
 const {promisify} = require('util');
 const glob = promisify(require('glob'));
-const {writeFileSync, readFileSync, readdirSync, existsSync} = require('fs');
+const {writeFileSync, readFileSync, existsSync} = require('fs');
 const rimraf = require('rimraf');
 const {beautify} = require('flowgen');
 const cpx = require('cpx');
@@ -134,16 +134,11 @@ const fixFlowDefinition = (flowFilename) => {
 };
 
 const applyJscodeshift = () => {
-    const transforms = readdirSync(PATH_TRANSFORMS).filter((transform) => transform.endsWith('.js'));
-
-    transforms.forEach((transform) => {
-        console.log('Apply codemod:', transform);
-        const transformPath = join(PATH_TRANSFORMS, transform);
-        execSync(
-            `yarn jscodeshift --transform=${transformPath} --extensions=flow --parser=flow --silent ${PATH_DIST}`,
-            {stdio: 'inherit'}
-        );
-    });
+    const transformPath = join(PATH_TRANSFORMS, 'index.js');
+    execSync(
+        `yarn jscodeshift --transform=${transformPath} --extensions=flow --parser=flow --silent ${PATH_DIST}`,
+        {stdio: 'inherit'}
+    );
 };
 
 const applyOverrides = () => {
@@ -182,22 +177,17 @@ module.exports = async () => {
 
     // generate .js.flow files
     cpx.copySync(join(__dirname, '__types__.js.flow'), PATH_DIST);
-    const time0 = Date.now();
     execSync('yarn flowgen --no-inexact --interface-records ./dist', {
         stdio: 'inherit',
     });
-    const time1 = Date.now();
-    console.log('TIME flowgen,', time1 - time0);
 
     //  patch
     const flowFilenames = await glob('./dist/**/*.js.flow');
     flowFilenames.forEach(fixFlowDefinition);
-    const time2 = Date.now();
-    console.log('TIME regexps,', time2 - time1);
+
     // codemods
     applyJscodeshift();
-    const time3 = Date.now();
-    console.log('TIME codemods,', time3 - time2);
+
     // overrides
     applyOverrides();
 
