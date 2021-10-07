@@ -38,7 +38,7 @@ export const Telefonica = {
 } as const;
 
 export const Blau = {
-    i18n: {locale: 'en-US', phoneNumberFormattingRegionCode: 'GB'},
+    i18n: {locale: 'de-DE', phoneNumberFormattingRegionCode: 'DE'},
     skin: getBlauSkin(),
 } as const;
 

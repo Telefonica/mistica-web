@@ -229,7 +229,7 @@ export const getBlauSkin: GetSkin = () => {
             dividerInverse: applyAlpha(palette.white, 0.05),
             navigationBarDivider: palette.darkModeBlack,
 
-            brand: palette.blauBluePrimary, // this color needs to be in darkModeColors to revert the promient variant
+            brand: palette.blauBluePrimary,
             brandDark: palette.darkModeGrey,
             inverse: palette.grey2,
             neutralHigh: palette.grey2,
