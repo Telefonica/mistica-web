@@ -5,9 +5,9 @@ import {useTheme} from './hooks';
 import Box from './box';
 import {Text1, Text2, Text4} from './text';
 import {createUseStyles} from './jss';
-import Inline from './inline';
 import {ButtonLink, ButtonPrimary} from './button';
 import {Boxed} from './boxed';
+import ButtonGroup from './button-group';
 
 import type {ButtonProps, ButtonLinkProps} from './button';
 import type {DataAttributes} from './utils/types';
@@ -15,7 +15,6 @@ import type {TagProps} from './tag';
 
 const useCardContentStyles = createUseStyles(() => ({
     actions: {
-        marginLeft: ({needsButtonLinkAlignment}) => (needsButtonLinkAlignment ? -6 : 0),
         flex: 1,
         display: 'flex',
         alignItems: 'flex-end',
@@ -31,7 +30,7 @@ type CardContentProps = {
     description?: string;
     extra?: React.ReactNode;
     button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
-    buttonLink?: React.ReactElement<ButtonProps, typeof ButtonLink>;
+    buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
 };
 
 const CardContent: React.FC<CardContentProps> = ({
@@ -45,8 +44,7 @@ const CardContent: React.FC<CardContentProps> = ({
     buttonLink,
 }) => {
     const theme = useTheme();
-    const needsButtonLinkAlignment = buttonLink && !button;
-    const classes = useCardContentStyles({needsButtonLinkAlignment});
+    const classes = useCardContentStyles();
     const renderHeadline = () => {
         if (!headline) {
             return null;
@@ -87,12 +85,7 @@ const CardContent: React.FC<CardContentProps> = ({
                 {extra && <div>{extra}</div>}
             </Stack>
             {(button || buttonLink) && (
-                <div className={classes.actions}>
-                    <Inline space={16} alignItems="center">
-                        {button}
-                        {buttonLink}
-                    </Inline>
-                </div>
+                <ButtonGroup className={classes.actions} primaryButton={button} link={buttonLink} />
             )}
         </>
     );
@@ -160,7 +153,7 @@ type MediaCardProps = {
     description?: string;
     extra?: React.ReactNode;
     button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
-    buttonLink?: React.ReactElement<ButtonProps, typeof ButtonLink>;
+    buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
     children?: void;
     'aria-label'?: string;
 };
