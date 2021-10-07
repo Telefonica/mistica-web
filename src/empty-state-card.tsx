@@ -3,13 +3,13 @@ import Box from './box';
 import {Boxed} from './boxed';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import {useScreenSize, useTheme} from './hooks';
-import Inline from './inline';
 import {createUseStyles} from './jss';
 import Stack from './stack';
 import {Text2, Text4} from './text';
 
-import type {ButtonProps} from './button';
+import type {ButtonProps, ButtonLinkProps} from './button';
 import type {DataAttributes} from './utils/types';
+import ButtonGroup from './button-group';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -32,17 +32,13 @@ const useStyles = createUseStyles((theme) => ({
             height: 64,
         },
     },
-    actions: {
-        marginLeft: ({needsButtonLinkAlignment}) => (needsButtonLinkAlignment ? -6 : 0),
-    },
 }));
 
 interface CommonProps {
     title: string;
-    button?:
-        | React.ReactElement<ButtonProps, typeof ButtonPrimary>
-        | React.ReactElement<ButtonProps, typeof ButtonSecondary>;
-    buttonLink?: React.ReactElement<ButtonProps, typeof ButtonLink>;
+    button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
+    secondaryButton?: React.ReactElement<ButtonProps, typeof ButtonSecondary>;
+    buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
     description?: string;
     children?: void;
     'aria-label'?: string;
@@ -66,6 +62,7 @@ const EmptyStateCard: React.FC<Props> = ({
     title,
     description,
     button,
+    secondaryButton,
     buttonLink,
     icon,
     imageUrl,
@@ -98,13 +95,12 @@ const EmptyStateCard: React.FC<Props> = ({
                                 </Text2>
                             </Stack>
                         </Box>
-                        {(button || buttonLink) && (
-                            <div className={classes.actions}>
-                                <Inline space={16} alignItems="center">
-                                    {button}
-                                    {buttonLink}
-                                </Inline>
-                            </div>
+                        {(button || secondaryButton || buttonLink) && (
+                            <ButtonGroup
+                                primaryButton={button}
+                                secondaryButton={secondaryButton}
+                                link={buttonLink}
+                            />
                         )}
                     </Stack>
                 </section>
