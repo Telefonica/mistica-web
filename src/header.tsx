@@ -14,7 +14,7 @@ import {ButtonPrimary, ButtonSecondary} from './button';
 import type {ButtonProps} from './button';
 import type {TextPresetProps} from './text';
 import type {NavigationBreadcrumbsProps} from './navigation-breadcrumbs';
-import ButtonLayout from './button-layout';
+import ButtonGroup from './button-group';
 
 const useButtonLayoutStyles = createUseStyles(() => ({
     inlineBlockContainer: {
@@ -129,10 +129,7 @@ export const Header: React.FC<HeaderProps> = ({
                                 {secondaryButton}
                             </MobileHeaderButtonLayout>
                         ) : (
-                            <ButtonLayout align="left">
-                                {button}
-                                {secondaryButton}
-                            </ButtonLayout>
+                            <ButtonGroup primaryButton={button} secondaryButton={secondaryButton} />
                         ))}
                     {subtitle && renderRichText(subtitle, {})}
                 </Stack>
