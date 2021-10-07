@@ -20,14 +20,18 @@ export interface ButtonGroupProps {
     link?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
 }
 
-const ButtonGroup: React.FC<ButtonGroupProps> = ({primaryButton, secondaryButton, link}) => {
+interface Props extends ButtonGroupProps {
+    className?: string;
+}
+
+const ButtonGroup: React.FC<Props> = ({primaryButton, secondaryButton, link, className}) => {
     const anyButton = !!primaryButton || !!secondaryButton;
     const bothButtons = !!primaryButton && !!secondaryButton;
 
     const classes = useStyles({bothButtons});
 
     return (
-        <div>
+        <div className={className}>
             {anyButton && (
                 <Inline space={buttonLayoutSpacing} alignItems="center">
                     {primaryButton}

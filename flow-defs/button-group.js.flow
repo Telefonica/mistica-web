@@ -7,5 +7,10 @@ export type ButtonGroupProps = {|
   secondaryButton?: React.Element<typeof ButtonSecondary>,
   link?: React.Element<typeof ButtonLink>,
 |};
-declare var ButtonGroup: React.ComponentType<ButtonGroupProps>;
+declare type Props = {|
+  ...$Exact<ButtonGroupProps>,
+
+  className?: string,
+|};
+declare var ButtonGroup: React.ComponentType<Props>;
 declare export default typeof ButtonGroup;
