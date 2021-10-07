@@ -213,6 +213,7 @@ export const getBlauSkin: GetSkin = () => {
             textButtonSecondaryInverseDisabled: palette.grey5,
             textButtonSecondaryInverseSelected: palette.blauBlueSecondary60,
 
+            textLink: palette.blauPurple30,
             textLinkInverse: palette.blauPurple30,
             textLinkDisabled: palette.grey5,
 
