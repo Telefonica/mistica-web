@@ -5,7 +5,7 @@ const replaceBabelWithSwc = (config) => {
     config.module.rules.forEach((rule) => {
         if (rule.use) {
             rule.use = rule.use.map((loaderConfig) => {
-                if (loaderConfig.loader?.includes('babel-loader')) {
+                if (loaderConfig.loader && loaderConfig.loader.includes('babel-loader')) {
                     return {
                         loader: require.resolve('swc-loader'),
                     };
