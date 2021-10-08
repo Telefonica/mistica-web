@@ -24,14 +24,13 @@ export const palette = {
     BlauYellow60: '#F09500',
     BlauYellow70: '#996614',
 
-    blauGreen: '#30D300',
-
     blauRed: '#F64417',
     blauRed10: '#FEECE8',
     blauRed70: '#C93712',
     blauRed30: '#FA9E87',
     blauRed20: '#FCC7B9',
 
+    blauGreen: '#30D300',
     BlauGreen10: '#EAFBE5',
     BlauGreen70: '#1D7F00',
 
@@ -170,21 +169,25 @@ export const getBlauSkin: GetSkin = () => {
             textAppBarSelected: palette.blauBlueSecondary60,
         },
         darkModeColors: {
-            background: palette.darkModeBlack,
-            backgroundAlternative: palette.darkModeGrey,
+            // BACKGROUNDS
             backgroundBrand: palette.darkModeBlack,
+            background: palette.darkModeBlack,
+            appBarBackground: palette.darkModeGrey,
             backgroundContainer: palette.darkModeGrey,
+            backgroundAlternative: palette.darkModeGrey,
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
             backgroundSkeleton: palette.darkModeGrey,
             backgroundSkeletonInverse: palette.darkModeGrey,
             backgroundFeedbackBottom: palette.darkModeBlack,
-            appBarBackground: palette.darkModeGrey,
             navigationBarBackground: palette.darkModeBlack,
+
             skeletonWave: palette.grey5,
 
+             // BORDERS
             borderLight: palette.darkModeBlack,
             border: palette.darkModeGrey,
 
+            // BUTTONS
             buttonDangerBackgroundDisabled: palette.darkModeGrey,
 
             buttonLinkBackgroundSelected: applyAlpha(palette.blauPurple, 0.3),
@@ -192,7 +195,7 @@ export const getBlauSkin: GetSkin = () => {
 
             buttonPrimaryBackgroundDisabled: palette.darkModeGrey,
             buttonPrimaryBackgroundDisabledInverse: palette.darkModeGrey,
-            buttonPrimaryBackgroundInverse: palette.blauBluePrimary,
+            buttonPrimaryBackgroundInverse: palette.blauBlueSecondary,
             buttonPrimaryBackgroundSelected: palette.blauBlueSecondary60,
 
             buttonSecondaryBackgroundDisabled: palette.darkModeGrey,
@@ -218,6 +221,7 @@ export const getBlauSkin: GetSkin = () => {
             textLinkDisabled: palette.grey5,
             textLinkDangerDisabled: palette.grey5,
 
+            // CONTROLS
             control: palette.grey5,
             loadingBar: palette.blauBluePrimary,
             loadingBarBackground: palette.darkModeGrey,
@@ -226,12 +230,14 @@ export const getBlauSkin: GetSkin = () => {
             toggleAndroidBackgroundActive: palette.blauBlueSecondary30, // web only
             iosControlKnob: palette.grey2, // web only
 
+            // DIVIDERS
             divider: applyAlpha(palette.white, 0.05),
             dividerInverse: applyAlpha(palette.white, 0.05),
             navigationBarDivider: palette.darkModeBlack,
 
+            // GLOBAL
             brand: palette.blauBluePrimary,
-            brandDark: palette.darkModeGrey,
+            brandDark: palette.grey5,
             inverse: palette.grey2,
             neutralHigh: palette.grey2,
             neutralMedium: palette.grey5,
