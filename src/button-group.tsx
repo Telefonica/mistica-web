@@ -1,6 +1,6 @@
 import React from 'react';
 import {createUseStyles} from './jss';
-import {Inline} from '.';
+import Inline from './inline';
 import {ButtonLink, ButtonLinkProps, ButtonPrimary, ButtonProps, ButtonSecondary} from './button';
 
 const buttonLayoutSpacing = 16;
