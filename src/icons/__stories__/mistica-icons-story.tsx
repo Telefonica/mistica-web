@@ -2,16 +2,24 @@ import * as React from 'react';
 import {useCheckbox} from '../../__stories__/helpers';
 import {ThemeVariant, useTheme, Box, Stack, SearchField, Inline, DoubleField, Text} from '../..';
 import IntegerField from '../../integer-field';
-import {kebabCase, upperFirst} from 'lodash';
+import {kebabCase, camelCase, upperFirst} from 'lodash';
+
+/**
+ * './path/icon-name-filled.tsx' => 'IconNameFilled'
+ */
+const fileNameToComponentName = (fileName: string) => {
+    const lastSlashIdx = fileName.lastIndexOf('/');
+    return upperFirst(camelCase(fileName.slice(lastSlashIdx + 1).replace('.tsx', '')));
+};
 
 // require all icons
-const misticaIcons = ((requireContext) =>
-    requireContext
-        .keys()
-        .map((id: string) => requireContext(id))
-        .map((module: any) => module.default))(
-    require.context('../../generated/mistica-icons/', true, /\.tsx$/)
-);
+const misticaIcons = ((requireContext) => {
+    return requireContext.keys().map((id: string) => {
+        const component = requireContext(id).default;
+        component.componentName = fileNameToComponentName(id);
+        return component;
+    });
+})(require.context('../../generated/mistica-icons/', true, /\.tsx$/));
 
 export default {
     title: 'Icons/Mistica Icons',
@@ -114,8 +122,8 @@ export const Catalog: React.FC = () => {
             <ThemeVariant isInverse={isInverse}>
                 <div style={{background: backgroundColor}}>
                     {misticaIcons
-                        .filter(({name}) => filterIcon(name))
-                        .sort((a, b) => compareNames(a.name, b.name))
+                        .filter(({componentName}) => filterIcon(componentName))
+                        .sort((a, b) => compareNames(a.componentName, b.componentName))
                         .map((Icon) => (
                             <div style={{display: 'inline-block', verticalAlign: 'top', textAlign: 'center'}}>
                                 <div
@@ -138,7 +146,7 @@ export const Catalog: React.FC = () => {
                                     </div>
                                     {showNames && (
                                         <Box paddingTop={8}>
-                                            <Text size={13}>{breakName(Icon.name)}</Text>
+                                            <Text size={13}>{breakName(Icon.componentName)}</Text>
                                         </Box>
                                     )}
                                 </div>
