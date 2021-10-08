@@ -16,20 +16,6 @@ import type {TextPresetProps} from './text';
 import type {NavigationBreadcrumbsProps} from './navigation-breadcrumbs';
 import ButtonGroup from './button-group';
 
-const useButtonLayoutStyles = createUseStyles(() => ({
-    inlineBlockContainer: {
-        // this inline block makes the parent grow with the width of its bigger children
-        // this, toggether with applying width 100% to the buttons, allows us to have two
-        // sibling buttons with the same width (the width of the bigger one).
-        display: 'inline-block',
-    },
-    button: {
-        '& > *': {
-            width: '100%',
-        },
-    },
-}));
-
 type OverridableTextProps = {
     color?: TextPresetProps['color'];
     textDecoration?: TextPresetProps['textDecoration'];
@@ -37,23 +23,6 @@ type OverridableTextProps = {
 };
 
 type RichText = string | ({text: string} & OverridableTextProps);
-
-const MobileHeaderButtonLayout: React.FC = ({children}) => {
-    const classes = useButtonLayoutStyles();
-    return (
-        <div className={classes.inlineBlockContainer}>
-            <Stack space={16}>
-                {React.Children.toArray(children)
-                    .filter(Boolean)
-                    .map((button, idx) => (
-                        <div key={idx} className={classes.button}>
-                            {button}
-                        </div>
-                    ))}
-            </Stack>
-        </div>
-    );
-};
 
 type HeaderProps = {
     pretitle?: RichText;
@@ -122,15 +91,9 @@ export const Header: React.FC<HeaderProps> = ({
                             </Text8>
                         </Stack>
                     )}
-                    {(button || secondaryButton) &&
-                        (isTabletOrSmaller ? (
-                            <MobileHeaderButtonLayout>
-                                {button}
-                                {secondaryButton}
-                            </MobileHeaderButtonLayout>
-                        ) : (
-                            <ButtonGroup primaryButton={button} secondaryButton={secondaryButton} />
-                        ))}
+                    {(button || secondaryButton) && (
+                        <ButtonGroup primaryButton={button} secondaryButton={secondaryButton} />
+                    )}
                     {subtitle && renderRichText(subtitle, {})}
                 </Stack>
             )}
