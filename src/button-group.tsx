@@ -3,7 +3,7 @@ import {createUseStyles} from './jss';
 import Inline from './inline';
 import {ButtonLink, ButtonLinkProps, ButtonPrimary, ButtonProps, ButtonSecondary} from './button';
 import {useIsomorphicLayoutEffect} from './hooks';
-import {Stack} from '.';
+import Stack from './stack';
 
 const buttonLayoutSpacing = 16;
 const buttonLinkPadding = 6;
