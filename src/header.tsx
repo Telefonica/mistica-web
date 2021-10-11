@@ -68,12 +68,14 @@ export const Header: React.FC<HeaderProps> = ({
     return (
         <Stack space={isTabletOrSmaller ? 24 : 32}>
             {(title || pretitle) && (
-                <Stack space={8}>
-                    {pretitle && renderRichText(pretitle, {color: theme.colors.textPrimary})}
-                    <Text6 role="heading" aria-level={2}>
-                        {title}
-                    </Text6>
-                </Stack>
+                <Box paddingRight={16}>
+                    <Stack space={8}>
+                        {pretitle && renderRichText(pretitle, {color: theme.colors.textPrimary})}
+                        <Text6 role="heading" aria-level={2}>
+                            {title}
+                        </Text6>
+                    </Stack>
+                </Box>
             )}
             {(preamount || amount || button || subtitle) && (
                 <Stack space={16}>
@@ -162,7 +164,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                 {isTabletOrSmaller ? (
                     <Box paddingTop={32} paddingBottom={24}>
                         <Stack space={24}>
-                            <Box paddingRight={16}>{header}</Box>
+                            {header}
                             {extra}
                         </Stack>
                     </Box>
