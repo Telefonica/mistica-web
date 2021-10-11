@@ -85,7 +85,9 @@ const CardContent: React.FC<CardContentProps> = ({
                 {extra && <div>{extra}</div>}
             </Stack>
             {(button || buttonLink) && (
-                <ButtonGroup className={classes.actions} primaryButton={button} link={buttonLink} />
+                <div className={classes.actions}>
+                    <ButtonGroup primaryButton={button} link={buttonLink} />
+                </div>
             )}
         </>
     );
