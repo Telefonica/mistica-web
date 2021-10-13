@@ -34,19 +34,27 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({primaryButton, secondaryButton
     const anyButton = !!primaryButton || !!secondaryButton;
     const bothButtons = !!primaryButton && !!secondaryButton;
     const [isOverflowing, setIsOverflowing] = React.useState(false);
+    const [isMeasuring, setIsMeasuring] = React.useState(true);
 
     const classes = useStyles({bothButtons});
 
     const containerElRef = React.useRef<HTMLDivElement | null>(null);
 
     useIsomorphicLayoutEffect(() => {
-        if (containerElRef.current) {
-            setIsOverflowing(containerElRef.current.scrollWidth > containerElRef.current.clientWidth);
-        }
-    }, []);
+        setIsMeasuring(true);
+        const req = window.requestAnimationFrame(() => {
+            if (containerElRef.current) {
+                setIsOverflowing(containerElRef.current.scrollWidth > containerElRef.current.clientWidth);
+            }
+            setIsMeasuring(false);
+        });
+        return () => {
+            window.cancelAnimationFrame(req);
+        };
+    }, [primaryButton, secondaryButton, link]);
 
     const actions = anyButton ? (
-        isOverflowing ? (
+        !isMeasuring && isOverflowing ? (
             <Stack className={classes.fullWidthButtons} space={16}>
                 {primaryButton}
                 {secondaryButton}
