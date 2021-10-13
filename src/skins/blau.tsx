@@ -183,7 +183,7 @@ export const getBlauSkin: GetSkin = () => {
 
             skeletonWave: palette.grey5,
 
-             // BORDERS
+            // BORDERS
             borderLight: palette.darkModeBlack,
             border: palette.darkModeGrey,
 
