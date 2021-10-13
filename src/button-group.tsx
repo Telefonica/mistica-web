@@ -1,6 +1,5 @@
 import React from 'react';
 import {createUseStyles} from './jss';
-import Inline from './inline';
 import {ButtonLink, ButtonLinkProps, ButtonPrimary, ButtonProps, ButtonSecondary} from './button';
 import {useIsomorphicLayoutEffect} from './hooks';
 import Stack from './stack';
@@ -12,6 +11,18 @@ const useStyles = createUseStyles(() => ({
     container: {
         flex: 1,
     },
+    inline: {
+        display: 'inline-flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        '& > div': {
+            flexShrink: ({isMeasuring}) => (isMeasuring ? 0 : 1),
+        },
+        '& > div:not(:empty) ~ div:not(:empty)': {
+            marginLeft: 16,
+        },
+    },
+
     fullWidthButtons: {
         '& > div > *': {
             width: '100%',
@@ -36,7 +47,7 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({primaryButton, secondaryButton
     const [isOverflowing, setIsOverflowing] = React.useState(false);
     const [isMeasuring, setIsMeasuring] = React.useState(true);
 
-    const classes = useStyles({bothButtons});
+    const classes = useStyles({bothButtons, isMeasuring});
 
     const containerElRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -61,11 +72,11 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({primaryButton, secondaryButton
                 {!bothButtons && link}
             </Stack>
         ) : (
-            <Inline space={buttonLayoutSpacing} alignItems="center">
-                {primaryButton}
-                {secondaryButton}
-                {!bothButtons && link}
-            </Inline>
+            <div className={classes.inline}>
+                {primaryButton && <div>{primaryButton}</div>}
+                {secondaryButton && <div>{secondaryButton}</div>}
+                {!bothButtons && link && <div>{link}</div>}
+            </div>
         )
     ) : undefined;
 
