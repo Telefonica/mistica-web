@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createUseStyles} from './jss';
 import {ButtonLink, ButtonLinkProps, ButtonPrimary, ButtonProps, ButtonSecondary} from './button';
 import {useIsomorphicLayoutEffect} from './hooks';
@@ -16,7 +16,7 @@ const useStyles = createUseStyles(() => ({
         flexDirection: 'row',
         alignItems: 'center',
         '& > div': {
-            flexShrink: ({isMeasuring}) => (isMeasuring ? 0 : 1),
+            flexShrink: () => 0,
         },
         '& > div:not(:empty) ~ div:not(:empty)': {
             marginLeft: 16,
@@ -47,18 +47,28 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({primaryButton, secondaryButton
     const [isOverflowing, setIsOverflowing] = React.useState(false);
     const [isMeasuring, setIsMeasuring] = React.useState(true);
 
-    const classes = useStyles({bothButtons, isMeasuring});
+    const classes = useStyles({bothButtons});
 
     const containerElRef = React.useRef<HTMLDivElement | null>(null);
 
-    useIsomorphicLayoutEffect(() => {
+    const calcLayout = (): number => {
         setIsMeasuring(true);
-        const req = window.requestAnimationFrame(() => {
+
+        return window.requestAnimationFrame(() => {
             if (containerElRef.current) {
-                setIsOverflowing(containerElRef.current.scrollWidth > containerElRef.current.clientWidth);
+                setIsOverflowing(containerElRef.current.scrollWidth > containerElRef.current.offsetWidth);
             }
             setIsMeasuring(false);
         });
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', calcLayout);
+        return () => window.removeEventListener('resize', calcLayout);
+    }, []);
+
+    useIsomorphicLayoutEffect(() => {
+        const req = calcLayout();
         return () => {
             window.cancelAnimationFrame(req);
         };
