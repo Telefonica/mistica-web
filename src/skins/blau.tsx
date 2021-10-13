@@ -91,7 +91,7 @@ export const getBlauSkin: GetSkin = () => {
             buttonSecondaryBackground: palette.blauBlueSecondary,
             buttonSecondaryBackgroundDisabled: palette.blauBlueSecondary20,
             buttonSecondaryBackgroundSelected: palette.blauBlueSecondary60,
-            buttonSecondaryBorderDisabledInverse: palette.blauBluePrimary30,
+            buttonSecondaryBorderDisabledInverse: palette.blauBlueSecondary20,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.blauBluePrimary30,
 
@@ -105,7 +105,7 @@ export const getBlauSkin: GetSkin = () => {
             textButtonSecondaryDisabled: palette.blauBlueSecondary30,
             textButtonSecondarySelected: palette.blauBlueSecondary60,
             textButtonSecondaryInverse: palette.white,
-            textButtonSecondaryInverseDisabled: palette.blauPurple30,
+            textButtonSecondaryInverseDisabled: palette.blauBlueSecondary20,
             textButtonSecondaryInverseSelected: palette.white,
 
             textLink: palette.blauPurple,
