@@ -1,3 +1,10 @@
+# [10.6.0](https://github.com/Telefonica/mistica-web/compare/v10.5.1...v10.6.0) (2021-10-14)
+
+
+### Features
+
+* **Blau:** new skin ([#311](https://github.com/Telefonica/mistica-web/issues/311)) ([235017b](https://github.com/Telefonica/mistica-web/commit/235017bb80fd87956ce84257c2042862d53b6f85))
+
 ## [10.5.1](https://github.com/Telefonica/mistica-web/compare/v10.5.0...v10.5.1) (2021-10-05)
 
 

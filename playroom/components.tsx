@@ -12,7 +12,7 @@ import {
     Checkbox,
     ThemeContextProvider,
 } from '../src';
-import {Movistar, Vivo, O2, Telefonica} from './themes';
+import {Movistar, Vivo, O2, Telefonica, Blau} from './themes';
 import {useOverrideTheme} from './frame-component';
 
 import type {ThemeConfig, ColorScheme, SkinName} from '../src';
@@ -105,6 +105,10 @@ const themesMap: {[skinName: string]: {themeConfig: ThemeConfig; text: string}} 
     Telefonica: {
         text: 'Telefónica',
         themeConfig: Telefonica,
+    },
+    Blau: {
+        text: 'Blau',
+        themeConfig: Blau,
     },
 };
 
