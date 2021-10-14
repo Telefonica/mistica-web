@@ -1,37 +1,31 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {createUseStyles} from './jss';
 import {ButtonLink, ButtonLinkProps, ButtonPrimary, ButtonProps, ButtonSecondary} from './button';
-import {useIsomorphicLayoutEffect} from './hooks';
-import Stack from './stack';
+import classnames from 'classnames';
 
 const buttonLayoutSpacing = 16;
 const buttonLinkPadding = 6;
 
 const useStyles = createUseStyles(() => ({
-    container: {
-        flex: 1,
-    },
     inline: {
         display: 'inline-flex',
-        flexDirection: 'row',
+        flexDirection: 'row-reverse',
+        flexWrap: 'wrap-reverse',
         alignItems: 'center',
+        justifyContent: 'flex-end',
+        marginTop: -buttonLayoutSpacing,
+        marginLeft: -buttonLayoutSpacing - buttonLinkPadding,
         '& > div': {
-            flexShrink: () => 0,
+            marginTop: buttonLayoutSpacing,
+            marginLeft: buttonLayoutSpacing + buttonLinkPadding,
         },
-        '& > div:not(:empty) ~ div:not(:empty)': {
-            marginLeft: 16,
+        '& > div:not(.link) + div': {
+            marginRight: -buttonLinkPadding,
         },
-    },
-
-    fullWidthButtons: {
-        '& > div > *': {
-            width: '100%',
+        '& > div.link': {
+            marginLeft: buttonLayoutSpacing,
+            width: ({bothButtons}) => (bothButtons ? '100%' : 'auto'),
         },
-    },
-    fullWidthLink: {
-        marginLeft: -buttonLinkPadding,
-        width: '100%',
-        marginTop: ({bothButtons}) => (bothButtons ? buttonLayoutSpacing : 0),
     },
 }));
 
@@ -42,58 +36,20 @@ export interface ButtonGroupProps {
 }
 
 const ButtonGroup: React.FC<ButtonGroupProps> = ({primaryButton, secondaryButton, link}) => {
-    const anyButton = !!primaryButton || !!secondaryButton;
+    const anyAction = !!primaryButton || !!secondaryButton || !!link;
     const bothButtons = !!primaryButton && !!secondaryButton;
-    const [isOverflowing, setIsOverflowing] = React.useState(false);
-    const [isMeasuring, setIsMeasuring] = React.useState(true);
-
     const classes = useStyles({bothButtons});
 
-    const containerElRef = React.useRef<HTMLDivElement | null>(null);
-
-    const calcLayout = (): number => {
-        setIsMeasuring(true);
-
-        return window.requestAnimationFrame(() => {
-            if (containerElRef.current) {
-                setIsOverflowing(containerElRef.current.scrollWidth > containerElRef.current.offsetWidth);
-            }
-            setIsMeasuring(false);
-        });
-    };
-
-    useEffect(() => {
-        window.addEventListener('resize', calcLayout);
-        return () => window.removeEventListener('resize', calcLayout);
-    }, []);
-
-    useIsomorphicLayoutEffect(() => {
-        const req = calcLayout();
-        return () => {
-            window.cancelAnimationFrame(req);
-        };
-    }, [primaryButton, secondaryButton, link]);
-
-    const actions = anyButton ? (
-        !isMeasuring && isOverflowing ? (
-            <Stack className={classes.fullWidthButtons} space={16}>
-                {primaryButton}
-                {secondaryButton}
-                {!bothButtons && link}
-            </Stack>
-        ) : (
-            <div className={classes.inline}>
-                {primaryButton && <div>{primaryButton}</div>}
-                {secondaryButton && <div>{secondaryButton}</div>}
-                {!bothButtons && link && <div>{link}</div>}
-            </div>
-        )
-    ) : undefined;
-
     return (
-        <div ref={containerElRef} className={classes.container}>
-            {actions}
-            {link && (bothButtons || !anyButton) && <div className={classes.fullWidthLink}>{link}</div>}
+        <div>
+            {anyAction ? (
+                // will be displayed in reverse mode to set a special alignment to link when it wraps.
+                <div className={classes.inline}>
+                    {link && <div className={classnames('link')}>{link}</div>}
+                    {secondaryButton && <div>{secondaryButton}</div>}
+                    {primaryButton && <div>{primaryButton}</div>}
+                </div>
+            ) : undefined}
         </div>
     );
 };
