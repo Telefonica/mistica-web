@@ -44,12 +44,12 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({primaryButton, secondaryButton
 
     return anyAction ? (
         <div className={classNames(classes.inline, classes.container)}>
-            {primaryButton || secondaryButton ? (
+            {(primaryButton || secondaryButton) && (
                 <div className={classNames(classes.inline, classes.buttons)}>
                     {primaryButton && <div>{primaryButton}</div>}
                     {secondaryButton && <div>{secondaryButton}</div>}
                 </div>
-            ) : undefined}
+            )}
             {link && <div className={classes.link}>{link}</div>}
         </div>
     ) : null;
