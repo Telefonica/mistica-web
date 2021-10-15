@@ -4,6 +4,8 @@ import {ThemeVariant, useTheme, Box, Stack, SearchField, Inline, Divider, Text1}
 import IntegerField from '../../integer-field';
 import {kebabCase, upperFirst} from 'lodash';
 import {useScreenSize} from '../../hooks';
+import {NoEmitOnErrorsPlugin} from 'webpack';
+import overscrollColorStory from '../../__stories__/overscroll-color-story';
 
 // require all icons
 const misticaIcons = ((requireContext) =>
@@ -91,8 +93,10 @@ export const Catalog: React.FC = () => {
     return (
         <div
             style={{
-                display: 'flex',
+                // display: "flex",
                 flexDirection: isTabletOrSmaller ? 'column' : 'row',
+                width: '100%',
+                background: colors.backgroundAlternative,
             }}
         >
             <div
@@ -163,63 +167,63 @@ export const Catalog: React.FC = () => {
                         </Stack>
                     </Box>
                 </div>
-                <div
-                    style={{
-                        display: 'flex',
-                        width: isTabletOrSmaller ? 'auto' : 'calc(100% - 280px)',
-                        marginLeft: isTabletOrSmaller ? '0' : '280px',
-                    }}
-                >
+                <div style={{width: isTabletOrSmaller ? '100%' : 'calc(100% - 280px)', marginLeft: 'auto'}}>
                     <ThemeVariant isInverse={isInverse}>
-                        <div style={{background: backgroundColor}}>
+                        <div
+                            style={{
+                                background: backgroundColor,
+                                margin: '0 auto',
+                                maxWidth: '100%',
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+                                gridGap: '1px',
+                                background: colors.backgroundAlternative,
+                                alignItems: 'stretch',
+                            }}
+                        >
                             {misticaIcons
                                 .filter(({name}) => filterIcon(name))
                                 .sort((a, b) => compareNames(a.name, b.name))
                                 .map((Icon) => (
+                                    // card
                                     <div
                                         style={{
-                                            display: 'inline-block',
-                                            verticalAlign: 'top',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+
+                                            backgroundColor: 'white',
+                                            borderRadius: '0px',
+                                            border: '0px solid #eee',
+                                            width: '100%',
                                             textAlign: 'center',
+                                            height: '150px',
+                                            overflow: 'hidden',
+                                            margin: '0 auto',
                                         }}
                                     >
-                                        <div
-                                            style={{
-                                                textAlign: 'center',
-                                                padding: 0,
-                                            }}
-                                        >
-                                            <div
-                                                style={{
-                                                    margin: 'auto',
-                                                    padding: showNames
-                                                        ? '48px 16px 24px 16px'
-                                                        : '72px 16px 72px 16px',
-                                                    borderRight: '1px solid' + colors.divider,
-                                                    borderBottom: '1px solid' + colors.divider,
-                                                    borderRadius: '0px',
-                                                    width: 163,
-                                                    height: showNames ? '96px' : 'auto',
-                                                    fontSize: 0,
-                                                }}
-                                            >
-                                                <Stack space="between">
-                                                    <div
-                                                        style={{
-                                                            width: size,
-                                                            margin: 'auto',
-                                                            background: iconBackgroundColor,
-                                                            fontSize: 0,
-                                                        }}
-                                                    >
-                                                        <Icon size={size} />
-                                                    </div>
-                                                    {showNames && (
-                                                        <Text1 regular>{breakName(Icon.name)}</Text1>
-                                                    )}
-                                                </Stack>
-                                            </div>
-                                        </div>
+                                        {/* card icon */}
+
+                                        <Box padding={16}>
+                                            <Stack space={8}>
+                                                {/* icon background */}
+
+                                                <div
+                                                    style={{
+                                                        width: size,
+                                                        margin: 'auto',
+                                                        background: iconBackgroundColor,
+                                                        fontSize: 0,
+                                                        transition: 'margin 0.2s ease-out',
+                                                        padding: showNames
+                                                            ? '16px 0px 24px 0px'
+                                                            : '48px 16px 72px 16px',
+                                                    }}
+                                                >
+                                                    <Icon size={size} />
+                                                </div>
+                                                {showNames && <Text1 regular>{breakName(Icon.name)}</Text1>}
+                                            </Stack>
+                                        </Box>
                                     </div>
                                 ))}
                         </div>
