@@ -85,7 +85,7 @@ export const Catalog: React.FC = () => {
             ));
 
     const backgroundColor = isInverse ? colors.backgroundBrand : colors.background;
-    const iconBackgroundColor = showIConBackground ? '#FFD0FE' : 'none';
+    const iconBackgroundColor = showIConBackground ? '#FF13FA32' : 'none';
     const {isTabletOrSmaller, isTablet} = useScreenSize();
 
     return (
