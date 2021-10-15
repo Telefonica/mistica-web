@@ -110,7 +110,8 @@ export const Catalog: React.FC = () => {
                         width: isTabletOrSmaller ? 'auto' : '280px',
                         position: isTabletOrSmaller ? 'static' : 'fixed',
                         background: colors.background,
-                        borderRight: isTabletOrSmaller ? 'none' : '1px solid' + colors.backgroundAlternative,
+                        borderRight: isTabletOrSmaller ? 'none' : '1px solid' + colors.divider,
+                        borderBottom: isTabletOrSmaller ? '1px solid' + colors.divider : 'none',
                     }}
                 >
                     <Box padding={16}>
@@ -175,7 +176,7 @@ export const Catalog: React.FC = () => {
                                 gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
                                 gridGap: '1px',
                                 alignItems: 'stretch',
-                                borderBottom: '1px solid' + colors.backgroundAlternative,
+                                borderBottom: '1px solid' + colors.divider,
                             }}
                         >
                             {misticaIcons
@@ -187,14 +188,13 @@ export const Catalog: React.FC = () => {
                                         style={{
                                             justifyContent: 'center',
                                             alignItems: 'center',
-                                            boxShadow: '0px 0px 0px 1px' + colors.backgroundAlternative,
+                                            boxShadow: '0px 0px 0px 1px' + colors.divider,
                                             background: backgroundColor,
                                             borderRadius: '0px',
                                             border: '0px solid #eee',
                                             width: '100%',
                                             textAlign: 'center',
                                             height: '150px',
-
                                             margin: '0 auto',
                                         }}
                                     >
