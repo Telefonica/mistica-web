@@ -1,6 +1,7 @@
 import React from 'react';
 import {createUseStyles} from './jss';
 import {ButtonLink, ButtonLinkProps, ButtonPrimary, ButtonProps, ButtonSecondary} from './button';
+import classNames from 'classnames';
 
 const buttonLayoutSpacing = 16;
 const buttonLinkPadding = 6;
@@ -11,19 +12,22 @@ const useStyles = createUseStyles(() => ({
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: 'center',
+    },
+    container: {
         marginTop: -buttonLayoutSpacing,
         marginLeft: -buttonLayoutSpacing - buttonLinkPadding,
+    },
+    buttons: {
+        marginLeft: buttonLinkPadding,
         '& > div': {
             marginTop: buttonLayoutSpacing,
-            marginLeft: buttonLayoutSpacing + buttonLinkPadding,
-        },
-        '& > div.link': {
             marginLeft: buttonLayoutSpacing,
-            width: ({bothButtons}) => (bothButtons ? '100%' : 'auto'),
         },
     },
-    followedByButton: {
-        marginRight: -buttonLinkPadding,
+    link: {
+        marginTop: buttonLayoutSpacing,
+        marginLeft: buttonLayoutSpacing,
+        width: ({bothButtons}) => (bothButtons ? '100%' : 'auto'),
     },
 }));
 
@@ -39,12 +43,14 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({primaryButton, secondaryButton
     const classes = useStyles({bothButtons});
 
     return anyAction ? (
-        <div className={classes.inline}>
-            {primaryButton && (
-                <div className={secondaryButton ? classes.followedByButton : undefined}>{primaryButton}</div>
-            )}
-            {secondaryButton && <div>{secondaryButton}</div>}
-            {link && <div className="link">{link}</div>}
+        <div className={classNames(classes.inline, classes.container)}>
+            {primaryButton || secondaryButton ? (
+                <div className={classNames(classes.inline, classes.buttons)}>
+                    {primaryButton && <div>{primaryButton}</div>}
+                    {secondaryButton && <div>{secondaryButton}</div>}
+                </div>
+            ) : undefined}
+            {link && <div className={classes.link}>{link}</div>}
         </div>
     ) : null;
 };
