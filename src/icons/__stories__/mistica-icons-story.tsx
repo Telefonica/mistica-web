@@ -93,7 +93,6 @@ export const Catalog: React.FC = () => {
     return (
         <div
             style={{
-                // display: "flex",
                 flexDirection: isTabletOrSmaller ? 'column' : 'row',
                 width: '100%',
                 background: isInverse ? colors.brand : colors.background,
