@@ -12,6 +12,7 @@ import {
     SearchField,
     PasswordField,
     DateField,
+    MonthField,
     PhoneNumberField,
     IbanField,
     Box,
@@ -242,7 +243,7 @@ export const Variants: StoryComponent = () => {
 
 export const TypesUncontrolled: StoryComponent = () => (
     <>
-        <Uncontrolled title="TextField">
+        {/* <Uncontrolled title="TextField">
             {(handleChange, handleChangeValue) => (
                 <TextField
                     name="text"
@@ -364,6 +365,22 @@ export const TypesUncontrolled: StoryComponent = () => (
                         <DateTimeField
                             name="datetime"
                             label="DateTime"
+                            onChange={handleChange}
+                            onChangeValue={handleChangeValue}
+                        />
+                    </div>
+                </>
+            )}
+        </Uncontrolled> */}
+
+        <Uncontrolled title="MonthField">
+            {(handleChange, handleChangeValue) => (
+                <>
+                    <DatePickerWarning />
+                    <div data-testid="month">
+                        <MonthField
+                            name="month"
+                            label="Month"
                             onChange={handleChange}
                             onChangeValue={handleChangeValue}
                         />
@@ -564,6 +581,21 @@ export const TypesControlled = (): React.ReactNode => (
                         value={value}
                         name="datetime"
                         label="DateTime"
+                        onChange={handleChange}
+                        onChangeValue={handleChangeValue}
+                    />
+                </>
+            )}
+        </Controlled>
+
+        <Controlled title="MonthField" initialValue="2021-10">
+            {(handleChange, handleChangeValue, value) => (
+                <>
+                    <DatePickerWarning />
+                    <MonthField
+                        value={value}
+                        name="month"
+                        label="Month"
                         onChange={handleChange}
                         onChangeValue={handleChangeValue}
                     />

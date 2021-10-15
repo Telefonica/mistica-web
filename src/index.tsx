@@ -83,6 +83,7 @@ export {default as CreditCardExpirationField} from './credit-card-expiration-fie
 export {default as CreditCardFields} from './credit-card-fields';
 export {default as CvvField} from './cvv-field';
 export {default as DateField} from './date-field';
+export {default as MonthField} from './month-field';
 export {default as DateTimeField} from './date-time-field';
 export {default as IntegerField} from './integer-field';
 export {default as DecimalField} from './decimal-field';
