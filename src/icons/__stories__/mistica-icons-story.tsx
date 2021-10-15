@@ -203,7 +203,7 @@ export const Catalog: React.FC = () => {
                                                 style={{
                                                     transition: 'padding 0.25s ease-in-out',
                                                     padding: showNames
-                                                        ? '16px 8px 24px 8px'
+                                                        ? '24px 8px 24px 8px'
                                                         : '48px 8px 72px 8px',
                                                 }}
                                             >
