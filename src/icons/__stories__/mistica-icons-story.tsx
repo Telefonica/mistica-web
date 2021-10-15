@@ -167,7 +167,7 @@ export const Catalog: React.FC = () => {
                     style={{
                         display: 'flex',
                         width: isTabletOrSmaller ? 'auto' : 'calc(100% - 280px)',
-                        marginLeft: isTabletOrSmaller ? 'auto' : '280px',
+                        marginLeft: isTabletOrSmaller ? '0' : '280px',
                     }}
                 >
                     <ThemeVariant isInverse={isInverse}>
@@ -187,7 +187,6 @@ export const Catalog: React.FC = () => {
                                             style={{
                                                 textAlign: 'center',
                                                 padding: 0,
-                                                width: 173,
                                             }}
                                         >
                                             <div
@@ -199,7 +198,7 @@ export const Catalog: React.FC = () => {
                                                     borderRight: '1px solid' + colors.divider,
                                                     borderBottom: '1px solid' + colors.divider,
                                                     borderRadius: '0px',
-                                                    width: 140,
+                                                    width: 163,
                                                     height: showNames ? '96px' : 'auto',
                                                     fontSize: 0,
                                                 }}
