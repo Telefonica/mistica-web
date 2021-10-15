@@ -1,18 +1,6 @@
 import * as React from 'react';
 import {useCheckbox} from '../../__stories__/helpers';
-import {
-    ThemeVariant,
-    useTheme,
-    Box,
-    Stack,
-    SearchField,
-    Inline,
-    Text,
-    TextField,
-    Divider,
-    Checkbox,
-    Text1,
-} from '../..';
+import {ThemeVariant, useTheme, Box, Stack, SearchField, Inline, Divider, Text1} from '../..';
 import IntegerField from '../../integer-field';
 import {kebabCase, upperFirst} from 'lodash';
 import {useScreenSize} from '../../hooks';
@@ -226,7 +214,9 @@ export const Catalog: React.FC = () => {
                                                     >
                                                         <Icon size={size} />
                                                     </div>
-                                                    {showNames && <Text1>{breakName(Icon.name)}</Text1>}
+                                                    {showNames && (
+                                                        <Text1 medium>{breakName(Icon.name)}</Text1>
+                                                    )}
                                                 </Stack>
                                             </div>
                                         </div>
