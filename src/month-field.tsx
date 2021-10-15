@@ -4,7 +4,7 @@ import TextFieldBase from './text-field-base';
 import {isInputTypeSupported} from './utils/dom';
 import {isServerSide} from './utils/environment';
 import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
-import {getLocalDateString} from './utils/time';
+import {getLocalYearMonthString} from './utils/time';
 import {useTheme} from './hooks';
 
 import type {CommonFormFieldProps} from './text-field-base';
@@ -40,12 +40,10 @@ const DateField: React.FC<DateFieldProps> = ({
     const {texts} = useTheme();
 
     const isInRange = (value: string): boolean => {
-        return true;
-
-        if (min && value && value < getLocalDateString(min)) {
+        if (min && value && value < getLocalYearMonthString(min)) {
             return false;
         }
-        if (max && value && value > getLocalDateString(max)) {
+        if (max && value && value > getLocalYearMonthString(max)) {
             return false;
         }
         return true;
@@ -84,8 +82,8 @@ const DateField: React.FC<DateFieldProps> = ({
         <TextFieldBase
             {...rest}
             {...fieldProps}
-            min={min ? getLocalDateString(min) : undefined}
-            max={max ? getLocalDateString(max) : undefined}
+            min={min ? getLocalYearMonthString(min) : undefined}
+            max={max ? getLocalYearMonthString(max) : undefined}
             type="month"
             endIconOverlay={
                 <div style={{position: 'absolute', top: 16, right: 16, pointerEvents: 'none'}}>
@@ -104,7 +102,7 @@ const DateField: React.FC<DateFieldProps> = ({
             <ReactDateTimePicker
                 {...rest}
                 {...fieldProps}
-                isValidDate={(currentDate) => isInRange(getLocalDateString(currentDate.toDate()))}
+                isValidDate={(currentDate) => isInRange(getLocalYearMonthString(currentDate.toDate()))}
             />
         </React.Suspense>
     );

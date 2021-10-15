@@ -7,10 +7,10 @@ import {DEFAULT_WIDTH} from './text-field-components';
 import IconButton from './icon-button';
 import {cancelEvent, createChangeEvent} from './utils/dom';
 import {createUseStyles} from './jss';
+import {useElementDimensions} from './hooks';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type Moment from 'moment';
-import {useElementDimensions} from './hooks';
 
 /**
  * Do not use this component!

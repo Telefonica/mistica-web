@@ -340,13 +340,14 @@ export const TypesUncontrolled: StoryComponent = () => (
                 </form>
             )}
         </Uncontrolled>
-
+            */}
         <Uncontrolled title="DateField">
             {(handleChange, handleChangeValue) => (
                 <>
                     <DatePickerWarning />
                     <div data-testid="date">
                         <DateField
+                            optional
                             name="date"
                             label="Date"
                             onChange={handleChange}
@@ -356,7 +357,7 @@ export const TypesUncontrolled: StoryComponent = () => (
                 </>
             )}
         </Uncontrolled>
-
+        {/*
         <Uncontrolled title="DateTimeField">
             {(handleChange, handleChangeValue) => (
                 <>
@@ -379,6 +380,7 @@ export const TypesUncontrolled: StoryComponent = () => (
                     <DatePickerWarning />
                     <div data-testid="month">
                         <MonthField
+                            optional
                             name="month"
                             label="Month"
                             onChange={handleChange}

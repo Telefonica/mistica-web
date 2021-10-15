@@ -156,9 +156,6 @@ export const useFieldProps = ({
         onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
             const rawValue = event.currentTarget.value;
             const value = processValue(rawValue);
-
-            console.log('>>>>hook:', value, rawValue);
-
             setRawValue({name, value: rawValue});
             setValue({name, value});
             setFormError({name, error: ''});
