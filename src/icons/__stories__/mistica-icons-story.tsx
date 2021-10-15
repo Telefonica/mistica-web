@@ -193,13 +193,14 @@ export const Catalog: React.FC = () => {
                                             <div
                                                 style={{
                                                     margin: 'auto',
-                                                    padding: '56px 16px 24px 16px',
+                                                    padding: showNames
+                                                        ? '48px 16px 24px 16px'
+                                                        : '72px 16px 72px 16px',
                                                     borderRight: '1px solid' + colors.divider,
                                                     borderBottom: '1px solid' + colors.divider,
                                                     borderRadius: '0px',
                                                     width: 140,
-                                                    height: 96,
-
+                                                    height: showNames ? '96px' : 'auto',
                                                     fontSize: 0,
                                                 }}
                                             >
@@ -215,7 +216,7 @@ export const Catalog: React.FC = () => {
                                                         <Icon size={size} />
                                                     </div>
                                                     {showNames && (
-                                                        <Text1 medium>{breakName(Icon.name)}</Text1>
+                                                        <Text1 regular>{breakName(Icon.name)}</Text1>
                                                     )}
                                                 </Stack>
                                             </div>
