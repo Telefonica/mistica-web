@@ -96,7 +96,7 @@ export const Catalog: React.FC = () => {
                 // display: "flex",
                 flexDirection: isTabletOrSmaller ? 'column' : 'row',
                 width: '100%',
-                background: colors.backgroundAlternative,
+                background: isInverse ? colors.brand : colors.background,
             }}
         >
             <div
@@ -111,8 +111,7 @@ export const Catalog: React.FC = () => {
                         width: isTabletOrSmaller ? 'auto' : '280px',
                         position: isTabletOrSmaller ? 'static' : 'fixed',
                         background: colors.background,
-                        borderRight: isTabletOrSmaller ? 'none' : '1px solid' + colors.divider,
-                        borderBottom: isTabletOrSmaller ? '1px solid' + colors.divider : 'none',
+                        borderRight: isTabletOrSmaller ? 'none' : '1px solid' + colors.backgroundAlternative,
                     }}
                 >
                     <Box padding={16}>
@@ -171,14 +170,13 @@ export const Catalog: React.FC = () => {
                     <ThemeVariant isInverse={isInverse}>
                         <div
                             style={{
-                                background: backgroundColor,
                                 margin: '0 auto',
                                 maxWidth: '100%',
                                 display: 'grid',
                                 gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
                                 gridGap: '1px',
-                                background: colors.backgroundAlternative,
                                 alignItems: 'stretch',
+                                borderBottom: '1px solid' + colors.backgroundAlternative,
                             }}
                         >
                             {misticaIcons
@@ -190,39 +188,43 @@ export const Catalog: React.FC = () => {
                                         style={{
                                             justifyContent: 'center',
                                             alignItems: 'center',
-
-                                            backgroundColor: 'white',
+                                            boxShadow: '0px 0px 0px 1px' + colors.backgroundAlternative,
+                                            background: backgroundColor,
                                             borderRadius: '0px',
                                             border: '0px solid #eee',
                                             width: '100%',
                                             textAlign: 'center',
                                             height: '150px',
-                                            overflow: 'hidden',
+
                                             margin: '0 auto',
                                         }}
                                     >
-                                        {/* card icon */}
-
                                         <Box padding={16}>
-                                            <Stack space={8}>
-                                                {/* icon background */}
+                                            <div
+                                                style={{
+                                                    transition: 'padding 0.25s ease-in-out',
+                                                    padding: showNames
+                                                        ? '16px 8px 24px 8px'
+                                                        : '48px 8px 72px 8px',
+                                                }}
+                                            >
+                                                <Stack space={16}>
+                                                    <div
+                                                        style={{
+                                                            width: size,
+                                                            margin: 'auto',
+                                                            background: iconBackgroundColor,
+                                                            fontSize: 0,
+                                                        }}
+                                                    >
+                                                        <Icon size={size} />
+                                                    </div>
 
-                                                <div
-                                                    style={{
-                                                        width: size,
-                                                        margin: 'auto',
-                                                        background: iconBackgroundColor,
-                                                        fontSize: 0,
-                                                        transition: 'margin 0.2s ease-out',
-                                                        padding: showNames
-                                                            ? '16px 0px 24px 0px'
-                                                            : '48px 16px 72px 16px',
-                                                    }}
-                                                >
-                                                    <Icon size={size} />
-                                                </div>
-                                                {showNames && <Text1 regular>{breakName(Icon.name)}</Text1>}
-                                            </Stack>
+                                                    {showNames && (
+                                                        <Text1 regular>{breakName(Icon.name)}</Text1>
+                                                    )}
+                                                </Stack>
+                                            </div>
                                         </Box>
                                     </div>
                                 ))}
