@@ -3,7 +3,7 @@ import LoadingBarComponent from '../loading-bar';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components/Others/LoadingBar',
+    title: 'Components/Others',
     parameters: {
         fullScreen: true,
     },

@@ -15,7 +15,7 @@ const Paragraph = ({children}) => {
     );
 };
 
-export const Mistica = () => {
+export const Welcome = () => {
     return (
         <ResponsiveLayout>
             <Box paddingY={32}>

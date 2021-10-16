@@ -8,7 +8,7 @@ export default {
     title: 'Components/Dialogs/Alert',
 };
 
-export const Default: StoryComponent = () => (
+export const Alert: StoryComponent = () => (
     <>
         <ButtonLayout>
             <ButtonPrimary
@@ -48,5 +48,3 @@ export const Default: StoryComponent = () => (
         </ButtonLayout>
     </>
 );
-
-Default.storyName = 'alert() and confirm()';

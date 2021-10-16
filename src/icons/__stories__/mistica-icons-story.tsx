@@ -40,7 +40,7 @@ export default {
     },
 };
 
-export const Catalog: React.FC = () => {
+export const MisticaIcons: React.FC = () => {
     const [showRegular, regularCheckbox] = useCheckbox('Regular', true);
     const [showLight, lightCheckbox] = useCheckbox('Light', false);
     const [showFilled, filledCheckbox] = useCheckbox('Filled', false);
