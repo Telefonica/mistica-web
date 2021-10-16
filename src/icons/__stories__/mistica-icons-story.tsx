@@ -127,8 +127,9 @@ export const Catalog: React.FC = () => {
                 <div
                     style={{
                         height: isTabletOrSmaller ? 'auto' : '100vh',
-                        width: isTabletOrSmaller ? 'auto' : '280px',
-                        position: isTabletOrSmaller ? 'static' : 'fixed',
+                        width: isTabletOrSmaller ? '100%' : '280px',
+                        position: isTabletOrSmaller ? 'fixed' : 'fixed',
+                        zIndex: 2,
                         background: colors.background,
                         borderRight: isTabletOrSmaller ? 'none' : `1px solid ${colors.divider}`,
                         borderBottom: isTabletOrSmaller ? `1px solid ${colors.divider}` : 'none',
