@@ -1,6 +1,22 @@
 import * as React from 'react';
 import {useCheckbox} from '../../__stories__/helpers';
-import {ThemeVariant, useTheme, Box, Stack, SearchField, Inline, Divider, Text1} from '../..';
+import {
+    ThemeVariant,
+    useTheme,
+    Box,
+    Stack,
+    SearchField,
+    Inline,
+    Divider,
+    Text1,
+    TextField,
+    Circle,
+    RadioGroup,
+    RadioButton,
+    Text3,
+    IconCheckedRegular,
+    IconCheckRegular,
+} from '../..';
 import IntegerField from '../../integer-field';
 import {kebabCase, upperFirst} from 'lodash';
 import {useScreenSize} from '../../hooks';
@@ -29,6 +45,8 @@ export const Catalog: React.FC = () => {
     const [showFilled, filledCheckbox] = useCheckbox('Filled', false);
     const [isInverse, inverseCheckbox] = useCheckbox('Inverse', false);
     const [showNames, showNamesCheckbox] = useCheckbox('Name', true);
+    const [changeColor, changeColorRadio] = React.useState('neutralHigh ');
+    // const [showCircle, circleCheckbox] = useCheckbox('Circle', false);
     const [showIConBackground, showIConBackgroundCheckbox] = useCheckbox('Icon area', false);
     const [filter, setFilter] = React.useState('');
     const [size, setSize] = React.useState(24);
@@ -88,6 +106,7 @@ export const Catalog: React.FC = () => {
 
     const backgroundColor = isInverse ? colors.backgroundBrand : colors.background;
     const iconBackgroundColor = showIConBackground ? '#FF13FA32' : 'none';
+    // const circle = showCircle ? <Circle size={40} backgroundColor={colors.neutralHigh}></Circle> : "none"; — Opción para meter el icono en un circulo
     const {isTabletOrSmaller, isTablet} = useScreenSize();
 
     return (
@@ -123,6 +142,7 @@ export const Catalog: React.FC = () => {
                                 onChangeValue={setFilter}
                                 fullWidth
                             />
+                            <Divider />
                             {isTabletOrSmaller ? (
                                 <Inline space={16} fullWidth>
                                     <IntegerField
@@ -153,6 +173,130 @@ export const Catalog: React.FC = () => {
                                         onChangeValue={(v) => setSize(Number(v) || 0)}
                                         fullWidth
                                     />
+                                    <RadioGroup
+                                        name="group1"
+                                        aria-labelledby="custom-render"
+                                        value={changeColor}
+                                        onChange={changeColorRadio}
+                                        defaultValue={colors.neutralHigh}
+                                    >
+                                        <Inline space="between">
+                                            <RadioButton
+                                                value={colors.neutralHigh}
+                                                render={() => (
+                                                    <Inline space={16}>
+                                                        <Circle
+                                                            size={32}
+                                                            backgroundColor={colors.neutralHigh}
+                                                        >
+                                                            {changeColor === colors.neutralHigh && (
+                                                                <IconCheckRegular
+                                                                    size={18}
+                                                                    color={colors.inverse}
+                                                                />
+                                                            )}
+                                                        </Circle>
+                                                    </Inline>
+                                                )}
+                                            />
+                                            <RadioButton
+                                                value={colors.neutralMedium}
+                                                render={() => (
+                                                    <Inline space={16}>
+                                                        <Circle
+                                                            size={32}
+                                                            backgroundColor={colors.neutralMedium}
+                                                        >
+                                                            {changeColor === colors.neutralMedium && (
+                                                                <IconCheckRegular
+                                                                    size={18}
+                                                                    color={colors.inverse}
+                                                                />
+                                                            )}
+                                                        </Circle>
+                                                    </Inline>
+                                                )}
+                                            />
+                                            <RadioButton
+                                                value={colors.brand}
+                                                render={() => (
+                                                    <Circle size={32} backgroundColor={colors.brand}>
+                                                        {changeColor === colors.brand && (
+                                                            <IconCheckRegular
+                                                                size={18}
+                                                                color={colors.inverse}
+                                                            />
+                                                        )}
+                                                    </Circle>
+                                                )}
+                                            />
+                                            <RadioButton
+                                                value={colors.success}
+                                                render={() => (
+                                                    <Inline space={16}>
+                                                        <Circle size={32} backgroundColor={colors.success}>
+                                                            {changeColor === colors.success && (
+                                                                <IconCheckRegular
+                                                                    size={18}
+                                                                    color={colors.inverse}
+                                                                />
+                                                            )}
+                                                        </Circle>
+                                                    </Inline>
+                                                )}
+                                            />
+                                            <RadioButton
+                                                value={colors.warning}
+                                                render={() => (
+                                                    <Inline space={16}>
+                                                        <Circle size={32} backgroundColor={colors.warning}>
+                                                            {changeColor === colors.warning && (
+                                                                <IconCheckRegular
+                                                                    size={18}
+                                                                    color={colors.inverse}
+                                                                />
+                                                            )}
+                                                        </Circle>
+                                                    </Inline>
+                                                )}
+                                            />
+                                            <RadioButton
+                                                value={colors.error}
+                                                render={() => (
+                                                    <Inline space={16}>
+                                                        <Circle size={32} backgroundColor={colors.error}>
+                                                            {changeColor === colors.error && (
+                                                                <IconCheckRegular
+                                                                    size={18}
+                                                                    color={colors.inverse}
+                                                                />
+                                                            )}
+                                                        </Circle>
+                                                    </Inline>
+                                                )}
+                                            />
+                                        </Inline>
+                                    </RadioGroup>
+                                    <Inline space={8}>
+                                        <div
+                                            style={{
+                                                border: '2px solid' + colors.background,
+                                                borderRadius: '999px',
+                                                boxShadow: '0px 0px 0px 2px' + colors.borderSelected,
+                                            }}
+                                        >
+                                            <Circle size={32} backgroundColor={colors.neutralHigh}></Circle>
+                                        </div>
+                                        <div
+                                            style={{
+                                                border: '2px solid' + colors.background,
+                                                borderRadius: '999px',
+                                                boxShadow: '0px 0px 0px 2px' + colors.background,
+                                            }}
+                                        >
+                                            <Circle size={32} backgroundColor={colors.neutralMedium}></Circle>
+                                        </div>
+                                    </Inline>
                                     <Divider />
                                     {lightCheckbox}
                                     {regularCheckbox}
@@ -161,6 +305,7 @@ export const Catalog: React.FC = () => {
                                     {inverseCheckbox}
                                     {showNamesCheckbox}
                                     {showIConBackgroundCheckbox}
+                                    {/* {showCircle} */}
                                 </Stack>
                             )}
                         </Stack>
@@ -196,6 +341,7 @@ export const Catalog: React.FC = () => {
                                             textAlign: 'center',
                                             height: '150px',
                                             margin: '0 auto',
+                                            cursor: 'pointer',
                                         }}
                                     >
                                         <Box padding={16}>
@@ -216,7 +362,11 @@ export const Catalog: React.FC = () => {
                                                             fontSize: 0,
                                                         }}
                                                     >
-                                                        <Icon size={size} />
+                                                        <Icon
+                                                            size={size}
+                                                            color={isInverse ? colors.inverse : changeColor}
+                                                            id="custom-render"
+                                                        />
                                                     </div>
 
                                                     {showNames && (
