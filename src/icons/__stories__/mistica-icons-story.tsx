@@ -16,6 +16,7 @@ import {
     Text3,
     IconCheckedRegular,
     IconCheckRegular,
+    FadeIn,
 } from '../..';
 import IntegerField from '../../integer-field';
 import {kebabCase, upperFirst} from 'lodash';
@@ -129,8 +130,8 @@ export const Catalog: React.FC = () => {
                         width: isTabletOrSmaller ? 'auto' : '280px',
                         position: isTabletOrSmaller ? 'static' : 'fixed',
                         background: colors.background,
-                        borderRight: isTabletOrSmaller ? 'none' : '1px solid' + colors.divider,
-                        borderBottom: isTabletOrSmaller ? '1px solid' + colors.divider : 'none',
+                        borderRight: isTabletOrSmaller ? 'none' : `1px solid ${colors.divider}`,
+                        borderBottom: isTabletOrSmaller ? `1px solid ${colors.divider}` : 'none',
                     }}
                 >
                     <Box padding={16}>
@@ -138,7 +139,7 @@ export const Catalog: React.FC = () => {
                             <SearchField
                                 name="filter"
                                 value={filter}
-                                label="Filter"
+                                label="Find icons"
                                 onChangeValue={setFilter}
                                 fullWidth
                             />
@@ -277,26 +278,7 @@ export const Catalog: React.FC = () => {
                                             />
                                         </Inline>
                                     </RadioGroup>
-                                    <Inline space={8}>
-                                        <div
-                                            style={{
-                                                border: '2px solid' + colors.background,
-                                                borderRadius: '999px',
-                                                boxShadow: '0px 0px 0px 2px' + colors.borderSelected,
-                                            }}
-                                        >
-                                            <Circle size={32} backgroundColor={colors.neutralHigh}></Circle>
-                                        </div>
-                                        <div
-                                            style={{
-                                                border: '2px solid' + colors.background,
-                                                borderRadius: '999px',
-                                                boxShadow: '0px 0px 0px 2px' + colors.background,
-                                            }}
-                                        >
-                                            <Circle size={32} backgroundColor={colors.neutralMedium}></Circle>
-                                        </div>
-                                    </Inline>
+
                                     <Divider />
                                     {lightCheckbox}
                                     {regularCheckbox}
@@ -321,7 +303,7 @@ export const Catalog: React.FC = () => {
                                 gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
                                 gridGap: '1px',
                                 alignItems: 'stretch',
-                                borderBottom: '1px solid' + colors.divider,
+                                borderBottom: `1px solid ${colors.divider}`,
                             }}
                         >
                             {misticaIcons
@@ -333,13 +315,13 @@ export const Catalog: React.FC = () => {
                                         style={{
                                             justifyContent: 'center',
                                             alignItems: 'center',
-                                            boxShadow: '0px 0px 0px 1px' + colors.divider,
+                                            boxShadow: `0px 0px 0px 1px ${colors.divider}`,
                                             background: backgroundColor,
                                             borderRadius: '0px',
                                             border: '0px solid #eee',
                                             width: '100%',
                                             textAlign: 'center',
-                                            height: '150px',
+                                            height: size + 136,
                                             margin: '0 auto',
                                             cursor: 'pointer',
                                         }}
@@ -368,10 +350,15 @@ export const Catalog: React.FC = () => {
                                                             id="custom-render"
                                                         />
                                                     </div>
-
-                                                    {showNames && (
-                                                        <Text1 regular>{breakName(Icon.name)}</Text1>
-                                                    )}
+                                                    <FadeIn
+                                                        delay="0"
+                                                        duration="300"
+                                                        // meter fadein cuando se activa/desactiva el checkbox de name
+                                                    >
+                                                        {showNames && (
+                                                            <Text1 regular>{breakName(Icon.name)}</Text1>
+                                                        )}
+                                                    </FadeIn>
                                                 </Stack>
                                             </div>
                                         </Box>
