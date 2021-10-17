@@ -128,7 +128,7 @@ export const MisticaIcons: React.FC = () => {
                     style={{
                         height: isTabletOrSmaller ? 'auto' : '100vh',
                         width: isTabletOrSmaller ? '100%' : '280px',
-                        position: isTabletOrSmaller ? 'fixed' : 'fixed',
+                        position: 'fixed',
                         zIndex: 2,
                         background: colors.background,
                         borderRight: isTabletOrSmaller ? 'none' : `1px solid ${colors.divider}`,
@@ -298,7 +298,7 @@ export const MisticaIcons: React.FC = () => {
                     <ThemeVariant isInverse={isInverse}>
                         <div
                             style={{
-                                margin: '0 auto',
+                                margin: isTabletOrSmaller ? '177px auto 0 auto' : '0 auto',
                                 maxWidth: '100%',
                                 display: 'grid',
                                 gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
