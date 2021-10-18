@@ -7,9 +7,8 @@ declare type Props = {
   description: string,
   onClose?: () => void,
   icon?: React.Element<any>,
-  button?:
-    | React.Element<typeof ButtonPrimary>
-    | React.Element<typeof ButtonSecondary>,
+  button?: React.Element<typeof ButtonPrimary>,
+  secondaryButton?: React.Element<typeof ButtonSecondary>,
   buttonLink?: React.Element<typeof ButtonLink>,
   "aria-label"?: string,
 };

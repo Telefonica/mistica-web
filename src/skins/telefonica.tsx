@@ -204,7 +204,7 @@ export const getTelefonicaSkin: GetSkin = () => {
             textLink: palette.telefonicaBlue,
             textLinkInverse: palette.telefonicaBlue,
             textLinkDisabled: palette.grey6,
-            control: palette.grey6,
+            control: palette.darkModeGrey,
             controlActivated: palette.telefonicaBlue,
             loadingBar: palette.telefonicaBlue,
             loadingBarBackground: applyAlpha(palette.white, 0.05),

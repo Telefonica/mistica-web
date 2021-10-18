@@ -8,9 +8,9 @@ import IconClose from './icons/icon-close';
 import IconButton from './icon-button';
 import classNames from 'classnames';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
-import Inline from './inline';
 
 import type {ButtonProps, ButtonLinkProps} from './button';
+import ButtonGroup from './button-group';
 
 const useStyles = createUseStyles(({colors}) => ({
     container: {
@@ -35,9 +35,6 @@ const useStyles = createUseStyles(({colors}) => ({
     overInverse: {
         background: colors.backgroundContainer,
     },
-    actions: {
-        marginLeft: ({needsButtonLinkAlignment}) => (needsButtonLinkAlignment ? -6 : 0),
-    },
 }));
 
 type Props = {
@@ -45,9 +42,8 @@ type Props = {
     description: string;
     onClose?: () => void;
     icon?: React.ReactElement;
-    button?:
-        | React.ReactElement<ButtonProps, typeof ButtonPrimary>
-        | React.ReactElement<ButtonProps, typeof ButtonSecondary>;
+    button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
+    secondaryButton?: React.ReactElement<ButtonProps, typeof ButtonSecondary>;
     buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
     children?: void;
     'aria-label'?: string;
@@ -59,6 +55,7 @@ const Callout: React.FC<Props> = ({
     icon,
     onClose,
     button,
+    secondaryButton,
     buttonLink,
     'aria-label': ariaLabel,
 }) => {
@@ -83,13 +80,12 @@ const Callout: React.FC<Props> = ({
                                 {description}
                             </Text2>
                         </>
-                        {(button || buttonLink) && (
-                            <div className={classes.actions}>
-                                <Inline space={16} alignItems="center">
-                                    {button}
-                                    {buttonLink}
-                                </Inline>
-                            </div>
+                        {(button || secondaryButton || buttonLink) && (
+                            <ButtonGroup
+                                primaryButton={button}
+                                secondaryButton={secondaryButton}
+                                link={buttonLink}
+                            />
                         )}
                     </Stack>
                 </div>

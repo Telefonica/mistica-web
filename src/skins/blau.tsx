@@ -222,7 +222,7 @@ export const getBlauSkin: GetSkin = () => {
             textLinkDangerDisabled: palette.grey5,
 
             // CONTROLS
-            control: palette.grey5,
+            control: palette.darkModeGrey,
             loadingBar: palette.blauBluePrimary,
             loadingBarBackground: palette.darkModeGrey,
 

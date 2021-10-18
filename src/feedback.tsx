@@ -3,7 +3,6 @@ import {createUseStyles} from './jss';
 import {useTheme, useScreenSize, useWindowHeight, useIsomorphicLayoutEffect} from './hooks';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
-import {ButtonPrimary, ButtonSecondary, ButtonLink} from './button';
 import OverscrollColor from './overscroll-color-context';
 import {VIVO_SKIN} from './skins/constants';
 import IcnSuccess from './icons/icon-success';
@@ -22,18 +21,18 @@ import {Boxed} from './boxed';
 import ResponsiveLayout from './responsive-layout';
 import Stack from './stack';
 
-import type {ButtonProps, ButtonLinkProps} from './button';
 import type {DataAttributes} from './utils/types';
 import {Colors} from './skins/types';
 import classnames from 'classnames';
+import ButtonGroup from './button-group';
+
+import type {ButtonGroupProps} from './button-group';
 
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) && !isRunningAcceptanceTest(platformOverrides);
 
 const checkHasButtons = ({primaryButton, secondaryButton}: FeedbackButtonsProps) =>
     !!primaryButton || !!secondaryButton;
-
-const buttonLayoutSpacing = 16;
 
 const useStyles = createUseStyles((theme) => ({
     background: {
@@ -99,19 +98,6 @@ const useStyles = createUseStyles((theme) => ({
         transitionDelay: '0.6s',
         opacity: 1,
         transform: 'translate(0, 0)',
-    },
-
-    buttonsContainer: {
-        display: 'flex',
-        justifyContent: 'flex-start',
-        flexWrap: 'wrap',
-        margin: -buttonLayoutSpacing / 2,
-        '& > *': {
-            margin: buttonLayoutSpacing / 2,
-        },
-    },
-    link: {
-        width: '100%',
     },
 }));
 
@@ -199,22 +185,12 @@ const renderFeedbackBody = (
     );
 };
 
-const renderInlineFeedbackBody = (
-    feedbackBody: React.ReactNode,
-    {primaryButton, secondaryButton, link}: FeedbackButtonsProps,
-    classes: any
-) => {
-    const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
+const renderInlineFeedbackBody = (feedbackBody: React.ReactNode, buttons: ButtonGroupProps) => {
+    const hasButtons = checkHasButtons(buttons);
     return (
         <Stack space={24}>
             {feedbackBody}
-            {hasButtons && (
-                <div className={classes.buttonsContainer}>
-                    {primaryButton}
-                    {secondaryButton}
-                    {link && <div className={classes.link}>{link}</div>}
-                </div>
-            )}
+            {hasButtons && <ButtonGroup {...buttons} />}
         </Stack>
     );
 };
@@ -242,11 +218,7 @@ const renderFeedbackInDesktop = ({
     </Boxed>
 );
 
-type FeedbackButtonsProps = {
-    primaryButton?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
-    secondaryButton?: React.ReactElement<ButtonProps, typeof ButtonSecondary>;
-    link?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
-};
+type FeedbackButtonsProps = ButtonGroupProps;
 
 interface FeedbackProps extends FeedbackButtonsProps {
     title: string;
@@ -320,15 +292,11 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         classes,
         colors
     );
-    const inlineFeedbackBody = renderInlineFeedbackBody(
-        feedbackBody,
-        {
-            primaryButton,
-            secondaryButton,
-            link,
-        },
-        classes
-    );
+    const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
+        primaryButton,
+        secondaryButton,
+        link,
+    });
 
     if (!isTabletOrSmaller && unstable_inlineInDesktop) {
         return inlineFeedbackBody;
@@ -439,15 +407,11 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
         classes,
         colors
     );
-    const inlineFeedbackBody = renderInlineFeedbackBody(
-        feedbackBody,
-        {
-            primaryButton,
-            secondaryButton,
-            link,
-        },
-        classes
-    );
+    const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
+        primaryButton,
+        secondaryButton,
+        link,
+    });
 
     return (
         <ThemeVariant isInverse>
