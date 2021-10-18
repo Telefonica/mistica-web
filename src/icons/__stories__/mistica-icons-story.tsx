@@ -193,7 +193,8 @@ export const MisticaIcons: React.FC = () => {
                                                     value={selectedColor}
                                                     render={() => (
                                                         <Circle size={32} backgroundColor={pickerColor}>
-                                                            {selectedColor === pickerColor && (
+                                                            {(selectedColor === colors.neutralHigh ||
+                                                                selectedColor) && (
                                                                 <IconCheckRegular
                                                                     size={18}
                                                                     color={colors.inverse}
