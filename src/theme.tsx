@@ -35,6 +35,7 @@ const TEXTS_ES = {
     openNavigationMenu: 'Abrir menú de navegación',
     closeNavigationMenu: 'Cerrar menú de navegación',
     backNavigationBar: 'Atrás',
+    clearButton: 'Borrar',
 };
 
 const TEXTS_EN: ThemeTexts = {
@@ -65,6 +66,7 @@ const TEXTS_EN: ThemeTexts = {
     openNavigationMenu: 'Open navigation menu',
     closeNavigationMenu: 'Close navigation menu',
     backNavigationBar: 'Back',
+    clearButton: 'Clear',
 };
 
 const TEXTS_DE: ThemeTexts = {
@@ -95,6 +97,7 @@ const TEXTS_DE: ThemeTexts = {
     openNavigationMenu: 'Navigationsmenü öffnen',
     closeNavigationMenu: 'Navigationsmenü schließen',
     backNavigationBar: 'Zurück',
+    clearButton: 'Löschen',
 };
 
 const TEXTS_PT: ThemeTexts = {
@@ -125,6 +128,7 @@ const TEXTS_PT: ThemeTexts = {
     openNavigationMenu: 'Abrir menu de navegação',
     closeNavigationMenu: 'Fechar menu de navegação',
     backNavigationBar: 'Voltar',
+    clearButton: 'Apagar',
 };
 
 export const getTexts = (locale: Locale): typeof TEXTS_ES => {

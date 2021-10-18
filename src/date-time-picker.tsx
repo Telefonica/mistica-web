@@ -7,10 +7,11 @@ import {DEFAULT_WIDTH} from './text-field-components';
 import IconButton from './icon-button';
 import {cancelEvent, createChangeEvent} from './utils/dom';
 import {createUseStyles} from './jss';
-import {useElementDimensions} from './hooks';
+import {useElementDimensions, useTheme} from './hooks';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type Moment from 'moment';
+import {IconCloseRegular} from '.';
 
 /**
  * Do not use this component!
@@ -26,6 +27,7 @@ export interface DateTimePickerProps extends CommonFormFieldProps {
     inputRef: (field: HTMLInputElement | null) => void;
     isValidDate?: (currentDate: Moment.Moment, selectedDate: Moment.Moment) => boolean;
     withTime?: boolean;
+    mode?: 'year-month';
 }
 
 // styles from "react-datetime/css/react-datetime.css" converted to JSS "as is"
@@ -121,18 +123,14 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, isValidDate, ...rest}) => {
+const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidDate, optional, ...rest}) => {
     const [showPicker, setShowPicker] = React.useState(false);
     const classes = useStyles();
+    const {texts} = useTheme();
     const fieldRef = React.useRef<HTMLInputElement | null>(null);
     const {height: pickerContainerHeight, ref: pickerContainerRef} = useElementDimensions();
 
-    const onFocus = (event: React.FocusEvent) => {
-        setShowPicker(true);
-        rest.onFocus?.(event);
-    };
-
-    const getCalendarContainerStyles = (): React.CSSProperties => {
+    const getPickerContainerStyles = (): React.CSSProperties => {
         const {top = 0, bottom = 0, left = 0} = fieldRef.current?.getBoundingClientRect() || {};
         // picker has different heights for month, year or day selectors
         // this hardcoded value is the date selector height + a little threshold
@@ -156,35 +154,65 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, isValidDate, .
         return value ? new Date(value) : undefined;
     };
 
+    const formatMoment = (moment: Moment.Moment): string => {
+        if (withTime) {
+            return moment.format('yyyy-MM-DD HH:mm');
+        }
+        if (mode === 'year-month') {
+            return moment.format('yyyy-MM');
+        }
+        return moment.format('yyyy-MM-DD');
+    };
+
     const setValue = (moment: string | Moment.Moment) => {
-        const value =
-            typeof moment === 'string' ? moment : moment.format(withTime ? 'yyyy-MM-DD HH:mm' : 'yyyy-MM-DD');
+        const value = typeof moment === 'string' ? moment : formatMoment(moment);
         if (fieldRef.current) {
             fieldRef.current.focus();
             rest.onChange?.(createChangeEvent(fieldRef.current, value));
         }
     };
 
+    const renderEndIcon = () => {
+        if (getValue() && optional) {
+            return (
+                <IconButton
+                    aria-label={texts.clearButton}
+                    size={32}
+                    onPress={(event) => {
+                        event.stopPropagation();
+                        setValue('');
+                    }}
+                >
+                    <IconCloseRegular size={24} />
+                </IconButton>
+            );
+        }
+        return (
+            <IconButton aria-label="" size={32} onPress={() => setShowPicker(!showPicker)}>
+                <IconCalendarRegular size={24} />
+            </IconButton>
+        );
+    };
+
     return (
         <>
             <TextFieldBase
                 {...rest}
+                style={{cursor: 'default'}}
+                required={!optional}
                 type="text"
                 autoComplete="off"
-                onFocus={onFocus}
                 shrinkLabel={!!getValue()}
-                endIcon={
-                    <IconButton aria-label="" size={32} onPress={() => setShowPicker(!showPicker)}>
-                        <IconCalendarRegular size={24} />
-                    </IconButton>
-                }
+                endIcon={renderEndIcon()}
                 inputRef={(e: HTMLInputElement) => {
                     rest?.inputRef?.(e);
                     fieldRef.current = e;
                 }}
                 readOnly
                 onKeyDown={() => setShowPicker(true)}
-                onClick={() => setShowPicker(true)}
+                onClick={() => {
+                    setShowPicker(true);
+                }}
             />
             {showPicker && (
                 <Overlay
@@ -196,12 +224,14 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, isValidDate, .
                 >
                     <div
                         ref={pickerContainerRef}
-                        style={getCalendarContainerStyles()}
+                        style={getPickerContainerStyles()}
                         className={classes.reactDatePicker}
                     >
                         <Datetime
-                            initialValue={getValue()}
+                            initialViewMode={mode === 'year-month' ? 'months' : undefined}
+                            dateFormat={mode === 'year-month' ? 'YYYY-MM' : undefined}
                             timeFormat={withTime ? 'HH:mm' : false}
+                            initialValue={getValue()}
                             locale={browserLocale}
                             input={false}
                             onChange={setValue}

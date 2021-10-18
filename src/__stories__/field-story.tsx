@@ -243,7 +243,7 @@ export const Variants: StoryComponent = () => {
 
 export const TypesUncontrolled: StoryComponent = () => (
     <>
-        {/* <Uncontrolled title="TextField">
+        <Uncontrolled title="TextField">
             {(handleChange, handleChangeValue) => (
                 <TextField
                     name="text"
@@ -340,7 +340,7 @@ export const TypesUncontrolled: StoryComponent = () => (
                 </form>
             )}
         </Uncontrolled>
-            */}
+
         <Uncontrolled title="DateField">
             {(handleChange, handleChangeValue) => (
                 <>
@@ -357,13 +357,14 @@ export const TypesUncontrolled: StoryComponent = () => (
                 </>
             )}
         </Uncontrolled>
-        {/*
+
         <Uncontrolled title="DateTimeField">
             {(handleChange, handleChangeValue) => (
                 <>
                     <DatePickerWarning />
                     <div data-testid="datetime">
                         <DateTimeField
+                            optional
                             name="datetime"
                             label="DateTime"
                             onChange={handleChange}
@@ -372,7 +373,7 @@ export const TypesUncontrolled: StoryComponent = () => (
                     </div>
                 </>
             )}
-        </Uncontrolled> */}
+        </Uncontrolled>
 
         <Uncontrolled title="MonthField">
             {(handleChange, handleChangeValue) => (

@@ -8,6 +8,7 @@ import {getLocalDateString} from './utils/time';
 import {useTheme} from './hooks';
 
 import type {CommonFormFieldProps} from './text-field-base';
+import {isFirefox} from './utils/platform';
 
 export interface DateFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
@@ -36,7 +37,12 @@ const DateField: React.FC<DateFieldProps> = ({
     ...rest
 }) => {
     const processValue = (value: string) => value;
-    const hasNativePicker = React.useMemo(() => isInputTypeSupported('date'), []);
+    const hasNativePicker = React.useMemo(() => {
+        if (isFirefox()) {
+            return false;
+        }
+        return isInputTypeSupported('date');
+    }, []);
     const {texts} = useTheme();
 
     const isInRange = (value: string): boolean => {
@@ -102,6 +108,7 @@ const DateField: React.FC<DateFieldProps> = ({
             <ReactDateTimePicker
                 {...rest}
                 {...fieldProps}
+                optional={optional}
                 isValidDate={(currentDate) => isInRange(getLocalDateString(currentDate.toDate()))}
             />
         </React.Suspense>

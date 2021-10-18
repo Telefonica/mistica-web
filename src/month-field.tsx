@@ -102,7 +102,9 @@ const DateField: React.FC<DateFieldProps> = ({
             <ReactDateTimePicker
                 {...rest}
                 {...fieldProps}
+                optional={optional}
                 isValidDate={(currentDate) => isInRange(getLocalYearMonthString(currentDate.toDate()))}
+                mode="year-month"
             />
         </React.Suspense>
     );
