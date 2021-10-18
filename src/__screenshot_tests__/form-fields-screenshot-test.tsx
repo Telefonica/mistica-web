@@ -181,7 +181,10 @@ test('month field', async () => {
     expect(emptyScreenshot).toMatchImageSnapshot();
 
     await field.focus();
-    await field.type('octubre' + '2021', {delay: 0});
+
+    await field.type('10', {delay: 0});
+    page.keyboard.press('Tab');
+    await field.type('2021', {delay: 0});
 
     const filledScreenshot = await fieldWrapper.screenshot();
 
