@@ -1,14 +1,10 @@
 // @flow
 
 import * as React from "react";
-import { ButtonPrimary, ButtonSecondary, ButtonLink } from "./button";
 import type { DataAttributes } from "./utils/types";
+import type { ButtonGroupProps } from "./button-group";
 declare type HapticFeedback = "error" | "success";
-declare type FeedbackButtonsProps = {
-  primaryButton?: React.Element<typeof ButtonPrimary>,
-  secondaryButton?: React.Element<typeof ButtonSecondary>,
-  link?: React.Element<typeof ButtonLink>,
-};
+declare type FeedbackButtonsProps = ButtonGroupProps;
 declare type FeedbackProps = {|
   ...$Exact<FeedbackButtonsProps>,
 

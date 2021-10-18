@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {EmptyStateCard, ButtonPrimary, ButtonLink, IconBoxLight, useTheme, Image} from '..';
+import {EmptyStateCard, ButtonPrimary, ButtonLink, IconBoxLight, useTheme, Image, ButtonSecondary} from '..';
 
 export default {
     title: 'Components/Cards/EmptyStateCard',
@@ -9,7 +9,7 @@ export default {
             control: {type: 'select'},
         },
         actions: {
-            options: ['button', 'link', 'button and link'],
+            options: ['button', 'link', 'button and secondary', 'button and link'],
             control: {type: 'select'},
         },
     },
@@ -55,12 +55,19 @@ export const Default: StoryComponent<Args> = ({actions, title, description, asse
         <ButtonLink onPress={() => {}}>Link</ButtonLink>
     ) : undefined;
 
+    const secondaryButton = actions.includes('secondary') ? (
+        <ButtonSecondary small onPress={() => {}}>
+            Secondary Action
+        </ButtonSecondary>
+    ) : undefined;
+
     return (
         <EmptyStateCard
             {...assetProps}
             title={title}
             description={description}
             button={button}
+            secondaryButton={secondaryButton}
             buttonLink={buttonLink}
             aria-label="Empty state card label"
             dataAttributes={{testid: 'empty-state-card'}}
