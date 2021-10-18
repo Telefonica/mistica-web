@@ -1,3 +1,15 @@
+# [10.7.0](https://github.com/Telefonica/mistica-web/compare/v10.6.0...v10.7.0) (2021-10-18)
+
+
+### Bug Fixes
+
+* **colors:** fix some dark colors ([#354](https://github.com/Telefonica/mistica-web/issues/354)) ([7ecb12b](https://github.com/Telefonica/mistica-web/commit/7ecb12b502a4a634d4cd0686f205e448db3a7b7f))
+
+
+### Features
+
+* **ProgressBar:** allow custom color ([#353](https://github.com/Telefonica/mistica-web/issues/353)) ([1f7be87](https://github.com/Telefonica/mistica-web/commit/1f7be87b4c9297fa273f69b612333224f05750aa))
+
 # [10.6.0](https://github.com/Telefonica/mistica-web/compare/v10.5.1...v10.6.0) (2021-10-14)
 
 
