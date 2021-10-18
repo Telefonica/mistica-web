@@ -132,7 +132,7 @@ test('date field', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('date');
-    const field = await screen.findByLabelText('Date');
+    const field = await screen.findByLabelText('Date (opcional)');
 
     const emptyScreenshot = await fieldWrapper.screenshot();
 
@@ -153,7 +153,7 @@ test('date-time field', async () => {
     });
 
     const fieldWrapper = await screen.findByTestId('datetime');
-    const field = await screen.findByLabelText('DateTime');
+    const field = await screen.findByLabelText('DateTime (opcional)');
 
     const emptyScreenshot = await fieldWrapper.screenshot();
 
@@ -161,6 +161,27 @@ test('date-time field', async () => {
 
     await field.focus();
     await field.type('06' + '10' + '001980' + '13' + '14', {delay: 0});
+
+    const filledScreenshot = await fieldWrapper.screenshot();
+
+    expect(filledScreenshot).toMatchImageSnapshot();
+});
+
+test('month field', async () => {
+    await openStoryPage({
+        id: 'components-forms-fields--types-uncontrolled',
+        device: 'MOBILE_ANDROID',
+    });
+
+    const fieldWrapper = await screen.findByTestId('month');
+    const field = await screen.findByLabelText('Month (opcional)');
+
+    const emptyScreenshot = await fieldWrapper.screenshot();
+
+    expect(emptyScreenshot).toMatchImageSnapshot();
+
+    await field.focus();
+    await field.type('octubre' + '2021', {delay: 0});
 
     const filledScreenshot = await fieldWrapper.screenshot();
 
