@@ -159,7 +159,7 @@ test('DateField (controlled)', async () => {
 
 test('DateField (uncontrolled)', async () => {
     await openStoryPage(getStoryOfType('uncontrolled'));
-    const field = await screen.findByLabelText('Date (optional)');
+    const field = await screen.findByLabelText('Date (opcional)');
     await field.focus();
     await field.type('06101980');
     await expect(getValue(field)).resolves.toBe('1980-10-06');
