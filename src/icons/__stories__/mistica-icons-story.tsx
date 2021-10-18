@@ -14,7 +14,6 @@ import {
     RadioGroup,
     RadioButton,
     Text3,
-    IconCheckedRegular,
     IconCheckRegular,
     FadeIn,
 } from '../..';
@@ -46,12 +45,12 @@ export const MisticaIcons: React.FC = () => {
     const [showFilled, filledCheckbox] = useCheckbox('Filled', false);
     const [isInverse, inverseCheckbox] = useCheckbox('Inverse', false);
     const [showNames, showNamesCheckbox] = useCheckbox('Name', true);
-    const [changeColor, changeColorRadio] = React.useState('neutralHigh ');
     // const [showCircle, circleCheckbox] = useCheckbox('Circle', false);
     const [showIConBackground, showIConBackgroundCheckbox] = useCheckbox('Icon area', false);
     const [filter, setFilter] = React.useState('');
     const [size, setSize] = React.useState(24);
     const {colors} = useTheme();
+    const [selectedColor, setSelectedColor] = React.useState(colors.neutralHigh);
 
     const getRealName = (name: string) => name.replace(/^Icon/, '').replace(/(Regular|Filled|Light)$/, '');
     const getTypeSortValue = (name: string) => {
@@ -176,107 +175,34 @@ export const MisticaIcons: React.FC = () => {
                                         fullWidth
                                     />
                                     <RadioGroup
-                                        name="group1"
+                                        name="colorPicker"
                                         aria-labelledby="custom-render"
-                                        value={changeColor}
-                                        onChange={changeColorRadio}
-                                        defaultValue={colors.neutralHigh}
+                                        value={selectedColor}
+                                        onChange={setSelectedColor}
                                     >
                                         <Inline space="between">
-                                            <RadioButton
-                                                value={colors.neutralHigh}
-                                                render={() => (
-                                                    <Inline space={16}>
-                                                        <Circle
-                                                            size={32}
-                                                            backgroundColor={colors.neutralHigh}
-                                                        >
-                                                            {changeColor === colors.neutralHigh && (
+                                            {[
+                                                colors.neutralHigh,
+                                                colors.neutralMedium,
+                                                colors.brand,
+                                                colors.success,
+                                                colors.warning,
+                                                colors.error,
+                                            ].map((pickerColor) => (
+                                                <RadioButton
+                                                    value={selectedColor}
+                                                    render={() => (
+                                                        <Circle size={32} backgroundColor={pickerColor}>
+                                                            {selectedColor === pickerColor && (
                                                                 <IconCheckRegular
                                                                     size={18}
                                                                     color={colors.inverse}
                                                                 />
                                                             )}
                                                         </Circle>
-                                                    </Inline>
-                                                )}
-                                            />
-                                            <RadioButton
-                                                value={colors.neutralMedium}
-                                                render={() => (
-                                                    <Inline space={16}>
-                                                        <Circle
-                                                            size={32}
-                                                            backgroundColor={colors.neutralMedium}
-                                                        >
-                                                            {changeColor === colors.neutralMedium && (
-                                                                <IconCheckRegular
-                                                                    size={18}
-                                                                    color={colors.inverse}
-                                                                />
-                                                            )}
-                                                        </Circle>
-                                                    </Inline>
-                                                )}
-                                            />
-                                            <RadioButton
-                                                value={colors.brand}
-                                                render={() => (
-                                                    <Circle size={32} backgroundColor={colors.brand}>
-                                                        {changeColor === colors.brand && (
-                                                            <IconCheckRegular
-                                                                size={18}
-                                                                color={colors.inverse}
-                                                            />
-                                                        )}
-                                                    </Circle>
-                                                )}
-                                            />
-                                            <RadioButton
-                                                value={colors.success}
-                                                render={() => (
-                                                    <Inline space={16}>
-                                                        <Circle size={32} backgroundColor={colors.success}>
-                                                            {changeColor === colors.success && (
-                                                                <IconCheckRegular
-                                                                    size={18}
-                                                                    color={colors.inverse}
-                                                                />
-                                                            )}
-                                                        </Circle>
-                                                    </Inline>
-                                                )}
-                                            />
-                                            <RadioButton
-                                                value={colors.warning}
-                                                render={() => (
-                                                    <Inline space={16}>
-                                                        <Circle size={32} backgroundColor={colors.warning}>
-                                                            {changeColor === colors.warning && (
-                                                                <IconCheckRegular
-                                                                    size={18}
-                                                                    color={colors.inverse}
-                                                                />
-                                                            )}
-                                                        </Circle>
-                                                    </Inline>
-                                                )}
-                                            />
-                                            <RadioButton
-                                                value={colors.error}
-                                                render={() => (
-                                                    <Inline space={16}>
-                                                        <Circle size={32} backgroundColor={colors.error}>
-                                                            {changeColor === colors.error && (
-                                                                <IconCheckRegular
-                                                                    size={18}
-                                                                    color={colors.inverse}
-                                                                />
-                                                            )}
-                                                        </Circle>
-                                                    </Inline>
-                                                )}
-                                            />
+                                                    )}
+                                                />
+                                            ))}
                                         </Inline>
                                     </RadioGroup>
 
@@ -347,7 +273,7 @@ export const MisticaIcons: React.FC = () => {
                                                     >
                                                         <Icon
                                                             size={size}
-                                                            color={isInverse ? colors.inverse : changeColor}
+                                                            color={isInverse ? colors.inverse : selectedColor}
                                                             id="custom-render"
                                                         />
                                                     </div>
@@ -357,7 +283,9 @@ export const MisticaIcons: React.FC = () => {
                                                         // meter fadein cuando se activa/desactiva el checkbox de name
                                                     >
                                                         {showNames && (
-                                                            <Text1 regular>{breakName(Icon.name)}</Text1>
+                                                            <Text1 regular color={colors.textSecondary}>
+                                                                {breakName(Icon.name)}
+                                                            </Text1>
                                                         )}
                                                     </FadeIn>
                                                 </Stack>
