@@ -1,3 +1,10 @@
+# [10.8.0](https://github.com/Telefonica/mistica-web/compare/v10.7.0...v10.8.0) (2021-10-18)
+
+
+### Features
+
+* **ButtonGroup:** new component (private) ([#351](https://github.com/Telefonica/mistica-web/issues/351)) ([fe00dd7](https://github.com/Telefonica/mistica-web/commit/fe00dd7372e6bec8222bf7456b28fb523d40d2c9))
+
 # [10.7.0](https://github.com/Telefonica/mistica-web/compare/v10.6.0...v10.7.0) (2021-10-18)
 
 
