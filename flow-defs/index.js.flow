@@ -109,6 +109,7 @@ declare export { default as CreditCardExpirationField } from "./credit-card-expi
 declare export { default as CreditCardFields } from "./credit-card-fields";
 declare export { default as CvvField } from "./cvv-field";
 declare export { default as DateField } from "./date-field";
+declare export { default as MonthField } from "./month-field";
 declare export { default as DateTimeField } from "./date-time-field";
 declare export { default as IntegerField } from "./integer-field";
 declare export { default as DecimalField } from "./decimal-field";

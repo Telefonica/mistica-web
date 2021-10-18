@@ -1,4 +1,5 @@
 // @flow
 
 declare export var getLocalDateString: (date: Date) => string;
+declare export var getLocalYearMonthString: (date: Date) => string;
 declare export var getLocalDateTimeString: (date: Date) => string;
