@@ -20,9 +20,9 @@ export const palette = {
     blauPurple30: '#BB89D9',
 
     blauYellow: '#FFA922',
-    BlauYellow10: '#FFF6E9',
-    BlauYellow60: '#F09500',
-    BlauYellow70: '#996614',
+    blauYellow10: '#FFF6E9',
+    blauYellow60: '#F09500',
+    blauYellow70: '#996614',
 
     blauRed: '#F64417',
     blauRed10: '#FEECE8',
@@ -31,8 +31,8 @@ export const palette = {
     blauRed20: '#FCC7B9',
 
     blauGreen: '#30D300',
-    BlauGreen10: '#EAFBE5',
-    BlauGreen70: '#1D7F00',
+    blauGreen10: '#EAFBE5',
+    blauGreen70: '#1D7F00',
 
     grey1: '#F5F9FA',
     grey2: '#E7E7E7',
