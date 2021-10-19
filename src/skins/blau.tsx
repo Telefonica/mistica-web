@@ -5,15 +5,15 @@ import type {GetSkin} from './types';
 
 export const palette = {
     blauBluePrimary: '#00B6F1',
-    blauBluePrimary30: '#B3E9FB',
-    blauBluePrimary20: '#E5F6FD',
     blauBluePrimary10: '#F7FDFF',
+    blauBluePrimary20: '#E5F6FD',
+    blauBluePrimary30: '#B3E9FB',
 
-    blauBlueSecondary60: '#005A99',
     blauBlueSecondary: '#0072BC',
-    blauBlueSecondary30: '#80B7DF',
-    blauBlueSecondary20: '#B2D4EC',
     blauBlueSecondary10: '#E5F1F9',
+    blauBlueSecondary20: '#B2D4EC',
+    blauBlueSecondary30: '#80B7DF',
+    blauBlueSecondary60: '#005A99',
 
     blauPurple: '#7814B3',
     blauPurple10: '#F1E7F7',
@@ -26,9 +26,9 @@ export const palette = {
 
     blauRed: '#F64417',
     blauRed10: '#FEECE8',
-    blauRed70: '#C93712',
-    blauRed30: '#FA9E87',
     blauRed20: '#FCC7B9',
+    blauRed30: '#FA9E87',
+    blauRed70: '#C93712',
 
     blauGreen: '#30D300',
     blauGreen10: '#EAFBE5',
