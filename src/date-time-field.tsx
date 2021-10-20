@@ -38,6 +38,7 @@ const FormDateField: React.FC<DateFieldProps> = ({
 }) => {
     const hasNativePicker = React.useMemo(() => {
         if (isFirefox()) {
+            // disabled for firefox because the picker has no option to select time
             return false;
         }
         return isInputTypeSupported('datetime-local');

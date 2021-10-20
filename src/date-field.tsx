@@ -39,6 +39,7 @@ const DateField: React.FC<DateFieldProps> = ({
     const processValue = (value: string) => value;
     const hasNativePicker = React.useMemo(() => {
         if (isFirefox()) {
+            // disabled in firefox because it shows a close button over the icon and can't be styled
             return false;
         }
         return isInputTypeSupported('date');
