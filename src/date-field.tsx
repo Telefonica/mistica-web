@@ -6,9 +6,9 @@ import {isServerSide} from './utils/environment';
 import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
 import {getLocalDateString} from './utils/time';
 import {useTheme} from './hooks';
+import {isFirefox} from './utils/platform';
 
 import type {CommonFormFieldProps} from './text-field-base';
-import {isFirefox} from './utils/platform';
 
 export interface DateFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;

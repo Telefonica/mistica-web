@@ -8,10 +8,10 @@ import IconButton from './icon-button';
 import {cancelEvent, createChangeEvent} from './utils/dom';
 import {createUseStyles} from './jss';
 import {useElementDimensions, useTheme} from './hooks';
+import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type Moment from 'moment';
-import {IconCloseRegular} from '.';
 
 /**
  * Do not use this component!
