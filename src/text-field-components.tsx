@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {createUseStyles} from './jss';
-import {useIsInverseVariant} from './theme-variant-context';
+import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
 import {Text1, Text3} from './text';
 
@@ -217,9 +217,11 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
 
     return (
         <div className={classes.fieldContainer}>
-            <div className={classnames(classes.border, className)} ref={fieldRef}>
-                {children}
-            </div>
+            <ThemeVariant isInverse={false}>
+                <div className={classnames(classes.border, className)} ref={fieldRef}>
+                    {children}
+                </div>
+            </ThemeVariant>
             {helperText}
         </div>
     );
