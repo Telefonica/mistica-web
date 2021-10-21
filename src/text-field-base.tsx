@@ -163,6 +163,7 @@ const useStyles = createUseStyles((theme) => ({
         display: 'inline-flex',
         '& > div': {
             width: '100%',
+            display: 'inline-flex',
         },
     },
     textArea: {
