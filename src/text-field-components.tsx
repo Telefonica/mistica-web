@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
-import {Text1, Text3} from '.';
+import {Text1, Text3} from './text';
 
 export type InputState = 'focused' | 'filled' | 'default';
 
