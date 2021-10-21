@@ -3,60 +3,36 @@ import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
+import {Text1, Text3} from '.';
 
 export type InputState = 'focused' | 'filled' | 'default';
 
 export const DEFAULT_WIDTH = 328;
 
 const LABEL_LEFT_POSITION = 12;
-const LABEL_SCALE = 0.75;
 
 const useLabelStyles = createUseStyles((theme) => ({
     labelContainer: {
-        lineHeight: '1em',
         position: 'absolute',
         pointerEvents: 'none',
         left: LABEL_LEFT_POSITION,
         top: 0,
-        fontSize: 16,
         transformOrigin: 0,
-        height: 16,
+        height: 24,
         display: 'flex',
         flexDirection: 'row',
-        transform: ({isShrinked}) =>
-            isShrinked ? `translateY(8px) scale(${LABEL_SCALE})` : 'translateY(20px) scale(1)',
-
-        color: ({inputState, error, disabled}) => {
-            if (inputState === 'default' && disabled) {
-                return theme.colors.textDisabled;
-            }
-            if (error && inputState !== 'default') {
-                return theme.colors.error;
-            }
-            if (inputState === 'focused') {
-                return theme.colors.controlActivated;
-            }
-            return theme.colors.textSecondary;
+        transform: 'translateY(18px)',
+        [theme.mq.tabletOrSmaller]: {
+            transform: 'translateY(16px)',
         },
-        width: ({isShrinked}) =>
-            isShrinked
-                ? `calc((100% - ${LABEL_LEFT_POSITION * 2}px) / ${LABEL_SCALE})`
-                : `calc(100% - ${LABEL_LEFT_POSITION * 2}px)`,
+        width: `calc(100% - ${LABEL_LEFT_POSITION * 2}px)`,
     },
-    labelText: {
-        '-webkit-line-clamp': 1,
-        lineClamp: 1,
-        wordBreak: 'break-all',
-        display: 'box',
-        overflow: 'hidden',
-        boxOrient: 'vertical',
-        flexShrink: 1,
-        // this is needed because at 1em, font descendants are cutted when using overflow hidden
-        // setting a higher height is not an option because it shows the next line
-        lineHeight: '1.2em',
-        height: '1.2em',
-        position: 'relative',
-        top: '-0.1em',
+    shrinked: {
+        transform: 'translateY(8px)',
+        height: 20,
+        [theme.mq.tabletOrSmaller]: {
+            height: 16,
+        },
     },
 }));
 
@@ -84,7 +60,18 @@ export const Label: React.FC<LabelProps> = ({
     const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
     const classes = useLabelStyles({isShrinked, inputState, error, disabled});
     const [transitionStyle, setTransitionStyle] = React.useState('');
-    const {texts} = useTheme();
+    const {texts, colors} = useTheme();
+
+    let color: string;
+    if (inputState === 'default' && disabled) {
+        color = colors.textDisabled;
+    } else if (error && inputState !== 'default') {
+        color = colors.error;
+    } else if (inputState === 'focused') {
+        color = colors.controlActivated;
+    } else {
+        color = colors.textSecondary;
+    }
 
     // This way we prevent animation when field is filled as initial state
     React.useEffect(() => {
@@ -98,46 +85,49 @@ export const Label: React.FC<LabelProps> = ({
             clearTimeout(tid);
         };
     }, []);
+    const renderText = (
+        isShrinked: boolean,
+        color: string,
+        children: React.ReactNode | string,
+        truncate = false
+    ) => {
+        const props = {regular: true, as: 'span', color, truncate};
+        if (isShrinked) {
+            return <Text1 {...props}>{children}</Text1>;
+        } else {
+            return <Text3 {...props}>{children}</Text3>;
+        }
+    };
 
     return (
         <label
-            className={classes.labelContainer}
+            className={classnames(classes.labelContainer, {[classes.shrinked]: isShrinked})}
             htmlFor={forId}
             style={{...style, transition: transitionStyle}}
         >
-            <span className={classes.labelText}>{children}</span>
-            {optional ? <span>&nbsp;({texts.formFieldOptionalLabelSuffix})</span> : null}
+            {renderText(isShrinked, color, children, true)}
+            {optional
+                ? renderText(isShrinked, color, `\u00A0(${texts.formFieldOptionalLabelSuffix})`) // using unicode for &nbsp; because jsx string scapes it
+                : null}
         </label>
     );
 };
 
-const useHelperTextStyles = createUseStyles((theme) => ({
+const useHelperTextStyles = createUseStyles(() => ({
     helperContainer: {
-        lineHeight: 1.4,
         paddingLeft: 14,
         paddingRight: 16,
-        '& p': {
+        '& div': {
             margin: 0,
             marginTop: 4,
-            fontSize: 12,
             flexGrow: 1,
         },
         display: 'flex',
     },
     leftText: {
-        color: ({error, isInverse}) => {
-            if (isInverse) {
-                return theme.colors.textPrimaryInverse;
-            }
-            if (error) {
-                return theme.colors.error;
-            }
-            return theme.colors.textSecondary;
-        },
         textAlign: 'left',
     },
     rightText: {
-        color: ({isInverse}) => (isInverse ? theme.colors.textPrimaryInverse : theme.colors.textSecondary),
         textAlign: 'right',
     },
 }));
@@ -151,12 +141,27 @@ type HelperTextProps = {
 
 export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, error}) => {
     const isInverse = useIsInverseVariant();
-    const classes = useHelperTextStyles({error, isInverse});
+    const {colors} = useTheme();
+    const classes = useHelperTextStyles();
+    const leftColor = isInverse ? colors.textPrimaryInverse : error ? colors.error : colors.textSecondary;
+    const rightColor = isInverse ? colors.textPrimaryInverse : colors.textSecondary;
 
     return (
         <div className={classes.helperContainer}>
-            {leftText && <p className={classes.leftText}>{leftText}</p>}
-            {rightText && <p className={classes.rightText}>{rightText}</p>}
+            {leftText && (
+                <div className={classes.leftText}>
+                    <Text1 color={leftColor} regular as="p">
+                        {leftText}
+                    </Text1>
+                </div>
+            )}
+            {rightText && (
+                <div className={classes.rightText}>
+                    <Text1 color={rightColor} regular as="p">
+                        {rightText}
+                    </Text1>
+                </div>
+            )}
         </div>
     );
 };
@@ -177,10 +182,12 @@ const useFieldContainerStyles = createUseStyles((theme) => ({
         overflow: 'hidden',
         border: `1px solid ${theme.colors.border}`,
         borderRadius: 4,
-        height: ({multiline}) => (multiline ? 152 : 56),
+        height: ({multiline}) => (multiline ? 152 : 60),
+        [theme.mq.tabletOrSmaller]: {
+            height: ({multiline}) => (multiline ? 152 : 56),
+        },
         display: 'flex',
         position: 'relative',
-        lineHeight: '16px',
         backgroundColor: ({disabled}) =>
             disabled ? theme.colors.backgroundAlternative : theme.colors.backgroundContainer,
         cursor: ({disabled}) => (disabled ? 'not-allowed' : 'initial'),
