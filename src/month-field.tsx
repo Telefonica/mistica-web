@@ -3,9 +3,8 @@ import {useFieldProps} from './form-context';
 import TextFieldBase from './text-field-base';
 import {isInputTypeSupported} from './utils/dom';
 import {isServerSide} from './utils/environment';
-import {getLocalDateTimeString} from './utils/time';
 import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
-import {isFirefox} from './utils/platform';
+import {getLocalYearMonthString} from './utils/time';
 import {useTheme} from './hooks';
 
 import type {CommonFormFieldProps} from './text-field-base';
@@ -20,7 +19,7 @@ const ReactDateTimePicker = React.lazy(
     () => import(/* webpackChunkName: "date-time-picker" */ './date-time-picker')
 );
 
-const FormDateField: React.FC<DateFieldProps> = ({
+const DateField: React.FC<DateFieldProps> = ({
     disabled,
     error,
     helperText,
@@ -36,22 +35,15 @@ const FormDateField: React.FC<DateFieldProps> = ({
     max,
     ...rest
 }) => {
-    const hasNativePicker = React.useMemo(() => {
-        if (isFirefox()) {
-            // disabled for firefox because the picker has no option to select time
-            return false;
-        }
-        return isInputTypeSupported('datetime-local');
-    }, []);
-    const processValue = (value: string) => (hasNativePicker ? value : value.replace(/\s/, 'T'));
+    const processValue = (value: string) => value;
+    const hasNativePicker = React.useMemo(() => isInputTypeSupported('month'), []);
     const {texts} = useTheme();
 
     const isInRange = (value: string): boolean => {
-        const isoValue = processValue(value);
-        if (min && isoValue && isoValue < getLocalDateTimeString(min)) {
+        if (min && value && value < getLocalYearMonthString(min)) {
             return false;
         }
-        if (max && isoValue && isoValue > getLocalDateTimeString(max)) {
+        if (max && value && value > getLocalYearMonthString(max)) {
             return false;
         }
         return true;
@@ -90,9 +82,9 @@ const FormDateField: React.FC<DateFieldProps> = ({
         <TextFieldBase
             {...rest}
             {...fieldProps}
-            min={min ? getLocalDateTimeString(min) : undefined}
-            max={max ? getLocalDateTimeString(max) : undefined}
-            type="datetime-local"
+            min={min ? getLocalYearMonthString(min) : undefined}
+            max={max ? getLocalYearMonthString(max) : undefined}
+            type="month"
             endIconOverlay={
                 <div style={{position: 'absolute', top: 16, right: 16, pointerEvents: 'none'}}>
                     <IconCalendarRegular />
@@ -111,11 +103,11 @@ const FormDateField: React.FC<DateFieldProps> = ({
                 {...rest}
                 {...fieldProps}
                 optional={optional}
-                withTime
-                isValidDate={(currentDate) => isInRange(getLocalDateTimeString(currentDate.toDate()))}
+                isValidDate={(currentDate) => isInRange(getLocalYearMonthString(currentDate.toDate()))}
+                mode="year-month"
             />
         </React.Suspense>
     );
 };
 
-export default FormDateField;
+export default DateField;

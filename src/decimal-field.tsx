@@ -102,6 +102,7 @@ export const DecimalInput: React.FC<DecimalInputProps> = ({
 
 export interface DecimalFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
+    prefix?: React.ReactNode;
 }
 
 const DecimalField: React.FC<DecimalFieldProps> = ({
