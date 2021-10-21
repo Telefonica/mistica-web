@@ -209,6 +209,10 @@ const useStyles = createUseStyles((theme) => ({
         // Chrome: hide value if not valid or focused
         // `opacity: 0` is needed when min/max is set and some parts of the date are disabled
         // be sure to check that case when updating these styles
+        '&[type="month"]:not(:valid):not(:focus)::-webkit-datetime-edit': {
+            color: 'transparent',
+            opacity: 0,
+        },
         '&[type="date"]:not(:valid):not(:focus)::-webkit-datetime-edit': {
             color: 'transparent',
             opacity: 0,
@@ -220,6 +224,7 @@ const useStyles = createUseStyles((theme) => ({
 
         // Firefox: hide value if not valid or focused
         // Only apply when Firefox, otherwise it breaks styles in safari mobile
+        '&[type="month"]:not(:valid):not(:focus)': isFirefox() ? {color: 'transparent'} : {},
         '&[type="date"]:not(:valid):not(:focus)': isFirefox() ? {color: 'transparent'} : {},
         '&[type="datetime-local"]:not(:valid):not(:focus)': isFirefox() ? {color: 'transparent'} : {},
 
@@ -305,7 +310,9 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         // this shrinkLabel override is a workaround because I was unable to find a way to hide date
         // and date-time native placeholders when the input is not required
         const shrinkLabel =
-            shrinkLabelProp || ((rest.type === 'date' || rest.type === 'datetime-local') && !rest.required);
+            shrinkLabelProp ||
+            ((rest.type === 'date' || rest.type === 'datetime-local' || rest.type === 'month') &&
+                !rest.required);
 
         const classes = useStyles({
             inputState,
