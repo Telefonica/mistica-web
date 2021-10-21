@@ -458,7 +458,6 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
 
 const useSuggestionsStyles = createUseStyles(() => ({
     menuItem: {
-        lineHeight: 1.5,
         padding: '6px 16px',
         height: 48,
         transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
@@ -547,7 +546,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 [classes.menuItemSelected]: isHighlighted,
                             })}
                         >
-                            {suggestion}
+                            <Text3 regular>{suggestion}</Text3>
                         </div>
                     )}
                     renderSuggestionsContainer={(options) => (
