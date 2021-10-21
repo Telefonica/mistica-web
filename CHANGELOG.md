@@ -1,3 +1,10 @@
+# [10.9.0](https://github.com/Telefonica/mistica-web/compare/v10.8.1...v10.9.0) (2021-10-21)
+
+
+### Features
+
+* **MonthField:** new form field to select months ([#356](https://github.com/Telefonica/mistica-web/issues/356)) ([1a949a5](https://github.com/Telefonica/mistica-web/commit/1a949a5fa4d2f9e7a0141afd7c920741faf36c49))
+
 ## [10.8.1](https://github.com/Telefonica/mistica-web/compare/v10.8.0...v10.8.1) (2021-10-19)
 
 
