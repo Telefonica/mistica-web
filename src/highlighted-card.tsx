@@ -19,9 +19,8 @@ const useStyles = createUseStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: ({width}) => width,
+        width: ({width}) => width || '100%',
         alignSelf: 'stretch',
-        flexGrow: 1,
     },
     imageContent: {
         display: 'flex',
@@ -60,6 +59,9 @@ const useStyles = createUseStyles((theme) => ({
             padding: 24,
             paddingRight: ({hasImage}) => (hasImage ? 24 : 56),
         },
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
     },
     touchableContainer: {
         display: 'flex',
@@ -162,7 +164,12 @@ const Content: React.FC<Props> = (props) => {
                         {description}
                     </Text2>
                 </Box>
-                {props.button && <Box paddingTop={16}>{props.button}</Box>}
+                {props.button && (
+                    <>
+                        <div style={{minHeight: 16, flexGrow: 1}} />
+                        {props.button}
+                    </>
+                )}
             </div>
             {imageUrl && (
                 <div
