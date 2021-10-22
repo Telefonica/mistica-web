@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {Label, HelperText, FieldContainer} from './text-field-components';
+import {Label, HelperText, FieldContainer, LABEL_LEFT_POSITION} from './text-field-components';
 import {Text3} from './text';
 import {isIos, isRunningAcceptanceTest, isChrome, isFirefox} from './utils/platform';
 import {useAriaId, useTheme} from './hooks';
@@ -367,15 +367,12 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             ...inputProps,
         };
 
-        let labelStyle = {};
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
-        if (startIcon) {
-            labelStyle = isShrinked
-                ? {left: 48, right: 0, width: 'auto'}
-                : {left: 48, right: 12, width: 'auto'};
-        } else if (endIcon && !isShrinked) {
-            labelStyle = {paddingRight: 36};
-        }
+        const labelStyle = {
+            left: startIcon ? 48 : LABEL_LEFT_POSITION,
+            width: `calc(100% - ${LABEL_LEFT_POSITION + (startIcon ? 48 : LABEL_LEFT_POSITION)}px)`,
+            paddingRight: endIcon && !isShrinked ? 36 : 0,
+        };
 
         const prefixColor = rest.disabled ? colors.textDisabled : colors.textSecondary;
 

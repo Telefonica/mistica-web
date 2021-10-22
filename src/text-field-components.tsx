@@ -9,7 +9,7 @@ export type InputState = 'focused' | 'filled' | 'default';
 
 export const DEFAULT_WIDTH = 328;
 
-const LABEL_LEFT_POSITION = 12;
+export const LABEL_LEFT_POSITION = 12;
 
 const useLabelStyles = createUseStyles((theme) => ({
     labelContainer: {

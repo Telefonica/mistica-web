@@ -3,6 +3,7 @@
 import * as React from "react";
 export type InputState = "focused" | "filled" | "default";
 declare export var DEFAULT_WIDTH: 328;
+declare export var LABEL_LEFT_POSITION: 12;
 declare type LabelProps = {
   shrinkLabel?: boolean,
   forId: string,
