@@ -110,7 +110,7 @@ export const CustomCardSize: StoryComponent = () => {
         >
             <HighlightedCard
                 width={250}
-                title="Title"
+                title="Title 1"
                 description="Some description here"
                 imageUrl="https://i.imgur.com/jeDSXBU.jpg"
                 imageFit="fit"
@@ -121,7 +121,7 @@ export const CustomCardSize: StoryComponent = () => {
 
             <HighlightedCard
                 width={250}
-                title="Title"
+                title="Title 2"
                 description="Some description here"
                 imageUrl="https://i.imgur.com/jeDSXBU.jpg"
                 imageFit="fit"
@@ -136,7 +136,7 @@ export const CustomCardSize: StoryComponent = () => {
 
             <HighlightedCard
                 width={250}
-                title="Title"
+                title="Title 3"
                 description="Some description here. Some description here."
                 imageUrl="https://i.imgur.com/jeDSXBU.jpg"
                 imageFit="fit"
@@ -153,7 +153,7 @@ export const CustomCardSize: StoryComponent = () => {
                 width={250}
                 onClose={() => {}}
                 onPress={() => {}}
-                title="Title"
+                title="Title 4"
                 description="Some description here. Some description here. Some description here. "
                 imageUrl="https://i.imgur.com/jeDSXBU.jpg"
                 imageFit="fit"
