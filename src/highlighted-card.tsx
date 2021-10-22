@@ -20,6 +20,7 @@ const useStyles = createUseStyles((theme) => ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: ({width}) => width || '100%',
+        flexShrink: 0,
         alignSelf: 'stretch',
     },
     imageContent: {
@@ -31,6 +32,7 @@ const useStyles = createUseStyles((theme) => ({
     dismissableContainer: {
         position: 'relative',
         display: 'flex',
+        flexShrink: 0,
     },
     dismissableButton: {
         position: 'absolute',
@@ -65,6 +67,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     touchableContainer: {
         display: 'flex',
+        flexShrink: 0,
     },
 }));
 
