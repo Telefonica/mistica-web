@@ -101,3 +101,29 @@ export const Default: StoryComponent = () => {
 };
 
 Default.storyName = 'HighlightedCard';
+
+export const CustomCardSize: StoryComponent = () => {
+    const count = 4;
+    const last = count - 1;
+    return (
+        <div
+            style={{display: 'flex', background: '#eee', overflowX: 'auto', justifyContent: 'flex-start'}}
+            data-testid="highlighted-card"
+        >
+            {Array.from({length: count}).map((_, index) => (
+                <React.Fragment key={index}>
+                    <HighlightedCard
+                        width={250}
+                        onClose={() => {}}
+                        onPress={() => {}}
+                        title="Title"
+                        description={'Some description here. '.repeat(index + 1)}
+                        imageUrl="https://i.imgur.com/jeDSXBU.jpg"
+                        imageFit="fit"
+                    />
+                    {index !== last && <Box paddingRight={8} />}
+                </React.Fragment>
+            ))}
+        </div>
+    );
+};
