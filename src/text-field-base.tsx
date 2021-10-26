@@ -173,17 +173,20 @@ const useStyles = createUseStyles((theme) => ({
         [theme.mq.tabletOrSmaller]: {
             paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
         },
-        paddingBottom: ({hasLabel, multiline}) => (hasLabel || multiline ? 8 : 16),
+        paddingBottom: ({hasLabel, multiline}) => (multiline ? 0 : hasLabel ? 8 : 16),
         width: '100%',
         display: 'flex',
-        alignItems: ({multiline}) => (multiline ? 'initial' : 'baseline'),
+        alignItems: ({multiline, prefix}) => (multiline || !prefix ? 'initial' : 'baseline'),
     },
     textArea: {
         resize: 'none',
+        paddingBottom: '8px',
         ...commonInputStyles(theme),
     },
     input: {
         position: 'relative',
+        paddingTop: 0,
+        paddingBottom: 0,
         ...commonInputStyles(theme),
         WebkitAppearance: 'none',
         '&::-webkit-search-cancel-button': {
