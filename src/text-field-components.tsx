@@ -11,6 +11,8 @@ export const DEFAULT_WIDTH = 328;
 
 export const LABEL_LEFT_POSITION = 12;
 
+const NBSP = '\u00A0';
+
 const useLabelStyles = createUseStyles((theme) => ({
     labelContainer: {
         position: 'absolute',
@@ -107,7 +109,7 @@ export const Label: React.FC<LabelProps> = ({
         >
             {renderText(isShrinked, color, children, true)}
             {optional
-                ? renderText(isShrinked, color, `\u00A0(${texts.formFieldOptionalLabelSuffix})`) // using unicode for &nbsp; because jsx string scapes it
+                ? renderText(isShrinked, color, `${NBSP}(${texts.formFieldOptionalLabelSuffix})`) // using unicode for &nbsp; because jsx string scapes it
                 : null}
         </label>
     );
