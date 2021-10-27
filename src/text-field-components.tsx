@@ -1,9 +1,9 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {createUseStyles} from './jss';
-import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
-import {Text1, Text3} from './text';
+import {Text1} from './text';
 
 export type InputState = 'focused' | 'filled' | 'default';
 
@@ -11,7 +11,9 @@ export const DEFAULT_WIDTH = 328;
 
 export const LABEL_LEFT_POSITION = 12;
 
-const NBSP = '\u00A0';
+// to scale to the correct text-preset when the transition applies
+export const LABEL_SCALE_DESKTOP = 0.78; // Text1/Text3 = 14/18 (desktop)
+export const LABEL_SCALE_MOBILE = 0.75; // Text1/Text3 = 12/16 (mobile)
 
 const useLabelStyles = createUseStyles((theme) => ({
     labelContainer: {
@@ -19,21 +21,50 @@ const useLabelStyles = createUseStyles((theme) => ({
         pointerEvents: 'none',
         left: LABEL_LEFT_POSITION,
         top: 0,
-        transformOrigin: 0,
+        transformOrigin: '0 0',
         height: 24,
         display: 'flex',
         flexDirection: 'row',
-        transform: 'translateY(18px)',
+        transform: 'translateY(18px) scale(1)',
+        fontSize: 18, // cannot use Text3/Text1 preset comps because we want to apply a scale transition (zoom-out)
+        lineHeight: '24px',
+        color: ({inputState, error, disabled}) => {
+            if (inputState === 'default' && disabled) {
+                return theme.colors.textDisabled;
+            }
+            if (error && inputState !== 'default') {
+                return theme.colors.error;
+            }
+            if (inputState === 'focused') {
+                return theme.colors.controlActivated;
+            }
+            return theme.colors.textSecondary;
+        },
         [theme.mq.tabletOrSmaller]: {
-            transform: 'translateY(16px)',
+            fontSize: 16,
+            transform: 'translateY(16px) scale(1)',
         },
         width: `calc(100% - ${LABEL_LEFT_POSITION * 2}px)`,
     },
+    labelText: {
+        '-webkit-line-clamp': 1,
+        lineClamp: 1,
+        wordBreak: 'break-all',
+        display: 'box',
+        overflow: 'hidden',
+        boxOrient: 'vertical',
+        flexShrink: 1,
+    },
     shrinked: {
-        transform: 'translateY(8px)',
-        height: 20,
+        transform: `translateY(8px) scale(${LABEL_SCALE_DESKTOP})`,
+        height: 20 / LABEL_SCALE_DESKTOP, // Text1 line-height is the expected final line-height.
+        lineHeight: `${20 / LABEL_SCALE_DESKTOP}px`,
+        width: `calc(100% - ${LABEL_LEFT_POSITION * 2}px) / ${LABEL_SCALE_DESKTOP}`,
         [theme.mq.tabletOrSmaller]: {
-            height: 16,
+            transform: `translateY(8px) scale(${LABEL_SCALE_MOBILE})`,
+            height: 16 / LABEL_SCALE_MOBILE,
+            lineHeight: `${16 / LABEL_SCALE_MOBILE}px`,
+            width: `calc(100% - ${LABEL_LEFT_POSITION * 2}px) / ${LABEL_SCALE_MOBILE}`,
         },
     },
 }));
@@ -62,18 +93,7 @@ export const Label: React.FC<LabelProps> = ({
     const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
     const classes = useLabelStyles({isShrinked, inputState, error, disabled});
     const [transitionStyle, setTransitionStyle] = React.useState('');
-    const {texts, colors} = useTheme();
-
-    let color: string;
-    if (inputState === 'default' && disabled) {
-        color = colors.textDisabled;
-    } else if (error && inputState !== 'default') {
-        color = colors.error;
-    } else if (inputState === 'focused') {
-        color = colors.controlActivated;
-    } else {
-        color = colors.textSecondary;
-    }
+    const {texts} = useTheme();
 
     // This way we prevent animation when field is filled as initial state
     React.useEffect(() => {
@@ -87,19 +107,6 @@ export const Label: React.FC<LabelProps> = ({
             clearTimeout(tid);
         };
     }, []);
-    const renderText = (
-        isShrinked: boolean,
-        color: string,
-        children: React.ReactNode | string,
-        truncate = false
-    ) => {
-        const props = {regular: true, as: 'span', color, truncate};
-        if (isShrinked) {
-            return <Text1 {...props}>{children}</Text1>;
-        } else {
-            return <Text3 {...props}>{children}</Text3>;
-        }
-    };
 
     return (
         <label
@@ -107,10 +114,8 @@ export const Label: React.FC<LabelProps> = ({
             htmlFor={forId}
             style={{...style, transition: transitionStyle}}
         >
-            {renderText(isShrinked, color, children, true)}
-            {optional
-                ? renderText(isShrinked, color, `${NBSP}(${texts.formFieldOptionalLabelSuffix})`) // using unicode for &nbsp; because jsx string scapes it
-                : null}
+            <span className={classes.labelText}>{children}</span>
+            {optional ? <span>&nbsp;({texts.formFieldOptionalLabelSuffix})</span> : null}
         </label>
     );
 };
@@ -219,11 +224,9 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
 
     return (
         <div className={classes.fieldContainer}>
-            <ThemeVariant isInverse={false}>
-                <div className={classnames(classes.border, className)} ref={fieldRef}>
-                    {children}
-                </div>
-            </ThemeVariant>
+            <div className={classnames(classes.border, className)} ref={fieldRef}>
+                {children}
+            </div>
             {helperText}
         </div>
     );

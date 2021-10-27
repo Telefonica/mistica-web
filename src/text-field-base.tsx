@@ -1,9 +1,16 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {Label, HelperText, FieldContainer, LABEL_LEFT_POSITION} from './text-field-components';
+import {
+    Label,
+    HelperText,
+    FieldContainer,
+    LABEL_LEFT_POSITION,
+    LABEL_SCALE_MOBILE,
+    LABEL_SCALE_DESKTOP,
+} from './text-field-components';
 import {Text3} from './text';
 import {isIos, isRunningAcceptanceTest, isChrome, isFirefox} from './utils/platform';
-import {useAriaId, useTheme} from './hooks';
+import {useAriaId, useTheme, useScreenSize} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
 
@@ -304,6 +311,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
         );
         const {platformOverrides, colors} = useTheme();
+        const {isTabletOrSmaller} = useScreenSize();
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
         const hasLabel = !!label || !rest.required;
 
@@ -367,9 +375,14 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         };
 
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
+        const scale = isShrinked ? (isTabletOrSmaller ? LABEL_SCALE_MOBILE : LABEL_SCALE_DESKTOP) : 1;
         const labelStyle = {
             left: startIcon ? 48 : LABEL_LEFT_POSITION,
-            width: `calc(100% - ${LABEL_LEFT_POSITION + (startIcon ? 48 : LABEL_LEFT_POSITION)}px)`,
+            // shrinking means applying a scale transformation, so width will be proportionally reduced.
+            // Let's keep the original width.
+            width: `calc(((100% - ${
+                LABEL_LEFT_POSITION + (startIcon ? 48 : LABEL_LEFT_POSITION)
+            }px)) / ${scale})`,
             paddingRight: endIcon && !isShrinked ? 36 : 0,
         };
 
