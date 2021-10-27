@@ -9,6 +9,7 @@ test('Icons catalog', async () => {
     const lightCheckbox = await screen.findByLabelText('Light');
     const filledCheckbox = await screen.findByLabelText('Filled');
     const regularCheckbox = await screen.findByLabelText('Regular');
+    // initially all checkboxes are checked
 
     await filledCheckbox.click();
     await regularCheckbox.click();
