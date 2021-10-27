@@ -101,3 +101,63 @@ export const Default: StoryComponent = () => {
 };
 
 Default.storyName = 'HighlightedCard';
+
+export const CustomCardSize: StoryComponent = () => {
+    return (
+        <div
+            style={{display: 'flex', background: '#eee', overflowX: 'auto', justifyContent: 'flex-start'}}
+            data-testid="highlighted-card"
+        >
+            <HighlightedCard
+                width={250}
+                title="Title 1"
+                description="Some description here"
+                imageUrl="https://i.imgur.com/jeDSXBU.jpg"
+                imageFit="fit"
+                onClose={() => {}}
+            />
+
+            <Box paddingRight={8} />
+
+            <HighlightedCard
+                width={250}
+                title="Title 2"
+                description="Some description here"
+                imageUrl="https://i.imgur.com/jeDSXBU.jpg"
+                imageFit="fit"
+                button={
+                    <ButtonPrimary small href="https://google.com">
+                        Action
+                    </ButtonPrimary>
+                }
+            />
+
+            <Box paddingRight={8} />
+
+            <HighlightedCard
+                width={250}
+                title="Title 3"
+                description="Some description here. Some description here."
+                imageUrl="https://i.imgur.com/jeDSXBU.jpg"
+                imageFit="fit"
+                button={
+                    <ButtonPrimary small href="https://google.com">
+                        Action
+                    </ButtonPrimary>
+                }
+            />
+
+            <Box paddingRight={8} />
+
+            <HighlightedCard
+                width={250}
+                onClose={() => {}}
+                onPress={() => {}}
+                title="Title 4"
+                description="Some description here. Some description here. Some description here. "
+                imageUrl="https://i.imgur.com/jeDSXBU.jpg"
+                imageFit="fit"
+            />
+        </div>
+    );
+};

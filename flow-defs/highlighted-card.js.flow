@@ -14,6 +14,7 @@ declare type CommonProps = {|
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   isInverse?: boolean,
   "aria-label"?: string,
+  width?: string | number,
 |};
 declare type BasicProps = {| ...$Exact<CommonProps> |};
 declare type ButtonProps = {|
