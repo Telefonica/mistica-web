@@ -4,10 +4,8 @@ import * as React from "react";
 export type InputState = "focused" | "filled" | "default";
 declare export var DEFAULT_WIDTH: 328;
 declare export var LABEL_LEFT_POSITION: 12;
-declare export var LABEL_SCALE_DESKTOP: 0;
-0.78;
-declare export var LABEL_SCALE_MOBILE: 0;
-0.75;
+declare export var LABEL_SCALE_DESKTOP: number;
+declare export var LABEL_SCALE_MOBILE: number;
 declare type LabelProps = {
   shrinkLabel?: boolean,
   forId: string,

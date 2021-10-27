@@ -12,8 +12,8 @@ export const DEFAULT_WIDTH = 328;
 export const LABEL_LEFT_POSITION = 12;
 
 // to scale to the correct text-preset when the transition applies
-export const LABEL_SCALE_DESKTOP = 0.78; // Text1/Text3 = 14/18 (desktop)
-export const LABEL_SCALE_MOBILE = 0.75; // Text1/Text3 = 12/16 (mobile)
+export const LABEL_SCALE_DESKTOP = parseFloat('0.78'); // Text1/Text3 = 14/18 (desktop)
+export const LABEL_SCALE_MOBILE = parseFloat('0.75'); // Text1/Text3 = 12/16 (mobile)
 
 const useLabelStyles = createUseStyles((theme) => ({
     labelContainer: {
