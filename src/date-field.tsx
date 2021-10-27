@@ -6,6 +6,7 @@ import {isServerSide} from './utils/environment';
 import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
 import {getLocalDateString} from './utils/time';
 import {useTheme} from './hooks';
+import {isFirefox} from './utils/platform';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -36,7 +37,13 @@ const DateField: React.FC<DateFieldProps> = ({
     ...rest
 }) => {
     const processValue = (value: string) => value;
-    const hasNativePicker = React.useMemo(() => isInputTypeSupported('date'), []);
+    const hasNativePicker = React.useMemo(() => {
+        if (isFirefox()) {
+            // disabled in firefox because it shows a close button over the icon and can't be styled
+            return false;
+        }
+        return isInputTypeSupported('date');
+    }, []);
     const {texts} = useTheme();
 
     const isInRange = (value: string): boolean => {
@@ -102,6 +109,7 @@ const DateField: React.FC<DateFieldProps> = ({
             <ReactDateTimePicker
                 {...rest}
                 {...fieldProps}
+                optional={optional}
                 isValidDate={(currentDate) => isInRange(getLocalDateString(currentDate.toDate()))}
             />
         </React.Suspense>

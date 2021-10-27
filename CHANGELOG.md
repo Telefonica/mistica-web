@@ -1,3 +1,43 @@
+# [10.9.0](https://github.com/Telefonica/mistica-web/compare/v10.8.1...v10.9.0) (2021-10-21)
+
+
+### Features
+
+* **MonthField:** new form field to select months ([#356](https://github.com/Telefonica/mistica-web/issues/356)) ([1a949a5](https://github.com/Telefonica/mistica-web/commit/1a949a5fa4d2f9e7a0141afd7c920741faf36c49))
+
+## [10.8.1](https://github.com/Telefonica/mistica-web/compare/v10.8.0...v10.8.1) (2021-10-19)
+
+
+### Bug Fixes
+
+* **blau:** some color bad naming ([#358](https://github.com/Telefonica/mistica-web/issues/358)) ([64a3a87](https://github.com/Telefonica/mistica-web/commit/64a3a87a23cdbb16ca60c0639976c5fe84275905))
+
+# [10.8.0](https://github.com/Telefonica/mistica-web/compare/v10.7.0...v10.8.0) (2021-10-18)
+
+
+### Features
+
+* **ButtonGroup:** new component (private) ([#351](https://github.com/Telefonica/mistica-web/issues/351)) ([fe00dd7](https://github.com/Telefonica/mistica-web/commit/fe00dd7372e6bec8222bf7456b28fb523d40d2c9))
+
+# [10.7.0](https://github.com/Telefonica/mistica-web/compare/v10.6.0...v10.7.0) (2021-10-18)
+
+
+### Bug Fixes
+
+* **colors:** fix some dark colors ([#354](https://github.com/Telefonica/mistica-web/issues/354)) ([7ecb12b](https://github.com/Telefonica/mistica-web/commit/7ecb12b502a4a634d4cd0686f205e448db3a7b7f))
+
+
+### Features
+
+* **ProgressBar:** allow custom color ([#353](https://github.com/Telefonica/mistica-web/issues/353)) ([1f7be87](https://github.com/Telefonica/mistica-web/commit/1f7be87b4c9297fa273f69b612333224f05750aa))
+
+# [10.6.0](https://github.com/Telefonica/mistica-web/compare/v10.5.1...v10.6.0) (2021-10-14)
+
+
+### Features
+
+* **Blau:** new skin ([#311](https://github.com/Telefonica/mistica-web/issues/311)) ([235017b](https://github.com/Telefonica/mistica-web/commit/235017bb80fd87956ce84257c2042862d53b6f85))
+
 ## [10.5.1](https://github.com/Telefonica/mistica-web/compare/v10.5.0...v10.5.1) (2021-10-05)
 
 

@@ -1,0 +1,11 @@
+// @flow
+
+import * as React from "react";
+import { ButtonLink, ButtonPrimary, ButtonSecondary } from "./button";
+export type ButtonGroupProps = {|
+  primaryButton?: React.Element<typeof ButtonPrimary>,
+  secondaryButton?: React.Element<typeof ButtonSecondary>,
+  link?: React.Element<typeof ButtonLink>,
+|};
+declare var ButtonGroup: React.ComponentType<ButtonGroupProps>;
+declare export default typeof ButtonGroup;

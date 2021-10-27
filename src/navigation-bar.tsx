@@ -116,6 +116,23 @@ const TelefonicaLogo = ({size}: LogoProps) => {
     );
 };
 
+const BlauLogo = ({size}: LogoProps) => {
+    const {colors, isDarkMode} = useTheme();
+    const isInverse = useIsInverseVariant();
+    const color = isInverse && !isDarkMode ? colors.inverse : colors.brand;
+    return (
+        <svg height={size} viewBox="0 0 100 44" role="presentation">
+            <g fill="none" fillRule="evenodd">
+                <path fill={colors.textLink} d="M0 35.184h100v8.2h-100z" />
+                <path
+                    fill={color}
+                    d="M24.878 13.321c3.448 1.331 5.278 3.588 5.069 7.436-.209 5.009-4.11 8.47-9.216 8.47h-19.731v-7.763h2.775v-13.698h-2.775v-7.766h19.814c4.319 0 7.768 3.674 7.636 8.017-.044 2.334-1.284 4.513-3.572 5.304zm-8.959-6.218h-2.583v4.114h2.583c2.544 0 2.716-4.114 0-4.114zm3.249 12.427c0-1.193-.771-2.381-2.546-2.381h-3.286v4.764h3.286c1.728 0 2.546-1.173 2.546-2.383zm11.554-19.53v7.766h2.75v21.46h10.043v-29.226h-12.793zm41.708 29.227h-9.421l-.206-2.17c-1.535 1.879-3.82 2.545-5.973 2.588-14.283.166-14.283-23.542 0-23.38 2.152 0 4.438.669 5.973 2.547l.207-2.175h9.42v22.59zm-10-11.275c0-4.383-6.183-4.339-6.183 0 .001 4.344 6.183 4.387 6.183 0zm37.513-11.316h-9.959v12.194c0 1.672-1.246 2.463-2.491 2.463-1.25 0-2.246-.831-2.246-2.421v-12.236h-9.965v12.282c0 6.057 2.364 10.562 9.051 10.729 2.199.041 4.485-.672 6.06-2.674l.211 2.254 9.342.015v-22.606h-.003z"
+                />
+            </g>
+        </svg>
+    );
+};
+
 type NavigationBarLogoProps = {
     size?: number;
     children?: undefined;
@@ -135,6 +152,8 @@ export const NavigationBarLogo: React.FC<NavigationBarLogoProps> = ({size}) => {
             return <O2Logo size={size} />;
         case 'Telefonica':
             return <TelefonicaLogo size={size} />;
+        case 'Blau':
+            return <BlauLogo size={size} />;
         default:
             return null;
     }

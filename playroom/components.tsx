@@ -12,12 +12,13 @@ import {
     Checkbox,
     ThemeContextProvider,
 } from '../src';
-import {Movistar, Vivo, O2, Telefonica} from './themes';
+import {Movistar, Vivo, O2, Telefonica, Blau} from './themes';
 import {useOverrideTheme} from './frame-component';
 
 import type {ThemeConfig, ColorScheme, SkinName} from '../src';
 
 export * from '../src';
+export {default as ButtonGroup} from '../src/button-group';
 
 const capitalize = (str: string): string => str.charAt(0).toUpperCase() + str.slice(1);
 
@@ -46,7 +47,7 @@ const useControlsStyles = createUseStyles((theme) => ({
     },
     tabs: {
         flexBasis: '100%',
-        marginRight: 96,
+        marginRight: 72,
         whiteSpace: 'nowrap',
     },
     desktopControlItem: {
@@ -105,6 +106,10 @@ const themesMap: {[skinName: string]: {themeConfig: ThemeConfig; text: string}} 
     Telefonica: {
         text: 'Telefónica',
         themeConfig: Telefonica,
+    },
+    Blau: {
+        text: 'Blau',
+        themeConfig: Blau,
     },
 };
 

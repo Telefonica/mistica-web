@@ -1,4 +1,5 @@
-import {TELEFONICA_SKIN, VIVO_SKIN, O2_SKIN, O2_CLASSIC_SKIN, MOVISTAR_SKIN} from './constants';
+import {BLAU_SKIN, TELEFONICA_SKIN, VIVO_SKIN, O2_SKIN, O2_CLASSIC_SKIN, MOVISTAR_SKIN} from './constants';
+import {getBlauSkin} from './blau';
 import {getTelefonicaSkin} from './telefonica';
 import {getVivoSkin} from './vivo';
 import {getO2Skin} from './o2';
@@ -9,6 +10,8 @@ import type {SkinVariant, Skin, SkinName} from './types';
 
 export const getSkinByName = (name: SkinName, variant?: SkinVariant): Skin => {
     switch (name) {
+        case BLAU_SKIN:
+            return getBlauSkin(variant);
         case TELEFONICA_SKIN:
             return getTelefonicaSkin(variant);
         case VIVO_SKIN:

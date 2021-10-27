@@ -8,13 +8,14 @@ import {
     ThemeVariant,
     ResponsiveLayout,
     Box,
+    ButtonSecondary,
 } from '..';
 
 export default {
     title: 'Components/Dialogs/Callout',
     argTypes: {
         actions: {
-            options: ['none', 'button', 'link', 'button and link'],
+            options: ['none', 'button', 'link', 'button and secondary', 'button and link'],
             control: {type: 'select'},
         },
     },
@@ -49,6 +50,12 @@ export const Default: StoryComponent<Args> = ({
         <ButtonLink onPress={() => {}}>Link</ButtonLink>
     ) : undefined;
 
+    const secondaryButton = actions.includes('secondary') ? (
+        <ButtonSecondary small onPress={() => {}}>
+            Secondary Action
+        </ButtonSecondary>
+    ) : undefined;
+
     return (
         <ThemeVariant isInverse={isOverInverse}>
             <div style={{background: isOverInverse ? colors.backgroundBrand : colors.background}}>
@@ -60,6 +67,7 @@ export const Default: StoryComponent<Args> = ({
                             title={title}
                             description={description}
                             button={button}
+                            secondaryButton={secondaryButton}
                             buttonLink={buttonLink}
                             aria-label="Callout label"
                         />

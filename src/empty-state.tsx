@@ -1,15 +1,16 @@
 import * as React from 'react';
 import Box from './box';
 import {Boxed} from './boxed';
-import {ButtonPrimary, ButtonSecondary, ButtonLink} from './button';
+import {ButtonPrimary, ButtonSecondary, ButtonLink, ButtonLinkProps} from './button';
 import {useScreenSize, useTheme} from './hooks';
 import Stack from './stack';
 import {Text4, Text6} from './text';
 import {createUseStyles} from './jss';
-import Inline from './inline';
+import ButtonGroup from './button-group';
 import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {ButtonProps} from './button';
+import type {ButtonGroupProps} from './button-group';
 import type {DataAttributes} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
@@ -62,7 +63,7 @@ interface BaseProps {
     button?:
         | React.ReactElement<ButtonProps, typeof ButtonPrimary>
         | React.ReactElement<ButtonProps, typeof ButtonSecondary>;
-    buttonLink?: React.ReactElement<ButtonProps, typeof ButtonLink>;
+    buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
     description?: string;
     children?: void;
     'aria-label'?: string;
@@ -117,6 +118,11 @@ const EmptyState: React.FC<Props> = ({
         image = <img className={classes.smallImage} alt="" src={imageUrl} />;
     }
 
+    const buttons: ButtonGroupProps = {
+        ...(button?.type === ButtonPrimary ? {primaryButton: button} : {secondaryButton: button}),
+    };
+    buttons.link = buttonLink;
+
     if (isTabletOrSmaller) {
         return (
             <section
@@ -132,12 +138,7 @@ const EmptyState: React.FC<Props> = ({
                             {description}
                         </Text4>
                     </Stack>
-                    {button && (
-                        <Inline space={16} alignItems="center">
-                            {button}
-                            {buttonLink}
-                        </Inline>
-                    )}
+                    {button && <ButtonGroup {...buttons} />}
                 </Stack>
             </section>
         );
@@ -156,12 +157,7 @@ const EmptyState: React.FC<Props> = ({
                                     {description}
                                 </Text4>
                             </Stack>
-                            {button && (
-                                <Inline space={16} alignItems="center">
-                                    {button}
-                                    {buttonLink}
-                                </Inline>
-                            )}
+                            {button && <ButtonGroup {...buttons} />}
                         </Stack>
                     </Box>
                 </div>
