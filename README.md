@@ -102,7 +102,6 @@ Start prototyping interfaces with Mistica components in the
 - `yarn lint`: check codestyle
 - `yarn ts-check`: check static types
 - `yarn build`: build package
-- `yarn watch`: build package and watch for changes
 - `yarn storybook`: starts storybook
 - `yarn playroom`: starts playroom
 

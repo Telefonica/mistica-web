@@ -43,12 +43,7 @@ const config = {
                     ],
                     use: [
                         {
-                            loader: 'babel-loader',
-                            options: {
-                                babelrc: true,
-                                configFile: './.babelrc',
-                                plugins: ['babel-plugin-typescript-to-proptypes'],
-                            },
+                            loader: 'swc-loader',
                         },
                     ],
                 },
