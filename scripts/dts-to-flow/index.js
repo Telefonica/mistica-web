@@ -2,7 +2,7 @@ const {execSync} = require('child_process');
 const {join, relative, dirname} = require('path');
 const {promisify} = require('util');
 const glob = promisify(require('glob'));
-const {writeFileSync, readFileSync, readdirSync, existsSync} = require('fs');
+const {writeFileSync, readFileSync, existsSync} = require('fs');
 const rimraf = require('rimraf');
 const {beautify} = require('flowgen');
 const cpx = require('cpx');
@@ -134,16 +134,11 @@ const fixFlowDefinition = (flowFilename) => {
 };
 
 const applyJscodeshift = () => {
-    const transforms = readdirSync(PATH_TRANSFORMS).filter((transform) => transform.endsWith('.js'));
-
-    transforms.forEach((transform) => {
-        console.log('Apply codemod:', transform);
-        const transformPath = join(PATH_TRANSFORMS, transform);
-        execSync(
-            `yarn jscodeshift -c 1 --transform=${transformPath} --extensions=flow --parser=flow --silent ${PATH_DIST}`,
-            {stdio: 'inherit'}
-        );
-    });
+    const transformPath = join(PATH_TRANSFORMS, 'index.js');
+    execSync(
+        `yarn jscodeshift --transform=${transformPath} --extensions=flow --parser=flow --silent ${PATH_DIST}`,
+        {stdio: 'inherit'}
+    );
 };
 
 const applyOverrides = () => {
@@ -173,7 +168,7 @@ const hasFlowDefChanges = () => {
     return false;
 };
 
-const main = async () => {
+module.exports = async () => {
     process.chdir(PATH_ROOT);
 
     // clean
@@ -206,5 +201,3 @@ const main = async () => {
         process.exit(1);
     }
 };
-
-main();

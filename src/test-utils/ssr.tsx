@@ -70,10 +70,7 @@ export const compileSsrClient = (): Promise<webpack.Stats> => {
                 {
                     test: /\.tsx$/,
                     use: {
-                        loader: 'babel-loader',
-                        options: {
-                            configFile: path.join(__dirname, '..', '..', '.babelrc'),
-                        },
+                        loader: 'swc-loader',
                     },
                     exclude: [/node_modules/],
                 },

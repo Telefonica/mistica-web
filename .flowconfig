@@ -1,9 +1,21 @@
 [ignore]
 .*/node_modules/.*
 !.*/node_modules/@tef-novum/.*
-<PROJECT_ROOT>/playroom/.*
-<PROJECT_ROOT>/.storybook/.*
-<PROJECT_ROOT>/scripts/dts-to-flow/overrides
+<PROJECT_ROOT>/playroom
+<PROJECT_ROOT>/.storybook
+<PROJECT_ROOT>/src
+<PROJECT_ROOT>/dist
+<PROJECT_ROOT>/dist-es
+<PROJECT_ROOT>/examples
+<PROJECT_ROOT>/public
+<PROJECT_ROOT>/doc
+<PROJECT_ROOT>/reports
+<PROJECT_ROOT>/scripts
+<PROJECT_ROOT>/css
+<PROJECT_ROOT>/packages
+<PROJECT_ROOT>/codemods
+<PROJECT_ROOT>/img
+<PROJECT_ROOT>/.github
 
 [include]
 

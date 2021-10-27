@@ -6,6 +6,7 @@ export type TrackingEvent = {
   +action: string,
   +label?: string,
   +value?: number,
-  ...
 };
-export type DataAttributes = { [name: string]: string | number | boolean | void, ... };
+export type DataAttributes = {
+  [name: string]: string | number | boolean | void,
+};

@@ -8,10 +8,7 @@
  *   `import  { NonUsedSpecifier } from "./module"` => ``;
  *
  */
-module.exports = (file, api) => {
-    const j = api.jscodeshift;
-    const root = j(file.source);
-
+module.exports = (root, j) => {
     const removeIfUnused = (importSpecifier, importDeclaration) => {
         const varName = importSpecifier.value.local.name;
 
@@ -57,9 +54,5 @@ module.exports = (file, api) => {
         return hadUnusedDefaultImport || hadUnusedNonDefaultImports;
     };
 
-    return root.find(j.ImportDeclaration).filter(processImportDeclaration).size() > 0
-        ? root.toSource()
-        : null;
+    root.find(j.ImportDeclaration).filter(processImportDeclaration);
 };
-
-module.exports.parser = 'flow';
