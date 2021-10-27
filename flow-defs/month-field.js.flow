@@ -1,0 +1,13 @@
+// @flow
+
+import * as React from "react";
+import type { CommonFormFieldProps } from "./text-field-base";
+export type DateFieldProps = {
+  ...$Exact<CommonFormFieldProps>,
+
+  onChangeValue?: (value: string, rawValue: string) => void,
+  min?: Date,
+  max?: Date,
+};
+declare var DateField: React.ComponentType<DateFieldProps>;
+declare export default typeof DateField;

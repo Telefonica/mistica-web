@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "10.5.1",
+    "version": "10.9.0",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -131,7 +131,7 @@
         "@juggle/resize-observer": "^3.3.1",
         "@tef-novum/webview-bridge": "^3.0.0",
         "@telefonica/libphonenumber": "^2.8.0",
-        "@telefonica/ts-to-flow": "1.0.0-beta8",
+        "@telefonica/ts-to-flow": "1.0.0-beta9",
         "classnames": "^2.3.1",
         "jss": "^10.6.0",
         "jss-plugin-camel-case": "^10.6.0",

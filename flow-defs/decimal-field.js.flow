@@ -17,6 +17,7 @@ export type DecimalFieldProps = {
   ...$Exact<CommonFormFieldProps>,
 
   onChangeValue?: (value: string, rawValue: string) => void,
+  prefix?: React.Node,
 };
 declare var DecimalField: React.ComponentType<DecimalFieldProps>;
 declare export default typeof DecimalField;

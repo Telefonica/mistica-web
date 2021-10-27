@@ -109,6 +109,7 @@ declare export { default as CreditCardExpirationField } from "./credit-card-expi
 declare export { default as CreditCardFields } from "./credit-card-fields";
 declare export { default as CvvField } from "./cvv-field";
 declare export { default as DateField } from "./date-field";
+declare export { default as MonthField } from "./month-field";
 declare export { default as DateTimeField } from "./date-time-field";
 declare export { default as IntegerField } from "./integer-field";
 declare export { default as DecimalField } from "./decimal-field";
@@ -145,6 +146,7 @@ declare export {
   O2_SKIN,
   MOVISTAR_SKIN,
   TELEFONICA_SKIN,
+  BLAU_SKIN,
 } from "./skins/constants";
 declare export { getSkinByName } from "./skins/utils";
 declare export { getVivoSkin } from "./skins/vivo";
@@ -152,11 +154,13 @@ declare export { getMovistarSkin } from "./skins/movistar";
 declare export { getO2Skin } from "./skins/o2";
 declare export { getO2ClassicSkin } from "./skins/o2-classic";
 declare export { getTelefonicaSkin } from "./skins/telefonica";
+declare export { getBlauSkin } from "./skins/blau";
 declare export { palette as vivoPalette } from "./skins/vivo";
 declare export { palette as movistarPalette } from "./skins/movistar";
 declare export { palette as o2Palette } from "./skins/o2";
 declare export { palette as o2ClassicPalette } from "./skins/o2-classic";
 declare export { palette as telefonicaPalette } from "./skins/telefonica";
+declare export { palette as blauPalette } from "./skins/blau";
 export type { Locale } from "./utils/locale";
 export type { TrackingEvent } from "./utils/types";
 export type { RegionCode } from "./utils/region-code";

@@ -14,21 +14,7 @@ import {ButtonPrimary, ButtonSecondary} from './button';
 import type {ButtonProps} from './button';
 import type {TextPresetProps} from './text';
 import type {NavigationBreadcrumbsProps} from './navigation-breadcrumbs';
-import ButtonLayout from './button-layout';
-
-const useButtonLayoutStyles = createUseStyles(() => ({
-    inlineBlockContainer: {
-        // this inline block makes the parent grow with the width of its bigger children
-        // this, toggether with applying width 100% to the buttons, allows us to have two
-        // sibling buttons with the same width (the width of the bigger one).
-        display: 'inline-block',
-    },
-    button: {
-        '& > *': {
-            width: '100%',
-        },
-    },
-}));
+import ButtonGroup from './button-group';
 
 type OverridableTextProps = {
     color?: TextPresetProps['color'];
@@ -37,23 +23,6 @@ type OverridableTextProps = {
 };
 
 type RichText = string | ({text: string} & OverridableTextProps);
-
-const MobileHeaderButtonLayout: React.FC = ({children}) => {
-    const classes = useButtonLayoutStyles();
-    return (
-        <div className={classes.inlineBlockContainer}>
-            <Stack space={16}>
-                {React.Children.toArray(children)
-                    .filter(Boolean)
-                    .map((button, idx) => (
-                        <div key={idx} className={classes.button}>
-                            {button}
-                        </div>
-                    ))}
-            </Stack>
-        </div>
-    );
-};
 
 type HeaderProps = {
     pretitle?: RichText;
@@ -99,12 +68,14 @@ export const Header: React.FC<HeaderProps> = ({
     return (
         <Stack space={isTabletOrSmaller ? 24 : 32}>
             {(title || pretitle) && (
-                <Stack space={8}>
-                    {pretitle && renderRichText(pretitle, {color: theme.colors.textPrimary})}
-                    <Text6 role="heading" aria-level={2}>
-                        {title}
-                    </Text6>
-                </Stack>
+                <Box paddingRight={16}>
+                    <Stack space={8}>
+                        {pretitle && renderRichText(pretitle, {color: theme.colors.textPrimary})}
+                        <Text6 role="heading" aria-level={2}>
+                            {title}
+                        </Text6>
+                    </Stack>
+                </Box>
             )}
             {(preamount || amount || button || subtitle) && (
                 <Stack space={16}>
@@ -122,18 +93,9 @@ export const Header: React.FC<HeaderProps> = ({
                             </Text8>
                         </Stack>
                     )}
-                    {(button || secondaryButton) &&
-                        (isTabletOrSmaller ? (
-                            <MobileHeaderButtonLayout>
-                                {button}
-                                {secondaryButton}
-                            </MobileHeaderButtonLayout>
-                        ) : (
-                            <ButtonLayout align="left">
-                                {button}
-                                {secondaryButton}
-                            </ButtonLayout>
-                        ))}
+                    {(button || secondaryButton) && (
+                        <ButtonGroup primaryButton={button} secondaryButton={secondaryButton} />
+                    )}
                     {subtitle && renderRichText(subtitle, {})}
                 </Stack>
             )}
@@ -202,7 +164,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                 {isTabletOrSmaller ? (
                     <Box paddingTop={32} paddingBottom={24}>
                         <Stack space={24}>
-                            <Box paddingRight={16}>{header}</Box>
+                            {header}
                             {extra}
                         </Stack>
                     </Box>

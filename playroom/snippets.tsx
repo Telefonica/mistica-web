@@ -60,6 +60,14 @@ const buttonSnippets: Array<Snippet> = [
         code: '<ButtonPrimary onPress={() => {}}><IconLockClosedRegular color="currentColor" />Action</ButtonPrimary>',
     },
     {
+        name: 'ButtonGroup (internal use)',
+        code: `
+        <ButtonGroup
+          primaryButton={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
+          secondaryButton={<ButtonSecondary onPress={() => {}}>Secondary Action</ButtonSecondary>}
+          link={<ButtonLink onPress={() => {}}>Link</ButtonLink>}/>`,
+    },
+    {
         name: 'ButtonLayout',
         code: `
         <ButtonLayout>

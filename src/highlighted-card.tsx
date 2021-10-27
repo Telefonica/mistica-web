@@ -3,7 +3,7 @@ import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 import Box from './box';
 import Touchable from './touchable';
-import IcnClose from './icons/icon-close';
+import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {applyAlpha} from './utils/color';
 import {useTheme} from './hooks';
 import {Text4, Text2} from './text';
@@ -19,6 +19,9 @@ const useStyles = createUseStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        width: ({width}) => width || '100%',
+        flexShrink: 0,
+        alignSelf: 'stretch',
     },
     imageContent: {
         display: 'flex',
@@ -28,6 +31,8 @@ const useStyles = createUseStyles((theme) => ({
     },
     dismissableContainer: {
         position: 'relative',
+        display: 'flex',
+        flexShrink: 0,
     },
     dismissableButton: {
         position: 'absolute',
@@ -56,6 +61,13 @@ const useStyles = createUseStyles((theme) => ({
             padding: 24,
             paddingRight: ({hasImage}) => (hasImage ? 24 : 56),
         },
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+    },
+    touchableContainer: {
+        display: 'flex',
+        flexShrink: 0,
     },
 }));
 
@@ -79,7 +91,7 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose = () => {}})
                 style={{display: 'flex', width: 48, height: 48}}
             >
                 <div className={classes.dismissableCircleContainer}>
-                    <IcnClose color={colors.neutralHigh} />
+                    <IconCloseRegular color={colors.neutralHigh} />
                 </div>
             </IconButton>
         </section>
@@ -97,6 +109,7 @@ interface CommonProps {
     isInverse?: boolean;
     children?: void;
     'aria-label'?: string;
+    width?: string | number;
 }
 interface BasicProps extends CommonProps {
     button?: undefined;
@@ -137,7 +150,7 @@ const Content: React.FC<Props> = (props) => {
     const {title, description, imageUrl, imageFit} = props;
     const isInverseOutside = useIsInverseVariant();
     const isInverse = props.isInverse ?? isInverseOutside;
-    const classes = useStyles({isInverse, hasImage: !!imageUrl});
+    const classes = useStyles({isInverse, hasImage: !!imageUrl, width: props.width});
     const theme = useTheme();
 
     const content = (
@@ -154,7 +167,12 @@ const Content: React.FC<Props> = (props) => {
                         {description}
                     </Text2>
                 </Box>
-                {props.button && <Box paddingTop={16}>{props.button}</Box>}
+                {props.button && (
+                    <>
+                        <div style={{minHeight: 16, flexGrow: 1}} />
+                        {props.button}
+                    </>
+                )}
             </div>
             {imageUrl && (
                 <div
@@ -174,7 +192,11 @@ const Content: React.FC<Props> = (props) => {
     }
     if (props.onPress) {
         return (
-            <Touchable onPress={props.onPress} trackingEvent={props.trackingEvent}>
+            <Touchable
+                onPress={props.onPress}
+                trackingEvent={props.trackingEvent}
+                className={classes.touchableContainer}
+            >
                 {content}
             </Touchable>
         );
@@ -185,6 +207,7 @@ const Content: React.FC<Props> = (props) => {
                 to={props.to}
                 trackingEvent={props.trackingEvent}
                 fullPageOnWebView={props.fullPageOnWebView}
+                className={classes.touchableContainer}
             >
                 {content}
             </Touchable>
@@ -192,7 +215,12 @@ const Content: React.FC<Props> = (props) => {
     }
     if (props.href) {
         return (
-            <Touchable trackingEvent={props.trackingEvent} href={props.href} newTab={props.newTab}>
+            <Touchable
+                trackingEvent={props.trackingEvent}
+                href={props.href}
+                newTab={props.newTab}
+                className={classes.touchableContainer}
+            >
                 {content}
             </Touchable>
         );

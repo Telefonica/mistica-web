@@ -3,7 +3,7 @@
 import * as React from "react";
 import type { DataAttributes, TrackingEvent } from "./utils/types";
 import type { Location } from "history";
-declare export var BUTTON_MIN_WIDTH: 156;
+declare export var BUTTON_MIN_WIDTH: 136;
 declare type CommonProps = {
   children: React.Node,
   className?: string,

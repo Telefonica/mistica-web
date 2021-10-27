@@ -94,7 +94,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         height: 4,
         width: '100%',
         margin: '0 8px',
-        background: colors.border,
+        background: colors.control,
         borderRadius: 4,
         overflow: 'hidden',
 
