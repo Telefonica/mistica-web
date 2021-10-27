@@ -16,6 +16,7 @@
 <PROJECT_ROOT>/codemods
 <PROJECT_ROOT>/img
 <PROJECT_ROOT>/.github
+<PROJECT_ROOT>/flow-overrides
 
 [include]
 

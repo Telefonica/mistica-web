@@ -9,7 +9,7 @@ declare type FeedbackButtonsProps = {
   secondaryButton?: React.Element<typeof ButtonSecondary>,
   link?: React.Element<typeof ButtonLink>,
 };
-declare type FeedbackProps = {|
+declare type FeedbackProps = {
   ...$Exact<FeedbackButtonsProps>,
 
   title: string,
@@ -17,20 +17,20 @@ declare type FeedbackProps = {|
   children?: React.Node,
   unstable_inlineInDesktop?: boolean,
   dataAttributes?: DataAttributes,
-|};
-declare type AssetFeedbackProps = {|
+};
+declare type AssetFeedbackProps = {
   ...$Exact<FeedbackProps>,
 
   imageUrl?: string,
   imageFit?: "fit" | "fill",
-|};
-declare type FeedbackScreenProps = {|
+};
+declare type FeedbackScreenProps = {
   ...$Exact<AssetFeedbackProps>,
 
   hapticFeedback?: HapticFeedback,
   icon?: React.Node,
   animateText?: boolean,
-|};
+};
 declare export var FeedbackScreen: React.ComponentType<FeedbackScreenProps>;
 declare export var SuccessFeedbackScreen: React.ComponentType<AssetFeedbackProps>;
 declare export var ErrorFeedbackScreen: React.ComponentType<FeedbackProps>;

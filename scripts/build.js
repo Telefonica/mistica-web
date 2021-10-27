@@ -1,8 +1,8 @@
 const childProcess = require('child_process');
 const rimraf = require('rimraf');
 const execSync = childProcess.execSync;
-const dtsToFlow = require('./dts-to-flow');
 const genSizeStats = require('./size-stats');
+const fs = require('fs');
 
 const run = (command) => {
     execSync(command, {stdio: 'inherit'});
@@ -33,11 +33,14 @@ const compile = () => {
     run('yarn gen-ts-defs');
 
     console.log('\nGenerate Flow defs:');
-    await dtsToFlow();
+    run('yarn ts-to-flow "dist" "flow-defs"');
+    // copy flow definition overrides
+    fs.copyFileSync('./flow-overrides/jss.js.flow', './dist/jss.js.flow');
+    fs.copyFileSync('./flow-overrides/jss.js.flow', './flow-defs/jss.js.flow');
 
     console.log('\nFlow check:');
     run('yarn flow check');
 
     console.log('\nGenerate size stats:');
-    await genSizeStats();
+    genSizeStats();
 })();

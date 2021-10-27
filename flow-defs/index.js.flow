@@ -133,12 +133,12 @@ declare export {
   useWindowHeight,
   useWindowWidth,
 } from "./hooks";
-declare export { ThemeConfig, ColorScheme } from "./theme";
+export type { ThemeConfig, ColorScheme } from "./theme";
 declare export {
   ThemeVariant,
   useIsInverseVariant,
 } from "./theme-variant-context";
-declare export { Skin, SkinName } from "./skins/types";
+export type { Skin, SkinName } from "./skins/types";
 declare export {
   VIVO_SKIN,
   O2_CLASSIC_SKIN,
@@ -157,9 +157,9 @@ declare export { palette as movistarPalette } from "./skins/movistar";
 declare export { palette as o2Palette } from "./skins/o2";
 declare export { palette as o2ClassicPalette } from "./skins/o2-classic";
 declare export { palette as telefonicaPalette } from "./skins/telefonica";
-declare export { Locale } from "./utils/locale";
-declare export { TrackingEvent } from "./utils/types";
-declare export { RegionCode } from "./utils/region-code";
+export type { Locale } from "./utils/locale";
+export type { TrackingEvent } from "./utils/types";
+export type { RegionCode } from "./utils/region-code";
 declare export { default as IconAcademicFilled } from "./generated/mistica-icons/icon-academic-filled";
 declare export { default as IconAcademicLight } from "./generated/mistica-icons/icon-academic-light";
 declare export { default as IconAcademicRegular } from "./generated/mistica-icons/icon-academic-regular";
