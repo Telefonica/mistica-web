@@ -172,7 +172,6 @@ const useStyles = createUseStyles((theme) => ({
         '& > div': {
             width: '100%',
             display: 'inline-flex',
-            alignItems: 'center',
         },
     },
     aligned: {
