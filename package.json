@@ -16,7 +16,7 @@
     ],
     "scripts": {
         "test": "jest --config jest.unit.config.js",
-        "test-acceptance": "node_modules/@telefonica/acceptance-testing/bin/test-acceptance.js",
+        "test-acceptance": "test-acceptance",
         "prettier-check": "prettier --check \"**/*.js\" \"**/*.tsx\" \"**/*.ts\" \"**/*.json\"",
         "lint": "eslint --report-unused-disable-directives .",
         "ts-check": "tsc --project tsconfig.json --noEmit",
@@ -77,7 +77,7 @@
         "@swc/cli": "^0.1.51",
         "@swc/core": "^1.2.93",
         "@swc/jest": "^0.2.4",
-        "@telefonica/acceptance-testing": "^1.1.0",
+        "@telefonica/acceptance-testing": "^1.1.2",
         "@telefonica/eslint-plugin-async-await": "^1.1.0",
         "@telefonica/eslint-plugin-react-element-interface": "^1.0.0",
         "@telefonica/prettier-config": "^1.1.0",
