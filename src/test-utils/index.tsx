@@ -129,7 +129,7 @@ const buildStoryPath = (id: string, skin?: string, platform?: string, args?: Sto
     return `/iframe.html?${params.toString()}`;
 };
 
-export const openStoryPage = async ({
+export const openStoryPage = ({
     id,
     device = TABLET_DEVICE,
     skin = 'Movistar',
@@ -141,21 +141,19 @@ export const openStoryPage = async ({
     skin?: 'Movistar' | 'Vivo' | 'O2' | 'O2-classic';
     args?: StoryArgs;
     isDarkMode?: boolean;
-}): Promise<PageApi> => {
-    const page = await openPage({
+}): Promise<PageApi> =>
+    openPage({
         path: buildStoryPath(id, skin, DEVICES[device].platform, args),
         userAgent: DEVICES[device].userAgent,
         viewport: DEVICES[device].viewport,
         isDarkMode,
     });
-    return page;
-};
 
 /**
  * Renders a page with a React component in the server and opens it in the browser, where it's hydrated client side.
  * `name` is the name (without extension) of a file in the __ssr_pages__ folder. This file exports the component to be rendered.
  */
-export const openSSRPage = async ({
+export const openSSRPage = ({
     name,
     device = TABLET_DEVICE,
     skin = MOVISTAR_SKIN,
