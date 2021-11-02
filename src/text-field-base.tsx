@@ -142,7 +142,6 @@ const commonInputStyles = (theme: Theme) => ({
     width: '100%',
     // Seems like 'display: flex' is causing issues on firefox and the input takes over the whole space https://stackoverflow.com/questions/43314921/strange-input-widths-in-firefox-vs-chrome
     minWidth: 0,
-    height: '100%',
     textOverflow: 'ellipsis',
     '&::placeholder ': {
         opacity: 0,
@@ -169,30 +168,29 @@ const useStyles = createUseStyles((theme) => ({
     fullWidth: {
         width: '100%',
         display: 'inline-flex',
+        alignSelf: ({prefix}) => (prefix ? 'baseline' : 'initial'),
         '& > div': {
             width: '100%',
             display: 'inline-flex',
         },
     },
-    aligned: {
-        paddingTop: ({hasLabel}) => (hasLabel ? 28 : 16),
-        [theme.mq.tabletOrSmaller]: {
-            paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
-        },
-        paddingBottom: ({hasLabel, multiline}) => (multiline ? 0 : hasLabel ? 8 : 16),
-        width: '100%',
-        display: 'flex',
-        alignItems: ({multiline, prefix}) => (multiline || !prefix ? 'initial' : 'baseline'),
-    },
     textArea: {
         resize: 'none',
+        marginTop: ({hasLabel}) => (hasLabel ? 28 : 16),
+        [theme.mq.tabletOrSmaller]: {
+            marginTop: ({hasLabel}) => (hasLabel ? 24 : 16),
+        },
         paddingBottom: '8px',
         ...commonInputStyles(theme),
     },
     input: {
         position: 'relative',
-        paddingTop: 0,
-        paddingBottom: 0,
+        paddingTop: ({hasLabel}) => (hasLabel ? 28 : 16),
+        [theme.mq.tabletOrSmaller]: {
+            paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
+        },
+        paddingBottom: ({hasLabel}) => (hasLabel ? 8 : 16),
+        height: '100%',
         ...commonInputStyles(theme),
         WebkitAppearance: 'none',
         '&::-webkit-search-cancel-button': {
@@ -252,6 +250,7 @@ const useStyles = createUseStyles((theme) => ({
         paddingRight: 16,
         display: 'flex',
         alignItems: 'center',
+        alignSelf: 'center',
         opacity: ({disabled}) => (disabled ? 0.3 : 1),
     },
     startIcon: {
@@ -265,6 +264,12 @@ const useStyles = createUseStyles((theme) => ({
         opacity: ({disabled}) => (disabled ? 0.3 : 1),
     },
     prefix: {
+        alignSelf: 'baseline',
+        paddingTop: ({hasLabel}) => (hasLabel ? 28 : 16),
+        [theme.mq.tabletOrSmaller]: {
+            paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
+        },
+        paddingBottom: ({hasLabel}) => (hasLabel ? 8 : 16),
         paddingLeft: 12,
         paddingRight: 16,
         opacity: ({inputState}) => (inputState === 'default' ? 0 : 1),
@@ -402,49 +407,48 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                 fieldRef={fieldRef}
             >
                 {startIcon && <div className={classes.startIcon}>{startIcon}</div>}
-                <div className={classes.aligned}>
-                    {prefix && (
-                        <div className={classes.prefix}>
-                            <Text3 color={prefixColor} regular>
-                                {prefix}
-                            </Text3>
-                        </div>
-                    )}
-                    <div className={classes.fullWidth}>
-                        <Text3 as="div" regular>
-                            {React.createElement(inputComponent || defaultInputElement, {
-                                ...inputRefProps,
-                                ...props,
-                                id,
-                                className: multiline ? classes.textArea : classes.input,
-                                onFocus: (event: React.FocusEvent<HTMLInputElement>) => {
-                                    setInputState('focused');
-                                    onFocus?.(event);
-                                },
-                                onBlur: (event: React.FocusEvent<HTMLInputElement>) => {
-                                    if (event.target.value.length > 0) {
-                                        setInputState('filled');
-                                    } else {
-                                        setInputState('default');
-                                    }
-                                    onBlur?.(event);
-                                },
-                                onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-                                    // Workaround for systems where maxlength prop is applied onBlur (https://caniuse.com/#feat=maxlength)
-                                    if (maxLength === undefined || event.target.value.length <= maxLength) {
-                                        setCharacterCount(event.target.value.length);
-                                        props.onChange?.(event);
-                                    } else {
-                                        event.stopPropagation();
-                                        event.preventDefault();
-                                    }
-                                },
-                                defaultValue,
-                                value,
-                                ...(error && {'aria-invalid': true}),
-                            })}
+
+                {prefix && (
+                    <div className={classes.prefix}>
+                        <Text3 color={prefixColor} regular>
+                            {prefix}
                         </Text3>
                     </div>
+                )}
+                <div className={classes.fullWidth}>
+                    <Text3 as="div" regular>
+                        {React.createElement(inputComponent || defaultInputElement, {
+                            ...inputRefProps,
+                            ...props,
+                            id,
+                            className: multiline ? classes.textArea : classes.input,
+                            onFocus: (event: React.FocusEvent<HTMLInputElement>) => {
+                                setInputState('focused');
+                                onFocus?.(event);
+                            },
+                            onBlur: (event: React.FocusEvent<HTMLInputElement>) => {
+                                if (event.target.value.length > 0) {
+                                    setInputState('filled');
+                                } else {
+                                    setInputState('default');
+                                }
+                                onBlur?.(event);
+                            },
+                            onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+                                // Workaround for systems where maxlength prop is applied onBlur (https://caniuse.com/#feat=maxlength)
+                                if (maxLength === undefined || event.target.value.length <= maxLength) {
+                                    setCharacterCount(event.target.value.length);
+                                    props.onChange?.(event);
+                                } else {
+                                    event.stopPropagation();
+                                    event.preventDefault();
+                                }
+                            },
+                            defaultValue,
+                            value,
+                            ...(error && {'aria-invalid': true}),
+                        })}
+                    </Text3>
                 </div>
                 {label && (
                     <Label
