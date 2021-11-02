@@ -4,9 +4,8 @@ on:
         branches: [master]
 jobs:
     deploy:
-        # runs-on: ubuntu-latest
         runs-on: self-hosted-novum
-        container: docker.tuenti.io/service-inf/mistica-web-builder:1.1.0
+        container: docker.tuenti.io/service-inf/web-builder:pptr10.4-1.0.0
         steps:
             - uses: actions/checkout@v2
             - uses: amondnet/vercel-action@master

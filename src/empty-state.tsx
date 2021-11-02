@@ -145,7 +145,7 @@ const EmptyState: React.FC<Props> = ({
     }
 
     return (
-        <Boxed dataAttributes={dataAttributes}>
+        <Boxed aria-label={ariaLabel} role="region" dataAttributes={dataAttributes}>
             <div className={classes.desktopContainer}>
                 <div className={classes.desktopContent}>
                     <Box padding={64}>
