@@ -17,14 +17,15 @@ export default {
 type Args = {asset: string};
 
 export const WithImage: StoryComponent = () => (
-    <EmptyState
-        largeImageUrl="https://i.imgur.com/yGFKQOy.png"
-        title="Your cart is empty"
-        description="Check our marketplaces and find something for you. Check our marketplaces and find something"
-        button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
-        buttonLink={<ButtonLink onPress={() => {}}>More info</ButtonLink>}
-        dataAttributes={{testid: 'empty-state-with-image'}}
-    />
+    <div data-testid="empty-state-with-image">
+        <EmptyState
+            largeImageUrl="https://i.imgur.com/yGFKQOy.png"
+            title="Your cart is empty"
+            description="Check our marketplaces and find something for you. Check our marketplaces and find something"
+            button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
+            buttonLink={<ButtonLink onPress={() => {}}>More info</ButtonLink>}
+        />
+    </div>
 );
 WithImage.storyName = 'With image';
 
@@ -47,13 +48,14 @@ export const WithIcon: StoryComponent<Args> = ({asset}) => {
     }
 
     return (
-        <EmptyState
-            {...assetProps}
-            title="Your cart is empty"
-            description="Check our marketplaces and find something for you. Check our marketplaces and find something"
-            button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
-            dataAttributes={{testid: 'empty-state-with-icon'}}
-        />
+        <div data-testid="empty-state-with-icon">
+            <EmptyState
+                {...assetProps}
+                title="Your cart is empty"
+                description="Check our marketplaces and find something for you. Check our marketplaces and find something"
+                button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
+            />
+        </div>
     );
 };
 WithIcon.storyName = 'With icon';
@@ -62,12 +64,13 @@ WithIcon.args = {
 };
 
 export const WithSmallImage: StoryComponent = () => (
-    <EmptyState
-        imageUrl="https://i.imgur.com/o5qympI.png"
-        title="Your cart is empty"
-        description="Check our marketplaces and find something for you. Check our marketplaces and find something"
-        button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
-        dataAttributes={{testid: 'empty-state-with-small-image'}}
-    />
+    <div data-testid="empty-state-with-small-image">
+        <EmptyState
+            imageUrl="https://i.imgur.com/o5qympI.png"
+            title="Your cart is empty"
+            description="Check our marketplaces and find something for you. Check our marketplaces and find something"
+            button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
+        />
+    </div>
 );
 WithSmallImage.storyName = 'With small image';
