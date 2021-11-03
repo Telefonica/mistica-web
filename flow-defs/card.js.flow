@@ -26,7 +26,7 @@ declare type MediaCardProps = {
   "aria-label"?: string,
 };
 declare export var MediaCard: React.ComponentType<MediaCardProps>;
-declare type DataCardProps = {|
+declare type DataCardProps = {
   /**
    * Typically a mistica-icons component element
    */
@@ -43,6 +43,6 @@ declare type DataCardProps = {|
    */
   dataAttributes?: DataAttributes,
   "aria-label"?: string,
-|};
+};
 declare export var DataCard: React.ComponentType<DataCardProps>;
 declare export {};

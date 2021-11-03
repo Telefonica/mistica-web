@@ -3,7 +3,7 @@
 import * as React from "react";
 import { ButtonPrimary, ButtonSecondary, ButtonLink } from "./button";
 import type { DataAttributes } from "./utils/types";
-declare type BaseProps = {|
+declare type BaseProps = {
   title: string,
   button?:
     | React.Element<typeof ButtonPrimary>
@@ -12,19 +12,19 @@ declare type BaseProps = {|
   description?: string,
   "aria-label"?: string,
   dataAttributes?: DataAttributes,
-|};
-declare type ImageProps = {|
+};
+declare type ImageProps = {
   ...$Exact<BaseProps>,
   imageUrl: string,
-|};
-declare type LargeImageProps = {|
+};
+declare type LargeImageProps = {
   ...$Exact<BaseProps>,
   largeImageUrl: string,
-|};
-declare type IconProps = {|
+};
+declare type IconProps = {
   ...$Exact<BaseProps>,
   icon: React.Element<any>,
-|};
+};
 declare type Props = IconProps | ImageProps | LargeImageProps;
 declare var EmptyState: React.ComponentType<Props>;
 declare export default typeof EmptyState;

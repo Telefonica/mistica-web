@@ -2,13 +2,13 @@
 
 import * as React from "react";
 import type { CommonFormFieldProps } from "./text-field-base";
-export type PhoneNumberFieldProps = {|
+export type PhoneNumberFieldProps = {
   ...$Exact<CommonFormFieldProps>,
 
   onChangeValue?: (value: string, rawValue: string) => void,
   prefix?: string,
   getSuggestions?: (value: string) => Array<string>,
   e164?: boolean,
-|};
+};
 declare var PhoneNumberField: React.ComponentType<PhoneNumberFieldProps>;
 declare export default typeof PhoneNumberField;

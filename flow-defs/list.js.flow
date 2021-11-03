@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import type { DataAttributes, TrackingEvent } from "./utils/types";
-declare type CommonProps = {|
+declare type CommonProps = {
   headline?: string | React.Node,
   title: string,
   titleLinesMax?: number,
@@ -15,52 +15,52 @@ declare type CommonProps = {|
   role?: string,
   extra?: React.Node,
   dataAttributes?: DataAttributes,
-|};
+};
 declare type ControlProps = {
   name?: string,
   value?: boolean,
   defaultValue?: boolean,
   onChange?: (checked: boolean) => void,
 };
-declare type BasicRowContentProps = {|
+declare type BasicRowContentProps = {
   ...$Exact<CommonProps>,
   right?: React.Node,
-|};
-declare type SwitchRowContentProps = {|
+};
+declare type SwitchRowContentProps = {
   ...$Exact<CommonProps>,
   onPress?: () => void,
   switch: ControlProps,
-|};
-declare type CheckboxRowContentProps = {|
+};
+declare type CheckboxRowContentProps = {
   ...$Exact<CommonProps>,
   onPress?: () => void,
   checkbox: ControlProps,
-|};
-declare type RadioRowContentProps = {|
+};
+declare type RadioRowContentProps = {
   ...$Exact<CommonProps>,
   radioValue: string,
-|};
-declare type HrefRowContentProps = {|
+};
+declare type HrefRowContentProps = {
   ...$Exact<CommonProps>,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   href: string,
   newTab?: boolean,
   right?: React.Node,
-|};
-declare type ToRowContentProps = {|
+};
+declare type ToRowContentProps = {
   ...$Exact<CommonProps>,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   to: string,
   fullPageOnWebView?: boolean,
   replace?: boolean,
   right?: React.Node,
-|};
-declare type OnPressRowContentProps = {|
+};
+declare type OnPressRowContentProps = {
   ...$Exact<CommonProps>,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   onPress: () => void,
   right?: React.Node,
-|};
+};
 declare type RowContentProps =
   | BasicRowContentProps
   | SwitchRowContentProps
@@ -77,37 +77,37 @@ declare type RowListProps = {
   dataAttributes?: DataAttributes,
 };
 declare export var RowList: React.ComponentType<RowListProps>;
-declare type CommonBoxedRowProps = {|
+declare type CommonBoxedRowProps = {
   isInverse?: boolean,
-|};
-declare type BasicBoxedRowProps = {|
+};
+declare type BasicBoxedRowProps = {
   ...$Exact<BasicRowContentProps>,
   ...$Exact<CommonBoxedRowProps>,
-|};
-declare type SwitchBoxedRowProps = {|
+};
+declare type SwitchBoxedRowProps = {
   ...$Exact<SwitchRowContentProps>,
   ...$Exact<CommonBoxedRowProps>,
-|};
-declare type CheckboxBoxedRowProps = {|
+};
+declare type CheckboxBoxedRowProps = {
   ...$Exact<CheckboxRowContentProps>,
   ...$Exact<CommonBoxedRowProps>,
-|};
-declare type RadioBoxedRowProps = {|
+};
+declare type RadioBoxedRowProps = {
   ...$Exact<RadioRowContentProps>,
   ...$Exact<CommonBoxedRowProps>,
-|};
-declare type HrefBoxedRowProps = {|
+};
+declare type HrefBoxedRowProps = {
   ...$Exact<HrefRowContentProps>,
   ...$Exact<CommonBoxedRowProps>,
-|};
-declare type ToBoxedRowProps = {|
+};
+declare type ToBoxedRowProps = {
   ...$Exact<ToRowContentProps>,
   ...$Exact<CommonBoxedRowProps>,
-|};
-declare type OnPressBoxedRowProps = {|
+};
+declare type OnPressBoxedRowProps = {
   ...$Exact<OnPressRowContentProps>,
   ...$Exact<CommonBoxedRowProps>,
-|};
+};
 declare type BoxedRowProps =
   | BasicBoxedRowProps
   | SwitchBoxedRowProps

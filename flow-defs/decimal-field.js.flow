@@ -13,11 +13,11 @@ import type { CommonFormFieldProps } from "./text-field-base";
  */
 declare type DecimalInputProps = any;
 declare export var DecimalInput: React.ComponentType<DecimalInputProps>;
-export type DecimalFieldProps = {|
+export type DecimalFieldProps = {
   ...$Exact<CommonFormFieldProps>,
 
   onChangeValue?: (value: string, rawValue: string) => void,
   prefix?: React.Node,
-|};
+};
 declare var DecimalField: React.ComponentType<DecimalFieldProps>;
 declare export default typeof DecimalField;
