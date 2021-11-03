@@ -32,7 +32,7 @@ export type AutoComplete =
   | "cc-exp"
   | "cc-csc"
   | "username";
-export type CommonFormFieldProps = {|
+export type CommonFormFieldProps = {
   autoFocus?: boolean,
   disabled?: boolean,
   error?: boolean,
@@ -53,8 +53,8 @@ export type CommonFormFieldProps = {|
   defaultValue?: string,
   onChange?: (event: SyntheticEvent<HTMLInputElement>) => void,
   readOnly?: boolean,
-|};
-declare type TextFieldBaseProps = {|
+};
+declare type TextFieldBaseProps = {
   id?: string,
   type?: string,
   autoComplete?: AutoComplete,
@@ -96,8 +96,11 @@ declare type TextFieldBaseProps = {|
   readOnly?: boolean,
   min?: string,
   max?: string,
-|};
-declare var TextFieldBase: React.Component<TextFieldBaseProps>;
+};
+declare var TextFieldBase: React.Component<{
+  ...TextFieldBaseProps,
+  ...{},
+}>;
 declare export default typeof TextFieldBase;
 
 import { type CssStyle } from "./__types__.js.flow";
