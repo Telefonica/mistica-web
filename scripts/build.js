@@ -2,7 +2,6 @@ const childProcess = require('child_process');
 const rimraf = require('rimraf');
 const execSync = childProcess.execSync;
 const genSizeStats = require('./size-stats');
-const fs = require('fs');
 
 const run = (command) => {
     execSync(command, {stdio: 'inherit'});
