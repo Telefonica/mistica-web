@@ -3,7 +3,7 @@ import {useForm} from './form-context';
 import {useAriaId, useTheme} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/key-codes';
 import {FieldContainer, HelperText, Label} from './text-field-components';
-import IconArrowDown from './icons/icon-arrow-down';
+import ChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
 import TextFieldBase from './text-field-base';
 import Overlay from './overlay';
 import classNames from 'classnames';
@@ -46,7 +46,7 @@ const useStyles = createUseStyles((theme) => ({
     arrowDown: {
         position: 'absolute',
         right: 16,
-        top: 'calc(50% - 12px)',
+        top: 'calc(50% - 10px)',
         pointerEvents: 'none',
         opacity: ({disabled}) => (disabled ? 0.3 : 1),
     },
@@ -427,7 +427,7 @@ const Select: React.FC<SelectProps> = ({
                 ))}
             </select>
             <div className={classes.arrowDown} aria-hidden>
-                <IconArrowDown />
+                <ChevronDownRegular size={20} />
             </div>
         </FieldContainer>
     ) : (
@@ -442,7 +442,7 @@ const Select: React.FC<SelectProps> = ({
                 <TextFieldBase
                     style={{visibility: 'hidden'}}
                     fullWidth={fullWidth}
-                    endIcon={<IconArrowDown />}
+                    endIcon={<ChevronDownRegular size={20} />}
                     focus={isFocused}
                     label={label}
                     value={value}
