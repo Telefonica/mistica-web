@@ -22,7 +22,8 @@ declare type DialogRootState = {
   instanceNumber: number,
 };
 declare export default class DialogRoot
-  mixins React.Component<DialogRootProps, DialogRootState> {
+  mixins React.Component<DialogRootProps, DialogRootState>
+{
   state: DialogRootState;
   componentDidMount(): void;
   componentWillUnmount(): void;
