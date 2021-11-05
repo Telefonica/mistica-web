@@ -141,7 +141,7 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
         }
     };
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const handleKeyDown = (event: React.KeyboardEvent) => {
         if (event.keyCode === SPACE) {
             event.preventDefault();
             event.stopPropagation();

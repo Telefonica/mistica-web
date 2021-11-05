@@ -1,3 +1,18 @@
+## [10.9.2](https://github.com/Telefonica/mistica-web/compare/v10.9.1...v10.9.2) (2021-11-05)
+
+
+### Bug Fixes
+
+* **Switch:** Revert event cancel in switch change ([#366](https://github.com/Telefonica/mistica-web/issues/366)) ([fd38fa0](https://github.com/Telefonica/mistica-web/commit/fd38fa0bcd94a27bd27b9ce7154db2ff6e9e7802))
+
+## [10.9.1](https://github.com/Telefonica/mistica-web/compare/v10.9.0...v10.9.1) (2021-11-05)
+
+
+### Bug Fixes
+
+* **HighlightedCard:** Allow to stretch inside flex container ([#360](https://github.com/Telefonica/mistica-web/issues/360)) ([43e56d1](https://github.com/Telefonica/mistica-web/commit/43e56d125a9cdc012baceeb060ca00d9395f580d))
+* **Switch:** stop event propagation on change ([#365](https://github.com/Telefonica/mistica-web/issues/365)) ([22d7254](https://github.com/Telefonica/mistica-web/commit/22d7254a0771c03f99488f197f9cd47d0d2e5370))
+
 # [10.9.0](https://github.com/Telefonica/mistica-web/compare/v10.8.1...v10.9.0) (2021-10-21)
 
 
