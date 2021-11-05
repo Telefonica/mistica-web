@@ -77,9 +77,10 @@ const useStyles = createUseStyles((theme) => ({
 type DismissableProps = {
     children: React.ReactNode;
     onClose?: () => void;
+    iconSize: number;
 };
 
-const Dismissable: React.FC<DismissableProps> = ({children, onClose = () => {}}) => {
+const Dismissable: React.FC<DismissableProps> = ({children, onClose = () => {}, iconSize}) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
     const {colors, texts} = useTheme();
@@ -94,7 +95,7 @@ const Dismissable: React.FC<DismissableProps> = ({children, onClose = () => {}})
                 style={{display: 'flex', width: 48, height: 48}}
             >
                 <div className={classes.dismissableCircleContainer}>
-                    <IconCloseRegular size={18} color={colors.neutralHigh} />
+                    <IconCloseRegular size={iconSize} color={colors.neutralHigh} />
                 </div>
             </IconButton>
         </section>
@@ -235,7 +236,7 @@ const Content: React.FC<Props> = (props) => {
 const HighlightedCard: React.FC<Props> = ({'aria-label': ariaLabel, ...props}) => {
     const label = ariaLabel ?? props.title;
     return props.onClose ? (
-        <Dismissable onClose={props.onClose} aria-label={label}>
+        <Dismissable onClose={props.onClose} iconSize={props.imageUrl ? 18 : 24} aria-label={label}>
             <Content {...props} />
         </Dismissable>
     ) : (
