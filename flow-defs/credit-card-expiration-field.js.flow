@@ -7,7 +7,7 @@ declare type ExpirationDateValue = {
   year: number | null,
   raw: string,
 };
-export type CreditCardExpirationFieldProps = {|
+export type CreditCardExpirationFieldProps = {
   ...$Exact<CommonFormFieldProps>,
 
   validate?: (
@@ -15,6 +15,6 @@ export type CreditCardExpirationFieldProps = {|
     rawValue: string
   ) => string | void,
   onChangeValue?: (value: ExpirationDateValue) => void,
-|};
+};
 declare var CreditCardExpirationField: React.ComponentType<CreditCardExpirationFieldProps>;
 declare export default typeof CreditCardExpirationField;

@@ -11,9 +11,12 @@ declare type OverridableTextProps = {
 };
 declare type RichText =
   | string
-  | ({
-      text: string,
-    } & OverridableTextProps);
+  | {
+      ...{
+        text: string,
+      },
+      ...OverridableTextProps,
+    };
 declare type HeaderProps = {
   pretitle?: RichText,
   title?: string,
