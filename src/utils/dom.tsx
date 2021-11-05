@@ -30,7 +30,7 @@ export const createChangeEvent = (
 
 /**
  * Detect passive event listeners support
- * see passiveeventlisteners.js at https://github.com/Modernizr/Modernizr/
+ * See passiveeventlisteners.js at https://github.com/Modernizr/Modernizr/
  */
 let supportsPassive = false;
 try {
