@@ -170,7 +170,7 @@ export const MisticaIcons: React.FC = () => {
                             ) : (
                                 <Stack space={16}>
                                     <Inline space="between">
-                                    <input type="range" name="size" style={{width: "150%" }}  min={16} max={120} step={8} value={String(size)} onInput={(v) => setSize(Number(v) || 0)} onChange={(v) => setSize(Number(v) || 0)}/>
+                                    <input type="range" name="size" style={{width: "150%" }}  min={16} max={120} step={8} value={String(size)} onInput={(v) => setSize(Number(v) || 64)} onChange={(v) => setSize(Number(v) || 64)}/>
                                     <Text3>{size}</Text3>
                                     </Inline>
                                     <RadioGroup
