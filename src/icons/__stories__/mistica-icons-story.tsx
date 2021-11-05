@@ -16,6 +16,7 @@ import {
     Text3,
     IconCheckRegular,
     FadeIn,
+    IconCallCenterUserSupportFilled,
 } from '../..';
 import IntegerField from '../../integer-field';
 import {kebabCase, upperFirst} from 'lodash';
@@ -45,8 +46,8 @@ export const MisticaIcons: React.FC = () => {
     const [showFilled, filledCheckbox] = useCheckbox('Filled', false);
     const [isInverse, inverseCheckbox] = useCheckbox('Inverse', false);
     const [showNames, showNamesCheckbox] = useCheckbox('Name', true);
-    // const [showCircle, circleCheckbox] = useCheckbox('Circle', false);
-    const [showIConBackground, showIConBackgroundCheckbox] = useCheckbox('Icon area', false);
+    const [showCircle, showCircleCheckbox] = useCheckbox('Circled', false);
+    const [showIconBackground, showIconBackgroundCheckbox] = useCheckbox('Icon area', false);
     const [filter, setFilter] = React.useState('');
     const [size, setSize] = React.useState(24);
     const {colors} = useTheme();
@@ -104,8 +105,8 @@ export const MisticaIcons: React.FC = () => {
                 </span>
             ));
 
-    const backgroundColor = isInverse ? colors.backgroundBrand : colors.background;
-    const iconBackgroundColor = showIConBackground ? '#FF13FA32' : 'none';
+    const backgroundColor = isInverse ? selectedColor : colors.background;
+    const iconBackgroundColor = showIconBackground ? '#FF13FA32' : 'none';
     // const circle = showCircle ? <Circle size={40} backgroundColor={colors.neutralHigh}></Circle> : "none"; — Opción para meter el icono en un circulo
     const {isTabletOrSmaller, isTablet} = useScreenSize();
 
@@ -114,7 +115,7 @@ export const MisticaIcons: React.FC = () => {
             style={{
                 flexDirection: isTabletOrSmaller ? 'column' : 'row',
                 width: '100%',
-                background: isInverse ? colors.brand : colors.background,
+                background: isInverse ? selectedColor : colors.background,
             }}
         >
             <div
@@ -139,7 +140,7 @@ export const MisticaIcons: React.FC = () => {
                             <SearchField
                                 name="filter"
                                 value={filter}
-                                label="Find icons"
+                                label="Search an icon..."
                                 onChangeValue={setFilter}
                                 fullWidth
                             />
@@ -161,19 +162,17 @@ export const MisticaIcons: React.FC = () => {
                                         <Inline space="between">
                                             <div style={{width: '160px'}}>{inverseCheckbox}</div>
                                             <div style={{width: '160px'}}>{showNamesCheckbox}</div>
-                                            <div style={{width: '160px'}}>{showIConBackgroundCheckbox}</div>
+                                            <div style={{width: '160px'}}>{showCircleCheckbox}</div>
+                                            <div style={{width: '160px'}}>{showIconBackgroundCheckbox}</div>
                                         </Inline>
                                     </Stack>
                                 </Inline>
                             ) : (
                                 <Stack space={16}>
-                                    <IntegerField
-                                        name="size"
-                                        value={String(size || 0)}
-                                        label="Size (px)"
-                                        onChangeValue={(v) => setSize(Number(v) || 0)}
-                                        fullWidth
-                                    />
+                                    <Inline space="between">
+                                    <input type="range" name="size" style={{width: "150%" }}  min={16} max={120} step={8} value={String(size)} onInput={(v) => setSize(Number(v) || 0)} onChange={(v) => setSize(Number(v) || 0)}/>
+                                    <Text3>{size}</Text3>
+                                    </Inline>
                                     <RadioGroup
                                         name="colorPicker"
                                         aria-labelledby="custom-render"
@@ -207,14 +206,15 @@ export const MisticaIcons: React.FC = () => {
                                         </Inline>
                                     </RadioGroup>
 
-                                    <Divider />
+                                    <Divider /> 
                                     {lightCheckbox}
                                     {regularCheckbox}
                                     {filledCheckbox}
                                     <Divider />
                                     {inverseCheckbox}
                                     {showNamesCheckbox}
-                                    {showIConBackgroundCheckbox}
+                                    {showCircleCheckbox}
+                                    {showIconBackgroundCheckbox}
                                     {/* {showCircle} */}
                                 </Stack>
                             )}
@@ -268,8 +268,30 @@ export const MisticaIcons: React.FC = () => {
                                                         style={{
                                                             width: size,
                                                             margin: 'auto',
-                                                            background: iconBackgroundColor,
                                                             fontSize: 0,
+                                                            transformOrigin: 'center center',
+                                                        }}
+                                                    >
+                                                    {showCircle ?
+                                                        <Circle size={size + 16} backgroundColor={isInverse ? colors.inverse : selectedColor}>
+                                                            <div
+                                                        style={{
+                                                            width: size,
+                                                            background: iconBackgroundColor,
+                                                        }}
+                                                    >
+                                                        <Icon
+                                                            size={size}
+                                                            color={showCircle && isInverse ? selectedColor : colors.inverse}
+                                                            id="custom-render"
+                                                        />
+                                                        </div>
+                                                        </Circle>
+                                                        :
+                                                        <div
+                                                        style={{
+                                                            width: size,
+                                                            background: iconBackgroundColor,
                                                         }}
                                                     >
                                                         <Icon
@@ -277,6 +299,8 @@ export const MisticaIcons: React.FC = () => {
                                                             color={isInverse ? colors.inverse : selectedColor}
                                                             id="custom-render"
                                                         />
+                                                        </div>
+                                                    }
                                                     </div>
                                                     <FadeIn
                                                         delay="0"
