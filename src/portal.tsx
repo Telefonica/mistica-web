@@ -47,7 +47,11 @@ export const usePortalNodes = (): PortalNodesContext => React.useContext(PortalN
  * This is useful for components that need position fixed, for example
  * for menus, alerts, overlays, etc.
  *
+<<<<<<< HEAD
  * see https://reactjs.org/docs/portals.html
+=======
+ * See https://reactjs.org/docs/portals.html
+>>>>>>> origin/master
  */
 
 type Props = {

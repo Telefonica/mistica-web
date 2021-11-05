@@ -10,9 +10,9 @@ declare type Props = {
  * set the label to the child element
  *
  * <Badge value={2}>
- *    <IconButton aria-label="Shopping Cart with 2 items">
- *      <IconShoppingCartFilled />
- *    </IconButton>
+ *   <IconButton aria-label="Shopping Cart with 2 items">
+ *     <IconShoppingCartFilled />
+ *   </IconButton>
  * </Badge>
  */
 declare var Badge: React.ComponentType<Props>;

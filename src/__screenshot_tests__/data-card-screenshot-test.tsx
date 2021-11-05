@@ -44,7 +44,7 @@ test('DataCard group', async () => {
 
 test('DataCard with extra content', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-datacard--with-extra-content',
+        id: 'components-cards-datacard--with-body',
         device: 'MOBILE_IOS',
     });
 
