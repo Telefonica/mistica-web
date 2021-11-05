@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {StorySection} from './helpers';
 import {Popover, Text2, Stack, useTheme} from '..';
-import IcnClose from '../icons/icon-close';
+import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
 
 export default {
     title: 'Components/Hints/Popover',
@@ -83,14 +83,14 @@ export const Default: StoryComponent = () => {
                     }}
                 >
                     <Popover
-                        target={<IcnClose />}
+                        target={<IconCloseRegular />}
                         position="left"
                         title="left"
                         description={description}
                         width={150}
                     />
                     <Popover
-                        target={<IcnClose />}
+                        target={<IconCloseRegular />}
                         position="right"
                         title="right"
                         description={description}
