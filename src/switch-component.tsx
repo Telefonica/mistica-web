@@ -132,8 +132,7 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
         }
     }, [onChange]);
 
-    const handleChange = (event: React.MouseEvent | React.KeyboardEvent) => {
-        event.stopPropagation();
+    const handleChange = () => {
         if (value !== undefined) {
             onChange?.(!value);
         } else {
@@ -145,7 +144,8 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
     const handleKeyDown = (event: React.KeyboardEvent) => {
         if (event.keyCode === SPACE) {
             event.preventDefault();
-            handleChange(event);
+            event.stopPropagation();
+            handleChange();
         }
     };
 
