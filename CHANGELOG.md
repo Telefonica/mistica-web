@@ -1,3 +1,10 @@
+## [10.9.2](https://github.com/Telefonica/mistica-web/compare/v10.9.1...v10.9.2) (2021-11-05)
+
+
+### Bug Fixes
+
+* **Switch:** Revert event cancel in switch change ([#366](https://github.com/Telefonica/mistica-web/issues/366)) ([fd38fa0](https://github.com/Telefonica/mistica-web/commit/fd38fa0bcd94a27bd27b9ce7154db2ff6e9e7802))
+
 ## [10.9.1](https://github.com/Telefonica/mistica-web/compare/v10.9.0...v10.9.1) (2021-11-05)
 
 
