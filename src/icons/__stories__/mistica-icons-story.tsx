@@ -13,7 +13,7 @@ import {
     Circle,
     RadioGroup,
     RadioButton,
-    Text3,
+    Text2,
     IconCheckRegular,
     FadeIn,
     IconCallCenterUserSupportFilled,
@@ -135,8 +135,8 @@ export const MisticaIcons: React.FC = () => {
                         borderBottom: isTabletOrSmaller ? `1px solid ${colors.divider}` : 'none',
                     }}
                 >
-                    <Box padding={16}>
-                        <Stack space={16}>
+                    <Box padding={24}>
+                        <Stack space={32}>
                             <SearchField
                                 name="filter"
                                 value={filter}
@@ -144,7 +144,7 @@ export const MisticaIcons: React.FC = () => {
                                 onChangeValue={setFilter}
                                 fullWidth
                             />
-                            <Divider />
+                            
                             {isTabletOrSmaller ? (
                                 <Inline space={16} fullWidth>
                                     <IntegerField
@@ -168,11 +168,16 @@ export const MisticaIcons: React.FC = () => {
                                     </Stack>
                                 </Inline>
                             ) : (
-                                <Stack space={16}>
+                                <Stack space={24}>
+                                    <Stack space={8}>
+                                    <Text2>Size</Text2>
                                     <Inline space="between">
-                                    <input type="range" name="size" style={{width: "150%" }}  min={16} max={120} step={8} onChange={(v) => setSize(v.target.value)} value={size}/>
-                                    <Text3>{size}</Text3>
+                                    <input type="range" name="size" style={{width: "196px" }}  min={16} max={104} step={4} onChange={(v) => setSize(v.target.value)} value={size}/>
+                                    <Text2 regular>{size}</Text2>
                                     </Inline>
+                                    </Stack>
+                                    <Stack space={8}>
+                                    <Text2>Color</Text2>
                                     <RadioGroup
                                         name="colorPicker"
                                         aria-labelledby="custom-render"
@@ -191,11 +196,11 @@ export const MisticaIcons: React.FC = () => {
                                                 <RadioButton
                                                     value={selectedColor}
                                                     render={() => (
-                                                        <Circle size={32} backgroundColor={pickerColor}>
+                                                        <Circle size={24} backgroundColor={pickerColor}>
                                                             {(selectedColor === colors.neutralHigh ||
                                                                 selectedColor) && (
                                                                 <IconCheckRegular
-                                                                    size={18}
+                                                                    size={16}
                                                                     color={colors.inverse}
                                                                 />
                                                             )}
@@ -205,6 +210,7 @@ export const MisticaIcons: React.FC = () => {
                                             ))}
                                         </Inline>
                                     </RadioGroup>
+                                    </Stack>
 
                                     <Divider /> 
                                     {lightCheckbox}
