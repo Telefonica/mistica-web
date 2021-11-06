@@ -264,6 +264,7 @@ export const MisticaIcons: React.FC = () => {
                                                     position: "relative",
                                                     width: "auto",
                                                     transformOrigin: 'center center',
+                                                    
                                                 }}
                                             >
                                                 <Stack space={16}>
@@ -271,7 +272,7 @@ export const MisticaIcons: React.FC = () => {
                                                         style={{
                                                             width: size,
                                                             margin: 'auto',
-                                                            fontSize: 0,
+                                                            fontSize: 0, 
                                                             transformOrigin: 'center',
                                                         }}
                                                     >
