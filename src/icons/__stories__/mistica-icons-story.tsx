@@ -170,7 +170,7 @@ export const MisticaIcons: React.FC = () => {
                             ) : (
                                 <Stack space={16}>
                                     <Inline space="between">
-                                    <input type="range" name="size" style={{width: "150%" }}  min={16} max={120} step={8} value={String(size)} onInput={(v) => setSize(Number(v) || 64)} onChange={(v) => setSize(Number(v) || 64)}/>
+                                    <input type="range" name="size" style={{width: "150%" }}  min={16} max={120} step={8} onChange={(v) => setSize(v.target.value)} value={size}/>
                                     <Text3>{size}</Text3>
                                     </Inline>
                                     <RadioGroup
@@ -228,7 +228,7 @@ export const MisticaIcons: React.FC = () => {
                                 margin: isTabletOrSmaller ? '177px auto 0 auto' : '0 auto',
                                 maxWidth: '100%',
                                 display: 'grid',
-                                gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+                                gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
                                 gridGap: '1px',
                                 alignItems: 'stretch',
                                 borderBottom: `1px solid ${colors.divider}`,
@@ -249,18 +249,21 @@ export const MisticaIcons: React.FC = () => {
                                             border: '0px solid #eee',
                                             width: '100%',
                                             textAlign: 'center',
-                                            height: size + 136,
+                                            height: "auto",
                                             margin: '0 auto',
                                             cursor: 'pointer',
                                         }}
                                     >
-                                        <Box padding={16}>
+                                        <Box padding={24}>
                                             <div
                                                 style={{
-                                                    transition: 'padding 0.25s ease-in-out',
+                                                    // transition: 'padding 0.25s ease-in-out',
                                                     padding: showNames
-                                                        ? '24px 8px 24px 8px'
-                                                        : '48px 8px 72px 8px',
+                                                        ? '16px 0 16px 0'
+                                                        : '32px 0 24px 0',
+                                                    position: "relative",
+                                                    width: "auto",
+                                                    transformOrigin: 'center center',
                                                 }}
                                             >
                                                 <Stack space={16}>
@@ -269,7 +272,7 @@ export const MisticaIcons: React.FC = () => {
                                                             width: size,
                                                             margin: 'auto',
                                                             fontSize: 0,
-                                                            transformOrigin: 'center center',
+                                                            transformOrigin: 'center',
                                                         }}
                                                     >
                                                     {showCircle ?
