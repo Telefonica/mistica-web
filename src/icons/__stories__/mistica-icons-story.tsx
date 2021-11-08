@@ -144,7 +144,7 @@ export const MisticaIcons: React.FC = () => {
                                 onChangeValue={setFilter}
                                 fullWidth
                             />
-                            
+
                             {isTabletOrSmaller ? (
                                 <Inline space={16} fullWidth>
                                     <IntegerField
@@ -170,49 +170,58 @@ export const MisticaIcons: React.FC = () => {
                             ) : (
                                 <Stack space={24}>
                                     <Stack space={8}>
-                                    <Text2>Size</Text2>
-                                    <Inline space="between">
-                                    <input type="range" name="size" style={{width: "196px" }}  min={16} max={104} step={4} onChange={(v) => setSize(v.target.value)} value={size}/>
-                                    <Text2 regular>{size}</Text2>
-                                    </Inline>
+                                        <Text2>Size</Text2>
+                                        <Inline space="between">
+                                            <input
+                                                type="range"
+                                                name="size"
+                                                style={{width: '196px'}}
+                                                min={16}
+                                                max={104}
+                                                step={4}
+                                                onChange={(v) => setSize(v.target.value)}
+                                                value={size}
+                                            />
+                                            <Text2 regular>{size}</Text2>
+                                        </Inline>
                                     </Stack>
                                     <Stack space={8}>
-                                    <Text2>Color</Text2>
-                                    <RadioGroup
-                                        name="colorPicker"
-                                        aria-labelledby="custom-render"
-                                        value={selectedColor}
-                                        onChange={setSelectedColor}
-                                    >
-                                        <Inline space="between">
-                                            {[
-                                                colors.neutralHigh,
-                                                colors.neutralMedium,
-                                                colors.brand,
-                                                colors.success,
-                                                colors.warning,
-                                                colors.error,
-                                            ].map((pickerColor) => (
-                                                <RadioButton
-                                                    value={selectedColor}
-                                                    render={() => (
-                                                        <Circle size={24} backgroundColor={pickerColor}>
-                                                            {(selectedColor === colors.neutralHigh ||
-                                                                selectedColor) && (
-                                                                <IconCheckRegular
-                                                                    size={16}
-                                                                    color={colors.inverse}
-                                                                />
-                                                            )}
-                                                        </Circle>
-                                                    )}
-                                                />
-                                            ))}
-                                        </Inline>
-                                    </RadioGroup>
+                                        <Text2>Color</Text2>
+                                        <RadioGroup
+                                            name="colorPicker"
+                                            aria-labelledby="custom-render"
+                                            value={selectedColor}
+                                            onChange={setSelectedColor}
+                                        >
+                                            <Inline space="between">
+                                                {[
+                                                    colors.neutralHigh,
+                                                    colors.neutralMedium,
+                                                    colors.brand,
+                                                    colors.success,
+                                                    colors.warning,
+                                                    colors.error,
+                                                ].map((pickerColor) => (
+                                                    <RadioButton
+                                                        value={selectedColor}
+                                                        render={() => (
+                                                            <Circle size={24} backgroundColor={pickerColor}>
+                                                                {(selectedColor === colors.neutralHigh ||
+                                                                    selectedColor) && (
+                                                                    <IconCheckRegular
+                                                                        size={16}
+                                                                        color={colors.inverse}
+                                                                    />
+                                                                )}
+                                                            </Circle>
+                                                        )}
+                                                    />
+                                                ))}
+                                            </Inline>
+                                        </RadioGroup>
                                     </Stack>
 
-                                    <Divider /> 
+                                    <Divider />
                                     {lightCheckbox}
                                     {regularCheckbox}
                                     {filledCheckbox}
@@ -255,77 +264,96 @@ export const MisticaIcons: React.FC = () => {
                                             border: '0px solid #eee',
                                             width: '100%',
                                             textAlign: 'center',
-                                            height: "auto",
+                                            height: 'auto',
                                             margin: '0 auto',
                                             cursor: 'pointer',
                                         }}
                                     >
-                                        <Box padding={24}>
-                                            <div
-                                                style={{
-                                                    // transition: 'padding 0.25s ease-in-out',
-                                                    padding: showNames
-                                                        ? '16px 0 16px 0'
-                                                        : '32px 0 24px 0',
-                                                    position: "relative",
-                                                    width: "auto",
-                                                    transformOrigin: 'center center',
-                                                    
-                                                }}
-                                            >
-                                                <Stack space={16}>
-                                                    <div
-                                                        style={{
-                                                            width: size,
-                                                            margin: 'auto',
-                                                            fontSize: 0, 
-                                                            transformOrigin: 'center',
-                                                        }}
-                                                    >
-                                                    {showCircle ?
-                                                        <Circle size={size + 16} backgroundColor={isInverse ? colors.inverse : selectedColor}>
-                                                            <div
-                                                        style={{
-                                                            width: size,
-                                                            background: iconBackgroundColor,
-                                                        }}
-                                                    >
-                                                        <Icon
-                                                            size={size}
-                                                            color={showCircle && isInverse ? selectedColor : colors.inverse}
-                                                            id="custom-render"
-                                                        />
-                                                        </div>
-                                                        </Circle>
-                                                        :
+                                        <span
+                                            role="button"
+                                            onClick={() => navigator.clipboard.writeText(Icon.name)}
+                                        >
+                                            <Box padding={24}>
+                                                <div
+                                                    style={{
+                                                        // transition: 'padding 0.25s ease-in-out',
+                                                        padding: showNames
+                                                            ? '16px 0 16px 0'
+                                                            : '32px 0 24px 0',
+                                                        position: 'relative',
+                                                        width: 'auto',
+                                                        transformOrigin: 'center center',
+                                                    }}
+                                                >
+                                                    <Stack space={16}>
                                                         <div
-                                                        style={{
-                                                            width: size,
-                                                            background: iconBackgroundColor,
-                                                        }}
-                                                    >
-                                                        <Icon
-                                                            size={size}
-                                                            color={isInverse ? colors.inverse : selectedColor}
-                                                            id="custom-render"
-                                                        />
+                                                            style={{
+                                                                width: size,
+                                                                margin: 'auto',
+                                                                fontSize: 0,
+                                                                transformOrigin: 'center',
+                                                            }}
+                                                        >
+                                                            {showCircle ? (
+                                                                <Circle
+                                                                    size={size + 16}
+                                                                    backgroundColor={
+                                                                        isInverse
+                                                                            ? colors.inverse
+                                                                            : selectedColor
+                                                                    }
+                                                                >
+                                                                    <div
+                                                                        style={{
+                                                                            width: size,
+                                                                            background: iconBackgroundColor,
+                                                                        }}
+                                                                    >
+                                                                        <Icon
+                                                                            size={size}
+                                                                            color={
+                                                                                showCircle && isInverse
+                                                                                    ? selectedColor
+                                                                                    : colors.inverse
+                                                                            }
+                                                                            id="custom-render"
+                                                                        />
+                                                                    </div>
+                                                                </Circle>
+                                                            ) : (
+                                                                <div
+                                                                    style={{
+                                                                        width: size,
+                                                                        background: iconBackgroundColor,
+                                                                    }}
+                                                                >
+                                                                    <Icon
+                                                                        size={size}
+                                                                        color={
+                                                                            isInverse
+                                                                                ? colors.inverse
+                                                                                : selectedColor
+                                                                        }
+                                                                        id="custom-render"
+                                                                    />
+                                                                </div>
+                                                            )}
                                                         </div>
-                                                    }
-                                                    </div>
-                                                    <FadeIn
-                                                        delay="0"
-                                                        duration="300"
-                                                        // meter fadein cuando se activa/desactiva el checkbox de name
-                                                    >
-                                                        {showNames && (
-                                                            <Text1 regular color={colors.textSecondary}>
-                                                                {breakName(Icon.name)}
-                                                            </Text1>
-                                                        )}
-                                                    </FadeIn>
-                                                </Stack>
-                                            </div>
-                                        </Box>
+                                                        <FadeIn
+                                                            delay="0"
+                                                            duration="300"
+                                                            // meter fadein cuando se activa/desactiva el checkbox de name
+                                                        >
+                                                            {showNames && (
+                                                                <Text1 regular color={colors.textSecondary}>
+                                                                    {breakName(Icon.name)}
+                                                                </Text1>
+                                                            )}
+                                                        </FadeIn>
+                                                    </Stack>
+                                                </div>
+                                            </Box>
+                                        </span>
                                     </div>
                                 ))}
                         </div>
