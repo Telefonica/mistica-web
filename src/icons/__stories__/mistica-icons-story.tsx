@@ -16,7 +16,9 @@ import {
     Text2,
     IconCheckRegular,
     FadeIn,
+    Snackbar,
     IconCallCenterUserSupportFilled,
+    Touchable,
 } from '../..';
 import IntegerField from '../../integer-field';
 import {kebabCase, upperFirst} from 'lodash';
@@ -49,6 +51,7 @@ export const MisticaIcons: React.FC = () => {
     const [showCircle, showCircleCheckbox] = useCheckbox('Circled', false);
     const [showIconBackground, showIconBackgroundCheckbox] = useCheckbox('Icon area', false);
     const [filter, setFilter] = React.useState('');
+    const [copied, setCopied] = React.useState(false);
     const [size, setSize] = React.useState(24);
     const {colors} = useTheme();
     const [selectedColor, setSelectedColor] = React.useState(colors.neutralHigh);
@@ -107,7 +110,6 @@ export const MisticaIcons: React.FC = () => {
 
     const backgroundColor = isInverse ? selectedColor : colors.background;
     const iconBackgroundColor = showIconBackground ? '#FF13FA32' : 'none';
-    // const circle = showCircle ? <Circle size={40} backgroundColor={colors.neutralHigh}></Circle> : "none"; — Opción para meter el icono en un circulo
     const {isTabletOrSmaller, isTablet} = useScreenSize();
 
     return (
@@ -154,7 +156,7 @@ export const MisticaIcons: React.FC = () => {
                                         onChangeValue={(v) => setSize(Number(v) || 0)}
                                     />
                                     <Stack space="between">
-                                        <Inline space="between">
+                                        <Inline space={0}>
                                             <div style={{width: '160px'}}>{lightCheckbox}</div>
                                             <div style={{width: '160px'}}>{regularCheckbox}</div>
                                             <div style={{width: '160px'}}>{filledCheckbox}</div>
@@ -269,20 +271,18 @@ export const MisticaIcons: React.FC = () => {
                                             cursor: 'pointer',
                                         }}
                                     >
-                                        <span
+                                        <Touchable
                                             role="button"
-                                            onClick={() => navigator.clipboard.writeText(Icon.name)}
+                                            onPress={() => navigator.clipboard.writeText(Icon.name)}
                                         >
                                             <Box padding={24}>
                                                 <div
                                                     style={{
-                                                        // transition: 'padding 0.25s ease-in-out',
                                                         padding: showNames
                                                             ? '16px 0 16px 0'
-                                                            : '32px 0 24px 0',
+                                                            : '40px 0 24px 0',
                                                         position: 'relative',
                                                         width: 'auto',
-                                                        transformOrigin: 'center center',
                                                     }}
                                                 >
                                                     <Stack space={16}>
@@ -291,7 +291,7 @@ export const MisticaIcons: React.FC = () => {
                                                                 width: size,
                                                                 margin: 'auto',
                                                                 fontSize: 0,
-                                                                transformOrigin: 'center',
+                                                                transformOrigin: 'center center',
                                                             }}
                                                         >
                                                             {showCircle ? (
@@ -353,7 +353,7 @@ export const MisticaIcons: React.FC = () => {
                                                     </Stack>
                                                 </div>
                                             </Box>
-                                        </span>
+                                        </Touchable>
                                     </div>
                                 ))}
                         </div>
