@@ -38,3 +38,14 @@ test('Custom card size', async () => {
     const image = await highlightedCard.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test('Custom card size inside wrapper', async () => {
+    await openStoryPage({
+        id: 'components-cards-highlightedcard--custom-card-size-inside-wrapper',
+        device: 'DESKTOP',
+    });
+
+    const highlightedCard = await screen.findByTestId('highlighted-card');
+    const image = await highlightedCard.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
