@@ -170,20 +170,20 @@ export const CustomCardSizeInsideWrapper: StoryComponent = () => {
     return (
         <div style={{display: 'flex', background: '#eee'}} data-testid="highlighted-card">
             <CardWrapper>
-                <HighlightedCard title="Title" description="Simple" />
+                <HighlightedCard title="Title1" description="Simple" />
             </CardWrapper>
 
             <CardWrapper>
-                <HighlightedCard title="Title" description="Dismisseable" onClose={() => {}} />
+                <HighlightedCard title="Title2" description="Dismisseable" onClose={() => {}} />
             </CardWrapper>
 
             <CardWrapper>
-                <HighlightedCard title="Title" description="Touchable card" onPress={() => {}} />
+                <HighlightedCard title="Title3" description="Touchable card" onPress={() => {}} />
             </CardWrapper>
 
             <CardWrapper>
                 <HighlightedCard
-                    title="Title"
+                    title="Title4"
                     description="Touchable and dismisseable"
                     onPress={() => {}}
                     onClose={() => {}}
@@ -192,7 +192,7 @@ export const CustomCardSizeInsideWrapper: StoryComponent = () => {
 
             <CardWrapper>
                 <HighlightedCard
-                    title="Title"
+                    title="Title5"
                     description="Super long description. Super long description. Super long description. Super long description."
                     onClose={() => {}}
                 />
