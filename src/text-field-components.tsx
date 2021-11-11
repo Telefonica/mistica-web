@@ -3,29 +3,31 @@ import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
+import {Text1} from './text';
 
 export type InputState = 'focused' | 'filled' | 'default';
 
 export const DEFAULT_WIDTH = 328;
 
-const LABEL_LEFT_POSITION = 12;
-const LABEL_SCALE = 0.75;
+export const LABEL_LEFT_POSITION = 12;
+
+// to scale to the correct text-preset when the transition applies
+export const LABEL_SCALE_DESKTOP = parseFloat('0.78'); // Text1/Text3 = 14/18 (desktop)
+export const LABEL_SCALE_MOBILE = parseFloat('0.75'); // Text1/Text3 = 12/16 (mobile)
 
 const useLabelStyles = createUseStyles((theme) => ({
     labelContainer: {
-        lineHeight: '1em',
         position: 'absolute',
         pointerEvents: 'none',
         left: LABEL_LEFT_POSITION,
         top: 0,
-        fontSize: 16,
-        transformOrigin: 0,
-        height: 16,
+        transformOrigin: '0 0',
+        height: 24,
         display: 'flex',
         flexDirection: 'row',
-        transform: ({isShrinked}) =>
-            isShrinked ? `translateY(8px) scale(${LABEL_SCALE})` : 'translateY(20px) scale(1)',
-
+        transform: 'translateY(18px) scale(1)',
+        fontSize: 18, // cannot use Text3/Text1 preset comps because we want to apply a scale transition (zoom-out)
+        lineHeight: '24px',
         color: ({inputState, error, disabled}) => {
             if (inputState === 'default' && disabled) {
                 return theme.colors.textDisabled;
@@ -38,10 +40,11 @@ const useLabelStyles = createUseStyles((theme) => ({
             }
             return theme.colors.textSecondary;
         },
-        width: ({isShrinked}) =>
-            isShrinked
-                ? `calc((100% - ${LABEL_LEFT_POSITION * 2}px) / ${LABEL_SCALE})`
-                : `calc(100% - ${LABEL_LEFT_POSITION * 2}px)`,
+        [theme.mq.tabletOrSmaller]: {
+            fontSize: 16,
+            transform: 'translateY(16px) scale(1)',
+        },
+        width: `calc(100% - ${LABEL_LEFT_POSITION * 2}px)`,
     },
     labelText: {
         '-webkit-line-clamp': 1,
@@ -51,12 +54,18 @@ const useLabelStyles = createUseStyles((theme) => ({
         overflow: 'hidden',
         boxOrient: 'vertical',
         flexShrink: 1,
-        // this is needed because at 1em, font descendants are cutted when using overflow hidden
-        // setting a higher height is not an option because it shows the next line
-        lineHeight: '1.2em',
-        height: '1.2em',
-        position: 'relative',
-        top: '-0.1em',
+    },
+    shrinked: {
+        transform: `translateY(8px) scale(${LABEL_SCALE_DESKTOP})`,
+        height: 20 / LABEL_SCALE_DESKTOP, // Text1 line-height is the expected final line-height.
+        lineHeight: `${20 / LABEL_SCALE_DESKTOP}px`,
+        width: `calc(100% - ${LABEL_LEFT_POSITION * 2}px) / ${LABEL_SCALE_DESKTOP}`,
+        [theme.mq.tabletOrSmaller]: {
+            transform: `translateY(8px) scale(${LABEL_SCALE_MOBILE})`,
+            height: 16 / LABEL_SCALE_MOBILE,
+            lineHeight: `${16 / LABEL_SCALE_MOBILE}px`,
+            width: `calc(100% - ${LABEL_LEFT_POSITION * 2}px) / ${LABEL_SCALE_MOBILE}`,
+        },
     },
 }));
 
@@ -101,7 +110,7 @@ export const Label: React.FC<LabelProps> = ({
 
     return (
         <label
-            className={classes.labelContainer}
+            className={classnames(classes.labelContainer, {[classes.shrinked]: isShrinked})}
             htmlFor={forId}
             style={{...style, transition: transitionStyle}}
         >
@@ -111,33 +120,21 @@ export const Label: React.FC<LabelProps> = ({
     );
 };
 
-const useHelperTextStyles = createUseStyles((theme) => ({
+const useHelperTextStyles = createUseStyles(() => ({
     helperContainer: {
-        lineHeight: 1.4,
         paddingLeft: 14,
         paddingRight: 16,
-        '& p': {
+        '& div': {
             margin: 0,
             marginTop: 4,
-            fontSize: 12,
             flexGrow: 1,
         },
         display: 'flex',
     },
     leftText: {
-        color: ({error, isInverse}) => {
-            if (isInverse) {
-                return theme.colors.textPrimaryInverse;
-            }
-            if (error) {
-                return theme.colors.error;
-            }
-            return theme.colors.textSecondary;
-        },
         textAlign: 'left',
     },
     rightText: {
-        color: ({isInverse}) => (isInverse ? theme.colors.textPrimaryInverse : theme.colors.textSecondary),
         textAlign: 'right',
     },
 }));
@@ -151,12 +148,27 @@ type HelperTextProps = {
 
 export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, error}) => {
     const isInverse = useIsInverseVariant();
-    const classes = useHelperTextStyles({error, isInverse});
+    const {colors} = useTheme();
+    const classes = useHelperTextStyles();
+    const leftColor = isInverse ? colors.textPrimaryInverse : error ? colors.error : colors.textSecondary;
+    const rightColor = isInverse ? colors.textPrimaryInverse : colors.textSecondary;
 
     return (
         <div className={classes.helperContainer}>
-            {leftText && <p className={classes.leftText}>{leftText}</p>}
-            {rightText && <p className={classes.rightText}>{rightText}</p>}
+            {leftText && (
+                <div className={classes.leftText}>
+                    <Text1 color={leftColor} regular as="p">
+                        {leftText}
+                    </Text1>
+                </div>
+            )}
+            {rightText && (
+                <div className={classes.rightText}>
+                    <Text1 color={rightColor} regular as="p">
+                        {rightText}
+                    </Text1>
+                </div>
+            )}
         </div>
     );
 };
@@ -177,10 +189,12 @@ const useFieldContainerStyles = createUseStyles((theme) => ({
         overflow: 'hidden',
         border: `1px solid ${theme.colors.border}`,
         borderRadius: 4,
-        height: ({multiline}) => (multiline ? 152 : 56),
+        height: ({multiline}) => (multiline ? 152 : 60),
+        [theme.mq.tabletOrSmaller]: {
+            height: ({multiline}) => (multiline ? 152 : 56),
+        },
         display: 'flex',
         position: 'relative',
-        lineHeight: '16px',
         backgroundColor: ({disabled}) =>
             disabled ? theme.colors.backgroundAlternative : theme.colors.backgroundContainer,
         cursor: ({disabled}) => (disabled ? 'not-allowed' : 'initial'),
