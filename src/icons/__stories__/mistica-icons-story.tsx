@@ -172,7 +172,7 @@ export const MisticaIcons: React.FC = () => {
                             ) : (
                                 <Stack space={24}>
                                     <Stack space={8}>
-                                        <Text2>Size</Text2>
+                                        <Text2 regular>Size</Text2>
                                         <Inline space="between">
                                             <input
                                                 type="range"
@@ -188,7 +188,7 @@ export const MisticaIcons: React.FC = () => {
                                         </Inline>
                                     </Stack>
                                     <Stack space={8}>
-                                        <Text2>Color</Text2>
+                                        <Text2 regular>Color</Text2>
                                         <RadioGroup
                                             name="colorPicker"
                                             aria-labelledby="custom-render"
@@ -209,7 +209,7 @@ export const MisticaIcons: React.FC = () => {
                                                         render={() => (
                                                             <Circle size={24} backgroundColor={pickerColor}>
                                                                 {(selectedColor === colors.neutralHigh ||
-                                                                    selectedColor) && (
+                                                                    setSelectedColor) && (
                                                                     <IconCheckRegular
                                                                         size={16}
                                                                         color={colors.inverse}
