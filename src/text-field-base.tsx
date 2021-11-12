@@ -1,8 +1,16 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {Label, HelperText, FieldContainer} from './text-field-components';
+import {
+    Label,
+    HelperText,
+    FieldContainer,
+    LABEL_LEFT_POSITION,
+    LABEL_SCALE_MOBILE,
+    LABEL_SCALE_DESKTOP,
+} from './text-field-components';
+import {Text3} from './text';
 import {isIos, isRunningAcceptanceTest, isChrome, isFirefox} from './utils/platform';
-import {useAriaId, useTheme} from './hooks';
+import {useAriaId, useTheme, useScreenSize} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
 
@@ -110,7 +118,8 @@ const commonInputStyles = (theme: Theme) => ({
     background: 'none',
     border: 0,
     outline: 0,
-    fontSize: 16,
+    fontSize: 'inherit',
+    lineHeight: 'inherit',
     paddingRight: ({endIcon}: {endIcon: boolean}) => (endIcon ? 0 : 16),
     paddingLeft: ({prefix, startIcon}: {prefix: boolean; startIcon: boolean}) => {
         if (prefix) {
@@ -156,23 +165,30 @@ const useStyles = createUseStyles((theme) => ({
         flexDirection: 'column',
         minWidth: 96,
     },
-    border: {
-        border: `1px solid ${theme.colors.border}`,
-        borderRadius: 4,
-        height: ({multiline}) => (multiline ? 152 : 56),
-        display: 'flex',
-        position: 'relative',
+    fullWidth: {
+        width: '100%',
+        display: 'inline-flex',
+        alignSelf: ({prefix}) => (prefix ? 'baseline' : 'initial'),
+        '& > div': {
+            width: '100%',
+            display: 'inline-flex',
+        },
     },
     textArea: {
         resize: 'none',
-        marginTop: ({hasLabel}) => (hasLabel ? 24 : 16),
-        paddingBottom: 8,
-        lineHeight: '24px',
+        marginTop: ({hasLabel}) => (hasLabel ? 28 : 16),
+        [theme.mq.tabletOrSmaller]: {
+            marginTop: ({hasLabel}) => (hasLabel ? 24 : 16),
+        },
+        paddingBottom: '8px',
         ...commonInputStyles(theme),
     },
     input: {
         position: 'relative',
-        paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
+        paddingTop: ({hasLabel}) => (hasLabel ? 28 : 16),
+        [theme.mq.tabletOrSmaller]: {
+            paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
+        },
         paddingBottom: ({hasLabel}) => (hasLabel ? 8 : 16),
         height: '100%',
         ...commonInputStyles(theme),
@@ -234,6 +250,7 @@ const useStyles = createUseStyles((theme) => ({
         paddingRight: 16,
         display: 'flex',
         alignItems: 'center',
+        alignSelf: 'center',
         opacity: ({disabled}) => (disabled ? 0.3 : 1),
     },
     startIcon: {
@@ -247,13 +264,14 @@ const useStyles = createUseStyles((theme) => ({
         opacity: ({disabled}) => (disabled ? 0.3 : 1),
     },
     prefix: {
-        paddingTop: ({hasLabel}) => (hasLabel ? 25 : 16),
+        alignSelf: 'baseline',
+        paddingTop: ({hasLabel}) => (hasLabel ? 28 : 16),
+        [theme.mq.tabletOrSmaller]: {
+            paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
+        },
         paddingBottom: ({hasLabel}) => (hasLabel ? 8 : 16),
         paddingLeft: 12,
         paddingRight: 16,
-        display: 'flex',
-        alignItems: 'center',
-        color: ({disabled}) => (disabled ? theme.colors.textDisabled : theme.colors.textSecondary),
         opacity: ({inputState}) => (inputState === 'default' ? 0 : 1),
         transition: 'opacity 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms',
     },
@@ -296,7 +314,8 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
         );
-        const {platformOverrides} = useTheme();
+        const {platformOverrides, colors} = useTheme();
+        const {isTabletOrSmaller} = useScreenSize();
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
         const hasLabel = !!label || !rest.required;
 
@@ -359,15 +378,19 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             ...inputProps,
         };
 
-        let labelStyle = {};
         const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
-        if (startIcon) {
-            labelStyle = isShrinked
-                ? {left: 48, right: 0, width: 'auto'}
-                : {left: 48, right: 12, width: 'auto'};
-        } else if (endIcon && !isShrinked) {
-            labelStyle = {paddingRight: 36};
-        }
+        const scale = isShrinked ? (isTabletOrSmaller ? LABEL_SCALE_MOBILE : LABEL_SCALE_DESKTOP) : 1;
+        const labelStyle = {
+            left: startIcon ? 48 : LABEL_LEFT_POSITION,
+            // shrinking means applying a scale transformation, so width will be proportionally reduced.
+            // Let's keep the original width.
+            width: `calc(((100% - ${
+                LABEL_LEFT_POSITION + (startIcon ? 48 : LABEL_LEFT_POSITION)
+            }px)) / ${scale})`,
+            paddingRight: endIcon && !isShrinked ? 36 : 0,
+        };
+
+        const prefixColor = rest.disabled ? colors.textDisabled : colors.textSecondary;
 
         return (
             <FieldContainer
@@ -384,38 +407,49 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                 fieldRef={fieldRef}
             >
                 {startIcon && <div className={classes.startIcon}>{startIcon}</div>}
-                {prefix && <div className={classes.prefix}>{prefix}</div>}
-                {React.createElement(inputComponent || defaultInputElement, {
-                    ...inputRefProps,
-                    ...props,
-                    id,
-                    className: multiline ? classes.textArea : classes.input,
-                    onFocus: (event: React.FocusEvent<HTMLInputElement>) => {
-                        setInputState('focused');
-                        onFocus?.(event);
-                    },
-                    onBlur: (event: React.FocusEvent<HTMLInputElement>) => {
-                        if (event.target.value.length > 0) {
-                            setInputState('filled');
-                        } else {
-                            setInputState('default');
-                        }
-                        onBlur?.(event);
-                    },
-                    onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-                        // Workaround for systems where maxlength prop is applied onBlur (https://caniuse.com/#feat=maxlength)
-                        if (maxLength === undefined || event.target.value.length <= maxLength) {
-                            setCharacterCount(event.target.value.length);
-                            props.onChange?.(event);
-                        } else {
-                            event.stopPropagation();
-                            event.preventDefault();
-                        }
-                    },
-                    defaultValue,
-                    value,
-                    ...(error && {'aria-invalid': true}),
-                })}
+
+                {prefix && (
+                    <div className={classes.prefix}>
+                        <Text3 color={prefixColor} regular>
+                            {prefix}
+                        </Text3>
+                    </div>
+                )}
+                <div className={classes.fullWidth}>
+                    <Text3 as="div" regular>
+                        {React.createElement(inputComponent || defaultInputElement, {
+                            ...inputRefProps,
+                            ...props,
+                            id,
+                            className: multiline ? classes.textArea : classes.input,
+                            onFocus: (event: React.FocusEvent<HTMLInputElement>) => {
+                                setInputState('focused');
+                                onFocus?.(event);
+                            },
+                            onBlur: (event: React.FocusEvent<HTMLInputElement>) => {
+                                if (event.target.value.length > 0) {
+                                    setInputState('filled');
+                                } else {
+                                    setInputState('default');
+                                }
+                                onBlur?.(event);
+                            },
+                            onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+                                // Workaround for systems where maxlength prop is applied onBlur (https://caniuse.com/#feat=maxlength)
+                                if (maxLength === undefined || event.target.value.length <= maxLength) {
+                                    setCharacterCount(event.target.value.length);
+                                    props.onChange?.(event);
+                                } else {
+                                    event.stopPropagation();
+                                    event.preventDefault();
+                                }
+                            },
+                            defaultValue,
+                            value,
+                            ...(error && {'aria-invalid': true}),
+                        })}
+                    </Text3>
+                </div>
                 {label && (
                     <Label
                         style={labelStyle}
@@ -438,7 +472,6 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
 
 const useSuggestionsStyles = createUseStyles(() => ({
     menuItem: {
-        lineHeight: 1.5,
         padding: '6px 16px',
         height: 48,
         transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
@@ -527,7 +560,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 [classes.menuItemSelected]: isHighlighted,
                             })}
                         >
-                            {suggestion}
+                            <Text3 regular>{suggestion}</Text3>
                         </div>
                     )}
                     renderSuggestionsContainer={(options) => (
