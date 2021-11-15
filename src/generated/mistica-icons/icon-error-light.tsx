@@ -12,7 +12,7 @@ type Props = {
 };
 
 const IconErrorLight: React.FC<Props> = ({color, size = 24}) => {
-    const {skinName, colors} = useTheme();
+    const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
 

@@ -5,5 +5,5 @@ declare type Props = {
   color?: string,
   size?: string | number,
 };
-declare var IconBushLight: React.ComponentType<Props>;
-declare export default typeof IconBushLight;
+declare var IconBoltonsLight: React.ComponentType<Props>;
+declare export default typeof IconBoltonsLight;

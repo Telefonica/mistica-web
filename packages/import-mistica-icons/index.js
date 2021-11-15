@@ -148,8 +148,10 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
         green(componentName)
     );
 
+    const hasVariants = availableIcons.length > 1;
+
     const getVariants = () => {
-        if (availableIcons.length === 1) {
+        if (!hasVariants) {
             return `return ${getIconJsx(availableIcons[0][1])}`;
         }
         let result = '';
@@ -177,7 +179,7 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
     };
 
     const ${componentName}: React.FC<Props> = ({color, size = 24}) => {
-        const {skinName, colors} = useTheme();
+        const {${hasVariants ? 'skinName, ' : ''}colors} = useTheme();
         const isInverse = useIsInverseVariant();
         const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
 
