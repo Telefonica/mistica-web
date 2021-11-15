@@ -69,7 +69,7 @@ const getSvgIconsInfo = () => {
         /** @type {Map<name, filename>} */
         const icons = new Map();
         filenames.forEach((filename) => {
-            icons.set(basename(filename, '.svg'), filename);
+            icons.set('icon-' + basename(filename, '.svg'), filename);
         });
 
         result[skin] = icons;
@@ -90,36 +90,6 @@ const getAllIconNames = (svgIconsInfo) => {
     return uniq(allIconNames).sort();
 };
 
-// const createIconComponentSource = async (svgSource, componentName) => {
-//     const generated = svgr.sync(
-//         svgSource,
-//         {
-//             ref: false,
-//             titleProp: false,
-//             typescript: true,
-//             template: require('./template'),
-//             plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx'],
-//         },
-//         {componentName}
-//     );
-
-//     // get icon size, needed to set the viewBox
-//     const svgSize = generated.match(/(width|height)={(\d+)}/)[2];
-
-//     return (
-//         generated
-//             // set svg props
-//             .replace(
-//                 /<svg .*?>/,
-//                 `<svg width={size} height={size} viewBox="0 0 ${svgSize} ${svgSize}" role="presentation">`
-//             )
-//             // set fill color
-//             .replace(/fill="#?\w+"/g, 'fill={fillColor}')
-//             // add component type, for some reason it gets stripped from the template
-//             .replace(/\s*=\s*\({\s*color,/m, ': React.FC<Props> = ({color,')
-//     );
-// };
-
 const format = async (src) =>
     prettier.format(src, {...(await prettier.resolveConfig('.')), parser: 'babel-ts'});
 
@@ -137,10 +107,17 @@ const getIconJsx = (svgFilename) => {
     });
     // this generates a complete component, but we only need the JSX
     const matches = jsx.match(/<svg(.*)<\/svg>/);
-    return '<svg' + matches[1] + '</svg>';
+    const svg = '<svg' + matches[1] + '</svg>';
+    const svgSize = svg.match(/(width|height)={(\d+)}/)[2];
+    return svg
+        .replace(
+            /<svg .*?>/,
+            `<svg width={size} height={size} viewBox="0 0 ${svgSize} ${svgSize}" role="presentation">`
+        )
+        .replace(/fill="#?\w+"/g, 'fill={fillColor}');
 };
 
-/** lower number means higher priority */
+/** lower number means higher priority (more generic) */
 const SKIN_PRIORITY = {
     telefonica: 1,
     o2: 2,
@@ -149,14 +126,14 @@ const SKIN_PRIORITY = {
 
 /**
  * @param {string} name
+ * @param {string} componentName
  * @param {svgIconsInfo} svgIconsInfo
  */
-const createIconComponentSource = async (name, svgIconsInfo) => {
-    // sort skins by priority, lower priority first
+const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
+    // sort skins by priority, lower priority (more specific) first
     const skins = Object.keys(svgIconsInfo).sort(
         (a, b) => (SKIN_PRIORITY[b] ?? 100) - (SKIN_PRIORITY[a] ?? 100)
     );
-    console.log(skins);
 
     const availableIcons = [];
     for (const skin of skins) {
@@ -164,15 +141,26 @@ const createIconComponentSource = async (name, svgIconsInfo) => {
             availableIcons.push([skin, svgIconsInfo[skin].get(name)]);
         }
     }
-    console.log(availableIcons);
 
-    const componentName = pascalCase(name);
+    console.log(
+        yellow(basename(name)),
+        `[${availableIcons.map(([skin]) => skin).join(', ')}] =>`,
+        green(componentName)
+    );
 
     const getVariants = () => {
         if (availableIcons.length === 1) {
             return `return ${getIconJsx(availableIcons[0][1])}`;
         }
-        for (const i = 0; i < availableIcons.length - 1; i++) {}
+        let result = '';
+        for (let i = 0; i < availableIcons.length; i++) {
+            const [skin, filename] = availableIcons[i];
+            // using a match because we want "o2" to match with "O2" and "O2-classic"
+            const ifStr = i < availableIcons.length - 1 ? `if (skinName.match(/^${skin}/i))` : '';
+            const elseStr = i > 0 ? 'else' : '';
+            result += `${elseStr} ${ifStr} {return ${getIconJsx(filename)}}`;
+        }
+        return result;
     };
 
     const source = `/*
@@ -183,9 +171,16 @@ const createIconComponentSource = async (name, svgIconsInfo) => {
     import {useTheme} from '../../hooks';
     import {useIsInverseVariant} from '../../theme-variant-context';
 
+    type Props = {
+        color?: string;
+        size?: string | number;
+    };
 
-    const ${componentName} = ({fillColor, size}) => {
-        const {skinName} = useTheme();
+    const ${componentName}: React.FC<Props> = ({color, size = 24}) => {
+        const {skinName, colors} = useTheme();
+        const isInverse = useIsInverseVariant();
+        const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
+
         ${getVariants()}
     };
 
@@ -196,73 +191,40 @@ const createIconComponentSource = async (name, svgIconsInfo) => {
 };
 
 const main = async () => {
-    // checkoutMisticaIconsRepo();
+    checkoutMisticaIconsRepo();
 
     const svgIconsInfo = getSvgIconsInfo();
     const allIconNames = getAllIconNames(svgIconsInfo);
 
-    console.log(svgIconsInfo.telefonica.get('wallet-filled'));
-
-    console.log(getIconJsx(svgIconsInfo.telefonica.get('wallet-filled')));
-
     rimraf.sync(PATH_OUTPUT);
     mkdirp.sync(PATH_OUTPUT);
 
+    /** @type Array<[string, string]> */
+    const components = [];
+
     for (const name of allIconNames) {
-        console.log(await createIconComponentSource(name, svgIconsInfo));
-        return;
+        const componentName = pascalCase(name);
+        const importName = kebabCase(componentName);
+        const source = await createIconComponentSource(name, componentName, svgIconsInfo);
+        const filename = `${importName}.tsx`;
+        components.push([componentName, importName]);
+        fs.writeFileSync(join(PATH_OUTPUT, filename), source);
     }
 
-    // const doNotEditComment = `/*
-    //     * This file was autogenerated. Don't edit this file!
-    //     *
-    //     * To update, execute "yarn start" inside "import-mistica-icons"
-    //     */
-    // `;
+    const index = components
+        .sort((a, b) => (a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1))
+        .map(
+            ([componentName, importName]) =>
+                `export {default as ${componentName}} from './generated/mistica-icons/${importName}';`
+        )
+        .join('\n');
 
-    // const componentHead = `
-    //     ${doNotEditComment}
+    fs.writeFileSync(PATH_OUTPUT_INDEX_FILENAME, index, 'utf8');
 
-    //     import * as React from 'react';
-    //     import {useTheme} from '../../hooks';
-    //     import {useIsInverseVariant} from '../../theme-variant-context';
-
-    //     type Props = {
-    //         color?: string;
-    //         size?: string | number;
-    //     };
-
-    // `;
-
-    // const components = [];
-
-    // for (const svgFilename of svgFilenames) {
-    //     const svgCode = fs.readFileSync(svgFilename, 'utf-8');
-    //     const componentName = 'Icon' + pascalCase(basename(svgFilename, '.svg'));
-
-    //     console.log(yellow(basename(svgFilename)), '=>', green(componentName));
-    //     const src = componentHead + (await createIconComponentSource(svgCode, componentName));
-    //     const formatted = await format(src);
-    //     const importName = kebabCase(componentName);
-    //     const filename = `${importName}.tsx`;
-    //     components.push([componentName, importName]);
-
-    //     fs.writeFileSync(join(PATH_OUTPUT, filename), formatted);
-    // }
-
-    // const index = components
-    //     .sort((a, b) => (a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1))
-    //     .map(
-    //         ([componentName, importName]) =>
-    //             `export {default as ${componentName}} from './generated/mistica-icons/${importName}';`
-    //     )
-    //     .join('\n');
-
-    // fs.writeFileSync(PATH_OUTPUT_INDEX_FILENAME, index, 'utf8');
-
-    // console.log();
-    // console.log('Done! Copy exports in ', yellow(PATH_OUTPUT_INDEX_FILENAME), ' to src/index.tsx');
-    // console.log();
+    console.log();
+    console.log(`Done! (${allIconNames.length} components).`);
+    console.log(`Copy exports in `, yellow(PATH_OUTPUT_INDEX_FILENAME), ' to src/index.tsx');
+    console.log();
 };
 
 main();

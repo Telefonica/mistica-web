@@ -1,9 +1,12 @@
 import {openStoryPage, screen} from '../test-utils';
 
-test('Icons catalog', async () => {
+const SKINS = ['Movistar', 'O2', 'Blau'] as const;
+
+test.each(SKINS)('Icons catalog for %s', async ([skin]) => {
     const page = await openStoryPage({
         id: 'icons-mistica-icons--catalog',
         device: 'DESKTOP',
+        skin: skin as typeof SKINS[number],
     });
 
     const lightCheckbox = await screen.findByLabelText('Light');
