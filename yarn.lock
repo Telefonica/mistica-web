@@ -5300,10 +5300,10 @@
   resolved "https://registry.yarnpkg.com/@tef-novum/webview-bridge/-/webview-bridge-3.0.0.tgz#60995bf3a5297cb079a601f97ede940e09701cb7"
   integrity sha512-pnIA8tLtwV2fJpJL6M2Vo8Li95UEWAHjYUx12b0U6yAPzyGznOJkdjqxlZOLORz5AUGhWBNNCUdXVGKli5PN/A==
 
-"@telefonica/acceptance-testing@^2.0.0-beta0":
-  version "2.0.0-beta0"
-  resolved "https://registry.yarnpkg.com/@telefonica/acceptance-testing/-/acceptance-testing-2.0.0-beta0.tgz#15337d92aad2709d29b128be7c0adeccec4f6adb"
-  integrity sha512-MCYo/fU89mLofSz2R8sOFrbEcDLyQvBktpH/Y9xS5TkqecVPWGPyIjAhgctVZs8LdZPhjhOJn/qjE9WlAXl09w==
+"@telefonica/acceptance-testing@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@telefonica/acceptance-testing/-/acceptance-testing-2.0.0.tgz#026fd900e75b5d2b2fc550b38b3c04ccaaec18b0"
+  integrity sha512-iYmnjr4+vHKegF99Aa0JfWasfUkTtamRGrQQlnPRHf6q+T4uoGpFQIZG3ExAvk4dGnOAG1lWWc7NUgy+Tf2ocQ==
   dependencies:
     "@types/jest-image-snapshot" "^4.3.1"
     find-root "^1.1.0"
