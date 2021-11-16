@@ -13,18 +13,18 @@ type Props = {
     size?: string | number;
 };
 
-const IconBoltonsRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconAddBoltonLight: React.FC<Props> = ({color, size = 24}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
             <path
-                d="M17 3H7l-5 9 5 9h10l5-9-5-9zm-.818 16.533H7.818L3.632 12l4.182-7.533h8.368L20.368 12l-4.186 7.533zM16.06 12c0 .404-.317.734-.706.734h-2.649v2.755c0 .404-.316.734-.705.734-.389 0-.705-.33-.705-.734v-2.755h-2.65c-.388 0-.705-.33-.705-.734 0-.404.317-.734.706-.734h2.649V8.511c0-.404.316-.734.705-.734.389 0 .705.33.705.734v2.755h2.65c.388 0 .705.33.705.734z"
+                d="M18.39 19.016a.723.723 0 01-.708.735.724.724 0 01-.71-.735c0-.406.319-.736.71-.736.39 0 .709.33.709.736zM17 3H7l-5 9.021L7 21h9.79a.362.362 0 00.355-.368.362.362 0 00-.354-.367H7.409L2.82 12.02l4.59-8.286h9.177l4.591 8.286-2.559 4.605c-.1.174-.04.4.132.504a.347.347 0 00.486-.136L22 12.02 17 3zm-5 13.438a.362.362 0 00.355-.368v-3.314h3.195a.362.362 0 00.355-.367.362.362 0 00-.355-.368h-3.195V8.708A.362.362 0 0012 8.34a.362.362 0 00-.355.368v3.313H8.45a.362.362 0 00-.355.368c0 .203.16.367.355.367h3.195v3.314c0 .203.16.368.355.368z"
                 fill={fillColor}
             />
         </svg>
     );
 };
 
-export default IconBoltonsRegular;
+export default IconAddBoltonLight;
