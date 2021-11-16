@@ -175,6 +175,9 @@ export {default as IconAddMoreRegular} from './generated/mistica-icons/icon-add-
 export {default as IconAdnFilled} from './generated/mistica-icons/icon-adn-filled';
 export {default as IconAdnLight} from './generated/mistica-icons/icon-adn-light';
 export {default as IconAdnRegular} from './generated/mistica-icons/icon-adn-regular';
+export {default as IconAlarmClockFilled} from './generated/mistica-icons/icon-alarm-clock-filled';
+export {default as IconAlarmClockLight} from './generated/mistica-icons/icon-alarm-clock-light';
+export {default as IconAlarmClockRegular} from './generated/mistica-icons/icon-alarm-clock-regular';
 export {default as IconAlarmLightCrossFilled} from './generated/mistica-icons/icon-alarm-light-cross-filled';
 export {default as IconAlarmLightCrossLight} from './generated/mistica-icons/icon-alarm-light-cross-light';
 export {default as IconAlarmLightCrossRegular} from './generated/mistica-icons/icon-alarm-light-cross-regular';

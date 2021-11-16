@@ -183,6 +183,9 @@ declare export { default as IconAddMoreRegular } from "./generated/mistica-icons
 declare export { default as IconAdnFilled } from "./generated/mistica-icons/icon-adn-filled";
 declare export { default as IconAdnLight } from "./generated/mistica-icons/icon-adn-light";
 declare export { default as IconAdnRegular } from "./generated/mistica-icons/icon-adn-regular";
+declare export { default as IconAlarmClockFilled } from "./generated/mistica-icons/icon-alarm-clock-filled";
+declare export { default as IconAlarmClockLight } from "./generated/mistica-icons/icon-alarm-clock-light";
+declare export { default as IconAlarmClockRegular } from "./generated/mistica-icons/icon-alarm-clock-regular";
 declare export { default as IconAlarmLightCrossFilled } from "./generated/mistica-icons/icon-alarm-light-cross-filled";
 declare export { default as IconAlarmLightCrossLight } from "./generated/mistica-icons/icon-alarm-light-cross-light";
 declare export { default as IconAlarmLightCrossRegular } from "./generated/mistica-icons/icon-alarm-light-cross-regular";

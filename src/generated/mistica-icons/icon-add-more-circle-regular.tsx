@@ -34,6 +34,15 @@ const IconAddMoreCircleRegular: React.FC<Props> = ({color, size = 24}) => {
                 </g>
             </svg>
         );
+    } else if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+                <path
+                    d="M12 2c5.516 0 10 4.484 10 10s-4.484 10-10 10S2 17.516 2 12 6.484 2 12 2zm0 1.424c-4.728 0-8.576 3.848-8.576 8.576 0 4.728 3.848 8.576 8.576 8.576 4.728 0 8.576-3.848 8.576-8.576 0-4.728-3.848-8.576-8.576-8.576zm-.002 1.8a.722.722 0 01.716.715v5.346l5.34.006a.722.722 0 01.715.715c0 .198-.079.38-.206.507a.726.726 0 01-.506.206H12.71v5.346a.702.702 0 01-.713.713.722.722 0 01-.715-.716v-5.346H5.937a.722.722 0 01-.716-.715.722.722 0 01.716-.716h5.346V5.94a.722.722 0 01.715-.715z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
     } else {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
