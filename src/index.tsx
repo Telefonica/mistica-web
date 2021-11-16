@@ -162,6 +162,9 @@ export {default as IconAcademicRegular} from './generated/mistica-icons/icon-aca
 export {default as IconAccesibilityFilled} from './generated/mistica-icons/icon-accesibility-filled';
 export {default as IconAccesibilityLight} from './generated/mistica-icons/icon-accesibility-light';
 export {default as IconAccesibilityRegular} from './generated/mistica-icons/icon-accesibility-regular';
+export {default as IconAddBoltonFilled} from './generated/mistica-icons/icon-add-bolton-filled';
+export {default as IconAddBoltonLight} from './generated/mistica-icons/icon-add-bolton-light';
+export {default as IconAddBoltonRegular} from './generated/mistica-icons/icon-add-bolton-regular';
 export {default as IconAddMoreCircleFilled} from './generated/mistica-icons/icon-add-more-circle-filled';
 export {default as IconAddMoreCircleLight} from './generated/mistica-icons/icon-add-more-circle-light';
 export {default as IconAddMoreCircleRegular} from './generated/mistica-icons/icon-add-more-circle-regular';
@@ -287,9 +290,6 @@ export {default as IconBlogRegular} from './generated/mistica-icons/icon-blog-re
 export {default as IconBoatFilled} from './generated/mistica-icons/icon-boat-filled';
 export {default as IconBoatLight} from './generated/mistica-icons/icon-boat-light';
 export {default as IconBoatRegular} from './generated/mistica-icons/icon-boat-regular';
-export {default as IconBoltonsFilled} from './generated/mistica-icons/icon-boltons-filled';
-export {default as IconBoltonsLight} from './generated/mistica-icons/icon-boltons-light';
-export {default as IconBoltonsRegular} from './generated/mistica-icons/icon-boltons-regular';
 export {default as IconBookmarkFilled} from './generated/mistica-icons/icon-bookmark-filled';
 export {default as IconBookmarkLight} from './generated/mistica-icons/icon-bookmark-light';
 export {default as IconBookmarkRegular} from './generated/mistica-icons/icon-bookmark-regular';
