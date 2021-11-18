@@ -162,7 +162,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
             {icon && <Box paddingBottom={24}>{icon}</Box>}
             {title && (
                 <Box paddingBottom={16}>
-                    <Text5 as="h2" light>
+                    <Text5 as="h2">
                         {title}
                     </Text5>
                 </Box>
