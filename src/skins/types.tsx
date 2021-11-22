@@ -124,4 +124,19 @@ export type Colors = {
     textNavigationSearchBarText: string;
     textAppBar: string;
     textAppBarSelected: string;
+
+    // TAGS
+    tagBackgroundSuccess: string;
+    tagBackgroundWarning: string;
+    tagBackgroundError: string;
+    tagBackgroundPromo: string;
+    tagBackgroundActive: string;
+    tagBackgroundInactive: string;
+
+    textTagSuccess: string;
+    textTagWarning: string;
+    textTagError: string;
+    textTagPromo: string;
+    textTagActive: string;
+    textTagInactive: string;
 };

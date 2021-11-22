@@ -3,34 +3,58 @@ import {O2_CLASSIC_SKIN} from './constants';
 
 import type {GetSkin} from './types';
 
+// https://github.com/Telefonica/mistica-design/blob/production/tokens/classicO2-constants.json
+// https://github.com/Telefonica/mistica-design/blob/production/tokens/classicO2-skin-schema.json
+
 export const palette = {
     o2Blue: '#032B5A',
-    o2BlueDark: '#04264E',
-    o2BlueLight60: '#6C8BAF',
+    o2Blue55: '#04264E',
+    o2Blue45: '#6C8BAF',
+    o2Blue10: '#E6EAEE',
+
     o2SkyBlue: '#0090D0',
-    o2SkyBlueDark: '#057DB2',
+    o2SkyBlue55: '#057DB2',
+
     o2SkyBlueLight: '#65B4E4',
     o2SkyBlueLight50: '#80C7E7',
+    o2SkyBlueLight45: '#80C7E7',
     o2SkyBlueLight30: '#D0E8F6',
+    o2SkyBlueLight20: '#D0E8F6',
     o2SkyBlueLight10: '#E9F5FB',
+
     o2DeepSkyBlue: '#7FD4FE',
+
     o2Gem: '#01B7B4',
     o2GemDark: '#099E9B',
     o2GemLight30: '#99E2E1',
+
     o2Yellow: '#FFCC00',
+
     o2Green: '#84B50F',
-    o2GreenLight: '#DAE8B7',
+    o2Green10: '#F3F8E7',
+    o2Green75: '#4D621D',
+
     pepper: '#FF374A',
-    pepperDark: '#D73241',
-    pepperLight30: '#FFC3C8',
+    pepper70: '#B22634',
+    pepper55: '#D73241',
+    pepper20: '#FFC3C8',
+    pepper10: '#FFEBED',
+
     orange: '#FF7F41',
-    orangeLight: '#FFD6C2',
+    orange10: '#FFF2EC',
+    orange80: '#73391D',
+
     coral: '#FF706E',
+
     pink: '#EB3C7D',
+    pink10: '#FDEBF2',
+    pink60: '#BC3064',
+
     o2GradientFirst: '#102550',
     o2GradientSecond: '#0B4680',
     o2GradientThird: '#0D71AD',
     o2GradientFourth: '#449ED0',
+
     grey1: '#F6F6F6',
     grey2: '#EEEEEE',
     grey3: '#DDDDDD',
@@ -38,6 +62,7 @@ export const palette = {
     grey5: '#757575',
     grey6: '#000033',
     white: '#FFFFFF',
+
     // specific for dark mode:
     darkModeBlack: '#191919',
     darkModeGrey: '#242424',
@@ -70,21 +95,21 @@ export const getO2ClassicSkin: GetSkin = () => {
 
             // BUTTONS
             buttonDangerBackground: palette.pepper,
-            buttonDangerBackgroundDisabled: palette.pepperLight30,
-            buttonDangerBackgroundSelected: palette.pepperDark,
-            buttonDangerBackgroundHover: palette.pepperDark,
+            buttonDangerBackgroundDisabled: palette.pepper20,
+            buttonDangerBackgroundSelected: palette.pepper55,
+            buttonDangerBackgroundHover: palette.pepper55,
             buttonLinkBackgroundSelected: palette.o2SkyBlueLight10,
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
             buttonPrimaryBackground: palette.o2SkyBlue,
             buttonPrimaryBackgroundDisabled: palette.o2SkyBlueLight50,
             buttonPrimaryBackgroundDisabledInverse: palette.o2SkyBlueLight50,
             buttonPrimaryBackgroundInverse: palette.white,
-            buttonPrimaryBackgroundSelected: palette.o2SkyBlueDark,
-            buttonPrimaryBackgroundHover: palette.o2SkyBlueDark,
+            buttonPrimaryBackgroundSelected: palette.o2SkyBlue55,
+            buttonPrimaryBackgroundHover: palette.o2SkyBlue55,
             buttonPrimaryBackgroundSelectedInverse: palette.o2SkyBlueLight50,
             buttonSecondaryBackground: palette.o2SkyBlue,
             buttonSecondaryBackgroundDisabled: palette.o2SkyBlueLight50,
-            buttonSecondaryBackgroundSelected: palette.o2SkyBlueDark,
+            buttonSecondaryBackgroundSelected: palette.o2SkyBlue55,
             buttonSecondaryBorderDisabledInverse: palette.o2SkyBlueLight50,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.o2SkyBlueLight50,
@@ -96,14 +121,14 @@ export const getO2ClassicSkin: GetSkin = () => {
             textButtonPrimaryInverseSelected: palette.o2SkyBlue,
             textButtonSecondary: palette.o2SkyBlue,
             textButtonSecondaryDisabled: palette.o2SkyBlueLight50,
-            textButtonSecondarySelected: palette.o2SkyBlueDark,
+            textButtonSecondarySelected: palette.o2SkyBlue55,
             textButtonSecondaryInverse: palette.white,
             textButtonSecondaryInverseDisabled: palette.o2SkyBlueLight50,
             textButtonSecondaryInverseSelected: palette.white,
             textLink: palette.o2SkyBlue,
             textLinkInverse: palette.white,
             textLinkDanger: palette.pepper,
-            textLinkDangerDisabled: palette.pepperLight30,
+            textLinkDangerDisabled: palette.pepper20,
             textLinkDisabled: palette.o2SkyBlueLight,
             textLinkSnackbar: palette.o2SkyBlueLight,
 
@@ -126,7 +151,7 @@ export const getO2ClassicSkin: GetSkin = () => {
             navigationBarDivider: palette.o2Blue,
 
             // FEEDBACKS
-            badge: palette.pepperDark,
+            badge: palette.pepper55,
             feedbackErrorBackground: palette.pepper,
             feedbackInfoBackground: palette.grey6,
 
@@ -154,11 +179,26 @@ export const getO2ClassicSkin: GetSkin = () => {
 
             // BARS TEXTS
             textNavigationBarPrimary: palette.white,
-            textNavigationBarSecondary: palette.o2BlueLight60,
-            textNavigationSearchBarHint: palette.o2BlueLight60, // iOS only
+            textNavigationBarSecondary: palette.o2Blue45,
+            textNavigationSearchBarHint: palette.o2Blue45, // iOS only
             textNavigationSearchBarText: palette.white, // iOS only
             textAppBar: palette.grey4,
             textAppBarSelected: palette.o2Blue,
+
+            // TAGS
+            tagBackgroundSuccess: palette.o2Green10,
+            tagBackgroundWarning: palette.orange10,
+            tagBackgroundError: palette.pepper10,
+            tagBackgroundPromo: palette.pink10,
+            tagBackgroundActive: palette.o2Blue10,
+            tagBackgroundInactive: palette.grey1,
+
+            textTagSuccess: palette.o2Green75,
+            textTagWarning: palette.orange80,
+            textTagError: palette.pepper70,
+            textTagPromo: palette.pink60,
+            textTagActive: palette.o2Blue,
+            textTagInactive: palette.grey5,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
@@ -182,11 +222,11 @@ export const getO2ClassicSkin: GetSkin = () => {
             buttonPrimaryBackgroundDisabled: applyAlpha(palette.white, 0.05),
             buttonPrimaryBackgroundDisabledInverse: applyAlpha(palette.white, 0.05),
             buttonPrimaryBackgroundInverse: palette.o2SkyBlue,
-            buttonPrimaryBackgroundSelectedInverse: palette.o2SkyBlueDark,
+            buttonPrimaryBackgroundSelectedInverse: palette.o2SkyBlue55,
             buttonSecondaryBackgroundDisabled: applyAlpha(palette.white, 0.05),
             buttonSecondaryBorderDisabledInverse: applyAlpha(palette.white, 0.05),
             buttonSecondaryBorderInverse: palette.o2SkyBlue,
-            buttonSecondaryBorderSelectedInverse: palette.o2SkyBlueDark,
+            buttonSecondaryBorderSelectedInverse: palette.o2SkyBlue55,
             textButtonPrimary: palette.grey2,
             textButtonPrimaryDisabled: palette.grey5,
             textButtonPrimaryInverse: palette.grey2,
@@ -234,6 +274,21 @@ export const getO2ClassicSkin: GetSkin = () => {
             textNavigationSearchBarText: palette.grey2,
             textAppBar: palette.grey5,
             textAppBarSelected: palette.grey2,
+
+            // TAGS
+            tagBackgroundSuccess: palette.o2Green10,
+            tagBackgroundWarning: palette.orange10,
+            tagBackgroundError: palette.pepper10,
+            tagBackgroundPromo: palette.pink10,
+            tagBackgroundActive: palette.o2Blue10,
+            tagBackgroundInactive: palette.grey1,
+
+            textTagSuccess: palette.o2Green75,
+            textTagWarning: palette.orange80,
+            textTagError: palette.pepper70,
+            textTagPromo: palette.pink60,
+            textTagActive: palette.o2Blue,
+            textTagInactive: palette.grey5,
         },
     };
 };

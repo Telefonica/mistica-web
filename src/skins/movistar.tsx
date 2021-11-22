@@ -3,39 +3,56 @@ import {MOVISTAR_SKIN} from './constants';
 
 import type {GetSkin, Skin} from './types';
 
+// https://github.com/Telefonica/mistica-design/blob/production/tokens/movistar-skin-schema.json
+// https://github.com/Telefonica/mistica-design/blob/production/tokens/movistar-constants.json
+
 export const palette = {
     movistarBlue: '#019DF4',
-    movistarBlueDark: '#008EDD',
-    movistarBlueLight50: '#80CEF9',
-    movistarBlueLight30: '#B3E1FB',
-    movistarBlueLight10: '#E6F5FD',
+    movistarBlue55: '#008EDD',
+    movistarBlue30: '#80CEF9',
+    movistarBlue20: '#B3E1FB',
+    movistarBlue10: '#E6F5FD',
+
     movistarGreen: '#5CB615',
-    movistarGreenDark: '#499110',
-    movistarGreenLight50: '#ADDA8A',
-    movistarGreenLight30: '#CEE9B9',
+    movistarGreen10: '#EFF8E8',
+    movistarGreen30: '#ADDA8A',
+    movistarGreen60: '#499110',
+    movistarGreen70: '#407F0F',
+
     pepper: '#FF374A',
-    pepperDark: '#D73241',
-    pepperLight30: '#FFC3C8',
-    egg: '#F28D15',
-    eggLight: '#F8D2B3',
-    pink: '#E63780',
+    pepper10: '#FFEBED',
+    pepper20: '#FFC3C8',
+    pepper55: '#D73241',
+    pepper70: '#B22634',
+
     purple: '#A13EA1',
+    purple10: '#F6ECF6',
+    purple70: '#712B71',
+
+    egg: '#F28D15',
+    egg10: '#FEF4E8',
+    egg80: '#6D3F09',
+
+    pink: '#E63780',
+
+    white: '#FFFFFF',
     grey1: '#F6F6F6',
     grey2: '#EEEEEE',
     grey3: '#DDDDDD',
     grey4: '#999999',
     grey5: '#86888C',
     grey6: '#313235',
-    white: '#FFFFFF',
+
     movistarProminentBlue: '#0B2739',
     movistarProminentBlueDark: '#081F2D',
     movistarProminentBlueLight20: '#CED3D7',
     movistarProminentBlueLight50: '#85939C',
     movistarProminentBlueLight70: '#546874',
+
     // specific for dark mode:
     darkModeBlack: '#191919',
     darkModeGrey: '#242424',
-    darkModeMovistarBlueDark: '#4C7389',
+    darkModemovistarBlue55: '#4C7389',
 } as const;
 
 export const getMovistarSkin: GetSkin = (variant) => {
@@ -49,7 +66,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             backgroundBrand: palette.movistarBlue,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
             backgroundSkeleton: palette.grey1,
-            backgroundSkeletonInverse: palette.movistarBlueDark,
+            backgroundSkeletonInverse: palette.movistarBlue55,
             navigationBarBackground: palette.movistarBlue,
             backgroundAlternative: palette.grey1,
             backgroundFeedbackBottom: palette.movistarBlue,
@@ -64,72 +81,72 @@ export const getMovistarSkin: GetSkin = (variant) => {
 
             // BUTTONS
             buttonDangerBackground: palette.pepper,
-            buttonDangerBackgroundDisabled: palette.pepperLight30,
-            buttonDangerBackgroundSelected: palette.pepperDark,
-            buttonDangerBackgroundHover: palette.pepperDark, // web only
+            buttonDangerBackgroundDisabled: palette.pepper20,
+            buttonDangerBackgroundSelected: palette.pepper55,
+            buttonDangerBackgroundHover: palette.pepper55, // web only
 
-            buttonLinkBackgroundSelected: palette.movistarBlueLight10,
+            buttonLinkBackgroundSelected: palette.movistarBlue20,
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
 
             buttonPrimaryBackground: palette.movistarGreen,
-            buttonPrimaryBackgroundDisabled: palette.movistarGreenLight50,
-            buttonPrimaryBackgroundDisabledInverse: palette.movistarBlueLight50,
+            buttonPrimaryBackgroundDisabled: palette.movistarGreen30,
+            buttonPrimaryBackgroundDisabledInverse: palette.movistarBlue10,
             buttonPrimaryBackgroundInverse: palette.white,
-            buttonPrimaryBackgroundSelected: palette.movistarGreenDark,
-            buttonPrimaryBackgroundHover: palette.movistarGreenDark, // web only
-            buttonPrimaryBackgroundSelectedInverse: palette.movistarBlueLight50,
+            buttonPrimaryBackgroundSelected: palette.movistarGreen60,
+            buttonPrimaryBackgroundHover: palette.movistarGreen60, // web only
+            buttonPrimaryBackgroundSelectedInverse: palette.movistarBlue10,
 
             buttonSecondaryBackground: palette.movistarGreen,
-            buttonSecondaryBackgroundDisabled: palette.movistarGreenLight50,
-            buttonSecondaryBackgroundSelected: palette.movistarGreenDark,
-            buttonSecondaryBorderDisabledInverse: palette.movistarBlueLight50,
+            buttonSecondaryBackgroundDisabled: palette.movistarGreen30,
+            buttonSecondaryBackgroundSelected: palette.movistarGreen60,
+            buttonSecondaryBorderDisabledInverse: palette.movistarBlue10,
             buttonSecondaryBorderInverse: palette.white,
-            buttonSecondaryBorderSelectedInverse: palette.movistarBlueLight50,
+            buttonSecondaryBorderSelectedInverse: palette.movistarBlue10,
 
             textButtonPrimary: palette.white,
             textButtonPrimaryDisabled: palette.white,
             textButtonPrimaryInverse: palette.movistarBlue,
-            textButtonPrimaryInverseDisabled: palette.movistarBlueLight30,
+            textButtonPrimaryInverseDisabled: palette.movistarBlue20,
             textButtonPrimaryInverseSelected: palette.movistarBlue,
 
             textButtonSecondary: palette.movistarGreen,
-            textButtonSecondaryDisabled: palette.movistarGreenLight50,
-            textButtonSecondarySelected: palette.movistarGreenDark,
+            textButtonSecondaryDisabled: palette.movistarGreen30,
+            textButtonSecondarySelected: palette.movistarGreen60,
             textButtonSecondaryInverse: palette.white,
-            textButtonSecondaryInverseDisabled: palette.movistarBlueLight50,
+            textButtonSecondaryInverseDisabled: palette.movistarBlue10,
             textButtonSecondaryInverseSelected: palette.white,
 
             textLink: palette.movistarBlue,
             textLinkInverse: palette.white,
             textLinkDanger: palette.pepper,
-            textLinkDangerDisabled: palette.pepperLight30,
-            textLinkDisabled: palette.movistarBlueLight50,
-            textLinkSnackbar: palette.movistarBlueLight50,
+            textLinkDangerDisabled: palette.pepper20,
+            textLinkDisabled: palette.movistarBlue10,
+            textLinkSnackbar: palette.movistarBlue10,
 
             // CONTROLS
             control: palette.grey3,
             controlActivated: palette.movistarBlue,
             controlError: palette.pepper,
-            loadingBar: palette.movistarBlueLight50,
-            loadingBarBackground: palette.movistarBlueDark,
+            loadingBar: palette.movistarBlue10,
+            loadingBarBackground: palette.movistarBlue55,
 
             toggleAndroidInactive: palette.grey2, // web only
-            toggleAndroidBackgroundActive: palette.movistarBlueLight30, // web only
+            toggleAndroidBackgroundActive: palette.movistarBlue20, // web only
             iosControlKnob: palette.white, // web only
 
             // DIVIDERS
             divider: palette.grey2,
-            dividerInverse: palette.movistarBlueDark,
+            dividerInverse: palette.movistarBlue55,
             navigationBarDivider: palette.movistarBlue,
 
             // FEEDBACKS
-            badge: palette.pepperDark,
+            badge: palette.pepper55,
             feedbackErrorBackground: palette.pepper,
             feedbackInfoBackground: palette.grey6,
 
             // GLOBAL
             brand: palette.movistarBlue,
-            brandDark: palette.movistarBlueDark,
+            brandDark: palette.movistarBlue55,
             inverse: palette.white,
             neutralHigh: palette.grey6,
             neutralMedium: palette.grey5,
@@ -151,11 +168,25 @@ export const getMovistarSkin: GetSkin = (variant) => {
 
             // BARS TEXTS
             textNavigationBarPrimary: palette.white,
-            textNavigationBarSecondary: palette.movistarBlueLight30,
-            textNavigationSearchBarHint: palette.movistarBlueLight30, // iOS
+            textNavigationBarSecondary: palette.movistarBlue20,
+            textNavigationSearchBarHint: palette.movistarBlue20, // iOS
             textNavigationSearchBarText: palette.white, // iOS
             textAppBar: palette.grey4,
             textAppBarSelected: palette.movistarBlue,
+
+            // TAGS
+            tagBackgroundSuccess: palette.movistarGreen10,
+            tagBackgroundWarning: palette.egg10,
+            tagBackgroundError: palette.pepper10,
+            tagBackgroundPromo: palette.purple10,
+            tagBackgroundActive: palette.movistarBlue10,
+            tagBackgroundInactive: palette.grey1,
+            textTagSuccess: palette.movistarGreen70,
+            textTagWarning: palette.egg80,
+            textTagError: palette.pepper70,
+            textTagPromo: palette.purple70,
+            textTagActive: palette.movistarBlue,
+            textTagInactive: palette.grey5,
         },
         darkModeColors: {
             brand: palette.movistarBlue, // this color needs to be in darkModeColors to revert the promient variant
@@ -179,15 +210,15 @@ export const getMovistarSkin: GetSkin = (variant) => {
             buttonPrimaryBackgroundDisabled: applyAlpha(palette.white, 0.05),
             buttonPrimaryBackgroundDisabledInverse: applyAlpha(palette.white, 0.05),
             buttonPrimaryBackgroundInverse: palette.movistarGreen,
-            buttonPrimaryBackgroundSelected: palette.movistarGreenDark,
-            buttonPrimaryBackgroundHover: palette.movistarGreenDark, // web only
-            buttonPrimaryBackgroundSelectedInverse: palette.movistarGreenDark,
+            buttonPrimaryBackgroundSelected: palette.movistarGreen60,
+            buttonPrimaryBackgroundHover: palette.movistarGreen60, // web only
+            buttonPrimaryBackgroundSelectedInverse: palette.movistarGreen60,
             buttonSecondaryBackground: palette.movistarGreen,
             buttonSecondaryBackgroundDisabled: applyAlpha(palette.white, 0.05),
-            buttonSecondaryBackgroundSelected: palette.movistarGreenDark,
+            buttonSecondaryBackgroundSelected: palette.movistarGreen60,
             buttonSecondaryBorderDisabledInverse: applyAlpha(palette.white, 0.05),
             buttonSecondaryBorderInverse: palette.movistarGreen,
-            buttonSecondaryBorderSelectedInverse: palette.movistarGreenDark,
+            buttonSecondaryBorderSelectedInverse: palette.movistarGreen60,
             textButtonPrimary: palette.grey2,
             textButtonPrimaryDisabled: palette.grey5,
             textButtonPrimaryInverse: palette.grey2,
@@ -207,7 +238,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             loadingBar: palette.movistarBlue,
             loadingBarBackground: applyAlpha(palette.white, 0.05),
             toggleAndroidInactive: palette.grey4, // web only
-            toggleAndroidBackgroundActive: palette.movistarBlueLight30, // web only
+            toggleAndroidBackgroundActive: palette.movistarBlue20, // web only
             iosControlKnob: palette.grey2, // web only
             divider: applyAlpha(palette.white, 0.05),
             dividerInverse: applyAlpha(palette.white, 0.05),
@@ -222,13 +253,27 @@ export const getMovistarSkin: GetSkin = (variant) => {
             textSecondary: palette.grey4,
             textSecondaryInverse: palette.grey4,
             textDisabled: palette.grey5,
-            textAmount: palette.movistarBlueLight50,
+            textAmount: palette.movistarBlue10,
             textNavigationBarPrimary: palette.grey2,
             textNavigationBarSecondary: palette.grey4,
             textNavigationSearchBarHint: palette.grey4, // iOS
             textNavigationSearchBarText: palette.grey2, // iOS
             textAppBar: palette.grey5,
             textAppBarSelected: palette.grey2,
+
+            // TAGS
+            tagBackgroundSuccess: palette.movistarGreen10,
+            tagBackgroundWarning: palette.egg10,
+            tagBackgroundError: palette.pepper10,
+            tagBackgroundPromo: palette.purple10,
+            tagBackgroundActive: palette.movistarBlue10,
+            tagBackgroundInactive: palette.grey1,
+            textTagSuccess: palette.movistarGreen70,
+            textTagWarning: palette.egg80,
+            textTagError: palette.pepper70,
+            textTagPromo: palette.purple70,
+            textTagActive: palette.movistarBlue,
+            textTagInactive: palette.grey5,
         },
     };
 
