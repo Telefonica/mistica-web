@@ -3,6 +3,9 @@ import {VIVO_SKIN} from './constants';
 
 import type {GetSkin} from './types';
 
+// https://github.com/Telefonica/mistica-design/blob/production/tokens/vivo-constants.json
+// https://github.com/Telefonica/mistica-design/blob/production/tokens/vivo-skin-schema.json
+
 export const palette = {
     vivoPurple: '#660099',
     vivoPurpleDark: '#461E5F',
@@ -11,17 +14,26 @@ export const palette = {
     vivoPurpleLight50: '#B280CC',
     vivoPurpleLight20: '#E0CCEB',
     vivoPurpleLight10: '#EFE5F4',
+
     vivoGreen: '#99CC33',
     vivoGreenDark: '#33A14A',
     vivoGreenLight40: '#D6EAAD',
+    vivoGreenLight10: '#EDF8E8',
+
     vivoBlue: '#00ABDB',
+
     orange: '#FF9900',
-    orangeDark: '#FA6324',
-    orangeLight: '#FFD699',
+    orangeDark: '#A42E20',
+    orangeLight10: '#FFEFE1',
+
     pink: '#EB3D7D',
+
     pepper: '#CC1F59',
     pepperDark: '#B71D63',
+    pepperDark80: '#922154',
     pepperLight30: '#F7B1CB',
+    pepperLight10: '#FCE4EF',
+
     grey1: '#F6F6F6',
     grey2: '#EEEEEE',
     grey3: '#DDDDDD',
@@ -29,6 +41,7 @@ export const palette = {
     grey5: '#666666',
     grey6: '#000000',
     white: '#FFFFFF',
+
     // specific for dark mode:
     darkModeBlack: '#191919',
     darkModeGrey: '#242424',
@@ -150,6 +163,21 @@ export const getVivoSkin: GetSkin = () => {
             textNavigationSearchBarText: palette.white, // iOS only
             textAppBar: palette.grey4,
             textAppBarSelected: palette.vivoPurple,
+
+            // TAGS
+            tagBackgroundSuccess: palette.vivoGreenLight10,
+            tagBackgroundWarning: palette.orangeLight10,
+            tagBackgroundError: palette.pepperLight10,
+            tagBackgroundPromo: palette.vivoPurpleLight10,
+            tagBackgroundActive: palette.vivoPurpleLight10,
+            tagBackgroundInactive: palette.grey1,
+
+            textTagSuccess: palette.vivoGreenDark,
+            textTagWarning: palette.orangeDark,
+            textTagError: palette.pepperDark80,
+            textTagPromo: palette.vivoPurple,
+            textTagActive: palette.vivoPurple,
+            textTagInactive: palette.grey5,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
@@ -229,6 +257,21 @@ export const getVivoSkin: GetSkin = () => {
             textNavigationSearchBarText: palette.grey2,
             textAppBar: palette.grey5,
             textAppBarSelected: palette.grey2,
+
+            // TAGS
+            tagBackgroundSuccess: palette.vivoGreenLight10,
+            tagBackgroundWarning: palette.orangeLight10,
+            tagBackgroundError: palette.pepperLight10,
+            tagBackgroundPromo: palette.vivoPurpleLight10,
+            tagBackgroundActive: palette.vivoPurpleLight10,
+            tagBackgroundInactive: palette.grey1,
+
+            textTagSuccess: palette.vivoGreenDark,
+            textTagWarning: palette.orangeDark,
+            textTagError: palette.pepperDark80,
+            textTagPromo: palette.vivoPurple,
+            textTagActive: palette.vivoPurple,
+            textTagInactive: palette.grey5,
         },
     };
 };
