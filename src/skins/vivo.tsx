@@ -171,6 +171,7 @@ export const getVivoSkin: GetSkin = () => {
             tagBackgroundPromo: palette.vivoPurpleLight10,
             tagBackgroundActive: palette.vivoPurpleLight10,
             tagBackgroundInactive: palette.grey1,
+            tagBackgroundInverse: palette.white,
 
             textTagSuccess: palette.vivoGreenDark,
             textTagWarning: palette.orangeDark,
@@ -265,6 +266,7 @@ export const getVivoSkin: GetSkin = () => {
             tagBackgroundPromo: palette.vivoPurpleLight10,
             tagBackgroundActive: palette.vivoPurpleLight10,
             tagBackgroundInactive: palette.grey1,
+            tagBackgroundInverse: palette.white,
 
             textTagSuccess: palette.vivoGreenDark,
             textTagWarning: palette.orangeDark,

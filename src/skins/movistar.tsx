@@ -181,6 +181,8 @@ export const getMovistarSkin: GetSkin = (variant) => {
             tagBackgroundPromo: palette.purple10,
             tagBackgroundActive: palette.movistarBlue10,
             tagBackgroundInactive: palette.grey1,
+            tagBackgroundInverse: palette.white,
+
             textTagSuccess: palette.movistarGreen70,
             textTagWarning: palette.egg80,
             textTagError: palette.pepper70,
@@ -268,6 +270,8 @@ export const getMovistarSkin: GetSkin = (variant) => {
             tagBackgroundPromo: palette.purple10,
             tagBackgroundActive: palette.movistarBlue10,
             tagBackgroundInactive: palette.grey1,
+            tagBackgroundInverse: palette.white,
+
             textTagSuccess: palette.movistarGreen70,
             textTagWarning: palette.egg80,
             textTagError: palette.pepper70,
