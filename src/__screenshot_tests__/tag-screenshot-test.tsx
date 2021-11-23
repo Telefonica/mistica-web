@@ -29,7 +29,7 @@ test('Tags short label', async () => {
     await openStoryPage({
         id: 'components-others-tag--default',
         device: 'DESKTOP',
-        args: {label: '1&#37;'},
+        args: {label: '1'},
     });
 
     const tag = await screen.findByTestId('tags');
