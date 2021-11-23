@@ -50,7 +50,7 @@ const CardContent: React.FC<CardContentProps> = ({
             return null;
         }
         if (typeof headline === 'string') {
-            return <Tag color={theme.colors.promo}>{headline}</Tag>;
+            return <Tag type="promo">{headline}</Tag>;
         }
         return headline;
     };

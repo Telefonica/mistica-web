@@ -21,22 +21,17 @@ export default {
 };
 
 export const Default: StoryComponent = () => {
-    const {colors} = useTheme();
-    const tagColors = {
-        promo: colors.promo,
-        brand: colors.brand,
-        success: colors.success,
-        warning: colors.warning,
-        error: colors.error,
+    const tagTypes = {
+        promo: 'promo',
+        active: 'active',
+        inactive: 'inactive',
+        success: 'success',
+        warning: 'warning',
+        error: 'error',
     };
-    const tagColorNames = Object.keys(tagColors);
+    const tagColorNames = Object.keys(tagTypes);
     const [headline, headlineTextField] = useTextField('headline', 'priority');
-    const [headlineColorName, headlineColorNameSelect] = useSelect(
-        'headline color',
-        tagColorNames[0],
-        tagColorNames
-    );
-    const headlineColor = (tagColors as any)[headlineColorName];
+    const [headlineType, headlineTypeSelect] = useSelect('headline color', tagColorNames[0], tagColorNames);
     const [pretitle, pretitleTextField] = useTextField('pretitle', 'Some pretitle');
     const [title, titleTextField] = useTextField('title', 'Some title');
     const [description, descriptionTextField] = useTextField(
@@ -64,7 +59,7 @@ export const Default: StoryComponent = () => {
         <>
             <Stack space={16}>
                 {headlineTextField}
-                {headline && headlineColorNameSelect}
+                {headline && headlineTypeSelect}
                 {pretitleTextField}
                 {titleTextField}
                 {descriptionTextField}
@@ -73,7 +68,7 @@ export const Default: StoryComponent = () => {
             <div data-testid="media-card">
                 <StorySection title="MediaCard">
                     <MediaCard
-                        headline={headline && <Tag color={headlineColor}>{headline}</Tag>}
+                        headline={headline && <Tag type={headlineType as never}>{headline}</Tag>}
                         pretitle={pretitle}
                         title={title}
                         description={description}
@@ -92,10 +87,9 @@ export const Default: StoryComponent = () => {
 Default.storyName = 'MediaCard';
 
 export const WithBody: StoryComponent = () => {
-    const {colors} = useTheme();
     return (
         <MediaCard
-            headline={<Tag color={colors.promo}>headline</Tag>}
+            headline={<Tag type="promo">headline</Tag>}
             pretitle="pretitle"
             title="title"
             description="description"
@@ -125,7 +119,6 @@ const useCardGroupStyles = createUseStyles(() => ({
 
 export const Group: StoryComponent = () => {
     const classes = useCardGroupStyles();
-    const {colors} = useTheme();
     return (
         <ResponsiveLayout>
             <Stack space={16}>
@@ -135,7 +128,7 @@ export const Group: StoryComponent = () => {
                 </Text2>
                 <Inline space={16} className={classes.group}>
                     <MediaCard
-                        headline={<Tag color={colors.promo}>headline</Tag>}
+                        headline={<Tag type="promo">headline</Tag>}
                         pretitle="pretitle"
                         title="title"
                         description="description"
@@ -182,7 +175,6 @@ const useCarouselStyles = createUseStyles((theme) => ({
 
 export const Carousel: StoryComponent = () => {
     const {isTabletOrSmaller} = useScreenSize();
-    const {colors} = useTheme();
     const classes = useCarouselStyles();
     return (
         <Box paddingY={16}>
@@ -195,7 +187,7 @@ export const Carousel: StoryComponent = () => {
                         {Array.from({length: 5}).flatMap((_, idx) => [
                             <MediaCard
                                 key={`${idx}-full`}
-                                headline={<Tag color={colors.promo}>headline</Tag>}
+                                headline={<Tag type="promo">headline</Tag>}
                                 pretitle="pretitle"
                                 title="title"
                                 description="description"

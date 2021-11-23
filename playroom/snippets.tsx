@@ -570,7 +570,7 @@ const cardSnippets: Array<Snippet> = [
         name: 'MediaCard',
         code: `
         <MediaCard
-            headline={<Tag color={colors.promo}>headline</Tag>}
+            headline={<Tag type="promo">headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             description="Description"
@@ -592,7 +592,7 @@ const cardSnippets: Array<Snippet> = [
         name: 'DataCard',
         code: `
         <DataCard
-            headline={<Tag color={colors.promo}>headline</Tag>}
+            headline={<Tag type="promo">headline</Tag>}
             title="Title"
             subtitle="Subtitle"
             description="Description"
@@ -622,6 +622,14 @@ const titlesSnippets: Array<Snippet> = [
         code: '<SectionTitle right={<TextLink onPress={() => {}}>Link</TextLink>}>Some title</SectionTitle>',
     },
 ].map((snippet) => ({...snippet, group: 'Titles'}));
+
+const tagSnippets: Array<Snippet> = ['promo', 'active', 'inactive', 'success', 'warning', 'error'].map(
+    (type) => ({
+        name: `Tag (${type})`,
+        group: 'Tags',
+        code: `<Tag type="${type}" Icon={IconStarRegular}>${type}</Tag>`,
+    })
+);
 
 const layoutSnippets: Array<Snippet> = [
     {
@@ -1075,11 +1083,6 @@ export default [
     ...tabsSnippets,
     ...cardSnippets,
     ...exampleScreens,
-    ...['promo', 'brand', 'success', 'warning', 'error', 'inverse'].map((colorName) => ({
-        group: 'Tag',
-        name: `Tag (${colorName})`,
-        code: `<Tag color={colors.${colorName}}>${colorName}</Tag>`,
-    })),
     {
         group: 'Progress',
         name: 'Stepper',
@@ -1116,4 +1119,5 @@ export default [
     },
     ...navigationBarSnippets,
     menuSnippet,
+    ...tagSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
