@@ -157,15 +157,15 @@ export const MisticaIcons: React.FC = () => {
                                     />
                                     <Stack space="between">
                                         <Inline space={0}>
-                                            <div style={{width: '160px'}}>{lightCheckbox}</div>
-                                            <div style={{width: '160px'}}>{regularCheckbox}</div>
-                                            <div style={{width: '160px'}}>{filledCheckbox}</div>
+                                            <Box width={156}>{lightCheckbox}</Box>
+                                            <Box width={156}>{regularCheckbox}</Box>
+                                            <Box width={156}>{filledCheckbox}</Box>
                                         </Inline>
                                         <Inline space="between">
-                                            <div style={{width: '160px'}}>{inverseCheckbox}</div>
-                                            <div style={{width: '160px'}}>{showNamesCheckbox}</div>
-                                            <div style={{width: '160px'}}>{showCircleCheckbox}</div>
-                                            <div style={{width: '160px'}}>{showIconBackgroundCheckbox}</div>
+                                            <Box width={156}>{showCircleCheckbox}</Box>
+                                            <Box width={156}>{inverseCheckbox}</Box>
+                                            <Box width={156}>{showNamesCheckbox}</Box>
+                                            <Box width={156}>{showIconBackgroundCheckbox}</Box>
                                         </Inline>
                                     </Stack>
                                 </Inline>
