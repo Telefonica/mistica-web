@@ -9,11 +9,13 @@ import {
     Inline,
     Divider,
     Text1,
+    Text2,
+    Text3,
     TextField,
+    IconPlantFilled,
     Circle,
     RadioGroup,
     RadioButton,
-    Text2,
     IconCheckRegular,
     FadeIn,
     Snackbar,
@@ -172,23 +174,31 @@ export const MisticaIcons: React.FC = () => {
                             ) : (
                                 <Stack space={24}>
                                     <Stack space={8}>
-                                        <Text2 regular>Size</Text2>
                                         <Inline space="between">
-                                            <input
-                                                type="range"
-                                                name="size"
-                                                style={{width: '196px'}}
-                                                min={16}
-                                                max={104}
-                                                step={4}
-                                                onChange={(v) => setSize(v.target.value)}
-                                                value={size}
-                                            />
+                                            <Text1 uppercase color={colors.textSecondary} regular>
+                                                Size
+                                            </Text1>
                                             <Text2 regular>{size}</Text2>
                                         </Inline>
+                                        <input
+                                            type="range"
+                                            name="size"
+                                            style={{width: '100%'}}
+                                            min={16}
+                                            max={104}
+                                            step={8}
+                                            onChange={(v) => setSize(v.target.value)}
+                                            value={size}
+                                        />
+                                        <Inline space="between" alignItems="baseline">
+                                            <IconPlantFilled size={16} />
+                                            <IconPlantFilled size={24} />
+                                        </Inline>
                                     </Stack>
-                                    <Stack space={8}>
-                                        <Text2 regular>Color</Text2>
+                                    <Stack space={16}>
+                                        <Text1 uppercase color={colors.textSecondary} regular>
+                                            Color
+                                        </Text1>
                                         <RadioGroup
                                             name="colorPicker"
                                             aria-labelledby="custom-render"
