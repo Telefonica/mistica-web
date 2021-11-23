@@ -11,7 +11,6 @@ import {
     Box,
     createUseStyles,
     Tag,
-    useTheme,
 } from '..';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
