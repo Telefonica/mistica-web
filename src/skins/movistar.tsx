@@ -90,18 +90,18 @@ export const getMovistarSkin: GetSkin = (variant) => {
 
             buttonPrimaryBackground: palette.movistarGreen,
             buttonPrimaryBackgroundDisabled: palette.movistarGreen30,
-            buttonPrimaryBackgroundDisabledInverse: palette.movistarBlue10,
+            buttonPrimaryBackgroundDisabledInverse: palette.movistarBlue30,
             buttonPrimaryBackgroundInverse: palette.white,
             buttonPrimaryBackgroundSelected: palette.movistarGreen60,
             buttonPrimaryBackgroundHover: palette.movistarGreen60, // web only
-            buttonPrimaryBackgroundSelectedInverse: palette.movistarBlue10,
+            buttonPrimaryBackgroundSelectedInverse: palette.movistarBlue30,
 
             buttonSecondaryBackground: palette.movistarGreen,
             buttonSecondaryBackgroundDisabled: palette.movistarGreen30,
             buttonSecondaryBackgroundSelected: palette.movistarGreen60,
-            buttonSecondaryBorderDisabledInverse: palette.movistarBlue10,
+            buttonSecondaryBorderDisabledInverse: palette.movistarBlue30,
             buttonSecondaryBorderInverse: palette.white,
-            buttonSecondaryBorderSelectedInverse: palette.movistarBlue10,
+            buttonSecondaryBorderSelectedInverse: palette.movistarBlue30,
 
             textButtonPrimary: palette.white,
             textButtonPrimaryDisabled: palette.white,
@@ -113,21 +113,21 @@ export const getMovistarSkin: GetSkin = (variant) => {
             textButtonSecondaryDisabled: palette.movistarGreen30,
             textButtonSecondarySelected: palette.movistarGreen60,
             textButtonSecondaryInverse: palette.white,
-            textButtonSecondaryInverseDisabled: palette.movistarBlue10,
+            textButtonSecondaryInverseDisabled: palette.movistarBlue30,
             textButtonSecondaryInverseSelected: palette.white,
 
             textLink: palette.movistarBlue,
             textLinkInverse: palette.white,
             textLinkDanger: palette.pepper,
             textLinkDangerDisabled: palette.pepper20,
-            textLinkDisabled: palette.movistarBlue10,
-            textLinkSnackbar: palette.movistarBlue10,
+            textLinkDisabled: palette.movistarBlue30,
+            textLinkSnackbar: palette.movistarBlue30,
 
             // CONTROLS
             control: palette.grey3,
             controlActivated: palette.movistarBlue,
             controlError: palette.pepper,
-            loadingBar: palette.movistarBlue10,
+            loadingBar: palette.movistarBlue30,
             loadingBarBackground: palette.movistarBlue55,
 
             toggleAndroidInactive: palette.grey2, // web only
@@ -254,7 +254,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             textSecondary: palette.grey4,
             textSecondaryInverse: palette.grey4,
             textDisabled: palette.grey5,
-            textAmount: palette.movistarBlue10,
+            textAmount: palette.movistarBlue30,
             textNavigationBarPrimary: palette.grey2,
             textNavigationBarSecondary: palette.grey4,
             textNavigationSearchBarHint: palette.grey4, // iOS
