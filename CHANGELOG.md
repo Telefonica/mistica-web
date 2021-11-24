@@ -1,3 +1,10 @@
+# [10.12.0](https://github.com/Telefonica/mistica-web/compare/v10.11.0...v10.12.0) (2021-11-24)
+
+
+### Features
+
+* **DataCard:** make title and description optional ([#373](https://github.com/Telefonica/mistica-web/issues/373)) ([e44a064](https://github.com/Telefonica/mistica-web/commit/e44a06460a1c27ed06279890c7df0d692300e38e))
+
 # [10.11.0](https://github.com/Telefonica/mistica-web/compare/v10.10.0...v10.11.0) (2021-11-24)
 
 
