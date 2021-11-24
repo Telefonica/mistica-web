@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {pxToRem} from '../utils/css';
-import {Tabs, IconClose} from '..';
+import {Tabs, IconCloseRegular} from '..';
 
 export default {
     title: 'Components/Controls/Tabs',
@@ -21,7 +21,7 @@ export const Default: StoryComponent<Args> = ({tabs, withIcon}) => {
             onChange={setSelectedIndex}
             tabs={texts.map((text) => ({
                 text,
-                icon: withIcon ? <IconClose size={pxToRem(24)} color="currentColor" /> : null,
+                icon: withIcon ? <IconCloseRegular size={pxToRem(24)} color="currentColor" /> : null,
             }))}
         />
     );

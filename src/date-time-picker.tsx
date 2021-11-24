@@ -183,13 +183,13 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidD
                         setValue('');
                     }}
                 >
-                    <IconCloseRegular size={24} />
+                    <IconCloseRegular />
                 </IconButton>
             );
         }
         return (
             <IconButton aria-label="" size={32} onPress={() => setShowPicker(!showPicker)}>
-                <IconCalendarRegular size={24} />
+                <IconCalendarRegular />
             </IconButton>
         );
     };
