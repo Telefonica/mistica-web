@@ -572,7 +572,7 @@ const cardSnippets: Array<Snippet> = [
         name: 'MediaCard',
         code: `
         <MediaCard
-            headline={<Tag type="promo">headline</Tag>}
+            headline={<Tag type="promo">Headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             description="Description"
@@ -594,7 +594,7 @@ const cardSnippets: Array<Snippet> = [
         name: 'DataCard',
         code: `
         <DataCard
-            headline={<Tag type="promo">headline</Tag>}
+            headline={<Tag type="promo">Headline</Tag>}
             title="Title"
             subtitle="Subtitle"
             description="Description"
