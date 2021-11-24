@@ -29,7 +29,7 @@ export const Default: StoryComponent = () => {
         error: 'error',
     };
     const tagColorNames = Object.keys(tagTypes);
-    const [headline, headlineTextField] = useTextField('headline', 'priority');
+    const [headline, headlineTextField] = useTextField('Headline', 'Priority');
     const [headlineType, headlineTypeSelect] = useSelect('headline color', tagColorNames[0], tagColorNames);
     const [pretitle, pretitleTextField] = useTextField('pretitle', 'Some pretitle');
     const [title, titleTextField] = useTextField('title', 'Some title');
@@ -89,9 +89,9 @@ export const WithBody: StoryComponent = () => {
     return (
         <MediaCard
             headline={<Tag type="promo">headline</Tag>}
-            pretitle="pretitle"
-            title="title"
-            description="description"
+            pretitle="Pretitle"
+            title="Title"
+            description="Description"
             extra={<Placeholder />}
             media={{
                 src: 'https://i.imgur.com/flZfkiX.png',
@@ -127,18 +127,18 @@ export const Group: StoryComponent = () => {
                 </Text2>
                 <Inline space={16} className={classes.group}>
                     <MediaCard
-                        headline={<Tag type="promo">headline</Tag>}
-                        pretitle="pretitle"
-                        title="title"
-                        description="description"
+                        headline={<Tag type="promo">Headline</Tag>}
+                        pretitle="Pretitle"
+                        title="Title"
+                        description="Description"
                         media={{
                             src: 'https://i.imgur.com/flZfkiX.png',
                         }}
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />
                     <MediaCard
-                        title="title"
-                        description="description"
+                        title="Title"
+                        description="Description"
                         media={{
                             src: 'https://i.imgur.com/flZfkiX.png',
                         }}
@@ -186,10 +186,10 @@ export const Carousel: StoryComponent = () => {
                         {Array.from({length: 5}).flatMap((_, idx) => [
                             <MediaCard
                                 key={`${idx}-full`}
-                                headline={<Tag type="promo">headline</Tag>}
-                                pretitle="pretitle"
-                                title="title"
-                                description="description"
+                                headline={<Tag type="promo">Headline</Tag>}
+                                pretitle="Pretitle"
+                                title="Title"
+                                description="Description"
                                 media={{
                                     src: 'https://i.imgur.com/flZfkiX.png',
                                 }}
@@ -197,8 +197,8 @@ export const Carousel: StoryComponent = () => {
                             />,
                             <MediaCard
                                 key={`${idx}-simple`}
-                                title="title"
-                                description="description"
+                                title="Title"
+                                description="Description"
                                 media={{
                                     src: 'https://i.imgur.com/flZfkiX.png',
                                 }}

@@ -92,7 +92,7 @@ Default.storyName = 'DataCard';
 Default.args = {
     asset: 'icon',
     headlineType: 'promo',
-    headline: 'priority',
+    headline: 'Priority',
     title: 'Some title',
     subtitle: 'Some subtitle',
     description: 'This is a description for the card',
@@ -103,10 +103,10 @@ export const WithBody: StoryComponent = () => {
     const {colors} = useTheme();
     return (
         <DataCard
-            headline={<Tag type="promo">headline</Tag>}
-            title="title"
-            subtitle="subtitle"
-            description="description"
+            headline={<Tag type="promo">Headline</Tag>}
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
             extra={<Placeholder />}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
@@ -128,10 +128,10 @@ WithBody.storyName = 'DataCard with extra content';
 export const WithIconImage: StoryComponent = () => {
     return (
         <DataCard
-            headline={<Tag type="promo">headline</Tag>}
-            title="title"
-            subtitle="subtitle"
-            description="description"
+            headline={<Tag type="promo">Headline</Tag>}
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
             icon={<Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />}
             button={
                 <ButtonPrimary small href="https://google.com">
@@ -165,10 +165,10 @@ export const Group: StoryComponent = () => {
                 </Text2>
                 <Inline space={16} className={classes.group}>
                     <DataCard
-                        headline={<Tag type="promo">headline</Tag>}
-                        title="title"
-                        subtitle="subtitle"
-                        description="description"
+                        headline={<Tag type="promo">Headline</Tag>}
+                        title="Title"
+                        subtitle="Subtitle"
+                        description="Description"
                         icon={
                             <Circle size={40} backgroundColor={colors.neutralLow}>
                                 <IconAcademicLight />
@@ -177,8 +177,8 @@ export const Group: StoryComponent = () => {
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />
                     <DataCard
-                        title="title"
-                        description="description"
+                        title="Title"
+                        description="Description"
                         icon={
                             <Circle size={40} backgroundColor={colors.neutralLow}>
                                 <IconAcademicLight />

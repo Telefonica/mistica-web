@@ -5,11 +5,11 @@ import {
     useTheme,
     Text3,
     IconStarFilled,
-    IconTimeRegular,
-    IconAlarmLightRegular,
-    IconLikeRegular,
-    IconSkullRegular,
-    IconSmileySadRegular,
+    IconTimeFilled,
+    IconOfferPercentFilled,
+    IconCheckRegular,
+    IconCloseRegular,
+    IconAlertRegular,
     Inline,
     Text1,
 } from '..';
@@ -50,22 +50,22 @@ export const Default: StoryComponent<Args> = ({label: labelFromArgs}) => {
             <Inline space={48}>
                 <Container>
                     <Text3 medium>Example</Text3>
-                    <Tag Icon={IconAlarmLightRegular} type="promo">
+                    <Tag Icon={IconOfferPercentFilled} type="promo">
                         {getLabel('Promo')}
                     </Tag>
                     <Tag Icon={IconStarFilled} type="active">
                         {getLabel('Active')}
                     </Tag>
-                    <Tag Icon={IconTimeRegular} type="inactive">
+                    <Tag Icon={IconTimeFilled} type="inactive">
                         {getLabel('Inactive')}
                     </Tag>
-                    <Tag Icon={IconLikeRegular} type="success">
+                    <Tag Icon={IconCheckRegular} type="success">
                         {getLabel('Success')}
                     </Tag>
-                    <Tag Icon={IconSmileySadRegular} type="warning">
+                    <Tag Icon={IconAlertRegular} type="warning">
                         {getLabel('Warning')}
                     </Tag>
-                    <Tag Icon={IconSkullRegular} type="error">
+                    <Tag Icon={IconCloseRegular} type="error">
                         {getLabel('Error')}
                     </Tag>
                 </Container>
@@ -82,22 +82,22 @@ export const Default: StoryComponent<Args> = ({label: labelFromArgs}) => {
 
                 <Container inverse>
                     <Text3 medium>Inverse</Text3>
-                    <Tag Icon={IconAlarmLightRegular} type="promo">
+                    <Tag Icon={IconOfferPercentFilled} type="promo">
                         {getLabel('Promo')}
                     </Tag>
                     <Tag Icon={IconStarFilled} type="active">
                         {getLabel('Active')}
                     </Tag>
-                    <Tag Icon={IconTimeRegular} type="inactive">
+                    <Tag Icon={IconTimeFilled} type="inactive">
                         {getLabel('Inactive')}
                     </Tag>
-                    <Tag Icon={IconLikeRegular} type="success">
+                    <Tag Icon={IconCheckRegular} type="success">
                         {getLabel('Success')}
                     </Tag>
-                    <Tag Icon={IconSmileySadRegular} type="warning">
+                    <Tag Icon={IconAlertRegular} type="warning">
                         {getLabel('Warning')}
                     </Tag>
-                    <Tag Icon={IconSkullRegular} type="error">
+                    <Tag Icon={IconCloseRegular} type="error">
                         {getLabel('Error')}
                     </Tag>
                 </Container>
