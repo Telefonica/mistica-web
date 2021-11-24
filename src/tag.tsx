@@ -46,6 +46,11 @@ const Tag: React.FC<TagProps> = ({Icon, children, type = 'promo', color}) => {
      *
      * @deprecated to be removed in the next major version
      */
+
+    if (!children) {
+        return null;
+    }
+
     if (color) {
         // Hardcode black text in darkmode because there isn't a black text color constant that we can use in dark mode
         const blackText = isDarkMode ? '#313235' : colors.textPrimary;
