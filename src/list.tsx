@@ -208,7 +208,6 @@ const Content: React.FC<ContentProps> = ({
             {type === 'chevron' ? (
                 <Box paddingLeft={16} className={classes.center}>
                     <IconChevron
-                        size={24}
                         color={isInverse ? colors.inverse : colors.neutralMedium}
                         direction="right"
                     />
