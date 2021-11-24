@@ -629,7 +629,7 @@ const tagSnippets: Array<Snippet> = ['promo', 'active', 'inactive', 'success', '
     (type) => ({
         name: `Tag (${type})`,
         group: 'Tags',
-        code: `<Tag type="${type}" Icon={IconStarRegular}>${capitalize(type)}</Tag>`,
+        code: `<Tag type="${type}" Icon={IconStarFilled}>${capitalize(type)}</Tag>`,
     })
 );
 
