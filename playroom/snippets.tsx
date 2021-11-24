@@ -1,3 +1,5 @@
+import {capitalize} from 'lodash';
+
 const imagePlaceholder = 'https://i.imgur.com/jeDSXBU.jpg';
 
 type Snippet = {group: string; name: string; code: string};
@@ -627,7 +629,7 @@ const tagSnippets: Array<Snippet> = ['promo', 'active', 'inactive', 'success', '
     (type) => ({
         name: `Tag (${type})`,
         group: 'Tags',
-        code: `<Tag type="${type}" Icon={IconStarRegular}>${type}</Tag>`,
+        code: `<Tag type="${type}" Icon={IconStarRegular}>${capitalize(type)}</Tag>`,
     })
 );
 
