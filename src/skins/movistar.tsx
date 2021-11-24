@@ -85,7 +85,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             buttonDangerBackgroundSelected: palette.pepper55,
             buttonDangerBackgroundHover: palette.pepper55, // web only
 
-            buttonLinkBackgroundSelected: palette.movistarBlue20,
+            buttonLinkBackgroundSelected: palette.movistarBlue10,
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
 
             buttonPrimaryBackground: palette.movistarGreen,
