@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconPlayLight: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconPlayLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M11.998 2.16c3.14 0 5.574.812 7.238 2.417C20.96 6.241 21.838 8.74 21.838 12c.003 6.435-3.4 9.838-9.84 9.838-6.435 0-9.838-3.4-9.838-9.838 0-6.437 3.4-9.84 9.838-9.84zm0 .56C5.843 2.72 2.72 5.843 2.72 12c0 6.154 3.12 9.278 9.278 9.278 6.16 0 9.28-3.12 9.28-9.278.002-6.16-3.12-9.28-9.28-9.28zm-2.91 4.891l7.128 4.115a.26.26 0 010 .448l-7.132 4.118a.26.26 0 01-.257 0 .257.257 0 01-.13-.224V7.835a.26.26 0 01.39-.224zm.128.675v7.33l6.347-3.663-6.347-3.667z"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M6.655 2.239l13.514 8.227c.477.288.784.792.818 1.331a1.77 1.77 0 01-.545 1.508c-.137.144-.341.108-.478-.036-.136-.144-.102-.36.035-.504.238-.216.34-.54.306-.9a1.074 1.074 0 00-.477-.791L6.352 2.85c-.34-.216-.75-.18-1.125.036-.34.216-.545.54-.545.9v16.527c0 .324.17.648.477.827.375.216.818.216 1.193.036l10.28-6.256c.17-.108.374-.036.477.144a.375.375 0 01-.137.503l-10.28 6.217a2.042 2.042 0 01-.92.216c-.34 0-.647-.072-.954-.252-.511-.324-.818-.863-.818-1.435V3.782c0-.612.34-1.188.852-1.507.58-.36 1.261-.36 1.803-.036zM18.64 13.305c.376 0 .682.322.682.72 0 .397-.306.719-.682.719-.377 0-.682-.322-.682-.72 0-.397.305-.72.682-.72z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M11.998 2.16c3.14 0 5.574.812 7.238 2.417C20.96 6.241 21.838 8.74 21.838 12c.003 6.435-3.4 9.838-9.84 9.838-6.435 0-9.838-3.4-9.838-9.838 0-6.437 3.4-9.84 9.838-9.84zm0 .56C5.843 2.72 2.72 5.843 2.72 12c0 6.154 3.12 9.278 9.278 9.278 6.16 0 9.28-3.12 9.28-9.278.002-6.16-3.12-9.28-9.28-9.28zm-2.91 4.891l7.128 4.115a.26.26 0 010 .448l-7.132 4.118a.26.26 0 01-.257 0 .257.257 0 01-.13-.224V7.835a.26.26 0 01.39-.224zm.128.675v7.33l6.347-3.663-6.347-3.667z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconPlayLight;

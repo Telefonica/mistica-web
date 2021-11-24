@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconLightningLight: React.FC<Props> = ({color, size = 24}) => {
+const IconLightningLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M9.248 19.7l2.316-5.984a.422.422 0 00-.017-.345.413.413 0 00-.266-.212l-4.238-1.037 7.235-7.678-2.274 5.709a.419.419 0 00.286.563l4.635 1.129-7.677 7.854zm8.874-8.205a.41.41 0 00-.3-.292l-4.883-1.19 2.9-7.275a.423.423 0 00-.157-.507.405.405 0 00-.518.062l-9.21 9.77a.43.43 0 00-.099.406.412.412 0 00.297.289l4.477 1.095-2.874 7.418a.421.421 0 00.156.501.405.405 0 00.515-.056l9.592-9.815a.409.409 0 00.104-.406z"
                 fill={fillColor}

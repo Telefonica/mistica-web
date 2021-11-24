@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import {isAndroid, isIos} from './utils/platform';
 import {createUseStyles} from './jss';
 import {cancelEvent} from './utils/dom';
+import {Text3} from './text';
 
 const useStyles = createUseStyles((theme) => ({
     selectContainer: {
@@ -89,7 +90,6 @@ const useStyles = createUseStyles((theme) => ({
     },
     menuItem: {
         color: theme.colors.textPrimary,
-        lineHeight: 1.5,
         padding: '6px 16px',
         height: 48,
         transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
@@ -492,7 +492,7 @@ const Select: React.FC<SelectProps> = ({
                                     }
                                 }}
                             >
-                                {text}
+                                <Text3 regular>{text}</Text3>
                             </li>
                         ))}
                     </ul>

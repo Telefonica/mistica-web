@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconGarajeRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconGarajeRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M21.238 10.445l-8.104-7.94c-.683-.67-1.843-.67-2.526 0L2.5 10.447c-.459.451-.596 1.09-.36 1.67.257.63.895 1.039 1.624 1.039h.414v6.927c0 .885.779 1.605 1.737 1.605h1.443c.005 0 .008-.003.014-.003.002 0 .005.003.008.003h8.921c.009 0 .015-.003.02-.003.009 0 .017.003.025.003h1.356c.958 0 1.737-.72 1.737-1.605v-6.927h.53c.727 0 1.366-.406 1.624-1.04.244-.582.103-1.22-.356-1.672zm-8.947-7.084l8.104 7.944c.112.11.14.23.09.353-.054.135-.222.289-.51.289h-1.132a.601.601 0 00-.602.602v7.53c0 .218-.244.4-.532.4h-.754v-7.846a.601.601 0 00-.602-.602H7.36a.601.601 0 00-.602.602v7.846h-.84c-.289 0-.532-.182-.532-.4v-7.53a.601.601 0 00-.603-.602H3.768c-.292 0-.457-.157-.51-.289-.054-.126-.023-.243.09-.353l8.103-7.944a.633.633 0 01.84 0zm3.46 15.51v1.608H7.964v-1.608h7.787zm0-2.81v1.608H7.964v-1.607h7.787zm0-2.823v1.62H7.964v-1.62h7.787z"
                 fill={fillColor}

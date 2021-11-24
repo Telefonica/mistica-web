@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconSendLight: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconSendLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M4.704 4a.704.704 0 00-.687.851l1.611 7.59-1.584 7.712a.705.705 0 001.006.772l15.563-7.837a.707.707 0 00-.003-1.26L5.018 4.073A.706.706 0 004.704 4m0 .704l15.592 7.752-15.563 7.838 1.616-7.857-1.645-7.733"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M22 2.38c0-.029 0-.057-.005-.086v-.028c0-.005-.004-.01-.01-.02a.24.24 0 00-.042-.085l-.019-.033a.341.341 0 00-.1-.085.295.295 0 00-.123-.043h-.042c-.034 0-.062 0-.095.005h-.02L2.278 7.19a.375.375 0 00-.275.327.37.37 0 00.213.37l9.15 4.227-1.104 1.105a.364.364 0 000 .522.37.37 0 00.26.11.37.37 0 00.261-.11L20.92 3.599l-2.418 9.041c-.052.2.066.404.26.456.2.052.404-.067.456-.261l2.778-10.38c0-.01 0-.019.005-.023V2.38zM3.457 7.64l16.936-4.563-8.468 8.472L3.457 7.64zm14.466 9.635l-1.115 4.445a.374.374 0 01-.327.28h-.033a.375.375 0 01-.337-.218l-3.702-8.155a.364.364 0 01.184-.488c.19-.086.408 0 .489.185l3.266 7.186.854-3.415a.372.372 0 01.72.18zm1.118-2.315a.74.74 0 01-1.479 0 .74.74 0 011.48 0z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M4.704 4a.704.704 0 00-.687.851l1.611 7.59-1.584 7.712a.705.705 0 001.006.772l15.563-7.837a.707.707 0 00-.003-1.26L5.018 4.073A.706.706 0 004.704 4m0 .704l15.592 7.752-15.563 7.838 1.616-7.857-1.645-7.733"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconSendLight;

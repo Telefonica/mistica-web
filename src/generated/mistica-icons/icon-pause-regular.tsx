@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconPauseRegular: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconPauseRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M11.986 2.16c3.124 0 5.552.815 7.222 2.423 1.734 1.67 2.61 4.162 2.61 7.409 0 3.246-.88 5.737-2.61 7.406-1.67 1.608-4.098 2.423-7.222 2.423-3.123 0-5.551-.815-7.218-2.423-1.731-1.667-2.608-4.157-2.608-7.403 0-3.247.877-5.74 2.608-7.41C6.435 2.979 8.866 2.16 11.986 2.16zm0 1.09c-5.798 0-8.74 2.94-8.74 8.745 0 5.798 2.942 8.74 8.74 8.74 5.801 0 8.745-2.942 8.745-8.74 0-5.801-2.944-8.745-8.745-8.745zM9.258 7.608c.308 0 .56.252.56.56v7.647c0 .309-.252.56-.56.56a.562.562 0 01-.56-.56V8.168c0-.308.252-.56.56-.56zm5.462 0c.308 0 .56.252.56.56v7.647c0 .309-.252.56-.56.56a.562.562 0 01-.56-.56V8.168c0-.308.252-.56.56-.56z"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M12 22C6.488 22 2 17.516 2 12S6.488 2 12 2s10 4.488 10 10-4.488 10-10 10zm0-18.57c-4.726 0-8.57 3.844-8.57 8.57 0 4.726 3.844 8.57 8.57 8.57 4.726 0 8.57-3.844 8.57-8.57 0-4.726-3.844-8.57-8.57-8.57zm-1.787 12.857V7.713a.714.714 0 00-1.426 0v8.57a.714.714 0 001.426.004zm5 0V7.713a.714.714 0 00-1.426 0v8.57a.714.714 0 001.426.004z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M11.986 2.16c3.124 0 5.552.815 7.222 2.423 1.734 1.67 2.61 4.162 2.61 7.409 0 3.246-.88 5.737-2.61 7.406-1.67 1.608-4.098 2.423-7.222 2.423-3.123 0-5.551-.815-7.218-2.423-1.731-1.667-2.608-4.157-2.608-7.403 0-3.247.877-5.74 2.608-7.41C6.435 2.979 8.866 2.16 11.986 2.16zm0 1.09c-5.798 0-8.74 2.94-8.74 8.745 0 5.798 2.942 8.74 8.74 8.74 5.801 0 8.745-2.942 8.745-8.74 0-5.801-2.944-8.745-8.745-8.745zM9.258 7.608c.308 0 .56.252.56.56v7.647c0 .309-.252.56-.56.56a.562.562 0 01-.56-.56V8.168c0-.308.252-.56.56-.56zm5.462 0c.308 0 .56.252.56.56v7.647c0 .309-.252.56-.56.56a.562.562 0 01-.56-.56V8.168c0-.308.252-.56.56-.56z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconPauseRegular;

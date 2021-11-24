@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconChevronLeftRegular: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconChevronLeftRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M15.161 20a.814.814 0 01-.564-.23l-7.32-7.05a.924.924 0 01-.044-1.273c.01-.014.024-.025.037-.04l7.323-7.17a.805.805 0 011.168.029l.017.02a.928.928 0 01-.048 1.257L9.079 12.06l6.646 6.393c.343.33.367.892.055 1.257a.828.828 0 01-.619.291"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M15.467 20a.508.508 0 00.374-.173.583.583 0 000-.8L9.277 12l6.563-7.03a.583.583 0 000-.8.494.494 0 00-.747 0l-6.935 7.428a.583.583 0 000 .8l6.935 7.428a.503.503 0 00.373.173z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M15.161 20a.814.814 0 01-.564-.23l-7.32-7.05a.924.924 0 01-.044-1.273c.01-.014.024-.025.037-.04l7.323-7.17a.805.805 0 011.168.029l.017.02a.928.928 0 01-.048 1.257L9.079 12.06l6.646 6.393c.343.33.367.892.055 1.257a.828.828 0 01-.619.291"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconChevronLeftRegular;

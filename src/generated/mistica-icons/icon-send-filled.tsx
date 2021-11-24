@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconSendFilled: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconSendFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M21.378 11.205L3.336 2.235a.82.82 0 00-1.168.908l1.865 8.782-1.835 8.924a.823.823 0 001.177.9l18.008-9.074a.82.82 0 00-.005-1.47"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M9.963 11.94L2.215 8.185a.392.392 0 01-.213-.388.389.389 0 01.275-.344L18.64 2.83l-8.677 9.11zm11.825-9.712a.717.717 0 00-1.048 0L9.996 13.508a.806.806 0 000 1.1.704.704 0 00.521.228c.19 0 .38-.074.522-.229l1.01-1.06 4.059 9.229a.37.37 0 00.336.224h.029a.381.381 0 00.327-.284S21.987 2.905 21.992 2.88a.798.798 0 00-.204-.652z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M21.378 11.205L3.336 2.235a.82.82 0 00-1.168.908l1.865 8.782-1.835 8.924a.823.823 0 001.177.9l18.008-9.074a.82.82 0 00-.005-1.47"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconSendFilled;

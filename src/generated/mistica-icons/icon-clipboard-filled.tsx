@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconClipboardFilled: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconClipboardFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M13.86 4.34c-.08-.25-.317-1.004-1.866-1.004-1.673 0-1.925.838-1.958 1.57l-.006.346c.011.267.023.653 1.964.653 1.94 0 1.952-.384 1.96-.61v-.323a2.405 2.405 0 00-.095-.633zm3.912-.749c.855 0 1.603.611 1.603 1.306V20.54c0 .709-.734 1.305-1.603 1.305H6.212c-.868 0-1.602-.6-1.602-1.305V4.894c0-.695.75-1.305 1.602-1.305h2.955c.471-.914 1.443-1.429 2.827-1.429 1.686 0 2.468.709 2.829 1.431h2.95zm-6.476 1.7a.55.55 0 01-.552-.548.55.55 0 01.552-.55h1.392c.306 0 .555.247.555.55 0 .302-.25.549-.555.549h-1.392z"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M15.637 5.718h.27V3H9.093v2.714h6.545v.004zm2.317-1.698h-1.021v2.714H8.067V4.02h-1.02A2.047 2.047 0 005 6.057V22h15V6.057c0-1.12-.92-2.037-2.046-2.037zm-1.536 14.246H8.582a.525.525 0 01-.51-.508c0-.27.24-.508.51-.508h7.84c.27 0 .51.239.51.508 0 .27-.24.508-.514.508zm0-2.714H8.582a.525.525 0 01-.51-.508c0-.269.24-.508.51-.508h7.84c.27 0 .51.24.51.508 0 .27-.24.508-.514.508zm0-2.713H8.582a.525.525 0 01-.51-.508c0-.27.24-.508.51-.508h7.84c.27 0 .51.238.51.508 0 .269-.24.508-.514.508zm0-2.714H8.582a.525.525 0 01-.51-.508c0-.27.24-.508.51-.508h7.84c.27 0 .51.239.51.508 0 .27-.24.508-.514.508z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M13.86 4.34c-.08-.25-.317-1.004-1.866-1.004-1.673 0-1.925.838-1.958 1.57l-.006.346c.011.267.023.653 1.964.653 1.94 0 1.952-.384 1.96-.61v-.323a2.405 2.405 0 00-.095-.633zm3.912-.749c.855 0 1.603.611 1.603 1.306V20.54c0 .709-.734 1.305-1.603 1.305H6.212c-.868 0-1.602-.6-1.602-1.305V4.894c0-.695.75-1.305 1.602-1.305h2.955c.471-.914 1.443-1.429 2.827-1.429 1.686 0 2.468.709 2.829 1.431h2.95zm-6.476 1.7a.55.55 0 01-.552-.548.55.55 0 01.552-.55h1.392c.306 0 .555.247.555.55 0 .302-.25.549-.555.549h-1.392z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconClipboardFilled;

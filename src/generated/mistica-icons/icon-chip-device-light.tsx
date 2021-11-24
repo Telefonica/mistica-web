@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconChipDeviceLight: React.FC<Props> = ({color, size = 24}) => {
+const IconChipDeviceLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M14.217 2.156c2.025 0 2.969.958 2.969 3.011v1.364h1.722c.62 0 1.003.384 1.003 1.003v6.745c0 .617-.386 1-1.003 1h-1.723v3.544c0 1.04-.235 1.784-.722 2.277-.487.493-1.221.734-2.246.734H7.032c-1.026 0-1.762-.24-2.25-.734-.487-.493-.72-1.238-.72-2.277V5.167c0-2.025.972-3.01 2.97-3.01h7.185zm0 .56H7.032c-1.69 0-2.41.734-2.41 2.451v13.656c0 .885.183 1.501.56 1.885.38.384.981.569 1.85.569h7.185c.868 0 1.473-.185 1.848-.569.376-.384.56-1 .56-1.885v-3.544H14.89c-.62 0-1.003-.383-1.003-1.002V8.445a.29.29 0 01.081-.2l1.639-1.632a.277.277 0 01.199-.081h.82V5.166c0-1.742-.697-2.45-2.408-2.45zm-3.591 15.11c.5 0 .829.266.831.834 0 .272-.075.477-.21.614-.145.148-.358.221-.621.221-.264 0-.477-.073-.622-.221-.135-.137-.21-.339-.21-.614 0-.568.327-.834.832-.834zm8.282-10.737h-2.986l-1.473 1.47v5.718c0 .31.132.442.443.442h4.016c.311 0 .443-.131.443-.442V7.532c0-.311-.132-.443-.443-.443zm-.322 2.58a.28.28 0 01.28.28v3.543a.282.282 0 01-.28.283h-3.375a.28.28 0 01-.28-.28V9.95a.28.28 0 01.28-.28h3.375zm-2.532 2.98h-.561v.566h.56v-.567zm1.123 0h-.564v.565h.564v-.566zm1.128 0h-.567v.565l.568.001v-.567zm-2.813-1.295v.734h2.813v-.734h-2.813zm.561-1.126l-.562.001v.565h.563v-.566zm1.123 0h-.563v.566h.564v-.566zm1.13.001h-.569v.565h.569v-.565z"
                 fill={fillColor}

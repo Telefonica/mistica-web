@@ -1,3 +1,15 @@
+# [10.10.0](https://github.com/Telefonica/mistica-web/compare/v10.9.2...v10.10.0) (2021-11-15)
+
+
+### Bug Fixes
+
+* **HighlightedCard:** Propagate width to card wrappers ([#368](https://github.com/Telefonica/mistica-web/issues/368)) ([81f3b2a](https://github.com/Telefonica/mistica-web/commit/81f3b2a9e2ed5b61df8295a104047186adc45307))
+
+
+### Features
+
+* **form fields:** use text presets ([#359](https://github.com/Telefonica/mistica-web/issues/359)) ([7fc1d0a](https://github.com/Telefonica/mistica-web/commit/7fc1d0a8b72788f982e80aab31a633fbc7e9244f))
+
 ## [10.9.2](https://github.com/Telefonica/mistica-web/compare/v10.9.1...v10.9.2) (2021-11-05)
 
 

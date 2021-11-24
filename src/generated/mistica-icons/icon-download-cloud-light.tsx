@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconDownloadCloudLight: React.FC<Props> = ({color, size = 24}) => {
+const IconDownloadCloudLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M17.213 18.015l-1.092.009 1.139-1.193a.75.75 0 00.137-.787.714.714 0 00-.654-.442h-1.865l-.01-4.987a.727.727 0 00-.716-.722h-4.32a.723.723 0 00-.716.722v4.894H7.24a.706.706 0 00-.654.442.745.745 0 00.147.79l1.277 1.335-2.297.01c-1.14 0-3.797-.377-3.797-3.868 0-1.953.83-3.195 2.463-3.674.204-.055.329-.367.329-.571 0-5.595 4.77-6.03 6.232-6.03.826 0 5.01.188 6.012 3.99.047.199.22.338.432.347 1.408.037 4.689.59 4.689 4.856.003 4.53-3.719 4.879-4.861 4.879zm-5.155 2.95l-4.322-4.517h1.59a.713.713 0 00.707-.723v-4.893h3.915l.01 4.986c0 .405.322.723.716.723h1.572l-4.188 4.424zm5.69-13.609C16.433 3.213 11.867 3 10.947 3c-1.186 0-7.033.327-7.152 6.753C2.618 10.195 1 11.323 1 14.215c0 3.55 2.438 4.807 4.726 4.807l3.18-.019 2.639 2.771a.721.721 0 00.516.226.71.71 0 00.504-.226l2.667-2.799 1.984-.018c.967 0 5.784-.272 5.784-5.824-.003-4.847-3.671-5.656-5.252-5.777z"
                 fill={fillColor}
