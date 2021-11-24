@@ -8,36 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconComputerRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconComputerRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-                <defs>
-                    <path id="prefix__a" d="M0 0h19.862v13.333H0z" />
-                </defs>
-                <g transform="translate(2 5)" fill={fillColor} fillRule="evenodd">
-                    <mask id="prefix__b" fill={fillColor}>
-                        <use xlinkHref="#prefix__a" />
-                    </mask>
-                    <path
-                        d="M3.252 9.333h13.334v-8H3.252v8zM17.309 12l-.928-1.334H3.458L2.529 12h14.78zM-.024 13.333l1.944-2.79V0h15.999v10.542l1.943 2.79H-.024zm9.275-10h1.333V2H9.251v1.333z"
-                        fill={fillColor}
-                        mask="url(#prefix__b)"
-                    />
-                </g>
-            </svg>
-        );
-    } else if (skinName.match(/^o2/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M20.217 15.685s0-.038 0 0V7.212c0-1.217-.964-2.212-2.144-2.212H5.931c-1.179 0-2.144.995-2.144 2.212v8.473H2v.552C2 17.746 3.18 19 4.642 19h14.752C20.821 19 22 17.746 22 16.237v-.552h-1.783zM5.218 7.212c0-.406.32-.736.713-.736h12.142c.393 0 .713.33.713.736v8.473H5.218V7.212zm14.176 10.685H4.647c-.677 0-1.248-.481-1.463-1.104h17.678c-.252.623-.823 1.104-1.468 1.104z"
                     fill={fillColor}
@@ -46,9 +25,9 @@ const IconComputerRegular: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M21.243 18.504a.75.75 0 01.102 1.493l-.102.007H3.3a.75.75 0 01-.101-1.493l.101-.007h17.943zM18.22 3.5c2.1 0 3.802 1.702 3.802 3.801v5.897c0 2.1-1.702 3.802-3.802 3.802H6.302A3.802 3.802 0 012.5 13.198V7.301a3.8 3.8 0 013.802-3.8zm0 1.5H6.302A2.301 2.301 0 004 7.301v5.897A2.302 2.302 0 006.302 15.5h11.917a2.302 2.302 0 002.302-2.302V7.301a2.3 2.3 0 00-2.302-2.3z"
+                    d="M18.406 18.007L5.603 18c-1.12 0-1.99-.311-2.58-.927-.574-.591-.863-1.437-.863-2.513V8.282C2.16 6.08 3.381 4.87 5.6 4.87l12.806.008c2.219 0 3.44 1.213 3.44 3.412v6.277c0 1.076-.288 1.922-.86 2.513-.594.616-1.462.927-2.58.927zM5.6 5.99c-.807 0-1.406.194-1.779.575-.358.367-.54.944-.54 1.717v6.277c0 1.583.736 2.32 2.319 2.32l12.804.008c1.582 0 2.319-.737 2.319-2.32V8.29c0-.773-.182-1.35-.543-1.717-.373-.38-.97-.574-1.78-.574L5.6 5.99zm15.686 14.23L2.72 20.212a.562.562 0 01-.56-.56c0-.309.252-.56.56-.56l18.566.008c.308 0 .56.252.56.56 0 .308-.252.56-.56.56z"
                     fill={fillColor}
                 />
             </svg>

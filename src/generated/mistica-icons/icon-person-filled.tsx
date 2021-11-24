@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconPersonFilled: React.FC<Props> = ({color, size = 24}) => {
+const IconPersonFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M15.991 15.705h-1.388V22H9.388v-6.295H8v-6.48c0-1.598 1.121-2.916 2.572-3.12a2.487 2.487 0 01-.659-1.697C9.913 3.081 10.928 2 12.173 2c1.25 0 2.26 1.08 2.26 2.408 0 .692-.275 1.313-.711 1.754C15.026 6.49 16 7.736 16 9.224v6.48h-.009z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconPersonFilled: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M17.304 14.048a1.52 1.52 0 01-1.079 1.857 1.509 1.509 0 01-1.196-.168v4.594c0 .863-.619 1.515-1.44 1.515-.818 0-1.434-.652-1.434-1.515v-4.454h-.28v4.454c0 .865-.597 1.493-1.415 1.493-.823 0-1.445-.642-1.445-1.493v-4.594l-.04.025a1.521 1.521 0 01-1.162.14 1.516 1.516 0 01-1.072-1.851l1.154-4.21a.885.885 0 01.047-.146c.286-1.294 1.46-2.23 2.801-2.23h2.563c1.342 0 2.513.933 2.799 2.224a.85.85 0 01.059.188c0 .006 1.14 4.171 1.14 4.171zm-5.527-6.93c-1.563 0-2.499-.927-2.499-2.476 0-.793.23-1.415.684-1.849.44-.42 1.05-.633 1.815-.633.767 0 1.378.213 1.815.63.454.434.686 1.056.686 1.849 0 1.552-.932 2.476-2.501 2.479z"
                     fill={fillColor}

@@ -8,43 +8,20 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconFlagRegular: React.FC<Props> = ({color, size = 24}) => {
-    const {skinName, colors} = useTheme();
+const IconFlagRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^blau/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-                <defs>
-                    <path id="prefix__a" d="M0 0h16.28v20H0z" />
-                </defs>
-                <g transform="translate(4 2)" fill={fillColor} fillRule="evenodd">
-                    <mask id="prefix__b" fill={fillColor}>
-                        <use xlinkHref="#prefix__a" />
-                    </mask>
-                    <path
-                        d="M2.314 4.615h10.682L9.852 7.76l3.144 3.145H2.314v-6.29zm9.462 3.145l4.504-4.505H2.314v-.228c.838-.42 1.258-1.55.458-2.6C1.06-.877-.876 1.06.428 2.772c.174.132.351.224.526.293V20h1.36v-7.735H16.28L11.776 7.76z"
-                        fill={fillColor}
-                        mask="url(#prefix__b)"
-                    />
-                </g>
-            </svg>
-        );
-    } else {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-                <path
-                    d="M19.728 11.527a.153.153 0 01-.143.09H4.838v-8.28c0-.088.07-.158.16-.158h14.59c.087 0 .126.056.143.09.02.042.034.1.034.11l-3.101 3.086a1.317 1.317 0 00-.003 1.852l3.05 3.044c.05.065.037.126.017.166zm-2.24-4.02c-.065-.067-.068-.168-.003-.23l3.148-3.145c.305-.398.359-.925.135-1.376a1.31 1.31 0 00-1.183-.73H4.995c-.726 0-1.317.587-1.317 1.307v17.801c0 .317.26.575.58.575.319 0 .58-.258.58-.575v-8.37h14.747c.505 0 .958-.28 1.183-.73.224-.451.17-.978-.183-1.432l-3.098-3.095z"
-                    fill={fillColor}
-                />
-            </svg>
-        );
-    }
+    return (
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+            <path
+                d="M19.728 11.527a.153.153 0 01-.143.09H4.838v-8.28c0-.088.07-.158.16-.158h14.59c.087 0 .126.056.143.09.02.042.034.1.034.11l-3.101 3.086a1.317 1.317 0 00-.003 1.852l3.05 3.044c.05.065.037.126.017.166zm-2.24-4.02c-.065-.067-.068-.168-.003-.23l3.148-3.145c.305-.398.359-.925.135-1.376a1.31 1.31 0 00-1.183-.73H4.995c-.726 0-1.317.587-1.317 1.307v17.801c0 .317.26.575.58.575.319 0 .58-.258.58-.575v-8.37h14.747c.505 0 .958-.28 1.183-.73.224-.451.17-.978-.183-1.432l-3.098-3.095z"
+                fill={fillColor}
+            />
+        </svg>
+    );
 };
 
 export default IconFlagRegular;

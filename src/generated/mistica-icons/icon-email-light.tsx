@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconEmailLight: React.FC<Props> = ({color, size = 24}) => {
+const IconEmailLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <g fill={fillColor}>
                     <path d="M21.274 18.223H2.726V6.45l8.91 5.501a.35.35 0 00.182.05.345.345 0 00.182-.05l8.91-5.496v7.493c0 .214.164.388.364.388.2 0 .363-.174.363-.388v-8.56c0-.214-.163-.388-.363-.388H2.364C2.162 5 2 5.174 2 5.388v13.224c0 .214.163.388.363.388h18.91c.2 0 .364-.174.364-.388 0-.214-.163-.389-.363-.389zm-9.456-7.06L3.09 5.778h17.458l-8.729 5.387z" />
                     <circle cx={21.274} cy={16.277} r={1} />
@@ -28,7 +25,7 @@ const IconEmailLight: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M20.834 17.817c-.168.199-.462.305-.874.31-1.543.026-16.092 0-16.246 0a.755.755 0 01-.451-.198c-.188-.185-.283-.488-.283-.902V7.682l7.3 4.63c.041.029.68.488 1.568.488.448 0 .964-.118 1.493-.468l7.678-4.664-.009 9.426c0 .003.068.434-.176.723M3.719 5.837l16.586.002c.103.003.593.065.691.883l-8.095 4.918c-1.11.726-2.098.04-2.16-.003L2.986 6.716c.02-.219.081-.521.255-.703.115-.118.272-.177.48-.177m18.106 11.19L21.84 6.93c-.042-1.538-1.012-1.888-1.535-1.908L3.719 5.016c-.434 0-.81.15-1.078.437-.524.554-.488 1.411-.482 1.484v10.087c0 .644.18 1.146.53 1.487.277.27.646.426 1.033.435.098 0 6.555.01 11.333.01 2.415 0 4.398-.002 4.919-.01.667-.012 1.17-.219 1.496-.614.473-.571.364-1.297.356-1.305"
                     fill={fillColor}

@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconShieldCrossFilled: React.FC<Props> = ({color, size = 24}) => {
+const IconShieldCrossFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M4 10.624V4.752h.363c3.411 0 6.18-2.01 7.088-2.752v8.624H4zm16 0V4.752h-.363c-3.411 0-6.18-2.01-7.088-2.752v8.624H20zm-7.455 1.099V22C15.863 20.877 20 18.919 20 14.659v-2.936h-7.455zm-1.09 0H4v2.936c0 4.199 3.886 6.13 7.455 7.336V11.723z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconShieldCrossFilled: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M4.434 4.56c1.602.258 2.454-.322 3.527-1.053C8.913 2.86 9.983 2.143 11.683 2v9.045H3.81c-.14-2.76-.132-5.703-.132-5.885 0-.19.087-.37.232-.49a.616.616 0 01.524-.11zm16.47.602c0 .183.01 3.127-.128 5.886h-7.877V2c1.7.143 2.77.86 3.723 1.507 1.075.731 1.933 1.303 3.552 1.048a.636.636 0 01.725.529c0 .028.003.053.006.078zM12.9 21.686v-9.395h7.804c-.062.891-.14 1.715-.246 2.345v.003c-.558 3.271-6.014 6.263-7.558 7.047zm-8.762-7.05c-.109-.63-.187-1.454-.252-2.347h7.801v9.394c-1.543-.781-6.994-3.773-7.549-7.047z"
                     fill={fillColor}

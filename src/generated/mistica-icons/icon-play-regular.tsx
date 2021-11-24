@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconPlayRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconPlayRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M6.023 22c-.37 0-.743-.108-1.08-.32-.607-.356-.943-1-.943-1.716v-15.9c0-.716.37-1.392 1.012-1.752.671-.392 1.449-.428 2.09-.032l12.909 7.928c.54.32.91.892.978 1.572.068.644-.17 1.32-.642 1.752-.034.036-.068.072-.102.072L7.069 21.716A2.13 2.13 0 016.023 22zm.068-18.58a.85.85 0 00-.404.108c-.102.072-.336.252-.336.536v15.9c0 .252.17.392.268.464.204.108.506.18.774.036l13.112-8.04a.88.88 0 00.17-.5.639.639 0 00-.302-.5L6.393 3.492a.946.946 0 00-.302-.072z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconPlayRegular: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M11.986 2.16c3.124 0 5.552.815 7.222 2.423 1.734 1.67 2.61 4.162 2.61 7.409 0 3.246-.88 5.737-2.61 7.406-1.67 1.608-4.098 2.423-7.222 2.423-3.123 0-5.551-.815-7.218-2.423-1.731-1.667-2.608-4.157-2.608-7.403 0-3.247.877-5.74 2.608-7.41C6.435 2.979 8.866 2.16 11.986 2.16zm0 1.09c-5.798 0-8.74 2.94-8.74 8.745 0 5.798 2.942 8.74 8.74 8.74 5.801 0 8.745-2.942 8.745-8.74 0-5.801-2.944-8.745-8.745-8.745zM9.43 7.712l6.653 3.84a.484.484 0 010 .84L9.43 16.236a.5.5 0 01-.241.064.484.484 0 01-.487-.485V8.132a.484.484 0 01.728-.42zm.244 1.26v6l5.196-3-5.196-3z"
                     fill={fillColor}

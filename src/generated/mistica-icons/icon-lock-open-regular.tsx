@@ -8,35 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconLockOpenRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconLockOpenRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-                <defs>
-                    <path id="prefix__a" d="M0 0h19.976v15.982H0z" />
-                </defs>
-                <g transform="translate(2 4)" fill={fillColor} fillRule="evenodd">
-                    <mask id="prefix__b" fill={fillColor}>
-                        <use xlinkHref="#prefix__a" />
-                    </mask>
-                    <g mask="url(#prefix__b)" fill={fillColor}>
-                        <path d="M4.881 12.441h2.4v-2.4h-2.4z" />
-                        <path d="M9.976 14.644H1.988a.651.651 0 01-.65-.65V8.018h9.288v5.976c0 .358-.292.65-.65.65zM15.301 0a4.68 4.68 0 00-4.675 4.675v1.981H-.008v.016h-.016v7.322c0 1.109.903 2.012 2.012 2.012h7.988c1.11 0 2.012-.903 2.012-2.012v-9.32a3.316 3.316 0 013.313-3.312 3.316 3.316 0 013.313 3.313v1.997h1.362V4.675A4.68 4.68 0 0015.301 0z" />
-                    </g>
-                </g>
-            </svg>
-        );
-    } else if (skinName.match(/^o2/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M18.298 9.893V8.07c0-3.355-2.592-6.07-5.794-6.07-2.317 0-4.397 1.427-5.317 3.643-.137.355 0 .783.34.927.34.144.748 0 .885-.356.748-1.679 2.317-2.783 4.088-2.783 2.454 0 4.431 2.072 4.431 4.643v1.783H7.046C5.92 9.857 5 10.82 5 12v7.857C5 21.037 5.92 22 7.046 22h10.908C19.08 22 20 21.036 20 19.857V12c0-1.072-.748-1.927-1.702-2.107zm.34 9.96c0 .396-.31.716-.684.716H7.046c-.378 0-.683-.324-.683-.716V12c0-.396.309-.716.683-.716h10.908c.378 0 .683.324.683.716v7.853z"
                     fill={fillColor}
@@ -45,7 +25,7 @@ const IconLockOpenRegular: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M18.097 11.045c.002-.053.042-.723-.381-1.18-.3-.324-.785-.487-1.437-.487-2.535 0-8.432.009-8.737.009h-.028c-.014 0-.03 0-.045-.003-.003 0-.033-.003-.081-.003-.219 0-.83.036-1.238.42-.286.269-.432.686-.432 1.238v7.785c-.002.044-.033.72.395 1.179.297.32.77.482 1.41.482l8.759-.006c.047 0 .88.048 1.389-.44.288-.277.428-.68.428-1.232-.005-2.56-.002-7.762-.002-7.762zm1.187.05c.003 0 0 5.163.003 7.709 0 .896-.272 1.608-.812 2.118-.894.846-2.185.761-2.238.759l-8.717.005c-.986 0-1.757-.294-2.289-.874-.779-.848-.706-1.988-.703-2.036l-.003-7.74c0-.904.278-1.621.82-2.128.508-.474 1.141-.645 1.6-.704v-1.19c0-3.664 2.44-4.992 4.723-5.014.146 0 .3.003.434.003 1.838.045 4.014.997 4.602 3.538a.603.603 0 01-.442.725.599.599 0 01-.717-.448c-.546-2.359-2.796-2.594-3.474-2.61-.12-.004-.263-.004-.395-.004-1.064.009-3.543.401-3.543 3.807v1.165c1.625-.002 6.04-.008 8.14-.008 1.006 0 1.787.297 2.322.885.776.855.692 1.989.69 2.042zm-7.417 5.168c1.356-.025 1.356-1.075 1.356-1.47 0-.359 0-1.451-1.376-1.485l-.168-.003h-.042c-1.33.014-1.33 1.073-1.33 1.47 0 .401 0 1.471 1.355 1.488h.205zm.008-4.16c.519.015 2.538.222 2.538 2.69 0 2.476-2.022 2.666-2.53 2.678h-.243c-.532-.009-2.53-.202-2.53-2.695 0-2.485 1.978-2.672 2.51-2.675h.054c.07 0 .14 0 .201.003z"
                     fill={fillColor}

@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconBatteryChargingFilled: React.FC<Props> = ({color, size = 24}) => {
+const IconBatteryChargingFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M15.874 3.783H14.82V2H9.173v1.787H8.118C6.948 3.787 6 4.747 6 5.93v13.927C6 21.04 6.948 22 8.118 22h7.764c1.17 0 2.118-.96 2.118-2.143V5.927c-.008-1.184-.956-2.144-2.126-2.144m-1.66 8.837l-2.43 4.274a.53.53 0 01-.726.196.54.54 0 01-.194-.732l1.976-3.47H10.2c-.186 0-.36-.1-.462-.268a.54.54 0 010-.536l2.43-4.286a.523.523 0 01.723-.196.536.536 0 01.194.731l-1.98 3.483h2.643c.186 0 .36.104.463.268a.53.53 0 01.004.536"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconBatteryChargingFilled: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M17.217 18.339V7.479c0-.742-.165-1.266-.507-1.602-.342-.34-.874-.502-1.63-.502H9.573c-.745 0-1.277.168-1.625.516-.344.341-.512.863-.512 1.59V18.34c0 .748.165 1.277.51 1.61.338.334.87.494 1.627.494h5.51c.753 0 1.288-.16 1.627-.493.342-.334.507-.863.507-1.611zM10.892 3.333c-.073.07-.087.233-.087.353v.446h3.048v-.446c0-.103-.011-.285-.084-.358-.076-.073-.26-.084-.364-.084h-2.149c-.129 0-.291.014-.364.09zM17.604 5c.588.583.874 1.392.874 2.479v10.86c0 1.098-.289 1.913-.883 2.493-.588.574-1.412.854-2.515.854H9.573c-1.104 0-1.927-.28-2.516-.854-.593-.583-.882-1.398-.882-2.496V7.48c0-1.073.286-1.88.874-2.465.591-.588 1.409-.877 2.493-.882v-.446c0-.515.151-.93.454-1.23C10.3 2.155 10.724 2 11.25 2h2.148c.535 0 .958.151 1.258.451.3.297.45.714.45 1.235v.446c1.096.005 1.914.288 2.497.868zm-2.541 5.84a.54.54 0 01.574.748l-2.916 6.647a.547.547 0 01-1.047-.215l.005-3.804-2.09.285a.53.53 0 01-.506-.204.534.534 0 01-.073-.535l2.736-6.55a.547.547 0 01.617-.321c.255.05.437.274.437.532l-.048 3.737 2.311-.32z"
                     fill={fillColor}

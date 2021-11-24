@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconWarningFilled: React.FC<Props> = ({color, size = 24}) => {
+const IconWarningFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10-4.5 10-10 10zm.536-14.644A.552.552 0 0012 6.82a.552.552 0 00-.536.536v6.788c0 .284.252.536.536.536a.552.552 0 00.536-.536V7.356zM12 16.108a.718.718 0 00-.716.716c0 .392.32.716.716.716.392 0 .716-.32.716-.716a.718.718 0 00-.716-.716z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconWarningFilled: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M11.997 18.41a.786.786 0 010-1.571c.432 0 .782.351.782.786 0 .435-.35.786-.782.786zm-.689-12.69a.689.689 0 011.378 0v9.498a.689.689 0 01-1.378 0V5.721zm1.152-4.707A35.105 35.105 0 0011.621 1h-.203C9.208 1.019 1 1.776 1 11.962c0 10.202 8.286 11.004 10.496 11.035a42.806 42.806 0 001.008-.003C14.604 22.956 23 22.167 23 12.028 23 1.914 14.614 1.063 12.46 1.013z"
                     fill={fillColor}

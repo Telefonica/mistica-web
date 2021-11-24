@@ -8,35 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconEuroSymbolRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconEuroSymbolRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-                <defs>
-                    <path id="prefix__a" d="M0 0h19.976v20H0z" />
-                </defs>
-                <g transform="translate(2 2)" fill={fillColor} fillRule="evenodd">
-                    <mask id="prefix__b" fill={fillColor}>
-                        <use xlinkHref="#prefix__a" />
-                    </mask>
-                    <g mask="url(#prefix__b)" fill={fillColor}>
-                        <path d="M10.4 14.008a3.983 3.983 0 01-3.469-2.032h4.74v-1.358H6.467a3.984 3.984 0 01-.049-.592c0-.202.02-.399.049-.592h5.204V8.076H6.932a3.98 3.98 0 016.52-.607l1.04-.872a5.328 5.328 0 00-4.092-1.91 5.344 5.344 0 00-4.966 3.389h-1.39v1.358h1.051a5.517 5.517 0 00-.035.592c0 .2.014.397.035.592H4.044v1.358h1.39a5.344 5.344 0 004.966 3.39c1.605 0 3.11-.714 4.129-1.956l-1.049-.86a3.97 3.97 0 01-3.08 1.458z" />
-                        <path d="M9.976 18.642c-4.604 0-8.642-4.038-8.642-8.642 0-4.604 4.038-8.643 8.642-8.643 4.604 0 8.642 4.039 8.642 8.643 0 4.604-4.038 8.642-8.642 8.642zM9.976 0c-5.327 0-10 4.673-10 10s4.673 10 10 10 10-4.673 10-10-4.673-10-10-10z" />
-                    </g>
-                </g>
-            </svg>
-        );
-    } else if (skinName.match(/^o2/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M12 2c5.5 0 10 4.5 10 10 0 5.536-4.5 10-10 10-5.536 0-10-4.5-10-10S6.5 2 12 2zm0 1.428A8.552 8.552 0 003.428 12 8.548 8.548 0 0012 20.568 8.548 8.548 0 0020.572 12c0-4.716-3.82-8.572-8.572-8.572zm.54 3.92c.824 0 1.608.248 2.324.644a.69.69 0 01.252.964.69.69 0 01-.964.252 3.205 3.205 0 00-1.608-.428 3.24 3.24 0 00-2.68 1.428h2.68c.392 0 .716.32.716.716 0 .392-.32.716-.716.716h-3.18c-.036.104-.036.252-.036.356 0 .104.036.248.036.356h3.176c.392 0 .716.32.716.716 0 .392-.32.716-.716.716H9.86a3.24 3.24 0 002.68 1.428c.572 0 1.108-.144 1.608-.428.32-.212.748-.104.964.252.212.32.104.748-.252.964-.716.428-1.5.644-2.324.644-1.928 0-3.568-1.176-4.284-2.856h-.716a.718.718 0 01-.716-.716c0-.396.32-.716.72-.724h.356c-.036-.104-.036-.252-.036-.356 0-.104.036-.248.036-.356H7.54a.718.718 0 01-.716-.716c0-.392.32-.716.716-.716h.716c.712-1.676 2.356-2.856 4.284-2.856z"
                     fill={fillColor}
@@ -45,7 +25,7 @@ const IconEuroSymbolRegular: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M18.667 18.846c-1.084.538-2.443.81-4.034.81-3.812 0-6.126-1.494-7.02-4.527h5.519c.515 0 .935-.44.935-.986 0-.544-.417-.986-.935-.986H7.266c-.04-.434-.081-.863-.081-1.342 0-.207.028-.386.036-.588h5.91c.516 0 .936-.44.936-.986s-.417-.986-.935-.986H7.45c.723-3.53 3.073-5.286 7.182-5.286 1.574 0 2.916.266 3.994.79.471.23 1.026.014 1.244-.479.216-.493.014-1.078-.456-1.308C18.09 2.325 16.479 2 14.633 2c-5.143 0-8.3 2.557-9.106 7.255H3.936c-.516 0-.936.44-.936.986s.42.986.936.986h1.397c-.005.196-.02.386-.02.588 0 .465.023.908.06 1.342H3.936c-.516 0-.936.44-.936.986 0 .543.42.986.936.986h1.736c1.006 4.216 4.098 6.496 8.958 6.496 1.871 0 3.496-.336 4.832-.998.468-.232.67-.817.448-1.31-.218-.493-.773-.706-1.243-.471"
                     fill={fillColor}

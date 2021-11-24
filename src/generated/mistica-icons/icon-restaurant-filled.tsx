@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconRestaurantFilled: React.FC<Props> = ({color, size = 24}) => {
+const IconRestaurantFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M12.517 3.074v5.357c0 1.179-.923 2.134-2.059 2.143v10.713a.702.702 0 01-.689.713.702.702 0 01-.689-.713V10.574h-.008C7.932 10.574 7 9.614 7 8.431V3.074c0-.393.31-.713.689-.713.38 0 .69.32.69.713v5.357c0 .393.308.713.688.713h.009v-6.07c0-.393.31-.713.689-.713.38 0 .689.32.689.713v6.07a.704.704 0 00.68-.713V3.074c0-.393.31-.713.69-.713.38 0 .693.32.693.713zM16.315 2c-1.524 0-2.76 1.28-2.76 2.856V12c0 .393.309.713.689.713h1.378v8.57c0 .393.31.712.689.712.38 0 .689-.32.689-.713V2.718A.697.697 0 0016.315 2z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconRestaurantFilled: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M10.12 2.153c.328 0 .594.269.594.602v7.395c0 .613-.359 1.073-.835 1.073h-.3c.521 3.658.953 8.011.958 8.056.003 1.871-1.274 2.538-2.372 2.557h-.2c-1.089-.014-2.372-.683-2.372-2.51.011-.12.61-5.137 1.028-8.109l-.386.003c-.476 0-.835-.46-.835-1.073V2.79c0-.33.266-.62.594-.62.328 0 .594.25.594.583v4.535h.82V2.752a.6.6 0 01.594-.602c.328 0 .594.269.594.602v4.535h.922l.005-4.532a.602.602 0 01.597-.602zm7.756 11.428c.373 2.933.647 5.715.65 5.743.003 1.834-1.252 2.49-2.328 2.512h-.187c-1.079-.014-2.337-.666-2.337-2.462.006-.067.348-2.958.695-5.613h-.185a.598.598 0 01-.594-.603V6.083c0-2.157 1.734-3.91 3.863-3.91.328 0 .594.268.594.602v10.383a.579.579 0 01-.17.423z"
                     fill={fillColor}

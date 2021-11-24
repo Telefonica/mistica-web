@@ -8,35 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconAddMoreCircleRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconAddMoreCircleRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-                <defs>
-                    <path id="prefix__a" d="M0 0h19.976v20H0z" />
-                </defs>
-                <g transform="translate(2 2)" fill={fillColor} fillRule="evenodd">
-                    <mask id="prefix__b" fill={fillColor}>
-                        <use xlinkHref="#prefix__a" />
-                    </mask>
-                    <g mask="url(#prefix__b)" fill={fillColor}>
-                        <path d="M15.908 9.321h-5.254V4.068a.679.679 0 10-1.357 0v5.253H4.044a.678.678 0 000 1.357h5.253v5.254a.679.679 0 001.357 0v-5.254h5.254a.678.678 0 000-1.357z" />
-                        <path d="M9.976 18.642c-4.604 0-8.642-4.038-8.642-8.642 0-4.604 4.038-8.643 8.642-8.643 4.604 0 8.642 4.039 8.642 8.643 0 4.604-4.038 8.642-8.642 8.642zM9.976 0c-5.327 0-10 4.673-10 10s4.673 10 10 10 10-4.673 10-10-4.673-10-10-10z" />
-                    </g>
-                </g>
-            </svg>
-        );
-    } else if (skinName.match(/^o2/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M12 2c5.516 0 10 4.484 10 10s-4.484 10-10 10S2 17.516 2 12 6.484 2 12 2zm0 1.424c-4.728 0-8.576 3.848-8.576 8.576 0 4.728 3.848 8.576 8.576 8.576 4.728 0 8.576-3.848 8.576-8.576 0-4.728-3.848-8.576-8.576-8.576zm-.002 1.8a.722.722 0 01.716.715v5.346l5.34.006a.722.722 0 01.715.715c0 .198-.079.38-.206.507a.726.726 0 01-.506.206H12.71v5.346a.702.702 0 01-.713.713.722.722 0 01-.715-.716v-5.346H5.937a.722.722 0 01-.716-.715.722.722 0 01.716-.716h5.346V5.94a.722.722 0 01.715-.715z"
                     fill={fillColor}
@@ -45,7 +25,7 @@ const IconAddMoreCircleRegular: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M17.98 11.215a.751.751 0 010 1.502h-5.236v5.245a.751.751 0 01-1.502 0v-5.248H6.017a.751.751 0 010-1.503h5.225V6.038a.751.751 0 011.502 0v5.177h5.236zm-5.46 11.279c3-.055 9.977-1.185 9.977-10.463 0-9.279-7.017-10.45-10.033-10.522-.286-.006-.573-.01-.86-.01h-.226c-2.97.027-9.875 1.096-9.875 10.463 0 9.381 6.973 10.494 9.971 10.535.348.004.697.004 1.045-.003zM12.498.01C14.855.068 24 .997 24 12.03c0 11.062-9.162 11.919-11.45 11.963-.215.004-.461.007-.71.007-.13 0-.26 0-.39-.003C9.04 23.962 0 23.092 0 11.962 0 .847 8.954.02 11.365 0h.239c.307 0 .625.003.895.01z"
                     fill={fillColor}

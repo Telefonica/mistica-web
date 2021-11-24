@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconCloseRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconCloseRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M12.734 12l6.114-6.114a.52.52 0 00-.734-.734L12 11.266 5.886 5.152a.52.52 0 00-.734.734L11.266 12l-6.114 6.114a.52.52 0 00.365.886c.132 0 .265-.05.366-.152L12 12.734l6.114 6.114a.515.515 0 00.731 0 .52.52 0 000-.734L12.734 12z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconCloseRegular: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M17.788 6.212c.259.258.28.664.065.947l-.065.074L13.022 12l4.766 4.767a.722.722 0 01-.947 1.086l-.074-.065L12 13.022l-4.767 4.766a.722.722 0 01-1.086-.947l.065-.074L10.978 12 6.212 7.233a.722.722 0 01.947-1.086l.074.065L12 10.978l4.767-4.766a.722.722 0 011.021 0z"
                     fill={fillColor}

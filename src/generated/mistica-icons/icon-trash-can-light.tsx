@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconTrashCanLight: React.FC<Props> = ({color, size = 24}) => {
+const IconTrashCanLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M13.112 1c1.037 0 1.85.823 1.85 1.874v.752h6.669c.224 0 .369.155.369.378 0 .222-.145.373-.37.373H4.96v15.754c0 .638.48 1.125 1.112 1.125h11.854c.631 0 1.112-.487 1.112-1.125V8.503c0-.223.146-.374.37-.374.22 0 .369.147.369.374v11.623c0 1.05-.813 1.874-1.85 1.874H6.07c-1.038 0-1.851-.823-1.851-1.874V4.373H2.37C2.15 4.373 2 4.222 2 4s.145-.373.37-.373h6.667v-.752c0-1.05.814-1.874 1.851-1.874zm1.481 6.003c.22 0 .37.147.37.374v10.876c0 .222-.15.374-.37.374s-.369-.147-.369-.374V7.377c0-.227.15-.374.37-.374zm-5.186 0c.22 0 .369.147.369.374v10.876c0 .222-.15.374-.37.374s-.369-.147-.369-.374V7.377c0-.227.15-.374.37-.374zM19.41 5.499c.41 0 .743.337.743.752a.747.747 0 01-.743.752.747.747 0 01-.743-.752c0-.415.333-.752.743-.752zm-6.299-3.751h-2.224c-.63 0-1.112.487-1.112 1.126v.752h4.448v-.752c0-.639-.481-1.126-1.112-1.126z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconTrashCanLight: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M18.905 18.713V7.167H5.053V18.73c0 .042-.056 1.023.563 1.67.387.409.967.622 1.72.622h9.258c.034 0 1.04.033 1.703-.614.403-.384.608-.958.608-1.695zM8.199 4.296V6.35h7.563V4.302c0-.034.034-.656-.32-1.031-.187-.205-.459-.294-.826-.294H9.32c-.042 0-.468-.034-.77.246-.239.213-.354.572-.351 1.073zm13.21 2.053a.41.41 0 010 .818h-1.686v11.546c0 .975-.294 1.746-.868 2.292-.81.787-1.933.834-2.21.834H7.338c-1 0-1.776-.294-2.325-.885-.86-.916-.779-2.201-.779-2.252V7.167H2.541a.41.41 0 010-.818h4.837V4.296c0-.745.205-1.31.622-1.686.583-.516 1.328-.451 1.359-.451h5.255c.605 0 1.08.188 1.425.557.597.639.541 1.58.541 1.62v2.013h4.83zM9.88 17.655a.408.408 0 01-.408-.41v-6.29a.41.41 0 01.818 0v6.29a.408.408 0 01-.41.41zm4.194 0a.408.408 0 01-.409-.41v-6.29a.41.41 0 01.818 0v6.29a.408.408 0 01-.409.41z"
                     fill={fillColor}

@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconChevronLeftLight: React.FC<Props> = ({color, size = 24}) => {
+const IconChevronLeftLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M15.447 18.854c.305 0 .553.257.553.573a.563.563 0 01-.553.573.563.563 0 01-.553-.573c0-.316.248-.573.553-.573zm.084-14.768a.259.259 0 01.386 0 .282.282 0 010 .4L8.664 12l5.875 6.086a.282.282 0 010 .4.248.248 0 01-.195.087.248.248 0 01-.194-.087l-6.067-6.284a.282.282 0 010-.4z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconChevronLeftLight: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M15.388 20a.593.593 0 01-.404-.16L7.19 12.527a.604.604 0 01-.19-.443c0-.173.07-.337.191-.455l7.793-7.451a.592.592 0 01.845 0 .64.64 0 010 .872l-7.354 7.02 7.319 6.862a.628.628 0 01.004.868l-.004.004a.624.624 0 01-.406.196z"
                     fill={fillColor}

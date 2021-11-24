@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconAddMoreLight: React.FC<Props> = ({color, size = 24}) => {
+const IconAddMoreLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M11.994 5c.155 0 .272.132.272.291v6.918h4.581c.146 0 .272.126.272.291 0 .165-.123.291-.272.291h-4.57v6.918c0 .165-.117.291-.271.291-.155 0-.272-.132-.272-.291V12.79H5.272c-.154 0-.272-.126-.272-.291 0-.165.123-.291.272-.291h6.45V5.29c0-.165.118-.291.272-.291zm6.468 6.918c.297 0 .538.258.538.576 0 .318-.241.576-.538.576-.298 0-.538-.258-.538-.576 0-.318.24-.576.538-.576z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconAddMoreLight: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M18.536 11.535h-6.069V5.466a.467.467 0 00-.932 0v6.069H5.466a.466.466 0 100 .932h6.069v6.067a.467.467 0 00.932 0v-6.067h6.067a.467.467 0 00.002-.932z"
                     fill={fillColor}

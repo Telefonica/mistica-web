@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconFastForwardFilled: React.FC<Props> = ({color, size = 24}) => {
+const IconFastForwardFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M12 2C6.488 2 2 6.488 2 12s4.488 10 10 10 10-4.488 10-10S17.512 2 12 2zm.38 10.38l-4.644 4.638a.532.532 0 01-.38.156.535.535 0 01-.38-.914l4.265-4.265-4.264-4.264a.535.535 0 010-.758c.21-.21.549-.21.759 0l4.643 4.643a.54.54 0 010 .763zm6.069 0l-4.644 4.638a.532.532 0 01-.379.156.535.535 0 01-.38-.914l4.265-4.265-4.26-4.26a.535.535 0 010-.758c.21-.21.549-.21.759 0l4.643 4.644a.54.54 0 01-.004.758z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconFastForwardFilled: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M11.846 2C5.403 2 2 5.403 2 11.846c0 6.437 3.403 9.84 9.846 9.84 6.437 0 9.84-3.403 9.84-9.84 0-6.443-3.403-9.846-9.84-9.846zM7.504 13.44l3.168-1.885L7.504 9.65v3.79zm9.093-1.891l-3.168-1.905v3.79l3.168-1.885zM6.599 8.053a.603.603 0 01.611.009l4.952 2.974c.026.014.034.04.056.056V8.574a.603.603 0 01.916-.518l4.953 2.978a.604.604 0 010 1.036l-4.953 2.947a.61.61 0 01-.61.005.604.604 0 01-.306-.526v-2.482c-.022.017-.033.045-.058.059l-4.953 2.952a.61.61 0 01-.61.006.61.61 0 01-.306-.527V8.58a.618.618 0 01.308-.527z"
                     fill={fillColor}

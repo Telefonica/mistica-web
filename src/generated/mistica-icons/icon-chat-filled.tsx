@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconChatFilled: React.FC<Props> = ({color, size = 24}) => {
+const IconChatFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M7.557 7.123v3.749c0 2.482 1.996 4.502 4.448 4.502h3.328c0 1.733-1.299 2.813-2.963 3H8.112L5.594 20.89a.368.368 0 01-.403.081.377.377 0 01-.228-.345v-2.252C3.3 18.187 2 16.733 2 15v-4.502c0-1.863 1.494-3.375 3.333-3.375h2.224zM18.667 3C20.507 3 22 4.512 22 6.374v4.503c0 1.733-1.3 3.187-2.963 3.374v2.251c0 .15-.09.288-.228.346a.368.368 0 01-.403-.082l-2.518-2.515H12c-1.84 0-3.333-1.512-3.333-3.374V6.374C8.667 4.512 10.16 3 12 3z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconChatFilled: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M18.812 2.845H4.832a2.822 2.822 0 00-2.826 2.812v9.65c0 1.383.924 2.507 2.187 2.759v2.35c0 .51.482.975 1.009.975.518 0 .77-.336.854-.449l2.207-2.823h10.55a2.82 2.82 0 002.823-2.812V5.654a2.82 2.82 0 00-2.824-2.81zm-1.03 6.036H5.848a.562.562 0 01-.56-.56c0-.308.252-.56.56-.56H17.78a.561.561 0 010 1.12zm-3.824 4.37h-8.11a.562.562 0 01-.56-.56c0-.309.253-.56.56-.56h8.11a.561.561 0 010 1.12z"
                     fill={fillColor}

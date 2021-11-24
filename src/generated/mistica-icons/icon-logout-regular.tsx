@@ -8,42 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconLogoutRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconLogoutRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-                <defs>
-                    <path id="prefix__a" d="M0 0h18.302v17.11H0z" />
-                </defs>
-                <g fill={fillColor} fillRule="evenodd">
-                    <g transform="translate(3 4.85)">
-                        <mask id="prefix__b" fill={fillColor}>
-                            <use xlinkHref="#prefix__a" />
-                        </mask>
-                        <path
-                            d="M14.197.384L13.636 0l-.768 1.122.56.384c2.168 1.485 3.514 3.953 3.514 6.441 0 4.157-3.646 7.803-7.803 7.803s-7.803-3.646-7.803-7.803c0-2.485 1.344-4.951 3.508-6.436l.56-.385-.77-1.121-.56.385C1.508 2.15-.024 4.976-.024 7.947c0 4.881 4.282 9.163 9.163 9.163s9.163-4.282 9.163-9.163c0-2.974-1.534-5.802-4.105-7.563z"
-                            fill={fillColor}
-                            mask="url(#prefix__b)"
-                        />
-                    </g>
-                    <path
-                        d="M12.14 13.477a.68.68 0 00.68-.68V2h-1.36v10.797c0 .375.304.68.68.68z"
-                        fill={fillColor}
-                    />
-                </g>
-            </svg>
-        );
-    } else if (skinName.match(/^o2/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M16.506 2h-6.293C8.293 2 6.72 3.608 6.72 5.571v5.715H4.727l.908-.928a.704.704 0 000-1 .668.668 0 00-.978 0L2 12.003l2.657 2.64c.14.143.317.215.49.215a.686.686 0 00.488-.216.704.704 0 000-1l-.908-.927h9.157a.71.71 0 00.7-.716.713.713 0 00-.7-.716H8.12v-4.64h10.483v10.714H8.12v-3.035a.71.71 0 00-.7-.716c-.384 0-.7.324-.7.716v4.107C6.72 20.392 8.291 22 10.212 22h6.293C18.427 22 20 20.392 20 18.429V5.57C20 3.608 18.427 2 16.506 2zm-6.293 1.428h6.293c1.048 0 1.886.784 2.062 1.783H8.15c.176-.995 1.018-1.783 2.062-1.783zm6.293 17.144h-6.293c-1.048 0-1.886-.784-2.062-1.783h10.417c-.172.995-1.014 1.783-2.062 1.783z"
                     fill={fillColor}
@@ -52,7 +25,7 @@ const IconLogoutRegular: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M16.823 2a3.674 3.674 0 013.67 3.67v12.16a3.674 3.674 0 01-3.67 3.67h-8.16a3.674 3.674 0 01-3.67-3.67.75.75 0 011.5 0c0 1.196.974 2.17 2.17 2.17h8.16c1.197 0 2.17-.974 2.17-2.17V5.67c0-1.196-.973-2.17-2.17-2.17h-8.16c-1.196 0-2.17.974-2.17 2.17a.75.75 0 01-1.5 0A3.674 3.674 0 018.663 2h8.16zM6.265 8.218a.75.75 0 010 1.06L4.543 11h7.2a.75.75 0 010 1.5H4.592l1.698 1.683a.749.749 0 11-1.054 1.066l-3.013-2.983a.745.745 0 01-.003-1.064l2.984-2.984a.75.75 0 011.061 0z"
                     fill={fillColor}

@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconArrowDownFilled: React.FC<Props> = ({color, size = 24}) => {
+const IconArrowDownFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M15.891 1v8.177h3.895c.889 0 1.707.563 2.04 1.424.336.823.186 1.726-.445 2.365L11.996 22l-9.377-9.038c-.631-.639-.78-1.538-.444-2.365.37-.865 1.15-1.424 2.039-1.424h3.895V1h7.782z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconArrowDownFilled: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M2.02 11.913c0-.151.028-.3.084-.44.176-.434.602-.7 1.106-.694l3.65-.003a.22.22 0 00.056-.04l.02-6.882c-.009-.616.145-1.07.467-1.383.322-.314.78-.463 1.393-.443h6.042c.42-.008 1.025.03 1.445.437.42.406.482 1.008.487 1.426v.008l-.002 6.712a.453.453 0 00.053.157l3.563-.006h.005c.857.006 1.149.414 1.247.658.168.418.014.9-.42 1.322l-8.712 8.659c-.084.086-.33.336-.689.333a.82.82 0 01-.594-.275L2.513 12.98c-.32-.305-.493-.691-.493-1.067z"
                     fill={fillColor}

@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconWaterDropFilled: React.FC<Props> = ({color, size = 24}) => {
+const IconWaterDropFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M10.933 19.5a5.85 5.85 0 01-4.187-1.787A6.067 6.067 0 015 13.426c0-2.002 1.393-4.32 2.509-6.143.245-.393 2.826-4.927 2.826-4.927.138-.214.348-.356.594-.356.245 0 .486.142.593.356l2.826 4.927c1.116 1.856 2.51 4.178 2.51 6.18 0 1.608-.595 3.107-1.71 4.25l-.036.037C14 18.856 12.5 19.5 10.933 19.5zm8.545-1.787h-1.393a.545.545 0 01-.523-.535c0-.283.246-.534.523-.534h1.393c.276 0 .522.25.522.534a.545.545 0 01-.522.535zm-1.674 2.751a.53.53 0 01-.384-.141l-.942-.965a.525.525 0 010-.75.496.496 0 01.732 0l.942.965c.21.215.21.535 0 .75-.072.105-.21.141-.348.141zM14.942 22a.545.545 0 01-.522-.535V20.04c0-.283.245-.534.522-.534s.522.25.522.534v1.422c0 .288-.24.539-.522.539z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconWaterDropFilled: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M12.569 2.12a.407.407 0 00-.575-.002l-.002.002c-1.359 1.367-6.673 8.247-6.659 12.57.006 2.173.647 3.957 1.852 5.164 1.199 1.2 2.966 1.835 5.106 1.835h.034c4.367-.014 6.964-2.644 6.95-7.042-.009-4.28-5.345-11.157-6.706-12.527"
                     fill={fillColor}

@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconTruckFilled: React.FC<Props> = ({color, size = 24}) => {
+const IconTruckFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M17 17.356a2.144 2.144 0 110 4.288 2.144 2.144 0 010-4.288zM15.152 5.928L22 12.736v7.136h-1.808c.012-.12.024-.248.024-.372A3.221 3.221 0 0017 16.284a3.221 3.221 0 00-3.216 3.216c0 .124-.016.236 0 .356h-1.428V5.928h2.796zm-7.08-3.572a3.228 3.228 0 013.212 3.216v14.284H2V14.32h6.428a.536.536 0 000-1.072H2v-2.5h3.216a.536.536 0 000-1.072H2v-7.32z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconTruckFilled: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M15.955 19.65c-1.126 0-1.697-.594-1.697-1.757 0-1.17.571-1.764 1.697-1.764 1.118 0 1.69.594 1.69 1.764 0 1.163-.572 1.757-1.69 1.757zm-9.65 0c-1.126 0-1.697-.594-1.697-1.757 0-1.17.571-1.764 1.697-1.764 1.118 0 1.69.594 1.69 1.764 0 1.163-.572 1.757-1.69 1.757zm14.7-7.983a479.146 479.146 0 01-2.831-3.922c-.41-.585-1.126-.97-1.835-.97h-.009l-.82.01V5.17c0-.82-.645-1.482-1.432-1.482L3.457 3.681c-.79 0-1.432.67-1.432 1.49V16.95c0 .809.628 1.473 1.406 1.487.202 1.54 1.264 2.468 2.872 2.468 1.599 0 2.66-.93 2.854-2.468h3.935c.194 1.54 1.255 2.468 2.863 2.468 1.6 0 2.661-.93 2.854-2.468h.869c.507 0 1.028-.233 1.423-.644a2.19 2.19 0 00.61-1.482v-2.97c.003-.728-.456-1.347-.705-1.674z"
                     fill={fillColor}

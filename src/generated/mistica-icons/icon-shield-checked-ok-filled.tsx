@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconShieldCheckedOkFilled: React.FC<Props> = ({color, size = 24}) => {
+const IconShieldCheckedOkFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M19.643 5.117c-3.88 0-6.86-2.983-6.892-3.011a.352.352 0 00-.502 0c-.028.028-3.012 3.01-6.893 3.01A.362.362 0 005 5.484v9.175c0 3.283 2.418 5.68 7.39 7.323a.3.3 0 00.11.019.3.3 0 00.11-.019c4.972-1.644 7.39-4.04 7.39-7.323V5.483a.356.356 0 00-.357-.366zm-2.838 4.796l-6.092 6.065L8.02 13.21a.56.56 0 010-.78.525.525 0 01.759 0l1.947 2.001L16.06 9.12a.525.525 0 01.759.014.565.565 0 01-.014.78z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconShieldCheckedOkFilled: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M20.603 5.14c0 .269.016 6.616-.449 9.361-.621 3.611-7.613 6.986-7.91 7.126a.601.601 0 01-.51 0c-.297-.142-7.28-3.518-7.902-7.128-.476-2.746-.459-9.093-.456-9.362a.595.595 0 01.74-.583c1.613.256 2.464-.319 3.543-1.041C8.72 2.807 9.922 2 11.986 2h.006c2.064.003 3.263.807 4.325 1.518 1.078.723 1.933 1.294 3.566 1.037a.62.62 0 01.711.51l.009.075zm-10.101 8.585l-2.006-2.028a.592.592 0 00-.835-.008l-.008.008a.607.607 0 000 .852l2.429 2.457c.23.232.607.232.837.002l.003-.002 5.406-5.468a.607.607 0 000-.852.592.592 0 00-.835-.008l-.008.008c-.003-.003-4.983 5.04-4.983 5.04z"
                     fill={fillColor}

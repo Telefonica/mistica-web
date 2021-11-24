@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconSharedDataLight: React.FC<Props> = ({color, size = 24}) => {
+const IconSharedDataLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <g fill={fillColor}>
                 <path d="M9.766 11.116a.287.287 0 01-.128-.544l4.476-2.25a.285.285 0 01.382.132c.068.14.011.31-.125.38l-4.477 2.253a.297.297 0 01-.128.029z" />
                 <path d="M14.24 13.442a.292.292 0 01-.128-.031l-4.477-2.25a.289.289 0 01-.125-.386.283.283 0 01.378-.126l4.477 2.25c.14.071.199.243.128.383a.276.276 0 01-.253.16zm0-6.027c-.72 0-1.187.381-1.187 1.2 0 .392.108.683.299.88.207.216.512.319.885.319s.68-.103.885-.318c.19-.198.299-.49.299-.882.005-.818-.461-1.199-1.181-1.199z" />

@@ -230,6 +230,10 @@ declare export { default as IconArrowDropUpFilled } from "./generated/mistica-ic
 declare export { default as IconArrowForwardLight } from "./generated/mistica-icons/icon-arrow-forward-light";
 declare export { default as IconArrowForwardRegular } from "./generated/mistica-icons/icon-arrow-forward-regular";
 declare export { default as IconArrowLeftFilled } from "./generated/mistica-icons/icon-arrow-left-filled";
+declare export { default as IconArrowLineDownLeftLight } from "./generated/mistica-icons/icon-arrow-line-down-left-light";
+declare export { default as IconArrowLineDownLeftRegular } from "./generated/mistica-icons/icon-arrow-line-down-left-regular";
+declare export { default as IconArrowLineUpRightLight } from "./generated/mistica-icons/icon-arrow-line-up-right-light";
+declare export { default as IconArrowLineUpRightRegular } from "./generated/mistica-icons/icon-arrow-line-up-right-regular";
 declare export { default as IconArrowRightFilled } from "./generated/mistica-icons/icon-arrow-right-filled";
 declare export { default as IconArrowRightLight } from "./generated/mistica-icons/icon-arrow-right-light";
 declare export { default as IconArrowRightRegular } from "./generated/mistica-icons/icon-arrow-right-regular";

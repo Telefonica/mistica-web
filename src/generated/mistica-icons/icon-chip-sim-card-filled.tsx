@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconChipSimCardFilled: React.FC<Props> = ({color, size = 24}) => {
+const IconChipSimCardFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M14.201 2c.575 0 1.146.252 1.542.648l3.686 3.69c.36.356.54.824.571 1.396V22H5V4.115C5 2.932 5.859 2 6.933 2zm1.757 7.705H9.05c-.647 0-1.219.576-1.219 1.22v8.1h9.346v-8.1c0-.648-.576-1.22-1.219-1.22zm-.035 1.075c.071 0 .14.108.14.144v7.026H8.901v-7.026c0-.036.108-.144.144-.144z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconChipSimCardFilled: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M18.465 2.622C17.978 2.106 17.3 2 16.818 2H9.725a.566.566 0 00-.38.148L5.52 5.692a.56.56 0 00-.18.412v13.372c0 .65.191 1.193.553 1.577.484.516 1.162.622 1.647.622h9.277c.874 0 1.378-.339 1.647-.622.361-.384.552-.927.552-1.577V4.2c0-.65-.19-1.193-.552-1.577zm-7.098 8.274a.28.28 0 01.28-.28h1.05a.28.28 0 01.28.28v1.05a.28.28 0 01-.28.28h-1.05a.28.28 0 01-.28-.28v-1.05zm-2.726 0a.28.28 0 01.28-.28h1.045a.28.28 0 01.28.28v1.05a.28.28 0 01-.28.28H8.922a.28.28 0 01-.28-.28v-1.05zm1.605 6.93a.28.28 0 01-.28.28H8.922a.28.28 0 01-.28-.28v-1.05a.28.28 0 01.28-.28h1.044a.28.28 0 01.28.28v1.05zm2.732 0a.28.28 0 01-.28.28h-1.051a.28.28 0 01-.28-.28v-1.05a.28.28 0 01.28-.28h1.05a.28.28 0 01.28.28v1.05zm2.736 0a.28.28 0 01-.28.28h-1.059a.28.28 0 01-.28-.28v-1.05a.28.28 0 01.28-.28h1.06a.28.28 0 01.28.28v1.05zm0-2.73a.28.28 0 01-.28.28H8.922a.28.28 0 01-.28-.28v-1.469a.28.28 0 01.28-.28h6.512a.28.28 0 01.28.28v1.468zm0-3.15a.28.28 0 01-.28.28h-1.059a.28.28 0 01-.28-.28v-1.05a.28.28 0 01.28-.28h1.06a.28.28 0 01.28.28v1.05z"
                     fill={fillColor}

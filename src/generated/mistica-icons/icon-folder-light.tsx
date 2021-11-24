@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconFolderLight: React.FC<Props> = ({color, size = 24}) => {
+const IconFolderLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M7.668 3c.48 0 .964.194 1.296.587l1.74 1.838c.224.237.48.351.776.351h8.296c1.036 0 1.852.862 1.852 1.956v8.214c0 .237-.148.393-.372.393s-.372-.156-.372-.393V7.694c0-.663-.48-1.174-1.112-1.174H11.52a1.69 1.69 0 01-1.296-.588L8.48 4.1c-.224-.237-.48-.351-.776-.351H3.852c-.628 0-1.112.507-1.112 1.175V20.18h18.52c.224 0 .372.157.372.393 0 .237-.152.427-.372.427H2V4.956C2 3.862 2.816 3 3.852 3h3.816zM21.26 17.476c.409 0 .74.35.74.782 0 .431-.331.781-.74.781s-.74-.35-.74-.781c0-.432.331-.782.74-.782z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconFolderLight: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M20.51 20.168H3.407a1.266 1.266 0 01-1.252-1.257V5.07a1.262 1.262 0 011.252-1.258h7.289c.336-.006.658.126.899.361.24.235.375.56.378.896v.995h8.538a1.26 1.26 0 011.277 1.257v11.586a1.269 1.269 0 01-1.28 1.26zM3.407 4.633a.437.437 0 00-.434.437v13.84c0 .242.193.438.434.438h17.104a.437.437 0 00.431-.437V7.325a.437.437 0 00-.431-.437h-9a.41.41 0 01-.409-.411V5.07a.436.436 0 00-.409-.437H3.408z"
                     fill={fillColor}

@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconAddMoreCircleFilled: React.FC<Props> = ({color, size = 24}) => {
+const IconAddMoreCircleFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M12 2C6.484 2 2 6.484 2 12s4.484 10 10 10 10-4.484 10-10S17.516 2 12 2zm6.067 9.467a.534.534 0 01.376.914.535.535 0 01-.376.161h-5.533v5.532c0 .148-.065.28-.161.377a.534.534 0 01-.914-.376v-5.533l-5.52-.011c-.3 0-.54-.24-.538-.538 0-.3.24-.54.537-.537h5.533V5.924c0-.3.24-.54.537-.538.3 0 .54.24.538.538v5.532l5.52.011z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconAddMoreCircleFilled: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M17.982 12.714h-5.236v5.248a.751.751 0 01-1.503 0v-5.248H6.018a.751.751 0 110-1.503h5.225V6.038a.751.751 0 011.503 0v5.177h5.236a.75.75 0 01.751.75.753.753 0 01-.75.749m-5.48-12.7a37.44 37.44 0 00-.92-.014h-.216C8.956.02 0 .847 0 11.962c0 11.13 9.04 12 11.452 12.035.126.003.26.003.39.003.249 0 .494-.003.706-.007C14.84 23.953 24 23.092 24 12.034 24.003.997 14.854.068 12.504.014"
                     fill={fillColor}

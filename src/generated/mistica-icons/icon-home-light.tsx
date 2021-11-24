@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconHomeLight: React.FC<Props> = ({color, size = 24}) => {
+const IconHomeLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M12.007 1l9.901 10.798c.105.114.109.265.068.412-.04.151-.18.227-.324.227h-1.785v4.687c0 .222-.14.374-.356.374-.212 0-.356-.147-.356-.374v-5.44h1.713l-8.861-9.558-8.825 9.559h1.685v9.563h4.286v-6.75h5.712v6.754h4.642c.212 0 .356.152.356.374 0 .223-.14.374-.356.374h-5.359v-6.75H9.862V22H4.147v-9.56H2.362c-.144 0-.252-.075-.325-.226a.357.357 0 01.073-.416L12.007 1zm7.508 17.619c.396 0 .717.337.717.752s-.321.752-.717.752c-.396 0-.716-.337-.716-.752s.32-.752.716-.752z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconHomeLight: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M15.433 21.018h2.513c.403 0 .73-.274.73-.613V12.71a.42.42 0 01.427-.412h1.154c.375 0 .6-.21.686-.406a.52.52 0 00-.132-.608l-8.257-8.112c-.28-.274-.83-.274-1.107 0l-8.26 8.115a.528.528 0 00-.132.608c.087.196.311.406.686.406h1.037a.42.42 0 01.426.412v7.695c0 .339.327.613.728.613h2.683v-4.048a.42.42 0 01.426-.411h5.964a.42.42 0 01.425.411l.003 4.045zm2.513.824h-2.939a.417.417 0 01-.425-.412v-4.042H9.47v4.045a.42.42 0 01-.426.412h-3.11c-.873 0-1.582-.645-1.582-1.437v-7.283h-.61c-.653 0-1.23-.356-1.474-.908a1.326 1.326 0 01.31-1.501l8.259-8.12c.596-.586 1.728-.586 2.325 0l8.26 8.114c.415.41.535.983.308 1.502-.24.551-.818.91-1.473.91h-.726v7.283c0 .793-.711 1.437-1.585 1.437z"
                     fill={fillColor}

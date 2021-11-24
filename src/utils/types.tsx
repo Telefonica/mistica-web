@@ -12,5 +12,7 @@ export type IconProps = {
     color?: string;
     size?: string | number;
     className?: string;
-    style?: React.CSSProperties;
+    // FIXME this should be React.CSSProperties but ts-to-flow is transforming it into React$CSSProperties
+    // update this type once ts-to-flow gets fixed
+    style?: {[key: string]: string | number | boolean | undefined};
 };

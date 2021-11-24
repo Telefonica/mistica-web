@@ -8,18 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconChipSimCardLight: React.FC<Props> = ({color, size = 24}) => {
+const IconChipSimCardLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M14.066 2c.454 0 .977.216 1.29.536l3.73 3.784c.348.356.559.82.559 1.252v9.784c0 .216-.141.356-.348.356-.211 0-.348-.144-.348-.356V7.608c0-.252-.14-.536-.347-.752l-3.73-3.82c-.212-.18-.524-.32-.802-.32H6.746c-.559 0-1.047.5-1.047 1.108v17.464h13.602c.21 0 .347.144.347.356s-.136.356-.347.356L5 21.964V3.82C5 2.82 5.766 2 6.742 2h7.324zm5.235 16.784c.386 0 .699.32.699.716a.708.708 0 01-.7.716.707.707 0 01-.698-.716c0-.395.313-.716.699-.716zM15.816 9.86c.489 0 1.047.392 1.047.964v8.32h-9.07v-8.32c0-.572.559-.964 1.047-.964h6.976zm-.004.708H8.84c-.176 0-.348.144-.348.252v7.608h7.668V10.82c0-.108-.176-.252-.348-.252z"
                     fill={fillColor}
@@ -28,7 +25,7 @@ const IconChipSimCardLight: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M16.634 2.156c.621 0 1.106.18 1.442.535.317.334.476.801.476 1.384v15.84c0 .583-.16 1.05-.476 1.384-.336.356-.82.535-1.442.535H7.356c-.622 0-1.106-.18-1.442-.535-.317-.333-.476-.801-.476-1.384V6.26a.29.29 0 01.08-.199l3.824-3.824a.277.277 0 01.2-.08h7.092zm0 .56H9.656L5.998 6.375v13.54c0 .902.456 1.359 1.358 1.359h9.278c.902 0 1.358-.457 1.358-1.359V4.075c0-.902-.456-1.359-1.358-1.359zm-.544 7.762a.28.28 0 01.28.28v8.611a.28.28 0 01-.28.28H7.897a.28.28 0 01-.28-.28v-8.61a.28.28 0 01.28-.28h8.193zm-5.748 6.44H8.177v2.171h2.165v-2.172zm2.73 0h-2.17v2.17h2.17v-2.17zm2.738 0h-2.177v2.17l2.177.001v-2.172zm-7.633-3.149v2.588h7.633V13.77H8.177zm2.165-2.73H8.177v2.17h2.165v-2.17zm2.73 0h-2.17v2.17h2.17v-2.17zm2.738 0h-2.177v2.17h2.177v-2.17z"
                     fill={fillColor}

@@ -8,27 +8,15 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconMobileDeviceRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconMobileDeviceRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^blau/i)) {
+    if (skinName.match(/^o2/i)) {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-                <g fill={fillColor} fillRule="evenodd">
-                    <path d="M8.11 3.35a.76.76 0 00-.76.76v15.78c0 .42.34.76.76.76h7.172c.42 0 .76-.34.76-.76V4.11a.76.76 0 00-.76-.76H8.11zM15.281 22H8.11A2.112 2.112 0 016 19.89V4.11C6 2.945 6.946 2 8.11 2h7.172c1.163 0 2.11.946 2.11 2.11v15.78c0 1.164-.947 2.11-2.11 2.11z" />
-                    <path d="M10.096 19.437h3.2v-3.2h-3.2z" />
-                </g>
-            </svg>
-        );
-    } else if (skinName.match(/^o2/i)) {
-        return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M15.216 2H8.784a3.578 3.578 0 00-3.572 3.572v12.856A3.578 3.578 0 008.784 22h6.428a3.578 3.578 0 003.572-3.572V5.572c0-1.968-1.6-3.572-3.568-3.572zM6.644 17.356V6.644H17.36V17.36H6.644v-.004zm2.14-13.928h6.428c1.06 0 1.94.772 2.112 1.784H6.672a2.149 2.149 0 012.112-1.784zm6.432 17.144H8.784c-1.06 0-1.94-.772-2.112-1.784h10.652a2.141 2.141 0 01-2.108 1.784z"
                     fill={fillColor}
@@ -37,7 +25,7 @@ const IconMobileDeviceRegular: React.FC<Props> = ({color, size = 24}) => {
         );
     } else {
         return (
-            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
                     d="M15.238 2c2.182 0 3.47 1.243 3.47 3.472v13.376c0 2.23-1.288 3.473-3.47 3.473H8.47c-2.181 0-3.47-1.244-3.47-3.473V5.472C5 3.242 6.289 2 8.47 2zm0 1.5H8.47c-1.365 0-1.97.584-1.97 1.972v13.376c0 1.389.606 1.973 1.97 1.973h6.768c1.365 0 1.97-.584 1.97-1.973V5.472c0-1.388-.604-1.972-1.97-1.972zm-3.384 12.66c.61 0 1.007.317 1.007 1 0 .328-.092.572-.254.735-.177.18-.436.265-.753.265s-.576-.085-.753-.265c-.162-.163-.254-.407-.254-.735 0-.683.397-1 1.007-1z"
                     fill={fillColor}
