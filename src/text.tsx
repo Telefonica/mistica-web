@@ -70,8 +70,8 @@ export interface TextPresetProps {
     color?: string;
     /** @deprecated use decoration prop */
     textDecoration?: 'underline' | 'line-through' | 'none';
-    decoration?: 'underline' | 'line-through' | 'none';
-    transform?: 'uppercase' | 'capitalize' | 'lowercase' | 'inherit' | 'none' | 'initial';
+    decoration?: 'underline' | 'line-through' | 'inherit' | 'none';
+    transform?: 'uppercase' | 'capitalize' | 'lowercase' | 'inherit' | 'none';
     children?: React.ReactNode;
     truncate?: boolean | number;
     /** @deprecated use transform */
