@@ -52,7 +52,6 @@ export const palette = {
     // specific for dark mode:
     darkModeBlack: '#191919',
     darkModeGrey: '#242424',
-    darkModemovistarBlue55: '#4C7389',
 } as const;
 
 export const getMovistarSkin: GetSkin = (variant) => {
