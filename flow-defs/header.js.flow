@@ -6,7 +6,12 @@ import { ButtonPrimary, ButtonSecondary } from "./button";
 import type { TextPresetProps } from "./text";
 declare type OverridableTextProps = {
   color?: $PropertyType<TextPresetProps, "color">,
+
+  /**
+   * @deprecated use decoration prop
+   */
   textDecoration?: $PropertyType<TextPresetProps, "textDecoration">,
+  decoration?: $PropertyType<TextPresetProps, "decoration">,
   truncate?: $PropertyType<TextPresetProps, "truncate">,
 };
 declare type RichText =

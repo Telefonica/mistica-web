@@ -175,7 +175,6 @@ export const getTelefonicaSkin: GetSkin = () => {
             tagBackgroundPromo: palette.orchid10,
             tagBackgroundActive: palette.grey1,
             tagBackgroundInactive: palette.grey1,
-            tagBackgroundInverse: palette.white,
 
             textTagSuccess: palette.turquoise70,
             textTagWarning: palette.ambar70,
@@ -266,7 +265,6 @@ export const getTelefonicaSkin: GetSkin = () => {
             tagBackgroundPromo: palette.orchid10,
             tagBackgroundActive: palette.grey1,
             tagBackgroundInactive: palette.grey1,
-            tagBackgroundInverse: palette.white,
 
             textTagSuccess: palette.turquoise70,
             textTagWarning: palette.ambar70,

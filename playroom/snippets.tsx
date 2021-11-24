@@ -450,7 +450,7 @@ const headerSnippets: Array<Snippet> = [
                     title="The last invoice is available"
                     preamount={{
                         text: "Example of line-through text",
-                        textDecoration: "line-through"
+                        decoration: "line-through"
                     }}
                     amount="60,44 €"
                     button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
@@ -474,7 +474,7 @@ const headerSnippets: Array<Snippet> = [
                     title="The last invoice is available"
                     preamount={{
                         text: "Example of line-through text",
-                        textDecoration: "line-through"
+                        decoration: "line-through"
                     }}
                     amount="60,44 €"
                     button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}

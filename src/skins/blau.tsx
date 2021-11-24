@@ -178,7 +178,6 @@ export const getBlauSkin: GetSkin = () => {
             tagBackgroundPromo: palette.blauPurple10,
             tagBackgroundActive: palette.blauBlueSecondary10,
             tagBackgroundInactive: palette.grey2,
-            tagBackgroundInverse: palette.white,
 
             textTagSuccess: palette.blauGreen70,
             textTagWarning: palette.blauYellow70,
@@ -283,7 +282,6 @@ export const getBlauSkin: GetSkin = () => {
             tagBackgroundPromo: palette.blauPurple10,
             tagBackgroundActive: palette.blauBlueSecondary10,
             tagBackgroundInactive: palette.grey2,
-            tagBackgroundInverse: palette.white,
 
             textTagSuccess: palette.blauGreen70,
             textTagWarning: palette.blauYellow70,

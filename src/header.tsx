@@ -18,7 +18,9 @@ import ButtonGroup from './button-group';
 
 type OverridableTextProps = {
     color?: TextPresetProps['color'];
+    /** @deprecated use decoration prop */
     textDecoration?: TextPresetProps['textDecoration'];
+    decoration?: TextPresetProps['decoration'];
     truncate?: TextPresetProps['truncate'];
 };
 

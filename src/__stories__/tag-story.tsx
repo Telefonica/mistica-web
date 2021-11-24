@@ -40,10 +40,10 @@ const Container: React.FC<{inverse?: boolean}> = ({children, inverse = false}) =
     );
 };
 
-export const Default: StoryComponent<Args> = ({label}) => {
+export const Default: StoryComponent<Args> = ({label: labelFromArgs}) => {
     const {colors} = useTheme();
 
-    const argsLabel = (s: string) => label || s;
+    const getLabel = (fallback: string) => labelFromArgs || fallback;
 
     return (
         <Stack space={48} dataAttributes={{testid: 'tags'}}>
@@ -51,54 +51,54 @@ export const Default: StoryComponent<Args> = ({label}) => {
                 <Container>
                     <Text3 medium>Example</Text3>
                     <Tag Icon={IconAlarmLightRegular} type="promo">
-                        {argsLabel('Promo')}
+                        {getLabel('Promo')}
                     </Tag>
                     <Tag Icon={IconStarFilled} type="active">
-                        {argsLabel('Active')}
+                        {getLabel('Active')}
                     </Tag>
                     <Tag Icon={IconTimeRegular} type="inactive">
-                        {argsLabel('Inactive')}
+                        {getLabel('Inactive')}
                     </Tag>
                     <Tag Icon={IconLikeRegular} type="success">
-                        {argsLabel('Success')}
+                        {getLabel('Success')}
                     </Tag>
                     <Tag Icon={IconSmileySadRegular} type="warning">
-                        {argsLabel('Warning')}
+                        {getLabel('Warning')}
                     </Tag>
                     <Tag Icon={IconSkullRegular} type="error">
-                        {argsLabel('Error')}
+                        {getLabel('Error')}
                     </Tag>
                 </Container>
 
                 <Container>
                     <Text3 medium>Without icon</Text3>
-                    <Tag type="promo">{argsLabel('Promo')}</Tag>
-                    <Tag type="active">{argsLabel('Active')}</Tag>
-                    <Tag type="inactive">{argsLabel('Inactive')}</Tag>
-                    <Tag type="success">{argsLabel('Success')}</Tag>
-                    <Tag type="warning">{argsLabel('Warning')}</Tag>
-                    <Tag type="error">{argsLabel('Error')}</Tag>
+                    <Tag type="promo">{getLabel('Promo')}</Tag>
+                    <Tag type="active">{getLabel('Active')}</Tag>
+                    <Tag type="inactive">{getLabel('Inactive')}</Tag>
+                    <Tag type="success">{getLabel('Success')}</Tag>
+                    <Tag type="warning">{getLabel('Warning')}</Tag>
+                    <Tag type="error">{getLabel('Error')}</Tag>
                 </Container>
 
                 <Container inverse>
                     <Text3 medium>Inverse</Text3>
                     <Tag Icon={IconAlarmLightRegular} type="promo">
-                        {argsLabel('Promo')}
+                        {getLabel('Promo')}
                     </Tag>
                     <Tag Icon={IconStarFilled} type="active">
-                        {argsLabel('Active')}
+                        {getLabel('Active')}
                     </Tag>
                     <Tag Icon={IconTimeRegular} type="inactive">
-                        {argsLabel('Inactive')}
+                        {getLabel('Inactive')}
                     </Tag>
                     <Tag Icon={IconLikeRegular} type="success">
-                        {argsLabel('Success')}
+                        {getLabel('Success')}
                     </Tag>
                     <Tag Icon={IconSmileySadRegular} type="warning">
-                        {argsLabel('Warning')}
+                        {getLabel('Warning')}
                     </Tag>
                     <Tag Icon={IconSkullRegular} type="error">
-                        {argsLabel('Error')}
+                        {getLabel('Error')}
                     </Tag>
                 </Container>
             </Inline>
@@ -106,24 +106,24 @@ export const Default: StoryComponent<Args> = ({label}) => {
             <Inline space={48}>
                 <Container>
                     <Text3 medium>Deprecated *</Text3>
-                    <Tag color={colors.promo}>{argsLabel('Promo')}</Tag>
-                    <Tag color={colors.brand}>{argsLabel('In progress')}</Tag>
-                    <Tag color={colors.success}>{argsLabel('Completed')}</Tag>
-                    <Tag color={colors.warning}>{argsLabel('Pending')}</Tag>
-                    <Tag color={colors.error}>{argsLabel('Overdue')}</Tag>
-                    <Tag color={colors.neutralMedium}>{argsLabel('Removed')}</Tag>
-                    <Tag color={colors.inverse}>{argsLabel('Priority')}</Tag>
+                    <Tag color={colors.promo}>{getLabel('Promo')}</Tag>
+                    <Tag color={colors.brand}>{getLabel('In progress')}</Tag>
+                    <Tag color={colors.success}>{getLabel('Completed')}</Tag>
+                    <Tag color={colors.warning}>{getLabel('Pending')}</Tag>
+                    <Tag color={colors.error}>{getLabel('Overdue')}</Tag>
+                    <Tag color={colors.neutralMedium}>{getLabel('Removed')}</Tag>
+                    <Tag color={colors.inverse}>{getLabel('Priority')}</Tag>
                 </Container>
 
                 <Container inverse>
                     <Text3 medium>Deprecated inverse *</Text3>
-                    <Tag color={colors.promo}>{argsLabel('Promo')}</Tag>
-                    <Tag color={colors.brand}>{argsLabel('In progress')}</Tag>
-                    <Tag color={colors.success}>{argsLabel('Completed')}</Tag>
-                    <Tag color={colors.warning}>{argsLabel('Pending')}</Tag>
-                    <Tag color={colors.error}>{argsLabel('Overdue')}</Tag>
-                    <Tag color={colors.neutralMedium}>{argsLabel('Removed')}</Tag>
-                    <Tag color={colors.inverse}>{argsLabel('Priority')}</Tag>
+                    <Tag color={colors.promo}>{getLabel('Promo')}</Tag>
+                    <Tag color={colors.brand}>{getLabel('In progress')}</Tag>
+                    <Tag color={colors.success}>{getLabel('Completed')}</Tag>
+                    <Tag color={colors.warning}>{getLabel('Pending')}</Tag>
+                    <Tag color={colors.error}>{getLabel('Overdue')}</Tag>
+                    <Tag color={colors.neutralMedium}>{getLabel('Removed')}</Tag>
+                    <Tag color={colors.inverse}>{getLabel('Priority')}</Tag>
                 </Container>
             </Inline>
 

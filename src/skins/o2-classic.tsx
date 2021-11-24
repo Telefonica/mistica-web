@@ -192,7 +192,6 @@ export const getO2ClassicSkin: GetSkin = () => {
             tagBackgroundPromo: palette.pink10,
             tagBackgroundActive: palette.o2Blue10,
             tagBackgroundInactive: palette.grey1,
-            tagBackgroundInverse: palette.white,
 
             textTagSuccess: palette.o2Green75,
             textTagWarning: palette.orange80,
@@ -283,7 +282,6 @@ export const getO2ClassicSkin: GetSkin = () => {
             tagBackgroundPromo: palette.pink10,
             tagBackgroundActive: palette.o2Blue10,
             tagBackgroundInactive: palette.grey1,
-            tagBackgroundInverse: palette.white,
 
             textTagSuccess: palette.o2Green75,
             textTagWarning: palette.orange80,

@@ -29,12 +29,20 @@ const useStyles = createUseStyles((theme) => {
     return {
         text: {
             lineHeight: ({desktopLineHeight}) => pxToRem(desktopLineHeight),
-            textTransform: ({uppercase}) => (uppercase ? 'uppercase' : 'inherit'),
+            textTransform: ({uppercase, transform}) => {
+                if (uppercase) {
+                    return 'uppercase';
+                }
+                if (transform) {
+                    return transform;
+                }
+                return 'inherit';
+            },
             fontSize: ({desktopSize}) => pxToRem(desktopSize),
             fontWeight: ({weight}) => (weight ? mapToWeight[weight] : 'inherit'),
             color: ({isInverse, color = theme.colors.textPrimary}) =>
                 isInverse ? inverseColorsMap[color] ?? color : color,
-            textDecoration: (p) => p.textDecoration ?? 'inherit',
+            textDecoration: (p) => p.decoration ?? 'inherit',
             letterSpacing: ({letterSpacing}) => letterSpacing,
             overflowWrap: ({wordBreak}) => (wordBreak ? 'anywhere' : 'inherit'),
             // Needed to reset the default browser margin that adds to p, h1, h2... elements.
@@ -60,9 +68,13 @@ type FontWeight = 'light' | 'regular' | 'medium';
 
 export interface TextPresetProps {
     color?: string;
+    /** @deprecated use decoration prop */
     textDecoration?: 'underline' | 'line-through' | 'none';
+    decoration?: 'underline' | 'line-through' | 'none';
+    transform?: 'uppercase' | 'capitalize' | 'lowercase' | 'inherit' | 'none' | 'initial';
     children?: React.ReactNode;
     truncate?: boolean | number;
+    /** @deprecated use transform */
     uppercase?: boolean;
     wordBreak?: boolean;
     id?: string;
@@ -92,8 +104,10 @@ export const Text: React.FC<TextProps> = ({
     weight,
     color,
     textDecoration,
+    decoration = textDecoration,
     truncate,
     uppercase,
+    transform,
     wordBreak,
     as = 'span',
     children,
@@ -117,8 +131,9 @@ export const Text: React.FC<TextProps> = ({
         desktopLineHeight,
         weight,
         color,
-        textDecoration,
+        decoration,
         uppercase,
+        transform,
         wordBreak,
         letterSpacing,
         truncate,

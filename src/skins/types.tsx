@@ -132,7 +132,6 @@ export type Colors = {
     tagBackgroundPromo: string;
     tagBackgroundActive: string;
     tagBackgroundInactive: string;
-    tagBackgroundInverse: string;
 
     textTagSuccess: string;
     textTagWarning: string;

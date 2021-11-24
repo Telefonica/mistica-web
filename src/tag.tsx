@@ -22,12 +22,14 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-type TagType = 'promo' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
 type IconProps = {color?: string; size?: string | number};
 
+type TagType = 'promo' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
+
 export type TagProps = {
+    // not using "TagType" and repeating the union to make these props playroom autocomplete friendly
+    type?: 'promo' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
     children: string;
-    type?: TagType;
     Icon?: React.FC<IconProps>;
 
     /** @deprecated  use type prop */
@@ -75,7 +77,7 @@ const Tag: React.FC<TagProps> = ({Icon, children, type = 'promo', color}) => {
     return (
         <span
             className={classes.tag}
-            style={{background: shouldUseInverseBackground ? colors.tagBackgroundInverse : backgroundColor}}
+            style={{background: shouldUseInverseBackground ? colors.inverse : backgroundColor}}
         >
             {Icon && (
                 <div style={{paddingRight: 4}}>
