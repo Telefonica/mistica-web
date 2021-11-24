@@ -17,11 +17,10 @@ const PATH_CACHE = join(__dirname, 'node_modules', '.cache');
 const PATH_MISTICA_ICONS_REPO = join(PATH_CACHE, 'mistica-icons');
 const PATH_OUTPUT = join(PATH_REPO_ROOT, 'src', 'generated/mistica-icons');
 const PATH_OUTPUT_INDEX_FILENAME = join(PATH_OUTPUT, 'index.tsx.txt');
-
-// const GIT_MISTICA_ICONS_BRANCH = 'production';
-const GIT_MISTICA_ICONS_BRANCH = 'multibrand-icons';
-
+const GIT_MISTICA_ICONS_BRANCH = 'production';
 const GIT_MISTICA_ICONS = 'git@github.com:Telefonica/mistica-icons.git';
+
+const SKIN_BLACKLIST = ['blau'];
 
 const checkoutMisticaIconsRepo = () => {
     mkdirp.sync(PATH_CACHE);
@@ -64,6 +63,10 @@ const getSvgIconsInfo = () => {
     const result = {};
 
     for (const skin of skins) {
+        if (SKIN_BLACKLIST.includes(skin)) {
+            continue;
+        }
+
         const filenames = glob.sync(join(basePath, skin, '**/*.svg'));
 
         /** @type {Map<name, filename>} */
@@ -112,7 +115,7 @@ const getIconJsx = (svgFilename) => {
     return svg
         .replace(
             /<svg .*?>/,
-            `<svg width={size} height={size} viewBox="0 0 ${svgSize} ${svgSize}" role="presentation">`
+            `<svg width={size} height={size} viewBox="0 0 ${svgSize} ${svgSize}" role="presentation" {...rest}>`
         )
         .replace(/fill="#?\w+"/g, 'fill={fillColor}');
 };
@@ -175,12 +178,9 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
     import {useTheme} from '../../hooks';
     import {useIsInverseVariant} from '../../theme-variant-context';
 
-    type Props = {
-        color?: string;
-        size?: string | number;
-    };
+    import type {IconProps} from '../../utils/types';
 
-    const ${componentName}: React.FC<Props> = ({color, size = 24}) => {
+    const ${componentName}: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
         const {${hasVariants ? 'skinName, ' : ''}colors} = useTheme();
         const isInverse = useIsInverseVariant();
         const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
