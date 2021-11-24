@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconInformationUserFilled: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconInformationUserFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M12.013 8.355a.733.733 0 010-1.465.733.733 0 010 1.465zm.679 8.748a.689.689 0 01-1.378 0V9.951a.689.689 0 011.378 0v7.152zm-.188-16.1C12.391 1 12.275 1 12.16 1c-.232 0-.464.003-.664.006C9.399 1.044 1 1.833 1 11.97c0 10.113 8.386 10.964 10.54 11.017.253.007.548.013.833.013h.21C14.788 22.981 23 22.224 23 12.04 23 1.832 14.71 1.033 12.504 1.002z"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm.536 14.644a.552.552 0 01-.536.536.552.552 0 01-.536-.536V9.856c0-.284.252-.536.536-.536.284 0 .536.252.536.536v6.788zM12 7.892a.718.718 0 01-.716-.716c0-.392.32-.716.716-.716.392 0 .716.32.716.716a.718.718 0 01-.716.716z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M12.013 8.355a.733.733 0 010-1.465.733.733 0 010 1.465zm.679 8.748a.689.689 0 01-1.378 0V9.951a.689.689 0 011.378 0v7.152zm-.188-16.1C12.391 1 12.275 1 12.16 1c-.232 0-.464.003-.664.006C9.399 1.044 1 1.833 1 11.97c0 10.113 8.386 10.964 10.54 11.017.253.007.548.013.833.013h.21C14.788 22.981 23 22.224 23 12.04 23 1.832 14.71 1.033 12.504 1.002z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconInformationUserFilled;

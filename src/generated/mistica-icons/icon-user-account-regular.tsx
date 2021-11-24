@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconUserAccountRegular: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconUserAccountRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M16.438 14.505c2.496 0 4.52 2.023 4.519 4.504l.041 2.229-.007.11a.75.75 0 01-.742.647h-16a.749.749 0 01-.749-.749v-2.223a4.517 4.517 0 014.518-4.518zm0 1.498h-8.42a3.02 3.02 0 00-3.02 3.02v1.474h14.488l-.032-1.651a3.02 3.02 0 00-3.016-2.843zM12.25 2.5c3.343 0 5.25 1.839 5.25 5.25S15.592 13 12.25 13c-3.259 0-5.154-1.748-5.246-4.997L7 7.75l.004-.253C7.095 4.247 8.99 2.5 12.249 2.5zm0 1.5C9.723 4 8.5 5.18 8.5 7.75c0 2.57 1.224 3.75 3.75 3.75S16 10.32 16 7.75C16 5.18 14.775 4 12.25 4z"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M15.82 13.547a6.296 6.296 0 002.838-5.273C18.658 4.814 15.896 2 12.5 2 9.104 2 6.342 4.813 6.342 8.274a6.296 6.296 0 002.838 5.273C5.536 14.543 3 17.15 3 20.284a.71.71 0 00.703.716.71.71 0 00.702-.716c0-3.162 3.631-5.737 8.095-5.737s8.095 2.575 8.095 5.737a.71.71 0 00.702.716.71.71 0 00.703-.716c0-3.134-2.536-5.741-6.18-6.737zM7.748 8.274c0-2.671 2.13-4.842 4.752-4.842s4.752 2.17 4.752 4.842c0 2.67-2.13 4.837-4.752 4.837s-4.752-2.17-4.752-4.837z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M16.438 14.505c2.496 0 4.52 2.023 4.519 4.504l.041 2.229-.007.11a.75.75 0 01-.742.647h-16a.749.749 0 01-.749-.749v-2.223a4.517 4.517 0 014.518-4.518zm0 1.498h-8.42a3.02 3.02 0 00-3.02 3.02v1.474h14.488l-.032-1.651a3.02 3.02 0 00-3.016-2.843zM12.25 2.5c3.343 0 5.25 1.839 5.25 5.25S15.592 13 12.25 13c-3.259 0-5.154-1.748-5.246-4.997L7 7.75l.004-.253C7.095 4.247 8.99 2.5 12.249 2.5zm0 1.5C9.723 4 8.5 5.18 8.5 7.75c0 2.57 1.224 3.75 3.75 3.75S16 10.32 16 7.75C16 5.18 14.775 4 12.25 4z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconUserAccountRegular;

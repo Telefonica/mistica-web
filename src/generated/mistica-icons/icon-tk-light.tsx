@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconTkLight: React.FC<Props> = ({color, size = 24}) => {
+const IconTkLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M11.992 21.02c5.99 0 9.024-3.035 9.024-9.022 0-5.99-3.037-9.024-9.024-9.024-5.987 0-9.021 3.034-9.021 9.024 0 5.984 3.037 9.021 9.021 9.021zm0-18.87c6.444 0 9.848 3.407 9.848 9.848 0 6.438-3.404 9.842-9.848 9.842-6.438 0-9.842-3.404-9.842-9.842 0-6.441 3.404-9.848 9.842-9.848zm-.328 4.945a.31.31 0 01.303.367l-.073.37a.309.309 0 01-.302.25H8.978v8.5c0 .17-.138.307-.309.307h-.406a.307.307 0 01-.308-.308v-8.5H5.279a.307.307 0 01-.308-.308v-.37c0-.17.138-.308.308-.308h6.385zm7.31 9.332a.31.31 0 01-.263.468h-.457a.313.313 0 01-.266-.151l-2.802-4.693-1.21 1.516v3.017a.307.307 0 01-.308.308h-.401a.307.307 0 01-.308-.308V7.41c0-.171.137-.308.308-.308h.4c.171 0 .309.137.309.308v4.603l3.81-4.797a.311.311 0 01.241-.114h.47a.31.31 0 01.24.501l-2.884 3.642 3.12 5.183z"
                 fill={fillColor}

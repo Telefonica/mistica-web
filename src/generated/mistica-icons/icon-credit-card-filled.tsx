@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconCreditCardFilled: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconCreditCardFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M20.213 18.045H3.523a.229.229 0 01-.232-.227V13.71h17.154v4.107a.233.233 0 01-.232.227zM3.523 6.565h16.69a.23.23 0 01.232.228V8.71H3.291V6.793a.23.23 0 01.233-.227zm18.191 2.763c0-.031-.014-.056-.017-.084V6.793c0-.807-.666-1.46-1.484-1.46H3.523c-.82 0-1.487.653-1.487 1.46V9.28c-.002.017-.01.03-.01.048v3.767c0 .017.008.031.01.048v4.675c0 .804.667 1.46 1.488 1.46h16.689c.818 0 1.484-.656 1.484-1.46v-4.642c.003-.028.017-.053.017-.084V9.328z"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M21.992 8.97V6.938c0-1.073-.8-1.938-1.788-1.938H3.788C2.8 5 2 5.865 2 6.938V8.97h19.992zM2 10.102v6.96C2 18.135 2.8 19 3.788 19h16.424C21.2 19 22 18.135 22 17.062v-6.96H2zm7.493 3.406H4.501c-.3 0-.537-.259-.537-.569 0-.318.244-.568.537-.568h5c.3 0 .537.259.537.568-.008.318-.244.569-.545.569zm4.65 0h-2.505c-.3 0-.536-.259-.536-.569 0-.318.244-.568.536-.568h2.5c.3 0 .537.259.537.568 0 .318-.245.569-.533.569zm5.348 0H16.28c-.3 0-.536-.259-.536-.569 0-.318.244-.568.536-.568h3.212c.3 0 .537.259.537.568-.004.318-.236.569-.537.569z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M20.213 18.045H3.523a.229.229 0 01-.232-.227V13.71h17.154v4.107a.233.233 0 01-.232.227zM3.523 6.565h16.69a.23.23 0 01.232.228V8.71H3.291V6.793a.23.23 0 01.233-.227zm18.191 2.763c0-.031-.014-.056-.017-.084V6.793c0-.807-.666-1.46-1.484-1.46H3.523c-.82 0-1.487.653-1.487 1.46V9.28c-.002.017-.01.03-.01.048v3.767c0 .017.008.031.01.048v4.675c0 .804.667 1.46 1.488 1.46h16.689c.818 0 1.484-.656 1.484-1.46v-4.642c.003-.028.017-.053.017-.084V9.328z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconCreditCardFilled;

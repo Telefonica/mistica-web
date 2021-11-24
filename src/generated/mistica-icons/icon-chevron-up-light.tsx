@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconChevronUpLight: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconChevronUpLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M4 15.388c0-.15.057-.295.16-.404l7.314-7.793A.604.604 0 0111.916 7c.173 0 .337.07.455.191l7.451 7.793a.592.592 0 010 .845.64.64 0 01-.872 0l-7.02-7.354-6.862 7.319a.628.628 0 01-.868.004l-.004-.004A.624.624 0 014 15.388z"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M12.202 8.083l6.284 6.067a.248.248 0 01.087.194.248.248 0 01-.087.195.282.282 0 01-.4 0L12 8.664l-7.514 7.253a.282.282 0 01-.4 0 .259.259 0 010-.386l7.716-7.448a.282.282 0 01.4 0zm7.225 6.811c.317 0 .573.248.573.553a.563.563 0 01-.573.553.563.563 0 01-.573-.553c0-.305.257-.553.573-.553z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M4 15.388c0-.15.057-.295.16-.404l7.314-7.793A.604.604 0 0111.916 7c.173 0 .337.07.455.191l7.451 7.793a.592.592 0 010 .845.64.64 0 01-.872 0l-7.02-7.354-6.862 7.319a.628.628 0 01-.868.004l-.004-.004A.624.624 0 014 15.388z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconChevronUpLight;

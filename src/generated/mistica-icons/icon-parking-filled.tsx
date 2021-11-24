@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconParkingFilled: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconParkingFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M14.74 10.785a1.494 1.494 0 01-.655.4c-.218.065-.658.137-1.504.137H11.15V6.348h1.305c.672 0 1.219.05 1.622.148.311.076.555.196.709.34.425.416.512 1.246.512 1.87 0 .986-.19 1.706-.557 2.079m3.846-6.925c-.65-.622-1.504-1.07-2.54-1.333-.964-.244-2.197-.367-3.667-.367H6.312a.82.82 0 00-.812.83v18.027c0 .457.364.83.812.83h4.028a.822.822 0 00.813-.83v-5.392h2.028c1.255 0 2.341-.157 3.23-.468.94-.328 1.728-.849 2.33-1.549 1.011-1.151 1.524-2.81 1.524-4.927-.003-2.146-.566-3.77-1.678-4.82"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M15.52 8.813c0 1.607-1.247 2.916-2.778 2.916H9.594V5.897h3.148c1.531 0 2.778 1.308 2.778 2.916zM22 2.946v17.108c0 1.07-.83 1.946-1.854 1.946H3.854C2.834 22 2 21.13 2 20.054V2.946C2 1.876 2.83 1 3.854 1H20.15C21.171 1 22 1.87 22 2.946zm-5.366 5.867c0-2.25-1.745-4.08-3.887-4.08H8.49v13.022c0 .324.246.582.554.582a.567.567 0 00.555-.582v-4.862h3.148c2.142 0 3.887-1.83 3.887-4.08z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M14.74 10.785a1.494 1.494 0 01-.655.4c-.218.065-.658.137-1.504.137H11.15V6.348h1.305c.672 0 1.219.05 1.622.148.311.076.555.196.709.34.425.416.512 1.246.512 1.87 0 .986-.19 1.706-.557 2.079m3.846-6.925c-.65-.622-1.504-1.07-2.54-1.333-.964-.244-2.197-.367-3.667-.367H6.312a.82.82 0 00-.812.83v18.027c0 .457.364.83.812.83h4.028a.822.822 0 00.813-.83v-5.392h2.028c1.255 0 2.341-.157 3.23-.468.94-.328 1.728-.849 2.33-1.549 1.011-1.151 1.524-2.81 1.524-4.927-.003-2.146-.566-3.77-1.678-4.82"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconParkingFilled;
