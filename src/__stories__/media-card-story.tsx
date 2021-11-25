@@ -80,7 +80,7 @@ Default.storyName = 'MediaCard';
 export const WithBody: StoryComponent = () => {
     return (
         <MediaCard
-            headline={<Tag type="promo">headline</Tag>}
+            headline={<Tag type="promo">Headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             description="Description"
