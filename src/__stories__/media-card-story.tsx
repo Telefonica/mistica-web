@@ -20,15 +20,7 @@ export default {
 };
 
 export const Default: StoryComponent = () => {
-    const tagTypes = {
-        promo: 'promo',
-        active: 'active',
-        inactive: 'inactive',
-        success: 'success',
-        warning: 'warning',
-        error: 'error',
-    };
-    const tagColorNames = Object.keys(tagTypes);
+    const tagColorNames = ['promo', 'active', 'inactive', 'success', 'warning', 'error'];
     const [headline, headlineTextField] = useTextField('Headline', 'Priority');
     const [headlineType, headlineTypeSelect] = useSelect('headline color', tagColorNames[0], tagColorNames);
     const [pretitle, pretitleTextField] = useTextField('pretitle', 'Some pretitle');
