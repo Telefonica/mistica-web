@@ -15,6 +15,7 @@ export const palette = {
 
     ambar: '#EAC344',
     ambar10: '#FDF9EC',
+    ambar40: '#F0D57C',
     ambar70: '#69581F',
 
     coral: '#E66C64',
@@ -25,10 +26,12 @@ export const palette = {
 
     orchid: '#C466EF',
     orchid10: '#F9F0FD',
+    orchid40: '#D694F4',
     orchid70: '#8947A7',
 
     turquoise: '#59C2C9',
     turquoise10: '#EEF9FA',
+    turquoise40: '#8BD4D9',
     turquoise70: '#3E888D',
 
     white: '#FFFFFF',
@@ -259,19 +262,19 @@ export const getTelefonicaSkin: GetSkin = () => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            tagBackgroundSuccess: palette.turquoise10,
-            tagBackgroundWarning: palette.ambar10,
-            tagBackgroundError: palette.coral10,
-            tagBackgroundPromo: palette.orchid10,
-            tagBackgroundActive: palette.grey1,
-            tagBackgroundInactive: palette.grey1,
+            tagBackgroundSuccess: applyAlpha(palette.white, 0.05),
+            tagBackgroundWarning: applyAlpha(palette.white, 0.05),
+            tagBackgroundError: applyAlpha(palette.white, 0.05),
+            tagBackgroundPromo: applyAlpha(palette.white, 0.05),
+            tagBackgroundActive: applyAlpha(palette.white, 0.05),
+            tagBackgroundInactive: applyAlpha(palette.white, 0.05),
 
-            textTagSuccess: palette.turquoise70,
-            textTagWarning: palette.ambar70,
-            textTagError: palette.coral70,
-            textTagPromo: palette.orchid70,
-            textTagActive: palette.telefonicaBlue,
-            textTagInactive: palette.grey6,
+            textTagSuccess: palette.turquoise40,
+            textTagWarning: palette.ambar40,
+            textTagError: palette.coral40,
+            textTagPromo: palette.orchid40,
+            textTagActive: palette.telefonicaBlue30,
+            textTagInactive: palette.grey4,
         },
     };
 };

@@ -17,7 +17,7 @@ export const palette = {
 
     vivoGreen: '#99CC33',
     vivoGreenDark: '#33A14A',
-    vivoGreenLight40: '#D6EAAD',
+    vivoGreenLight30: '#91AE9E',
     vivoGreenLight10: '#EDF8E8',
 
     vivoBlue: '#00ABDB',
@@ -25,12 +25,14 @@ export const palette = {
     orange: '#FF9900',
     orangeDark: '#A42E20',
     orangeLight10: '#FFEFE1',
+    orangeLight40: '#FFB84C',
 
     pink: '#EB3D7D',
 
     pepper: '#CC1F59',
     pepperDark: '#B71D63',
     pepperDark80: '#922154',
+    pepperLight40: '#DB628B',
     pepperLight30: '#F7B1CB',
     pepperLight10: '#FCE4EF',
 
@@ -259,19 +261,19 @@ export const getVivoSkin: GetSkin = () => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            tagBackgroundSuccess: palette.vivoGreenLight10,
-            tagBackgroundWarning: palette.orangeLight10,
-            tagBackgroundError: palette.pepperLight10,
-            tagBackgroundPromo: palette.vivoPurpleLight10,
-            tagBackgroundActive: palette.vivoPurpleLight10,
-            tagBackgroundInactive: palette.grey1,
+            tagBackgroundSuccess: applyAlpha(palette.white, 0.05),
+            tagBackgroundWarning: applyAlpha(palette.white, 0.05),
+            tagBackgroundError: applyAlpha(palette.white, 0.05),
+            tagBackgroundPromo: applyAlpha(palette.white, 0.05),
+            tagBackgroundActive: applyAlpha(palette.white, 0.05),
+            tagBackgroundInactive: applyAlpha(palette.white, 0.05),
 
-            textTagSuccess: palette.vivoGreenDark,
-            textTagWarning: palette.orangeDark,
-            textTagError: palette.pepperDark80,
-            textTagPromo: palette.vivoPurple,
-            textTagActive: palette.vivoPurple,
-            textTagInactive: palette.grey5,
+            textTagSuccess: palette.vivoGreenLight30,
+            textTagWarning: palette.orangeLight40,
+            textTagError: palette.pepperLight40,
+            textTagPromo: palette.vivoPurpleLight50,
+            textTagActive: palette.vivoPurpleLight50,
+            textTagInactive: palette.grey4,
         },
     };
 };

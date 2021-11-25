@@ -9,6 +9,7 @@ import type {GetSkin, Skin} from './types';
 export const palette = {
     movistarBlue: '#019DF4',
     movistarBlue55: '#008EDD',
+    movistarBlue40: '#4DBAF7',
     movistarBlue30: '#80CEF9',
     movistarBlue20: '#B3E1FB',
     movistarBlue10: '#E6F5FD',
@@ -16,21 +17,25 @@ export const palette = {
     movistarGreen: '#5CB615',
     movistarGreen10: '#EFF8E8',
     movistarGreen30: '#ADDA8A',
+    movistarGreen40: '#8DCC5B',
     movistarGreen60: '#499110',
     movistarGreen70: '#407F0F',
 
     pepper: '#FF374A',
     pepper10: '#FFEBED',
     pepper20: '#FFC3C8',
+    pepper40: '#FF7380',
     pepper55: '#D73241',
     pepper70: '#B22634',
 
     purple: '#A13EA1',
     purple10: '#F6ECF6',
+    purple40: '#BD78BD',
     purple70: '#712B71',
 
     egg: '#F28D15',
     egg10: '#FEF4E8',
+    egg40: '#F6AF5B',
     egg80: '#6D3F09',
 
     pink: '#E63780',
@@ -262,19 +267,19 @@ export const getMovistarSkin: GetSkin = (variant) => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            tagBackgroundSuccess: palette.movistarGreen10,
-            tagBackgroundWarning: palette.egg10,
-            tagBackgroundError: palette.pepper10,
-            tagBackgroundPromo: palette.purple10,
-            tagBackgroundActive: palette.movistarBlue10,
-            tagBackgroundInactive: palette.grey1,
+            tagBackgroundSuccess: applyAlpha(palette.white, 0.05),
+            tagBackgroundWarning: applyAlpha(palette.white, 0.05),
+            tagBackgroundError: applyAlpha(palette.white, 0.05),
+            tagBackgroundPromo: applyAlpha(palette.white, 0.05),
+            tagBackgroundActive: applyAlpha(palette.white, 0.05),
+            tagBackgroundInactive: applyAlpha(palette.white, 0.05),
 
-            textTagSuccess: palette.movistarGreen70,
-            textTagWarning: palette.egg80,
-            textTagError: palette.pepper70,
-            textTagPromo: palette.purple70,
-            textTagActive: palette.movistarBlue,
-            textTagInactive: palette.grey5,
+            textTagSuccess: palette.movistarGreen40,
+            textTagWarning: palette.egg40,
+            textTagError: palette.pepper40,
+            textTagPromo: palette.purple40,
+            textTagActive: palette.movistarBlue40,
+            textTagInactive: palette.grey4,
         },
     };
 

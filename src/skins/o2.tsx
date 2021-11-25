@@ -21,21 +21,25 @@ export const palette = {
 
     o2Green: '#91C90E',
     o2Green10: '#F4FAE7',
+    o2Green40: '#B2D956',
     o2Green80: '#415A06',
 
     o2Yellow: '#FEDB00',
 
     o2Orange: '#FF7F41',
     o2Orange10: '#FFF2EC',
+    o2Orange40: '#FFA57A',
     o2Orange75: '#A6522A',
 
     o2Pink: '#E45DBF',
 
     o2Purple: '#952D98',
     o2Purple10: '#F4EAF5',
+    o2Purple30: '#CA9ACB',
 
     pepper: '#FF374A',
     pepper60: '#C32B3D',
+    pepper40: '#FF7380',
     pepper20: '#FCC3C9',
     pepper10: '#FEEBED',
 
@@ -266,19 +270,19 @@ export const getO2Skin: GetSkin = () => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            tagBackgroundSuccess: palette.o2Green10,
-            tagBackgroundWarning: palette.o2Orange10,
-            tagBackgroundError: palette.pepper10,
-            tagBackgroundPromo: palette.o2Purple10,
-            tagBackgroundActive: palette.o2BluePrimary10,
-            tagBackgroundInactive: palette.grey1,
+            tagBackgroundSuccess: applyAlpha(palette.white, 0.05),
+            tagBackgroundWarning: applyAlpha(palette.white, 0.05),
+            tagBackgroundError: applyAlpha(palette.white, 0.05),
+            tagBackgroundPromo: applyAlpha(palette.white, 0.05),
+            tagBackgroundActive: applyAlpha(palette.white, 0.05),
+            tagBackgroundInactive: applyAlpha(palette.white, 0.05),
 
-            textTagSuccess: palette.o2Green80,
-            textTagWarning: palette.o2Orange75,
-            textTagError: palette.pepper60,
-            textTagPromo: palette.o2Purple,
-            textTagActive: palette.o2BluePrimary,
-            textTagInactive: palette.grey5,
+            textTagSuccess: palette.o2Green40,
+            textTagWarning: palette.o2Orange40,
+            textTagError: palette.pepper40,
+            textTagPromo: palette.o2Purple30,
+            textTagActive: palette.o2BluePrimary15,
+            textTagInactive: palette.grey4,
         },
     };
 };

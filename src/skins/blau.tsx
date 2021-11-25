@@ -24,17 +24,20 @@ export const palette = {
 
     blauYellow: '#FFA922',
     blauYellow10: '#FFF6E9',
+    blauYellow40: '#FFC364',
     blauYellow60: '#F09500',
     blauYellow70: '#996614',
 
     blauGreen: '#30D300',
     blauGreen10: '#EAFBE5',
+    blauGreen30: '#97E980',
     blauGreen70: '#1D7F00',
 
     blauRed: '#F64417',
     blauRed10: '#FEECE8',
     blauRed20: '#FCC7B9',
     blauRed30: '#FA9E87',
+    blauRed40: '#F97C5D',
     blauRed70: '#C93712',
 
     grey1: '#F5F9FA',
@@ -182,7 +185,7 @@ export const getBlauSkin: GetSkin = () => {
             textTagSuccess: palette.blauGreen70,
             textTagWarning: palette.blauYellow70,
             textTagError: palette.blauRed70,
-            textTagPromo: palette.blauPurple30,
+            textTagPromo: palette.blauPurple,
             textTagActive: palette.blauBlueSecondary,
             textTagInactive: palette.grey5,
         },
@@ -276,19 +279,19 @@ export const getBlauSkin: GetSkin = () => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            tagBackgroundSuccess: palette.blauGreen10,
-            tagBackgroundWarning: palette.blauYellow10,
-            tagBackgroundError: palette.blauRed10,
-            tagBackgroundPromo: palette.blauPurple10,
-            tagBackgroundActive: palette.blauBlueSecondary10,
-            tagBackgroundInactive: palette.grey2,
+            tagBackgroundSuccess: applyAlpha(palette.white, 0.05),
+            tagBackgroundWarning: applyAlpha(palette.white, 0.05),
+            tagBackgroundError: applyAlpha(palette.white, 0.05),
+            tagBackgroundPromo: applyAlpha(palette.white, 0.05),
+            tagBackgroundActive: applyAlpha(palette.white, 0.05),
+            tagBackgroundInactive: applyAlpha(palette.white, 0.05),
 
-            textTagSuccess: palette.blauGreen70,
-            textTagWarning: palette.blauYellow70,
-            textTagError: palette.blauRed70,
+            textTagSuccess: palette.blauGreen30,
+            textTagWarning: palette.blauYellow40,
+            textTagError: palette.blauRed40,
             textTagPromo: palette.blauPurple30,
-            textTagActive: palette.blauBlueSecondary,
-            textTagInactive: palette.grey5,
+            textTagActive: palette.blauBluePrimary30,
+            textTagInactive: palette.grey4,
         },
     };
 };

@@ -10,6 +10,7 @@ export const palette = {
     o2Blue: '#032B5A',
     o2Blue55: '#04264E',
     o2Blue45: '#6C8BAF',
+    o2Blue30: '#8195AC',
     o2Blue10: '#E6EAEE',
 
     o2SkyBlue: '#0090D0',
@@ -30,22 +31,26 @@ export const palette = {
 
     o2Green: '#84B50F',
     o2Green10: '#F3F8E7',
+    o2Green40: '#A9CB57',
     o2Green75: '#4D621D',
 
     pepper: '#FF374A',
     pepper70: '#B22634',
     pepper55: '#D73241',
+    pepper40: '#FF7380',
     pepper20: '#FFC3C8',
     pepper10: '#FFEBED',
 
     orange: '#FF7F41',
     orange10: '#FFF2EC',
+    orange40: '#FFA57A',
     orange80: '#73391D',
 
     coral: '#FF706E',
 
     pink: '#EB3C7D',
     pink10: '#FDEBF2',
+    pink40: '#F59DBE',
     pink60: '#BC3064',
 
     o2GradientFirst: '#102550',
@@ -274,19 +279,19 @@ export const getO2ClassicSkin: GetSkin = () => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            tagBackgroundSuccess: palette.o2Green10,
-            tagBackgroundWarning: palette.orange10,
-            tagBackgroundError: palette.pepper10,
-            tagBackgroundPromo: palette.pink10,
-            tagBackgroundActive: palette.o2Blue10,
-            tagBackgroundInactive: palette.grey1,
+            tagBackgroundSuccess: applyAlpha(palette.white, 0.05),
+            tagBackgroundWarning: applyAlpha(palette.white, 0.05),
+            tagBackgroundError: applyAlpha(palette.white, 0.05),
+            tagBackgroundPromo: applyAlpha(palette.white, 0.05),
+            tagBackgroundActive: applyAlpha(palette.white, 0.05),
+            tagBackgroundInactive: applyAlpha(palette.white, 0.05),
 
-            textTagSuccess: palette.o2Green75,
-            textTagWarning: palette.orange80,
-            textTagError: palette.pepper70,
-            textTagPromo: palette.pink60,
-            textTagActive: palette.o2Blue,
-            textTagInactive: palette.grey5,
+            textTagSuccess: palette.o2Green40,
+            textTagWarning: palette.orange40,
+            textTagError: palette.pepper40,
+            textTagPromo: palette.pink40,
+            textTagActive: palette.o2Blue30,
+            textTagInactive: palette.grey4,
         },
     };
 };
