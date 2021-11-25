@@ -162,7 +162,7 @@ declare export { palette as o2ClassicPalette } from "./skins/o2-classic";
 declare export { palette as telefonicaPalette } from "./skins/telefonica";
 declare export { palette as blauPalette } from "./skins/blau";
 export type { Locale } from "./utils/locale";
-export type { TrackingEvent } from "./utils/types";
+export type { TrackingEvent, IconProps } from "./utils/types";
 export type { RegionCode } from "./utils/region-code";
 declare export { default as IconAcademicFilled } from "./generated/mistica-icons/icon-academic-filled";
 declare export { default as IconAcademicLight } from "./generated/mistica-icons/icon-academic-light";

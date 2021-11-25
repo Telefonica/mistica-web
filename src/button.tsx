@@ -490,20 +490,30 @@ export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
         ),
     };
 
+    if (process.env.NODE_ENV !== 'production') {
+        if (props.to === '' || props.href === '') {
+            throw Error('to or href props are empty strings');
+        }
+    }
+
     if (props.onPress) {
         return <Touchable {...commonProps} onPress={props.onPress} />;
     }
 
-    if (props.to) {
+    if (props.to || props.to === '') {
         return <Touchable {...commonProps} to={props.to} fullPageOnWebView={props.fullPageOnWebView} />;
     }
 
-    if (props.href) {
+    if (props.href || props.href === '') {
         return <Touchable {...commonProps} href={props.href} newTab={props.newTab} />;
     }
 
-    // this cannot happen
-    throw Error('Bad button props');
+    if (process.env.NODE_ENV !== 'production') {
+        // this cannot happen
+        throw Error('Bad button props');
+    }
+
+    return null;
 };
 
 export const ButtonPrimary: React.FC<ButtonProps> = (props) => {
