@@ -23,7 +23,7 @@ export const palette = {
     vivoBlue: '#00ABDB',
 
     orange: '#FF9900',
-    orangeDark: '#A42E20',
+    orangeDark: '#972A1D',
     orangeLight10: '#FFEFE1',
     orangeLight40: '#FFB84C',
 
@@ -31,7 +31,7 @@ export const palette = {
 
     pepper: '#CC1F59',
     pepperDark: '#B71D63',
-    pepperDark80: '#922154',
+    pepperDark80: '#8F2052',
     pepperLight40: '#DB628B',
     pepperLight30: '#F7B1CB',
     pepperLight10: '#FCE4EF',
