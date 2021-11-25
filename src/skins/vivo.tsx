@@ -16,7 +16,7 @@ export const palette = {
     vivoPurpleLight10: '#EFE5F4',
 
     vivoGreen: '#99CC33',
-    vivoGreenDark: '#33A14A',
+    vivoGreenDark: '#225C3D',
     vivoGreenLight30: '#91AE9E',
     vivoGreenLight10: '#EDF8E8',
 
