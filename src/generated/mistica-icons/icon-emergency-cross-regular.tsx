@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconEmergencyCrossRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconEmergencyCrossRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M20.132 14.036l-5.46.003a.604.604 0 00-.602.602l.003 5.463c0 .21-.135.36-.177.378h-4.03c-.056-.017-.188-.168-.188-.378l-.003-5.46a.604.604 0 00-.602-.602l-5.462.003c-.208 0-.362-.135-.376-.174V9.838c.017-.054.171-.188.378-.188l5.457-.003a.601.601 0 00.602-.602L9.67 3.583c0-.188.14-.359.177-.379l4.017-.002c.061.02.201.19.201.378l.003 5.456a.604.604 0 00.602.603l5.465-.003a.55.55 0 01.379.176l.002 4.017c-.025.065-.196.207-.383.207m0-5.599l-4.86.003-.003-4.855c0-.826-.658-1.582-1.381-1.582H9.843c-.723 0-1.38.753-1.38 1.582l.002 4.86-4.854.003c-.858 0-1.583.633-1.583 1.381l-.003 4.045c0 .748.723 1.38 1.583 1.38l4.86-.002.003 4.857c0 .857.633 1.583 1.38 1.583h4.045c.748 0 1.381-.726 1.381-1.583l-.003-4.86 4.858-.003c.826 0 1.582-.658 1.582-1.38V9.82c0-.726-.753-1.384-1.582-1.384"
                 fill={fillColor}

@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconTechServiceMobileLight: React.FC<Props> = ({color, size = 24}) => {
+const IconTechServiceMobileLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M18.055 2.15c1.998 0 2.97.986 2.97 3.011v13.656c0 1.039-.236 1.784-.723 2.277-.487.493-1.221.734-2.247.734h-7.184c-1.026 0-1.762-.241-2.25-.734-.487-.493-.722-1.238-.722-2.277l-.001-3.584-.282.284c.038.287.033.575-.017.859l-.045.211a2.746 2.746 0 01-3.37 1.964.56.56 0 01-.252-.939l.754-.753-.093-.659-.658-.095-.753.754a.56.56 0 01-.939-.252 2.746 2.746 0 013.034-3.426L7.9 10.555V5.161c0-2.053.944-3.011 2.97-3.011h7.184zm-.002.56H10.87c-1.712 0-2.41.709-2.41 2.451v4.834l1.645-1.643a2.825 2.825 0 01.016-.859l.046-.211a2.746 2.746 0 013.37-1.961.56.56 0 01.251.938l-.753.754.092.658.659.092.753-.753a.56.56 0 01.938.252 2.746 2.746 0 01-3.034 3.426l-3.986 3.985v4.144c0 .885.183 1.501.561 1.885.378.384.98.568 1.849.568h7.185c.868 0 1.473-.184 1.848-.568.376-.384.56-1 .56-1.885V5.16c0-1.717-.72-2.45-2.408-2.45zm-3.591 15.11c.504 0 .832.266.832.834 0 .275-.076.476-.21.614-.146.148-.36.22-.622.22-.264 0-.477-.072-.622-.22-.135-.138-.21-.342-.21-.614.003-.568.33-.835.832-.835zM12.826 5.785a2.182 2.182 0 00-2.112 2.75L5.459 13.79a2.186 2.186 0 00-2.675 2.678l.952-.952 1.353.193.193 1.35-.952.953a2.186 2.186 0 002.675-2.678l5.258-5.252a2.186 2.186 0 002.675-2.678l-.953.952-1.352-.193-.194-1.353.953-.952a2.272 2.272 0 00-.566-.073z"
                 fill={fillColor}

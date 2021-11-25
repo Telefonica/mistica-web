@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconTvContentFilled: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconTvContentFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M18.396 17.374H5.59c-1.12 0-1.989-.314-2.583-.93-.568-.594-.857-1.44-.857-2.515V7.93c0-2.201 1.221-3.411 3.44-3.411l12.806.008c2.219 0 3.44 1.213 3.44 3.412v5.997c0 1.076-.288 1.922-.86 2.51-.594.616-1.462.927-2.58.927zm-3.95 2.199H9.532a.562.562 0 01-.56-.56c0-.309.252-.56.56-.56h4.916a.561.561 0 010 1.12z"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M22 16.596V4H2v12.596h7.966v1.294H7.557a.553.553 0 00-.555.555c0 .308.247.555.555.555h8.891a.553.553 0 00.554-.555.553.553 0 00-.554-.555h-2.41v-1.294H22zm-9.075 1.294H11.07v-1.294h1.854v1.294z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M18.396 17.374H5.59c-1.12 0-1.989-.314-2.583-.93-.568-.594-.857-1.44-.857-2.515V7.93c0-2.201 1.221-3.411 3.44-3.411l12.806.008c2.219 0 3.44 1.213 3.44 3.412v5.997c0 1.076-.288 1.922-.86 2.51-.594.616-1.462.927-2.58.927zm-3.95 2.199H9.532a.562.562 0 01-.56-.56c0-.309.252-.56.56-.56h4.916a.561.561 0 010 1.12z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconTvContentFilled;

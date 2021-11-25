@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconHospitalRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconHospitalRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M20.487 20.46V6.181h-1.854v14.325h1.854v-.048zm-10.465.05h3.647v-5.944h-3.647v5.944zM6.255 3.406V20.51H8.82v-6.546a.6.6 0 01.6-.603h4.845a.6.6 0 01.6.603v6.546h2.565V3.409c0-.067-.086-.163-.131-.174H6.373c-.031.009-.118.104-.118.171zM3.199 20.46v.05h1.854v-.798c0-.005-.003-.008-.003-.01V6.184H3.196v14.274H3.2zM20.908 4.98c.487 0 .778.468.778 1.255V20.46c0 .785-.291 1.255-.778 1.255H2.778c-.487 0-.775-.468-.775-1.255V6.232c0-.784.291-1.254.776-1.254h2.28V3.403c0-.722.627-1.378 1.32-1.378h10.938c.691 0 1.319.656 1.319 1.378v1.575l2.272.002zM8.922 7.35v1.143h1.75a.6.6 0 01.6.602v1.76h1.143l-.006-1.757c0-.16.062-.314.176-.426a.593.593 0 01.426-.176h1.756V7.347h-1.756a.6.6 0 01-.6-.602V4.986h-1.14v1.765a.6.6 0 01-.599.602h-1.75V7.35zM8.824 9.7c-.608 0-1.101-.465-1.101-1.036V7.182c0-.56.504-1.036 1.1-1.036h1.25V4.89c0-.602.473-1.112 1.03-1.112h1.477c.56 0 1.03.51 1.03 1.112v1.25h1.253c.6 0 1.106.473 1.106 1.036v1.488c0 .56-.507 1.036-1.106 1.036h-1.25l.003 1.252c0 .603-.473 1.11-1.03 1.11h-1.482c-.56 0-1.031-.507-1.031-1.107V9.7h-1.25z"
                 fill={fillColor}

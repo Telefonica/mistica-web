@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconInvoiceDigitalRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconInvoiceDigitalRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M21.098 17.62a.561.561 0 010 1.12H2.594a.562.562 0 01-.56-.56c0-.307.252-.56.56-.56h18.504zM18.401 4.508c1.098 0 1.94.328 2.504.972.524.6.787 1.468.787 2.583v4.938c0 1.115-.266 1.984-.787 2.583-.563.644-1.406.972-2.504.972H5.29c-1.098 0-1.94-.328-2.504-.97-.52-.601-.787-1.47-.787-2.585V8.063c0-1.115.266-1.983.787-2.583.563-.644 1.403-.972 2.504-.972H18.4zm0 1.12l-13.11.004c-.773 0-1.313.193-1.658.588-.339.386-.513 1.008-.513 1.843v4.938c0 .835.174 1.457.513 1.846.345.395.888.589 1.658.589h13.11c.77 0 1.313-.194 1.658-.589.339-.389.512-1.01.512-1.846V8.063c0-.835-.173-1.457-.512-1.846-.345-.395-.888-.588-1.658-.588zm-5.986.928a.42.42 0 01.296.123l1.891 1.894a.42.42 0 01.123.297v4.989a.612.612 0 01-.638.638H9.613c-.386 0-.647-.26-.647-.65V7.2c0-.386.26-.644.647-.644h2.802zm-.374.84H9.807v6.26h4.078V9.242l-.84.001c-.62 0-1.003-.448-1.003-1.17l-.001-.677zm1.133 4.751a.28.28 0 01.28.28c0 .154-.13.28-.283.28h-2.647a.28.28 0 01-.28-.28.28.28 0 01.28-.28h2.65zm0-1.134a.28.28 0 01.28.28c0 .154-.13.28-.283.28h-2.647a.28.28 0 01-.28-.28.28.28 0 01.28-.28h2.65zm0-1.138a.28.28 0 01.28.28c0 .155-.13.28-.283.28h-2.647a.28.28 0 01-.28-.28.28.28 0 01.28-.28h2.65zm-.572-2.116v.312c0 .404.149.611.443.611h.478l-.921-.923z"
                 fill={fillColor}

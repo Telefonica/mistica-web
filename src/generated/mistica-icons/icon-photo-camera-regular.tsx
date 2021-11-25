@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconPhotoCameraRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconPhotoCameraRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M12.091 14.765c1.622-.03 1.622-1.342 1.622-1.773 0-.431 0-1.748-1.638-1.787-.06-.003-.127-.003-.19-.003h-.049c-1.59.014-1.59 1.339-1.59 1.773 0 .437 0 1.768 1.616 1.793h.075l.154-.003zm.012-4.756c.574.014 2.812.243 2.812 2.983 0 2.745-2.241 2.958-2.804 2.97l-.174.002h-.095c-.588-.008-2.801-.224-2.801-2.986 0-2.756 2.193-2.96 2.781-2.966h.06c.075-.006.153-.006.22-.003zm8.324 8.039c.16-.17.174-.515.169-.58l-.003-8.927c0-.277-.06-.476-.18-.591a.575.575 0 00-.336-.143l-5.59-.003a.604.604 0 01-.522-.297l-.989-1.689-2.168.006-.798 1.647a.604.604 0 01-.54.336c-2.583 0-4.77 0-5.32.006-.31.002-.53.07-.647.204-.16.18-.146.46-.143.462l.028 8.956c.023.733.404.728.415.733l16.266.003c.221-.005.31-.073.358-.123zm1.373-.62c.006.051.042.87-.493 1.435-.213.227-.602.496-1.238.496l-16.25-.003c-.462 0-1.585-.31-1.632-1.91L2.16 8.538c-.005-.02-.067-.75.446-1.325.246-.271.711-.6 1.538-.602.52-.003 2.529-.006 4.95-.006L9.74 5.29a1.18 1.18 0 011.067-.664h2.183c.42 0 .815.227 1.028.591l.812 1.39 5.235.005c.056.011.695.003 1.19.485.247.24.541.686.541 1.445v8.888h.003z"
                 fill={fillColor}

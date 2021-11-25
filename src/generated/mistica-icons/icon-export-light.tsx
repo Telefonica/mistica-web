@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconExportLight: React.FC<Props> = ({color, size = 24}) => {
+const IconExportLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M11.648 2.322a.746.746 0 01.185-.126c.14-.061.3-.061.44 0a.9.9 0 01.195.126l5.791 5.79a.583.583 0 01-.823.825L12.63 4.129v12.08a.581.581 0 01-1.16 0V4.13L6.574 9.04a.583.583 0 01-.824-.823l5.898-5.895zm9.612 14.153c.32 0 .58.26.58.58v4.205c0 .32-.26.58-.58.58H2.73a.58.58 0 01-.58-.58v-4.205a.581.581 0 011.16 0v3.625h17.373v-3.625c0-.322.258-.58.577-.58z"
                 fill={fillColor}
