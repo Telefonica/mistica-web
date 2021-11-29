@@ -10,7 +10,7 @@ import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/w
 import ThemeContext from './theme-context';
 import {useTheme, useScreenSize} from './hooks';
 import ButtonLayout from './button-layout';
-import {Text4, Text3} from './text';
+import {Text5, Text3} from './text';
 import {ESC} from './utils/key-codes';
 import Box from './box';
 import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
@@ -162,9 +162,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
             {icon && <Box paddingBottom={24}>{icon}</Box>}
             {title && (
                 <Box paddingBottom={16}>
-                    <Text4 as="h2" light>
-                        {title}
-                    </Text4>
+                    <Text5 as="h2">{title}</Text5>
                 </Box>
             )}
             <div className={classes.dialogContent}>
