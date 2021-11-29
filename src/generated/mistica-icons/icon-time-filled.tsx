@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconTimeFilled: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconTimeFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M15.458 15.73a.618.618 0 01-.868 0l-3.031-3.028a.617.617 0 01-.18-.437V8.164a.616.616 0 011.233 0v3.846l2.852 2.849a.62.62 0 01-.006.87M11.99 2.15c-6.218 0-9.84 3.14-9.84 9.846 0 6.706 3.622 9.84 9.84 9.84 6.219 0 9.846-3.134 9.846-9.84 0-6.706-3.627-9.846-9.846-9.846"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M12 2C6.488 2 2 6.488 2 12s4.488 10 10 10 10-4.488 10-10S17.512 2 12 2zm3.236 7.52L12 12.756 6.616 7.384a.529.529 0 010-.756.529.529 0 01.756 0l4.616 4.616 2.488-2.48a.529.529 0 01.756 0 .525.525 0 01.004.756z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M15.458 15.73a.618.618 0 01-.868 0l-3.031-3.028a.617.617 0 01-.18-.437V8.164a.616.616 0 011.233 0v3.846l2.852 2.849a.62.62 0 01-.006.87M11.99 2.15c-6.218 0-9.84 3.14-9.84 9.846 0 6.706 3.622 9.84 9.84 9.84 6.219 0 9.846-3.134 9.846-9.84 0-6.706-3.627-9.846-9.846-9.846"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconTimeFilled;

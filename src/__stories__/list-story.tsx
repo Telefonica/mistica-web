@@ -142,7 +142,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={<IconLikeFilled size={24} />}
+                asset={<IconLikeFilled />}
                 headline={headline && <Tag color={colors.promo}>{headline}</Tag>}
                 title={title}
                 subtitle={subtitle}

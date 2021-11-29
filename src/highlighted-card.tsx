@@ -46,6 +46,9 @@ const useStyles = createUseStyles((theme) => ({
         justifyContent: 'center',
     },
     dismissableCircleContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         width: 24,
         height: 24,
         margin: '0 0 8px 8px',

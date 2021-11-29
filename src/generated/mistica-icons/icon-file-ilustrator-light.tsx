@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconFileIlustratorLight: React.FC<Props> = ({color, size = 24}) => {
+const IconFileIlustratorLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M15.747 2.156c.182 0 .353.07.485.196l5.409 5.236a.683.683 0 01.168.325c.02.05.034.106.034.162v12.563c0 .653-.564 1.205-1.23 1.205H8.176c-.656 0-1.233-.564-1.233-1.205l.037-3.036H4.422a2.27 2.27 0 01-2.266-2.27v-4.179a2.27 2.27 0 012.266-2.268h2.521V3.36c0-.63.586-1.205 1.233-1.205h7.571zm-.692.83H8.173c-.185 0-.406.204-.406.378v5.52h6.706a2.27 2.27 0 012.266 2.27v4.179a2.27 2.27 0 01-2.266 2.269H7.806l-.036 3.042c0 .182.204.372.406.372h12.437c.207 0 .403-.185.403-.378V8.758H18.45c-.98 0-1.826-.316-2.442-.915-.622-.6-.953-1.426-.953-2.384V2.985zm-.58 6.722H4.423c-.792 0-1.44.647-1.44 1.443v4.179c0 .795.645 1.442 1.44 1.442h10.054c.792 0 1.44-.647 1.44-1.442v-4.18c0-.795-.645-1.442-1.44-1.442zM9.18 11.322l1.372 3.803h-.93l-.316-.955H8.069l-.294.955h-.829l1.277-3.803h.956zm2.694 0v3.803h-.868v-3.803h.868zm-3.193.95H8.67l-.395 1.268h.823l-.417-1.269zm7.202-9.107v2.291c0 .728.24 1.347.7 1.79.462.445 1.11.683 1.868.683h2.35l-4.918-4.764z"
                 fill={fillColor}

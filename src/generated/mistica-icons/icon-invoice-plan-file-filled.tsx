@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconInvoicePlanFileFilled: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconInvoicePlanFileFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M18.845 7.336l-5.463-5.182A.56.56 0 0013 2H5.618c-.569 0-1.107.538-1.107 1.106v17.48c0 .588.518 1.106 1.107 1.106h12.297c.588 0 1.106-.518 1.106-1.107V7.742a.56.56 0 00-.176-.406zM15.31 18.681H8.209a.562.562 0 01-.56-.56c0-.309.252-.56.56-.56h7.1a.56.56 0 010 1.12zm0-3.006H8.209a.562.562 0 01-.56-.56c0-.308.252-.56.56-.56h7.1a.561.561 0 010 1.12zm0-3.003H8.209a.562.562 0 01-.56-.56c0-.308.252-.56.56-.56h7.1a.561.561 0 010 1.12zm.14-4.944c-.653 0-1.2-.204-1.583-.588-.384-.384-.588-.933-.588-1.583V3.6l4.353 4.13H15.45z"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M20 2v20H5V8.252h6.252V2H20zm-3.572 14.82H8.572a.552.552 0 00-.536.536c0 .284.252.536.536.536h7.856a.547.547 0 00.536-.536.552.552 0 00-.536-.536zm0-3.572H8.572a.552.552 0 00-.536.536c0 .284.252.536.536.536h7.856a.55.55 0 00.536-.536.552.552 0 00-.536-.536zm-6.248-11V7.18H5.252l4.928-4.932z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M18.845 7.336l-5.463-5.182A.56.56 0 0013 2H5.618c-.569 0-1.107.538-1.107 1.106v17.48c0 .588.518 1.106 1.107 1.106h12.297c.588 0 1.106-.518 1.106-1.107V7.742a.56.56 0 00-.176-.406zM15.31 18.681H8.209a.562.562 0 01-.56-.56c0-.309.252-.56.56-.56h7.1a.56.56 0 010 1.12zm0-3.006H8.209a.562.562 0 01-.56-.56c0-.308.252-.56.56-.56h7.1a.561.561 0 010 1.12zm0-3.003H8.209a.562.562 0 01-.56-.56c0-.308.252-.56.56-.56h7.1a.561.561 0 010 1.12zm.14-4.944c-.653 0-1.2-.204-1.583-.588-.384-.384-.588-.933-.588-1.583V3.6l4.353 4.13H15.45z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconInvoicePlanFileFilled;

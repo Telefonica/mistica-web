@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconInternetPendriveFilled: React.FC<Props> = ({color, size = 24}) => {
+const IconInternetPendriveFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M11.75 6.56c-5.75 0-8.548 2.855-8.548 8.731a.607.607 0 01-.6.614A.607.607 0 012 15.29c0-6.515 3.373-9.958 9.75-9.958a.607.607 0 01.603.614.607.607 0 01-.602.613zm.583 2.703a.607.607 0 01-.6.614c-3.59 0-5.335 1.784-5.335 5.45a.605.605 0 01-.6.614h-.002a.607.607 0 01-.603-.613v-.003c0-4.37 2.26-6.678 6.54-6.678a.615.615 0 01.6.616zm8.152 7.544v-2.941a.158.158 0 00-.126-.149h-.748v3.241h.736c.076 0 .138-.067.138-.151zm-.149-4.317c.728 0 1.333.61 1.35 1.364v2.953c0 .759-.602 1.378-1.339 1.378h-.804a1.542 1.542 0 01-1.462 1.092H12.23c-2.3-.084-3.62-1.518-3.62-3.93 0-2.417 1.32-3.846 3.623-3.921h5.84c.672 0 1.244.445 1.454 1.064h.81zm-8.675 2.14c-.448 0-.74.238-.74.75 0 .247.068.43.188.553.13.134.32.199.552.199.233 0 .423-.065.552-.2.12-.123.188-.305.188-.551 0-.513-.292-.75-.74-.75z"
                 fill={fillColor}

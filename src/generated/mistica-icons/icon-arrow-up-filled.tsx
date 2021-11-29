@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconArrowUpFilled: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconArrowUpFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M21.7 11.846c0 .151-.028.3-.084.44-.176.434-.602.7-1.106.694l-3.65.003a.253.253 0 00-.056.04l-.02 6.882c.009.616-.145 1.07-.467 1.384-.323.313-.776.459-1.393.442H8.882c-.42.008-1.025-.03-1.445-.437-.42-.406-.479-1.008-.487-1.426v-.008l.002-6.712a.453.453 0 00-.053-.156l-3.563.005h-.005c-.858-.005-1.149-.414-1.247-.658-.168-.417-.014-.9.42-1.322l8.712-8.658c.084-.087.33-.337.689-.334a.82.82 0 01.594.275l8.703 8.482c.325.3.498.689.498 1.064z"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M15.89 21.996v-8.173h3.894c.89 0 1.704-.564 2.041-1.425.337-.824.187-1.724-.445-2.363L11.996 1 2.62 10.035c-.632.639-.782 1.539-.445 2.363.37.861 1.151 1.425 2.04 1.425H8.11V22l7.78-.004z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M21.7 11.846c0 .151-.028.3-.084.44-.176.434-.602.7-1.106.694l-3.65.003a.253.253 0 00-.056.04l-.02 6.882c.009.616-.145 1.07-.467 1.384-.323.313-.776.459-1.393.442H8.882c-.42.008-1.025-.03-1.445-.437-.42-.406-.479-1.008-.487-1.426v-.008l.002-6.712a.453.453 0 00-.053-.156l-3.563.005h-.005c-.858-.005-1.149-.414-1.247-.658-.168-.417-.014-.9.42-1.322l8.712-8.658c.084-.087.33-.337.689-.334a.82.82 0 01.594.275l8.703 8.482c.325.3.498.689.498 1.064z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconArrowUpFilled;

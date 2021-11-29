@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconCancelRegular: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconCancelRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M17.85 6.143a.746.746 0 010 1.059L13.052 12l4.794 4.795a.75.75 0 11-1.045 1.079l-.017-.017-4.79-4.795-4.782 4.78a.75.75 0 01-1.058.004l-.004-.003a.75.75 0 010-1.062L10.931 12l-4.78-4.78a.747.747 0 01-.038-1.06.747.747 0 011.058-.037l.038.038 4.78 4.78 4.795-4.794a.751.751 0 011.066-.004c-.004 0-.004 0 0 0zm-5.853 16.358c7.065 0 10.504-3.436 10.504-10.498C22.5 4.938 19.065 1.5 12 1.5 4.935 1.5 1.503 4.935 1.503 12.003c-.004 7.062 3.432 10.498 10.494 10.498zm0-22.501C19.577 0 24 3.832 24 12.003 24 20.18 19.578 24 11.997 24 4.415 24 0 20.179 0 12.003 0 3.832 4.415 0 11.997 0z"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M12 2c5.516 0 10 4.484 10 10s-4.484 10-10 10S2 17.516 2 12 6.484 2 12 2zm0 1.424c-4.728 0-8.576 3.848-8.576 8.576 0 4.728 3.848 8.576 8.576 8.576 4.728 0 8.576-3.848 8.576-8.576 0-4.728-3.848-8.576-8.576-8.576zm3.78 3.784a.722.722 0 011.012 0 .722.722 0 010 1.012L13.012 12l3.772 3.78a.722.722 0 010 1.012.716.716 0 01-.504.212.726.726 0 01-.504-.212l-3.78-3.78-3.78 3.78a.702.702 0 01-1.008 0 .722.722 0 010-1.012l3.78-3.78-3.78-3.78a.722.722 0 010-1.012.722.722 0 011.012 0l3.78 3.78z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M17.85 6.143a.746.746 0 010 1.059L13.052 12l4.794 4.795a.75.75 0 11-1.045 1.079l-.017-.017-4.79-4.795-4.782 4.78a.75.75 0 01-1.058.004l-.004-.003a.75.75 0 010-1.062L10.931 12l-4.78-4.78a.747.747 0 01-.038-1.06.747.747 0 011.058-.037l.038.038 4.78 4.78 4.795-4.794a.751.751 0 011.066-.004c-.004 0-.004 0 0 0zm-5.853 16.358c7.065 0 10.504-3.436 10.504-10.498C22.5 4.938 19.065 1.5 12 1.5 4.935 1.5 1.503 4.935 1.503 12.003c-.004 7.062 3.432 10.498 10.494 10.498zm0-22.501C19.577 0 24 3.832 24 12.003 24 20.18 19.578 24 11.997 24 4.415 24 0 20.179 0 12.003 0 3.832 4.415 0 11.997 0z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconCancelRegular;

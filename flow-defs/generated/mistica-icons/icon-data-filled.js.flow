@@ -1,9 +1,6 @@
 // @flow
 
 import * as React from "react";
-declare type Props = {
-  color?: string,
-  size?: string | number,
-};
-declare var IconDataFilled: React.ComponentType<Props>;
+import type { IconProps } from "../../utils/types";
+declare var IconDataFilled: React.ComponentType<IconProps>;
 declare export default typeof IconDataFilled;

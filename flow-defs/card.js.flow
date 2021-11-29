@@ -32,9 +32,9 @@ declare type DataCardProps = {
    */
   icon?: React.Element<any>,
   headline?: string | React.Element<typeof Tag>,
-  title: string,
+  title?: string,
   subtitle?: string,
-  description: string,
+  description?: string,
   extra?: React.Node,
   button?: React.Element<typeof ButtonPrimary>,
   buttonLink?: React.Element<typeof ButtonLink>,

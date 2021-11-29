@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useFieldProps} from './form-context';
 import TextFieldBase from './text-field-base';
 import IconSearch from './icons/icon-search';
-import IconClose from './icons/icon-close';
+import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 
 import type {CommonFormFieldProps} from './text-field-base';
@@ -81,7 +81,7 @@ const SearchField: React.FC<SearchFieldProps> = ({
                         aria-label={theme.texts.formSearchClear}
                         onPress={clearInput}
                     >
-                        <IconClose />
+                        <IconCloseRegular />
                     </IconButton>
                 ) : undefined
             }

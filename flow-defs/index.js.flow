@@ -170,6 +170,9 @@ declare export { default as IconAcademicRegular } from "./generated/mistica-icon
 declare export { default as IconAccesibilityFilled } from "./generated/mistica-icons/icon-accesibility-filled";
 declare export { default as IconAccesibilityLight } from "./generated/mistica-icons/icon-accesibility-light";
 declare export { default as IconAccesibilityRegular } from "./generated/mistica-icons/icon-accesibility-regular";
+declare export { default as IconAddBoltonFilled } from "./generated/mistica-icons/icon-add-bolton-filled";
+declare export { default as IconAddBoltonLight } from "./generated/mistica-icons/icon-add-bolton-light";
+declare export { default as IconAddBoltonRegular } from "./generated/mistica-icons/icon-add-bolton-regular";
 declare export { default as IconAddMoreCircleFilled } from "./generated/mistica-icons/icon-add-more-circle-filled";
 declare export { default as IconAddMoreCircleLight } from "./generated/mistica-icons/icon-add-more-circle-light";
 declare export { default as IconAddMoreCircleRegular } from "./generated/mistica-icons/icon-add-more-circle-regular";
@@ -183,6 +186,9 @@ declare export { default as IconAddMoreRegular } from "./generated/mistica-icons
 declare export { default as IconAdnFilled } from "./generated/mistica-icons/icon-adn-filled";
 declare export { default as IconAdnLight } from "./generated/mistica-icons/icon-adn-light";
 declare export { default as IconAdnRegular } from "./generated/mistica-icons/icon-adn-regular";
+declare export { default as IconAlarmClockFilled } from "./generated/mistica-icons/icon-alarm-clock-filled";
+declare export { default as IconAlarmClockLight } from "./generated/mistica-icons/icon-alarm-clock-light";
+declare export { default as IconAlarmClockRegular } from "./generated/mistica-icons/icon-alarm-clock-regular";
 declare export { default as IconAlarmLightCrossFilled } from "./generated/mistica-icons/icon-alarm-light-cross-filled";
 declare export { default as IconAlarmLightCrossLight } from "./generated/mistica-icons/icon-alarm-light-cross-light";
 declare export { default as IconAlarmLightCrossRegular } from "./generated/mistica-icons/icon-alarm-light-cross-regular";
@@ -224,6 +230,10 @@ declare export { default as IconArrowDropUpFilled } from "./generated/mistica-ic
 declare export { default as IconArrowForwardLight } from "./generated/mistica-icons/icon-arrow-forward-light";
 declare export { default as IconArrowForwardRegular } from "./generated/mistica-icons/icon-arrow-forward-regular";
 declare export { default as IconArrowLeftFilled } from "./generated/mistica-icons/icon-arrow-left-filled";
+declare export { default as IconArrowLineDownLeftLight } from "./generated/mistica-icons/icon-arrow-line-down-left-light";
+declare export { default as IconArrowLineDownLeftRegular } from "./generated/mistica-icons/icon-arrow-line-down-left-regular";
+declare export { default as IconArrowLineUpRightLight } from "./generated/mistica-icons/icon-arrow-line-up-right-light";
+declare export { default as IconArrowLineUpRightRegular } from "./generated/mistica-icons/icon-arrow-line-up-right-regular";
 declare export { default as IconArrowRightFilled } from "./generated/mistica-icons/icon-arrow-right-filled";
 declare export { default as IconArrowRightLight } from "./generated/mistica-icons/icon-arrow-right-light";
 declare export { default as IconArrowRightRegular } from "./generated/mistica-icons/icon-arrow-right-regular";
@@ -311,9 +321,6 @@ declare export { default as IconBugFilled } from "./generated/mistica-icons/icon
 declare export { default as IconBugLight } from "./generated/mistica-icons/icon-bug-light";
 declare export { default as IconBugRegular } from "./generated/mistica-icons/icon-bug-regular";
 declare export { default as IconBusFilled } from "./generated/mistica-icons/icon-bus-filled";
-declare export { default as IconBushFilled } from "./generated/mistica-icons/icon-bush-filled";
-declare export { default as IconBushLight } from "./generated/mistica-icons/icon-bush-light";
-declare export { default as IconBushRegular } from "./generated/mistica-icons/icon-bush-regular";
 declare export { default as IconBusLight } from "./generated/mistica-icons/icon-bus-light";
 declare export { default as IconBusRegular } from "./generated/mistica-icons/icon-bus-regular";
 declare export { default as IconBuyDataFilled } from "./generated/mistica-icons/icon-buy-data-filled";
@@ -432,8 +439,6 @@ declare export { default as IconCocktailRegular } from "./generated/mistica-icon
 declare export { default as IconCodeFilled } from "./generated/mistica-icons/icon-code-filled";
 declare export { default as IconCodeLight } from "./generated/mistica-icons/icon-code-light";
 declare export { default as IconCodeRegular } from "./generated/mistica-icons/icon-code-regular";
-declare export { default as IconComputerAcademicFilled } from "./generated/mistica-icons/icon-computer-academic-filled";
-declare export { default as IconComputerAcademicRegular } from "./generated/mistica-icons/icon-computer-academic-regular";
 declare export { default as IconComputerFilled } from "./generated/mistica-icons/icon-computer-filled";
 declare export { default as IconComputerLight } from "./generated/mistica-icons/icon-computer-light";
 declare export { default as IconComputerRegular } from "./generated/mistica-icons/icon-computer-regular";
@@ -580,9 +585,6 @@ declare export { default as IconEmergencyCrossWithCircleRegular } from "./genera
 declare export { default as IconErrorFilled } from "./generated/mistica-icons/icon-error-filled";
 declare export { default as IconErrorLight } from "./generated/mistica-icons/icon-error-light";
 declare export { default as IconErrorRegular } from "./generated/mistica-icons/icon-error-regular";
-declare export { default as IconEuroSymbolCircleFilled } from "./generated/mistica-icons/icon-euro-symbol-circle-filled";
-declare export { default as IconEuroSymbolCircleLight } from "./generated/mistica-icons/icon-euro-symbol-circle-light";
-declare export { default as IconEuroSymbolCircleRegular } from "./generated/mistica-icons/icon-euro-symbol-circle-regular";
 declare export { default as IconEuroSymbolFilled } from "./generated/mistica-icons/icon-euro-symbol-filled";
 declare export { default as IconEuroSymbolLight } from "./generated/mistica-icons/icon-euro-symbol-light";
 declare export { default as IconEuroSymbolRegular } from "./generated/mistica-icons/icon-euro-symbol-regular";
@@ -897,8 +899,6 @@ declare export { default as IconMusicFilled } from "./generated/mistica-icons/ic
 declare export { default as IconMusicLight } from "./generated/mistica-icons/icon-music-light";
 declare export { default as IconMusicRegular } from "./generated/mistica-icons/icon-music-regular";
 declare export { default as IconNeuralNetworkFilled } from "./generated/mistica-icons/icon-neural-network-filled";
-declare export { default as IconNeuralNetworkHumanFilled } from "./generated/mistica-icons/icon-neural-network-human-filled";
-declare export { default as IconNeuralNetworkHumanRegular } from "./generated/mistica-icons/icon-neural-network-human-regular";
 declare export { default as IconNeuralNetworkLight } from "./generated/mistica-icons/icon-neural-network-light";
 declare export { default as IconNeuralNetworkRegular } from "./generated/mistica-icons/icon-neural-network-regular";
 declare export { default as IconNotConexionFilled } from "./generated/mistica-icons/icon-not-conexion-filled";
@@ -1015,6 +1015,9 @@ declare export { default as IconPoundRegular } from "./generated/mistica-icons/i
 declare export { default as IconPoundryFilled } from "./generated/mistica-icons/icon-poundry-filled";
 declare export { default as IconPoundryLight } from "./generated/mistica-icons/icon-poundry-light";
 declare export { default as IconPoundryRegular } from "./generated/mistica-icons/icon-poundry-regular";
+declare export { default as IconPoundSymbolFilled } from "./generated/mistica-icons/icon-pound-symbol-filled";
+declare export { default as IconPoundSymbolLight } from "./generated/mistica-icons/icon-pound-symbol-light";
+declare export { default as IconPoundSymbolRegular } from "./generated/mistica-icons/icon-pound-symbol-regular";
 declare export { default as IconPowerFilled } from "./generated/mistica-icons/icon-power-filled";
 declare export { default as IconPowerLight } from "./generated/mistica-icons/icon-power-light";
 declare export { default as IconPowerRegular } from "./generated/mistica-icons/icon-power-regular";
