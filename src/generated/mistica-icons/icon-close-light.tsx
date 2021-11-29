@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconCloseLight: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconCloseLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M12.569 12l5.31-5.319a.384.384 0 00.017-.543l-.017-.017a.384.384 0 00-.543-.017c-.007.005-.012.012-.017.017L12 11.431l-5.319-5.31a.384.384 0 00-.543-.017l-.017.017a.384.384 0 00-.017.543c.005.007.012.012.017.017L11.431 12l-5.31 5.319a.384.384 0 00-.017.543l.017.017a.38.38 0 00.28.12.377.377 0 00.28-.12L12 12.569l5.319 5.31a.384.384 0 00.543.017l.017-.017a.384.384 0 00.017-.543c-.005-.007-.012-.012-.017-.017L12.569 12z"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M18.461 17.925a.538.538 0 110 1.075.538.538 0 010-1.075zM18.54 5.08a.267.267 0 01.381 0 .267.267 0 010 .38L12.38 12l5.194 5.194a.267.267 0 010 .38.265.265 0 01-.19.08.265.265 0 01-.191-.08L12 12.382l-6.54 6.54a.265.265 0 01-.19.079.265.265 0 01-.19-.078.267.267 0 010-.381L11.62 12 5.08 5.46a.267.267 0 010-.381.267.267 0 01.38 0L12 11.62z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M12.569 12l5.31-5.319a.384.384 0 00.017-.543l-.017-.017a.384.384 0 00-.543-.017c-.007.005-.012.012-.017.017L12 11.431l-5.319-5.31a.384.384 0 00-.543-.017l-.017.017a.384.384 0 00-.017.543c.005.007.012.012.017.017L11.431 12l-5.31 5.319a.384.384 0 00-.017.543l.017.017a.38.38 0 00.28.12.377.377 0 00.28-.12L12 12.569l5.319 5.31a.384.384 0 00.543.017l.017-.017a.384.384 0 00.017-.543c-.005-.007-.012-.012-.017-.017L12.569 12z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconCloseLight;

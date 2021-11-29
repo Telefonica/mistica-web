@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconBellOffRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconBellOffRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M5.005 17.586c1.47-2.09 1.313-4.885 1.305-4.991V8.797c0-.765.095-1.454.277-2.07l9.866 10.86H5.005zm8.423 2.395c-.311.337-.773.502-1.412.502-.642 0-1.104-.163-1.415-.502-.325-.352-.425-.84-.453-1.19h3.74c-.032.356-.133.838-.46 1.19zM7.865 4.606c1.647-1.504 4.09-1.361 4.115-1.361a.421.421 0 00.084 0c.025 0 2.467-.143 4.114 1.361 1.031.944 1.555 2.353 1.555 4.19l.003 3.76c-.011.14-.168 2.94 1.305 5.03h-.935L7.126 5.508a4.18 4.18 0 01.739-.902zM20.89 20.654l-1.695-1.863h1.233c.26 0 .493-.16.58-.4a.595.595 0 00-.191-.67c-2.042-1.63-1.857-5.056-1.854-5.129V8.797c0-2.19-.659-3.9-1.955-5.079-1.933-1.762-4.603-1.703-4.986-1.678-.387-.022-3.056-.084-4.99 1.678-.28.258-.534.546-.753.857L4.122 2.203a.624.624 0 00-.868-.05.59.59 0 00-.064.834c.005.006.008.011.014.014l2.448 2.695c-.376.89-.572 1.924-.572 3.1v3.835c.003.034.188 3.46-1.854 5.09a.595.595 0 00-.19.67c.09.24.322.403.58.4h5.3c.033.543.187 1.353.764 1.989.549.605 1.336.907 2.339.907 1 0 1.784-.305 2.336-.907.577-.633.734-1.443.77-1.989h2.423l2.42 2.661a.613.613 0 00.46.202c.145 0 .294-.05.409-.152a.59.59 0 00.064-.834c-.003-.006-.008-.009-.011-.014z"
                 fill={fillColor}

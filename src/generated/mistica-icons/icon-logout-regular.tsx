@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconLogoutRegular: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconLogoutRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M16.823 2a3.674 3.674 0 013.67 3.67v12.16a3.674 3.674 0 01-3.67 3.67h-8.16a3.674 3.674 0 01-3.67-3.67.75.75 0 011.5 0c0 1.196.974 2.17 2.17 2.17h8.16c1.197 0 2.17-.974 2.17-2.17V5.67c0-1.196-.973-2.17-2.17-2.17h-8.16c-1.196 0-2.17.974-2.17 2.17a.75.75 0 01-1.5 0A3.674 3.674 0 018.663 2h8.16zM6.265 8.218a.75.75 0 010 1.06L4.543 11h7.2a.75.75 0 010 1.5H4.592l1.698 1.683a.749.749 0 11-1.054 1.066l-3.013-2.983a.745.745 0 01-.003-1.064l2.984-2.984a.75.75 0 011.061 0z"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M16.506 2h-6.293C8.293 2 6.72 3.608 6.72 5.571v5.715H4.727l.908-.928a.704.704 0 000-1 .668.668 0 00-.978 0L2 12.003l2.657 2.64c.14.143.317.215.49.215a.686.686 0 00.488-.216.704.704 0 000-1l-.908-.927h9.157a.71.71 0 00.7-.716.713.713 0 00-.7-.716H8.12v-4.64h10.483v10.714H8.12v-3.035a.71.71 0 00-.7-.716c-.384 0-.7.324-.7.716v4.107C6.72 20.392 8.291 22 10.212 22h6.293C18.427 22 20 20.392 20 18.429V5.57C20 3.608 18.427 2 16.506 2zm-6.293 1.428h6.293c1.048 0 1.886.784 2.062 1.783H8.15c.176-.995 1.018-1.783 2.062-1.783zm6.293 17.144h-6.293c-1.048 0-1.886-.784-2.062-1.783h10.417c-.172.995-1.014 1.783-2.062 1.783z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M16.823 2a3.674 3.674 0 013.67 3.67v12.16a3.674 3.674 0 01-3.67 3.67h-8.16a3.674 3.674 0 01-3.67-3.67.75.75 0 011.5 0c0 1.196.974 2.17 2.17 2.17h8.16c1.197 0 2.17-.974 2.17-2.17V5.67c0-1.196-.973-2.17-2.17-2.17h-8.16c-1.196 0-2.17.974-2.17 2.17a.75.75 0 01-1.5 0A3.674 3.674 0 018.663 2h8.16zM6.265 8.218a.75.75 0 010 1.06L4.543 11h7.2a.75.75 0 010 1.5H4.592l1.698 1.683a.749.749 0 11-1.054 1.066l-3.013-2.983a.745.745 0 01-.003-1.064l2.984-2.984a.75.75 0 011.061 0z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconLogoutRegular;

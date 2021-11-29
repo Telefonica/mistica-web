@@ -7,6 +7,9 @@ declare type Props = {
   color?: string,
   style?: CssStyle,
 };
+/**
+ * @deprecated use IconArrowDropDownFilled instead
+ */
 declare var IconArrowDown: React.ComponentType<Props>;
 declare export default typeof IconArrowDown;
 

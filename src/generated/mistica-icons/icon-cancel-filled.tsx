@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconCancelFilled: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconCancelFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M17.85 16.795a.75.75 0 11-1.062 1.062l-4.795-4.795-4.78 4.78a.744.744 0 01-.53.22.75.75 0 01-.53-1.28L10.935 12 6.154 7.22a.746.746 0 010-1.06.746.746 0 011.058 0l4.781 4.781 4.795-4.798a.75.75 0 111.062 1.062L13.052 12l4.798 4.795zM11.997 0C4.415 0 0 3.828 0 12.003 0 20.18 4.415 24 11.997 24 19.577 24 24 20.179 24 12.003 24 3.828 19.578 0 11.997 0z"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M12 2C6.484 2 2 6.484 2 12s4.484 10 10 10 10-4.484 10-10S17.516 2 12 2zm4.664 13.912a.534.534 0 01-.38.912.535.535 0 01-.38-.152l-3.912-3.912-3.912 3.912a.535.535 0 01-.38.152.534.534 0 01-.38-.912L11.232 12 7.336 8.088a.534.534 0 010-.76.534.534 0 01.76 0l3.912 3.912 3.912-3.912a.534.534 0 01.76 0 .534.534 0 010 .76L12.768 12l3.896 3.912z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M17.85 16.795a.75.75 0 11-1.062 1.062l-4.795-4.795-4.78 4.78a.744.744 0 01-.53.22.75.75 0 01-.53-1.28L10.935 12 6.154 7.22a.746.746 0 010-1.06.746.746 0 011.058 0l4.781 4.781 4.795-4.798a.75.75 0 111.062 1.062L13.052 12l4.798 4.795zM11.997 0C4.415 0 0 3.828 0 12.003 0 20.18 4.415 24 11.997 24 19.577 24 24 20.179 24 12.003 24 3.828 19.578 0 11.997 0z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconCancelFilled;

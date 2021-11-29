@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Tooltip, Text2, Stack, useTheme} from '..';
 import {StorySection} from './helpers';
-import IcnClose from '../icons/icon-close';
+import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
 import IcnInfo from '../icons/icon-info-cvv';
 import IconVisa from '../icons/icon-visa';
 import IconMastercard from '../icons/icon-mastercard';
@@ -82,7 +82,7 @@ export const Default: StoryComponent = () => {
                 >
                     <Tooltip
                         targetLabel="help text"
-                        target={<IcnClose />}
+                        target={<IconCloseRegular />}
                         position="left"
                         description={description}
                         width={100}

@@ -210,9 +210,9 @@ interface DataCardProps {
      */
     icon?: React.ReactElement;
     headline?: string | React.ReactElement<TagProps, typeof Tag>;
-    title: string;
+    title?: string;
     subtitle?: string;
-    description: string;
+    description?: string;
     extra?: React.ReactNode;
     button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
     buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
