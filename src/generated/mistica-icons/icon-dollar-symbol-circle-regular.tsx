@@ -10,7 +10,7 @@ import {useIsInverseVariant} from '../../theme-variant-context';
 
 import type {IconProps} from '../../utils/types';
 
-const IconMoneyRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+const IconDollarSymbolCircleRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
@@ -24,4 +24,4 @@ const IconMoneyRegular: React.FC<IconProps> = ({color, size = 24, children, ...r
     );
 };
 
-export default IconMoneyRegular;
+export default IconDollarSymbolCircleRegular;
