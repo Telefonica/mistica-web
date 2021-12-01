@@ -15,6 +15,7 @@ export const Error: StoryComponent = () => (
         description="I'm the description"
         primaryButton={<ButtonPrimary onPress={() => {}}>Action1</ButtonPrimary>}
         link={<ButtonLink onPress={() => {}}>Action2</ButtonLink>}
+        errorReference="Error reference: #95001"
     />
 );
 Error.storyName = 'ErrorFeedbackScreen';
