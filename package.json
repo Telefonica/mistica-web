@@ -79,7 +79,7 @@
         "@telefonica/eslint-plugin-async-await": "^1.1.0",
         "@telefonica/eslint-plugin-react-element-interface": "^1.0.0",
         "@telefonica/prettier-config": "^1.1.0",
-        "@telefonica/ts-to-flow": "1.1.0",
+        "@telefonica/ts-to-flow": "1.1.1",
         "@testing-library/jest-dom": "^5.12.0",
         "@testing-library/react": "^11.2.7",
         "@testing-library/user-event": "^13.1.9",
