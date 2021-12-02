@@ -18,10 +18,6 @@ jobs:
             matrix:
                 node-version: [16.x]
 
-        env:
-            PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
-            PUPPETEER_EXECUTABLE_PATH: /usr/local/share/.config/yarn/global/node_modules/puppeteer/.local-chromium/linux-901912/chrome-linux/chrome
-
         steps:
             - uses: actions/checkout@v2
 
