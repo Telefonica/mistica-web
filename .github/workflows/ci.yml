@@ -26,17 +26,8 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
 
-            - name: Restore node_modules from cache
-              uses: actions/cache@v2
-              id: yarn-cache
-              with:
-                  path: ./node_modules
-                  key: node_modules-${{ hashFiles('**/yarn.lock') }}
             - name: Install dependencies
-              # skip yarn install if restored from cache
-              # note that the id (yarn-cache) must match the id from actions/cache@v2 step
-              if: steps.yarn-cache.outputs.cache-hit != 'true'
-              run: yarn
+              run: yarn install --immutable --immutable-cache
 
             - run: yarn ci
 
