@@ -4,6 +4,9 @@ jobs:
     deploy:
         runs-on: self-hosted-novum
         container: docker.tuenti.io/service-inf/web-builder:pptr10.4-1.0.2
+        env:
+            PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+            PUPPETEER_EXECUTABLE_PATH: /usr/local/share/.config/yarn/global/node_modules/puppeteer/.local-chromium/linux-901912/chrome-linux/chrome
         steps:
             - uses: actions/checkout@v2
             - uses: amondnet/vercel-action@master
@@ -17,9 +20,6 @@ jobs:
                   working-directory: ./
 
             - name: Install dependencies
-              env:
-                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
-                  PUPPETEER_EXECUTABLE_PATH: /usr/local/share/.config/yarn/global/node_modules/puppeteer/.local-chromium/linux-901912/chrome-linux/chrome
               run: yarn install --immutable --immutable-cache
 
             - name: 'Build storybook' # a static storybook build is required to extract stories information in next step
