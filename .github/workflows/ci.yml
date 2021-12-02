@@ -29,6 +29,7 @@ jobs:
             - name: Install dependencies
               env:
                   PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+                  PUPPETEER_EXECUTABLE_PATH: /usr/local/share/.config/yarn/global/node_modules/puppeteer/.local-chromium/linux-901912/chrome-linux/chrome
               run: yarn install --immutable --immutable-cache
 
             - run: yarn ci
