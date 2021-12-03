@@ -29,7 +29,12 @@ declare type FeedbackScreenProps = {
 };
 declare export var FeedbackScreen: React.ComponentType<FeedbackScreenProps>;
 declare export var SuccessFeedbackScreen: React.ComponentType<AssetFeedbackProps>;
-declare export var ErrorFeedbackScreen: React.ComponentType<FeedbackProps>;
+declare type ErrorFeedbackScreenProps = {
+  ...$Exact<FeedbackProps>,
+
+  errorReference?: string,
+};
+declare export var ErrorFeedbackScreen: React.ComponentType<ErrorFeedbackScreenProps>;
 declare export var InfoFeedbackScreen: React.ComponentType<FeedbackProps>;
 declare export var SuccessFeedback: React.ComponentType<AssetFeedbackProps>;
 declare export {};
