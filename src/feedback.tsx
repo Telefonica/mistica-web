@@ -15,7 +15,7 @@ import {
 } from '@tef-novum/webview-bridge';
 import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {Theme} from './theme';
-import {Text6, Text4} from './text';
+import {Text6, Text4, Text2} from './text';
 import Box from './box';
 import {Boxed} from './boxed';
 import ResponsiveLayout from './responsive-layout';
@@ -354,18 +354,35 @@ export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = (props) => {
         </ThemeVariant>
     );
 };
-export const ErrorFeedbackScreen: React.FC<FeedbackProps> = (props) => {
-    const {skinName} = useTheme();
+
+interface ErrorFeedbackScreenProps extends FeedbackProps {
+    errorReference?: string;
+}
+
+export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
+    children,
+    errorReference,
+    ...otherProps
+}) => {
+    const {skinName, colors} = useTheme();
     const hasIcon = skinName !== VIVO_SKIN;
     return (
         <FeedbackScreen
-            {...props}
+            {...otherProps}
             hapticFeedback="error"
             icon={hasIcon ? <IcnError /> : undefined}
             animateText
-        />
+        >
+            {children}
+            {errorReference && (
+                <Text2 color={colors.textSecondary} regular>
+                    {errorReference}
+                </Text2>
+            )}
+        </FeedbackScreen>
     );
 };
+
 export const InfoFeedbackScreen: React.FC<FeedbackProps> = (props) => {
     const {skinName} = useTheme();
     const hasIcon = skinName !== VIVO_SKIN;
