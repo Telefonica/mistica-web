@@ -22,7 +22,7 @@
         "ts-check": "tsc --project tsconfig.json --noEmit",
         "build": "yarn clean && node scripts/build.js",
         "clean": "rimraf dist && rimraf dist-es && rimraf dist-ts && rimraf node_modules/.cache",
-        "ci": "yarn lint && yarn prettier-check && yarn circular-dependencies && yarn build && yarn storybook-static && yarn test --ci && yarn test-acceptance --ci",
+        "ci": "yarn lint && yarn prettier-check && yarn ts-check && yarn circular-dependencies && yarn build && yarn storybook-static && yarn test --ci && yarn test-acceptance --ci",
         "prepublishOnly": "node scripts/prepublish-only.js",
         "prepack": "yarn build",
         "storybook": "start-storybook -p 6006",

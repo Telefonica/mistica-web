@@ -2,7 +2,7 @@ import {
     openPage,
     serverHostName,
     screen,
-    getGlobalPage,
+    globalPage,
     PageApi,
     Viewport,
 } from '@telefonica/acceptance-testing';
@@ -162,11 +162,11 @@ export const openSSRPage = ({
     device?: Device;
     skin?: string;
 }): Promise<PageApi> => {
-    const page = getGlobalPage();
+    const page = globalPage;
     const port = (global as any).__SSR_SERVER__.address().port;
 
     // Capture browser console.error and console.warn calls that React could trigger when calling hydrate()
-    page.on('console', async (msg) => {
+    page.on('console', async (msg: any) => {
         const type = msg.type();
         const args = [...(await Promise.all(msg.args().map((h: any) => h.jsonValue())))];
         if (args.length === 0) {

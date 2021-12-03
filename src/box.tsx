@@ -31,36 +31,38 @@ type Props = {
     'aria-label'?: string;
 };
 
-const Box: React.FC<Props> = ({
-    className,
-    children,
-    width,
-    padding = 0,
-    paddingX = padding,
-    paddingY = padding,
-    paddingTop = paddingY,
-    paddingBottom = paddingY,
-    paddingLeft = paddingX,
-    paddingRight = paddingX,
-    role,
-    dataAttributes,
-    'aria-label': ariaLabel,
-}) => {
-    const classes = useStyles({
-        padding: `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`,
+const Box = React.forwardRef<HTMLDivElement, Props>(
+    ({
+        className,
+        children,
         width,
-    });
+        padding = 0,
+        paddingX = padding,
+        paddingY = padding,
+        paddingTop = paddingY,
+        paddingBottom = paddingY,
+        paddingLeft = paddingX,
+        paddingRight = paddingX,
+        role,
+        dataAttributes,
+        'aria-label': ariaLabel,
+    }) => {
+        const classes = useStyles({
+            padding: `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`,
+            width,
+        });
 
-    return (
-        <div
-            {...getPrefixedDataAttributes(dataAttributes)}
-            className={classnames(className, classes.box)}
-            role={role}
-            aria-label={ariaLabel}
-        >
-            {children}
-        </div>
-    );
-};
+        return (
+            <div
+                {...getPrefixedDataAttributes(dataAttributes)}
+                className={classnames(className, classes.box)}
+                role={role}
+                aria-label={ariaLabel}
+            >
+                {children}
+            </div>
+        );
+    }
+);
 
 export default Box;

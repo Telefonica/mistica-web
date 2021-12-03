@@ -14,5 +14,8 @@ declare type Props = {
   dataAttributes?: DataAttributes,
   "aria-label"?: string,
 };
-declare export var Boxed: React.ComponentType<Props>;
+declare export var Boxed: React.Component<{
+  ...Props,
+  ...React.RefAttributes<HTMLDivElement>,
+}>;
 declare export {};
