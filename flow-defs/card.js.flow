@@ -27,7 +27,7 @@ declare type MediaCardProps = {
 };
 declare export var MediaCard: React.Component<{
   ...MediaCardProps,
-  ...React.RefAttributes<HTMLDivElement>,
+  ref: React.Ref<HTMLDivElement>,
 }>;
 declare type DataCardProps = {
   /**
@@ -49,6 +49,6 @@ declare type DataCardProps = {
 };
 declare export var DataCard: React.Component<{
   ...DataCardProps,
-  ...React.RefAttributes<HTMLDivElement>,
+  ref: React.Ref<HTMLDivElement>,
 }>;
 declare export {};
