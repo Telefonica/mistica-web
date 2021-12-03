@@ -16,17 +16,8 @@ jobs:
                   vercel-project-name: mistica-web # not required by the docs, but the action fails if not specified. See https://github.com/amondnet/vercel-action/issues/30#issuecomment-678608424
                   working-directory: ./
 
-            - name: Restore node_modules from cache
-              uses: actions/cache@v2
-              id: yarn-cache
-              with:
-                  path: ./node_modules
-                  key: node_modules-${{ hashFiles('**/yarn.lock') }}
             - name: Install dependencies
-              # skip yarn install if restored from cache
-              # note that the id (yarn-cache) must match the id from actions/cache@v2 step
-              if: steps.yarn-cache.outputs.cache-hit != 'true'
-              run: yarn
+              run: yarn install --immutable --immutable-cache
 
             - name: 'Build storybook' # a static storybook build is required to extract stories information in next step
               run: 'yarn storybook-static'

@@ -59,7 +59,7 @@ export const createUseStyles = <S extends StylesDefinition>(styles?: (theme: The
     return (...args) => {
         try {
             return useStyles(...args) as any; // casted because useStyles returns Record<string, string>
-        } catch (err) {
+        } catch (err: any) {
             err.message = `${err.message} (Did you forget to add <ThemeContextProvider>?)`;
             throw err;
         }
