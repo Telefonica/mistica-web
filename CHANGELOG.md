@@ -1,3 +1,15 @@
+# [10.13.0](https://github.com/Telefonica/mistica-web/compare/v10.12.0...v10.13.0) (2021-12-02)
+
+
+### Bug Fixes
+
+* **Dialog:** text size ([#371](https://github.com/Telefonica/mistica-web/issues/371)) ([4b3a2a7](https://github.com/Telefonica/mistica-web/commit/4b3a2a70ed2aa46c8d91420182e146c6b3b3b2c4))
+
+
+### Features
+
+* **Icons:** Update mistica icons ([#374](https://github.com/Telefonica/mistica-web/issues/374)) ([136bb96](https://github.com/Telefonica/mistica-web/commit/136bb96a11835ce16c69b93e67eb1f92e9c0d8d4))
+
 # [10.12.0](https://github.com/Telefonica/mistica-web/compare/v10.11.0...v10.12.0) (2021-11-24)
 
 

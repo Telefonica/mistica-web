@@ -10,18 +10,18 @@ import {useIsInverseVariant} from '../../theme-variant-context';
 
 import type {IconProps} from '../../utils/types';
 
-const IconPoundryFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+const IconBookRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
-                d="M21.308 3.714c-.213-.017-5.19-.378-9.468 1.813-4.274-2.188-9.249-1.832-9.462-1.813A.409.409 0 002 4.12v13.46a.41.41 0 00.409.409c5.24 0 9.204 2.03 9.244 2.05.058.03.123.048.19.048.025 0 .05-.017.079-.023.039-.008.078-.008.112-.028l.016-.008h.006l.003-.003c.252-.126 4.126-2.036 9.218-2.036a.408.408 0 00.41-.41V4.12a.409.409 0 00-.379-.406"
+                d="M20.431 16.812a23.065 23.065 0 00-7.96 1.687V6.519c3.067-1.505 6.593-1.614 7.96-1.589v11.882zM3.255 4.93c1.367-.017 4.885.081 7.96 1.588v11.98a23.115 23.115 0 00-7.96-1.686V4.93zm17.854-1.216c-.21-.017-5.056-.361-9.266 1.734C7.636 3.35 2.79 3.698 2.58 3.714a.62.62 0 00-.577.62v13.092c0 .342.28.622.627.622 5.06 0 8.885 1.95 8.925 1.969.092.047.19.07.29.07.026 0 .049-.017.077-.02a.596.596 0 00.249-.07c.328-.162 4.022-1.952 8.89-1.952a.623.623 0 00.628-.622V4.331a.627.627 0 00-.58-.617z"
                 fill={fillColor}
             />
         </svg>
     );
 };
 
-export default IconPoundryFilled;
+export default IconBookRegular;
