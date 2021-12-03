@@ -69,7 +69,12 @@ declare type RowContentProps =
   | HrefRowContentProps
   | ToRowContentProps
   | OnPressRowContentProps;
-declare export var Row: React.ComponentType<RowContentProps>;
+declare export var Row: React.Component<{
+  ...RowContentProps,
+  ...React.RefAttributes<
+    HTMLAnchorElement | HTMLDivElement | HTMLButtonElement
+  >,
+}>;
 declare type RowListProps = {
   children: React.Node,
   ariaLabelledby?: string,
