@@ -76,9 +76,7 @@ export type Props =
   | PropsMaybeOnPress;
 declare var Touchable: React.Component<{
   ...Props,
-  ...React.Ref<
-    HTMLAnchorElement | HTMLDivElement | HTMLButtonElement
-  >,
+  ref: React.Ref<HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>,
 }>;
 declare export default typeof Touchable;
 

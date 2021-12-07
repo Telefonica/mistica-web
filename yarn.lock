@@ -5319,10 +5319,10 @@
   resolved "https://registry.yarnpkg.com/@telefonica/prettier-config/-/prettier-config-1.1.0.tgz#4304fbdd70296e4c1231d81171d5dc918f191860"
   integrity sha512-d8bzcTquUgLK1XlO5Me7mhg7jQXkGI6n9l1Hm3EUwleBkvZ8yhHBLD2RMkcrVaMSLCT3VrjXKXIXWNCgYx9E/g==
 
-"@telefonica/ts-to-flow@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@telefonica/ts-to-flow/-/ts-to-flow-1.1.0.tgz#9810cf7ced7ccaf8330737c417ed5866ce5d555d"
-  integrity sha512-xY8cz5QYYhMoZ8/tBnBmXshmgs/6ypMZD01UDQtjVQvRdhmktmgha5xk4X2XwKaEzuTRCamjHoAp+wfiEc93yg==
+"@telefonica/ts-to-flow@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@telefonica/ts-to-flow/-/ts-to-flow-1.1.2.tgz#a8fc9f706dfb135cf146f740b95ffa5ab61624f9"
+  integrity sha512-14FxMxl3AmkqpAfDKtNKKm9nN4PXVEPzZDWkqNlRwZ7d/qN+RuOd5yacthjjqKuMW1Nh36aleCl/BLyqKJnYIA==
   dependencies:
     cpx "^1.5.0"
     find-root "^1.1.0"

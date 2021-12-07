@@ -14,7 +14,7 @@ export type IconProps = {
   color?: string,
   size?: string | number,
   className?: string,
-  style?: {
-    [key: string]: string | number | boolean | void,
-  },
+  style?: CssStyle,
 };
+
+import { type CssStyle } from "../__types__.js.flow";

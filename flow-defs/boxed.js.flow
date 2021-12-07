@@ -16,6 +16,6 @@ declare type Props = {
 };
 declare export var Boxed: React.Component<{
   ...Props,
-  ...React.RefAttributes<HTMLDivElement>,
+  ref: React.Ref<HTMLDivElement>,
 }>;
 declare export {};
