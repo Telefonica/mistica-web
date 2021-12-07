@@ -13,6 +13,8 @@ import type {DataAttributes} from './utils/types';
 
 const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
     outerCircle: {
+        position: 'relative',
+        top: -2,
         flexShrink: 0,
         width: 20,
         height: 20,

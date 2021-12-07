@@ -12,6 +12,8 @@ import type {DataAttributes} from './utils/types';
 
 const useIconCheckboxStyles = createUseStyles(({colors, isIos}) => ({
     box: {
+        position: 'relative',
+        top: -2,
         flexShrink: 0,
         height: 18,
         width: 18,
