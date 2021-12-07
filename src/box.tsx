@@ -32,21 +32,24 @@ type Props = {
 };
 
 const Box = React.forwardRef<HTMLDivElement, Props>(
-    ({
-        className,
-        children,
-        width,
-        padding = 0,
-        paddingX = padding,
-        paddingY = padding,
-        paddingTop = paddingY,
-        paddingBottom = paddingY,
-        paddingLeft = paddingX,
-        paddingRight = paddingX,
-        role,
-        dataAttributes,
-        'aria-label': ariaLabel,
-    }) => {
+    (
+        {
+            className,
+            children,
+            width,
+            padding = 0,
+            paddingX = padding,
+            paddingY = padding,
+            paddingTop = paddingY,
+            paddingBottom = paddingY,
+            paddingLeft = paddingX,
+            paddingRight = paddingX,
+            role,
+            dataAttributes,
+            'aria-label': ariaLabel,
+        },
+        ref
+    ) => {
         const classes = useStyles({
             padding: `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`,
             width,
@@ -58,6 +61,7 @@ const Box = React.forwardRef<HTMLDivElement, Props>(
                 className={classnames(className, classes.box)}
                 role={role}
                 aria-label={ariaLabel}
+                ref={ref}
             >
                 {children}
             </div>
