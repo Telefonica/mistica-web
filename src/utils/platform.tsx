@@ -19,7 +19,7 @@ export const isInsideNovumNativeApp = (platformOverrides: Theme['platformOverrid
 export const isRunningAcceptanceTest = (platformOverrides: Theme['platformOverrides'] = {}): boolean =>
     getUserAgent(platformOverrides).includes('acceptance-test');
 
-const isEdgeOrIE = Boolean(typeof self !== 'undefined' && self.MSStream);
+const isEdgeOrIE = Boolean(typeof self !== 'undefined' && (self as any).MSStream);
 
 export const isAndroid = (platformOverrides: Theme['platformOverrides']): boolean =>
     getUserAgent(platformOverrides).toLowerCase().includes('android') && !isEdgeOrIE;
