@@ -85,6 +85,31 @@ export const Default: StoryComponent = () => {
                     </Stack>
                 </RadioGroup>
             </>
+            <>
+                <SectionTitle id="disabled">Multiline</SectionTitle>
+                <RadioGroup
+                    disabled
+                    name="group3"
+                    aria-labelledby="disabled"
+                    value={value}
+                    onChange={setValue}
+                >
+                    <Stack space={16}>
+                        <RadioButton value="banana">
+                            <Text3 regular>
+                                Checkbox with a very large very large very large very large very large very
+                                large very large very large very large text that falls
+                            </Text3>
+                        </RadioButton>
+                        <RadioButton value="apple">
+                            <Text3 regular>
+                                Checkbox with a very large very large very large very large very large very
+                                large very large very large very large text that falls
+                            </Text3>
+                        </RadioButton>
+                    </Stack>
+                </RadioGroup>
+            </>
         </Stack>
     );
 };
