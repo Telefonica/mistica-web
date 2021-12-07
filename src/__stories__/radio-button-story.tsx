@@ -86,7 +86,7 @@ export const Default: StoryComponent = () => {
                 </RadioGroup>
             </>
             <>
-                <SectionTitle id="disabled">Multiline</SectionTitle>
+                <SectionTitle id="multiline">Multiline</SectionTitle>
                 <RadioGroup
                     disabled
                     name="group4"
