@@ -13,8 +13,6 @@ import type {DataAttributes} from './utils/types';
 
 const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
     outerCircle: {
-        position: 'relative',
-        top: -2,
         flexShrink: 0,
         width: 20,
         height: 20,
@@ -149,7 +147,7 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, dataAttr
                 <Inline space={16}>
                     {/* Text3 wrapper added to have the same line-height and center checkbox with text */}
                     <Text3 regular as="div">
-                        {radio}
+                        <div style={{position: 'relative', top: -2}}>{radio}</div>
                     </Text3>
                     <Text3 regular as="div">
                         {rest.children}

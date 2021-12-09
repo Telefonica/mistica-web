@@ -12,8 +12,6 @@ import type {DataAttributes} from './utils/types';
 
 const useIconCheckboxStyles = createUseStyles(({colors, isIos}) => ({
     box: {
-        position: 'relative',
-        top: -2,
         flexShrink: 0,
         height: 18,
         width: 18,
@@ -179,7 +177,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
                 <Inline space={16}>
                     {/* Text3 wrapper added to have the same line-height and center checkbox with text */}
                     <Text3 regular as="div">
-                        {iconCheckbox}
+                        <div style={{position: 'relative', top: -2}}>{iconCheckbox}</div>
                     </Text3>
                     {props.children && (
                         <Text3

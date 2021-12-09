@@ -87,13 +87,7 @@ export const Default: StoryComponent = () => {
             </>
             <>
                 <SectionTitle id="multiline">Multiline</SectionTitle>
-                <RadioGroup
-                    disabled
-                    name="group4"
-                    aria-labelledby="multiline"
-                    value={value}
-                    onChange={setValue}
-                >
+                <RadioGroup name="group4" aria-labelledby="multiline" value={value} onChange={setValue}>
                     <Stack space={16}>
                         <RadioButton value="banana">
                             <Text3 regular>
