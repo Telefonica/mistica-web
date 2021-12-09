@@ -187,6 +187,12 @@ export {default as IconDolarSymbolFilled} from './generated/mistica-icons/icon-d
 export {default as IconDolarSymbolLight} from './generated/mistica-icons/icon-dollar-symbol-light';
 /** @deprecated use IconDollarSymbolRegular */
 export {default as IconDolarSymbolRegular} from './generated/mistica-icons/icon-dollar-symbol-regular';
+/** @deprecated use IconFileIllustratorFilled */
+export {default as IconFileFilled} from './generated/mistica-icons/icon-file-illustrator-filled';
+/** @deprecated use IconFileIllustratorLight */
+export {default as IconFileIlustratorLight} from './generated/mistica-icons/icon-file-illustrator-light';
+/** @deprecated use IconFileIllustratorRegular */
+export {default as IconFileIlustratorRegular} from './generated/mistica-icons/icon-file-illustrator-regular';
 
 // Exported this way to facilitate tree-shaking
 export {default as IconAcademicFilled} from './generated/mistica-icons/icon-academic-filled';
