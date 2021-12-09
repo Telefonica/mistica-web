@@ -179,6 +179,9 @@ declare export { default as IconMoneyRegular } from "./generated/mistica-icons/i
 declare export { default as IconDolarSymbolFilled } from "./generated/mistica-icons/icon-dollar-symbol-filled";
 declare export { default as IconDolarSymbolLight } from "./generated/mistica-icons/icon-dollar-symbol-light";
 declare export { default as IconDolarSymbolRegular } from "./generated/mistica-icons/icon-dollar-symbol-regular";
+declare export { default as IconFileFilled } from "./generated/mistica-icons/icon-file-illustrator-filled";
+declare export { default as IconFileIlustratorLight } from "./generated/mistica-icons/icon-file-illustrator-light";
+declare export { default as IconFileIlustratorRegular } from "./generated/mistica-icons/icon-file-illustrator-regular";
 declare export { default as IconAcademicFilled } from "./generated/mistica-icons/icon-academic-filled";
 declare export { default as IconAcademicLight } from "./generated/mistica-icons/icon-academic-light";
 declare export { default as IconAcademicRegular } from "./generated/mistica-icons/icon-academic-regular";
