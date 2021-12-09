@@ -106,17 +106,6 @@ const useStyles = createUseStyles(() => ({
         opacity: 0.5,
         pointerEvents: 'none',
     },
-    checkboxIcon: {
-        alignSelf: 'flex-start',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        '&:before': {
-            content: "'A'",
-            width: 0,
-            visibility: 'hidden',
-        },
-    },
 }));
 
 const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
