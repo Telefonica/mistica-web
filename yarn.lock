@@ -4242,9 +4242,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/acceptance-testing@npm:^2.0.0":
-  version: 2.1.0
-  resolution: "@telefonica/acceptance-testing@npm:2.1.0"
+"@telefonica/acceptance-testing@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "@telefonica/acceptance-testing@npm:2.3.1"
   dependencies:
     "@types/jest-image-snapshot": ^4.3.1
     find-root: ^1.1.0
@@ -4257,7 +4257,7 @@ __metadata:
     jest-environment-puppeteer: ">=4"
   bin:
     test-acceptance: bin/test-acceptance.js
-  checksum: 75aff7cc92aeaee891b2e6d094001c36c00296b2266c31e3d14c82510f238dee08c45dd420de02aadf9dec795780984bc92f35125fc04b5b04908e82686c1a84
+  checksum: b18bb7725152e58cffe00d15bae148609d1681148fa9a2c3533b9f5e21283f07c2bdf0edd7d9264489c68aaeb045a1b2acef428b958aa0c19673e765698982d4
   languageName: node
   linkType: hard
 
@@ -4311,12 +4311,12 @@ __metadata:
     "@swc/core": ^1.2.93
     "@swc/jest": ^0.2.4
     "@tef-novum/webview-bridge": ^3.0.0
-    "@telefonica/acceptance-testing": ^2.0.0
+    "@telefonica/acceptance-testing": ^2.3.1
     "@telefonica/eslint-plugin-async-await": ^1.1.0
     "@telefonica/eslint-plugin-react-element-interface": ^1.0.0
     "@telefonica/libphonenumber": ^2.8.0
     "@telefonica/prettier-config": ^1.1.0
-    "@telefonica/ts-to-flow": 1.1.1
+    "@telefonica/ts-to-flow": 1.1.2
     "@testing-library/jest-dom": ^5.12.0
     "@testing-library/react": ^11.2.7
     "@testing-library/user-event": ^13.1.9
@@ -4401,9 +4401,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/ts-to-flow@npm:1.1.1":
-  version: 1.1.1
-  resolution: "@telefonica/ts-to-flow@npm:1.1.1"
+"@telefonica/ts-to-flow@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@telefonica/ts-to-flow@npm:1.1.2"
   dependencies:
     cpx: ^1.5.0
     find-root: ^1.1.0
@@ -4411,7 +4411,7 @@ __metadata:
     jscodeshift: ^0.13.0
   bin:
     ts-to-flow: cli.js
-  checksum: f79fd8ee14d9f8194a3d99b08b74250d9bbdc8d6b1f9b0c9445cae1cb28272eda0f3d68914aee14a4b13a73788e54384c3a97cbfdf08d696c463f0b1fbac0701
+  checksum: e30874b420cb761c3f77aa502ac36298f2f2dc74d2a332112dc2c2937a6b59e443a995b3062817e118ce6ee0c2d2611f0baf54b5cbce1a9518e6d377b704c8d7
   languageName: node
   linkType: hard
 
