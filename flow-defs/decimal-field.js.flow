@@ -18,6 +18,11 @@ export type DecimalFieldProps = {
 
   onChangeValue?: (value: string, rawValue: string) => void,
   prefix?: React.Node,
+
+  /**
+   * defaults to Infinity
+   */
+  maxDecimals?: number,
 };
 declare var DecimalField: React.ComponentType<DecimalFieldProps>;
 declare export default typeof DecimalField;
