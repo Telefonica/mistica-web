@@ -35,10 +35,8 @@ jobs:
 
             - name: 'ci'
               run: |
-                  pwd
-                  ls -la
-                  cp -r jest-resolve/* node_modules/jest-resolve/
                   yarn
+                  cp -rv jest-resolve/* node_modules/jest-resolve/
                   yarn test decimal
                   yarn test
                   yarn ci
