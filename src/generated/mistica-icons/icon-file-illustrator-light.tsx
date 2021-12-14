@@ -10,7 +10,7 @@ import {useIsInverseVariant} from '../../theme-variant-context';
 
 import type {IconProps} from '../../utils/types';
 
-const IconFileIlustratorLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+const IconFileIllustratorLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
@@ -24,4 +24,4 @@ const IconFileIlustratorLight: React.FC<IconProps> = ({color, size = 24, childre
     );
 };
 
-export default IconFileIlustratorLight;
+export default IconFileIllustratorLight;
