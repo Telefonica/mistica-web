@@ -14,6 +14,4 @@ module.exports = {
         '^.+\\.(t|j)sx?$': ['@swc/jest', {...swcConfig, sourceMaps: 'inline'}],
     },
     coverageReporters: ['json-summary', 'lcov'],
-    modulePaths: ['<rootDir>'],
-    moduleFileExtensions: ['js', 'tsx'],
 };

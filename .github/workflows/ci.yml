@@ -33,7 +33,11 @@ jobs:
             - name: Install dependencies
               run: yarn install --immutable --immutable-cache
 
-            - run: yarn ci
+            - name: 'ci'
+              run: |
+                  pwd
+                  ls -la
+                  yarn ci
 
             - name: 'Upload failed screenshot diffs'
               uses: './.github/actions/upload-failed-screenshots'
