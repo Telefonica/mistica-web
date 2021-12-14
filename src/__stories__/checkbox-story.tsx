@@ -76,6 +76,15 @@ export const Default: StoryComponent = () => {
                     You accept to sell your soul
                 </Checkbox>
             </>
+            <>
+                <SectionTitle>Multiline</SectionTitle>
+                <Checkbox name="multiline" checked={checked}>
+                    <Text3 regular>
+                        Checkbox with a very large very large very large very large very large very large very
+                        large very large very large text that falls
+                    </Text3>
+                </Checkbox>
+            </>
         </Stack>
     );
 };
