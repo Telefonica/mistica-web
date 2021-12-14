@@ -173,7 +173,7 @@ class Resolver {
     static findNodeModule(path, options) {
         const resolver = options.resolver ? require(options.resolver) : _defaultResolver.default;
         if (path === '..') {
-            console.log(resolver);
+            console.log({resolver});
         }
         const paths = options.paths;
 
@@ -202,7 +202,7 @@ class Resolver {
                 console.log('resolveModuleFromDirIfExists', ...args);
             }
         };
-        debug(dirname, moduleName, options);
+        debug({dirname, moduleName, options});
         const paths = (options && options.paths) || this._options.modulePaths;
         const moduleDirectory = this._options.moduleDirectories;
         const key = dirname + path().delimiter + moduleName;
