@@ -138,7 +138,7 @@ module.exports = function resolveSync(x, options) {
             debug('loadAsFileSync, try extensions:', x + extensions[i]);
             var file = x + extensions[i];
             if (isFile(file)) {
-                console.log('loadAsFileSync, found:', file);
+                debug('loadAsFileSync, found:', file);
                 return file;
             }
         }
