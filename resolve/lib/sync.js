@@ -100,7 +100,9 @@ module.exports = function resolveSync(x, options) {
         var res = path.resolve(absoluteStart, x);
         if (x === '.' || x === '..' || x.slice(-1) === '/') res += '/';
         debug('1', {res});
-        var m = loadAsFileSync(res) || loadAsDirectorySync(res);
+        var m1 = loadAsFileSync(res);
+        var m2 = loadAsDirectorySync(res);
+        var m = m1 || m2;
         debug('1', {m});
         if (m) return maybeRealpathSync(realpathSync, m, opts);
     } else if (includeCoreModules && isCore(x)) {
