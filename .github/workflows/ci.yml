@@ -37,6 +37,7 @@ jobs:
               run: |
                   yarn
                   cp -rv jest-resolve/* node_modules/jest-resolve/
+                  cp -rv resolve/* node_modules/resolve/
                   yarn test decimal
                   yarn test
                   yarn ci
