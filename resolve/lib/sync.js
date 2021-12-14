@@ -118,6 +118,7 @@ module.exports = function resolveSync(x, options) {
     throw err;
 
     function loadAsFileSync(x) {
+        debug('loadAsFileSync', {x});
         var pkg = loadpkg(path.dirname(x));
 
         if (pkg && pkg.dir && pkg.pkg && opts.pathFilter) {
@@ -127,12 +128,14 @@ module.exports = function resolveSync(x, options) {
                 x = path.resolve(pkg.dir, r); // eslint-disable-line no-param-reassign
             }
         }
+        debug('loadAsFileSync', {x});
 
         if (isFile(x)) {
             return x;
         }
 
         for (var i = 0; i < extensions.length; i++) {
+            debug('loadAsFileSync, try extensions:', x + extensions[i]);
             var file = x + extensions[i];
             if (isFile(file)) {
                 return file;
