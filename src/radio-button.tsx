@@ -144,8 +144,11 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, dataAttr
             {rest.render ? (
                 rest.render(radio, disabled)
             ) : (
-                <Inline space={16} alignItems="center">
-                    {radio}
+                <Inline space={16}>
+                    {/* Text3 wrapper added to have the same line-height and center checkbox with text and -2px to perfect pixel center icon  */}
+                    <Text3 regular as="div">
+                        <div style={{position: 'relative', top: -2}}>{radio}</div>
+                    </Text3>
                     <Text3 regular as="div">
                         {rest.children}
                     </Text3>

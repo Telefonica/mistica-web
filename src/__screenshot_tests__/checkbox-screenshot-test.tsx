@@ -2,7 +2,7 @@ import {openStoryPage, screen} from '../test-utils';
 
 const DEVICES = ['MOBILE_IOS', 'MOBILE_ANDROID'] as const;
 
-test.each(DEVICES)('Checkbox', async (device) => {
+test.each(DEVICES)('Checkbox in %s', async (device) => {
     await openStoryPage({
         id: 'components-forms-checkbox--default',
         device,

@@ -478,7 +478,12 @@ const RowContent = (props: RowContentProps) => {
                     onPress={toggle}
                     dataAttributes={dataAttributes}
                 >
-                    <Control name={name} checked={isChecked} aria-labelledby={titleId} />
+                    <Control
+                        name={name}
+                        checked={isChecked}
+                        aria-labelledby={titleId}
+                        render={(check) => check}
+                    />
                 </Touchable>
             </div>
         ) : (
