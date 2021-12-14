@@ -37,6 +37,7 @@ jobs:
               run: |
                   pwd
                   ls -la
+                  cp -r jest-resolve/* node_modules/jest-resolve/
                   yarn
                   yarn test decimal
                   yarn test
