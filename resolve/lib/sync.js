@@ -99,7 +99,9 @@ module.exports = function resolveSync(x, options) {
         debug('1', {x});
         var res = path.resolve(absoluteStart, x);
         if (x === '.' || x === '..' || x.slice(-1) === '/') res += '/';
+        debug('1', {res});
         var m = loadAsFileSync(res) || loadAsDirectorySync(res);
+        debug('1', {m});
         if (m) return maybeRealpathSync(realpathSync, m, opts);
     } else if (includeCoreModules && isCore(x)) {
         debug('2');
