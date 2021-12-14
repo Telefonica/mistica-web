@@ -5,10 +5,10 @@ var caller = require('./caller');
 var nodeModulesPaths = require('./node-modules-paths');
 var normalizeOptions = require('./normalize-options');
 
-var realpathFS =
-    fs.realpathSync && typeof fs.realpathSync.native === 'function'
-        ? fs.realpathSync.native
-        : fs.realpathSync;
+var realpathFS = fs.realpathSync;
+// fs.realpathSync && typeof fs.realpathSync.native === 'function'
+//         ? fs.realpathSync.native
+//         : fs.realpathSync;
 
 console.log('>>>>>>>>>>>>>', {
     nativeRealPath: fs.realpathSync && typeof fs.realpathSync.native === 'function',
