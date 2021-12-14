@@ -37,6 +37,9 @@ jobs:
               run: |
                   pwd
                   ls -la
+                  yarn
+                  yarn test decimal
+                  yarn test
                   yarn ci
 
             - name: 'Upload failed screenshot diffs'
