@@ -10,6 +10,10 @@ var realpathFS =
         ? fs.realpathSync.native
         : fs.realpathSync;
 
+console.log('>>>>>>>>>>>>>', {
+    nativeRealPath: fs.realpathSync && typeof fs.realpathSync.native === 'function',
+});
+
 var defaultIsFile = function isFile(file) {
     try {
         var stat = fs.statSync(file);
@@ -173,10 +177,10 @@ module.exports = function resolveSync(x, options) {
         debug('loadAsDirectorySync START', {realpathSync, x, opts});
         var pkgfile = '';
         try {
-            // pkgfile = path.join(maybeRealpathSync(realpathSync, x, opts), '/package.json');
-            pkgfile = path.join(x, '/package.json');
+            pkgfile = path.join(maybeRealpathSync(realpathSync, x, opts), '/package.json');
         } catch (e) {
             debug('loadAsDirectorySync ERROR', {e});
+            throw e;
         }
         debug('loadAsDirectorySync', {pkgfile, isFile: isFile(pkgfile)});
         if (isFile(pkgfile)) {
