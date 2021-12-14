@@ -114,7 +114,7 @@ function defaultResolver(path, options) {
     // module instance depending on how it was referenced.
 
     if (path === '..') {
-        console.log('defaultResolver', {path}, options, {result});
+        console.log('defaultResolver', {path, options, result, realpathSync: realpathSync(result)});
     }
 
     return realpathSync(result);
