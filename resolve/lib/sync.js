@@ -170,8 +170,13 @@ module.exports = function resolveSync(x, options) {
     }
 
     function loadAsDirectorySync(x) {
-        debug('loadAsDirectorySync', {realpathSync, x, opts});
-        var pkgfile = path.join(maybeRealpathSync(realpathSync, x, opts), '/package.json');
+        debug('loadAsDirectorySync START', {realpathSync, x, opts});
+        var pkgfile = '';
+        try {
+            pkgfile = path.join(maybeRealpathSync(realpathSync, x, opts), '/package.json');
+        } catch (e) {
+            debug('loadAsDirectorySync ERROR', {e});
+        }
         debug('loadAsDirectorySync', {pkgfile, isFile: isFile(pkgfile)});
         if (isFile(pkgfile)) {
             debug('loadAsDirectorySync, found package.json');
