@@ -100,6 +100,10 @@ function defaultResolver(path, options) {
         return (0, _jestPnpResolver().default)(path, options);
     }
 
+    if (path === '..') {
+        console.log('defaultResolver1', {path, options});
+    }
+
     const result = (0, _resolve().sync)(path, {
         basedir: options.basedir,
         extensions: options.extensions,
@@ -114,7 +118,7 @@ function defaultResolver(path, options) {
     // module instance depending on how it was referenced.
 
     if (path === '..') {
-        console.log('defaultResolver', {path, options, result, realpathSync: realpathSync(result)});
+        console.log('defaultResolver2', {path, options, result, realpathSync: realpathSync(result)});
     }
 
     return realpathSync(result);
