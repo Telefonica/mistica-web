@@ -32,7 +32,7 @@ const compile = () => {
     run('yarn gen-ts-defs');
 
     console.log('Generating Flow defs...');
-    run('DEBUG=1 yarn ts-to-flow "dist" "flow-defs" "flow-overrides"');
+    run('yarn ts-to-flow "dist" "flow-defs" "flow-overrides"');
 
     console.log('Flow check...');
     run('yarn flow check');
