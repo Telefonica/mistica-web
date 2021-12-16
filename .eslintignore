@@ -7,4 +7,3 @@ storybook-static/
 public/
 !.storybook/
 examples/
-/jest-resolve
