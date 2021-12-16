@@ -11,28 +11,11 @@ on:
 
 jobs:
     build:
-        # runs-on: self-hosted-novum
-        # runs-on: [self-hosted-org, linux]
         runs-on: ubuntu-latest
         container: telefonicacdo/web-builder:chromium93.0.4577-1.2.0
 
-        # strategy:
-        #     matrix:
-        #         node-version: [16.x]
-
         steps:
             - uses: actions/checkout@v2
-
-            # - name: Use Node.js ${{ matrix.node-version }}
-            #   uses: actions/setup-node@v1
-            #   with:
-            #       node-version: ${{ matrix.node-version }}
-            - name: print-versions
-              run: |
-                  node --version
-                  yarn --version
-                  whoami
-                  id
 
             - name: Install dependencies
               run: yarn install --immutable --immutable-cache
@@ -40,10 +23,6 @@ jobs:
             - name: 'ci'
               run: |
                   yarn
-                  cp -rv jest-resolve/* node_modules/jest-resolve/
-                  cp -rv resolve/* node_modules/resolve/
-                  yarn test decimal
-                  yarn test
                   yarn ci
 
             - name: 'Upload failed screenshot diffs'
