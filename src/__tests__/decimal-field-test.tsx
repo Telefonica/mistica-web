@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Form, DecimalField, ButtonPrimary} from '../index';
+import {Form, DecimalField, ButtonPrimary} from '..';
 import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ThemeContextProvider from '../theme-context-provider';
