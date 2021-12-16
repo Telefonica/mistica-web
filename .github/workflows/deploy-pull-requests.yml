@@ -3,7 +3,7 @@ on: [pull_request]
 jobs:
     deploy:
         runs-on: ubuntu-latest
-        container: telefonicacdo/web-builder:chromium93.0.4577-1.2.2
+        container: telefonicacdo/web-builder:chromium93.0.4577-1.2.3
         steps:
             - uses: actions/checkout@v2
 
