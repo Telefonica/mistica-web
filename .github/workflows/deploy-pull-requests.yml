@@ -6,6 +6,11 @@ jobs:
         container: telefonicacdo/web-builder:chromium93.0.4577-1.2.2
         steps:
             - uses: actions/checkout@v2
+
+            - name: checks
+              run: |
+                  node -e "console.log(os.userInfo())"
+
             - uses: amondnet/vercel-action@master
               id: vercel-deploy # identifier to reference this step
               with:
