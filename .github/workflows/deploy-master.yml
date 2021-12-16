@@ -9,6 +9,9 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - uses: amondnet/vercel-action@master
+              env:
+                  # workaround for https://github.com/vercel/vercel/issues/6811
+                  CLI_COLLECT_METRICS: '0'
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }} # needed to allow comments on prs
                   vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required

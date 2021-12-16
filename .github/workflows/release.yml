@@ -13,16 +13,8 @@ jobs:
         container: telefonicacdo/web-builder:chromium93.0.4577-1.2.3
         steps:
             - uses: actions/checkout@v2
-              env:
-                  # workaround for https://github.com/vercel/vercel/issues/6811
-                  CLI_COLLECT_METRICS: '0'
               with:
                   token: ${{ secrets.FLOW_GITHUB_TOKEN }}
-
-            - name: Setup Node.js
-              uses: actions/setup-node@v1
-              with:
-                  node-version: 16
 
             - name: Install dependencies
               env:
