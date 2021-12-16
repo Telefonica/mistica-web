@@ -11,7 +11,7 @@ on:
 
 jobs:
     build:
-        runs-on: self-hosted-novum
+        runs-on: [self-hosted-org, linux]
         container: telefonicacdo/web-builder:chromium93.0.4577-1.2.0
 
         # strategy:
