@@ -5,7 +5,7 @@ on:
 jobs:
     deploy:
         runs-on: self-hosted-novum
-        container: telefonicacdo/web-builder:chromium93.0.4577-1.1.0
+        container: telefonicacdo/web-builder:chromium93.0.4577-1.2.0
         steps:
             - uses: actions/checkout@v2
             - uses: amondnet/vercel-action@master

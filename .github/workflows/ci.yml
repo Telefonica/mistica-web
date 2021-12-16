@@ -12,7 +12,7 @@ on:
 jobs:
     build:
         runs-on: self-hosted-novum
-        container: telefonicacdo/web-builder:chromium93.0.4577-1.1.0
+        container: telefonicacdo/web-builder:chromium93.0.4577-1.2.0
 
         # strategy:
         #     matrix:
