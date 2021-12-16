@@ -29,6 +29,8 @@ jobs:
               run: |
                   node --version
                   yarn --version
+                  whoami
+                  id
 
             - name: Install dependencies
               run: yarn install --immutable --immutable-cache
