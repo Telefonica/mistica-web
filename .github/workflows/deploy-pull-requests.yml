@@ -2,10 +2,15 @@ name: deploy-pull-requests
 on: [pull_request]
 jobs:
     deploy:
-        runs-on: self-hosted-novum
-        container: docker.tuenti.io/service-inf/web-builder:pptr10.4-1.0.2
+        runs-on: ubuntu-latest
+        container: telefonica/web-builder:chromium93.0.4577-1.2.4
         steps:
             - uses: actions/checkout@v2
+
+            - name: install-vercel
+              # workaround for https://github.com/vercel/vercel/issues/6811
+              run: npm i -g vercel@canary
+
             - uses: amondnet/vercel-action@master
               id: vercel-deploy # identifier to reference this step
               with:

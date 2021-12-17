@@ -1,0 +1,6 @@
+// @flow
+
+import * as React from "react";
+import type { IconProps } from "../../utils/types";
+declare var IconCommentLight: React.ComponentType<IconProps>;
+declare export default typeof IconCommentLight;

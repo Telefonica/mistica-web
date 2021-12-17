@@ -163,8 +163,11 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             {props.render ? (
                 props.render(iconCheckbox, labelId)
             ) : (
-                <Inline space={16} alignItems="center">
-                    {iconCheckbox}
+                <Inline space={16}>
+                    {/* Text3 wrapper added to have the same line-height and center checkbox with text and -2px to perfect pixel center icon */}
+                    <Text3 regular as="div">
+                        <div style={{position: 'relative', top: -2}}>{iconCheckbox}</div>
+                    </Text3>
                     {props.children && (
                         <Text3
                             regular

@@ -9,17 +9,12 @@ on:
 jobs:
     release:
         name: Release
-        runs-on: self-hosted-novum
-        container: docker.tuenti.io/service-inf/web-builder:pptr10.4-1.0.2
+        runs-on: ubuntu-latest
+        container: telefonica/web-builder:chromium93.0.4577-1.2.4
         steps:
             - uses: actions/checkout@v2
               with:
                   token: ${{ secrets.FLOW_GITHUB_TOKEN }}
-
-            - name: Setup Node.js
-              uses: actions/setup-node@v1
-              with:
-                  node-version: 16
 
             - name: Install dependencies
               env:

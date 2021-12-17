@@ -25,18 +25,18 @@ const compile = () => {
 };
 
 (async () => {
-    console.log('\nCompile:');
+    console.log('Compiling...');
     compile();
 
-    console.log('\nGenerate TS defs:');
+    console.log('Generating TS defs...');
     run('yarn gen-ts-defs');
 
-    console.log('\nGenerate Flow defs:');
+    console.log('Generating Flow defs...');
     run('yarn ts-to-flow "dist" "flow-defs" "flow-overrides"');
 
-    console.log('\nFlow check:');
+    console.log('Flow check...');
     run('yarn flow check');
 
-    console.log('\nGenerate size stats:');
+    console.log('Generating size stats...');
     genSizeStats();
 })();

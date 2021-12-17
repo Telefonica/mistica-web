@@ -75,7 +75,7 @@
         "@swc/cli": "^0.1.51",
         "@swc/core": "^1.2.93",
         "@swc/jest": "^0.2.4",
-        "@telefonica/acceptance-testing": "^2.0.0",
+        "@telefonica/acceptance-testing": "^2.5.0",
         "@telefonica/eslint-plugin-async-await": "^1.1.0",
         "@telefonica/eslint-plugin-react-element-interface": "^1.0.0",
         "@telefonica/prettier-config": "^1.1.0",
