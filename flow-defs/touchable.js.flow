@@ -74,7 +74,7 @@ export type Props =
   | PropsMaybeHref
   | PropsMaybeTo
   | PropsMaybeOnPress;
-declare var Touchable: React.Component<{
+declare var Touchable: React.ComponentType<{
   ...Props,
   ref: React.Ref<HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>,
 }>;

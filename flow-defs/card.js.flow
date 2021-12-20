@@ -25,7 +25,7 @@ declare type MediaCardProps = {
   buttonLink?: React.Element<typeof ButtonLink>,
   "aria-label"?: string,
 };
-declare export var MediaCard: React.Component<{
+declare export var MediaCard: React.ComponentType<{
   ...MediaCardProps,
   ref: React.Ref<HTMLDivElement>,
 }>;
@@ -47,7 +47,7 @@ declare type DataCardProps = {
   dataAttributes?: DataAttributes,
   "aria-label"?: string,
 };
-declare export var DataCard: React.Component<{
+declare export var DataCard: React.ComponentType<{
   ...DataCardProps,
   ref: React.Ref<HTMLDivElement>,
 }>;
