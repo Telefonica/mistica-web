@@ -80,7 +80,7 @@ export type ButtonLinkProps =
   | ButtonLinkToProps;
 declare export var ButtonLink: React.ComponentType<{
   ...ButtonLinkProps,
-  ref: React.Ref<HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>,
+  ref?: React.Ref<HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>,
 }>;
 declare export var ButtonPrimary: React.ComponentType<ButtonProps>;
 declare export var ButtonSecondary: React.ComponentType<ButtonProps>;

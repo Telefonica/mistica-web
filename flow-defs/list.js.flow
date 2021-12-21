@@ -71,7 +71,7 @@ declare type RowContentProps =
   | OnPressRowContentProps;
 declare export var Row: React.ComponentType<{
   ...RowContentProps,
-  ref: React.Ref<HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>,
+  ref?: React.Ref<HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>,
 }>;
 declare type RowListProps = {
   children: React.Node,
@@ -121,7 +121,7 @@ declare type BoxedRowProps =
   | OnPressBoxedRowProps;
 declare export var BoxedRow: React.ComponentType<{
   ...BoxedRowProps,
-  ref: React.Ref<HTMLDivElement>,
+  ref?: React.Ref<HTMLDivElement>,
 }>;
 declare type BoxedRowListProps = {
   children: React.Node,
