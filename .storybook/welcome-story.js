@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {Text2, Text6, Stack, Box, ResponsiveLayout, useTheme, ButtonLink, TextLink} from '../src';
 import logo from '../img/mistica-react-logo.svg';
 

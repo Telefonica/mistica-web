@@ -4,7 +4,6 @@ import {createUseStyles} from './jss';
 import {Text2, Text1} from './text';
 import {useTheme, useScreenSize, useElementDimensions} from './hooks';
 import IconSuccess from './icons/icon-success';
-
 import {pxToRem} from './utils/css';
 
 const transition = '1s cubic-bezier(0.75, 0, 0.27, 1)';

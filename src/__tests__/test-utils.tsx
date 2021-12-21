@@ -1,5 +1,4 @@
 import {getMovistarSkin} from '..';
-
 import {ThemeConfig, ThemeTexts, getTexts} from '../theme';
 
 import type {Locale} from '../utils/locale';

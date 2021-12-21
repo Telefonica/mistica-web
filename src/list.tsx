@@ -246,6 +246,7 @@ interface SwitchRowContentProps extends CommonProps {
     checkbox?: undefined;
     radioValue?: undefined;
     newTab?: undefined;
+    fullPageOnWebView?: undefined;
 
     switch: ControlProps;
 }
@@ -258,6 +259,7 @@ interface CheckboxRowContentProps extends CommonProps {
     switch?: undefined;
     radioValue?: undefined;
     newTab?: undefined;
+    fullPageOnWebView?: undefined;
 
     checkbox: ControlProps;
 }
@@ -270,6 +272,7 @@ interface RadioRowContentProps extends CommonProps {
     switch?: undefined;
     checkbox?: undefined;
     newTab?: undefined;
+    fullPageOnWebView?: undefined;
 
     radioValue: string;
 }
@@ -278,6 +281,7 @@ interface HrefRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
+    fullPageOnWebView?: undefined;
 
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     href: string;
@@ -306,6 +310,7 @@ interface OnPressRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
+    fullPageOnWebView?: undefined;
 
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     onPress: () => void;

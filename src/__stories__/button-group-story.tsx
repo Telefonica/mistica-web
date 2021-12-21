@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {ButtonLink, SectionTitle, Stack} from '..';
 import {ButtonPrimary, ButtonSecondary} from '../button';
 import ButtonGroup from '../button-group';

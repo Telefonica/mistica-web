@@ -1,4 +1,5 @@
 import {openStoryPage, screen} from '../test-utils';
+
 import type {Device} from '../test-utils';
 
 const devices: Array<Device> = ['MOBILE_IOS', 'TABLET', 'DESKTOP'];
