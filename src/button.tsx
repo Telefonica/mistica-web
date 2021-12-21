@@ -473,7 +473,10 @@ interface ButtonLinkToProps extends ButtonLinkCommonProps {
 
 export type ButtonLinkProps = ButtonLinkOnPressProps | ButtonLinkHrefProps | ButtonLinkToProps;
 
-export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
+export const ButtonLink = React.forwardRef<
+    HTMLDivElement | HTMLAnchorElement | HTMLButtonElement,
+    ButtonLinkProps
+>((props, ref) => {
     const classes = useButtonLinkStyles();
     const isInverse = useIsInverseVariant();
     const commonProps = {
@@ -491,20 +494,22 @@ export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
     };
 
     if (props.onPress) {
-        return <Touchable {...commonProps} onPress={props.onPress} />;
+        return <Touchable ref={ref} {...commonProps} onPress={props.onPress} />;
     }
 
     if (props.to) {
-        return <Touchable {...commonProps} to={props.to} fullPageOnWebView={props.fullPageOnWebView} />;
+        return (
+            <Touchable ref={ref} {...commonProps} to={props.to} fullPageOnWebView={props.fullPageOnWebView} />
+        );
     }
 
     if (props.href) {
-        return <Touchable {...commonProps} href={props.href} newTab={props.newTab} />;
+        return <Touchable ref={ref} {...commonProps} href={props.href} newTab={props.newTab} />;
     }
 
     // this cannot happen
     throw Error('Bad button props');
-};
+});
 
 export const ButtonPrimary: React.FC<ButtonProps> = (props) => {
     const classes = usePrimaryButtonStyles();

@@ -142,7 +142,7 @@ export {palette as telefonicaPalette} from './skins/telefonica';
 export {palette as blauPalette} from './skins/blau';
 
 export type {Locale} from './utils/locale';
-export type {TrackingEvent} from './utils/types';
+export type {TrackingEvent, IconProps} from './utils/types';
 export type {RegionCode} from './utils/region-code';
 
 // Check there is only one version of mistica installed in the page.

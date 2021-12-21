@@ -6,7 +6,7 @@ import {makeTheme} from './test-utils';
 
 type Props = Omit<React.ComponentProps<typeof Popover>, 'children' | 'description' | 'target'>;
 
-const TestPopover: React.FC<Props> = (props) => (
+const TestPopover: React.FC<Props> = ({children, ...props}) => (
     <ThemeContextProvider theme={makeTheme()}>
         <Popover {...props} description="Content" target={<span>Press me!</span>} />
     </ThemeContextProvider>

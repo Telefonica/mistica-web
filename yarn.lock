@@ -2963,6 +2963,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pladaria/flowgen@npm:1.16.1":
+  version: 1.16.1
+  resolution: "@pladaria/flowgen@npm:1.16.1"
+  dependencies:
+    "@babel/code-frame": ^7.10.4
+    "@babel/highlight": ^7.10.4
+    commander: ^6.1.0
+    lodash: ^4.17.20
+    prettier: ^2.1.1
+    shelljs: ^0.8.4
+    typescript: ^4.0.2
+    typescript-compiler: ^1.4.1-2
+  bin:
+    flowgen: lib/cli/index.js
+  checksum: 12b7ad39b3e7b75db4dbee5fe62df77cd246646c90b9783cc09b19f130660d915c80146864ac8e46d31224ea64d5054acd61ada1c73c37acfcbebf30ebb5192e
+  languageName: node
+  linkType: hard
+
 "@pmmmwh/react-refresh-webpack-plugin@npm:^0.4.3":
   version: 0.4.3
   resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.4.3"
@@ -4316,7 +4334,7 @@ __metadata:
     "@telefonica/eslint-plugin-react-element-interface": ^1.0.0
     "@telefonica/libphonenumber": ^2.8.0
     "@telefonica/prettier-config": ^1.1.0
-    "@telefonica/ts-to-flow": 1.1.2
+    "@telefonica/ts-to-flow": 1.1.5
     "@testing-library/jest-dom": ^5.12.0
     "@testing-library/react": ^11.2.7
     "@testing-library/user-event": ^13.1.9
@@ -4401,17 +4419,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/ts-to-flow@npm:1.1.2":
-  version: 1.1.2
-  resolution: "@telefonica/ts-to-flow@npm:1.1.2"
+"@telefonica/ts-to-flow@npm:1.1.5":
+  version: 1.1.5
+  resolution: "@telefonica/ts-to-flow@npm:1.1.5"
   dependencies:
+    "@pladaria/flowgen": 1.16.1
     cpx: ^1.5.0
     find-root: ^1.1.0
-    flowgen: ^1.15.0
     jscodeshift: ^0.13.0
   bin:
     ts-to-flow: cli.js
-  checksum: e30874b420cb761c3f77aa502ac36298f2f2dc74d2a332112dc2c2937a6b59e443a995b3062817e118ce6ee0c2d2611f0baf54b5cbce1a9518e6d377b704c8d7
+  checksum: c7e74512d96a20e9e35059348cc990b85002d16dc7a13b1372854a060d9b5ac091a6f7dfebfd3101588a25a23e98dcfdac07cb74ea9e1c2d6b409f3f6e8274b4
   languageName: node
   linkType: hard
 
@@ -11115,7 +11133,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flowgen@npm:^1.10.0, flowgen@npm:^1.15.0":
+"flowgen@npm:^1.10.0":
   version: 1.15.0
   resolution: "flowgen@npm:1.15.0"
   dependencies:
