@@ -33,7 +33,7 @@ jobs:
             - name: 'Debug'
               run: |
                   ls -la .git
-                  git fetch
+                  git fetch --tags --update-head-ok Telefonica/mistica-web +refs/heads/master:refs/heads/master
 
             - name: Release
               env:
