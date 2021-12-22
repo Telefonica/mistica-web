@@ -30,10 +30,9 @@ jobs:
               with:
                   npm-token: ${{ secrets.NPM_PUBLISH_TOKEN }}
 
-            - name: 'Debug'
-              run: |
-                  ls -la .git
-                  chown $(whoami):$(whoami) -R .
+              # see https://github.com/semantic-release/semantic-release/issues/2218
+            - name: 'Workaround permissions issue'
+              run: chown $(whoami):$(whoami) -R .
 
             - name: Release
               env:
