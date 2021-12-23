@@ -1,3 +1,1 @@
-import pkg from '../package.json';
-
-export const PACKAGE_VERSION: string = pkg.version;
+export const PACKAGE_VERSION = '10.14.0' as string;
