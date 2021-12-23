@@ -14,12 +14,12 @@ import IconVisa from './icons/icon-visa';
 import IconMastercard from './icons/icon-mastercard';
 import IconAmex from './icons/icon-amex';
 import {createUseStyles} from './jss';
-
-import type {CommonFormFieldProps} from './text-field-base';
-import type {CardOptions} from './utils/credit-card';
 import {useRifm} from 'rifm';
 import {createChangeEvent} from './utils/dom';
 import {combineRefs} from './utils/common';
+
+import type {CardOptions} from './utils/credit-card';
+import type {CommonFormFieldProps} from './text-field-base';
 
 const format = (s?: string) => {
     const sanitizedNumber = String(s ?? '').replace(/[^\d]/g, '');

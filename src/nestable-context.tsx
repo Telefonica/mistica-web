@@ -43,7 +43,7 @@ type NestableContext<Value> = {
     useSetValue: (value: Value) => void;
 };
 
-const createNestableContext = <Value extends any>(defaultValue: Value): NestableContext<Value> => {
+const createNestableContext = <Value,>(defaultValue: Value): NestableContext<Value> => {
     const DispatchContext = React.createContext<Dispatch<Value>>(() => {});
     const ValueContext = React.createContext<Value>(defaultValue);
 

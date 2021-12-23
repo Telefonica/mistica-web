@@ -4,10 +4,10 @@ import TextFieldBase from './text-field-base';
 import IconSearch from './icons/icon-search';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
-
-import type {CommonFormFieldProps} from './text-field-base';
 import {useTheme} from './hooks';
 import {createChangeEvent} from './utils/dom';
+
+import type {CommonFormFieldProps} from './text-field-base';
 
 export interface SearchFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;

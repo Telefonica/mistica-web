@@ -163,7 +163,7 @@ export const openSSRPage = ({
     skin?: string;
 }): Promise<PageApi> => {
     const page = getGlobalPage();
-    const port = (global as any).__SSR_SERVER__.address().port;
+    const port = (global as any)['__SSR_SERVER__'].address().port;
 
     // Capture browser console.error and console.warn calls that React could trigger when calling hydrate()
     page.on('console', async (msg) => {

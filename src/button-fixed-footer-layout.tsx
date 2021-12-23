@@ -4,9 +4,9 @@ import ButtonLayout from './button-layout';
 import {useScreenSize} from './hooks';
 import {ButtonLink} from './button';
 import ResponsiveLayout from './responsive-layout';
+import Box from './box';
 
 import type {ButtonElement, ButtonLinkProps} from './button';
-import Box from './box';
 
 type Props = {
     isFooterVisible?: boolean;

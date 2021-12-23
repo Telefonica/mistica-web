@@ -15,7 +15,7 @@ declare type NestableContext<Value> = {
   useValue: () => Value,
   useSetValue: (value: Value) => void,
 };
-declare var createNestableContext: <Value: mixed>(
+declare var createNestableContext: <Value>(
   defaultValue: Value
 ) => NestableContext<Value>;
 declare export default typeof createNestableContext;

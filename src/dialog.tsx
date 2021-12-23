@@ -14,9 +14,9 @@ import {Text5, Text3} from './text';
 import {ESC} from './utils/key-codes';
 import Box from './box';
 import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
+import {useSetModalState} from './modal-context-provider';
 
 import type {Theme} from './theme';
-import {useSetModalState} from './modal-context-provider';
 
 const animationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) &&

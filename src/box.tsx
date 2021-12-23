@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {createUseStyles} from './jss';
 import classnames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
