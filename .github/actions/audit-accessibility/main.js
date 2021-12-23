@@ -1,5 +1,6 @@
 // @ts-check
 const path = require('path');
+const _ = require('lodash');
 const {execSync} = require('child_process');
 const StaticServer = require('static-server');
 const {AxePuppeteer} = require('@axe-core/puppeteer');
@@ -69,6 +70,8 @@ const startStorybook = () => {
  */
 const audit = async (browser, url) => {
     const page = await browser.newPage();
+    const ua = await browser.userAgent();
+    await page.setUserAgent(`${ua} acceptance-test`);
     await page.goto(url);
     const result = await new AxePuppeteer(page)
         .disableRules([
@@ -214,10 +217,15 @@ const main = async () => {
     const results = [];
 
     const t = Date.now();
-    for (const story of stories) {
-        console.log(story);
-        const result = await audit(browser, getStoryUrl(story));
-        results.push([story, result]);
+    const chunks = _.chunk(stories, 4);
+    for (const stories of chunks) {
+        await Promise.all(
+            stories.map(async (story) => {
+                console.log(story);
+                const result = await audit(browser, getStoryUrl(story));
+                results.push([story, result]);
+            })
+        );
     }
 
     processResults(results);
