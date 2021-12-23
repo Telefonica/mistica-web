@@ -4285,14 +4285,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/eslint-config@npm:^1.0.0-beta5":
-  version: 1.0.0-beta5
-  resolution: "@telefonica/eslint-config@npm:1.0.0-beta5"
+"@telefonica/eslint-config@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@telefonica/eslint-config@npm:1.0.0"
   dependencies:
     "@babel/core": ^7.16.5
     "@babel/eslint-parser": ^7.16.5
     "@telefonica/eslint-plugin-async-await": ^1.1.0
-    "@telefonica/eslint-plugin-import": 1.0.0-beta1
+    "@telefonica/eslint-plugin-import": 1.0.0
     "@typescript-eslint/eslint-plugin": ^5.7.0
     "@typescript-eslint/parser": ^5.7.0
     babel-eslint: ^10.1.0
@@ -4308,7 +4308,7 @@ __metadata:
     eslint-plugin-testing-library: ^5.0.1
   peerDependencies:
     eslint: ">=7"
-  checksum: 6e6f32ff55a4b2889d2cb8bdba59f1f62589f9f36d9d8891d8f677ba8499fdf4832b7f1dccc0b24b4cf36a5b6c4cacdc45d89f6dc82f650391c4502d8f6eb174
+  checksum: b5777397c4283f4ca3beff66ccb0dfa4f5bf44b1bd90287c5501a9534102c16f9c23ea1b124dd127849ef316d9593c3229db792c6a7a31999702f8111f9b1f24
   languageName: node
   linkType: hard
 
@@ -4321,12 +4321,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/eslint-plugin-import@npm:1.0.0-beta1":
-  version: 1.0.0-beta1
-  resolution: "@telefonica/eslint-plugin-import@npm:1.0.0-beta1"
+"@telefonica/eslint-plugin-import@npm:1.0.0":
+  version: 1.0.0
+  resolution: "@telefonica/eslint-plugin-import@npm:1.0.0"
   peerDependencies:
     eslint: ">=7"
-  checksum: 5a559dd372e789a488d279da5edc15a148925d591a48bf9ceca09eacca275bdb1a99a67a381ee4bf6952309bf3fa003ed6c64d56e275506610d8c8cf8d3ce262
+  checksum: 4683eca07b66cc989325696b0eabd78609c0a1d87b9f7f12b80875dfc11d4afd37d26ea7d444b399244627b96d25731caaa82a750e6a7ef3e64690e79d537a9b
   languageName: node
   linkType: hard
 
@@ -4372,7 +4372,7 @@ __metadata:
     "@swc/jest": ^0.2.4
     "@tef-novum/webview-bridge": ^3.0.0
     "@telefonica/acceptance-testing": ^2.5.0
-    "@telefonica/eslint-config": ^1.0.0-beta5
+    "@telefonica/eslint-config": ^1.0.0
     "@telefonica/eslint-plugin-async-await": ^1.1.0
     "@telefonica/eslint-plugin-react-element-interface": ^1.0.0
     "@telefonica/libphonenumber": ^2.8.0
