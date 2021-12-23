@@ -1,5 +1,6 @@
 // @ts-check
 const path = require('path');
+const os = require('os');
 const _ = require('lodash');
 const {execSync} = require('child_process');
 const StaticServer = require('static-server');
@@ -217,7 +218,7 @@ const main = async () => {
     const results = [];
 
     const t = Date.now();
-    const chunks = _.chunk(stories, 4);
+    const chunks = _.chunk(stories, os.cpus().length / 2);
     for (const stories of chunks) {
         await Promise.all(
             stories.map(async (story) => {
