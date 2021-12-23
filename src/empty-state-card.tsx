@@ -6,10 +6,10 @@ import {useScreenSize, useTheme} from './hooks';
 import {createUseStyles} from './jss';
 import Stack from './stack';
 import {Text2, Text4} from './text';
+import ButtonGroup from './button-group';
 
 import type {ButtonProps, ButtonLinkProps} from './button';
 import type {DataAttributes} from './utils/types';
-import ButtonGroup from './button-group';
 
 const useStyles = createUseStyles((theme) => ({
     container: {

@@ -1,8 +1,8 @@
 // @flow
 
 import * as React from "react";
-import type { CommonFormFieldProps } from "./text-field-base";
 import type { CardOptions } from "./utils/credit-card";
+import type { CommonFormFieldProps } from "./text-field-base";
 declare type CreditCardNumberFieldProps = {
   ...$Exact<CommonFormFieldProps>,
 

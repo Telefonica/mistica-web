@@ -12,7 +12,6 @@ import {
     Inline,
     alert,
 } from '..';
-
 import {useCheckbox} from './helpers';
 
 export default {

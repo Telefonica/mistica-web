@@ -5,10 +5,10 @@ import {createUseStyles} from './jss';
 import {useTheme} from './hooks';
 import {isInsideNovumNativeApp} from './utils/platform';
 import {ENTER, SPACE} from './utils/key-codes';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
-import {getPrefixedDataAttributes} from './utils/dom';
 
 const redirect = (url: string, external = false): void => {
     if (external) {

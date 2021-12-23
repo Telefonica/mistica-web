@@ -20,12 +20,11 @@ import Box from './box';
 import {Boxed} from './boxed';
 import ResponsiveLayout from './responsive-layout';
 import Stack from './stack';
-
-import type {DataAttributes} from './utils/types';
 import {Colors} from './skins/types';
 import classnames from 'classnames';
 import ButtonGroup from './button-group';
 
+import type {DataAttributes} from './utils/types';
 import type {ButtonGroupProps} from './button-group';
 
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>

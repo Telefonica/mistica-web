@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {useScreenSize, useTheme} from '../src';
 import curry from 'lodash/curry';
 

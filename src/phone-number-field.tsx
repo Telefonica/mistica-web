@@ -4,11 +4,11 @@ import {formatAsYouType, formatToE164, parse, getRegionCodeForCountryCode} from 
 import {useFieldProps} from './form-context';
 import TextFieldBase from './text-field-base';
 import {useTheme} from './hooks';
+import {createChangeEvent} from './utils/dom';
+import {combineRefs} from './utils/common';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type {RegionCode} from './utils/region-code';
-import {createChangeEvent} from './utils/dom';
-import {combineRefs} from './utils/common';
 
 const formatPhone = (regionCode: RegionCode, number: string): string =>
     formatAsYouType(number.replace(/[^\d+*#]/g, ''), regionCode);

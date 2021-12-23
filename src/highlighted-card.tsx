@@ -9,10 +9,10 @@ import {useTheme} from './hooks';
 import {Text4, Text2} from './text';
 import IconButton from './icon-button';
 import {ButtonLink} from './button';
+import {Boxed} from './boxed';
 
 import type {TrackingEvent} from './utils/types';
 import type {ButtonElement, ButtonLinkProps} from './button';
-import {Boxed} from './boxed';
 
 const useStyles = createUseStyles((theme) => ({
     container: {

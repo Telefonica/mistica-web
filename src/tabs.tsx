@@ -6,9 +6,9 @@ import ResponsiveLayout from './responsive-layout';
 import {useAriaId, useElementDimensions} from './hooks';
 import {Text3} from './text';
 import {pxToRem} from './utils/css';
+import {isRunningAcceptanceTest} from './utils/platform';
 
 import type {TrackingEvent} from './utils/types';
-import {isRunningAcceptanceTest} from './utils/platform';
 
 const TAB_MAX_WIDTH = 284;
 const TAB_HEIGHT = 56;
