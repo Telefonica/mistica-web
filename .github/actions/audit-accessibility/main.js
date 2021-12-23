@@ -218,7 +218,8 @@ const main = async () => {
     const results = [];
 
     const t = Date.now();
-    const chunks = _.chunk(stories, os.cpus().length / 2);
+    const chunkSize = Math.max(os.cpus().length - 1, 2);
+    const chunks = _.chunk(stories, chunkSize);
     for (const stories of chunks) {
         await Promise.all(
             stories.map(async (story) => {
