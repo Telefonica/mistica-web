@@ -97,7 +97,7 @@ declare type TextFieldBaseProps = {
   min?: string,
   max?: string,
 };
-declare var TextFieldBase: React.Component<{
+declare var TextFieldBase: React.ComponentType<{
   ...TextFieldBaseProps,
   ...{},
 }>;
