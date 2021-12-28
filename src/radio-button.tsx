@@ -13,6 +13,7 @@ import type {DataAttributes} from './utils/types';
 
 const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
     outerCircle: {
+        cursor: 'pointer',
         flexShrink: 0,
         width: 20,
         height: 20,
@@ -47,7 +48,7 @@ const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
         transform: 'scale(1)',
     },
     radioButton: {
-        cursor: 'default',
+        cursor: ({disabled}) => (disabled ? 'not-allowed' : 'default'),
     },
     disabled: {
         opacity: 0.5,

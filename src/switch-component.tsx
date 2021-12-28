@@ -23,6 +23,7 @@ const useStyles = createUseStyles(({colors, isIos}) => {
         checkbox: {
             display: 'inline-block',
             padding: isIos ? 0 : 4,
+            cursor: 'pointer',
         },
         switchCheckboxContainer: {
             position: 'relative',
@@ -32,7 +33,6 @@ const useStyles = createUseStyles(({colors, isIos}) => {
         switchCheckboxLabel: {
             display: 'block',
             overflow: 'hidden',
-            cursor: 'pointer',
             borderRadius: 40,
             '& > *': {pointerEvents: 'none'},
         },
@@ -73,7 +73,7 @@ const useStyles = createUseStyles(({colors, isIos}) => {
             boxShadow: isIos ? '1px 2px 4px rgba(0, 0, 0, 0.3)' : '1px 1px 2px rgba(0, 0, 0, 0.3)',
         },
         container: {
-            cursor: 'default',
+            cursor: ({disabled}) => (disabled ? 'not-allowed' : 'default'),
         },
         disabled: {
             opacity: 0.5,
@@ -120,7 +120,7 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
 
     const [checkedState, setCheckedState] = React.useState(!!defaultValue);
 
-    const classes = useStyles({isChecked: value ?? checkedState});
+    const classes = useStyles({isChecked: value ?? checkedState, disabled});
 
     const notifyChange = React.useMemo(() => {
         if (process.env.NODE_ENV === 'test') {
