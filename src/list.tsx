@@ -524,7 +524,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                         role={role}
                         className={classNames(classes.dualActionLeft, classes.hover)}
                     >
-                        {renderContent({type: 'control', labelId: titleId})}
+                        {renderContent({type: 'basic', labelId: titleId})}
                     </Touchable>
                     <Touchable
                         disabled={disabled}

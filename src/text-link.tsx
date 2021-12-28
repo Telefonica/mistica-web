@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import {useIsInverseVariant} from './theme-variant-context';
 
 import type {TrackingEvent, DataAttributes} from './utils/types';
+import {useForm} from './form-context';
 
 const useStyles = createUseStyles((theme) => ({
     textLink: {
@@ -14,7 +15,7 @@ const useStyles = createUseStyles((theme) => ({
         color: theme.colors.textLink,
         wordBreak: 'break-word',
         [theme.mq.supportsHover]: {
-            '&:hover': {
+            '&:hover:not([disabled])': {
                 textDecoration: 'underline',
             },
         },
@@ -64,13 +65,16 @@ export interface OnPressProps extends CommonProps {
 
 export type TextLinkProps = HrefProps | ToProps | OnPressProps;
 
-const TextLink: React.FC<TextLinkProps> = ({children, className = '', small, ...props}) => {
+const TextLink: React.FC<TextLinkProps> = ({children, className = '', small, disabled, ...props}) => {
     const classes = useStyles();
     const isInverse = useIsInverseVariant();
+
+    const {formStatus} = useForm();
 
     return (
         <Touchable
             {...props}
+            disabled={disabled || formStatus === 'sending'}
             className={classnames(classes.textLink, className, {
                 [classes.small]: small,
                 [classes.inverse]: isInverse,
