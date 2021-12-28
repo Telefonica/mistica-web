@@ -18,6 +18,10 @@ const useStyles = createUseStyles((theme) => ({
                 textDecoration: 'underline',
             },
         },
+        '&[disabled]': {
+            opacity: 0.5,
+            cursor: 'not-allowed',
+        },
     },
     inverse: {
         color: theme.colors.textLinkInverse,
@@ -33,6 +37,7 @@ interface CommonProps {
     style?: React.CSSProperties;
     classes?: {[className: string]: string};
     small?: boolean;
+    disabled?: boolean;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;

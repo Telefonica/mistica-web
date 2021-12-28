@@ -28,10 +28,7 @@ const useLabelStyles = createUseStyles((theme) => ({
         transform: 'translateY(18px) scale(1)',
         fontSize: 18, // cannot use Text3/Text1 preset comps because we want to apply a scale transition (zoom-out)
         lineHeight: '24px',
-        color: ({inputState, error, disabled}) => {
-            if (inputState === 'default' && disabled) {
-                return theme.colors.textDisabled;
-            }
+        color: ({inputState, error}) => {
             if (error && inputState !== 'default') {
                 return theme.colors.error;
             }
@@ -75,7 +72,6 @@ type LabelProps = {
     inputState: InputState;
     error?: boolean;
     children: string;
-    disabled?: boolean;
     style?: React.CSSProperties;
     optional?: boolean;
 };
@@ -86,12 +82,11 @@ export const Label: React.FC<LabelProps> = ({
     inputState,
     error,
     children,
-    disabled,
     style,
     optional,
 }) => {
     const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
-    const classes = useLabelStyles({isShrinked, inputState, error, disabled});
+    const classes = useLabelStyles({inputState, error});
     const [transitionStyle, setTransitionStyle] = React.useState('');
     const {texts} = useTheme();
 
@@ -175,6 +170,7 @@ export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, erro
 
 const useFieldContainerStyles = createUseStyles((theme) => ({
     fieldContainer: {
+        opacity: ({disabled}) => (disabled ? 0.5 : 1),
         display: 'flex',
         flexDirection: 'column',
         minWidth: 96,
@@ -195,8 +191,7 @@ const useFieldContainerStyles = createUseStyles((theme) => ({
         },
         display: 'flex',
         position: 'relative',
-        backgroundColor: ({disabled}) =>
-            disabled ? theme.colors.backgroundAlternative : theme.colors.backgroundContainer,
+        backgroundColor: theme.colors.backgroundContainer,
         cursor: ({disabled}) => (disabled ? 'not-allowed' : 'initial'),
     },
 }));

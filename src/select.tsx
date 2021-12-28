@@ -14,7 +14,6 @@ import {Text3} from './text';
 
 const useStyles = createUseStyles((theme) => ({
     selectContainer: {
-        cursor: ({disabled}) => (disabled ? 'auto' : 'pointer'),
         position: 'relative',
         outline: 0,
         [theme.mq.tabletOrSmaller]: {
@@ -38,18 +37,14 @@ const useStyles = createUseStyles((theme) => ({
         width: '100%',
         height: '100%',
         textOverflow: 'ellipsis',
-        '&:disabled': {
-            color: theme.colors.textDisabled,
-        },
         appearance: 'none',
-        cursor: ({disabled}) => (disabled ? 'inherit' : 'pointer'),
+        cursor: ({disabled}) => (disabled ? 'not-allowed' : 'pointer'),
     },
     arrowDown: {
         position: 'absolute',
         right: 16,
         top: 'calc(50% - 10px)',
         pointerEvents: 'none',
-        opacity: ({disabled}) => (disabled ? 0.3 : 1),
     },
     selectText: {
         position: 'absolute',
@@ -59,7 +54,8 @@ const useStyles = createUseStyles((theme) => ({
         overflow: 'hidden',
         top: ({label}) => (label ? 27 : 17),
         fontSize: 16,
-        color: ({disabled}) => (disabled ? theme.colors.textDisabled : theme.colors.textPrimary),
+        color: theme.colors.textPrimary,
+        opacity: ({disabled}) => (disabled ? 0.5 : 1),
         maxWidth: '100%',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
@@ -380,7 +376,6 @@ const Select: React.FC<SelectProps> = ({
                             ? 'filled'
                             : 'default'
                     }
-                    disabled={disabled}
                     optional={optional}
                 >
                     {label}

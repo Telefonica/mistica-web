@@ -48,7 +48,10 @@ const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
     },
     radioButton: {
         cursor: 'default',
-        opacity: ({disabled}) => (disabled ? 0.5 : 1),
+    },
+    disabled: {
+        opacity: 0.5,
+        cursor: 'not-allowed',
     },
 }));
 
@@ -119,7 +122,12 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, dataAttr
     };
 
     const radio = (
-        <div className={classnames(classes.outerCircle, {[classes.outerCircleChecked]: checked})}>
+        <div
+            className={classnames(classes.outerCircle, {
+                [classes.outerCircleChecked]: checked,
+                [classes.disabled]: disabled,
+            })}
+        >
             {!isIos && (
                 <div className={classnames(classes.innerCircle, {[classes.innerCircleChecked]: checked})} />
             )}
@@ -150,7 +158,7 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, dataAttr
                         <div style={{position: 'relative', top: -2}}>{radio}</div>
                     </Text3>
                     <Text3 regular as="div">
-                        {rest.children}
+                        <span className={disabled ? classes.disabled : ''}>{rest.children}</span>
                     </Text3>
                 </Inline>
             )}

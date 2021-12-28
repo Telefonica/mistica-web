@@ -77,7 +77,7 @@ const useStyles = createUseStyles(({colors, isIos}) => {
         },
         disabled: {
             opacity: 0.5,
-            pointerEvents: 'none',
+            cursor: 'not-allowed',
         },
     };
 });
@@ -150,7 +150,7 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
     };
 
     const switchEl = (
-        <div className={classes.checkbox}>
+        <div className={classNames(classes.checkbox, {[classes.disabled]: disabled})}>
             <div className={classes.switchCheckboxContainer}>
                 <div className={classes.switchCheckboxLabel}>
                     <span className={classes.bar} />
@@ -170,7 +170,7 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
             onKeyDown={disabled ? undefined : handleKeyDown}
             tabIndex={disabled ? undefined : 0}
             ref={focusableRef}
-            className={classNames(classes.container, {[classes.disabled]: disabled})}
+            className={classes.container}
             aria-disabled={disabled}
             aria-labelledby={labelId}
             {...getPrefixedDataAttributes(props.dataAttributes)}
@@ -181,7 +181,7 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
                 <Inline space={16} alignItems="center">
                     {switchEl}
                     <Text3 regular as="div" id={labelId}>
-                        {props.children}
+                        <span className={disabled ? classes.disabled : ''}>{props.children}</span>
                     </Text3>
                 </Inline>
             )}

@@ -37,9 +37,13 @@ const useIconCheckboxStyles = createUseStyles(({colors, isIos}) => ({
     checkChecked: {
         transform: 'scale(1, 1)',
     },
+    disabled: {
+        opacity: 0.5,
+        cursor: 'not-allowed',
+    },
 }));
 
-const IconCheckbox: React.FC<{isChecked: boolean}> = ({isChecked}) => {
+const IconCheckbox: React.FC<{isChecked: boolean; disabled?: boolean}> = ({isChecked, disabled}) => {
     const classes = useIconCheckboxStyles();
     const {isIos, colors} = useTheme();
 
@@ -66,7 +70,16 @@ const IconCheckbox: React.FC<{isChecked: boolean}> = ({isChecked}) => {
         </svg>
     );
 
-    return <div className={classnames(classes.box, {[classes.boxChecked]: isChecked})}>{icon}</div>;
+    return (
+        <div
+            className={classnames(classes.box, {
+                [classes.boxChecked]: isChecked,
+                [classes.disabled]: disabled,
+            })}
+        >
+            {icon}
+        </div>
+    );
 };
 
 type RenderProps = {
@@ -104,7 +117,7 @@ const useStyles = createUseStyles(() => ({
     },
     disabled: {
         opacity: 0.5,
-        pointerEvents: 'none',
+        cursor: 'not-allowed',
     },
 }));
 
@@ -141,7 +154,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
         }
     };
 
-    const iconCheckbox = <IconCheckbox isChecked={value ?? checkedState} />;
+    const iconCheckbox = <IconCheckbox disabled={disabled} isChecked={value ?? checkedState} />;
 
     return (
         // When the checkbox is disabled, it shouldn't be focusable
@@ -154,7 +167,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             onClick={disabled ? undefined : handleChange}
             tabIndex={disabled ? undefined : 0}
             ref={focusableRef}
-            className={classnames(classes.checkboxContainer, {[classes.disabled]: disabled})}
+            className={classes.checkboxContainer}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : labelId}
             aria-disabled={disabled}
@@ -175,7 +188,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
                             id={labelId}
                             role={hasExternalLabel ? 'presentation' : undefined}
                         >
-                            <span>{props.children}</span>
+                            <span className={disabled ? classes.disabled : ''}>{props.children}</span>
                         </Text3>
                     )}
                 </Inline>

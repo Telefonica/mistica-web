@@ -25,16 +25,21 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import type {DataAttributes, TrackingEvent} from './utils/types';
 
 const useStyles = createUseStyles(({colors, mq}) => ({
+    disabled: {
+        opacity: 0.5,
+        cursor: 'not-allowed',
+    },
     hover: {
         [mq.supportsHover]: {
             '&:hover': {
-                background: ({isInverse}) => (isInverse ? 'initial' : colors.backgroundAlternative),
+                background: ({isInverse, disabled}) =>
+                    isInverse || disabled ? 'initial' : colors.backgroundAlternative,
             },
         },
     },
     rowContent: {
         width: '100%',
-        cursor: 'pointer',
+        cursor: ({disabled}) => (disabled ? 'not-allowed' : 'pointer'),
     },
     hoverDisabled: {
         cursor: 'initial',
@@ -117,11 +122,12 @@ interface CommonProps {
     role?: string;
     extra?: React.ReactNode;
     dataAttributes?: DataAttributes;
+    disabled?: boolean;
 }
 
 interface ContentProps extends CommonProps {
     isClickable?: boolean;
-    type?: 'chevron' | 'basic' | 'custom';
+    type?: 'chevron' | 'basic' | 'custom' | 'control';
     right?: React.ReactNode;
     /** This id is to link the title with the related control */
     labelId?: string;
@@ -141,6 +147,7 @@ const Content: React.FC<ContentProps> = ({
     right,
     extra,
     labelId,
+    disabled,
 }) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
@@ -154,21 +161,52 @@ const Content: React.FC<ContentProps> = ({
         }
         return (
             <Box paddingLeft={16}>
-                <div className={classNames(classes.center, classes.badge)}>
+                <div className={classNames(classes.center, classes.badge, {[classes.disabled]: disabled})}>
                     {badge === true ? <Badge /> : <Badge value={badge} />}
                 </div>
             </Box>
         );
     };
 
+    const renderRight = () => {
+        switch (type) {
+            case 'chevron':
+                return (
+                    <Box
+                        paddingLeft={16}
+                        className={classNames(classes.center, {[classes.disabled]: disabled})}
+                    >
+                        <IconChevron
+                            color={isInverse ? colors.inverse : colors.neutralMedium}
+                            direction="right"
+                        />
+                    </Box>
+                );
+            case 'control':
+                return <div className={classes.right}>{right}</div>;
+            case 'custom':
+                return (
+                    <div className={classNames(classes.right, {[classes.disabled]: disabled})}>{right}</div>
+                );
+            default:
+                return null;
+        }
+    };
+
     return (
         <Box paddingY={16} className={classes.content}>
             {asset && (
-                <Box paddingRight={16} className={classNames({[classes.center]: shouldCenter})}>
+                <Box
+                    paddingRight={16}
+                    className={classNames({[classes.center]: shouldCenter, [classes.disabled]: disabled})}
+                >
                     <div className={classes.asset}>{asset}</div>
                 </Box>
             )}
-            <div className={classes.rowBody} style={{justifyContent: shouldCenter ? 'center' : 'flex-start'}}>
+            <div
+                className={classNames(classes.rowBody, {[classes.disabled]: disabled})}
+                style={{justifyContent: shouldCenter ? 'center' : 'flex-start'}}
+            >
                 <Stack space={4}>
                     {headline && (
                         <Text1 wordBreak regular color={colors.textPrimary}>
@@ -205,16 +243,7 @@ const Content: React.FC<ContentProps> = ({
                 </Stack>
             </div>
             {renderBadge()}
-            {type === 'chevron' ? (
-                <Box paddingLeft={16} className={classes.center}>
-                    <IconChevron
-                        color={isInverse ? colors.inverse : colors.neutralMedium}
-                        direction="right"
-                    />
-                </Box>
-            ) : right ? (
-                <div className={classes.right}>{right}</div>
-            ) : null}
+            {renderRight()}
         </Box>
     );
 };
@@ -361,7 +390,6 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
     (props, ref) => {
         const titleId = useAriaId();
         const isInverse = useIsInverseVariant();
-        const classes = useStyles({isInverse});
         const {
             asset,
             headline,
@@ -375,7 +403,9 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
             role,
             extra,
             dataAttributes,
+            disabled,
         } = props;
+        const classes = useStyles({isInverse, disabled});
         const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
         const renderContent = ({
@@ -401,6 +431,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                 right={right}
                 extra={extra}
                 labelId={labelId}
+                disabled={disabled}
             />
         );
 
@@ -438,6 +469,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                     onPress={props.onPress}
                     role={role}
                     dataAttributes={dataAttributes}
+                    disabled={disabled}
                 >
                     {renderTouchableContent(props)}
                 </Touchable>
@@ -453,6 +485,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                     fullPageOnWebView={props.fullPageOnWebView}
                     role={role}
                     dataAttributes={dataAttributes}
+                    disabled={disabled}
                 >
                     {renderTouchableContent(props)}
                 </Touchable>
@@ -468,6 +501,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                     newTab={props.newTab}
                     role={role}
                     dataAttributes={dataAttributes}
+                    disabled={disabled}
                 >
                     {renderTouchableContent(props)}
                 </Touchable>
@@ -479,18 +513,21 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
             return props.onPress ? (
                 <div className={classes.dualActionContainer}>
                     <Touchable
+                        disabled={disabled}
                         onPress={props.onPress}
                         role={role}
                         className={classNames(classes.dualActionLeft, classes.hover)}
                     >
-                        {renderContent({type: 'custom', labelId: titleId})}
+                        {renderContent({type: 'control', labelId: titleId})}
                     </Touchable>
                     <Touchable
+                        disabled={disabled}
                         className={classes.dualActionRight}
                         onPress={toggle}
                         dataAttributes={dataAttributes}
                     >
                         <Control
+                            disabled={disabled}
                             name={name}
                             checked={isChecked}
                             aria-labelledby={titleId}
@@ -501,6 +538,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
             ) : (
                 <div className={classNames(classes.rowContent, classes.hover)}>
                     <Control
+                        disabled={disabled}
                         dataAttributes={dataAttributes}
                         name={name}
                         checked={isChecked}
@@ -509,7 +547,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                             <Box paddingX={16} role={role}>
                                 {renderContent({
                                     labelId,
-                                    type: 'custom',
+                                    type: 'control',
                                     right: <Stack space="around">{control}</Stack>,
                                 })}
                             </Box>
@@ -541,7 +579,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                         render={(radio) => (
                             <Box paddingX={16}>
                                 {renderContent({
-                                    type: 'custom',
+                                    type: 'control',
                                     right: <Stack space="around">{radio}</Stack>,
                                 })}
                             </Box>
