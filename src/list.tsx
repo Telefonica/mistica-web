@@ -16,7 +16,7 @@ import {useAriaId, useTheme} from './hooks';
 import {useIsInverseVariant} from './theme-variant-context';
 import IconChevron from './icons/icon-chevron';
 import Switch from './switch-component';
-import RadioButton from './radio-button';
+import RadioButton, {useRadioContext} from './radio-button';
 import Checkbox from './checkbox';
 import {Boxed} from './boxed';
 import Divider from './divider';
@@ -403,9 +403,15 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
             role,
             extra,
             dataAttributes,
-            disabled,
         } = props;
-        const classes = useStyles({isInverse, disabled});
+
+        const radioContext = useRadioContext();
+        const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
+
+        const classes = useStyles({
+            isInverse,
+            disabled,
+        });
         const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
         const renderContent = ({
