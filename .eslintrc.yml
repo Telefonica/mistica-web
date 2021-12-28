@@ -1,2 +1,5 @@
 extends:
     - '@telefonica/eslint-config'
+overrides:
+    - files: ['*.js']
+      parser: espree
