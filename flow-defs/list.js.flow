@@ -15,6 +15,7 @@ declare type CommonProps = {
   role?: string,
   extra?: React.Node,
   dataAttributes?: DataAttributes,
+  disabled?: boolean,
 };
 declare type ControlProps = {
   name?: string,
