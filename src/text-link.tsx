@@ -3,9 +3,9 @@ import {createUseStyles} from './jss';
 import Touchable from './touchable';
 import classnames from 'classnames';
 import {useIsInverseVariant} from './theme-variant-context';
+import {useForm} from './form-context';
 
 import type {TrackingEvent, DataAttributes} from './utils/types';
-import {useForm} from './form-context';
 
 const useStyles = createUseStyles((theme) => ({
     textLink: {
