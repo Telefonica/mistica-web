@@ -1,3 +1,10 @@
+## [10.14.2](https://github.com/Telefonica/mistica-web/compare/v10.14.1...v10.14.2) (2022-01-03)
+
+
+### Bug Fixes
+
+* **release:** commit updated package-version.tsx file on release ([#389](https://github.com/Telefonica/mistica-web/issues/389)) ([61e384a](https://github.com/Telefonica/mistica-web/commit/61e384a0cd93f32bae691c15b209b5e6f3e42485))
+
 ## [10.14.1](https://github.com/Telefonica/mistica-web/compare/v10.14.0...v10.14.1) (2022-01-03)
 
 
