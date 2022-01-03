@@ -263,6 +263,10 @@ const ModalDialog = (props: ModalDialogProps) => {
     const {platformOverrides} = useTheme();
     const context = React.useContext(ThemeContext);
     const classes = useStylesModalDialog();
+
+    // Closing the dialog before the animation has ended leaves the component in a broken state
+    // To avoid race conditions, we don't allow closing the dialog until the animation has ended
+    // See onAnimationEnd handler
     const canCloseRef = React.useRef(process.env.NODE_ENV === 'test');
 
     if (!context) {
@@ -270,24 +274,36 @@ const ModalDialog = (props: ModalDialogProps) => {
             `To use @telefonica/mistica components you must instantiate <ThemeContextProvider> as their parent.`
         );
     }
-
     const renderNative = isWebViewBridgeAvailable();
-    const closeHandler = props.showCancel ? props.onCancel : props.onAccept;
 
-    const handleClose = React.useCallback(
+    const {onAccept, isClosing, onCancel, onCloseTransitionEnd, ...dialogProps} = props;
+
+    const handleAccept = React.useCallback(() => {
+        if (!isClosing && canCloseRef.current) {
+            onAccept();
+        }
+    }, [isClosing, onAccept]);
+
+    const handleCancel = React.useCallback(() => {
+        if (!isClosing && canCloseRef.current) {
+            onCancel();
+        }
+    }, [isClosing, onCancel]);
+
+    const handleClose = props.showCancel ? handleCancel : handleAccept;
+
+    const handleOverlayPress = React.useCallback(
         (event: React.SyntheticEvent<any> | Event) => {
-            if (!props.isClosing) {
-                closeHandler();
-                event.stopPropagation();
-            }
+            handleClose();
+            event.stopPropagation();
         },
-        [closeHandler, props.isClosing]
+        [handleClose]
     );
 
     const handleKeyDown = React.useCallback(
         (event: KeyboardEvent) => {
             if (event.keyCode === ESC) {
-                handleClose(event);
+                handleClose();
                 event.stopPropagation();
                 event.preventDefault();
             }
@@ -335,21 +351,13 @@ const ModalDialog = (props: ModalDialogProps) => {
         };
     }, [setModalState]);
 
-    const {isClosing, onCloseTransitionEnd, ...dialogProps} = props;
     /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions */
     return renderNative ? null : (
         <Portal>
             <div className={classes.wrapper}>
                 <FocusTrap>
                     <div
-                        onClick={(event) => {
-                            // Closing the dialog before the animation has ended leaves the component in a broken state
-                            // To avoid race conditions, we don't allow closing the dialog until the animation has ended
-                            // See onAnimationEnd handler
-                            if (canCloseRef.current) {
-                                handleClose(event);
-                            }
-                        }}
+                        onClick={handleOverlayPress}
                         className={classnames(classes.modalOpacityLayer)}
                         role="dialog"
                     >
@@ -374,7 +382,7 @@ const ModalDialog = (props: ModalDialogProps) => {
                                         <IcnCloseRegular color={context.colors.neutralHigh} />
                                     </IconButton>
                                 </div>
-                                <Dialog {...dialogProps} />
+                                <Dialog {...dialogProps} onCancel={handleCancel} onAccept={handleAccept} />
                             </div>
                         </div>
                     </div>
