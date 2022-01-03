@@ -358,7 +358,7 @@ const ModalDialog = (props: ModalDialogProps) => {
                 <FocusTrap>
                     <div
                         onClick={handleOverlayPress}
-                        className={classnames(classes.modalOpacityLayer)}
+                        className={classnames(classes.modalOpacityLayer, {closed: isClosing})}
                         role="dialog"
                     >
                         <div onClick={(e) => e.stopPropagation()}>
