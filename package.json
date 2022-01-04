@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "10.14.0",
+    "version": "10.14.2",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -163,7 +163,16 @@
             "@semantic-release/changelog",
             "./scripts/set-version.js",
             "@semantic-release/npm",
-            "@semantic-release/git",
+            [
+                "@semantic-release/git",
+                {
+                    "assets": [
+                        "CHANGELOG.md",
+                        "package.json",
+                        "src/package-version.tsx"
+                    ]
+                }
+            ],
             "@semantic-release/github"
         ]
     },
