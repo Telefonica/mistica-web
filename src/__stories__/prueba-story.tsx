@@ -175,6 +175,7 @@ const Options = ({
 };
 
 export const PruebaStory: StoryComponent = () => {
+    const inputRef = React.useRef<HTMLInputElement>();
     const [options, setOptions] = React.useState(OPTIONS);
     const [filterValue, setFilterValue] = React.useState('');
     const [selectedValue, setSelectedValue] = React.useState('');
@@ -203,9 +204,12 @@ export const PruebaStory: StoryComponent = () => {
         <StorySection title="Prueba">
             <Form onSubmit={() => {}}>
                 <Menu
+                    onMenuClose={() => {
+                        inputRef?.current?.blur();
+                    }}
                     renderTarget={({ref, onPress, isMenuOpen}) => (
                         <TextField
-                            ref={ref}
+                            ref={combineRefs(ref, inputRef)}
                             onFocus={onPress}
                             fullWidth
                             value={filterValue}
