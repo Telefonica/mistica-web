@@ -44,12 +44,11 @@ export type MenuProps = {
     width?: number;
     renderTarget: (props: TargetRenderProps) => React.ReactNode;
     renderMenu: (props: MenuRenderProps) => React.ReactNode;
-    onMenuClose?: () => void;
     children?: void;
     position?: 'left' | 'right';
 };
 
-const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 'left', onMenuClose}) => {
+const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 'left'}) => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [target, setTarget] = React.useState<HTMLElement | null>(null);
     const [menu, setMenu] = React.useState<HTMLElement | null>(null);
@@ -153,7 +152,6 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
                 }
                 if (e.keyCode === ESC) {
                     setIsMenuOpen(false);
-                    onMenuClose?.();
                 }
             }
         };
@@ -170,7 +168,6 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
                 <Overlay
                     onPress={(e) => {
                         setIsMenuOpen(false);
-                        onMenuClose?.();
                         cancelEvent(e);
                     }}
                     disableScroll

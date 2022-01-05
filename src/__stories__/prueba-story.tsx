@@ -109,7 +109,7 @@ const Options = ({
             }
         };
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.keyCode === ENTER || e.keyCode === SPACE) {
+            if (tentativeValueState && (e.keyCode === ENTER || e.keyCode === SPACE)) {
                 cancelEvent(e);
                 if (
                     options.findIndex(({value}) => value === tentativeValueState) !== -1 &&
@@ -130,7 +130,14 @@ const Options = ({
     });
 
     return (
-        <div ref={combineRefs(elementRef, scrollRef)} className={className}>
+        <div
+            ref={combineRefs(elementRef, scrollRef)}
+            className={className}
+            onMouseDown={(event) => {
+                // Prevent blur and lost input focus
+                event.preventDefault();
+            }}
+        >
             {options.map((option) => (
                 <Box
                     paddingX={16}
@@ -151,7 +158,9 @@ const Options = ({
                         onPress={() => {
                             setSelectedValue(option.value);
                             setFilterValue(option.value);
-                            closeMenu();
+                            requestAnimationFrame(() => {
+                                closeMenu();
+                            });
                         }}
                     >
                         <Text1 as="p" regular>
@@ -204,9 +213,6 @@ export const PruebaStory: StoryComponent = () => {
         <StorySection title="Prueba">
             <Form onSubmit={() => {}}>
                 <Menu
-                    onMenuClose={() => {
-                        inputRef?.current?.blur();
-                    }}
                     renderTarget={({ref, onPress, isMenuOpen}) => (
                         <TextField
                             ref={combineRefs(ref, inputRef)}
