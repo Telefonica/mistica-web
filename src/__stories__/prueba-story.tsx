@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StorySection} from './helpers';
-import {useTheme, Text3, TextField, Menu, Touchable, Box, Text1, createUseStyles} from '..';
+import {useTheme, Text3, TextField, Menu, Touchable, Box, Text1, createUseStyles, Form} from '..';
 
 export default {
     title: 'Components/Prueba/Prueba',
@@ -36,18 +36,18 @@ export const PruebaStory: StoryComponent = () => {
     const classes = useStyles();
     const [options, setOptions] = React.useState(OPTIONS);
     const [filterValue, setFilterValue] = React.useState('');
-    const [selected, setSelected] = React.useState('');
+    const [selectedValue, setSelectedValue] = React.useState('');
 
     const filterOptions = (valueInput: string) => {
         setFilterValue(valueInput);
     };
 
     const checkIfRightOption = () => {
-        if (filterValue === selected) return;
+        if (filterValue === selectedValue) return;
 
         if (OPTIONS.filter(({value}) => value === filterValue).length === 0) {
             setFilterValue('');
-            setSelected('');
+            setSelectedValue('');
         }
     };
 
@@ -58,51 +58,53 @@ export const PruebaStory: StoryComponent = () => {
     return (
         <>
             <StorySection title="Prueba">
-                <Menu
-                    renderTarget={({ref, onPress}) => (
-                        <Touchable elementRef={ref} onPress={onPress}>
-                            <TextField
-                                fullWidth
-                                value={filterValue}
-                                name="prueba"
-                                label="Prueba"
-                                onChangeValue={filterOptions}
-                                onBlur={checkIfRightOption}
-                                autoComplete="off"
-                            />
-                        </Touchable>
-                    )}
-                    renderMenu={({ref, className, close}) => (
-                        <div ref={ref} className={className}>
-                            {options.map((option) => (
-                                <Box paddingX={16} paddingY={8} key={option.value}>
-                                    <Touchable
-                                        className={classes.hover}
-                                        onPress={() => {
-                                            setSelected(option.value);
-                                            setFilterValue(option.value);
-                                            close();
-                                        }}
-                                    >
-                                        <Text1 as="p" regular>
-                                            {option.value}
-                                        </Text1>
-                                        <Text1 regular color={colors.textSecondary}>
-                                            {option.text}
-                                        </Text1>
-                                    </Touchable>
-                                </Box>
-                            ))}
-                            {options.length === 0 ? (
-                                <Box paddingX={16} paddingY={8}>
-                                    <Text3 regular color={colors.textSecondary}>
-                                        No option
-                                    </Text3>
-                                </Box>
-                            ) : null}
-                        </div>
-                    )}
-                />
+                <Form onSubmit={() => {}}>
+                    <Menu
+                        renderTarget={({ref, onPress}) => (
+                            <Touchable elementRef={ref} onPress={onPress}>
+                                <TextField
+                                    fullWidth
+                                    value={filterValue}
+                                    name="prueba"
+                                    label="Prueba"
+                                    onChangeValue={filterOptions}
+                                    onBlur={checkIfRightOption}
+                                    autoComplete="off"
+                                />
+                            </Touchable>
+                        )}
+                        renderMenu={({ref, className, close}) => (
+                            <div ref={ref} className={className}>
+                                {options.map((option) => (
+                                    <Box paddingX={16} paddingY={8} key={option.value}>
+                                        <Touchable
+                                            className={classes.hover}
+                                            onPress={() => {
+                                                setSelectedValue(option.value);
+                                                setFilterValue(option.value);
+                                                close();
+                                            }}
+                                        >
+                                            <Text1 as="p" regular>
+                                                {option.value}
+                                            </Text1>
+                                            <Text1 regular color={colors.textSecondary}>
+                                                {option.text}
+                                            </Text1>
+                                        </Touchable>
+                                    </Box>
+                                ))}
+                                {options.length === 0 ? (
+                                    <Box paddingX={16} paddingY={8}>
+                                        <Text3 regular color={colors.textSecondary}>
+                                            No option
+                                        </Text3>
+                                    </Box>
+                                ) : null}
+                            </div>
+                        )}
+                    />
+                </Form>
             </StorySection>
         </>
     );

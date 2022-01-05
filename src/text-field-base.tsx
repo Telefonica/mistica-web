@@ -9,7 +9,7 @@ import {
     LABEL_SCALE_DESKTOP,
 } from './text-field-components';
 import {Text3} from './text';
-import {isIos, isRunningAcceptanceTest, isChrome, isFirefox} from './utils/platform';
+import {isIos, isRunningAcceptanceTest, isFirefox} from './utils/platform';
 import {useAriaId, useTheme, useScreenSize} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
@@ -278,8 +278,8 @@ const useStyles = createUseStyles((theme) => ({
 }));
 
 // Chrome ignores 'off': https://bugs.chromium.org/p/chromium/issues/detail?id=468153#c164
-const fixAutoComplete = (platformOverrides: Theme['platformOverrides'], autoComplete?: AutoComplete) =>
-    autoComplete === 'off' && isChrome(platformOverrides) ? 'nope' : autoComplete;
+// const fixAutoComplete = (platformOverrides: Theme['platformOverrides'], autoComplete?: AutoComplete) =>
+// autoComplete === 'off' && isChrome(platformOverrides) ? 'nope' : autoComplete;
 
 const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
     (
@@ -314,7 +314,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
         );
-        const {platformOverrides, colors} = useTheme();
+        const {colors} = useTheme();
         const {isTabletOrSmaller} = useScreenSize();
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
         const hasLabel = !!label || !rest.required;
@@ -374,7 +374,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const props = {
             ...rest,
             maxLength,
-            autoComplete: fixAutoComplete(platformOverrides, autoCompleteProp),
+            autoComplete: autoCompleteProp,
             ...inputProps,
         };
 
@@ -523,7 +523,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                         // while the test is typing, the component could be remounted.
                         // By hiding the label, we ensure that the test selects the loaded component
                         label={isRunningAcceptanceTest(platformOverrides) ? '' : props.label}
-                        autoComplete={fixAutoComplete(platformOverrides, 'off') as AutoComplete}
+                        autoComplete="off"
                         ref={ref}
                         id={id}
                     />
@@ -534,7 +534,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                     inputProps={{
                         ...props,
                         id,
-                        autoComplete: fixAutoComplete(platformOverrides, 'off'),
+                        autoComplete: 'off',
                         // @ts-expect-error Autosuggest expects slightly different types
                         onChange: (e: React.ChangeEvent<HTMLInputElement>, {newValue}) => {
                             // hack to mutate event value
