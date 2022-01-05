@@ -1,4 +1,3 @@
-/* eslint-disable filenames/match-regex */
 const fs = require('fs');
 const swcConfig = JSON.parse(fs.readFileSync(`${__dirname}/.swcrc`, 'utf-8'));
 

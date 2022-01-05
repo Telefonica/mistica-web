@@ -17,7 +17,7 @@ export const Default: StoryComponent = () => {
                     render={(checkboxElement, labelId) => (
                         <Inline alignItems="center" space={16}>
                             {checkboxElement}
-                            {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility*/}
+                            {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility */}
                             <Text3 regular id={labelId}>
                                 You accept to sell your soul
                             </Text3>
@@ -40,7 +40,7 @@ export const Default: StoryComponent = () => {
                     render={(checkboxElement, labelId) => (
                         <Inline alignItems="center" space={16}>
                             {checkboxElement}
-                            {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility*/}
+                            {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility */}
                             <Text3 regular id={labelId}>
                                 You accept to sell your soul: {checked ? 'sure!' : 'nahh'}
                             </Text3>
@@ -62,7 +62,7 @@ export const Default: StoryComponent = () => {
                     onChange={onChange}
                     render={(_, labelId) => (
                         <Inline alignItems="center" space={16}>
-                            {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility*/}
+                            {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility */}
                             <Text3 regular id={labelId}>
                                 You accept to sell your soul: {checked ? 'sure!' : 'nahh'}
                             </Text3>
@@ -74,6 +74,15 @@ export const Default: StoryComponent = () => {
                 <SectionTitle>Disabled</SectionTitle>
                 <Checkbox name="disabled-children" checked={checked} onChange={onChange} disabled>
                     You accept to sell your soul
+                </Checkbox>
+            </>
+            <>
+                <SectionTitle>Multiline</SectionTitle>
+                <Checkbox name="multiline" checked={checked}>
+                    <Text3 regular>
+                        Checkbox with a very large very large very large very large very large very large very
+                        large very large very large text that falls
+                    </Text3>
                 </Checkbox>
             </>
         </Stack>

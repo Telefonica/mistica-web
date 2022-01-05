@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import {createUseStyles} from './jss';
 
 const useStyles = createUseStyles(() => ({

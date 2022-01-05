@@ -285,6 +285,7 @@ export const TypesUncontrolled: StoryComponent = () => (
                     name="decimal"
                     label="Decimal"
                     defaultValue="123.45"
+                    maxDecimals={3}
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
                 />
@@ -505,6 +506,7 @@ export const TypesControlled = (): React.ReactNode => (
                     value={value}
                     name="decimal"
                     label="Decimal"
+                    maxDecimals={3}
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
                 />

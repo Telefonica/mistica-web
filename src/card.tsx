@@ -160,37 +160,32 @@ type MediaCardProps = {
     'aria-label'?: string;
 };
 
-export const MediaCard: React.FC<MediaCardProps> = ({
-    media,
-    headline,
-    pretitle,
-    title,
-    description,
-    extra,
-    button,
-    buttonLink,
-    'aria-label': ariaLabel,
-}) => {
-    const classes = useMediaCardStyles({media});
-    return (
-        <Boxed className={classes.boxed}>
-            <section className={classes.mediaCard} aria-label={ariaLabel}>
-                <div className={classes.media}></div>
-                <div className={classes.content}>
-                    <CardContent
-                        headline={headline}
-                        pretitle={pretitle}
-                        title={title}
-                        description={description}
-                        extra={extra}
-                        button={button}
-                        buttonLink={buttonLink}
-                    />
-                </div>
-            </section>
-        </Boxed>
-    );
-};
+export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
+    (
+        {media, headline, pretitle, title, description, extra, button, buttonLink, 'aria-label': ariaLabel},
+        ref
+    ) => {
+        const classes = useMediaCardStyles({media});
+        return (
+            <Boxed className={classes.boxed} ref={ref}>
+                <section className={classes.mediaCard} aria-label={ariaLabel}>
+                    <div className={classes.media}></div>
+                    <div className={classes.content}>
+                        <CardContent
+                            headline={headline}
+                            pretitle={pretitle}
+                            title={title}
+                            description={description}
+                            extra={extra}
+                            button={button}
+                            buttonLink={buttonLink}
+                        />
+                    </div>
+                </section>
+            </Boxed>
+        );
+    }
+);
 
 const useDataCardStyles = createUseStyles(() => ({
     boxed: {
@@ -222,33 +217,38 @@ interface DataCardProps {
     'aria-label'?: string;
 }
 
-export const DataCard: React.FC<DataCardProps> = ({
-    icon,
-    headline,
-    title,
-    subtitle,
-    description,
-    extra,
-    button,
-    buttonLink,
-    dataAttributes,
-    'aria-label': ariaLabel,
-}) => {
-    const classes = useDataCardStyles();
-    return (
-        <Boxed className={classes.boxed} dataAttributes={dataAttributes}>
-            <section className={classes.dataCard} aria-label={ariaLabel}>
-                {icon && <Box paddingBottom={16}>{icon}</Box>}
-                <CardContent
-                    headline={headline}
-                    title={title}
-                    subtitle={subtitle}
-                    description={description}
-                    extra={extra}
-                    button={button}
-                    buttonLink={buttonLink}
-                />
-            </section>
-        </Boxed>
-    );
-};
+export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
+    (
+        {
+            icon,
+            headline,
+            title,
+            subtitle,
+            description,
+            extra,
+            button,
+            buttonLink,
+            dataAttributes,
+            'aria-label': ariaLabel,
+        },
+        ref
+    ) => {
+        const classes = useDataCardStyles();
+        return (
+            <Boxed className={classes.boxed} dataAttributes={dataAttributes} ref={ref}>
+                <section className={classes.dataCard} aria-label={ariaLabel}>
+                    {icon && <Box paddingBottom={16}>{icon}</Box>}
+                    <CardContent
+                        headline={headline}
+                        title={title}
+                        subtitle={subtitle}
+                        description={description}
+                        extra={extra}
+                        button={button}
+                        buttonLink={buttonLink}
+                    />
+                </section>
+            </Boxed>
+        );
+    }
+);

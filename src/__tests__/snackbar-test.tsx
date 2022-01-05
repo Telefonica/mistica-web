@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import Snackbar from '../snackbar';
 import {render, screen, waitFor} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';

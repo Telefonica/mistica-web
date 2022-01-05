@@ -234,6 +234,7 @@ interface BasicRowContentProps extends CommonProps {
     switch?: undefined;
     radioValue?: undefined;
     newTab?: undefined;
+    fullPageOnWebView?: undefined;
 
     right?: React.ReactNode;
 }
@@ -246,6 +247,7 @@ interface SwitchRowContentProps extends CommonProps {
     checkbox?: undefined;
     radioValue?: undefined;
     newTab?: undefined;
+    fullPageOnWebView?: undefined;
 
     switch: ControlProps;
 }
@@ -258,6 +260,7 @@ interface CheckboxRowContentProps extends CommonProps {
     switch?: undefined;
     radioValue?: undefined;
     newTab?: undefined;
+    fullPageOnWebView?: undefined;
 
     checkbox: ControlProps;
 }
@@ -270,6 +273,7 @@ interface RadioRowContentProps extends CommonProps {
     switch?: undefined;
     checkbox?: undefined;
     newTab?: undefined;
+    fullPageOnWebView?: undefined;
 
     radioValue: string;
 }
@@ -278,6 +282,7 @@ interface HrefRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
+    fullPageOnWebView?: undefined;
 
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     href: string;
@@ -306,6 +311,7 @@ interface OnPressRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
+    fullPageOnWebView?: undefined;
 
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     onPress: () => void;
@@ -351,199 +357,217 @@ const useControlState = ({
     return [isChecked, toggle];
 };
 
-const RowContent = (props: RowContentProps) => {
-    const titleId = useAriaId();
-    const isInverse = useIsInverseVariant();
-    const classes = useStyles({isInverse});
-    const {
-        asset,
-        headline,
-        title,
-        titleLinesMax,
-        subtitle,
-        subtitleLinesMax,
-        description,
-        descriptionLinesMax,
-        badge,
-        role,
-        extra,
-        dataAttributes,
-    } = props;
-    const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
+const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLButtonElement, RowContentProps>(
+    (props, ref) => {
+        const titleId = useAriaId();
+        const isInverse = useIsInverseVariant();
+        const classes = useStyles({isInverse});
+        const {
+            asset,
+            headline,
+            title,
+            titleLinesMax,
+            subtitle,
+            subtitleLinesMax,
+            description,
+            descriptionLinesMax,
+            badge,
+            role,
+            extra,
+            dataAttributes,
+        } = props;
+        const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
-    const renderContent = ({
-        type,
-        right,
-        labelId,
-    }: {
-        type: ContentProps['type'];
-        right?: ContentProps['right'];
-        labelId?: string;
-    }) => (
-        <Content
-            asset={asset}
-            headline={headline}
-            title={title}
-            subtitle={subtitle}
-            description={description}
-            badge={badge}
-            titleLinesMax={titleLinesMax}
-            subtitleLinesMax={subtitleLinesMax}
-            descriptionLinesMax={descriptionLinesMax}
-            type={type}
-            right={right}
-            extra={extra}
-            labelId={labelId}
-        />
-    );
-
-    const renderTouchableContent = (
-        props: HrefRowContentProps | ToRowContentProps | OnPressRowContentProps
-    ) => {
-        let type: ContentProps['type'] = 'chevron';
-
-        if (props.right === null) {
-            type = 'basic';
-        }
-
-        if (props.right) {
-            type = 'custom';
-        }
-
-        return <Box paddingX={16}>{renderContent({type, right: props.right})}</Box>;
-    };
-
-    if (
-        props.onPress &&
-        props.switch === undefined &&
-        props.radioValue === undefined &&
-        props.checkbox === undefined
-    ) {
-        return (
-            <Touchable
-                className={classNames(classes.rowContent, classes.hover)}
-                trackingEvent={props.trackingEvent}
-                onPress={props.onPress}
-                role={role}
-                dataAttributes={dataAttributes}
-            >
-                {renderTouchableContent(props)}
-            </Touchable>
+        const renderContent = ({
+            type,
+            right,
+            labelId,
+        }: {
+            type: ContentProps['type'];
+            right?: ContentProps['right'];
+            labelId?: string;
+        }) => (
+            <Content
+                asset={asset}
+                headline={headline}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                badge={badge}
+                titleLinesMax={titleLinesMax}
+                subtitleLinesMax={subtitleLinesMax}
+                descriptionLinesMax={descriptionLinesMax}
+                type={type}
+                right={right}
+                extra={extra}
+                labelId={labelId}
+            />
         );
-    }
 
-    if (props.to) {
-        return (
-            <Touchable
-                className={classNames(classes.rowContent, classes.hover)}
-                trackingEvent={props.trackingEvent}
-                to={props.to}
-                fullPageOnWebView={props.fullPageOnWebView}
-                role={role}
-                dataAttributes={dataAttributes}
-            >
-                {renderTouchableContent(props)}
-            </Touchable>
-        );
-    }
+        const renderTouchableContent = (
+            props: HrefRowContentProps | ToRowContentProps | OnPressRowContentProps
+        ) => {
+            let type: ContentProps['type'] = 'chevron';
 
-    if (props.href) {
-        return (
-            <Touchable
-                className={classNames(classes.rowContent, classes.hover)}
-                trackingEvent={props.trackingEvent}
-                href={props.href}
-                newTab={props.newTab}
-                role={role}
-                dataAttributes={dataAttributes}
-            >
-                {renderTouchableContent(props)}
-            </Touchable>
-        );
-    }
+            if (props.right === null) {
+                type = 'basic';
+            }
 
-    const renderRowWithControl = (Control: typeof Switch | typeof Checkbox) => {
-        const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
-        return props.onPress ? (
-            <div className={classes.dualActionContainer}>
+            if (props.right) {
+                type = 'custom';
+            }
+
+            return (
+                <Box paddingX={16} ref={ref as React.Ref<HTMLDivElement>}>
+                    {renderContent({type, right: props.right})}
+                </Box>
+            );
+        };
+
+        if (
+            props.onPress &&
+            props.switch === undefined &&
+            props.radioValue === undefined &&
+            props.checkbox === undefined
+        ) {
+            return (
                 <Touchable
+                    ref={ref}
+                    className={classNames(classes.rowContent, classes.hover)}
+                    trackingEvent={props.trackingEvent}
                     onPress={props.onPress}
                     role={role}
-                    className={classNames(classes.dualActionLeft, classes.hover)}
+                    dataAttributes={dataAttributes}
                 >
-                    {renderContent({type: 'custom', labelId: titleId})}
+                    {renderTouchableContent(props)}
                 </Touchable>
+            );
+        }
+
+        if (props.to) {
+            return (
                 <Touchable
-                    className={classes.dualActionRight}
-                    onPress={toggle}
+                    className={classNames(classes.rowContent, classes.hover)}
+                    trackingEvent={props.trackingEvent}
+                    to={props.to}
+                    fullPageOnWebView={props.fullPageOnWebView}
+                    role={role}
                     dataAttributes={dataAttributes}
                 >
-                    <Control name={name} checked={isChecked} aria-labelledby={titleId} />
+                    {renderTouchableContent(props)}
                 </Touchable>
-            </div>
-        ) : (
-            <div className={classNames(classes.rowContent, classes.hover)}>
-                <Control
+            );
+        }
+
+        if (props.href) {
+            return (
+                <Touchable
+                    className={classNames(classes.rowContent, classes.hover)}
+                    trackingEvent={props.trackingEvent}
+                    href={props.href}
+                    newTab={props.newTab}
+                    role={role}
                     dataAttributes={dataAttributes}
-                    name={name}
-                    checked={isChecked}
-                    onChange={toggle}
-                    render={(control: React.ReactElement, labelId) => (
-                        <Box paddingX={16} role={role}>
-                            {renderContent({
-                                labelId,
-                                type: 'custom',
-                                right: <Stack space="around">{control}</Stack>,
-                            })}
-                        </Box>
-                    )}
-                />
-            </div>
-        );
-    };
+                >
+                    {renderTouchableContent(props)}
+                </Touchable>
+            );
+        }
 
-    if (props.switch) {
-        return renderRowWithControl(Switch);
-    }
+        const renderRowWithControl = (Control: typeof Switch | typeof Checkbox) => {
+            const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
+            return props.onPress ? (
+                <div className={classes.dualActionContainer}>
+                    <Touchable
+                        onPress={props.onPress}
+                        role={role}
+                        className={classNames(classes.dualActionLeft, classes.hover)}
+                    >
+                        {renderContent({type: 'custom', labelId: titleId})}
+                    </Touchable>
+                    <Touchable
+                        className={classes.dualActionRight}
+                        onPress={toggle}
+                        dataAttributes={dataAttributes}
+                    >
+                        <Control
+                            name={name}
+                            checked={isChecked}
+                            aria-labelledby={titleId}
+                            render={(check) => check}
+                        />
+                    </Touchable>
+                </div>
+            ) : (
+                <div className={classNames(classes.rowContent, classes.hover)}>
+                    <Control
+                        dataAttributes={dataAttributes}
+                        name={name}
+                        checked={isChecked}
+                        onChange={toggle}
+                        render={(control: React.ReactElement, labelId) => (
+                            <Box paddingX={16} role={role}>
+                                {renderContent({
+                                    labelId,
+                                    type: 'custom',
+                                    right: <Stack space="around">{control}</Stack>,
+                                })}
+                            </Box>
+                        )}
+                    />
+                </div>
+            );
+        };
 
-    if (props.checkbox) {
-        return renderRowWithControl(Checkbox);
-    }
+        if (props.switch) {
+            return renderRowWithControl(Switch);
+        }
 
-    if (props.radioValue) {
+        if (props.checkbox) {
+            return renderRowWithControl(Checkbox);
+        }
+
+        if (props.radioValue) {
+            return (
+                <div
+                    className={classNames(classes.rowContent, classes.hover)}
+                    role={role}
+                    ref={ref as React.Ref<HTMLDivElement>}
+                >
+                    <RadioButton
+                        dataAttributes={dataAttributes}
+                        value={props.radioValue}
+                        aria-labelledby={titleId}
+                        render={(radio) => (
+                            <Box paddingX={16}>
+                                {renderContent({
+                                    type: 'custom',
+                                    right: <Stack space="around">{radio}</Stack>,
+                                })}
+                            </Box>
+                        )}
+                    />
+                </div>
+            );
+        }
+
         return (
-            <div className={classNames(classes.rowContent, classes.hover)} role={role}>
-                <RadioButton
-                    dataAttributes={dataAttributes}
-                    value={props.radioValue}
-                    aria-labelledby={titleId}
-                    render={(radio) => (
-                        <Box paddingX={16}>
-                            {renderContent({
-                                type: 'custom',
-                                right: <Stack space="around">{radio}</Stack>,
-                            })}
-                        </Box>
-                    )}
-                />
-            </div>
+            <Box
+                paddingX={16}
+                className={classNames(classes.rowContent, classes.hover, classes.hoverDisabled)}
+                role={role}
+            >
+                {props.right
+                    ? renderContent({type: 'custom', right: props.right})
+                    : renderContent({type: 'basic'})}
+            </Box>
         );
     }
+);
 
-    return (
-        <Box
-            paddingX={16}
-            className={classNames(classes.rowContent, classes.hover, classes.hoverDisabled)}
-            role={role}
-        >
-            {props.right
-                ? renderContent({type: 'custom', right: props.right})
-                : renderContent({type: 'basic'})}
-        </Box>
-    );
-};
-
-export const Row: React.FC<RowContentProps> = (props) => <RowContent {...props} />;
+export const Row = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLButtonElement, RowContentProps>(
+    (props, ref) => <RowContent {...props} ref={ref} />
+);
 
 type RowListProps = {
     children: React.ReactNode;
@@ -587,11 +611,11 @@ type BoxedRowProps =
     | ToBoxedRowProps
     | OnPressBoxedRowProps;
 
-export const BoxedRow: React.FC<BoxedRowProps> = (props) => (
-    <Boxed isInverse={props.isInverse}>
+export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>((props, ref) => (
+    <Boxed isInverse={props.isInverse} ref={ref}>
         <RowContent {...props} />
     </Boxed>
-);
+));
 
 type BoxedRowListProps = {
     children: React.ReactNode;

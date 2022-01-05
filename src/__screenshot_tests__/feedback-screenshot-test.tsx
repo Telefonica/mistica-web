@@ -1,6 +1,7 @@
 import {openStoryPage, setRootFontSize} from '../test-utils';
-import type {Device} from '../test-utils';
 import {MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN} from '../skins/constants';
+
+import type {Device} from '../test-utils';
 
 const testableSkins = [MOVISTAR_SKIN, VIVO_SKIN, O2_SKIN];
 const testableDevices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];

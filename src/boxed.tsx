@@ -42,25 +42,31 @@ type Props = {
     'aria-label'?: string;
 };
 
-export const Boxed: React.FC<Props> = ({
-    children,
-    isInverse: isInverseInside = false,
-    className,
-    role,
-    dataAttributes,
-    'aria-label': ariaLabel,
-}) => {
-    const isInverseOutside = useIsInverseVariant();
-    const classes = useStyles({isInverseOutside, isInverseInside} as StylesProps);
+export const Boxed = React.forwardRef<HTMLDivElement, Props>(
+    (
+        {
+            children,
+            isInverse: isInverseInside = false,
+            className,
+            role,
+            dataAttributes,
+            'aria-label': ariaLabel,
+        },
+        ref
+    ) => {
+        const isInverseOutside = useIsInverseVariant();
+        const classes = useStyles({isInverseOutside, isInverseInside} as StylesProps);
 
-    return (
-        <div
-            className={classNames(className, classes.boxed)}
-            role={role}
-            {...getPrefixedDataAttributes(dataAttributes)}
-            aria-label={ariaLabel}
-        >
-            <ThemeVariant isInverse={isInverseInside}>{children}</ThemeVariant>
-        </div>
-    );
-};
+        return (
+            <div
+                ref={ref}
+                className={classNames(className, classes.boxed)}
+                role={role}
+                {...getPrefixedDataAttributes(dataAttributes)}
+                aria-label={ariaLabel}
+            >
+                <ThemeVariant isInverse={isInverseInside}>{children}</ThemeVariant>
+            </div>
+        );
+    }
+);

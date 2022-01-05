@@ -13,7 +13,7 @@ const Card: React.FC<CardProps> = ({show, children, onPress}) => {
             <Touchable onPress={onPress} style={{background: 'lightgray', padding: 8}}>
                 Card{!show && ' - click to open'}
             </Touchable>
-            <div style={{height: show ? 'auto' : 0, overflow: 'hidden'}}>{children}</div>
+            <div style={{display: show ? 'block' : 'none'}}>{children}</div>
         </>
     );
 };

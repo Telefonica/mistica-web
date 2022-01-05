@@ -1,3 +1,41 @@
+## [10.14.2](https://github.com/Telefonica/mistica-web/compare/v10.14.1...v10.14.2) (2022-01-03)
+
+
+### Bug Fixes
+
+* **release:** commit updated package-version.tsx file on release ([#389](https://github.com/Telefonica/mistica-web/issues/389)) ([61e384a](https://github.com/Telefonica/mistica-web/commit/61e384a0cd93f32bae691c15b209b5e6f3e42485))
+
+## [10.14.1](https://github.com/Telefonica/mistica-web/compare/v10.14.0...v10.14.1) (2022-01-03)
+
+
+### Bug Fixes
+
+* **Dialog:** overlay fadeout animation ([#388](https://github.com/Telefonica/mistica-web/issues/388)) ([fc9b80b](https://github.com/Telefonica/mistica-web/commit/fc9b80b5b9670b6cdaa7ee81a7a1ae457c396662))
+* **Dialog:** race condition closing it before open transition end ([#387](https://github.com/Telefonica/mistica-web/issues/387)) ([cfef0f3](https://github.com/Telefonica/mistica-web/commit/cfef0f3a30e21909537bd07b98d359c1fbc3cd3b))
+
+# [10.14.0](https://github.com/Telefonica/mistica-web/compare/v10.13.0...v10.14.0) (2021-12-22)
+
+
+### Features
+
+* **Checkbox, RadioButton:** Baseline alignment by default ([6c1fe3e](https://github.com/Telefonica/mistica-web/commit/6c1fe3ef62d96889ce7f94f22f08782f729070ca))
+* **DecimalField:** Add maxDecimals prop to limit the number of decimal places ([#380](https://github.com/Telefonica/mistica-web/issues/380)) ([82196ec](https://github.com/Telefonica/mistica-web/commit/82196ecdba2b9a10140ae70c3c881baff43f8d39))
+* **ErrorFeedbackScreen:** new errorReference prop ([#375](https://github.com/Telefonica/mistica-web/issues/375)) ([60b8193](https://github.com/Telefonica/mistica-web/commit/60b8193c92b9c076e570792197f8c60eabd7d412))
+* **ForwardRef:** Support forward ref in: Row, BoxedRow, MediaCard, Boxed, Box, ButtonLink ([#377](https://github.com/Telefonica/mistica-web/issues/377)) ([48d3017](https://github.com/Telefonica/mistica-web/commit/48d30174cb8f43dbeb0185ca7ca294e41acee9a8))
+* **Icons:** Update Mistica Icons ([#379](https://github.com/Telefonica/mistica-web/issues/379)) ([9165907](https://github.com/Telefonica/mistica-web/commit/91659078b736edb6938fa309e9a40968e6b7b1c9))
+
+# [10.13.0](https://github.com/Telefonica/mistica-web/compare/v10.12.0...v10.13.0) (2021-12-02)
+
+
+### Bug Fixes
+
+* **Dialog:** text size ([#371](https://github.com/Telefonica/mistica-web/issues/371)) ([4b3a2a7](https://github.com/Telefonica/mistica-web/commit/4b3a2a70ed2aa46c8d91420182e146c6b3b3b2c4))
+
+
+### Features
+
+* **Icons:** Update mistica icons ([#374](https://github.com/Telefonica/mistica-web/issues/374)) ([136bb96](https://github.com/Telefonica/mistica-web/commit/136bb96a11835ce16c69b93e67eb1f92e9c0d8d4))
+
 # [10.12.0](https://github.com/Telefonica/mistica-web/compare/v10.11.0...v10.12.0) (2021-11-24)
 
 

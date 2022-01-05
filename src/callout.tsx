@@ -8,9 +8,9 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import classNames from 'classnames';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
+import ButtonGroup from './button-group';
 
 import type {ButtonProps, ButtonLinkProps} from './button';
-import ButtonGroup from './button-group';
 
 const useStyles = createUseStyles(({colors}) => ({
     container: {

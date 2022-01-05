@@ -19,7 +19,7 @@ const createWebpackEntries = (): {[entryName: string]: string} => {
         .filter((f) => f.endsWith('.tsx'));
 
     files.forEach((f) => {
-        const moduleName = f.replace('.tsx', ''); //remove file extension
+        const moduleName = f.replace('.tsx', ''); // remove file extension
 
         // create a temporary file for the entry, it'll be removed after webpack compilation
         const clientSideEntryFile = path.join(__dirname, `temporary-file-do-not-commit-${f}`);
