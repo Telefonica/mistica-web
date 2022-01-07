@@ -1,25 +1,26 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import {StorySection} from './helpers';
-import {useTheme, Text3, TextField, Menu, Touchable, Box, Text1, createUseStyles, Form} from '..';
+import {
+    useTheme,
+    Text2,
+    Text3,
+    TextField,
+    Menu,
+    Touchable,
+    Box,
+    Text1,
+    createUseStyles,
+    Form,
+    Stack,
+} from '..';
 import {DOWN, ENTER, SPACE, UP} from '../utils/key-codes';
 import {cancelEvent} from '../utils/dom';
 import {combineRefs} from '../utils/common';
 
 export default {
-    title: 'Components/Prueba/Prueba',
+    title: 'Components/Forms/Custom input',
 };
-
-const useStyles = createUseStyles(({mq}) => ({
-    hover: {
-        [mq.supportsHover]: {
-            '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, 0.08)',
-            },
-        },
-    },
-    selected: {backgroundColor: 'rgba(0, 0, 0, 0.08)'},
-}));
 
 const OPTIONS = [
     {
@@ -31,8 +32,8 @@ const OPTIONS = [
         value: 'option2',
     },
     {
-        text: 'Patata 3 (checking this will close the menu)',
-        value: 'patata',
+        text: 'Option 3',
+        value: 'option3',
     },
     {
         text: 'Option 4',
@@ -51,6 +52,17 @@ const OPTIONS = [
         value: 'option7',
     },
 ];
+
+const useStyles = createUseStyles(({mq}) => ({
+    hover: {
+        [mq.supportsHover]: {
+            '&:hover': {
+                backgroundColor: 'rgba(0, 0, 0, 0.08)',
+            },
+        },
+    },
+    selected: {backgroundColor: 'rgba(0, 0, 0, 0.08)'},
+}));
 
 type OptionsProps = {
     options: ReadonlyArray<{text: string; value: string}>;
@@ -183,7 +195,7 @@ const Options = ({
     );
 };
 
-export const PruebaStory: StoryComponent = () => {
+export const Default: StoryComponent = () => {
     const inputRef = React.useRef<HTMLInputElement>();
     const [options, setOptions] = React.useState(OPTIONS);
     const [filterValue, setFilterValue] = React.useState('');
@@ -210,37 +222,48 @@ export const PruebaStory: StoryComponent = () => {
     }, [filterValue]);
 
     return (
-        <StorySection title="Prueba">
-            <Form onSubmit={() => {}}>
-                <Menu
-                    renderTarget={({ref, onPress, isMenuOpen}) => (
-                        <TextField
-                            ref={combineRefs(ref, inputRef)}
-                            onFocus={onPress}
-                            fullWidth
-                            value={filterValue}
-                            name="prueba"
-                            label="Prueba"
-                            onChangeValue={(value) => filterOptions(value, onPress, isMenuOpen)}
-                            onBlur={checkIfRightOption}
-                            autoComplete="off"
-                        />
-                    )}
-                    renderMenu={({ref, className, close}) => (
-                        <Options
-                            elementRef={ref}
-                            options={options}
-                            className={className}
-                            selectedValue={selectedValue}
-                            setFilterValue={setFilterValue}
-                            setSelectedValue={setSelectedValue}
-                            closeMenu={close}
-                        />
-                    )}
-                />
-            </Form>
+        <StorySection title="Custom input">
+            <Stack space={32}>
+                <Text2 regular>
+                    This is an example of how to create a custom form input based on Mistica's pieces. This
+                    component is like a select with autocomplete feature.
+                </Text2>
+                <Form onSubmit={() => {}}>
+                    <Menu
+                        renderTarget={({ref, onPress, isMenuOpen}) => (
+                            <TextField
+                                fullWidth
+                                name="autocomplete"
+                                label="Autocomplete"
+                                value={filterValue}
+                                ref={combineRefs(ref, inputRef)}
+                                onFocus={onPress}
+                                onPress={() => {
+                                    if (!isMenuOpen) {
+                                        onPress();
+                                    }
+                                }}
+                                onChangeValue={(value) => filterOptions(value, onPress, isMenuOpen)}
+                                onBlur={checkIfRightOption}
+                                autoComplete="off"
+                            />
+                        )}
+                        renderMenu={({ref, className, close}) => (
+                            <Options
+                                elementRef={ref}
+                                options={options}
+                                className={className}
+                                selectedValue={selectedValue}
+                                setFilterValue={setFilterValue}
+                                setSelectedValue={setSelectedValue}
+                                closeMenu={close}
+                            />
+                        )}
+                    />
+                </Form>
+            </Stack>
         </StorySection>
     );
 };
 
-PruebaStory.storyName = 'Prueba';
+Default.storyName = 'Custom input';

@@ -277,10 +277,6 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-// Chrome ignores 'off': https://bugs.chromium.org/p/chromium/issues/detail?id=468153#c164
-// const fixAutoComplete = (platformOverrides: Theme['platformOverrides'], autoComplete?: AutoComplete) =>
-// autoComplete === 'off' && isChrome(platformOverrides) ? 'nope' : autoComplete;
-
 const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
     (
         {

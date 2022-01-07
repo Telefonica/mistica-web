@@ -7,6 +7,7 @@ import type {CommonFormFieldProps} from './text-field-base';
 
 export interface TextFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
+    onPress?: (event: React.MouseEvent) => void;
     multiline?: boolean;
     prefix?: React.ReactNode;
     endIcon?: React.ReactNode;
@@ -28,6 +29,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             defaultValue,
             onBlur: onBlurProp,
             onFocus: onFocusProp,
+            onPress,
             ...rest
         },
         ref
@@ -78,6 +80,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             <TextFieldBase
                 {...rest}
                 {...fieldProps}
+                onClick={onPress}
                 inputRef={combineRefs(inputRef, fieldProps.inputRef, ref)}
                 onFocus={onFocus}
                 type="text"
