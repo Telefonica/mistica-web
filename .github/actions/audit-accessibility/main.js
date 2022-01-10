@@ -178,26 +178,10 @@ const generateReportForGithub = async (results) => {
  * @param {Array<[name: string, results: import('axe-core').AxeResults]>} rawResults
  */
 const processResults = (rawResults) => {
-    // For reference:
-    // ButtonPrimary has a contrast ratio of 2.57
-    // Tag of type "Pending" has a contrast ratio of 2.44 (which is the current lowest)
-    const MINIMUM_CONTRAST_RATIO = 2.44;
-
     // https://github.com/dequelabs/axe-core/blob/master/doc/API.md#results-object
     for (const [, result] of rawResults) {
-        result.violations = result.violations.filter((violation) => {
-            if (violation.id === 'color-contrast') {
-                violation.nodes = violation.nodes.filter((node) => {
-                    node.any = node.any.filter(
-                        (anyNode) => anyNode.data.contrastRatio < MINIMUM_CONTRAST_RATIO
-                    );
-                    return node.any.length > 0;
-                });
-                return violation.nodes.length > 0;
-            } else {
-                return true;
-            }
-        });
+        // Disabled color-contrast violation, because disabled input fields have a low contrast by design spec
+        result.violations = result.violations.filter((violation) => violation.id !== 'color-contrast');
     }
 };
 
