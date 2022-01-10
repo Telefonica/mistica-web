@@ -25,7 +25,7 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-type TagType = 'promo' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
+export type TagType = 'promo' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
 
 export type TagProps = {
     // not using "TagType" and repeating the union to make these props playroom autocomplete friendly
