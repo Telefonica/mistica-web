@@ -39,7 +39,6 @@ const useIconCheckboxStyles = createUseStyles(({colors, isIos}) => ({
     },
     disabled: {
         opacity: 0.5,
-        cursor: 'not-allowed',
     },
 }));
 
@@ -112,17 +111,16 @@ type ChildrenProps = {
 
 const useStyles = createUseStyles(() => ({
     checkboxContainer: {
-        cursor: ({disabled}) => (disabled ? 'not-allowed' : 'default'),
+        cursor: 'default',
         display: 'inline',
     },
     disabled: {
         opacity: 0.5,
-        cursor: 'not-allowed',
     },
 }));
 
 const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
-    const classes = useStyles({disabled: props.disabled});
+    const classes = useStyles();
     const labelId = useAriaId(props['aria-labelledby']);
     const ariaLabel = props['aria-label'];
     const hasExternalLabel = ariaLabel || props['aria-labelledby'];

@@ -78,13 +78,13 @@ const useStyles = createUseStyles(() => ({
         '& .rdtPicker td.rdtDisabled, & .rdtPicker td.rdtDisabled:hover': {
             background: 'none',
             color: '#999999',
-            cursor: 'not-allowed',
+            cursor: 'default',
         },
         '& .rdtPicker td span.rdtOld': {color: '#999999'},
         '& .rdtPicker td span.rdtDisabled, & .rdtPicker td span.rdtDisabled:hover': {
             background: 'none',
             color: '#999999',
-            cursor: 'not-allowed',
+            cursor: 'default',
         },
         '& .rdtPicker th': {borderBottom: '1px solid #f9f9f9', fontWeight: 'bold'},
         '& .rdtPicker .dow': {width: '14.2857%', borderBottom: 'none', cursor: 'default'},
@@ -94,7 +94,7 @@ const useStyles = createUseStyles(() => ({
         '& .rdtPicker th.rdtDisabled, & .rdtPicker th.rdtDisabled:hover': {
             background: 'none',
             color: '#999999',
-            cursor: 'not-allowed',
+            cursor: 'default',
         },
         '& .rdtPicker thead tr:first-of-type th': {cursor: 'pointer'},
         '& .rdtPicker thead tr:first-of-type th:hover': {background: '#eeeeee'},
@@ -124,11 +124,17 @@ const useStyles = createUseStyles(() => ({
 }));
 
 const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidDate, optional, ...rest}) => {
-    const [showPicker, setShowPicker] = React.useState(false);
+    const [showPicker, realSetShowPicker] = React.useState(false);
     const classes = useStyles();
     const {texts} = useTheme();
     const fieldRef = React.useRef<HTMLInputElement | null>(null);
     const {height: pickerContainerHeight, ref: pickerContainerRef} = useElementDimensions();
+
+    const setShowPicker = (show: boolean) => {
+        if (!rest.disabled) {
+            realSetShowPicker(show);
+        }
+    };
 
     const getPickerContainerStyles = (): React.CSSProperties => {
         const {top = 0, bottom = 0, left = 0} = fieldRef.current?.getBoundingClientRect() || {};
@@ -188,7 +194,12 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidD
             );
         }
         return (
-            <IconButton aria-label="" size={32} onPress={() => setShowPicker(!showPicker)}>
+            <IconButton
+                disabled={rest.disabled}
+                aria-label=""
+                size={32}
+                onPress={() => setShowPicker(!showPicker)}
+            >
                 <IconCalendarRegular />
             </IconButton>
         );

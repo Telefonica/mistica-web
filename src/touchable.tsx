@@ -41,7 +41,7 @@ const useStyles = createUseStyles(() => ({
             border: 'none',
         },
         '&[disabled]': {
-            cursor: 'not-allowed',
+            cursor: 'default',
         },
         '&:active, &:hover': {
             textDecoration: 'none',

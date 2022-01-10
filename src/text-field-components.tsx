@@ -192,7 +192,6 @@ const useFieldContainerStyles = createUseStyles((theme) => ({
         display: 'flex',
         position: 'relative',
         backgroundColor: theme.colors.backgroundContainer,
-        cursor: ({disabled}) => (disabled ? 'not-allowed' : 'initial'),
     },
 }));
 

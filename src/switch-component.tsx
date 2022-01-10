@@ -73,11 +73,11 @@ const useStyles = createUseStyles(({colors, isIos}) => {
             boxShadow: isIos ? '1px 2px 4px rgba(0, 0, 0, 0.3)' : '1px 1px 2px rgba(0, 0, 0, 0.3)',
         },
         container: {
-            cursor: ({disabled}) => (disabled ? 'not-allowed' : 'default'),
+            cursor: 'default',
         },
         disabled: {
+            cursor: 'default',
             opacity: 0.5,
-            cursor: 'not-allowed',
         },
     };
 });
@@ -120,7 +120,7 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
 
     const [checkedState, setCheckedState] = React.useState(!!defaultValue);
 
-    const classes = useStyles({isChecked: value ?? checkedState, disabled});
+    const classes = useStyles({isChecked: value ?? checkedState});
 
     const notifyChange = React.useMemo(() => {
         if (process.env.NODE_ENV === 'test') {

@@ -48,11 +48,11 @@ const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
         transform: 'scale(1)',
     },
     radioButton: {
-        cursor: ({disabled}) => (disabled ? 'not-allowed' : 'default'),
+        cursor: 'default',
     },
     disabled: {
         opacity: 0.5,
-        cursor: 'not-allowed',
+        cursor: 'default',
     },
 }));
 
@@ -95,7 +95,7 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, dataAttr
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
     const tabIndex = focusableValue === value ? 0 : -1;
-    const classes = useRadioButtonStyles({disabled, checked});
+    const classes = useRadioButtonStyles({checked});
     const {isIos} = useTheme();
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {

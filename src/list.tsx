@@ -27,7 +27,6 @@ import type {DataAttributes, TrackingEvent} from './utils/types';
 const useStyles = createUseStyles(({colors, mq}) => ({
     disabled: {
         opacity: 0.5,
-        cursor: 'not-allowed',
     },
     hover: {
         [mq.supportsHover]: {
@@ -39,7 +38,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     },
     rowContent: {
         width: '100%',
-        cursor: ({disabled}) => (disabled ? 'not-allowed' : 'pointer'),
+        cursor: ({disabled}) => (disabled ? 'default' : 'pointer'),
     },
     hoverDisabled: {
         cursor: 'initial',

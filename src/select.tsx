@@ -38,7 +38,7 @@ const useStyles = createUseStyles((theme) => ({
         height: '100%',
         textOverflow: 'ellipsis',
         appearance: 'none',
-        cursor: ({disabled}) => (disabled ? 'not-allowed' : 'pointer'),
+        cursor: ({disabled}) => (disabled ? 'default' : 'pointer'),
     },
     arrowDown: {
         position: 'absolute',
