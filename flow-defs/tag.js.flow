@@ -1,10 +1,7 @@
 // @flow
 
 import * as React from "react";
-declare type IconProps = {
-  color?: string,
-  size?: string | number,
-};
+import type { IconProps } from "./utils/types";
 export type TagProps = {
   type?: "promo" | "active" | "inactive" | "success" | "warning" | "error",
   children: string,

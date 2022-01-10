@@ -6,6 +6,8 @@ import {Text} from './text';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {pxToRem} from './utils/css';
 
+import type {IconProps} from './utils/types';
+
 const useStyles = createUseStyles(() => ({
     tag: {
         display: 'inline-flex',
@@ -22,8 +24,6 @@ const useStyles = createUseStyles(() => ({
         },
     },
 }));
-
-type IconProps = {color?: string; size?: string | number};
 
 type TagType = 'promo' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
 
