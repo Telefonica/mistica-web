@@ -80,6 +80,8 @@ const audit = async (browser, url) => {
             'page-has-heading-one',
             // ignored because we use invented autocomplete values to workaround related chrome issues
             'autocomplete-valid',
+            // ignored because disabled input fields have a low contrast by design spec
+            'color-contrast',
         ])
         .analyze();
     page.close();
@@ -174,17 +176,6 @@ const generateReportForGithub = async (results) => {
     require('../utils/github').commentPullRequest(lines.join('\n'));
 };
 
-/**
- * @param {Array<[name: string, results: import('axe-core').AxeResults]>} rawResults
- */
-const processResults = (rawResults) => {
-    // https://github.com/dequelabs/axe-core/blob/master/doc/API.md#results-object
-    for (const [, result] of rawResults) {
-        // Disabled color-contrast violation, because disabled input fields have a low contrast by design spec
-        result.violations = result.violations.filter((violation) => violation.id !== 'color-contrast');
-    }
-};
-
 const main = async () => {
     process.chdir(PATH_REPO_ROOT);
 
@@ -213,8 +204,6 @@ const main = async () => {
             })
         );
     }
-
-    processResults(results);
 
     console.log('total time:', Date.now() - t, 'ms');
 
