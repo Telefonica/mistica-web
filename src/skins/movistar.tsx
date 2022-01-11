@@ -8,11 +8,11 @@ import type {GetSkin, Skin} from './types';
 
 export const palette = {
     movistarBlue: '#019DF4',
-    movistarBlue55: '#008EDD',
-    movistarBlue40: '#4DBAF7',
-    movistarBlue30: '#80CEF9',
-    movistarBlue20: '#B3E1FB',
     movistarBlue10: '#E6F5FD',
+    movistarBlue20: '#B3E1FB',
+    movistarBlue30: '#80CEF9',
+    movistarBlue40: '#4DBAF7',
+    movistarBlue55: '#008EDD',
 
     movistarGreen: '#5CB615',
     movistarGreen10: '#EFF8E8',
@@ -28,11 +28,6 @@ export const palette = {
     pepper55: '#D73241',
     pepper70: '#B22634',
 
-    purple: '#A13EA1',
-    purple10: '#F6ECF6',
-    purple40: '#BD78BD',
-    purple70: '#712B71',
-
     egg: '#F28D15',
     egg10: '#FEF4E8',
     egg40: '#F6AF5B',
@@ -40,13 +35,18 @@ export const palette = {
 
     pink: '#E63780',
 
-    white: '#FFFFFF',
+    purple: '#A13EA1',
+    purple10: '#F6ECF6',
+    purple40: '#BD78BD',
+    purple70: '#712B71',
+
     grey1: '#F6F6F6',
     grey2: '#EEEEEE',
     grey3: '#DDDDDD',
     grey4: '#999999',
     grey5: '#86888C',
     grey6: '#313235',
+    white: '#FFFFFF',
 
     movistarProminentBlue: '#0B2739',
     movistarProminentBlueDark: '#081F2D',

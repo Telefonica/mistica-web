@@ -34,7 +34,6 @@ export const palette = {
     turquoise40: '#8BD4D9',
     turquoise70: '#3E888D',
 
-    white: '#FFFFFF',
     grey1: '#F2F4FF',
     grey2: '#D1D5E4',
     grey3: '#B0B6CA',
@@ -44,6 +43,7 @@ export const palette = {
     grey7: '#414B61',
     grey8: '#2B3447',
     grey9: '#031A34',
+    white: '#FFFFFF',
 
     // specific for dark mode:
     darkModeBlack: '#191919',

@@ -8,10 +8,10 @@ import type {GetSkin} from './types';
 
 export const palette = {
     o2Blue: '#032B5A',
-    o2Blue55: '#04264E',
-    o2Blue45: '#6C8BAF',
-    o2Blue30: '#8195AC',
     o2Blue10: '#E6EAEE',
+    o2Blue30: '#8195AC',
+    o2Blue45: '#6C8BAF',
+    o2Blue55: '#04264E',
 
     o2SkyBlue: '#0090D0',
     o2SkyBlue55: '#057DB2',
@@ -35,17 +35,16 @@ export const palette = {
     o2Green75: '#4D621D',
 
     pepper: '#FF374A',
-    pepper70: '#B22634',
-    pepper55: '#D73241',
-    pepper40: '#FF7380',
-    pepper20: '#FFC3C8',
     pepper10: '#FFEBED',
+    pepper20: '#FFC3C8',
+    pepper40: '#FF7380',
+    pepper55: '#D73241',
+    pepper70: '#B22634',
 
     orange: '#FF7F41',
     orange10: '#FFF2EC',
     orange40: '#FFA57A',
     orange80: '#73391D',
-
     coral: '#FF706E',
 
     pink: '#EB3C7D',

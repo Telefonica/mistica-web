@@ -14,6 +14,7 @@ export const palette = {
     o2BluePrimary10: '#E5E8F6',
 
     o2BlueMid: '#0090D0',
+
     o2BlueLight: '#41B6E6',
     o2BlueLight30: '#C6E9F7',
 
@@ -38,10 +39,10 @@ export const palette = {
     o2Purple30: '#CA9ACB',
 
     pepper: '#FF374A',
-    pepper60: '#C32B3D',
-    pepper40: '#FF7380',
-    pepper20: '#FCC3C9',
     pepper10: '#FEEBED',
+    pepper20: '#FCC3C9',
+    pepper40: '#FF7380',
+    pepper60: '#C32B3D',
 
     grey1: '#F6F6F6',
     grey2: '#EEEEEE',
