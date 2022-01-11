@@ -12,7 +12,6 @@ declare type LabelProps = {
   inputState: InputState,
   error?: boolean,
   children: string,
-  disabled?: boolean,
   style?: CssStyle,
   optional?: boolean,
 };
