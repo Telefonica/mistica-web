@@ -70,6 +70,7 @@ export {
     NavigationBarLogo,
 } from './navigation-bar';
 export {default as Image} from './image';
+export {default as Video} from './video';
 
 // Forms
 export {default as Form} from './form';
