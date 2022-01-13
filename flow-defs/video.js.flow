@@ -1,0 +1,33 @@
+// @flow
+
+import * as React from "react";
+declare type VideoSource = {
+  src: string,
+  type?: string,
+};
+declare type Props = {
+ width?: number | string,
+ height?: number | string,
+ /**
+  * accepts multiple sources
+  */
+ src: string | Array<string> | VideoSource | Array<VideoSource>,
+ /**
+  * defaults to true
+  */
+ loop?: boolean,
+ /**
+  * defaults to true
+  */
+ muted?: boolean,
+ /**
+  * defaults to true
+  */
+ autoPlay?: boolean,
+ poster?: string,
+};
+declare var Video: React.ComponentType<{
+  ...Props,
+  ref?: React.Ref<HTMLVideoElement>,
+}>;
+declare export default typeof Video;
