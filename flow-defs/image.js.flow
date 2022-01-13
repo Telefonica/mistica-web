@@ -14,6 +14,7 @@ export type ImageProps = {
   * defaults to empty string
   */
  alt?: string,
+ noBorderRadius?: boolean,
 };
 declare var Image: React.ComponentType<ImageProps>;
 declare export default typeof Image;
