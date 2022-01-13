@@ -222,20 +222,20 @@ export const Carousel: StoryComponent = () => {
                             buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
                         />
                         <MediaCard
-                            headline={<Tag color={colors.promo}>headline</Tag>}
-                            pretitle="pretitle"
-                            title="title"
-                            description="description"
+                            headline={<Tag color={colors.promo}>Headline</Tag>}
+                            pretitle="Pretitle"
+                            title="Title"
+                            description="Description"
                             media={{src: IMAGE_SRC}}
                             buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
                         />
                         <MediaCard
-                            title="title"
-                            description="description"
+                            title="Title"
+                            description="Description"
                             media={{src: IMAGE_SRC}}
                             buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
                         />
-                        <MediaCard title="title" description="description" media={{src: IMAGE_SRC}} />
+                        <MediaCard title="Title" description="Description" media={{src: IMAGE_SRC}} />
                     </Inline>
                 </ResponsiveLayout>
             </Stack>
