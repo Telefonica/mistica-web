@@ -23,7 +23,6 @@ export const Default: StoryComponent = () => {
                 <Video
                     poster={POSTER_SRC}
                     width={480}
-                    height={480 / 2.4}
                     ref={videoRef}
                     autoPlay={false}
                     src={{src: VIDEO_SRC, type: 'video/mp4'}}
