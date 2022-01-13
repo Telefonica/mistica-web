@@ -183,12 +183,14 @@ const useCarouselStyles = createUseStyles((theme) => ({
 }));
 
 const VIDEO_SRC = 'https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw';
-const IMAGE_SRC = 'https://i.imgur.com/Fu7RiuY.jpg';
+const POSTER_SRC = 'https://i.imgur.com/Fu7RiuY.jpg';
+const IMAGE_SRC = 'https://i.imgur.com/flZfkiX.png';
 
 export const Carousel: StoryComponent = () => {
     const {isTabletOrSmaller} = useScreenSize();
     const {colors} = useTheme();
     const classes = useCarouselStyles();
+    const videoRef = React.useRef<HTMLVideoElement>(null);
     return (
         <Box paddingY={16}>
             <Stack space={16}>
@@ -200,8 +202,18 @@ export const Carousel: StoryComponent = () => {
                         <MediaCard
                             title="Video"
                             description="Example media card with <Video> element"
-                            media={<Video src={VIDEO_SRC} />}
-                            buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
+                            media={
+                                <Video ref={videoRef} src={VIDEO_SRC} poster={POSTER_SRC} autoPlay={false} />
+                            }
+                            buttonLink={
+                                <ButtonLink
+                                    onPress={() => {
+                                        videoRef.current?.play();
+                                    }}
+                                >
+                                    Play Video
+                                </ButtonLink>
+                            }
                         />
                         <MediaCard
                             title="Image"
@@ -214,15 +226,16 @@ export const Carousel: StoryComponent = () => {
                             pretitle="pretitle"
                             title="title"
                             description="description"
-                            media={{src: 'https://i.imgur.com/flZfkiX.png'}}
+                            media={{src: IMAGE_SRC}}
                             buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
                         />
                         <MediaCard
                             title="title"
                             description="description"
-                            media={{src: 'https://i.imgur.com/flZfkiX.png'}}
+                            media={{src: IMAGE_SRC}}
                             buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
                         />
+                        <MediaCard title="title" description="description" media={{src: IMAGE_SRC}} />
                     </Inline>
                 </ResponsiveLayout>
             </Stack>

@@ -17,13 +17,14 @@ export const Default: StoryComponent = () => {
         <Stack space={64} data-testid="video">
             <Stack space={16}>
                 <SectionTitle>Auto Play</SectionTitle>
-                <Video width={480} src={VIDEO_SRC} />
+                <Video width={480} height={480 / 2.4} src={VIDEO_SRC} />
             </Stack>
 
             <Stack space={16}>
                 <SectionTitle>Manual Play</SectionTitle>
                 <Video
                     width={480}
+                    height={480 / 2.4}
                     ref={videoRef}
                     autoPlay={false}
                     src={{src: VIDEO_SRC, type: 'video/mp4'}}
@@ -53,6 +54,7 @@ export const Default: StoryComponent = () => {
                 <Video
                     poster={POSTER_SRC}
                     width={480}
+                    height={480 / 2.4}
                     ref={videoRefWithPoster}
                     autoPlay={false}
                     src={{src: VIDEO_SRC, type: 'video/mp4'}}

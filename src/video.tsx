@@ -17,6 +17,10 @@ type VideoSource = {
     type?: string; // video/webm, video/mp4...
 };
 
+/** Transparent 1x1px PNG  */
+const TRANSPARENT_PIXEL =
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAAtJREFUGFdjYAACAAAFAAGq1chRAAAAAElFTkSuQmCC';
+
 export type VideoProps = {
     /** defaults to 100% */
     width?: number | string;
@@ -31,17 +35,23 @@ export type VideoProps = {
     autoPlay?: boolean;
     poster?: string;
     children?: void;
+    /** defaults to none */
+    preload?: 'none' | 'metadata' | 'auto';
 };
 
 const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
-    ({width = '100%', height, src, poster, autoPlay = true, muted = true, loop = true}, ref) => {
+    (
+        {width = '100%', height, src, poster, autoPlay = true, muted = true, loop = true, preload = 'none'},
+        ref
+    ) => {
         const noBorderRadius = useDisableBorderRadius();
         const classes = useStyles({noBorderRadius});
         const videoRef = React.useRef<HTMLVideoElement | null>(null);
 
         React.useEffect(() => {
-            if (autoPlay && !videoRef.current?.paused) {
-                videoRef.current?.play();
+            const video = videoRef.current;
+            if (video && autoPlay && video.paused) {
+                video.play();
             }
         }, [autoPlay]);
 
@@ -60,14 +70,15 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 playsInline
                 disablePictureInPicture
                 disableRemotePlayback
-                preload="auto"
                 autoPlay={autoPlay}
                 muted={muted}
                 loop={loop}
                 width={width}
                 height={height}
-                poster={poster}
                 className={classes.video}
+                preload={preload}
+                // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
+                poster={poster || TRANSPARENT_PIXEL}
             >
                 {sources.map(({src, type}, index) => (
                     <source key={index} src={src} type={type} />
