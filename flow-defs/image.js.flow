@@ -1,6 +1,8 @@
 // @flow
 
 import * as React from "react";
+declare export var useDisableBorderRadius: () => boolean;
+declare export var DisableBorderRadiusProvider: React.ComponentType<{}>;
 declare type AspectRatio = "1:1" | "16:9" | "7:10";
 export type ImageProps = {
  url: string,
@@ -14,7 +16,6 @@ export type ImageProps = {
   * defaults to empty string
   */
  alt?: string,
- noBorderRadius?: boolean,
 };
 declare var Image: React.ComponentType<ImageProps>;
 declare export default typeof Image;

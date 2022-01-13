@@ -9,7 +9,7 @@ import {ButtonLink, ButtonPrimary} from './button';
 import {Boxed} from './boxed';
 import ButtonGroup from './button-group';
 import Video from './video';
-import Image from './image';
+import Image, {DisableBorderRadiusProvider} from './image';
 
 import type {ButtonProps, ButtonLinkProps} from './button';
 import type {DataAttributes} from './utils/types';
@@ -177,7 +177,11 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         return (
             <Boxed className={classes.boxed} ref={ref}>
                 <section className={classes.mediaCard} aria-label={ariaLabel}>
-                    {typeof media.src === 'string' ? <div className={classes.media}></div> : media}
+                    {typeof media.src === 'string' ? (
+                        <div className={classes.media}></div>
+                    ) : (
+                        <DisableBorderRadiusProvider>{media}</DisableBorderRadiusProvider>
+                    )}
                     <div className={classes.content}>
                         <CardContent
                             headline={headline}

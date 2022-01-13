@@ -28,7 +28,6 @@ export type VideoProps = {
   */
  autoPlay?: boolean,
  poster?: string,
- noBorderRadius?: boolean,
 };
 declare var Video: React.ComponentType<{
   ...VideoProps,

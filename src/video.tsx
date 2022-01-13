@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useDisableBorderRadius} from './image';
 import {createUseStyles} from './jss';
 import {combineRefs} from './utils/common';
 
@@ -30,14 +31,11 @@ export type VideoProps = {
     autoPlay?: boolean;
     poster?: string;
     children?: void;
-    noBorderRadius?: boolean;
 };
 
 const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
-    (
-        {width = '100%', height, src, poster, autoPlay = true, muted = true, loop = true, noBorderRadius},
-        ref
-    ) => {
+    ({width = '100%', height, src, poster, autoPlay = true, muted = true, loop = true}, ref) => {
+        const noBorderRadius = useDisableBorderRadius();
         const classes = useStyles({noBorderRadius});
         const videoRef = React.useRef<HTMLVideoElement | null>(null);
 

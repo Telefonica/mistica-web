@@ -200,13 +200,13 @@ export const Carousel: StoryComponent = () => {
                         <MediaCard
                             title="Video"
                             description="Example media card with <Video> element"
-                            media={<Video noBorderRadius src={VIDEO_SRC} />}
+                            media={<Video src={VIDEO_SRC} />}
                             buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
                         />
                         <MediaCard
                             title="Image"
                             description="Example media card with <Image> element"
-                            media={<Image noBorderRadius width={300} aspectRatio="16:9" url={IMAGE_SRC} />}
+                            media={<Image width={300} aspectRatio="16:9" url={IMAGE_SRC} />}
                             buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
                         />
                         <MediaCard

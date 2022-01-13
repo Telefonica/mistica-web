@@ -1,6 +1,18 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
 
+/**
+ * This context is used internally to disable the border radius. This is useful for example
+ * when using the Image component inside a Card
+ */
+const DisableBorderRadiusContext = React.createContext(false);
+
+export const useDisableBorderRadius = (): boolean => React.useContext(DisableBorderRadiusContext);
+
+export const DisableBorderRadiusProvider: React.FC = ({children}) => (
+    <DisableBorderRadiusContext.Provider value>{children}</DisableBorderRadiusContext.Provider>
+);
+
 const useStyles = createUseStyles(() => ({
     image: {
         borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
@@ -28,10 +40,10 @@ export type ImageProps = {
     /** defaults to empty string */
     alt?: string;
     children?: void;
-    noBorderRadius?: boolean;
 };
 
-const Image: React.FC<ImageProps> = ({url, aspectRatio = '1:1', alt = '', noBorderRadius, ...props}) => {
+const Image: React.FC<ImageProps> = ({url, aspectRatio = '1:1', alt = '', ...props}) => {
+    const noBorderRadius = useDisableBorderRadius();
     const classes = useStyles({noBorderRadius});
     let width = props.width;
     let height = props.height;
