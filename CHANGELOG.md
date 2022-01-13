@@ -1,3 +1,10 @@
+# [10.15.0](https://github.com/Telefonica/mistica-web/compare/v10.14.2...v10.15.0) (2022-01-12)
+
+
+### Features
+
+* **Form fields:** review disabled state ([#386](https://github.com/Telefonica/mistica-web/issues/386)) ([615f90d](https://github.com/Telefonica/mistica-web/commit/615f90de59ec647121f1c8c2cb6c342ace5df396))
+
 ## [10.14.2](https://github.com/Telefonica/mistica-web/compare/v10.14.1...v10.14.2) (2022-01-03)
 
 
