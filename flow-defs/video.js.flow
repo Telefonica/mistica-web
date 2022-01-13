@@ -5,7 +5,10 @@ declare type VideoSource = {
   src: string,
   type?: string,
 };
-declare type Props = {
+export type VideoProps = {
+ /**
+  * defaults to 100%
+  */
  width?: number | string,
  height?: number | string,
  /**
@@ -27,7 +30,7 @@ declare type Props = {
  poster?: string,
 };
 declare var Video: React.ComponentType<{
-  ...Props,
+  ...VideoProps,
   ref?: React.Ref<HTMLVideoElement>,
 }>;
 declare export default typeof Video;

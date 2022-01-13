@@ -2,7 +2,7 @@
 
 import * as React from "react";
 declare type AspectRatio = "1:1" | "16:9" | "7:10";
-declare type Props = {
+export type ImageProps = {
  url: string,
  width?: number,
  height?: number,
@@ -15,5 +15,5 @@ declare type Props = {
   */
  alt?: string,
 };
-declare var Image: React.ComponentType<Props>;
+declare var Image: React.ComponentType<ImageProps>;
 declare export default typeof Image;

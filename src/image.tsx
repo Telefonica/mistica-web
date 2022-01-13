@@ -3,7 +3,7 @@ import {createUseStyles} from './jss';
 
 const useStyles = createUseStyles(() => ({
     image: {
-        borderRadius: 4,
+        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
         display: 'block',
         objectFit: 'cover',
         maxWidth: '100%',
@@ -19,7 +19,7 @@ const RATIO = {
     '7:10': 7 / 10,
 };
 
-type Props = {
+export type ImageProps = {
     url: string;
     width?: number;
     height?: number;
@@ -28,10 +28,11 @@ type Props = {
     /** defaults to empty string */
     alt?: string;
     children?: void;
+    noBorderRadius?: boolean;
 };
 
-const Image: React.FC<Props> = ({url, aspectRatio = '1:1', alt = '', ...props}) => {
-    const classes = useStyles();
+const Image: React.FC<ImageProps> = ({url, aspectRatio = '1:1', alt = '', noBorderRadius, ...props}) => {
+    const classes = useStyles({noBorderRadius});
     let width = props.width;
     let height = props.height;
 

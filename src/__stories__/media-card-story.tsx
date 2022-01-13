@@ -12,6 +12,8 @@ import {
     createUseStyles,
     Tag,
     useTheme,
+    Video,
+    Image,
 } from '..';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
@@ -180,6 +182,9 @@ const useCarouselStyles = createUseStyles((theme) => ({
     },
 }));
 
+const VIDEO_SRC = 'https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw';
+const IMAGE_SRC = 'https://i.imgur.com/Fu7RiuY.jpg';
+
 export const Carousel: StoryComponent = () => {
     const {isTabletOrSmaller} = useScreenSize();
     const {colors} = useTheme();
@@ -192,28 +197,32 @@ export const Carousel: StoryComponent = () => {
                 </ResponsiveLayout>
                 <ResponsiveLayout fullWidth={isTabletOrSmaller}>
                     <Inline space={16} className={classes.carousel}>
-                        {Array.from({length: 5}).flatMap((_, idx) => [
-                            <MediaCard
-                                key={`${idx}-full`}
-                                headline={<Tag color={colors.promo}>headline</Tag>}
-                                pretitle="pretitle"
-                                title="title"
-                                description="description"
-                                media={{
-                                    src: 'https://i.imgur.com/flZfkiX.png',
-                                }}
-                                buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-                            />,
-                            <MediaCard
-                                key={`${idx}-simple`}
-                                title="title"
-                                description="description"
-                                media={{
-                                    src: 'https://i.imgur.com/flZfkiX.png',
-                                }}
-                                buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-                            />,
-                        ])}
+                        <MediaCard
+                            title="Video"
+                            description="Example media card with <Video> element"
+                            media={<Video noBorderRadius src={VIDEO_SRC} />}
+                            buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
+                        />
+                        <MediaCard
+                            title="Image"
+                            description="Example media card with <Image> element"
+                            media={<Image noBorderRadius width={300} aspectRatio="16:9" url={IMAGE_SRC} />}
+                            buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
+                        />
+                        <MediaCard
+                            headline={<Tag color={colors.promo}>headline</Tag>}
+                            pretitle="pretitle"
+                            title="title"
+                            description="description"
+                            media={{src: 'https://i.imgur.com/flZfkiX.png'}}
+                            buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
+                        />
+                        <MediaCard
+                            title="title"
+                            description="description"
+                            media={{src: 'https://i.imgur.com/flZfkiX.png'}}
+                            buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
+                        />
                     </Inline>
                 </ResponsiveLayout>
             </Stack>

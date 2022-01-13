@@ -4,7 +4,7 @@ import {combineRefs} from './utils/common';
 
 const useStyles = createUseStyles(() => ({
     video: {
-        borderRadius: 4,
+        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
         display: 'block',
         maxWidth: '100%',
         maxHeight: '100%',
@@ -16,7 +16,8 @@ type VideoSource = {
     type?: string; // video/webm, video/mp4...
 };
 
-type Props = {
+export type VideoProps = {
+    /** defaults to 100% */
     width?: number | string;
     height?: number | string;
     /** accepts multiple sources */
@@ -29,11 +30,15 @@ type Props = {
     autoPlay?: boolean;
     poster?: string;
     children?: void;
+    noBorderRadius?: boolean;
 };
 
-const Video = React.forwardRef<HTMLVideoElement, Props>(
-    ({width, height, src, poster, autoPlay = true, muted = true, loop = true}, ref) => {
-        const classes = useStyles();
+const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
+    (
+        {width = '100%', height, src, poster, autoPlay = true, muted = true, loop = true, noBorderRadius},
+        ref
+    ) => {
+        const classes = useStyles({noBorderRadius});
         const videoRef = React.useRef<HTMLVideoElement | null>(null);
 
         React.useEffect(() => {

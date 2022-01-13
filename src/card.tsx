@@ -8,10 +8,14 @@ import {createUseStyles} from './jss';
 import {ButtonLink, ButtonPrimary} from './button';
 import {Boxed} from './boxed';
 import ButtonGroup from './button-group';
+import Video from './video';
+import Image from './image';
 
 import type {ButtonProps, ButtonLinkProps} from './button';
 import type {DataAttributes} from './utils/types';
 import type {TagProps} from './tag';
+import type {VideoProps} from './video';
+import type {ImageProps} from './image';
 
 const useCardContentStyles = createUseStyles(() => ({
     actions: {
@@ -93,6 +97,7 @@ const CardContent: React.FC<CardContentProps> = ({
     );
 };
 
+/** @deprecated */
 type CardMedia =
     | {
           src: string;
@@ -148,7 +153,10 @@ const useMediaCardStyles = createUseStyles(() => ({
 }));
 
 type MediaCardProps = {
-    media: CardMedia;
+    media:
+        | CardMedia
+        | (React.ReactElement<ImageProps, typeof Image> & {src?: undefined})
+        | (React.ReactElement<VideoProps, typeof Video> & {src?: undefined});
     headline?: string | React.ReactElement<TagProps, typeof Tag>;
     pretitle?: string;
     title?: string;
@@ -169,7 +177,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         return (
             <Boxed className={classes.boxed} ref={ref}>
                 <section className={classes.mediaCard} aria-label={ariaLabel}>
-                    <div className={classes.media}></div>
+                    {typeof media.src === 'string' ? <div className={classes.media}></div> : media}
                     <div className={classes.content}>
                         <CardContent
                             headline={headline}

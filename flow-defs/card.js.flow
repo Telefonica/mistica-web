@@ -4,6 +4,12 @@ import * as React from "react";
 import Tag from "./tag";
 import { ButtonLink, ButtonPrimary } from "./button";
 import type { DataAttributes } from "./utils/types";
+import type { VideoProps } from "./video";
+import type { ImageProps } from "./image";
+
+/**
+ * @deprecated
+ */
 declare type CardMedia =
   | {
   src: string,
@@ -15,7 +21,10 @@ declare type CardMedia =
 }
   | { src: string };
 declare type MediaCardProps = {
-  media: CardMedia,
+  /**
+   * @deprecated use mediaElement
+   */
+  media: CardMedia | React.Element<ImageProps> | React.Element<VideoProps>,
   headline?: string | React.Element<typeof Tag>,
   pretitle?: string,
   title?: string,

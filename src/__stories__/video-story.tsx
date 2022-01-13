@@ -11,6 +11,8 @@ const POSTER_SRC = 'https://i.imgur.com/Fu7RiuY.jpg';
 
 export const Default: StoryComponent = () => {
     const videoRef = React.useRef<HTMLVideoElement | null>(null);
+    const videoRefWithPoster = React.useRef<HTMLVideoElement | null>(null);
+
     return (
         <Stack space={64} data-testid="video">
             <Stack space={16}>
@@ -21,7 +23,6 @@ export const Default: StoryComponent = () => {
             <Stack space={16}>
                 <SectionTitle>Manual Play</SectionTitle>
                 <Video
-                    poster={POSTER_SRC}
                     width={480}
                     ref={videoRef}
                     autoPlay={false}
@@ -31,10 +32,7 @@ export const Default: StoryComponent = () => {
                     <ButtonPrimary
                         small
                         onPress={() => {
-                            if (videoRef.current) {
-                                videoRef.current.currentTime = 0; // play from the beginning
-                                videoRef.current.play();
-                            }
+                            videoRef.current?.play();
                         }}
                     >
                         Play
@@ -43,7 +41,39 @@ export const Default: StoryComponent = () => {
                         small
                         onPress={() => {
                             videoRef.current?.pause();
-                            videoRef.current?.load(); // to force showing the poster again
+                        }}
+                    >
+                        Stop
+                    </ButtonPrimary>
+                </Inline>
+            </Stack>
+
+            <Stack space={16}>
+                <SectionTitle>Manual Play with Poster</SectionTitle>
+                <Video
+                    poster={POSTER_SRC}
+                    width={480}
+                    ref={videoRefWithPoster}
+                    autoPlay={false}
+                    src={{src: VIDEO_SRC, type: 'video/mp4'}}
+                />
+                <Inline space={16}>
+                    <ButtonPrimary
+                        small
+                        onPress={() => {
+                            if (videoRefWithPoster.current) {
+                                videoRefWithPoster.current.currentTime = 0; // play from the beginning
+                                videoRefWithPoster.current.play();
+                            }
+                        }}
+                    >
+                        Play
+                    </ButtonPrimary>
+                    <ButtonPrimary
+                        small
+                        onPress={() => {
+                            videoRefWithPoster.current?.pause();
+                            videoRefWithPoster.current?.load(); // to force showing the poster again
                         }}
                     >
                         Stop
