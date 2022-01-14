@@ -4403,14 +4403,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/eslint-config@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@telefonica/eslint-config@npm:1.0.1"
+"@telefonica/eslint-config@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@telefonica/eslint-config@npm:1.0.2"
   dependencies:
     "@babel/core": ^7.16.5
     "@babel/eslint-parser": ^7.16.5
     "@telefonica/eslint-plugin-async-await": ^1.1.0
-    "@telefonica/eslint-plugin-import": 1.0.0
+    "@telefonica/eslint-plugin-import": 1.0.1
     "@typescript-eslint/eslint-plugin": ^5.7.0
     "@typescript-eslint/parser": ^5.7.0
     eslint-plugin-babel: ^5.3.1
@@ -4425,7 +4425,7 @@ __metadata:
     eslint-plugin-testing-library: ^5.0.1
   peerDependencies:
     eslint: ">=7"
-  checksum: 12e2972986bef5b0a5ccb4776f4fa20a6a3efb24aad077c843752f117a4b489f64e47b84e08b440843c721c025e8311f3ccc8cf85e5bfe3b818793fa3e7dc992
+  checksum: ca8c38a57210506e15648795bec6f0e33e83e1047103fde8db59a81f852652acdcf37d955d74396e7cea4e83cb06fad8893011303004297f4e7199c9ed8302d9
   languageName: node
   linkType: hard
 
@@ -4438,12 +4438,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/eslint-plugin-import@npm:1.0.0":
-  version: 1.0.0
-  resolution: "@telefonica/eslint-plugin-import@npm:1.0.0"
+"@telefonica/eslint-plugin-import@npm:1.0.1":
+  version: 1.0.1
+  resolution: "@telefonica/eslint-plugin-import@npm:1.0.1"
   peerDependencies:
     eslint: ">=7"
-  checksum: 4683eca07b66cc989325696b0eabd78609c0a1d87b9f7f12b80875dfc11d4afd37d26ea7d444b399244627b96d25731caaa82a750e6a7ef3e64690e79d537a9b
+  checksum: c9543e2cd8771ad03794c0f034848575ba0ce8ffb5fd2131d598f50e9c73898eabe3d850f0f01e2bd543b1eb381222b377df07c713f257ed41ef65299a9f9968
   languageName: node
   linkType: hard
 
@@ -4480,7 +4480,7 @@ __metadata:
     "@swc/jest": ^0.2.4
     "@tef-novum/webview-bridge": ^3.0.0
     "@telefonica/acceptance-testing": ^2.5.0
-    "@telefonica/eslint-config": ^1.0.1
+    "@telefonica/eslint-config": ^1.0.2
     "@telefonica/libphonenumber": ^2.8.0
     "@telefonica/prettier-config": ^1.1.0
     "@telefonica/ts-to-flow": 1.1.5

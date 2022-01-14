@@ -152,10 +152,6 @@ const commonInputStyles = (theme: Theme) => ({
             opacity: 0.5,
         },
     },
-    '&:disabled': {
-        color: theme.colors.textDisabled,
-        cursor: 'not-allowed',
-    },
     boxShadow: 'none', // reset FF red shadow styles for required inputs
 });
 
@@ -251,7 +247,6 @@ const useStyles = createUseStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         alignSelf: 'center',
-        opacity: ({disabled}) => (disabled ? 0.3 : 1),
     },
     startIcon: {
         pointerEvents: 'none', // passthrough click events to the input
@@ -261,7 +256,6 @@ const useStyles = createUseStyles((theme) => ({
         alignItems: 'center',
         height: '100%',
         position: 'absolute',
-        opacity: ({disabled}) => (disabled ? 0.3 : 1),
     },
     prefix: {
         alignSelf: 'baseline',
@@ -386,8 +380,6 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             paddingRight: endIcon && !isShrinked ? 36 : 0,
         };
 
-        const prefixColor = rest.disabled ? colors.textDisabled : colors.textSecondary;
-
         return (
             <FieldContainer
                 disabled={rest.disabled}
@@ -406,7 +398,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
 
                 {prefix && (
                     <div className={classes.prefix}>
-                        <Text3 color={prefixColor} regular>
+                        <Text3 color={colors.textSecondary} regular>
                             {prefix}
                         </Text3>
                     </div>
@@ -453,7 +445,6 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                         forId={id}
                         inputState={inputState}
                         shrinkLabel={shrinkLabel}
-                        disabled={rest.disabled}
                         optional={!rest.required}
                     >
                         {label}

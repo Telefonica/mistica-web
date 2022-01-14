@@ -46,7 +46,7 @@ type Args = {
     oneLineSubtitle: boolean;
     oneLineDescription: boolean;
     extraContent: boolean;
-    disableRadioGroup: boolean;
+    disabled: boolean;
 };
 
 const Template: StoryComponent<Args & {boxed?: boolean}> = ({
@@ -61,7 +61,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
     oneLineSubtitle,
     oneLineDescription,
     extraContent,
-    disableRadioGroup,
+    disabled,
 }) => {
     const {colors} = useTheme();
     const extra = extraContent ? <Placeholder height={56} /> : undefined;
@@ -139,6 +139,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
+                disabled={disabled}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -152,6 +153,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
+                disabled={disabled}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -169,6 +171,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
+                disabled={disabled}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -182,6 +185,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
+                disabled={disabled}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -195,6 +199,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
+                disabled={disabled}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -208,6 +213,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
+                disabled={disabled}
                 {...getControlProps(row++)}
             />
             <RowComponent
@@ -221,18 +227,14 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 subtitleLinesMax={oneLineSubtitle ? 1 : 2}
                 descriptionLinesMax={oneLineDescription ? 1 : 2}
                 extra={extra}
+                disabled={disabled}
                 {...getControlProps(row++)}
             />
         </ListComponent>
     );
 
     return control === 'radio' ? (
-        <RadioGroup
-            disabled={disableRadioGroup}
-            name="radio-group"
-            defaultValue="apple"
-            data-testid="radio-row-list"
-        >
+        <RadioGroup disabled={disabled} name="radio-group" defaultValue="apple" data-testid="radio-row-list">
             {list}
         </RadioGroup>
     ) : (
@@ -251,7 +253,7 @@ const defaultArgs = {
     oneLineSubtitle: false,
     oneLineDescription: false,
     extraContent: false,
-    disableRadioGroup: false,
+    disabled: false,
 };
 
 export const RowListStory: StoryComponent<Args> = (args) => <Template {...args} />;
