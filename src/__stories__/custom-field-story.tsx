@@ -13,43 +13,53 @@ import {
     createUseStyles,
     Form,
     Stack,
+    useFieldProps,
+    ButtonPrimary,
 } from '..';
 import {DOWN, ENTER, SPACE, UP} from '../utils/key-codes';
 import {cancelEvent} from '../utils/dom';
 import {combineRefs} from '../utils/common';
 
 export default {
-    title: 'Components/Forms/Custom input',
+    title: 'Components/Forms/Custom field',
 };
 
 const OPTIONS = [
     {
-        text: 'Option 1',
-        value: 'option1',
+        text: 'Albania',
+        value: 'albania',
     },
     {
-        text: 'Option 2',
-        value: 'option2',
+        text: 'Alemania',
+        value: 'alemania',
     },
     {
-        text: 'Option 3',
-        value: 'option3',
+        text: 'Andorra',
+        value: 'andorra',
     },
     {
-        text: 'Option 4',
-        value: 'option4',
+        text: 'Belgica',
+        value: 'belgica',
     },
     {
-        text: 'Option 5',
-        value: 'option5',
+        text: 'Brasil',
+        value: 'brasil',
     },
     {
-        text: 'Option 6',
-        value: 'option6',
+        text: 'Canada',
+        value: 'canada',
     },
     {
-        text: 'Option 7',
-        value: 'option7',
+        text: 'España',
+        value: 'españa',
+    },
+    {
+        text: 'Francia',
+        value: 'francia',
+    },
+    {
+        text: 'Grecia',
+        value: 'grecia',
     },
 ];
 
@@ -176,10 +186,10 @@ const Options = ({
                         }}
                     >
                         <Text1 as="p" regular>
-                            {option.value}
+                            {option.text}
                         </Text1>
                         <Text1 regular color={colors.textSecondary}>
-                            {option.text}
+                            {option.value}
                         </Text1>
                     </Touchable>
                 </Box>
@@ -195,11 +205,35 @@ const Options = ({
     );
 };
 
-export const Default: StoryComponent = () => {
+type AutocompleteSelectFieldProps = {
+    name: string;
+    options: ReadonlyArray<{text: string; value: string}>;
+};
+
+const AutocompleteSelectField = ({name, options}: AutocompleteSelectFieldProps) => {
     const inputRef = React.useRef<HTMLInputElement>();
-    const [options, setOptions] = React.useState(OPTIONS);
+    const [filteredOptions, setFilteredOptions] = React.useState(options);
     const [filterValue, setFilterValue] = React.useState('');
     const [selectedValue, setSelectedValue] = React.useState('');
+
+    const fieldProps = useFieldProps({
+        name,
+        defaultValue: undefined,
+        value: filterValue,
+        processValue: (value: string) => value.trim(),
+        helperText: undefined,
+        optional: false,
+        error: false,
+        disabled: false,
+        onBlur: undefined,
+        validate: undefined,
+        onChange: undefined,
+        onChangeValue: undefined,
+    });
+
+    React.useEffect(() => {
+        setFilteredOptions(options.filter(({value}) => value.includes(filterValue)));
+    }, [filterValue, options]);
 
     const filterOptions = (valueInput: string, openMenu: () => void, isMenuOpen: boolean) => {
         if (!isMenuOpen) {
@@ -216,54 +250,65 @@ export const Default: StoryComponent = () => {
             setSelectedValue('');
         }
     };
-
-    React.useEffect(() => {
-        setOptions(OPTIONS.filter(({value}) => value.includes(filterValue)));
-    }, [filterValue]);
-
     return (
-        <StorySection title="Custom input">
+        <Menu
+            renderTarget={({ref, onPress, isMenuOpen}) => (
+                <TextField
+                    {...fieldProps}
+                    fullWidth
+                    label="Autocomplete"
+                    ref={combineRefs(ref, inputRef)}
+                    onFocus={onPress}
+                    onPress={() => {
+                        if (!isMenuOpen) {
+                            onPress();
+                        }
+                    }}
+                    onChangeValue={(value) => filterOptions(value, onPress, isMenuOpen)}
+                    onBlur={checkIfRightOption}
+                    autoComplete="off"
+                />
+            )}
+            renderMenu={({ref, className, close}) => (
+                <Options
+                    elementRef={ref}
+                    options={filteredOptions}
+                    className={className}
+                    selectedValue={selectedValue}
+                    setFilterValue={setFilterValue}
+                    setSelectedValue={setSelectedValue}
+                    closeMenu={close}
+                />
+            )}
+        />
+    );
+};
+
+export const Default: StoryComponent = () => {
+    const [formData, setFormData] = React.useState<any>({});
+    return (
+        <StorySection title="Custom field">
             <Stack space={32}>
                 <Text2 regular>
-                    This is an example of how to create a custom form input based on Mistica's pieces. This
+                    This is an example of how to create a custom form field based on Mistica's pieces. This
                     component is like a select with autocomplete feature.
                 </Text2>
-                <Form onSubmit={() => {}}>
-                    <Menu
-                        renderTarget={({ref, onPress, isMenuOpen}) => (
-                            <TextField
-                                fullWidth
-                                name="autocomplete"
-                                label="Autocomplete"
-                                value={filterValue}
-                                ref={combineRefs(ref, inputRef)}
-                                onFocus={onPress}
-                                onPress={() => {
-                                    if (!isMenuOpen) {
-                                        onPress();
-                                    }
-                                }}
-                                onChangeValue={(value) => filterOptions(value, onPress, isMenuOpen)}
-                                onBlur={checkIfRightOption}
-                                autoComplete="off"
-                            />
-                        )}
-                        renderMenu={({ref, className, close}) => (
-                            <Options
-                                elementRef={ref}
-                                options={options}
-                                className={className}
-                                selectedValue={selectedValue}
-                                setFilterValue={setFilterValue}
-                                setSelectedValue={setSelectedValue}
-                                closeMenu={close}
-                            />
-                        )}
-                    />
+                <Form
+                    onSubmit={(data) => {
+                        setFormData(data);
+                    }}
+                >
+                    <Stack space={24}>
+                        <AutocompleteSelectField name="autocomplete" options={OPTIONS} />
+                        <ButtonPrimary submit>Send</ButtonPrimary>
+                        <Text2 as="pre" regular>
+                            DATA: {JSON.stringify(formData, null, 2)}
+                        </Text2>
+                    </Stack>
                 </Form>
             </Stack>
         </StorySection>
     );
 };
 
-Default.storyName = 'Custom input';
+Default.storyName = 'Custom field';

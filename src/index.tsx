@@ -90,7 +90,7 @@ export {default as DecimalField} from './decimal-field';
 export {default as PasswordField} from './password-field';
 export {default as DoubleField} from './double-field';
 export {default as IbanField} from './iban-field';
-export {useForm} from './form-context';
+export {useForm, useFieldProps} from './form-context';
 
 // Icons
 // @deprecated use IconCloseRegular instead
