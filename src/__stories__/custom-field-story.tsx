@@ -21,7 +21,7 @@ import {cancelEvent} from '../utils/dom';
 import {combineRefs} from '../utils/common';
 
 export default {
-    title: 'Components/Forms/Custom field',
+    title: 'Experiments/Custom field',
 };
 
 const OPTIONS = [
