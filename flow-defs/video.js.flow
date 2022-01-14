@@ -28,6 +28,10 @@ export type VideoProps = {
   */
  autoPlay?: boolean,
  poster?: string,
+ /**
+  * defaults to none
+  */
+ preload?: "none" | "metadata" | "auto",
 };
 declare var Video: React.ComponentType<{
   ...VideoProps,
