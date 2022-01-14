@@ -32,19 +32,35 @@ const RATIO = {
 };
 
 export type ImageProps = {
-    url: string;
+    src: string;
+    url?: undefined;
     width?: number;
     height?: number;
-    /** defaults to 1:1 */
+    /** defaults to 1:1, if both width and height are given, aspectRatio is ignored */
     aspectRatio?: AspectRatio;
     /** defaults to empty string */
     alt?: string;
     children?: void;
 };
 
-const Image: React.FC<ImageProps> = ({url, aspectRatio = '1:1', alt = '', ...props}) => {
+/** @deprecated */
+type DeprecatedImageProps = {
+    url: string;
+    src?: undefined;
+    width?: number;
+    height?: number;
+    /** defaults to 1:1, if both width and height are given, aspectRatio is ignored */
+    aspectRatio?: AspectRatio;
+    /** defaults to empty string */
+    alt?: string;
+    children?: void;
+};
+
+const Image: React.FC<ImageProps | DeprecatedImageProps> = ({aspectRatio = '1:1', alt = '', ...props}) => {
     const noBorderRadius = useDisableBorderRadius();
     const classes = useStyles({noBorderRadius});
+    const url = props.src || props.url;
+
     let width = props.width;
     let height = props.height;
 

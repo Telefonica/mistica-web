@@ -218,7 +218,7 @@ export const Carousel: StoryComponent = () => {
                         <MediaCard
                             title="Image"
                             description="Example media card with <Image> element"
-                            media={<Image width={300} aspectRatio="16:9" url={IMAGE_SRC} />}
+                            media={<Image width={300} aspectRatio="16:9" src={IMAGE_SRC} />}
                             buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
                         />
                         <MediaCard

@@ -200,7 +200,7 @@ const listSnippets: Array<Snippet> = [
                 onPress={() => {}}
             />
             <${rowName}
-                asset={<Image url="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
+                asset={<Image src="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
                 title="Title"
                 description="Description"
                 onPress={() => {}}
@@ -256,7 +256,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         name: `${rowName} (image)`,
         code: `
         <${rowName}
-            asset={<Image url="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
+            asset={<Image src="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
             title="Title"
             description="Description"
             onPress={() => {}}

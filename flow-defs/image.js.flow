@@ -5,11 +5,11 @@ declare export var useDisableBorderRadius: () => boolean;
 declare export var DisableBorderRadiusProvider: React.ComponentType<{}>;
 declare type AspectRatio = "1:1" | "16:9" | "7:10";
 export type ImageProps = {
- url: string,
+ src: string,
  width?: number,
  height?: number,
  /**
-  * defaults to 1:1
+  * defaults to 1:1, if both width and height are given, aspectRatio is ignored
   */
  aspectRatio?: AspectRatio,
  /**
@@ -17,5 +17,21 @@ export type ImageProps = {
   */
  alt?: string,
 };
-declare var Image: React.ComponentType<ImageProps>;
+/**
+ * @deprecated
+ */
+declare type DeprecatedImageProps = {
+ url: string,
+ width?: number,
+ height?: number,
+ /**
+  * defaults to 1:1, if both width and height are given, aspectRatio is ignored
+  */
+ aspectRatio?: AspectRatio,
+ /**
+  * defaults to empty string
+  */
+ alt?: string,
+};
+declare var Image: React.ComponentType<ImageProps | DeprecatedImageProps>;
 declare export default typeof Image;
