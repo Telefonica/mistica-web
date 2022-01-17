@@ -175,7 +175,7 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
                 />
             ) : null}
             {renderTarget({...targetProps, isMenuOpen})}
-            {renderMenu(menuProps)}
+            {isMenuOpen ? renderMenu(menuProps) : null}
         </div>
     );
 };
