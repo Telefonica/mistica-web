@@ -1,3 +1,10 @@
+# [10.16.0](https://github.com/Telefonica/mistica-web/compare/v10.15.0...v10.16.0) (2022-01-17)
+
+
+### Features
+
+* **Form:** improvements to be able to build custom fields ([cf5de03](https://github.com/Telefonica/mistica-web/commit/cf5de0398c441d943ee417123293450595aa95f5))
+
 # [10.15.0](https://github.com/Telefonica/mistica-web/compare/v10.14.2...v10.15.0) (2022-01-12)
 
 
