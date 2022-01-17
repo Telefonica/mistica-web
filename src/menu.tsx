@@ -2,6 +2,7 @@ import * as React from 'react';
 import {ESC, TAB} from './utils/key-codes';
 import {createUseStyles} from './jss';
 import {cancelEvent} from './utils/dom';
+import Overlay from './overlay';
 
 const MAX_HEIGHT_DEFAULT = 416;
 
@@ -164,14 +165,12 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
     return (
         <div style={{position: 'relative'}}>
             {isMenuOpen ? (
-                <div
-                    role="presentation"
-                    tabIndex={-1}
-                    style={{position: 'fixed', top: 0, bottom: 0, left: 0, right: 0}}
-                    onClick={(e) => {
+                <Overlay
+                    onPress={(e) => {
                         cancelEvent(e);
                         setIsMenuOpen(false);
                     }}
+                    disableScroll
                 />
             ) : null}
             {renderTarget({...targetProps, isMenuOpen})}
