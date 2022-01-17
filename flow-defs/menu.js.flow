@@ -8,7 +8,7 @@ declare type MenuRenderProps = {
 };
 declare type TargetRenderProps = {
   ref: (element: HTMLElement | null) => void,
-  onPress: (event: SyntheticMouseEvent<> | SyntheticKeyboardEvent<>) => void,
+  onPress: () => void,
   isMenuOpen: boolean,
 };
 export type MenuProps = {
