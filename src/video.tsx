@@ -1,7 +1,9 @@
 import * as React from 'react';
-import {useDisableBorderRadius} from './image';
+import {useDisableBorderRadius, RATIO} from './image';
 import {createUseStyles} from './jss';
 import {combineRefs} from './utils/common';
+
+import type {AspectRatio} from './image';
 
 const useStyles = createUseStyles(() => ({
     video: {
@@ -9,6 +11,7 @@ const useStyles = createUseStyles(() => ({
         display: 'block',
         maxWidth: '100%',
         maxHeight: '100%',
+        objectFit: 'cover',
     },
 }));
 
@@ -40,10 +43,7 @@ export type VideoProps = {
 };
 
 const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
-    (
-        {width = '100%', height, src, poster, autoPlay = true, muted = true, loop = true, preload = 'none'},
-        ref
-    ) => {
+    ({width, height, src, poster, autoPlay = true, muted = true, loop = true, preload = 'none'}, ref) => {
         const noBorderRadius = useDisableBorderRadius();
         const classes = useStyles({noBorderRadius});
         const videoRef = React.useRef<HTMLVideoElement | null>(null);

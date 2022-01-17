@@ -36,7 +36,7 @@ type MenuRenderProps = {
 
 type TargetRenderProps = {
     ref: (element: HTMLElement | null) => void;
-    onPress: (event: React.MouseEvent | React.KeyboardEvent) => void;
+    onPress: () => void;
     isMenuOpen: boolean;
 };
 

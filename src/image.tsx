@@ -23,9 +23,9 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-type AspectRatio = '1:1' | '16:9' | '7:10';
+export type AspectRatio = '1:1' | '16:9' | '7:10';
 
-const RATIO = {
+export const RATIO = {
     '1:1': 1,
     '16:9': 16 / 9,
     '7:10': 7 / 10,
@@ -61,13 +61,15 @@ const Image: React.FC<ImageProps | DeprecatedImageProps> = ({aspectRatio = '1:1'
     const classes = useStyles({noBorderRadius});
     const url = props.src || props.url;
 
-    let width = props.width;
+    let width: number | string | undefined = props.width;
     let height = props.height;
 
     if (props.width !== undefined) {
         height = props.width / RATIO[aspectRatio];
     } else if (props.height !== undefined) {
         width = props.height * RATIO[aspectRatio];
+    } else {
+        width = '100%';
     }
 
     return <img src={url} className={classes.image} alt={alt} width={width} height={height} />;

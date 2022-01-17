@@ -117,7 +117,7 @@ declare export { default as DecimalField } from "./decimal-field";
 declare export { default as PasswordField } from "./password-field";
 declare export { default as DoubleField } from "./double-field";
 declare export { default as IbanField } from "./iban-field";
-declare export { useForm } from "./form-context";
+declare export { useForm, useFieldProps } from "./form-context";
 declare export { default as IconClose } from "./icons/icon-close";
 declare export { default as IconInfo } from "./icons/icon-info";
 declare export { default as IconArrowDown } from "./icons/icon-arrow-down";
