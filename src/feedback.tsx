@@ -364,13 +364,8 @@ export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
     ...otherProps
 }) => {
     const {colors} = useTheme();
-     return (
-        <FeedbackScreen
-            {...otherProps}
-            hapticFeedback="error"
-            icon={<IcnError />}
-            animateText
-        >
+    return (
+        <FeedbackScreen {...otherProps} hapticFeedback="error" icon={<IcnError />} animateText>
             {children}
             {errorReference && (
                 <Text2 color={colors.textSecondary} regular>
