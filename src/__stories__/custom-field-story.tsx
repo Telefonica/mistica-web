@@ -231,14 +231,11 @@ const AutocompleteSelectField = ({name, options}: AutocompleteSelectFieldProps) 
         onChangeValue: undefined,
     });
 
-    React.useEffect(() => {
-        setFilteredOptions(options.filter(({value}) => value.includes(filterValue)));
-    }, [filterValue, options]);
-
     const filterOptions = (valueInput: string, openMenu: () => void, isMenuOpen: boolean) => {
         if (!isMenuOpen) {
             openMenu();
         }
+        setFilteredOptions(options.filter(({value}) => value.includes(valueInput)));
         setFilterValue(valueInput);
     };
 
