@@ -496,7 +496,7 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
         const {platformOverrides, texts} = useTheme();
         const id = useAriaId(idProp);
         const autoSuggestId = useAriaId();
-
+        console.log('Commit test');
         if (getSuggestions && (props.value === undefined || props.defaultValue !== undefined)) {
             throw Error('Fields with suggestions must be used in controlled mode');
         }
