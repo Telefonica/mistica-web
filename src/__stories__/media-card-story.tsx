@@ -102,9 +102,7 @@ export const WithBody: StoryComponent = () => {
             title="title"
             description="description"
             extra={<Placeholder />}
-            media={{
-                src: 'https://i.imgur.com/flZfkiX.png',
-            }}
+            media={<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />}
             button={
                 <ButtonPrimary small href="https://google.com">
                     Action
@@ -116,6 +114,32 @@ export const WithBody: StoryComponent = () => {
 };
 
 WithBody.storyName = 'MediaCard with body';
+
+export const WithVideo: StoryComponent = () => {
+    const {colors} = useTheme();
+    return (
+        <MediaCard
+            headline={<Tag color={colors.promo}>headline</Tag>}
+            pretitle="pretitle"
+            title="title"
+            description="description"
+            media={
+                <Video
+                    src="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
+                    aspectRatio="12:5"
+                />
+            }
+            button={
+                <ButtonPrimary small href="https://google.com">
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+        />
+    );
+};
+
+WithVideo.storyName = 'MediaCard with video';
 
 const useCardGroupStyles = createUseStyles(() => ({
     group: {
@@ -224,13 +248,7 @@ export const Carousel: StoryComponent = () => {
                         <MediaCard
                             title="Image"
                             description="Example media card with <Image> element"
-                            media={
-                                <Image
-                                    // width={300}
-                                    aspectRatio="16:9"
-                                    src={IMAGE_SRC}
-                                />
-                            }
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                             buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
                         />
                         <MediaCard

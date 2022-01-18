@@ -1,9 +1,15 @@
 import * as React from 'react';
-import {useDisableBorderRadius, RATIO} from './image';
+import {useDisableBorderRadius} from './image';
 import {createUseStyles} from './jss';
 import {combineRefs} from './utils/common';
 
-import type {AspectRatio} from './image';
+export type AspectRatio = '1:1' | '16:9' | '12:5';
+
+export const RATIO = {
+    '1:1': 1,
+    '16:9': 16 / 9,
+    '12:5': 12 / 5,
+};
 
 const useStyles = createUseStyles(() => ({
     video: {
@@ -12,6 +18,7 @@ const useStyles = createUseStyles(() => ({
         maxWidth: '100%',
         maxHeight: '100%',
         objectFit: 'cover',
+        aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
     },
 }));
 
@@ -25,9 +32,11 @@ const TRANSPARENT_PIXEL =
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAAtJREFUGFdjYAACAAAFAAGq1chRAAAAAElFTkSuQmCC';
 
 export type VideoProps = {
-    /** defaults to 100% */
-    width?: number | string;
-    height?: number | string;
+    /** defaults to 100% when no width and no height are given */
+    width?: number;
+    height?: number;
+    /** defaults to 1:1, if both width and height are given, aspectRatio is ignored */
+    aspectRatio?: AspectRatio;
     /** accepts multiple sources */
     src: string | Array<string> | VideoSource | Array<VideoSource>;
     /** defaults to true */
@@ -43,9 +52,24 @@ export type VideoProps = {
 };
 
 const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
-    ({width, height, src, poster, autoPlay = true, muted = true, loop = true, preload = 'none'}, ref) => {
+    (
+        {
+            src,
+            poster,
+            autoPlay = true,
+            muted = true,
+            loop = true,
+            preload = 'none',
+            aspectRatio = '1:1',
+            ...props
+        },
+        ref
+    ) => {
         const noBorderRadius = useDisableBorderRadius();
-        const classes = useStyles({noBorderRadius});
+        const classes = useStyles({
+            noBorderRadius,
+            aspectRatio: !props.width && !props.height ? RATIO[aspectRatio] : undefined,
+        });
         const videoRef = React.useRef<HTMLVideoElement | null>(null);
 
         React.useEffect(() => {
@@ -63,6 +87,17 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 return source;
             }
         });
+
+        let width: number | string | undefined = props.width;
+        let height = props.height;
+
+        if (props.width !== undefined) {
+            height = props.width / RATIO[aspectRatio];
+        } else if (props.height !== undefined) {
+            width = props.height * RATIO[aspectRatio];
+        } else {
+            width = '100%';
+        }
 
         return (
             <video

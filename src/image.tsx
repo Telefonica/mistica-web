@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import * as React from 'react';
 import {createUseStyles} from './jss';
 
@@ -20,6 +21,7 @@ const useStyles = createUseStyles(() => ({
         objectFit: 'cover',
         maxWidth: '100%',
         maxHeight: '100%',
+        aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
     },
 }));
 
@@ -34,6 +36,7 @@ export const RATIO = {
 export type ImageProps = {
     src: string;
     url?: undefined;
+    /** defaults to 100% when no width and no height are given */
     width?: number;
     height?: number;
     /** defaults to 1:1, if both width and height are given, aspectRatio is ignored */
@@ -58,7 +61,10 @@ type DeprecatedImageProps = {
 
 const Image: React.FC<ImageProps | DeprecatedImageProps> = ({aspectRatio = '1:1', alt = '', ...props}) => {
     const noBorderRadius = useDisableBorderRadius();
-    const classes = useStyles({noBorderRadius});
+    const classes = useStyles({
+        noBorderRadius,
+        aspectRatio: !props.width && !props.height ? RATIO[aspectRatio] : undefined,
+    });
     const url = props.src || props.url;
 
     let width: number | string | undefined = props.width;
@@ -72,7 +78,7 @@ const Image: React.FC<ImageProps | DeprecatedImageProps> = ({aspectRatio = '1:1'
         width = '100%';
     }
 
-    return <img src={url} className={classes.image} alt={alt} width={width} height={height} />;
+    return <img src={url} className={classnames(classes.image)} alt={alt} width={width} height={height} />;
 };
 
 export default Image;

@@ -44,7 +44,7 @@ export const Default: StoryComponent = () => {
                             videoRef.current?.pause();
                         }}
                     >
-                        Stop
+                        Pause
                     </ButtonPrimary>
                 </Inline>
             </Stack>
