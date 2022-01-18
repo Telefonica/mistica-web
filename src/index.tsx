@@ -75,6 +75,7 @@ export {default as Image} from './image';
 export {default as Form} from './form';
 export {default as Select} from './select';
 export {default as TextField} from './text-field';
+export {TextFieldBase} from './text-field-base';
 export {default as SearchField} from './search-field';
 export {default as EmailField} from './email-field';
 export {default as PhoneNumberField} from './phone-number-field';
