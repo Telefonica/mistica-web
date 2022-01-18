@@ -1,16 +1,26 @@
 // @flow
 
 import * as React from "react";
+export type AspectRatio = "1:1" | "16:9" | "12:5";
+declare export var RATIO: {
+  "1:1": number,
+  "16:9": number,
+  "12:5": number,
+};
 declare type VideoSource = {
   src: string,
   type?: string,
 };
 export type VideoProps = {
  /**
-  * defaults to 100%
+  * defaults to 100% when no width and no height are given
   */
- width?: number | string,
- height?: number | string,
+ width?: number,
+ height?: number,
+ /**
+  * defaults to 1:1, if both width and height are given, aspectRatio is ignored
+  */
+ aspectRatio?: AspectRatio,
  /**
   * accepts multiple sources
   */
