@@ -19,7 +19,7 @@ const useStyles = createUseStyles(({colors}) => ({
 type ChipProps = {
     children: string;
     icon?: React.ReactNode;
-    onClose?: (value: string) => void;
+    onClose?: () => void;
 };
 
 const Chip: React.FC<ChipProps> = ({children, icon, onClose}) => {
@@ -37,12 +37,8 @@ const Chip: React.FC<ChipProps> = ({children, icon, onClose}) => {
             <Text2 medium>{children}</Text2>
             {onClose ? (
                 <Box paddingLeft={8}>
-                    <IconButton size={16} onPress={() => onClose(children)}>
-                        <IconCloseRegular
-                            size={16}
-                            color={colors.neutralHigh}
-                            aria-label={texts.closeButtonLabel}
-                        />
+                    <IconButton size={16} aria-label={texts.closeButtonLabel} onPress={() => onClose()}>
+                        <IconCloseRegular size={16} color={colors.neutralHigh} />
                     </IconButton>
                 </Box>
             ) : null}
