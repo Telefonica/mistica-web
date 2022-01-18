@@ -488,7 +488,7 @@ const useSuggestionsStyles = createUseStyles(() => ({
 
 const Autosuggest = React.lazy(() => import(/* webpackChunkName: "react-autosuggest" */ 'react-autosuggest'));
 
-const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps>(
+export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps>(
     ({getSuggestions, id: idProp, ...props}, ref) => {
         const [suggestions, setSuggestions] = React.useState<Array<string>>([]);
         const inputRef = React.useRef<HTMLInputElement>(null);
@@ -569,5 +569,3 @@ const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps>(
         );
     }
 );
-
-export default TextFieldBaseAutosuggest;
