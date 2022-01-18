@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useFieldProps} from './form-context';
-import TextFieldBase from './text-field-base';
+import {TextFieldBaseAutosuggest} from './text-field-base';
 import {isInputTypeSupported} from './utils/dom';
 import {isServerSide} from './utils/environment';
 import {getLocalDateTimeString} from './utils/time';
@@ -87,7 +87,7 @@ const FormDateField: React.FC<DateFieldProps> = ({
     });
 
     const nativePicker = (
-        <TextFieldBase
+        <TextFieldBaseAutosuggest
             {...rest}
             {...fieldProps}
             min={min ? getLocalDateTimeString(min) : undefined}

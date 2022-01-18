@@ -7,7 +7,7 @@ import Tooltip from './tooltip';
 import IconButton from './icon-button';
 import IcnInfo from './icons/icon-info-cvv';
 import {useFieldProps, useForm} from './form-context';
-import TextFieldBase from './text-field-base';
+import {TextFieldBaseAutosuggest} from './text-field-base';
 import {IntegerInput} from './integer-field';
 
 import type {CommonFormFieldProps} from './text-field-base';
@@ -100,7 +100,7 @@ const CvvField: React.FC<CvvFieldProps> = ({
     });
 
     return (
-        <TextFieldBase
+        <TextFieldBaseAutosuggest
             {...rest}
             {...fieldProps}
             maxLength={maxLength}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {useTheme} from './hooks';
-import TextFieldBase from './text-field-base';
+import {TextFieldBaseAutosuggest} from './text-field-base';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -58,7 +58,13 @@ const EmailField: React.FC<EmailFieldProps> = ({
     });
 
     return (
-        <TextFieldBase {...rest} {...fieldProps} type="email" inputMode="email" autoComplete={autoComplete} />
+        <TextFieldBaseAutosuggest
+            {...rest}
+            {...fieldProps}
+            type="email"
+            inputMode="email"
+            autoComplete={autoComplete}
+        />
     );
 };
 

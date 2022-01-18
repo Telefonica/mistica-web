@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useFieldProps} from './form-context';
-import TextFieldBase from './text-field-base';
+import {TextFieldBaseAutosuggest} from './text-field-base';
 import IconSearch from './icons/icon-search';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
@@ -70,7 +70,7 @@ const SearchField: React.FC<SearchFieldProps> = ({
     });
 
     return (
-        <TextFieldBase
+        <TextFieldBaseAutosuggest
             ref={inputRef}
             startIcon={<IconSearch />}
             endIcon={
