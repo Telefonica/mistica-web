@@ -24,13 +24,13 @@ export const Default: StoryComponent = () => {
             <StorySection title="With start icon">
                 <Chip
                     value="Chip closeable"
-                    startIcon={<IconLightningFilled size={16} color={colors.neutralMedium} />}
+                    icon={<IconLightningFilled size={16} color={colors.neutralMedium} />}
                 />
             </StorySection>
             <StorySection title="With start icon and closeable">
                 <Chip
                     value="Chip closeable"
-                    startIcon={<IconLightningFilled size={16} color={colors.neutralMedium} />}
+                    icon={<IconLightningFilled size={16} color={colors.neutralMedium} />}
                     onClose={() => {
                         window.alert('closed');
                     }}

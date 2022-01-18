@@ -17,28 +17,32 @@ const useStyles = createUseStyles(({colors}) => ({
 }));
 
 type ChipProps = {
-    value: string;
-    startIcon?: React.ReactNode;
+    children: string;
+    icon?: React.ReactNode;
     onClose?: (value: string) => void;
 };
 
-const Chip: React.FC<ChipProps> = ({value, startIcon, onClose}) => {
+const Chip: React.FC<ChipProps> = ({children, icon, onClose}) => {
     const classes = useStyles();
-    const {colors} = useTheme();
+    const {colors, texts} = useTheme();
 
     return (
         <Box
             className={classes.container}
             paddingY={4}
-            paddingLeft={startIcon ? 8 : 12}
+            paddingLeft={icon ? 8 : 12}
             paddingRight={onClose ? 8 : 12}
         >
-            {startIcon && <Box paddingRight={4}>{startIcon}</Box>}
-            <Text2 medium>{value}</Text2>
+            {icon && <Box paddingRight={4}>{icon}</Box>}
+            <Text2 medium>{children}</Text2>
             {onClose ? (
                 <Box paddingLeft={8}>
-                    <IconButton size={16} onPress={() => onClose(value)}>
-                        <IconCloseRegular size={16} color={colors.neutralHigh} />
+                    <IconButton size={16} onPress={() => onClose(children)}>
+                        <IconCloseRegular
+                            size={16}
+                            color={colors.neutralHigh}
+                            aria-label={texts.closeButtonLabel}
+                        />
                     </IconButton>
                 </Box>
             ) : null}

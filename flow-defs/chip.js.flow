@@ -2,8 +2,8 @@
 
 import * as React from "react";
 declare type ChipProps = {
-  value: string,
-  startIcon?: React.Node,
+  children: string,
+  icon?: React.Node,
   onClose?: (value: string) => void,
 };
 declare var Chip: React.ComponentType<ChipProps>;
