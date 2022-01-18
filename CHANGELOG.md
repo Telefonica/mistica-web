@@ -1,3 +1,16 @@
+# [10.17.0](https://github.com/Telefonica/mistica-web/compare/v10.16.0...v10.17.0) (2022-01-18)
+
+
+### Bug Fixes
+
+* **Menu:** Menu component improvements ([#392](https://github.com/Telefonica/mistica-web/issues/392)) ([d8f1098](https://github.com/Telefonica/mistica-web/commit/d8f10988c7273da71645768c22d3a106dae0f15e))
+
+
+### Features
+
+* **Feedback:** show info/error icons in vivo ([c60e3a3](https://github.com/Telefonica/mistica-web/commit/c60e3a391174f0f6ff6e40c5bd795f2f950b5d69))
+* **TextFieldBase:** expose internal TextFieldBase component for advanced usage ([e917a99](https://github.com/Telefonica/mistica-web/commit/e917a99379d5f7fedddb0d5727cffd88af5a1d0f))
+
 # [10.16.0](https://github.com/Telefonica/mistica-web/compare/v10.15.0...v10.16.0) (2022-01-17)
 
 
