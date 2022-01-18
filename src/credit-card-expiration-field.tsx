@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useForm, useFieldProps} from './form-context';
 import {useTheme} from './hooks';
-import TextFieldBase from './text-field-base';
+import {TextFieldBaseAutosuggest} from './text-field-base';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -137,7 +137,7 @@ const CreditCardExpirationField: React.FC<CreditCardExpirationFieldProps> = ({
     });
 
     return (
-        <TextFieldBase
+        <TextFieldBaseAutosuggest
             {...rest}
             {...fieldProps}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {

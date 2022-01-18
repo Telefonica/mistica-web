@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useFieldProps} from './form-context';
-import TextFieldBase from './text-field-base';
+import {TextFieldBaseAutosuggest} from './text-field-base';
 import {useTheme} from './hooks';
 import IconButton from './icon-button';
 import Visibility from './icons/icon-visibility';
@@ -108,7 +108,7 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
     });
 
     return (
-        <TextFieldBase
+        <TextFieldBaseAutosuggest
             {...rest}
             {...fieldProps}
             type={isVisible ? 'text' : 'password'}

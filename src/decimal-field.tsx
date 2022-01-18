@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {useTheme} from './hooks';
-import TextFieldBase from './text-field-base';
+import {TextFieldBaseAutosuggest} from './text-field-base';
 import {Locale} from './utils/locale';
 import {createChangeEvent} from './utils/dom';
 import {useRifm} from 'rifm';
@@ -150,7 +150,12 @@ const DecimalField: React.FC<DecimalFieldProps> = ({
     });
 
     return (
-        <TextFieldBase {...rest} {...fieldProps} inputComponent={DecimalInput} inputProps={{maxDecimals}} />
+        <TextFieldBaseAutosuggest
+            {...rest}
+            {...fieldProps}
+            inputComponent={DecimalInput}
+            inputProps={{maxDecimals}}
+        />
     );
 };
 
