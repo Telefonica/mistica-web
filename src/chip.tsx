@@ -12,7 +12,8 @@ const useStyles = createUseStyles(({colors}) => ({
         justifyContent: 'center',
         alignItems: 'center',
         border: `1px solid ${colors.border}`,
-        borderRadius: 16,
+        borderRadius: 20,
+        backgroundColor: colors.backgroundContainer,
     },
 }));
 
@@ -37,8 +38,17 @@ const Chip: React.FC<ChipProps> = ({children, icon, onClose}) => {
             <Text2 medium>{children}</Text2>
             {onClose ? (
                 <Box paddingLeft={8}>
-                    <IconButton size={16} aria-label={texts.closeButtonLabel} onPress={() => onClose()}>
-                        <IconCloseRegular size={16} color={colors.neutralHigh} />
+                    <IconButton
+                        size={24}
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                        aria-label={texts.closeButtonLabel}
+                        onPress={() => onClose()}
+                    >
+                        <IconCloseRegular size={16} color={colors.neutralMedium} />
                     </IconButton>
                 </Box>
             ) : null}

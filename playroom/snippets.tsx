@@ -1116,4 +1116,11 @@ export default [
     },
     ...navigationBarSnippets,
     menuSnippet,
+    {group: 'Chip', name: 'Chip', code: '<Chip>Chip</Chip>'},
+    {group: 'Chip', name: 'Chip closeable', code: '<Chip onClose={() => {}}>Chip</Chip>'},
+    {
+        group: 'Chip',
+        name: 'Chip icon',
+        code: '<Chip onClose={() => {}} icon={<IconLightningFilled size={16} />}>Chip</Chip>',
+    },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
