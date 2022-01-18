@@ -101,6 +101,7 @@ declare export { default as Image } from "./image";
 declare export { default as Form } from "./form";
 declare export { default as Select } from "./select";
 declare export { default as TextField } from "./text-field";
+declare export { TextFieldBase } from "./text-field-base";
 declare export { default as SearchField } from "./search-field";
 declare export { default as EmailField } from "./email-field";
 declare export { default as PhoneNumberField } from "./phone-number-field";
