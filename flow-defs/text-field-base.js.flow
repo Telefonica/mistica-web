@@ -101,10 +101,10 @@ declare export var TextFieldBase: React.ComponentType<{
   ...TextFieldBaseProps,
   ...{},
 }>;
-declare var TextFieldBaseAutosuggest: React.ComponentType<{
+declare export var TextFieldBaseAutosuggest: React.ComponentType<{
   ...TextFieldBaseProps,
   ...{},
 }>;
-declare export default typeof TextFieldBaseAutosuggest;
+declare export {};
 
 import { type CssStyle } from "./__types__.js.flow";
