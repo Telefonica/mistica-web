@@ -161,8 +161,12 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     }, [classes.link, isMeasuring]);
 
     const calcLayout = React.useCallback(() => {
-        updateButtonWidth(0);
-        updateIsMeasuring(true);
+        // These updates are executed inside a setTimeout to to avoid an immediate re-render on a visibility change
+        // This issue can be reproduced with Chrome. The button click is missed if pressed having the focus on the devtools
+        setTimeout(() => {
+            updateButtonWidth(0);
+            updateIsMeasuring(true);
+        }, 0);
     }, []);
 
     useOnChildrenChangeEffect(wrapperElRef.current, calcLayout);
