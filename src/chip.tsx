@@ -29,7 +29,7 @@ const Chip: React.FC<ChipProps> = ({children, icon, onClose}) => {
     const {colors, texts} = useTheme();
 
     return (
-        <Box className={classes.container} paddingLeft={icon ? 8 : 12} paddingRight={onClose ? 8 : 12}>
+        <Box className={classes.container} paddingLeft={icon ? 8 : 12} paddingRight={onClose ? 0 : 12}>
             {icon && <Box paddingRight={4}>{icon}</Box>}
             <Text2 medium>{children}</Text2>
             {onClose ? (
