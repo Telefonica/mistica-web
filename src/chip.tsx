@@ -14,6 +14,7 @@ const useStyles = createUseStyles(({colors}) => ({
         border: `1px solid ${colors.border}`,
         borderRadius: 20,
         backgroundColor: colors.backgroundContainer,
+        minHeight: 32,
     },
 }));
 
@@ -28,16 +29,11 @@ const Chip: React.FC<ChipProps> = ({children, icon, onClose}) => {
     const {colors, texts} = useTheme();
 
     return (
-        <Box
-            className={classes.container}
-            paddingY={4}
-            paddingLeft={icon ? 8 : 12}
-            paddingRight={onClose ? 8 : 12}
-        >
+        <Box className={classes.container} paddingLeft={icon ? 8 : 12} paddingRight={onClose ? 8 : 12}>
             {icon && <Box paddingRight={4}>{icon}</Box>}
             <Text2 medium>{children}</Text2>
             {onClose ? (
-                <Box paddingLeft={8}>
+                <Box paddingLeft={4}>
                     <IconButton
                         size={24}
                         style={{
