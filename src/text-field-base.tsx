@@ -271,7 +271,7 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
+export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
     (
         {
             error,
@@ -488,7 +488,7 @@ const useSuggestionsStyles = createUseStyles(() => ({
 
 const Autosuggest = React.lazy(() => import(/* webpackChunkName: "react-autosuggest" */ 'react-autosuggest'));
 
-const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
+export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps>(
     ({getSuggestions, id: idProp, ...props}, ref) => {
         const [suggestions, setSuggestions] = React.useState<Array<string>>([]);
         const inputRef = React.useRef<HTMLInputElement>(null);
@@ -504,7 +504,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         return getSuggestions ? (
             <React.Suspense
                 fallback={
-                    <TextFieldBaseComponent
+                    <TextFieldBase
                         {...props}
                         // This label override while loading is needed in acceptance tests because
                         // while the test is typing, the component could be remounted.
@@ -531,7 +531,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                         },
                     }}
                     renderInputComponent={(inputProps) => (
-                        <TextFieldBaseComponent
+                        <TextFieldBase
                             {...(inputProps as TextFieldBaseProps)}
                             inputRef={combineRefs(inputRef, props.inputRef, ref)}
                         />
@@ -565,9 +565,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                 />
             </React.Suspense>
         ) : (
-            <TextFieldBaseComponent {...props} id={id} ref={ref} />
+            <TextFieldBase {...props} id={id} ref={ref} />
         );
     }
 );
-
-export default TextFieldBase;

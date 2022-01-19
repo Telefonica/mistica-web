@@ -1,5 +1,5 @@
 import * as React from 'react';
-import TextFieldBase from './text-field-base';
+import {TextFieldBaseAutosuggest} from './text-field-base';
 import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
 import Datetime from 'react-datetime';
 import Overlay from './overlay';
@@ -207,7 +207,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidD
 
     return (
         <>
-            <TextFieldBase
+            <TextFieldBaseAutosuggest
                 {...rest}
                 style={{cursor: 'default'}}
                 required={!optional}
