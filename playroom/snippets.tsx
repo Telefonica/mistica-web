@@ -200,7 +200,7 @@ const listSnippets: Array<Snippet> = [
                 onPress={() => {}}
             />
             <${rowName}
-                asset={<Image url="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
+                asset={<Image src="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
                 title="Title"
                 description="Description"
                 onPress={() => {}}
@@ -256,7 +256,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         name: `${rowName} (image)`,
         code: `
         <${rowName}
-            asset={<Image url="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
+            asset={<Image src="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
             title="Title"
             description="Description"
             onPress={() => {}}
@@ -567,7 +567,7 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'MediaCard',
+        name: 'MediaCard with Image',
         code: `
         <MediaCard
             headline={<Tag color={colors.promo}>headline</Tag>}
@@ -575,10 +575,26 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             description="Description"
             extra={<Placeholder />}
-            media={{
-                src:
-                    'https://i.imgur.com/flZfkiX.png',
-            }}
+            media={<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />}
+            button={
+                <ButtonPrimary small onPress={() => {}}>
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'MediaCard with Video',
+        code: `
+        <MediaCard
+            headline={<Tag color={colors.promo}>headline</Tag>}
+            pretitle="Pretitle"
+            title="Title"
+            description="Description"
+            extra={<Placeholder />}
+            media={<Video src="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw" aspectRatio="16:9" />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
@@ -1116,4 +1132,14 @@ export default [
     },
     ...navigationBarSnippets,
     menuSnippet,
+    {
+        group: 'Media',
+        name: 'Video',
+        code: `<Video src="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw" aspectRatio="16:9" />`,
+    },
+    {
+        group: 'Media',
+        name: 'Image',
+        code: `<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />`,
+    },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

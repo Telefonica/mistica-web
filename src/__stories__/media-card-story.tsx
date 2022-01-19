@@ -12,6 +12,8 @@ import {
     createUseStyles,
     Tag,
     useTheme,
+    Video,
+    Image,
 } from '..';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
@@ -100,9 +102,7 @@ export const WithBody: StoryComponent = () => {
             title="title"
             description="description"
             extra={<Placeholder />}
-            media={{
-                src: 'https://i.imgur.com/flZfkiX.png',
-            }}
+            media={<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />}
             button={
                 <ButtonPrimary small href="https://google.com">
                     Action
@@ -114,6 +114,32 @@ export const WithBody: StoryComponent = () => {
 };
 
 WithBody.storyName = 'MediaCard with body';
+
+export const WithVideo: StoryComponent = () => {
+    const {colors} = useTheme();
+    return (
+        <MediaCard
+            headline={<Tag color={colors.promo}>headline</Tag>}
+            pretitle="pretitle"
+            title="title"
+            description="description"
+            media={
+                <Video
+                    src="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
+                    aspectRatio="12:5"
+                />
+            }
+            button={
+                <ButtonPrimary small href="https://google.com">
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+        />
+    );
+};
+
+WithVideo.storyName = 'MediaCard with video';
 
 const useCardGroupStyles = createUseStyles(() => ({
     group: {
@@ -180,10 +206,15 @@ const useCarouselStyles = createUseStyles((theme) => ({
     },
 }));
 
+const VIDEO_SRC = 'https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw';
+const POSTER_SRC = 'https://i.imgur.com/Fu7RiuY.jpg';
+const IMAGE_SRC = 'https://i.imgur.com/flZfkiX.png';
+
 export const Carousel: StoryComponent = () => {
     const {isTabletOrSmaller} = useScreenSize();
     const {colors} = useTheme();
     const classes = useCarouselStyles();
+    const videoRef = React.useRef<HTMLVideoElement>(null);
     return (
         <Box paddingY={16}>
             <Stack space={16}>
@@ -192,28 +223,49 @@ export const Carousel: StoryComponent = () => {
                 </ResponsiveLayout>
                 <ResponsiveLayout fullWidth={isTabletOrSmaller}>
                     <Inline space={16} className={classes.carousel}>
-                        {Array.from({length: 5}).flatMap((_, idx) => [
-                            <MediaCard
-                                key={`${idx}-full`}
-                                headline={<Tag color={colors.promo}>headline</Tag>}
-                                pretitle="pretitle"
-                                title="title"
-                                description="description"
-                                media={{
-                                    src: 'https://i.imgur.com/flZfkiX.png',
-                                }}
-                                buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-                            />,
-                            <MediaCard
-                                key={`${idx}-simple`}
-                                title="title"
-                                description="description"
-                                media={{
-                                    src: 'https://i.imgur.com/flZfkiX.png',
-                                }}
-                                buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-                            />,
-                        ])}
+                        <MediaCard
+                            title="Video"
+                            description="Example media card with <Video> element"
+                            media={
+                                <Video
+                                    ref={videoRef}
+                                    src={VIDEO_SRC}
+                                    poster={POSTER_SRC}
+                                    autoPlay={false}
+                                    aspectRatio="16:9"
+                                />
+                            }
+                            buttonLink={
+                                <ButtonLink
+                                    onPress={() => {
+                                        videoRef.current?.play();
+                                    }}
+                                >
+                                    Play Video
+                                </ButtonLink>
+                            }
+                        />
+                        <MediaCard
+                            title="Image"
+                            description="Example media card with <Image> element"
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                            buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
+                        />
+                        <MediaCard
+                            headline={<Tag color={colors.promo}>Headline</Tag>}
+                            pretitle="Pretitle"
+                            title="Title"
+                            description="Description"
+                            media={{src: IMAGE_SRC}}
+                            buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
+                        />
+                        <MediaCard
+                            title="Title"
+                            description="Description"
+                            media={{src: IMAGE_SRC}}
+                            buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
+                        />
+                        <MediaCard title="Title" description="Description" media={{src: IMAGE_SRC}} />
                     </Inline>
                 </ResponsiveLayout>
             </Stack>
