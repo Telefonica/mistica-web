@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import * as React from 'react';
 import {createUseStyles} from './jss';
 
@@ -78,7 +77,7 @@ const Image: React.FC<ImageProps | DeprecatedImageProps> = ({aspectRatio = '1:1'
         width = '100%';
     }
 
-    return <img src={url} className={classnames(classes.image)} alt={alt} width={width} height={height} />;
+    return <img src={url} className={classes.image} alt={alt} width={width} height={height} />;
 };
 
 export default Image;
