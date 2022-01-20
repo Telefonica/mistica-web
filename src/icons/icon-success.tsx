@@ -36,18 +36,18 @@ const IconSuccessO2: React.FC<Props> = ({size = 64, color, skipAnimation = false
                     strokeWidth="2"
                     stroke={color ? color : undefined}
                     d="M45.64 53.84A25.599 25.599 0 0 1 32 57.75C17.78 57.75 6.25 46.22 6.25 32S17.78 6.25 32 6.25 57.75 17.78 57.75 32c0 5.13-1.5 9.92-4.09 13.93"
-                    {...(!skipAnimation &&
-                        mergeProperties(
-                            getAnimateDrawLineProps('155', '0.9s', platformOverrides),
-                            getAnimateHopInProps('0.9s', platformOverrides)
-                        ))}
+                    {...(!skipAnimation && getAnimateDrawLineProps('180', '0.4s', platformOverrides))}
                 />
                 <path
                     fill="none"
                     strokeWidth="2"
                     stroke={color ? color : undefined}
                     d="m19.33 30.39 9.88 10.95 18.13-19.23"
-                    {...(!skipAnimation && getAnimateDrawLineProps('180', '0.5s', platformOverrides))}
+                    {...(!skipAnimation &&
+                        mergeProperties(
+                            getAnimateDrawLineProps('155', '0.7s', platformOverrides),
+                            getAnimateHopInProps('0.9', platformOverrides)
+                        ))}
                 />
                 <circle
                     fill="none"
@@ -56,7 +56,7 @@ const IconSuccessO2: React.FC<Props> = ({size = 64, color, skipAnimation = false
                     cx="50.18"
                     cy="50.1"
                     r=".89"
-                    {...(!skipAnimation && getAnimateDrawLineProps('180', '0.8s', platformOverrides))}
+                    {...(!skipAnimation && getAnimateDrawLineProps('180', '0.3s', platformOverrides))}
                 />
             </g>
         </svg>
