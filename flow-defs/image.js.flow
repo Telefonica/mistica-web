@@ -41,5 +41,8 @@ declare type DeprecatedImageProps = {
   */
  alt?: string,
 };
-declare var Image: React.ComponentType<ImageProps | DeprecatedImageProps>;
+declare var Image: React.ComponentType<{
+  ...ImageProps | DeprecatedImageProps,
+  ref?: React.Ref<HTMLImageElement>,
+}>;
 declare export default typeof Image;
