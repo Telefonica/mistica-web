@@ -1,3 +1,10 @@
+# [10.18.0](https://github.com/Telefonica/mistica-web/compare/v10.17.0...v10.18.0) (2022-01-21)
+
+
+### Features
+
+* **Video:** Video component and Video support in Media Cards ([#391](https://github.com/Telefonica/mistica-web/issues/391)) ([a830a9b](https://github.com/Telefonica/mistica-web/commit/a830a9b2f364d9f17245aba02cfbbfee678a064b))
+
 # [10.17.0](https://github.com/Telefonica/mistica-web/compare/v10.16.0...v10.17.0) (2022-01-18)
 
 
