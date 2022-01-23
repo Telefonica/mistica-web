@@ -241,6 +241,7 @@ type PreviewToolsProps = {
     showColorSchemeSelector?: boolean;
     forceMobile?: boolean;
     forceDesktop?: boolean;
+    hide?: boolean;
 };
 
 export const PreviewTools: React.FC<PreviewToolsProps> = ({
@@ -250,6 +251,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     showPlatformSelector = false,
     forceMobile = false,
     forceDesktop = false,
+    hide,
 }) => {
     const {
         skinName: initialSkinName,
@@ -336,6 +338,9 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                 )}
             </>
         );
+    }
+    if (hide) {
+        return <div style={{display: 'none'}}>{children}</div>;
     } else {
         return (
             <>
