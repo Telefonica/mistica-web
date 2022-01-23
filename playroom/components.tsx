@@ -340,7 +340,12 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
         );
     }
     if (hide) {
-        return <div style={{display: 'none'}}>{children}</div>;
+        return (
+            <>
+                {children}
+                <div style={{display: 'none'}} />
+            </>
+        );
     } else {
         return (
             <>
