@@ -321,7 +321,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
         </ThemeContextProvider>
     );
 
-    if (floating) {
+    if (floating && !hide) {
         return (
             <>
                 {children}
