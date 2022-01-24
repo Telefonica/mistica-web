@@ -22,7 +22,6 @@ const useCardContentStyles = createUseStyles(() => ({
         flex: 1,
         display: 'flex',
         alignItems: 'flex-end',
-        marginTop: 16,
     },
 }));
 
@@ -54,46 +53,47 @@ const CardContent: React.FC<CardContentProps> = ({
             return null;
         }
         if (typeof headline === 'string') {
-            return <Tag color={theme.colors.promo}>{headline}</Tag>;
+            return <Tag type="promo">{headline}</Tag>;
         }
         return headline;
     };
     return (
-        <>
-            <Stack space={16}>
-                <Stack space={8}>
-                    {(headline || pretitle || title || subtitle) && (
-                        <header>
+        <Stack space={16}>
+            <Stack space={8}>
+                {(headline || pretitle || title || subtitle) && (
+                    <header>
+                        <Stack space={16}>
+                            {renderHeadline()}
                             <Stack space={4}>
-                                {renderHeadline()}
                                 {pretitle && (
-                                    <Box paddingTop={4}>
-                                        <Text1 regular uppercase>
-                                            {pretitle}
-                                        </Text1>
-                                    </Box>
+                                    <Text1 regular uppercase>
+                                        {pretitle}
+                                    </Text1>
                                 )}
                                 <Text4 as="h1" regular>
                                     {title}
                                 </Text4>
                                 <Text2 regular>{subtitle}</Text2>
                             </Stack>
-                        </header>
-                    )}
-                    {description && (
-                        <Text2 as="p" regular color={theme.colors.textSecondary}>
-                            {description}
-                        </Text2>
-                    )}
-                </Stack>
-                {extra && <div>{extra}</div>}
+                        </Stack>
+                    </header>
+                )}
+
+                {description && (
+                    <Text2 as="p" regular color={theme.colors.textSecondary}>
+                        {description}
+                    </Text2>
+                )}
             </Stack>
+
+            {extra && <div>{extra}</div>}
+
             {(button || buttonLink) && (
                 <div className={classes.actions}>
                     <ButtonGroup primaryButton={button} link={buttonLink} />
                 </div>
             )}
-        </>
+        </Stack>
     );
 };
 
