@@ -1,3 +1,12 @@
+# [10.19.0](https://github.com/Telefonica/mistica-web/compare/v10.18.0...v10.19.0) (2022-01-24)
+
+
+### Features
+
+* **Feedback:** Update animated success icon for O2 ([#397](https://github.com/Telefonica/mistica-web/issues/397)) ([c0952cd](https://github.com/Telefonica/mistica-web/commit/c0952cdf10779f097359754b8f8d1addccb05713))
+* **Image:** Added forward ref to Image component. ([#399](https://github.com/Telefonica/mistica-web/issues/399)) ([c78008f](https://github.com/Telefonica/mistica-web/commit/c78008f33d0a7979ead1760b01169a3e5bc65c1e))
+* **SectionTitle:** Changed right prop to React.Node ([#398](https://github.com/Telefonica/mistica-web/issues/398)) ([d94b986](https://github.com/Telefonica/mistica-web/commit/d94b98636a834291af46f3b51223de97aaf79e41))
+
 # [10.18.0](https://github.com/Telefonica/mistica-web/compare/v10.17.0...v10.18.0) (2022-01-21)
 
 
