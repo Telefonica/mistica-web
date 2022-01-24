@@ -58,29 +58,31 @@ type DeprecatedImageProps = {
     children?: void;
 };
 
-const Image: React.FC<ImageProps | DeprecatedImageProps> = ({aspectRatio = '1:1', alt = '', ...props}) => {
-    const noBorderRadius = useDisableBorderRadius();
-    const classes = useStyles({
-        noBorderRadius,
-        aspectRatio: !props.width && !props.height ? RATIO[aspectRatio] : undefined,
-    });
-    const url = props.src || props.url;
+const Image = React.forwardRef<HTMLImageElement, ImageProps | DeprecatedImageProps>(
+    ({aspectRatio = '1:1', alt = '', ...props}, ref) => {
+        const noBorderRadius = useDisableBorderRadius();
+        const classes = useStyles({
+            noBorderRadius,
+            aspectRatio: !props.width && !props.height ? RATIO[aspectRatio] : undefined,
+        });
+        const url = props.src || props.url;
 
-    let width: number | string | undefined = props.width;
-    let height = props.height;
+        let width: number | string | undefined = props.width;
+        let height = props.height;
 
-    if (props.width !== undefined && props.height !== undefined) {
-        width = props.width;
-        height = props.height;
-    } else if (props.width !== undefined) {
-        height = props.width / RATIO[aspectRatio];
-    } else if (props.height !== undefined) {
-        width = props.height * RATIO[aspectRatio];
-    } else {
-        width = '100%';
+        if (props.width !== undefined && props.height !== undefined) {
+            width = props.width;
+            height = props.height;
+        } else if (props.width !== undefined) {
+            height = props.width / RATIO[aspectRatio];
+        } else if (props.height !== undefined) {
+            width = props.height * RATIO[aspectRatio];
+        } else {
+            width = '100%';
+        }
+
+        return <img ref={ref} src={url} className={classes.image} alt={alt} width={width} height={height} />;
     }
-
-    return <img src={url} className={classes.image} alt={alt} width={width} height={height} />;
-};
+);
 
 export default Image;
