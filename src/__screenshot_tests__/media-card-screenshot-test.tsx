@@ -52,3 +52,14 @@ test('MediaCard with body ', async () => {
 
     expect(image).toMatchImageSnapshot();
 });
+
+test('MediaCard carousel ', async () => {
+    const page = await openStoryPage({
+        id: 'components-cards-mediacard--carousel',
+        device: 'DESKTOP',
+    });
+
+    const image = await page.screenshot({fullPage: true});
+
+    expect(image).toMatchImageSnapshot();
+});

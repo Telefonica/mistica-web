@@ -41,8 +41,7 @@ const useStyles = createUseStyles(() => ({
             border: 'none',
         },
         '&[disabled]': {
-            cursor: 'auto',
-            pointerEvents: 'none',
+            cursor: 'default',
         },
         '&:active, &:hover': {
             textDecoration: 'none',
@@ -231,7 +230,7 @@ const Touchable = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLButt
                     aria-labelledby={props['aria-labelledby']}
                     onClick={handleHrefClick}
                     onKeyDown={handleKeyDown}
-                    href={props.disabled ? '' : getHref()}
+                    href={props.disabled ? undefined : getHref()}
                     target={openNewTab ? '_blank' : undefined}
                     rel={openNewTab ? 'noopener noreferrer' : undefined}
                     ref={ref as React.RefObject<HTMLAnchorElement>}

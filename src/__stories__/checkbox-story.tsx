@@ -78,7 +78,7 @@ export const Default: StoryComponent = () => {
             </>
             <>
                 <SectionTitle>Multiline</SectionTitle>
-                <Checkbox name="multiline" checked={checked}>
+                <Checkbox name="multiline" checked={checked} onChange={onChange}>
                     <Text3 regular>
                         Checkbox with a very large very large very large very large very large very large very
                         large very large very large text that falls

@@ -33,7 +33,7 @@ export const Default: StoryComponent<Args> = ({actions, title, description, asse
         };
     } else if (asset === 'icon as Image') {
         assetProps = {
-            icon: <Image url="https://i.imgur.com/o5qympI.png" />,
+            icon: <Image src="https://i.imgur.com/o5qympI.png" />,
         };
     } else if (asset === 'icon as img') {
         assetProps = {

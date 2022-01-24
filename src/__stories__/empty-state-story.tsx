@@ -39,7 +39,7 @@ export const WithIcon: StoryComponent<Args> = ({asset}) => {
         };
     } else if (asset === 'Image') {
         assetProps = {
-            icon: <Image url="https://i.imgur.com/o5qympI.png" />,
+            icon: <Image src="https://i.imgur.com/o5qympI.png" />,
         };
     } else {
         assetProps = {

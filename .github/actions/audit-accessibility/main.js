@@ -80,6 +80,8 @@ const audit = async (browser, url) => {
             'page-has-heading-one',
             // ignored because we use invented autocomplete values to workaround related chrome issues
             'autocomplete-valid',
+            // ignored because disabled input fields have a low contrast by design spec
+            'color-contrast',
         ])
         .analyze();
     page.close();
@@ -174,33 +176,6 @@ const generateReportForGithub = async (results) => {
     require('../utils/github').commentPullRequest(lines.join('\n'));
 };
 
-/**
- * @param {Array<[name: string, results: import('axe-core').AxeResults]>} rawResults
- */
-const processResults = (rawResults) => {
-    // For reference:
-    // ButtonPrimary has a contrast ratio of 2.57
-    // Tag of type "Pending" has a contrast ratio of 2.44 (which is the current lowest)
-    const MINIMUM_CONTRAST_RATIO = 2.44;
-
-    // https://github.com/dequelabs/axe-core/blob/master/doc/API.md#results-object
-    for (const [, result] of rawResults) {
-        result.violations = result.violations.filter((violation) => {
-            if (violation.id === 'color-contrast') {
-                violation.nodes = violation.nodes.filter((node) => {
-                    node.any = node.any.filter(
-                        (anyNode) => anyNode.data.contrastRatio < MINIMUM_CONTRAST_RATIO
-                    );
-                    return node.any.length > 0;
-                });
-                return violation.nodes.length > 0;
-            } else {
-                return true;
-            }
-        });
-    }
-};
-
 const main = async () => {
     process.chdir(PATH_REPO_ROOT);
 
@@ -229,8 +204,6 @@ const main = async () => {
             })
         );
     }
-
-    processResults(results);
 
     console.log('total time:', Date.now() - t, 'ms');
 

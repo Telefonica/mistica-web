@@ -97,10 +97,14 @@ declare type TextFieldBaseProps = {
   min?: string,
   max?: string,
 };
-declare var TextFieldBase: React.ComponentType<{
+declare export var TextFieldBase: React.ComponentType<{
   ...TextFieldBaseProps,
   ...{},
 }>;
-declare export default typeof TextFieldBase;
+declare export var TextFieldBaseAutosuggest: React.ComponentType<{
+  ...TextFieldBaseProps,
+  ...{},
+}>;
+declare export {};
 
 import { type CssStyle } from "./__types__.js.flow";

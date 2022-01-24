@@ -33,22 +33,17 @@ export type Colors = {
 
     // BUTTONS
     buttonDangerBackground: string;
-    buttonDangerBackgroundDisabled: string;
     buttonDangerBackgroundSelected: string;
     buttonDangerBackgroundHover: string;
     buttonLinkBackgroundSelected: string;
     buttonLinkBackgroundSelectedInverse: string;
     buttonPrimaryBackground: string;
-    buttonPrimaryBackgroundDisabled: string;
-    buttonPrimaryBackgroundDisabledInverse: string;
     buttonPrimaryBackgroundInverse: string;
     buttonPrimaryBackgroundSelected: string;
     buttonPrimaryBackgroundSelectedInverse: string;
     buttonPrimaryBackgroundHover: string;
     buttonSecondaryBackground: string;
-    buttonSecondaryBackgroundDisabled: string;
     buttonSecondaryBackgroundSelected: string;
-    buttonSecondaryBorderDisabledInverse: string;
     buttonSecondaryBorderInverse: string;
     buttonSecondaryBorderSelectedInverse: string;
 
@@ -93,28 +88,21 @@ export type Colors = {
     textPrimaryInverse: string;
     textSecondary: string;
     textSecondaryInverse: string;
-    textDisabled: string;
     textAmount: string;
 
     // TEXT BUTTONS
     textButtonPrimary: string;
-    textButtonPrimaryDisabled: string;
     textButtonPrimaryInverse: string;
-    textButtonPrimaryInverseDisabled: string;
     textButtonPrimaryInverseSelected: string;
     textButtonSecondary: string;
-    textButtonSecondaryDisabled: string;
     textButtonSecondarySelected: string;
     textButtonSecondaryInverse: string;
-    textButtonSecondaryInverseDisabled: string;
     textButtonSecondaryInverseSelected: string;
 
     // TEXT LINKS
     textLink: string;
     textLinkInverse: string;
     textLinkDanger: string;
-    textLinkDangerDisabled: string;
-    textLinkDisabled: string;
     textLinkSnackbar: string;
 
     // TEXT NAVIGATION BARS

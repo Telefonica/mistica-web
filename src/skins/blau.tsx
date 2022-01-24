@@ -79,7 +79,6 @@ export const getBlauSkin: GetSkin = () => {
 
             // BUTTONS
             buttonDangerBackground: palette.blauRed,
-            buttonDangerBackgroundDisabled: palette.blauRed20,
             buttonDangerBackgroundSelected: palette.blauRed70,
             buttonDangerBackgroundHover: palette.blauRed70,
 
@@ -87,38 +86,28 @@ export const getBlauSkin: GetSkin = () => {
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.3),
 
             buttonPrimaryBackground: palette.blauBlueSecondary,
-            buttonPrimaryBackgroundDisabled: palette.blauBlueSecondary20,
-            buttonPrimaryBackgroundDisabledInverse: palette.blauBlueSecondary30,
             buttonPrimaryBackgroundInverse: palette.white,
             buttonPrimaryBackgroundSelected: palette.blauBlueSecondary60,
             buttonPrimaryBackgroundHover: palette.blauBlueSecondary60,
             buttonPrimaryBackgroundSelectedInverse: palette.blauBluePrimary30,
 
             buttonSecondaryBackground: palette.blauBlueSecondary,
-            buttonSecondaryBackgroundDisabled: palette.blauBlueSecondary20,
             buttonSecondaryBackgroundSelected: palette.blauBlueSecondary60,
-            buttonSecondaryBorderDisabledInverse: palette.blauBlueSecondary20,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.blauBluePrimary30,
 
             textButtonPrimary: palette.white,
-            textButtonPrimaryDisabled: palette.white,
             textButtonPrimaryInverse: palette.blauBlueSecondary,
-            textButtonPrimaryInverseDisabled: palette.blauBluePrimary10,
             textButtonPrimaryInverseSelected: palette.blauBlueSecondary60,
 
             textButtonSecondary: palette.blauBlueSecondary,
-            textButtonSecondaryDisabled: palette.blauBlueSecondary30,
             textButtonSecondarySelected: palette.blauBlueSecondary60,
             textButtonSecondaryInverse: palette.white,
-            textButtonSecondaryInverseDisabled: palette.blauBlueSecondary20,
             textButtonSecondaryInverseSelected: palette.white,
 
             textLink: palette.blauPurple,
             textLinkInverse: palette.white,
             textLinkDanger: palette.blauRed,
-            textLinkDangerDisabled: palette.blauRed20,
-            textLinkDisabled: palette.blauPurple30,
             textLinkSnackbar: palette.blauPurple30,
 
             // CONTROLS
@@ -156,7 +145,6 @@ export const getBlauSkin: GetSkin = () => {
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
             textSecondaryInverse: palette.white,
-            textDisabled: palette.grey3,
             textAmount: palette.blauBlueSecondary,
 
             // STATES
@@ -209,38 +197,27 @@ export const getBlauSkin: GetSkin = () => {
             border: palette.darkModeGrey,
 
             // BUTTONS
-            buttonDangerBackgroundDisabled: palette.darkModeGrey,
 
             buttonLinkBackgroundSelected: applyAlpha(palette.blauPurple, 0.3),
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.blauPurple, 0.3),
 
-            buttonPrimaryBackgroundDisabled: palette.darkModeGrey,
-            buttonPrimaryBackgroundDisabledInverse: palette.darkModeGrey,
             buttonPrimaryBackgroundInverse: palette.blauBlueSecondary,
             buttonPrimaryBackgroundSelected: palette.blauBlueSecondary60,
 
-            buttonSecondaryBackgroundDisabled: palette.darkModeGrey,
-            buttonSecondaryBorderDisabledInverse: palette.darkModeGrey,
             buttonSecondaryBorderInverse: palette.blauBluePrimary,
             buttonSecondaryBorderSelectedInverse: palette.blauBlueSecondary60,
 
             textButtonPrimary: palette.grey2,
-            textButtonPrimaryDisabled: palette.grey5,
             textButtonPrimaryInverse: palette.grey2,
-            textButtonPrimaryInverseDisabled: palette.grey5,
             textButtonPrimaryInverseSelected: palette.grey2,
 
             textButtonSecondary: palette.grey2,
-            textButtonSecondaryDisabled: palette.grey5,
             textButtonSecondarySelected: palette.blauBlueSecondary60,
             textButtonSecondaryInverse: palette.grey2,
-            textButtonSecondaryInverseDisabled: palette.grey5,
             textButtonSecondaryInverseSelected: palette.blauBlueSecondary60,
 
             textLink: palette.blauPurple30,
             textLinkInverse: palette.blauPurple30,
-            textLinkDisabled: palette.grey5,
-            textLinkDangerDisabled: palette.grey5,
 
             // CONTROLS
             control: palette.darkModeGrey,
@@ -268,7 +245,6 @@ export const getBlauSkin: GetSkin = () => {
             textPrimaryInverse: palette.grey2,
             textSecondary: palette.grey4,
             textSecondaryInverse: palette.grey4,
-            textDisabled: palette.grey5,
             textAmount: palette.blauBlueSecondary,
 
             textNavigationBarPrimary: palette.grey2,

@@ -9,7 +9,7 @@ import {
     LABEL_SCALE_DESKTOP,
 } from './text-field-components';
 import {Text3} from './text';
-import {isIos, isRunningAcceptanceTest, isChrome, isFirefox} from './utils/platform';
+import {isIos, isRunningAcceptanceTest, isFirefox} from './utils/platform';
 import {useAriaId, useTheme, useScreenSize} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
@@ -152,10 +152,6 @@ const commonInputStyles = (theme: Theme) => ({
             opacity: 0.5,
         },
     },
-    '&:disabled': {
-        color: theme.colors.textDisabled,
-        cursor: 'not-allowed',
-    },
     boxShadow: 'none', // reset FF red shadow styles for required inputs
 });
 
@@ -251,7 +247,6 @@ const useStyles = createUseStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         alignSelf: 'center',
-        opacity: ({disabled}) => (disabled ? 0.3 : 1),
     },
     startIcon: {
         pointerEvents: 'none', // passthrough click events to the input
@@ -261,7 +256,6 @@ const useStyles = createUseStyles((theme) => ({
         alignItems: 'center',
         height: '100%',
         position: 'absolute',
-        opacity: ({disabled}) => (disabled ? 0.3 : 1),
     },
     prefix: {
         alignSelf: 'baseline',
@@ -277,11 +271,7 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-// Chrome ignores 'off': https://bugs.chromium.org/p/chromium/issues/detail?id=468153#c164
-const fixAutoComplete = (platformOverrides: Theme['platformOverrides'], autoComplete?: AutoComplete) =>
-    autoComplete === 'off' && isChrome(platformOverrides) ? 'nope' : autoComplete;
-
-const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
+export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
     (
         {
             error,
@@ -314,7 +304,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
         );
-        const {platformOverrides, colors} = useTheme();
+        const {colors} = useTheme();
         const {isTabletOrSmaller} = useScreenSize();
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
         const hasLabel = !!label || !rest.required;
@@ -374,7 +364,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
         const props = {
             ...rest,
             maxLength,
-            autoComplete: fixAutoComplete(platformOverrides, autoCompleteProp),
+            autoComplete: autoCompleteProp,
             ...inputProps,
         };
 
@@ -389,8 +379,6 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
             }px)) / ${scale})`,
             paddingRight: endIcon && !isShrinked ? 36 : 0,
         };
-
-        const prefixColor = rest.disabled ? colors.textDisabled : colors.textSecondary;
 
         return (
             <FieldContainer
@@ -410,7 +398,7 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
 
                 {prefix && (
                     <div className={classes.prefix}>
-                        <Text3 color={prefixColor} regular>
+                        <Text3 color={colors.textSecondary} regular>
                             {prefix}
                         </Text3>
                     </div>
@@ -457,7 +445,6 @@ const TextFieldBaseComponent = React.forwardRef<any, TextFieldBaseProps>(
                         forId={id}
                         inputState={inputState}
                         shrinkLabel={shrinkLabel}
-                        disabled={rest.disabled}
                         optional={!rest.required}
                     >
                         {label}
@@ -501,7 +488,7 @@ const useSuggestionsStyles = createUseStyles(() => ({
 
 const Autosuggest = React.lazy(() => import(/* webpackChunkName: "react-autosuggest" */ 'react-autosuggest'));
 
-const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
+export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps>(
     ({getSuggestions, id: idProp, ...props}, ref) => {
         const [suggestions, setSuggestions] = React.useState<Array<string>>([]);
         const inputRef = React.useRef<HTMLInputElement>(null);
@@ -517,13 +504,13 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         return getSuggestions ? (
             <React.Suspense
                 fallback={
-                    <TextFieldBaseComponent
+                    <TextFieldBase
                         {...props}
                         // This label override while loading is needed in acceptance tests because
                         // while the test is typing, the component could be remounted.
                         // By hiding the label, we ensure that the test selects the loaded component
                         label={isRunningAcceptanceTest(platformOverrides) ? '' : props.label}
-                        autoComplete={fixAutoComplete(platformOverrides, 'off') as AutoComplete}
+                        autoComplete="off"
                         ref={ref}
                         id={id}
                     />
@@ -534,7 +521,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                     inputProps={{
                         ...props,
                         id,
-                        autoComplete: fixAutoComplete(platformOverrides, 'off'),
+                        autoComplete: 'off',
                         // @ts-expect-error Autosuggest expects slightly different types
                         onChange: (e: React.ChangeEvent<HTMLInputElement>, {newValue}) => {
                             // hack to mutate event value
@@ -544,7 +531,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                         },
                     }}
                     renderInputComponent={(inputProps) => (
-                        <TextFieldBaseComponent
+                        <TextFieldBase
                             {...(inputProps as TextFieldBaseProps)}
                             inputRef={combineRefs(inputRef, props.inputRef, ref)}
                         />
@@ -578,9 +565,7 @@ const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                 />
             </React.Suspense>
         ) : (
-            <TextFieldBaseComponent {...props} id={id} ref={ref} />
+            <TextFieldBase {...props} id={id} ref={ref} />
         );
     }
 );
-
-export default TextFieldBase;

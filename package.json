@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "10.14.2",
+    "version": "10.19.0",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -76,7 +76,7 @@
         "@swc/core": "^1.2.93",
         "@swc/jest": "^0.2.4",
         "@telefonica/acceptance-testing": "^2.5.0",
-        "@telefonica/eslint-config": "^1.0.1",
+        "@telefonica/eslint-config": "^1.0.2",
         "@telefonica/prettier-config": "^1.1.0",
         "@telefonica/ts-to-flow": "1.1.5",
         "@testing-library/jest-dom": "^5.12.0",

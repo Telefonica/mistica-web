@@ -99,9 +99,11 @@ declare export {
   NavigationBarLogo,
 } from "./navigation-bar";
 declare export { default as Image } from "./image";
+declare export { default as Video } from "./video";
 declare export { default as Form } from "./form";
 declare export { default as Select } from "./select";
 declare export { default as TextField } from "./text-field";
+declare export { TextFieldBase } from "./text-field-base";
 declare export { default as SearchField } from "./search-field";
 declare export { default as EmailField } from "./email-field";
 declare export { default as PhoneNumberField } from "./phone-number-field";
@@ -117,7 +119,7 @@ declare export { default as DecimalField } from "./decimal-field";
 declare export { default as PasswordField } from "./password-field";
 declare export { default as DoubleField } from "./double-field";
 declare export { default as IbanField } from "./iban-field";
-declare export { useForm } from "./form-context";
+declare export { useForm, useFieldProps } from "./form-context";
 declare export { default as IconClose } from "./icons/icon-close";
 declare export { default as IconInfo } from "./icons/icon-info";
 declare export { default as IconArrowDown } from "./icons/icon-arrow-down";

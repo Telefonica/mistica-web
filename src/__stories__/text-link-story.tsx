@@ -14,6 +14,7 @@ export const Default: StoryComponent = () => {
             <StorySection title="TextLink">
                 <TextLink href="https://web.tuenti.com/">Text</TextLink>
             </StorySection>
+
             <StorySection title="TextLink small">
                 <TextLink small href="https://web.tuenti.com/">
                     Text
@@ -32,13 +33,18 @@ export const Default: StoryComponent = () => {
                     </TextLink>
                 </Stack>
             </StorySection>
+
             <StorySection title="TextLink with onPress">
                 <Stack space={16}>
-                    <TextLink style={{fontSize: '16px'}} onPress={() => setCount(count + 1)}>
-                        Text
-                    </TextLink>
+                    <TextLink onPress={() => setCount(count + 1)}>Text</TextLink>
                     <Text2 regular>Clicked {count} times</Text2>
                 </Stack>
+            </StorySection>
+
+            <StorySection title="TextLink disabled">
+                <TextLink disabled onPress={() => {}}>
+                    Text
+                </TextLink>
             </StorySection>
         </div>
     );
