@@ -320,8 +320,10 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
             />
         </ThemeContextProvider>
     );
-
-    if (floating && !hide) {
+    if (hide) {
+        return <>{children}</>;
+    }
+    if (floating) {
         return (
             <>
                 {children}
@@ -338,9 +340,6 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                 )}
             </>
         );
-    }
-    if (hide) {
-        return <>{children}</>;
     } else {
         return (
             <>
