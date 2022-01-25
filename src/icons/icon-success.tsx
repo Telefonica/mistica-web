@@ -55,7 +55,6 @@ const IconSuccessO2: React.FC<Props> = ({size = 64, color, skipAnimation = false
                         ))}
                 />
                 <circle
-                    fill="none"
                     strokeWidth="2"
                     stroke={color ? color : undefined}
                     cx="53.64"
