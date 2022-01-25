@@ -25,7 +25,7 @@ const FieldWithCheckbox: React.FC = ({children}) => (
 export const Default: StoryComponent = () => {
     const [pretitle, pretitleTextField] = useTextField('Pretitle', 'Your last bill');
     const [title, titleTextField] = useTextField('Title', 'December bill is now available');
-    const [preamount, preamountTextField] = useTextField('Pretitle', 'Monthly fee (IVA included)');
+    const [preamount, preamountTextField] = useTextField('Preamount', 'Monthly fee (IVA included)');
     const [amount, amountTextField] = useTextField('Amount', '60,44 €');
     const [buttonLabel, buttonLabelTextField] = useTextField('Button', 'Download bill');
     const [secondaryButtonLabel, secondaryButtonLabelTextField] = useTextField('SecondaryButton', 'Pay bill');

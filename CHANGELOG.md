@@ -1,3 +1,10 @@
+# [10.20.0](https://github.com/Telefonica/mistica-web/compare/v10.19.0...v10.20.0) (2022-01-24)
+
+
+### Features
+
+* **Tags:** Tag component evolution ([#372](https://github.com/Telefonica/mistica-web/issues/372)) ([0db48b1](https://github.com/Telefonica/mistica-web/commit/0db48b15525b67c574b90c8c450b35ef155ca199))
+
 # [10.19.0](https://github.com/Telefonica/mistica-web/compare/v10.18.0...v10.19.0) (2022-01-24)
 
 

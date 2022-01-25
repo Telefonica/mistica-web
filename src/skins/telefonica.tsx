@@ -3,27 +3,37 @@ import {TELEFONICA_SKIN} from './constants';
 
 import type {GetSkin} from './types';
 
+// https://github.com/Telefonica/mistica-design/blob/production/tokens/telefonica-skin-schema.json
+// https://github.com/Telefonica/mistica-design/blob/production/tokens/telefonica-constants.json
+
 export const palette = {
     telefonicaBlue: '#0066FF',
-    telefonicaBlueDark: '#0356C9',
-    telefonicaBlueLight50: '#80B2FF',
-    telefonicaBlueLight30: '#B3D1FF',
-    telefonicaBlueLight20: '#EBF3FF',
+    telefonicaBlue10: '#E5F0FF',
+    telefonicaBlue20: '#B2D1FF',
+    telefonicaBlue30: '#80B3FF',
+    telefonicaBlue70: '#0356C9',
 
     ambar: '#EAC344',
-    ambarLight: '#F5E98A',
-    ambarDark: '#AD842D',
-    coral: '#E66C64',
-    coralLight: '#E3A19A',
-    coralDark: '#912C31',
-    orchid: '#C466EF',
-    orchidDark: '#8A1A93',
-    orchidLight: '#E7C2F8',
-    turquoise: '#59C2C9',
-    turquoiseLight: '#67E0E5',
-    turquoiseDark: '#3E8A8A',
+    ambar10: '#FDF9EC',
+    ambar40: '#F0D57C',
+    ambar70: '#69581F',
 
-    white: '#FFFFFF',
+    coral: '#E66C64',
+    coral10: '#FDF0EF',
+    coral40: '#E3A19A',
+    coral70: '#D50000',
+    coral80: '#912C31',
+
+    orchid: '#C466EF',
+    orchid10: '#F9F0FD',
+    orchid40: '#D694F4',
+    orchid70: '#8947A7',
+
+    turquoise: '#59C2C9',
+    turquoise10: '#EEF9FA',
+    turquoise40: '#8BD4D9',
+    turquoise70: '#3E888D',
+
     grey1: '#F2F4FF',
     grey2: '#D1D5E4',
     grey3: '#B0B6CA',
@@ -33,6 +43,7 @@ export const palette = {
     grey7: '#414B61',
     grey8: '#2B3447',
     grey9: '#031A34',
+    white: '#FFFFFF',
 
     // specific for dark mode:
     darkModeBlack: '#191919',
@@ -50,7 +61,7 @@ export const getTelefonicaSkin: GetSkin = () => {
             backgroundBrand: palette.telefonicaBlue,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
             backgroundSkeleton: palette.grey1,
-            backgroundSkeletonInverse: palette.telefonicaBlueDark,
+            backgroundSkeletonInverse: palette.telefonicaBlue70,
             navigationBarBackground: palette.telefonicaBlue,
             backgroundAlternative: palette.grey1,
             backgroundFeedbackBottom: palette.telefonicaBlue,
@@ -66,55 +77,55 @@ export const getTelefonicaSkin: GetSkin = () => {
             // BUTTONS
             buttonDangerBackground: palette.coral,
             buttonDangerBackgroundDisabled: palette.grey2,
-            buttonDangerBackgroundSelected: palette.coralDark,
-            buttonDangerBackgroundHover: palette.coralDark, // web only
+            buttonDangerBackgroundSelected: palette.coral80,
+            buttonDangerBackgroundHover: palette.coral80, // web only
 
             buttonLinkBackgroundSelected: palette.grey1,
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
 
             buttonPrimaryBackground: palette.telefonicaBlue,
             buttonPrimaryBackgroundDisabled: palette.grey2,
-            buttonPrimaryBackgroundDisabledInverse: palette.telefonicaBlueLight50,
+            buttonPrimaryBackgroundDisabledInverse: palette.telefonicaBlue30,
             buttonPrimaryBackgroundInverse: palette.white,
-            buttonPrimaryBackgroundSelected: palette.telefonicaBlueDark,
-            buttonPrimaryBackgroundHover: palette.telefonicaBlueDark, // web only
-            buttonPrimaryBackgroundSelectedInverse: palette.telefonicaBlueLight50,
+            buttonPrimaryBackgroundSelected: palette.telefonicaBlue70,
+            buttonPrimaryBackgroundHover: palette.telefonicaBlue70, // web only
+            buttonPrimaryBackgroundSelectedInverse: palette.telefonicaBlue30,
 
             buttonSecondaryBackground: palette.telefonicaBlue,
             buttonSecondaryBackgroundDisabled: palette.grey2,
-            buttonSecondaryBackgroundSelected: palette.telefonicaBlueDark,
-            buttonSecondaryBorderDisabledInverse: palette.telefonicaBlueLight50,
+            buttonSecondaryBackgroundSelected: palette.telefonicaBlue70,
+            buttonSecondaryBorderDisabledInverse: palette.telefonicaBlue30,
             buttonSecondaryBorderInverse: palette.white,
-            buttonSecondaryBorderSelectedInverse: palette.telefonicaBlueLight50,
+            buttonSecondaryBorderSelectedInverse: palette.telefonicaBlue30,
 
             textButtonPrimary: palette.white,
             textButtonPrimaryDisabled: palette.white,
             textButtonPrimaryInverse: palette.telefonicaBlue,
-            textButtonPrimaryInverseDisabled: palette.telefonicaBlueLight30,
+            textButtonPrimaryInverseDisabled: palette.telefonicaBlue20,
             textButtonPrimaryInverseSelected: palette.telefonicaBlue,
 
             textButtonSecondary: palette.telefonicaBlue,
             textButtonSecondaryDisabled: palette.grey2,
-            textButtonSecondarySelected: palette.telefonicaBlueDark,
+            textButtonSecondarySelected: palette.telefonicaBlue70,
             textButtonSecondaryInverse: palette.white,
-            textButtonSecondaryInverseDisabled: palette.telefonicaBlueLight50,
-            textButtonSecondaryInverseSelected: palette.telefonicaBlueLight50,
+            textButtonSecondaryInverseDisabled: palette.telefonicaBlue30,
+            textButtonSecondaryInverseSelected: palette.telefonicaBlue30,
 
             textLink: palette.telefonicaBlue,
             textLinkInverse: palette.white,
             textLinkDanger: palette.coral,
             textLinkDangerDisabled: palette.grey2,
             textLinkDisabled: palette.grey2,
-            textLinkSnackbar: palette.telefonicaBlueLight50,
+            textLinkSnackbar: palette.telefonicaBlue30,
 
             // CONTROLS
             control: palette.grey3,
             controlActivated: palette.telefonicaBlue,
             controlError: palette.coral,
-            loadingBar: palette.telefonicaBlueLight50,
-            loadingBarBackground: palette.telefonicaBlueDark,
-            loadingBarBackgroundInverse: palette.telefonicaBlueDark,
-            loadingBarInverse: palette.telefonicaBlueLight50,
+            loadingBar: palette.telefonicaBlue30,
+            loadingBarBackground: palette.telefonicaBlue70,
+            loadingBarBackgroundInverse: palette.telefonicaBlue70,
+            loadingBarInverse: palette.telefonicaBlue30,
 
             toggleAndroidInactive: palette.grey2, // web only
             toggleAndroidBackgroundActive: palette.grey2, // web only
@@ -126,19 +137,19 @@ export const getTelefonicaSkin: GetSkin = () => {
             navigationBarDivider: palette.telefonicaBlue,
 
             // FEEDBACKS
-            badge: palette.coralDark,
+            badge: palette.coral80,
             feedbackErrorBackground: palette.coral,
             feedbackInfoBackground: palette.grey9,
 
             // GLOBAL
             brand: palette.telefonicaBlue,
-            brandDark: palette.telefonicaBlueDark,
+            brandDark: palette.telefonicaBlue70,
             inverse: palette.white,
             neutralHigh: palette.grey9,
             neutralMedium: palette.grey5,
             neutralLow: palette.grey1,
             promo: palette.orchid,
-            highlight: palette.coralLight,
+            highlight: palette.coral40,
 
             textPrimary: palette.grey9,
             textPrimaryInverse: palette.white,
@@ -159,6 +170,21 @@ export const getTelefonicaSkin: GetSkin = () => {
             textNavigationSearchBarText: palette.white, // iOS
             textAppBar: palette.grey4,
             textAppBarSelected: palette.telefonicaBlue,
+
+            // TAGS
+            tagBackgroundSuccess: palette.turquoise10,
+            tagBackgroundWarning: palette.ambar10,
+            tagBackgroundError: palette.coral10,
+            tagBackgroundPromo: palette.orchid10,
+            tagBackgroundActive: palette.grey1,
+            tagBackgroundInactive: palette.grey1,
+
+            textTagSuccess: palette.turquoise70,
+            textTagWarning: palette.ambar70,
+            textTagError: palette.coral70,
+            textTagPromo: palette.orchid70,
+            textTagActive: palette.telefonicaBlue,
+            textTagInactive: palette.grey6,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
@@ -181,15 +207,15 @@ export const getTelefonicaSkin: GetSkin = () => {
             buttonPrimaryBackgroundDisabled: applyAlpha(palette.white, 0.05),
             buttonPrimaryBackgroundDisabledInverse: applyAlpha(palette.white, 0.05),
             buttonPrimaryBackgroundInverse: palette.telefonicaBlue,
-            buttonPrimaryBackgroundSelected: palette.telefonicaBlueDark,
-            buttonPrimaryBackgroundHover: palette.telefonicaBlueDark, // web only
-            buttonPrimaryBackgroundSelectedInverse: palette.telefonicaBlueDark,
+            buttonPrimaryBackgroundSelected: palette.telefonicaBlue70,
+            buttonPrimaryBackgroundHover: palette.telefonicaBlue70, // web only
+            buttonPrimaryBackgroundSelectedInverse: palette.telefonicaBlue70,
             buttonSecondaryBackground: palette.telefonicaBlue,
             buttonSecondaryBackgroundDisabled: applyAlpha(palette.white, 0.05),
-            buttonSecondaryBackgroundSelected: palette.telefonicaBlueDark,
+            buttonSecondaryBackgroundSelected: palette.telefonicaBlue70,
             buttonSecondaryBorderDisabledInverse: applyAlpha(palette.white, 0.05),
             buttonSecondaryBorderInverse: palette.telefonicaBlue,
-            buttonSecondaryBorderSelectedInverse: palette.telefonicaBlueDark,
+            buttonSecondaryBorderSelectedInverse: palette.telefonicaBlue70,
             textButtonPrimary: palette.grey2,
             textButtonPrimaryDisabled: palette.grey7,
             textButtonPrimaryInverse: palette.grey2,
@@ -208,8 +234,8 @@ export const getTelefonicaSkin: GetSkin = () => {
             controlActivated: palette.telefonicaBlue,
             loadingBar: palette.telefonicaBlue,
             loadingBarBackground: applyAlpha(palette.white, 0.05),
-            loadingBarBackgroundInverse: palette.telefonicaBlueDark,
-            loadingBarInverse: palette.telefonicaBlueLight50,
+            loadingBarBackgroundInverse: palette.telefonicaBlue70,
+            loadingBarInverse: palette.telefonicaBlue30,
             toggleAndroidInactive: palette.grey4, // web only
             toggleAndroidBackgroundActive: palette.grey1, // web only
             iosControlKnob: palette.grey2, // web only
@@ -227,13 +253,28 @@ export const getTelefonicaSkin: GetSkin = () => {
             textSecondary: palette.grey4,
             textSecondaryInverse: palette.grey4,
             textDisabled: palette.grey5,
-            textAmount: palette.telefonicaBlueLight50,
+            textAmount: palette.telefonicaBlue30,
             textNavigationBarPrimary: palette.grey2,
             textNavigationBarSecondary: palette.grey4,
             textNavigationSearchBarHint: palette.grey4, // iOS
             textNavigationSearchBarText: palette.grey2, // iOS
             textAppBar: palette.grey5,
             textAppBarSelected: palette.grey2,
+
+            // TAGS
+            tagBackgroundSuccess: applyAlpha(palette.white, 0.05),
+            tagBackgroundWarning: applyAlpha(palette.white, 0.05),
+            tagBackgroundError: applyAlpha(palette.white, 0.05),
+            tagBackgroundPromo: applyAlpha(palette.white, 0.05),
+            tagBackgroundActive: applyAlpha(palette.white, 0.05),
+            tagBackgroundInactive: applyAlpha(palette.white, 0.05),
+
+            textTagSuccess: palette.turquoise40,
+            textTagWarning: palette.ambar40,
+            textTagError: palette.coral40,
+            textTagPromo: palette.orchid40,
+            textTagActive: palette.telefonicaBlue30,
+            textTagInactive: palette.grey4,
         },
     };
 };

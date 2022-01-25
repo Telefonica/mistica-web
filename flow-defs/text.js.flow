@@ -4,9 +4,19 @@ import * as React from "react";
 declare type FontWeight = "light" | "regular" | "medium";
 export type TextPresetProps = {
   color?: string,
+
+  /**
+   * @deprecated use decoration prop
+   */
   textDecoration?: "underline" | "line-through" | "none",
+  decoration?: "underline" | "line-through" | "inherit" | "none",
+  transform?: "uppercase" | "capitalize" | "lowercase" | "inherit" | "none",
   children?: React.Node,
   truncate?: boolean | number,
+
+  /**
+   * @deprecated use transform
+   */
   uppercase?: boolean,
   wordBreak?: boolean,
   id?: string,
