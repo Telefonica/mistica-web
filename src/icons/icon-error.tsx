@@ -31,23 +31,30 @@ const IconErrorO2: React.FC = () => {
                 <g className={classes.outerAnimation}>
                     <path
                         fill="none"
-                        d="M49.1,57.9C44.2,61.1,38.3,63,32,63C14.9,63,1,49.1,1,32C1,14.9,14.9,1,32,1c17.1,0,31,13.9,31,31c0,7.5-2.6,14.3-7.1,19.7"
-                        {...getAnimateDrawLineProps('186', '0.3s', platformOverrides)}
+                        d="M48.24,57.99c-4.71,2.95-10.27,4.65-16.24,4.65C15.08,62.64,1.36,48.92,1.36,32S15.08,1.36,32,1.36 S62.64,15.08,62.64,32c0,6.11-1.79,11.8-4.87,16.58"
+                        {...getAnimateDrawLineProps('202', '0.3s', platformOverrides)}
+                    />
+                    <circle
+                        cx="53.64"
+                        cy="53.54"
+                        r="1.06"
+                        {...getAnimateFadeInProps('0.2s', platformOverrides)}
                     />
                 </g>
                 <g className={classes.innerAnimation}>
                     <line
                         fill="none"
                         x1="32"
-                        y1="13.5"
+                        y1="14.86"
                         x2="32"
-                        y2="36.5"
-                        {...getAnimateDrawLineProps('23', '0.7s', platformOverrides)}
+                        y2="39.08"
+                        {...getAnimateDrawLineProps('110', '0.6s', platformOverrides)}
                     />
-                    <path
-                        strokeWidth="1"
-                        d="M32.1,50.1c1.4,0,2.5-1.1,2.5-2.5S33.5,45,32.1,45s-2.5,1.1-2.5,2.5S30.7,50.1,32.1,50.1z"
-                        {...getAnimateFadeInProps('1', platformOverrides)}
+                    <circle
+                        cx="32"
+                        cy="46.25"
+                        r="1.72"
+                        {...getAnimateFadeInProps('0.8', platformOverrides)}
                     />
                 </g>
             </g>

@@ -1,7 +1,12 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {O2_SKIN, O2_CLASSIC_SKIN} from '../skins/constants';
-import {getAnimateDrawLineProps, getAnimateHopInProps, mergeProperties} from '../utils/animation';
+import {
+    getAnimateDrawLineProps,
+    getAnimateFadeInProps,
+    getAnimateHopInProps,
+    mergeProperties,
+} from '../utils/animation';
 import {createUseStyles} from '../jss';
 import {useTheme} from '../hooks';
 import {useIsInverseVariant} from '../theme-variant-context';
@@ -56,7 +61,7 @@ const IconSuccessO2: React.FC<Props> = ({size = 64, color, skipAnimation = false
                     cx="53.64"
                     cy="53.54"
                     r="1.06"
-                    {...(!skipAnimation && getAnimateDrawLineProps('180', '0.2s', platformOverrides))}
+                    {...(!skipAnimation && getAnimateFadeInProps('0.2s', platformOverrides))}
                 />
             </g>
         </svg>
