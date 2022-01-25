@@ -330,3 +330,48 @@ test('<Link> component has click-like behaviour on "space" key press', async () 
         expect(screen.getByText('test click')).toBeInTheDocument();
     });
 });
+
+const hrefDecorator = (href: string) => {
+    const url = new URL(href, 'https://x');
+    const search = new URLSearchParams(url.search);
+    search.set('utm_source', 'test');
+    return `${url.pathname}?${search.toString()}${url.hash}`;
+};
+
+test('"href" gets decorated', () => {
+    const href = '/foo/bar/?param=123#hash';
+    render(
+        <ThemeContextProvider theme={makeTheme({hrefDecorator})}>
+            <Touchable href={href}>Test</Touchable>
+        </ThemeContextProvider>
+    );
+    const anchor = screen.getByRole('link', {name: 'Test'});
+
+    expect(anchor).toHaveAttribute('href', '/foo/bar/?param=123&utm_source=test#hash');
+});
+
+test('"to" paths are not decorated', () => {
+    const to = '/foo/bar/?param=123#hash';
+    render(
+        <ThemeContextProvider theme={makeTheme({hrefDecorator})}>
+            <Touchable to={to}>Test</Touchable>
+        </ThemeContextProvider>
+    );
+    const anchor = screen.getByRole('link', {name: 'Test'});
+
+    expect(anchor).toHaveAttribute('href', '/foo/bar/?param=123#hash');
+});
+
+test('"to" paths with "fullPageOnWebView" are not decorated', () => {
+    const to = '/foo/bar/?param=123#hash';
+    render(
+        <ThemeContextProvider theme={makeTheme({hrefDecorator})}>
+            <Touchable to={to} fullPageOnWebView>
+                Test
+            </Touchable>
+        </ThemeContextProvider>
+    );
+    const anchor = screen.getByRole('link', {name: 'Test'});
+
+    expect(anchor).toHaveAttribute('href', '/foo/bar/?param=123#hash');
+});

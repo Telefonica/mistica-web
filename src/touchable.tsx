@@ -129,7 +129,7 @@ export type Props = PropsHref | PropsTo | PropsOnPress | PropsMaybeHref | PropsM
 
 const Touchable = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLButtonElement, Props>(
     (props, ref) => {
-        const {texts, analytics, platformOverrides, Link} = useTheme();
+        const {texts, analytics, platformOverrides, Link, hrefDecorator} = useTheme();
         const classes = useStyles();
         const isClicked = React.useRef(false);
         let trackingEvents: ReadonlyArray<TrackingEvent> = [];
@@ -170,7 +170,7 @@ const Touchable = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLButt
 
         const getHref = (): string => {
             if (props.href) {
-                return props.href;
+                return hrefDecorator(props.href);
             }
             if (props.to && props.fullPageOnWebView) {
                 if (typeof props.to === 'string') {

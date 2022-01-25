@@ -83,7 +83,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
 
     const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
-    const contextTheme: Theme = React.useMemo(() => {
+    const contextTheme = React.useMemo<Theme>(() => {
         // TODO: In next major version we could change this to "auto" by default
         const colorScheme = theme.colorScheme ?? 'light';
         const lightColors: Colors = theme.skin.colors;
@@ -118,6 +118,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
             Link: theme.Link ?? AnchorLink,
             isDarkMode: isDarkModeEnabled,
             isIos: getPlatform(platformOverrides) === 'ios',
+            hrefDecorator: theme.hrefDecorator ?? ((href) => href),
         };
     }, [theme, isOsDarkModeEnabled]);
 

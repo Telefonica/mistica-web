@@ -223,6 +223,7 @@ export type ThemeConfig = {
         desktopOrTabletMinHeight: number;
     };
     Link?: LinkComponent;
+    hrefDecorator?: (href: string) => string;
     enableTabFocus?: boolean;
 };
 
@@ -255,4 +256,5 @@ export type Theme = {
     Link: LinkComponent;
     isDarkMode: boolean;
     isIos: boolean;
+    hrefDecorator: (href: string) => string;
 };
