@@ -35,17 +35,17 @@ const IconSuccessO2: React.FC<Props> = ({size = 64, color, skipAnimation = false
                     fill="none"
                     strokeWidth="2"
                     stroke={color ? color : undefined}
-                    d="M45.64 53.84A25.599 25.599 0 0 1 32 57.75C17.78 57.75 6.25 46.22 6.25 32S17.78 6.25 32 6.25 57.75 17.78 57.75 32c0 5.13-1.5 9.92-4.09 13.93"
+                    d="M48.24,57.99c-4.71,2.95-10.27,4.65-16.24,4.65C15.08,62.64,1.36,48.92,1.36,32S15.08,1.36,32,1.36 S62.64,15.08,62.64,32c0,6.11-1.79,11.8-4.87,16.58"
                     {...(!skipAnimation && getAnimateDrawLineProps('202', '0.3s', platformOverrides))}
                 />
-                <path
+                <polyline
                     fill="none"
                     strokeWidth="2"
                     stroke={color ? color : undefined}
-                    d="m19.33 30.39 9.88 10.95 18.13-19.23"
+                    points="16.92,30.08 28.68,43.12 50.26,20.22"
                     {...(!skipAnimation &&
                         mergeProperties(
-                            getAnimateDrawLineProps('44', '0.6s', platformOverrides),
+                            getAnimateDrawLineProps('50', '0.6s', platformOverrides),
                             getAnimateHopInProps('0.6', platformOverrides)
                         ))}
                 />
@@ -53,9 +53,9 @@ const IconSuccessO2: React.FC<Props> = ({size = 64, color, skipAnimation = false
                     fill="none"
                     strokeWidth="2"
                     stroke={color ? color : undefined}
-                    cx="50.18"
-                    cy="50.1"
-                    r=".89"
+                    cx="53.64"
+                    cy="53.54"
+                    r="1.06"
                     {...(!skipAnimation && getAnimateDrawLineProps('180', '0.2s', platformOverrides))}
                 />
             </g>
