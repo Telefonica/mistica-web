@@ -37,7 +37,7 @@ const IconInfoO2: React.FC<Props> = ({size = 64, color}) => {
                     y2="23.74"
                 />
                 <circle strokeWidth="2" stroke={color ? color : undefined} cx="53.64" cy="53.54" r="1.06" />
-                <circle strokeWidth="2" stroke={color ? color : undefined} cx="32" cy="16.58" r="1.72" />
+                <circle stroke={color ? color : undefined} cx="32" cy="16.58" r="1.72" />
             </g>
         </svg>
     );
