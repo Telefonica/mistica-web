@@ -1,14 +1,17 @@
 import * as React from 'react';
-import {Carousel, Box, ResponsiveLayout, MediaCard, ButtonLink} from '..';
+import {
+    Carousel,
+    Box,
+    ResponsiveLayout,
+    MediaCard,
+    ButtonLink,
+    Callout,
+    Stack,
+    IconInformationRegular,
+} from '..';
 
 export default {
-    title: 'Components/Layouts/Carousel',
-    // argTypes: {
-    //     numItems: {
-    //         type: {name: 'number', required: true},
-    //         defaultValue: 6,
-    //     },
-    // },
+    title: 'Components/Carousel/Carousel',
 };
 
 type Args = {
@@ -16,6 +19,10 @@ type Args = {
     itemsPerPageMobile: number;
     itemsPerPageDesktop: number;
     withBullets: boolean;
+    nextPageOffset: number;
+    prevPageOffset: number;
+    free: boolean;
+    itemsToScroll: number;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -23,27 +30,40 @@ export const Default: StoryComponent<Args> = ({
     withBullets,
     itemsPerPageMobile,
     itemsPerPageDesktop,
+    nextPageOffset,
+    prevPageOffset,
+    free,
+    itemsToScroll,
 }) => {
     return (
-        <ResponsiveLayout>
-            <Box paddingY={24}>
-                <Carousel
-                    withBullets={withBullets}
-                    itemsPerPage={{mobile: itemsPerPageMobile, desktop: itemsPerPageDesktop}}
-                    items={Array.from({length: numItems}, (_, idx) => (
-                        <MediaCard
-                            key={idx}
-                            title={`Title ${idx}`}
-                            description="Some description"
-                            media={{
-                                src: 'https://i.imgur.com/flZfkiX.png',
-                            }}
-                            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-                        />
-                    ))}
-                />
-            </Box>
-        </ResponsiveLayout>
+        <Box paddingY={24}>
+            <ResponsiveLayout>
+                <Stack space={16}>
+                    <Callout
+                        description="Arrow controls disappear in touch devices"
+                        icon={<IconInformationRegular />}
+                    />
+                    <Carousel
+                        withBullets={withBullets}
+                        free={free}
+                        itemsPerPage={{mobile: itemsPerPageMobile, desktop: itemsPerPageDesktop}}
+                        itemsToScroll={itemsToScroll}
+                        mobilePageOffset={{next: nextPageOffset, prev: prevPageOffset}}
+                        items={Array.from({length: numItems}, (_, idx) => (
+                            <MediaCard
+                                key={idx}
+                                title={`Title ${idx}`}
+                                description="Some description"
+                                media={{
+                                    src: 'https://i.imgur.com/flZfkiX.png',
+                                }}
+                                buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                            />
+                        ))}
+                    />
+                </Stack>
+            </ResponsiveLayout>
+        </Box>
     );
 };
 
@@ -54,4 +74,8 @@ Default.args = {
     numItems: 6,
     itemsPerPageDesktop: 3,
     itemsPerPageMobile: 1,
+    nextPageOffset: 16,
+    prevPageOffset: 16,
+    free: false,
+    itemsToScroll: 0,
 };

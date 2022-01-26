@@ -70,7 +70,7 @@ export {
     NavigationBarLogo,
 } from './navigation-bar';
 export {default as Image} from './image';
-export {default as Carousel} from './carousel';
+export {Carousel, CenteredCarousel, PageBullets} from './carousel';
 
 // Forms
 export {default as Form} from './form';
