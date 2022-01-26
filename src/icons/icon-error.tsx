@@ -31,7 +31,6 @@ const IconErrorO2: React.FC = () => {
                         {...getAnimateDrawLineProps('202', '0.3s', platformOverrides)}
                     />
                     <circle
-                        strokeWidth="2"
                         cx="53.64"
                         cy="53.54"
                         r="1.06"
@@ -49,6 +48,7 @@ const IconErrorO2: React.FC = () => {
                         {...getAnimateDrawLineProps('110', '0.6s', platformOverrides)}
                     />
                     <circle
+                        strokeWidth="0"
                         cx="32"
                         cy="46.25"
                         r="1.72"
