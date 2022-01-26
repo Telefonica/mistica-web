@@ -22,19 +22,16 @@ const IconErrorO2: React.FC = () => {
 
     return (
         <svg width="72" height="64" viewBox="0 0 72 64">
-            <g
-                className={classes.iconContainerFill}
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            >
+            <g className={classes.iconContainerFill} strokeLinecap="round" strokeLinejoin="round">
                 <g className={classes.outerAnimation}>
                     <path
+                        strokeWidth="2"
                         fill="none"
                         d="M48.24,57.99c-4.71,2.95-10.27,4.65-16.24,4.65C15.08,62.64,1.36,48.92,1.36,32S15.08,1.36,32,1.36 S62.64,15.08,62.64,32c0,6.11-1.79,11.8-4.87,16.58"
                         {...getAnimateDrawLineProps('202', '0.3s', platformOverrides)}
                     />
                     <circle
+                        strokeWidth="2"
                         cx="53.64"
                         cy="53.54"
                         r="1.06"
@@ -43,6 +40,7 @@ const IconErrorO2: React.FC = () => {
                 </g>
                 <g className={classes.innerAnimation}>
                     <line
+                        strokeWidth="2"
                         fill="none"
                         x1="32"
                         y1="14.86"
