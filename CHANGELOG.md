@@ -1,3 +1,46 @@
+# [10.20.0](https://github.com/Telefonica/mistica-web/compare/v10.19.0...v10.20.0) (2022-01-24)
+
+
+### Features
+
+* **Tags:** Tag component evolution ([#372](https://github.com/Telefonica/mistica-web/issues/372)) ([0db48b1](https://github.com/Telefonica/mistica-web/commit/0db48b15525b67c574b90c8c450b35ef155ca199))
+
+# [10.19.0](https://github.com/Telefonica/mistica-web/compare/v10.18.0...v10.19.0) (2022-01-24)
+
+
+### Features
+
+* **Feedback:** Update animated success icon for O2 ([#397](https://github.com/Telefonica/mistica-web/issues/397)) ([c0952cd](https://github.com/Telefonica/mistica-web/commit/c0952cdf10779f097359754b8f8d1addccb05713))
+* **Image:** Added forward ref to Image component. ([#399](https://github.com/Telefonica/mistica-web/issues/399)) ([c78008f](https://github.com/Telefonica/mistica-web/commit/c78008f33d0a7979ead1760b01169a3e5bc65c1e))
+* **SectionTitle:** Changed right prop to React.Node ([#398](https://github.com/Telefonica/mistica-web/issues/398)) ([d94b986](https://github.com/Telefonica/mistica-web/commit/d94b98636a834291af46f3b51223de97aaf79e41))
+
+# [10.18.0](https://github.com/Telefonica/mistica-web/compare/v10.17.0...v10.18.0) (2022-01-21)
+
+
+### Features
+
+* **Video:** Video component and Video support in Media Cards ([#391](https://github.com/Telefonica/mistica-web/issues/391)) ([a830a9b](https://github.com/Telefonica/mistica-web/commit/a830a9b2f364d9f17245aba02cfbbfee678a064b))
+
+# [10.17.0](https://github.com/Telefonica/mistica-web/compare/v10.16.0...v10.17.0) (2022-01-18)
+
+
+### Bug Fixes
+
+* **Menu:** Menu component improvements ([#392](https://github.com/Telefonica/mistica-web/issues/392)) ([d8f1098](https://github.com/Telefonica/mistica-web/commit/d8f10988c7273da71645768c22d3a106dae0f15e))
+
+
+### Features
+
+* **Feedback:** show info/error icons in vivo ([c60e3a3](https://github.com/Telefonica/mistica-web/commit/c60e3a391174f0f6ff6e40c5bd795f2f950b5d69))
+* **TextFieldBase:** expose internal TextFieldBase component for advanced usage ([e917a99](https://github.com/Telefonica/mistica-web/commit/e917a99379d5f7fedddb0d5727cffd88af5a1d0f))
+
+# [10.16.0](https://github.com/Telefonica/mistica-web/compare/v10.15.0...v10.16.0) (2022-01-17)
+
+
+### Features
+
+* **Form:** improvements to be able to build custom fields ([cf5de03](https://github.com/Telefonica/mistica-web/commit/cf5de0398c441d943ee417123293450595aa95f5))
+
 # [10.15.0](https://github.com/Telefonica/mistica-web/compare/v10.14.2...v10.15.0) (2022-01-12)
 
 

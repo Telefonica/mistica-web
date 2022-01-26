@@ -363,15 +363,9 @@ export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
     errorReference,
     ...otherProps
 }) => {
-    const {skinName, colors} = useTheme();
-    const hasIcon = skinName !== VIVO_SKIN;
+    const {colors} = useTheme();
     return (
-        <FeedbackScreen
-            {...otherProps}
-            hapticFeedback="error"
-            icon={hasIcon ? <IcnError /> : undefined}
-            animateText
-        >
+        <FeedbackScreen {...otherProps} hapticFeedback="error" icon={<IcnError />} animateText>
             {children}
             {errorReference && (
                 <Text2 color={colors.textSecondary} regular>
@@ -383,9 +377,7 @@ export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
 };
 
 export const InfoFeedbackScreen: React.FC<FeedbackProps> = (props) => {
-    const {skinName} = useTheme();
-    const hasIcon = skinName !== VIVO_SKIN;
-    return <FeedbackScreen {...props} icon={hasIcon ? <IcnInfo /> : undefined} />;
+    return <FeedbackScreen {...props} icon={<IcnInfo />} />;
 };
 
 export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({

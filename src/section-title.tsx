@@ -1,12 +1,9 @@
 import * as React from 'react';
 import {Text1, Text2} from './text';
 import {useTheme} from './hooks';
-import TextLink from './text-link';
 import Inline from './inline';
 import {createUseStyles} from './jss';
 import {pxToRem} from './utils/css';
-
-import type {TextLinkProps} from './text-link';
 
 const useStyles = createUseStyles((theme) => ({
     right: {
@@ -23,7 +20,7 @@ const useStyles = createUseStyles((theme) => ({
 type Props = {
     children: React.ReactNode;
     id?: string;
-    right?: React.ReactElement<TextLinkProps, typeof TextLink>;
+    right?: React.ReactNode;
     as?: 'h1' | 'h2' | 'h3' | 'h4';
 };
 

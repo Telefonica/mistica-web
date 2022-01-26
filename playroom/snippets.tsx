@@ -1,3 +1,5 @@
+import {capitalize} from 'lodash';
+
 const imagePlaceholder = 'https://i.imgur.com/jeDSXBU.jpg';
 
 type Snippet = {group: string; name: string; code: string};
@@ -200,7 +202,7 @@ const listSnippets: Array<Snippet> = [
                 onPress={() => {}}
             />
             <${rowName}
-                asset={<Image url="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
+                asset={<Image src="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
                 title="Title"
                 description="Description"
                 onPress={() => {}}
@@ -256,7 +258,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         name: `${rowName} (image)`,
         code: `
         <${rowName}
-            asset={<Image url="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
+            asset={<Image src="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
             title="Title"
             description="Description"
             onPress={() => {}}
@@ -450,7 +452,7 @@ const headerSnippets: Array<Snippet> = [
                     title="The last invoice is available"
                     preamount={{
                         text: "Example of line-through text",
-                        textDecoration: "line-through"
+                        decoration: "line-through"
                     }}
                     amount="60,44 €"
                     button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
@@ -474,7 +476,7 @@ const headerSnippets: Array<Snippet> = [
                     title="The last invoice is available"
                     preamount={{
                         text: "Example of line-through text",
-                        textDecoration: "line-through"
+                        decoration: "line-through"
                     }}
                     amount="60,44 €"
                     button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
@@ -567,7 +569,26 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'MediaCard',
+        name: 'MediaCard with Image',
+        code: `
+        <MediaCard
+            headline={<Tag type="promo">Headline</Tag>}
+            pretitle="Pretitle"
+            title="Title"
+            description="Description"
+            extra={<Placeholder />}
+            media={<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />}
+            button={
+                <ButtonPrimary small onPress={() => {}}>
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'MediaCard with Video',
         code: `
         <MediaCard
             headline={<Tag color={colors.promo}>headline</Tag>}
@@ -575,10 +596,7 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             description="Description"
             extra={<Placeholder />}
-            media={{
-                src:
-                    'https://i.imgur.com/flZfkiX.png',
-            }}
+            media={<Video src="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw" aspectRatio="16:9" />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
@@ -592,7 +610,7 @@ const cardSnippets: Array<Snippet> = [
         name: 'DataCard',
         code: `
         <DataCard
-            headline={<Tag color={colors.promo}>headline</Tag>}
+            headline={<Tag type="promo">Headline</Tag>}
             title="Title"
             subtitle="Subtitle"
             description="Description"
@@ -622,6 +640,14 @@ const titlesSnippets: Array<Snippet> = [
         code: '<SectionTitle right={<TextLink onPress={() => {}}>Link</TextLink>}>Some title</SectionTitle>',
     },
 ].map((snippet) => ({...snippet, group: 'Titles'}));
+
+const tagSnippets: Array<Snippet> = ['promo', 'active', 'inactive', 'success', 'warning', 'error'].map(
+    (type) => ({
+        name: `Tag (${type})`,
+        group: 'Tags',
+        code: `<Tag type="${type}" Icon={IconStarFilled}>${capitalize(type)}</Tag>`,
+    })
+);
 
 const layoutSnippets: Array<Snippet> = [
     {
@@ -1075,11 +1101,6 @@ export default [
     ...tabsSnippets,
     ...cardSnippets,
     ...exampleScreens,
-    ...['promo', 'brand', 'success', 'warning', 'error', 'inverse'].map((colorName) => ({
-        group: 'Tag',
-        name: `Tag (${colorName})`,
-        code: `<Tag color={colors.${colorName}}>${colorName}</Tag>`,
-    })),
     {
         group: 'Progress',
         name: 'Stepper',
@@ -1116,4 +1137,15 @@ export default [
     },
     ...navigationBarSnippets,
     menuSnippet,
+    ...tagSnippets,
+    {
+        group: 'Media',
+        name: 'Video',
+        code: `<Video src="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw" aspectRatio="16:9" />`,
+    },
+    {
+        group: 'Media',
+        name: 'Image',
+        code: `<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />`,
+    },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

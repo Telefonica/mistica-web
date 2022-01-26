@@ -1,30 +1,65 @@
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
-import type {Device} from '../test-utils';
-
-const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
-
-test.each(TESTABLE_DEVICES)('Tag in %s', async (device) => {
+test('Tags', async () => {
     await openStoryPage({
         id: 'components-others-tag--default',
-        device,
+        device: 'DESKTOP',
     });
 
-    const tag = await screen.findByTestId('tag');
+    const tag = await screen.findByTestId('tags');
 
     const image = await tag.screenshot();
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(TESTABLE_DEVICES)('Tag with large fontSize in %s', async (device) => {
+test('Tags dark mode', async () => {
     await openStoryPage({
         id: 'components-others-tag--default',
-        device,
+        device: 'DESKTOP',
+        isDarkMode: true,
+    });
+
+    const tag = await screen.findByTestId('tags');
+
+    const image = await tag.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Tags short label', async () => {
+    await openStoryPage({
+        id: 'components-others-tag--default',
+        device: 'DESKTOP',
+        args: {label: '1'},
+    });
+
+    const tag = await screen.findByTestId('tags');
+
+    const image = await tag.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Tags long label', async () => {
+    await openStoryPage({
+        id: 'components-others-tag--default',
+        device: 'DESKTOP',
+        args: {label: 'Super long label is long'},
+    });
+
+    const tag = await screen.findByTestId('tags');
+
+    const image = await tag.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test('Tags with large fontSize', async () => {
+    await openStoryPage({
+        id: 'components-others-tag--default',
+        device: 'DESKTOP',
     });
 
     await setRootFontSize(32);
 
-    const tag = await screen.findByTestId('tag');
+    const tag = await screen.findByTestId('tags');
 
     const image = await tag.screenshot();
     expect(image).toMatchImageSnapshot();

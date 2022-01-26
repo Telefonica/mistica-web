@@ -6,10 +6,14 @@ export type TextFieldProps = {
   ...$Exact<CommonFormFieldProps>,
 
   onChangeValue?: (value: string, rawValue: string) => void,
+  onPress?: (event: SyntheticMouseEvent<>) => void,
   multiline?: boolean,
   prefix?: React.Node,
   endIcon?: React.Node,
   getSuggestions?: (value: string) => Array<string>,
 };
-declare var TextField: React.ComponentType<TextFieldProps>;
+declare var TextField: React.ComponentType<{
+  ...TextFieldProps,
+  ref?: React.Ref<HTMLInputElement>,
+}>;
 declare export default typeof TextField;

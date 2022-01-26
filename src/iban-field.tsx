@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useRifm} from 'rifm';
 import {useFieldProps} from './form-context';
-import TextFieldBase from './text-field-base';
+import {TextFieldBaseAutosuggest} from './text-field-base';
 import {createChangeEvent} from './utils/dom';
 import {combineRefs} from './utils/common';
 import {useTheme} from './hooks';
@@ -201,7 +201,7 @@ const IbanField: React.FC<IbanFieldProps> = ({
         onChangeValue,
     });
 
-    return <TextFieldBase {...rest} {...fieldProps} inputComponent={IbanInput} />;
+    return <TextFieldBaseAutosuggest {...rest} {...fieldProps} inputComponent={IbanInput} />;
 };
 
 export default IbanField;

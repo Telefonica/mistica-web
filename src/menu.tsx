@@ -1,20 +1,22 @@
 import * as React from 'react';
 import {ESC, TAB} from './utils/key-codes';
-import Overlay from './overlay';
 import {createUseStyles} from './jss';
 import {cancelEvent} from './utils/dom';
+import Overlay from './overlay';
 
 const MAX_HEIGHT_DEFAULT = 416;
 
 const useStyles = createUseStyles(({colors}) => ({
     menuContainer: {
+        zIndex: 12,
         margin: 0,
         padding: 0,
         listStyleType: 'none',
         position: 'absolute',
         top: ({itemsComputedProps}) => itemsComputedProps.top,
-        left: ({itemsComputedProps}) => itemsComputedProps.left,
-        width: ({itemsComputedProps, width}) => width ?? itemsComputedProps.width,
+        bottom: ({itemsComputedProps}) => itemsComputedProps.bottom,
+        right: ({itemsComputedProps}) => itemsComputedProps.right,
+        width: ({width}) => width ?? '100%',
         borderRadius: 4,
         boxShadow:
             '0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)',
@@ -36,7 +38,7 @@ type MenuRenderProps = {
 
 type TargetRenderProps = {
     ref: (element: HTMLElement | null) => void;
-    onPress: (event: React.MouseEvent | React.KeyboardEvent) => void;
+    onPress: () => void;
     isMenuOpen: boolean;
 };
 
@@ -65,29 +67,28 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
         }
 
         const MARGIN_THRESHOLD = 12;
-        const {top: topTarget, width: widthTarget, left, right, height} = targetRect;
+        const {top: topTarget, width: widthTarget, height} = targetRect;
         const top = topTarget + height;
         const spaceTaken = parseInt(window.getComputedStyle(menu).getPropertyValue('height')) ?? 0;
 
-        const leftDirection = position === 'left' ? left : right - (width ?? widthTarget);
+        const rightDirection = position === 'left' ? 'auto' : `calc(100% - ${widthTarget}px)`;
 
         // if it doesn't fit on bottom
         if (top + spaceTaken + MARGIN_THRESHOLD > window.innerHeight) {
             const availableSpaceBottom = window.innerHeight - top;
             if (topTarget /* this is the available space on top */ > availableSpaceBottom) {
-                const newTop = topTarget - spaceTaken;
                 setItemsComputedProps({
-                    width: widthTarget,
-                    left: leftDirection,
-                    top: Math.max(newTop, MARGIN_THRESHOLD),
-                    maxHeight: topTarget - MARGIN_THRESHOLD,
+                    right: rightDirection,
+                    bottom: '100%',
+                    top: 'auto',
+                    maxHeight: Math.min(topTarget, MAX_HEIGHT_DEFAULT),
                     transformOrigin: 'center bottom',
                 });
             } else {
                 setItemsComputedProps({
-                    width: widthTarget,
-                    top,
-                    left: leftDirection,
+                    top: '100%',
+                    bottom: 'auto',
+                    right: rightDirection,
                     maxHeight: Math.min(window.innerHeight - top - MARGIN_THRESHOLD, MAX_HEIGHT_DEFAULT),
                     transformOrigin: 'center top',
                 });
@@ -95,9 +96,9 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
         } else {
             // if it fits on bottom
             setItemsComputedProps({
-                width: widthTarget,
-                top,
-                left: leftDirection,
+                top: '100%',
+                bottom: 'auto',
+                right: rightDirection,
                 maxHeight: Math.min(window.innerHeight - top - MARGIN_THRESHOLD, MAX_HEIGHT_DEFAULT),
                 transformOrigin: 'center top',
             });
@@ -162,20 +163,19 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
     });
 
     return (
-        <>
-            {renderTarget({...targetProps, isMenuOpen})}
+        <div style={{position: 'relative'}}>
             {isMenuOpen ? (
                 <Overlay
                     onPress={(e) => {
-                        setIsMenuOpen(false);
                         cancelEvent(e);
+                        setIsMenuOpen(false);
                     }}
                     disableScroll
-                >
-                    {renderMenu(menuProps)}
-                </Overlay>
+                />
             ) : null}
-        </>
+            {renderTarget({...targetProps, isMenuOpen})}
+            {isMenuOpen ? renderMenu(menuProps) : null}
+        </div>
     );
 };
 
