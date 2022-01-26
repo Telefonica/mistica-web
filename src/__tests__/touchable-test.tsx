@@ -331,17 +331,19 @@ test('<Link> component has click-like behaviour on "space" key press', async () 
     });
 });
 
-const hrefDecorator = (href: string) => {
-    const url = new URL(href, 'https://x');
-    const search = new URLSearchParams(url.search);
-    search.set('utm_source', 'test');
-    return `${url.pathname}?${search.toString()}${url.hash}`;
+const useHrefDecorator = () => {
+    return (href: string) => {
+        const url = new URL(href, 'https://x');
+        const search = new URLSearchParams(url.search);
+        search.set('utm_source', 'test');
+        return `${url.pathname}?${search.toString()}${url.hash}`;
+    };
 };
 
 test('"href" gets decorated', () => {
     const href = '/foo/bar/?param=123#hash';
     render(
-        <ThemeContextProvider theme={makeTheme({hrefDecorator})}>
+        <ThemeContextProvider theme={makeTheme({useHrefDecorator})}>
             <Touchable href={href}>Test</Touchable>
         </ThemeContextProvider>
     );
@@ -353,7 +355,7 @@ test('"href" gets decorated', () => {
 test('"to" paths are not decorated', () => {
     const to = '/foo/bar/?param=123#hash';
     render(
-        <ThemeContextProvider theme={makeTheme({hrefDecorator})}>
+        <ThemeContextProvider theme={makeTheme({useHrefDecorator})}>
             <Touchable to={to}>Test</Touchable>
         </ThemeContextProvider>
     );
@@ -365,7 +367,7 @@ test('"to" paths are not decorated', () => {
 test('"to" paths with "fullPageOnWebView" are not decorated', () => {
     const to = '/foo/bar/?param=123#hash';
     render(
-        <ThemeContextProvider theme={makeTheme({hrefDecorator})}>
+        <ThemeContextProvider theme={makeTheme({useHrefDecorator})}>
             <Touchable to={to} fullPageOnWebView>
                 Test
             </Touchable>

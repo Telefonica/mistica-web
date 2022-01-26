@@ -27,7 +27,7 @@ type ThemeConfig = {
     desktopOrTabletMinHeight: number;
   };
   Link?: LinkComponent;
-  hrefDecorator: (href: string) => string;
+  useHrefDecorator: () => (href: string) => string;
 };
 ```
 
@@ -59,6 +59,6 @@ Here is a description of every attribute:
 - `Link?`: the `Link` component you want to use by Touchables that use the prop `to`. By default, the lib uses
   an anchor tag (`<a>`). Use this prop to use the Link component from ReactRouter, Next.js or any other
   library.
-- `hrefDecorator`: a function that takes a `href` and returns a new `href`. This is useful to automatically
-  add parameters to the `href` being used in Touchable components (for example, to add a `utm_source`
-  parameter to the `href`).
+- `useHrefDecorator`: it is a React hook that a function that takes a `href` and returns a new `href`. This is
+  useful to automatically add parameters to the `href` being used in Touchable components (for example, to add
+  a `utm_source` parameter to the `href`).

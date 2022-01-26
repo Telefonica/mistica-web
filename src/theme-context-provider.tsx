@@ -66,6 +66,10 @@ const generateId = (() => {
     return createGenerateId();
 })();
 
+const useDefaultHrefDecorator = () => {
+    return (href: string) => href;
+};
+
 const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
     const classNamePrefix = React.useMemo(
         // Always start the counter in 0 in server side, otherwise every new request to the server will inclrement the counter and
@@ -118,7 +122,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
             Link: theme.Link ?? AnchorLink,
             isDarkMode: isDarkModeEnabled,
             isIos: getPlatform(platformOverrides) === 'ios',
-            hrefDecorator: theme.hrefDecorator ?? ((href) => href),
+            useHrefDecorator: theme.useHrefDecorator ?? useDefaultHrefDecorator,
         };
     }, [theme, isOsDarkModeEnabled]);
 
