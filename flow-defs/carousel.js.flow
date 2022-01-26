@@ -1,0 +1,47 @@
+// @flow
+
+import * as React from "react";
+declare type PageBulletsProps = {
+  currentIndex: number,
+  numPages: number,
+  onPress?: (index: number) => void,
+};
+declare export var PageBullets: React.ComponentType<PageBulletsProps>;
+declare type ItemsPerPageProp =
+  | {
+      mobile?: number,
+      desktop?: number,
+    }
+  | number;
+declare type MobilePageOffset =
+  | number
+  | {
+      prev: number,
+      next: number,
+    };
+declare type CarouselProps = {
+  items: $ReadOnlyArray<React.Node>,
+  withBullets?: boolean,
+  renderBullets?: (bulletsProps: PageBulletsProps) => React.Node,
+  itemsPerPage?: ItemsPerPageProp,
+  /**
+   * scrolls one page by default
+   */
+  itemsToScroll?: number,
+  /**
+   * number of pixels to show for the next/prev page in mobile
+   */
+  mobilePageOffset?: MobilePageOffset,
+  /**
+   * If true, scroll snap doesn't apply and the user has a free scroll
+   */
+  free?: boolean,
+};
+declare export var Carousel: React.ComponentType<CarouselProps>;
+declare type CenteredCarouselProps = {
+  items: $ReadOnlyArray<React.Node>,
+  withBullets?: boolean,
+  renderBullets?: (bulletsProps: PageBulletsProps) => React.Node,
+};
+declare export var CenteredCarousel: React.ComponentType<CenteredCarouselProps>;
+declare export {};
