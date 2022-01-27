@@ -164,6 +164,10 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         return () => {};
     }, [classes.link, isMeasuring]);
 
+    /**
+     * Multiple calls to calcLayout are debounced to workaround an issue that can be reproduced in chrome when pressing
+     * the button during a focus/visibility change. For example, pressing the button having the focus on the devTools.
+     */
     const calcLayout = React.useMemo(
         () =>
             debounce(() => {
