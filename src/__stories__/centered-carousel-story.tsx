@@ -10,6 +10,8 @@ import {
     Text2,
     Callout,
     IconInformationRegular,
+    Text10,
+    ThemeVariant,
 } from '..';
 
 export default {
@@ -50,7 +52,11 @@ export const Default: StoryComponent<Args> = ({numItems}) => {
                                 }}
                             >
                                 <div style={{flexShrink: 0}}>
-                                    <Circle backgroundColor={colors.brand} size={160} />
+                                    <Circle backgroundColor={colors.brand} size={160}>
+                                        <ThemeVariant isInverse>
+                                            <Text10>{idx}</Text10>
+                                        </ThemeVariant>
+                                    </Circle>
                                 </div>
                             </div>
                         ))}
