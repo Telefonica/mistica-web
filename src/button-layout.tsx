@@ -1,5 +1,4 @@
 import * as React from 'react';
-import ReactDom from 'react-dom';
 import {createUseStyles} from './jss';
 import {useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 import {BUTTON_MIN_WIDTH, ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
