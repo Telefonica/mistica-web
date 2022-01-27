@@ -1076,6 +1076,33 @@ const navigationBarSnippets = [
     },
 ];
 
+const carouselSnippets = [
+    {
+        group: 'Carousel',
+        name: 'Carousel',
+        code: `
+<Carousel
+  withBullets
+  items={Array.from({ length: 6 }, (_, idx) => (
+    <MediaCard
+      key={idx}
+      headline={<Tag type="promo">Headline</Tag>}
+      title={'Card ' + idx}
+      description="Description"
+      media={<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />}
+      button={
+        <ButtonPrimary small onPress={() => {}}>
+          Action
+        </ButtonPrimary>
+      }
+      buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+    />
+  ))}
+/>
+  `,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -1148,4 +1175,5 @@ export default [
         name: 'Image',
         code: `<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />`,
     },
+    ...carouselSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
