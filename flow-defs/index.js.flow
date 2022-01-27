@@ -70,6 +70,7 @@ declare export {
   Text10,
 } from "./text";
 declare export { default as Tag } from "./tag";
+export type { TagType } from "./tag";
 declare export { default as SectionTitle } from "./section-title";
 declare export { Placeholder, AvatarPlaceholder } from "./placeholder";
 declare export { RowList, Row, BoxedRowList, BoxedRow } from "./list";

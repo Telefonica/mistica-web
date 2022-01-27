@@ -1,3 +1,5 @@
+import {capitalize} from 'lodash';
+
 const imagePlaceholder = 'https://i.imgur.com/jeDSXBU.jpg';
 
 type Snippet = {group: string; name: string; code: string};
@@ -450,7 +452,7 @@ const headerSnippets: Array<Snippet> = [
                     title="The last invoice is available"
                     preamount={{
                         text: "Example of line-through text",
-                        textDecoration: "line-through"
+                        decoration: "line-through"
                     }}
                     amount="60,44 €"
                     button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
@@ -474,7 +476,7 @@ const headerSnippets: Array<Snippet> = [
                     title="The last invoice is available"
                     preamount={{
                         text: "Example of line-through text",
-                        textDecoration: "line-through"
+                        decoration: "line-through"
                     }}
                     amount="60,44 €"
                     button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
@@ -570,7 +572,7 @@ const cardSnippets: Array<Snippet> = [
         name: 'MediaCard with Image',
         code: `
         <MediaCard
-            headline={<Tag color={colors.promo}>headline</Tag>}
+            headline={<Tag type="promo">Headline</Tag>}
             pretitle="Pretitle"
             title="Title"
             description="Description"
@@ -608,7 +610,7 @@ const cardSnippets: Array<Snippet> = [
         name: 'DataCard',
         code: `
         <DataCard
-            headline={<Tag color={colors.promo}>headline</Tag>}
+            headline={<Tag type="promo">Headline</Tag>}
             title="Title"
             subtitle="Subtitle"
             description="Description"
@@ -638,6 +640,14 @@ const titlesSnippets: Array<Snippet> = [
         code: '<SectionTitle right={<TextLink onPress={() => {}}>Link</TextLink>}>Some title</SectionTitle>',
     },
 ].map((snippet) => ({...snippet, group: 'Titles'}));
+
+const tagSnippets: Array<Snippet> = ['promo', 'active', 'inactive', 'success', 'warning', 'error'].map(
+    (type) => ({
+        name: `Tag (${type})`,
+        group: 'Tags',
+        code: `<Tag type="${type}" Icon={IconStarFilled}>${capitalize(type)}</Tag>`,
+    })
+);
 
 const layoutSnippets: Array<Snippet> = [
     {
@@ -1091,11 +1101,6 @@ export default [
     ...tabsSnippets,
     ...cardSnippets,
     ...exampleScreens,
-    ...['promo', 'brand', 'success', 'warning', 'error', 'inverse'].map((colorName) => ({
-        group: 'Tag',
-        name: `Tag (${colorName})`,
-        code: `<Tag color={colors.${colorName}}>${colorName}</Tag>`,
-    })),
     {
         group: 'Progress',
         name: 'Stepper',
@@ -1132,6 +1137,7 @@ export default [
     },
     ...navigationBarSnippets,
     menuSnippet,
+    ...tagSnippets,
     {
         group: 'Media',
         name: 'Video',

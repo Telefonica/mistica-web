@@ -22,8 +22,8 @@ export default {
             options: ['icon', 'image', 'none'],
             control: {type: 'select'},
         },
-        headlineColor: {
-            options: ['promo', 'brand', 'success', 'warning', 'error'],
+        headlineType: {
+            options: ['promo', 'active', 'inactive', 'success', 'warning', 'error'],
             control: {type: 'select'},
         },
         actions: {
@@ -35,7 +35,7 @@ export default {
 
 type DataCardArgs = {
     asset: 'icon' | 'image' | 'none';
-    headlineColor: 'promo' | 'brand' | 'success' | 'warning' | 'error';
+    headlineType: 'promo' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
     headline: string;
     title: string;
     subtitle: string;
@@ -46,7 +46,7 @@ type DataCardArgs = {
 export const Default: StoryComponent<DataCardArgs> = ({
     asset,
     headline,
-    headlineColor,
+    headlineType,
     title,
     subtitle,
     description,
@@ -76,7 +76,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
     return (
         <DataCard
             icon={icon}
-            headline={headline && <Tag color={colors[headlineColor]}>{headline}</Tag>}
+            headline={headline && <Tag type={headlineType}>{headline}</Tag>}
             title={title}
             subtitle={subtitle}
             description={description}
@@ -91,8 +91,8 @@ export const Default: StoryComponent<DataCardArgs> = ({
 Default.storyName = 'DataCard';
 Default.args = {
     asset: 'icon',
-    headlineColor: 'promo',
-    headline: 'priority',
+    headlineType: 'promo',
+    headline: 'Priority',
     title: 'Some title',
     subtitle: 'Some subtitle',
     description: 'This is a description for the card',
@@ -103,10 +103,10 @@ export const WithBody: StoryComponent = () => {
     const {colors} = useTheme();
     return (
         <DataCard
-            headline={<Tag color={colors.promo}>headline</Tag>}
-            title="title"
-            subtitle="subtitle"
-            description="description"
+            headline={<Tag type="promo">Headline</Tag>}
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
             extra={<Placeholder />}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
@@ -126,13 +126,12 @@ export const WithBody: StoryComponent = () => {
 WithBody.storyName = 'DataCard with extra content';
 
 export const WithIconImage: StoryComponent = () => {
-    const {colors} = useTheme();
     return (
         <DataCard
-            headline={<Tag color={colors.promo}>headline</Tag>}
-            title="title"
-            subtitle="subtitle"
-            description="description"
+            headline={<Tag type="promo">Headline</Tag>}
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
             icon={<Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />}
             button={
                 <ButtonPrimary small href="https://google.com">
@@ -166,10 +165,10 @@ export const Group: StoryComponent = () => {
                 </Text2>
                 <Inline space={16} className={classes.group}>
                     <DataCard
-                        headline={<Tag color={colors.promo}>headline</Tag>}
-                        title="title"
-                        subtitle="subtitle"
-                        description="description"
+                        headline={<Tag type="promo">Headline</Tag>}
+                        title="Title"
+                        subtitle="Subtitle"
+                        description="Description"
                         icon={
                             <Circle size={40} backgroundColor={colors.neutralLow}>
                                 <IconAcademicLight />
@@ -178,8 +177,8 @@ export const Group: StoryComponent = () => {
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />
                     <DataCard
-                        title="title"
-                        description="description"
+                        title="Title"
+                        description="Description"
                         icon={
                             <Circle size={40} backgroundColor={colors.neutralLow}>
                                 <IconAcademicLight />
