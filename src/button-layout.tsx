@@ -116,28 +116,25 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     withMargins = false,
 }) => {
     const {isTabletOrSmaller} = useScreenSize();
-    const [isMeasuring, setIsMeasuring] = React.useState(true);
     const childrenCount = React.Children.count(children);
+    const [buttonStatus, setButtonStatus] = React.useState({isMeasuring: true, buttonWidth: 0});
 
-    const [buttonWidth, setButtonWidth] = React.useState(0);
-
-    const updateButtonWidth = (buttonWidth: number) => {
+    const updateButtonStatus = ({isMeasuring, buttonWidth}: {isMeasuring: boolean; buttonWidth: number}) => {
         if (process.env.NODE_ENV !== 'test') {
-            setButtonWidth(buttonWidth);
+            setButtonStatus({isMeasuring, buttonWidth});
         }
     };
 
-    const updateIsMeasuring = (isMeasuring: boolean) => {
-        if (process.env.NODE_ENV !== 'test') {
-            setIsMeasuring(isMeasuring);
-        }
-    };
-
-    const classes = useStyles({buttonWidth, isTabletOrSmaller, align, childrenCount});
+    const classes = useStyles({
+        buttonWidth: buttonStatus.buttonWidth,
+        isTabletOrSmaller,
+        align,
+        childrenCount,
+    });
 
     const wrapperElRef = React.useRef<HTMLDivElement | null>(null);
     useIsomorphicLayoutEffect(() => {
-        if (isMeasuring) {
+        if (buttonStatus.isMeasuring) {
             const req = window.requestAnimationFrame(() => {
                 if (wrapperElRef.current) {
                     const childrenWidths = Array.from(wrapperElRef.current.children).map((el) =>
@@ -151,10 +148,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
                         el.classList.contains(classes.link) ? 0 : (el as HTMLElement).offsetWidth + 1
                     );
                     const maxChildWidth = Math.ceil(Math.max(...childrenWidths, BUTTON_MIN_WIDTH));
-                    ReactDom.unstable_batchedUpdates(() => {
-                        updateButtonWidth(maxChildWidth);
-                        updateIsMeasuring(false);
-                    });
+                    updateButtonStatus({isMeasuring: false, buttonWidth: maxChildWidth});
                 }
             });
             return () => {
@@ -162,7 +156,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
             };
         }
         return () => {};
-    }, [classes.link, isMeasuring]);
+    }, [classes.link, buttonStatus]);
 
     /**
      * Multiple calls to calcLayout are debounced to workaround an issue that can be reproduced in chrome when pressing
@@ -171,10 +165,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     const calcLayout = React.useMemo(
         () =>
             debounce(() => {
-                ReactDom.unstable_batchedUpdates(() => {
-                    updateButtonWidth(0);
-                    updateIsMeasuring(true);
-                });
+                updateButtonStatus({isMeasuring: true, buttonWidth: 0});
             }, 50),
         []
     );
