@@ -1,3 +1,16 @@
+# [10.21.0](https://github.com/Telefonica/mistica-web/compare/v10.20.0...v10.21.0) (2022-01-27)
+
+
+### Bug Fixes
+
+* **ButtonLayout:** missed button press in button layout when gaining focus ([#396](https://github.com/Telefonica/mistica-web/issues/396)) ([9f3bba5](https://github.com/Telefonica/mistica-web/commit/9f3bba57affeac7b89c7dc831d00ce4ef33cdb5f))
+* **ButtonLayout:** unstable in acceptance tests ([#404](https://github.com/Telefonica/mistica-web/issues/404)) ([11d4772](https://github.com/Telefonica/mistica-web/commit/11d4772c49d5f35bfcfa4ead6826782eccde5a18))
+
+
+### Features
+
+* **Touchable:** WEB-435 add hrefDecorator to theme ([#401](https://github.com/Telefonica/mistica-web/issues/401)) ([21a45ee](https://github.com/Telefonica/mistica-web/commit/21a45ee84259af4ccca2a5adf2a7242b442d2874))
+
 # [10.20.0](https://github.com/Telefonica/mistica-web/compare/v10.19.0...v10.20.0) (2022-01-24)
 
 
