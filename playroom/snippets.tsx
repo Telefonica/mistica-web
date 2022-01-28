@@ -577,7 +577,7 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             description="Description"
             extra={<Placeholder />}
-            media={<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />}
+            media={<Image src="https://i.imgur.com/aEVtKsE.jpg" aspectRatio="16:9" />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
@@ -596,7 +596,7 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             description="Description"
             extra={<Placeholder />}
-            media={<Video src="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw" aspectRatio="16:9" />}
+            media={<Video src="https://cdn.kapwing.com/final_61f3e551955a8b003ec98e68_257607.mp4" aspectRatio="16:9" />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
@@ -1141,11 +1141,11 @@ export default [
     {
         group: 'Media',
         name: 'Video',
-        code: `<Video src="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw" aspectRatio="16:9" />`,
+        code: `<Video src="https://cdn.kapwing.com/final_61f3e551955a8b003ec98e68_257607.mp4" aspectRatio="16:9" />`,
     },
     {
         group: 'Media',
         name: 'Image',
-        code: `<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />`,
+        code: `<Image src="https://i.imgur.com/aEVtKsE.jpg" aspectRatio="16:9" />`,
     },
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
