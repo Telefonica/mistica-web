@@ -62,7 +62,7 @@ const CardContent: React.FC<CardContentProps> = ({
             <Stack space={8}>
                 {(headline || pretitle || title || subtitle) && (
                     <header>
-                        <Stack space={16}>
+                        <Stack space={8}>
                             {renderHeadline()}
                             <Stack space={4}>
                                 {pretitle && (
