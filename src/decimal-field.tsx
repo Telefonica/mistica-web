@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {useTheme} from './hooks';
-import TextFieldBase from './text-field-base';
+import {TextFieldBaseAutosuggest} from './text-field-base';
 import {Locale} from './utils/locale';
-
-import type {CommonFormFieldProps} from './text-field-base';
 import {createChangeEvent} from './utils/dom';
 import {useRifm} from 'rifm';
 import {combineRefs} from './utils/common';
+
+import type {CommonFormFieldProps} from './text-field-base';
 
 const getLocalDecimalChar = (locale: Locale): string => {
     try {
@@ -17,7 +17,7 @@ const getLocalDecimalChar = (locale: Locale): string => {
     }
 };
 
-const format = (value: any) => {
+const format = (value: any, maxDecimals: number) => {
     // do not make the localDecimalChar replacement here. Instead, keep the one the user typed.
     // Make that replacement in `replace` prost-processor. It is what rifm lib expects.
     const sanitized = String(value ?? '').replace(/[^.,\d]/g, ''); // remove non digits or decimal separator chars;
@@ -29,9 +29,9 @@ const format = (value: any) => {
         return '';
     }
 
-    if (firstSeparator) {
+    if (firstSeparator && maxDecimals > 0) {
         // value includes one or more decimal separators, keep the first one
-        return parts.shift() + firstSeparator[0] + parts.join('');
+        return parts.shift() + firstSeparator[0] + parts.join('').slice(0, maxDecimals);
     } else {
         // no fractional part, return "as is"
         return parts[0];
@@ -53,6 +53,7 @@ export const DecimalInput: React.FC<DecimalInputProps> = ({
     value,
     defaultValue,
     onChange,
+    maxDecimals,
     ...rest
 }) => {
     const {i18n} = useTheme();
@@ -79,7 +80,7 @@ export const DecimalInput: React.FC<DecimalInputProps> = ({
     );
 
     const rifm = useRifm({
-        format,
+        format: (value) => format(value, maxDecimals),
         replace,
         value: controlledValue,
         onChange: handleChangeValue,
@@ -102,6 +103,9 @@ export const DecimalInput: React.FC<DecimalInputProps> = ({
 
 export interface DecimalFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
+    prefix?: React.ReactNode;
+    /** defaults to Infinity */
+    maxDecimals?: number;
 }
 
 const DecimalField: React.FC<DecimalFieldProps> = ({
@@ -116,6 +120,7 @@ const DecimalField: React.FC<DecimalFieldProps> = ({
     onBlur,
     value,
     defaultValue,
+    maxDecimals = Infinity,
     ...rest
 }) => {
     const {texts} = useTheme();
@@ -144,7 +149,14 @@ const DecimalField: React.FC<DecimalFieldProps> = ({
         onChangeValue,
     });
 
-    return <TextFieldBase {...rest} {...fieldProps} inputComponent={DecimalInput} />;
+    return (
+        <TextFieldBaseAutosuggest
+            {...rest}
+            {...fieldProps}
+            inputComponent={DecimalInput}
+            inputProps={{maxDecimals}}
+        />
+    );
 };
 
 export default DecimalField;

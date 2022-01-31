@@ -1,3 +1,164 @@
+# [10.21.0](https://github.com/Telefonica/mistica-web/compare/v10.20.0...v10.21.0) (2022-01-27)
+
+
+### Bug Fixes
+
+* **ButtonLayout:** missed button press in button layout when gaining focus ([#396](https://github.com/Telefonica/mistica-web/issues/396)) ([9f3bba5](https://github.com/Telefonica/mistica-web/commit/9f3bba57affeac7b89c7dc831d00ce4ef33cdb5f))
+* **ButtonLayout:** unstable in acceptance tests ([#404](https://github.com/Telefonica/mistica-web/issues/404)) ([11d4772](https://github.com/Telefonica/mistica-web/commit/11d4772c49d5f35bfcfa4ead6826782eccde5a18))
+
+
+### Features
+
+* **Touchable:** WEB-435 add hrefDecorator to theme ([#401](https://github.com/Telefonica/mistica-web/issues/401)) ([21a45ee](https://github.com/Telefonica/mistica-web/commit/21a45ee84259af4ccca2a5adf2a7242b442d2874))
+
+# [10.20.0](https://github.com/Telefonica/mistica-web/compare/v10.19.0...v10.20.0) (2022-01-24)
+
+
+### Features
+
+* **Tags:** Tag component evolution ([#372](https://github.com/Telefonica/mistica-web/issues/372)) ([0db48b1](https://github.com/Telefonica/mistica-web/commit/0db48b15525b67c574b90c8c450b35ef155ca199))
+
+# [10.19.0](https://github.com/Telefonica/mistica-web/compare/v10.18.0...v10.19.0) (2022-01-24)
+
+
+### Features
+
+* **Feedback:** Update animated success icon for O2 ([#397](https://github.com/Telefonica/mistica-web/issues/397)) ([c0952cd](https://github.com/Telefonica/mistica-web/commit/c0952cdf10779f097359754b8f8d1addccb05713))
+* **Image:** Added forward ref to Image component. ([#399](https://github.com/Telefonica/mistica-web/issues/399)) ([c78008f](https://github.com/Telefonica/mistica-web/commit/c78008f33d0a7979ead1760b01169a3e5bc65c1e))
+* **SectionTitle:** Changed right prop to React.Node ([#398](https://github.com/Telefonica/mistica-web/issues/398)) ([d94b986](https://github.com/Telefonica/mistica-web/commit/d94b98636a834291af46f3b51223de97aaf79e41))
+
+# [10.18.0](https://github.com/Telefonica/mistica-web/compare/v10.17.0...v10.18.0) (2022-01-21)
+
+
+### Features
+
+* **Video:** Video component and Video support in Media Cards ([#391](https://github.com/Telefonica/mistica-web/issues/391)) ([a830a9b](https://github.com/Telefonica/mistica-web/commit/a830a9b2f364d9f17245aba02cfbbfee678a064b))
+
+# [10.17.0](https://github.com/Telefonica/mistica-web/compare/v10.16.0...v10.17.0) (2022-01-18)
+
+
+### Bug Fixes
+
+* **Menu:** Menu component improvements ([#392](https://github.com/Telefonica/mistica-web/issues/392)) ([d8f1098](https://github.com/Telefonica/mistica-web/commit/d8f10988c7273da71645768c22d3a106dae0f15e))
+
+
+### Features
+
+* **Feedback:** show info/error icons in vivo ([c60e3a3](https://github.com/Telefonica/mistica-web/commit/c60e3a391174f0f6ff6e40c5bd795f2f950b5d69))
+* **TextFieldBase:** expose internal TextFieldBase component for advanced usage ([e917a99](https://github.com/Telefonica/mistica-web/commit/e917a99379d5f7fedddb0d5727cffd88af5a1d0f))
+
+# [10.16.0](https://github.com/Telefonica/mistica-web/compare/v10.15.0...v10.16.0) (2022-01-17)
+
+
+### Features
+
+* **Form:** improvements to be able to build custom fields ([cf5de03](https://github.com/Telefonica/mistica-web/commit/cf5de0398c441d943ee417123293450595aa95f5))
+
+# [10.15.0](https://github.com/Telefonica/mistica-web/compare/v10.14.2...v10.15.0) (2022-01-12)
+
+
+### Features
+
+* **Form fields:** review disabled state ([#386](https://github.com/Telefonica/mistica-web/issues/386)) ([615f90d](https://github.com/Telefonica/mistica-web/commit/615f90de59ec647121f1c8c2cb6c342ace5df396))
+
+## [10.14.2](https://github.com/Telefonica/mistica-web/compare/v10.14.1...v10.14.2) (2022-01-03)
+
+
+### Bug Fixes
+
+* **release:** commit updated package-version.tsx file on release ([#389](https://github.com/Telefonica/mistica-web/issues/389)) ([61e384a](https://github.com/Telefonica/mistica-web/commit/61e384a0cd93f32bae691c15b209b5e6f3e42485))
+
+## [10.14.1](https://github.com/Telefonica/mistica-web/compare/v10.14.0...v10.14.1) (2022-01-03)
+
+
+### Bug Fixes
+
+* **Dialog:** overlay fadeout animation ([#388](https://github.com/Telefonica/mistica-web/issues/388)) ([fc9b80b](https://github.com/Telefonica/mistica-web/commit/fc9b80b5b9670b6cdaa7ee81a7a1ae457c396662))
+* **Dialog:** race condition closing it before open transition end ([#387](https://github.com/Telefonica/mistica-web/issues/387)) ([cfef0f3](https://github.com/Telefonica/mistica-web/commit/cfef0f3a30e21909537bd07b98d359c1fbc3cd3b))
+
+# [10.14.0](https://github.com/Telefonica/mistica-web/compare/v10.13.0...v10.14.0) (2021-12-22)
+
+
+### Features
+
+* **Checkbox, RadioButton:** Baseline alignment by default ([6c1fe3e](https://github.com/Telefonica/mistica-web/commit/6c1fe3ef62d96889ce7f94f22f08782f729070ca))
+* **DecimalField:** Add maxDecimals prop to limit the number of decimal places ([#380](https://github.com/Telefonica/mistica-web/issues/380)) ([82196ec](https://github.com/Telefonica/mistica-web/commit/82196ecdba2b9a10140ae70c3c881baff43f8d39))
+* **ErrorFeedbackScreen:** new errorReference prop ([#375](https://github.com/Telefonica/mistica-web/issues/375)) ([60b8193](https://github.com/Telefonica/mistica-web/commit/60b8193c92b9c076e570792197f8c60eabd7d412))
+* **ForwardRef:** Support forward ref in: Row, BoxedRow, MediaCard, Boxed, Box, ButtonLink ([#377](https://github.com/Telefonica/mistica-web/issues/377)) ([48d3017](https://github.com/Telefonica/mistica-web/commit/48d30174cb8f43dbeb0185ca7ca294e41acee9a8))
+* **Icons:** Update Mistica Icons ([#379](https://github.com/Telefonica/mistica-web/issues/379)) ([9165907](https://github.com/Telefonica/mistica-web/commit/91659078b736edb6938fa309e9a40968e6b7b1c9))
+
+# [10.13.0](https://github.com/Telefonica/mistica-web/compare/v10.12.0...v10.13.0) (2021-12-02)
+
+
+### Bug Fixes
+
+* **Dialog:** text size ([#371](https://github.com/Telefonica/mistica-web/issues/371)) ([4b3a2a7](https://github.com/Telefonica/mistica-web/commit/4b3a2a70ed2aa46c8d91420182e146c6b3b3b2c4))
+
+
+### Features
+
+* **Icons:** Update mistica icons ([#374](https://github.com/Telefonica/mistica-web/issues/374)) ([136bb96](https://github.com/Telefonica/mistica-web/commit/136bb96a11835ce16c69b93e67eb1f92e9c0d8d4))
+
+# [10.12.0](https://github.com/Telefonica/mistica-web/compare/v10.11.0...v10.12.0) (2021-11-24)
+
+
+### Features
+
+* **DataCard:** make title and description optional ([#373](https://github.com/Telefonica/mistica-web/issues/373)) ([e44a064](https://github.com/Telefonica/mistica-web/commit/e44a06460a1c27ed06279890c7df0d692300e38e))
+
+# [10.11.0](https://github.com/Telefonica/mistica-web/compare/v10.10.0...v10.11.0) (2021-11-24)
+
+
+### Bug Fixes
+
+* **IconClose, IconArrowDown:** use mistica icons instead ([#367](https://github.com/Telefonica/mistica-web/issues/367)) ([1c324fa](https://github.com/Telefonica/mistica-web/commit/1c324fa97a937fb8da56539ee1230896f7f094ff))
+
+
+### Features
+
+* **Icons:** Skin support for icons ([#369](https://github.com/Telefonica/mistica-web/issues/369)) ([8d82c53](https://github.com/Telefonica/mistica-web/commit/8d82c53981b38ac53e5c11e775d38fa9824e2a5a))
+
+# [10.10.0](https://github.com/Telefonica/mistica-web/compare/v10.9.2...v10.10.0) (2021-11-15)
+
+
+### Bug Fixes
+
+* **HighlightedCard:** Propagate width to card wrappers ([#368](https://github.com/Telefonica/mistica-web/issues/368)) ([81f3b2a](https://github.com/Telefonica/mistica-web/commit/81f3b2a9e2ed5b61df8295a104047186adc45307))
+
+
+### Features
+
+* **form fields:** use text presets ([#359](https://github.com/Telefonica/mistica-web/issues/359)) ([7fc1d0a](https://github.com/Telefonica/mistica-web/commit/7fc1d0a8b72788f982e80aab31a633fbc7e9244f))
+
+## [10.9.2](https://github.com/Telefonica/mistica-web/compare/v10.9.1...v10.9.2) (2021-11-05)
+
+
+### Bug Fixes
+
+* **Switch:** Revert event cancel in switch change ([#366](https://github.com/Telefonica/mistica-web/issues/366)) ([fd38fa0](https://github.com/Telefonica/mistica-web/commit/fd38fa0bcd94a27bd27b9ce7154db2ff6e9e7802))
+
+## [10.9.1](https://github.com/Telefonica/mistica-web/compare/v10.9.0...v10.9.1) (2021-11-05)
+
+
+### Bug Fixes
+
+* **HighlightedCard:** Allow to stretch inside flex container ([#360](https://github.com/Telefonica/mistica-web/issues/360)) ([43e56d1](https://github.com/Telefonica/mistica-web/commit/43e56d125a9cdc012baceeb060ca00d9395f580d))
+* **Switch:** stop event propagation on change ([#365](https://github.com/Telefonica/mistica-web/issues/365)) ([22d7254](https://github.com/Telefonica/mistica-web/commit/22d7254a0771c03f99488f197f9cd47d0d2e5370))
+
+# [10.9.0](https://github.com/Telefonica/mistica-web/compare/v10.8.1...v10.9.0) (2021-10-21)
+
+
+### Features
+
+* **MonthField:** new form field to select months ([#356](https://github.com/Telefonica/mistica-web/issues/356)) ([1a949a5](https://github.com/Telefonica/mistica-web/commit/1a949a5fa4d2f9e7a0141afd7c920741faf36c49))
+
+## [10.8.1](https://github.com/Telefonica/mistica-web/compare/v10.8.0...v10.8.1) (2021-10-19)
+
+
+### Bug Fixes
+
+* **blau:** some color bad naming ([#358](https://github.com/Telefonica/mistica-web/issues/358)) ([64a3a87](https://github.com/Telefonica/mistica-web/commit/64a3a87a23cdbb16ca60c0639976c5fe84275905))
+
 # [10.8.0](https://github.com/Telefonica/mistica-web/compare/v10.7.0...v10.8.0) (2021-10-18)
 
 

@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconAppointmentFilled: React.FC<Props> = ({color, size = 24}) => {
+const IconAppointmentFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M14.765 13.885c.476 0 .896.381.896.815v1.406c0 .443-.409.816-.896.816H13.4l.002 1.35c0 .479-.378.882-.823.882h-1.42c-.449 0-.824-.403-.824-.882v-1.353H8.972c-.482 0-.89-.373-.89-.815v-1.401c0-.443.408-.815.89-.815h1.364v-1.35c0-.482.378-.888.824-.888h1.414c.448 0 .824.406.824.888v1.347h1.367zm3.621 6.583c2.096 0 2.096-1.807 2.096-2.4l-.003-7.508H3.26v7.527c0 .028 0 .056-.002.084 0 0-.045 1.036.577 1.683.38.398.994.6 1.812.6h12.42c.05 0 .101.002.151.01.014-.002.076.004.168.004zM18.07 4.134c3.927 0 3.639 3.6 3.639 3.6l.002 10.333c0 3.32-2.442 3.62-3.325 3.62-.196 0-.313-.015-.313-.015H5.65c-3.866 0-3.62-3.585-3.62-3.585V7.714c0-3.341 2.656-3.58 3.41-3.58.126 0 .199.006.199.006h1.19V2.61c0-.335.275-.61.616-.61.34 0 .617.272.617.61v1.53l7.63-.003V2.611c0-.336.274-.611.616-.611.339 0 .616.272.616.61v1.527c-.005-.003 1.146-.003 1.146-.003z"
                 fill={fillColor}

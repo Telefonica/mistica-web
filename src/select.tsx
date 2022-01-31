@@ -3,17 +3,17 @@ import {useForm} from './form-context';
 import {useAriaId, useTheme} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/key-codes';
 import {FieldContainer, HelperText, Label} from './text-field-components';
-import IconArrowDown from './icons/icon-arrow-down';
-import TextFieldBase from './text-field-base';
+import ChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
+import {TextFieldBaseAutosuggest} from './text-field-base';
 import Overlay from './overlay';
 import classNames from 'classnames';
 import {isAndroid, isIos} from './utils/platform';
 import {createUseStyles} from './jss';
 import {cancelEvent} from './utils/dom';
+import {Text3} from './text';
 
 const useStyles = createUseStyles((theme) => ({
     selectContainer: {
-        cursor: ({disabled}) => (disabled ? 'auto' : 'pointer'),
         position: 'relative',
         outline: 0,
         [theme.mq.tabletOrSmaller]: {
@@ -37,18 +37,14 @@ const useStyles = createUseStyles((theme) => ({
         width: '100%',
         height: '100%',
         textOverflow: 'ellipsis',
-        '&:disabled': {
-            color: theme.colors.textDisabled,
-        },
         appearance: 'none',
-        cursor: ({disabled}) => (disabled ? 'inherit' : 'pointer'),
+        cursor: ({disabled}) => (disabled ? 'default' : 'pointer'),
     },
     arrowDown: {
         position: 'absolute',
         right: 16,
-        top: 'calc(50% - 12px)',
+        top: 'calc(50% - 10px)',
         pointerEvents: 'none',
-        opacity: ({disabled}) => (disabled ? 0.3 : 1),
     },
     selectText: {
         position: 'absolute',
@@ -58,7 +54,8 @@ const useStyles = createUseStyles((theme) => ({
         overflow: 'hidden',
         top: ({label}) => (label ? 27 : 17),
         fontSize: 16,
-        color: ({disabled}) => (disabled ? theme.colors.textDisabled : theme.colors.textPrimary),
+        color: theme.colors.textPrimary,
+        opacity: ({disabled}) => (disabled ? 0.5 : 1),
         maxWidth: '100%',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
@@ -89,7 +86,6 @@ const useStyles = createUseStyles((theme) => ({
     },
     menuItem: {
         color: theme.colors.textPrimary,
-        lineHeight: 1.5,
         padding: '6px 16px',
         height: 48,
         transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
@@ -380,7 +376,6 @@ const Select: React.FC<SelectProps> = ({
                             ? 'filled'
                             : 'default'
                     }
-                    disabled={disabled}
                     optional={optional}
                 >
                     {label}
@@ -427,7 +422,7 @@ const Select: React.FC<SelectProps> = ({
                 ))}
             </select>
             <div className={classes.arrowDown} aria-hidden>
-                <IconArrowDown />
+                <ChevronDownRegular size={20} />
             </div>
         </FieldContainer>
     ) : (
@@ -439,10 +434,10 @@ const Select: React.FC<SelectProps> = ({
                 ref={focusableRef as React.Ref<HTMLDivElement>}
                 {...(!disabled && containerActiveProps)}
             >
-                <TextFieldBase
+                <TextFieldBaseAutosuggest
                     style={{visibility: 'hidden'}}
                     fullWidth={fullWidth}
-                    endIcon={<IconArrowDown />}
+                    endIcon={<ChevronDownRegular size={20} />}
                     focus={isFocused}
                     label={label}
                     value={value}
@@ -492,7 +487,7 @@ const Select: React.FC<SelectProps> = ({
                                     }
                                 }}
                             >
-                                {text}
+                                <Text3 regular>{text}</Text3>
                             </li>
                         ))}
                     </ul>

@@ -8,17 +8,20 @@ import {createUseStyles} from './jss';
 import {ButtonLink, ButtonPrimary} from './button';
 import {Boxed} from './boxed';
 import ButtonGroup from './button-group';
+import Video from './video';
+import Image, {DisableBorderRadiusProvider} from './image';
 
 import type {ButtonProps, ButtonLinkProps} from './button';
 import type {DataAttributes} from './utils/types';
 import type {TagProps} from './tag';
+import type {VideoProps} from './video';
+import type {ImageProps} from './image';
 
 const useCardContentStyles = createUseStyles(() => ({
     actions: {
         flex: 1,
         display: 'flex',
         alignItems: 'flex-end',
-        marginTop: 16,
     },
 }));
 
@@ -50,49 +53,51 @@ const CardContent: React.FC<CardContentProps> = ({
             return null;
         }
         if (typeof headline === 'string') {
-            return <Tag color={theme.colors.promo}>{headline}</Tag>;
+            return <Tag type="promo">{headline}</Tag>;
         }
         return headline;
     };
     return (
-        <>
-            <Stack space={16}>
-                <Stack space={8}>
-                    {(headline || pretitle || title || subtitle) && (
-                        <header>
+        <Stack space={16}>
+            <Stack space={8}>
+                {(headline || pretitle || title || subtitle) && (
+                    <header>
+                        <Stack space={16}>
+                            {renderHeadline()}
                             <Stack space={4}>
-                                {renderHeadline()}
                                 {pretitle && (
-                                    <Box paddingTop={4}>
-                                        <Text1 regular uppercase>
-                                            {pretitle}
-                                        </Text1>
-                                    </Box>
+                                    <Text1 regular uppercase>
+                                        {pretitle}
+                                    </Text1>
                                 )}
                                 <Text4 as="h1" regular>
                                     {title}
                                 </Text4>
                                 <Text2 regular>{subtitle}</Text2>
                             </Stack>
-                        </header>
-                    )}
-                    {description && (
-                        <Text2 as="p" regular color={theme.colors.textSecondary}>
-                            {description}
-                        </Text2>
-                    )}
-                </Stack>
-                {extra && <div>{extra}</div>}
+                        </Stack>
+                    </header>
+                )}
+
+                {description && (
+                    <Text2 as="p" regular color={theme.colors.textSecondary}>
+                        {description}
+                    </Text2>
+                )}
             </Stack>
+
+            {extra && <div>{extra}</div>}
+
             {(button || buttonLink) && (
                 <div className={classes.actions}>
                     <ButtonGroup primaryButton={button} link={buttonLink} />
                 </div>
             )}
-        </>
+        </Stack>
     );
 };
 
+/** @deprecated */
 type CardMedia =
     | {
           src: string;
@@ -148,7 +153,10 @@ const useMediaCardStyles = createUseStyles(() => ({
 }));
 
 type MediaCardProps = {
-    media: CardMedia;
+    media:
+        | CardMedia
+        | (React.ReactElement<ImageProps, typeof Image> & {src?: undefined})
+        | (React.ReactElement<VideoProps, typeof Video> & {src?: undefined});
     headline?: string | React.ReactElement<TagProps, typeof Tag>;
     pretitle?: string;
     title?: string;
@@ -160,37 +168,36 @@ type MediaCardProps = {
     'aria-label'?: string;
 };
 
-export const MediaCard: React.FC<MediaCardProps> = ({
-    media,
-    headline,
-    pretitle,
-    title,
-    description,
-    extra,
-    button,
-    buttonLink,
-    'aria-label': ariaLabel,
-}) => {
-    const classes = useMediaCardStyles({media});
-    return (
-        <Boxed className={classes.boxed}>
-            <section className={classes.mediaCard} aria-label={ariaLabel}>
-                <div className={classes.media}></div>
-                <div className={classes.content}>
-                    <CardContent
-                        headline={headline}
-                        pretitle={pretitle}
-                        title={title}
-                        description={description}
-                        extra={extra}
-                        button={button}
-                        buttonLink={buttonLink}
-                    />
-                </div>
-            </section>
-        </Boxed>
-    );
-};
+export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
+    (
+        {media, headline, pretitle, title, description, extra, button, buttonLink, 'aria-label': ariaLabel},
+        ref
+    ) => {
+        const classes = useMediaCardStyles({media});
+        return (
+            <Boxed className={classes.boxed} ref={ref}>
+                <section className={classes.mediaCard} aria-label={ariaLabel}>
+                    {typeof media.src === 'string' ? (
+                        <div className={classes.media}></div>
+                    ) : (
+                        <DisableBorderRadiusProvider>{media}</DisableBorderRadiusProvider>
+                    )}
+                    <div className={classes.content}>
+                        <CardContent
+                            headline={headline}
+                            pretitle={pretitle}
+                            title={title}
+                            description={description}
+                            extra={extra}
+                            button={button}
+                            buttonLink={buttonLink}
+                        />
+                    </div>
+                </section>
+            </Boxed>
+        );
+    }
+);
 
 const useDataCardStyles = createUseStyles(() => ({
     boxed: {
@@ -210,9 +217,9 @@ interface DataCardProps {
      */
     icon?: React.ReactElement;
     headline?: string | React.ReactElement<TagProps, typeof Tag>;
-    title: string;
+    title?: string;
     subtitle?: string;
-    description: string;
+    description?: string;
     extra?: React.ReactNode;
     button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
     buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
@@ -222,33 +229,38 @@ interface DataCardProps {
     'aria-label'?: string;
 }
 
-export const DataCard: React.FC<DataCardProps> = ({
-    icon,
-    headline,
-    title,
-    subtitle,
-    description,
-    extra,
-    button,
-    buttonLink,
-    dataAttributes,
-    'aria-label': ariaLabel,
-}) => {
-    const classes = useDataCardStyles();
-    return (
-        <Boxed className={classes.boxed} dataAttributes={dataAttributes}>
-            <section className={classes.dataCard} aria-label={ariaLabel}>
-                {icon && <Box paddingBottom={16}>{icon}</Box>}
-                <CardContent
-                    headline={headline}
-                    title={title}
-                    subtitle={subtitle}
-                    description={description}
-                    extra={extra}
-                    button={button}
-                    buttonLink={buttonLink}
-                />
-            </section>
-        </Boxed>
-    );
-};
+export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
+    (
+        {
+            icon,
+            headline,
+            title,
+            subtitle,
+            description,
+            extra,
+            button,
+            buttonLink,
+            dataAttributes,
+            'aria-label': ariaLabel,
+        },
+        ref
+    ) => {
+        const classes = useDataCardStyles();
+        return (
+            <Boxed className={classes.boxed} dataAttributes={dataAttributes} ref={ref}>
+                <section className={classes.dataCard} aria-label={ariaLabel}>
+                    {icon && <Box paddingBottom={16}>{icon}</Box>}
+                    <CardContent
+                        headline={headline}
+                        title={title}
+                        subtitle={subtitle}
+                        description={description}
+                        extra={extra}
+                        button={button}
+                        buttonLink={buttonLink}
+                    />
+                </section>
+            </Boxed>
+        );
+    }
+);

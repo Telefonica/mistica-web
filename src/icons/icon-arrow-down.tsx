@@ -8,6 +8,7 @@ type Props = {
     style?: React.CSSProperties;
 };
 
+/** @deprecated use IconArrowDropDownFilled instead */
 const IconArrowDown: React.FC<Props> = ({role = 'presentation', size = 24, color, style}) => {
     const {colors} = useTheme();
 

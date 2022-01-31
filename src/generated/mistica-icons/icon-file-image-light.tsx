@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconFileImageLight: React.FC<Props> = ({color, size = 24}) => {
+const IconFileImageLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M18.174 21.016c.207 0 .4-.185.4-.378V8.756h-2.543c-.972 0-1.81-.317-2.423-.916-.616-.603-.941-1.429-.941-2.384v-2.47H5.849c-.182 0-.4.204-.4.378v17.274c0 .188.201.378.4.378h12.325zm.188-13.09l-4.877-4.761v2.288c0 .728.238 1.348.692 1.79.456.445 1.098.684 1.851.684h2.334zm1-.013a.39.39 0 01.03.162v12.563c0 .653-.557 1.205-1.22 1.205H5.845c-.65 0-1.221-.564-1.221-1.205V3.361c0-.63.583-1.205 1.221-1.205h7.502c.179 0 .347.07.476.194l5.361 5.235a.673.673 0 01.177.328zm-3.014 10.882a.173.173 0 00.123-.059l-.011-7.941c-.003.034-.06-.003-.11-.003H7.675a.17.17 0 00-.109.04v7.96c0-.011.006-.014.014-.014.02 0 .056.017.098.017h8.67zm0-8.832c.495 0 .93.39.93.832v7.997c0 .443-.435.832-.93.832H7.675c-.504 0-.93-.38-.93-.832v-7.997c0-.451.426-.832.928-.832h8.675zm-6.883 2.835a.44.44 0 000 .88c.241 0 .435-.2.435-.44a.434.434 0 00-.435-.44zm0 1.706a1.26 1.26 0 01-1.252-1.267c0-.697.563-1.266 1.252-1.266.692 0 1.255.569 1.255 1.266 0 .698-.563 1.267-1.255 1.267zm4.914-.754l1.669 1.291c.18.14.213.398.076.58a.405.405 0 01-.575.076l-1.417-1.095-1.507 1.21.938.89a.415.415 0 01.017.586.409.409 0 01-.58.02l-1.678-1.597-2.436 2.05a.41.41 0 01-.58-.053.418.418 0 01.053-.583l2.717-2.285a.407.407 0 01.543.017l.404.383 1.848-1.484a.416.416 0 01.508-.006z"
                 fill={fillColor}

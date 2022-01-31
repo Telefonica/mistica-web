@@ -4,7 +4,7 @@ import * as React from "react";
 import { ButtonLink } from "./button";
 import type { TrackingEvent } from "./utils/types";
 import type { ButtonElement } from "./button";
-declare type CommonProps = {|
+declare type CommonProps = {
   title: string,
   description: string,
   imageUrl?: string,
@@ -14,26 +14,27 @@ declare type CommonProps = {|
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   isInverse?: boolean,
   "aria-label"?: string,
-|};
-declare type BasicProps = {| ...$Exact<CommonProps> |};
-declare type ButtonProps = {|
+  width?: string | number,
+};
+declare type BasicProps = { ...$Exact<CommonProps> };
+declare type ButtonProps = {
   ...$Exact<CommonProps>,
   button?: ButtonElement | React.Element<typeof ButtonLink> | null,
-|};
-declare type HrefProps = {|
+};
+declare type HrefProps = {
   ...$Exact<CommonProps>,
   href?: string,
   newTab?: boolean,
-|};
-declare type ToProps = {|
+};
+declare type ToProps = {
   ...$Exact<CommonProps>,
   to?: string,
   fullPageOnWebView?: boolean,
-|};
-declare type OnPressProps = {|
+};
+declare type OnPressProps = {
   ...$Exact<CommonProps>,
   onPress?: () => void,
-|};
+};
 declare type Props =
   | BasicProps
   | ButtonProps

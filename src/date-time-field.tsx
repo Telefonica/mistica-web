@@ -1,10 +1,11 @@
 import * as React from 'react';
 import {useFieldProps} from './form-context';
-import TextFieldBase from './text-field-base';
+import {TextFieldBaseAutosuggest} from './text-field-base';
 import {isInputTypeSupported} from './utils/dom';
 import {isServerSide} from './utils/environment';
 import {getLocalDateTimeString} from './utils/time';
 import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
+import {isFirefox} from './utils/platform';
 import {useTheme} from './hooks';
 
 import type {CommonFormFieldProps} from './text-field-base';
@@ -35,7 +36,13 @@ const FormDateField: React.FC<DateFieldProps> = ({
     max,
     ...rest
 }) => {
-    const hasNativePicker = React.useMemo(() => isInputTypeSupported('datetime-local'), []);
+    const hasNativePicker = React.useMemo(() => {
+        if (isFirefox()) {
+            // disabled for firefox because the picker has no option to select time
+            return false;
+        }
+        return isInputTypeSupported('datetime-local');
+    }, []);
     const processValue = (value: string) => (hasNativePicker ? value : value.replace(/\s/, 'T'));
     const {texts} = useTheme();
 
@@ -80,7 +87,7 @@ const FormDateField: React.FC<DateFieldProps> = ({
     });
 
     const nativePicker = (
-        <TextFieldBase
+        <TextFieldBaseAutosuggest
             {...rest}
             {...fieldProps}
             min={min ? getLocalDateTimeString(min) : undefined}
@@ -103,6 +110,7 @@ const FormDateField: React.FC<DateFieldProps> = ({
             <ReactDateTimePicker
                 {...rest}
                 {...fieldProps}
+                optional={optional}
                 withTime
                 isValidDate={(currentDate) => isInRange(getLocalDateTimeString(currentDate.toDate()))}
             />

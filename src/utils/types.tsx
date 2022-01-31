@@ -7,3 +7,10 @@ export type TrackingEvent = {
 };
 
 export type DataAttributes = {[name: string]: string | number | boolean | undefined};
+
+export type IconProps = {
+    color?: string;
+    size?: string | number;
+    className?: string;
+    style?: React.CSSProperties;
+};

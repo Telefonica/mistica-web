@@ -10,8 +10,9 @@ import {
     useScreenSize,
     Box,
     createUseStyles,
+    Video,
+    Image,
     Tag,
-    useTheme,
 } from '..';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
@@ -21,22 +22,9 @@ export default {
 };
 
 export const Default: StoryComponent = () => {
-    const {colors} = useTheme();
-    const tagColors = {
-        promo: colors.promo,
-        brand: colors.brand,
-        success: colors.success,
-        warning: colors.warning,
-        error: colors.error,
-    };
-    const tagColorNames = Object.keys(tagColors);
-    const [headline, headlineTextField] = useTextField('headline', 'priority');
-    const [headlineColorName, headlineColorNameSelect] = useSelect(
-        'headline color',
-        tagColorNames[0],
-        tagColorNames
-    );
-    const headlineColor = (tagColors as any)[headlineColorName];
+    const tagColorNames = ['promo', 'active', 'inactive', 'success', 'warning', 'error'];
+    const [headline, headlineTextField] = useTextField('Headline', 'Priority');
+    const [headlineType, headlineTypeSelect] = useSelect('headline color', tagColorNames[0], tagColorNames);
     const [pretitle, pretitleTextField] = useTextField('pretitle', 'Some pretitle');
     const [title, titleTextField] = useTextField('title', 'Some title');
     const [description, descriptionTextField] = useTextField(
@@ -64,7 +52,7 @@ export const Default: StoryComponent = () => {
         <>
             <Stack space={16}>
                 {headlineTextField}
-                {headline && headlineColorNameSelect}
+                {headline && headlineTypeSelect}
                 {pretitleTextField}
                 {titleTextField}
                 {descriptionTextField}
@@ -73,7 +61,7 @@ export const Default: StoryComponent = () => {
             <div data-testid="media-card">
                 <StorySection title="MediaCard">
                     <MediaCard
-                        headline={headline && <Tag color={headlineColor}>{headline}</Tag>}
+                        headline={headline && <Tag type={headlineType as never}>{headline}</Tag>}
                         pretitle={pretitle}
                         title={title}
                         description={description}
@@ -92,17 +80,14 @@ export const Default: StoryComponent = () => {
 Default.storyName = 'MediaCard';
 
 export const WithBody: StoryComponent = () => {
-    const {colors} = useTheme();
     return (
         <MediaCard
-            headline={<Tag color={colors.promo}>headline</Tag>}
-            pretitle="pretitle"
-            title="title"
-            description="description"
+            headline={<Tag type="promo">Headline</Tag>}
+            pretitle="Pretitle"
+            title="Title"
+            description="Description"
             extra={<Placeholder />}
-            media={{
-                src: 'https://i.imgur.com/flZfkiX.png',
-            }}
+            media={<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />}
             button={
                 <ButtonPrimary small href="https://google.com">
                     Action
@@ -115,6 +100,31 @@ export const WithBody: StoryComponent = () => {
 
 WithBody.storyName = 'MediaCard with body';
 
+export const WithVideo: StoryComponent = () => {
+    return (
+        <MediaCard
+            headline={<Tag type="promo">headline</Tag>}
+            pretitle="pretitle"
+            title="title"
+            description="description"
+            media={
+                <Video
+                    src="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
+                    aspectRatio="12:5"
+                />
+            }
+            button={
+                <ButtonPrimary small href="https://google.com">
+                    Action
+                </ButtonPrimary>
+            }
+            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+        />
+    );
+};
+
+WithVideo.storyName = 'MediaCard with video';
+
 const useCardGroupStyles = createUseStyles(() => ({
     group: {
         '& > *': {
@@ -125,7 +135,6 @@ const useCardGroupStyles = createUseStyles(() => ({
 
 export const Group: StoryComponent = () => {
     const classes = useCardGroupStyles();
-    const {colors} = useTheme();
     return (
         <ResponsiveLayout>
             <Stack space={16}>
@@ -135,18 +144,18 @@ export const Group: StoryComponent = () => {
                 </Text2>
                 <Inline space={16} className={classes.group}>
                     <MediaCard
-                        headline={<Tag color={colors.promo}>headline</Tag>}
-                        pretitle="pretitle"
-                        title="title"
-                        description="description"
+                        headline={<Tag type="promo">Headline</Tag>}
+                        pretitle="Pretitle"
+                        title="Title"
+                        description="Description"
                         media={{
                             src: 'https://i.imgur.com/flZfkiX.png',
                         }}
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />
                     <MediaCard
-                        title="title"
-                        description="description"
+                        title="Title"
+                        description="Description"
                         media={{
                             src: 'https://i.imgur.com/flZfkiX.png',
                         }}
@@ -180,10 +189,14 @@ const useCarouselStyles = createUseStyles((theme) => ({
     },
 }));
 
+const VIDEO_SRC = 'https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw';
+const POSTER_SRC = 'https://i.imgur.com/Fu7RiuY.jpg';
+const IMAGE_SRC = 'https://i.imgur.com/flZfkiX.png';
+
 export const Carousel: StoryComponent = () => {
     const {isTabletOrSmaller} = useScreenSize();
-    const {colors} = useTheme();
     const classes = useCarouselStyles();
+    const videoRef = React.useRef<HTMLVideoElement>(null);
     return (
         <Box paddingY={16}>
             <Stack space={16}>
@@ -192,28 +205,49 @@ export const Carousel: StoryComponent = () => {
                 </ResponsiveLayout>
                 <ResponsiveLayout fullWidth={isTabletOrSmaller}>
                     <Inline space={16} className={classes.carousel}>
-                        {Array.from({length: 5}).flatMap((_, idx) => [
-                            <MediaCard
-                                key={`${idx}-full`}
-                                headline={<Tag color={colors.promo}>headline</Tag>}
-                                pretitle="pretitle"
-                                title="title"
-                                description="description"
-                                media={{
-                                    src: 'https://i.imgur.com/flZfkiX.png',
-                                }}
-                                buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-                            />,
-                            <MediaCard
-                                key={`${idx}-simple`}
-                                title="title"
-                                description="description"
-                                media={{
-                                    src: 'https://i.imgur.com/flZfkiX.png',
-                                }}
-                                buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-                            />,
-                        ])}
+                        <MediaCard
+                            title="Video"
+                            description="Example media card with <Video> element"
+                            media={
+                                <Video
+                                    ref={videoRef}
+                                    src={VIDEO_SRC}
+                                    poster={POSTER_SRC}
+                                    autoPlay={false}
+                                    aspectRatio="16:9"
+                                />
+                            }
+                            buttonLink={
+                                <ButtonLink
+                                    onPress={() => {
+                                        videoRef.current?.play();
+                                    }}
+                                >
+                                    Play Video
+                                </ButtonLink>
+                            }
+                        />
+                        <MediaCard
+                            title="Image"
+                            description="Example media card with <Image> element"
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                            buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
+                        />
+                        <MediaCard
+                            headline={<Tag type="promo">Headline</Tag>}
+                            pretitle="Pretitle"
+                            title="Title"
+                            description="Description"
+                            media={{src: IMAGE_SRC}}
+                            buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
+                        />
+                        <MediaCard
+                            title="Title"
+                            description="Description"
+                            media={{src: IMAGE_SRC}}
+                            buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
+                        />
+                        <MediaCard title="Title" description="Description" media={{src: IMAGE_SRC}} />
                     </Inline>
                 </ResponsiveLayout>
             </Stack>

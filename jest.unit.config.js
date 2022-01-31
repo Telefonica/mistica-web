@@ -1,5 +1,3 @@
-/* eslint-disable filenames/match-regex */
-
 module.exports = {
     ...require('./jest.base.config'),
     displayName: 'unit',

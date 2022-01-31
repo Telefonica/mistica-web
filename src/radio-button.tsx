@@ -13,6 +13,7 @@ import type {DataAttributes} from './utils/types';
 
 const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
     outerCircle: {
+        cursor: 'pointer',
         flexShrink: 0,
         width: 20,
         height: 20,
@@ -48,7 +49,10 @@ const useRadioButtonStyles = createUseStyles(({colors, isIos}) => ({
     },
     radioButton: {
         cursor: 'default',
-        opacity: ({disabled}) => (disabled ? 0.5 : 1),
+    },
+    disabled: {
+        opacity: 0.5,
+        cursor: 'default',
     },
 }));
 
@@ -91,7 +95,7 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, dataAttr
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
     const tabIndex = focusableValue === value ? 0 : -1;
-    const classes = useRadioButtonStyles({disabled, checked});
+    const classes = useRadioButtonStyles({checked});
     const {isIos} = useTheme();
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -119,7 +123,12 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, dataAttr
     };
 
     const radio = (
-        <div className={classnames(classes.outerCircle, {[classes.outerCircleChecked]: checked})}>
+        <div
+            className={classnames(classes.outerCircle, {
+                [classes.outerCircleChecked]: checked,
+                [classes.disabled]: disabled,
+            })}
+        >
             {!isIos && (
                 <div className={classnames(classes.innerCircle, {[classes.innerCircleChecked]: checked})} />
             )}
@@ -144,10 +153,13 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, dataAttr
             {rest.render ? (
                 rest.render(radio, disabled)
             ) : (
-                <Inline space={16} alignItems="center">
-                    {radio}
+                <Inline space={16}>
+                    {/* Text3 wrapper added to have the same line-height and center checkbox with text and -2px to perfect pixel center icon  */}
                     <Text3 regular as="div">
-                        {rest.children}
+                        <div style={{position: 'relative', top: -2}}>{radio}</div>
+                    </Text3>
+                    <Text3 regular as="div">
+                        <span className={disabled ? classes.disabled : ''}>{rest.children}</span>
                     </Text3>
                 </Inline>
             )}

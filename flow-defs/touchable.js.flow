@@ -4,10 +4,14 @@ import * as React from "react";
 import type { DataAttributes, TrackingEvent } from "./utils/types";
 import type { Location } from "history";
 export type PressHandler = (event: SyntheticMouseEvent<HTMLElement>) => void;
-declare type CommonProps = {|
+declare type CommonProps = {
   children: React.Node,
   className?: string,
   disabled?: boolean,
+
+  /**
+   * @deprecated use ref
+   */
   elementRef?: React.Ref<"button" | "a" | "div">,
   style?: CssStyle,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
@@ -27,42 +31,42 @@ declare type CommonProps = {|
   role?: string,
   type?: "button" | "submit",
   tabIndex?: number,
-|};
-export type PropsHref = {|
+};
+export type PropsHref = {
   ...$Exact<CommonProps>,
   href: string,
   newTab?: boolean,
-|};
-export type PropsOnPress = {|
+};
+export type PropsOnPress = {
   ...$Exact<CommonProps>,
   onPress: PressHandler,
   formId?: string,
-|};
-export type PropsTo = {|
+};
+export type PropsTo = {
   ...$Exact<CommonProps>,
   to: string | Location,
   fullPageOnWebView?: boolean,
   replace?: boolean,
-|};
-export type PropsMaybeHref = {|
+};
+export type PropsMaybeHref = {
   ...$Exact<CommonProps>,
   maybe: true,
   href?: string,
   newTab?: boolean,
-|};
-export type PropsMaybeTo = {|
+};
+export type PropsMaybeTo = {
   ...$Exact<CommonProps>,
   maybe: true,
   to?: string | Location,
   fullPageOnWebView?: boolean,
   replace?: boolean,
-|};
-export type PropsMaybeOnPress = {|
+};
+export type PropsMaybeOnPress = {
   ...$Exact<CommonProps>,
   maybe: true,
   onPress?: PressHandler,
   formId?: string,
-|};
+};
 export type Props =
   | PropsHref
   | PropsTo
@@ -70,7 +74,10 @@ export type Props =
   | PropsMaybeHref
   | PropsMaybeTo
   | PropsMaybeOnPress;
-declare var Touchable: React.ComponentType<Props>;
+declare var Touchable: React.ComponentType<{
+  ...Props,
+  ref?: React.Ref<HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>,
+}>;
 declare export default typeof Touchable;
 
 import { type CssStyle } from "./__types__.js.flow";

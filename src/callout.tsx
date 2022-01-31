@@ -4,13 +4,13 @@ import {useTheme} from './hooks';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {createUseStyles} from './jss';
 import {Text2, Text3} from './text';
-import IconClose from './icons/icon-close';
+import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import classNames from 'classnames';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
+import ButtonGroup from './button-group';
 
 import type {ButtonProps, ButtonLinkProps} from './button';
-import ButtonGroup from './button-group';
 
 const useStyles = createUseStyles(({colors}) => ({
     container: {
@@ -101,7 +101,7 @@ const Callout: React.FC<Props> = ({
                         onPress={onClose}
                         aria-label={texts.closeButtonLabel}
                     >
-                        <IconClose color={colors.neutralHigh} />
+                        <IconCloseRegular color={colors.neutralHigh} />
                     </IconButton>
                 )}
             </ThemeVariant>

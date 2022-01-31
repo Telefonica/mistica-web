@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconDownloadCloudFilled: React.FC<Props> = ({color, size = 24}) => {
+const IconDownloadCloudFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M17.015 16.512l-.46.476-4.542 4.091-4.467-4.082-.56-.587a.352.352 0 01-.073-.392.357.357 0 01.338-.235H9.33a.144.144 0 00.138-.142v-5.068c0-.197.165-.364.366-.364h4.323c.203 0 .366.16.366.361v.003l.019 5.173c0 .074.056.139.138.139h2.069c.156 0 .285.083.34.222a.392.392 0 01-.074.405m.735-9.18C16.436 3.216 11.865 3 10.948 3c-1.186 0-7.024.328-7.153 6.714C2.618 10.154 1 11.274 1 14.152c0 3.528 2.435 4.78 4.727 4.78l2.545-.01 3.133 2.865a.957.957 0 00.617.213c.228 0 .45-.074.635-.222l3.19-2.905 1.371-.01c.964 0 5.782-.271 5.782-5.79 0-4.814-3.669-5.617-5.25-5.74"
                 fill={fillColor}

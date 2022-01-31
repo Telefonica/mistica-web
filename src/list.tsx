@@ -16,7 +16,7 @@ import {useAriaId, useTheme} from './hooks';
 import {useIsInverseVariant} from './theme-variant-context';
 import IconChevron from './icons/icon-chevron';
 import Switch from './switch-component';
-import RadioButton from './radio-button';
+import RadioButton, {useRadioContext} from './radio-button';
 import Checkbox from './checkbox';
 import {Boxed} from './boxed';
 import Divider from './divider';
@@ -25,16 +25,20 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import type {DataAttributes, TrackingEvent} from './utils/types';
 
 const useStyles = createUseStyles(({colors, mq}) => ({
+    disabled: {
+        opacity: 0.5,
+    },
     hover: {
         [mq.supportsHover]: {
             '&:hover': {
-                background: ({isInverse}) => (isInverse ? 'initial' : colors.backgroundAlternative),
+                background: ({isInverse, disabled}) =>
+                    isInverse || disabled ? 'initial' : colors.backgroundAlternative,
             },
         },
     },
     rowContent: {
         width: '100%',
-        cursor: 'pointer',
+        cursor: ({disabled}) => (disabled ? 'default' : 'pointer'),
     },
     hoverDisabled: {
         cursor: 'initial',
@@ -117,11 +121,12 @@ interface CommonProps {
     role?: string;
     extra?: React.ReactNode;
     dataAttributes?: DataAttributes;
+    disabled?: boolean;
 }
 
 interface ContentProps extends CommonProps {
     isClickable?: boolean;
-    type?: 'chevron' | 'basic' | 'custom';
+    type?: 'chevron' | 'basic' | 'custom' | 'control';
     right?: React.ReactNode;
     /** This id is to link the title with the related control */
     labelId?: string;
@@ -141,6 +146,7 @@ const Content: React.FC<ContentProps> = ({
     right,
     extra,
     labelId,
+    disabled,
 }) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse});
@@ -154,21 +160,52 @@ const Content: React.FC<ContentProps> = ({
         }
         return (
             <Box paddingLeft={16}>
-                <div className={classNames(classes.center, classes.badge)}>
+                <div className={classNames(classes.center, classes.badge, {[classes.disabled]: disabled})}>
                     {badge === true ? <Badge /> : <Badge value={badge} />}
                 </div>
             </Box>
         );
     };
 
+    const renderRight = () => {
+        switch (type) {
+            case 'chevron':
+                return (
+                    <Box
+                        paddingLeft={16}
+                        className={classNames(classes.center, {[classes.disabled]: disabled})}
+                    >
+                        <IconChevron
+                            color={isInverse ? colors.inverse : colors.neutralMedium}
+                            direction="right"
+                        />
+                    </Box>
+                );
+            case 'control':
+                return <div className={classes.right}>{right}</div>;
+            case 'custom':
+                return (
+                    <div className={classNames(classes.right, {[classes.disabled]: disabled})}>{right}</div>
+                );
+            default:
+                return null;
+        }
+    };
+
     return (
         <Box paddingY={16} className={classes.content}>
             {asset && (
-                <Box paddingRight={16} className={classNames({[classes.center]: shouldCenter})}>
+                <Box
+                    paddingRight={16}
+                    className={classNames({[classes.center]: shouldCenter, [classes.disabled]: disabled})}
+                >
                     <div className={classes.asset}>{asset}</div>
                 </Box>
             )}
-            <div className={classes.rowBody} style={{justifyContent: shouldCenter ? 'center' : 'flex-start'}}>
+            <div
+                className={classNames(classes.rowBody, {[classes.disabled]: disabled})}
+                style={{justifyContent: shouldCenter ? 'center' : 'flex-start'}}
+            >
                 <Stack space={4}>
                     {headline && (
                         <Text1 wordBreak regular color={colors.textPrimary}>
@@ -205,17 +242,7 @@ const Content: React.FC<ContentProps> = ({
                 </Stack>
             </div>
             {renderBadge()}
-            {type === 'chevron' ? (
-                <Box paddingLeft={16} className={classes.center}>
-                    <IconChevron
-                        size={24}
-                        color={isInverse ? colors.inverse : colors.neutralMedium}
-                        direction="right"
-                    />
-                </Box>
-            ) : right ? (
-                <div className={classes.right}>{right}</div>
-            ) : null}
+            {renderRight()}
         </Box>
     );
 };
@@ -235,6 +262,7 @@ interface BasicRowContentProps extends CommonProps {
     switch?: undefined;
     radioValue?: undefined;
     newTab?: undefined;
+    fullPageOnWebView?: undefined;
 
     right?: React.ReactNode;
 }
@@ -247,6 +275,7 @@ interface SwitchRowContentProps extends CommonProps {
     checkbox?: undefined;
     radioValue?: undefined;
     newTab?: undefined;
+    fullPageOnWebView?: undefined;
 
     switch: ControlProps;
 }
@@ -259,6 +288,7 @@ interface CheckboxRowContentProps extends CommonProps {
     switch?: undefined;
     radioValue?: undefined;
     newTab?: undefined;
+    fullPageOnWebView?: undefined;
 
     checkbox: ControlProps;
 }
@@ -271,6 +301,7 @@ interface RadioRowContentProps extends CommonProps {
     switch?: undefined;
     checkbox?: undefined;
     newTab?: undefined;
+    fullPageOnWebView?: undefined;
 
     radioValue: string;
 }
@@ -279,6 +310,7 @@ interface HrefRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
+    fullPageOnWebView?: undefined;
 
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     href: string;
@@ -307,6 +339,7 @@ interface OnPressRowContentProps extends CommonProps {
     checkbox?: undefined;
     switch?: undefined;
     radioValue?: undefined;
+    fullPageOnWebView?: undefined;
 
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     onPress: () => void;
@@ -352,199 +385,232 @@ const useControlState = ({
     return [isChecked, toggle];
 };
 
-const RowContent = (props: RowContentProps) => {
-    const titleId = useAriaId();
-    const isInverse = useIsInverseVariant();
-    const classes = useStyles({isInverse});
-    const {
-        asset,
-        headline,
-        title,
-        titleLinesMax,
-        subtitle,
-        subtitleLinesMax,
-        description,
-        descriptionLinesMax,
-        badge,
-        role,
-        extra,
-        dataAttributes,
-    } = props;
-    const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
+const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLButtonElement, RowContentProps>(
+    (props, ref) => {
+        const titleId = useAriaId();
+        const isInverse = useIsInverseVariant();
+        const {
+            asset,
+            headline,
+            title,
+            titleLinesMax,
+            subtitle,
+            subtitleLinesMax,
+            description,
+            descriptionLinesMax,
+            badge,
+            role,
+            extra,
+            dataAttributes,
+        } = props;
 
-    const renderContent = ({
-        type,
-        right,
-        labelId,
-    }: {
-        type: ContentProps['type'];
-        right?: ContentProps['right'];
-        labelId?: string;
-    }) => (
-        <Content
-            asset={asset}
-            headline={headline}
-            title={title}
-            subtitle={subtitle}
-            description={description}
-            badge={badge}
-            titleLinesMax={titleLinesMax}
-            subtitleLinesMax={subtitleLinesMax}
-            descriptionLinesMax={descriptionLinesMax}
-            type={type}
-            right={right}
-            extra={extra}
-            labelId={labelId}
-        />
-    );
+        const radioContext = useRadioContext();
+        const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
 
-    const renderTouchableContent = (
-        props: HrefRowContentProps | ToRowContentProps | OnPressRowContentProps
-    ) => {
-        let type: ContentProps['type'] = 'chevron';
+        const classes = useStyles({
+            isInverse,
+            disabled,
+        });
+        const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
-        if (props.right === null) {
-            type = 'basic';
-        }
-
-        if (props.right) {
-            type = 'custom';
-        }
-
-        return <Box paddingX={16}>{renderContent({type, right: props.right})}</Box>;
-    };
-
-    if (
-        props.onPress &&
-        props.switch === undefined &&
-        props.radioValue === undefined &&
-        props.checkbox === undefined
-    ) {
-        return (
-            <Touchable
-                className={classNames(classes.rowContent, classes.hover)}
-                trackingEvent={props.trackingEvent}
-                onPress={props.onPress}
-                role={role}
-                dataAttributes={dataAttributes}
-            >
-                {renderTouchableContent(props)}
-            </Touchable>
+        const renderContent = ({
+            type,
+            right,
+            labelId,
+        }: {
+            type: ContentProps['type'];
+            right?: ContentProps['right'];
+            labelId?: string;
+        }) => (
+            <Content
+                asset={asset}
+                headline={headline}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                badge={badge}
+                titleLinesMax={titleLinesMax}
+                subtitleLinesMax={subtitleLinesMax}
+                descriptionLinesMax={descriptionLinesMax}
+                type={type}
+                right={right}
+                extra={extra}
+                labelId={labelId}
+                disabled={disabled}
+            />
         );
-    }
 
-    if (props.to) {
-        return (
-            <Touchable
-                className={classNames(classes.rowContent, classes.hover)}
-                trackingEvent={props.trackingEvent}
-                to={props.to}
-                fullPageOnWebView={props.fullPageOnWebView}
-                role={role}
-                dataAttributes={dataAttributes}
-            >
-                {renderTouchableContent(props)}
-            </Touchable>
-        );
-    }
+        const renderTouchableContent = (
+            props: HrefRowContentProps | ToRowContentProps | OnPressRowContentProps
+        ) => {
+            let type: ContentProps['type'] = 'chevron';
 
-    if (props.href) {
-        return (
-            <Touchable
-                className={classNames(classes.rowContent, classes.hover)}
-                trackingEvent={props.trackingEvent}
-                href={props.href}
-                newTab={props.newTab}
-                role={role}
-                dataAttributes={dataAttributes}
-            >
-                {renderTouchableContent(props)}
-            </Touchable>
-        );
-    }
+            if (props.right === null) {
+                type = 'basic';
+            }
 
-    const renderRowWithControl = (Control: typeof Switch | typeof Checkbox) => {
-        const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
-        return props.onPress ? (
-            <div className={classes.dualActionContainer}>
+            if (props.right) {
+                type = 'custom';
+            }
+
+            return (
+                <Box paddingX={16} ref={ref as React.Ref<HTMLDivElement>}>
+                    {renderContent({type, right: props.right})}
+                </Box>
+            );
+        };
+
+        if (
+            props.onPress &&
+            props.switch === undefined &&
+            props.radioValue === undefined &&
+            props.checkbox === undefined
+        ) {
+            return (
                 <Touchable
+                    ref={ref}
+                    className={classNames(classes.rowContent, classes.hover)}
+                    trackingEvent={props.trackingEvent}
                     onPress={props.onPress}
                     role={role}
-                    className={classNames(classes.dualActionLeft, classes.hover)}
+                    dataAttributes={dataAttributes}
+                    disabled={disabled}
                 >
-                    {renderContent({type: 'custom', labelId: titleId})}
+                    {renderTouchableContent(props)}
                 </Touchable>
+            );
+        }
+
+        if (props.to) {
+            return (
                 <Touchable
-                    className={classes.dualActionRight}
-                    onPress={toggle}
+                    className={classNames(classes.rowContent, classes.hover)}
+                    trackingEvent={props.trackingEvent}
+                    to={props.to}
+                    fullPageOnWebView={props.fullPageOnWebView}
+                    role={role}
                     dataAttributes={dataAttributes}
+                    disabled={disabled}
                 >
-                    <Control name={name} checked={isChecked} aria-labelledby={titleId} />
+                    {renderTouchableContent(props)}
                 </Touchable>
-            </div>
-        ) : (
-            <div className={classNames(classes.rowContent, classes.hover)}>
-                <Control
+            );
+        }
+
+        if (props.href) {
+            return (
+                <Touchable
+                    className={classNames(classes.rowContent, classes.hover)}
+                    trackingEvent={props.trackingEvent}
+                    href={props.href}
+                    newTab={props.newTab}
+                    role={role}
                     dataAttributes={dataAttributes}
-                    name={name}
-                    checked={isChecked}
-                    onChange={toggle}
-                    render={(control: React.ReactElement, labelId) => (
-                        <Box paddingX={16} role={role}>
-                            {renderContent({
-                                labelId,
-                                type: 'custom',
-                                right: <Stack space="around">{control}</Stack>,
-                            })}
-                        </Box>
-                    )}
-                />
-            </div>
-        );
-    };
+                    disabled={disabled}
+                >
+                    {renderTouchableContent(props)}
+                </Touchable>
+            );
+        }
 
-    if (props.switch) {
-        return renderRowWithControl(Switch);
-    }
+        const renderRowWithControl = (Control: typeof Switch | typeof Checkbox) => {
+            const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
+            return props.onPress ? (
+                <div className={classes.dualActionContainer}>
+                    <Touchable
+                        disabled={disabled}
+                        onPress={props.onPress}
+                        role={role}
+                        className={classNames(classes.dualActionLeft, classes.hover)}
+                    >
+                        {renderContent({type: 'basic', labelId: titleId})}
+                    </Touchable>
+                    <Touchable
+                        disabled={disabled}
+                        className={classes.dualActionRight}
+                        onPress={toggle}
+                        dataAttributes={dataAttributes}
+                    >
+                        <Control
+                            disabled={disabled}
+                            name={name}
+                            checked={isChecked}
+                            aria-labelledby={titleId}
+                            render={(check) => check}
+                        />
+                    </Touchable>
+                </div>
+            ) : (
+                <div className={classNames(classes.rowContent, classes.hover)}>
+                    <Control
+                        disabled={disabled}
+                        dataAttributes={dataAttributes}
+                        name={name}
+                        checked={isChecked}
+                        onChange={toggle}
+                        render={(control: React.ReactElement, labelId) => (
+                            <Box paddingX={16} role={role}>
+                                {renderContent({
+                                    labelId,
+                                    type: 'control',
+                                    right: <Stack space="around">{control}</Stack>,
+                                })}
+                            </Box>
+                        )}
+                    />
+                </div>
+            );
+        };
 
-    if (props.checkbox) {
-        return renderRowWithControl(Checkbox);
-    }
+        if (props.switch) {
+            return renderRowWithControl(Switch);
+        }
 
-    if (props.radioValue) {
+        if (props.checkbox) {
+            return renderRowWithControl(Checkbox);
+        }
+
+        if (props.radioValue) {
+            return (
+                <div
+                    className={classNames(classes.rowContent, classes.hover)}
+                    role={role}
+                    ref={ref as React.Ref<HTMLDivElement>}
+                >
+                    <RadioButton
+                        dataAttributes={dataAttributes}
+                        value={props.radioValue}
+                        aria-labelledby={titleId}
+                        render={(radio) => (
+                            <Box paddingX={16}>
+                                {renderContent({
+                                    type: 'control',
+                                    right: <Stack space="around">{radio}</Stack>,
+                                })}
+                            </Box>
+                        )}
+                    />
+                </div>
+            );
+        }
+
         return (
-            <div className={classNames(classes.rowContent, classes.hover)} role={role}>
-                <RadioButton
-                    dataAttributes={dataAttributes}
-                    value={props.radioValue}
-                    aria-labelledby={titleId}
-                    render={(radio) => (
-                        <Box paddingX={16}>
-                            {renderContent({
-                                type: 'custom',
-                                right: <Stack space="around">{radio}</Stack>,
-                            })}
-                        </Box>
-                    )}
-                />
-            </div>
+            <Box
+                paddingX={16}
+                className={classNames(classes.rowContent, classes.hover, classes.hoverDisabled)}
+                role={role}
+            >
+                {props.right
+                    ? renderContent({type: 'custom', right: props.right})
+                    : renderContent({type: 'basic'})}
+            </Box>
         );
     }
+);
 
-    return (
-        <Box
-            paddingX={16}
-            className={classNames(classes.rowContent, classes.hover, classes.hoverDisabled)}
-            role={role}
-        >
-            {props.right
-                ? renderContent({type: 'custom', right: props.right})
-                : renderContent({type: 'basic'})}
-        </Box>
-    );
-};
-
-export const Row: React.FC<RowContentProps> = (props) => <RowContent {...props} />;
+export const Row = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLButtonElement, RowContentProps>(
+    (props, ref) => <RowContent {...props} ref={ref} />
+);
 
 type RowListProps = {
     children: React.ReactNode;
@@ -588,11 +654,11 @@ type BoxedRowProps =
     | ToBoxedRowProps
     | OnPressBoxedRowProps;
 
-export const BoxedRow: React.FC<BoxedRowProps> = (props) => (
-    <Boxed isInverse={props.isInverse}>
+export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>((props, ref) => (
+    <Boxed isInverse={props.isInverse} ref={ref}>
         <RowContent {...props} />
     </Boxed>
-);
+));
 
 type BoxedRowListProps = {
     children: React.ReactNode;

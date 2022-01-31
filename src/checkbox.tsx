@@ -37,9 +37,12 @@ const useIconCheckboxStyles = createUseStyles(({colors, isIos}) => ({
     checkChecked: {
         transform: 'scale(1, 1)',
     },
+    disabled: {
+        opacity: 0.5,
+    },
 }));
 
-const IconCheckbox: React.FC<{isChecked: boolean}> = ({isChecked}) => {
+const IconCheckbox: React.FC<{isChecked: boolean; disabled?: boolean}> = ({isChecked, disabled}) => {
     const classes = useIconCheckboxStyles();
     const {isIos, colors} = useTheme();
 
@@ -66,7 +69,16 @@ const IconCheckbox: React.FC<{isChecked: boolean}> = ({isChecked}) => {
         </svg>
     );
 
-    return <div className={classnames(classes.box, {[classes.boxChecked]: isChecked})}>{icon}</div>;
+    return (
+        <div
+            className={classnames(classes.box, {
+                [classes.boxChecked]: isChecked,
+                [classes.disabled]: disabled,
+            })}
+        >
+            {icon}
+        </div>
+    );
 };
 
 type RenderProps = {
@@ -104,7 +116,6 @@ const useStyles = createUseStyles(() => ({
     },
     disabled: {
         opacity: 0.5,
-        pointerEvents: 'none',
     },
 }));
 
@@ -141,7 +152,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
         }
     };
 
-    const iconCheckbox = <IconCheckbox isChecked={value ?? checkedState} />;
+    const iconCheckbox = <IconCheckbox disabled={disabled} isChecked={value ?? checkedState} />;
 
     return (
         // When the checkbox is disabled, it shouldn't be focusable
@@ -154,7 +165,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             onClick={disabled ? undefined : handleChange}
             tabIndex={disabled ? undefined : 0}
             ref={focusableRef}
-            className={classnames(classes.checkboxContainer, {[classes.disabled]: disabled})}
+            className={classes.checkboxContainer}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : labelId}
             aria-disabled={disabled}
@@ -163,8 +174,11 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             {props.render ? (
                 props.render(iconCheckbox, labelId)
             ) : (
-                <Inline space={16} alignItems="center">
-                    {iconCheckbox}
+                <Inline space={16}>
+                    {/* Text3 wrapper added to have the same line-height and center checkbox with text and -2px to perfect pixel center icon */}
+                    <Text3 regular as="div">
+                        <div style={{position: 'relative', top: -2}}>{iconCheckbox}</div>
+                    </Text3>
                     {props.children && (
                         <Text3
                             regular
@@ -172,7 +186,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
                             id={labelId}
                             role={hasExternalLabel ? 'presentation' : undefined}
                         >
-                            <span>{props.children}</span>
+                            <span className={disabled ? classes.disabled : ''}>{props.children}</span>
                         </Text3>
                     )}
                 </Inline>

@@ -9,30 +9,17 @@ on:
 jobs:
     release:
         name: Release
-        # runs-on: ubuntu-latest
-        runs-on: self-hosted-novum
-        container: docker.tuenti.io/service-inf/mistica-web-builder:1.1.0
+        runs-on: ubuntu-latest
+        container: telefonica/web-builder:chromium93.0.4577-1.2.4
         steps:
             - uses: actions/checkout@v2
               with:
                   token: ${{ secrets.FLOW_GITHUB_TOKEN }}
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v1
-              with:
-                  node-version: 12
-
-            - name: Restore node_modules from cache
-              uses: actions/cache@v2
-              id: yarn-cache
-              with:
-                  path: ./node_modules
-                  key: node_modules-${{ hashFiles('**/yarn.lock') }}
             - name: Install dependencies
-              # skip yarn install if restored from cache
-              # note that the id (yarn-cache) must match the id from actions/cache@v2 step
-              if: steps.yarn-cache.outputs.cache-hit != 'true'
-              run: yarn
+              env:
+                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+              run: yarn install --immutable --immutable-cache
 
             - name: Husky install
               if: steps.yarn-cache.outputs.cache-hit == 'true'
@@ -42,6 +29,10 @@ jobs:
               uses: './.github/actions/set-npm-token'
               with:
                   npm-token: ${{ secrets.NPM_PUBLISH_TOKEN }}
+
+              # see https://github.com/semantic-release/semantic-release/issues/2218
+            - name: 'Workaround permissions issue'
+              run: chown $(whoami):$(whoami) -R .
 
             - name: Release
               env:

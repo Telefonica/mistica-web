@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconSniperScopeRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconSniperScopeRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M12.527 18.403V16.27a.604.604 0 00-.605-.602.604.604 0 00-.605.602v2.137c-1.636-.084-5.575-.815-6-5.742h2.15a.604.604 0 00.606-.602.604.604 0 00-.605-.603h-2.18c.163-5.495 4.387-6.21 6.031-6.274v2.232c0 .334.272.603.605.603a.604.604 0 00.605-.603V5.2c1.726.115 5.844.958 6.026 6.26h-2.28a.604.604 0 00-.606.603c0 .333.272.602.605.602h2.258c-.414 4.902-4.364 5.647-6.005 5.74m8.582-6.945h-1.347c-.199-6.493-5.544-7.358-7.235-7.465V2.602A.604.604 0 0011.922 2a.604.604 0 00-.605.602V3.98c-1.58.062-7.065.765-7.239 7.48H2.63a.604.604 0 00-.605.602c0 .333.272.602.605.602h1.48c.461 6.112 5.596 6.868 7.207 6.947v1.473c0 .333.271.602.605.602a.604.604 0 00.605-.602v-1.476c1.61-.087 6.761-.857 7.207-6.944h1.375a.602.602 0 100-1.204"
                 fill={fillColor}

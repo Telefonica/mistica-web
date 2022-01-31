@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconConferenceRegular: React.FC<Props> = ({color, size = 24}) => {
+const IconConferenceRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M14.254 2c.302 0 .594.129.81.359l.646.694c.379.404.418 1.011.16 1.482l.473.51a.642.642 0 01.169.434v.588h2.546c.63 0 1.143.552 1.145 1.233v1.087c0 .68-.512 1.23-1.145 1.23h-.381v.96c0 .68-.513 1.23-1.146 1.23h-1.154v6.574h1.132c.633 0 1.145.552 1.145 1.23v.851c0 .678-.512 1.23-1.145 1.23H6.486c-.633 0-1.145-.552-1.145-1.23v-.851c0-.678.512-1.23 1.145-1.23h1.132v-6.574H6.464c-.633 0-1.146-.55-1.146-1.23v-.96h-.38c-.634 0-1.146-.55-1.146-1.23V7.3c0-.678.512-1.23 1.145-1.23h2.547v-.588c0-.163.061-.32.168-.434l.476-.513c-.258-.47-.216-1.076.16-1.479l.647-.695c.215-.23.507-.358.809-.358.303 0 .594.129.81.358l.378.407a1.29 1.29 0 010 1.736l-.647.695a1.104 1.104 0 01-.81.361c-.19 0-.375-.059-.54-.154l-.306.328v.333h6.734v-.333l-.302-.328a1.075 1.075 0 01-.538.151c-.303 0-.594-.128-.81-.36l-.647-.696a1.296 1.296 0 010-1.736l.378-.406c.216-.23.507-.359.81-.359zM8.688 19.605H6.486v.852h11.02v-.852h-2.202c-.022.003-.047.008-.073.008h-6.47c-.025 0-.048-.005-.073-.008zm6.546-7.804h-6.47v6.574h6.47v-6.574zm2.297-2.19H6.464v.96h2.255c.017 0 .03-.005.045-.005h6.47c.014 0 .028.005.045.005h2.252v-.96zm1.527-2.314H4.94v1.087h1.482c.017 0 .03-.006.045-.006h11.067c.014 0 .03.006.045.006h1.479V7.297zM9.75 3.23l-.647.694.378.407.647-.695-.378-.406zm4.504 0l-.378.406.647.695.378-.407-.647-.694z"
                 fill={fillColor}

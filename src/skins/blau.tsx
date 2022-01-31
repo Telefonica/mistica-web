@@ -3,36 +3,42 @@ import {BLAU_SKIN} from './constants';
 
 import type {GetSkin} from './types';
 
+// https://github.com/Telefonica/mistica-design/blob/production/tokens/blau-constants.json
+// https://github.com/Telefonica/mistica-design/blob/production/tokens/blau-skin-schema.json
+
 export const palette = {
     blauBluePrimary: '#00B6F1',
-    blauBluePrimary30: '#B3E9FB',
-    blauBluePrimary20: '#E5F6FD',
     blauBluePrimary10: '#F7FDFF',
+    blauBluePrimary20: '#E5F6FD',
+    blauBluePrimary30: '#B3E9FB',
 
-    blauBlueSecondary60: '#005A99',
     blauBlueSecondary: '#0072BC',
-    blauBlueSecondary30: '#80B7DF',
-    blauBlueSecondary20: '#B2D4EC',
     blauBlueSecondary10: '#E5F1F9',
+    blauBlueSecondary20: '#B2D4EC',
+    blauBlueSecondary30: '#80B7DF',
+    blauBlueSecondary60: '#005A99',
 
     blauPurple: '#7814B3',
     blauPurple10: '#F1E7F7',
     blauPurple30: '#BB89D9',
 
     blauYellow: '#FFA922',
-    BlauYellow10: '#FFF6E9',
-    BlauYellow60: '#F09500',
-    BlauYellow70: '#996614',
+    blauYellow10: '#FFF6E9',
+    blauYellow40: '#FFC364',
+    blauYellow60: '#F09500',
+    blauYellow70: '#996614',
+
+    blauGreen: '#30D300',
+    blauGreen10: '#EAFBE5',
+    blauGreen30: '#97E980',
+    blauGreen70: '#1D7F00',
 
     blauRed: '#F64417',
     blauRed10: '#FEECE8',
-    blauRed70: '#C93712',
-    blauRed30: '#FA9E87',
     blauRed20: '#FCC7B9',
-
-    blauGreen: '#30D300',
-    BlauGreen10: '#EAFBE5',
-    BlauGreen70: '#1D7F00',
+    blauRed30: '#FA9E87',
+    blauRed40: '#F97C5D',
+    blauRed70: '#C93712',
 
     grey1: '#F5F9FA',
     grey2: '#E7E7E7',
@@ -73,7 +79,6 @@ export const getBlauSkin: GetSkin = () => {
 
             // BUTTONS
             buttonDangerBackground: palette.blauRed,
-            buttonDangerBackgroundDisabled: palette.blauRed20,
             buttonDangerBackgroundSelected: palette.blauRed70,
             buttonDangerBackgroundHover: palette.blauRed70,
 
@@ -81,38 +86,28 @@ export const getBlauSkin: GetSkin = () => {
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.3),
 
             buttonPrimaryBackground: palette.blauBlueSecondary,
-            buttonPrimaryBackgroundDisabled: palette.blauBlueSecondary20,
-            buttonPrimaryBackgroundDisabledInverse: palette.blauBlueSecondary30,
             buttonPrimaryBackgroundInverse: palette.white,
             buttonPrimaryBackgroundSelected: palette.blauBlueSecondary60,
             buttonPrimaryBackgroundHover: palette.blauBlueSecondary60,
             buttonPrimaryBackgroundSelectedInverse: palette.blauBluePrimary30,
 
             buttonSecondaryBackground: palette.blauBlueSecondary,
-            buttonSecondaryBackgroundDisabled: palette.blauBlueSecondary20,
             buttonSecondaryBackgroundSelected: palette.blauBlueSecondary60,
-            buttonSecondaryBorderDisabledInverse: palette.blauBlueSecondary20,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.blauBluePrimary30,
 
             textButtonPrimary: palette.white,
-            textButtonPrimaryDisabled: palette.white,
             textButtonPrimaryInverse: palette.blauBlueSecondary,
-            textButtonPrimaryInverseDisabled: palette.blauBluePrimary10,
             textButtonPrimaryInverseSelected: palette.blauBlueSecondary60,
 
             textButtonSecondary: palette.blauBlueSecondary,
-            textButtonSecondaryDisabled: palette.blauBlueSecondary30,
             textButtonSecondarySelected: palette.blauBlueSecondary60,
             textButtonSecondaryInverse: palette.white,
-            textButtonSecondaryInverseDisabled: palette.blauBlueSecondary20,
             textButtonSecondaryInverseSelected: palette.white,
 
             textLink: palette.blauPurple,
             textLinkInverse: palette.white,
             textLinkDanger: palette.blauRed,
-            textLinkDangerDisabled: palette.blauRed20,
-            textLinkDisabled: palette.blauPurple30,
             textLinkSnackbar: palette.blauPurple30,
 
             // CONTROLS
@@ -150,7 +145,6 @@ export const getBlauSkin: GetSkin = () => {
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
             textSecondaryInverse: palette.white,
-            textDisabled: palette.grey3,
             textAmount: palette.blauBlueSecondary,
 
             // STATES
@@ -167,6 +161,21 @@ export const getBlauSkin: GetSkin = () => {
             textNavigationSearchBarText: palette.white,
             textAppBar: palette.grey5,
             textAppBarSelected: palette.blauBlueSecondary60,
+
+            // TAGS
+            tagBackgroundSuccess: palette.blauGreen10,
+            tagBackgroundWarning: palette.blauYellow10,
+            tagBackgroundError: palette.blauRed10,
+            tagBackgroundPromo: palette.blauPurple10,
+            tagBackgroundActive: palette.blauBlueSecondary10,
+            tagBackgroundInactive: palette.grey2,
+
+            textTagSuccess: palette.blauGreen70,
+            textTagWarning: palette.blauYellow70,
+            textTagError: palette.blauRed70,
+            textTagPromo: palette.blauPurple,
+            textTagActive: palette.blauBlueSecondary,
+            textTagInactive: palette.grey5,
         },
         darkModeColors: {
             // BACKGROUNDS
@@ -188,38 +197,27 @@ export const getBlauSkin: GetSkin = () => {
             border: palette.darkModeGrey,
 
             // BUTTONS
-            buttonDangerBackgroundDisabled: palette.darkModeGrey,
 
             buttonLinkBackgroundSelected: applyAlpha(palette.blauPurple, 0.3),
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.blauPurple, 0.3),
 
-            buttonPrimaryBackgroundDisabled: palette.darkModeGrey,
-            buttonPrimaryBackgroundDisabledInverse: palette.darkModeGrey,
             buttonPrimaryBackgroundInverse: palette.blauBlueSecondary,
             buttonPrimaryBackgroundSelected: palette.blauBlueSecondary60,
 
-            buttonSecondaryBackgroundDisabled: palette.darkModeGrey,
-            buttonSecondaryBorderDisabledInverse: palette.darkModeGrey,
             buttonSecondaryBorderInverse: palette.blauBluePrimary,
             buttonSecondaryBorderSelectedInverse: palette.blauBlueSecondary60,
 
             textButtonPrimary: palette.grey2,
-            textButtonPrimaryDisabled: palette.grey5,
             textButtonPrimaryInverse: palette.grey2,
-            textButtonPrimaryInverseDisabled: palette.grey5,
             textButtonPrimaryInverseSelected: palette.grey2,
 
             textButtonSecondary: palette.grey2,
-            textButtonSecondaryDisabled: palette.grey5,
             textButtonSecondarySelected: palette.blauBlueSecondary60,
             textButtonSecondaryInverse: palette.grey2,
-            textButtonSecondaryInverseDisabled: palette.grey5,
             textButtonSecondaryInverseSelected: palette.blauBlueSecondary60,
 
             textLink: palette.blauPurple30,
             textLinkInverse: palette.blauPurple30,
-            textLinkDisabled: palette.grey5,
-            textLinkDangerDisabled: palette.grey5,
 
             // CONTROLS
             control: palette.darkModeGrey,
@@ -247,7 +245,6 @@ export const getBlauSkin: GetSkin = () => {
             textPrimaryInverse: palette.grey2,
             textSecondary: palette.grey4,
             textSecondaryInverse: palette.grey4,
-            textDisabled: palette.grey5,
             textAmount: palette.blauBlueSecondary,
 
             textNavigationBarPrimary: palette.grey2,
@@ -256,6 +253,21 @@ export const getBlauSkin: GetSkin = () => {
             textNavigationSearchBarText: palette.grey2, // iOS
             textAppBar: palette.grey5,
             textAppBarSelected: palette.grey2,
+
+            // TAGS
+            tagBackgroundSuccess: applyAlpha(palette.white, 0.05),
+            tagBackgroundWarning: applyAlpha(palette.white, 0.05),
+            tagBackgroundError: applyAlpha(palette.white, 0.05),
+            tagBackgroundPromo: applyAlpha(palette.white, 0.05),
+            tagBackgroundActive: applyAlpha(palette.white, 0.05),
+            tagBackgroundInactive: applyAlpha(palette.white, 0.05),
+
+            textTagSuccess: palette.blauGreen30,
+            textTagWarning: palette.blauYellow40,
+            textTagError: palette.blauRed40,
+            textTagPromo: palette.blauPurple30,
+            textTagActive: palette.blauBluePrimary30,
+            textTagInactive: palette.grey4,
         },
     };
 };

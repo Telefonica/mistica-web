@@ -4,7 +4,7 @@ import * as React from "react";
 import type { DataAttributes, TrackingEvent } from "./utils/types";
 import type { Location } from "history";
 declare export var BUTTON_MIN_WIDTH: 136;
-declare type CommonProps = {|
+declare type CommonProps = {
   children: React.Node,
   className?: string,
   style?: CssStyle,
@@ -21,36 +21,36 @@ declare type CommonProps = {|
   "aria-controls"?: string,
   "aria-expanded"?: "true" | "false",
   tabIndex?: number,
-|};
-export type ToButtonProps = {|
+};
+export type ToButtonProps = {
   ...$Exact<CommonProps>,
   to: string | Location,
   fullPageOnWebView?: boolean,
-|};
-export type OnPressButtonProps = {|
+};
+export type OnPressButtonProps = {
   ...$Exact<CommonProps>,
   onPress: (event: SyntheticMouseEvent<HTMLElement>) => void | void,
-|};
-export type HrefButtonProps = {|
+};
+export type HrefButtonProps = {
   ...$Exact<CommonProps>,
   href: string,
   newTab?: boolean,
-|};
-export type FakeButtonProps = {|
+};
+export type FakeButtonProps = {
   ...$Exact<CommonProps>,
   fake: true,
-|};
-export type SubmitButtonProps = {|
+};
+export type SubmitButtonProps = {
   ...$Exact<CommonProps>,
   submit: true,
-|};
+};
 export type ButtonProps =
   | FakeButtonProps
   | SubmitButtonProps
   | ToButtonProps
   | OnPressButtonProps
   | HrefButtonProps;
-declare type ButtonLinkCommonProps = {|
+declare type ButtonLinkCommonProps = {
   children: React.Node,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
 
@@ -59,26 +59,29 @@ declare type ButtonLinkCommonProps = {|
    */
   dataAttributes?: DataAttributes,
   aligned?: boolean,
-|};
-declare type ButtonLinkOnPressProps = {|
+};
+declare type ButtonLinkOnPressProps = {
   ...$Exact<ButtonLinkCommonProps>,
   onPress: (event: SyntheticMouseEvent<HTMLElement>) => void,
-|};
-declare type ButtonLinkHrefProps = {|
+};
+declare type ButtonLinkHrefProps = {
   ...$Exact<ButtonLinkCommonProps>,
   href: string,
   newTab?: boolean,
-|};
-declare type ButtonLinkToProps = {|
+};
+declare type ButtonLinkToProps = {
   ...$Exact<ButtonLinkCommonProps>,
   to: string,
   fullPageOnWebView?: boolean,
-|};
+};
 export type ButtonLinkProps =
   | ButtonLinkOnPressProps
   | ButtonLinkHrefProps
   | ButtonLinkToProps;
-declare export var ButtonLink: React.ComponentType<ButtonLinkProps>;
+declare export var ButtonLink: React.ComponentType<{
+  ...ButtonLinkProps,
+  ref?: React.Ref<HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>,
+}>;
 declare export var ButtonPrimary: React.ComponentType<ButtonProps>;
 declare export var ButtonSecondary: React.ComponentType<ButtonProps>;
 declare export var ButtonDanger: React.ComponentType<ButtonProps>;

@@ -5,7 +5,7 @@ import type { DataAttributes } from "./utils/types";
 import type { ButtonGroupProps } from "./button-group";
 declare type HapticFeedback = "error" | "success";
 declare type FeedbackButtonsProps = ButtonGroupProps;
-declare type FeedbackProps = {|
+declare type FeedbackProps = {
   ...$Exact<FeedbackButtonsProps>,
 
   title: string,
@@ -13,23 +13,28 @@ declare type FeedbackProps = {|
   children?: React.Node,
   unstable_inlineInDesktop?: boolean,
   dataAttributes?: DataAttributes,
-|};
-declare type AssetFeedbackProps = {|
+};
+declare type AssetFeedbackProps = {
   ...$Exact<FeedbackProps>,
 
   imageUrl?: string,
   imageFit?: "fit" | "fill",
-|};
-declare type FeedbackScreenProps = {|
+};
+declare type FeedbackScreenProps = {
   ...$Exact<AssetFeedbackProps>,
 
   hapticFeedback?: HapticFeedback,
   icon?: React.Node,
   animateText?: boolean,
-|};
+};
 declare export var FeedbackScreen: React.ComponentType<FeedbackScreenProps>;
 declare export var SuccessFeedbackScreen: React.ComponentType<AssetFeedbackProps>;
-declare export var ErrorFeedbackScreen: React.ComponentType<FeedbackProps>;
+declare type ErrorFeedbackScreenProps = {
+  ...$Exact<FeedbackProps>,
+
+  errorReference?: string,
+};
+declare export var ErrorFeedbackScreen: React.ComponentType<ErrorFeedbackScreenProps>;
 declare export var InfoFeedbackScreen: React.ComponentType<FeedbackProps>;
 declare export var SuccessFeedback: React.ComponentType<AssetFeedbackProps>;
 declare export {};

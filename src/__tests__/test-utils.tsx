@@ -1,5 +1,4 @@
 import {getMovistarSkin} from '..';
-
 import {ThemeConfig, ThemeTexts, getTexts} from '../theme';
 
 import type {Locale} from '../utils/locale';
@@ -24,6 +23,7 @@ type ThemeOverrides = {
     texts?: Partial<ThemeTexts>;
     analytics?: {logEvent: (trackingEvent: TrackingEvent) => Promise<void>};
     dimensions?: {headerMobileHeight: number};
+    useHrefDecorator?: () => (href: string) => string;
     Link?: ThemeConfig['Link'];
 };
 

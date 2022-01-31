@@ -2,7 +2,9 @@
 
 import * as React from "react";
 import type { FormErrors } from "./form-context";
-declare type FormValues = { [name: string]: any, ... };
+declare type FormValues = {
+  [name: string]: any,
+};
 declare type FormProps = {
   id?: string,
   onSubmit: (values: FormValues, rawValues: FormValues) => Promise<void> | void,

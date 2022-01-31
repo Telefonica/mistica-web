@@ -34,7 +34,7 @@ const commonClasses = () => ({
         border: `${BORDER_PX}px solid transparent`,
         borderRadius: 4,
         overflow: 'hidden',
-        '&:hover': {
+        '&:hover:not([disabled])': {
             transition: `background-color ${transitionTiming}, color ${transitionTiming}, border-color ${transitionTiming}`,
         },
     },
@@ -89,6 +89,8 @@ const commonClasses = () => ({
     },
 });
 
+const disabledStyle = {opacity: 0.5};
+
 const usePrimaryButtonStyles = createUseStyles((theme) => ({
     ...commonClasses(),
     light: {
@@ -98,10 +100,7 @@ const usePrimaryButtonStyles = createUseStyles((theme) => ({
         '&:enabled:active': {
             backgroundColor: theme.colors.buttonPrimaryBackgroundSelected,
         },
-        '&[disabled]:not($isLoading)': {
-            color: theme.colors.textButtonPrimaryDisabled,
-            backgroundColor: theme.colors.buttonPrimaryBackgroundDisabled,
-        },
+        '&[disabled]:not($isLoading)': disabledStyle,
 
         // Next media queries were added in each button style, because a pair of bugs in mobile devices (related to: https://jira.tuenti.io/jira/browse/APPS-1882):
         // - When tapping on a button that takes you to next screen and then go back to the previous one, button still have the focus styles
@@ -112,7 +111,7 @@ const usePrimaryButtonStyles = createUseStyles((theme) => ({
         // - Media query with "coarse" (mobile), avoids that in devices that have coarse implemented, focus style doesn't get stuck
 
         // Must be always declared for Firefox
-        '&:hover': {
+        '&:hover:not([disabled])': {
             backgroundColor: theme.colors.buttonPrimaryBackgroundHover,
             '@media (pointer: coarse)': {
                 // Revert hover background in touch devices
@@ -128,12 +127,9 @@ const usePrimaryButtonStyles = createUseStyles((theme) => ({
             backgroundColor: theme.colors.buttonPrimaryBackgroundSelectedInverse,
             color: theme.colors.textButtonPrimaryInverseSelected,
         },
-        '&[disabled]:not($isLoading)': {
-            backgroundColor: theme.colors.buttonPrimaryBackgroundDisabledInverse,
-            color: theme.colors.textButtonPrimaryInverseDisabled,
-        },
+        '&[disabled]:not($isLoading)': disabledStyle,
 
-        '&:hover': {
+        '&:hover:not([disabled])': {
             color: theme.colors.textButtonPrimaryInverseSelected,
             backgroundColor: theme.colors.buttonPrimaryBackgroundSelectedInverse,
             '@media (pointer: coarse)': {
@@ -163,11 +159,8 @@ const useSecondaryButtonStyles = createUseStyles((theme) => ({
         '&:enabled:active': {
             ...buttonSecondaryHoverLightStyle(theme),
         },
-        '&[disabled]:not($isLoading)': {
-            color: theme.colors.textButtonSecondaryDisabled,
-            borderColor: theme.colors.buttonSecondaryBackgroundDisabled,
-        },
-        '&:hover': {
+        '&[disabled]:not($isLoading)': disabledStyle,
+        '&:hover:not([disabled])': {
             ...buttonSecondaryHoverLightStyle(theme),
             '@media (pointer: coarse)': {
                 ...buttonSecondaryLightStyle(theme),
@@ -182,12 +175,9 @@ const useSecondaryButtonStyles = createUseStyles((theme) => ({
             borderColor: theme.colors.buttonSecondaryBorderSelectedInverse,
             color: theme.colors.textButtonSecondaryInverseSelected,
         },
-        '&[disabled]:not($isLoading)': {
-            color: theme.colors.textButtonSecondaryInverseDisabled,
-            borderColor: theme.colors.buttonSecondaryBorderDisabledInverse,
-        },
+        '&[disabled]:not($isLoading)': disabledStyle,
 
-        '&:hover': {
+        '&:hover:not([disabled])': {
             borderColor: theme.colors.buttonSecondaryBorderSelectedInverse,
             color: theme.colors.textButtonSecondaryInverseSelected,
             '@media (pointer: coarse)': {
@@ -206,11 +196,10 @@ const dangerButtonStyles = (theme: Theme) => ({
         backgroundColor: theme.colors.buttonDangerBackgroundSelected,
     },
     '&[disabled]:not($isLoading)': {
-        color: theme.colors.textButtonPrimaryDisabled,
-        backgroundColor: theme.colors.buttonDangerBackgroundDisabled,
+        opacity: 0.5,
     },
 
-    '&:hover': {
+    '&:hover:not([disabled])': {
         backgroundColor: theme.colors.buttonDangerBackgroundHover,
         '@media (pointer: coarse)': {
             // Revert hover background in touch devices
@@ -383,6 +372,12 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
         role: 'button',
     };
 
+    if (process.env.NODE_ENV !== 'production') {
+        if (props.to === '' || props.href === '') {
+            throw Error('to or href props are empty strings');
+        }
+    }
+
     if (props.fake) {
         return <Touchable maybe {...commonProps} role="presentation" aria-hidden="true" />;
     }
@@ -396,16 +391,20 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
         return <Touchable {...commonProps} onPress={props.onPress} />;
     }
 
-    if (props.to) {
+    if (props.to || props.to === '') {
         return <Touchable {...commonProps} to={props.to} fullPageOnWebView={props.fullPageOnWebView} />;
     }
 
-    if (props.href) {
+    if (props.href || props.href === '') {
         return <Touchable {...commonProps} href={props.href} newTab={props.newTab} />;
     }
 
-    // this cannot happen
-    throw Error('Bad button props');
+    if (process.env.NODE_ENV !== 'production') {
+        // this cannot happen
+        throw Error('Bad button props');
+    }
+
+    return null;
 };
 
 const useButtonLinkStyles = createUseStyles((theme) => {
@@ -423,7 +422,7 @@ const useButtonLinkStyles = createUseStyles((theme) => {
             '&:enabled:active': {
                 backgroundColor: theme.colors.buttonLinkBackgroundSelected,
             },
-            '&:hover': {
+            '&:hover:not([disabled])': {
                 backgroundColor: theme.colors.buttonLinkBackgroundSelected,
                 '@media (pointer: coarse)': {
                     backgroundColor: 'initial',
@@ -435,7 +434,7 @@ const useButtonLinkStyles = createUseStyles((theme) => {
             '&:enabled:active': {
                 backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
             },
-            '&:hover': {
+            '&:hover:not([disabled])': {
                 backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
                 '@media (pointer: coarse)': {
                     backgroundColor: 'initial',
@@ -473,7 +472,10 @@ interface ButtonLinkToProps extends ButtonLinkCommonProps {
 
 export type ButtonLinkProps = ButtonLinkOnPressProps | ButtonLinkHrefProps | ButtonLinkToProps;
 
-export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
+export const ButtonLink = React.forwardRef<
+    HTMLDivElement | HTMLAnchorElement | HTMLButtonElement,
+    ButtonLinkProps
+>((props, ref) => {
     const classes = useButtonLinkStyles();
     const isInverse = useIsInverseVariant();
     const commonProps = {
@@ -490,21 +492,33 @@ export const ButtonLink: React.FC<ButtonLinkProps> = (props) => {
         ),
     };
 
+    if (process.env.NODE_ENV !== 'production') {
+        if (props.to === '' || props.href === '') {
+            throw Error('to or href props are empty strings');
+        }
+    }
+
     if (props.onPress) {
-        return <Touchable {...commonProps} onPress={props.onPress} />;
+        return <Touchable ref={ref} {...commonProps} onPress={props.onPress} />;
     }
 
-    if (props.to) {
-        return <Touchable {...commonProps} to={props.to} fullPageOnWebView={props.fullPageOnWebView} />;
+    if (props.to || props.to === '') {
+        return (
+            <Touchable ref={ref} {...commonProps} to={props.to} fullPageOnWebView={props.fullPageOnWebView} />
+        );
     }
 
-    if (props.href) {
-        return <Touchable {...commonProps} href={props.href} newTab={props.newTab} />;
+    if (props.href || props.href === '') {
+        return <Touchable ref={ref} {...commonProps} href={props.href} newTab={props.newTab} />;
     }
 
-    // this cannot happen
-    throw Error('Bad button props');
-};
+    if (process.env.NODE_ENV !== 'production') {
+        // this cannot happen
+        throw Error('Bad button props');
+    }
+
+    return null;
+});
 
 export const ButtonPrimary: React.FC<ButtonProps> = (props) => {
     const classes = usePrimaryButtonStyles();

@@ -3,32 +3,47 @@ import {O2_SKIN} from './constants';
 
 import type {GetSkin} from './types';
 
+// https://github.com/Telefonica/mistica-design/blob/production/tokens/o2-constants.json
+// https://github.com/Telefonica/mistica-design/blob/production/tokens/o2-skin-schema.json
+
 export const palette = {
     o2BluePrimary: '#0019A5',
-    o2BluePrimaryDark: '#000066',
-    o2BluePrimaryLight50: '#808CD2',
-    o2BluePrimaryLight10: '#CCD1ED',
-    o2BlueMid: '#007BB2',
-    o2BlueMidDark: '#006795',
+    o2BluePrimary70: '#000066',
+    o2BluePrimary30: '#808CD2',
+    o2BluePrimary15: '#CCD1ED',
+    o2BluePrimary10: '#E5E8F6',
+
+    o2BlueMid: '#0090D0',
+
     o2BlueLight: '#41B6E6',
-    o2BlueLight60: '#8DD3F0',
     o2BlueLight30: '#C6E9F7',
-    o2BlueLight10: '#ECF7FC',
+
     o2Teal: '#01B7B4',
-    o2TealDark: '#099E9B',
-    o2TealLight: '#B1E4E3',
+
     o2Green: '#91C90E',
-    o2GreenLight: '#DEEEB7',
+    o2Green10: '#F4FAE7',
+    o2Green40: '#B2D956',
+    o2Green80: '#415A06',
+
     o2Yellow: '#FEDB00',
-    o2YellowLight: '#FEF6C3',
+
     o2Orange: '#FF7F41',
-    o2OrangeLight: '#FFD6C2',
-    o2Coral: '#FF706E',
-    o2Pink: '#CB31A0',
-    o2Purple: '#953698',
+    o2Orange10: '#FFF2EC',
+    o2Orange40: '#FFA57A',
+    o2Orange75: '#A6522A',
+
+    o2Pink: '#E45DBF',
+
+    o2Purple: '#952D98',
+    o2Purple10: '#F4EAF5',
+    o2Purple30: '#CA9ACB',
+
     pepper: '#FF374A',
-    pepperDark: '#D73241',
-    pepperLight30: '#FFC3C8',
+    pepper10: '#FEEBED',
+    pepper20: '#FCC3C9',
+    pepper40: '#FF7380',
+    pepper60: '#C32B3D',
+
     grey1: '#F6F6F6',
     grey2: '#EEEEEE',
     grey3: '#DDDDDD',
@@ -36,6 +51,7 @@ export const palette = {
     grey5: '#707070',
     grey6: '#000033',
     white: '#FFFFFF',
+
     // specific for dark mode:
     darkModeBlack: '#191919',
     darkModeGrey: '#242424',
@@ -70,43 +86,32 @@ export const getO2Skin: GetSkin = () => {
 
             // BUTTONS
             buttonDangerBackground: palette.pepper,
-            buttonDangerBackgroundDisabled: palette.pepperLight30,
-            buttonDangerBackgroundSelected: palette.pepperDark,
-            buttonDangerBackgroundHover: palette.pepperDark,
-            buttonLinkBackgroundSelected: palette.o2BluePrimaryLight10,
+            buttonDangerBackgroundSelected: palette.pepper60,
+            buttonDangerBackgroundHover: palette.pepper60,
+            buttonLinkBackgroundSelected: palette.o2BluePrimary15,
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
 
             buttonPrimaryBackground: palette.o2BluePrimary,
-            buttonPrimaryBackgroundDisabled: palette.o2BluePrimaryLight10,
-            buttonPrimaryBackgroundDisabledInverse: palette.o2BluePrimaryLight50,
             buttonPrimaryBackgroundInverse: palette.white,
-            buttonPrimaryBackgroundSelected: palette.o2BluePrimaryDark,
-            buttonPrimaryBackgroundHover: palette.o2BluePrimaryDark,
-            buttonPrimaryBackgroundSelectedInverse: palette.o2BluePrimaryLight50,
+            buttonPrimaryBackgroundSelected: palette.o2BluePrimary70,
+            buttonPrimaryBackgroundHover: palette.o2BluePrimary70,
+            buttonPrimaryBackgroundSelectedInverse: palette.o2BluePrimary30,
             buttonSecondaryBackground: palette.o2BluePrimary,
-            buttonSecondaryBackgroundDisabled: palette.o2BluePrimaryLight10,
-            buttonSecondaryBackgroundSelected: palette.o2BluePrimaryDark,
-            buttonSecondaryBorderDisabledInverse: palette.o2BluePrimaryLight50,
+            buttonSecondaryBackgroundSelected: palette.o2BluePrimary70,
             buttonSecondaryBorderInverse: palette.white,
-            buttonSecondaryBorderSelectedInverse: palette.o2BluePrimaryLight50,
+            buttonSecondaryBorderSelectedInverse: palette.o2BluePrimary30,
 
             textButtonPrimary: palette.white,
-            textButtonPrimaryDisabled: palette.white,
             textButtonPrimaryInverse: palette.o2BluePrimary,
-            textButtonPrimaryInverseDisabled: palette.o2BluePrimaryLight10,
-            textButtonPrimaryInverseSelected: palette.o2BluePrimaryDark,
+            textButtonPrimaryInverseSelected: palette.o2BluePrimary70,
             textButtonSecondary: palette.o2BluePrimary,
-            textButtonSecondaryDisabled: palette.o2BluePrimaryLight10,
-            textButtonSecondarySelected: palette.o2BluePrimaryDark,
+            textButtonSecondarySelected: palette.o2BluePrimary70,
             textButtonSecondaryInverse: palette.white,
-            textButtonSecondaryInverseDisabled: palette.o2BluePrimaryLight50,
             textButtonSecondaryInverseSelected: palette.white,
             textLink: palette.o2BluePrimary,
             textLinkInverse: palette.white,
             textLinkDanger: palette.pepper,
-            textLinkDangerDisabled: palette.pepperLight30,
-            textLinkDisabled: palette.o2BluePrimaryLight50,
-            textLinkSnackbar: palette.o2BluePrimaryLight50,
+            textLinkSnackbar: palette.o2BluePrimary30,
 
             // CONTROLS
             control: palette.grey3,
@@ -118,7 +123,7 @@ export const getO2Skin: GetSkin = () => {
             loadingBarInverse: palette.o2BluePrimary,
 
             toggleAndroidInactive: palette.grey2, // web only
-            toggleAndroidBackgroundActive: palette.o2BluePrimaryLight10, // web only
+            toggleAndroidBackgroundActive: palette.o2BluePrimary15, // web only
             iosControlKnob: palette.white, // web only
 
             // DIVIDERS
@@ -127,13 +132,13 @@ export const getO2Skin: GetSkin = () => {
             navigationBarDivider: palette.o2BluePrimary,
 
             // FEEDBACKS
-            badge: palette.pepperDark,
+            badge: palette.pepper60,
             feedbackErrorBackground: palette.pepper,
             feedbackInfoBackground: palette.grey6,
 
             // GLOBAL
             brand: palette.o2BluePrimary,
-            brandDark: palette.o2BluePrimaryDark,
+            brandDark: palette.o2BluePrimary70,
             inverse: palette.white,
             neutralHigh: palette.grey6,
             neutralMedium: palette.grey5,
@@ -145,7 +150,6 @@ export const getO2Skin: GetSkin = () => {
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
             textSecondaryInverse: palette.white,
-            textDisabled: palette.grey4,
             textAmount: palette.o2BluePrimary,
 
             // STATES
@@ -155,11 +159,26 @@ export const getO2Skin: GetSkin = () => {
 
             // BARS TEXTS
             textNavigationBarPrimary: palette.white,
-            textNavigationBarSecondary: palette.o2BluePrimaryLight50,
-            textNavigationSearchBarHint: palette.o2BluePrimaryLight50, // iOS only
+            textNavigationBarSecondary: palette.o2BluePrimary30,
+            textNavigationSearchBarHint: palette.o2BluePrimary30, // iOS only
             textNavigationSearchBarText: palette.white, // iOS only
             textAppBar: palette.grey4,
             textAppBarSelected: palette.o2BluePrimary,
+
+            // TAGS
+            tagBackgroundSuccess: palette.o2Green10,
+            tagBackgroundWarning: palette.o2Orange10,
+            tagBackgroundError: palette.pepper10,
+            tagBackgroundPromo: palette.o2Purple10,
+            tagBackgroundActive: palette.o2BluePrimary10,
+            tagBackgroundInactive: palette.grey1,
+
+            textTagSuccess: palette.o2Green80,
+            textTagWarning: palette.o2Orange75,
+            textTagError: palette.pepper60,
+            textTagPromo: palette.o2Purple,
+            textTagActive: palette.o2BluePrimary,
+            textTagInactive: palette.grey5,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
@@ -177,38 +196,28 @@ export const getO2Skin: GetSkin = () => {
             border: palette.darkModeGrey,
             borderDark: palette.grey5,
             borderSelected: palette.darkModeO2BluePrimary,
-            buttonDangerBackgroundDisabled: applyAlpha(palette.white, 0.05),
             buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.05),
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.05),
             buttonPrimaryBackground: palette.darkModeO2BluePrimary,
-            buttonPrimaryBackgroundDisabled: applyAlpha(palette.white, 0.05),
-            buttonPrimaryBackgroundDisabledInverse: applyAlpha(palette.white, 0.05),
             buttonPrimaryBackgroundInverse: palette.darkModeO2BluePrimary,
             buttonPrimaryBackgroundSelected: palette.darkModeO2BluePrimaryDark,
             buttonPrimaryBackgroundHover: palette.darkModeO2BluePrimaryDark,
             buttonPrimaryBackgroundSelectedInverse: palette.darkModeO2BluePrimaryDark,
             buttonSecondaryBackground: palette.darkModeO2BluePrimary,
-            buttonSecondaryBackgroundDisabled: applyAlpha(palette.white, 0.05),
             buttonSecondaryBackgroundSelected: palette.darkModeO2BluePrimaryDark,
-            buttonSecondaryBorderDisabledInverse: applyAlpha(palette.white, 0.05),
             buttonSecondaryBorderInverse: palette.darkModeO2BluePrimary,
             buttonSecondaryBorderSelectedInverse: palette.darkModeO2BluePrimaryDark,
             textButtonPrimary: palette.grey2,
-            textButtonPrimaryDisabled: palette.grey5,
             textButtonPrimaryInverse: palette.grey2,
-            textButtonPrimaryInverseDisabled: palette.grey5,
             textButtonPrimaryInverseSelected: palette.grey2,
             textButtonSecondary: palette.grey2,
-            textButtonSecondaryDisabled: palette.grey5,
             textButtonSecondarySelected: palette.grey4,
             textButtonSecondaryInverse: palette.grey2,
-            textButtonSecondaryInverseDisabled: palette.grey5,
             textButtonSecondaryInverseSelected: palette.grey4,
-            textLink: palette.o2BluePrimaryLight50,
-            textLinkInverse: palette.o2BluePrimaryLight50,
-            textLinkDisabled: palette.darkModeGrey6,
+            textLink: palette.o2BluePrimary30,
+            textLinkInverse: palette.o2BluePrimary30,
             control: palette.darkModeGrey6,
-            controlActivated: palette.o2BluePrimaryLight50,
+            controlActivated: palette.o2BluePrimary30,
             loadingBar: palette.darkModeO2BluePrimary,
             loadingBarBackground: palette.darkModeGrey6,
             loadingBarBackgroundInverse: palette.grey1,
@@ -220,7 +229,7 @@ export const getO2Skin: GetSkin = () => {
             dividerInverse: applyAlpha(palette.white, 0.05),
             navigationBarDivider: palette.darkModeBlack,
             feedbackInfoBackground: palette.darkModeGrey6,
-            brand: palette.o2BluePrimaryLight50,
+            brand: palette.o2BluePrimary30,
             brandDark: palette.darkModeGrey6,
             inverse: palette.grey2,
             neutralHigh: palette.grey2,
@@ -230,14 +239,28 @@ export const getO2Skin: GetSkin = () => {
             textPrimaryInverse: palette.grey2,
             textSecondary: palette.grey4,
             textSecondaryInverse: palette.grey4,
-            textDisabled: palette.grey5,
-            textAmount: palette.o2BluePrimaryLight10,
+            textAmount: palette.o2BluePrimary15,
             textNavigationBarPrimary: palette.grey2,
             textNavigationBarSecondary: palette.grey4,
             textNavigationSearchBarHint: palette.grey4,
             textNavigationSearchBarText: palette.grey2,
             textAppBar: palette.grey5,
             textAppBarSelected: palette.grey2,
+
+            // TAGS
+            tagBackgroundSuccess: applyAlpha(palette.white, 0.05),
+            tagBackgroundWarning: applyAlpha(palette.white, 0.05),
+            tagBackgroundError: applyAlpha(palette.white, 0.05),
+            tagBackgroundPromo: applyAlpha(palette.white, 0.05),
+            tagBackgroundActive: applyAlpha(palette.white, 0.05),
+            tagBackgroundInactive: applyAlpha(palette.white, 0.05),
+
+            textTagSuccess: palette.o2Green40,
+            textTagWarning: palette.o2Orange40,
+            textTagError: palette.pepper40,
+            textTagPromo: palette.o2Purple30,
+            textTagActive: palette.o2BluePrimary15,
+            textTagInactive: palette.grey4,
         },
     };
 };

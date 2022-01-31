@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconAddMoreRegular: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconAddMoreRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M18.354 11.318H12.68V5.644a.682.682 0 00-1.36 0v5.676H5.644a.682.682 0 000 1.36h5.676v5.676a.682.682 0 001.36 0V12.68h5.676a.682.682 0 00-.002-1.362"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M18.49 11.957h-5.824V5.552A.538.538 0 0012.141 5a.538.538 0 00-.525.552v6.396H5.525A.538.538 0 005 12.5c0 .303.237.552.525.552h6.083v6.396c0 .309.237.552.525.552a.538.538 0 00.525-.552v-6.39h5.817a.538.538 0 00.525-.552c0-.303-.223-.549-.51-.549z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M18.354 11.318H12.68V5.644a.682.682 0 00-1.36 0v5.676H5.644a.682.682 0 000 1.36h5.676v5.676a.682.682 0 001.36 0V12.68h5.676a.682.682 0 00-.002-1.362"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconAddMoreRegular;

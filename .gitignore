@@ -18,3 +18,11 @@ storybook-static/
 .vercel
 src/generated/mistica-icons/index.tsx.txt
 reports
+
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

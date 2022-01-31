@@ -1,4 +1,5 @@
 import {openStoryPage, screen} from '../test-utils';
+
 import type {Device} from '../test-utils';
 
 const devices: Array<Device> = ['MOBILE_IOS', 'TABLET', 'DESKTOP'];
@@ -13,7 +14,7 @@ const createCases = () => {
     return cases;
 };
 
-test.each(devices)('EmptyState with image', async (device) => {
+test.each(devices)('EmptyState in %s with image', async (device) => {
     await openStoryPage({
         id: 'components-others-emptystate--with-image',
         device,
@@ -25,7 +26,7 @@ test.each(devices)('EmptyState with image', async (device) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(createCases())('EmptyState with icon', async (device, asset) => {
+test.each(createCases())('EmptyState in %s with %s asset', async (device, asset) => {
     await openStoryPage({
         id: 'components-others-emptystate--with-icon',
         device: device as Device,
@@ -38,7 +39,7 @@ test.each(createCases())('EmptyState with icon', async (device, asset) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(devices)('EmptyState with small image', async (device) => {
+test.each(devices)('EmptyState in %s with small image', async (device) => {
     await openStoryPage({
         id: 'components-others-emptystate--with-small-image',
         device,

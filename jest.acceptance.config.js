@@ -1,4 +1,3 @@
-/* eslint-disable filenames/match-regex */
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
 
@@ -16,7 +15,7 @@ module.exports = {
     ...require('./jest.base.config'),
     displayName: 'acceptance',
     maxConcurrency: 1,
-    testTimeout: 30000,
+    testTimeout: 60000,
     maxWorkers: getMaxWorkers(),
 
     testMatch: [
@@ -25,7 +24,7 @@ module.exports = {
     ],
 
     globalSetup: require.resolve('./src/test-utils/environment/setup.tsx'),
-    globalTeardown: require.resolve('./src/test-utils/environment/teardown.tsx'),
+    globalTeardown: 'jest-environment-puppeteer/teardown',
     testEnvironment: 'jest-environment-puppeteer',
     setupFilesAfterEnv: [require.resolve('./src/test-utils/setup-acceptance-test-env.tsx')],
 };

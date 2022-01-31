@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {createUseStyles} from './jss';
 import {ButtonLink, ButtonLinkProps, ButtonPrimary, ButtonProps, ButtonSecondary} from './button';
 import classNames from 'classnames';

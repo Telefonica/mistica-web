@@ -1,9 +1,6 @@
 // @flow
 
 import * as React from "react";
-declare type Props = {
-  color?: string,
-  size?: string | number,
-};
-declare var IconRouteRegular: React.ComponentType<Props>;
+import type { IconProps } from "../../utils/types";
+declare var IconRouteRegular: React.ComponentType<IconProps>;
 declare export default typeof IconRouteRegular;

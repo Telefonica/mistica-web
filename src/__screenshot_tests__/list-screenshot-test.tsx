@@ -1,4 +1,5 @@
 import {openStoryPage, screen} from '../test-utils';
+
 import type {Device} from '../test-utils';
 
 const devices: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
@@ -67,6 +68,40 @@ test.each(getCases())(
         expect(image).toMatchImageSnapshot();
     }
 );
+
+test.each(controls)('Row list disabled - %s', async (control) => {
+    await openStoryPage({
+        id: 'components-lists--row-list-story',
+        device: 'MOBILE_IOS',
+        args: {
+            control,
+            headline: 'Headline',
+            withBadge: true,
+            disabled: true,
+        },
+    });
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
+
+test.each(controls)('Boxed row list disabled - %s', async (control) => {
+    await openStoryPage({
+        id: 'components-lists--boxed-row-list-story',
+        device: 'MOBILE_IOS',
+        args: {
+            control,
+            headline: 'Headline',
+            withBadge: true,
+            disabled: true,
+        },
+    });
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
 
 test('Rows with only a Title content are centered', async () => {
     await openStoryPage({

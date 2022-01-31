@@ -2,33 +2,36 @@
 
 import * as React from "react";
 import type { TrackingEvent, DataAttributes } from "./utils/types";
-declare type CommonProps = {|
+declare type CommonProps = {
   children?: React.Node,
   className?: string,
   style?: CssStyle,
-  classes?: { [className: string]: string, ... },
+  classes?: {
+    [className: string]: string,
+  },
   small?: boolean,
+  disabled?: boolean,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
 
   /**
    * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
    */
   dataAttributes?: DataAttributes,
-|};
-export type HrefProps = {|
+};
+export type HrefProps = {
   ...$Exact<CommonProps>,
   href: string,
   newTab?: boolean,
-|};
-export type ToProps = {|
+};
+export type ToProps = {
   ...$Exact<CommonProps>,
   to: string,
   fullPageOnWebView?: boolean,
-|};
-export type OnPressProps = {|
+};
+export type OnPressProps = {
   ...$Exact<CommonProps>,
   onPress: (event: SyntheticMouseEvent<HTMLElement>) => void | boolean,
-|};
+};
 export type TextLinkProps = HrefProps | ToProps | OnPressProps;
 declare var TextLink: React.ComponentType<TextLinkProps>;
 declare export default typeof TextLink;

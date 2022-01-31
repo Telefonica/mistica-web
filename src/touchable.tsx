@@ -5,10 +5,10 @@ import {createUseStyles} from './jss';
 import {useTheme} from './hooks';
 import {isInsideNovumNativeApp} from './utils/platform';
 import {ENTER, SPACE} from './utils/key-codes';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
-import {getPrefixedDataAttributes} from './utils/dom';
 
 const redirect = (url: string, external = false): void => {
     if (external) {
@@ -41,8 +41,7 @@ const useStyles = createUseStyles(() => ({
             border: 'none',
         },
         '&[disabled]': {
-            cursor: 'auto',
-            pointerEvents: 'none',
+            cursor: 'default',
         },
         '&:active, &:hover': {
             textDecoration: 'none',
@@ -60,6 +59,7 @@ interface CommonProps {
     children: React.ReactNode;
     className?: string;
     disabled?: boolean;
+    /** @deprecated use ref */
     elementRef?: React.Ref<HTMLButtonElement | HTMLAnchorElement | HTMLDivElement>;
     style?: React.CSSProperties;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
@@ -127,165 +127,172 @@ export interface PropsMaybeOnPress extends CommonProps {
 
 export type Props = PropsHref | PropsTo | PropsOnPress | PropsMaybeHref | PropsMaybeTo | PropsMaybeOnPress;
 
-const Touchable: React.FC<Props> = (props) => {
-    const {texts, analytics, platformOverrides, Link} = useTheme();
-    const classes = useStyles();
-    const isClicked = React.useRef(false);
-    let trackingEvents: ReadonlyArray<TrackingEvent> = [];
-    if (props.trackingEvent) {
-        if (Array.isArray(props.trackingEvent)) {
-            trackingEvents = props.trackingEvent;
-        } else {
-            trackingEvents = [props.trackingEvent as TrackingEvent];
-        }
-    }
-
-    const children = props.children;
-
-    const commonProps = {
-        className: classnames(classes.touchable, props.className),
-        disabled: props.disabled,
-        style: props.style,
-        role: props.role,
-        'aria-checked': props['aria-checked'],
-        'aria-controls': props['aria-controls'],
-        'aria-expanded': props['aria-expanded'],
-        'aria-hidden': props['aria-hidden'],
-        'aria-selected': props['aria-selected'],
-        'aria-live': props['aria-live'],
-        tabIndex: props.tabIndex,
-        ...getPrefixedDataAttributes(props.dataAttributes),
-    };
-
-    const type = props.type ? props.type : 'button';
-
-    const openNewTab = !!props.href && !!props.newTab;
-
-    const onPress = (event: React.MouseEvent<HTMLElement>) => {
-        if (props.onPress) {
-            props.onPress(event);
-        }
-    };
-
-    const getHref = (): string => {
-        if (props.href) {
-            return props.href;
-        }
-        if (props.to && props.fullPageOnWebView) {
-            if (typeof props.to === 'string') {
-                return props.to;
+const Touchable = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLButtonElement, Props>(
+    (props, ref) => {
+        const {texts, analytics, platformOverrides, Link, useHrefDecorator} = useTheme();
+        const hrefDecorator = useHrefDecorator();
+        const classes = useStyles();
+        const isClicked = React.useRef(false);
+        let trackingEvents: ReadonlyArray<TrackingEvent> = [];
+        if (props.trackingEvent) {
+            if (Array.isArray(props.trackingEvent)) {
+                trackingEvents = props.trackingEvent;
+            } else {
+                trackingEvents = [props.trackingEvent as TrackingEvent];
             }
-            return props.to.pathname ?? '';
-        }
-        return '';
-    };
-
-    const trackEvent = () => Promise.all(trackingEvents.map((event) => analytics.logEvent(event)));
-
-    const trackOnce = (callback: () => void) => {
-        if (isClicked.current) return;
-        isClicked.current = true;
-
-        trackEvent().finally(() => {
-            isClicked.current = false;
-            callback();
-        });
-    };
-
-    const handleButtonClick = (event: React.MouseEvent<HTMLElement>) => {
-        // synchronously execute handler when no tracking is needed
-        if (!trackingEvents.length) {
-            onPress(event);
-            return;
         }
 
-        trackOnce(() => onPress(event));
-    };
+        const children = props.children;
 
-    const handleHrefClick = (event: React.MouseEvent<HTMLElement>) => {
-        if (!trackingEvents.length) {
-            return; // leave the browser handle the href
-        }
+        const commonProps = {
+            className: classnames(classes.touchable, props.className),
+            disabled: props.disabled,
+            style: props.style,
+            role: props.role,
+            'aria-checked': props['aria-checked'],
+            'aria-controls': props['aria-controls'],
+            'aria-expanded': props['aria-expanded'],
+            'aria-hidden': props['aria-hidden'],
+            'aria-selected': props['aria-selected'],
+            'aria-live': props['aria-live'],
+            tabIndex: props.tabIndex,
+            ...getPrefixedDataAttributes(props.dataAttributes),
+        };
 
-        event.preventDefault();
-        trackOnce(() => redirect(getHref(), openNewTab));
-    };
+        const type = props.type ? props.type : 'button';
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
-        if (event.keyCode === ENTER || event.keyCode === SPACE) {
+        const openNewTab = !!props.href && !!props.newTab;
+
+        const onPress = (event: React.MouseEvent<HTMLElement>) => {
+            if (props.onPress) {
+                props.onPress(event);
+            }
+        };
+
+        const getHref = (): string => {
+            if (props.href) {
+                return hrefDecorator(props.href);
+            }
+            if (props.to && props.fullPageOnWebView) {
+                if (typeof props.to === 'string') {
+                    return props.to;
+                }
+                return props.to.pathname ?? '';
+            }
+            return '';
+        };
+
+        const trackEvent = () => Promise.all(trackingEvents.map((event) => analytics.logEvent(event)));
+
+        const trackOnce = (callback: () => void) => {
+            if (isClicked.current) return;
+            isClicked.current = true;
+
+            trackEvent().finally(() => {
+                isClicked.current = false;
+                callback();
+            });
+        };
+
+        const handleButtonClick = (event: React.MouseEvent<HTMLElement>) => {
+            // synchronously execute handler when no tracking is needed
+            if (!trackingEvents.length) {
+                onPress(event);
+                return;
+            }
+
+            trackOnce(() => onPress(event));
+        };
+
+        const handleHrefClick = (event: React.MouseEvent<HTMLElement>) => {
+            if (!trackingEvents.length) {
+                return; // leave the browser handle the href
+            }
+
             event.preventDefault();
-            event.currentTarget.click();
+            trackOnce(() => redirect(getHref(), openNewTab));
+        };
+
+        const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+            if (event.keyCode === ENTER || event.keyCode === SPACE) {
+                event.preventDefault();
+                event.currentTarget.click();
+            }
+        };
+
+        if (
+            !!props.href ||
+            (props.to && props.fullPageOnWebView && isInsideNovumNativeApp(platformOverrides))
+        ) {
+            return (
+                <a
+                    {...commonProps}
+                    aria-label={props['aria-label']}
+                    aria-labelledby={props['aria-labelledby']}
+                    onClick={handleHrefClick}
+                    onKeyDown={handleKeyDown}
+                    href={props.disabled ? undefined : getHref()}
+                    target={openNewTab ? '_blank' : undefined}
+                    rel={openNewTab ? 'noopener noreferrer' : undefined}
+                    ref={ref as React.RefObject<HTMLAnchorElement>}
+                >
+                    {children}
+                    {openNewTab && (
+                        <ScreenReaderOnly>
+                            <span>{texts.linkOpensInNewTab}</span>
+                        </ScreenReaderOnly>
+                    )}
+                </a>
+            );
         }
-    };
 
-    if (!!props.href || (props.to && props.fullPageOnWebView && isInsideNovumNativeApp(platformOverrides))) {
+        if (props.to) {
+            return (
+                <Link
+                    {...commonProps}
+                    aria-label={props['aria-label']}
+                    aria-labelledby={props['aria-labelledby']}
+                    innerRef={(props.elementRef as React.RefObject<HTMLAnchorElement>) ?? ref}
+                    to={props.disabled ? '' : props.to}
+                    replace={props.replace}
+                    onClick={trackEvent}
+                    onKeyDown={handleKeyDown}
+                >
+                    {children}
+                </Link>
+            );
+        }
+
+        if (props.onPress) {
+            return (
+                <button
+                    {...commonProps}
+                    // this "form" attribute is useful when the form's submit button
+                    // is located outside the <form> element, for example if you use
+                    // a ButtonFixedFooter layout inside a form with the submit
+                    // button located at the footer, which is redered using a Portal
+                    form={type === 'submit' && props.formId ? props.formId : undefined}
+                    aria-label={props['aria-label']}
+                    aria-labelledby={props['aria-labelledby']}
+                    type={type}
+                    ref={(props.elementRef as React.RefObject<HTMLButtonElement>) ?? ref}
+                    onClick={handleButtonClick}
+                >
+                    {children}
+                </button>
+            );
+        }
+
         return (
-            <a
+            <div
                 {...commonProps}
-                aria-label={props['aria-label']}
-                aria-labelledby={props['aria-labelledby']}
-                onClick={handleHrefClick}
-                onKeyDown={handleKeyDown}
-                href={props.disabled ? '' : getHref()}
-                target={openNewTab ? '_blank' : undefined}
-                rel={openNewTab ? 'noopener noreferrer' : undefined}
+                ref={(props.elementRef as React.RefObject<HTMLDivElement>) ?? ref}
+                className={classnames(commonProps.className, classes.notTouchable)}
             >
                 {children}
-                {openNewTab && (
-                    <ScreenReaderOnly>
-                        <span>{texts.linkOpensInNewTab}</span>
-                    </ScreenReaderOnly>
-                )}
-            </a>
+            </div>
         );
     }
-
-    if (props.to) {
-        return (
-            <Link
-                {...commonProps}
-                aria-label={props['aria-label']}
-                aria-labelledby={props['aria-labelledby']}
-                innerRef={props.elementRef as React.RefObject<HTMLAnchorElement>}
-                to={props.disabled ? '' : props.to}
-                replace={props.replace}
-                onClick={trackEvent}
-                onKeyDown={handleKeyDown}
-            >
-                {children}
-            </Link>
-        );
-    }
-
-    if (props.onPress) {
-        return (
-            <button
-                {...commonProps}
-                // this "form" attribute is useful when the form's submit button
-                // is located outside the <form> element, for example if you use
-                // a ButtonFixedFooter layout inside a form with the submit
-                // button located at the footer, which is redered using a Portal
-                form={type === 'submit' && props.formId ? props.formId : undefined}
-                aria-label={props['aria-label']}
-                aria-labelledby={props['aria-labelledby']}
-                type={type}
-                ref={props.elementRef as React.RefObject<HTMLButtonElement>}
-                onClick={handleButtonClick}
-            >
-                {children}
-            </button>
-        );
-    }
-
-    return (
-        <div
-            {...commonProps}
-            ref={props.elementRef as React.RefObject<HTMLDivElement>}
-            className={classnames(commonProps.className, classes.notTouchable)}
-        >
-            {children}
-        </div>
-    );
-};
+);
 
 export default Touchable;

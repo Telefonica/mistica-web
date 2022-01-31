@@ -101,3 +101,102 @@ export const Default: StoryComponent = () => {
 };
 
 Default.storyName = 'HighlightedCard';
+
+export const CustomCardSize: StoryComponent = () => {
+    return (
+        <div
+            style={{display: 'flex', background: '#eee', overflowX: 'auto', justifyContent: 'flex-start'}}
+            data-testid="highlighted-card"
+        >
+            <HighlightedCard
+                width={250}
+                title="Title 1"
+                description="Some description here"
+                imageUrl="https://i.imgur.com/jeDSXBU.jpg"
+                imageFit="fit"
+                onClose={() => {}}
+            />
+
+            <Box paddingRight={8} />
+
+            <HighlightedCard
+                width={250}
+                title="Title 2"
+                description="Some description here"
+                imageUrl="https://i.imgur.com/jeDSXBU.jpg"
+                imageFit="fit"
+                button={
+                    <ButtonPrimary small href="https://google.com">
+                        Action
+                    </ButtonPrimary>
+                }
+            />
+
+            <Box paddingRight={8} />
+
+            <HighlightedCard
+                width={250}
+                title="Title 3"
+                description="Some description here. Some description here."
+                imageUrl="https://i.imgur.com/jeDSXBU.jpg"
+                imageFit="fit"
+                button={
+                    <ButtonPrimary small href="https://google.com">
+                        Action
+                    </ButtonPrimary>
+                }
+            />
+
+            <Box paddingRight={8} />
+
+            <HighlightedCard
+                width={250}
+                onClose={() => {}}
+                onPress={() => {}}
+                title="Title 4"
+                description="Some description here. Some description here. Some description here. "
+                imageUrl="https://i.imgur.com/jeDSXBU.jpg"
+                imageFit="fit"
+            />
+        </div>
+    );
+};
+
+const CardWrapper: React.FC = ({children}) => (
+    <div style={{display: 'flex', width: '18%', marginRight: 8}}>{children}</div>
+);
+
+export const CustomCardSizeInsideWrapper: StoryComponent = () => {
+    return (
+        <div style={{display: 'flex', background: '#eee'}} data-testid="highlighted-card">
+            <CardWrapper>
+                <HighlightedCard title="Title1" description="Simple" />
+            </CardWrapper>
+
+            <CardWrapper>
+                <HighlightedCard title="Title2" description="Dismisseable" onClose={() => {}} />
+            </CardWrapper>
+
+            <CardWrapper>
+                <HighlightedCard title="Title3" description="Touchable card" onPress={() => {}} />
+            </CardWrapper>
+
+            <CardWrapper>
+                <HighlightedCard
+                    title="Title4"
+                    description="Touchable and dismisseable"
+                    onPress={() => {}}
+                    onClose={() => {}}
+                />
+            </CardWrapper>
+
+            <CardWrapper>
+                <HighlightedCard
+                    title="Title5"
+                    description="Super long description. Super long description. Super long description. Super long description."
+                    onClose={() => {}}
+                />
+            </CardWrapper>
+        </div>
+    );
+};

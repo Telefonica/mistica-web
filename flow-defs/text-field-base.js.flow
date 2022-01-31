@@ -32,7 +32,7 @@ export type AutoComplete =
   | "cc-exp"
   | "cc-csc"
   | "username";
-export type CommonFormFieldProps = {|
+export type CommonFormFieldProps = {
   autoFocus?: boolean,
   disabled?: boolean,
   error?: boolean,
@@ -53,8 +53,8 @@ export type CommonFormFieldProps = {|
   defaultValue?: string,
   onChange?: (event: SyntheticEvent<HTMLInputElement>) => void,
   readOnly?: boolean,
-|};
-declare type TextFieldBaseProps = {|
+};
+declare type TextFieldBaseProps = {
   id?: string,
   type?: string,
   autoComplete?: AutoComplete,
@@ -83,7 +83,9 @@ declare type TextFieldBaseProps = {|
   onBlur?: (event: SyntheticFocusEvent<>) => void,
   onFocus?: (event: SyntheticFocusEvent<>) => void,
   onKeyDown?: (event: SyntheticKeyboardEvent<>) => void,
-  inputProps?: { [name: string]: string | number | void, ... },
+  inputProps?: {
+    [name: string]: string | number | void,
+  },
   inputComponent?: React.ComponentType<any>,
   shrinkLabel?: boolean,
   focus?: boolean,
@@ -94,8 +96,15 @@ declare type TextFieldBaseProps = {|
   readOnly?: boolean,
   min?: string,
   max?: string,
-|};
-declare var TextFieldBase: React.Component<TextFieldBaseProps>;
-declare export default typeof TextFieldBase;
+};
+declare export var TextFieldBase: React.ComponentType<{
+  ...TextFieldBaseProps,
+  ...{},
+}>;
+declare export var TextFieldBaseAutosuggest: React.ComponentType<{
+  ...TextFieldBaseProps,
+  ...{},
+}>;
+declare export {};
 
 import { type CssStyle } from "./__types__.js.flow";

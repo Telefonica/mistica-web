@@ -8,17 +8,14 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconDumbbellFilled: React.FC<Props> = ({color, size = 24}) => {
+const IconDumbbellFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
+        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
                 d="M2 8.126c0-.74.571-1.336 1.28-1.336h.26v10.224h-.26c-.706 0-1.28-.6-1.28-1.336V8.126zm18.406-1.339c.706 0 1.28.6 1.28 1.336v7.55c0 .739-.574 1.335-1.28 1.335h-.24V6.784h.24v.003zM8.045 6.675V9.49h.014v4.82h-.014v2.816c0 .74-.572 1.336-1.28 1.336H5.667c-.692 0-1.255-.577-1.275-1.294V6.636c.02-.72.583-1.297 1.275-1.297h1.098c.706-.003 1.28.597 1.28 1.336zm.865 7.244v-4.04h5.894v4.04H8.91zm10.4-7.244v.112h.004v10.224h-.003v.112c0 .74-.574 1.336-1.28 1.336h-1.098c-.706 0-1.28-.6-1.28-1.336V6.675c0-.74.571-1.336 1.28-1.336h1.098c.708-.003 1.28.597 1.28 1.336z"
                 fill={fillColor}

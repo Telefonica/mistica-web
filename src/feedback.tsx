@@ -15,17 +15,16 @@ import {
 } from '@tef-novum/webview-bridge';
 import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {Theme} from './theme';
-import {Text6, Text4} from './text';
+import {Text6, Text4, Text2} from './text';
 import Box from './box';
 import {Boxed} from './boxed';
 import ResponsiveLayout from './responsive-layout';
 import Stack from './stack';
-
-import type {DataAttributes} from './utils/types';
 import {Colors} from './skins/types';
 import classnames from 'classnames';
 import ButtonGroup from './button-group';
 
+import type {DataAttributes} from './utils/types';
 import type {ButtonGroupProps} from './button-group';
 
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
@@ -354,22 +353,31 @@ export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = (props) => {
         </ThemeVariant>
     );
 };
-export const ErrorFeedbackScreen: React.FC<FeedbackProps> = (props) => {
-    const {skinName} = useTheme();
-    const hasIcon = skinName !== VIVO_SKIN;
+
+interface ErrorFeedbackScreenProps extends FeedbackProps {
+    errorReference?: string;
+}
+
+export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
+    children,
+    errorReference,
+    ...otherProps
+}) => {
+    const {colors} = useTheme();
     return (
-        <FeedbackScreen
-            {...props}
-            hapticFeedback="error"
-            icon={hasIcon ? <IcnError /> : undefined}
-            animateText
-        />
+        <FeedbackScreen {...otherProps} hapticFeedback="error" icon={<IcnError />} animateText>
+            {children}
+            {errorReference && (
+                <Text2 color={colors.textSecondary} regular>
+                    {errorReference}
+                </Text2>
+            )}
+        </FeedbackScreen>
     );
 };
+
 export const InfoFeedbackScreen: React.FC<FeedbackProps> = (props) => {
-    const {skinName} = useTheme();
-    const hasIcon = skinName !== VIVO_SKIN;
-    return <FeedbackScreen {...props} icon={hasIcon ? <IcnInfo /> : undefined} />;
+    return <FeedbackScreen {...props} icon={<IcnInfo />} />;
 };
 
 export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({

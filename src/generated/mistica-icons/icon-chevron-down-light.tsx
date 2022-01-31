@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconChevronDownLight: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconChevronDownLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M20 8.612c0 .15-.057.295-.16.404l-7.314 7.793a.604.604 0 01-.442.191.638.638 0 01-.455-.191L4.178 9.016a.592.592 0 010-.845.64.64 0 01.872 0l7.02 7.354 6.862-7.319a.628.628 0 01.868-.004l.004.004a.624.624 0 01.196.406z"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M19.914 8.083a.259.259 0 010 .386l-7.716 7.448a.282.282 0 01-.4 0L5.514 9.85a.248.248 0 01-.087-.194c0-.084.029-.14.087-.195a.282.282 0 01.4 0L12 15.336l7.514-7.253a.282.282 0 01.4 0zM4.573 8c.316 0 .573.248.573.553a.563.563 0 01-.573.553A.563.563 0 014 8.553C4 8.248 4.256 8 4.573 8z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M20 8.612c0 .15-.057.295-.16.404l-7.314 7.793a.604.604 0 01-.442.191.638.638 0 01-.455-.191L4.178 9.016a.592.592 0 010-.845.64.64 0 01.872 0l7.02 7.354 6.862-7.319a.628.628 0 01.868-.004l.004.004a.624.624 0 01.196.406z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconChevronDownLight;

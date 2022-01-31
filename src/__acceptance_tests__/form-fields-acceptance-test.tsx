@@ -1,6 +1,6 @@
 import {openStoryPage, screen, PageApi} from '../test-utils';
 
-import type {ElementHandle} from 'puppeteer';
+import type {ElementHandle} from '../test-utils';
 
 const clearAndType = async (page: PageApi, element: ElementHandle, text: string) => {
     await page.click(element, {clickCount: 3});
@@ -8,7 +8,7 @@ const clearAndType = async (page: PageApi, element: ElementHandle, text: string)
 };
 
 const getValue = async (element: Promise<ElementHandle> | ElementHandle) =>
-    (await element).getProperty('value').then((t) => t.jsonValue());
+    (await element).getProperty('value').then((t) => t?.jsonValue());
 
 const CONTROLLED_STORY = {id: 'components-forms-fields--types-controlled'};
 
@@ -137,7 +137,7 @@ test.each(STORY_TYPES)('PasswordField (%s)', async (storyType) => {
     });
     await page.click(await screen.findByLabelText('Mostrar u ocultar contraseña'));
 
-    await expect((await field).getProperty('selectionStart').then((t) => t.jsonValue())).resolves.toBe(6);
+    await expect(field.getProperty('selectionStart').then((t) => t?.jsonValue())).resolves.toBe(6);
 
     await field.evaluate((el) => {
         // move the caret
@@ -146,12 +146,20 @@ test.each(STORY_TYPES)('PasswordField (%s)', async (storyType) => {
 
     await page.click(await screen.findByLabelText('Mostrar u ocultar contraseña'));
 
-    await expect((await field).getProperty('selectionStart').then((t) => t.jsonValue())).resolves.toBe(0);
+    await expect(field.getProperty('selectionStart').then((t) => t?.jsonValue())).resolves.toBe(0);
 });
 
-test.each(STORY_TYPES)('DateField (%s)', async (storyType) => {
-    await openStoryPage(getStoryOfType(storyType));
+test('DateField (controlled)', async () => {
+    await openStoryPage(getStoryOfType('controlled'));
     const field = await screen.findByLabelText('Date');
+    await field.focus();
+    await field.type('06101980');
+    await expect(getValue(field)).resolves.toBe('1980-10-06');
+});
+
+test('DateField (uncontrolled)', async () => {
+    await openStoryPage(getStoryOfType('uncontrolled'));
+    const field = await screen.findByLabelText('Date (opcional)');
     await field.focus();
     await field.type('06101980');
     await expect(getValue(field)).resolves.toBe('1980-10-06');

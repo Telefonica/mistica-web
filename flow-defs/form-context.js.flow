@@ -2,7 +2,9 @@
 
 import * as React from "react";
 export type FormStatus = "filling" | "sending";
-export type FormErrors = { [name: string]: string | void, ... };
+export type FormErrors = {
+  [name: string]: string | void,
+};
 export type FieldValidator = (value: any, rawValue: string) => string | void;
 export type FieldRegistration = {
   input?: HTMLInputElement | HTMLSelectElement | null,
@@ -10,12 +12,16 @@ export type FieldRegistration = {
   focusableElement?: HTMLDivElement | HTMLSelectElement | null,
 };
 declare type Context = {
-  rawValues: { [name: string]: any, ... },
+  rawValues: {
+    [name: string]: any,
+  },
   setRawValue: (param: {
     +name: string,
     +value: any,
   }) => void,
-  values: { [name: string]: any, ... },
+  values: {
+    [name: string]: any,
+  },
   setValue: (param: {
     +name: string,
     +value: any,

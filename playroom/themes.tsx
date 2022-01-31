@@ -1,5 +1,6 @@
 import {mediaQueriesConfig} from '../src/theme';
 import * as themes from '../.storybook/themes';
+
 import type {ThemeConfig} from '../src/theme';
 
 const common = {

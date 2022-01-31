@@ -21,21 +21,27 @@ import {
     Snackbar,
     IconCallCenterUserSupportFilled,
     Touchable,
+    useScreenSize,
 } from '../..';
 import IntegerField from '../../integer-field';
-import {kebabCase, upperFirst} from 'lodash';
-import {useScreenSize} from '../../hooks';
-import {NoEmitOnErrorsPlugin} from 'webpack';
-import overscrollColorStory from '../../__stories__/overscroll-color-story';
+import {kebabCase, camelCase, upperFirst} from 'lodash';
+
+/**
+ * './path/icon-name-filled.tsx' => 'IconNameFilled'
+ */
+const fileNameToComponentName = (fileName: string) => {
+    const lastSlashIdx = fileName.lastIndexOf('/');
+    return upperFirst(camelCase(fileName.slice(lastSlashIdx + 1).replace('.tsx', '')));
+};
 
 // require all icons
-const misticaIcons = ((requireContext) =>
-    requireContext
-        .keys()
-        .map((id: string) => requireContext(id))
-        .map((module: any) => module.default))(
-    require.context('../../generated/mistica-icons/', true, /\.tsx$/)
-);
+const misticaIcons = ((requireContext) => {
+    return requireContext.keys().map((id: string) => {
+        const component = requireContext(id).default;
+        component.componentName = fileNameToComponentName(id);
+        return component;
+    });
+})(require.context('../../generated/mistica-icons/', true, /\.tsx$/));
 
 export default {
     title: 'Icons/Mistica Icons',
@@ -112,7 +118,7 @@ export const MisticaIcons: React.FC = () => {
 
     const backgroundColor = isInverse ? selectedColor : colors.background;
     const iconBackgroundColor = showIconBackground ? '#FF13FA32' : 'none';
-    const {isTabletOrSmaller, isTablet} = useScreenSize();
+    const {isTabletOrSmaller} = useScreenSize();
 
     return (
         <div

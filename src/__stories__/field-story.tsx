@@ -12,6 +12,7 @@ import {
     SearchField,
     PasswordField,
     DateField,
+    MonthField,
     PhoneNumberField,
     IbanField,
     Box,
@@ -284,6 +285,7 @@ export const TypesUncontrolled: StoryComponent = () => (
                     name="decimal"
                     label="Decimal"
                     defaultValue="123.45"
+                    maxDecimals={3}
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
                 />
@@ -346,6 +348,7 @@ export const TypesUncontrolled: StoryComponent = () => (
                     <DatePickerWarning />
                     <div data-testid="date">
                         <DateField
+                            optional
                             name="date"
                             label="Date"
                             onChange={handleChange}
@@ -362,8 +365,26 @@ export const TypesUncontrolled: StoryComponent = () => (
                     <DatePickerWarning />
                     <div data-testid="datetime">
                         <DateTimeField
+                            optional
                             name="datetime"
                             label="DateTime"
+                            onChange={handleChange}
+                            onChangeValue={handleChangeValue}
+                        />
+                    </div>
+                </>
+            )}
+        </Uncontrolled>
+
+        <Uncontrolled title="MonthField">
+            {(handleChange, handleChangeValue) => (
+                <>
+                    <DatePickerWarning />
+                    <div data-testid="month">
+                        <MonthField
+                            optional
+                            name="month"
+                            label="Month"
                             onChange={handleChange}
                             onChangeValue={handleChangeValue}
                         />
@@ -485,6 +506,7 @@ export const TypesControlled = (): React.ReactNode => (
                     value={value}
                     name="decimal"
                     label="Decimal"
+                    maxDecimals={3}
                     onChange={handleChange}
                     onChangeValue={handleChangeValue}
                 />
@@ -564,6 +586,21 @@ export const TypesControlled = (): React.ReactNode => (
                         value={value}
                         name="datetime"
                         label="DateTime"
+                        onChange={handleChange}
+                        onChangeValue={handleChangeValue}
+                    />
+                </>
+            )}
+        </Controlled>
+
+        <Controlled title="MonthField" initialValue="2021-10">
+            {(handleChange, handleChangeValue, value) => (
+                <>
+                    <DatePickerWarning />
+                    <MonthField
+                        value={value}
+                        name="month"
+                        label="Month"
                         onChange={handleChange}
                         onChangeValue={handleChangeValue}
                     />

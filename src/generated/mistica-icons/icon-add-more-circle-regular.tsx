@@ -8,23 +8,31 @@ import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
 
-type Props = {
-    color?: string;
-    size?: string | number;
-};
+import type {IconProps} from '../../utils/types';
 
-const IconAddMoreCircleRegular: React.FC<Props> = ({color, size = 24}) => {
-    const {colors} = useTheme();
+const IconAddMoreCircleRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation">
-            <path
-                d="M17.98 11.215a.751.751 0 010 1.502h-5.236v5.245a.751.751 0 01-1.502 0v-5.248H6.017a.751.751 0 010-1.503h5.225V6.038a.751.751 0 011.502 0v5.177h5.236zm-5.46 11.279c3-.055 9.977-1.185 9.977-10.463 0-9.279-7.017-10.45-10.033-10.522-.286-.006-.573-.01-.86-.01h-.226c-2.97.027-9.875 1.096-9.875 10.463 0 9.381 6.973 10.494 9.971 10.535.348.004.697.004 1.045-.003zM12.498.01C14.855.068 24 .997 24 12.03c0 11.062-9.162 11.919-11.45 11.963-.215.004-.461.007-.71.007-.13 0-.26 0-.39-.003C9.04 23.962 0 23.092 0 11.962 0 .847 8.954.02 11.365 0h.239c.307 0 .625.003.895.01z"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M12 2c5.516 0 10 4.484 10 10s-4.484 10-10 10S2 17.516 2 12 6.484 2 12 2zm0 1.424c-4.728 0-8.576 3.848-8.576 8.576 0 4.728 3.848 8.576 8.576 8.576 4.728 0 8.576-3.848 8.576-8.576 0-4.728-3.848-8.576-8.576-8.576zm-.002 1.8a.722.722 0 01.716.715v5.346l5.34.006a.722.722 0 01.715.715c0 .198-.079.38-.206.507a.726.726 0 01-.506.206H12.71v5.346a.702.702 0 01-.713.713.722.722 0 01-.715-.716v-5.346H5.937a.722.722 0 01-.716-.715.722.722 0 01.716-.716h5.346V5.94a.722.722 0 01.715-.715z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M17.481 11.28a.689.689 0 010 1.377h-4.799v4.809a.689.689 0 01-1.377 0v-4.812h-4.79a.689.689 0 010-1.377h4.79V6.534a.689.689 0 011.377 0v4.746h4.8zm-5.005 10.34c2.751-.05 9.147-1.087 9.147-9.592S15.19 2.45 12.426 2.384a33.14 33.14 0 00-.79-.01h-.206C8.707 2.4 2.377 3.38 2.377 11.966c0 8.599 6.392 9.62 9.14 9.657.32.003.64.003.959-.003zm-.019-20.61C14.617 1.062 23 1.913 23 12.027c0 10.14-8.399 10.925-10.496 10.966-.197.003-.423.006-.651.006-.12 0-.238 0-.357-.003C9.286 22.966 1 22.167 1 11.966 1 1.776 9.208 1.019 11.418 1h.219c.282 0 .573.003.82.01z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconAddMoreCircleRegular;
