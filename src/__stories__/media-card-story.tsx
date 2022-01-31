@@ -21,6 +21,10 @@ export default {
     title: 'Components/Cards/MediaCard',
 };
 
+const VIDEO_SRC = 'https://cdn.kapwing.com/final_61f3e551955a8b003ec98e68_257607.mp4';
+const POSTER_SRC = 'https://i.imgur.com/aEVtKsE.jpg';
+const IMAGE_SRC = 'https://i.imgur.com/aEVtKsE.jpg';
+
 export const Default: StoryComponent = () => {
     const tagColorNames = ['promo', 'active', 'inactive', 'success', 'warning', 'error'];
     const [headline, headlineTextField] = useTextField('Headline', 'Priority');
@@ -179,10 +183,6 @@ const useCarouselStyles = createUseStyles((theme) => ({
         },
     },
 }));
-
-const VIDEO_SRC = 'https://cdn.kapwing.com/final_61f3e551955a8b003ec98e68_257607.mp4';
-const POSTER_SRC = 'https://i.imgur.com/aEVtKsE.jpg';
-const IMAGE_SRC = 'https://i.imgur.com/aEVtKsE.jpg';
 
 export const Carousel: StoryComponent = () => {
     const {isTabletOrSmaller} = useScreenSize();
