@@ -143,8 +143,8 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={<IconLikeFilled />}
-                headline={headline && <Tag color={colors.promo}>{headline}</Tag>}
+                asset={<IconLikeFilled size={24} />}
+                headline={headline && <Tag type="promo">{headline}</Tag>}
                 title={title}
                 subtitle={subtitle}
                 description={description}
@@ -189,7 +189,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={<Image url="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
+                asset={<Image src="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
                 headline={headline}
                 title={title}
                 subtitle={subtitle}
@@ -203,7 +203,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={<Image url="https://i.imgur.com/G8aJDhB.jpeg" width={80} aspectRatio="7:10" />}
+                asset={<Image src="https://i.imgur.com/G8aJDhB.jpeg" width={80} aspectRatio="7:10" />}
                 headline={headline}
                 title={title}
                 subtitle={subtitle}
@@ -217,7 +217,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={<Image url="https://i.imgur.com/0T2IYB2.jpeg" width={80} />}
+                asset={<Image src="https://i.imgur.com/0T2IYB2.jpeg" width={80} />}
                 headline={headline}
                 title={title}
                 subtitle={subtitle}

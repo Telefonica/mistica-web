@@ -372,6 +372,12 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
         role: 'button',
     };
 
+    if (process.env.NODE_ENV !== 'production') {
+        if (props.to === '' || props.href === '') {
+            throw Error('to or href props are empty strings');
+        }
+    }
+
     if (props.fake) {
         return <Touchable maybe {...commonProps} role="presentation" aria-hidden="true" />;
     }
@@ -385,16 +391,20 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
         return <Touchable {...commonProps} onPress={props.onPress} />;
     }
 
-    if (props.to) {
+    if (props.to || props.to === '') {
         return <Touchable {...commonProps} to={props.to} fullPageOnWebView={props.fullPageOnWebView} />;
     }
 
-    if (props.href) {
+    if (props.href || props.href === '') {
         return <Touchable {...commonProps} href={props.href} newTab={props.newTab} />;
     }
 
-    // this cannot happen
-    throw Error('Bad button props');
+    if (process.env.NODE_ENV !== 'production') {
+        // this cannot happen
+        throw Error('Bad button props');
+    }
+
+    return null;
 };
 
 const useButtonLinkStyles = createUseStyles((theme) => {
@@ -482,22 +492,32 @@ export const ButtonLink = React.forwardRef<
         ),
     };
 
+    if (process.env.NODE_ENV !== 'production') {
+        if (props.to === '' || props.href === '') {
+            throw Error('to or href props are empty strings');
+        }
+    }
+
     if (props.onPress) {
         return <Touchable ref={ref} {...commonProps} onPress={props.onPress} />;
     }
 
-    if (props.to) {
+    if (props.to || props.to === '') {
         return (
             <Touchable ref={ref} {...commonProps} to={props.to} fullPageOnWebView={props.fullPageOnWebView} />
         );
     }
 
-    if (props.href) {
+    if (props.href || props.href === '') {
         return <Touchable ref={ref} {...commonProps} href={props.href} newTab={props.newTab} />;
     }
 
-    // this cannot happen
-    throw Error('Bad button props');
+    if (process.env.NODE_ENV !== 'production') {
+        // this cannot happen
+        throw Error('Bad button props');
+    }
+
+    return null;
 });
 
 export const ButtonPrimary: React.FC<ButtonProps> = (props) => {

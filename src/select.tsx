@@ -4,7 +4,7 @@ import {useAriaId, useTheme} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/key-codes';
 import {FieldContainer, HelperText, Label} from './text-field-components';
 import ChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
-import TextFieldBase from './text-field-base';
+import {TextFieldBaseAutosuggest} from './text-field-base';
 import Overlay from './overlay';
 import classNames from 'classnames';
 import {isAndroid, isIos} from './utils/platform';
@@ -434,7 +434,7 @@ const Select: React.FC<SelectProps> = ({
                 ref={focusableRef as React.Ref<HTMLDivElement>}
                 {...(!disabled && containerActiveProps)}
             >
-                <TextFieldBase
+                <TextFieldBaseAutosuggest
                     style={{visibility: 'hidden'}}
                     fullWidth={fullWidth}
                     endIcon={<ChevronDownRegular size={20} />}

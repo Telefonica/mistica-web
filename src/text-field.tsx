@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useFieldProps} from './form-context';
-import TextFieldBase from './text-field-base';
+import {TextFieldBaseAutosuggest} from './text-field-base';
 import {combineRefs} from './utils/common';
 
 import type {CommonFormFieldProps} from './text-field-base';
@@ -77,7 +77,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
         });
 
         return (
-            <TextFieldBase
+            <TextFieldBaseAutosuggest
                 {...rest}
                 {...fieldProps}
                 onClick={onPress}

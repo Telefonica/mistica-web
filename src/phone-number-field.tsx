@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useRifm} from 'rifm';
 import {formatAsYouType, formatToE164, parse, getRegionCodeForCountryCode} from '@telefonica/libphonenumber';
 import {useFieldProps} from './form-context';
-import TextFieldBase from './text-field-base';
+import {TextFieldBaseAutosuggest} from './text-field-base';
 import {useTheme} from './hooks';
 import {createChangeEvent} from './utils/dom';
 import {combineRefs} from './utils/common';
@@ -156,7 +156,7 @@ const PhoneNumberField: React.FC<PhoneNumberFieldProps> = ({
     });
 
     return (
-        <TextFieldBase
+        <TextFieldBaseAutosuggest
             {...rest}
             {...fieldProps}
             type="phone"

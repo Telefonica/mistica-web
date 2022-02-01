@@ -1,9 +1,23 @@
 // @flow
 
 import * as React from "react";
+import type { IconProps } from "./utils/types";
+export type TagType =
+  | "promo"
+  | "active"
+  | "inactive"
+  | "success"
+  | "warning"
+  | "error";
 export type TagProps = {
+  type?: "promo" | "active" | "inactive" | "success" | "warning" | "error",
   children: string,
-  color: string,
+  Icon?: React.ComponentType<IconProps>,
+
+  /**
+   * @deprecated use type prop
+   */
+  color?: string,
 };
 declare var Tag: React.ComponentType<TagProps>;
 declare export default typeof Tag;

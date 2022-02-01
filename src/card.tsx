@@ -8,17 +8,20 @@ import {createUseStyles} from './jss';
 import {ButtonLink, ButtonPrimary} from './button';
 import {Boxed} from './boxed';
 import ButtonGroup from './button-group';
+import Video from './video';
+import Image, {DisableBorderRadiusProvider} from './image';
 
 import type {ButtonProps, ButtonLinkProps} from './button';
 import type {DataAttributes} from './utils/types';
 import type {TagProps} from './tag';
+import type {VideoProps} from './video';
+import type {ImageProps} from './image';
 
 const useCardContentStyles = createUseStyles(() => ({
     actions: {
         flex: 1,
         display: 'flex',
         alignItems: 'flex-end',
-        marginTop: 16,
     },
 }));
 
@@ -50,49 +53,51 @@ const CardContent: React.FC<CardContentProps> = ({
             return null;
         }
         if (typeof headline === 'string') {
-            return <Tag color={theme.colors.promo}>{headline}</Tag>;
+            return <Tag type="promo">{headline}</Tag>;
         }
         return headline;
     };
     return (
-        <>
-            <Stack space={16}>
-                <Stack space={8}>
-                    {(headline || pretitle || title || subtitle) && (
-                        <header>
+        <Stack space={16}>
+            <Stack space={8}>
+                {(headline || pretitle || title || subtitle) && (
+                    <header>
+                        <Stack space={16}>
+                            {renderHeadline()}
                             <Stack space={4}>
-                                {renderHeadline()}
                                 {pretitle && (
-                                    <Box paddingTop={4}>
-                                        <Text1 regular uppercase>
-                                            {pretitle}
-                                        </Text1>
-                                    </Box>
+                                    <Text1 regular uppercase>
+                                        {pretitle}
+                                    </Text1>
                                 )}
                                 <Text4 as="h1" regular>
                                     {title}
                                 </Text4>
                                 <Text2 regular>{subtitle}</Text2>
                             </Stack>
-                        </header>
-                    )}
-                    {description && (
-                        <Text2 as="p" regular color={theme.colors.textSecondary}>
-                            {description}
-                        </Text2>
-                    )}
-                </Stack>
-                {extra && <div>{extra}</div>}
+                        </Stack>
+                    </header>
+                )}
+
+                {description && (
+                    <Text2 as="p" regular color={theme.colors.textSecondary}>
+                        {description}
+                    </Text2>
+                )}
             </Stack>
+
+            {extra && <div>{extra}</div>}
+
             {(button || buttonLink) && (
                 <div className={classes.actions}>
                     <ButtonGroup primaryButton={button} link={buttonLink} />
                 </div>
             )}
-        </>
+        </Stack>
     );
 };
 
+/** @deprecated */
 type CardMedia =
     | {
           src: string;
@@ -148,7 +153,10 @@ const useMediaCardStyles = createUseStyles(() => ({
 }));
 
 type MediaCardProps = {
-    media: CardMedia;
+    media:
+        | CardMedia
+        | (React.ReactElement<ImageProps, typeof Image> & {src?: undefined})
+        | (React.ReactElement<VideoProps, typeof Video> & {src?: undefined});
     headline?: string | React.ReactElement<TagProps, typeof Tag>;
     pretitle?: string;
     title?: string;
@@ -169,7 +177,11 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         return (
             <Boxed className={classes.boxed} ref={ref}>
                 <section className={classes.mediaCard} aria-label={ariaLabel}>
-                    <div className={classes.media}></div>
+                    {typeof media.src === 'string' ? (
+                        <div className={classes.media}></div>
+                    ) : (
+                        <DisableBorderRadiusProvider>{media}</DisableBorderRadiusProvider>
+                    )}
                     <div className={classes.content}>
                         <CardContent
                             headline={headline}

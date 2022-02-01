@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {useTheme} from './hooks';
-import TextFieldBase from './text-field-base';
+import {TextFieldBaseAutosuggest} from './text-field-base';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -70,7 +70,7 @@ const IntegerField: React.FC<IntegerFieldProps> = ({
         onChangeValue,
     });
 
-    return <TextFieldBase {...rest} {...fieldProps} inputComponent={IntegerInput} />;
+    return <TextFieldBaseAutosuggest {...rest} {...fieldProps} inputComponent={IntegerInput} />;
 };
 
 export default IntegerField;
