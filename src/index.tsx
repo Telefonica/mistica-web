@@ -72,7 +72,7 @@ export {
 } from './navigation-bar';
 export {default as Image} from './image';
 export {default as Video} from './video';
-export {Carousel, CenteredCarousel, PageBullets} from './carousel';
+export {Carousel, CenteredCarousel, FullWidthCarousel, PageBullets} from './carousel';
 
 // Forms
 export {default as Form} from './form';

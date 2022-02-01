@@ -10,6 +10,33 @@ import Touchable from './touchable';
 import classNames from 'classnames';
 import {useResonsiveLayoutMargin} from './responsive-layout';
 
+import type {Theme} from './theme';
+
+const onResize = (element: Element, handler: () => void) => {
+    const getResizeObserverPromise = (): Promise<typeof window.ResizeObserver> => {
+        return window.ResizeObserver
+            ? Promise.resolve(ResizeObserver)
+            : import(/* webpackChunkName: "@juggle/resize-observer" */ '@juggle/resize-observer').then(
+                  (m: any) => m.ResizeObserver
+              );
+    };
+    let cancelled = false;
+    let resizeObserver: ResizeObserver | null = null;
+    getResizeObserverPromise().then((ResizeObserver) => {
+        if (!cancelled) {
+            resizeObserver = new ResizeObserver(handler);
+            resizeObserver.observe(element);
+        }
+    });
+
+    return () => {
+        cancelled = true;
+        if (resizeObserver) {
+            resizeObserver.disconnect();
+        }
+    };
+};
+
 type PageBulletsProps = {
     currentIndex: number;
     numPages: number;
@@ -49,14 +76,34 @@ const hideScrollbar = {
 };
 
 const arrowButtonSize = 40;
+const arrowButtonStyle = (theme: Theme) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: arrowButtonSize,
+    height: arrowButtonSize,
+    borderRadius: '50%',
+    backgroundColor: theme.colors.backgroundContainer,
+    border: `1px solid ${theme.colors.border}`,
+    transition: 'opacity 0.2s',
+    '&[disabled]': {
+        opacity: 0,
+    },
+    // don't show carrousel arrow buttons in touch devices, just regular horizontal scroll
+    '@media (pointer: coarse)': {
+        display: 'none',
+    },
+});
 
 const useStyles = createUseStyles((theme) => ({
     carouselContainer: {
         position: 'relative',
     },
     arrowButton: {
+        ...arrowButtonStyle(theme),
         position: 'absolute',
         zIndex: 1,
+        top: `calc(50% - ${arrowButtonSize / 2}px)`,
         '&.prev': {
             left: -arrowButtonSize / 2,
             [theme.mq.tabletOrSmaller]: {
@@ -74,23 +121,6 @@ const useStyles = createUseStyles((theme) => ({
             [theme.mq.largeDesktop]: {
                 right: -(24 + arrowButtonSize),
             },
-        },
-        top: `calc(50% - ${arrowButtonSize / 2}px)`,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: arrowButtonSize,
-        height: arrowButtonSize,
-        borderRadius: '50%',
-        backgroundColor: theme.colors.backgroundContainer,
-        border: `1px solid ${theme.colors.border}`,
-        transition: 'opacity 0.2s',
-        '&[disabled]': {
-            opacity: 0,
-        },
-        // don't show carrousel arrow buttons in touch devices, just regular horizontal scroll
-        '@media (pointer: coarse)': {
-            display: 'none',
         },
     },
     carousel: {
@@ -258,6 +288,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     centered,
     autoplay,
 }) => {
+    const {texts} = useTheme();
     const itemsPerPageConfig = normalizeItemsPerPage(itemsPerPage);
     const mobilePageOffsetConfig = normalizeMobilePageOffset(mobilePageOffset);
     const {isDesktopOrBigger} = useScreenSize();
@@ -311,18 +342,14 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
             calcItemScrollPositions();
 
             carouselEl.addEventListener('scroll', handleCarouselChange);
-            const mutationObserver = new MutationObserver(handleCarouselChange);
-            mutationObserver.observe(carouselEl, {childList: true, attributes: true, subtree: true});
-            const resizeObserver = new ResizeObserver(() => {
+            const cancelResizeObserver = onResize(carouselEl, () => {
                 handleCarouselChange();
                 calcItemScrollPositions();
             });
-            resizeObserver.observe(carouselEl);
 
             return () => {
                 carouselEl.removeEventListener('scroll', handleCarouselChange);
-                resizeObserver.disconnect();
-                mutationObserver.disconnect();
+                cancelResizeObserver();
             };
         }
         return () => {};
@@ -381,7 +408,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
             }, time);
             return () => clearInterval(interval);
         }
-    }, [autoplay, goNext, goToPage, scrollRight]);
+    }, [autoplay, goNext, scrollRight]);
 
     const currentPageIndex = calcCurrentPageIndex(scrollLeft, pagesScrollPositions);
 
@@ -398,7 +425,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
             <div className={classes.carouselContainer}>
                 <Touchable
                     className={classNames(classes.arrowButton, 'prev')}
-                    aria-label="previous"
+                    aria-label={texts.carouselPrevButton}
                     onPress={goPrev}
                     disabled={!showPrevArrow}
                 >
@@ -413,7 +440,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                 </div>
                 <Touchable
                     className={classNames(classes.arrowButton, 'next')}
-                    aria-label="next"
+                    aria-label={texts.carouselNextButton}
                     onPress={goNext}
                     disabled={!showNextArrow}
                 >
@@ -462,3 +489,152 @@ export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({items, withBu
         renderBullets={renderBullets}
     />
 );
+
+const useFwCarouselStyles = createUseStyles((theme) => ({
+    fwCarouselContainer: {
+        position: 'relative',
+    },
+    fwCarousel: {
+        display: 'flex',
+        overflowX: 'auto',
+        minWidth: '100%',
+        scrollSnapType: 'x mandatory',
+        ...hideScrollbar,
+        [theme.mq.tabletOrSmaller]: {
+            margin: ({sideMargin}) => `0 -${sideMargin}px`,
+        },
+    },
+    item: {
+        width: '100%',
+        scrollSnapAlign: 'start',
+        flexShrink: 0,
+    },
+    arrowButton: {
+        ...arrowButtonStyle(theme),
+        position: 'absolute',
+        zIndex: 1,
+        top: `calc(50% - ${arrowButtonSize / 2}px)`,
+        '&.prev': {
+            left: 24,
+            [theme.mq.tabletOrSmaller]: {
+                left: 0,
+            },
+        },
+        '&.next': {
+            right: 24,
+            [theme.mq.tabletOrSmaller]: {
+                right: 0,
+            },
+        },
+    },
+    bullets: {
+        position: 'absolute',
+        bottom: 24,
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+    },
+}));
+
+type FullWidthCarouselProps = {
+    items: ReadonlyArray<React.ReactNode>;
+    withBullets?: boolean;
+    autoplay?: boolean | {time: number};
+
+    children?: void;
+};
+
+export const FullWidthCarousel: React.FC<FullWidthCarouselProps> = ({items, withBullets, autoplay}) => {
+    const {texts} = useTheme();
+    const sideMargin = useResonsiveLayoutMargin();
+    const classes = useFwCarouselStyles({sideMargin});
+
+    const carouselRef = React.useRef<HTMLDivElement>(null);
+
+    const [{scrollLeft, scrollRight}, setScroll] = React.useState({scrollLeft: 0, scrollRight: 0});
+
+    const goPrev = React.useCallback(() => {
+        const carouselEl = carouselRef.current;
+        if (carouselEl) {
+            carouselEl.scrollBy({left: -carouselEl.clientWidth, behavior: 'smooth'});
+        }
+    }, []);
+
+    const goNext = React.useCallback(() => {
+        const carouselEl = carouselRef.current;
+        if (carouselEl) {
+            carouselEl.scrollBy({left: carouselEl.clientWidth, behavior: 'smooth'});
+        }
+    }, []);
+
+    const showNextArrow = scrollRight !== 0;
+    const showPrevArrow = scrollLeft !== 0;
+    const currentIndex = carouselRef.current ? Math.floor(scrollLeft / carouselRef.current?.clientWidth) : 0;
+
+    React.useLayoutEffect(() => {
+        const carouselEl = carouselRef.current;
+        if (carouselEl) {
+            const handleCarouselChange = () => {
+                const {scrollWidth, clientWidth} = carouselEl;
+                const scrollLeft = Math.round(carouselEl.scrollLeft);
+                const scrollRight = Math.round(scrollWidth - (scrollLeft + clientWidth));
+                setScroll({scrollLeft, scrollRight});
+            };
+
+            handleCarouselChange();
+
+            carouselEl.addEventListener('scroll', handleCarouselChange);
+            const cancelResizeObserver = onResize(carouselEl, handleCarouselChange);
+
+            return () => {
+                carouselEl.removeEventListener('scroll', handleCarouselChange);
+                cancelResizeObserver();
+            };
+        }
+    }, []);
+
+    React.useEffect(() => {
+        if (autoplay) {
+            const time = typeof autoplay === 'boolean' ? 5000 : autoplay.time;
+            const interval = setInterval(() => {
+                if (scrollRight !== 0) {
+                    goNext();
+                }
+            }, time);
+            return () => clearInterval(interval);
+        }
+    }, [autoplay, goNext, scrollRight]);
+
+    return (
+        <div className={classes.fwCarouselContainer}>
+            <Touchable
+                className={classNames(classes.arrowButton, 'prev')}
+                aria-label={texts.carouselPrevButton}
+                onPress={goPrev}
+                disabled={!showPrevArrow}
+            >
+                <IconChevronLeftRegular />
+            </Touchable>
+            <div className={classes.fwCarousel} ref={carouselRef}>
+                {items.map((item, index) => (
+                    <div key={index} className={classes.item}>
+                        {item}
+                    </div>
+                ))}
+            </div>
+            <Touchable
+                className={classNames(classes.arrowButton, 'next')}
+                aria-label={texts.carouselNextButton}
+                onPress={goNext}
+                disabled={!showNextArrow}
+            >
+                <IconChevronRightRegular />
+            </Touchable>
+            {withBullets && (
+                <div className={classes.bullets}>
+                    <PageBullets numPages={items.length} currentIndex={currentIndex} />
+                </div>
+            )}
+        </div>
+    );
+};
