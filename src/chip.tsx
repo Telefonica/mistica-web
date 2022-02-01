@@ -28,6 +28,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
 
         [mq.supportsHover]: {
             '&:hover': {
+                borderColor: colors.tagBackgroundActive,
                 color: colors.controlActivated, // Giving color to icons on hover
                 backgroundColor: colors.tagBackgroundActive,
             },
