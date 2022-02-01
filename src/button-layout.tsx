@@ -3,6 +3,7 @@ import {createUseStyles} from './jss';
 import {useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 import {BUTTON_MIN_WIDTH, ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 import classNames from 'classnames';
+import debounce from 'lodash/debounce';
 
 import type {ButtonElement, ButtonLinkProps} from './button';
 
@@ -114,28 +115,25 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     withMargins = false,
 }) => {
     const {isTabletOrSmaller} = useScreenSize();
-    const [isMeasuring, setIsMeasuring] = React.useState(true);
     const childrenCount = React.Children.count(children);
+    const [buttonStatus, setButtonStatus] = React.useState({isMeasuring: true, buttonWidth: 0});
 
-    const [buttonWidth, setButtonWidth] = React.useState(0);
-
-    const updateButtonWidth = (buttonWidth: number) => {
+    const updateButtonStatus = ({isMeasuring, buttonWidth}: {isMeasuring: boolean; buttonWidth: number}) => {
         if (process.env.NODE_ENV !== 'test') {
-            setButtonWidth(buttonWidth);
+            setButtonStatus({isMeasuring, buttonWidth});
         }
     };
 
-    const updateIsMeasuring = (isMeasuring: boolean) => {
-        if (process.env.NODE_ENV !== 'test') {
-            setIsMeasuring(isMeasuring);
-        }
-    };
-
-    const classes = useStyles({buttonWidth, isTabletOrSmaller, align, childrenCount});
+    const classes = useStyles({
+        buttonWidth: buttonStatus.buttonWidth,
+        isTabletOrSmaller,
+        align,
+        childrenCount,
+    });
 
     const wrapperElRef = React.useRef<HTMLDivElement | null>(null);
     useIsomorphicLayoutEffect(() => {
-        if (isMeasuring) {
+        if (buttonStatus.isMeasuring) {
             const req = window.requestAnimationFrame(() => {
                 if (wrapperElRef.current) {
                     const childrenWidths = Array.from(wrapperElRef.current.children).map((el) =>
@@ -149,8 +147,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
                         el.classList.contains(classes.link) ? 0 : (el as HTMLElement).offsetWidth + 1
                     );
                     const maxChildWidth = Math.ceil(Math.max(...childrenWidths, BUTTON_MIN_WIDTH));
-                    updateButtonWidth(maxChildWidth);
-                    updateIsMeasuring(false);
+                    updateButtonStatus({isMeasuring: false, buttonWidth: maxChildWidth});
                 }
             });
             return () => {
@@ -158,16 +155,19 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
             };
         }
         return () => {};
-    }, [classes.link, isMeasuring]);
+    }, [classes.link, buttonStatus]);
 
-    const calcLayout = React.useCallback(() => {
-        // These updates are executed inside a setTimeout to to avoid an immediate re-render on a visibility change
-        // This issue can be reproduced with Chrome. The button click is missed if pressed having the focus on the devtools
-        setTimeout(() => {
-            updateButtonWidth(0);
-            updateIsMeasuring(true);
-        }, 0);
-    }, []);
+    /**
+     * Multiple calls to calcLayout are debounced to workaround an issue that can be reproduced in chrome when pressing
+     * the button during a focus/visibility change. For example, pressing the button having the focus on the devTools.
+     */
+    const calcLayout = React.useMemo(
+        () =>
+            debounce(() => {
+                updateButtonStatus({isMeasuring: true, buttonWidth: 0});
+            }, 50),
+        []
+    );
 
     useOnChildrenChangeEffect(wrapperElRef.current, calcLayout);
     useOnFontsReadyEffect(calcLayout);
