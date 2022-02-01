@@ -241,6 +241,7 @@ type BaseCarouselProps = {
     gap?: number;
     /** centered mode only applies to mobile. It includes a horizontal padding of half of the size of an item to show the items centered */
     centered?: boolean;
+    autoplay?: boolean | {time: number};
 
     children?: void;
 };
@@ -255,6 +256,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     gap = 8,
     free,
     centered,
+    autoplay,
 }) => {
     const itemsPerPageConfig = normalizeItemsPerPage(itemsPerPage);
     const mobilePageOffsetConfig = normalizeMobilePageOffset(mobilePageOffset);
@@ -336,15 +338,18 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
         sideMargin,
     ]);
 
-    const goToPage = (pageIndex: number) => {
-        const carouselEl = carouselRef.current;
-        if (carouselEl) {
-            const scroll = pagesScrollPositions[pageIndex];
-            carouselEl.scrollTo({left: scroll, behavior: 'smooth'});
-        }
-    };
+    const goToPage = React.useCallback(
+        (pageIndex: number) => {
+            const carouselEl = carouselRef.current;
+            if (carouselEl) {
+                const scroll = pagesScrollPositions[pageIndex];
+                carouselEl.scrollTo({left: scroll, behavior: 'smooth'});
+            }
+        },
+        [pagesScrollPositions]
+    );
 
-    const goPrev = () => {
+    const goPrev = React.useCallback(() => {
         const carouselEl = carouselRef.current;
         if (carouselEl) {
             const {scrollLeft} = carouselEl;
@@ -354,9 +359,9 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
             console.log('scrollLeft', scrollLeft, 'prevScrollPosition', prevPageScrollPosition);
             carouselEl.scrollTo({left: prevPageScrollPosition, behavior: 'smooth'});
         }
-    };
+    }, [scrollPositions]);
 
-    const goNext = () => {
+    const goNext = React.useCallback(() => {
         const carouselEl = carouselRef.current;
         if (carouselEl) {
             const {scrollLeft} = carouselEl;
@@ -364,7 +369,19 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
             console.log('scrollLeft', scrollLeft, 'nextPageScrollPosition', nextPageScrollPosition);
             carouselEl.scrollTo({left: nextPageScrollPosition, behavior: 'smooth'});
         }
-    };
+    }, [scrollPositions]);
+
+    React.useEffect(() => {
+        if (autoplay) {
+            const time = typeof autoplay === 'boolean' ? 5000 : autoplay.time;
+            const interval = setInterval(() => {
+                if (scrollRight !== 0) {
+                    goNext();
+                }
+            }, time);
+            return () => clearInterval(interval);
+        }
+    }, [autoplay, goNext, goToPage, scrollRight]);
 
     const currentPageIndex = calcCurrentPageIndex(scrollLeft, pagesScrollPositions);
 
@@ -419,6 +436,7 @@ type CarouselProps = {
     mobilePageOffset?: MobilePageOffset;
     /** If true, scroll snap doesn't apply and the user has a free scroll */
     free?: boolean;
+    autoplay?: boolean | {time: number};
 
     children?: void;
 };

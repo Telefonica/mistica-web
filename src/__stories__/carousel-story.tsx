@@ -23,6 +23,7 @@ type Args = {
     prevPageOffset: number;
     free: boolean;
     itemsToScroll: number;
+    autoplay: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -34,6 +35,7 @@ export const Default: StoryComponent<Args> = ({
     prevPageOffset,
     free,
     itemsToScroll,
+    autoplay,
 }) => {
     return (
         <Box paddingY={24}>
@@ -48,6 +50,7 @@ export const Default: StoryComponent<Args> = ({
                         free={free}
                         itemsPerPage={{mobile: itemsPerPageMobile, desktop: itemsPerPageDesktop}}
                         itemsToScroll={itemsToScroll}
+                        autoplay={autoplay}
                         mobilePageOffset={{next: nextPageOffset, prev: prevPageOffset}}
                         items={Array.from({length: numItems}, (_, idx) => (
                             <MediaCard
@@ -77,5 +80,6 @@ Default.args = {
     nextPageOffset: 16,
     prevPageOffset: 16,
     free: false,
+    autoplay: false,
     itemsToScroll: 0,
 };
