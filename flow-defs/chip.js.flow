@@ -1,9 +1,10 @@
 // @flow
 
 import * as React from "react";
+import type { IconProps } from "./utils/types";
 declare type ChipProps = {
   children: string,
-  icon?: React.Node,
+  Icon?: React.ComponentType<IconProps>,
   onClose?: () => void,
 };
 declare var Chip: React.ComponentType<ChipProps>;
