@@ -12,6 +12,9 @@ import {
     IconLikeFilled,
     IconLightningRegular,
     Image,
+    Text3,
+    Inline,
+    IconChevron,
 } from '..';
 
 export default {
@@ -27,6 +30,7 @@ export default {
                 'checkbox and onPress',
                 'radio',
                 'custom element',
+                'custom element with text',
                 'action with custom element',
                 'none',
             ],
@@ -74,7 +78,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 controlProps = {href: 'https://example.org', newTab: true};
                 break;
             case 'navigates without chevron':
-                controlProps = {href: 'https://example.org', newTab: true, right: null}; // right null removes the chevron
+                controlProps = {href: 'https://example.org', newTab: true, renderRight: null}; // renderRight null removes the chevron
                 break;
             case 'switch':
                 controlProps = {switch: {defaultValue: true, onChange: () => {}}};
@@ -96,9 +100,23 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 break;
             case 'custom element':
                 controlProps = {
-                    right: (
+                    renderRight: () => (
                         <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
                             <div style={{width: 32, height: 32, borderRadius: '50%', background: 'pink'}} />
+                        </div>
+                    ),
+                };
+                break;
+            case 'custom element with text':
+                controlProps = {
+                    renderRight: ({centerY}: {centerY: boolean}) => (
+                        <div style={centerY ? {display: 'flex', alignItems: 'center', height: '100%'} : {}}>
+                            <Inline space={0}>
+                                <Text3 color={colors.error} medium as="p">
+                                    12,00 €
+                                </Text3>
+                                <IconChevron direction="right" color={colors.neutralMedium} />
+                            </Inline>
                         </div>
                     ),
                 };
@@ -106,7 +124,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
             case 'action with custom element':
                 controlProps = {
                     onPress,
-                    right: (
+                    renderRight: () => (
                         <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
                             <div style={{width: 32, height: 32, borderRadius: '50%', background: 'pink'}} />
                         </div>
