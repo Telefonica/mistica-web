@@ -5,8 +5,11 @@ import Box from './box';
 import {Text2} from './text';
 import IconButton from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import {pxToRem} from './utils/css';
 
-const useStyles = createUseStyles(({colors}) => ({
+import type {IconProps} from './utils/types';
+
+const useStyles = createUseStyles(({colors, mq}) => ({
     container: {
         display: 'inline-flex',
         justifyContent: 'center',
@@ -15,23 +18,46 @@ const useStyles = createUseStyles(({colors}) => ({
         borderRadius: 20,
         backgroundColor: colors.backgroundContainer,
         minHeight: 32,
+        minWidth: 56,
+
+        color: colors.neutralMedium, // Giving color to icons
+
+        '& > span': {
+            color: colors.textPrimary, // Giving color to text
+        },
+
+        [mq.supportsHover]: {
+            '&:hover': {
+                color: colors.controlActivated, // Giving color to icons on hover
+                backgroundColor: colors.tagBackgroundActive,
+            },
+            '&:hover > span': {
+                color: colors.textLink, // Giving color to text on hover
+            },
+        },
     },
 }));
 
 type ChipProps = {
     children: string;
-    icon?: React.ReactNode;
+    Icon?: React.FC<IconProps>;
     onClose?: () => void;
 };
 
-const Chip: React.FC<ChipProps> = ({children, icon, onClose}) => {
-    const classes = useStyles();
-    const {colors, texts} = useTheme();
+const Chip: React.FC<ChipProps> = ({children, Icon, onClose}) => {
+    const {texts, isDarkMode} = useTheme();
+    const classes = useStyles({isDarkMode});
 
     return (
-        <Box className={classes.container} paddingLeft={icon ? 8 : 12} paddingRight={onClose ? 0 : 12}>
-            {icon && <Box paddingRight={4}>{icon}</Box>}
-            <Text2 medium>{children}</Text2>
+        <Box className={classes.container} paddingLeft={Icon ? 8 : 12} paddingRight={onClose ? 0 : 12}>
+            {Icon && (
+                <Box paddingRight={4}>
+                    <Icon color="currentColor" size={pxToRem(16)} />
+                </Box>
+            )}
+            <Text2 medium truncate={1} color="currentColor">
+                {children}
+            </Text2>
             {onClose ? (
                 <Box paddingLeft={4}>
                     <IconButton
@@ -44,7 +70,7 @@ const Chip: React.FC<ChipProps> = ({children, icon, onClose}) => {
                         aria-label={texts.closeButtonLabel}
                         onPress={() => onClose()}
                     >
-                        <IconCloseRegular size={16} color={colors.neutralMedium} />
+                        <IconCloseRegular size={16} color="currentColor" />
                     </IconButton>
                 </Box>
             ) : null}
