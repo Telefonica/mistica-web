@@ -12,6 +12,7 @@ import {
     IconInformationRegular,
     Text10,
     ThemeVariant,
+    SectionTitle,
 } from '..';
 
 export default {
@@ -23,6 +24,10 @@ const centerStyle = {display: 'flex', alignItems: 'center', justifyContent: 'cen
 type Args = {numItems: number};
 
 export const Default: StoryComponent<Args> = ({numItems}) => {
+    const [pageInfo, setPageInfo] = React.useState<{
+        pageIndex: number;
+        shownItemIndexes: Array<number>;
+    } | null>(null);
     const {colors} = useTheme();
     return (
         <Box paddingY={24}>
@@ -33,6 +38,7 @@ export const Default: StoryComponent<Args> = ({numItems}) => {
                         icon={<IconInformationRegular />}
                     />
                     <CenteredCarousel
+                        onPageChange={setPageInfo}
                         renderBullets={(bulletsProps) => (
                             <Stack space={8}>
                                 <div style={centerStyle}>
@@ -61,6 +67,14 @@ export const Default: StoryComponent<Args> = ({numItems}) => {
                             </div>
                         ))}
                     />
+                    <Stack space={8}>
+                        <SectionTitle>Current page info</SectionTitle>
+                        {pageInfo && (
+                            <Text2 regular as="pre">
+                                {JSON.stringify(pageInfo, null, 2)}
+                            </Text2>
+                        )}
+                    </Stack>
                 </Stack>
             </ResponsiveLayout>
         </Box>

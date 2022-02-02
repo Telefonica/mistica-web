@@ -8,6 +8,8 @@ import {
     Callout,
     Stack,
     IconInformationRegular,
+    SectionTitle,
+    Text2,
 } from '..';
 
 export default {
@@ -37,6 +39,10 @@ export const Default: StoryComponent<Args> = ({
     itemsToScroll,
     autoplay,
 }) => {
+    const [pageInfo, setPageInfo] = React.useState<{
+        pageIndex: number;
+        shownItemIndexes: Array<number>;
+    } | null>(null);
     return (
         <Box paddingY={24}>
             <ResponsiveLayout>
@@ -52,6 +58,7 @@ export const Default: StoryComponent<Args> = ({
                         itemsToScroll={itemsToScroll}
                         autoplay={autoplay}
                         mobilePageOffset={{next: nextPageOffset, prev: prevPageOffset}}
+                        onPageChange={setPageInfo}
                         items={Array.from({length: numItems}, (_, idx) => (
                             <MediaCard
                                 key={idx}
@@ -64,6 +71,14 @@ export const Default: StoryComponent<Args> = ({
                             />
                         ))}
                     />
+                    <Stack space={8}>
+                        <SectionTitle>Current page info</SectionTitle>
+                        {pageInfo && (
+                            <Text2 regular as="pre">
+                                {JSON.stringify(pageInfo, null, 2)}
+                            </Text2>
+                        )}
+                    </Stack>
                 </Stack>
             </ResponsiveLayout>
         </Box>

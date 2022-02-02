@@ -1,5 +1,14 @@
 import * as React from 'react';
-import {FullWidthCarousel, Stack, Box, ResponsiveLayout, Callout, IconInformationRegular, Image} from '..';
+import {
+    FullWidthCarousel,
+    Stack,
+    Box,
+    ResponsiveLayout,
+    Callout,
+    IconInformationRegular,
+    Image,
+    Text4,
+} from '..';
 import {DisableBorderRadiusProvider} from '../image';
 
 export default {
@@ -9,6 +18,7 @@ export default {
 type Args = {numItems: number; autoplay: boolean; withBullets: boolean};
 
 export const Default: StoryComponent<Args> = ({numItems, autoplay, withBullets}) => {
+    const [currentPage, setCurrentPage] = React.useState(0);
     return (
         <Box paddingY={24}>
             <ResponsiveLayout>
@@ -21,6 +31,7 @@ export const Default: StoryComponent<Args> = ({numItems, autoplay, withBullets})
                         <FullWidthCarousel
                             withBullets={withBullets}
                             autoplay={autoplay}
+                            onPageChange={setCurrentPage}
                             items={Array.from({length: numItems}, (_, idx) => (
                                 <Image
                                     src={
@@ -33,6 +44,7 @@ export const Default: StoryComponent<Args> = ({numItems, autoplay, withBullets})
                             ))}
                         />
                     </DisableBorderRadiusProvider>
+                    <Text4 regular>Page {currentPage}</Text4>
                 </Stack>
             </ResponsiveLayout>
         </Box>

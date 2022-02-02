@@ -270,6 +270,7 @@ type BaseCarouselProps = {
     /** centered mode only applies to mobile. It includes a horizontal padding of half of the size of an item to show the items centered */
     centered?: boolean;
     autoplay?: boolean | {time: number};
+    onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
 
     children?: void;
 };
@@ -285,6 +286,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     free,
     centered,
     autoplay,
+    onPageChange,
 }) => {
     const {texts} = useTheme();
     const itemsPerPageConfig = normalizeItemsPerPage(itemsPerPage);
@@ -293,11 +295,10 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const sideMargin = useResonsiveLayoutMargin();
     const classes = useStyles({itemsPerPageConfig, mobilePageOffsetConfig, free, gap, centered, sideMargin});
     const carouselRef = React.useRef<HTMLDivElement>(null);
-    const pagesCount = Math.ceil(
-        isDesktopOrBigger
-            ? items.length / Math.floor(itemsPerPageConfig.desktop)
-            : items.length / Math.floor(itemsPerPageConfig.mobile)
-    );
+    const itemsPerPageFloor = isDesktopOrBigger
+        ? Math.floor(itemsPerPageConfig.desktop)
+        : Math.floor(itemsPerPageConfig.mobile);
+    const pagesCount = Math.ceil(items.length / itemsPerPageFloor);
     const [{scrollLeft, scrollRight}, setScroll] = React.useState({scrollLeft: 0, scrollRight: 0});
     const [itemScrollPositions, setItemScrollPositions] = React.useState<Array<number>>([]);
 
@@ -410,6 +411,20 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
 
     const currentPageIndex = calcCurrentPageIndex(scrollLeft, pagesScrollPositions);
 
+    React.useEffect(() => {
+        if (onPageChange) {
+            const lastShownItemIndex = Math.min(
+                (currentPageIndex + 1) * itemsPerPageFloor - 1,
+                items.length - 1
+            );
+            const shownItemIndexes = [];
+            for (let i = 0; i < itemsPerPageFloor; i++) {
+                shownItemIndexes.unshift(lastShownItemIndex - i);
+            }
+            onPageChange({pageIndex: currentPageIndex, shownItemIndexes});
+        }
+    }, [currentPageIndex, items.length, itemsPerPageFloor, onPageChange]);
+
     let bullets: React.ReactNode = null;
 
     if (renderBullets) {
@@ -464,6 +479,7 @@ type CarouselProps = {
     /** If true, scroll snap doesn't apply and the user has a free scroll */
     free?: boolean;
     autoplay?: boolean | {time: number};
+    onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
 
     children?: void;
 };
@@ -474,10 +490,17 @@ type CenteredCarouselProps = {
     items: ReadonlyArray<React.ReactNode>;
     withBullets?: boolean;
     renderBullets?: (bulletsProps: PageBulletsProps) => React.ReactNode;
+    onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
+
     children?: void;
 };
 
-export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({items, withBullets, renderBullets}) => (
+export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({
+    items,
+    withBullets,
+    renderBullets,
+    onPageChange,
+}) => (
     <BaseCarousel
         items={items}
         itemsPerPage={{mobile: 1, desktop: 3}}
@@ -487,6 +510,7 @@ export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({items, withBu
         gap={0}
         withBullets={withBullets}
         renderBullets={renderBullets}
+        onPageChange={onPageChange}
     />
 );
 
@@ -540,11 +564,17 @@ type FullWidthCarouselProps = {
     items: ReadonlyArray<React.ReactNode>;
     withBullets?: boolean;
     autoplay?: boolean | {time: number};
+    onPageChange?: (newPageIndex?: number) => void;
 
     children?: void;
 };
 
-export const FullWidthCarousel: React.FC<FullWidthCarouselProps> = ({items, withBullets, autoplay}) => {
+export const FullWidthCarousel: React.FC<FullWidthCarouselProps> = ({
+    items,
+    withBullets,
+    autoplay,
+    onPageChange,
+}) => {
     const {texts} = useTheme();
     const sideMargin = useResonsiveLayoutMargin();
     const classes = useFwCarouselStyles({sideMargin});
@@ -604,6 +634,12 @@ export const FullWidthCarousel: React.FC<FullWidthCarouselProps> = ({items, with
             return () => clearInterval(interval);
         }
     }, [autoplay, goNext, scrollRight]);
+
+    React.useEffect(() => {
+        if (onPageChange) {
+            onPageChange(currentIndex);
+        }
+    }, [currentIndex, onPageChange]);
 
     return (
         <div className={classes.fwCarouselContainer}>
