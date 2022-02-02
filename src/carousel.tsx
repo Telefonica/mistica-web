@@ -53,8 +53,6 @@ export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages,
             {Array.from({length: numPages}, (_, i: number) => (
                 <Touchable
                     key={i}
-                    // TODO: define copy and translations for this aria label
-                    aria-label={`Go to page ${i}`}
                     maybe
                     onPress={isDesktopOrBigger && onPress ? () => onPress(i) : undefined}
                 >
@@ -431,7 +429,9 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                 >
                     <IconChevronLeftRegular />
                 </Touchable>
-                <div className={classNames(classes.carousel, {centered})} ref={carouselRef}>
+                {/* The tabindex addresses the scrollable-region-focusable a11y issue */}
+                {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
+                <div className={classNames(classes.carousel, {centered})} ref={carouselRef} tabIndex={0}>
                     {items.map((item, index) => (
                         <div key={index} className={classes.slide} data-slide>
                             {item}
@@ -615,7 +615,9 @@ export const FullWidthCarousel: React.FC<FullWidthCarouselProps> = ({items, with
             >
                 <IconChevronLeftRegular />
             </Touchable>
-            <div className={classes.fwCarousel} ref={carouselRef}>
+            {/* The tabindex addresses the scrollable-region-focusable a11y issue */}
+            {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
+            <div className={classes.fwCarousel} ref={carouselRef} tabIndex={0}>
                 {items.map((item, index) => (
                     <div key={index} className={classes.item}>
                         {item}
