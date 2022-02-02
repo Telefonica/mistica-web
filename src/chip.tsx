@@ -19,6 +19,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         backgroundColor: colors.backgroundContainer,
         minHeight: 32,
         minWidth: 56,
+        cursor: 'default',
 
         color: colors.neutralMedium, // Giving color to icons
 
