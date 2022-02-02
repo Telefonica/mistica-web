@@ -444,9 +444,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                 >
                     <IconChevronLeftRegular />
                 </Touchable>
-                {/* The tabindex addresses the scrollable-region-focusable a11y issue */}
-                {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
-                <div className={classNames(classes.carousel, {centered})} ref={carouselRef} tabIndex={0}>
+                <div className={classNames(classes.carousel, {centered})} ref={carouselRef}>
                     {items.map((item, index) => (
                         <div key={index} className={classes.slide} data-slide>
                             {item}
@@ -651,9 +649,7 @@ export const FullWidthCarousel: React.FC<FullWidthCarouselProps> = ({
             >
                 <IconChevronLeftRegular />
             </Touchable>
-            {/* The tabindex addresses the scrollable-region-focusable a11y issue */}
-            {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
-            <div className={classes.fwCarousel} ref={carouselRef} tabIndex={0}>
+            <div className={classes.fwCarousel} ref={carouselRef}>
                 {items.map((item, index) => (
                     <div key={index} className={classes.item}>
                         {item}

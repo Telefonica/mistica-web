@@ -72,7 +72,7 @@ export const Default: StoryComponent<Args> = ({
                         ))}
                     />
                     <Stack space={8}>
-                        <SectionTitle>Current page info</SectionTitle>
+                        <SectionTitle as="h2">Current page info</SectionTitle>
                         {pageInfo && (
                             <Text2 regular as="pre">
                                 {JSON.stringify(pageInfo, null, 2)}
