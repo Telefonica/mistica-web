@@ -1142,7 +1142,7 @@ export default [
     {
         group: 'Chip',
         name: 'Chip icon',
-        code: '<Chip onClose={() => {}} icon={<IconLightningFilled size={16} />}>Chip</Chip>',
+        code: '<Chip onClose={() => {}} Icon={IconLightningFilled}>Chip</Chip>',
     },
     ...tagSnippets,
     {
