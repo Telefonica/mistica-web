@@ -564,7 +564,7 @@ type FullWidthCarouselProps = {
     items: ReadonlyArray<React.ReactNode>;
     withBullets?: boolean;
     autoplay?: boolean | {time: number};
-    onPageChange?: (newPageIndex?: number) => void;
+    onPageChange?: (newPageIndex: number) => void;
 
     children?: void;
 };

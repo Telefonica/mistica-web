@@ -18,7 +18,7 @@ export default {
 type Args = {numItems: number; autoplay: boolean; withBullets: boolean};
 
 export const Default: StoryComponent<Args> = ({numItems, autoplay, withBullets}) => {
-    const [currentPage, setCurrentPage] = React.useState(0);
+    const [currentPage, setCurrentPage] = React.useState<number>(0);
     return (
         <Box paddingY={24}>
             <ResponsiveLayout>

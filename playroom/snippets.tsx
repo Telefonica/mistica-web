@@ -1085,7 +1085,6 @@ const carouselSnippets = [
   withBullets
   items={Array.from({ length: 6 }, (_, idx) => (
     <MediaCard
-      key={idx}
       headline={<Tag type="promo">Headline</Tag>}
       title={'Card ' + idx}
       description="Description"
@@ -1098,8 +1097,46 @@ const carouselSnippets = [
       buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
     />
   ))}
+/>`,
+    },
+    {
+        group: 'Carousel',
+        name: 'FullWidthCarousel',
+        code: `
+<FullWidthCarousel
+  withBullets
+  items={[
+    <Image src="https://i.imgur.com/HRvhZ6F.jpeg" aspectRatio="16:9" />,
+    <Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />,
+  ]}
+/>`,
+    },
+    {
+        group: 'Carousel',
+        name: 'CenteredCarousel',
+        code: `
+<CenteredCarousel
+  withBullets
+  items={Array.from({length: 6}, (_, idx) => (
+      <div
+          style={{
+              border: \`1px solid \${colors.border}\`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+          }}
+      >
+          <div style={{flexShrink: 0}}>
+              <Circle backgroundColor={colors.brand} size={160}>
+                  <ThemeVariant isInverse>
+                      <Text10>{idx}</Text10>
+                  </ThemeVariant>
+              </Circle>
+          </div>
+      </div>
+  ))}
 />
-  `,
+`,
     },
 ];
 
