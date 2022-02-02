@@ -71,6 +71,7 @@ export {
     NavigationBarLogo,
 } from './navigation-bar';
 export {default as Image} from './image';
+export {default as Chip} from './chip';
 export {default as Video} from './video';
 
 // Forms

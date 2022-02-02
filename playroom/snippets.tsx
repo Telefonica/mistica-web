@@ -1137,6 +1137,13 @@ export default [
     },
     ...navigationBarSnippets,
     menuSnippet,
+    {group: 'Chip', name: 'Chip', code: '<Chip>Chip</Chip>'},
+    {group: 'Chip', name: 'Chip closeable', code: '<Chip onClose={() => {}}>Chip</Chip>'},
+    {
+        group: 'Chip',
+        name: 'Chip icon',
+        code: '<Chip onClose={() => {}} Icon={IconLightningFilled}>Chip</Chip>',
+    },
     ...tagSnippets,
     {
         group: 'Media',
