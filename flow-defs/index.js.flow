@@ -101,7 +101,12 @@ declare export {
 declare export { default as Image } from "./image";
 declare export { default as Chip } from "./chip";
 declare export { default as Video } from "./video";
-declare export { Carousel, CenteredCarousel, PageBullets } from "./carousel";
+declare export {
+  Carousel,
+  CenteredCarousel,
+  FullWidthCarousel,
+  PageBullets,
+} from "./carousel";
 declare export { default as Form } from "./form";
 declare export { default as Select } from "./select";
 declare export { default as TextField } from "./text-field";

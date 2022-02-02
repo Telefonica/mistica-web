@@ -35,6 +35,8 @@ declare var TEXTS_ES: {
   closeNavigationMenu: string,
   backNavigationBar: string,
   clearButton: string,
+  carouselNextButton: string,
+  carouselPrevButton: string,
 };
 declare export var getTexts: (locale: Locale) => typeof TEXTS_ES;
 declare export var dimensions: {

@@ -36,6 +36,11 @@ declare type CarouselProps = {
    * If true, scroll snap doesn't apply and the user has a free scroll
    */
   free?: boolean,
+  autoplay?:
+    | boolean
+    | {
+        time: number,
+      },
 };
 declare export var Carousel: React.ComponentType<CarouselProps>;
 declare type CenteredCarouselProps = {
@@ -44,4 +49,14 @@ declare type CenteredCarouselProps = {
   renderBullets?: (bulletsProps: PageBulletsProps) => React.Node,
 };
 declare export var CenteredCarousel: React.ComponentType<CenteredCarouselProps>;
+declare type FullWidthCarouselProps = {
+  items: $ReadOnlyArray<React.Node>,
+  withBullets?: boolean,
+  autoplay?:
+    | boolean
+    | {
+        time: number,
+      },
+};
+declare export var FullWidthCarousel: React.ComponentType<FullWidthCarouselProps>;
 declare export {};
