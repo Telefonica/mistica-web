@@ -1,3 +1,10 @@
+# [10.22.0](https://github.com/Telefonica/mistica-web/compare/v10.21.0...v10.22.0) (2022-02-02)
+
+
+### Features
+
+* **Chip:** new component ([#395](https://github.com/Telefonica/mistica-web/issues/395)) ([37f1be2](https://github.com/Telefonica/mistica-web/commit/37f1be2322ad3913b3084fb6a14539629a9a81b4))
+
 # [10.21.0](https://github.com/Telefonica/mistica-web/compare/v10.20.0...v10.21.0) (2022-01-27)
 
 
