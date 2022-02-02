@@ -41,12 +41,20 @@ declare type CarouselProps = {
     | {
         time: number,
       },
+  onPageChange?: (newPageInfo: {
+    pageIndex: number,
+    shownItemIndexes: Array<number>,
+  }) => void,
 };
 declare export var Carousel: React.ComponentType<CarouselProps>;
 declare type CenteredCarouselProps = {
   items: $ReadOnlyArray<React.Node>,
   withBullets?: boolean,
   renderBullets?: (bulletsProps: PageBulletsProps) => React.Node,
+  onPageChange?: (newPageInfo: {
+    pageIndex: number,
+    shownItemIndexes: Array<number>,
+  }) => void,
 };
 declare export var CenteredCarousel: React.ComponentType<CenteredCarouselProps>;
 declare type FullWidthCarouselProps = {
@@ -57,6 +65,7 @@ declare type FullWidthCarouselProps = {
     | {
         time: number,
       },
+  onPageChange?: (newPageIndex: number) => void,
 };
 declare export var FullWidthCarousel: React.ComponentType<FullWidthCarouselProps>;
 declare export {};
