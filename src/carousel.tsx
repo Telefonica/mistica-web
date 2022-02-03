@@ -252,8 +252,16 @@ const calcPagesScrollPositions = (itemsScrollPosition: ReadonlyArray<number>, nu
 };
 
 const calcCurrentPageIndex = (scrollPosition: number, pagesScrollPositions: ReadonlyArray<number>) => {
-    for (let i = pagesScrollPositions.length - 1; i >= 0; i--) {
-        if (scrollPosition - pagesScrollPositions[i] >= -1) {
+    const midlePageScrollPositions = [];
+    for (let i = 0; i < pagesScrollPositions.length; i++) {
+        if (i === 0) {
+            midlePageScrollPositions.push(pagesScrollPositions[0]);
+        } else {
+            midlePageScrollPositions.push((pagesScrollPositions[i] + pagesScrollPositions[i - 1]) / 2);
+        }
+    }
+    for (let i = midlePageScrollPositions.length - 1; i >= 0; i--) {
+        if (scrollPosition - midlePageScrollPositions[i] >= -1) {
             return i;
         }
     }
@@ -367,6 +375,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
         centered,
         isDesktopOrBigger,
         sideMargin,
+        items.length,
     ]);
 
     const goToPage = React.useCallback(
