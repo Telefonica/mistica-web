@@ -9,6 +9,8 @@ import Stack from './stack';
 import Touchable from './touchable';
 import classNames from 'classnames';
 import {useResonsiveLayoutMargin} from './responsive-layout';
+import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
+import {applyAlpha} from './utils/color';
 
 import type {Theme} from './theme';
 
@@ -44,7 +46,10 @@ type PageBulletsProps = {
 };
 
 export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages, onPress}) => {
+    const isInverse = useIsInverseVariant();
     const {colors} = useTheme();
+    const activeCircleColor = isInverse ? colors.inverse : colors.controlActivated;
+    const circleColor = isInverse ? applyAlpha(colors.inverse, 0.5) : colors.control;
     const {isDesktopOrBigger} = useScreenSize();
     const bulletSize = isDesktopOrBigger ? 8 : 4;
     const currentBulletSize = isDesktopOrBigger ? 10 : 6;
@@ -58,7 +63,7 @@ export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages,
                 >
                     <Circle
                         size={i === currentIndex ? currentBulletSize : bulletSize}
-                        backgroundColor={i === currentIndex ? colors.controlActivated : colors.control}
+                        backgroundColor={i === currentIndex ? activeCircleColor : circleColor}
                     />
                 </Touchable>
             ))}
@@ -533,6 +538,7 @@ const useFwCarouselStyles = createUseStyles((theme) => ({
     },
     arrowButton: {
         ...arrowButtonStyle(theme),
+        border: 'none',
         position: 'absolute',
         zIndex: 1,
         top: `calc(50% - ${arrowButtonSize / 2}px)`,
@@ -665,9 +671,11 @@ export const FullWidthCarousel: React.FC<FullWidthCarouselProps> = ({
                 <IconChevronRightRegular />
             </Touchable>
             {withBullets && (
-                <div className={classes.bullets}>
-                    <PageBullets numPages={items.length} currentIndex={currentIndex} />
-                </div>
+                <ThemeVariant isInverse>
+                    <div className={classes.bullets}>
+                        <PageBullets numPages={items.length} currentIndex={currentIndex} />
+                    </div>
+                </ThemeVariant>
             )}
         </div>
     );
