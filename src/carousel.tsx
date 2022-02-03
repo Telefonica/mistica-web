@@ -612,7 +612,9 @@ export const FullWidthCarousel: React.FC<FullWidthCarouselProps> = ({
 
     const showNextArrow = scrollRight !== 0;
     const showPrevArrow = scrollLeft !== 0;
-    const currentIndex = carouselRef.current ? Math.floor(scrollLeft / carouselRef.current?.clientWidth) : 0;
+    const currentIndex = carouselRef.current
+        ? Math.floor((scrollLeft + carouselRef.current.clientWidth / 2) / carouselRef.current.clientWidth)
+        : 0;
 
     React.useLayoutEffect(() => {
         const carouselEl = carouselRef.current;
@@ -634,7 +636,7 @@ export const FullWidthCarousel: React.FC<FullWidthCarouselProps> = ({
                 cancelResizeObserver();
             };
         }
-    }, []);
+    }, [items.length]);
 
     React.useEffect(() => {
         if (autoplay) {
