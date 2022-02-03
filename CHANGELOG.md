@@ -1,3 +1,10 @@
+## [10.22.1](https://github.com/Telefonica/mistica-web/compare/v10.22.0...v10.22.1) (2022-02-03)
+
+
+### Bug Fixes
+
+* **Form fields:** use rawValue to check if a form field is empty ([#408](https://github.com/Telefonica/mistica-web/issues/408)) ([50a5d37](https://github.com/Telefonica/mistica-web/commit/50a5d37179903ed69f1aa33ac6b7e5d6b1f10a6f))
+
 # [10.22.0](https://github.com/Telefonica/mistica-web/compare/v10.21.0...v10.22.0) (2022-02-02)
 
 
