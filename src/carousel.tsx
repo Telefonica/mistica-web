@@ -14,7 +14,7 @@ import {applyAlpha} from './utils/color';
 
 import type {Theme} from './theme';
 
-const onResize = (element: Element, handler: () => void) => {
+const listenResize = (element: Element, handler: () => void) => {
     const getResizeObserverPromise = (): Promise<typeof window.ResizeObserver> => {
         return window.ResizeObserver
             ? Promise.resolve(ResizeObserver)
@@ -354,14 +354,14 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
             calcItemScrollPositions();
 
             carouselEl.addEventListener('scroll', handleCarouselChange);
-            const cancelResizeObserver = onResize(carouselEl, () => {
+            const unlistenResize = listenResize(carouselEl, () => {
                 handleCarouselChange();
                 calcItemScrollPositions();
             });
 
             return () => {
                 carouselEl.removeEventListener('scroll', handleCarouselChange);
-                cancelResizeObserver();
+                unlistenResize();
             };
         }
         return () => {};
@@ -450,14 +450,16 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     return (
         <Stack space={24}>
             <div className={classes.carouselContainer}>
-                <Touchable
-                    className={classNames(classes.arrowButton, 'prev')}
-                    aria-label={texts.carouselPrevButton}
-                    onPress={goPrev}
-                    disabled={!showPrevArrow}
-                >
-                    <IconChevronLeftRegular />
-                </Touchable>
+                <ThemeVariant isInverse={false}>
+                    <Touchable
+                        className={classNames(classes.arrowButton, 'prev')}
+                        aria-label={texts.carouselPrevButton}
+                        onPress={goPrev}
+                        disabled={!showPrevArrow}
+                    >
+                        <IconChevronLeftRegular />
+                    </Touchable>
+                </ThemeVariant>
                 <div className={classNames(classes.carousel, {centered})} ref={carouselRef}>
                     {items.map((item, index) => (
                         <div key={index} className={classes.slide} data-slide>
@@ -465,14 +467,16 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                         </div>
                     ))}
                 </div>
-                <Touchable
-                    className={classNames(classes.arrowButton, 'next')}
-                    aria-label={texts.carouselNextButton}
-                    onPress={goNext}
-                    disabled={!showNextArrow}
-                >
-                    <IconChevronRightRegular />
-                </Touchable>
+                <ThemeVariant isInverse={false}>
+                    <Touchable
+                        className={classNames(classes.arrowButton, 'next')}
+                        aria-label={texts.carouselNextButton}
+                        onPress={goNext}
+                        disabled={!showNextArrow}
+                    >
+                        <IconChevronRightRegular />
+                    </Touchable>
+                </ThemeVariant>
             </div>
             {bullets && <div className={classes.bullets}>{bullets}</div>}
         </Stack>
@@ -629,11 +633,11 @@ export const FullWidthCarousel: React.FC<FullWidthCarouselProps> = ({
             handleCarouselChange();
 
             carouselEl.addEventListener('scroll', handleCarouselChange);
-            const cancelResizeObserver = onResize(carouselEl, handleCarouselChange);
+            const unlistenResize = listenResize(carouselEl, handleCarouselChange);
 
             return () => {
                 carouselEl.removeEventListener('scroll', handleCarouselChange);
-                cancelResizeObserver();
+                unlistenResize();
             };
         }
     }, [items.length]);
@@ -658,14 +662,16 @@ export const FullWidthCarousel: React.FC<FullWidthCarouselProps> = ({
 
     return (
         <div className={classes.fwCarouselContainer}>
-            <Touchable
-                className={classNames(classes.arrowButton, 'prev')}
-                aria-label={texts.carouselPrevButton}
-                onPress={goPrev}
-                disabled={!showPrevArrow}
-            >
-                <IconChevronLeftRegular />
-            </Touchable>
+            <ThemeVariant isInverse={false}>
+                <Touchable
+                    className={classNames(classes.arrowButton, 'prev')}
+                    aria-label={texts.carouselPrevButton}
+                    onPress={goPrev}
+                    disabled={!showPrevArrow}
+                >
+                    <IconChevronLeftRegular />
+                </Touchable>
+            </ThemeVariant>
             <div className={classes.fwCarousel} ref={carouselRef}>
                 {items.map((item, index) => (
                     <div key={index} className={classes.item}>
@@ -673,14 +679,16 @@ export const FullWidthCarousel: React.FC<FullWidthCarouselProps> = ({
                     </div>
                 ))}
             </div>
-            <Touchable
-                className={classNames(classes.arrowButton, 'next')}
-                aria-label={texts.carouselNextButton}
-                onPress={goNext}
-                disabled={!showNextArrow}
-            >
-                <IconChevronRightRegular />
-            </Touchable>
+            <ThemeVariant isInverse={false}>
+                <Touchable
+                    className={classNames(classes.arrowButton, 'next')}
+                    aria-label={texts.carouselNextButton}
+                    onPress={goNext}
+                    disabled={!showNextArrow}
+                >
+                    <IconChevronRightRegular />
+                </Touchable>
+            </ThemeVariant>
             {withBullets && (
                 <ThemeVariant isInverse>
                     <div className={classes.bullets}>
