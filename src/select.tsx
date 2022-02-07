@@ -272,6 +272,11 @@ const Select: React.FC<SelectProps> = ({
     const inputElement = inputRef.current;
 
     React.useEffect(() => {
+        setRawValue({name, value});
+        formSetValue({name, value});
+    }, [name, setRawValue, formSetValue, value]);
+
+    React.useEffect(() => {
         register(name, {
             input: inputRef.current,
             focusableElement: focusableRef.current,
