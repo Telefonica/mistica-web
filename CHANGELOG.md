@@ -1,3 +1,10 @@
+## [10.22.2](https://github.com/Telefonica/mistica-web/compare/v10.22.1...v10.22.2) (2022-02-07)
+
+
+### Bug Fixes
+
+* **Select:** set rawValue on init ([#409](https://github.com/Telefonica/mistica-web/issues/409)) ([d72cbd1](https://github.com/Telefonica/mistica-web/commit/d72cbd179e930712ef54c5e483e08c922a857059))
+
 ## [10.22.1](https://github.com/Telefonica/mistica-web/compare/v10.22.0...v10.22.1) (2022-02-03)
 
 
