@@ -5,9 +5,9 @@ export default {
     title: 'Components/Carousel/Slideshow',
 };
 
-type Args = {numItems: number; autoplay: boolean; withBullets: boolean};
+type Args = {numItems: number; autoplay: boolean; loop: boolean; withBullets: boolean};
 
-export const Default: StoryComponent<Args> = ({numItems, autoplay, withBullets}) => {
+export const Default: StoryComponent<Args> = ({numItems, autoplay, loop, withBullets}) => {
     const [currentPage, setCurrentPage] = React.useState<number>(0);
     return (
         <Box paddingY={24}>
@@ -19,7 +19,7 @@ export const Default: StoryComponent<Args> = ({numItems, autoplay, withBullets})
                     />
                     <Slideshow
                         withBullets={withBullets}
-                        autoplay={autoplay}
+                        autoplay={autoplay ? {time: 5000, loop} : false}
                         onPageChange={setCurrentPage}
                         items={Array.from({length: numItems}, (_, idx) => (
                             <Image
@@ -44,5 +44,6 @@ Default.parameters = {fullScreen: true};
 Default.args = {
     numItems: 6,
     autoplay: false,
+    loop: false,
     withBullets: true,
 };

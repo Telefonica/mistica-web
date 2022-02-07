@@ -12,6 +12,8 @@ import {useResonsiveLayoutMargin} from './responsive-layout';
 import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
 import {applyAlpha} from './utils/color';
 import {DisableBorderRadiusProvider} from './image';
+import {DataAttributes} from './utils/types';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {Theme} from './theme';
 
@@ -151,37 +153,27 @@ const useStyles = createUseStyles((theme) => ({
         scrollMargin: ({gap}) => `-${gap}px`,
         '&:first-child': {
             width: ({itemsPerPageConfig, gap}) =>
-                `calc(${100 / itemsPerPageConfig.desktop}% - ${
-                    (gap * (itemsPerPageConfig.desktop - 1)) / itemsPerPageConfig.desktop
-                }px)`,
+                // prettier-ignore
+                `calc(${100 / itemsPerPageConfig.desktop}% - ${(gap * (itemsPerPageConfig.desktop - 1)) / itemsPerPageConfig.desktop}px)`,
             scrollMargin: 0,
         },
         [theme.mq.tabletOrSmaller]: {
             scrollSnapAlign: ({centered}) => (centered ? 'center' : 'start'),
             scrollMargin: ({mobilePageOffsetConfig}) => `${mobilePageOffsetConfig.prev}px`,
             width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap}) =>
-                `calc(${100 / itemsPerPageConfig.mobile}% - ${
-                    (mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) /
-                    itemsPerPageConfig.mobile
-                }px)`,
+                // prettier-ignore
+                `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile}px)`,
             '&:first-child': {
                 paddingLeft: ({centered, sideMargin}) => (centered ? 0 : sideMargin),
                 width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap, centered, sideMargin}) =>
-                    `calc(${100 / itemsPerPageConfig.mobile}% - ${
-                        (mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) /
-                            itemsPerPageConfig.mobile +
-                        gap -
-                        (centered ? 0 : sideMargin)
-                    }px)`,
+                    // prettier-ignore
+                    `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile + gap - (centered ? 0 : sideMargin)}px)`,
             },
             '&:last-child': {
                 paddingRight: ({sideMargin}) => sideMargin,
                 width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap, centered, sideMargin}) =>
-                    `calc(${100 / itemsPerPageConfig.mobile}% - ${
-                        (mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) /
-                            itemsPerPageConfig.mobile -
-                        (centered ? 0 : sideMargin)
-                    }px)`,
+                    // prettier-ignore
+                    `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile - (centered ? 0 : sideMargin)}px)`,
             },
             '.centered &': {
                 width: () => '50%',
@@ -283,8 +275,9 @@ type BaseCarouselProps = {
     gap?: number;
     /** centered mode only applies to mobile. It includes a horizontal padding of half of the size of an item to show the items centered */
     centered?: boolean;
-    autoplay?: boolean | {time: number};
+    autoplay?: boolean | {time: number; loop?: boolean};
     onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
+    dataAttributes?: DataAttributes;
 
     children?: void;
 };
@@ -301,6 +294,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     centered,
     autoplay,
     onPageChange,
+    dataAttributes,
 }) => {
     const {texts} = useTheme();
     const itemsPerPageConfig = normalizeItemsPerPage(itemsPerPage);
@@ -415,9 +409,12 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     React.useEffect(() => {
         if (autoplay) {
             const time = typeof autoplay === 'boolean' ? 5000 : autoplay.time;
+            const loop = typeof autoplay === 'object' && autoplay.loop;
             const interval = setInterval(() => {
                 if (scrollRight !== 0) {
                     goNext();
+                } else if (loop) {
+                    carouselRef.current?.scrollTo({left: 0});
                 }
             }, time);
             return () => clearInterval(interval);
@@ -449,7 +446,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     }
 
     return (
-        <Stack space={24}>
+        <Stack space={24} dataAttributes={dataAttributes}>
             <div className={classes.carouselContainer}>
                 <ThemeVariant isInverse={false}>
                     <Touchable
@@ -495,8 +492,9 @@ type CarouselProps = {
     mobilePageOffset?: MobilePageOffset;
     /** If true, scroll snap doesn't apply and the user has a free scroll */
     free?: boolean;
-    autoplay?: boolean | {time: number};
+    autoplay?: boolean | {time: number; loop?: boolean};
     onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
+    dataAttributes?: DataAttributes;
 
     children?: void;
 };
@@ -508,6 +506,7 @@ type CenteredCarouselProps = {
     withBullets?: boolean;
     renderBullets?: (bulletsProps: PageBulletsProps) => React.ReactNode;
     onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
+    dataAttributes?: DataAttributes;
 
     children?: void;
 };
@@ -517,6 +516,7 @@ export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({
     withBullets,
     renderBullets,
     onPageChange,
+    dataAttributes,
 }) => (
     <BaseCarousel
         items={items}
@@ -528,6 +528,7 @@ export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({
         withBullets={withBullets}
         renderBullets={renderBullets}
         onPageChange={onPageChange}
+        dataAttributes={dataAttributes}
     />
 );
 
@@ -581,13 +582,20 @@ const useSlideshowStyles = createUseStyles((theme) => ({
 type SlideshowProps = {
     items: ReadonlyArray<React.ReactNode>;
     withBullets?: boolean;
-    autoplay?: boolean | {time: number};
+    autoplay?: boolean | {time: number; loop?: boolean};
     onPageChange?: (newPageIndex: number) => void;
+    dataAttributes?: DataAttributes;
 
     children?: void;
 };
 
-export const Slideshow: React.FC<SlideshowProps> = ({items, withBullets, autoplay, onPageChange}) => {
+export const Slideshow: React.FC<SlideshowProps> = ({
+    items,
+    withBullets,
+    autoplay,
+    onPageChange,
+    dataAttributes,
+}) => {
     const {texts} = useTheme();
     const sideMargin = useResonsiveLayoutMargin();
     const classes = useSlideshowStyles({sideMargin});
@@ -641,9 +649,12 @@ export const Slideshow: React.FC<SlideshowProps> = ({items, withBullets, autopla
     React.useEffect(() => {
         if (autoplay) {
             const time = typeof autoplay === 'boolean' ? 5000 : autoplay.time;
+            const loop = typeof autoplay === 'object' && autoplay.loop;
             const interval = setInterval(() => {
                 if (scrollRight !== 0) {
                     goNext();
+                } else if (loop) {
+                    carouselRef.current?.scrollTo({left: 0});
                 }
             }, time);
             return () => clearInterval(interval);
@@ -657,7 +668,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({items, withBullets, autopla
     }, [currentIndex, onPageChange]);
 
     return (
-        <div className={classes.slideshowContainer}>
+        <div className={classes.slideshowContainer} {...getPrefixedDataAttributes(dataAttributes)}>
             <ThemeVariant isInverse={false}>
                 <Touchable
                     className={classNames(classes.arrowButton, 'prev')}

@@ -26,6 +26,7 @@ type Args = {
     free: boolean;
     itemsToScroll: number;
     autoplay: boolean;
+    loop: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -38,6 +39,7 @@ export const Default: StoryComponent<Args> = ({
     free,
     itemsToScroll,
     autoplay,
+    loop,
 }) => {
     const [pageInfo, setPageInfo] = React.useState<{
         pageIndex: number;
@@ -52,11 +54,12 @@ export const Default: StoryComponent<Args> = ({
                         icon={<IconInformationRegular />}
                     />
                     <Carousel
+                        dataAttributes={{testid: 'carousel-story'}}
                         withBullets={withBullets}
                         free={free}
                         itemsPerPage={{mobile: itemsPerPageMobile, desktop: itemsPerPageDesktop}}
                         itemsToScroll={itemsToScroll}
-                        autoplay={autoplay}
+                        autoplay={autoplay ? {time: 5000, loop} : false}
                         mobilePageOffset={{next: nextPageOffset, prev: prevPageOffset}}
                         onPageChange={setPageInfo}
                         items={Array.from({length: numItems}, (_, idx) => (
@@ -67,7 +70,7 @@ export const Default: StoryComponent<Args> = ({
                                 media={{
                                     src: 'https://i.imgur.com/flZfkiX.png',
                                 }}
-                                buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                                buttonLink={<ButtonLink href="https://google.com">Link {idx}</ButtonLink>}
                             />
                         ))}
                     />
@@ -96,5 +99,6 @@ Default.args = {
     prevPageOffset: 16,
     free: false,
     autoplay: false,
+    loop: false,
     itemsToScroll: 0,
 };
