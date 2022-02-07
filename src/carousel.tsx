@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import {useResonsiveLayoutMargin} from './responsive-layout';
 import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
 import {applyAlpha} from './utils/color';
+import {DisableBorderRadiusProvider} from './image';
 
 import type {Theme} from './theme';
 
@@ -672,13 +673,15 @@ export const FullWidthCarousel: React.FC<FullWidthCarouselProps> = ({
                     <IconChevronLeftRegular />
                 </Touchable>
             </ThemeVariant>
-            <div className={classes.fwCarousel} ref={carouselRef}>
-                {items.map((item, index) => (
-                    <div key={index} className={classes.item}>
-                        {item}
-                    </div>
-                ))}
-            </div>
+            <DisableBorderRadiusProvider>
+                <div className={classes.fwCarousel} ref={carouselRef}>
+                    {items.map((item, index) => (
+                        <div key={index} className={classes.item}>
+                            {item}
+                        </div>
+                    ))}
+                </div>
+            </DisableBorderRadiusProvider>
             <ThemeVariant isInverse={false}>
                 <Touchable
                     className={classNames(classes.arrowButton, 'next')}

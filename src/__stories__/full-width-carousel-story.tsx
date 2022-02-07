@@ -9,7 +9,6 @@ import {
     Image,
     Text4,
 } from '..';
-import {DisableBorderRadiusProvider} from '../image';
 
 export default {
     title: 'Components/Carousel/FullWidthCarousel',
@@ -27,23 +26,21 @@ export const Default: StoryComponent<Args> = ({numItems, autoplay, withBullets})
                         description="Arrow controls disappear in touch devices."
                         icon={<IconInformationRegular />}
                     />
-                    <DisableBorderRadiusProvider>
-                        <FullWidthCarousel
-                            withBullets={withBullets}
-                            autoplay={autoplay}
-                            onPageChange={setCurrentPage}
-                            items={Array.from({length: numItems}, (_, idx) => (
-                                <Image
-                                    src={
-                                        idx % 2 === 0
-                                            ? 'https://i.imgur.com/HRvhZ6F.jpeg'
-                                            : 'https://i.imgur.com/flZfkiX.png'
-                                    }
-                                    aspectRatio="16:9"
-                                />
-                            ))}
-                        />
-                    </DisableBorderRadiusProvider>
+                    <FullWidthCarousel
+                        withBullets={withBullets}
+                        autoplay={autoplay}
+                        onPageChange={setCurrentPage}
+                        items={Array.from({length: numItems}, (_, idx) => (
+                            <Image
+                                src={
+                                    idx % 2 === 0
+                                        ? 'https://i.imgur.com/HRvhZ6F.jpeg'
+                                        : 'https://i.imgur.com/flZfkiX.png'
+                                }
+                                aspectRatio="16:9"
+                            />
+                        ))}
+                    />
                     <Text4 regular>Page {currentPage}</Text4>
                 </Stack>
             </ResponsiveLayout>
