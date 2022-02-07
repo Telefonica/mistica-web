@@ -240,7 +240,6 @@ const calcPagesScrollPositions = (itemsScrollPosition: ReadonlyArray<number>, nu
     pagesScrollPositions[pagesScrollPositions.length - 1] =
         itemsScrollPosition[itemsScrollPosition.length - itemsPerPage];
 
-    console.log('clacPagesScrollPositions', itemsScrollPosition, numPages, pagesScrollPositions);
     return pagesScrollPositions;
 };
 
@@ -391,7 +390,6 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
             const prevPageScrollPosition = [...scrollPositions]
                 .reverse()
                 .find((pos) => pos - scrollLeft < -1);
-            console.log('scrollLeft', scrollLeft, 'prevScrollPosition', prevPageScrollPosition);
             carouselEl.scrollTo({left: prevPageScrollPosition, behavior: 'smooth'});
         }
     }, [scrollPositions]);
@@ -401,7 +399,6 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
         if (carouselEl) {
             const {scrollLeft} = carouselEl;
             const nextPageScrollPosition = scrollPositions.find((pos) => pos - scrollLeft > 1);
-            console.log('scrollLeft', scrollLeft, 'nextPageScrollPosition', nextPageScrollPosition);
             carouselEl.scrollTo({left: nextPageScrollPosition, behavior: 'smooth'});
         }
     }, [scrollPositions]);
