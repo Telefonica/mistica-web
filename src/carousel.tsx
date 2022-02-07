@@ -411,7 +411,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                 if (scrollRight !== 0) {
                     goNext();
                 } else if (loop) {
-                    carouselRef.current?.scrollTo({left: 0});
+                    carouselRef.current?.scrollTo({left: 0, behavior: 'smooth'});
                 }
             }, time);
             return () => clearInterval(interval);
@@ -651,7 +651,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
                 if (scrollRight !== 0) {
                     goNext();
                 } else if (loop) {
-                    carouselRef.current?.scrollTo({left: 0});
+                    carouselRef.current?.scrollTo({left: 0, behavior: 'smooth'});
                 }
             }, time);
             return () => clearInterval(interval);
