@@ -1,17 +1,8 @@
 import * as React from 'react';
-import {
-    FullWidthCarousel,
-    Stack,
-    Box,
-    ResponsiveLayout,
-    Callout,
-    IconInformationRegular,
-    Image,
-    Text4,
-} from '..';
+import {Slideshow, Stack, Box, ResponsiveLayout, Callout, IconInformationRegular, Image, Text4} from '..';
 
 export default {
-    title: 'Components/Carousel/FullWidthCarousel',
+    title: 'Components/Carousel/Slideshow',
 };
 
 type Args = {numItems: number; autoplay: boolean; withBullets: boolean};
@@ -26,7 +17,7 @@ export const Default: StoryComponent<Args> = ({numItems, autoplay, withBullets})
                         description="Arrow controls disappear in touch devices."
                         icon={<IconInformationRegular />}
                     />
-                    <FullWidthCarousel
+                    <Slideshow
                         withBullets={withBullets}
                         autoplay={autoplay}
                         onPageChange={setCurrentPage}
@@ -48,7 +39,7 @@ export const Default: StoryComponent<Args> = ({numItems, autoplay, withBullets})
     );
 };
 
-Default.storyName = 'FullWidthCarousel';
+Default.storyName = 'Slideshow';
 Default.parameters = {fullScreen: true};
 Default.args = {
     numItems: 6,

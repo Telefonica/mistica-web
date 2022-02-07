@@ -57,7 +57,7 @@ declare type CenteredCarouselProps = {
   }) => void,
 };
 declare export var CenteredCarousel: React.ComponentType<CenteredCarouselProps>;
-declare type FullWidthCarouselProps = {
+declare type SlideshowProps = {
   items: $ReadOnlyArray<React.Node>,
   withBullets?: boolean,
   autoplay?:
@@ -67,5 +67,5 @@ declare type FullWidthCarouselProps = {
       },
   onPageChange?: (newPageIndex: number) => void,
 };
-declare export var FullWidthCarousel: React.ComponentType<FullWidthCarouselProps>;
+declare export var Slideshow: React.ComponentType<SlideshowProps>;
 declare export {};

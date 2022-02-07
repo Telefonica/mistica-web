@@ -180,7 +180,7 @@ const generateReportForGithub = async (results) => {
 
 const disabledRules = {
     'components-carousel-centeredcarousel--default': ['scrollable-region-focusable'],
-    'components-carousel-fullwidthcarousel--default': ['scrollable-region-focusable'],
+    'components-carousel-slideshow--default': ['scrollable-region-focusable'],
 };
 
 const main = async () => {

@@ -1101,9 +1101,9 @@ const carouselSnippets = [
     },
     {
         group: 'Carousel',
-        name: 'FullWidthCarousel',
+        name: 'Slideshow',
         code: `
-<FullWidthCarousel
+<Slideshow
   withBullets
   items={[
     <Image src="https://i.imgur.com/HRvhZ6F.jpeg" aspectRatio="16:9" />,

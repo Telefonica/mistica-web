@@ -104,7 +104,7 @@ declare export { default as Video } from "./video";
 declare export {
   Carousel,
   CenteredCarousel,
-  FullWidthCarousel,
+  Slideshow,
   PageBullets,
 } from "./carousel";
 declare export { default as Form } from "./form";

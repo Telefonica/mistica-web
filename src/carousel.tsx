@@ -531,11 +531,11 @@ export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({
     />
 );
 
-const useFwCarouselStyles = createUseStyles((theme) => ({
-    fwCarouselContainer: {
+const useSlideshowStyles = createUseStyles((theme) => ({
+    slideshowContainer: {
         position: 'relative',
     },
-    fwCarousel: {
+    slideshow: {
         display: 'flex',
         overflowX: 'auto',
         minWidth: '100%',
@@ -578,7 +578,7 @@ const useFwCarouselStyles = createUseStyles((theme) => ({
     },
 }));
 
-type FullWidthCarouselProps = {
+type SlideshowProps = {
     items: ReadonlyArray<React.ReactNode>;
     withBullets?: boolean;
     autoplay?: boolean | {time: number};
@@ -587,15 +587,10 @@ type FullWidthCarouselProps = {
     children?: void;
 };
 
-export const FullWidthCarousel: React.FC<FullWidthCarouselProps> = ({
-    items,
-    withBullets,
-    autoplay,
-    onPageChange,
-}) => {
+export const Slideshow: React.FC<SlideshowProps> = ({items, withBullets, autoplay, onPageChange}) => {
     const {texts} = useTheme();
     const sideMargin = useResonsiveLayoutMargin();
-    const classes = useFwCarouselStyles({sideMargin});
+    const classes = useSlideshowStyles({sideMargin});
 
     const carouselRef = React.useRef<HTMLDivElement>(null);
 
@@ -662,7 +657,7 @@ export const FullWidthCarousel: React.FC<FullWidthCarouselProps> = ({
     }, [currentIndex, onPageChange]);
 
     return (
-        <div className={classes.fwCarouselContainer}>
+        <div className={classes.slideshowContainer}>
             <ThemeVariant isInverse={false}>
                 <Touchable
                     className={classNames(classes.arrowButton, 'prev')}
@@ -674,7 +669,7 @@ export const FullWidthCarousel: React.FC<FullWidthCarouselProps> = ({
                 </Touchable>
             </ThemeVariant>
             <DisableBorderRadiusProvider>
-                <div className={classes.fwCarousel} ref={carouselRef}>
+                <div className={classes.slideshow} ref={carouselRef}>
                     {items.map((item, index) => (
                         <div key={index} className={classes.item}>
                             {item}
