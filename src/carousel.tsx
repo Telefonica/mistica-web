@@ -334,11 +334,14 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                 const maxScroll = carouselEl.scrollWidth - carouselEl.clientWidth;
 
                 setItemScrollPositions(
-                    Array.from(carouselEl.querySelectorAll('[data-slide]')).map((child) => {
-                        const offsetLeft = (child as HTMLElement).offsetLeft;
-                        const scrollMargin = Number(getComputedStyle(child).scrollMargin.replace('px', ''));
+                    Array.from(carouselEl.querySelectorAll('[data-item]')).map((itemEl, idx) => {
+                        if (idx === items.length - 1) {
+                            return maxScroll;
+                        }
+                        const offsetLeft = (itemEl as HTMLElement).offsetLeft;
+                        const scrollMargin = Number(getComputedStyle(itemEl).scrollMargin.replace('px', ''));
                         const scrollPosition =
-                            centered && !isDesktopOrBigger ? offsetLeft - child.clientWidth / 2 : offsetLeft;
+                            centered && !isDesktopOrBigger ? offsetLeft - itemEl.clientWidth / 2 : offsetLeft;
                         return Math.min(scrollPosition - scrollMargin - carouselEl.offsetLeft, maxScroll);
                     })
                 );
@@ -457,7 +460,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                 </ThemeVariant>
                 <div className={classNames(classes.carousel, {centered})} ref={carouselRef}>
                     {items.map((item, index) => (
-                        <div key={index} className={classes.slide} data-slide>
+                        <div key={index} className={classes.slide} data-item>
                             {item}
                         </div>
                     ))}
