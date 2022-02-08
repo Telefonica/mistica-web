@@ -12,9 +12,9 @@ import {useResonsiveLayoutMargin} from './responsive-layout';
 import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
 import {applyAlpha} from './utils/color';
 import {DisableBorderRadiusProvider} from './image';
-import {DataAttributes} from './utils/types';
 import {getPrefixedDataAttributes} from './utils/dom';
 
+import type {DataAttributes} from './utils/types';
 import type {Theme} from './theme';
 
 const listenResize = (element: Element, handler: () => void) => {

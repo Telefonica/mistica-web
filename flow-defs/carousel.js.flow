@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from "react";
+import type { DataAttributes } from "./utils/types";
 declare type PageBulletsProps = {
   currentIndex: number,
   numPages: number,
@@ -40,11 +41,13 @@ declare type CarouselProps = {
     | boolean
     | {
         time: number,
+        loop?: boolean,
       },
   onPageChange?: (newPageInfo: {
     pageIndex: number,
     shownItemIndexes: Array<number>,
   }) => void,
+  dataAttributes?: DataAttributes,
 };
 declare export var Carousel: React.ComponentType<CarouselProps>;
 declare type CenteredCarouselProps = {
@@ -55,6 +58,7 @@ declare type CenteredCarouselProps = {
     pageIndex: number,
     shownItemIndexes: Array<number>,
   }) => void,
+  dataAttributes?: DataAttributes,
 };
 declare export var CenteredCarousel: React.ComponentType<CenteredCarouselProps>;
 declare type SlideshowProps = {
@@ -64,8 +68,10 @@ declare type SlideshowProps = {
     | boolean
     | {
         time: number,
+        loop?: boolean,
       },
   onPageChange?: (newPageIndex: number) => void,
+  dataAttributes?: DataAttributes,
 };
 declare export var Slideshow: React.ComponentType<SlideshowProps>;
 declare export {};
