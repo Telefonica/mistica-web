@@ -1,3 +1,10 @@
+## [10.22.3](https://github.com/Telefonica/mistica-web/compare/v10.22.2...v10.22.3) (2022-02-08)
+
+
+### Bug Fixes
+
+* **Form:** handle undefined rawValue ([#410](https://github.com/Telefonica/mistica-web/issues/410)) ([6363328](https://github.com/Telefonica/mistica-web/commit/63633288d1a9a1781b9bf350c4923af101a72312))
+
 ## [10.22.2](https://github.com/Telefonica/mistica-web/compare/v10.22.1...v10.22.2) (2022-02-07)
 
 
