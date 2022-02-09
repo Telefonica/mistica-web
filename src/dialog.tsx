@@ -501,7 +501,6 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
     }
 
     render(): React.ReactNode {
-        console.log(this.context);
         const {isClosing, dialogProps} = this.state;
 
         let dialog = null;
