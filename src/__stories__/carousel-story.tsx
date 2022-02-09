@@ -64,6 +64,7 @@ export const Default: StoryComponent<Args> = ({
                         onPageChange={setPageInfo}
                         items={Array.from({length: numItems}, (_, idx) => (
                             <MediaCard
+                                aria-label={`Carousel item ${idx}`}
                                 key={idx}
                                 title={`Title ${idx}`}
                                 description="Some description"
