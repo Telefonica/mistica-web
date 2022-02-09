@@ -1,7 +1,6 @@
 import * as React from 'react';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
-import Circle from './circle';
 import {useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
 import {createUseStyles} from './jss';
@@ -42,6 +41,31 @@ const listenResize = (element: Element, handler: () => void) => {
     };
 };
 
+const useBulletsStyles = createUseStyles((theme) => ({
+    bullet: {
+        backgroundColor: ({isInverse}) =>
+            isInverse ? applyAlpha(theme.colors.inverse, 0.5) : theme.colors.control,
+        width: 8,
+        height: 8,
+        borderRadius: '50%',
+        transition: 'transform 0.3s ease-in-out, background-color 0.3s ease-in-out',
+
+        '&.active': {
+            backgroundColor: ({isInverse}) =>
+                isInverse ? theme.colors.inverse : theme.colors.controlActivated,
+            transform: 'scale(1.25)', // 10px
+        },
+
+        [theme.mq.tabletOrSmaller]: {
+            width: 4,
+            height: 4,
+            '&.active': {
+                transform: 'scale(1.5)', // 6px
+            },
+        },
+    },
+}));
+
 type PageBulletsProps = {
     currentIndex: number;
     numPages: number;
@@ -50,12 +74,8 @@ type PageBulletsProps = {
 
 export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages, onPress}) => {
     const isInverse = useIsInverseVariant();
-    const {colors} = useTheme();
-    const activeCircleColor = isInverse ? colors.inverse : colors.controlActivated;
-    const circleColor = isInverse ? applyAlpha(colors.inverse, 0.5) : colors.control;
+    const classes = useBulletsStyles({isInverse});
     const {isDesktopOrBigger} = useScreenSize();
-    const bulletSize = isDesktopOrBigger ? 8 : 4;
-    const currentBulletSize = isDesktopOrBigger ? 10 : 6;
     return (
         <Inline space={8} alignItems="center">
             {Array.from({length: numPages}, (_, i: number) => (
@@ -64,10 +84,7 @@ export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages,
                     maybe
                     onPress={isDesktopOrBigger && onPress ? () => onPress(i) : undefined}
                 >
-                    <Circle
-                        size={i === currentIndex ? currentBulletSize : bulletSize}
-                        backgroundColor={i === currentIndex ? activeCircleColor : circleColor}
-                    />
+                    <div className={classNames(classes.bullet, {active: i === currentIndex})} />
                 </Touchable>
             ))}
         </Inline>
