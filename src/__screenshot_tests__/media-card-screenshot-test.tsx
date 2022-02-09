@@ -12,7 +12,7 @@ test.each(TESTABLE_DEVICES)('MediaCard in %s', async (device) => {
 
     const mediaCard = await screen.findByTestId('media-card');
 
-    const image = await mediaCard.screenshot();
+    const image = await mediaCard.screenshot({captureBeyondViewport: true});
 
     expect(image).toMatchImageSnapshot();
 });
@@ -27,7 +27,7 @@ test.each(TESTABLE_DEVICES)('MediaCard with large fontSize in %s', async (device
 
     const mediaCard = await screen.findByTestId('media-card');
 
-    const image = await mediaCard.screenshot();
+    const image = await mediaCard.screenshot({captureBeyondViewport: true});
 
     expect(image).toMatchImageSnapshot();
 });
