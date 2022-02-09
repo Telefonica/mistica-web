@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from "react";
+import type { Theme } from "./theme";
 declare type DialogProps = {
   className?: string,
   title?: string,
@@ -24,6 +25,7 @@ declare type DialogRootState = {
 declare export default class DialogRoot
   mixins React.Component<DialogRootProps, DialogRootState>
 {
+  static contextType: React.Context<Theme | null>;
   state: DialogRootState;
   componentDidMount(): void;
   componentWillUnmount(): void;
