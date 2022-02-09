@@ -77,7 +77,7 @@ export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages,
     const classes = useBulletsStyles({isInverse});
     const {isDesktopOrBigger} = useScreenSize();
     return (
-        <Inline space={8} alignItems="center">
+        <Inline space={isDesktopOrBigger ? 16 : 8} alignItems="center">
             {Array.from({length: numPages}, (_, i: number) => (
                 <Touchable
                     key={i}
