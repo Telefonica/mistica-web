@@ -225,6 +225,7 @@ export type ThemeConfig = {
     Link?: LinkComponent;
     useHrefDecorator?: () => (href: string) => string;
     enableTabFocus?: boolean;
+    unstable_disableHistoryUpdateInDialogs?: boolean;
 };
 
 // This is the lib INTERNAL context
@@ -257,4 +258,5 @@ export type Theme = {
     isDarkMode: boolean;
     isIos: boolean;
     useHrefDecorator: () => (href: string) => string;
+    unstable_disableHistoryUpdateInDialogs: boolean;
 };
