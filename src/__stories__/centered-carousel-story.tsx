@@ -51,6 +51,7 @@ export const Default: StoryComponent<Args> = ({numItems}) => {
                         )}
                         items={Array.from({length: numItems}, (_, idx) => (
                             <div
+                                aria-label={`Carousel item ${idx}`}
                                 key={idx}
                                 style={{
                                     border: `1px solid ${colors.border}`,
