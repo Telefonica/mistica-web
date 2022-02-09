@@ -420,7 +420,9 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
         dialogRootInstances++;
         if (dialogRootInstances === 1) {
             dialogInstance = this;
-            window.addEventListener('popstate', this.handleBack);
+            if (!this.context.unstable_disableHistoryUpdateInDialogs) {
+                window.addEventListener('popstate', this.handleBack);
+            }
         }
     }
 
@@ -428,7 +430,9 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
         dialogRootInstances--;
         if (dialogRootInstances === 0) {
             dialogInstance = null;
-            window.removeEventListener('popstate', this.handleBack);
+            if (!this.context.unstable_disableHistoryUpdateInDialogs) {
+                window.removeEventListener('popstate', this.handleBack);
+            }
         }
     }
 
@@ -473,6 +477,8 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
         if (!this.context.unstable_disableHistoryUpdateInDialogs) {
             // Here we have to remove the additional entry added to history when we created the Dialog
             window.history.back();
+        } else {
+            this.handleBack();
         }
     }
 
@@ -495,6 +501,7 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
     }
 
     render(): React.ReactNode {
+        console.log(this.context);
         const {isClosing, dialogProps} = this.state;
 
         let dialog = null;
