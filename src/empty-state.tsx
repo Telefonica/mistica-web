@@ -10,7 +10,7 @@ import ButtonGroup from './button-group';
 import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {ButtonGroupProps} from './button-group';
-import type {DataAttributes, RendersElement} from './utils/types';
+import type {DataAttributes, RendersNullableElement} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -59,8 +59,8 @@ const useStyles = createUseStyles((theme) => ({
 
 interface BaseProps {
     title: string;
-    button?: RendersElement<typeof ButtonPrimary> | RendersElement<typeof ButtonSecondary>;
-    buttonLink?: RendersElement<typeof ButtonLink>;
+    button?: RendersNullableElement<typeof ButtonPrimary> | RendersNullableElement<typeof ButtonSecondary>;
+    buttonLink?: RendersNullableElement<typeof ButtonLink>;
     description?: string;
     children?: void;
     'aria-label'?: string;

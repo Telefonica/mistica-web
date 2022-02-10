@@ -11,7 +11,7 @@ import ButtonGroup from './button-group';
 import Video from './video';
 import Image, {DisableBorderRadiusProvider} from './image';
 
-import type {DataAttributes, RendersElement} from './utils/types';
+import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
 
 const useCardContentStyles = createUseStyles(() => ({
     actions: {
@@ -22,14 +22,14 @@ const useCardContentStyles = createUseStyles(() => ({
 }));
 
 type CardContentProps = {
-    headline?: string | RendersElement<typeof Tag>;
+    headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     title?: string;
     subtitle?: string;
     description?: string;
     extra?: React.ReactNode;
-    button?: RendersElement<typeof ButtonPrimary>;
-    buttonLink?: RendersElement<typeof ButtonLink>;
+    button?: RendersNullableElement<typeof ButtonPrimary>;
+    buttonLink?: RendersNullableElement<typeof ButtonLink>;
 };
 
 const CardContent: React.FC<CardContentProps> = ({
@@ -153,13 +153,13 @@ type MediaCardProps = {
         | CardMedia
         | (RendersElement<typeof Image> & {src?: undefined})
         | (RendersElement<typeof Video> & {src?: undefined});
-    headline?: string | RendersElement<typeof Tag>;
+    headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     title?: string;
     description?: string;
     extra?: React.ReactNode;
-    button?: RendersElement<typeof ButtonPrimary>;
-    buttonLink?: RendersElement<typeof ButtonLink>;
+    button?: RendersNullableElement<typeof ButtonPrimary>;
+    buttonLink?: RendersNullableElement<typeof ButtonLink>;
     children?: void;
     'aria-label'?: string;
 };
@@ -212,13 +212,13 @@ interface DataCardProps {
      * Typically a mistica-icons component element
      */
     icon?: React.ReactElement;
-    headline?: string | RendersElement<typeof Tag>;
+    headline?: string | RendersNullableElement<typeof Tag>;
     title?: string;
     subtitle?: string;
     description?: string;
     extra?: React.ReactNode;
-    button?: RendersElement<typeof ButtonPrimary>;
-    buttonLink?: RendersElement<typeof ButtonLink>;
+    button?: RendersNullableElement<typeof ButtonPrimary>;
+    buttonLink?: RendersNullableElement<typeof ButtonLink>;
     children?: void;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;

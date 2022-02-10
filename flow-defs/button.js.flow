@@ -4,6 +4,7 @@ import * as React from "react";
 import type {
   DataAttributes,
   RendersElement,
+  RendersNullableElement,
   TrackingEvent,
 } from "./utils/types";
 import type { Location } from "history";
@@ -93,6 +94,10 @@ export type ButtonElement =
   | RendersElement<typeof ButtonPrimary>
   | RendersElement<typeof ButtonSecondary>
   | RendersElement<typeof ButtonDanger>;
+export type NullableButtonElement =
+  | RendersNullableElement<typeof ButtonPrimary>
+  | RendersNullableElement<typeof ButtonSecondary>
+  | RendersNullableElement<typeof ButtonDanger>;
 declare export {};
 
 import { type CssStyle } from "./__types__.js.flow";

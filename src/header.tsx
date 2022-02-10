@@ -12,7 +12,7 @@ import NavigationBreadcrumbs from './navigation-breadcrumbs';
 import {ButtonPrimary, ButtonSecondary} from './button';
 import ButtonGroup from './button-group';
 
-import type {RendersElement} from './utils/types';
+import type {RendersElement, RendersNullableElement} from './utils/types';
 import type {TextPresetProps} from './text';
 
 type OverridableTextProps = {
@@ -30,8 +30,8 @@ type HeaderProps = {
     title?: string;
     preamount?: RichText;
     amount?: string;
-    button?: RendersElement<typeof ButtonPrimary>;
-    secondaryButton?: RendersElement<typeof ButtonSecondary>;
+    button?: RendersNullableElement<typeof ButtonPrimary>;
+    secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     subtitle?: RichText;
     isErrorAmount?: boolean;
 };
@@ -107,7 +107,7 @@ export const Header: React.FC<HeaderProps> = ({
 type MainSectionHeaderProps = {
     title: string;
     description?: string;
-    button?: RendersElement<typeof ButtonPrimary> | RendersElement<typeof ButtonSecondary>;
+    button?: RendersNullableElement<typeof ButtonPrimary> | RendersNullableElement<typeof ButtonSecondary>;
 };
 
 export const MainSectionHeader: React.FC<MainSectionHeaderProps> = ({title, description, button}) => {
@@ -139,7 +139,7 @@ const useHeaderLayoutStyles = createUseStyles((theme) => ({
 
 type HeaderLayoutProps = {
     isInverse?: boolean;
-    breadcrumbs?: RendersElement<typeof NavigationBreadcrumbs>;
+    breadcrumbs?: RendersNullableElement<typeof NavigationBreadcrumbs>;
     header: React.ReactNode; // intentionally not forced to RendersElement<typeof Header> to allow skeletons for example
     extra?: React.ReactNode;
     sideBySideExtraOnDesktop?: boolean;

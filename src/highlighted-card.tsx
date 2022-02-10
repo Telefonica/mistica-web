@@ -11,8 +11,8 @@ import IconButton from './icon-button';
 import {ButtonLink} from './button';
 import {Boxed} from './boxed';
 
-import type {RendersElement, TrackingEvent} from './utils/types';
-import type {ButtonElement} from './button';
+import type {RendersNullableElement, TrackingEvent} from './utils/types';
+import type {NullableButtonElement} from './button';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -124,7 +124,7 @@ interface BasicProps extends CommonProps {
     href?: undefined;
 }
 interface ButtonProps extends CommonProps {
-    button?: ButtonElement | RendersElement<typeof ButtonLink> | null;
+    button?: NullableButtonElement | RendersNullableElement<typeof ButtonLink> | null;
     onPress?: undefined;
     to?: undefined;
     href?: undefined;

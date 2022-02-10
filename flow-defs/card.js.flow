@@ -5,7 +5,11 @@ import Tag from "./tag";
 import { ButtonLink, ButtonPrimary } from "./button";
 import Video from "./video";
 import Image from "./image";
-import type { DataAttributes, RendersElement } from "./utils/types";
+import type {
+  DataAttributes,
+  RendersElement,
+  RendersNullableElement,
+} from "./utils/types";
 
 /**
  * @deprecated
@@ -31,13 +35,13 @@ declare type MediaCardProps = {
         ...RendersElement<typeof Video>,
         ...{},
       },
-  headline?: string | RendersElement<typeof Tag>,
+  headline?: string | RendersNullableElement<typeof Tag>,
   pretitle?: string,
   title?: string,
   description?: string,
   extra?: React.Node,
-  button?: RendersElement<typeof ButtonPrimary>,
-  buttonLink?: RendersElement<typeof ButtonLink>,
+  button?: RendersNullableElement<typeof ButtonPrimary>,
+  buttonLink?: RendersNullableElement<typeof ButtonLink>,
   "aria-label"?: string,
 };
 declare export var MediaCard: React.ComponentType<{
@@ -49,13 +53,13 @@ declare type DataCardProps = {
    * Typically a mistica-icons component element
    */
   icon?: React.Element<any>,
-  headline?: string | RendersElement<typeof Tag>,
+  headline?: string | RendersNullableElement<typeof Tag>,
   title?: string,
   subtitle?: string,
   description?: string,
   extra?: React.Node,
-  button?: RendersElement<typeof ButtonPrimary>,
-  buttonLink?: RendersElement<typeof ButtonLink>,
+  button?: RendersNullableElement<typeof ButtonPrimary>,
+  buttonLink?: RendersNullableElement<typeof ButtonLink>,
   /**
    * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
    */

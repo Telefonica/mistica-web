@@ -5,10 +5,10 @@ import {BUTTON_MIN_WIDTH, ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLi
 import classNames from 'classnames';
 import debounce from 'lodash/debounce';
 
-import type {RendersElement} from './utils/types';
-import type {ButtonElement} from './button';
+import type {RendersNullableElement} from './utils/types';
+import type {NullableButtonElement} from './button';
 
-type MaybeButtonElement = ButtonElement | void | false;
+type MaybeButtonElement = NullableButtonElement | void | false;
 
 const buttonLayoutSpacing = 16;
 
@@ -103,7 +103,7 @@ const useOnChildrenChangeEffect = (el: HTMLElement | null, effect: MutationCallb
 type ButtonLayoutProps = {
     children?: MaybeButtonElement | [MaybeButtonElement, MaybeButtonElement];
     align?: 'center' | 'left' | 'right' | 'full-width';
-    link?: RendersElement<typeof ButtonLink> | null;
+    link?: RendersNullableElement<typeof ButtonLink> | null;
     withMargins?: boolean;
 };
 

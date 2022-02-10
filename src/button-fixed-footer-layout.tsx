@@ -6,15 +6,15 @@ import {ButtonLink} from './button';
 import ResponsiveLayout from './responsive-layout';
 import Box from './box';
 
-import type {RendersElement} from './utils/types';
-import type {ButtonElement} from './button';
+import type {RendersNullableElement} from './utils/types';
+import type {NullableButtonElement} from './button';
 
 type Props = {
     isFooterVisible?: boolean;
-    button?: ButtonElement;
+    button?: NullableButtonElement;
     desktopButtonAlign?: 'left' | 'center';
-    secondaryButton?: ButtonElement;
-    link?: RendersElement<typeof ButtonLink>;
+    secondaryButton?: NullableButtonElement;
+    link?: RendersNullableElement<typeof ButtonLink>;
     footerBgColor?: string;
     containerBgColor?: string;
     children: React.ReactNode;

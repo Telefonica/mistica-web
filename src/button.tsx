@@ -9,7 +9,7 @@ import {pxToRem} from './utils/css';
 import {Text, Text2, Text3} from './text';
 import Box from './box';
 
-import type {DataAttributes, RendersElement, TrackingEvent} from './utils/types';
+import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
 import type {Theme} from './theme';
 
@@ -539,3 +539,8 @@ export type ButtonElement =
     | RendersElement<typeof ButtonPrimary>
     | RendersElement<typeof ButtonSecondary>
     | RendersElement<typeof ButtonDanger>;
+
+export type NullableButtonElement =
+    | RendersNullableElement<typeof ButtonPrimary>
+    | RendersNullableElement<typeof ButtonSecondary>
+    | RendersNullableElement<typeof ButtonDanger>;
