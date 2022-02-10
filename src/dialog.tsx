@@ -408,6 +408,8 @@ type DialogRootState = {
 };
 
 export default class DialogRoot extends React.Component<DialogRootProps, DialogRootState> {
+    static contextType = ThemeContext;
+
     state: DialogRootState = {
         dialogProps: null,
         isClosing: false,
@@ -418,7 +420,9 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
         dialogRootInstances++;
         if (dialogRootInstances === 1) {
             dialogInstance = this;
-            window.addEventListener('popstate', this.handleBack);
+            if (!this.context.unstable_disableHistoryUpdateInDialogs) {
+                window.addEventListener('popstate', this.handleBack);
+            }
         }
     }
 
@@ -426,7 +430,9 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
         dialogRootInstances--;
         if (dialogRootInstances === 0) {
             dialogInstance = null;
-            window.removeEventListener('popstate', this.handleBack);
+            if (!this.context.unstable_disableHistoryUpdateInDialogs) {
+                window.removeEventListener('popstate', this.handleBack);
+            }
         }
     }
 
@@ -436,8 +442,10 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
                 'Tried to show a dialog on top of another dialog. This functionality is not currently supported.'
             );
         }
-        // We add an additional entry to history with the same page, so the first time back is pressed we only close the Dialog
-        window.history.pushState(null, document.title, window.location.href);
+        if (!this.context.unstable_disableHistoryUpdateInDialogs) {
+            // We add an additional entry to history with the same page, so the first time back is pressed we only close the Dialog
+            window.history.pushState(null, document.title, window.location.href);
+        }
         this.setState({
             dialogProps: props,
             isClosing: false,
@@ -466,8 +474,12 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
     };
 
     close(): void {
-        // Here we have to remove the additional entry added to history when we created the Dialog
-        window.history.back();
+        if (!this.context.unstable_disableHistoryUpdateInDialogs) {
+            // Here we have to remove the additional entry added to history when we created the Dialog
+            window.history.back();
+        } else {
+            this.handleBack();
+        }
     }
 
     createCancelHandler(onCancel?: () => void) {
