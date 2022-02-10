@@ -13,28 +13,19 @@ import PhoneNumberField from './phone-number-field';
 import Select from './select';
 import TextField from './text-field';
 
-import type {TextFieldProps} from './text-field';
-import type {SelectProps} from './select';
-import type {CvvFieldProps} from './cvv-field';
-import type {CreditCardExpirationFieldProps} from './credit-card-expiration-field';
-import type {DecimalFieldProps} from './decimal-field';
-import type {IntegerFieldProps} from './integer-field';
-import type {DateFieldProps} from './date-field';
-import type {PasswordFieldProps} from './password-field';
-import type {PhoneNumberFieldProps} from './phone-number-field';
-import type {EmailFieldProps} from './email-field';
+import type {RendersElement} from './utils/types';
 
 type Field =
-    | React.ReactElement<TextFieldProps, typeof TextField>
-    | React.ReactElement<SelectProps, typeof Select>
-    | React.ReactElement<CvvFieldProps, typeof CvvField>
-    | React.ReactElement<CreditCardExpirationFieldProps, typeof CreditCardExpirationField>
-    | React.ReactElement<DecimalFieldProps, typeof DecimalField>
-    | React.ReactElement<IntegerFieldProps, typeof IntegerField>
-    | React.ReactElement<DateFieldProps, typeof DateField>
-    | React.ReactElement<PhoneNumberFieldProps, typeof PhoneNumberField>
-    | React.ReactElement<PasswordFieldProps, typeof PasswordField>
-    | React.ReactElement<EmailFieldProps, typeof EmailField>;
+    | RendersElement<typeof TextField>
+    | RendersElement<typeof Select>
+    | RendersElement<typeof CvvField>
+    | RendersElement<typeof CreditCardExpirationField>
+    | RendersElement<typeof DecimalField>
+    | RendersElement<typeof IntegerField>
+    | RendersElement<typeof DateField>
+    | RendersElement<typeof PhoneNumberField>
+    | RendersElement<typeof PasswordField>
+    | RendersElement<typeof EmailField>;
 
 type Props = {
     fullWidth?: boolean;

@@ -5,7 +5,7 @@ import Tag from "./tag";
 import { ButtonLink, ButtonPrimary } from "./button";
 import Video from "./video";
 import Image from "./image";
-import type { DataAttributes } from "./utils/types";
+import type { DataAttributes, RendersElement } from "./utils/types";
 
 /**
  * @deprecated
@@ -24,20 +24,20 @@ declare type MediaCardProps = {
   media:
     | CardMedia
     | {
-        ...React.Element<typeof Image>,
+        ...RendersElement<typeof Image>,
         ...{},
       }
     | {
-        ...React.Element<typeof Video>,
+        ...RendersElement<typeof Video>,
         ...{},
       },
-  headline?: string | React.Element<typeof Tag>,
+  headline?: string | RendersElement<typeof Tag>,
   pretitle?: string,
   title?: string,
   description?: string,
   extra?: React.Node,
-  button?: React.Element<typeof ButtonPrimary>,
-  buttonLink?: React.Element<typeof ButtonLink>,
+  button?: RendersElement<typeof ButtonPrimary>,
+  buttonLink?: RendersElement<typeof ButtonLink>,
   "aria-label"?: string,
 };
 declare export var MediaCard: React.ComponentType<{
@@ -49,13 +49,13 @@ declare type DataCardProps = {
    * Typically a mistica-icons component element
    */
   icon?: React.Element<any>,
-  headline?: string | React.Element<typeof Tag>,
+  headline?: string | RendersElement<typeof Tag>,
   title?: string,
   subtitle?: string,
   description?: string,
   extra?: React.Node,
-  button?: React.Element<typeof ButtonPrimary>,
-  buttonLink?: React.Element<typeof ButtonLink>,
+  button?: RendersElement<typeof ButtonPrimary>,
+  buttonLink?: RendersElement<typeof ButtonLink>,
   /**
    * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
    */

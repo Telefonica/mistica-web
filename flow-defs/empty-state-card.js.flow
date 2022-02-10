@@ -2,12 +2,12 @@
 
 import * as React from "react";
 import { ButtonLink, ButtonPrimary, ButtonSecondary } from "./button";
-import type { DataAttributes } from "./utils/types";
+import type { DataAttributes, RendersElement } from "./utils/types";
 declare type CommonProps = {
   title: string,
-  button?: React.Element<typeof ButtonPrimary>,
-  secondaryButton?: React.Element<typeof ButtonSecondary>,
-  buttonLink?: React.Element<typeof ButtonLink>,
+  button?: RendersElement<typeof ButtonPrimary>,
+  secondaryButton?: RendersElement<typeof ButtonSecondary>,
+  buttonLink?: RendersElement<typeof ButtonLink>,
   description?: string,
   "aria-label"?: string,
   /**

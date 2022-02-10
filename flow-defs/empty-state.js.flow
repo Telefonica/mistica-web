@@ -2,13 +2,13 @@
 
 import * as React from "react";
 import { ButtonPrimary, ButtonSecondary, ButtonLink } from "./button";
-import type { DataAttributes } from "./utils/types";
+import type { DataAttributes, RendersElement } from "./utils/types";
 declare type BaseProps = {
   title: string,
   button?:
-    | React.Element<typeof ButtonPrimary>
-    | React.Element<typeof ButtonSecondary>,
-  buttonLink?: React.Element<typeof ButtonLink>,
+    | RendersElement<typeof ButtonPrimary>
+    | RendersElement<typeof ButtonSecondary>,
+  buttonLink?: RendersElement<typeof ButtonLink>,
   description?: string,
   "aria-label"?: string,
   dataAttributes?: DataAttributes,

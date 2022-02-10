@@ -2,13 +2,14 @@
 
 import * as React from "react";
 import { ButtonLink } from "./button";
+import type { RendersElement } from "./utils/types";
 import type { ButtonElement } from "./button";
 declare type Props = {
   isFooterVisible?: boolean,
   button?: ButtonElement,
   desktopButtonAlign?: "left" | "center",
   secondaryButton?: ButtonElement,
-  link?: React.Element<typeof ButtonLink>,
+  link?: RendersElement<typeof ButtonLink>,
   footerBgColor?: string,
   containerBgColor?: string,
   children: React.Node,

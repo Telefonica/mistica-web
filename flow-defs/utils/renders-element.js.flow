@@ -1,0 +1,9 @@
+// @flow
+import * as React from 'react';
+
+export type RendersElement<+TElementType: React.ElementType> = {
+    +type: TElementType | ((props: any) => RendersElement<TElementType>),
+    +props: any,
+    +key: React.Key | null,
+    +ref: any,
+};

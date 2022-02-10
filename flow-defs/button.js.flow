@@ -1,7 +1,11 @@
 // @flow
 
 import * as React from "react";
-import type { DataAttributes, TrackingEvent } from "./utils/types";
+import type {
+  DataAttributes,
+  RendersElement,
+  TrackingEvent,
+} from "./utils/types";
 import type { Location } from "history";
 declare export var BUTTON_MIN_WIDTH: 136;
 declare type CommonProps = {
@@ -86,9 +90,9 @@ declare export var ButtonPrimary: React.ComponentType<ButtonProps>;
 declare export var ButtonSecondary: React.ComponentType<ButtonProps>;
 declare export var ButtonDanger: React.ComponentType<ButtonProps>;
 export type ButtonElement =
-  | React.Element<typeof ButtonPrimary>
-  | React.Element<typeof ButtonSecondary>
-  | React.Element<typeof ButtonDanger>;
+  | RendersElement<typeof ButtonPrimary>
+  | RendersElement<typeof ButtonSecondary>
+  | RendersElement<typeof ButtonDanger>;
 declare export {};
 
 import { type CssStyle } from "./__types__.js.flow";
