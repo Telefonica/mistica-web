@@ -124,7 +124,7 @@ interface BasicProps extends CommonProps {
     href?: undefined;
 }
 interface ButtonProps extends CommonProps {
-    button?: NullableButtonElement | RendersNullableElement<typeof ButtonLink> | null;
+    button?: NullableButtonElement | RendersNullableElement<typeof ButtonLink>;
     onPress?: undefined;
     to?: undefined;
     href?: undefined;

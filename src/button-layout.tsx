@@ -103,7 +103,7 @@ const useOnChildrenChangeEffect = (el: HTMLElement | null, effect: MutationCallb
 type ButtonLayoutProps = {
     children?: MaybeButtonElement | [MaybeButtonElement, MaybeButtonElement];
     align?: 'center' | 'left' | 'right' | 'full-width';
-    link?: RendersNullableElement<typeof ButtonLink> | null;
+    link?: RendersNullableElement<typeof ButtonLink>;
     withMargins?: boolean;
 };
 

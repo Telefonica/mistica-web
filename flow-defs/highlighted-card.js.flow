@@ -19,10 +19,7 @@ declare type CommonProps = {
 declare type BasicProps = { ...$Exact<CommonProps> };
 declare type ButtonProps = {
   ...$Exact<CommonProps>,
-  button?:
-    | NullableButtonElement
-    | RendersNullableElement<typeof ButtonLink>
-    | null,
+  button?: NullableButtonElement | RendersNullableElement<typeof ButtonLink>,
 };
 declare type HrefProps = {
   ...$Exact<CommonProps>,
