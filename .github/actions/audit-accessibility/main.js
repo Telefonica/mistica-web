@@ -67,9 +67,10 @@ const startStorybook = () => {
 /**
  * @param {import('puppeteer').Browser} browser
  * @param {string} url
+ * @param {Array<string>} disabledRules
  * @returns {Promise<import('axe-core').AxeResults>}
  */
-const audit = async (browser, url) => {
+const audit = async (browser, url, disabledRules = []) => {
     const page = await browser.newPage();
     const ua = await browser.userAgent();
     await page.setUserAgent(`${ua} acceptance-test`);
@@ -82,6 +83,7 @@ const audit = async (browser, url) => {
             'autocomplete-valid',
             // ignored because disabled input fields have a low contrast by design spec
             'color-contrast',
+            ...disabledRules,
         ])
         .analyze();
     page.close();
@@ -176,6 +178,11 @@ const generateReportForGithub = async (results) => {
     require('../utils/github').commentPullRequest(lines.join('\n'));
 };
 
+const disabledRules = {
+    'components-carousel-centeredcarousel--default': ['scrollable-region-focusable'],
+    'components-carousel-slideshow--default': ['scrollable-region-focusable'],
+};
+
 const main = async () => {
     process.chdir(PATH_REPO_ROOT);
 
@@ -199,7 +206,7 @@ const main = async () => {
         await Promise.all(
             stories.map(async (story) => {
                 console.log(story);
-                const result = await audit(browser, getStoryUrl(story));
+                const result = await audit(browser, getStoryUrl(story), disabledRules[story]);
                 results.push([story, result]);
             })
         );
