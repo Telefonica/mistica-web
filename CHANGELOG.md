@@ -1,3 +1,10 @@
+# [10.23.0](https://github.com/Telefonica/mistica-web/compare/v10.22.3...v10.23.0) (2022-02-10)
+
+
+### Features
+
+* **Dialog:** allow disable history update in dialogs ([#412](https://github.com/Telefonica/mistica-web/issues/412)) ([178bc55](https://github.com/Telefonica/mistica-web/commit/178bc55abc19f0d9117d0a51bbcb5a8a2353f68e))
+
 ## [10.22.3](https://github.com/Telefonica/mistica-web/compare/v10.22.2...v10.22.3) (2022-02-08)
 
 
