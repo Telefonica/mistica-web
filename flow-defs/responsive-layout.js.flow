@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from "react";
+declare export var useResonsiveLayoutMargin: () => null | number;
 declare type Props = {
   children: React.Node,
   fullWidth?: boolean,
