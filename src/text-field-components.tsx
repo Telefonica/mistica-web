@@ -117,7 +117,7 @@ export const Label: React.FC<LabelProps> = ({
 
 const useHelperTextStyles = createUseStyles(() => ({
     helperContainer: {
-        paddingLeft: 14,
+        paddingLeft: 12,
         paddingRight: 16,
         '& div': {
             margin: 0,
