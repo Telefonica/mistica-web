@@ -162,7 +162,7 @@ const useStyles = createUseStyles((theme) => ({
             },
         },
     },
-    slide: {
+    item: {
         scrollSnapAlign: 'start',
         flexShrink: 0,
         width: ({itemsPerPageConfig, gap}) =>
@@ -261,21 +261,23 @@ const calcPagesScrollPositions = (itemsScrollPosition: ReadonlyArray<number>, nu
 };
 
 const calcCurrentPageIndex = (scrollPosition: number, pagesScrollPositions: ReadonlyArray<number>) => {
-    const midlePageScrollPositions = [];
+    const middlePageScrollPositions = [];
     for (let i = 0; i < pagesScrollPositions.length; i++) {
         if (i === 0) {
-            midlePageScrollPositions.push(pagesScrollPositions[0]);
+            middlePageScrollPositions.push(pagesScrollPositions[0]);
         } else {
-            midlePageScrollPositions.push((pagesScrollPositions[i] + pagesScrollPositions[i - 1]) / 2);
+            middlePageScrollPositions.push((pagesScrollPositions[i] + pagesScrollPositions[i - 1]) / 2);
         }
     }
-    for (let i = midlePageScrollPositions.length - 1; i >= 0; i--) {
-        if (scrollPosition - midlePageScrollPositions[i] >= -1) {
+    for (let i = middlePageScrollPositions.length - 1; i >= 0; i--) {
+        if (scrollPosition - middlePageScrollPositions[i] >= -1) {
             return i;
         }
     }
     return 0;
 };
+
+const DEFAULT_AUTOPLAY_TIME = 5000;
 
 type BaseCarouselProps = {
     items: ReadonlyArray<React.ReactNode>;
@@ -425,7 +427,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
 
     React.useEffect(() => {
         if (autoplay) {
-            const time = typeof autoplay === 'boolean' ? 5000 : autoplay.time;
+            const time = typeof autoplay === 'boolean' ? DEFAULT_AUTOPLAY_TIME : autoplay.time;
             const loop = typeof autoplay === 'object' && autoplay.loop;
             const interval = setInterval(() => {
                 if (scrollRight !== 0) {
@@ -477,7 +479,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                 </ThemeVariant>
                 <div className={classNames(classes.carousel, {centered})} ref={carouselRef}>
                     {items.map((item, index) => (
-                        <div key={index} className={classes.slide} data-item>
+                        <div key={index} className={classes.item} data-item>
                             {item}
                         </div>
                     ))}
@@ -665,7 +667,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
 
     React.useEffect(() => {
         if (autoplay) {
-            const time = typeof autoplay === 'boolean' ? 5000 : autoplay.time;
+            const time = typeof autoplay === 'boolean' ? DEFAULT_AUTOPLAY_TIME : autoplay.time;
             const loop = typeof autoplay === 'object' && autoplay.loop;
             const interval = setInterval(() => {
                 if (scrollRight !== 0) {
