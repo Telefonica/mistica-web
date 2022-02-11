@@ -1076,6 +1076,70 @@ const navigationBarSnippets = [
     },
 ];
 
+const carouselSnippets = [
+    {
+        group: 'Carousel',
+        name: 'Carousel',
+        code: `
+<Carousel
+  withBullets
+  items={Array.from({ length: 6 }, (_, idx) => (
+    <MediaCard
+      headline={<Tag type="promo">Headline</Tag>}
+      title={'Card ' + idx}
+      description="Description"
+      media={<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />}
+      button={
+        <ButtonPrimary small onPress={() => {}}>
+          Action
+        </ButtonPrimary>
+      }
+      buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+    />
+  ))}
+/>`,
+    },
+    {
+        group: 'Carousel',
+        name: 'Slideshow',
+        code: `
+<Slideshow
+  withBullets
+  items={[
+    <Image src="https://i.imgur.com/HRvhZ6F.jpeg" aspectRatio="16:9" />,
+    <Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />,
+  ]}
+/>`,
+    },
+    {
+        group: 'Carousel',
+        name: 'CenteredCarousel',
+        code: `
+<CenteredCarousel
+  withBullets
+  items={Array.from({length: 6}, (_, idx) => (
+      <div
+          style={{
+              border: \`1px solid \${colors.border}\`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+          }}
+      >
+          <div style={{flexShrink: 0}}>
+              <Circle backgroundColor={colors.brand} size={160}>
+                  <ThemeVariant isInverse>
+                      <Text10>{idx}</Text10>
+                  </ThemeVariant>
+              </Circle>
+          </div>
+      </div>
+  ))}
+/>
+`,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -1137,6 +1201,13 @@ export default [
     },
     ...navigationBarSnippets,
     menuSnippet,
+    {group: 'Chip', name: 'Chip', code: '<Chip>Chip</Chip>'},
+    {group: 'Chip', name: 'Chip closeable', code: '<Chip onClose={() => {}}>Chip</Chip>'},
+    {
+        group: 'Chip',
+        name: 'Chip icon',
+        code: '<Chip onClose={() => {}} Icon={IconLightningFilled}>Chip</Chip>',
+    },
     ...tagSnippets,
     {
         group: 'Media',
@@ -1148,4 +1219,5 @@ export default [
         name: 'Image',
         code: `<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />`,
     },
+    ...carouselSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
