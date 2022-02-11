@@ -11,35 +11,10 @@ import {useResonsiveLayoutMargin} from './responsive-layout';
 import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
 import {applyAlpha} from './utils/color';
 import {DisableBorderRadiusProvider} from './image';
-import {getPrefixedDataAttributes} from './utils/dom';
+import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
 import type {Theme} from './theme';
-
-const listenResize = (element: Element, handler: () => void) => {
-    const getResizeObserverPromise = (): Promise<typeof window.ResizeObserver> => {
-        return window.ResizeObserver
-            ? Promise.resolve(ResizeObserver)
-            : import(/* webpackChunkName: "@juggle/resize-observer" */ '@juggle/resize-observer').then(
-                  (m: any) => m.ResizeObserver
-              );
-    };
-    let cancelled = false;
-    let resizeObserver: ResizeObserver | null = null;
-    getResizeObserverPromise().then((ResizeObserver) => {
-        if (!cancelled) {
-            resizeObserver = new ResizeObserver(handler);
-            resizeObserver.observe(element);
-        }
-    });
-
-    return () => {
-        cancelled = true;
-        if (resizeObserver) {
-            resizeObserver.disconnect();
-        }
-    };
-};
 
 const useBulletsStyles = createUseStyles((theme) => ({
     bullet: {

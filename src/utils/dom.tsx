@@ -92,3 +92,31 @@ export const getScrollDistanceToBottom = (el: HTMLElement): number =>
     el.scrollHeight - el.scrollTop - el.clientHeight;
 
 export const hasScroll = (el: HTMLElement): boolean => el.scrollHeight > el.clientHeight;
+
+export const listenResize = (element: Element, handler: ResizeObserverCallback): (() => void) => {
+    const getResizeObserverPromise = (): Promise<typeof window.ResizeObserver | null> => {
+        if (typeof window === 'undefined') {
+            return Promise.resolve(null);
+        }
+        return window.ResizeObserver
+            ? Promise.resolve(ResizeObserver)
+            : import(/* webpackChunkName: "@juggle/resize-observer" */ '@juggle/resize-observer').then(
+                  (m: any) => m.ResizeObserver
+              );
+    };
+    let cancelled = false;
+    let resizeObserver: ResizeObserver | null = null;
+    getResizeObserverPromise().then((ResizeObserver) => {
+        if (!cancelled && ResizeObserver) {
+            resizeObserver = new ResizeObserver(handler);
+            resizeObserver.observe(element);
+        }
+    });
+
+    return () => {
+        cancelled = true;
+        if (resizeObserver) {
+            resizeObserver.disconnect();
+        }
+    };
+};
