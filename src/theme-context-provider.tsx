@@ -123,6 +123,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
             isDarkMode: isDarkModeEnabled,
             isIos: getPlatform(platformOverrides) === 'ios',
             useHrefDecorator: theme.useHrefDecorator ?? useDefaultHrefDecorator,
+            unstable_disableHistoryUpdateInDialogs: !!theme.unstable_disableHistoryUpdateInDialogs,
         };
     }, [theme, isOsDarkModeEnabled]);
 
