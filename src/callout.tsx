@@ -10,7 +10,7 @@ import classNames from 'classnames';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import ButtonGroup from './button-group';
 
-import type {ButtonProps, ButtonLinkProps} from './button';
+import type {RendersNullableElement} from './utils/types';
 
 const useStyles = createUseStyles(({colors}) => ({
     container: {
@@ -42,9 +42,9 @@ type Props = {
     description: string;
     onClose?: () => void;
     icon?: React.ReactElement;
-    button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
-    secondaryButton?: React.ReactElement<ButtonProps, typeof ButtonSecondary>;
-    buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
+    button?: RendersNullableElement<typeof ButtonPrimary>;
+    secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
+    buttonLink?: RendersNullableElement<typeof ButtonLink>;
     children?: void;
     'aria-label'?: string;
 };

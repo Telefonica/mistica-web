@@ -2,12 +2,13 @@
 
 import * as React from "react";
 import { ButtonLink } from "./button";
-import type { ButtonElement } from "./button";
-declare type MaybeButtonElement = ButtonElement | void | false;
+import type { RendersNullableElement } from "./utils/types";
+import type { NullableButtonElement } from "./button";
+declare type MaybeButtonElement = NullableButtonElement | void | false;
 declare type ButtonLayoutProps = {
   children?: MaybeButtonElement | [MaybeButtonElement, MaybeButtonElement],
   align?: "center" | "left" | "right" | "full-width",
-  link?: React.Element<typeof ButtonLink> | null,
+  link?: RendersNullableElement<typeof ButtonLink>,
   withMargins?: boolean,
 };
 declare var ButtonLayout: React.ComponentType<ButtonLayoutProps>;
