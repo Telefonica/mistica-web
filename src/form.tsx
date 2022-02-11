@@ -86,7 +86,7 @@ const Form: React.FC<FormProps> = ({
                 if (input.disabled) {
                     continue;
                 }
-                if (input.required && !input.value.trim()) {
+                if (input.required && !rawValues[name]?.trim()) {
                     errors[name] = texts.formFieldErrorIsMandatory;
                 } else {
                     const error = validator?.(values[name], rawValues[name]);

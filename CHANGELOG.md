@@ -1,3 +1,38 @@
+# [10.23.0](https://github.com/Telefonica/mistica-web/compare/v10.22.3...v10.23.0) (2022-02-10)
+
+
+### Features
+
+* **Dialog:** allow disable history update in dialogs ([#412](https://github.com/Telefonica/mistica-web/issues/412)) ([178bc55](https://github.com/Telefonica/mistica-web/commit/178bc55abc19f0d9117d0a51bbcb5a8a2353f68e))
+
+## [10.22.3](https://github.com/Telefonica/mistica-web/compare/v10.22.2...v10.22.3) (2022-02-08)
+
+
+### Bug Fixes
+
+* **Form:** handle undefined rawValue ([#410](https://github.com/Telefonica/mistica-web/issues/410)) ([6363328](https://github.com/Telefonica/mistica-web/commit/63633288d1a9a1781b9bf350c4923af101a72312))
+
+## [10.22.2](https://github.com/Telefonica/mistica-web/compare/v10.22.1...v10.22.2) (2022-02-07)
+
+
+### Bug Fixes
+
+* **Select:** set rawValue on init ([#409](https://github.com/Telefonica/mistica-web/issues/409)) ([d72cbd1](https://github.com/Telefonica/mistica-web/commit/d72cbd179e930712ef54c5e483e08c922a857059))
+
+## [10.22.1](https://github.com/Telefonica/mistica-web/compare/v10.22.0...v10.22.1) (2022-02-03)
+
+
+### Bug Fixes
+
+* **Form fields:** use rawValue to check if a form field is empty ([#408](https://github.com/Telefonica/mistica-web/issues/408)) ([50a5d37](https://github.com/Telefonica/mistica-web/commit/50a5d37179903ed69f1aa33ac6b7e5d6b1f10a6f))
+
+# [10.22.0](https://github.com/Telefonica/mistica-web/compare/v10.21.0...v10.22.0) (2022-02-02)
+
+
+### Features
+
+* **Chip:** new component ([#395](https://github.com/Telefonica/mistica-web/issues/395)) ([37f1be2](https://github.com/Telefonica/mistica-web/commit/37f1be2322ad3913b3084fb6a14539629a9a81b4))
+
 # [10.21.0](https://github.com/Telefonica/mistica-web/compare/v10.20.0...v10.21.0) (2022-01-27)
 
 

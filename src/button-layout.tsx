@@ -163,9 +163,13 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
      */
     const calcLayout = React.useMemo(
         () =>
-            debounce(() => {
-                updateButtonStatus({isMeasuring: true, buttonWidth: 0});
-            }, 50),
+            debounce(
+                () => {
+                    updateButtonStatus({isMeasuring: true, buttonWidth: 0});
+                },
+                5,
+                {maxWait: 50}
+            ),
         []
     );
 
