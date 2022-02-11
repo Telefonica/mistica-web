@@ -93,7 +93,8 @@ export const getScrollDistanceToBottom = (el: HTMLElement): number =>
 
 export const hasScroll = (el: HTMLElement): boolean => el.scrollHeight > el.clientHeight;
 
-export const listenResize = (element: Element, handler: ResizeObserverCallback): (() => void) => {
+type ResizeListener = (entries: Array<ResizeObserverEntry>, observer: ResizeObserver) => void;
+export const listenResize = (element: Element, handler: ResizeListener): (() => void) => {
     const getResizeObserverPromise = (): Promise<typeof window.ResizeObserver | null> => {
         if (typeof window === 'undefined') {
             return Promise.resolve(null);
