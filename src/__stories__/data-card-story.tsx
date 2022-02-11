@@ -8,7 +8,7 @@ import {
     Text2,
     createUseStyles,
     ResponsiveLayout,
-    IconAcademicLight,
+    IconAcademicRegular,
     useTheme,
     Circle,
     Tag,
@@ -58,7 +58,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
     if (asset === 'icon') {
         icon = (
             <Circle size={40} backgroundColor={colors.neutralLow}>
-                <IconAcademicLight />
+                <IconAcademicRegular />
             </Circle>
         );
     } else if (asset === 'image') {
@@ -110,7 +110,7 @@ export const WithBody: StoryComponent = () => {
             extra={<Placeholder />}
             icon={
                 <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconAcademicLight />
+                    <IconAcademicRegular />
                 </Circle>
             }
             button={
@@ -171,7 +171,7 @@ export const Group: StoryComponent = () => {
                         description="Description"
                         icon={
                             <Circle size={40} backgroundColor={colors.neutralLow}>
-                                <IconAcademicLight />
+                                <IconAcademicRegular />
                             </Circle>
                         }
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
@@ -181,7 +181,7 @@ export const Group: StoryComponent = () => {
                         description="Description"
                         icon={
                             <Circle size={40} backgroundColor={colors.neutralLow}>
-                                <IconAcademicLight />
+                                <IconAcademicRegular />
                             </Circle>
                         }
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
