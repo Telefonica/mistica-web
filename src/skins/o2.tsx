@@ -119,8 +119,6 @@ export const getO2Skin: GetSkin = () => {
             controlError: palette.pepper,
             loadingBar: palette.o2BluePrimary,
             loadingBarBackground: palette.grey1,
-            loadingBarBackgroundInverse: palette.grey1,
-            loadingBarInverse: palette.o2BluePrimary,
 
             toggleAndroidInactive: palette.grey2, // web only
             toggleAndroidBackgroundActive: palette.o2BluePrimary15, // web only
@@ -220,8 +218,6 @@ export const getO2Skin: GetSkin = () => {
             controlActivated: palette.o2BluePrimary30,
             loadingBar: palette.darkModeO2BluePrimary,
             loadingBarBackground: palette.darkModeGrey6,
-            loadingBarBackgroundInverse: palette.grey1,
-            loadingBarInverse: palette.darkModeO2BluePrimary,
             toggleAndroidInactive: palette.grey4,
             toggleAndroidBackgroundActive: palette.o2BlueLight30,
             iosControlKnob: palette.grey2,
