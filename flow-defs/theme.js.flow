@@ -35,6 +35,8 @@ declare var TEXTS_ES: {
   closeNavigationMenu: string,
   backNavigationBar: string,
   clearButton: string,
+  carouselNextButton: string,
+  carouselPrevButton: string,
 };
 declare export var getTexts: (locale: Locale) => typeof TEXTS_ES;
 declare export var dimensions: {
@@ -104,7 +106,6 @@ export type ThemeConfig = {
   Link?: LinkComponent,
   useHrefDecorator?: () => (href: string) => string,
   enableTabFocus?: boolean,
-  unstable_disableHistoryUpdateInDialogs?: boolean,
 };
 export type Theme = {
   skinName: SkinName,
@@ -139,7 +140,6 @@ export type Theme = {
   isDarkMode: boolean,
   isIos: boolean,
   useHrefDecorator: () => (href: string) => string,
-  unstable_disableHistoryUpdateInDialogs: boolean,
 };
 declare export {};
 

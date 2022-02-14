@@ -138,7 +138,7 @@ export const Text: React.FC<TextProps> = ({
         letterSpacing,
         truncate,
     });
-    if (!children) {
+    if (!children && children !== 0) {
         return null;
     }
     const className = classnames(classes.text, {[classes.truncate]: !!truncate});

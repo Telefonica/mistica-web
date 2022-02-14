@@ -1,3 +1,5 @@
+export type {RendersElement, RendersNullableElement} from './renders-element';
+
 export type TrackingEvent = {
     readonly [key: string]: unknown;
     readonly category: string;

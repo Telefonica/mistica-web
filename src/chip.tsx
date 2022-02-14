@@ -12,6 +12,7 @@ import type {IconProps} from './utils/types';
 const useStyles = createUseStyles(({colors, mq}) => ({
     container: {
         display: 'inline-flex',
+        verticalAlign: 'middle',
         justifyContent: 'center',
         alignItems: 'center',
         border: `1px solid ${colors.border}`,

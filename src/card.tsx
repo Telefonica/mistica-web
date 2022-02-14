@@ -11,11 +11,7 @@ import ButtonGroup from './button-group';
 import Video from './video';
 import Image, {DisableBorderRadiusProvider} from './image';
 
-import type {ButtonProps, ButtonLinkProps} from './button';
-import type {DataAttributes} from './utils/types';
-import type {TagProps} from './tag';
-import type {VideoProps} from './video';
-import type {ImageProps} from './image';
+import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
 
 const useCardContentStyles = createUseStyles(() => ({
     actions: {
@@ -26,14 +22,14 @@ const useCardContentStyles = createUseStyles(() => ({
 }));
 
 type CardContentProps = {
-    headline?: string | React.ReactElement<TagProps, typeof Tag>;
+    headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     title?: string;
     subtitle?: string;
     description?: string;
     extra?: React.ReactNode;
-    button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
-    buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
+    button?: RendersNullableElement<typeof ButtonPrimary>;
+    buttonLink?: RendersNullableElement<typeof ButtonLink>;
 };
 
 const CardContent: React.FC<CardContentProps> = ({
@@ -62,7 +58,7 @@ const CardContent: React.FC<CardContentProps> = ({
             <Stack space={8}>
                 {(headline || pretitle || title || subtitle) && (
                     <header>
-                        <Stack space={16}>
+                        <Stack space={8}>
                             {renderHeadline()}
                             <Stack space={4}>
                                 {pretitle && (
@@ -155,15 +151,15 @@ const useMediaCardStyles = createUseStyles(() => ({
 type MediaCardProps = {
     media:
         | CardMedia
-        | (React.ReactElement<ImageProps, typeof Image> & {src?: undefined})
-        | (React.ReactElement<VideoProps, typeof Video> & {src?: undefined});
-    headline?: string | React.ReactElement<TagProps, typeof Tag>;
+        | (RendersElement<typeof Image> & {src?: undefined})
+        | (RendersElement<typeof Video> & {src?: undefined});
+    headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     title?: string;
     description?: string;
     extra?: React.ReactNode;
-    button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
-    buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
+    button?: RendersNullableElement<typeof ButtonPrimary>;
+    buttonLink?: RendersNullableElement<typeof ButtonLink>;
     children?: void;
     'aria-label'?: string;
 };
@@ -216,13 +212,13 @@ interface DataCardProps {
      * Typically a mistica-icons component element
      */
     icon?: React.ReactElement;
-    headline?: string | React.ReactElement<TagProps, typeof Tag>;
+    headline?: string | RendersNullableElement<typeof Tag>;
     title?: string;
     subtitle?: string;
     description?: string;
     extra?: React.ReactNode;
-    button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
-    buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
+    button?: RendersNullableElement<typeof ButtonPrimary>;
+    buttonLink?: RendersNullableElement<typeof ButtonLink>;
     children?: void;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
