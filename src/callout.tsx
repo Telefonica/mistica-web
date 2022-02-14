@@ -73,30 +73,29 @@ const Callout: React.FC<Props> = ({
                 {icon && <div className={classes.icon}>{icon}</div>}
                 <div className={classes.content}>
                     <Stack space={16}>
-                        <Inline fullWidth alignItems="flex-start" space={16}>
-                            <Stack space={4}>
+                        <Inline fullWidth alignItems="flex-start" space="between">
+                            <Stack space={0}>
                                 <Text3 as="h2" regular>
                                     {title}
                                 </Text3>
+                                <div style={{height: '4px'}}></div>
                                 <Text2 as="p" regular color={colors.textSecondary}>
                                     {description}
                                 </Text2>
                             </Stack>
                             {onClose && (
-                                <div style={{textAlign: 'right'}}>
-                                    <IconButton
-                                        size={40}
-                                        style={{
-                                            margin: '-8px -12px -8px 0',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                        }}
-                                        onPress={onClose}
-                                        aria-label={texts.closeButtonLabel}
-                                    >
-                                        <IconCloseRegular color={colors.neutralHigh} />
-                                    </IconButton>
-                                </div>
+                                <IconButton
+                                    size={40}
+                                    style={{
+                                        margin: '-8px -12px -8px 0',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                    }}
+                                    onPress={onClose}
+                                    aria-label={texts.closeButtonLabel}
+                                >
+                                    <IconCloseRegular color={colors.neutralHigh} />
+                                </IconButton>
                             )}
                         </Inline>
                         {(button || secondaryButton || buttonLink) && (
