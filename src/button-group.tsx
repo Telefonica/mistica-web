@@ -1,7 +1,9 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {ButtonLink, ButtonLinkProps, ButtonPrimary, ButtonProps, ButtonSecondary} from './button';
+import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import classNames from 'classnames';
+
+import type {RendersNullableElement} from './utils/types';
 
 const buttonLayoutSpacing = 16;
 const buttonLinkPadding = 6;
@@ -32,9 +34,9 @@ const useStyles = createUseStyles(() => ({
 }));
 
 export interface ButtonGroupProps {
-    primaryButton?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
-    secondaryButton?: React.ReactElement<ButtonProps, typeof ButtonSecondary>;
-    link?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
+    primaryButton?: RendersNullableElement<typeof ButtonPrimary>;
+    secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
+    link?: RendersNullableElement<typeof ButtonLink>;
 }
 
 const ButtonGroup: React.FC<ButtonGroupProps> = ({primaryButton, secondaryButton, link}) => {

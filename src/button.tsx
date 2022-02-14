@@ -9,7 +9,7 @@ import {pxToRem} from './utils/css';
 import {Text, Text2, Text3} from './text';
 import Box from './box';
 
-import type {DataAttributes, TrackingEvent} from './utils/types';
+import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
 import type {Theme} from './theme';
 
@@ -536,6 +536,11 @@ export const ButtonDanger: React.FC<ButtonProps> = (props) => {
 };
 
 export type ButtonElement =
-    | React.ReactElement<ButtonProps, typeof ButtonPrimary>
-    | React.ReactElement<ButtonProps, typeof ButtonSecondary>
-    | React.ReactElement<ButtonProps, typeof ButtonDanger>;
+    | RendersElement<typeof ButtonPrimary>
+    | RendersElement<typeof ButtonSecondary>
+    | RendersElement<typeof ButtonDanger>;
+
+export type NullableButtonElement =
+    | RendersNullableElement<typeof ButtonPrimary>
+    | RendersNullableElement<typeof ButtonSecondary>
+    | RendersNullableElement<typeof ButtonDanger>;

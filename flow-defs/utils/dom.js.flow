@@ -36,4 +36,12 @@ declare export var getScrollableParentElement: (
 ) => HTMLElement;
 declare export var getScrollDistanceToBottom: (el: HTMLElement) => number;
 declare export var hasScroll: (el: HTMLElement) => boolean;
+declare type ResizeListener = (
+  entries: Array<ResizeObserverEntry>,
+  observer: ResizeObserver
+) => void;
+declare export var listenResize: (
+  element: Element,
+  handler: ResizeListener
+) => () => void;
 declare export {};
