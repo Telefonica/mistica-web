@@ -1,11 +1,12 @@
 // @flow
 
 import * as React from "react";
-export type AspectRatio = "1:1" | "16:9" | "12:5";
+export type AspectRatio = "1:1" | "16:9" | "12:5" | "4:3";
 declare export var RATIO: {
   "1:1": number,
   "16:9": number,
   "12:5": number,
+  "4:3": number,
 };
 declare type VideoSource = {
   src: string,
