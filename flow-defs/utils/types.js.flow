@@ -1,5 +1,6 @@
 // @flow
 
+export type { RendersElement, RendersNullableElement } from "./renders-element";
 export type TrackingEvent = {
   [key: string]: mixed,
   +category: string,

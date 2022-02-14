@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from './box';
 import {Boxed} from './boxed';
-import {ButtonPrimary, ButtonSecondary, ButtonLink, ButtonLinkProps} from './button';
+import {ButtonPrimary, ButtonSecondary, ButtonLink} from './button';
 import {useScreenSize, useTheme} from './hooks';
 import Stack from './stack';
 import {Text4, Text6} from './text';
@@ -9,9 +9,8 @@ import {createUseStyles} from './jss';
 import ButtonGroup from './button-group';
 import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {ButtonProps} from './button';
 import type {ButtonGroupProps} from './button-group';
-import type {DataAttributes} from './utils/types';
+import type {DataAttributes, RendersNullableElement} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -60,10 +59,8 @@ const useStyles = createUseStyles((theme) => ({
 
 interface BaseProps {
     title: string;
-    button?:
-        | React.ReactElement<ButtonProps, typeof ButtonPrimary>
-        | React.ReactElement<ButtonProps, typeof ButtonSecondary>;
-    buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
+    button?: RendersNullableElement<typeof ButtonPrimary> | RendersNullableElement<typeof ButtonSecondary>;
+    buttonLink?: RendersNullableElement<typeof ButtonLink>;
     description?: string;
     children?: void;
     'aria-label'?: string;

@@ -11,6 +11,7 @@ import type {IconProps} from './utils/types';
 const useStyles = createUseStyles(() => ({
     tag: {
         display: 'inline-flex',
+        verticalAlign: 'middle',
         flexDirection: 'row',
         alignItems: 'center',
         borderRadius: 50,

@@ -36,7 +36,7 @@ You can customize them in your page. For example:
 ```js
 <ThemeContextProvider
   theme={{
-    skin: 'Movistar',
+    skin: getMovistarSkin(),
     i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
     texts: {
       formCreditCardExpirationError: 'Fecha incorrecta',

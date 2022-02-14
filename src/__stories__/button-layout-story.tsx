@@ -77,14 +77,12 @@ export const Default: StoryComponent = () => (
                 </Text2>
             </Stack>
         </StorySection>
-        <div data-testid="screenshot">
-            <Stack space={16}>
-                <Template align="full-width" />
-                <Template align="center" />
-                <Template align="left" />
-                <Template align="right" />
-            </Stack>
-        </div>
+        <Stack space={16}>
+            <Template align="full-width" />
+            <Template align="center" />
+            <Template align="left" />
+            <Template align="right" />
+        </Stack>
     </>
 );
 

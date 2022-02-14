@@ -3,6 +3,7 @@
 import * as React from "react";
 import NavigationBreadcrumbs from "./navigation-breadcrumbs";
 import { ButtonPrimary, ButtonSecondary } from "./button";
+import type { RendersElement, RendersNullableElement } from "./utils/types";
 import type { TextPresetProps } from "./text";
 declare type OverridableTextProps = {
   color?: $PropertyType<TextPresetProps, "color">,
@@ -27,8 +28,8 @@ declare type HeaderProps = {
   title?: string,
   preamount?: RichText,
   amount?: string,
-  button?: React.Element<typeof ButtonPrimary>,
-  secondaryButton?: React.Element<typeof ButtonSecondary>,
+  button?: RendersNullableElement<typeof ButtonPrimary>,
+  secondaryButton?: RendersNullableElement<typeof ButtonSecondary>,
   subtitle?: RichText,
   isErrorAmount?: boolean,
 };
@@ -37,13 +38,13 @@ declare type MainSectionHeaderProps = {
   title: string,
   description?: string,
   button?:
-    | React.Element<typeof ButtonPrimary>
-    | React.Element<typeof ButtonSecondary>,
+    | RendersNullableElement<typeof ButtonPrimary>
+    | RendersNullableElement<typeof ButtonSecondary>,
 };
 declare export var MainSectionHeader: React.ComponentType<MainSectionHeaderProps>;
 declare type HeaderLayoutProps = {
   isInverse?: boolean,
-  breadcrumbs?: React.Element<typeof NavigationBreadcrumbs>,
+  breadcrumbs?: RendersNullableElement<typeof NavigationBreadcrumbs>,
   header: React.Node,
   extra?: React.Node,
   sideBySideExtraOnDesktop?: boolean,
@@ -51,7 +52,7 @@ declare type HeaderLayoutProps = {
 declare export var HeaderLayout: React.ComponentType<HeaderLayoutProps>;
 declare type MainSectionHeaderLayoutProps = {
   isInverse?: boolean,
-  children: React.Element<typeof MainSectionHeader>,
+  children: RendersElement<typeof MainSectionHeader>,
 };
 declare export var MainSectionHeaderLayout: React.ComponentType<MainSectionHeaderLayoutProps>;
 declare export {};
