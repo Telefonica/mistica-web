@@ -46,7 +46,8 @@ export const useIsOsDarkModeEnabled = (): boolean => {
 // This counter will increment with every new instance of ThemeContextProvider in the app. In a typical app we don't need more than
 // one instance of ThemeContextProvider. But some apps may depend on libs that use Mistica too, so there may be more than one instance
 // in those cases. We use this counter to avoid class name collisions in those cases.
-let jssInstanceId = 0;
+let nextJssInstanceId = 0;
+const jssInstances = new Set();
 
 type Props = {
     theme: ThemeConfig;
@@ -70,16 +71,38 @@ const useDefaultHrefDecorator = () => {
     return (href: string) => href;
 };
 
+console.log('Log from Mistica');
+
 const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
+    const instanceIdRef = React.useRef(nextJssInstanceId);
+    const [instanceId] = React.useState(() => {
+        console.log(isServerSide() ? 'server' : 'client', '- New jssid:', instanceIdRef.current);
+        if (isServerSide()) {
+            return nextJssInstanceId;
+        }
+        if (!jssInstances.has(instanceIdRef.current)) {
+            jssInstances.add(instanceIdRef.current);
+            console.log('increment nextJssId');
+            nextJssInstanceId++;
+        }
+        return instanceIdRef.current;
+    });
+
+    console.log('Theme context provider render, instanceId:', instanceId);
+
     const classNamePrefix = React.useMemo(
         // Always start the counter in 0 in server side, otherwise every new request to the server will inclrement the counter and
         // we'll have missmatches when rendering client side. The disadvantage of this is that we can only have one instance of
         // ThemeContextProvider in apps with ssr.
-        () =>
-            process.env.NODE_ENV === 'test'
-                ? ''
-                : `mistica-${PACKAGE_VERSION.replace(/\./g, '-')}-${isServerSide() ? 0 : jssInstanceId++}-`,
-        []
+        () => {
+            const result =
+                process.env.NODE_ENV === 'test'
+                    ? ''
+                    : `mistica-${PACKAGE_VERSION.replace(/\./g, '-')}-${isServerSide() ? 0 : instanceId}-`;
+            console.log('classNamePrefix:', result);
+            return result;
+        },
+        [instanceId]
     );
 
     const nextAriaId = React.useRef(1);
