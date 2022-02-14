@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Stack from './stack';
+import Inline from './inline';
 import {useTheme} from './hooks';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {createUseStyles} from './jss';
@@ -9,7 +10,6 @@ import IconButton from './icon-button';
 import classNames from 'classnames';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import ButtonGroup from './button-group';
-import {Inline} from '.';
 
 import type {ButtonProps, ButtonLinkProps} from './button';
 
