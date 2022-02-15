@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Stack from './stack';
 import Inline from './inline';
+import Box from './box';
 import {useTheme} from './hooks';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {createUseStyles} from './jss';
@@ -70,15 +71,14 @@ const Callout: React.FC<Props> = ({
             aria-label={ariaLabel ?? title}
         >
             <ThemeVariant isInverse={false}>
-                {icon && <div className={classes.icon}>{icon}</div>}
+                {icon && <Box paddingRight={16}>{icon}</Box>}
                 <div className={classes.content}>
                     <Stack space={16}>
                         <Inline fullWidth alignItems="flex-start" space="between">
-                            <Stack space={0}>
+                            <Stack space={4}>
                                 <Text3 as="h2" regular>
                                     {title}
                                 </Text3>
-                                <div style={{height: '4px'}}></div>
                                 <Text2 as="p" regular color={colors.textSecondary}>
                                     {description}
                                 </Text2>
@@ -87,14 +87,14 @@ const Callout: React.FC<Props> = ({
                                 <IconButton
                                     size={40}
                                     style={{
-                                        margin: '-8px -12px -8px 0',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
+                                        position: 'relative',
+                                        top: -8,
+                                        right: -12,
                                     }}
                                     onPress={onClose}
                                     aria-label={texts.closeButtonLabel}
                                 >
-                                    <IconCloseRegular color={colors.neutralHigh} />
+                                    <IconCloseRegular size={24} color={colors.neutralHigh} />
                                 </IconButton>
                             )}
                         </Inline>
