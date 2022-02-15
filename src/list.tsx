@@ -182,10 +182,25 @@ const Content: React.FC<ContentProps> = ({
                     </Box>
                 );
             case 'control':
-                return <div className={classes.right}>{right}</div>;
+                return (
+                    <div
+                        className={classNames(classes.right, {
+                            [classes.center]: shouldCenter,
+                        })}
+                    >
+                        {right}
+                    </div>
+                );
             case 'custom':
                 return (
-                    <div className={classNames(classes.right, {[classes.disabled]: disabled})}>{right}</div>
+                    <div
+                        className={classNames(classes.right, {
+                            [classes.center]: shouldCenter,
+                            [classes.disabled]: disabled,
+                        })}
+                    >
+                        {right}
+                    </div>
                 );
             default:
                 return null;
