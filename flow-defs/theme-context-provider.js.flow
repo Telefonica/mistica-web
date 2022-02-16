@@ -5,6 +5,17 @@ import type { ThemeConfig } from "./theme";
 declare export var useIsOsDarkModeEnabled: () => boolean;
 declare type Props = {
   theme: ThemeConfig,
+
+  /**
+   * You should use this prop if you use Strict Mode and Server Side Rendering together.
+   * This identifier will be used to generate unique class names for each instance of ThemeContextProvider.
+   * If no identifier is provided, this will fallback to an aunto-incremented id, which will cause
+   * problems in SSR + Strict Mode because the class names from client and server won't match.
+   * More info: https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects
+   *
+   * Once we migrate to React18, we could remove this prop and use the useId hook instead.
+   */
+  providerId?: string,
   children?: React.Node,
 };
 declare var ThemeContextProvider: React.ComponentType<Props>;

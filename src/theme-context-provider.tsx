@@ -47,10 +47,19 @@ export const useIsOsDarkModeEnabled = (): boolean => {
 // one instance of ThemeContextProvider. But some apps may depend on libs that use Mistica too, so there may be more than one instance
 // in those cases. We use this counter to avoid class name collisions in those cases.
 let nextJssInstanceId = 0;
-const jssInstances = new Set();
 
 type Props = {
     theme: ThemeConfig;
+    /**
+     * You should use this prop if you use Strict Mode and Server Side Rendering together.
+     * This identifier will be used to generate unique class names for each instance of ThemeContextProvider.
+     * If no identifier is provided, this will fallback to an aunto-incremented id, which will cause
+     * problems in SSR + Strict Mode because the class names from client and server won't match.
+     * More info: https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects
+     *
+     * Once we migrate to React18, we could remove this prop and use the useId hook instead.
+     */
+    providerId?: string;
     children?: React.ReactNode;
 };
 
@@ -71,36 +80,23 @@ const useDefaultHrefDecorator = () => {
     return (href: string) => href;
 };
 
-console.log('Log from Mistica');
-
-const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
-    const instanceIdRef = React.useRef(nextJssInstanceId);
+const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) => {
     const [instanceId] = React.useState(() => {
-        console.log(isServerSide() ? 'server' : 'client', '- New jssid:', instanceIdRef.current);
-        if (isServerSide()) {
-            return nextJssInstanceId;
+        if (providerId) {
+            return providerId;
+        } else {
+            return isServerSide() ? 0 : nextJssInstanceId++;
         }
-        if (!jssInstances.has(instanceIdRef.current)) {
-            jssInstances.add(instanceIdRef.current);
-            console.log('increment nextJssId');
-            nextJssInstanceId++;
-        }
-        return instanceIdRef.current;
     });
-
-    console.log('Theme context provider render, instanceId:', instanceId);
 
     const classNamePrefix = React.useMemo(
         // Always start the counter in 0 in server side, otherwise every new request to the server will inclrement the counter and
         // we'll have missmatches when rendering client side. The disadvantage of this is that we can only have one instance of
         // ThemeContextProvider in apps with ssr.
         () => {
-            const result =
-                process.env.NODE_ENV === 'test'
-                    ? ''
-                    : `mistica-${PACKAGE_VERSION.replace(/\./g, '-')}-${isServerSide() ? 0 : instanceId}-`;
-            console.log('classNamePrefix:', result);
-            return result;
+            return process.env.NODE_ENV === 'test'
+                ? ''
+                : `mistica-${PACKAGE_VERSION.replace(/\./g, '-')}_${instanceId}_`;
         },
         [instanceId]
     );
