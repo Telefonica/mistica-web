@@ -93,11 +93,10 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) =>
         // Always start the counter in 0 in server side, otherwise every new request to the server will inclrement the counter and
         // we'll have missmatches when rendering client side. The disadvantage of this is that we can only have one instance of
         // ThemeContextProvider in apps with ssr.
-        () => {
-            return process.env.NODE_ENV === 'test'
+        () =>
+            process.env.NODE_ENV === 'test'
                 ? ''
-                : `mistica-${PACKAGE_VERSION.replace(/\./g, '-')}_${instanceId}_`;
-        },
+                : `mistica-${PACKAGE_VERSION.replace(/\./g, '-')}_${instanceId}_`,
         [instanceId]
     );
 
