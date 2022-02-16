@@ -90,9 +90,6 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) =>
     });
 
     const classNamePrefix = React.useMemo(
-        // Always start the counter in 0 in server side, otherwise every new request to the server will increment the counter and
-        // we'll have missmatches when rendering client side. The disadvantage of this is that we can only have one instance of
-        // ThemeContextProvider in apps with ssr.
         () =>
             process.env.NODE_ENV === 'test'
                 ? ''

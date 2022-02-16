@@ -9,7 +9,7 @@ declare type Props = {
   /**
    * You should use this prop if you use Strict Mode and Server Side Rendering together.
    * This identifier will be used to generate unique class names for each instance of ThemeContextProvider.
-   * If no identifier is provided, this will fallback to an aunto-incremented id, which will cause
+   * If no identifier is provided, this will fallback to an auto-incremented id, which will cause
    * problems in SSR + Strict Mode because the class names from client and server won't match.
    * More info: https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects
    *
