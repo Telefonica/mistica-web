@@ -1,3 +1,10 @@
+## [10.24.1](https://github.com/Telefonica/mistica-web/compare/v10.24.0...v10.24.1) (2022-02-16)
+
+
+### Bug Fixes
+
+* **ThemeContextProvider:** Support SSR + Strict Mode ([#419](https://github.com/Telefonica/mistica-web/issues/419)) ([05b701d](https://github.com/Telefonica/mistica-web/commit/05b701d868d3b49a280c32365244771bd9c94416))
+
 # [10.24.0](https://github.com/Telefonica/mistica-web/compare/v10.23.0...v10.24.0) (2022-02-15)
 
 
