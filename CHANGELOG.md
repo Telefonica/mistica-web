@@ -1,3 +1,23 @@
+# [10.24.0](https://github.com/Telefonica/mistica-web/compare/v10.23.0...v10.24.0) (2022-02-15)
+
+
+### Bug Fixes
+
+* **Card:** spacing between headline and title ([#405](https://github.com/Telefonica/mistica-web/issues/405)) ([2baeb82](https://github.com/Telefonica/mistica-web/commit/2baeb829468ff0fb5181c1b475a6464123eace45))
+* **Dialog:** remove unstable_disableHistoryUpdateInDialogs ([#415](https://github.com/Telefonica/mistica-web/issues/415)) ([bc8da4b](https://github.com/Telefonica/mistica-web/commit/bc8da4bda217134a9c02ab7538268ecc5b2f6b51))
+* **FormFields:** helper text spacing ([#411](https://github.com/Telefonica/mistica-web/issues/411)) ([97111a7](https://github.com/Telefonica/mistica-web/commit/97111a7654aeb5cb1d246065523cedecba721071))
+* **Playroom:** bug with modals when using PreviewTools ([#416](https://github.com/Telefonica/mistica-web/issues/416)) ([1ccf9b1](https://github.com/Telefonica/mistica-web/commit/1ccf9b116d90cc1e8db0e9572222eb2d3b6c7e69))
+* **skins:** cleanup disabled colors in Telefonica skin ([#406](https://github.com/Telefonica/mistica-web/issues/406)) ([8cde8e5](https://github.com/Telefonica/mistica-web/commit/8cde8e5a696bd33b43b14c221211b890da8b36d5))
+* **Tag,Chip:** fix vertical alignment ([2309a24](https://github.com/Telefonica/mistica-web/commit/2309a2452461fb05004f8ae1114a0e32811a4037))
+
+
+### Features
+
+* **Carousel:** new components ([#403](https://github.com/Telefonica/mistica-web/issues/403)) ([613b19c](https://github.com/Telefonica/mistica-web/commit/613b19cd9abbc2a7012fd30087eb2f1d834bcf42))
+* **Feedback:** change icons for O2 ([#402](https://github.com/Telefonica/mistica-web/issues/402)) ([e6b84ae](https://github.com/Telefonica/mistica-web/commit/e6b84ae3c1eb3531bb9ca260e28a1e21767a2177))
+* **types:** better Flow types for ReactElement ([#413](https://github.com/Telefonica/mistica-web/issues/413)) ([3db84c0](https://github.com/Telefonica/mistica-web/commit/3db84c080c7d3786c707d9366b2d7e643752fa70))
+* **Video, Image:** support 4:3 aspect ratio ([#417](https://github.com/Telefonica/mistica-web/issues/417)) ([81ff230](https://github.com/Telefonica/mistica-web/commit/81ff230f0e9f81422af34c499b35e4307f2412fc))
+
 # [10.23.0](https://github.com/Telefonica/mistica-web/compare/v10.22.3...v10.23.0) (2022-02-10)
 
 

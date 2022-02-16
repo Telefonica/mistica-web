@@ -298,16 +298,18 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
         }
     };
 
+    const theme: ThemeConfig = React.useMemo(() => {
+        return {
+            ...themesMap[skinName].themeConfig,
+            platformOverrides: {platform: os},
+            // Dont override mediaqueries for PreviewToolsControls, to avoid using Select instead of Tabs in desktop
+            enableTabFocus: false,
+            colorScheme: 'light',
+        };
+    }, [os, skinName]);
+
     const controls = (
-        <ThemeContextProvider
-            theme={{
-                ...themesMap[skinName].themeConfig,
-                platformOverrides: {platform: os},
-                // Dont override mediaqueries for PreviewToolsControls, to avoid using Select instead of Tabs in desktop
-                enableTabFocus: false,
-                colorScheme: 'light',
-            }}
-        >
+        <ThemeContextProvider theme={theme}>
             <PreviewToolsControls
                 skinName={skinName}
                 onSkinNameChange={setSkinName}
