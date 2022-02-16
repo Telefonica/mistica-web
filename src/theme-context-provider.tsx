@@ -53,7 +53,7 @@ type Props = {
     /**
      * You should use this prop if you use Strict Mode and Server Side Rendering together.
      * This identifier will be used to generate unique class names for each instance of ThemeContextProvider.
-     * If no identifier is provided, this will fallback to an aunto-incremented id, which will cause
+     * If no identifier is provided, this will fallback to an auto-incremented id, which will cause
      * problems in SSR + Strict Mode because the class names from client and server won't match.
      * More info: https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects
      *
@@ -90,7 +90,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) =>
     });
 
     const classNamePrefix = React.useMemo(
-        // Always start the counter in 0 in server side, otherwise every new request to the server will inclrement the counter and
+        // Always start the counter in 0 in server side, otherwise every new request to the server will increment the counter and
         // we'll have missmatches when rendering client side. The disadvantage of this is that we can only have one instance of
         // ThemeContextProvider in apps with ssr.
         () =>
