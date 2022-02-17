@@ -12,6 +12,8 @@ import {
     IconLikeFilled,
     IconLightningRegular,
     Image,
+    Text3,
+    Inline,
 } from '..';
 
 export default {
@@ -27,6 +29,7 @@ export default {
                 'checkbox and onPress',
                 'radio',
                 'custom element',
+                'custom element with text',
                 'action with custom element',
                 'none',
             ],
@@ -99,6 +102,19 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                     right: (
                         <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
                             <div style={{width: 32, height: 32, borderRadius: '50%', background: 'pink'}} />
+                        </div>
+                    ),
+                };
+                break;
+            case 'custom element with text':
+                controlProps = {
+                    right: (
+                        <div>
+                            <Inline space={0}>
+                                <Text3 color={colors.error} medium as="p">
+                                    12,00 €
+                                </Text3>
+                            </Inline>
                         </div>
                     ),
                 };
