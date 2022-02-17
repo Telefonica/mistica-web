@@ -4394,10 +4394,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tef-novum/webview-bridge@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "@tef-novum/webview-bridge@npm:3.2.0"
-  checksum: dc489eb6e1f7235dc0f28ed6c759ada66875b56bd4b54e88a3f4d464ec3252efe4733eab26edee0f3cb74d56d0c46c6ae44631d22c5cdd62de39780e4412b0bb
+"@tef-novum/webview-bridge@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "@tef-novum/webview-bridge@npm:3.2.1"
+  checksum: 8f6dc9d26b0e00e3c00c8385770a72f57302a2eb17ed4de32ca33ce177001bbebb0d3ed6d76d155db2ea3621f11bb43382dda9d0dadbe1dc1f14ee7b33509509
   languageName: node
   linkType: hard
 
@@ -4495,7 +4495,7 @@ __metadata:
     "@swc/cli": ^0.1.55
     "@swc/core": ^1.2.135
     "@swc/jest": ^0.2.17
-    "@tef-novum/webview-bridge": ^3.2.0
+    "@tef-novum/webview-bridge": ^3.2.1
     "@telefonica/acceptance-testing": ^2.5.2
     "@telefonica/eslint-config": ^1.0.2
     "@telefonica/libphonenumber": ^2.8.0
