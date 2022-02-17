@@ -87,9 +87,10 @@ const Callout: React.FC<Props> = ({
                                 <IconButton
                                     size={40}
                                     style={{
-                                        position: 'relative',
-                                        top: -8,
-                                        right: -12,
+                                        display: 'flex',
+                                        margin: '-8px -12px',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
                                     }}
                                     onPress={onClose}
                                     aria-label={texts.closeButtonLabel}
