@@ -109,13 +109,11 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
             case 'custom element with text':
                 controlProps = {
                     right: (
-                        <div>
-                            <Inline space={0}>
-                                <Text3 color={colors.error} medium as="p">
-                                    12,00 €
-                                </Text3>
-                            </Inline>
-                        </div>
+                        <Inline space={0}>
+                            <Text3 color={colors.error} medium as="p">
+                                12,00 €
+                            </Text3>
+                        </Inline>
                     ),
                 };
                 break;
