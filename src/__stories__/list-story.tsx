@@ -14,6 +14,7 @@ import {
     Image,
     Text3,
     Inline,
+    IconChevron,
 } from '..';
 
 export default {
@@ -113,6 +114,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                             <Text3 color={colors.error} medium as="p">
                                 12,00 €
                             </Text3>
+                            <IconChevron direction="right" color={colors.neutralMedium} />
                         </Inline>
                     ),
                 };
