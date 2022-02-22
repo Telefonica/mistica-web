@@ -254,12 +254,6 @@ const Popover: React.FC<Props> = ({
         setTargetPosition(getTargetPosition(targetWrapperRef.current));
     }, [isVisible]);
 
-    const handleClose = () => {
-        if (onClose) {
-            onClose();
-        }
-    };
-
     let popoverContainer = null;
 
     if (isVisible && targetPosition) {
@@ -289,7 +283,10 @@ const Popover: React.FC<Props> = ({
                     </div>
                     <div className={classes.closeButtonIcon}>
                         <IconButton
-                            onPress={handleClose}
+                            onPress={(e) => {
+                                onClose?.();
+                                e.stopPropagation();
+                            }}
                             trackingEvent={trackingEvent}
                             aria-label={texts.modalClose}
                         >
