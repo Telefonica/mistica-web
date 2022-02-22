@@ -11,6 +11,7 @@ const controls = [
     'switch and onPress',
     'radio',
     'custom element',
+    'custom element with text',
 ];
 
 const getCases = () => {
