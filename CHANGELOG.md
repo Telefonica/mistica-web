@@ -1,3 +1,10 @@
+# [10.26.0](https://github.com/Telefonica/mistica-web/compare/v10.25.0...v10.26.0) (2022-02-23)
+
+
+### Features
+
+* **Callout:** Changed element distribution so link has more space ([#414](https://github.com/Telefonica/mistica-web/issues/414)) ([bf3c1cf](https://github.com/Telefonica/mistica-web/commit/bf3c1cfc30db7f5df498743b414599635582910e))
+
 # [10.25.0](https://github.com/Telefonica/mistica-web/compare/v10.24.2...v10.25.0) (2022-02-23)
 
 
