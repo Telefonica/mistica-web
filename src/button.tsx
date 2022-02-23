@@ -223,6 +223,7 @@ interface CommonProps {
     loadingText?: string;
     disabled?: boolean;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    trackEvent?: boolean;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-controls'?: string;
@@ -520,19 +521,47 @@ export const ButtonLink = React.forwardRef<
     return null;
 });
 
+type ButtonType = 'primary' | 'secondary' | 'danger';
+
+const getLabelFromChildren = (children: React.ReactNode) => {
+    let label = '';
+
+    React.Children.forEach(children, (child) => {
+        if (typeof child === 'string') {
+            label += child;
+        }
+    });
+
+    return label;
+};
+
+const normalizeButtonProps = (props: ButtonProps, type: ButtonType): ButtonProps => {
+    if (!props.trackingEvent && props.trackEvent) {
+        return {
+            ...props,
+            trackingEvent: {
+                category: 'user_interaction',
+                action: `${type}_button_tapped`,
+                label: getLabelFromChildren(props.children),
+            },
+        };
+    }
+    return props;
+};
+
 export const ButtonPrimary: React.FC<ButtonProps> = (props) => {
     const classes = usePrimaryButtonStyles();
-    return <Button {...props} classes={classes} />;
+    return <Button {...normalizeButtonProps(props, 'primary')} classes={classes} />;
 };
 
 export const ButtonSecondary: React.FC<ButtonProps> = (props) => {
     const classes = useSecondaryButtonStyles();
-    return <Button {...props} classes={classes} />;
+    return <Button {...normalizeButtonProps(props, 'secondary')} classes={classes} />;
 };
 
 export const ButtonDanger: React.FC<ButtonProps> = (props) => {
     const classes = useDangerButtonStyles();
-    return <Button {...props} classes={classes} />;
+    return <Button {...normalizeButtonProps(props, 'danger')} classes={classes} />;
 };
 
 export type ButtonElement =
