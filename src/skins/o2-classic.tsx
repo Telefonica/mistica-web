@@ -129,8 +129,6 @@ export const getO2ClassicSkin: GetSkin = () => {
             controlError: palette.pepper,
             loadingBar: palette.o2Gem,
             loadingBarBackground: palette.o2GemLight30,
-            loadingBarBackgroundInverse: palette.o2GemLight30,
-            loadingBarInverse: palette.o2Gem,
 
             toggleAndroidInactive: palette.grey2, // web only
             toggleAndroidBackgroundActive: palette.o2GemLight30, // web only
@@ -226,8 +224,6 @@ export const getO2ClassicSkin: GetSkin = () => {
             controlActivated: palette.o2Gem,
             loadingBar: palette.o2Gem,
             loadingBarBackground: palette.darkModeGrey6,
-            loadingBarBackgroundInverse: palette.darkModeGrey,
-            loadingBarInverse: palette.o2SkyBlue,
             toggleAndroidInactive: palette.grey4,
             toggleAndroidBackgroundActive: palette.o2GemLight30,
             iosControlKnob: palette.grey2,

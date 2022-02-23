@@ -108,8 +108,6 @@ export const getVivoSkin: GetSkin = () => {
             controlError: palette.pepper,
             loadingBar: palette.pink,
             loadingBarBackground: palette.pepperLight30,
-            loadingBarBackgroundInverse: palette.vivoPurpleLight50,
-            loadingBarInverse: palette.vivoPurple,
 
             toggleAndroidInactive: palette.grey2,
             toggleAndroidBackgroundActive: palette.vivoPurpleLight20,
@@ -209,8 +207,6 @@ export const getVivoSkin: GetSkin = () => {
             controlActivated: palette.vivoPurpleLight80,
             loadingBar: palette.vivoPurpleLight80,
             loadingBarBackground: palette.darkModeGrey6,
-            loadingBarBackgroundInverse: palette.grey1,
-            loadingBarInverse: palette.vivoPurpleLight80,
             toggleAndroidInactive: palette.grey4,
             toggleAndroidBackgroundActive: palette.vivoPurpleLight50,
             iosControlKnob: palette.grey2,
