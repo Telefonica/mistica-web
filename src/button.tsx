@@ -214,6 +214,20 @@ const useDangerButtonStyles = createUseStyles((theme) => ({
     inverse: dangerButtonStyles(theme),
 }));
 
+type ButtonType = 'primary' | 'secondary' | 'danger';
+
+const getLabelFromChildren = (children: React.ReactNode) => {
+    let label = '';
+
+    React.Children.forEach(children, (child) => {
+        if (typeof child === 'string') {
+            label += child;
+        }
+    });
+
+    return label;
+};
+
 interface CommonProps {
     children: React.ReactNode;
     className?: string;
@@ -276,7 +290,9 @@ export type ButtonProps =
     | OnPressButtonProps
     | HrefButtonProps;
 
-const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButtonStyles>}> = (props) => {
+const Button: React.FC<
+    ButtonProps & {classes: ReturnType<typeof usePrimaryButtonStyles>; type: ButtonType}
+> = (props) => {
     const {formStatus, formId} = useForm();
     const isInverse = useIsInverseVariant();
     const {classes, loadingText} = props;
@@ -318,7 +334,15 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
             [classes.isLoading]: showSpinner,
         }),
         style: {cursor: props.fake ? 'pointer' : undefined, ...props.style},
-        trackingEvent: props.trackingEvent,
+        trackingEvent:
+            props.trackingEvent ??
+            (props.trackEvent
+                ? {
+                      category: 'user_interaction',
+                      action: `${props.type}_button_tapped`,
+                      label: getLabelFromChildren(props.children),
+                  }
+                : undefined),
         dataAttributes: props.dataAttributes,
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
@@ -521,47 +545,19 @@ export const ButtonLink = React.forwardRef<
     return null;
 });
 
-type ButtonType = 'primary' | 'secondary' | 'danger';
-
-const getLabelFromChildren = (children: React.ReactNode) => {
-    let label = '';
-
-    React.Children.forEach(children, (child) => {
-        if (typeof child === 'string') {
-            label += child;
-        }
-    });
-
-    return label;
-};
-
-const normalizeButtonProps = (props: ButtonProps, type: ButtonType): ButtonProps => {
-    if (!props.trackingEvent && props.trackEvent) {
-        return {
-            ...props,
-            trackingEvent: {
-                category: 'user_interaction',
-                action: `${type}_button_tapped`,
-                label: getLabelFromChildren(props.children),
-            },
-        };
-    }
-    return props;
-};
-
 export const ButtonPrimary: React.FC<ButtonProps> = (props) => {
     const classes = usePrimaryButtonStyles();
-    return <Button {...normalizeButtonProps(props, 'primary')} classes={classes} />;
+    return <Button {...props} classes={classes} type="primary" />;
 };
 
 export const ButtonSecondary: React.FC<ButtonProps> = (props) => {
     const classes = useSecondaryButtonStyles();
-    return <Button {...normalizeButtonProps(props, 'secondary')} classes={classes} />;
+    return <Button {...props} classes={classes} type="secondary" />;
 };
 
 export const ButtonDanger: React.FC<ButtonProps> = (props) => {
     const classes = useDangerButtonStyles();
-    return <Button {...normalizeButtonProps(props, 'danger')} classes={classes} />;
+    return <Button {...props} classes={classes} type="danger" />;
 };
 
 export type ButtonElement =
