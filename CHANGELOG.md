@@ -1,3 +1,10 @@
+## [10.24.2](https://github.com/Telefonica/mistica-web/compare/v10.24.1...v10.24.2) (2022-02-22)
+
+
+### Bug Fixes
+
+* **Popover:** bug with close event propagation ([#421](https://github.com/Telefonica/mistica-web/issues/421)) ([0b439b6](https://github.com/Telefonica/mistica-web/commit/0b439b6cdb9ea6404d0ec2c6b50b61d99937cbc6))
+
 ## [10.24.1](https://github.com/Telefonica/mistica-web/compare/v10.24.0...v10.24.1) (2022-02-16)
 
 
