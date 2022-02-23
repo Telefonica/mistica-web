@@ -18,6 +18,7 @@ declare type CommonProps = {
   loadingText?: string,
   disabled?: boolean,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
+  trackEvent?: boolean,
 
   /**
    * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
