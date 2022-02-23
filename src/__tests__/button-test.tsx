@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ThemeVariant} from '../theme-variant-context';
-import {ButtonDanger, ButtonPrimary, ButtonSecondary} from '../button';
+import {ButtonDanger, ButtonLink, ButtonPrimary, ButtonSecondary} from '../button';
 import * as Spinner from '../spinner';
 import {render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
@@ -467,6 +467,10 @@ test('buttons track default events', async () => {
                 <IconPhotoCameraRegular color="currentColor" />
                 Take a photo
             </ButtonPrimary>
+            <ButtonLink href="#">no track link</ButtonLink>
+            <ButtonLink trackEvent href="#">
+                link
+            </ButtonLink>
         </ThemeContextProvider>
     );
 
@@ -475,8 +479,11 @@ test('buttons track default events', async () => {
     const secondaryButton = await screen.findByRole('button', {name: 'secondary'});
     const dangerButton = await screen.findByRole('button', {name: 'danger'});
     const buttonWithIcon = await screen.findByRole('button', {name: 'Take a photo'});
+    const noTrackLink = await screen.findByRole('link', {name: 'no track link'});
+    const link = await screen.findByRole('link', {name: 'link'});
 
     userEvent.click(noTrackButton);
+    userEvent.click(noTrackLink);
     expect(logEventSpy).not.toHaveBeenCalled();
 
     userEvent.click(primaryButton);
@@ -510,4 +517,12 @@ test('buttons track default events', async () => {
         label: 'Take a photo',
     });
     expect(logEventSpy).toHaveBeenCalledTimes(4);
+
+    userEvent.click(link);
+    expect(logEventSpy).toHaveBeenCalledWith({
+        category: 'user_interaction',
+        action: 'link_tapped',
+        label: 'link',
+    });
+    expect(logEventSpy).toHaveBeenCalledTimes(5);
 });

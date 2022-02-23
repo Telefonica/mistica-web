@@ -8,6 +8,8 @@ import {useForm} from './form-context';
 import {pxToRem} from './utils/css';
 import {Text, Text2, Text3} from './text';
 import Box from './box';
+import {getTextFromChildren} from './utils/common';
+import {eventActions, eventCategories} from './utils/analytics';
 
 import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
@@ -216,18 +218,6 @@ const useDangerButtonStyles = createUseStyles((theme) => ({
 
 type ButtonType = 'primary' | 'secondary' | 'danger';
 
-const getLabelFromChildren = (children: React.ReactNode) => {
-    let label = '';
-
-    React.Children.forEach(children, (child) => {
-        if (typeof child === 'string') {
-            label += child;
-        }
-    });
-
-    return label;
-};
-
 interface CommonProps {
     children: React.ReactNode;
     className?: string;
@@ -338,9 +328,9 @@ const Button: React.FC<
             props.trackingEvent ??
             (props.trackEvent
                 ? {
-                      category: 'user_interaction',
+                      category: eventCategories.userInteraction,
                       action: `${props.type}_button_tapped`,
-                      label: getLabelFromChildren(props.children),
+                      label: getTextFromChildren(props.children),
                   }
                 : undefined),
         dataAttributes: props.dataAttributes,
@@ -473,6 +463,7 @@ const useButtonLinkStyles = createUseStyles((theme) => {
 interface ButtonLinkCommonProps {
     children: React.ReactNode;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    trackEvent?: boolean;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     aligned?: boolean;
@@ -508,7 +499,15 @@ export const ButtonLink = React.forwardRef<
             [classes.inverse]: isInverse,
             [classes.aligned]: props.aligned,
         }),
-        trackingEvent: props.trackingEvent,
+        trackingEvent:
+            props.trackingEvent ??
+            (props.trackEvent
+                ? {
+                      category: eventCategories.userInteraction,
+                      action: eventActions.linkTapped,
+                      label: getTextFromChildren(props.children),
+                  }
+                : undefined),
         dataAttributes: props.dataAttributes,
         children: (
             <Text2 medium truncate={1} color="inherit">
