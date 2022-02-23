@@ -111,8 +111,6 @@ export const getTelefonicaSkin: GetSkin = () => {
             controlError: palette.coral,
             loadingBar: palette.telefonicaBlue30,
             loadingBarBackground: palette.telefonicaBlue70,
-            loadingBarBackgroundInverse: palette.telefonicaBlue70,
-            loadingBarInverse: palette.telefonicaBlue30,
 
             toggleAndroidInactive: palette.grey2, // web only
             toggleAndroidBackgroundActive: palette.grey2, // web only
@@ -210,8 +208,6 @@ export const getTelefonicaSkin: GetSkin = () => {
             controlActivated: palette.telefonicaBlue,
             loadingBar: palette.telefonicaBlue,
             loadingBarBackground: applyAlpha(palette.white, 0.05),
-            loadingBarBackgroundInverse: palette.telefonicaBlue70,
-            loadingBarInverse: palette.telefonicaBlue30,
             toggleAndroidInactive: palette.grey4, // web only
             toggleAndroidBackgroundActive: palette.grey1, // web only
             iosControlKnob: palette.grey2, // web only
