@@ -122,7 +122,7 @@ export const getTelefonicaSkin: GetSkin = () => {
             navigationBarDivider: palette.telefonicaBlue,
 
             // FEEDBACKS
-            badge: palette.coral80,
+            badge: palette.coral70,
             feedbackErrorBackground: palette.coral,
             feedbackInfoBackground: palette.grey9,
 
