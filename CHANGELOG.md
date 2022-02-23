@@ -1,3 +1,10 @@
+# [10.25.0](https://github.com/Telefonica/mistica-web/compare/v10.24.2...v10.25.0) (2022-02-23)
+
+
+### Features
+
+* **webview-bridge:** upgrade webview-bridge dependency ([#420](https://github.com/Telefonica/mistica-web/issues/420)) ([0b01b6e](https://github.com/Telefonica/mistica-web/commit/0b01b6ed67bb0bcb10927ffb44812095abacc233))
+
 ## [10.24.2](https://github.com/Telefonica/mistica-web/compare/v10.24.1...v10.24.2) (2022-02-22)
 
 
