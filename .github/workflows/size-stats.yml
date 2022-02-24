@@ -76,4 +76,4 @@ jobs:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   title: Size stats
                   message: ${{ steps.message.outputs.message }}
-                  update-if-exists: true
+                  update-if-exists: 'true'
