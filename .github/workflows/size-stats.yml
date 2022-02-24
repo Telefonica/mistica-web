@@ -1,0 +1,66 @@
+name: CI
+
+on:
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
+
+jobs:
+    branch-size-stats:
+        runs-on: ubuntu-latest
+        container: telefonica/web-builder:chromium93.0.4577-1.2.4
+
+        outputs:
+            total-js: ${{ steps.stats.outputs.total-js }}
+            js-without-icons: ${{ steps.stats.outputs.js-without-icons }}
+            lib-overhead: ${{ steps.stats.outputs.lib-overhead }}
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - run: yarn install --immutable --immutable-cache
+
+            - id: stats
+              uses: './.github/actions/size-stats'
+
+    master-size-stats:
+        runs-on: ubuntu-latest
+        container: telefonica/web-builder:chromium93.0.4577-1.2.4
+
+        outputs:
+            total-js: ${{ steps.stats.outputs.total-js }}
+            js-without-icons: ${{ steps.stats.outputs.js-without-icons }}
+            lib-overhead: ${{ steps.stats.outputs.lib-overhead }}
+
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  ref: master
+
+            - run: yarn install --immutable --immutable-cache
+
+            - id: stats
+              uses: './.github/actions/size-stats'
+
+    show-results:
+        runs-on: ubuntu-latest
+        container: telefonica/web-builder:chromium93.0.4577-1.2.4
+        needs: [master-size-stats, branch-size-stats]
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  repository: Telefonica/github-actions
+                  token: '${{ secrets.NOVUM_PRIVATE_REPOS }}'
+                  path: .github/shared-actions
+
+            - name: Form size stats message
+              id: message
+              uses: './.github/actions/size-stats-message'
+
+            - name: Comment on PR
+              uses: ./.github/shared-actions/novum/comment-pr
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  title: Size stats
+                  message: ${{ steps.message.outputs.message }}

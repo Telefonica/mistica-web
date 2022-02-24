@@ -1,7 +1,6 @@
 const childProcess = require('child_process');
 const rimraf = require('rimraf');
 const execSync = childProcess.execSync;
-const genSizeStats = require('./size-stats');
 
 const run = (command) => {
     execSync(command, {stdio: 'inherit'});
@@ -36,7 +35,4 @@ const compile = () => {
 
     console.log('Flow check...');
     run('yarn flow check');
-
-    console.log('Generating size stats...');
-    genSizeStats();
 })();
