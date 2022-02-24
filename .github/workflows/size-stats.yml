@@ -19,6 +19,8 @@ jobs:
 
             - run: yarn install --immutable --immutable-cache
 
+            - run: yarn compile
+
             - id: stats
               uses: './.github/actions/size-stats'
 
@@ -37,6 +39,8 @@ jobs:
                   ref: master
 
             - run: yarn install --immutable --immutable-cache
+
+            - run: yarn compile
 
             - id: stats
               uses: './.github/actions/size-stats'

@@ -24,7 +24,7 @@ const buildApp = () => {
     execSync('yarn build', {cwd: PATH_APP});
 };
 
-module.exports = () => {
+const calcStats = () => {
     buildApp();
     const appInitial = 130857; // precalculated - see webpack.config.js
     const appWithMistica = getTotalSize(glob.sync(join(PATH_APP_BUILD, '**/*.js')));
@@ -40,3 +40,9 @@ module.exports = () => {
         libOverhead: appWithMistica - appInitial,
     };
 };
+
+if (require.main === module) {
+    console.log(calcStats());
+}
+
+module.exports = calcStats;
