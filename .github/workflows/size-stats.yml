@@ -57,6 +57,8 @@ jobs:
                   token: '${{ secrets.NOVUM_PRIVATE_REPOS }}'
                   path: .github/shared-actions
 
+            - run: yarn install --immutable --immutable-cache
+
             - name: Form size stats message
               id: message
               uses: './.github/actions/size-stats-message'
