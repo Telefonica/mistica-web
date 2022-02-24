@@ -75,6 +75,6 @@ jobs:
               uses: ./.github/shared-actions/novum/comment-pr
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
-                  title: Size stats
+                  title: '**Size stats**'
                   message: ${{ steps.message.outputs.message }}
                   update-if-present: 'true'
