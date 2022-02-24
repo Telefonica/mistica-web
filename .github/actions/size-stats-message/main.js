@@ -21,21 +21,21 @@ const main = async () => {
         `
     <table>
         <th>
-            <td>master
-            <td>pr
-            <td>diff
+            <td><b>master</b>
+            <td><b>pr</b>
+            <td><b>diff</b>
         <tr>
-            <td>total js
+            <td>Total JS
             <td>${formatKb(master.totalJs)}
             <td>${formatKb(pr.totalJs)}
             <td>${formatKb(pr.totalJs - master.totalJs)}
         <tr>
-            <td>js without icons
+            <td>JS without icons
             <td>${formatKb(master.withoutIcons)}
             <td>${formatKb(pr.withoutIcons)}
             <td>${formatKb(pr.withoutIcons - master.withoutIcons)}
         <tr>
-            <td>lib overhead
+            <td>Lib overhead
             <td>${formatKb(master.libOverhead)}
             <td>${formatKb(pr.libOverhead)}
             <td>${formatKb(pr.libOverhead - master.libOverhead)}
