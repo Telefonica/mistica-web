@@ -27,17 +27,17 @@ const main = async () => {
             <td><b>Total JS</b>
             <td>${prettyBytes(master.totalJs)}
             <td>${prettyBytes(pr.totalJs)}
-            <td>${prettyBytes(pr.totalJs - master.totalJs + 5459, {signed: true})}
+            <td>${prettyBytes(pr.totalJs - master.totalJs, {signed: true})}
         <tr>
             <td><b>JS without icons</b>
             <td>${prettyBytes(master.withoutIcons)}
             <td>${prettyBytes(pr.withoutIcons)}
-            <td>${prettyBytes(pr.withoutIcons - master.withoutIcons - 2734, {signed: true})}
+            <td>${prettyBytes(pr.withoutIcons - master.withoutIcons, {signed: true})}
         <tr>
             <td><b>Lib overhead</b>
             <td>${prettyBytes(master.libOverhead)}
             <td>${prettyBytes(pr.libOverhead)}
-            <td>${prettyBytes(pr.libOverhead - master.libOverhead + 7680, {signed: true})}
+            <td>${prettyBytes(pr.libOverhead - master.libOverhead, {signed: true})}
     </table>
     `
     );
