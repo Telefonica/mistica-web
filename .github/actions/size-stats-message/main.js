@@ -14,6 +14,8 @@ const main = async () => {
         libOverhead: core.getInput('pr-lib-overhead'),
     };
 
+    console.log('format', master, pr);
+
     core.setOutput(
         'message',
         `

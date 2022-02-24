@@ -62,6 +62,13 @@ jobs:
             - name: Form size stats message
               id: message
               uses: './.github/actions/size-stats-message'
+              with:
+                  master-total-js: ${{ needs.branch-size-stats.outputs.total-js }}
+                  master-js-without-icons: ${{ needs.branch-size-stats.outputs.js-without-icons }}
+                  master-lib-overhead: ${{ needs.branch-size-stats.outputs.lib-overhead }}
+                  pr-total-js: ${{ needs.branch-size-stats.outputs.total-js }}
+                  pr-js-without-icons: ${{ needs.branch-size-stats.outputs.js-without-icons }}
+                  pr-lib-overhead: ${{ needs.branch-size-stats.outputs.lib-overhead }}
 
             - name: Comment on PR
               uses: ./.github/shared-actions/novum/comment-pr
