@@ -3,14 +3,14 @@ const prettyBytes = require('pretty-bytes');
 
 const main = async () => {
     const master = {
-        totalJs: core.getInput('master-total-js'),
-        withoutIcons: core.getInput('master-js-without-icons'),
-        libOverhead: core.getInput('master-lib-overhead'),
+        totalJs: Number(core.getInput('master-total-js')),
+        withoutIcons: Number(core.getInput('master-js-without-icons')),
+        libOverhead: Number(core.getInput('master-lib-overhead')),
     };
     const pr = {
-        totalJs: core.getInput('pr-total-js'),
-        withoutIcons: core.getInput('pr-js-without-icons'),
-        libOverhead: core.getInput('pr-lib-overhead'),
+        totalJs: Number(core.getInput('pr-total-js')),
+        withoutIcons: Number(core.getInput('pr-js-without-icons')),
+        libOverhead: Number(core.getInput('pr-lib-overhead')),
     };
 
     console.log('format', master, pr);
