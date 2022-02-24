@@ -1,8 +1,6 @@
-name: CI
+name: Size stats
 
 on:
-    push:
-        branches: [master]
     pull_request:
         branches: [master]
 
