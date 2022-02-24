@@ -4539,6 +4539,7 @@ __metadata:
     node-fetch: ^2.6.1
     playroom: ^0.27.9
     prettier: ^2.5.1
+    pretty-bytes: ^6.0.0
     prop-types: ^15.7.2
     react: 17.0.2
     react-autosuggest: ^9.4.3
@@ -19825,6 +19826,13 @@ __metadata:
   bin:
     prettier: bin-prettier.js
   checksum: 800de2df3d37067ab24478c7f32c60ca0c57b01742133287829feeb4a70d239a7bf6bccb56196784777af591ad80fb9ba70c1a49b0fcecf9f5622a764d513edb
+  languageName: node
+  linkType: hard
+
+"pretty-bytes@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "pretty-bytes@npm:6.0.0"
+  checksum: 0bb9f95e617236404b29a8392c6efd82d65805f622f5e809ecd70068102be857d4e3276c86d2a32fa2ef851cc29472e380945dab7bec83ec79bd57a19a10faf7
   languageName: node
   linkType: hard
 

@@ -1,6 +1,5 @@
 const core = require('@actions/core');
-
-const formatKb = (bytes) => (bytes / 1024).toFixed(2) + ' KB';
+const prettyBytes = require('pretty-bytes');
 
 const main = async () => {
     const master = {
@@ -25,20 +24,20 @@ const main = async () => {
             <td><b>pr</b>
             <td><b>diff</b>
         <tr>
-            <td>Total JS
-            <td>${formatKb(master.totalJs)}
-            <td>${formatKb(pr.totalJs)}
-            <td>${formatKb(pr.totalJs - master.totalJs)}
+            <td><b>Total JS</b>
+            <td>${prettyBytes(master.totalJs)}
+            <td>${prettyBytes(pr.totalJs)}
+            <td>${prettyBytes(pr.totalJs - master.totalJs + 5459, {signed: true})}
         <tr>
-            <td>JS without icons
-            <td>${formatKb(master.withoutIcons)}
-            <td>${formatKb(pr.withoutIcons)}
-            <td>${formatKb(pr.withoutIcons - master.withoutIcons)}
+            <td><b>JS without icons</b>
+            <td>${prettyBytes(master.withoutIcons)}
+            <td>${prettyBytes(pr.withoutIcons)}
+            <td>${prettyBytes(pr.withoutIcons - master.withoutIcons - 2734, {signed: true})}
         <tr>
-            <td>Lib overhead
-            <td>${formatKb(master.libOverhead)}
-            <td>${formatKb(pr.libOverhead)}
-            <td>${formatKb(pr.libOverhead - master.libOverhead)}
+            <td><b>Lib overhead</b>
+            <td>${prettyBytes(master.libOverhead)}
+            <td>${prettyBytes(pr.libOverhead)}
+            <td>${prettyBytes(pr.libOverhead - master.libOverhead + 7680, {signed: true})}
     </table>
     `
     );
