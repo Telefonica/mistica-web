@@ -14,14 +14,32 @@ const main = async () => {
         libOverhead: core.getInput('pr-lib-overhead'),
     };
 
-    // prettier-ignore
-    core.setOutput('message', `
-    |                  | master                           | pr                           | diff                                               |
-    |------------------|----------------------------------|------------------------------|----------------------------------------------------|
-    | Total JS         | ${formatKb(master.totalJs)}      | ${formatKb(pr.totalJs)}      | ${formatKb(pr.totalJs - master.totalJs)}           |
-    | JS without icons | ${formatKb(master.withoutIcons)} | ${formatKb(pr.withoutIcons)} | ${formatKb(pr.withoutIcons - master.withoutIcons)} |
-    | Lib overhead     | ${formatKb(master.libOverhead)}  | ${formatKb(pr.libOverhead)}  | ${formatKb(pr.libOverhead - master.libOverhead)}   |
-    `);
+    core.setOutput(
+        'message',
+        `
+    <table>
+        <th>
+            <td>master
+            <td>pr
+            <td>diff
+        <tr>
+            <td>total js
+            <td>${formatKb(master.totalJs)}
+            <td>${formatKb(pr.totalJs)}
+            <td>${formatKb(pr.totalJs - master.totalJs)}
+        <tr>
+            <td>js without icons
+            <td>${formatKb(master.withoutIcons)}
+            <td>${formatKb(pr.withoutIcons)}
+            <td>${formatKb(pr.withoutIcons - master.withoutIcons)}
+        <tr>
+            <td>lib overhead
+            <td>${formatKb(master.libOverhead)}
+            <td>${formatKb(pr.libOverhead)}
+            <td>${formatKb(pr.libOverhead - master.libOverhead)}
+    </table>
+    `
+    );
 };
 
 main().catch((error) => {
