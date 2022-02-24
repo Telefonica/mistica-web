@@ -21,7 +21,7 @@ const main = async () => {
     <table>
         <th>
             <td><b>master</b>
-            <td><b>pr</b>
+            <td><b>this branch</b>
             <td><b>diff</b>
         <tr>
             <td><b>Total JS</b>
