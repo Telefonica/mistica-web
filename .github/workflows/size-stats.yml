@@ -51,6 +51,8 @@ jobs:
         needs: [master-size-stats, branch-size-stats]
         steps:
             - uses: actions/checkout@v2
+              with:
+                  ref: atoledano-comment-pr-logs
             - uses: actions/checkout@v2
               with:
                   repository: Telefonica/github-actions
