@@ -596,7 +596,7 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             description="Description"
             extra={<Placeholder />}
-            media={<Video src="https://cdn.kapwing.com/final_61f3e551955a8b003ec98e68_257607.mp4" aspectRatio="16:9" />}
+            media={<Video src="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw" aspectRatio="16:9" />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
                     Action

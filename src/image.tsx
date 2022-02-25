@@ -1,5 +1,8 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 /**
  * This context is used internally to disable the border radius. This is useful for example
@@ -44,6 +47,7 @@ export type ImageProps = {
     /** defaults to empty string */
     alt?: string;
     children?: void;
+    dataAttributes?: DataAttributes;
 };
 
 /** @deprecated */
@@ -57,10 +61,11 @@ type DeprecatedImageProps = {
     /** defaults to empty string */
     alt?: string;
     children?: void;
+    dataAttributes?: DataAttributes;
 };
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps | DeprecatedImageProps>(
-    ({aspectRatio = '1:1', alt = '', ...props}, ref) => {
+    ({aspectRatio = '1:1', alt = '', dataAttributes, ...props}, ref) => {
         const noBorderRadius = useDisableBorderRadius();
         const classes = useStyles({
             noBorderRadius,
@@ -82,7 +87,17 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps | DeprecatedImagePro
             width = '100%';
         }
 
-        return <img ref={ref} src={url} className={classes.image} alt={alt} width={width} height={height} />;
+        return (
+            <img
+                {...getPrefixedDataAttributes(dataAttributes)}
+                ref={ref}
+                src={url}
+                className={classes.image}
+                alt={alt}
+                width={width}
+                height={height}
+            />
+        );
     }
 );
 
