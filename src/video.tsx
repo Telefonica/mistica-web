@@ -3,7 +3,8 @@ import {useDisableBorderRadius} from './image';
 import {createUseStyles} from './jss';
 import {combineRefs} from './utils/common';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {DataAttributes} from './utils/types';
+
+import type {DataAttributes} from './utils/types';
 
 export type AspectRatio = '1:1' | '16:9' | '12:5' | '4:3';
 

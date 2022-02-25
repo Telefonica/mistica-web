@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {DataAttributes} from './utils/types';
+
+import type {DataAttributes} from './utils/types';
 
 /**
  * This context is used internally to disable the border radius. This is useful for example
