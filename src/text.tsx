@@ -3,9 +3,9 @@ import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 import {pxToRem} from './utils/css';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
-import {getPrefixedDataAttributes} from './utils/dom';
 
 const useStyles = createUseStyles((theme) => {
     const mapToWeight: Record<string, number> = {
