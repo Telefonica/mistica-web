@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from "react";
+import type { DataAttributes } from "./utils/types";
 declare export var useDisableBorderRadius: () => boolean;
 declare export var DisableBorderRadiusProvider: React.ComponentType<{}>;
 export type AspectRatio = "1:1" | "16:9" | "7:10" | "4:3";
@@ -25,6 +26,7 @@ export type ImageProps = {
   * defaults to empty string
   */
  alt?: string,
+ dataAttributes?: DataAttributes,
 };
 /**
  * @deprecated
@@ -41,6 +43,7 @@ declare type DeprecatedImageProps = {
   * defaults to empty string
   */
  alt?: string,
+ dataAttributes?: DataAttributes,
 };
 declare var Image: React.ComponentType<{
   ...ImageProps | DeprecatedImageProps,

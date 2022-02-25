@@ -9,7 +9,7 @@ export default {
 export const Default: StoryComponent = () => (
     <div data-testid="text">
         <Stack space={16}>
-            <Text10>Text10 Light 32/40 (Mobile) | 64/72 (Desktop)</Text10>
+            <Text10 dataAttributes={{qsysid: 'text10'}}>Text10 Light 32/40 (Mobile) | 64/72 (Desktop)</Text10>
 
             <Text9>Text9 Light 32/40 (Mobile) | 56/64 (Desktop)</Text9>
 

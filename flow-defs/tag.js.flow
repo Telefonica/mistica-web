@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from "react";
-import type { IconProps } from "./utils/types";
+import type { DataAttributes, IconProps } from "./utils/types";
 export type TagType =
   | "promo"
   | "active"
@@ -13,6 +13,7 @@ export type TagProps = {
   type?: "promo" | "active" | "inactive" | "success" | "warning" | "error",
   children: string,
   Icon?: React.ComponentType<IconProps>,
+  dataAttributes?: DataAttributes,
 
   /**
    * @deprecated use type prop

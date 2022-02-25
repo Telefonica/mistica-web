@@ -50,7 +50,7 @@ export const Default: StoryComponent<Args> = ({label: labelFromArgs}) => {
             <Inline space={48}>
                 <Container>
                     <Text3 medium>Example</Text3>
-                    <Tag Icon={IconOfferPercentFilled} type="promo">
+                    <Tag Icon={IconOfferPercentFilled} type="promo" dataAttributes={{qsysid: 'promo'}}>
                         {getLabel('Promo')}
                     </Tag>
                     <Tag Icon={IconStarFilled} type="active">

@@ -1,3 +1,18 @@
+# [10.27.0](https://github.com/Telefonica/mistica-web/compare/v10.26.0...v10.27.0) (2022-02-25)
+
+
+### Bug Fixes
+
+* **playroom:** dark mode in Blau & Telefonica ios ([#423](https://github.com/Telefonica/mistica-web/issues/423)) ([a630625](https://github.com/Telefonica/mistica-web/commit/a630625379cdb486abd916ad05c0d3fd4974e5cd))
+* **skins:** remove deprecated constants ([#418](https://github.com/Telefonica/mistica-web/issues/418)) ([822960f](https://github.com/Telefonica/mistica-web/commit/822960f2ecf629b4e5de0ac3224e2026332c0f14))
+* **Telefonica skin:** change badge color ([#424](https://github.com/Telefonica/mistica-web/issues/424)) ([0976c24](https://github.com/Telefonica/mistica-web/commit/0976c246f295d4be61426d33ff93b65c9bae0598))
+
+
+### Features
+
+* **Button:** default tracking events ([#425](https://github.com/Telefonica/mistica-web/issues/425)) ([5fc2576](https://github.com/Telefonica/mistica-web/commit/5fc25768f71cd8a0318b47266511694e6024e49e))
+* **Image, Text, Video, Tag:** add dataAttributes prop ([#429](https://github.com/Telefonica/mistica-web/issues/429)) ([730a0db](https://github.com/Telefonica/mistica-web/commit/730a0dbb80abe9a47260b21e29fe1cbf2c9cc206))
+
 # [10.26.0](https://github.com/Telefonica/mistica-web/compare/v10.25.0...v10.26.0) (2022-02-23)
 
 
