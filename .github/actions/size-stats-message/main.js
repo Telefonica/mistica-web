@@ -13,8 +13,6 @@ const main = async () => {
         libOverhead: Number(core.getInput('pr-lib-overhead')),
     };
 
-    console.log('format', master, pr);
-
     core.setOutput(
         'message',
         `
