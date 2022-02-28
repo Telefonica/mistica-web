@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useTheme} from '../hooks';
 import {isAndroid} from './platform';
 
-const isDocumentVisible = () => document.visibilityState === 'visible';
+const isDocumentVisible = () => typeof document !== 'undefined' && document.visibilityState === 'visible';
 
 const DocumentVisibilityContext = React.createContext<boolean>(true);
 
