@@ -19,3 +19,14 @@ declare export var useWindowSize: () => {
 declare export var useWindowHeight: () => number;
 declare export var useWindowWidth: () => number;
 declare export var useIsomorphicLayoutEffect: typeof React.useLayoutEffect;
+declare type IntersectionObserverOptions = {
+  root?: Element | Document | null,
+  rootMargin?: string,
+  threshold?: number | Array<number>,
+};
+declare export var useIsInViewport: (
+  ref: React.Ref<HTMLElement>,
+  defaultValue: boolean,
+  options?: IntersectionObserverOptions | void
+) => boolean;
+declare export {};
