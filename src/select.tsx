@@ -52,7 +52,7 @@ const useStyles = createUseStyles((theme) => ({
         left: 12 + 1, // 12 for select paddingLeft and +1 for border
         right: 48 + 1, // 48 for icon and +1 for border
         overflow: 'hidden',
-        top: ({label}) => (label ? 26 : 16),
+        top: ({label}) => (label ? 27 : 17),
         lineHeight: '18px',
         fontSize: 16,
         color: theme.colors.textPrimary,
