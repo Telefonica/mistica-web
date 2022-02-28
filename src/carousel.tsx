@@ -12,6 +12,7 @@ import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
 import {applyAlpha} from './utils/color';
 import {DisableBorderRadiusProvider} from './image';
 import {getPrefixedDataAttributes, listenResize} from './utils/dom';
+import {isAndroid} from './utils/platform';
 
 import type {DataAttributes} from './utils/types';
 import type {Theme} from './theme';
@@ -138,6 +139,7 @@ const useStyles = createUseStyles((theme) => ({
         },
     },
     item: {
+        scrollSnapStop: isAndroid(theme.platformOverrides) ? 'always' : 'normal',
         scrollSnapAlign: 'start',
         flexShrink: 0,
         width: ({itemsPerPageConfig, gap}) =>
