@@ -1,3 +1,15 @@
+# [10.28.0](https://github.com/Telefonica/mistica-web/compare/v10.27.0...v10.28.0) (2022-03-01)
+
+
+### Bug Fixes
+
+* **popover:** Fix size in iOS when rendered offscreen ([#431](https://github.com/Telefonica/mistica-web/issues/431)) ([9cb3a29](https://github.com/Telefonica/mistica-web/commit/9cb3a290ea2b6c434c715bb7c18bca9678c5a006))
+
+
+### Features
+
+* **Carousel:** autoplay only move when carousel is visible ([#430](https://github.com/Telefonica/mistica-web/issues/430)) ([fa74b04](https://github.com/Telefonica/mistica-web/commit/fa74b04e1d6171809ea8a5c1522cb0622b9dfc01))
+
 # [10.27.0](https://github.com/Telefonica/mistica-web/compare/v10.26.0...v10.27.0) (2022-02-25)
 
 
