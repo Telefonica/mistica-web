@@ -1407,3 +1407,4 @@ export {default as IconWinnerRegular} from './generated/mistica-icons/icon-winne
 export {default as IconWomanFilled} from './generated/mistica-icons/icon-woman-filled';
 export {default as IconWomanLight} from './generated/mistica-icons/icon-woman-light';
 export {default as IconWomanRegular} from './generated/mistica-icons/icon-woman-regular';
+console.log('test');
