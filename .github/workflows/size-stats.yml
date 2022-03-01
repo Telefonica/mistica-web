@@ -35,8 +35,8 @@ jobs:
 
         steps:
             - uses: actions/checkout@v2
-            #   with:
-            #       ref: master
+              with:
+                  ref: master
 
             - run: yarn install --immutable --immutable-cache
 
