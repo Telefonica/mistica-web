@@ -53,7 +53,7 @@ const useStyles = createUseStyles((theme) => ({
         right: 48 + 1, // 48 for icon and +1 for border
         overflow: 'hidden',
         top: ({label}) => (label ? 27 : 17),
-        lineHeight: '18px',
+        lineHeight: '20px',
         fontSize: 16,
         color: theme.colors.textPrimary,
         opacity: ({disabled}) => (disabled ? 0.5 : 1),
