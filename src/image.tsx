@@ -37,13 +37,14 @@ export const RATIO = {
 };
 
 export type ImageProps = {
+    noBorderRadius?: boolean;
     src: string;
     url?: undefined;
     /** defaults to 100% when no width and no height are given */
-    width?: number;
-    height?: number;
+    width?: string | number;
+    height?: string | number;
     /** defaults to 1:1, if both width and height are given, aspectRatio is ignored */
-    aspectRatio?: AspectRatio;
+    aspectRatio: AspectRatio | number;
     /** defaults to empty string */
     alt?: string;
     children?: void;
@@ -67,9 +68,10 @@ type DeprecatedImageProps = {
 const Image = React.forwardRef<HTMLImageElement, ImageProps | DeprecatedImageProps>(
     ({aspectRatio = '1:1', alt = '', dataAttributes, ...props}, ref) => {
         const noBorderRadius = useDisableBorderRadius();
+        const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
         const classes = useStyles({
             noBorderRadius,
-            aspectRatio: !props.width && !props.height ? RATIO[aspectRatio] : undefined,
+            aspectRatio: !props.width && !props.height ? ratio : undefined,
         });
         const url = props.src || props.url;
 
@@ -80,9 +82,9 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps | DeprecatedImagePro
             width = props.width;
             height = props.height;
         } else if (props.width !== undefined) {
-            height = props.width / RATIO[aspectRatio];
+            height = typeof props.width === 'number' ? props.width / ratio : props.width;
         } else if (props.height !== undefined) {
-            width = props.height * RATIO[aspectRatio];
+            width = typeof props.height === 'number' ? props.height * ratio : props.height;
         } else {
             width = '100%';
         }
