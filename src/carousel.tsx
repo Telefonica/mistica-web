@@ -553,6 +553,7 @@ const useSlideshowStyles = createUseStyles((theme) => ({
     },
     item: {
         width: '100%',
+        scrollSnapStop: isAndroid(theme.platformOverrides) ? 'always' : 'normal',
         scrollSnapAlign: 'start',
         flexShrink: 0,
     },
