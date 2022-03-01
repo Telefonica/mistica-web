@@ -116,8 +116,11 @@ const getWidthDesktop = (customWidth?: number): number => (customWidth ? customW
 const getPosition = (position: Position = defaultPositionDesktop, isTabletOrSmaller: boolean) =>
     isTabletOrSmaller && (position === 'left' || position === 'right') ? defaultPositionMobile : position;
 
-const getWidth = (isTabletOrSmaller: boolean, width?: number): number =>
-    isTabletOrSmaller ? window.innerWidth - marginLeftRightMobile * 2 : getWidthDesktop(width);
+const getWidth = (isTabletOrSmaller: boolean, isIos: boolean, width?: number): number =>
+    // in iOS, when the webview is rendered offscreen (eg. acccount tab), window.innerWidth value is wrong, it returns strange values like 0 or 80.
+    isTabletOrSmaller
+        ? (isIos ? window.screen.width : window.innerWidth) - marginLeftRightMobile * 2
+        : getWidthDesktop(width);
 
 const getPositionStyles = (
     position: Position,
@@ -226,14 +229,14 @@ const Popover: React.FC<Props> = ({
     asset,
     isVisible = true,
 }) => {
-    const {texts, colors} = useTheme();
+    const {texts, colors, isIos} = useTheme();
     const {isTabletOrSmaller} = useScreenSize();
     const [targetPosition, setTargetPosition] = React.useState<TargetPosition | null>(null);
 
     const targetWrapperRef = React.useRef<HTMLDivElement | null>(null);
 
     position = getPosition(position, isTabletOrSmaller);
-    const innerWidth = getWidth(isTabletOrSmaller, width);
+    const innerWidth = getWidth(isTabletOrSmaller, isIos, width);
     const classes = useStyles({position});
 
     React.useEffect(() => {

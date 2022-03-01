@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "10.24.2",
+    "version": "10.28.0",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -21,6 +21,7 @@
         "lint": "eslint --report-unused-disable-directives .",
         "ts-check": "tsc --project tsconfig.json --noEmit",
         "build": "yarn clean && node scripts/build.js",
+        "compile": "node scripts/compile.js",
         "clean": "rimraf dist && rimraf dist-es && rimraf dist-ts && rimraf node_modules/.cache",
         "ci": "yarn lint && yarn prettier-check && yarn ts-check && yarn circular-dependencies && yarn build && yarn storybook-static && yarn test --ci && yarn test-acceptance --ci",
         "prepublishOnly": "node scripts/prepublish-only.js",
@@ -108,6 +109,7 @@
         "node-fetch": "^2.6.1",
         "playroom": "^0.27.9",
         "prettier": "^2.5.1",
+        "pretty-bytes": "^5.6.0",
         "prop-types": "^15.7.2",
         "react": "17.0.2",
         "react-dom": "17.0.2",
@@ -122,7 +124,7 @@
     },
     "dependencies": {
         "@juggle/resize-observer": "^3.3.1",
-        "@tef-novum/webview-bridge": "^3.0.0",
+        "@tef-novum/webview-bridge": "^3.2.1",
         "@telefonica/libphonenumber": "^2.8.0",
         "classnames": "^2.3.1",
         "jss": "^10.6.0",

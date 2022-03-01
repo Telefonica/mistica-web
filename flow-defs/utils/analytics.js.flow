@@ -1,0 +1,8 @@
+// @flow
+
+declare export var eventCategories: {
+  +userInteraction: "user_interaction",
+};
+declare export var eventActions: {
+  +linkTapped: "link_tapped",
+};

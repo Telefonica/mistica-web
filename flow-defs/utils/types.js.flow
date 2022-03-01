@@ -1,13 +1,7 @@
 // @flow
 
 export type { RendersElement, RendersNullableElement } from "./renders-element";
-export type TrackingEvent = {
-  [key: string]: mixed,
-  +category: string,
-  +action: string,
-  +label?: string,
-  +value?: number,
-};
+export type { TrackingEvent } from "@tef-novum/webview-bridge";
 export type DataAttributes = {
   [name: string]: string | number | boolean | void,
 };

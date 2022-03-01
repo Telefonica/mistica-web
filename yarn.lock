@@ -4394,10 +4394,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tef-novum/webview-bridge@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@tef-novum/webview-bridge@npm:3.0.0"
-  checksum: 1cc4b5b3b528eeb1f7e90071b28f6f266a2a09ef31e5689e0e8fa29944f7f5706c9324b7c5af0bf6a5ab03f7ce25a943cd0c4a026c6808489c808a74fb46e871
+"@tef-novum/webview-bridge@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "@tef-novum/webview-bridge@npm:3.2.1"
+  checksum: 8f6dc9d26b0e00e3c00c8385770a72f57302a2eb17ed4de32ca33ce177001bbebb0d3ed6d76d155db2ea3621f11bb43382dda9d0dadbe1dc1f14ee7b33509509
   languageName: node
   linkType: hard
 
@@ -4495,7 +4495,7 @@ __metadata:
     "@swc/cli": ^0.1.55
     "@swc/core": ^1.2.135
     "@swc/jest": ^0.2.17
-    "@tef-novum/webview-bridge": ^3.0.0
+    "@tef-novum/webview-bridge": ^3.2.1
     "@telefonica/acceptance-testing": ^2.5.2
     "@telefonica/eslint-config": ^1.0.2
     "@telefonica/libphonenumber": ^2.8.0
@@ -4539,6 +4539,7 @@ __metadata:
     node-fetch: ^2.6.1
     playroom: ^0.27.9
     prettier: ^2.5.1
+    pretty-bytes: ^5.6.0
     prop-types: ^15.7.2
     react: 17.0.2
     react-autosuggest: ^9.4.3
@@ -19825,6 +19826,13 @@ __metadata:
   bin:
     prettier: bin-prettier.js
   checksum: 800de2df3d37067ab24478c7f32c60ca0c57b01742133287829feeb4a70d239a7bf6bccb56196784777af591ad80fb9ba70c1a49b0fcecf9f5622a764d513edb
+  languageName: node
+  linkType: hard
+
+"pretty-bytes@npm:^5.6.0":
+  version: 5.6.0
+  resolution: "pretty-bytes@npm:5.6.0"
+  checksum: 9c082500d1e93434b5b291bd651662936b8bd6204ec9fa17d563116a192d6d86b98f6d328526b4e8d783c07d5499e2614a807520249692da9ec81564b2f439cd
   languageName: node
   linkType: hard
 
