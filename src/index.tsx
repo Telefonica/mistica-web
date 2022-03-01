@@ -118,8 +118,11 @@ export {
     useWindowSize,
     useWindowHeight,
     useWindowWidth,
+    useIsInViewport,
 } from './hooks';
 export type {ThemeConfig, ColorScheme} from './theme';
+
+export {useDocumentVisibility} from './utils/document-visibility';
 
 export {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 
