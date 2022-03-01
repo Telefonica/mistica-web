@@ -143,8 +143,10 @@ declare export {
   useWindowSize,
   useWindowHeight,
   useWindowWidth,
+  useIsInViewport,
 } from "./hooks";
 export type { ThemeConfig, ColorScheme } from "./theme";
+declare export { useDocumentVisibility } from "./utils/document-visibility";
 declare export {
   ThemeVariant,
   useIsInverseVariant,

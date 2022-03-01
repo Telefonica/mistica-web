@@ -1,0 +1,10 @@
+// @flow
+
+import * as React from "react";
+declare type Props = {
+  hidden?: boolean,
+  children: React.Node,
+};
+declare export var DocumentVisibilityProvider: React.ComponentType<Props>;
+declare export var useDocumentVisibility: () => boolean;
+declare export {};
