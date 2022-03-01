@@ -63,9 +63,9 @@ jobs:
               id: message
               uses: './.github/actions/size-stats-message'
               with:
-                  master-total-js: ${{ needs.branch-size-stats.outputs.total-js }}
-                  master-js-without-icons: ${{ needs.branch-size-stats.outputs.js-without-icons }}
-                  master-lib-overhead: ${{ needs.branch-size-stats.outputs.lib-overhead }}
+                  master-total-js: ${{ needs.master-size-stats.outputs.total-js }}
+                  master-js-without-icons: ${{ needs.master-size-stats.outputs.js-without-icons }}
+                  master-lib-overhead: ${{ needs.master-size-stats.outputs.lib-overhead }}
                   pr-total-js: ${{ needs.branch-size-stats.outputs.total-js }}
                   pr-js-without-icons: ${{ needs.branch-size-stats.outputs.js-without-icons }}
                   pr-lib-overhead: ${{ needs.branch-size-stats.outputs.lib-overhead }}
