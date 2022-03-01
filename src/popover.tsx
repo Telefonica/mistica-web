@@ -117,7 +117,7 @@ const getPosition = (position: Position = defaultPositionDesktop, isTabletOrSmal
     isTabletOrSmaller && (position === 'left' || position === 'right') ? defaultPositionMobile : position;
 
 const getWidth = (isTabletOrSmaller: boolean, isIos: boolean, width?: number): number =>
-    // in iOS, when the webview is rendered offscreen (eg. acccount tab), window.innerWidth value wrong, it returns strange values like 0 or 80.
+    // in iOS, when the webview is rendered offscreen (eg. acccount tab), window.innerWidth value is wrong, it returns strange values like 0 or 80.
     isTabletOrSmaller
         ? (isIos ? window.screen.width : window.innerWidth) - marginLeftRightMobile * 2
         : getWidthDesktop(width);
