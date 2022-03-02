@@ -60,7 +60,7 @@ const useStyles = createUseStyles((theme) => {
         title: {
             marginBottom: 4,
             color: theme.colors.textPrimary,
-            fontWeight: 500,
+            fontWeight: 400,
             lineHeight: 1.5,
             fontSize: 16,
         },
@@ -88,7 +88,7 @@ const useStyles = createUseStyles((theme) => {
             marginRight: 0,
         },
         text: {
-            color: theme.colors.textPrimary,
+            color: theme.colors.textSecondary,
             textAlign: 'left',
             lineHeight: 1.42857142,
             fontSize: 14,
