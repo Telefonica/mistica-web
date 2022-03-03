@@ -146,3 +146,42 @@ export const useWindowWidth = (): number => {
 // useLayoutEffect in the browser
 export const useIsomorphicLayoutEffect =
     typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
+
+type IntersectionObserverOptions = {
+    root?: Element | Document | null;
+    rootMargin?: string;
+    threshold?: number | number[];
+};
+
+export const useIsInViewport = (
+    ref: React.RefObject<HTMLElement>,
+    defaultValue: boolean,
+    options?: IntersectionObserverOptions
+): boolean => {
+    const [isInViewport, setIsInViewport] = React.useState<boolean>(defaultValue);
+
+    React.useEffect(() => {
+        if (!ref.current) {
+            return;
+        }
+
+        if (typeof window.IntersectionObserver === 'undefined') {
+            return () => {};
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                setIsInViewport(entries[0].isIntersecting);
+            },
+            {root: options?.root, rootMargin: options?.rootMargin, threshold: options?.threshold}
+        );
+
+        observer.observe(ref.current);
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [ref, options?.root, options?.rootMargin, options?.threshold]);
+
+    return isInViewport;
+};

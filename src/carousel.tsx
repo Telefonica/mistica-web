@@ -1,7 +1,7 @@
 import * as React from 'react';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
-import {useScreenSize, useTheme} from './hooks';
+import {useIsInViewport, useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
 import {createUseStyles} from './jss';
 import Stack from './stack';
@@ -12,9 +12,17 @@ import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
 import {applyAlpha} from './utils/color';
 import {DisableBorderRadiusProvider} from './image';
 import {getPrefixedDataAttributes, listenResize} from './utils/dom';
+import {isAndroid} from './utils/platform';
+import {useDocumentVisibility} from './utils/document-visibility';
 
 import type {DataAttributes} from './utils/types';
 import type {Theme} from './theme';
+
+const useShouldAutoplay = (autoplay: boolean, ref: React.RefObject<HTMLElement>): boolean => {
+    const isDocumentVisible = useDocumentVisibility();
+    const isInViewport = useIsInViewport(ref, false);
+    return isInViewport && isDocumentVisible && !!autoplay;
+};
 
 const useBulletsStyles = createUseStyles((theme) => ({
     bullet: {
@@ -138,6 +146,7 @@ const useStyles = createUseStyles((theme) => ({
         },
     },
     item: {
+        scrollSnapStop: isAndroid(theme.platformOverrides) ? 'always' : 'normal',
         scrollSnapAlign: 'start',
         flexShrink: 0,
         width: ({itemsPerPageConfig, gap}) =>
@@ -400,8 +409,10 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
         }
     }, [scrollPositions]);
 
+    const shouldAutoplay = useShouldAutoplay(!!autoplay, carouselRef);
+
     React.useEffect(() => {
-        if (autoplay) {
+        if (shouldAutoplay && autoplay) {
             const time = typeof autoplay === 'boolean' ? DEFAULT_AUTOPLAY_TIME : autoplay.time;
             const loop = typeof autoplay === 'object' && autoplay.loop;
             const interval = setInterval(() => {
@@ -413,7 +424,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
             }, time);
             return () => clearInterval(interval);
         }
-    }, [autoplay, goNext, scrollRight]);
+    }, [autoplay, goNext, scrollRight, shouldAutoplay]);
 
     const currentPageIndex = calcCurrentPageIndex(scrollLeft, pagesScrollPositions);
 
@@ -542,6 +553,7 @@ const useSlideshowStyles = createUseStyles((theme) => ({
     },
     item: {
         width: '100%',
+        scrollSnapStop: isAndroid(theme.platformOverrides) ? 'always' : 'normal',
         scrollSnapAlign: 'start',
         flexShrink: 0,
     },
@@ -640,8 +652,10 @@ export const Slideshow: React.FC<SlideshowProps> = ({
         }
     }, [items.length]);
 
+    const shouldAutoplay = useShouldAutoplay(!!autoplay, carouselRef);
+
     React.useEffect(() => {
-        if (autoplay) {
+        if (shouldAutoplay && autoplay) {
             const time = typeof autoplay === 'boolean' ? DEFAULT_AUTOPLAY_TIME : autoplay.time;
             const loop = typeof autoplay === 'object' && autoplay.loop;
             const interval = setInterval(() => {
@@ -653,7 +667,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
             }, time);
             return () => clearInterval(interval);
         }
-    }, [autoplay, goNext, scrollRight]);
+    }, [autoplay, goNext, scrollRight, shouldAutoplay]);
 
     React.useEffect(() => {
         if (onPageChange) {

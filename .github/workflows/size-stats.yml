@@ -1,0 +1,79 @@
+name: Size stats
+
+on:
+    pull_request:
+        branches: [master]
+
+jobs:
+    branch-size-stats:
+        runs-on: ubuntu-latest
+        container: telefonica/web-builder:chromium93.0.4577-1.2.4
+
+        outputs:
+            total-js: ${{ steps.stats.outputs.total-js }}
+            js-without-icons: ${{ steps.stats.outputs.js-without-icons }}
+            lib-overhead: ${{ steps.stats.outputs.lib-overhead }}
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - run: yarn install --immutable --immutable-cache
+
+            - run: yarn compile
+
+            - id: stats
+              uses: './.github/actions/size-stats'
+
+    master-size-stats:
+        runs-on: ubuntu-latest
+        container: telefonica/web-builder:chromium93.0.4577-1.2.4
+
+        outputs:
+            total-js: ${{ steps.stats.outputs.total-js }}
+            js-without-icons: ${{ steps.stats.outputs.js-without-icons }}
+            lib-overhead: ${{ steps.stats.outputs.lib-overhead }}
+
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  ref: master
+
+            - run: yarn install --immutable --immutable-cache
+
+            - run: yarn compile
+
+            - id: stats
+              uses: './.github/actions/size-stats'
+
+    show-results:
+        runs-on: ubuntu-latest
+        container: telefonica/web-builder:chromium93.0.4577-1.2.4
+        needs: [master-size-stats, branch-size-stats]
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/checkout@v2
+              with:
+                  repository: Telefonica/github-actions
+                  token: '${{ secrets.NOVUM_PRIVATE_REPOS }}'
+                  path: .github/shared-actions
+
+            - run: yarn install --immutable --immutable-cache
+
+            - name: Form size stats message
+              id: message
+              uses: './.github/actions/size-stats-message'
+              with:
+                  master-total-js: ${{ needs.master-size-stats.outputs.total-js }}
+                  master-js-without-icons: ${{ needs.master-size-stats.outputs.js-without-icons }}
+                  master-lib-overhead: ${{ needs.master-size-stats.outputs.lib-overhead }}
+                  pr-total-js: ${{ needs.branch-size-stats.outputs.total-js }}
+                  pr-js-without-icons: ${{ needs.branch-size-stats.outputs.js-without-icons }}
+                  pr-lib-overhead: ${{ needs.branch-size-stats.outputs.lib-overhead }}
+
+            - name: Comment on PR
+              uses: ./.github/shared-actions/novum/comment-pr
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  title: '**Size stats**'
+                  message: ${{ steps.message.outputs.message }}
+                  update-if-present: 'true'
