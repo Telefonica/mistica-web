@@ -18,7 +18,7 @@ export const DisableBorderRadiusProvider: React.FC = ({children}) => (
 
 const useStyles = createUseStyles(() => ({
     image: {
-        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
+        borderRadius: ({borderRadius}) => (borderRadius ? 4 : 0),
         display: 'block',
         objectFit: 'cover',
         maxWidth: '100%',
@@ -37,18 +37,18 @@ export const RATIO = {
 };
 
 export type ImageProps = {
-    noBorderRadius?: boolean;
     src: string;
     url?: undefined;
     /** defaults to 100% when no width and no height are given */
     width?: string | number;
     height?: string | number;
     /** defaults to 1:1, if both width and height are given, aspectRatio is ignored */
-    aspectRatio: AspectRatio | number;
+    aspectRatio?: AspectRatio | number;
     /** defaults to empty string */
     alt?: string;
     children?: void;
     dataAttributes?: DataAttributes;
+    borderRadius?: boolean;
 };
 
 /** @deprecated */
@@ -61,16 +61,16 @@ type DeprecatedImageProps = {
     aspectRatio?: AspectRatio;
     /** defaults to empty string */
     alt?: string;
-    children?: void;
     dataAttributes?: DataAttributes;
+    children?: void;
+    borderRadius?: boolean;
 };
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps | DeprecatedImageProps>(
     ({aspectRatio = '1:1', alt = '', dataAttributes, ...props}, ref) => {
-        const noBorderRadius = useDisableBorderRadius();
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
         const classes = useStyles({
-            noBorderRadius,
+            borderRadius: props.borderRadius,
             aspectRatio: !props.width && !props.height ? ratio : undefined,
         });
         const url = props.src || props.url;
@@ -82,9 +82,9 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps | DeprecatedImagePro
             width = props.width;
             height = props.height;
         } else if (props.width !== undefined) {
-            height = typeof props.width === 'number' ? props.width / ratio : props.width;
+            height = typeof props.width === 'number' ? props.width / ratio : `calc(${props.width} / ratio)`;
         } else if (props.height !== undefined) {
-            width = typeof props.height === 'number' ? props.height * ratio : props.height;
+            width = typeof props.height === 'number' ? props.height * ratio : `calc(${props.height} * ratio)`;
         } else {
             width = '100%';
         }
