@@ -45,7 +45,7 @@ const useStyles = createUseStyles((theme) => ({
             zIndex: 1,
         },
         shadow: {
-            boxShadow: '0 -4px 4px 0 rgba(0, 0, 0, 0.15)',
+            boxShadow: '0 -3px 8px 0 rgba(0, 0, 0, 0.15)',
         },
     },
 }));
