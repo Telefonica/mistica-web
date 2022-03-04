@@ -67,10 +67,10 @@ type DeprecatedImageProps = {
 };
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps | DeprecatedImageProps>(
-    ({aspectRatio = '1:1', alt = '', dataAttributes, ...props}, ref) => {
+    ({aspectRatio = '1:1', alt = '', dataAttributes, borderRadius = false, ...props}, ref) => {
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
         const classes = useStyles({
-            borderRadius: props.borderRadius,
+            borderRadius,
             aspectRatio: !props.width && !props.height ? ratio : undefined,
         });
         const url = props.src || props.url;

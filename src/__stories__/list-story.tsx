@@ -189,7 +189,14 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={<Image src="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
+                asset={
+                    <Image
+                        src="https://i.imgur.com/HRvhZ6F.jpeg"
+                        borderRadius
+                        height={80}
+                        aspectRatio="16:9"
+                    />
+                }
                 headline={headline}
                 title={title}
                 subtitle={subtitle}
