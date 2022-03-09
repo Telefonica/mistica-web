@@ -27,7 +27,7 @@ export type ImageProps = {
   */
  alt?: string,
  dataAttributes?: DataAttributes,
- borderRadius?: boolean,
+ noBorderRadius?: boolean,
 };
 /**
  * @deprecated
@@ -45,7 +45,7 @@ declare type DeprecatedImageProps = {
   */
  alt?: string,
  dataAttributes?: DataAttributes,
- borderRadius?: boolean,
+ noBorderRadius?: boolean,
 };
 declare var Image: React.ComponentType<{
   ...ImageProps | DeprecatedImageProps,
