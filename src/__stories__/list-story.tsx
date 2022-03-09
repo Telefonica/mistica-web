@@ -192,7 +192,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 asset={
                     <Image
                         src="https://i.imgur.com/HRvhZ6F.jpeg"
-                        borderRadius
+                        noBorderRadius
                         height={80}
                         aspectRatio="16:9"
                     />

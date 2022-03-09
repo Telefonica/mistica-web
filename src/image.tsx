@@ -18,7 +18,7 @@ export const DisableBorderRadiusProvider: React.FC = ({children}) => (
 
 const useStyles = createUseStyles(() => ({
     image: {
-        borderRadius: ({borderRadius}) => (borderRadius ? 4 : 0),
+        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
         display: 'block',
         objectFit: 'cover',
         maxWidth: '100%',
@@ -48,7 +48,7 @@ export type ImageProps = {
     alt?: string;
     children?: void;
     dataAttributes?: DataAttributes;
-    borderRadius?: boolean;
+    noBorderRadius?: boolean;
 };
 
 /** @deprecated */
@@ -63,14 +63,14 @@ type DeprecatedImageProps = {
     alt?: string;
     dataAttributes?: DataAttributes;
     children?: void;
-    borderRadius?: boolean;
+    noBorderRadius?: boolean;
 };
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps | DeprecatedImageProps>(
-    ({aspectRatio = '1:1', alt = '', dataAttributes, borderRadius = false, ...props}, ref) => {
+    ({aspectRatio = '1:1', alt = '', dataAttributes, noBorderRadius = false, ...props}, ref) => {
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
         const classes = useStyles({
-            borderRadius,
+            noBorderRadius,
             aspectRatio: !props.width && !props.height ? ratio : undefined,
         });
         const url = props.src || props.url;
