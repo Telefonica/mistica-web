@@ -46,7 +46,7 @@ test('Row with switch', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <RowList>
-                <Row title="Title" switch={{defaultValue: false}} />
+                <Row title="Title" switch={{defaultValue: false, onChange: onChangeFn}} />
             </RowList>
         </ThemeContextProvider>
     );
@@ -58,8 +58,11 @@ test('Row with switch', () => {
     fireEvent.click(switchEl);
 
     expect(switchEl).toBeChecked();
+    expect(spyOnChange).toHaveBeenCalledWith(true);
 
-    expect(spyOnChange).toHaveBeenCalled();
+    fireEvent.click(switchEl);
+
+    expect(spyOnChange).toHaveBeenCalledWith(false);
 });
 
 test('Row with checkbox', () => {
@@ -84,8 +87,11 @@ test('Row with checkbox', () => {
     fireEvent.click(checkboxEl);
 
     expect(checkboxEl).toBeChecked();
+    expect(spyOnChange).toHaveBeenCalledWith(true);
 
-    expect(spyOnChange).toHaveBeenCalled();
+    fireEvent.click(checkboxEl);
+
+    expect(spyOnChange).toHaveBeenCalledWith(false);
 });
 
 test('Row with custom right element', () => {
