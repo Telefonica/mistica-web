@@ -37,6 +37,12 @@ test('Row as a button', () => {
 });
 
 test('Row with switch', () => {
+    const onChangeFn = (isChecked?: boolean) => {
+        return isChecked;
+    };
+
+    const spyOnChange = jest.fn(onChangeFn);
+
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <RowList>
@@ -52,13 +58,21 @@ test('Row with switch', () => {
     fireEvent.click(switchEl);
 
     expect(switchEl).toBeChecked();
+
+    expect(spyOnChange).toHaveBeenCalled();
 });
 
 test('Row with checkbox', () => {
+    const onChangeFn = (isChecked?: boolean) => {
+        return isChecked;
+    };
+
+    const spyOnChange = jest.fn(onChangeFn);
+
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <RowList>
-                <Row title="Title" checkbox={{defaultValue: false}} />
+                <Row title="Title" checkbox={{defaultValue: false, onChange: onChangeFn}} />
             </RowList>
         </ThemeContextProvider>
     );
@@ -70,6 +84,8 @@ test('Row with checkbox', () => {
     fireEvent.click(checkboxEl);
 
     expect(checkboxEl).toBeChecked();
+
+    expect(spyOnChange).toHaveBeenCalled();
 });
 
 test('Row with custom right element', () => {
