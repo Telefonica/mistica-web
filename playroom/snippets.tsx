@@ -1208,6 +1208,52 @@ export default [
         name: 'Chip icon',
         code: '<Chip onClose={() => {}} Icon={IconLightningFilled}>Chip</Chip>',
     },
+    {
+        group: 'Chip',
+        name: 'Chip checkbox',
+        code: `
+        <Checkbox
+          name="chip-checkbox"
+          render={({labelId, checked}) => (
+            <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                Chip
+            </Chip>
+          )}
+        />`,
+    },
+    {
+        group: 'Chip',
+        name: 'Chip radio group',
+        code: `
+        <RadioGroup name="chip-group" defaultValue="1">
+          <Inline space={8}>
+            <RadioButton
+              value="1"
+              render={({ checked, labelId }) => (
+                <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                  Chip 1
+                </Chip>
+              )}
+            />
+            <RadioButton
+              value="2"
+              render={({ checked, labelId }) => (
+                <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                  Chip 2
+                </Chip>
+              )}
+            />
+            <RadioButton
+              value="3"
+              render={({ checked, labelId }) => (
+                <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                  Chip 3
+                </Chip>
+              )}
+            />
+          </Inline>
+        </RadioGroup>`,
+    },
     ...tagSnippets,
     {
         group: 'Media',

@@ -7,7 +7,7 @@ test('Chip', async () => {
 
     expect(await story.screenshot()).toMatchImageSnapshot();
 
-    const checkboxChip = await screen.findByRole('checkbox', {name: 'Unchecked'});
+    const checkboxChip = await screen.findByRole('checkbox', {name: 'Chip 1'});
 
     await page.click(checkboxChip);
 

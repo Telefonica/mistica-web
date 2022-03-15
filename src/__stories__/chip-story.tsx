@@ -7,7 +7,6 @@ export default {
 };
 
 export const Default: StoryComponent = () => {
-    const [checked, setChecked] = React.useState<boolean>(false);
     return (
         <div data-testid="chip-story">
             <StorySection title="Default">
@@ -36,59 +35,59 @@ export const Default: StoryComponent = () => {
                 </Chip>
             </StorySection>
 
-            <StorySection title="Like a checkbox">
-                <Checkbox
-                    name="checkbox"
-                    onChange={(value) => {
-                        window.alert('value:' + value);
-                    }}
-                    render={({labelId, checked}) => (
-                        <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
-                            Chip like checkbox
-                        </Chip>
-                    )}
-                />
+            <StorySection title="Multiple selection">
+                <Inline space={8}>
+                    <Checkbox
+                        name="chip-checkbox-1"
+                        render={({labelId, checked}) => (
+                            <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                                Chip 1
+                            </Chip>
+                        )}
+                    />
+                    <Checkbox
+                        name="chip-checkbox-2"
+                        render={({labelId, checked}) => (
+                            <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                                Chip 2
+                            </Chip>
+                        )}
+                    />
+                    <Checkbox
+                        name="chip-checkbox-3"
+                        render={({labelId, checked}) => (
+                            <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                                Chip 3
+                            </Chip>
+                        )}
+                    />
+                </Inline>
             </StorySection>
 
-            <StorySection title="Like a controlled checkbox">
-                <Checkbox
-                    name="controlled-checkbox"
-                    checked={checked}
-                    onChange={setChecked}
-                    render={({labelId, checked}) => (
-                        <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
-                            {checked ? 'Checked' : 'Unchecked'}
-                        </Chip>
-                    )}
-                />
-            </StorySection>
-
-            <StorySection title="Like radio buttons" id="radio-seciton">
-                <RadioGroup name="radio-group" defaultValue="chip 1" aria-labelledby="radio-section">
+            <StorySection title="Single selection">
+                <RadioGroup name="chip-group" defaultValue="1">
                     <Inline space={8}>
                         <RadioButton
                             value="1"
                             render={({checked, labelId}) => (
                                 <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
-                                    chip 1
+                                    Chip 1
                                 </Chip>
                             )}
                         />
-
                         <RadioButton
                             value="2"
                             render={({checked, labelId}) => (
                                 <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
-                                    chip 2
+                                    Chip 2
                                 </Chip>
                             )}
                         />
-
                         <RadioButton
                             value="3"
                             render={({checked, labelId}) => (
                                 <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
-                                    chip 3
+                                    Chip 3
                                 </Chip>
                             )}
                         />
