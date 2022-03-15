@@ -29,14 +29,6 @@ const useStyles = createUseStyles(({colors, mq}) => ({
             color: colors.textPrimary, // Giving color to text
         },
     },
-    active: {
-        backgroundColor: colors.tagBackgroundActive,
-        borderColor: colors.controlActivated,
-        color: colors.controlActivated,
-        '& > span': {
-            color: colors.controlActivated,
-        },
-    },
     interactive: {
         [mq.supportsHover]: {
             '&:hover': {
@@ -47,6 +39,14 @@ const useStyles = createUseStyles(({colors, mq}) => ({
             '&:hover > span': {
                 color: colors.textLink, // Giving color to text on hover
             },
+        },
+    },
+    active: {
+        backgroundColor: colors.tagBackgroundActive,
+        borderColor: colors.controlActivated,
+        color: colors.controlActivated,
+        '& > span': {
+            color: colors.controlActivated,
         },
     },
 }));
@@ -95,9 +95,11 @@ const Chip: React.FC<ChipProps> = (props) => {
         </>
     );
 
+    const paddingLeft = Icon ? 8 : 12;
+
     if (props.onClose) {
         return (
-            <Box className={classes.container} paddingLeft={Icon ? 8 : 12}>
+            <Box className={classes.container} paddingLeft={paddingLeft}>
                 {body}
                 <Box paddingLeft={4}>
                     <IconButton
@@ -115,21 +117,17 @@ const Chip: React.FC<ChipProps> = (props) => {
                 </Box>
             </Box>
         );
-    } else if (props.active !== undefined) {
+    } else {
+        const isInteractive = props.active !== undefined;
         return (
             <Box
-                className={classNames(classes.container, classes.interactive, {
+                className={classNames(classes.container, {
+                    [classes.interactive]: isInteractive,
                     [classes.active]: props.active,
                 })}
-                paddingLeft={Icon ? 8 : 12}
+                paddingLeft={paddingLeft}
                 paddingRight={12}
             >
-                {body}
-            </Box>
-        );
-    } else {
-        return (
-            <Box className={classes.container} paddingLeft={Icon ? 8 : 12} paddingRight={12}>
                 {body}
             </Box>
         );
