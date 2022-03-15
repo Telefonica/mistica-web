@@ -200,6 +200,36 @@ test('<a> element is rendered when "href" prop is passed and trackingEvent', asy
     expect(redirectSpy).toHaveBeenCalledTimes(1);
 });
 
+test('<a> element is rendered when "href" and "loadOnTop" props are passed', async () => {
+    const href = 'href';
+    const logEventSpy = jest.fn(() => Promise.resolve());
+    const redirectSpy = jest.spyOn(window, 'open').mockImplementation(() => null);
+
+    render(
+        <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}})}>
+            <Touchable
+                dataAttributes={{testid: 'touchable-events'}}
+                href={href}
+                loadOnTop
+                trackingEvent={trackingEvent}
+            >
+                Test
+            </Touchable>
+        </ThemeContextProvider>
+    );
+
+    const anchor = screen.getByTestId('touchable-events');
+    expect(anchor).toBeInTheDocument();
+    fireEvent.click(anchor);
+
+    await waitFor(() => {
+        expect(logEventSpy).toHaveBeenCalledTimes(1);
+    });
+    expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
+    expect(redirectSpy).toHaveBeenCalledTimes(1);
+    expect(redirectSpy).toHaveBeenCalledWith('href', '_top');
+});
+
 test('<a> element is rendered when "href" prop is passed and multiple trackingEvent', async () => {
     const href = 'href';
     const logEventSpy = jest.fn(() => Promise.resolve());

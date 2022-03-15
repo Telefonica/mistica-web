@@ -41,6 +41,7 @@ export type HrefButtonProps = {
   ...$Exact<CommonProps>,
   href: string,
   newTab?: boolean,
+  loadOnTop?: boolean,
 };
 export type FakeButtonProps = {
   ...$Exact<CommonProps>,
