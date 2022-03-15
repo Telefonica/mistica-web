@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {useTheme} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import Box from './box';
 import {Text2} from './text';
 import IconButton from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {pxToRem} from './utils/css';
+import {SPACE} from './utils/key-codes';
 
 import type {IconProps} from './utils/types';
 
@@ -39,20 +40,115 @@ const useStyles = createUseStyles(({colors, mq}) => ({
             },
         },
     },
+    checked: {
+        '& $container': {
+            backgroundColor: colors.tagBackgroundActive,
+            borderColor: colors.controlActivated,
+            color: colors.controlActivated,
+        },
+        '& $container > span': {
+            color: colors.controlActivated,
+        },
+    },
 }));
 
-type ChipProps = {
-    children: string;
-    Icon?: React.FC<IconProps>;
-    onClose?: () => void;
+type ToggleChipProps = {
+    children: React.ReactNode;
+    checked?: boolean;
+    defaultChecked?: boolean;
+    onChange: (checked: boolean) => void;
+    classes: ReturnType<typeof useStyles>;
 };
 
-const Chip: React.FC<ChipProps> = ({children, Icon, onClose}) => {
+const ToggleChip = ({children, checked, defaultChecked, onChange, classes}: ToggleChipProps) => {
+    const isControlledByParent = checked !== undefined;
+
+    const labelId = useAriaId();
+    const [checkedState, setCheckedState] = React.useState(!!defaultChecked);
+
+    const handleChange = () => {
+        if (isControlledByParent) {
+            onChange(!checked);
+        } else {
+            setCheckedState(!checkedState);
+            onChange(!checkedState);
+        }
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.keyCode === SPACE) {
+            event.preventDefault();
+            event.stopPropagation();
+            handleChange();
+        }
+    };
+
+    const isChecked = isControlledByParent ? checked : checkedState;
+
+    return (
+        <div
+            role="checkbox"
+            aria-checked={isChecked}
+            onKeyDown={handleKeyDown}
+            onClick={handleChange}
+            tabIndex={0}
+            aria-labelledby={labelId}
+        >
+            <div id={labelId} className={isChecked ? classes.checked : ''}>
+                {children}
+            </div>
+        </div>
+    );
+};
+
+interface ChipBaseProps {
+    children: string;
+    Icon?: React.FC<IconProps>;
+}
+
+interface SimpleChipProps extends ChipBaseProps {
+    onClose?: undefined;
+    onChange?: undefined;
+}
+
+interface CloasableChipProps extends ChipBaseProps {
+    onClose: () => void;
+
+    onChange?: undefined;
+    checked?: undefined;
+    defaultChecked?: undefined;
+}
+
+interface ControlledToggleChipProps extends ChipBaseProps {
+    checked: boolean;
+    onChange: (value: boolean) => void;
+
+    onClose?: undefined;
+    defaultChecked?: undefined;
+}
+
+interface UncontrolledToggleChipProps extends ChipBaseProps {
+    defaultChecked?: boolean;
+    onChange: (value: boolean) => void;
+
+    onClose?: undefined;
+    checked?: undefined;
+}
+
+type ChipProps =
+    | SimpleChipProps
+    | CloasableChipProps
+    | ControlledToggleChipProps
+    | UncontrolledToggleChipProps;
+
+const Chip: React.FC<ChipProps> = (props) => {
     const {texts, isDarkMode} = useTheme();
     const classes = useStyles({isDarkMode});
 
-    return (
-        <Box className={classes.container} paddingLeft={Icon ? 8 : 12} paddingRight={onClose ? 0 : 12}>
+    const {Icon, children} = props;
+
+    const body = (
+        <>
             {Icon && (
                 <Box paddingRight={4}>
                     <Icon color="currentColor" size={pxToRem(16)} />
@@ -61,7 +157,13 @@ const Chip: React.FC<ChipProps> = ({children, Icon, onClose}) => {
             <Text2 medium truncate={1} color="currentColor">
                 {children}
             </Text2>
-            {onClose ? (
+        </>
+    );
+
+    if (props.onClose) {
+        return (
+            <Box className={classes.container} paddingLeft={Icon ? 8 : 12}>
+                {body}
                 <Box paddingLeft={4}>
                     <IconButton
                         size={24}
@@ -71,14 +173,33 @@ const Chip: React.FC<ChipProps> = ({children, Icon, onClose}) => {
                             alignItems: 'center',
                         }}
                         aria-label={texts.closeButtonLabel}
-                        onPress={() => onClose()}
+                        onPress={() => props.onClose()}
                     >
                         <IconCloseRegular size={16} color="currentColor" />
                     </IconButton>
                 </Box>
-            ) : null}
-        </Box>
-    );
+            </Box>
+        );
+    } else if (props.onChange) {
+        return (
+            <ToggleChip
+                onChange={props.onChange}
+                checked={props.checked}
+                defaultChecked={props.defaultChecked}
+                classes={classes}
+            >
+                <Box className={classes.container} paddingLeft={Icon ? 8 : 12} paddingRight={12}>
+                    {body}
+                </Box>
+            </ToggleChip>
+        );
+    } else {
+        return (
+            <Box className={classes.container} paddingLeft={Icon ? 8 : 12} paddingRight={12}>
+                {body}
+            </Box>
+        );
+    }
 };
 
 export default Chip;
