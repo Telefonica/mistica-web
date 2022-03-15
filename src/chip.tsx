@@ -111,7 +111,7 @@ interface SimpleChipProps extends ChipBaseProps {
     onChange?: undefined;
 }
 
-interface CloasableChipProps extends ChipBaseProps {
+interface ClosableChipProps extends ChipBaseProps {
     onClose: () => void;
 
     onChange?: undefined;
@@ -137,7 +137,7 @@ interface UncontrolledToggleChipProps extends ChipBaseProps {
 
 type ChipProps =
     | SimpleChipProps
-    | CloasableChipProps
+    | ClosableChipProps
     | ControlledToggleChipProps
     | UncontrolledToggleChipProps;
 
