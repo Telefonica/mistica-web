@@ -1,6 +1,6 @@
 import {openStoryPage} from '../test-utils';
 
-test('RadioGroup', async () => {
+test('Switch', async () => {
     await openStoryPage({
         id: 'components-forms-switch--default',
     });
