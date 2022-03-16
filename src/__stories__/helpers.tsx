@@ -5,15 +5,13 @@ import {isRunningAcceptanceTest} from '../utils/platform';
 type Props = {
     title: string;
     children: React.ReactNode;
-    id?: string;
 };
 
-export const StorySection: React.FC<Props> = ({title, children, id}) => {
+export const StorySection: React.FC<Props> = ({title, children}) => {
     const isInverse = useIsInverseVariant();
     return (
         <div style={{marginBottom: 32}}>
             <h1
-                id={id}
                 style={{
                     color: isInverse ? 'white' : '#888',
                     fontWeight: 'normal',
