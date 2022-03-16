@@ -31,7 +31,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     },
     interactive: {
         [mq.supportsHover]: {
-            '&:hover': {
+            '&:hover:not($active)': {
                 borderColor: ({isDarkMode}) => (isDarkMode ? colors.background : colors.tagBackgroundActive),
                 color: colors.controlActivated, // Giving color to icons on hover
                 backgroundColor: colors.tagBackgroundActive,
@@ -42,11 +42,11 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         },
     },
     active: {
-        backgroundColor: colors.tagBackgroundActive,
         borderColor: colors.controlActivated,
         color: colors.controlActivated,
+        backgroundColor: colors.tagBackgroundActive,
         '& > span': {
-            color: colors.controlActivated,
+            color: colors.textLink,
         },
     },
 }));
