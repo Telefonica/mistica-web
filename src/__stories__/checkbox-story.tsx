@@ -14,9 +14,9 @@ export const Default: StoryComponent = () => {
                 <Checkbox
                     name="uncontrolled-render"
                     defaultChecked={false}
-                    render={({iconElement, labelId}) => (
+                    render={({controlElement, labelId}) => (
                         <Inline alignItems="center" space={16}>
-                            {iconElement}
+                            {controlElement}
                             {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility */}
                             <Text3 regular id={labelId}>
                                 You accept to sell your soul
@@ -37,9 +37,9 @@ export const Default: StoryComponent = () => {
                     name="controlled-render"
                     checked={checked}
                     onChange={onChange}
-                    render={({iconElement, labelId}) => (
+                    render={({controlElement, labelId}) => (
                         <Inline alignItems="center" space={16}>
-                            {iconElement}
+                            {controlElement}
                             {/* set the text id to match the checkbox name, so this text can be linked as label for accessibility */}
                             <Text3 regular id={labelId}>
                                 You accept to sell your soul: {checked ? 'sure!' : 'nahh'}

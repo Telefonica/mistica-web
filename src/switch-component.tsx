@@ -83,7 +83,7 @@ const useStyles = createUseStyles(({colors, isIos}) => {
 });
 
 type RenderSwitch = (renderProps: {
-    iconElement: React.ReactElement;
+    controlElement: React.ReactElement;
     labelId: string;
     checked: boolean;
     disabled: boolean;
@@ -183,7 +183,7 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
             {props.render ? (
                 <>
                     {props.render({
-                        iconElement: switchEl,
+                        controlElement: switchEl,
                         labelId,
                         disabled: !!disabled,
                         checked: value ?? checkedState,

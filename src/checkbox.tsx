@@ -88,7 +88,7 @@ type RenderProps = {
     onChange?: (value: boolean) => void;
     id?: string;
     render?: (renderProps: {
-        iconElement: React.ReactElement;
+        controlElement: React.ReactElement;
         labelId: string;
         disabled: boolean;
         checked: boolean;
@@ -178,7 +178,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
         >
             {props.render ? (
                 props.render({
-                    iconElement: iconCheckbox,
+                    controlElement: iconCheckbox,
                     labelId,
                     checked: value ?? checkedState,
                     disabled: !!disabled,

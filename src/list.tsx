@@ -536,7 +536,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                             name={name}
                             checked={isChecked}
                             aria-labelledby={titleId}
-                            render={({iconElement}) => iconElement}
+                            render={({controlElement}) => controlElement}
                         />
                     </Touchable>
                 </div>
@@ -548,12 +548,12 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                         name={name}
                         checked={isChecked}
                         onChange={toggle}
-                        render={({iconElement, labelId}) => (
+                        render={({controlElement, labelId}) => (
                             <Box paddingX={16} role={role}>
                                 {renderContent({
                                     labelId,
                                     type: 'control',
-                                    right: <Stack space="around">{iconElement}</Stack>,
+                                    right: <Stack space="around">{controlElement}</Stack>,
                                 })}
                             </Box>
                         )}
@@ -581,11 +581,11 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                         dataAttributes={dataAttributes}
                         value={props.radioValue}
                         aria-labelledby={titleId}
-                        render={({iconElement}) => (
+                        render={({controlElement}) => (
                             <Box paddingX={16}>
                                 {renderContent({
                                     type: 'control',
-                                    right: <Stack space="around">{iconElement}</Stack>,
+                                    right: <Stack space="around">{controlElement}</Stack>,
                                 })}
                             </Box>
                         )}

@@ -9,7 +9,7 @@ declare type RenderProps = {
   onChange?: (value: boolean) => void,
   id?: string,
   render?: (renderProps: {
-    iconElement: React.Element<any>,
+    controlElement: React.Element<any>,
     labelId: string,
     disabled: boolean,
     checked: boolean,

@@ -18,9 +18,9 @@ export const Default: StoryComponent = () => {
                     name="uncontrolled"
                     onChange={onUncontrolledChange}
                     aria-labelledby="uncontrolled-label"
-                    render={({iconElement}) => (
+                    render={({controlElement}) => (
                         <Inline alignItems="center" space={16}>
-                            {iconElement}
+                            {controlElement}
                             <Text3 regular uppercase>
                                 {uncontrolledChecked ? 'on' : 'off'}
                             </Text3>
@@ -37,9 +37,9 @@ export const Default: StoryComponent = () => {
                     checked={checked}
                     onChange={onChange}
                     aria-labelledby="controlled-label"
-                    render={({iconElement}) => (
+                    render={({controlElement}) => (
                         <Inline alignItems="center" space={16}>
-                            {iconElement}
+                            {controlElement}
                             <Text3 regular uppercase>
                                 {checked ? 'on' : 'off'}
                             </Text3>
