@@ -5,7 +5,7 @@ export default {
     title: 'Components/Others/Image',
 };
 
-export const RowListStory: StoryComponent = () => (
+export const Default: StoryComponent = () => (
     <Stack space={16} dataAttributes={{testid: 'image-story'}}>
         <Image src="https://i.imgur.com/G8aJDhB.jpeg" noBorderRadius aspectRatio="1:1" width={200} />
         <Image src="https://i.imgur.com/G8aJDhB.jpeg" aspectRatio="4:3" width={200} />
@@ -15,4 +15,4 @@ export const RowListStory: StoryComponent = () => (
     </Stack>
 );
 
-RowListStory.storyName = 'Image';
+Default.storyName = 'Image';
