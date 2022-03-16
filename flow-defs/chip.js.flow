@@ -5,26 +5,17 @@ import type { IconProps } from "./utils/types";
 declare type ChipBaseProps = {
   children: string,
   Icon?: React.ComponentType<IconProps>,
+  id?: string,
 };
 declare type SimpleChipProps = { ...$Exact<ChipBaseProps> };
 declare type ClosableChipProps = {
   ...$Exact<ChipBaseProps>,
   onClose: () => void,
 };
-declare type ControlledToggleChipProps = {
+declare type ToggleChipProps = {
   ...$Exact<ChipBaseProps>,
-  checked: boolean,
-  onChange: (value: boolean) => void,
+  active: boolean,
 };
-declare type UncontrolledToggleChipProps = {
-  ...$Exact<ChipBaseProps>,
-  defaultChecked?: boolean,
-  onChange: (value: boolean) => void,
-};
-declare type ChipProps =
-  | SimpleChipProps
-  | ClosableChipProps
-  | ControlledToggleChipProps
-  | UncontrolledToggleChipProps;
+declare type ChipProps = SimpleChipProps | ClosableChipProps | ToggleChipProps;
 declare var Chip: React.ComponentType<ChipProps>;
 declare export default typeof Chip;

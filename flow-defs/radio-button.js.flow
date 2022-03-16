@@ -14,7 +14,12 @@ declare export var useRadioContext: () => RadioContextType;
 declare type PropsRender = {
   value: string,
   id?: string,
-  render: (radioElement: React.Element<any>, disabled?: boolean) => React.Node,
+  render: (renderProps: {
+    iconElement: React.Element<any>,
+    labelId: string,
+    disabled: boolean,
+    checked: boolean,
+  }) => React.Node,
   dataAttributes?: DataAttributes,
 };
 declare type PropsChildren = {

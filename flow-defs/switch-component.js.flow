@@ -2,10 +2,12 @@
 
 import * as React from "react";
 import type { DataAttributes } from "./utils/types";
-declare type RenderSwitch = (
-  switchElement: React.Element<any>,
-  labelId: string
-) => React.Node;
+declare type RenderSwitch = (renderProps: {
+  iconElement: React.Element<any>,
+  labelId: string,
+  checked: boolean,
+  disabled: boolean,
+}) => React.Node;
 declare type PropsRender = {
   name: string,
   defaultChecked?: boolean,
