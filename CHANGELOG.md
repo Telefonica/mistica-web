@@ -1,3 +1,10 @@
+# [10.29.0](https://github.com/Telefonica/mistica-web/compare/v10.28.1...v10.29.0) (2022-03-15)
+
+
+### Features
+
+* **Touchable:** Added loadOnTop prop ([#440](https://github.com/Telefonica/mistica-web/issues/440)) ([884940f](https://github.com/Telefonica/mistica-web/commit/884940fc1b924fef8f398af1c71313068c0e7ad7))
+
 ## [10.28.1](https://github.com/Telefonica/mistica-web/compare/v10.28.0...v10.28.1) (2022-03-09)
 
 
