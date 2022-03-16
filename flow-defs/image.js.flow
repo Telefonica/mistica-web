@@ -28,25 +28,8 @@ export type ImageProps = {
  alt?: string,
  dataAttributes?: DataAttributes,
 };
-/**
- * @deprecated
- */
-declare type DeprecatedImageProps = {
- url: string,
- width?: number,
- height?: number,
- /**
-  * defaults to 1:1, if both width and height are given, aspectRatio is ignored
-  */
- aspectRatio?: AspectRatio,
- /**
-  * defaults to empty string
-  */
- alt?: string,
- dataAttributes?: DataAttributes,
-};
 declare var Image: React.ComponentType<{
-  ...ImageProps | DeprecatedImageProps,
+  ...ImageProps,
   ref?: React.Ref<HTMLImageElement>,
 }>;
 declare export default typeof Image;
