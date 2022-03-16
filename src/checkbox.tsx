@@ -87,7 +87,12 @@ type RenderProps = {
     checked?: boolean;
     onChange?: (value: boolean) => void;
     id?: string;
-    render?: (checkboxElement: React.ReactElement, labelId: string) => React.ReactElement<any, any>; // Seems like this is the type returned by React.FC
+    render?: (renderProps: {
+        controlElement: React.ReactElement;
+        labelId: string;
+        disabled: boolean;
+        checked: boolean;
+    }) => React.ReactElement<any, any>; // Seems like this is the type returned by React.FC
     children?: undefined;
     disabled?: boolean;
     'aria-labelledby'?: string;
@@ -172,7 +177,12 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             {...getPrefixedDataAttributes(props.dataAttributes)}
         >
             {props.render ? (
-                props.render(iconCheckbox, labelId)
+                props.render({
+                    controlElement: iconCheckbox,
+                    labelId,
+                    checked: value ?? checkedState,
+                    disabled: !!disabled,
+                })
             ) : (
                 <Inline space={16}>
                     {/* Text3 wrapper added to have the same line-height and center checkbox with text and -2px to perfect pixel center icon */}
