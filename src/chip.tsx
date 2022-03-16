@@ -37,7 +37,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
                 backgroundColor: colors.tagBackgroundActive,
             },
             '&:hover > span': {
-                color: colors.textLink, // Giving color to text on hover
+                color: colors.controlActivated, // Giving color to text on hover
             },
         },
     },
@@ -46,7 +46,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         color: colors.controlActivated,
         backgroundColor: colors.tagBackgroundActive,
         '& > span': {
-            color: colors.textLink,
+            color: colors.controlActivated,
         },
     },
 }));
