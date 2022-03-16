@@ -10,31 +10,8 @@ import type {
   RendersElement,
   RendersNullableElement,
 } from "./utils/types";
-
-/**
- * @deprecated
- */
-declare type CardMedia =
-  | {
-  src: string,
-  aspectRatio: number,
-}
-  | {
-  src: string,
-  height: number,
-}
-  | { src: string };
 declare type MediaCardProps = {
-  media:
-    | CardMedia
-    | {
-        ...RendersElement<typeof Image>,
-        ...{},
-      }
-    | {
-        ...RendersElement<typeof Video>,
-        ...{},
-      },
+  media: RendersElement<typeof Image> | RendersElement<typeof Video>,
   headline?: string | RendersNullableElement<typeof Tag>,
   pretitle?: string,
   title?: string,
