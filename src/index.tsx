@@ -12,7 +12,7 @@ export {default as ButtonLayout} from './button-layout';
 export {default as FixedFooterLayout} from './fixed-footer-layout';
 export {default as ButtonFixedFooterLayout} from './button-fixed-footer-layout';
 export {default as Snackbar} from './snackbar';
-export {Portal, usePortalNodes} from './portal';
+export {Portal} from './portal';
 export {default as LoadingBar} from './loading-bar';
 export {default as FixedToTop, TopDistanceContext} from './fixed-to-top';
 export {default as createNestableContext} from './nestable-context';
@@ -98,11 +98,7 @@ export {default as IbanField} from './iban-field';
 export {useForm, useFieldProps} from './form-context';
 
 // Icons
-// @deprecated use IconCloseRegular instead
-export {default as IconClose} from './icons/icon-close';
 export {default as IconInfo} from './icons/icon-info';
-// @deprecated use IconArrowDropDownFilled instead
-export {default as IconArrowDown} from './icons/icon-arrow-down';
 export {default as IconChevron} from './icons/icon-chevron';
 export {default as IconError} from './icons/icon-error';
 export {default as IconSuccess} from './icons/icon-success';
@@ -163,44 +159,6 @@ if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
         window['__mistica_version__'] = PACKAGE_VERSION;
     }
 }
-
-// Deprecated icons, to be removed in the next major version
-/** @deprecated use IconPoundSymbolCircleFilled */
-export {default as IconPoundFilled} from './generated/mistica-icons/icon-pound-symbol-circle-filled';
-/** @deprecated use IconPoundSymbolCircleLight */
-export {default as IconPoundLight} from './generated/mistica-icons/icon-pound-symbol-circle-light';
-/** @deprecated use IconPoundSymbolCircleRegular */
-export {default as IconPoundRegular} from './generated/mistica-icons/icon-pound-symbol-circle-regular';
-/** @deprecated use IconPoundSymbolCircleFilled */
-export {default as IconPoundSymbolFilled} from './generated/mistica-icons/icon-pound-symbol-circle-filled';
-/** @deprecated use IconPoundSymbolCircleLight */
-export {default as IconPoundSymbolLight} from './generated/mistica-icons/icon-pound-symbol-circle-light';
-/** @deprecated use IconPoundSymbolCircleRegular */
-export {default as IconPoundSymbolRegular} from './generated/mistica-icons/icon-pound-symbol-circle-regular';
-/** @deprecated use IconBookFilled */
-export {default as IconPoundryFilled} from './generated/mistica-icons/icon-book-filled';
-/** @deprecated use IconBookLight */
-export {default as IconPoundryLight} from './generated/mistica-icons/icon-book-light';
-/** @deprecated use IconBookRegular */
-export {default as IconPoundryRegular} from './generated/mistica-icons/icon-book-regular';
-/** @deprecated use IconDollarSymbolCircleFilled */
-export {default as IconMoneyFilled} from './generated/mistica-icons/icon-dollar-symbol-circle-filled';
-/** @deprecated use IconDollarSymbolCircleLight */
-export {default as IconMoneyLight} from './generated/mistica-icons/icon-dollar-symbol-circle-light';
-/** @deprecated use IconDollarSymbolCircleRegular */
-export {default as IconMoneyRegular} from './generated/mistica-icons/icon-dollar-symbol-circle-regular';
-/** @deprecated use IconDollarSymbolFilled */
-export {default as IconDolarSymbolFilled} from './generated/mistica-icons/icon-dollar-symbol-filled';
-/** @deprecated use IconDollarSymbolLight */
-export {default as IconDolarSymbolLight} from './generated/mistica-icons/icon-dollar-symbol-light';
-/** @deprecated use IconDollarSymbolRegular */
-export {default as IconDolarSymbolRegular} from './generated/mistica-icons/icon-dollar-symbol-regular';
-/** @deprecated use IconFileIllustratorFilled */
-export {default as IconFileFilled} from './generated/mistica-icons/icon-file-illustrator-filled';
-/** @deprecated use IconFileIllustratorLight */
-export {default as IconFileIlustratorLight} from './generated/mistica-icons/icon-file-illustrator-light';
-/** @deprecated use IconFileIllustratorRegular */
-export {default as IconFileIlustratorRegular} from './generated/mistica-icons/icon-file-illustrator-regular';
 
 // Exported this way to facilitate tree-shaking
 export {default as IconAcademicFilled} from './generated/mistica-icons/icon-academic-filled';

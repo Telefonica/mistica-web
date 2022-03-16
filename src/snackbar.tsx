@@ -136,7 +136,7 @@ const SnackbarComponent: React.FC<Props> = ({
                 <div className={classes.snackbarContent}>
                     <span>{message}</span>
                     {buttonText && (
-                        <Touchable elementRef={buttonRef} className={classes.snackbarButton} onPress={close}>
+                        <Touchable ref={buttonRef} className={classes.snackbarButton} onPress={close}>
                             {buttonText}
                         </Touchable>
                     )}

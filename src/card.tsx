@@ -62,7 +62,7 @@ const CardContent: React.FC<CardContentProps> = ({
                             {renderHeadline()}
                             <Stack space={4}>
                                 {pretitle && (
-                                    <Text1 regular uppercase>
+                                    <Text1 regular transform="uppercase">
                                         {pretitle}
                                     </Text1>
                                 )}

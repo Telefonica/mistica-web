@@ -61,8 +61,6 @@ interface CommonProps {
     children: React.ReactNode;
     className?: string;
     disabled?: boolean;
-    /** @deprecated use ref */
-    elementRef?: React.Ref<HTMLButtonElement | HTMLAnchorElement | HTMLDivElement>;
     style?: React.CSSProperties;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     'aria-label'?: string;
@@ -261,7 +259,7 @@ const Touchable = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLButt
                     {...commonProps}
                     aria-label={props['aria-label']}
                     aria-labelledby={props['aria-labelledby']}
-                    innerRef={(props.elementRef as React.RefObject<HTMLAnchorElement>) ?? ref}
+                    innerRef={ref as React.RefObject<HTMLAnchorElement>}
                     to={props.disabled ? '' : props.to}
                     replace={props.replace}
                     onClick={trackEvent}
@@ -284,7 +282,7 @@ const Touchable = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLButt
                     aria-label={props['aria-label']}
                     aria-labelledby={props['aria-labelledby']}
                     type={type}
-                    ref={(props.elementRef as React.RefObject<HTMLButtonElement>) ?? ref}
+                    ref={ref as React.RefObject<HTMLButtonElement>}
                     onClick={handleButtonClick}
                 >
                     {children}
@@ -295,7 +293,7 @@ const Touchable = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLButt
         return (
             <div
                 {...commonProps}
-                ref={(props.elementRef as React.RefObject<HTMLDivElement>) ?? ref}
+                ref={ref as React.RefObject<HTMLDivElement>}
                 className={classnames(commonProps.className, classes.notTouchable)}
             >
                 {children}
