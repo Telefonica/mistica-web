@@ -291,7 +291,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     itemsPerPage,
     itemsToScroll,
     mobilePageOffset = 16,
-    gap = 8,
+    gap: gapProp,
     free,
     centered,
     autoplay,
@@ -302,6 +302,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const itemsPerPageConfig = normalizeItemsPerPage(itemsPerPage);
     const mobilePageOffsetConfig = normalizeMobilePageOffset(mobilePageOffset);
     const {isDesktopOrBigger} = useScreenSize();
+    const gap: number = gapProp ?? (isDesktopOrBigger ? 16 : 8);
     const sideMargin = useResonsiveLayoutMargin();
     const classes = useStyles({itemsPerPageConfig, mobilePageOffsetConfig, free, gap, centered, sideMargin});
     const carouselRef = React.useRef<HTMLDivElement>(null);
