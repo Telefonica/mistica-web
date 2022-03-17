@@ -36,6 +36,7 @@ export type PropsHref = {
   ...$Exact<CommonProps>,
   href: string,
   newTab?: boolean,
+  loadOnTop?: boolean,
 };
 export type PropsOnPress = {
   ...$Exact<CommonProps>,
@@ -53,6 +54,7 @@ export type PropsMaybeHref = {
   maybe: true,
   href?: string,
   newTab?: boolean,
+  loadOnTop?: boolean,
 };
 export type PropsMaybeTo = {
   ...$Exact<CommonProps>,

@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from "react";
+import type { DataAttributes } from "./utils/types";
 declare type FontWeight = "light" | "regular" | "medium";
 export type TextPresetProps = {
   color?: string,
@@ -23,6 +24,7 @@ export type TextPresetProps = {
   as?: React.ComponentType<any> | string,
   role?: string,
   "aria-level"?: number,
+  dataAttributes?: DataAttributes,
 };
 declare type TextProps = {
   ...$Exact<TextPresetProps>,

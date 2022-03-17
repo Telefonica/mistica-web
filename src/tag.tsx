@@ -5,8 +5,9 @@ import {createUseStyles} from './jss';
 import {Text} from './text';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {pxToRem} from './utils/css';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {IconProps} from './utils/types';
+import type {DataAttributes, IconProps} from './utils/types';
 
 const useStyles = createUseStyles(() => ({
     tag: {
@@ -33,12 +34,13 @@ export type TagProps = {
     type?: 'promo' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
     children: string;
     Icon?: React.FC<IconProps>;
+    dataAttributes?: DataAttributes;
 
     /** @deprecated use type prop */
     color?: string;
 };
 
-const Tag: React.FC<TagProps> = ({Icon, children, type = 'promo', color}) => {
+const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo', color}) => {
     const classes = useStyles({hasIcon: !!Icon});
     const {colors, isDarkMode} = useTheme();
     const isInverse = useIsInverseVariant();
@@ -82,6 +84,7 @@ const Tag: React.FC<TagProps> = ({Icon, children, type = 'promo', color}) => {
 
     return (
         <span
+            {...getPrefixedDataAttributes(dataAttributes)}
             className={classes.tag}
             style={{background: shouldUseInverseBackground ? colors.inverse : backgroundColor}}
         >

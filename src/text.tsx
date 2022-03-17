@@ -3,6 +3,9 @@ import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 import {pxToRem} from './utils/css';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 const useStyles = createUseStyles((theme) => {
     const mapToWeight: Record<string, number> = {
@@ -81,6 +84,7 @@ export interface TextPresetProps {
     as?: React.ComponentType<any> | string;
     role?: string;
     'aria-level'?: number;
+    dataAttributes?: DataAttributes;
 }
 
 interface TextProps extends TextPresetProps {
@@ -121,6 +125,7 @@ export const Text: React.FC<TextProps> = ({
     id,
     role,
     'aria-level': ariaLevel,
+    dataAttributes,
 }) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({
@@ -142,7 +147,11 @@ export const Text: React.FC<TextProps> = ({
         return null;
     }
     const className = classnames(classes.text, {[classes.truncate]: !!truncate});
-    return React.createElement(as, {className, id, role, 'aria-level': ariaLevel}, children);
+    return React.createElement(
+        as,
+        {className, id, role, 'aria-level': ariaLevel, ...getPrefixedDataAttributes(dataAttributes)},
+        children
+    );
 };
 
 interface LightProps extends TextPresetProps {

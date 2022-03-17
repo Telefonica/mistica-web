@@ -1,3 +1,49 @@
+# [10.29.0](https://github.com/Telefonica/mistica-web/compare/v10.28.1...v10.29.0) (2022-03-15)
+
+
+### Features
+
+* **Touchable:** Added loadOnTop prop ([#440](https://github.com/Telefonica/mistica-web/issues/440)) ([884940f](https://github.com/Telefonica/mistica-web/commit/884940fc1b924fef8f398af1c71313068c0e7ad7))
+
+## [10.28.1](https://github.com/Telefonica/mistica-web/compare/v10.28.0...v10.28.1) (2022-03-09)
+
+
+### Bug Fixes
+
+* **Carousel:** undefined is not an object error in iOS 14 ([#439](https://github.com/Telefonica/mistica-web/issues/439)) ([ef1cf63](https://github.com/Telefonica/mistica-web/commit/ef1cf63a1e7b9009cab28a0bb23b3dd6540defbb))
+* **FixedFooterLayout:** shadow style ([#437](https://github.com/Telefonica/mistica-web/issues/437)) ([d9d9641](https://github.com/Telefonica/mistica-web/commit/d9d9641b101484f8e1d3e5bf9476821cdef517e3))
+* **Popover:** arrow border radius ([#435](https://github.com/Telefonica/mistica-web/issues/435)) ([42eb25e](https://github.com/Telefonica/mistica-web/commit/42eb25ea9e071a38a3b44c1934aef949cfc7c9a5))
+* **Popover:** text styles ([#436](https://github.com/Telefonica/mistica-web/issues/436)) ([4c156cb](https://github.com/Telefonica/mistica-web/commit/4c156cbebae937175a66cf3afb5abfca8051cfd0))
+* **select:** issue with cropped text ([#426](https://github.com/Telefonica/mistica-web/issues/426)) ([2c6e027](https://github.com/Telefonica/mistica-web/commit/2c6e027f643b3458359e6866bc6d9a10afb1e5b4))
+* **Slideshow:** scroll snap stop on android ([#434](https://github.com/Telefonica/mistica-web/issues/434)) ([4ccb6a6](https://github.com/Telefonica/mistica-web/commit/4ccb6a6822a936ae185470bf8bf01bb4224a6626))
+
+# [10.28.0](https://github.com/Telefonica/mistica-web/compare/v10.27.0...v10.28.0) (2022-03-01)
+
+
+### Bug Fixes
+
+* **popover:** Fix size in iOS when rendered offscreen ([#431](https://github.com/Telefonica/mistica-web/issues/431)) ([9cb3a29](https://github.com/Telefonica/mistica-web/commit/9cb3a290ea2b6c434c715bb7c18bca9678c5a006))
+
+
+### Features
+
+* **Carousel:** autoplay only move when carousel is visible ([#430](https://github.com/Telefonica/mistica-web/issues/430)) ([fa74b04](https://github.com/Telefonica/mistica-web/commit/fa74b04e1d6171809ea8a5c1522cb0622b9dfc01))
+
+# [10.27.0](https://github.com/Telefonica/mistica-web/compare/v10.26.0...v10.27.0) (2022-02-25)
+
+
+### Bug Fixes
+
+* **playroom:** dark mode in Blau & Telefonica ios ([#423](https://github.com/Telefonica/mistica-web/issues/423)) ([a630625](https://github.com/Telefonica/mistica-web/commit/a630625379cdb486abd916ad05c0d3fd4974e5cd))
+* **skins:** remove deprecated constants ([#418](https://github.com/Telefonica/mistica-web/issues/418)) ([822960f](https://github.com/Telefonica/mistica-web/commit/822960f2ecf629b4e5de0ac3224e2026332c0f14))
+* **Telefonica skin:** change badge color ([#424](https://github.com/Telefonica/mistica-web/issues/424)) ([0976c24](https://github.com/Telefonica/mistica-web/commit/0976c246f295d4be61426d33ff93b65c9bae0598))
+
+
+### Features
+
+* **Button:** default tracking events ([#425](https://github.com/Telefonica/mistica-web/issues/425)) ([5fc2576](https://github.com/Telefonica/mistica-web/commit/5fc25768f71cd8a0318b47266511694e6024e49e))
+* **Image, Text, Video, Tag:** add dataAttributes prop ([#429](https://github.com/Telefonica/mistica-web/issues/429)) ([730a0db](https://github.com/Telefonica/mistica-web/commit/730a0dbb80abe9a47260b21e29fe1cbf2c9cc206))
+
 # [10.26.0](https://github.com/Telefonica/mistica-web/compare/v10.25.0...v10.26.0) (2022-02-23)
 
 

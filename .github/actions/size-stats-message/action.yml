@@ -1,0 +1,25 @@
+# https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions
+name: 'Size stats message'
+description: 'Builds the html table with the size stats'
+inputs:
+    master-total-js:
+        description: 'Total JS size (on master)'
+        required: true
+    master-js-without-icons:
+        description: 'JS size without icons (on master)'
+        required: true
+    master-lib-overhead:
+        description: 'Mistica lib size overhead (on master)'
+        required: true
+    pr-total-js:
+        description: 'Total JS size (on pr)'
+        required: true
+    pr-js-without-icons:
+        description: 'JS size without icons (on pr)'
+        required: true
+    pr-lib-overhead:
+        description: 'Mistica lib size overhead (on pr)'
+        required: true
+runs:
+    using: 'node12'
+    main: 'main.js'
