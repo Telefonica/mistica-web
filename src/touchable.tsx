@@ -10,9 +10,11 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
 
-const redirect = (url: string, external = false): void => {
+const redirect = (url: string, external = false, loadOnTop = false): void => {
     if (external) {
         window.open(url, '_blank');
+    } else if (loadOnTop) {
+        window.open(url, '_top');
     } else {
         document.location.href = url;
     }
@@ -86,6 +88,7 @@ interface CommonProps {
 export interface PropsHref extends CommonProps {
     href: string;
     newTab?: boolean;
+    loadOnTop?: boolean;
     to?: undefined;
     onPress?: undefined;
 }
@@ -106,6 +109,7 @@ export interface PropsMaybeHref extends CommonProps {
     maybe: true;
     href?: string;
     newTab?: boolean;
+    loadOnTop?: boolean;
     to?: undefined;
     onPress?: undefined;
 }
@@ -162,6 +166,7 @@ const Touchable = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLButt
         const type = props.type ? props.type : 'button';
 
         const openNewTab = !!props.href && !!props.newTab;
+        const loadOnTop = !openNewTab && !!props.href && !!props.loadOnTop;
 
         const onPress = (event: React.MouseEvent<HTMLElement>) => {
             if (props.onPress) {
@@ -210,7 +215,7 @@ const Touchable = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLButt
             }
 
             event.preventDefault();
-            trackOnce(() => redirect(getHref(), openNewTab));
+            trackOnce(() => redirect(getHref(), openNewTab, loadOnTop));
         };
 
         const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
@@ -232,7 +237,11 @@ const Touchable = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLButt
                     onClick={handleHrefClick}
                     onKeyDown={handleKeyDown}
                     href={props.disabled ? undefined : getHref()}
-                    target={openNewTab ? '_blank' : undefined}
+                    target={(() => {
+                        if (openNewTab) return '_blank';
+                        if (loadOnTop) return '_top';
+                        return undefined;
+                    })()}
                     rel={openNewTab ? 'noopener noreferrer' : undefined}
                     ref={ref as React.RefObject<HTMLAnchorElement>}
                 >

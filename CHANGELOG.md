@@ -1,3 +1,22 @@
+# [10.29.0](https://github.com/Telefonica/mistica-web/compare/v10.28.1...v10.29.0) (2022-03-15)
+
+
+### Features
+
+* **Touchable:** Added loadOnTop prop ([#440](https://github.com/Telefonica/mistica-web/issues/440)) ([884940f](https://github.com/Telefonica/mistica-web/commit/884940fc1b924fef8f398af1c71313068c0e7ad7))
+
+## [10.28.1](https://github.com/Telefonica/mistica-web/compare/v10.28.0...v10.28.1) (2022-03-09)
+
+
+### Bug Fixes
+
+* **Carousel:** undefined is not an object error in iOS 14 ([#439](https://github.com/Telefonica/mistica-web/issues/439)) ([ef1cf63](https://github.com/Telefonica/mistica-web/commit/ef1cf63a1e7b9009cab28a0bb23b3dd6540defbb))
+* **FixedFooterLayout:** shadow style ([#437](https://github.com/Telefonica/mistica-web/issues/437)) ([d9d9641](https://github.com/Telefonica/mistica-web/commit/d9d9641b101484f8e1d3e5bf9476821cdef517e3))
+* **Popover:** arrow border radius ([#435](https://github.com/Telefonica/mistica-web/issues/435)) ([42eb25e](https://github.com/Telefonica/mistica-web/commit/42eb25ea9e071a38a3b44c1934aef949cfc7c9a5))
+* **Popover:** text styles ([#436](https://github.com/Telefonica/mistica-web/issues/436)) ([4c156cb](https://github.com/Telefonica/mistica-web/commit/4c156cbebae937175a66cf3afb5abfca8051cfd0))
+* **select:** issue with cropped text ([#426](https://github.com/Telefonica/mistica-web/issues/426)) ([2c6e027](https://github.com/Telefonica/mistica-web/commit/2c6e027f643b3458359e6866bc6d9a10afb1e5b4))
+* **Slideshow:** scroll snap stop on android ([#434](https://github.com/Telefonica/mistica-web/issues/434)) ([4ccb6a6](https://github.com/Telefonica/mistica-web/commit/4ccb6a6822a936ae185470bf8bf01bb4224a6626))
+
 # [10.28.0](https://github.com/Telefonica/mistica-web/compare/v10.27.0...v10.28.0) (2022-03-01)
 
 

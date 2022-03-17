@@ -291,7 +291,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     itemsPerPage,
     itemsToScroll,
     mobilePageOffset = 16,
-    gap = 8,
+    gap: gapProp,
     free,
     centered,
     autoplay,
@@ -302,6 +302,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const itemsPerPageConfig = normalizeItemsPerPage(itemsPerPage);
     const mobilePageOffsetConfig = normalizeMobilePageOffset(mobilePageOffset);
     const {isDesktopOrBigger} = useScreenSize();
+    const gap: number = gapProp ?? (isDesktopOrBigger ? 16 : 8);
     const sideMargin = useResonsiveLayoutMargin();
     const classes = useStyles({itemsPerPageConfig, mobilePageOffsetConfig, free, gap, centered, sideMargin});
     const carouselRef = React.useRef<HTMLDivElement>(null);
@@ -336,13 +337,26 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
             const calcItemScrollPositions = () => {
                 const maxScroll = carouselEl.scrollWidth - carouselEl.clientWidth;
 
+                const getItemScrollMargin = (itemIndex: number) => {
+                    if (centered) {
+                        return 0;
+                    }
+                    if (itemIndex === 0) {
+                        return 0;
+                    }
+                    if (isDesktopOrBigger) {
+                        return -gap;
+                    }
+                    return mobilePageOffsetConfig.prev;
+                };
+
                 setItemScrollPositions(
                     Array.from(carouselEl.querySelectorAll('[data-item]')).map((itemEl, idx) => {
                         if (idx === items.length - 1) {
                             return maxScroll;
                         }
                         const offsetLeft = (itemEl as HTMLElement).offsetLeft;
-                        const scrollMargin = Number(getComputedStyle(itemEl).scrollMargin.replace('px', ''));
+                        const scrollMargin = getItemScrollMargin(idx);
                         const scrollPosition =
                             centered && !isDesktopOrBigger ? offsetLeft - itemEl.clientWidth / 2 : offsetLeft;
                         return Math.min(scrollPosition - scrollMargin - carouselEl.offsetLeft, maxScroll);
