@@ -130,7 +130,9 @@ const FixedFooterLayout: React.FC<Props> = ({
                  * This style is inline to avoid creating a class that may collide with
                  * other fixed footers during the page animation transition
                  */
-                style={{background: isTabletOrSmaller ? footerBgColor || colors.background : undefined}}
+                style={{
+                    background: isTabletOrSmaller ? footerBgColor || colors.backgroundContainer : undefined,
+                }}
                 data-testid={`fixed-footer${isFooterVisible ? '-visible' : '-hidden'}`}
                 /**
                  * This hints about the position of the fixed element. Other components could select nodes
