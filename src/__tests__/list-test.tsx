@@ -37,16 +37,12 @@ test('Row as a button', () => {
 });
 
 test('Row with switch', () => {
-    const onChangeFn = (isChecked?: boolean) => {
-        return isChecked;
-    };
-
-    const spyOnChange = jest.fn(onChangeFn);
+    const spyOnChange = jest.fn();
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <RowList>
-                <Row title="Title" switch={{defaultValue: false, onChange: onChangeFn}} />
+                <Row title="Title" switch={{defaultValue: false, onChange: spyOnChange}} />
             </RowList>
         </ThemeContextProvider>
     );
@@ -66,16 +62,12 @@ test('Row with switch', () => {
 });
 
 test('Row with checkbox', () => {
-    const onChangeFn = (isChecked?: boolean) => {
-        return isChecked;
-    };
-
-    const spyOnChange = jest.fn(onChangeFn);
+    const spyOnChange = jest.fn();
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <RowList>
-                <Row title="Title" checkbox={{defaultValue: false, onChange: onChangeFn}} />
+                <Row title="Title" checkbox={{defaultValue: false, onChange: spyOnChange}} />
             </RowList>
         </ThemeContextProvider>
     );
