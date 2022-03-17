@@ -6,6 +6,7 @@ import {Text2} from './text';
 import IconButton from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {pxToRem} from './utils/css';
+import classNames from 'classnames';
 
 import type {IconProps} from './utils/types';
 
@@ -27,41 +28,79 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         '& > span': {
             color: colors.textPrimary, // Giving color to text
         },
-
+    },
+    interactive: {
         [mq.supportsHover]: {
-            '&:hover': {
+            '&:hover:not($active)': {
                 borderColor: ({isDarkMode}) => (isDarkMode ? colors.background : colors.tagBackgroundActive),
                 color: colors.controlActivated, // Giving color to icons on hover
                 backgroundColor: colors.tagBackgroundActive,
             },
             '&:hover > span': {
-                color: colors.textLink, // Giving color to text on hover
+                color: colors.controlActivated, // Giving color to text on hover
             },
+        },
+    },
+    active: {
+        borderColor: colors.controlActivated,
+        color: colors.controlActivated,
+        backgroundColor: colors.tagBackgroundActive,
+        '& > span': {
+            color: colors.controlActivated,
         },
     },
 }));
 
-type ChipProps = {
+interface ChipBaseProps {
     children: string;
     Icon?: React.FC<IconProps>;
-    onClose?: () => void;
-};
+    id?: string;
+}
 
-const Chip: React.FC<ChipProps> = ({children, Icon, onClose}) => {
+interface SimpleChipProps extends ChipBaseProps {
+    onClose?: undefined;
+    active?: undefined;
+}
+
+interface ClosableChipProps extends ChipBaseProps {
+    onClose: () => void;
+
+    active?: undefined;
+}
+
+interface ToggleChipProps extends ChipBaseProps {
+    active: boolean;
+
+    onClose?: undefined;
+}
+
+type ChipProps = SimpleChipProps | ClosableChipProps | ToggleChipProps;
+
+const Chip: React.FC<ChipProps> = (props) => {
     const {texts, isDarkMode} = useTheme();
     const classes = useStyles({isDarkMode});
 
-    return (
-        <Box className={classes.container} paddingLeft={Icon ? 8 : 12} paddingRight={onClose ? 0 : 12}>
+    const {Icon, children, id} = props;
+
+    const body = (
+        <>
             {Icon && (
                 <Box paddingRight={4}>
                     <Icon color="currentColor" size={pxToRem(16)} />
                 </Box>
             )}
-            <Text2 medium truncate={1} color="currentColor">
+            <Text2 id={id} medium truncate={1} color="currentColor">
                 {children}
             </Text2>
-            {onClose ? (
+        </>
+    );
+
+    const paddingLeft = Icon ? 8 : 12;
+
+    if (props.onClose) {
+        return (
+            <Box className={classes.container} paddingLeft={paddingLeft}>
+                {body}
                 <Box paddingLeft={4}>
                     <IconButton
                         size={24}
@@ -71,14 +110,28 @@ const Chip: React.FC<ChipProps> = ({children, Icon, onClose}) => {
                             alignItems: 'center',
                         }}
                         aria-label={texts.closeButtonLabel}
-                        onPress={() => onClose()}
+                        onPress={() => props.onClose()}
                     >
                         <IconCloseRegular size={16} color="currentColor" />
                     </IconButton>
                 </Box>
-            ) : null}
-        </Box>
-    );
+            </Box>
+        );
+    } else {
+        const isInteractive = props.active !== undefined;
+        return (
+            <Box
+                className={classNames(classes.container, {
+                    [classes.interactive]: isInteractive,
+                    [classes.active]: props.active,
+                })}
+                paddingLeft={paddingLeft}
+                paddingRight={12}
+            >
+                {body}
+            </Box>
+        );
+    }
 };
 
 export default Chip;

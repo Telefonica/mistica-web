@@ -8,10 +8,12 @@ declare type RenderProps = {
   checked?: boolean,
   onChange?: (value: boolean) => void,
   id?: string,
-  render?: (
-    checkboxElement: React.Element<any>,
-    labelId: string
-  ) => React.Element<any>,
+  render?: (renderProps: {
+    controlElement: React.Element<any>,
+    labelId: string,
+    disabled: boolean,
+    checked: boolean,
+  }) => React.Element<any>,
   disabled?: boolean,
   "aria-labelledby"?: string,
   "aria-label"?: string,

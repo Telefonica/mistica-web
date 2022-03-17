@@ -253,6 +253,7 @@ export interface OnPressButtonProps extends CommonProps {
 export interface HrefButtonProps extends CommonProps {
     href: string;
     newTab?: boolean;
+    loadOnTop?: boolean;
     submit?: undefined;
     fake?: undefined;
     onPress?: undefined;
@@ -411,7 +412,9 @@ const Button: React.FC<
     }
 
     if (props.href || props.href === '') {
-        return <Touchable {...commonProps} href={props.href} newTab={props.newTab} />;
+        return (
+            <Touchable {...commonProps} href={props.href} newTab={props.newTab} loadOnTop={props.loadOnTop} />
+        );
     }
 
     if (process.env.NODE_ENV !== 'production') {

@@ -234,6 +234,49 @@ test('"href" with "newTab" renders required attributes', () => {
         </DocumentFragment>
     `);
 });
+test('"href" with "loadOnTop" renders required attributes', () => {
+    const {asFragment} = render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <ButtonPrimary href="/test" loadOnTop>
+                test
+            </ButtonPrimary>
+        </ThemeContextProvider>
+    );
+
+    expect(asFragment()).toMatchInlineSnapshot(`
+        <DocumentFragment>
+          <a
+            class="touchable button light"
+            href="/test"
+            role="button"
+            target="_top"
+          >
+            <div
+              class="textContent"
+            >
+              <div
+                class="text text-d0 truncate truncate-d2"
+              >
+                test
+              </div>
+            </div>
+            <div
+              aria-hidden="true"
+              class="loadingFiller"
+              style="padding-left: 1.500rem; padding-right: 37px;"
+            />
+            <div
+              aria-hidden="true"
+              class="loadingContent"
+            >
+              <div
+                style="display: inline-block; width: 1.500rem; height: 1.500rem;"
+              />
+            </div>
+          </a>
+        </DocumentFragment>
+    `);
+});
 
 test('"to" uses a Link Component', () => {
     const Link = () => '(Link Component)' as any;
