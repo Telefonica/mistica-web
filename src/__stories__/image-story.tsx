@@ -11,7 +11,7 @@ export const Default: StoryComponent = () => (
         <Image src="https://i.imgur.com/G8aJDhB.jpeg" aspectRatio="4:3" width={200} />
         <Image src="https://i.imgur.com/G8aJDhB.jpeg" aspectRatio="7:10" width={200} />
         <Image src="https://i.imgur.com/G8aJDhB.jpeg" aspectRatio="16:9" width={200} />
-        <Image src="https://i.imgur.com/G8aJDhB.jpeg" aspectRatio="16:9" width={230} height={100} />
+        <Image src="https://i.imgur.com/G8aJDhB.jpeg" width={230} height={100} />
     </Stack>
 );
 
