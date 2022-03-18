@@ -1,3 +1,31 @@
+# [11.0.0](https://github.com/Telefonica/mistica-web/compare/v10.29.0...v11.0.0) (2022-03-18)
+
+
+### Bug Fixes
+
+* **Carousel:** set default gap in desktop to 16 ([#442](https://github.com/Telefonica/mistica-web/issues/442)) ([91d233a](https://github.com/Telefonica/mistica-web/commit/91d233af0a27521f31a3ac1d450bd8a11bf39889))
+* **FixedFooterLayout:** improve dark mode footer ([#438](https://github.com/Telefonica/mistica-web/issues/438)) ([194b265](https://github.com/Telefonica/mistica-web/commit/194b265656a844c71cea3fe4e9f432d3df44e98c))
+* **Row:** checkbox onChange always returning true ([#428](https://github.com/Telefonica/mistica-web/issues/428)) ([6e58166](https://github.com/Telefonica/mistica-web/commit/6e5816630edc587572d22dea9789957b8dbd7a89))
+
+
+### chore
+
+* **deprecate:** remove deprecated stuff ([#443](https://github.com/Telefonica/mistica-web/issues/443)) ([6d14fb9](https://github.com/Telefonica/mistica-web/commit/6d14fb9681c3ece5969f5ba7d43381d5ef37c11f))
+
+
+### Features
+
+* **Chip:** work like checkbox or radio button ([#441](https://github.com/Telefonica/mistica-web/issues/441)) ([fb34bd9](https://github.com/Telefonica/mistica-web/commit/fb34bd953c88bae9bd50de299ce382ef6d99efcd))
+* **icons:** update catalog ([#445](https://github.com/Telefonica/mistica-web/issues/445)) ([0a045cb](https://github.com/Telefonica/mistica-web/commit/0a045cb67c0b923eb151a595719b58b4f43785b7))
+* **Image:** allow string width, number aspectRatio ([328e568](https://github.com/Telefonica/mistica-web/commit/328e568638684d82927621b00f7da06575a46a61))
+
+
+### BREAKING CHANGES
+
+* **deprecate:** removed deprecated components and props
+* **icons:** rename some icons, and remove some others
+* **Chip:** changed params of `render` prop in `Switch`, `Checkbox` and `RadioButton`
+
 # [10.29.0](https://github.com/Telefonica/mistica-web/compare/v10.28.1...v10.29.0) (2022-03-15)
 
 
