@@ -12,7 +12,7 @@ export {default as ButtonLayout} from './button-layout';
 export {default as FixedFooterLayout} from './fixed-footer-layout';
 export {default as ButtonFixedFooterLayout} from './button-fixed-footer-layout';
 export {default as Snackbar} from './snackbar';
-export {Portal, usePortalNodes} from './portal';
+export {Portal} from './portal';
 export {default as LoadingBar} from './loading-bar';
 export {default as FixedToTop, TopDistanceContext} from './fixed-to-top';
 export {default as createNestableContext} from './nestable-context';
@@ -98,11 +98,7 @@ export {default as IbanField} from './iban-field';
 export {useForm, useFieldProps} from './form-context';
 
 // Icons
-// @deprecated use IconCloseRegular instead
-export {default as IconClose} from './icons/icon-close';
 export {default as IconInfo} from './icons/icon-info';
-// @deprecated use IconArrowDropDownFilled instead
-export {default as IconArrowDown} from './icons/icon-arrow-down';
 export {default as IconChevron} from './icons/icon-chevron';
 export {default as IconError} from './icons/icon-error';
 export {default as IconSuccess} from './icons/icon-success';
@@ -164,6 +160,7 @@ if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
     }
 }
 
+// Exported this way to facilitate tree-shaking
 export {default as IconAcademicFilled} from './generated/mistica-icons/icon-academic-filled';
 export {default as IconAcademicLight} from './generated/mistica-icons/icon-academic-light';
 export {default as IconAcademicRegular} from './generated/mistica-icons/icon-academic-regular';

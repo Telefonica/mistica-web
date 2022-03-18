@@ -14,11 +14,6 @@ export type TagProps = {
   children: string,
   Icon?: React.ComponentType<IconProps>,
   dataAttributes?: DataAttributes,
-
-  /**
-   * @deprecated use type prop
-   */
-  color?: string,
 };
 declare var Tag: React.ComponentType<TagProps>;
 declare export default typeof Tag;

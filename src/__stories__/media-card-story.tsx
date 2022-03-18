@@ -69,9 +69,7 @@ export const Default: StoryComponent = () => {
                         pretitle={pretitle}
                         title={title}
                         description={description}
-                        media={{
-                            src: IMAGE_SRC,
-                        }}
+                        media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                         button={button}
                         buttonLink={buttonLink}
                     />
@@ -147,13 +145,13 @@ export const Group: StoryComponent = () => {
                         pretitle="Pretitle"
                         title="Title"
                         description="Description"
-                        media={{src: IMAGE_SRC}}
+                        media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />
                     <MediaCard
                         title="Title"
                         description="Description"
-                        media={{src: IMAGE_SRC}}
+                        media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />
                 </Inline>
@@ -229,16 +227,20 @@ export const Carousel: StoryComponent = () => {
                             pretitle="Pretitle"
                             title="Title"
                             description="Description"
-                            media={{src: IMAGE_SRC}}
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                             buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
                         />
                         <MediaCard
                             title="Title"
                             description="Description"
-                            media={{src: IMAGE_SRC}}
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                             buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
                         />
-                        <MediaCard title="Title" description="Description" media={{src: IMAGE_SRC}} />
+                        <MediaCard
+                            title="Title"
+                            description="Description"
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                        />
                     </Inline>
                 </ResponsiveLayout>
             </Stack>
