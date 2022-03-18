@@ -81,7 +81,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             borderLight: palette.grey1,
             border: palette.grey3,
             borderDark: palette.grey5,
-            borderSelected: palette.movistarGreen,
+            borderSelected: palette.movistarBlue,
 
             // BUTTONS
             buttonDangerBackground: palette.pepper,
@@ -91,14 +91,14 @@ export const getMovistarSkin: GetSkin = (variant) => {
             buttonLinkBackgroundSelected: palette.movistarBlue10,
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
 
-            buttonPrimaryBackground: palette.movistarGreen,
+            buttonPrimaryBackground: palette.movistarBlue,
             buttonPrimaryBackgroundInverse: palette.white,
-            buttonPrimaryBackgroundSelected: palette.movistarGreen60,
-            buttonPrimaryBackgroundHover: palette.movistarGreen60, // web only
+            buttonPrimaryBackgroundSelected: palette.movistarBlue55,
+            buttonPrimaryBackgroundHover: palette.movistarBlue55, // web only
             buttonPrimaryBackgroundSelectedInverse: palette.movistarBlue30,
 
-            buttonSecondaryBackground: palette.movistarGreen,
-            buttonSecondaryBackgroundSelected: palette.movistarGreen60,
+            buttonSecondaryBackground: palette.movistarBlue,
+            buttonSecondaryBackgroundSelected: palette.movistarBlue55,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.movistarBlue30,
 
@@ -106,8 +106,8 @@ export const getMovistarSkin: GetSkin = (variant) => {
             textButtonPrimaryInverse: palette.movistarBlue,
             textButtonPrimaryInverseSelected: palette.movistarBlue,
 
-            textButtonSecondary: palette.movistarGreen,
-            textButtonSecondarySelected: palette.movistarGreen60,
+            textButtonSecondary: palette.movistarBlue,
+            textButtonSecondarySelected: palette.movistarBlue55,
             textButtonSecondaryInverse: palette.white,
             textButtonSecondaryInverseSelected: palette.white,
 
@@ -198,15 +198,15 @@ export const getMovistarSkin: GetSkin = (variant) => {
             border: palette.darkModeGrey,
             buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.05),
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.05),
-            buttonPrimaryBackground: palette.movistarGreen,
-            buttonPrimaryBackgroundInverse: palette.movistarGreen,
-            buttonPrimaryBackgroundSelected: palette.movistarGreen60,
-            buttonPrimaryBackgroundHover: palette.movistarGreen60, // web only
-            buttonPrimaryBackgroundSelectedInverse: palette.movistarGreen60,
-            buttonSecondaryBackground: palette.movistarGreen,
-            buttonSecondaryBackgroundSelected: palette.movistarGreen60,
-            buttonSecondaryBorderInverse: palette.movistarGreen,
-            buttonSecondaryBorderSelectedInverse: palette.movistarGreen60,
+            buttonPrimaryBackground: palette.movistarBlue,
+            buttonPrimaryBackgroundInverse: palette.movistarBlue,
+            buttonPrimaryBackgroundSelected: palette.movistarBlue55,
+            buttonPrimaryBackgroundHover: palette.movistarBlue55, // web only
+            buttonPrimaryBackgroundSelectedInverse: palette.movistarBlue55,
+            buttonSecondaryBackground: palette.movistarBlue,
+            buttonSecondaryBackgroundSelected: palette.movistarBlue55,
+            buttonSecondaryBorderInverse: palette.movistarBlue,
+            buttonSecondaryBorderSelectedInverse: palette.movistarBlue55,
             textButtonPrimary: palette.grey2,
             textButtonPrimaryInverse: palette.grey2,
             textButtonPrimaryInverseSelected: palette.grey2,
