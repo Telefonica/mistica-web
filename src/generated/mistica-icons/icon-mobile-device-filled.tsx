@@ -18,8 +18,6 @@ const IconMobileDeviceFilled: React.FC<IconProps> = ({color, size = 24, children
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
                     d="M18.988 5.388C18.897 3.504 17.402 2 15.578 2h-6.16C7.594 2 6.1 3.504 6.008 5.388h12.98zM6 6.46h13v11.08H6V6.46zM9.418 22c-1.828 0-3.322-1.504-3.41-3.388h12.977C18.897 20.496 17.402 22 15.575 22H9.418z"
                     fill={fillColor}
                 />
@@ -29,8 +27,6 @@ const IconMobileDeviceFilled: React.FC<IconProps> = ({color, size = 24, children
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
                     d="M15.241 2c1.11 0 1.91.272 2.454.832.535.549.795 1.353.795 2.46v13.103c0 2.216-1.061 3.291-3.249 3.291H8.602c-2.187 0-3.249-1.075-3.249-3.291V5.291C5.353 3.106 6.445 2 8.603 2h6.638zm-3.314 17.358c.342 0 .625-.106.821-.305.19-.199.289-.47.291-.81 0-.697-.412-1.114-1.109-1.114-.697 0-1.112.417-1.112 1.115 0 .339.095.61.289.81.193.198.479.305.82.305z"
                     fill={fillColor}
                 />
