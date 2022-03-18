@@ -1,0 +1,6 @@
+// @flow
+
+import * as React from "react";
+import type { IconProps } from "../../utils/types";
+declare var IconArrowLineUpRegular: React.ComponentType<IconProps>;
+declare export default typeof IconArrowLineUpRegular;
