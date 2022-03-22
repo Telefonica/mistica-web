@@ -17,8 +17,6 @@ const IconExportRegular: React.FC<IconProps> = ({color, size = 24, children, ...
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
-                fillRule="evenodd"
-                clipRule="evenodd"
                 d="M5.492 8.724a.842.842 0 001.437.59l4.277-4.282v11.05a.846.846 0 001.689 0V5.032l4.21 4.213a.155.155 0 01.008.008c.005.005.009.01.015.014a.845.845 0 001.17-1.216l-5.65-5.655a.847.847 0 00-1.193 0L5.738 8.124a.858.858 0 00-.246.6zm16.344 8.182a.844.844 0 00-.843-.843.84.84 0 00-.84.843v3.243H3.839v-3.243a.845.845 0 00-1.69 0v4.086c0 .465.379.844.844.844h18a.844.844 0 00.843-.844v-4.086z"
                 fill={fillColor}
             />

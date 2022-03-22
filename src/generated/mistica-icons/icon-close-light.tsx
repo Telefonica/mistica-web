@@ -18,8 +18,6 @@ const IconCloseLight: React.FC<IconProps> = ({color, size = 24, children, ...res
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
                     d="M18.92 5.46L12.38 12l5.194 5.194a.267.267 0 010 .38.265.265 0 01-.19.08.264.264 0 01-.191-.08L12 12.382l-6.54 6.54a.265.265 0 01-.19.079.265.265 0 01-.19-.078.267.267 0 010-.381L11.62 12 5.08 5.46a.267.267 0 010-.381.267.267 0 01.38 0L12 11.62l6.54-6.54a.267.267 0 01.38 0 .267.267 0 010 .38zM18.461 19a.538.538 0 100-1.075.538.538 0 000 1.075z"
                     fill={fillColor}
                 />

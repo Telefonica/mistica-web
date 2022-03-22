@@ -18,8 +18,6 @@ const IconCancelFilled: React.FC<IconProps> = ({color, size = 24, children, ...r
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
                     d="M2 12C2 6.484 6.484 2 12 2s10 4.484 10 10-4.484 10-10 10S2 17.516 2 12zm14.664 4.672a.534.534 0 000-.76L12.768 12l3.912-3.912a.534.534 0 000-.76.534.534 0 00-.76 0l-3.912 3.912-3.912-3.912a.534.534 0 00-.76 0 .534.534 0 000 .76L11.232 12 7.32 15.912a.534.534 0 00.38.912.535.535 0 00.38-.152l3.912-3.912 3.912 3.912a.535.535 0 00.38.152.535.535 0 00.38-.152z"
                     fill={fillColor}
                 />
@@ -29,8 +27,6 @@ const IconCancelFilled: React.FC<IconProps> = ({color, size = 24, children, ...r
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
                     d="M1 12.003C1 4.51 5.048 1 11.997 1 18.947 1 23 4.51 23 12.003 23 19.497 18.946 23 11.997 23 5.047 23 1 19.497 1 12.003zm16.362 5.366a.688.688 0 000-.974L12.964 12l4.398-4.395a.688.688 0 10-.973-.974l-4.395 4.399L7.61 6.647a.684.684 0 00-.97 0 .684.684 0 000 .97L11.023 12l-4.382 4.383a.688.688 0 00.97.973l4.383-4.383 4.395 4.396a.69.69 0 00.973 0z"
                     fill={fillColor}
                 />

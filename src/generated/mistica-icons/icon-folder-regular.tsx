@@ -18,8 +18,6 @@ const IconFolderRegular: React.FC<IconProps> = ({color, size = 24, children, ...
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
                     d="M2 21h20V7.92c0-1.239-1-2.251-2.224-2.251h-8.294a.728.728 0 01-.52-.227l-1.74-1.766A2.066 2.066 0 007.668 3H4.224C3 3 2 4.012 2 5.252V21zm18.516-1.498H3.48V5.215a.75.75 0 01.744-.75h3.479c.188 0 .372.078.52.228l1.74 1.761c.407.45.963.676 1.555.676h8.258c.408 0 .74.337.74.75v11.622z"
                     fill={fillColor}
                 />
@@ -29,8 +27,6 @@ const IconFolderRegular: React.FC<IconProps> = ({color, size = 24, children, ...
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
                     d="M3.465 20.237h16.76c.806 0 1.461-.656 1.461-1.462V7.489c0-.807-.655-1.462-1.462-1.462H12.07v-.732c0-.806-.658-1.462-1.465-1.462h-7.14C2.655 3.833 2 4.49 2 5.295v13.477c0 .81.658 1.465 1.465 1.465zM3.277 5.296c0-.107.082-.188.188-.188h7.14c.106 0 .188.081.188.188v1.37c0 .352.285.638.638.638h8.793c.107 0 .188.081.188.188v11.283a.188.188 0 01-.188.187H3.465a.184.184 0 01-.188-.188V5.296z"
                     fill={fillColor}
                 />

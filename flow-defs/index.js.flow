@@ -476,7 +476,6 @@ declare export { default as IconComputerAcademicRegular } from "./generated/mist
 declare export { default as IconComputerFilled } from "./generated/mistica-icons/icon-computer-filled";
 declare export { default as IconComputerLight } from "./generated/mistica-icons/icon-computer-light";
 declare export { default as IconComputerRegular } from "./generated/mistica-icons/icon-computer-regular";
-declare export { default as IconComputerRegularDuplicateName } from "./generated/mistica-icons/icon-computer-regular-duplicate-name";
 declare export { default as IconComputerUserFilled } from "./generated/mistica-icons/icon-computer-user-filled";
 declare export { default as IconComputerUserLight } from "./generated/mistica-icons/icon-computer-user-light";
 declare export { default as IconComputerUserRegular } from "./generated/mistica-icons/icon-computer-user-regular";

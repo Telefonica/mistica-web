@@ -18,8 +18,6 @@ const IconSendFilled: React.FC<IconProps> = ({color, size = 24, children, ...res
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
                     d="M20.74 2.228a.717.717 0 011.048 0 .798.798 0 01.204.652c-.005.025-5.192 19.836-5.192 19.836a.381.381 0 01-.327.284h-.029a.37.37 0 01-.336-.224l-4.06-9.229-1.009 1.06a.704.704 0 01-.522.23.704.704 0 01-.521-.23.806.806 0 010-1.1L20.74 2.227zM2.215 8.186l7.748 3.753L18.64 2.83 2.277 7.454a.389.389 0 00-.275.344.392.392 0 00.213.388z"
                     fill={fillColor}
                 />
