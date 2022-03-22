@@ -34,7 +34,7 @@ const commonClasses = () => ({
         minWidth: BUTTON_MIN_WIDTH,
         textAlign: 'center',
         border: `${BORDER_PX}px solid transparent`,
-        borderRadius: 4,
+        borderRadius: 48,
         overflow: 'hidden',
         '&:hover:not([disabled])': {
             transition: `background-color ${transitionTiming}, color ${transitionTiming}, border-color ${transitionTiming}`,

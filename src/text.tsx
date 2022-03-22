@@ -171,7 +171,7 @@ export const Text10: React.FC<TextPresetProps> = (props) => (
         mobileLineHeight="40px"
         desktopSize={64}
         desktopLineHeight="72px"
-        weight="light"
+        weight="medium"
         {...props}
     >
         {props.children}
@@ -184,7 +184,7 @@ export const Text9: React.FC<TextPresetProps> = (props) => (
         mobileLineHeight="40px"
         desktopSize={56}
         desktopLineHeight="64px"
-        weight="light"
+        weight="medium"
         {...props}
     >
         {props.children}
@@ -197,7 +197,7 @@ export const Text8: React.FC<TextPresetProps> = (props) => (
         mobileLineHeight="40px"
         desktopSize={40}
         desktopLineHeight="48px"
-        weight="light"
+        weight="medium"
         {...props}
     >
         {props.children}
@@ -210,7 +210,7 @@ export const Text7: React.FC<TextPresetProps> = (props) => (
         mobileLineHeight="32px"
         desktopSize={40}
         desktopLineHeight="48px"
-        weight="light"
+        weight="medium"
         {...props}
     >
         {props.children}
@@ -223,7 +223,7 @@ export const Text6: React.FC<TextPresetProps> = (props) => (
         mobileLineHeight="32px"
         desktopSize={32}
         desktopLineHeight="40px"
-        weight="light"
+        weight="medium"
         {...props}
     >
         {props.children}
