@@ -426,14 +426,14 @@ const Button: React.FC<
 };
 
 const useButtonLinkStyles = createUseStyles((theme) => {
-    const padding = 6;
+    const padding = '6px 12px';
     return {
         link: {
             display: 'inline-block',
             width: 'auto',
             padding,
             fontWeight: 500,
-            borderRadius: 4,
+            borderRadius: 32,
             overflow: 'hidden',
             transition: `background-color ${transitionTiming}, color ${transitionTiming}`,
             color: theme.colors.textLink,
