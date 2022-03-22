@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "10.29.0",
+    "version": "11.1.0",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -124,7 +124,7 @@
     },
     "dependencies": {
         "@juggle/resize-observer": "^3.3.1",
-        "@tef-novum/webview-bridge": "^3.2.1",
+        "@tef-novum/webview-bridge": "^3.4.0",
         "@telefonica/libphonenumber": "^2.8.0",
         "classnames": "^2.3.1",
         "jss": "^10.6.0",

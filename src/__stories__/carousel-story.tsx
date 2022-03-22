@@ -10,6 +10,7 @@ import {
     IconInformationRegular,
     SectionTitle,
     Text2,
+    Image,
 } from '..';
 
 export default {
@@ -68,9 +69,7 @@ export const Default: StoryComponent<Args> = ({
                                 key={idx}
                                 title={`Title ${idx}`}
                                 description="Some description"
-                                media={{
-                                    src: 'https://i.imgur.com/flZfkiX.png',
-                                }}
+                                media={<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />}
                                 buttonLink={<ButtonLink href="https://google.com">Link {idx}</ButtonLink>}
                             />
                         ))}

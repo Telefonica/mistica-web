@@ -17,8 +17,6 @@ const IconCloudFilled: React.FC<IconProps> = ({color, size = 24, children, ...re
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
-                fillRule="evenodd"
-                clipRule="evenodd"
                 d="M16.623 19.056H6.203a4.06 4.06 0 01-4.053-4.054c0-.904.314-1.77.907-2.504a4.242 4.242 0 012.045-1.395c.053-1.627.628-3.11 1.633-4.19 1.073-1.157 2.58-1.793 4.238-1.793a6.224 6.224 0 015.594 3.51h.06a5.22 5.22 0 015.215 5.215c0 2.877-2.345 5.21-5.219 5.21z"
                 fill={fillColor}
             />

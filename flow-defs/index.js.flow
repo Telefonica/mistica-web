@@ -17,7 +17,7 @@ declare export { default as ButtonLayout } from "./button-layout";
 declare export { default as FixedFooterLayout } from "./fixed-footer-layout";
 declare export { default as ButtonFixedFooterLayout } from "./button-fixed-footer-layout";
 declare export { default as Snackbar } from "./snackbar";
-declare export { Portal, usePortalNodes } from "./portal";
+declare export { Portal } from "./portal";
 declare export { default as LoadingBar } from "./loading-bar";
 declare export {
   default as FixedToTop,
@@ -127,9 +127,7 @@ declare export { default as PasswordField } from "./password-field";
 declare export { default as DoubleField } from "./double-field";
 declare export { default as IbanField } from "./iban-field";
 declare export { useForm, useFieldProps } from "./form-context";
-declare export { default as IconClose } from "./icons/icon-close";
 declare export { default as IconInfo } from "./icons/icon-info";
-declare export { default as IconArrowDown } from "./icons/icon-arrow-down";
 declare export { default as IconChevron } from "./icons/icon-chevron";
 declare export { default as IconError } from "./icons/icon-error";
 declare export { default as IconSuccess } from "./icons/icon-success";
@@ -478,7 +476,6 @@ declare export { default as IconComputerAcademicRegular } from "./generated/mist
 declare export { default as IconComputerFilled } from "./generated/mistica-icons/icon-computer-filled";
 declare export { default as IconComputerLight } from "./generated/mistica-icons/icon-computer-light";
 declare export { default as IconComputerRegular } from "./generated/mistica-icons/icon-computer-regular";
-declare export { default as IconComputerRegularDuplicateName } from "./generated/mistica-icons/icon-computer-regular-duplicate-name";
 declare export { default as IconComputerUserFilled } from "./generated/mistica-icons/icon-computer-user-filled";
 declare export { default as IconComputerUserLight } from "./generated/mistica-icons/icon-computer-user-light";
 declare export { default as IconComputerUserRegular } from "./generated/mistica-icons/icon-computer-user-regular";

@@ -50,7 +50,7 @@ export const Default: StoryComponent<MenuArgs> = ({position}) => {
                     position={position}
                     width={400}
                     renderTarget={({ref, onPress, isMenuOpen}) => (
-                        <Touchable elementRef={ref} onPress={onPress} style={{width: 100}}>
+                        <Touchable ref={ref} onPress={onPress} style={{width: 100}}>
                             <Inline space={16}>
                                 <IconKebabMenuLight />
                                 <Text3 regular>{isMenuOpen ? 'Close' : 'Open'}</Text3>

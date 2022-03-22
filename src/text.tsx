@@ -32,15 +32,7 @@ const useStyles = createUseStyles((theme) => {
     return {
         text: {
             lineHeight: ({desktopLineHeight}) => pxToRem(desktopLineHeight),
-            textTransform: ({uppercase, transform}) => {
-                if (uppercase) {
-                    return 'uppercase';
-                }
-                if (transform) {
-                    return transform;
-                }
-                return 'inherit';
-            },
+            textTransform: ({transform}) => transform || 'inherit',
             fontSize: ({desktopSize}) => pxToRem(desktopSize),
             fontWeight: ({weight}) => (weight ? mapToWeight[weight] : 'inherit'),
             color: ({isInverse, color = theme.colors.textPrimary}) =>
@@ -71,14 +63,10 @@ type FontWeight = 'light' | 'regular' | 'medium';
 
 export interface TextPresetProps {
     color?: string;
-    /** @deprecated use decoration prop */
-    textDecoration?: 'underline' | 'line-through' | 'none';
     decoration?: 'underline' | 'line-through' | 'inherit' | 'none';
     transform?: 'uppercase' | 'capitalize' | 'lowercase' | 'inherit' | 'none';
     children?: React.ReactNode;
     truncate?: boolean | number;
-    /** @deprecated use transform */
-    uppercase?: boolean;
     wordBreak?: boolean;
     id?: string;
     as?: React.ComponentType<any> | string;
@@ -107,10 +95,8 @@ interface TextProps extends TextPresetProps {
 export const Text: React.FC<TextProps> = ({
     weight,
     color,
-    textDecoration,
-    decoration = textDecoration,
+    decoration,
     truncate,
-    uppercase,
     transform,
     wordBreak,
     as = 'span',
@@ -137,7 +123,6 @@ export const Text: React.FC<TextProps> = ({
         weight,
         color,
         decoration,
-        uppercase,
         transform,
         wordBreak,
         letterSpacing,

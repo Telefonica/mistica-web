@@ -1,12 +1,10 @@
 import * as React from 'react';
-import {MediaCard, DataCard, Inline, ButtonPrimary, ButtonLink, IconAcademicLight} from '../..';
+import {MediaCard, DataCard, Inline, Image, ButtonPrimary, ButtonLink, IconAcademicLight} from '../..';
 
 const CardsTest: React.FC = () => (
     <Inline space={16}>
         <MediaCard
-            media={{
-                src: 'https://i.imgur.com/flZfkiX.png',
-            }}
+            media={<Image aspectRatio="16:9" src="https://i.imgur.com/flZfkiX.png" />}
             headline="headline"
             pretitle="pretitle"
             title="title"

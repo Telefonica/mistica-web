@@ -18,8 +18,6 @@ const IconChevronLeftLight: React.FC<IconProps> = ({color, size = 24, children, 
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
                     d="M14.539 18.486a.248.248 0 01-.195.087.248.248 0 01-.194-.087l-6.067-6.284a.282.282 0 010-.4l7.447-7.716a.259.259 0 01.387 0 .282.282 0 010 .4L8.664 12l5.875 6.086a.282.282 0 010 .4zM15.447 20a.563.563 0 01-.553-.573c0-.316.248-.573.553-.573.306 0 .553.257.553.573a.563.563 0 01-.553.573z"
                     fill={fillColor}
                 />

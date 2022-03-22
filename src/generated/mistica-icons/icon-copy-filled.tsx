@@ -17,8 +17,6 @@ const IconCopyFilled: React.FC<IconProps> = ({color, size = 24, children, ...res
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
-                fillRule="evenodd"
-                clipRule="evenodd"
                 d="M16.084 7.602h4.143c.804 0 1.46.656 1.456 1.46v11.165c0 .804-.655 1.46-1.46 1.46H9.062a1.463 1.463 0 01-1.459-1.46v-4.143h-4.09c-.831 0-1.51-.678-1.51-1.51V3.51c0-.832.679-1.51 1.51-1.51h11.062c.832 0 1.51.678 1.51 1.51v4.092zM3.274 3.507v11.064c0 .132.104.236.236.236h11.06a.237.237 0 00.236-.236V3.507a.237.237 0 00-.236-.235H3.51a.237.237 0 00-.236.235z"
                 fill={fillColor}
             />

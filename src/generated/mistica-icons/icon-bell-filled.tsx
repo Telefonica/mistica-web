@@ -18,8 +18,6 @@ const IconBellFilled: React.FC<IconProps> = ({color, size = 24, children, ...res
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
                     d="M19.083 11.644c0 2.144.7 4.284 1.958 6 .172.212.176.504.07.752-.106.248-.352.392-.63.392H3.702c-.281 0-.524-.14-.63-.392-.106-.252-.106-.536.07-.752a10.251 10.251 0 001.958-6v-2.5C5.1 5.216 8.247 2 12.092 2c3.844 0 6.991 3.216 6.991 7.144v2.5zM12.096 22c-1.296 0-2.38-.928-2.694-2.144h5.387C14.472 21.072 13.39 22 12.096 22z"
                     fill={fillColor}
                 />

@@ -13,7 +13,6 @@ import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
 import TabFocus from './tab-focus';
-import {PortalNodesProvider} from './portal';
 import ModalContextProvider from './modal-context-provider';
 import {DocumentVisibilityProvider} from './utils/document-visibility';
 
@@ -143,23 +142,21 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) =>
     }, [theme, isOsDarkModeEnabled]);
 
     return (
-        <PortalNodesProvider>
-            <JssProvider jss={getJss()} classNamePrefix={classNamePrefix} generateId={generateId}>
-                <TabFocus disabled={!theme.enableTabFocus}>
-                    <ModalContextProvider>
-                        <ThemeContext.Provider value={contextTheme}>
-                            <DocumentVisibilityProvider>
-                                <AriaIdGetterContext.Provider value={getAriaId}>
-                                    <ScreenSizeContextProvider>
-                                        <DialogRoot>{children}</DialogRoot>
-                                    </ScreenSizeContextProvider>
-                                </AriaIdGetterContext.Provider>
-                            </DocumentVisibilityProvider>
-                        </ThemeContext.Provider>
-                    </ModalContextProvider>
-                </TabFocus>
-            </JssProvider>
-        </PortalNodesProvider>
+        <JssProvider jss={getJss()} classNamePrefix={classNamePrefix} generateId={generateId}>
+            <TabFocus disabled={!theme.enableTabFocus}>
+                <ModalContextProvider>
+                    <ThemeContext.Provider value={contextTheme}>
+                        <DocumentVisibilityProvider>
+                            <AriaIdGetterContext.Provider value={getAriaId}>
+                                <ScreenSizeContextProvider>
+                                    <DialogRoot>{children}</DialogRoot>
+                                </ScreenSizeContextProvider>
+                            </AriaIdGetterContext.Provider>
+                        </DocumentVisibilityProvider>
+                    </ThemeContext.Provider>
+                </ModalContextProvider>
+            </TabFocus>
+        </JssProvider>
     );
 };
 

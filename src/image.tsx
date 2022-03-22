@@ -51,22 +51,7 @@ export type ImageProps = {
     noBorderRadius?: boolean;
 };
 
-/** @deprecated */
-type DeprecatedImageProps = {
-    url: string;
-    src?: undefined;
-    width?: number;
-    height?: number;
-    /** defaults to 1:1, if both width and height are given, aspectRatio is ignored */
-    aspectRatio?: AspectRatio;
-    /** defaults to empty string */
-    alt?: string;
-    dataAttributes?: DataAttributes;
-    children?: void;
-    noBorderRadius?: boolean;
-};
-
-const Image = React.forwardRef<HTMLImageElement, ImageProps | DeprecatedImageProps>(
+const Image = React.forwardRef<HTMLImageElement, ImageProps>(
     ({aspectRatio = '1:1', alt = '', dataAttributes, noBorderRadius, ...props}, ref) => {
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
         const noBorderRadiusContext = useDisableBorderRadius();
