@@ -1,7 +1,7 @@
 import * as React from 'react';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
-import {useIsInViewport, useScreenSize, useTheme} from './hooks';
+import {useIsInViewport, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
 import {createUseStyles} from './jss';
 import Stack from './stack';
@@ -129,6 +129,8 @@ const useStyles = createUseStyles((theme) => ({
             },
         },
     },
+    hasScroll: {},
+    centered: {},
     carousel: {
         display: 'flex',
         overflowX: 'auto',
@@ -136,12 +138,14 @@ const useStyles = createUseStyles((theme) => ({
         scrollSnapType: ({free}) => (free ? 'initial' : 'x mandatory'),
         ...hideScrollbar,
         [theme.mq.tabletOrSmaller]: {
-            margin: ({sideMargin}) => `0 -${sideMargin}px`,
-            '&::before, &::after': {
+            '&$hasScroll': {
+                margin: ({sideMargin}) => `0 -${sideMargin}px`,
+            },
+            '&$centered::before, &$centered::after': {
                 content: '""',
                 flexShrink: 0,
                 display: 'block',
-                width: ({centered}) => (centered ? '25%' : 0),
+                width: '25%',
             },
         },
     },
@@ -159,28 +163,38 @@ const useStyles = createUseStyles((theme) => ({
             scrollMargin: 0,
         },
         [theme.mq.tabletOrSmaller]: {
-            scrollSnapAlign: ({centered}) => (centered ? 'center' : 'start'),
-            scrollMargin: ({mobilePageOffsetConfig}) => `${mobilePageOffsetConfig.prev}px`,
-            width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap}) =>
-                // prettier-ignore
-                `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile}px)`,
+            width: ({itemsPerPageConfig, gap}) =>
+                `calc(${100 / itemsPerPageConfig.mobile}% + ${gap / itemsPerPageConfig.mobile}px)`,
             '&:first-child': {
-                paddingLeft: ({centered, sideMargin}) => (centered ? 0 : sideMargin),
-                width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap, centered, sideMargin}) =>
+                width: ({itemsPerPageConfig, gap}) =>
                     // prettier-ignore
-                    `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile + gap - (centered ? 0 : sideMargin)}px)`,
+                    `calc(${100 / itemsPerPageConfig.mobile}% - ${(gap * (itemsPerPageConfig.mobile - 1)) / itemsPerPageConfig.mobile}px)`,
             },
-            '&:last-child': {
-                paddingRight: ({sideMargin}) => sideMargin,
-                width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap, centered, sideMargin}) =>
+
+            scrollSnapAlign: 'start',
+            scrollMargin: ({mobilePageOffsetConfig}) => `${mobilePageOffsetConfig.prev}px`,
+
+            '$hasScroll:not($centered) &': {
+                width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap}) =>
                     // prettier-ignore
-                    `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile - (centered ? 0 : sideMargin)}px)`,
+                    `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile}px)`,
+                '&:first-child': {
+                    paddingLeft: ({sideMargin}) => sideMargin,
+                    width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap, sideMargin}) =>
+                        // prettier-ignore
+                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile + gap - sideMargin}px)`,
+                },
+                '&:last-child': {
+                    paddingRight: ({sideMargin}) => sideMargin,
+                    width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap, sideMargin}) =>
+                        // prettier-ignore
+                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile - sideMargin}px)`,
+                },
             },
-            '.centered &': {
+
+            '$centered &': {
                 width: () => '50%',
-                paddingLeft: () => 0,
-                paddingRight: () => 0,
-                scrollSnapAlign: () => 'center',
+                scrollSnapAlign: 'center',
                 scrollMargin: () => 0,
             },
         },
@@ -304,7 +318,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const {isDesktopOrBigger} = useScreenSize();
     const gap: number = gapProp ?? (isDesktopOrBigger ? 16 : 8);
     const sideMargin = useResonsiveLayoutMargin();
-    const classes = useStyles({itemsPerPageConfig, mobilePageOffsetConfig, free, gap, centered, sideMargin});
+    const classes = useStyles({itemsPerPageConfig, mobilePageOffsetConfig, free, gap, sideMargin});
     const carouselRef = React.useRef<HTMLDivElement>(null);
     const itemsPerPageFloor = isDesktopOrBigger
         ? Math.floor(itemsPerPageConfig.desktop)
@@ -321,7 +335,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const showNextArrow = scrollRight !== 0;
     const showPrevArrow = scrollLeft !== 0;
 
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         if (carouselRef.current) {
             const carouselEl = carouselRef.current;
 
@@ -450,7 +464,10 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
             );
             const shownItemIndexes = [];
             for (let i = 0; i < itemsPerPageFloor; i++) {
-                shownItemIndexes.unshift(lastShownItemIndex - i);
+                const idx = lastShownItemIndex - i;
+                if (idx >= 0) {
+                    shownItemIndexes.unshift(idx);
+                }
             }
             onPageChange({pageIndex: currentPageIndex, shownItemIndexes});
         }
@@ -461,7 +478,9 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     if (renderBullets) {
         bullets = renderBullets({numPages: pagesCount, currentIndex: currentPageIndex, onPress: goToPage});
     } else if (withBullets) {
-        bullets = <PageBullets numPages={pagesCount} currentIndex={currentPageIndex} onPress={goToPage} />;
+        bullets = pagesCount > 1 && (
+            <PageBullets numPages={pagesCount} currentIndex={currentPageIndex} onPress={goToPage} />
+        );
     }
 
     return (
@@ -477,7 +496,13 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                         <IconChevronLeftRegular />
                     </Touchable>
                 </ThemeVariant>
-                <div className={classNames(classes.carousel, {centered})} ref={carouselRef}>
+                <div
+                    className={classNames(classes.carousel, {
+                        [classes.centered]: centered,
+                        [classes.hasScroll]: pagesCount > 1,
+                    })}
+                    ref={carouselRef}
+                >
                     {items.map((item, index) => (
                         <div key={index} className={classes.item} data-item>
                             {item}
@@ -720,7 +745,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
                     <IconChevronRightRegular />
                 </Touchable>
             </ThemeVariant>
-            {withBullets && (
+            {withBullets && items.length > 1 && (
                 <ThemeVariant isInverse>
                     <div className={classes.bullets}>
                         <PageBullets numPages={items.length} currentIndex={currentIndex} />
