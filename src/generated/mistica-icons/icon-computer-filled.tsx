@@ -18,8 +18,6 @@ const IconComputerFilled: React.FC<IconProps> = ({color, size = 24, children, ..
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
                     d="M18.787 5c.782 0 1.426.647 1.426 1.442h.005v7.947H3.792V6.442c0-.79.64-1.442 1.426-1.442h13.569zM2 15.832v-.36h20v.36C22 17.024 21.036 18 19.857 18H4.144C2.964 18 2 17.024 2 15.832z"
                     fill={fillColor}
                 />
@@ -29,8 +27,6 @@ const IconComputerFilled: React.FC<IconProps> = ({color, size = 24, children, ..
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
                     d="M5.602 17.999l12.804.008c1.118 0 1.986-.31 2.58-.927.572-.591.86-1.437.86-2.512V8.29c0-2.199-1.221-3.412-3.44-3.412L5.6 4.87c-2.219 0-3.44 1.21-3.44 3.412v6.277c0 1.076.288 1.922.863 2.513.59.616 1.459.927 2.58.927zM2.72 20.212l18.566.008c.308 0 .56-.252.56-.56a.562.562 0 00-.56-.56L2.72 19.09a.562.562 0 00-.56.56c0 .309.252.56.56.56z"
                     fill={fillColor}
                 />

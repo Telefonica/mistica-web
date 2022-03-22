@@ -18,8 +18,6 @@ const IconSearchRegular: React.FC<IconProps> = ({color, size = 24, children, ...
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
                     d="M15.893 15.528l5.9 6.191a.781.781 0 01-.003 1.063.695.695 0 01-1.009 0l-5.9-6.195c-1.364 1.192-3.116 1.91-5.024 1.91-4.333 0-7.857-3.7-7.857-8.248C2 5.7 5.524 2 9.857 2c4.332 0 7.86 3.7 7.856 8.253a8.469 8.469 0 01-1.82 5.275zM9.857 3.5c-3.545 0-6.429 3.029-6.429 6.75S6.312 17 9.857 17c3.544 0 6.428-3.029 6.428-6.75S13.401 3.5 9.857 3.5z"
                     fill={fillColor}
                 />
@@ -29,8 +27,6 @@ const IconSearchRegular: React.FC<IconProps> = ({color, size = 24, children, ...
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
                     d="M9.871 17.605A7.846 7.846 0 014.322 4.21a7.848 7.848 0 0111.473 10.677l5.704 5.704a.561.561 0 01-.793.793l-5.697-5.697a7.792 7.792 0 01-5.138 1.918zm0-14.571a6.726 6.726 0 00-4.756 11.482 6.728 6.728 0 009.512-.037 6.724 6.724 0 000-9.473 6.672 6.672 0 00-4.756-1.972z"
                     fill={fillColor}
                 />

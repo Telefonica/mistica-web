@@ -463,7 +463,6 @@ export {default as IconComputerAcademicRegular} from './generated/mistica-icons/
 export {default as IconComputerFilled} from './generated/mistica-icons/icon-computer-filled';
 export {default as IconComputerLight} from './generated/mistica-icons/icon-computer-light';
 export {default as IconComputerRegular} from './generated/mistica-icons/icon-computer-regular';
-export {default as IconComputerRegularDuplicateName} from './generated/mistica-icons/icon-computer-regular-duplicate-name';
 export {default as IconComputerUserFilled} from './generated/mistica-icons/icon-computer-user-filled';
 export {default as IconComputerUserLight} from './generated/mistica-icons/icon-computer-user-light';
 export {default as IconComputerUserRegular} from './generated/mistica-icons/icon-computer-user-regular';
