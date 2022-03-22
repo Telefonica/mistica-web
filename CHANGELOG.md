@@ -1,3 +1,15 @@
+# [11.1.0](https://github.com/Telefonica/mistica-web/compare/v11.0.0...v11.1.0) (2022-03-22)
+
+
+### Bug Fixes
+
+* **icons:** removed unneeded evenodd prop ([#446](https://github.com/Telefonica/mistica-web/issues/446)) ([7761aef](https://github.com/Telefonica/mistica-web/commit/7761aefcf0dce1cddf55042e82d02e5ebcde53d6))
+
+
+### Features
+
+* **webview-bridge:** bump version ([#447](https://github.com/Telefonica/mistica-web/issues/447)) ([3f5dc1f](https://github.com/Telefonica/mistica-web/commit/3f5dc1f596ebc0f2a96564440ed906f17e0803a5))
+
 # [11.0.0](https://github.com/Telefonica/mistica-web/compare/v10.29.0...v11.0.0) (2022-03-18)
 
 
