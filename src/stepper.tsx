@@ -94,7 +94,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         width: '100%',
         margin: '0 8px',
         background: colors.control,
-        borderRadius: 4,
+        borderRadius: 8,
         overflow: 'hidden',
 
         '&:last-child': {
