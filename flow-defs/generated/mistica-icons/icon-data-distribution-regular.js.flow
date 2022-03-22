@@ -1,0 +1,6 @@
+// @flow
+
+import * as React from "react";
+import type { IconProps } from "../../utils/types";
+declare var IconDataDistributionRegular: React.ComponentType<IconProps>;
+declare export default typeof IconDataDistributionRegular;

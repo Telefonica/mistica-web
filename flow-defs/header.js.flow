@@ -7,11 +7,6 @@ import type { RendersElement, RendersNullableElement } from "./utils/types";
 import type { TextPresetProps } from "./text";
 declare type OverridableTextProps = {
   color?: $PropertyType<TextPresetProps, "color">,
-
-  /**
-   * @deprecated use decoration prop
-   */
-  textDecoration?: $PropertyType<TextPresetProps, "textDecoration">,
   decoration?: $PropertyType<TextPresetProps, "decoration">,
   truncate?: $PropertyType<TextPresetProps, "truncate">,
 };

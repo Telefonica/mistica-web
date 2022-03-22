@@ -17,8 +17,6 @@ import type {TextPresetProps} from './text';
 
 type OverridableTextProps = {
     color?: TextPresetProps['color'];
-    /** @deprecated use decoration prop */
-    textDecoration?: TextPresetProps['textDecoration'];
     decoration?: TextPresetProps['decoration'];
     truncate?: TextPresetProps['truncate'];
 };
