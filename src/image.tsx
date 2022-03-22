@@ -18,7 +18,7 @@ export const DisableBorderRadiusProvider: React.FC = ({children}) => (
 
 const useStyles = createUseStyles(() => ({
     image: {
-        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
+        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 8),
         display: 'block',
         objectFit: 'cover',
         maxWidth: '100%',

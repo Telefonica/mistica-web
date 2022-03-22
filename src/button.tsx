@@ -426,7 +426,7 @@ const Button: React.FC<
 };
 
 const useButtonLinkStyles = createUseStyles((theme) => {
-    const padding = '6px 12px';
+    const padding = '6px';
     return {
         link: {
             display: 'inline-block',
