@@ -48,8 +48,13 @@ const config = {
                     ],
                 },
                 {
-                    test: /(reset|roboto)\.css$/,
+                    test: /(reset|roboto|on-air)\.css$/,
                     use: ['style-loader', 'css-loader'],
+                },
+                {
+                    test: /\.(woff2)$/,
+                    loaders: ['file-loader'],
+                    include: path.resolve(__dirname, '../'),
                 },
             ],
         },
