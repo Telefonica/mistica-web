@@ -25,8 +25,6 @@ const IconChipDeviceLight: React.FC<IconProps> = ({color, size = 24, children, .
                 fill={fillColor}
             />
             <path
-                fillRule="evenodd"
-                clipRule="evenodd"
                 d="M18.586 13.775h-3.375a.281.281 0 01-.28-.28V9.95a.28.28 0 01.28-.28h3.375a.28.28 0 01.28.28v3.543a.282.282 0 01-.28.283zm-.28-1.686v-.734h-2.814v.734h2.814zm-1.129-1.294v-.566h-.563v.566h.563zm-1.123 0v-.566h-.563v.566h.563zm-.56 1.854v.566h.56v-.566h-.56zm1.12 0v.566h.563v-.566h-.563zm1.692-1.854h-.568v-.566h.568v.566zm0 2.42v-.566h-.568v.566h.568z"
                 fill={fillColor}
             />
