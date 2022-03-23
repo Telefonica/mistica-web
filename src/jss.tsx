@@ -38,7 +38,11 @@ type ClassDefinition = {
               [cssProp: string]:
                   | CSSValue
                   | {
-                        [cssProp: string]: CSSValue;
+                        [cssProp: string]:
+                            | CSSValue
+                            | {
+                                  [cssProp: string]: CSSValue;
+                              };
                     };
           };
 };

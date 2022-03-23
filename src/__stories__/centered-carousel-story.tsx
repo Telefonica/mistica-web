@@ -45,7 +45,7 @@ export const Default: StoryComponent<Args> = ({numItems}) => {
                                     <Text2 regular>Page {bulletsProps.currentIndex}</Text2>
                                 </div>
                                 <div style={centerStyle}>
-                                    <PageBullets {...bulletsProps} />
+                                    {bulletsProps.numPages > 1 && <PageBullets {...bulletsProps} />}
                                 </div>
                             </Stack>
                         )}
