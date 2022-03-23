@@ -82,6 +82,19 @@ export const Default: StoryComponent = () => {
                     </ButtonPrimary>
                 </Inline>
             </Stack>
+
+            <Stack space={16}>
+                <SectionTitle>Aspect ratio</SectionTitle>
+                <Video src={VIDEO_SRC} width={480} aspectRatio="16:9" />
+                <Video src={VIDEO_SRC} width={480} aspectRatio="4:3" />
+            </Stack>
+
+            <Stack space={16}>
+                <SectionTitle>Aspect ratio width 100%</SectionTitle>
+                <Video src={VIDEO_SRC} aspectRatio="16:9" />
+                <Video src={VIDEO_SRC} aspectRatio="4:3" />
+                <div>aaaaa</div>
+            </Stack>
         </Stack>
     );
 };

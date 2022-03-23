@@ -17,12 +17,22 @@ export const RATIO = {
 
 const useStyles = createUseStyles(() => ({
     video: {
-        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
         display: 'block',
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        top: 0,
+        left: 0,
+        objectFit: 'cover',
+    },
+
+    wrapper: {
+        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
+        overflow: 'hidden',
         maxWidth: '100%',
         maxHeight: '100%',
-        objectFit: 'cover',
-        aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
+        position: 'relative',
+        paddingTop: ({aspectRatio}) => (aspectRatio ? `${100 / aspectRatio}%` : 'initial'),
     },
 }));
 
@@ -109,26 +119,28 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         }
 
         return (
-            <video
-                ref={combineRefs(ref, videoRef)}
-                playsInline
-                disablePictureInPicture
-                disableRemotePlayback
-                autoPlay={autoPlay}
-                muted={muted}
-                loop={loop}
-                width={width}
-                height={height}
-                className={classes.video}
-                preload={preload}
-                // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
-                poster={poster || TRANSPARENT_PIXEL}
-                {...getPrefixedDataAttributes(dataAttributes)}
-            >
-                {sources.map(({src, type}, index) => (
-                    <source key={index} src={src} type={type} />
-                ))}
-            </video>
+            <div style={{width, height}} className={classes.wrapper}>
+                <video
+                    ref={combineRefs(ref, videoRef)}
+                    playsInline
+                    disablePictureInPicture
+                    disableRemotePlayback
+                    autoPlay={autoPlay}
+                    muted={muted}
+                    loop={loop}
+                    width={width}
+                    height={height}
+                    className={classes.video}
+                    preload={preload}
+                    // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
+                    poster={poster || TRANSPARENT_PIXEL}
+                    {...getPrefixedDataAttributes(dataAttributes)}
+                >
+                    {sources.map(({src, type}, index) => (
+                        <source key={index} src={src} type={type} />
+                    ))}
+                </video>
+            </div>
         );
     }
 );
