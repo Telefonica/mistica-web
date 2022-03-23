@@ -128,8 +128,6 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                     autoPlay={autoPlay}
                     muted={muted}
                     loop={loop}
-                    width={width}
-                    height={height}
                     className={classes.video}
                     preload={preload}
                     // This transparent pixel fallback avoids showing the ugly "play" image in android webviews

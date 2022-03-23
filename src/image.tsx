@@ -18,12 +18,21 @@ export const DisableBorderRadiusProvider: React.FC = ({children}) => (
 
 const useStyles = createUseStyles(() => ({
     image: {
-        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
         display: 'block',
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        top: 0,
+        left: 0,
         objectFit: 'cover',
+    },
+    wrapper: {
+        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
+        overflow: 'hidden',
         maxWidth: '100%',
         maxHeight: '100%',
-        aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
+        position: 'relative',
+        paddingTop: ({aspectRatio}) => (aspectRatio ? `${100 / aspectRatio}%` : 'initial'),
     },
 }));
 
@@ -38,7 +47,6 @@ export const RATIO = {
 
 export type ImageProps = {
     src: string;
-    url?: undefined;
     /** defaults to 100% when no width and no height are given */
     width?: string | number;
     height?: string | number;
@@ -52,7 +60,7 @@ export type ImageProps = {
 };
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
-    ({aspectRatio = '1:1', alt = '', dataAttributes, noBorderRadius, ...props}, ref) => {
+    ({aspectRatio = '1:1', alt = '', dataAttributes, noBorderRadius, src, ...props}, ref) => {
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
         const noBorderRadiusContext = useDisableBorderRadius();
         const noBorderSetting = noBorderRadius ?? noBorderRadiusContext;
@@ -60,7 +68,6 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
             noBorderRadius: noBorderSetting,
             aspectRatio: !props.width && !props.height ? ratio : undefined,
         });
-        const url = props.src || props.url;
 
         let width: number | string | undefined = props.width;
         let height = props.height;
@@ -69,23 +76,23 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
             width = props.width;
             height = props.height;
         } else if (props.width !== undefined) {
-            height = typeof props.width === 'number' ? props.width / ratio : `calc(${props.width} / ratio)`;
+            height = typeof props.width === 'number' ? props.width / ratio : undefined;
         } else if (props.height !== undefined) {
-            width = typeof props.height === 'number' ? props.height * ratio : `calc(${props.height} * ratio)`;
+            width = typeof props.height === 'number' ? props.height * ratio : undefined;
         } else {
             width = '100%';
         }
 
         return (
-            <img
-                {...getPrefixedDataAttributes(dataAttributes)}
-                ref={ref}
-                src={url}
-                className={classes.image}
-                alt={alt}
-                width={width}
-                height={height}
-            />
+            <div style={{width, height}} className={classes.wrapper}>
+                <img
+                    {...getPrefixedDataAttributes(dataAttributes)}
+                    ref={ref}
+                    src={src}
+                    className={classes.image}
+                    alt={alt}
+                />
+            </div>
         );
     }
 );
