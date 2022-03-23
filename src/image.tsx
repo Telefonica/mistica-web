@@ -21,10 +21,11 @@ const useStyles = createUseStyles(() => ({
     image: {
         display: 'block',
         objectFit: 'cover',
+        maxWidth: '100%',
+        maxHeight: '100%',
+
         '@supports (aspect-ratio: 1 / 1)': {
             borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
-            maxWidth: '100%',
-            maxHeight: '100%',
             aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
         },
         '$wrapper &': {
@@ -41,7 +42,15 @@ const useStyles = createUseStyles(() => ({
         maxWidth: '100%',
         maxHeight: '100%',
         position: 'relative',
-        paddingTop: ({aspectRatio}) => (aspectRatio ? `${100 / aspectRatio}%` : 'initial'),
+        paddingTop: ({aspectRatio, width}) => {
+            if (!aspectRatio) {
+                return 'initial';
+            }
+            if (width && typeof width === 'string' && width.endsWith('%')) {
+                return `${Number(width.replace('%', '')) / aspectRatio}%`;
+            }
+            return `${100 / aspectRatio}%`;
+        },
     },
 }));
 
@@ -71,12 +80,17 @@ export type ImageProps = {
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
     ({aspectRatio = '1:1', alt = '', dataAttributes, noBorderRadius, src, ...props}, ref) => {
         const supportsAspectRatio = useSupportsAspectRatio();
-        const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
         const noBorderRadiusContext = useDisableBorderRadius();
         const noBorderSetting = noBorderRadius ?? noBorderRadiusContext;
+
+        // if width or height are numeric, we can calculate the other with the ratio without css
+        const withCssAspectRatio = typeof props.width !== 'number' && typeof props.height !== 'number';
+        const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
+
         const classes = useStyles({
             noBorderRadius: noBorderSetting,
-            aspectRatio: !props.width && !props.height ? ratio : undefined,
+            aspectRatio: withCssAspectRatio ? ratio : undefined,
+            width: props.width,
         });
 
         let width: number | string | undefined = props.width;
@@ -85,13 +99,15 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
         if (props.width !== undefined && props.height !== undefined) {
             width = props.width;
             height = props.height;
-        } else if (props.width !== undefined) {
-            height = typeof props.width === 'number' ? props.width / ratio : undefined;
-        } else if (props.height !== undefined) {
-            width = typeof props.height === 'number' ? props.height * ratio : undefined;
+        } else if (typeof props.width === 'number') {
+            height = props.width / ratio;
+        } else if (typeof props.height === 'number') {
+            width = props.height * ratio;
         } else {
-            width = '100%';
+            width = props.width || '100%';
         }
+
+        const needsWrapper = withCssAspectRatio && !supportsAspectRatio;
 
         const img = (
             <img
@@ -100,18 +116,18 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
                 src={src}
                 className={classes.image}
                 alt={alt}
-                {...(supportsAspectRatio ? {width, height} : {})}
+                {...(!needsWrapper ? {width, height} : {})}
             />
         );
 
-        if (supportsAspectRatio) {
-            return img;
-        } else {
+        if (needsWrapper) {
             return (
                 <div style={{width, height}} className={classes.wrapper}>
                     {img}
                 </div>
             );
+        } else {
+            return img;
         }
     }
 );

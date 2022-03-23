@@ -20,10 +20,11 @@ const useStyles = createUseStyles(() => ({
     video: {
         display: 'block',
         objectFit: 'cover',
+        maxWidth: '100%',
+        maxHeight: '100%',
+
         '@supports (aspect-ratio: 1 / 1)': {
             borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
-            maxWidth: '100%',
-            maxHeight: '100%',
             aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
         },
         '$wrapper &': {
@@ -40,7 +41,15 @@ const useStyles = createUseStyles(() => ({
         maxWidth: '100%',
         maxHeight: '100%',
         position: 'relative',
-        paddingTop: ({aspectRatio}) => (aspectRatio ? `${100 / aspectRatio}%` : 'initial'),
+        paddingTop: ({aspectRatio, width}) => {
+            if (!aspectRatio) {
+                return 'initial';
+            }
+            if (width && typeof width === 'string' && width.endsWith('%')) {
+                return `${Number(width.replace('%', '')) / aspectRatio}%`;
+            }
+            return `${100 / aspectRatio}%`;
+        },
     },
 }));
 
@@ -55,10 +64,10 @@ const TRANSPARENT_PIXEL =
 
 export type VideoProps = {
     /** defaults to 100% when no width and no height are given */
-    width?: number;
-    height?: number;
+    width?: string | number;
+    height?: string | number;
     /** defaults to 1:1, if both width and height are given, aspectRatio is ignored */
-    aspectRatio?: AspectRatio;
+    aspectRatio?: AspectRatio | number;
     /** accepts multiple sources */
     src: string | Array<string> | VideoSource | Array<VideoSource>;
     /** defaults to true */
@@ -91,9 +100,15 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
     ) => {
         const supportsAspectRatio = useSupportsAspectRatio();
         const noBorderRadius = useDisableBorderRadius();
+
+        // if width or height are numeric, we can calculate the other with the ratio without css
+        const withCssAspectRatio = typeof props.width !== 'number' && typeof props.height !== 'number';
+        const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
+
         const classes = useStyles({
             noBorderRadius,
-            aspectRatio: !props.width && !props.height ? RATIO[aspectRatio] : undefined,
+            aspectRatio: withCssAspectRatio ? ratio : undefined,
+            width: props.width,
         });
         const videoRef = React.useRef<HTMLVideoElement | null>(null);
 
@@ -119,13 +134,15 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         if (props.width !== undefined && props.height !== undefined) {
             width = props.width;
             height = props.height;
-        } else if (props.width !== undefined) {
-            height = props.width / RATIO[aspectRatio];
-        } else if (props.height !== undefined) {
-            width = props.height * RATIO[aspectRatio];
+        } else if (typeof props.width === 'number') {
+            height = props.width / ratio;
+        } else if (typeof props.height === 'number') {
+            width = props.height * ratio;
         } else {
-            width = '100%';
+            width = props.width || '100%';
         }
+
+        const needsWrapper = withCssAspectRatio && !supportsAspectRatio;
 
         const video = (
             <video
@@ -136,7 +153,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 autoPlay={autoPlay}
                 muted={muted}
                 loop={loop}
-                {...(supportsAspectRatio ? {width, height} : {})}
+                {...(!needsWrapper ? {width, height} : {})}
                 className={classes.video}
                 preload={preload}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
@@ -148,14 +165,14 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 ))}
             </video>
         );
-        if (supportsAspectRatio) {
-            return video;
-        } else {
+        if (needsWrapper) {
             return (
                 <div style={{width, height}} className={classes.wrapper}>
                     {video}
                 </div>
             );
+        } else {
+            return video;
         }
     }
 );
