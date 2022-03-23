@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {useDisableBorderRadius} from './image';
 import {createUseStyles} from './jss';
+import {useSupportsAspectRatio} from './utils/aspect-ratio-support';
 import {combineRefs} from './utils/common';
 import {getPrefixedDataAttributes} from './utils/dom';
 
@@ -18,14 +19,21 @@ export const RATIO = {
 const useStyles = createUseStyles(() => ({
     video: {
         display: 'block',
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
-        top: 0,
-        left: 0,
         objectFit: 'cover',
+        '@supports (aspect-ratio: 1 / 1)': {
+            borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
+            maxWidth: '100%',
+            maxHeight: '100%',
+            aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
+        },
+        '$wrapper &': {
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            top: 0,
+            left: 0,
+        },
     },
-
     wrapper: {
         borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
         overflow: 'hidden',
@@ -81,6 +89,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         },
         ref
     ) => {
+        const supportsAspectRatio = useSupportsAspectRatio();
         const noBorderRadius = useDisableBorderRadius();
         const classes = useStyles({
             noBorderRadius,
@@ -118,28 +127,36 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             width = '100%';
         }
 
-        return (
-            <div style={{width, height}} className={classes.wrapper}>
-                <video
-                    ref={combineRefs(ref, videoRef)}
-                    playsInline
-                    disablePictureInPicture
-                    disableRemotePlayback
-                    autoPlay={autoPlay}
-                    muted={muted}
-                    loop={loop}
-                    className={classes.video}
-                    preload={preload}
-                    // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
-                    poster={poster || TRANSPARENT_PIXEL}
-                    {...getPrefixedDataAttributes(dataAttributes)}
-                >
-                    {sources.map(({src, type}, index) => (
-                        <source key={index} src={src} type={type} />
-                    ))}
-                </video>
-            </div>
+        const video = (
+            <video
+                ref={combineRefs(ref, videoRef)}
+                playsInline
+                disablePictureInPicture
+                disableRemotePlayback
+                autoPlay={autoPlay}
+                muted={muted}
+                loop={loop}
+                {...(supportsAspectRatio ? {width, height} : {})}
+                className={classes.video}
+                preload={preload}
+                // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
+                poster={poster || TRANSPARENT_PIXEL}
+                {...getPrefixedDataAttributes(dataAttributes)}
+            >
+                {sources.map(({src, type}, index) => (
+                    <source key={index} src={src} type={type} />
+                ))}
+            </video>
         );
+        if (supportsAspectRatio) {
+            return video;
+        } else {
+            return (
+                <div style={{width, height}} className={classes.wrapper}>
+                    {video}
+                </div>
+            );
+        }
     }
 );
 

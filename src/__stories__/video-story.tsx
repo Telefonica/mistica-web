@@ -93,7 +93,6 @@ export const Default: StoryComponent = () => {
                 <SectionTitle>Aspect ratio width 100%</SectionTitle>
                 <Video src={VIDEO_SRC} aspectRatio="16:9" />
                 <Video src={VIDEO_SRC} aspectRatio="4:3" />
-                <div>aaaaa</div>
             </Stack>
         </Stack>
     );

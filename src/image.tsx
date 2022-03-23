@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
+import {useSupportsAspectRatio} from './utils/aspect-ratio-support';
 import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
@@ -19,12 +20,20 @@ export const DisableBorderRadiusProvider: React.FC = ({children}) => (
 const useStyles = createUseStyles(() => ({
     image: {
         display: 'block',
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
-        top: 0,
-        left: 0,
         objectFit: 'cover',
+        '@supports (aspect-ratio: 1 / 1)': {
+            borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
+            maxWidth: '100%',
+            maxHeight: '100%',
+            aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
+        },
+        '$wrapper &': {
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            top: 0,
+            left: 0,
+        },
     },
     wrapper: {
         borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
@@ -61,6 +70,7 @@ export type ImageProps = {
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
     ({aspectRatio = '1:1', alt = '', dataAttributes, noBorderRadius, src, ...props}, ref) => {
+        const supportsAspectRatio = useSupportsAspectRatio();
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
         const noBorderRadiusContext = useDisableBorderRadius();
         const noBorderSetting = noBorderRadius ?? noBorderRadiusContext;
@@ -83,17 +93,26 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
             width = '100%';
         }
 
-        return (
-            <div style={{width, height}} className={classes.wrapper}>
-                <img
-                    {...getPrefixedDataAttributes(dataAttributes)}
-                    ref={ref}
-                    src={src}
-                    className={classes.image}
-                    alt={alt}
-                />
-            </div>
+        const img = (
+            <img
+                {...getPrefixedDataAttributes(dataAttributes)}
+                ref={ref}
+                src={src}
+                className={classes.image}
+                alt={alt}
+                {...(supportsAspectRatio ? {width, height} : {})}
+            />
         );
+
+        if (supportsAspectRatio) {
+            return img;
+        } else {
+            return (
+                <div style={{width, height}} className={classes.wrapper}>
+                    {img}
+                </div>
+            );
+        }
     }
 );
 
