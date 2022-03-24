@@ -1,3 +1,10 @@
+## [11.2.1](https://github.com/Telefonica/mistica-web/compare/v11.2.0...v11.2.1) (2022-03-24)
+
+
+### Bug Fixes
+
+* **icons:** device chip missing hole ([#453](https://github.com/Telefonica/mistica-web/issues/453)) ([cb4107d](https://github.com/Telefonica/mistica-web/commit/cb4107db46d1dafd1ea5feb6ff5629bb350643ff))
+
 # [11.2.0](https://github.com/Telefonica/mistica-web/compare/v11.1.0...v11.2.0) (2022-03-24)
 
 
