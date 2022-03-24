@@ -1,3 +1,15 @@
+# [11.2.0](https://github.com/Telefonica/mistica-web/compare/v11.1.0...v11.2.0) (2022-03-24)
+
+
+### Bug Fixes
+
+* **icons:** fix some broken icons ([#452](https://github.com/Telefonica/mistica-web/issues/452)) ([226760c](https://github.com/Telefonica/mistica-web/commit/226760c7c5f8d1d5e93913ba9be33904aaa54362))
+
+
+### Features
+
+* **Carousel:** improve the single page case ([#450](https://github.com/Telefonica/mistica-web/issues/450)) ([67c08bd](https://github.com/Telefonica/mistica-web/commit/67c08bdf7f70472879fae7290a976998a12a6f63))
+
 # [11.1.0](https://github.com/Telefonica/mistica-web/compare/v11.0.0...v11.1.0) (2022-03-22)
 
 
