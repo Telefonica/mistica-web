@@ -122,6 +122,7 @@ interface CommonProps {
     extra?: React.ReactNode;
     dataAttributes?: DataAttributes;
     disabled?: boolean;
+    navigable?: boolean;
 }
 
 interface ContentProps extends CommonProps {
@@ -133,7 +134,7 @@ interface ContentProps extends CommonProps {
 }
 
 const Content: React.FC<ContentProps> = ({
-    isClickable,
+    navigable,
     headline,
     title,
     titleLinesMax,
@@ -231,7 +232,7 @@ const Content: React.FC<ContentProps> = ({
                     {renderRight?.({centerY})}
                 </div>
             )}
-            {type === 'custom' && isClickable && (
+            {type === 'custom' && navigable === true && (
                 <div className={classNames(classes.right, {[classes.disabled]: disabled})}>
                     <div style={centerY ? {display: 'flex', alignItems: 'center', height: '100%'} : {}}>
                         <IconChevron
@@ -434,6 +435,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                 extra={extra}
                 labelId={labelId}
                 disabled={disabled}
+                navigable={!!props.onPress}
             />
         );
 

@@ -108,6 +108,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 break;
             case 'custom element with text':
                 controlProps = {
+                    onPress,
                     renderRight: ({centerY}: {centerY: boolean}) => (
                         <div style={centerY ? {display: 'flex', alignItems: 'center', height: '100%'} : {}}>
                             <Inline space={0}>
