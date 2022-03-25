@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
+import {useSupportsAspectRatio} from './utils/aspect-ratio-support';
 import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
@@ -18,12 +19,38 @@ export const DisableBorderRadiusProvider: React.FC = ({children}) => (
 
 const useStyles = createUseStyles(() => ({
     image: {
-        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
         display: 'block',
         objectFit: 'cover',
         maxWidth: '100%',
         maxHeight: '100%',
-        aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
+
+        '@supports (aspect-ratio: 1 / 1)': {
+            borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
+            aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
+        },
+        '$wrapper &': {
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            top: 0,
+            left: 0,
+        },
+    },
+    wrapper: {
+        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
+        overflow: 'hidden',
+        maxWidth: '100%',
+        maxHeight: '100%',
+        position: 'relative',
+        paddingTop: ({aspectRatio, width}) => {
+            if (!aspectRatio) {
+                return 'initial';
+            }
+            if (width && typeof width === 'string' && width.endsWith('%')) {
+                return `${Number(width.replace('%', '')) / aspectRatio}%`;
+            }
+            return `${100 / aspectRatio}%`;
+        },
     },
 }));
 
@@ -38,7 +65,6 @@ export const RATIO = {
 
 export type ImageProps = {
     src: string;
-    url?: undefined;
     /** defaults to 100% when no width and no height are given */
     width?: string | number;
     height?: string | number;
@@ -52,15 +78,20 @@ export type ImageProps = {
 };
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
-    ({aspectRatio = '1:1', alt = '', dataAttributes, noBorderRadius, ...props}, ref) => {
-        const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
+    ({aspectRatio = '1:1', alt = '', dataAttributes, noBorderRadius, src, ...props}, ref) => {
+        const supportsAspectRatio = useSupportsAspectRatio();
         const noBorderRadiusContext = useDisableBorderRadius();
         const noBorderSetting = noBorderRadius ?? noBorderRadiusContext;
+
+        // if width or height are numeric, we can calculate the other with the ratio without css
+        const withCssAspectRatio = typeof props.width !== 'number' && typeof props.height !== 'number';
+        const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
+
         const classes = useStyles({
             noBorderRadius: noBorderSetting,
-            aspectRatio: !props.width && !props.height ? ratio : undefined,
+            aspectRatio: withCssAspectRatio ? ratio : undefined,
+            width: props.width,
         });
-        const url = props.src || props.url;
 
         let width: number | string | undefined = props.width;
         let height = props.height;
@@ -68,25 +99,36 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
         if (props.width !== undefined && props.height !== undefined) {
             width = props.width;
             height = props.height;
-        } else if (props.width !== undefined) {
-            height = typeof props.width === 'number' ? props.width / ratio : `calc(${props.width} / ratio)`;
-        } else if (props.height !== undefined) {
-            width = typeof props.height === 'number' ? props.height * ratio : `calc(${props.height} * ratio)`;
+        } else if (typeof props.width === 'number') {
+            height = props.width / ratio;
+        } else if (typeof props.height === 'number') {
+            width = props.height * ratio;
         } else {
-            width = '100%';
+            width = props.width || '100%';
         }
 
-        return (
+        const needsWrapper = withCssAspectRatio && !supportsAspectRatio;
+
+        const img = (
             <img
                 {...getPrefixedDataAttributes(dataAttributes)}
                 ref={ref}
-                src={url}
+                src={src}
                 className={classes.image}
                 alt={alt}
-                width={width}
-                height={height}
+                {...(!needsWrapper ? {width, height} : {})}
             />
         );
+
+        if (needsWrapper) {
+            return (
+                <div style={{width, height}} className={classes.wrapper}>
+                    {img}
+                </div>
+            );
+        } else {
+            return img;
+        }
     }
 );
 
