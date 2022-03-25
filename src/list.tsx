@@ -127,12 +127,13 @@ interface CommonProps {
 interface ContentProps extends CommonProps {
     isClickable?: boolean;
     type?: 'chevron' | 'basic' | 'custom' | 'control';
-    right?: React.ReactNode;
+    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode;
     /** This id is to link the title with the related control */
     labelId?: string;
 }
 
 const Content: React.FC<ContentProps> = ({
+    isClickable,
     headline,
     title,
     titleLinesMax,
@@ -143,7 +144,7 @@ const Content: React.FC<ContentProps> = ({
     asset,
     type = 'basic',
     badge,
-    right,
+    renderRight,
     extra,
     labelId,
     disabled,
@@ -152,7 +153,7 @@ const Content: React.FC<ContentProps> = ({
     const classes = useStyles({isInverse});
     const {colors} = useTheme();
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
-    const shouldCenter = numTextLines === 1;
+    const centerY = numTextLines === 1;
 
     const renderBadge = () => {
         if (!badge) {
@@ -166,60 +167,19 @@ const Content: React.FC<ContentProps> = ({
             </Box>
         );
     };
-
-    const renderRight = () => {
-        switch (type) {
-            case 'chevron':
-                return (
-                    <Box
-                        paddingLeft={16}
-                        className={classNames(classes.center, {[classes.disabled]: disabled})}
-                    >
-                        <IconChevron
-                            color={isInverse ? colors.inverse : colors.neutralMedium}
-                            direction="right"
-                        />
-                    </Box>
-                );
-            case 'control':
-                return (
-                    <div
-                        className={classNames(classes.right, {
-                            [classes.center]: shouldCenter,
-                        })}
-                    >
-                        {right}
-                    </div>
-                );
-            case 'custom':
-                return (
-                    <div
-                        className={classNames(classes.right, {
-                            [classes.center]: shouldCenter,
-                            [classes.disabled]: disabled,
-                        })}
-                    >
-                        {right}
-                    </div>
-                );
-            default:
-                return null;
-        }
-    };
-
     return (
         <Box paddingY={16} className={classes.content}>
             {asset && (
                 <Box
                     paddingRight={16}
-                    className={classNames({[classes.center]: shouldCenter, [classes.disabled]: disabled})}
+                    className={classNames({[classes.center]: centerY, [classes.disabled]: disabled})}
                 >
                     <div className={classes.asset}>{asset}</div>
                 </Box>
             )}
             <div
                 className={classNames(classes.rowBody, {[classes.disabled]: disabled})}
-                style={{justifyContent: shouldCenter ? 'center' : 'flex-start'}}
+                style={{justifyContent: centerY ? 'center' : 'flex-start'}}
             >
                 <Stack space={4}>
                     {headline && (
@@ -257,7 +217,30 @@ const Content: React.FC<ContentProps> = ({
                 </Stack>
             </div>
             {renderBadge()}
-            {renderRight()}
+            {type === 'chevron' && (
+                <Box paddingLeft={16} className={classNames(classes.center, {[classes.disabled]: disabled})}>
+                    <IconChevron
+                        color={isInverse ? colors.inverse : colors.neutralMedium}
+                        direction="right"
+                    />
+                </Box>
+            )}
+            {type === 'control' && <div className={classes.right}>{renderRight?.({centerY})}</div>}
+            {type === 'custom' && (
+                <div className={classNames(classes.right, {[classes.disabled]: disabled})}>
+                    {renderRight?.({centerY})}
+                </div>
+            )}
+            {type === 'custom' && isClickable && (
+                <div className={classNames(classes.right, {[classes.disabled]: disabled})}>
+                    <div style={centerY ? {display: 'flex', alignItems: 'center', height: '100%'} : {}}>
+                        <IconChevron
+                            color={isInverse ? colors.inverse : colors.neutralMedium}
+                            direction="right"
+                        />
+                    </div>
+                </div>
+            )}
         </Box>
     );
 };
@@ -278,15 +261,14 @@ interface BasicRowContentProps extends CommonProps {
     radioValue?: undefined;
     newTab?: undefined;
     fullPageOnWebView?: undefined;
-
-    right?: React.ReactNode;
+    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode;
 }
 
 interface SwitchRowContentProps extends CommonProps {
     href?: undefined;
     onPress?: () => void;
     to?: undefined;
-    right?: undefined;
+    renderRight?: undefined;
     checkbox?: undefined;
     radioValue?: undefined;
     newTab?: undefined;
@@ -299,7 +281,7 @@ interface CheckboxRowContentProps extends CommonProps {
     href?: undefined;
     onPress?: () => void;
     to?: undefined;
-    right?: undefined;
+    renderRight?: undefined;
     switch?: undefined;
     radioValue?: undefined;
     newTab?: undefined;
@@ -312,7 +294,7 @@ interface RadioRowContentProps extends CommonProps {
     href?: undefined;
     onPress?: undefined;
     to?: undefined;
-    right?: undefined;
+    renderRight?: undefined;
     switch?: undefined;
     checkbox?: undefined;
     newTab?: undefined;
@@ -332,7 +314,7 @@ interface HrefRowContentProps extends CommonProps {
     newTab?: boolean;
     onPress?: undefined;
     to?: undefined;
-    right?: React.ReactNode;
+    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode;
 }
 
 interface ToRowContentProps extends CommonProps {
@@ -347,7 +329,7 @@ interface ToRowContentProps extends CommonProps {
     replace?: boolean;
     href?: undefined;
     onPress?: undefined;
-    right?: React.ReactNode;
+    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode;
 }
 
 interface OnPressRowContentProps extends CommonProps {
@@ -360,7 +342,7 @@ interface OnPressRowContentProps extends CommonProps {
     onPress: () => void;
     href?: undefined;
     to?: undefined;
-    right?: React.ReactNode;
+    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode;
 }
 
 type RowContentProps =
@@ -430,11 +412,11 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
 
         const renderContent = ({
             type,
-            right,
+            renderRight,
             labelId,
         }: {
             type: ContentProps['type'];
-            right?: ContentProps['right'];
+            renderRight?: ContentProps['renderRight'];
             labelId?: string;
         }) => (
             <Content
@@ -448,7 +430,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                 subtitleLinesMax={subtitleLinesMax}
                 descriptionLinesMax={descriptionLinesMax}
                 type={type}
-                right={right}
+                renderRight={renderRight}
                 extra={extra}
                 labelId={labelId}
                 disabled={disabled}
@@ -460,17 +442,17 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
         ) => {
             let type: ContentProps['type'] = 'chevron';
 
-            if (props.right === null) {
+            if (props.renderRight === null) {
                 type = 'basic';
             }
 
-            if (props.right) {
+            if (props.renderRight) {
                 type = 'custom';
             }
 
             return (
                 <Box paddingX={16} ref={ref as React.Ref<HTMLDivElement>}>
-                    {renderContent({type, right: props.right})}
+                    {renderContent({type, renderRight: props.renderRight})}
                 </Box>
             );
         };
@@ -568,7 +550,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                                 {renderContent({
                                     labelId,
                                     type: 'control',
-                                    right: <Stack space="around">{control}</Stack>,
+                                    renderRight: () => <Stack space="around">{control}</Stack>,
                                 })}
                             </Box>
                         )}
@@ -600,7 +582,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                             <Box paddingX={16}>
                                 {renderContent({
                                     type: 'control',
-                                    right: <Stack space="around">{radio}</Stack>,
+                                    renderRight: () => <Stack space="around">{radio}</Stack>,
                                 })}
                             </Box>
                         )}
@@ -615,8 +597,8 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                 className={classNames(classes.rowContent, classes.hover, classes.hoverDisabled)}
                 role={role}
             >
-                {props.right
-                    ? renderContent({type: 'custom', right: props.right})
+                {props.renderRight
+                    ? renderContent({type: 'custom', renderRight: props.renderRight})
                     : renderContent({type: 'basic'})}
             </Box>
         );

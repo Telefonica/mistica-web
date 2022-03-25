@@ -14,7 +14,6 @@ import {
     Image,
     Text3,
     Inline,
-    IconChevron,
 } from '..';
 
 export default {
@@ -109,13 +108,14 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 break;
             case 'custom element with text':
                 controlProps = {
-                    right: (
-                        <Inline space={0}>
-                            <Text3 color={colors.error} medium as="p">
-                                12,00 €
-                            </Text3>
-                            <IconChevron direction="right" color={colors.neutralMedium} />
-                        </Inline>
+                    renderRight: ({centerY}: {centerY: boolean}) => (
+                        <div style={centerY ? {display: 'flex', alignItems: 'center', height: '100%'} : {}}>
+                            <Inline space={0}>
+                                <Text3 color={colors.error} medium as="p">
+                                    12,00 €
+                                </Text3>
+                            </Inline>
+                        </div>
                     ),
                 };
                 break;
