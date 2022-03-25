@@ -16,28 +16,6 @@ import {addons} from '@storybook/addons';
 
 import type {ColorScheme, ThemeConfig} from '../src';
 
-const getUserAgent = () => self.navigator.userAgent || '';
-const isRunningAcceptanceTest = () => getUserAgent().includes('acceptance-test');
-
-const acceptanceStyles = `
-*, *:after, *:before {
-    transition-delay: 0s !important;
-    transition-duration: 0s !important;
-    animation-delay: -0.0001s !important;
-    animation-duration: 0s !important;
-    animation-play-state: paused !important;
-    caret-color: transparent !important;
-    font-variant-ligatures: none !important;
-}
-*::-webkit-scrollbar {
-    display: 'none' !important;
-    width: 0 !important;
-    height: 0 !important;
-}
-*:focus, *:active {
-    outline: none;
-}`;
-
 type Platform = 'android' | 'desktop' | 'ios';
 
 const getSkin = (searchParams: URLSearchParams) => {
@@ -113,7 +91,7 @@ const Styles = () => {
     const bodyBackground = `body {background: ${colors.background}}`;
     return (
         <style>
-            {fontSizeStyle} {bodyBackground} {isRunningAcceptanceTest() && acceptanceStyles}
+            {fontSizeStyle} {bodyBackground}
         </style>
     );
 };
