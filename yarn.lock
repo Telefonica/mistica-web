@@ -566,7 +566,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/highlight@npm:^7.10.4, @babel/highlight@npm:^7.16.7":
+"@babel/highlight@npm:^7.16.7":
   version: 7.16.10
   resolution: "@babel/highlight@npm:7.16.10"
   dependencies:
@@ -3034,24 +3034,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pladaria/flowgen@npm:1.16.1":
-  version: 1.16.1
-  resolution: "@pladaria/flowgen@npm:1.16.1"
-  dependencies:
-    "@babel/code-frame": ^7.10.4
-    "@babel/highlight": ^7.10.4
-    commander: ^6.1.0
-    lodash: ^4.17.20
-    prettier: ^2.1.1
-    shelljs: ^0.8.4
-    typescript: ^4.0.2
-    typescript-compiler: ^1.4.1-2
-  bin:
-    flowgen: lib/cli/index.js
-  checksum: 12b7ad39b3e7b75db4dbee5fe62df77cd246646c90b9783cc09b19f130660d915c80146864ac8e46d31224ea64d5054acd61ada1c73c37acfcbebf30ebb5192e
-  languageName: node
-  linkType: hard
-
 "@pmmmwh/react-refresh-webpack-plugin@npm:^0.5.1":
   version: 0.5.4
   resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.4"
@@ -4551,7 +4533,7 @@ __metadata:
     "@telefonica/eslint-config": ^1.0.3
     "@telefonica/libphonenumber": ^2.8.1
     "@telefonica/prettier-config": ^1.1.0
-    "@telefonica/ts-to-flow": 1.1.5
+    "@telefonica/ts-to-flow": 1.1.8
     "@testing-library/jest-dom": ^5.16.3
     "@testing-library/react": ^12.1.4
     "@testing-library/user-event": ^13.5.0
@@ -4624,17 +4606,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/ts-to-flow@npm:1.1.5":
-  version: 1.1.5
-  resolution: "@telefonica/ts-to-flow@npm:1.1.5"
+"@telefonica/ts-to-flow@npm:1.1.8":
+  version: 1.1.8
+  resolution: "@telefonica/ts-to-flow@npm:1.1.8"
   dependencies:
-    "@pladaria/flowgen": 1.16.1
     cpx: ^1.5.0
     find-root: ^1.1.0
+    flowgen: 1.17.0
     jscodeshift: ^0.13.0
   bin:
     ts-to-flow: cli.js
-  checksum: c7e74512d96a20e9e35059348cc990b85002d16dc7a13b1372854a060d9b5ac091a6f7dfebfd3101588a25a23e98dcfdac07cb74ea9e1c2d6b409f3f6e8274b4
+  checksum: 79e63083e06ac90e75029d9f85653d09476dbd7579ca8d62510acb237c81189f3b309e518f2713ba87dc46c1511ce8cb86086bf71b905b21d36ac28d9fe48ce8
   languageName: node
   linkType: hard
 
@@ -11603,21 +11585,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flowgen@npm:^1.10.0":
-  version: 1.15.0
-  resolution: "flowgen@npm:1.15.0"
+"flowgen@npm:1.17.0, flowgen@npm:^1.10.0":
+  version: 1.17.0
+  resolution: "flowgen@npm:1.17.0"
   dependencies:
-    "@babel/code-frame": ^7.10.4
-    "@babel/highlight": ^7.10.4
+    "@babel/code-frame": ^7.16.7
+    "@babel/highlight": ^7.16.7
     commander: ^6.1.0
     lodash: ^4.17.20
-    prettier: ^2.1.1
+    prettier: ^2.5.1
     shelljs: ^0.8.4
-    typescript: ^4.0.2
+    typescript: ~4.4.4
     typescript-compiler: ^1.4.1-2
   bin:
     flowgen: lib/cli/index.js
-  checksum: 7ba7a640e40703feb356eda9eb39ba33cab1781f2ce68395cfd257dff696b5f46e6678af6aead998a5eb1069a49072faa069b8ccb4081c44010fbc31bc2e596d
+  checksum: 308e20743a1ae5f933566795785dcefe701aa0e81c738c10733a99a3ae7cced2ec90f7132d84ee62117770bae5bdbe0f2a9d5087ee3628c14ef172cac9fb9314
   languageName: node
   linkType: hard
 
@@ -19408,7 +19390,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.1.1, prettier@npm:^2.2.1, prettier@npm:^2.6.1":
+"prettier@npm:^2.2.1, prettier@npm:^2.5.1, prettier@npm:^2.6.1":
   version: 2.6.1
   resolution: "prettier@npm:2.6.1"
   bin:
@@ -23560,7 +23542,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.0.2, typescript@npm:^4.3.2, typescript@npm:^4.4.3, typescript@npm:^4.6.3":
+"typescript@npm:^4.3.2, typescript@npm:^4.4.3, typescript@npm:^4.6.3":
   version: 4.6.3
   resolution: "typescript@npm:4.6.3"
   bin:
@@ -23570,13 +23552,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.0.2#~builtin<compat/typescript>, typescript@patch:typescript@^4.3.2#~builtin<compat/typescript>, typescript@patch:typescript@^4.4.3#~builtin<compat/typescript>, typescript@patch:typescript@^4.6.3#~builtin<compat/typescript>":
+"typescript@npm:~4.4.4":
+  version: 4.4.4
+  resolution: "typescript@npm:4.4.4"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 89ecb8436bb48ef5594d49289f5f89103071716b6e4844278f4fb3362856e31203e187a9c76d205c3f0b674d221a058fd28310dbcbcf5d95e9a57229bb5203f1
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@^4.3.2#~builtin<compat/typescript>, typescript@patch:typescript@^4.4.3#~builtin<compat/typescript>, typescript@patch:typescript@^4.6.3#~builtin<compat/typescript>":
   version: 4.6.3
   resolution: "typescript@patch:typescript@npm%3A4.6.3#~builtin<compat/typescript>::version=4.6.3&hash=493e53"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: fe6bdc1afb2f145ddb7b0a3a31f96352209f6a5704d97f038414ea22ff9d8dd42f32cfb6652e30458d7d958d2d4e85de2df11c574899c6f750a6b3c0e90a3a76
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@~4.4.4#~builtin<compat/typescript>":
+  version: 4.4.4
+  resolution: "typescript@patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=493e53"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: bd629ad0da4a15d79aaad56baf3ee7d96f6a181760d430ae77f8c5325df7bffd9edee57544a3970e3651e8b796fe03a5838a7eb39c6d46cc3866c0b23d36a0dd
   languageName: node
   linkType: hard
 

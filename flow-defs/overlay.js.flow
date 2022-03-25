@@ -11,4 +11,4 @@ declare type Props = {
 declare var Overlay: React.ComponentType<Props>;
 declare export default typeof Overlay;
 
-import { type CssStyle } from "./__types__.js.flow";
+import { type CssStyle } from "./__css_types__.js.flow";

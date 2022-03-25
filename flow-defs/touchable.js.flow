@@ -77,4 +77,4 @@ declare var Touchable: React.ComponentType<{
 }>;
 declare export default typeof Touchable;
 
-import { type CssStyle } from "./__types__.js.flow";
+import { type CssStyle } from "./__css_types__.js.flow";
