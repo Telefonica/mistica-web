@@ -2,13 +2,17 @@ import * as React from 'react';
 import {useDisableBorderRadius} from './image';
 import {createUseStyles} from './jss';
 import {combineRefs} from './utils/common';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-export type AspectRatio = '1:1' | '16:9' | '12:5';
+import type {DataAttributes} from './utils/types';
+
+export type AspectRatio = '1:1' | '16:9' | '12:5' | '4:3';
 
 export const RATIO = {
     '1:1': 1,
     '16:9': 16 / 9,
     '12:5': 12 / 5,
+    '4:3': 4 / 3,
 };
 
 const useStyles = createUseStyles(() => ({
@@ -49,6 +53,7 @@ export type VideoProps = {
     children?: void;
     /** defaults to none */
     preload?: 'none' | 'metadata' | 'auto';
+    dataAttributes?: DataAttributes;
 };
 
 const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
@@ -61,6 +66,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             loop = true,
             preload = 'none',
             aspectRatio = '1:1',
+            dataAttributes,
             ...props
         },
         ref
@@ -117,6 +123,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 preload={preload}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
                 poster={poster || TRANSPARENT_PIXEL}
+                {...getPrefixedDataAttributes(dataAttributes)}
             >
                 {sources.map(({src, type}, index) => (
                     <source key={index} src={src} type={type} />

@@ -13,8 +13,8 @@ import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
 import TabFocus from './tab-focus';
-import {PortalNodesProvider} from './portal';
 import ModalContextProvider from './modal-context-provider';
+import {DocumentVisibilityProvider} from './utils/document-visibility';
 
 import type {Colors} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
@@ -46,10 +46,20 @@ export const useIsOsDarkModeEnabled = (): boolean => {
 // This counter will increment with every new instance of ThemeContextProvider in the app. In a typical app we don't need more than
 // one instance of ThemeContextProvider. But some apps may depend on libs that use Mistica too, so there may be more than one instance
 // in those cases. We use this counter to avoid class name collisions in those cases.
-let jssInstanceId = 0;
+let nextJssInstanceId = 0;
 
 type Props = {
     theme: ThemeConfig;
+    /**
+     * You should use this prop if you use Strict Mode and Server Side Rendering together.
+     * This identifier will be used to generate unique class names for each instance of ThemeContextProvider.
+     * If no identifier is provided, this will fallback to an auto-incremented id, which will cause
+     * problems in SSR + Strict Mode because the class names from client and server won't match.
+     * More info: https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects
+     *
+     * Once we migrate to React18, we could remove this prop and use the useId hook instead.
+     */
+    providerId?: string;
     children?: React.ReactNode;
 };
 
@@ -70,16 +80,21 @@ const useDefaultHrefDecorator = () => {
     return (href: string) => href;
 };
 
-const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
+const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) => {
+    const [instanceId] = React.useState(() => {
+        if (providerId) {
+            return providerId;
+        } else {
+            return isServerSide() ? 0 : nextJssInstanceId++;
+        }
+    });
+
     const classNamePrefix = React.useMemo(
-        // Always start the counter in 0 in server side, otherwise every new request to the server will inclrement the counter and
-        // we'll have missmatches when rendering client side. The disadvantage of this is that we can only have one instance of
-        // ThemeContextProvider in apps with ssr.
         () =>
             process.env.NODE_ENV === 'test'
                 ? ''
-                : `mistica-${PACKAGE_VERSION.replace(/\./g, '-')}-${isServerSide() ? 0 : jssInstanceId++}-`,
-        []
+                : `mistica-${PACKAGE_VERSION.replace(/\./g, '-')}_${instanceId}_`,
+        [instanceId]
     );
 
     const nextAriaId = React.useRef(1);
@@ -127,21 +142,21 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children}) => {
     }, [theme, isOsDarkModeEnabled]);
 
     return (
-        <PortalNodesProvider>
-            <JssProvider jss={getJss()} classNamePrefix={classNamePrefix} generateId={generateId}>
-                <TabFocus disabled={!theme.enableTabFocus}>
-                    <ModalContextProvider>
-                        <ThemeContext.Provider value={contextTheme}>
+        <JssProvider jss={getJss()} classNamePrefix={classNamePrefix} generateId={generateId}>
+            <TabFocus disabled={!theme.enableTabFocus}>
+                <ModalContextProvider>
+                    <ThemeContext.Provider value={contextTheme}>
+                        <DocumentVisibilityProvider>
                             <AriaIdGetterContext.Provider value={getAriaId}>
                                 <ScreenSizeContextProvider>
                                     <DialogRoot>{children}</DialogRoot>
                                 </ScreenSizeContextProvider>
                             </AriaIdGetterContext.Provider>
-                        </ThemeContext.Provider>
-                    </ModalContextProvider>
-                </TabFocus>
-            </JssProvider>
-        </PortalNodesProvider>
+                        </DocumentVisibilityProvider>
+                    </ThemeContext.Provider>
+                </ModalContextProvider>
+            </TabFocus>
+        </JssProvider>
     );
 };
 

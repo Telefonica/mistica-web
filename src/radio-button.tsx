@@ -6,7 +6,7 @@ import {combineRefs} from './utils/common';
 import {Text3} from './text';
 import Inline from './inline';
 import classnames from 'classnames';
-import {useTheme} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
@@ -77,7 +77,12 @@ export const useRadioContext = (): RadioContextType => React.useContext(RadioCon
 type PropsRender = {
     value: string;
     id?: string;
-    render: (radioElement: React.ReactElement, disabled?: boolean) => React.ReactNode;
+    render: (renderProps: {
+        controlElement: React.ReactElement;
+        labelId: string;
+        disabled: boolean;
+        checked: boolean;
+    }) => React.ReactNode;
     children?: undefined;
     dataAttributes?: DataAttributes;
 };
@@ -92,6 +97,7 @@ type PropsChildren = {
 
 const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, dataAttributes, ...rest}) => {
     const {disabled, selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
+    const labelId = useAriaId();
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
     const tabIndex = focusableValue === value ? 0 : -1;
@@ -145,20 +151,21 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, dataAttr
             data-value={value}
             aria-checked={checked}
             aria-disabled={disabled}
+            aria-labelledby={labelId}
             onClick={disabled ? undefined : () => select(value)}
             onKeyDown={disabled ? undefined : handleKeyDown}
             className={classes.radioButton}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
             {rest.render ? (
-                rest.render(radio, disabled)
+                rest.render({controlElement: radio, disabled: !!disabled, checked, labelId})
             ) : (
                 <Inline space={16}>
                     {/* Text3 wrapper added to have the same line-height and center checkbox with text and -2px to perfect pixel center icon  */}
                     <Text3 regular as="div">
                         <div style={{position: 'relative', top: -2}}>{radio}</div>
                     </Text3>
-                    <Text3 regular as="div">
+                    <Text3 regular as="div" id={labelId}>
                         <span className={disabled ? classes.disabled : ''}>{rest.children}</span>
                     </Text3>
                 </Inline>

@@ -1,5 +1,8 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 /**
  * This context is used internally to disable the border radius. This is useful for example
@@ -24,46 +27,38 @@ const useStyles = createUseStyles(() => ({
     },
 }));
 
-export type AspectRatio = '1:1' | '16:9' | '7:10';
+export type AspectRatio = '1:1' | '16:9' | '7:10' | '4:3';
 
 export const RATIO = {
     '1:1': 1,
     '16:9': 16 / 9,
     '7:10': 7 / 10,
+    '4:3': 4 / 3,
 };
 
 export type ImageProps = {
     src: string;
     url?: undefined;
     /** defaults to 100% when no width and no height are given */
-    width?: number;
-    height?: number;
+    width?: string | number;
+    height?: string | number;
     /** defaults to 1:1, if both width and height are given, aspectRatio is ignored */
-    aspectRatio?: AspectRatio;
+    aspectRatio?: AspectRatio | number;
     /** defaults to empty string */
     alt?: string;
     children?: void;
+    dataAttributes?: DataAttributes;
+    noBorderRadius?: boolean;
 };
 
-/** @deprecated */
-type DeprecatedImageProps = {
-    url: string;
-    src?: undefined;
-    width?: number;
-    height?: number;
-    /** defaults to 1:1, if both width and height are given, aspectRatio is ignored */
-    aspectRatio?: AspectRatio;
-    /** defaults to empty string */
-    alt?: string;
-    children?: void;
-};
-
-const Image = React.forwardRef<HTMLImageElement, ImageProps | DeprecatedImageProps>(
-    ({aspectRatio = '1:1', alt = '', ...props}, ref) => {
-        const noBorderRadius = useDisableBorderRadius();
+const Image = React.forwardRef<HTMLImageElement, ImageProps>(
+    ({aspectRatio = '1:1', alt = '', dataAttributes, noBorderRadius, ...props}, ref) => {
+        const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
+        const noBorderRadiusContext = useDisableBorderRadius();
+        const noBorderSetting = noBorderRadius ?? noBorderRadiusContext;
         const classes = useStyles({
-            noBorderRadius,
-            aspectRatio: !props.width && !props.height ? RATIO[aspectRatio] : undefined,
+            noBorderRadius: noBorderSetting,
+            aspectRatio: !props.width && !props.height ? ratio : undefined,
         });
         const url = props.src || props.url;
 
@@ -74,14 +69,24 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps | DeprecatedImagePro
             width = props.width;
             height = props.height;
         } else if (props.width !== undefined) {
-            height = props.width / RATIO[aspectRatio];
+            height = typeof props.width === 'number' ? props.width / ratio : `calc(${props.width} / ratio)`;
         } else if (props.height !== undefined) {
-            width = props.height * RATIO[aspectRatio];
+            width = typeof props.height === 'number' ? props.height * ratio : `calc(${props.height} * ratio)`;
         } else {
             width = '100%';
         }
 
-        return <img ref={ref} src={url} className={classes.image} alt={alt} width={width} height={height} />;
+        return (
+            <img
+                {...getPrefixedDataAttributes(dataAttributes)}
+                ref={ref}
+                src={url}
+                className={classes.image}
+                alt={alt}
+                width={width}
+                height={height}
+            />
+        );
     }
 );
 

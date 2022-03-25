@@ -62,7 +62,7 @@ const CardContent: React.FC<CardContentProps> = ({
                             {renderHeadline()}
                             <Stack space={4}>
                                 {pretitle && (
-                                    <Text1 regular uppercase>
+                                    <Text1 regular transform="uppercase">
                                         {pretitle}
                                     </Text1>
                                 )}
@@ -93,27 +93,6 @@ const CardContent: React.FC<CardContentProps> = ({
     );
 };
 
-/** @deprecated */
-type CardMedia =
-    | {
-          src: string;
-          aspectRatio: number;
-
-          height?: undefined;
-      }
-    | {
-          src: string;
-          height: number;
-
-          aspectRatio?: undefined;
-      }
-    | {
-          src: string;
-
-          aspectRatio?: undefined;
-          height?: undefined;
-      };
-
 const useMediaCardStyles = createUseStyles(() => ({
     boxed: {
         height: '100%',
@@ -122,22 +101,6 @@ const useMediaCardStyles = createUseStyles(() => ({
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-    },
-    media: {
-        width: '100%',
-        paddingTop: ({media}: {media: CardMedia}) => {
-            if (media.height) {
-                return media.height;
-            }
-            // padding percentage is relative to width. With this trick we can force aspect ratio
-            if (media.aspectRatio) {
-                return `${100 / media.aspectRatio}%`;
-            }
-            return '56.25%'; // 16/9 aspect ratio
-        },
-        backgroundImage: ({media}: {media: CardMedia}) => `url(${media.src})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
     },
     content: {
         flex: 1,
@@ -149,10 +112,7 @@ const useMediaCardStyles = createUseStyles(() => ({
 }));
 
 type MediaCardProps = {
-    media:
-        | CardMedia
-        | (RendersElement<typeof Image> & {src?: undefined})
-        | (RendersElement<typeof Video> & {src?: undefined});
+    media: RendersElement<typeof Image> | RendersElement<typeof Video>;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     title?: string;
@@ -173,11 +133,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         return (
             <Boxed className={classes.boxed} ref={ref}>
                 <section className={classes.mediaCard} aria-label={ariaLabel}>
-                    {typeof media.src === 'string' ? (
-                        <div className={classes.media}></div>
-                    ) : (
-                        <DisableBorderRadiusProvider>{media}</DisableBorderRadiusProvider>
-                    )}
+                    <DisableBorderRadiusProvider>{media}</DisableBorderRadiusProvider>
                     <div className={classes.content}>
                         <CardContent
                             headline={headline}

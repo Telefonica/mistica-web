@@ -3,6 +3,9 @@ import classnames from 'classnames';
 import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 import {pxToRem} from './utils/css';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 const useStyles = createUseStyles((theme) => {
     const mapToWeight: Record<string, number> = {
@@ -29,15 +32,7 @@ const useStyles = createUseStyles((theme) => {
     return {
         text: {
             lineHeight: ({desktopLineHeight}) => pxToRem(desktopLineHeight),
-            textTransform: ({uppercase, transform}) => {
-                if (uppercase) {
-                    return 'uppercase';
-                }
-                if (transform) {
-                    return transform;
-                }
-                return 'inherit';
-            },
+            textTransform: ({transform}) => transform || 'inherit',
             fontSize: ({desktopSize}) => pxToRem(desktopSize),
             fontWeight: ({weight}) => (weight ? mapToWeight[weight] : 'inherit'),
             color: ({isInverse, color = theme.colors.textPrimary}) =>
@@ -68,19 +63,16 @@ type FontWeight = 'light' | 'regular' | 'medium';
 
 export interface TextPresetProps {
     color?: string;
-    /** @deprecated use decoration prop */
-    textDecoration?: 'underline' | 'line-through' | 'none';
     decoration?: 'underline' | 'line-through' | 'inherit' | 'none';
     transform?: 'uppercase' | 'capitalize' | 'lowercase' | 'inherit' | 'none';
     children?: React.ReactNode;
     truncate?: boolean | number;
-    /** @deprecated use transform */
-    uppercase?: boolean;
     wordBreak?: boolean;
     id?: string;
     as?: React.ComponentType<any> | string;
     role?: string;
     'aria-level'?: number;
+    dataAttributes?: DataAttributes;
 }
 
 interface TextProps extends TextPresetProps {
@@ -103,10 +95,8 @@ interface TextProps extends TextPresetProps {
 export const Text: React.FC<TextProps> = ({
     weight,
     color,
-    textDecoration,
-    decoration = textDecoration,
+    decoration,
     truncate,
-    uppercase,
     transform,
     wordBreak,
     as = 'span',
@@ -121,6 +111,7 @@ export const Text: React.FC<TextProps> = ({
     id,
     role,
     'aria-level': ariaLevel,
+    dataAttributes,
 }) => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({
@@ -132,7 +123,6 @@ export const Text: React.FC<TextProps> = ({
         weight,
         color,
         decoration,
-        uppercase,
         transform,
         wordBreak,
         letterSpacing,
@@ -142,7 +132,11 @@ export const Text: React.FC<TextProps> = ({
         return null;
     }
     const className = classnames(classes.text, {[classes.truncate]: !!truncate});
-    return React.createElement(as, {className, id, role, 'aria-level': ariaLevel}, children);
+    return React.createElement(
+        as,
+        {className, id, role, 'aria-level': ariaLevel, ...getPrefixedDataAttributes(dataAttributes)},
+        children
+    );
 };
 
 interface LightProps extends TextPresetProps {

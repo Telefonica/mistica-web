@@ -21,7 +21,7 @@ export default {
     title: 'Components/Cards/MediaCard',
 };
 
-const VIDEO_SRC = 'https://cdn.kapwing.com/final_61f3e551955a8b003ec98e68_257607.mp4';
+const VIDEO_SRC = 'https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw';
 const POSTER_SRC = 'https://i.imgur.com/aEVtKsE.jpg';
 const IMAGE_SRC = 'https://i.imgur.com/aEVtKsE.jpg';
 
@@ -69,9 +69,7 @@ export const Default: StoryComponent = () => {
                         pretitle={pretitle}
                         title={title}
                         description={description}
-                        media={{
-                            src: IMAGE_SRC,
-                        }}
+                        media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                         button={button}
                         buttonLink={buttonLink}
                     />
@@ -91,7 +89,7 @@ export const WithBody: StoryComponent = () => {
             title="Title"
             description="Description"
             extra={<Placeholder />}
-            media={<Image src={IMAGE_SRC} aspectRatio="16:9" />}
+            media={<Image src={IMAGE_SRC} aspectRatio="16:9" dataAttributes={{qsysid: 'image'}} />}
             button={
                 <ButtonPrimary small href="https://google.com">
                     Action
@@ -111,7 +109,7 @@ export const WithVideo: StoryComponent = () => {
             pretitle="Pretitle"
             title="Title"
             description="Description"
-            media={<Video src={VIDEO_SRC} aspectRatio="12:5" />}
+            media={<Video src={VIDEO_SRC} aspectRatio="12:5" dataAttributes={{qsysid: 'video'}} />}
             button={
                 <ButtonPrimary small href="https://google.com">
                     Action
@@ -147,13 +145,13 @@ export const Group: StoryComponent = () => {
                         pretitle="Pretitle"
                         title="Title"
                         description="Description"
-                        media={{src: IMAGE_SRC}}
+                        media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />
                     <MediaCard
                         title="Title"
                         description="Description"
-                        media={{src: IMAGE_SRC}}
+                        media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />
                 </Inline>
@@ -229,16 +227,20 @@ export const Carousel: StoryComponent = () => {
                             pretitle="Pretitle"
                             title="Title"
                             description="Description"
-                            media={{src: IMAGE_SRC}}
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                             buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
                         />
                         <MediaCard
                             title="Title"
                             description="Description"
-                            media={{src: IMAGE_SRC}}
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                             buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
                         />
-                        <MediaCard title="Title" description="Description" media={{src: IMAGE_SRC}} />
+                        <MediaCard
+                            title="Title"
+                            description="Description"
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                        />
                     </Inline>
                 </ResponsiveLayout>
             </Stack>

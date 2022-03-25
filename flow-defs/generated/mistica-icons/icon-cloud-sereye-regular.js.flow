@@ -1,6 +1,0 @@
-// @flow
-
-import * as React from "react";
-import type { IconProps } from "../../utils/types";
-declare var IconCloudSereyeRegular: React.ComponentType<IconProps>;
-declare export default typeof IconCloudSereyeRegular;

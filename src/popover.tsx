@@ -30,7 +30,7 @@ const useStyles = createUseStyles((theme) => {
             left: '50%',
             transform: 'translate(-50%, -50%) rotate(45deg)',
             border: `1px solid ${theme.colors.divider}`,
-            borderRadius: 4,
+            borderRadius: 2,
             boxShadow: ({position}) =>
                 position === 'bottom' ? 'initial' : `0 0 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
         },
@@ -60,7 +60,7 @@ const useStyles = createUseStyles((theme) => {
         title: {
             marginBottom: 4,
             color: theme.colors.textPrimary,
-            fontWeight: 500,
+            fontWeight: 400,
             lineHeight: 1.5,
             fontSize: 16,
         },
@@ -88,7 +88,7 @@ const useStyles = createUseStyles((theme) => {
             marginRight: 0,
         },
         text: {
-            color: theme.colors.textPrimary,
+            color: theme.colors.textSecondary,
             textAlign: 'left',
             lineHeight: 1.42857142,
             fontSize: 14,
@@ -116,8 +116,11 @@ const getWidthDesktop = (customWidth?: number): number => (customWidth ? customW
 const getPosition = (position: Position = defaultPositionDesktop, isTabletOrSmaller: boolean) =>
     isTabletOrSmaller && (position === 'left' || position === 'right') ? defaultPositionMobile : position;
 
-const getWidth = (isTabletOrSmaller: boolean, width?: number): number =>
-    isTabletOrSmaller ? window.innerWidth - marginLeftRightMobile * 2 : getWidthDesktop(width);
+const getWidth = (isTabletOrSmaller: boolean, isIos: boolean, width?: number): number =>
+    // in iOS, when the webview is rendered offscreen (eg. acccount tab), window.innerWidth value is wrong, it returns strange values like 0 or 80.
+    isTabletOrSmaller
+        ? (isIos ? window.screen.width : window.innerWidth) - marginLeftRightMobile * 2
+        : getWidthDesktop(width);
 
 const getPositionStyles = (
     position: Position,
@@ -226,14 +229,14 @@ const Popover: React.FC<Props> = ({
     asset,
     isVisible = true,
 }) => {
-    const {texts, colors} = useTheme();
+    const {texts, colors, isIos} = useTheme();
     const {isTabletOrSmaller} = useScreenSize();
     const [targetPosition, setTargetPosition] = React.useState<TargetPosition | null>(null);
 
     const targetWrapperRef = React.useRef<HTMLDivElement | null>(null);
 
     position = getPosition(position, isTabletOrSmaller);
-    const innerWidth = getWidth(isTabletOrSmaller, width);
+    const innerWidth = getWidth(isTabletOrSmaller, isIos, width);
     const classes = useStyles({position});
 
     React.useEffect(() => {
@@ -253,12 +256,6 @@ const Popover: React.FC<Props> = ({
     React.useEffect(() => {
         setTargetPosition(getTargetPosition(targetWrapperRef.current));
     }, [isVisible]);
-
-    const handleClose = () => {
-        if (onClose) {
-            onClose();
-        }
-    };
 
     let popoverContainer = null;
 
@@ -289,7 +286,10 @@ const Popover: React.FC<Props> = ({
                     </div>
                     <div className={classes.closeButtonIcon}>
                         <IconButton
-                            onPress={handleClose}
+                            onPress={(e) => {
+                                onClose?.();
+                                e.stopPropagation();
+                            }}
                             trackingEvent={trackingEvent}
                             aria-label={texts.modalClose}
                         >

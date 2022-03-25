@@ -12,7 +12,7 @@ export {default as ButtonLayout} from './button-layout';
 export {default as FixedFooterLayout} from './fixed-footer-layout';
 export {default as ButtonFixedFooterLayout} from './button-fixed-footer-layout';
 export {default as Snackbar} from './snackbar';
-export {Portal, usePortalNodes} from './portal';
+export {Portal} from './portal';
 export {default as LoadingBar} from './loading-bar';
 export {default as FixedToTop, TopDistanceContext} from './fixed-to-top';
 export {default as createNestableContext} from './nestable-context';
@@ -98,11 +98,7 @@ export {default as IbanField} from './iban-field';
 export {useForm, useFieldProps} from './form-context';
 
 // Icons
-// @deprecated use IconCloseRegular instead
-export {default as IconClose} from './icons/icon-close';
 export {default as IconInfo} from './icons/icon-info';
-// @deprecated use IconArrowDropDownFilled instead
-export {default as IconArrowDown} from './icons/icon-arrow-down';
 export {default as IconChevron} from './icons/icon-chevron';
 export {default as IconError} from './icons/icon-error';
 export {default as IconSuccess} from './icons/icon-success';
@@ -118,8 +114,11 @@ export {
     useWindowSize,
     useWindowHeight,
     useWindowWidth,
+    useIsInViewport,
 } from './hooks';
 export type {ThemeConfig, ColorScheme} from './theme';
+
+export {useDocumentVisibility} from './utils/document-visibility';
 
 export {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 
@@ -160,44 +159,6 @@ if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
         window['__mistica_version__'] = PACKAGE_VERSION;
     }
 }
-
-// Deprecated icons, to be removed in the next major version
-/** @deprecated use IconPoundSymbolCircleFilled */
-export {default as IconPoundFilled} from './generated/mistica-icons/icon-pound-symbol-circle-filled';
-/** @deprecated use IconPoundSymbolCircleLight */
-export {default as IconPoundLight} from './generated/mistica-icons/icon-pound-symbol-circle-light';
-/** @deprecated use IconPoundSymbolCircleRegular */
-export {default as IconPoundRegular} from './generated/mistica-icons/icon-pound-symbol-circle-regular';
-/** @deprecated use IconPoundSymbolCircleFilled */
-export {default as IconPoundSymbolFilled} from './generated/mistica-icons/icon-pound-symbol-circle-filled';
-/** @deprecated use IconPoundSymbolCircleLight */
-export {default as IconPoundSymbolLight} from './generated/mistica-icons/icon-pound-symbol-circle-light';
-/** @deprecated use IconPoundSymbolCircleRegular */
-export {default as IconPoundSymbolRegular} from './generated/mistica-icons/icon-pound-symbol-circle-regular';
-/** @deprecated use IconBookFilled */
-export {default as IconPoundryFilled} from './generated/mistica-icons/icon-book-filled';
-/** @deprecated use IconBookLight */
-export {default as IconPoundryLight} from './generated/mistica-icons/icon-book-light';
-/** @deprecated use IconBookRegular */
-export {default as IconPoundryRegular} from './generated/mistica-icons/icon-book-regular';
-/** @deprecated use IconDollarSymbolCircleFilled */
-export {default as IconMoneyFilled} from './generated/mistica-icons/icon-dollar-symbol-circle-filled';
-/** @deprecated use IconDollarSymbolCircleLight */
-export {default as IconMoneyLight} from './generated/mistica-icons/icon-dollar-symbol-circle-light';
-/** @deprecated use IconDollarSymbolCircleRegular */
-export {default as IconMoneyRegular} from './generated/mistica-icons/icon-dollar-symbol-circle-regular';
-/** @deprecated use IconDollarSymbolFilled */
-export {default as IconDolarSymbolFilled} from './generated/mistica-icons/icon-dollar-symbol-filled';
-/** @deprecated use IconDollarSymbolLight */
-export {default as IconDolarSymbolLight} from './generated/mistica-icons/icon-dollar-symbol-light';
-/** @deprecated use IconDollarSymbolRegular */
-export {default as IconDolarSymbolRegular} from './generated/mistica-icons/icon-dollar-symbol-regular';
-/** @deprecated use IconFileIllustratorFilled */
-export {default as IconFileFilled} from './generated/mistica-icons/icon-file-illustrator-filled';
-/** @deprecated use IconFileIllustratorLight */
-export {default as IconFileIlustratorLight} from './generated/mistica-icons/icon-file-illustrator-light';
-/** @deprecated use IconFileIllustratorRegular */
-export {default as IconFileIlustratorRegular} from './generated/mistica-icons/icon-file-illustrator-regular';
 
 // Exported this way to facilitate tree-shaking
 export {default as IconAcademicFilled} from './generated/mistica-icons/icon-academic-filled';
@@ -250,8 +211,6 @@ export {default as IconAppointmentFilled} from './generated/mistica-icons/icon-a
 export {default as IconAppointmentLight} from './generated/mistica-icons/icon-appointment-light';
 export {default as IconAppointmentRegular} from './generated/mistica-icons/icon-appointment-regular';
 export {default as IconAppsFilled} from './generated/mistica-icons/icon-apps-filled';
-export {default as IconArrowBackLight} from './generated/mistica-icons/icon-arrow-back-light';
-export {default as IconArrowBackRegular} from './generated/mistica-icons/icon-arrow-back-regular';
 export {default as IconArrowDownFilled} from './generated/mistica-icons/icon-arrow-down-filled';
 export {default as IconArrowDownLeftFilled} from './generated/mistica-icons/icon-arrow-down-left-filled';
 export {default as IconArrowDownLeftLight} from './generated/mistica-icons/icon-arrow-down-left-light';
@@ -263,11 +222,17 @@ export {default as IconArrowDownRightLight} from './generated/mistica-icons/icon
 export {default as IconArrowDownRightRegular} from './generated/mistica-icons/icon-arrow-down-right-regular';
 export {default as IconArrowDropDownFilled} from './generated/mistica-icons/icon-arrow-drop-down-filled';
 export {default as IconArrowDropUpFilled} from './generated/mistica-icons/icon-arrow-drop-up-filled';
-export {default as IconArrowForwardLight} from './generated/mistica-icons/icon-arrow-forward-light';
-export {default as IconArrowForwardRegular} from './generated/mistica-icons/icon-arrow-forward-regular';
 export {default as IconArrowLeftFilled} from './generated/mistica-icons/icon-arrow-left-filled';
 export {default as IconArrowLineDownLeftLight} from './generated/mistica-icons/icon-arrow-line-down-left-light';
 export {default as IconArrowLineDownLeftRegular} from './generated/mistica-icons/icon-arrow-line-down-left-regular';
+export {default as IconArrowLineDownLight} from './generated/mistica-icons/icon-arrow-line-down-light';
+export {default as IconArrowLineDownRegular} from './generated/mistica-icons/icon-arrow-line-down-regular';
+export {default as IconArrowLineLeftLight} from './generated/mistica-icons/icon-arrow-line-left-light';
+export {default as IconArrowLineLeftRegular} from './generated/mistica-icons/icon-arrow-line-left-regular';
+export {default as IconArrowLineRightLight} from './generated/mistica-icons/icon-arrow-line-right-light';
+export {default as IconArrowLineRightRegular} from './generated/mistica-icons/icon-arrow-line-right-regular';
+export {default as IconArrowLineUpLight} from './generated/mistica-icons/icon-arrow-line-up-light';
+export {default as IconArrowLineUpRegular} from './generated/mistica-icons/icon-arrow-line-up-regular';
 export {default as IconArrowLineUpRightLight} from './generated/mistica-icons/icon-arrow-line-up-right-light';
 export {default as IconArrowLineUpRightRegular} from './generated/mistica-icons/icon-arrow-line-up-right-regular';
 export {default as IconArrowRightFilled} from './generated/mistica-icons/icon-arrow-right-filled';
@@ -291,7 +256,9 @@ export {default as IconArrowUpRightRegular} from './generated/mistica-icons/icon
 export {default as IconAudioFilled} from './generated/mistica-icons/icon-audio-filled';
 export {default as IconAudioLight} from './generated/mistica-icons/icon-audio-light';
 export {default as IconAudioRegular} from './generated/mistica-icons/icon-audio-regular';
-export {default as IconAuraRegular} from './generated/mistica-icons/icon-aura-regular';
+export {default as IconAuraFilled} from './generated/mistica-icons/icon-aura-filled';
+export {default as IconAutenticationFailureFilled} from './generated/mistica-icons/icon-autentication-failure-filled';
+export {default as IconAutenticationFailureRegular} from './generated/mistica-icons/icon-autentication-failure-regular';
 export {default as IconAutenticationSuccessFilled} from './generated/mistica-icons/icon-autentication-success-filled';
 export {default as IconAutenticationSuccessLight} from './generated/mistica-icons/icon-autentication-success-light';
 export {default as IconAutenticationSuccessRegular} from './generated/mistica-icons/icon-autentication-success-regular';
@@ -447,6 +414,7 @@ export {default as IconChevronLeftLight} from './generated/mistica-icons/icon-ch
 export {default as IconChevronLeftRegular} from './generated/mistica-icons/icon-chevron-left-regular';
 export {default as IconChevronRightLight} from './generated/mistica-icons/icon-chevron-right-light';
 export {default as IconChevronRightRegular} from './generated/mistica-icons/icon-chevron-right-regular';
+export {default as IconChevronTopRegular} from './generated/mistica-icons/icon-chevron-top-regular';
 export {default as IconChevronUpLight} from './generated/mistica-icons/icon-chevron-up-light';
 export {default as IconChevronUpRegular} from './generated/mistica-icons/icon-chevron-up-regular';
 export {default as IconChildFilled} from './generated/mistica-icons/icon-child-filled';
@@ -469,12 +437,12 @@ export {default as IconClipLight} from './generated/mistica-icons/icon-clip-ligh
 export {default as IconClipRegular} from './generated/mistica-icons/icon-clip-regular';
 export {default as IconCloseLight} from './generated/mistica-icons/icon-close-light';
 export {default as IconCloseRegular} from './generated/mistica-icons/icon-close-regular';
+export {default as IconCloudDistributionFilled} from './generated/mistica-icons/icon-cloud-distribution-filled';
+export {default as IconCloudDistributionLight} from './generated/mistica-icons/icon-cloud-distribution-light';
+export {default as IconCloudDistributionRegular} from './generated/mistica-icons/icon-cloud-distribution-regular';
 export {default as IconCloudFilled} from './generated/mistica-icons/icon-cloud-filled';
 export {default as IconCloudLight} from './generated/mistica-icons/icon-cloud-light';
 export {default as IconCloudRegular} from './generated/mistica-icons/icon-cloud-regular';
-export {default as IconCloudSereyeFilled} from './generated/mistica-icons/icon-cloud-sereye-filled';
-export {default as IconCloudSereyeLight} from './generated/mistica-icons/icon-cloud-sereye-light';
-export {default as IconCloudSereyeRegular} from './generated/mistica-icons/icon-cloud-sereye-regular';
 export {default as IconCloudUploadFilled} from './generated/mistica-icons/icon-cloud-upload-filled';
 export {default as IconCloudUploadLight} from './generated/mistica-icons/icon-cloud-upload-light';
 export {default as IconCloudUploadRegular} from './generated/mistica-icons/icon-cloud-upload-regular';
@@ -490,6 +458,8 @@ export {default as IconCodeRegular} from './generated/mistica-icons/icon-code-re
 export {default as IconCommentFilled} from './generated/mistica-icons/icon-comment-filled';
 export {default as IconCommentLight} from './generated/mistica-icons/icon-comment-light';
 export {default as IconCommentRegular} from './generated/mistica-icons/icon-comment-regular';
+export {default as IconComputerAcademicFilled} from './generated/mistica-icons/icon-computer-academic-filled';
+export {default as IconComputerAcademicRegular} from './generated/mistica-icons/icon-computer-academic-regular';
 export {default as IconComputerFilled} from './generated/mistica-icons/icon-computer-filled';
 export {default as IconComputerLight} from './generated/mistica-icons/icon-computer-light';
 export {default as IconComputerRegular} from './generated/mistica-icons/icon-computer-regular';
@@ -554,9 +524,9 @@ export {default as IconDataCheckedRegular} from './generated/mistica-icons/icon-
 export {default as IconDataCloudFilled} from './generated/mistica-icons/icon-data-cloud-filled';
 export {default as IconDataCloudLight} from './generated/mistica-icons/icon-data-cloud-light';
 export {default as IconDataCloudRegular} from './generated/mistica-icons/icon-data-cloud-regular';
-export {default as IconDataDataSereyeFilled} from './generated/mistica-icons/icon-data-data-sereye-filled';
-export {default as IconDataDataSereyeLight} from './generated/mistica-icons/icon-data-data-sereye-light';
-export {default as IconDataDataSereyeRegular} from './generated/mistica-icons/icon-data-data-sereye-regular';
+export {default as IconDataDistributionFilled} from './generated/mistica-icons/icon-data-distribution-filled';
+export {default as IconDataDistributionLight} from './generated/mistica-icons/icon-data-distribution-light';
+export {default as IconDataDistributionRegular} from './generated/mistica-icons/icon-data-distribution-regular';
 export {default as IconDataFilled} from './generated/mistica-icons/icon-data-filled';
 export {default as IconDataLight} from './generated/mistica-icons/icon-data-light';
 export {default as IconDataNetworkFilled} from './generated/mistica-icons/icon-data-network-filled';
@@ -859,6 +829,9 @@ export {default as IconKebabMenuLight} from './generated/mistica-icons/icon-keba
 export {default as IconKeyFilled} from './generated/mistica-icons/icon-key-filled';
 export {default as IconKeyLight} from './generated/mistica-icons/icon-key-light';
 export {default as IconKeyRegular} from './generated/mistica-icons/icon-key-regular';
+export {default as IconLandlineFilled} from './generated/mistica-icons/icon-landline-filled';
+export {default as IconLandlineLight} from './generated/mistica-icons/icon-landline-light';
+export {default as IconLandlineRegular} from './generated/mistica-icons/icon-landline-regular';
 export {default as IconLaptopChargingFilled} from './generated/mistica-icons/icon-laptop-charging-filled';
 export {default as IconLaptopChargingLight} from './generated/mistica-icons/icon-laptop-charging-light';
 export {default as IconLayersFilled} from './generated/mistica-icons/icon-layers-filled';
@@ -971,6 +944,8 @@ export {default as IconNetworkHotspotFilled} from './generated/mistica-icons/ico
 export {default as IconNetworkHotspotLight} from './generated/mistica-icons/icon-network-hotspot-light';
 export {default as IconNetworkHotspotRegular} from './generated/mistica-icons/icon-network-hotspot-regular';
 export {default as IconNeuralNetworkFilled} from './generated/mistica-icons/icon-neural-network-filled';
+export {default as IconNeuralNetworkHumanFilled} from './generated/mistica-icons/icon-neural-network-human-filled';
+export {default as IconNeuralNetworkHumanRegular} from './generated/mistica-icons/icon-neural-network-human-regular';
 export {default as IconNeuralNetworkLight} from './generated/mistica-icons/icon-neural-network-light';
 export {default as IconNeuralNetworkRegular} from './generated/mistica-icons/icon-neural-network-regular';
 export {default as IconNewsletterFilled} from './generated/mistica-icons/icon-newsletter-filled';
@@ -1114,6 +1089,9 @@ export {default as IconQuestionRegular} from './generated/mistica-icons/icon-que
 export {default as IconRatingFilled} from './generated/mistica-icons/icon-rating-filled';
 export {default as IconRatingLight} from './generated/mistica-icons/icon-rating-light';
 export {default as IconRatingRegular} from './generated/mistica-icons/icon-rating-regular';
+export {default as IconRecycleFilled} from './generated/mistica-icons/icon-recycle-filled';
+export {default as IconRecycleLight} from './generated/mistica-icons/icon-recycle-light';
+export {default as IconRecycleRegular} from './generated/mistica-icons/icon-recycle-regular';
 export {default as IconReloadLight} from './generated/mistica-icons/icon-reload-light';
 export {default as IconReloadRegular} from './generated/mistica-icons/icon-reload-regular';
 export {default as IconRenovateDeviceChangeMobileFilled} from './generated/mistica-icons/icon-renovate-device-change-mobile-filled';
@@ -1125,6 +1103,9 @@ export {default as IconRepeatRegular} from './generated/mistica-icons/icon-repea
 export {default as IconRestaurantFilled} from './generated/mistica-icons/icon-restaurant-filled';
 export {default as IconRestaurantLight} from './generated/mistica-icons/icon-restaurant-light';
 export {default as IconRestaurantRegular} from './generated/mistica-icons/icon-restaurant-regular';
+export {default as IconRewardsFilled} from './generated/mistica-icons/icon-rewards-filled';
+export {default as IconRewardsLight} from './generated/mistica-icons/icon-rewards-light';
+export {default as IconRewardsRegular} from './generated/mistica-icons/icon-rewards-regular';
 export {default as IconRewindFilled} from './generated/mistica-icons/icon-rewind-filled';
 export {default as IconRewindLight} from './generated/mistica-icons/icon-rewind-light';
 export {default as IconRewindRegular} from './generated/mistica-icons/icon-rewind-regular';
@@ -1334,6 +1315,9 @@ export {default as IconTrashCanRegular} from './generated/mistica-icons/icon-tra
 export {default as IconTravelBagFilled} from './generated/mistica-icons/icon-travel-bag-filled';
 export {default as IconTravelBagLight} from './generated/mistica-icons/icon-travel-bag-light';
 export {default as IconTravelBagRegular} from './generated/mistica-icons/icon-travel-bag-regular';
+export {default as IconTree2Filled} from './generated/mistica-icons/icon-tree-2-filled';
+export {default as IconTree2Light} from './generated/mistica-icons/icon-tree-2-light';
+export {default as IconTree2Regular} from './generated/mistica-icons/icon-tree-2-regular';
 export {default as IconTreeFilled} from './generated/mistica-icons/icon-tree-filled';
 export {default as IconTreeLight} from './generated/mistica-icons/icon-tree-light';
 export {default as IconTreeRegular} from './generated/mistica-icons/icon-tree-regular';
@@ -1388,6 +1372,8 @@ export {default as IconWarningRegular} from './generated/mistica-icons/icon-warn
 export {default as IconWaterDropFilled} from './generated/mistica-icons/icon-water-drop-filled';
 export {default as IconWaterDropLight} from './generated/mistica-icons/icon-water-drop-light';
 export {default as IconWaterDropRegular} from './generated/mistica-icons/icon-water-drop-regular';
+export {default as IconWearableFilled} from './generated/mistica-icons/icon-wearable-filled';
+export {default as IconWearableLight} from './generated/mistica-icons/icon-wearable-light';
 export {default as IconWearableRegular} from './generated/mistica-icons/icon-wearable-regular';
 export {default as IconWebFilled} from './generated/mistica-icons/icon-web-filled';
 export {default as IconWebLight} from './generated/mistica-icons/icon-web-light';

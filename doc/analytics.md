@@ -4,17 +4,19 @@
 Analytics).
 
 Some components, like buttons, come with a special `trackingEvent` prop. Every time that the button is
-pressed, an event is tracked with the data provided to the `trackingEvent` prop. This is the type of a
-tracking event:
+pressed, an event is tracked with the data provided to the `trackingEvent` prop. This type is defined by the
+[webview-bridge](https://github.com/Telefonica/webview-bridge). **At the time of writing this documentation**,
+this is the type of a tracking event:
 
-```js
-type TrackingEvent = {
-  category: string,
-  action: string,
-  label?: string,
-  value?: number,
-  ...
-};
+```ts
+type TrackingEvent = Readonly<{
+  category: string;
+  action: string;
+  label?: string;
+  value?: number;
+  screenName?: string;
+  [key: string]: any;
+}>;
 ```
 
 And here is an axample of a button with a tracking event:

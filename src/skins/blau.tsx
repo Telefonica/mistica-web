@@ -116,8 +116,6 @@ export const getBlauSkin: GetSkin = () => {
             controlError: palette.blauRed,
             loadingBar: palette.blauBlueSecondary,
             loadingBarBackground: palette.blauBlueSecondary10,
-            loadingBarInverse: palette.blauBlueSecondary, // Deprecated. Remove
-            loadingBarBackgroundInverse: palette.blauBlueSecondary10, // Deprecated. Remove
 
             toggleAndroidInactive: palette.grey2,
             toggleAndroidBackgroundActive: palette.blauBlueSecondary10,

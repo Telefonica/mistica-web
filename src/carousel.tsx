@@ -1,7 +1,7 @@
 import * as React from 'react';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
-import {useScreenSize, useTheme} from './hooks';
+import {useIsInViewport, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
 import {createUseStyles} from './jss';
 import Stack from './stack';
@@ -12,9 +12,17 @@ import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
 import {applyAlpha} from './utils/color';
 import {DisableBorderRadiusProvider} from './image';
 import {getPrefixedDataAttributes, listenResize} from './utils/dom';
+import {isAndroid} from './utils/platform';
+import {useDocumentVisibility} from './utils/document-visibility';
 
 import type {DataAttributes} from './utils/types';
 import type {Theme} from './theme';
+
+const useShouldAutoplay = (autoplay: boolean, ref: React.RefObject<HTMLElement>): boolean => {
+    const isDocumentVisible = useDocumentVisibility();
+    const isInViewport = useIsInViewport(ref, false);
+    return isInViewport && isDocumentVisible && !!autoplay;
+};
 
 const useBulletsStyles = createUseStyles((theme) => ({
     bullet: {
@@ -121,6 +129,8 @@ const useStyles = createUseStyles((theme) => ({
             },
         },
     },
+    hasScroll: {},
+    centered: {},
     carousel: {
         display: 'flex',
         overflowX: 'auto',
@@ -128,16 +138,19 @@ const useStyles = createUseStyles((theme) => ({
         scrollSnapType: ({free}) => (free ? 'initial' : 'x mandatory'),
         ...hideScrollbar,
         [theme.mq.tabletOrSmaller]: {
-            margin: ({sideMargin}) => `0 -${sideMargin}px`,
-            '&::before, &::after': {
+            '&$hasScroll': {
+                margin: ({sideMargin}) => `0 -${sideMargin}px`,
+            },
+            '&$centered::before, &$centered::after': {
                 content: '""',
                 flexShrink: 0,
                 display: 'block',
-                width: ({centered}) => (centered ? '25%' : 0),
+                width: '25%',
             },
         },
     },
     item: {
+        scrollSnapStop: isAndroid(theme.platformOverrides) ? 'always' : 'normal',
         scrollSnapAlign: 'start',
         flexShrink: 0,
         width: ({itemsPerPageConfig, gap}) =>
@@ -150,28 +163,38 @@ const useStyles = createUseStyles((theme) => ({
             scrollMargin: 0,
         },
         [theme.mq.tabletOrSmaller]: {
-            scrollSnapAlign: ({centered}) => (centered ? 'center' : 'start'),
-            scrollMargin: ({mobilePageOffsetConfig}) => `${mobilePageOffsetConfig.prev}px`,
-            width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap}) =>
-                // prettier-ignore
-                `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile}px)`,
+            width: ({itemsPerPageConfig, gap}) =>
+                `calc(${100 / itemsPerPageConfig.mobile}% + ${gap / itemsPerPageConfig.mobile}px)`,
             '&:first-child': {
-                paddingLeft: ({centered, sideMargin}) => (centered ? 0 : sideMargin),
-                width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap, centered, sideMargin}) =>
+                width: ({itemsPerPageConfig, gap}) =>
                     // prettier-ignore
-                    `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile + gap - (centered ? 0 : sideMargin)}px)`,
+                    `calc(${100 / itemsPerPageConfig.mobile}% - ${(gap * (itemsPerPageConfig.mobile - 1)) / itemsPerPageConfig.mobile}px)`,
             },
-            '&:last-child': {
-                paddingRight: ({sideMargin}) => sideMargin,
-                width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap, centered, sideMargin}) =>
+
+            scrollSnapAlign: 'start',
+            scrollMargin: ({mobilePageOffsetConfig}) => `${mobilePageOffsetConfig.prev}px`,
+
+            '$hasScroll:not($centered) &': {
+                width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap}) =>
                     // prettier-ignore
-                    `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile - (centered ? 0 : sideMargin)}px)`,
+                    `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile}px)`,
+                '&:first-child': {
+                    paddingLeft: ({sideMargin}) => sideMargin,
+                    width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap, sideMargin}) =>
+                        // prettier-ignore
+                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile + gap - sideMargin}px)`,
+                },
+                '&:last-child': {
+                    paddingRight: ({sideMargin}) => sideMargin,
+                    width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap, sideMargin}) =>
+                        // prettier-ignore
+                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile - sideMargin}px)`,
+                },
             },
-            '.centered &': {
+
+            '$centered &': {
                 width: () => '50%',
-                paddingLeft: () => 0,
-                paddingRight: () => 0,
-                scrollSnapAlign: () => 'center',
+                scrollSnapAlign: 'center',
                 scrollMargin: () => 0,
             },
         },
@@ -282,7 +305,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     itemsPerPage,
     itemsToScroll,
     mobilePageOffset = 16,
-    gap = 8,
+    gap: gapProp,
     free,
     centered,
     autoplay,
@@ -293,8 +316,9 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const itemsPerPageConfig = normalizeItemsPerPage(itemsPerPage);
     const mobilePageOffsetConfig = normalizeMobilePageOffset(mobilePageOffset);
     const {isDesktopOrBigger} = useScreenSize();
+    const gap: number = gapProp ?? (isDesktopOrBigger ? 16 : 8);
     const sideMargin = useResonsiveLayoutMargin();
-    const classes = useStyles({itemsPerPageConfig, mobilePageOffsetConfig, free, gap, centered, sideMargin});
+    const classes = useStyles({itemsPerPageConfig, mobilePageOffsetConfig, free, gap, sideMargin});
     const carouselRef = React.useRef<HTMLDivElement>(null);
     const itemsPerPageFloor = isDesktopOrBigger
         ? Math.floor(itemsPerPageConfig.desktop)
@@ -311,7 +335,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const showNextArrow = scrollRight !== 0;
     const showPrevArrow = scrollLeft !== 0;
 
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         if (carouselRef.current) {
             const carouselEl = carouselRef.current;
 
@@ -327,13 +351,26 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
             const calcItemScrollPositions = () => {
                 const maxScroll = carouselEl.scrollWidth - carouselEl.clientWidth;
 
+                const getItemScrollMargin = (itemIndex: number) => {
+                    if (centered) {
+                        return 0;
+                    }
+                    if (itemIndex === 0) {
+                        return 0;
+                    }
+                    if (isDesktopOrBigger) {
+                        return -gap;
+                    }
+                    return mobilePageOffsetConfig.prev;
+                };
+
                 setItemScrollPositions(
                     Array.from(carouselEl.querySelectorAll('[data-item]')).map((itemEl, idx) => {
                         if (idx === items.length - 1) {
                             return maxScroll;
                         }
                         const offsetLeft = (itemEl as HTMLElement).offsetLeft;
-                        const scrollMargin = Number(getComputedStyle(itemEl).scrollMargin.replace('px', ''));
+                        const scrollMargin = getItemScrollMargin(idx);
                         const scrollPosition =
                             centered && !isDesktopOrBigger ? offsetLeft - itemEl.clientWidth / 2 : offsetLeft;
                         return Math.min(scrollPosition - scrollMargin - carouselEl.offsetLeft, maxScroll);
@@ -400,8 +437,10 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
         }
     }, [scrollPositions]);
 
+    const shouldAutoplay = useShouldAutoplay(!!autoplay, carouselRef);
+
     React.useEffect(() => {
-        if (autoplay) {
+        if (shouldAutoplay && autoplay) {
             const time = typeof autoplay === 'boolean' ? DEFAULT_AUTOPLAY_TIME : autoplay.time;
             const loop = typeof autoplay === 'object' && autoplay.loop;
             const interval = setInterval(() => {
@@ -413,7 +452,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
             }, time);
             return () => clearInterval(interval);
         }
-    }, [autoplay, goNext, scrollRight]);
+    }, [autoplay, goNext, scrollRight, shouldAutoplay]);
 
     const currentPageIndex = calcCurrentPageIndex(scrollLeft, pagesScrollPositions);
 
@@ -425,7 +464,10 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
             );
             const shownItemIndexes = [];
             for (let i = 0; i < itemsPerPageFloor; i++) {
-                shownItemIndexes.unshift(lastShownItemIndex - i);
+                const idx = lastShownItemIndex - i;
+                if (idx >= 0) {
+                    shownItemIndexes.unshift(idx);
+                }
             }
             onPageChange({pageIndex: currentPageIndex, shownItemIndexes});
         }
@@ -436,7 +478,9 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     if (renderBullets) {
         bullets = renderBullets({numPages: pagesCount, currentIndex: currentPageIndex, onPress: goToPage});
     } else if (withBullets) {
-        bullets = <PageBullets numPages={pagesCount} currentIndex={currentPageIndex} onPress={goToPage} />;
+        bullets = pagesCount > 1 && (
+            <PageBullets numPages={pagesCount} currentIndex={currentPageIndex} onPress={goToPage} />
+        );
     }
 
     return (
@@ -452,7 +496,13 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                         <IconChevronLeftRegular />
                     </Touchable>
                 </ThemeVariant>
-                <div className={classNames(classes.carousel, {centered})} ref={carouselRef}>
+                <div
+                    className={classNames(classes.carousel, {
+                        [classes.centered]: centered,
+                        [classes.hasScroll]: pagesCount > 1,
+                    })}
+                    ref={carouselRef}
+                >
                     {items.map((item, index) => (
                         <div key={index} className={classes.item} data-item>
                             {item}
@@ -542,6 +592,7 @@ const useSlideshowStyles = createUseStyles((theme) => ({
     },
     item: {
         width: '100%',
+        scrollSnapStop: isAndroid(theme.platformOverrides) ? 'always' : 'normal',
         scrollSnapAlign: 'start',
         flexShrink: 0,
     },
@@ -640,8 +691,10 @@ export const Slideshow: React.FC<SlideshowProps> = ({
         }
     }, [items.length]);
 
+    const shouldAutoplay = useShouldAutoplay(!!autoplay, carouselRef);
+
     React.useEffect(() => {
-        if (autoplay) {
+        if (shouldAutoplay && autoplay) {
             const time = typeof autoplay === 'boolean' ? DEFAULT_AUTOPLAY_TIME : autoplay.time;
             const loop = typeof autoplay === 'object' && autoplay.loop;
             const interval = setInterval(() => {
@@ -653,7 +706,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
             }, time);
             return () => clearInterval(interval);
         }
-    }, [autoplay, goNext, scrollRight]);
+    }, [autoplay, goNext, scrollRight, shouldAutoplay]);
 
     React.useEffect(() => {
         if (onPageChange) {
@@ -692,7 +745,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
                     <IconChevronRightRegular />
                 </Touchable>
             </ThemeVariant>
-            {withBullets && (
+            {withBullets && items.length > 1 && (
                 <ThemeVariant isInverse>
                     <div className={classes.bullets}>
                         <PageBullets numPages={items.length} currentIndex={currentIndex} />

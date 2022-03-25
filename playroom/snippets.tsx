@@ -596,7 +596,7 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             description="Description"
             extra={<Placeholder />}
-            media={<Video src="https://cdn.kapwing.com/final_61f3e551955a8b003ec98e68_257607.mp4" aspectRatio="16:9" />}
+            media={<Video src="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw" aspectRatio="16:9" />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
@@ -1207,6 +1207,52 @@ export default [
         group: 'Chip',
         name: 'Chip icon',
         code: '<Chip onClose={() => {}} Icon={IconLightningFilled}>Chip</Chip>',
+    },
+    {
+        group: 'Chip',
+        name: 'Chip checkbox',
+        code: `
+        <Checkbox
+          name="chip-checkbox"
+          render={({labelId, checked}) => (
+            <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                Chip
+            </Chip>
+          )}
+        />`,
+    },
+    {
+        group: 'Chip',
+        name: 'Chip radio group',
+        code: `
+        <RadioGroup name="chip-group" defaultValue="1">
+          <Inline space={8}>
+            <RadioButton
+              value="1"
+              render={({ checked, labelId }) => (
+                <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                  Chip 1
+                </Chip>
+              )}
+            />
+            <RadioButton
+              value="2"
+              render={({ checked, labelId }) => (
+                <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                  Chip 2
+                </Chip>
+              )}
+            />
+            <RadioButton
+              value="3"
+              render={({ checked, labelId }) => (
+                <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                  Chip 3
+                </Chip>
+              )}
+            />
+          </Inline>
+        </RadioGroup>`,
     },
     ...tagSnippets,
     {

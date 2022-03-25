@@ -8,11 +8,6 @@ declare type CommonProps = {
   children: React.Node,
   className?: string,
   disabled?: boolean,
-
-  /**
-   * @deprecated use ref
-   */
-  elementRef?: React.Ref<"button" | "a" | "div">,
   style?: CssStyle,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   "aria-label"?: string,
@@ -36,6 +31,7 @@ export type PropsHref = {
   ...$Exact<CommonProps>,
   href: string,
   newTab?: boolean,
+  loadOnTop?: boolean,
 };
 export type PropsOnPress = {
   ...$Exact<CommonProps>,
@@ -53,6 +49,7 @@ export type PropsMaybeHref = {
   maybe: true,
   href?: string,
   newTab?: boolean,
+  loadOnTop?: boolean,
 };
 export type PropsMaybeTo = {
   ...$Exact<CommonProps>,

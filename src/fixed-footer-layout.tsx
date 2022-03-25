@@ -45,7 +45,7 @@ const useStyles = createUseStyles((theme) => ({
             zIndex: 1,
         },
         shadow: {
-            boxShadow: '0 -1px 2px 0 rgba(0, 0, 0, 0.2)',
+            boxShadow: '0 -3px 8px 0 rgba(0, 0, 0, 0.15)',
         },
     },
 }));
@@ -130,7 +130,9 @@ const FixedFooterLayout: React.FC<Props> = ({
                  * This style is inline to avoid creating a class that may collide with
                  * other fixed footers during the page animation transition
                  */
-                style={{background: isTabletOrSmaller ? footerBgColor || colors.background : undefined}}
+                style={{
+                    background: isTabletOrSmaller ? footerBgColor || colors.backgroundContainer : undefined,
+                }}
                 data-testid={`fixed-footer${isFooterVisible ? '-visible' : '-hidden'}`}
                 /**
                  * This hints about the position of the fixed element. Other components could select nodes

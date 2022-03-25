@@ -148,8 +148,11 @@ test('Radio custom render', () => {
         <ThemeContextProvider theme={makeTheme()}>
             <SectionTitle id="label">Choose a fruit</SectionTitle>
             <RadioGroup name="radio-group" aria-labelledby="label" defaultValue="banana">
-                <RadioButton value="banana" render={(radio) => <div>banana {radio}</div>} />
-                <RadioButton value="apple" render={(radio) => <div>apple {radio}</div>} />
+                <RadioButton
+                    value="banana"
+                    render={({controlElement}) => <div>banana {controlElement}</div>}
+                />
+                <RadioButton value="apple" render={({controlElement}) => <div>apple {controlElement}</div>} />
             </RadioGroup>
         </ThemeContextProvider>
     );
@@ -173,8 +176,14 @@ test('form controlled mode', async () => {
         <ThemeContextProvider theme={makeTheme()}>
             <Form onSubmit={handleSubmitSpy} initialValues={{'radio-group': 'apple'}}>
                 <RadioGroup name="radio-group" aria-labelledby="label">
-                    <RadioButton value="banana" render={(radio) => <div>banana {radio}</div>} />
-                    <RadioButton value="apple" render={(radio) => <div>apple {radio}</div>} />
+                    <RadioButton
+                        value="banana"
+                        render={({controlElement}) => <div>banana {controlElement}</div>}
+                    />
+                    <RadioButton
+                        value="apple"
+                        render={({controlElement}) => <div>apple {controlElement}</div>}
+                    />
                 </RadioGroup>
                 <ButtonPrimary submit>done!</ButtonPrimary>
             </Form>
@@ -204,8 +213,14 @@ test('form uncontrolled mode', async () => {
         return (
             <ThemeContextProvider theme={makeTheme()}>
                 <RadioGroup value={value} onChange={setValue} name="radio-group" aria-labelledby="label">
-                    <RadioButton value="banana" render={(radio) => <div>banana {radio}</div>} />
-                    <RadioButton value="apple" render={(radio) => <div>apple {radio}</div>} />
+                    <RadioButton
+                        value="banana"
+                        render={({controlElement}) => <div>banana {controlElement}</div>}
+                    />
+                    <RadioButton
+                        value="apple"
+                        render={({controlElement}) => <div>apple {controlElement}</div>}
+                    />
                 </RadioGroup>
             </ThemeContextProvider>
         );
