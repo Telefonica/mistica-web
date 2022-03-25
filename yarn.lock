@@ -4598,6 +4598,7 @@ __metadata:
     react-dom: 17.0.2
     react-focus-lock: ^2.8.1
     react-jss: ^10.9.0
+    react-router: ^5.2.1
     react-router-dom: ^5.3.0
     react-transition-group: ^4.4.2
     rifm: ^0.12.1
@@ -20230,7 +20231,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@npm:5.2.1":
+"react-router@npm:5.2.1, react-router@npm:^5.2.1":
   version: 5.2.1
   resolution: "react-router@npm:5.2.1"
   dependencies:
