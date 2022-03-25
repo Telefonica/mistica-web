@@ -15,6 +15,7 @@ import {useIsomorphicLayoutEffect} from './hooks';
 import TabFocus from './tab-focus';
 import ModalContextProvider from './modal-context-provider';
 import {DocumentVisibilityProvider} from './utils/document-visibility';
+import {AspectRatioSupportProvider} from './utils/aspect-ratio-support';
 
 import type {Colors} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
@@ -146,13 +147,15 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) =>
             <TabFocus disabled={!theme.enableTabFocus}>
                 <ModalContextProvider>
                     <ThemeContext.Provider value={contextTheme}>
-                        <DocumentVisibilityProvider>
-                            <AriaIdGetterContext.Provider value={getAriaId}>
-                                <ScreenSizeContextProvider>
-                                    <DialogRoot>{children}</DialogRoot>
-                                </ScreenSizeContextProvider>
-                            </AriaIdGetterContext.Provider>
-                        </DocumentVisibilityProvider>
+                        <AspectRatioSupportProvider>
+                            <DocumentVisibilityProvider>
+                                <AriaIdGetterContext.Provider value={getAriaId}>
+                                    <ScreenSizeContextProvider>
+                                        <DialogRoot>{children}</DialogRoot>
+                                    </ScreenSizeContextProvider>
+                                </AriaIdGetterContext.Provider>
+                            </DocumentVisibilityProvider>
+                        </AspectRatioSupportProvider>
                     </ThemeContext.Provider>
                 </ModalContextProvider>
             </TabFocus>
