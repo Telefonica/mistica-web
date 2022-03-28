@@ -192,7 +192,7 @@ export const getMovistarSkin: GetSkin = (variant) => {
             backgroundSkeletonInverse: palette.grey6,
             navigationBarBackground: palette.darkModeBlack,
             backgroundAlternative: palette.darkModeGrey,
-            backgroundFeedbackBottom: palette.darkModeGrey,
+            backgroundFeedbackBottom: palette.darkModeBlack,
             skeletonWave: palette.grey5,
             borderLight: palette.darkModeBlack,
             border: palette.darkModeGrey,
