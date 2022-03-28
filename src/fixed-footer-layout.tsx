@@ -26,7 +26,7 @@ const useStyles = createUseStyles((theme) => ({
     footer: {
         width: '100%',
         backgroundColor: theme.colors.background,
-        transition: 'all 0.2s linear',
+        transition: 'background 0.2s linear',
     },
 
     elevated: {
