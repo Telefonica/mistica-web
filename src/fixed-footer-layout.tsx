@@ -11,6 +11,7 @@ import {
     hasScroll,
     removePassiveEventListener,
 } from './utils/dom';
+import FadeIn from './fade-in';
 
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
 
@@ -24,9 +25,13 @@ const waitForSwitchTransitionToStart = (fn: () => void) => {
 const useStyles = createUseStyles((theme) => ({
     footer: {
         width: '100%',
+        backgroundColor: theme.colors.background,
+        transition: 'all 0.2s linear',
     },
 
-    elevated: {backgroundColor: theme.colors.backgroundContainer},
+    elevated: {
+        backgroundColor: theme.colors.backgroundContainer,
+    },
 
     withoutFooter: {
         display: 'none',
@@ -140,8 +145,9 @@ const FixedFooterLayout: React.FC<Props> = ({
                 data-position-fixed="bottom"
             >
                 {isFooterVisible && (
-                    <aside style={{height: footerHeight, marginBottom: 'env(safe-area-inset-bottom)'}}>
-                        {footer}
+                    <aside style={{ height: footerHeight, marginBottom: 'env(safe-area-inset-bottom)' }}>
+                        
+                            {footer}
                     </aside>
                 )}
             </div>
