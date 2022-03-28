@@ -228,17 +228,23 @@ const Content: React.FC<ContentProps> = ({
             )}
             {type === 'control' && <div className={classes.right}>{renderRight?.({centerY})}</div>}
             {type === 'custom' && (
-                <div className={classNames(classes.right, {[classes.disabled]: disabled})}>
-                    {renderRight?.({centerY})}
-                </div>
-            )}
-            {type === 'custom' && navigable === true && (
-                <Box paddingLeft={16} className={classNames(classes.center, {[classes.disabled]: disabled})}>
-                    <IconChevron
-                        color={isInverse ? colors.inverse : colors.neutralMedium}
-                        direction="right"
-                    />
-                </Box>
+                <>
+                    <div className={classNames(classes.right, {[classes.disabled]: disabled})}>
+                        {renderRight?.({centerY})}
+                    </div>
+                    {navigable && (
+                        <div className={classNames(classes.right, {[classes.disabled]: disabled})}>
+                            <div
+                                style={centerY ? {display: 'flex', alignItems: 'center', height: '100%'} : {}}
+                            >
+                                <IconChevron
+                                    color={isInverse ? colors.inverse : colors.neutralMedium}
+                                    direction="right"
+                                />
+                            </div>
+                        </div>
+                    )}
+                </>
             )}
         </Box>
     );
