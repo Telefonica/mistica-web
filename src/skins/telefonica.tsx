@@ -180,7 +180,7 @@ export const getTelefonicaSkin: GetSkin = () => {
             backgroundSkeletonInverse: palette.grey6,
             navigationBarBackground: palette.darkModeBlack,
             backgroundAlternative: palette.darkModeGrey,
-            backgroundFeedbackBottom: palette.darkModeBlack,
+            backgroundFeedbackBottom: palette.darkModeGrey,
             skeletonWave: palette.grey5,
             borderLight: palette.darkModeBlack,
             border: palette.darkModeGrey,
