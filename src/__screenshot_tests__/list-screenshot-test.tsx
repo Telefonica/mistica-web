@@ -120,3 +120,21 @@ test('Rows with only a Title content are centered', async () => {
     const image = await list.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test.each(devices)('Custom row with text centered', async (device) => {
+    await openStoryPage({
+        id: 'components-lists--boxed-row-list-story',
+        device,
+        args: {
+            control: 'custom element with text',
+            title: 'Title',
+            subtitle: '',
+            headline: '',
+            description: '',
+        },
+    });
+
+    const list = await screen.findByTestId('list');
+    const image = await list.screenshot();
+    expect(image).toMatchImageSnapshot();
+});

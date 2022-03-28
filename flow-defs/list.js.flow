@@ -16,6 +16,7 @@ declare type CommonProps = {
   extra?: React.Node,
   dataAttributes?: DataAttributes,
   disabled?: boolean,
+  navigable?: boolean,
 };
 declare type ControlProps = {
   name?: string,
@@ -25,7 +26,9 @@ declare type ControlProps = {
 };
 declare type BasicRowContentProps = {
   ...$Exact<CommonProps>,
-  right?: React.Node,
+  renderRight?: (x: {
+    centerY: boolean,
+  }) => React.Node,
 };
 declare type SwitchRowContentProps = {
   ...$Exact<CommonProps>,
@@ -46,7 +49,9 @@ declare type HrefRowContentProps = {
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   href: string,
   newTab?: boolean,
-  right?: React.Node,
+  renderRight?: (x: {
+    centerY: boolean,
+  }) => React.Node,
 };
 declare type ToRowContentProps = {
   ...$Exact<CommonProps>,
@@ -54,13 +59,17 @@ declare type ToRowContentProps = {
   to: string,
   fullPageOnWebView?: boolean,
   replace?: boolean,
-  right?: React.Node,
+  renderRight?: (x: {
+    centerY: boolean,
+  }) => React.Node,
 };
 declare type OnPressRowContentProps = {
   ...$Exact<CommonProps>,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   onPress: () => void,
-  right?: React.Node,
+  renderRight?: (x: {
+    centerY: boolean,
+  }) => React.Node,
 };
 declare type RowContentProps =
   | BasicRowContentProps
