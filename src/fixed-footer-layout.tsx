@@ -148,7 +148,6 @@ const FixedFooterLayout: React.FC<Props> = ({
             >
                 {isFooterVisible && (
                     <aside style={{ height: footerHeight, marginBottom: 'env(safe-area-inset-bottom)' }}>
-                        
                             {footer}
                     </aside>
                 )}
