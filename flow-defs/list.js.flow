@@ -28,7 +28,7 @@ declare type BasicRowContentProps = {
   ...$Exact<CommonProps>,
   renderRight?: (x: {
     centerY: boolean,
-  }) => React.Node,
+  }) => React.Node | React.Node,
 };
 declare type SwitchRowContentProps = {
   ...$Exact<CommonProps>,
@@ -51,7 +51,7 @@ declare type HrefRowContentProps = {
   newTab?: boolean,
   renderRight?: (x: {
     centerY: boolean,
-  }) => React.Node,
+  }) => React.Node | React.Node,
 };
 declare type ToRowContentProps = {
   ...$Exact<CommonProps>,
@@ -61,7 +61,7 @@ declare type ToRowContentProps = {
   replace?: boolean,
   renderRight?: (x: {
     centerY: boolean,
-  }) => React.Node,
+  }) => React.Node | React.Node,
 };
 declare type OnPressRowContentProps = {
   ...$Exact<CommonProps>,
@@ -69,7 +69,7 @@ declare type OnPressRowContentProps = {
   onPress: () => void,
   renderRight?: (x: {
     centerY: boolean,
-  }) => React.Node,
+  }) => React.Node | React.Node,
 };
 declare type RowContentProps =
   | BasicRowContentProps

@@ -128,7 +128,7 @@ interface CommonProps {
 interface ContentProps extends CommonProps {
     isClickable?: boolean;
     type?: 'chevron' | 'basic' | 'custom' | 'control';
-    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode;
+    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
     /** This id is to link the title with the related control */
     labelId?: string;
 }
@@ -260,7 +260,7 @@ interface BasicRowContentProps extends CommonProps {
     radioValue?: undefined;
     newTab?: undefined;
     fullPageOnWebView?: undefined;
-    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode;
+    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
 }
 
 interface SwitchRowContentProps extends CommonProps {
@@ -313,7 +313,7 @@ interface HrefRowContentProps extends CommonProps {
     newTab?: boolean;
     onPress?: undefined;
     to?: undefined;
-    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode;
+    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
 }
 
 interface ToRowContentProps extends CommonProps {
@@ -328,7 +328,7 @@ interface ToRowContentProps extends CommonProps {
     replace?: boolean;
     href?: undefined;
     onPress?: undefined;
-    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode;
+    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
 }
 
 interface OnPressRowContentProps extends CommonProps {
@@ -341,7 +341,7 @@ interface OnPressRowContentProps extends CommonProps {
     onPress: () => void;
     href?: undefined;
     to?: undefined;
-    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode;
+    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
 }
 
 type RowContentProps =
