@@ -11,7 +11,6 @@ import {
     hasScroll,
     removePassiveEventListener,
 } from './utils/dom';
-import FadeIn from './fade-in';
 
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
 
