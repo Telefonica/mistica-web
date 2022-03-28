@@ -50,7 +50,7 @@ const useStyles = createUseStyles((theme) => ({
             zIndex: 1,
         },
         elevated: {
-            boxShadow: '0 -3px 8px 0 rgba(0, 0, 0, 0.15)',
+            boxShadow: '0 -2px 8px 0 rgba(0, 0, 0, 0.10)',
         },
     },
 }));
@@ -103,7 +103,7 @@ const FixedFooterLayout: React.FC<Props> = ({
                 setDisplayElevation(shouldDisplayElevation());
             },
             50,
-            {leading: true}
+            {leading: true, maxWait: 200}
         );
 
         const transitionAwaiter = waitForSwitchTransitionToStart(checkDisplayElevation);
