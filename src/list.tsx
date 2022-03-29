@@ -122,7 +122,7 @@ interface CommonProps {
     extra?: React.ReactNode;
     dataAttributes?: DataAttributes;
     disabled?: boolean;
-    navigable?: boolean;
+    navigable?: boolean; // enables chevron on custom elements with text
 }
 
 interface ContentProps extends CommonProps {
