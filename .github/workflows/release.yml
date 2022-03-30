@@ -10,7 +10,6 @@ jobs:
     release:
         name: Release
         runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-1.2.4
         steps:
             - uses: actions/checkout@v2
               with:
