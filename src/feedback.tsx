@@ -255,7 +255,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
 }) => {
     useHapticFeedback(hapticFeedback);
     const isInverse = useIsInverseVariant();
-    const {colors, platformOverrides} = useTheme();
+    const {colors, platformOverrides, isDarkMode} = useTheme();
     const windowHeight = useWindowHeight();
     const {isTabletOrSmaller} = useScreenSize();
     const [isServerSide, setIsServerSide] = React.useState(typeof self !== 'undefined');
@@ -318,8 +318,8 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                     button={primaryButton}
                     secondaryButton={secondaryButton}
                     link={link}
-                    footerBgColor={isInverse ? colors.backgroundFeedbackBottom : undefined}
-                    containerBgColor={isInverse ? colors.navigationBarBackground : undefined}
+                    footerBgColor={isInverse && !isDarkMode ? colors.backgroundFeedbackBottom : undefined}
+                    containerBgColor={isInverse && !isDarkMode ? colors.backgroundFeedbackBottom : undefined}
                     onChangeFooterHeight={setFooterHeight}
                 >
                     {feedbackContent}
