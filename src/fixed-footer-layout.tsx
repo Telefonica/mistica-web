@@ -78,7 +78,6 @@ const FixedFooterLayout: React.FC<Props> = ({
     const {isTabletOrSmaller} = useScreenSize();
     const {platformOverrides} = useTheme();
     const {height: realHeight, ref} = useElementDimensions();
-    const {colors} = useTheme();
 
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(realHeight);
@@ -146,8 +145,8 @@ const FixedFooterLayout: React.FC<Props> = ({
                 data-position-fixed="bottom"
             >
                 {isFooterVisible && (
-                    <aside style={{ height: footerHeight, marginBottom: 'env(safe-area-inset-bottom)' }}>
-                            {footer}
+                    <aside style={{height: footerHeight, marginBottom: 'env(safe-area-inset-bottom)'}}>
+                        {footer}
                     </aside>
                 )}
             </div>
