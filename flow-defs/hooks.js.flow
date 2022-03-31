@@ -22,7 +22,7 @@ declare export var useIsomorphicLayoutEffect: typeof React.useLayoutEffect;
 declare type IntersectionObserverOptions = {
   root?: Element | Document | null,
   rootMargin?: string,
-  threshold?: number | Array<number>,
+  threshold?: number | number[],
 };
 declare export var useIsInViewport: (
   ref: React.Ref<HTMLElement>,
