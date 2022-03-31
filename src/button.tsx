@@ -441,7 +441,7 @@ const useButtonLinkStyles = createUseStyles((theme) => {
             width: 'auto',
             padding,
             fontWeight: 500,
-            borderRadius: 8,
+            borderRadius: 4,
             overflow: 'hidden',
             transition: `background-color ${transitionTiming}, color ${transitionTiming}`,
             color: theme.colors.textLink,
