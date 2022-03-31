@@ -434,7 +434,7 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
     };
 
 const useButtonLinkStyles = createUseStyles((theme) => {
-    const padding = '6px';
+    const padding = 6;
     return {
         link: {
             display: 'inline-block',
