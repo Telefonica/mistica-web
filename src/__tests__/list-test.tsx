@@ -90,7 +90,7 @@ test('Row with custom right element', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <RowList>
-                <Row title="Title" renderRight={() => <div>custom</div>} />
+                <Row title="Title" right={() => <div>custom</div>} />
             </RowList>
         </ThemeContextProvider>
     );

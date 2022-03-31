@@ -26,7 +26,7 @@ declare type ControlProps = {
 };
 declare type BasicRowContentProps = {
   ...$Exact<CommonProps>,
-  renderRight?: (x: {
+  right?: (x: {
     centerY: boolean,
   }) => React.Node | React.Node,
 };
@@ -49,7 +49,7 @@ declare type HrefRowContentProps = {
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   href: string,
   newTab?: boolean,
-  renderRight?: (x: {
+  right?: (x: {
     centerY: boolean,
   }) => React.Node | React.Node,
 };
@@ -59,7 +59,7 @@ declare type ToRowContentProps = {
   to: string,
   fullPageOnWebView?: boolean,
   replace?: boolean,
-  renderRight?: (x: {
+  right?: (x: {
     centerY: boolean,
   }) => React.Node | React.Node,
 };
@@ -67,7 +67,7 @@ declare type OnPressRowContentProps = {
   ...$Exact<CommonProps>,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   onPress: () => void,
-  renderRight?: (x: {
+  right?: (x: {
     centerY: boolean,
   }) => React.Node | React.Node,
 };

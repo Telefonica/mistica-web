@@ -77,7 +77,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 controlProps = {href: 'https://example.org', newTab: true};
                 break;
             case 'navigates without chevron':
-                controlProps = {href: 'https://example.org', newTab: true, renderRight: null}; // renderRight null removes the chevron
+                controlProps = {href: 'https://example.org', newTab: true, right: null}; // right null removes the chevron
                 break;
             case 'switch':
                 controlProps = {switch: {defaultValue: true, onChange: () => {}}};
@@ -99,7 +99,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 break;
             case 'custom element':
                 controlProps = {
-                    right: (
+                    right: () => (
                         <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
                             <div style={{width: 32, height: 32, borderRadius: '50%', background: 'pink'}} />
                         </div>
@@ -109,7 +109,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
             case 'custom element with text':
                 controlProps = {
                     onPress,
-                    renderRight: ({centerY}: {centerY: boolean}) => (
+                    right: ({centerY}: {centerY: boolean}) => (
                         <div style={centerY ? {display: 'flex', alignItems: 'center', height: '100%'} : {}}>
                             <Inline space={0}>
                                 <Text3 color={colors.error} medium as="p">
@@ -123,7 +123,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
             case 'action with custom element':
                 controlProps = {
                     onPress,
-                    right: (
+                    right: () => (
                         <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
                             <div style={{width: 32, height: 32, borderRadius: '50%', background: 'pink'}} />
                         </div>

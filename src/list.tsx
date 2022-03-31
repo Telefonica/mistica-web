@@ -128,7 +128,7 @@ interface CommonProps {
 interface ContentProps extends CommonProps {
     isClickable?: boolean;
     type?: 'chevron' | 'basic' | 'custom' | 'control';
-    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
+    right?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
     /** This id is to link the title with the related control */
     labelId?: string;
 }
@@ -145,7 +145,7 @@ const Content: React.FC<ContentProps> = ({
     asset,
     type = 'basic',
     badge,
-    renderRight,
+    right,
     extra,
     labelId,
     disabled,
@@ -226,11 +226,11 @@ const Content: React.FC<ContentProps> = ({
                     />
                 </Box>
             )}
-            {type === 'control' && <div className={classes.right}>{renderRight?.({centerY})}</div>}
+            {type === 'control' && <div className={classes.right}>{right?.({centerY})}</div>}
             {type === 'custom' && (
                 <>
                     <div className={classNames(classes.right, {[classes.disabled]: disabled})}>
-                        {renderRight?.({centerY})}
+                        {right?.({centerY})}
                     </div>
                     {navigable && (
                         <div className={classNames(classes.right, {[classes.disabled]: disabled})}>
@@ -266,14 +266,14 @@ interface BasicRowContentProps extends CommonProps {
     radioValue?: undefined;
     newTab?: undefined;
     fullPageOnWebView?: undefined;
-    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
+    right?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
 }
 
 interface SwitchRowContentProps extends CommonProps {
     href?: undefined;
     onPress?: () => void;
     to?: undefined;
-    renderRight?: undefined;
+    right?: undefined;
     checkbox?: undefined;
     radioValue?: undefined;
     newTab?: undefined;
@@ -286,7 +286,7 @@ interface CheckboxRowContentProps extends CommonProps {
     href?: undefined;
     onPress?: () => void;
     to?: undefined;
-    renderRight?: undefined;
+    right?: undefined;
     switch?: undefined;
     radioValue?: undefined;
     newTab?: undefined;
@@ -299,7 +299,7 @@ interface RadioRowContentProps extends CommonProps {
     href?: undefined;
     onPress?: undefined;
     to?: undefined;
-    renderRight?: undefined;
+    right?: undefined;
     switch?: undefined;
     checkbox?: undefined;
     newTab?: undefined;
@@ -319,7 +319,7 @@ interface HrefRowContentProps extends CommonProps {
     newTab?: boolean;
     onPress?: undefined;
     to?: undefined;
-    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
+    right?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
 }
 
 interface ToRowContentProps extends CommonProps {
@@ -334,7 +334,7 @@ interface ToRowContentProps extends CommonProps {
     replace?: boolean;
     href?: undefined;
     onPress?: undefined;
-    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
+    right?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
 }
 
 interface OnPressRowContentProps extends CommonProps {
@@ -347,7 +347,7 @@ interface OnPressRowContentProps extends CommonProps {
     onPress: () => void;
     href?: undefined;
     to?: undefined;
-    renderRight?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
+    right?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
 }
 
 type RowContentProps =
@@ -417,11 +417,11 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
 
         const renderContent = ({
             type,
-            renderRight,
+            right,
             labelId,
         }: {
             type: ContentProps['type'];
-            renderRight?: ContentProps['renderRight'];
+            right?: ContentProps['right'];
             labelId?: string;
         }) => (
             <Content
@@ -435,7 +435,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                 subtitleLinesMax={subtitleLinesMax}
                 descriptionLinesMax={descriptionLinesMax}
                 type={type}
-                renderRight={renderRight}
+                right={right}
                 extra={extra}
                 labelId={labelId}
                 disabled={disabled}
@@ -448,17 +448,17 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
         ) => {
             let type: ContentProps['type'] = 'chevron';
 
-            if (props.renderRight === null) {
+            if (props.right === null) {
                 type = 'basic';
             }
 
-            if (props.renderRight) {
+            if (props.right) {
                 type = 'custom';
             }
 
             return (
                 <Box paddingX={16} ref={ref as React.Ref<HTMLDivElement>}>
-                    {renderContent({type, renderRight: props.renderRight})}
+                    {renderContent({type, right: props.right})}
                 </Box>
             );
         };
@@ -556,7 +556,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                                 {renderContent({
                                     labelId,
                                     type: 'control',
-                                    renderRight: () => <Stack space="around">{controlElement}</Stack>,
+                                    right: () => <Stack space="around">{controlElement}</Stack>,
                                 })}
                             </Box>
                         )}
@@ -588,7 +588,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                             <Box paddingX={16}>
                                 {renderContent({
                                     type: 'control',
-                                    renderRight: () => <Stack space="around">{controlElement}</Stack>,
+                                    right: () => <Stack space="around">{controlElement}</Stack>,
                                 })}
                             </Box>
                         )}
@@ -603,8 +603,8 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                 className={classNames(classes.rowContent, classes.hover, classes.hoverDisabled)}
                 role={role}
             >
-                {props.renderRight
-                    ? renderContent({type: 'custom', renderRight: props.renderRight})
+                {props.right
+                    ? renderContent({type: 'custom', right: props.right})
                     : renderContent({type: 'basic'})}
             </Box>
         );
