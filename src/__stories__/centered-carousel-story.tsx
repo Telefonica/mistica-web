@@ -24,10 +24,11 @@ const centerStyle = {display: 'flex', alignItems: 'center', justifyContent: 'cen
 type Args = {numItems: number};
 
 export const Default: StoryComponent<Args> = ({numItems}) => {
-    const [pageInfo, setPageInfo] = React.useState<{
-        pageIndex: number;
-        shownItemIndexes: Array<number>;
-    } | null>(null);
+    const [pageInfo, setPageInfo] =
+        React.useState<{
+            pageIndex: number;
+            shownItemIndexes: Array<number>;
+        } | null>(null);
     const {colors} = useTheme();
     return (
         <Box paddingY={24}>
@@ -45,7 +46,7 @@ export const Default: StoryComponent<Args> = ({numItems}) => {
                                     <Text2 regular>Page {bulletsProps.currentIndex}</Text2>
                                 </div>
                                 <div style={centerStyle}>
-                                    <PageBullets {...bulletsProps} />
+                                    {bulletsProps.numPages > 1 && <PageBullets {...bulletsProps} />}
                                 </div>
                             </Stack>
                         )}

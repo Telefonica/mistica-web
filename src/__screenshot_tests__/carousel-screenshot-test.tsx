@@ -17,6 +17,32 @@ test('Carousel mobile', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
+test('Carousel mobile with a single page', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousel-carousel--default',
+        device: 'MOBILE_IOS',
+        args: {numItems: 1, itemsPerPageMobile: 1},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+
+    const page2 = await openStoryPage({
+        id: 'components-carousel-carousel--default',
+        device: 'MOBILE_IOS',
+        args: {numItems: 2, itemsPerPageMobile: 2},
+    });
+
+    expect(await page2.screenshot()).toMatchImageSnapshot();
+
+    const page3 = await openStoryPage({
+        id: 'components-carousel-carousel--default',
+        device: 'MOBILE_IOS',
+        args: {numItems: 1, itemsPerPageMobile: 2},
+    });
+
+    expect(await page3.screenshot()).toMatchImageSnapshot();
+});
+
 test('Carousel desktop', async () => {
     const page = await openStoryPage({
         id: 'components-carousel-carousel--default',

@@ -12,4 +12,4 @@ declare type Props = {
 declare var IconChevron: React.ComponentType<Props>;
 declare export default typeof IconChevron;
 
-import { type CssStyle } from "../__types__.js.flow";
+import { type CssStyle } from "../__css_types__.js.flow";

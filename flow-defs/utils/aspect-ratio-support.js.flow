@@ -1,0 +1,9 @@
+// @flow
+
+import * as React from "react";
+declare type Props = {
+  children: React.Node,
+};
+declare export var AspectRatioSupportProvider: React.ComponentType<Props>;
+declare export var useSupportsAspectRatio: () => boolean;
+declare export {};

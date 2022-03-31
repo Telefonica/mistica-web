@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {useDisableBorderRadius} from './image';
 import {createUseStyles} from './jss';
+import {useSupportsAspectRatio} from './utils/aspect-ratio-support';
 import {combineRefs} from './utils/common';
 import {getPrefixedDataAttributes} from './utils/dom';
 
@@ -17,12 +18,38 @@ export const RATIO = {
 
 const useStyles = createUseStyles(() => ({
     video: {
-        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
         display: 'block',
+        objectFit: 'cover',
         maxWidth: '100%',
         maxHeight: '100%',
-        objectFit: 'cover',
-        aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
+
+        '@supports (aspect-ratio: 1 / 1)': {
+            borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
+            aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
+        },
+        '$wrapper &': {
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            top: 0,
+            left: 0,
+        },
+    },
+    wrapper: {
+        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
+        overflow: 'hidden',
+        maxWidth: '100%',
+        maxHeight: '100%',
+        position: 'relative',
+        paddingTop: ({aspectRatio, width}) => {
+            if (!aspectRatio) {
+                return 'initial';
+            }
+            if (width && typeof width === 'string' && width.endsWith('%')) {
+                return `${Number(width.replace('%', '')) / aspectRatio}%`;
+            }
+            return `${100 / aspectRatio}%`;
+        },
     },
 }));
 
@@ -37,10 +64,10 @@ const TRANSPARENT_PIXEL =
 
 export type VideoProps = {
     /** defaults to 100% when no width and no height are given */
-    width?: number;
-    height?: number;
+    width?: string | number;
+    height?: string | number;
     /** defaults to 1:1, if both width and height are given, aspectRatio is ignored */
-    aspectRatio?: AspectRatio;
+    aspectRatio?: AspectRatio | number;
     /** accepts multiple sources */
     src: string | Array<string> | VideoSource | Array<VideoSource>;
     /** defaults to true */
@@ -71,10 +98,17 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         },
         ref
     ) => {
+        const supportsAspectRatio = useSupportsAspectRatio();
         const noBorderRadius = useDisableBorderRadius();
+
+        // if width or height are numeric, we can calculate the other with the ratio without css
+        const withCssAspectRatio = typeof props.width !== 'number' && typeof props.height !== 'number';
+        const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
+
         const classes = useStyles({
             noBorderRadius,
-            aspectRatio: !props.width && !props.height ? RATIO[aspectRatio] : undefined,
+            aspectRatio: withCssAspectRatio ? ratio : undefined,
+            width: props.width,
         });
         const videoRef = React.useRef<HTMLVideoElement | null>(null);
 
@@ -100,15 +134,17 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         if (props.width !== undefined && props.height !== undefined) {
             width = props.width;
             height = props.height;
-        } else if (props.width !== undefined) {
-            height = props.width / RATIO[aspectRatio];
-        } else if (props.height !== undefined) {
-            width = props.height * RATIO[aspectRatio];
+        } else if (typeof props.width === 'number') {
+            height = props.width / ratio;
+        } else if (typeof props.height === 'number') {
+            width = props.height * ratio;
         } else {
-            width = '100%';
+            width = props.width || '100%';
         }
 
-        return (
+        const needsWrapper = withCssAspectRatio && !supportsAspectRatio;
+
+        const video = (
             <video
                 ref={combineRefs(ref, videoRef)}
                 playsInline
@@ -117,8 +153,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 autoPlay={autoPlay}
                 muted={muted}
                 loop={loop}
-                width={width}
-                height={height}
+                {...(!needsWrapper ? {width, height} : {})}
                 className={classes.video}
                 preload={preload}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
@@ -130,6 +165,15 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 ))}
             </video>
         );
+        if (needsWrapper) {
+            return (
+                <div style={{width, height}} className={classes.wrapper}>
+                    {video}
+                </div>
+            );
+        } else {
+            return video;
+        }
     }
 );
 
