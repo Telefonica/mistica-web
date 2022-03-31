@@ -7,7 +7,6 @@ on:
 jobs:
     branch-size-stats:
         runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-1.2.4
 
         outputs:
             total-js: ${{ steps.stats.outputs.total-js }}
@@ -26,7 +25,6 @@ jobs:
 
     master-size-stats:
         runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-1.2.4
 
         outputs:
             total-js: ${{ steps.stats.outputs.total-js }}
@@ -47,7 +45,6 @@ jobs:
 
     show-results:
         runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-1.2.4
         needs: [master-size-stats, branch-size-stats]
         steps:
             - uses: actions/checkout@v2
