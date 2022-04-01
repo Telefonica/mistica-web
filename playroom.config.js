@@ -53,7 +53,7 @@ const config = {
                 },
                 {
                     test: /\.(woff2)$/,
-                    loaders: ['file-loader'],
+                    use: ['file-loader'],
                     include: path.resolve(__dirname, '../'),
                 },
             ],
