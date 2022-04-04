@@ -99,7 +99,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 break;
             case 'custom element':
                 controlProps = {
-                    right: () => (
+                    right: (
                         <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
                             <div style={{width: 32, height: 32, borderRadius: '50%', background: 'pink'}} />
                         </div>

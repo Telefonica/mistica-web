@@ -125,10 +125,15 @@ interface CommonProps {
     navigable?: boolean; // enables chevron on custom elements with text
 }
 
+type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
+
+const renderRight = (right: Right, centerY: boolean) =>
+    typeof right === 'function' ? right?.({centerY}) : right;
+
 interface ContentProps extends CommonProps {
     isClickable?: boolean;
     type?: 'chevron' | 'basic' | 'custom' | 'control';
-    right?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
+    right?: Right;
     /** This id is to link the title with the related control */
     labelId?: string;
 }
@@ -226,17 +231,15 @@ const Content: React.FC<ContentProps> = ({
                     />
                 </Box>
             )}
-            {type === 'control' && <div className={classes.right}>{right?.({centerY})}</div>}
+            {type === 'control' && <div className={classes.right}>{renderRight(right, centerY)}</div>}
             {type === 'custom' && (
                 <>
                     <div className={classNames(classes.right, {[classes.disabled]: disabled})}>
-                        {right?.({centerY})}
+                        {renderRight(right, centerY)}
                     </div>
                     {navigable && (
                         <div className={classNames(classes.right, {[classes.disabled]: disabled})}>
-                            <div
-                                style={centerY ? {display: 'flex', alignItems: 'center', height: '100%'} : {}}
-                            >
+                            <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
                                 <IconChevron
                                     color={isInverse ? colors.inverse : colors.neutralMedium}
                                     direction="right"
@@ -266,7 +269,7 @@ interface BasicRowContentProps extends CommonProps {
     radioValue?: undefined;
     newTab?: undefined;
     fullPageOnWebView?: undefined;
-    right?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
+    right?: Right;
 }
 
 interface SwitchRowContentProps extends CommonProps {
@@ -319,7 +322,7 @@ interface HrefRowContentProps extends CommonProps {
     newTab?: boolean;
     onPress?: undefined;
     to?: undefined;
-    right?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
+    right?: Right;
 }
 
 interface ToRowContentProps extends CommonProps {
@@ -334,7 +337,7 @@ interface ToRowContentProps extends CommonProps {
     replace?: boolean;
     href?: undefined;
     onPress?: undefined;
-    right?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
+    right?: Right;
 }
 
 interface OnPressRowContentProps extends CommonProps {
@@ -347,7 +350,7 @@ interface OnPressRowContentProps extends CommonProps {
     onPress: () => void;
     href?: undefined;
     to?: undefined;
-    right?: ({centerY}: {centerY: boolean}) => React.ReactNode | React.ReactNode;
+    right?: Right;
 }
 
 type RowContentProps =
@@ -439,7 +442,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                 extra={extra}
                 labelId={labelId}
                 disabled={disabled}
-                navigable={!!props.onPress}
+                navigable={!!props.onPress || !!props.href || !!props.to}
             />
         );
 
