@@ -29,8 +29,5 @@ export type ImageProps = {
  dataAttributes?: DataAttributes,
  noBorderRadius?: boolean,
 };
-declare var Image: React.ComponentType<{
-  ...ImageProps,
-  ref?: React.Ref<HTMLImageElement>,
-}>;
+declare var Image: React.AbstractComponent<ImageProps, HTMLImageElement>;
 declare export default typeof Image;
