@@ -122,7 +122,7 @@ export {useDocumentVisibility} from './utils/document-visibility';
 
 export {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 
-export type {Skin, SkinName} from './skins/types';
+export type {Skin, KnownSkinName, SkinName} from './skins/types';
 export {
     VIVO_SKIN,
     O2_CLASSIC_SKIN,
