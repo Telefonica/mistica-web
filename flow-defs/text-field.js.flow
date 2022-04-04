@@ -12,8 +12,5 @@ export type TextFieldProps = {
   endIcon?: React.Node,
   getSuggestions?: (value: string) => Array<string>,
 };
-declare var TextField: React.ComponentType<{
-  ...TextFieldProps,
-  ref?: React.Ref<HTMLInputElement>,
-}>;
+declare var TextField: React.AbstractComponent<TextFieldProps, HTMLInputElement>;
 declare export default typeof TextField;

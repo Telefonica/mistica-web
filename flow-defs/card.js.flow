@@ -21,10 +21,7 @@ declare type MediaCardProps = {
   buttonLink?: RendersNullableElement<typeof ButtonLink>,
   "aria-label"?: string,
 };
-declare export var MediaCard: React.ComponentType<{
-  ...MediaCardProps,
-  ref?: React.Ref<HTMLDivElement>,
-}>;
+declare export var MediaCard: React.AbstractComponent<MediaCardProps, HTMLDivElement>;
 declare type DataCardProps = {
   /**
    * Typically a mistica-icons component element
@@ -43,8 +40,5 @@ declare type DataCardProps = {
   dataAttributes?: DataAttributes,
   "aria-label"?: string,
 };
-declare export var DataCard: React.ComponentType<{
-  ...DataCardProps,
-  ref?: React.Ref<HTMLDivElement>,
-}>;
+declare export var DataCard: React.AbstractComponent<DataCardProps, HTMLDivElement>;
 declare export {};
