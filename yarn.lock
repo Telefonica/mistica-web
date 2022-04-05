@@ -4675,7 +4675,7 @@ __metadata:
     "@telefonica/eslint-config": ^1.0.3
     "@telefonica/libphonenumber": ^2.8.1
     "@telefonica/prettier-config": ^1.1.0
-    "@telefonica/ts-to-flow": 1.1.8
+    "@telefonica/ts-to-flow": 1.2.0
     "@testing-library/jest-dom": ^5.16.3
     "@testing-library/react": ^12.1.4
     "@testing-library/user-event": ^13.5.0
@@ -4748,9 +4748,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/ts-to-flow@npm:1.1.8":
-  version: 1.1.8
-  resolution: "@telefonica/ts-to-flow@npm:1.1.8"
+"@telefonica/ts-to-flow@npm:1.2.0":
+  version: 1.2.0
+  resolution: "@telefonica/ts-to-flow@npm:1.2.0"
   dependencies:
     cpx: ^1.5.0
     find-root: ^1.1.0
@@ -4758,7 +4758,7 @@ __metadata:
     jscodeshift: ^0.13.0
   bin:
     ts-to-flow: cli.js
-  checksum: 79e63083e06ac90e75029d9f85653d09476dbd7579ca8d62510acb237c81189f3b309e518f2713ba87dc46c1511ce8cb86086bf71b905b21d36ac28d9fe48ce8
+  checksum: 5e9cd20efa49ce1692bc370b5de65ca270bd98a143cbe044370c69b966b10b660a4cae3e27e6227c63a487bb497159bc346b429c78f668094ce229c49e7b753b
   languageName: node
   linkType: hard
 
