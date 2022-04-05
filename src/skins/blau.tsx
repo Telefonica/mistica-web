@@ -1,7 +1,7 @@
 import {applyAlpha} from '../utils/color';
 import {BLAU_SKIN} from './constants';
 
-import type {GetSkin} from './types';
+import type {GetKnownSkin} from './types';
 
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/blau-constants.json
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/blau-skin-schema.json
@@ -53,7 +53,7 @@ export const palette = {
     darkModeGrey: '#242424',
 } as const;
 
-export const getBlauSkin: GetSkin = () => {
+export const getBlauSkin: GetKnownSkin = () => {
     return {
         name: BLAU_SKIN,
         colors: {
