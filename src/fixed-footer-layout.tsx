@@ -24,9 +24,13 @@ const waitForSwitchTransitionToStart = (fn: () => void) => {
 const useStyles = createUseStyles((theme) => ({
     footer: {
         width: '100%',
+        backgroundColor: theme.colors.background,
+        transition: 'background 0.2s linear, box-shadow 0.2s linear',
     },
 
-    shadow: {},
+    elevated: {
+        backgroundColor: theme.colors.backgroundContainer,
+    },
 
     withoutFooter: {
         display: 'none',
@@ -44,8 +48,8 @@ const useStyles = createUseStyles((theme) => ({
             bottom: 0,
             zIndex: 1,
         },
-        shadow: {
-            boxShadow: '0 -3px 8px 0 rgba(0, 0, 0, 0.15)',
+        elevated: {
+            boxShadow: '0 -2px 8px 0 rgba(0, 0, 0, 0.10)',
         },
     },
 }));
@@ -69,12 +73,11 @@ const FixedFooterLayout: React.FC<Props> = ({
     children,
     onChangeFooterHeight,
 }) => {
-    const [displayShadow, setDisplayShadow] = React.useState(false);
+    const [displayElevation, setDisplayElevation] = React.useState(false);
     const containerRef = React.useRef<HTMLDivElement>(null);
     const {isTabletOrSmaller} = useScreenSize();
     const {platformOverrides} = useTheme();
     const {height: realHeight, ref} = useElementDimensions();
-    const {colors} = useTheme();
 
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(realHeight);
@@ -83,7 +86,7 @@ const FixedFooterLayout: React.FC<Props> = ({
     React.useEffect(() => {
         const scrollable = getScrollableParentElement(containerRef.current);
 
-        const shouldDisplayShadow = () => {
+        const shouldDisplayElevation = () => {
             if (isRunningAcceptanceTest(platformOverrides)) {
                 return false;
             }
@@ -93,22 +96,22 @@ const FixedFooterLayout: React.FC<Props> = ({
             return false;
         };
 
-        const checkDisplayShadow = debounce(
+        const checkDisplayElevation = debounce(
             () => {
-                setDisplayShadow(shouldDisplayShadow());
+                setDisplayElevation(shouldDisplayElevation());
             },
             50,
-            {leading: true}
+            {leading: true, maxWait: 200}
         );
 
-        const transitionAwaiter = waitForSwitchTransitionToStart(checkDisplayShadow);
+        const transitionAwaiter = waitForSwitchTransitionToStart(checkDisplayElevation);
         const scrollEventTarget = getScrollEventTarget(scrollable);
-        addPassiveEventListener(scrollEventTarget, 'resize', checkDisplayShadow);
-        addPassiveEventListener(scrollEventTarget, 'scroll', checkDisplayShadow);
+        addPassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
+        addPassiveEventListener(scrollEventTarget, 'scroll', checkDisplayElevation);
         return () => {
-            checkDisplayShadow.cancel();
-            removePassiveEventListener(scrollEventTarget, 'scroll', checkDisplayShadow);
-            removePassiveEventListener(scrollEventTarget, 'resize', checkDisplayShadow);
+            checkDisplayElevation.cancel();
+            removePassiveEventListener(scrollEventTarget, 'scroll', checkDisplayElevation);
+            removePassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
             transitionAwaiter.cancel();
         };
     }, [children, containerRef, platformOverrides]);
@@ -124,14 +127,14 @@ const FixedFooterLayout: React.FC<Props> = ({
                 ref={ref}
                 className={classnames(classes.footer, {
                     [classes.withoutFooter]: !isFooterVisible,
-                    [classes.shadow]: displayShadow,
+                    [classes.elevated]: displayElevation,
                 })}
                 /**
                  * This style is inline to avoid creating a class that may collide with
                  * other fixed footers during the page animation transition
                  */
                 style={{
-                    background: isTabletOrSmaller ? footerBgColor || colors.backgroundContainer : undefined,
+                    background: isTabletOrSmaller ? footerBgColor : undefined,
                 }}
                 data-testid={`fixed-footer${isFooterVisible ? '-visible' : '-hidden'}`}
                 /**
