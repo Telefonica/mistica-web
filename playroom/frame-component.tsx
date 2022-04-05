@@ -1,7 +1,7 @@
 import '../css/roboto.css';
 import '../css/reset.css';
 import * as React from 'react';
-import {ThemeContextProvider, useTheme, useModalState} from '../src';
+import {ThemeContextProvider, useTheme, useModalState, OverscrollColorProvider} from '../src';
 
 import type {ThemeConfig} from '../src';
 
@@ -50,7 +50,9 @@ const FrameComponent = ({children, theme}: Props): React.ReactNode => (
     <ThemeOverriderContextProvider>
         {(overridenTheme) => (
             <ThemeContextProvider theme={overridenTheme ?? theme}>
-                <App>{children}</App>
+                <OverscrollColorProvider>
+                    <App>{children}</App>
+                </OverscrollColorProvider>
             </ThemeContextProvider>
         )}
     </ThemeOverriderContextProvider>
