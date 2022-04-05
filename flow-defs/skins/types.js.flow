@@ -1,16 +1,22 @@
 // @flow
 
 export type SkinVariant = "prominent";
-export type SkinName =
+export type KnownSkinName =
   | "Movistar"
   | "O2"
   | "O2-classic"
   | "Vivo"
   | "Telefonica"
   | "Blau";
-export type GetSkin = (variant?: SkinVariant) => Skin;
+export type SkinName = KnownSkinName | string;
+export type GetKnownSkin = (variant?: SkinVariant) => KnownSkin;
 export type Skin = {
   name: SkinName,
+  colors: Colors,
+  darkModeColors?: $Shape<Colors>,
+};
+export type KnownSkin = {
+  name: KnownSkinName,
   colors: Colors,
   darkModeColors?: $Shape<Colors>,
 };

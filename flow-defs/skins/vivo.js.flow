@@ -1,6 +1,6 @@
 // @flow
 
-import type { GetSkin } from "./types";
+import type { GetKnownSkin } from "./types";
 declare export var palette: {
   +vivoPurple: "#660099",
   +vivoPurpleDark: "#461E5F",
@@ -36,4 +36,4 @@ declare export var palette: {
   +darkModeGrey: "#242424",
   +darkModeGrey6: "#313235",
 };
-declare export var getVivoSkin: GetSkin;
+declare export var getVivoSkin: GetKnownSkin;
