@@ -1,7 +1,7 @@
 import {applyAlpha} from '../utils/color';
 import {VIVO_SKIN} from './constants';
 
-import type {GetSkin} from './types';
+import type {GetKnownSkin} from './types';
 
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/vivo-constants.json
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/vivo-skin-schema.json
@@ -50,7 +50,7 @@ export const palette = {
     darkModeGrey6: '#313235',
 } as const;
 
-export const getVivoSkin: GetSkin = () => {
+export const getVivoSkin: GetKnownSkin = () => {
     return {
         name: VIVO_SKIN,
         colors: {

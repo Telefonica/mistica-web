@@ -1,11 +1,18 @@
 export type SkinVariant = 'prominent';
 
-export type SkinName = 'Movistar' | 'O2' | 'O2-classic' | 'Vivo' | 'Telefonica' | 'Blau';
+export type KnownSkinName = 'Movistar' | 'O2' | 'O2-classic' | 'Vivo' | 'Telefonica' | 'Blau';
+export type SkinName = KnownSkinName | string;
 
-export type GetSkin = (variant?: SkinVariant) => Skin;
+export type GetKnownSkin = (variant?: SkinVariant) => KnownSkin;
 
 export type Skin = {
     name: SkinName;
+    colors: Colors;
+    darkModeColors?: Partial<Colors>;
+};
+
+export type KnownSkin = {
+    name: KnownSkinName;
     colors: Colors;
     darkModeColors?: Partial<Colors>;
 };
