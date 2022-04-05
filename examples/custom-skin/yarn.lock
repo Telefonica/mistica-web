@@ -1440,7 +1440,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.8.3, @babel/runtime@npm:^7.8.4":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.3, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7":
   version: 7.17.8
   resolution: "@babel/runtime@npm:7.17.8"
   dependencies:
@@ -2222,41 +2222,41 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@telefonica/libphonenumber@npm:^2.8.0":
+"@telefonica/libphonenumber@npm:^2.8.1":
   version: 2.8.1
   resolution: "@telefonica/libphonenumber@npm:2.8.1"
   checksum: f51a07fd300337f8fd681f469411d9f8506899d30fbd3af9e757a8780ee020db7a80527bba35a9377fd0c18ae8d288237fedd35bf896e6c55b5aef957f8d2f8f
   languageName: node
   linkType: hard
 
-"@telefonica/mistica@npm:^11.2.1":
-  version: 11.2.1
-  resolution: "@telefonica/mistica@npm:11.2.1"
+"@telefonica/mistica@npm:^11.3.0":
+  version: 11.3.0
+  resolution: "@telefonica/mistica@npm:11.3.0"
   dependencies:
     "@juggle/resize-observer": ^3.3.1
     "@tef-novum/webview-bridge": ^3.4.0
-    "@telefonica/libphonenumber": ^2.8.0
+    "@telefonica/libphonenumber": ^2.8.1
     classnames: ^2.3.1
-    jss: ^10.6.0
-    jss-plugin-camel-case: ^10.6.0
-    jss-plugin-default-unit: ^10.6.0
-    jss-plugin-nested: ^10.6.0
-    jss-plugin-rule-value-function: ^10.6.0
-    jss-plugin-vendor-prefixer: ^10.6.0
+    jss: ^10.9.0
+    jss-plugin-camel-case: ^10.9.0
+    jss-plugin-default-unit: ^10.9.0
+    jss-plugin-nested: ^10.9.0
+    jss-plugin-rule-value-function: ^10.9.0
+    jss-plugin-vendor-prefixer: ^10.9.0
     lodash: ^4.17.21
     moment: ^2.29.1
-    react-autosuggest: ^9.4.3
-    react-datetime: ^3.0.4
-    react-focus-lock: ^2.5.2
-    react-jss: ^10.6.0
-    react-transition-group: ^2.5.3
-    rifm: ^0.12.0
+    react-autosuggest: ^10.1.0
+    react-datetime: ^3.1.1
+    react-focus-lock: ^2.8.1
+    react-jss: ^10.9.0
+    react-transition-group: ^4.4.2
+    rifm: ^0.12.1
     scroll-behavior-polyfill: ^2.0.13
     semver-compare: ^1.0.0
   peerDependencies:
     react: 16.x || 17.x
     react-dom: 16.x || 17.x
-  checksum: e9e47c6137fe8a1b52ef086db8a67f5e58aa51b7bbff1193f68d48348b86e41e4a61bf4a284339dd3e81fc16f8294810c3f535d15a03873c4c27411056917a13
+  checksum: d8e570d18c23fd091015a8f41cfe6bbbc25a46badedd58e62a886c879ff9ce2a20808ac72a772fff14f03406f1e12a427f5a8eb64de624b11559c384d92a6b15
   languageName: node
   linkType: hard
 
@@ -4581,7 +4581,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "custom-skin@workspace:."
   dependencies:
-    "@telefonica/mistica": ^11.2.1
+    "@telefonica/mistica": ^11.3.0
     "@types/node": ^16.7.13
     "@types/react": ^17.0.20
     "@types/react-dom": ^17.0.9
@@ -4888,12 +4888,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dom-helpers@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "dom-helpers@npm:3.4.0"
+"dom-helpers@npm:^5.0.1":
+  version: 5.2.1
+  resolution: "dom-helpers@npm:5.2.1"
   dependencies:
-    "@babel/runtime": ^7.1.2
-  checksum: 58d9f1c4a96daf77eddc63ae1236b826e1cddd6db66bbf39b18d7e21896d99365b376593352d52a60969d67fa4a8dbef26adc1439fa2c1b355efa37cacbaf637
+    "@babel/runtime": ^7.8.7
+    csstype: ^3.0.2
+  checksum: 863ba9e086f7093df3376b43e74ce4422571d404fc9828bf2c56140963d5edf0e56160f9b2f3bb61b282c07f8fc8134f023c98fd684bddcb12daf7b0f14d951c
   languageName: node
   linkType: hard
 
@@ -5163,6 +5164,13 @@ __metadata:
     is-date-object: ^1.0.1
     is-symbol: ^1.0.2
   checksum: 4ead6671a2c1402619bdd77f3503991232ca15e17e46222b0a41a5d81aebc8740a77822f5b3c965008e631153e9ef0580540007744521e72de8e33599fca2eed
+  languageName: node
+  linkType: hard
+
+"es6-promise@npm:^4.2.8":
+  version: 4.2.8
+  resolution: "es6-promise@npm:4.2.8"
+  checksum: 95614a88873611cb9165a85d36afa7268af5c03a378b35ca7bda9508e1d4f1f6f19a788d4bc755b3fd37c8ebba40782018e02034564ff24c9d6fa37e959ad57d
   languageName: node
   linkType: hard
 
@@ -7680,7 +7688,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jss-plugin-camel-case@npm:10.9.0, jss-plugin-camel-case@npm:^10.6.0":
+"jss-plugin-camel-case@npm:10.9.0, jss-plugin-camel-case@npm:^10.9.0":
   version: 10.9.0
   resolution: "jss-plugin-camel-case@npm:10.9.0"
   dependencies:
@@ -7702,7 +7710,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jss-plugin-default-unit@npm:10.9.0, jss-plugin-default-unit@npm:^10.6.0":
+"jss-plugin-default-unit@npm:10.9.0, jss-plugin-default-unit@npm:^10.9.0":
   version: 10.9.0
   resolution: "jss-plugin-default-unit@npm:10.9.0"
   dependencies:
@@ -7743,7 +7751,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jss-plugin-nested@npm:10.9.0, jss-plugin-nested@npm:^10.6.0":
+"jss-plugin-nested@npm:10.9.0, jss-plugin-nested@npm:^10.9.0":
   version: 10.9.0
   resolution: "jss-plugin-nested@npm:10.9.0"
   dependencies:
@@ -7764,7 +7772,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jss-plugin-rule-value-function@npm:10.9.0, jss-plugin-rule-value-function@npm:^10.6.0":
+"jss-plugin-rule-value-function@npm:10.9.0, jss-plugin-rule-value-function@npm:^10.9.0":
   version: 10.9.0
   resolution: "jss-plugin-rule-value-function@npm:10.9.0"
   dependencies:
@@ -7797,7 +7805,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jss-plugin-vendor-prefixer@npm:10.9.0, jss-plugin-vendor-prefixer@npm:^10.6.0":
+"jss-plugin-vendor-prefixer@npm:10.9.0, jss-plugin-vendor-prefixer@npm:^10.9.0":
   version: 10.9.0
   resolution: "jss-plugin-vendor-prefixer@npm:10.9.0"
   dependencies:
@@ -7830,7 +7838,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jss@npm:10.9.0, jss@npm:^10.6.0":
+"jss@npm:10.9.0, jss@npm:^10.9.0":
   version: 10.9.0
   resolution: "jss@npm:10.9.0"
   dependencies:
@@ -9915,7 +9923,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.10, prop-types@npm:^15.5.7, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.5.7, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -10029,29 +10037,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-autosuggest@npm:^9.4.3":
-  version: 9.4.3
-  resolution: "react-autosuggest@npm:9.4.3"
+"react-autosuggest@npm:^10.1.0":
+  version: 10.1.0
+  resolution: "react-autosuggest@npm:10.1.0"
   dependencies:
-    prop-types: ^15.5.10
-    react-autowhatever: ^10.1.2
-    shallow-equal: ^1.0.0
-  peerDependencies:
-    react: ">=0.14.7"
-  checksum: 41e983bd4e84a4dee85b1cc61a9d09ad60c22922bb9fdf483815dfdd498a36955872912f78c020ced80d96c07a72ff1c32f9831df50cf119d81418265d8efd0d
-  languageName: node
-  linkType: hard
-
-"react-autowhatever@npm:^10.1.2":
-  version: 10.2.1
-  resolution: "react-autowhatever@npm:10.2.1"
-  dependencies:
-    prop-types: ^15.5.8
+    es6-promise: ^4.2.8
+    prop-types: ^15.7.2
     react-themeable: ^1.1.0
     section-iterator: ^2.0.0
+    shallow-equal: ^1.2.1
   peerDependencies:
-    react: ">=0.14.7"
-  checksum: 507a287d46984c6bc9fa3342ada2faf9002fee72568ce8151448908de553fd6daa501b32bec3406e18dee93939d403b8e8800c0d723f7b8435859b1ce36886e7
+    react: ">=16.3.0"
+  checksum: 3526b02bb1938374c2a0d108a03666eae24cddd8bef7686e7f6271bb4c25ad34f8b09e84d1cc2e9206aff577a742c1f8481964e75442a9e080326676ad71f8ae
   languageName: node
   linkType: hard
 
@@ -10066,7 +10063,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-datetime@npm:^3.0.4":
+"react-datetime@npm:^3.1.1":
   version: 3.1.1
   resolution: "react-datetime@npm:3.1.1"
   dependencies:
@@ -10137,7 +10134,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-focus-lock@npm:^2.5.2":
+"react-focus-lock@npm:^2.8.1":
   version: 2.8.1
   resolution: "react-focus-lock@npm:2.8.1"
   dependencies:
@@ -10167,7 +10164,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-jss@npm:^10.6.0":
+"react-jss@npm:^10.9.0":
   version: 10.9.0
   resolution: "react-jss@npm:10.9.0"
   dependencies:
@@ -10185,13 +10182,6 @@ __metadata:
   peerDependencies:
     react: ">=16.8.6"
   checksum: 52e8a19f71a231e9cae98b6d087e63fbf3ad128db91200671dcfbac34654fa75fa107a274e7f08b332c230f082cdde79d93ff941435ab2a3331631723e36bc43
-  languageName: node
-  linkType: hard
-
-"react-lifecycles-compat@npm:^3.0.4":
-  version: 3.0.4
-  resolution: "react-lifecycles-compat@npm:3.0.4"
-  checksum: a904b0fc0a8eeb15a148c9feb7bc17cec7ef96e71188280061fc340043fd6d8ee3ff233381f0e8f95c1cf926210b2c4a31f38182c8f35ac55057e453d6df204f
   languageName: node
   linkType: hard
 
@@ -10278,18 +10268,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-transition-group@npm:^2.5.3":
-  version: 2.9.0
-  resolution: "react-transition-group@npm:2.9.0"
+"react-transition-group@npm:^4.4.2":
+  version: 4.4.2
+  resolution: "react-transition-group@npm:4.4.2"
   dependencies:
-    dom-helpers: ^3.4.0
+    "@babel/runtime": ^7.5.5
+    dom-helpers: ^5.0.1
     loose-envify: ^1.4.0
     prop-types: ^15.6.2
-    react-lifecycles-compat: ^3.0.4
   peerDependencies:
-    react: ">=15.0.0"
-    react-dom: ">=15.0.0"
-  checksum: d8c9e50aabdc2cfc324e5cdb0ad1c6eecb02e1c0cd007b26d5b30ccf49015e900683dd489348c71fba4055858308d9ba7019e0d37d0e8d37bd46ed098788f670
+    react: ">=16.6.0"
+    react-dom: ">=16.6.0"
+  checksum: b67bf5b3e86dbab72d658b9a52a3589e5960583ab28c7c66272427d8fe30d4c7de422d5046ae96bd2683cdf80cc3264b2516f5ce80cae1dbe6cf3ca6dda392c5
   languageName: node
   linkType: hard
 
@@ -10594,7 +10584,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rifm@npm:^0.12.0":
+"rifm@npm:^0.12.1":
   version: 0.12.1
   resolution: "rifm@npm:0.12.1"
   peerDependencies:
@@ -10928,7 +10918,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shallow-equal@npm:^1.0.0, shallow-equal@npm:^1.2.0":
+"shallow-equal@npm:^1.2.0, shallow-equal@npm:^1.2.1":
   version: 1.2.1
   resolution: "shallow-equal@npm:1.2.1"
   checksum: 4f1645cc516e7754c4438db687e1da439a5f29a7dba2ba90c5f88e5708aeb17bc4355ba45cad805b0e95dc898e37d8bf6d77d854919c7512f89939986cff8cd1

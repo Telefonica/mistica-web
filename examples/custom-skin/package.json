@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@telefonica/mistica": "^11.2.1",
+        "@telefonica/mistica": "^11.3.0",
         "@types/node": "^16.7.13",
         "@types/react": "^17.0.20",
         "@types/react-dom": "^17.0.9",
@@ -14,9 +14,7 @@
     },
     "scripts": {
         "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "build": "react-scripts build"
     },
     "eslintConfig": {
         "extends": [

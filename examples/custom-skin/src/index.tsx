@@ -7,7 +7,7 @@ import {ThemeContextProvider} from '@telefonica/mistica';
 import type {Skin} from '@telefonica/mistica';
 
 const skin: Skin = {
-    name: 'Movistar',
+    name: 'Custom skin',
     colors: {
         appBarBackground: '#FFFFFF',
         background: '#FFFFFF',
