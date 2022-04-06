@@ -1,3 +1,17 @@
+# [11.3.0](https://github.com/Telefonica/mistica-web/compare/v11.2.1...v11.3.0) (2022-04-05)
+
+
+### Bug Fixes
+
+* **flow types:** components with forward ref ([#457](https://github.com/Telefonica/mistica-web/issues/457)) ([db9cf82](https://github.com/Telefonica/mistica-web/commit/db9cf825a839c849c17bea84ac2c80a914177cb1))
+* **Row:** remove cursor pointer on non interactive rows ([#458](https://github.com/Telefonica/mistica-web/issues/458)) ([f629dd2](https://github.com/Telefonica/mistica-web/commit/f629dd2ab3eeacef9ebe654d445ad88aa346cc29))
+* **Video, Image:** aspect ratio fix for old browsers ([#451](https://github.com/Telefonica/mistica-web/issues/451)) ([4e9ea65](https://github.com/Telefonica/mistica-web/commit/4e9ea65786c90bc49bbb85b6acdd0ff9bf398bbd))
+
+
+### Features
+
+* **ThemeContextProvider:** allow custom skins ([#460](https://github.com/Telefonica/mistica-web/issues/460)) ([738bb5c](https://github.com/Telefonica/mistica-web/commit/738bb5c0ca44c3557bcdddcabdf53a7a0449df4c))
+
 ## [11.2.1](https://github.com/Telefonica/mistica-web/compare/v11.2.0...v11.2.1) (2022-03-24)
 
 
