@@ -79,7 +79,7 @@ declare type LinkComponent = React.ComponentType<{
 declare export var AnchorLink: LinkComponent;
 export type ColorScheme = "dark" | "light" | "auto";
 export type ThemeConfig = {
-  skin: Skin,
+  skin: $ReadOnly<Skin>,
   colorScheme?: ColorScheme,
   i18n: {
     locale: Locale,
