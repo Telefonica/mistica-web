@@ -10,6 +10,9 @@ const common = {
     enableTabFocus: true,
     colorScheme: 'auto',
     i18n: {locale: 'en-US', phoneNumberFormattingRegionCode: 'ES'},
+    dimensions: {
+        headerMobileHeight: 0,
+    },
 } as const;
 
 export const Movistar: ThemeConfig = {...themes.Movistar, ...common};

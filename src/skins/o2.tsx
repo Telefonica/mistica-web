@@ -1,7 +1,7 @@
 import {applyAlpha} from '../utils/color';
 import {O2_SKIN} from './constants';
 
-import type {GetSkin} from './types';
+import type {GetKnownSkin} from './types';
 
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/o2-constants.json
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/o2-skin-schema.json
@@ -60,7 +60,7 @@ export const palette = {
     darkModeO2BluePrimaryDark: '#000099',
 } as const;
 
-export const getO2Skin: GetSkin = () => {
+export const getO2Skin: GetKnownSkin = () => {
     return {
         name: O2_SKIN,
         colors: {

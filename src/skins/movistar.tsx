@@ -1,7 +1,7 @@
 import {applyAlpha} from '../utils/color';
 import {MOVISTAR_SKIN} from './constants';
 
-import type {GetSkin, Skin} from './types';
+import type {GetKnownSkin, KnownSkin} from './types';
 
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/movistar-skin-schema.json
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/movistar-constants.json
@@ -59,8 +59,8 @@ export const palette = {
     darkModeGrey: '#242424',
 } as const;
 
-export const getMovistarSkin: GetSkin = (variant) => {
-    const skin: Skin = {
+export const getMovistarSkin: GetKnownSkin = (variant) => {
+    const skin: KnownSkin = {
         name: MOVISTAR_SKIN,
         colors: {
             // BACKGROUNDS

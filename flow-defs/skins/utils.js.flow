@@ -1,7 +1,7 @@
 // @flow
 
-import type { Skin, SkinName } from "./types";
+import type { KnownSkin, KnownSkinName } from "./types";
 declare export var getSkinByName: (
-  name: SkinName,
+  name: KnownSkinName,
   variant?: "prominent" | void
-) => Skin;
+) => KnownSkin;
