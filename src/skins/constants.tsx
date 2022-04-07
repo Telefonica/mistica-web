@@ -4,3 +4,4 @@ export const O2_CLASSIC_SKIN = 'O2-classic';
 export const VIVO_SKIN = 'Vivo';
 export const TELEFONICA_SKIN = 'Telefonica';
 export const BLAU_SKIN = 'Blau';
+export const SOLAR360_SKIN = 'Solar360';

@@ -3,7 +3,7 @@
 // This module replaces the required parts from ./src/skins
 
 /**
- * @param {'Movistar' | 'Vivo' | 'O2' | 'O2-classic' | 'Telefonica' | 'Blau'} skin
+ * @param {'Movistar' | 'Vivo' | 'O2' | 'O2-classic' | 'Telefonica' | 'Blau' | 'Solar360'} skin
  */
 export const getColors = (skin) => {
     switch (skin) {
@@ -37,6 +37,13 @@ export const getColors = (skin) => {
                 textSecondary: '#6E7894',
             };
         case 'Blau':
+            return {
+                primary: '#0070BF',
+                textPrimary: '#000000',
+                textPrimaryInverse: '#FFFFFF',
+                textSecondary: '#808285',
+            };
+        case 'Solar360':
             return {
                 primary: '#0070BF',
                 textPrimary: '#000000',
