@@ -1,6 +1,6 @@
 // @flow
 
-import type { GetSkin } from "./types";
+import type { GetKnownSkin } from "./types";
 declare export var palette: {
   +movistarBlue: "#019DF4",
   +movistarBlue10: "#E6F5FD",
@@ -44,4 +44,4 @@ declare export var palette: {
   +darkModeBlack: "#191919",
   +darkModeGrey: "#242424",
 };
-declare export var getMovistarSkin: GetSkin;
+declare export var getMovistarSkin: GetKnownSkin;

@@ -6,9 +6,9 @@ import {getO2Skin} from './o2';
 import {getO2ClassicSkin} from './o2-classic';
 import {getMovistarSkin} from './movistar';
 
-import type {SkinVariant, Skin, SkinName} from './types';
+import type {SkinVariant, KnownSkin, KnownSkinName} from './types';
 
-export const getSkinByName = (name: SkinName, variant?: SkinVariant): Skin => {
+export const getSkinByName = (name: KnownSkinName, variant?: SkinVariant): KnownSkin => {
     switch (name) {
         case BLAU_SKIN:
             return getBlauSkin(variant);

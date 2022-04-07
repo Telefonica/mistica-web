@@ -36,8 +36,5 @@ declare type Props = {
   dataAttributes?: DataAttributes,
   "aria-label"?: string,
 };
-declare var Box: React.ComponentType<{
-  ...Props,
-  ref?: React.Ref<HTMLDivElement>,
-}>;
+declare var Box: React.AbstractComponent<Props, HTMLDivElement>;
 declare export default typeof Box;

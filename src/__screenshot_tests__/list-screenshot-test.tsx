@@ -113,6 +113,7 @@ test('Rows with only a Title content are centered', async () => {
             subtitle: '',
             headline: '',
             description: '',
+            control: 'chevron',
         },
     });
 

@@ -37,4 +37,4 @@ export type TextLinkProps = HrefProps | ToProps | OnPressProps;
 declare var TextLink: React.ComponentType<TextLinkProps>;
 declare export default typeof TextLink;
 
-import { type CssStyle } from "./__types__.js.flow";
+import { type CssStyle } from "./__css_types__.js.flow";

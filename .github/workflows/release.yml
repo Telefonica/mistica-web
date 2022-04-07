@@ -10,7 +10,6 @@ jobs:
     release:
         name: Release
         runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-1.2.4
         steps:
             - uses: actions/checkout@v2
               with:
@@ -29,10 +28,6 @@ jobs:
               uses: './.github/actions/set-npm-token'
               with:
                   npm-token: ${{ secrets.NPM_PUBLISH_TOKEN }}
-
-              # see https://github.com/semantic-release/semantic-release/issues/2218
-            - name: 'Workaround permissions issue'
-              run: chown $(whoami):$(whoami) -R .
 
             - name: Release
               env:

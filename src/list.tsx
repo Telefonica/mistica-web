@@ -41,7 +41,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         cursor: ({disabled}) => (disabled ? 'default' : 'pointer'),
     },
     hoverDisabled: {
-        cursor: 'initial',
+        cursor: () => 'initial',
         '&:hover': {
             background: () => 'none',
         },

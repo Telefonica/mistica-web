@@ -1,7 +1,7 @@
 import {applyAlpha} from '../utils/color';
 import {TELEFONICA_SKIN} from './constants';
 
-import type {GetSkin} from './types';
+import type {GetKnownSkin} from './types';
 
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/telefonica-skin-schema.json
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/telefonica-constants.json
@@ -50,7 +50,7 @@ export const palette = {
     darkModeGrey: '#242424',
 } as const;
 
-export const getTelefonicaSkin: GetSkin = () => {
+export const getTelefonicaSkin: GetKnownSkin = () => {
     return {
         name: TELEFONICA_SKIN,
         colors: {

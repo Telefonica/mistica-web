@@ -86,10 +86,7 @@ export type ButtonLinkProps =
   | ButtonLinkOnPressProps
   | ButtonLinkHrefProps
   | ButtonLinkToProps;
-declare export var ButtonLink: React.ComponentType<{
-  ...ButtonLinkProps,
-  ref?: React.Ref<HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>,
-}>;
+declare export var ButtonLink: React.AbstractComponent<ButtonLinkProps, HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>;
 declare export var ButtonPrimary: React.ComponentType<ButtonProps>;
 declare export var ButtonSecondary: React.ComponentType<ButtonProps>;
 declare export var ButtonDanger: React.ComponentType<ButtonProps>;
@@ -103,4 +100,4 @@ export type NullableButtonElement =
   | RendersNullableElement<typeof ButtonDanger>;
 declare export {};
 
-import { type CssStyle } from "./__types__.js.flow";
+import { type CssStyle } from "./__css_types__.js.flow";
