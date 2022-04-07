@@ -122,24 +122,19 @@ interface CommonProps {
     extra?: React.ReactNode;
     dataAttributes?: DataAttributes;
     disabled?: boolean;
-    navigable?: boolean; // enables chevron on custom elements with text
+    withChevron?: boolean;
 }
 
 type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
 
 const renderRight = (right: Right, centerY: boolean) => {
-    if (typeof right === 'function') {
-        return right?.({centerY});
-    } else {
-        const rightFn = ({centerY}: {centerY: boolean}) => {
-            return (
-                <div style={centerY ? {display: 'flex', alignItems: 'center', height: '100%'} : {}}>
-                    {right}
-                </div>
-            );
-        };
-        return rightFn({centerY});
-    }
+    if (typeof right === 'function') return right?.({centerY});
+
+    return centerY ? (
+        <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>{right}</div>
+    ) : (
+        right
+    );
 };
 
 interface ContentProps extends CommonProps {
@@ -151,7 +146,7 @@ interface ContentProps extends CommonProps {
 }
 
 const Content: React.FC<ContentProps> = ({
-    navigable,
+    withChevron,
     headline,
     title,
     titleLinesMax,
@@ -249,7 +244,7 @@ const Content: React.FC<ContentProps> = ({
                     <div className={classNames(classes.right, {[classes.disabled]: disabled})}>
                         {renderRight(right, centerY)}
                     </div>
-                    {navigable && (
+                    {withChevron && (
                         <div className={classNames(classes.right, {[classes.disabled]: disabled})}>
                             <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
                                 <IconChevron
@@ -454,7 +449,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                 extra={extra}
                 labelId={labelId}
                 disabled={disabled}
-                navigable={!!props.onPress || !!props.href || !!props.to}
+                withChevron={!!props.onPress || !!props.href || !!props.to}
             />
         );
 

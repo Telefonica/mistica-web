@@ -16,7 +16,7 @@ declare type CommonProps = {
   extra?: React.Node,
   dataAttributes?: DataAttributes,
   disabled?: boolean,
-  navigable?: boolean,
+  withChevron?: boolean,
 };
 declare type Right =
   | ((x: {
