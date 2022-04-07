@@ -127,8 +127,20 @@ interface CommonProps {
 
 type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
 
-const renderRight = (right: Right, centerY: boolean) =>
-    typeof right === 'function' ? right?.({centerY}) : right;
+const renderRight = (right: Right, centerY: boolean) => {
+    if (typeof right === 'function') {
+        return right?.({centerY});
+    } else {
+        const rightFn = ({centerY}: {centerY: boolean}) => {
+            return (
+                <div style={centerY ? {display: 'flex', alignItems: 'center', height: '100%'} : {}}>
+                    {right}
+                </div>
+            );
+        };
+        return rightFn({centerY});
+    }
+};
 
 interface ContentProps extends CommonProps {
     isClickable?: boolean;
