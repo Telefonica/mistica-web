@@ -11,48 +11,42 @@ export const palette = {
     movistarBlue10: '#E6F5FD',
     movistarBlue20: '#B3E1FB',
     movistarBlue30: '#80CEF9',
-    movistarBlue40: '#4DBAF7',
     movistarBlue55: '#008EDD',
 
-    repsolOrange: '#FF8200',
-    repsolOrange10: '#EFF8E8',
-    repsolOrange30: '#ADDA8A',
-    repsolOrange40: '#8DCC5B',
-    repsolOrange60: '#499110',
-    repsolOrange70: '#407F0F',
+    repsolBlue200: '#005AA8',
 
-    pepper: '#FF374A',
-    pepper10: '#FFEBED',
-    pepper20: '#FFC3C8',
-    pepper40: '#FF7380',
-    pepper55: '#D73241',
-    pepper70: '#B22634',
+    repsolOrange70: '#FF6200',
+    repsolOrange20: '#FFCB96',
+    repsolOrange50: '#FF9B33',
+    repsolOrange700: '#E64D00',
 
-    egg: '#F28D15',
-    egg10: '#FEF4E8',
-    egg40: '#F6AF5B',
-    egg80: '#6D3F09',
+    repsolYellow: '#FFC800',
+    repsolYellow10: '#FFF7DB',
+    repsolYellow90: '#806400',
 
-    pink: '#E63780',
+    repsolRed500: '#E4002B',
+    repsolRed10: '#FCE5E9',
+    repsolRed80: '#AB174F',
 
-    purple: '#A13EA1',
-    purple10: '#F6ECF6',
-    purple40: '#BD78BD',
-    purple70: '#712B71',
+    movistarRed: '#FF374A',
 
-    grey1: '#F6F6F6',
-    grey2: '#EEEEEE',
-    grey3: '#DDDDDD',
-    grey4: '#999999',
-    grey5: '#86888C',
-    grey6: '#313235',
+    repsolTurquoise10: '#D9F1EA',
+    repsolTurquoise30: '#00ADC3',
+    repsolTurquoise80: '#016A7F',
+
+    repsolPurple10: '#F4EBFC',
+    repsolPurple80: '#6F29A6',
+
+    repsolOrangeDisabled: '#FFB080',
+    repsolRedDisabled: '#FF9BA4',
+
+    grey1: '#F8F8F8',
+    grey2: '#E6E8EC',
+    grey3: '#B4BBC6',
+    grey4: '#818EA0',
+    grey5: '#4F617B',
+    grey6: '#041E42',
     white: '#FFFFFF',
-
-    movistarProminentBlue: '#0B2739',
-    movistarProminentBlueDark: '#081F2D',
-    movistarProminentBlueLight20: '#CED3D7',
-    movistarProminentBlueLight50: '#85939C',
-    movistarProminentBlueLight70: '#546874',
 
     // specific for dark mode:
     darkModeBlack: '#191919',
@@ -68,9 +62,9 @@ export const getSolar360Skin: GetKnownSkin = (variant) => {
             background: palette.white,
             backgroundContainer: palette.white,
             backgroundBrand: palette.movistarBlue,
-            backgroundOverlay: applyAlpha(palette.grey6, 0.6),
+            backgroundOverlay: applyAlpha(palette.repsolBlue200, 0.8),
             backgroundSkeleton: palette.grey1,
-            backgroundSkeletonInverse: palette.movistarBlue55,
+            backgroundSkeletonInverse: palette.repsolBlue200,
             navigationBarBackground: palette.movistarBlue,
             backgroundAlternative: palette.grey1,
             backgroundFeedbackBottom: palette.movistarBlue,
@@ -79,49 +73,49 @@ export const getSolar360Skin: GetKnownSkin = (variant) => {
 
             // BORDERS
             borderLight: palette.grey1,
-            border: palette.grey3,
-            borderDark: palette.grey5,
-            borderSelected: palette.repsolOrange,
+            border: palette.grey2,
+            borderDark: palette.grey4,
+            borderSelected: palette.repsolOrange700,
 
             // BUTTONS
-            buttonDangerBackground: palette.pepper,
-            buttonDangerBackgroundSelected: palette.pepper55,
-            buttonDangerBackgroundHover: palette.pepper55, // web only
+            buttonDangerBackground: palette.movistarRed,
+            buttonDangerBackgroundSelected: palette.repsolRedDisabled,
+            buttonDangerBackgroundHover: palette.repsolOrange700, // web only
 
             buttonLinkBackgroundSelected: palette.movistarBlue10,
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
 
-            buttonPrimaryBackground: palette.repsolOrange,
+            buttonPrimaryBackground: palette.repsolOrange70,
             buttonPrimaryBackgroundInverse: palette.white,
-            buttonPrimaryBackgroundSelected: palette.repsolOrange60,
-            buttonPrimaryBackgroundHover: palette.repsolOrange60, // web only
+            buttonPrimaryBackgroundSelected: palette.repsolOrange700,
+            buttonPrimaryBackgroundHover: palette.repsolOrange700, // web only
             buttonPrimaryBackgroundSelectedInverse: palette.movistarBlue30,
 
-            buttonSecondaryBackground: palette.repsolOrange,
-            buttonSecondaryBackgroundSelected: palette.repsolOrange60,
+            buttonSecondaryBackground: palette.repsolOrange70,
+            buttonSecondaryBackgroundSelected: palette.repsolOrange700,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.movistarBlue30,
 
             textButtonPrimary: palette.white,
-            textButtonPrimaryInverse: palette.movistarBlue,
-            textButtonPrimaryInverseSelected: palette.movistarBlue,
+            textButtonPrimaryInverse: palette.repsolOrange70,
+            textButtonPrimaryInverseSelected: palette.repsolOrange700,
 
-            textButtonSecondary: palette.repsolOrange,
-            textButtonSecondarySelected: palette.repsolOrange60,
+            textButtonSecondary: palette.repsolOrange70,
+            textButtonSecondarySelected: palette.repsolOrange700,
             textButtonSecondaryInverse: palette.white,
             textButtonSecondaryInverseSelected: palette.white,
 
-            textLink: palette.repsolOrange,
+            textLink: palette.movistarBlue,
             textLinkInverse: palette.white,
-            textLinkDanger: palette.pepper,
+            textLinkDanger: palette.repsolRed500,
             textLinkSnackbar: palette.movistarBlue30,
 
             // CONTROLS
             control: palette.grey3,
             controlActivated: palette.movistarBlue,
-            controlError: palette.pepper,
-            loadingBar: palette.movistarBlue30,
-            loadingBarBackground: palette.movistarBlue55,
+            controlError: palette.movistarRed,
+            loadingBar: palette.repsolBlue200,
+            loadingBarBackground: palette.grey2,
 
             toggleAndroidInactive: palette.grey2, // web only
             toggleAndroidBackgroundActive: palette.movistarBlue20, // web only
@@ -133,8 +127,8 @@ export const getSolar360Skin: GetKnownSkin = (variant) => {
             navigationBarDivider: palette.movistarBlue,
 
             // FEEDBACKS
-            badge: palette.pepper55,
-            feedbackErrorBackground: palette.pepper,
+            badge: palette.repsolRed500,
+            feedbackErrorBackground: palette.movistarRed,
             feedbackInfoBackground: palette.grey6,
 
             // GLOBAL
@@ -142,47 +136,46 @@ export const getSolar360Skin: GetKnownSkin = (variant) => {
             brandDark: palette.movistarBlue55,
             inverse: palette.white,
             neutralHigh: palette.grey6,
-            neutralMedium: palette.grey5,
-            neutralLow: palette.grey3,
-            promo: palette.purple,
-            highlight: palette.pink,
+            neutralMedium: palette.grey4,
+            neutralLow: palette.grey2,
+            promo: palette.movistarBlue,
+            highlight: palette.repsolOrange50,
 
             textPrimary: palette.grey6,
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
             textSecondaryInverse: palette.white,
-            textAmount: palette.movistarBlue,
+            textAmount: palette.repsolOrange70,
 
             // STATES
-            error: palette.pepper,
-            success: palette.repsolOrange,
-            warning: palette.egg,
+            error: palette.movistarRed,
+            success: palette.repsolTurquoise30,
+            warning: palette.repsolYellow,
 
             // BARS TEXTS
             textNavigationBarPrimary: palette.white,
             textNavigationBarSecondary: palette.movistarBlue20,
             textNavigationSearchBarHint: palette.movistarBlue20, // iOS
             textNavigationSearchBarText: palette.white, // iOS
-            textAppBar: palette.grey4,
+            textAppBar: palette.grey3,
             textAppBarSelected: palette.movistarBlue,
 
             // TAGS
-            tagBackgroundSuccess: palette.repsolOrange10,
-            tagBackgroundWarning: palette.egg10,
-            tagBackgroundError: palette.pepper10,
-            tagBackgroundPromo: palette.purple10,
-            tagBackgroundActive: palette.movistarBlue10,
+            tagBackgroundSuccess: palette.repsolTurquoise10,
+            tagBackgroundWarning: palette.repsolYellow10,
+            tagBackgroundError: palette.repsolRed10,
+            tagBackgroundPromo: palette.movistarBlue10,
+            tagBackgroundActive: palette.repsolPurple10,
             tagBackgroundInactive: palette.grey1,
 
-            textTagSuccess: palette.repsolOrange70,
-            textTagWarning: palette.egg80,
-            textTagError: palette.pepper70,
-            textTagPromo: palette.purple70,
-            textTagActive: palette.movistarBlue,
-            textTagInactive: palette.grey5,
+            textTagSuccess: palette.repsolTurquoise80,
+            textTagWarning: palette.repsolYellow90,
+            textTagError: palette.repsolRed80,
+            textTagPromo: palette.repsolBlue200,
+            textTagActive: palette.repsolPurple80,
+            textTagInactive: palette.grey4,
         },
         darkModeColors: {
-            brand: palette.movistarBlue, // this color needs to be in darkModeColors to revert the promient variant
             appBarBackground: palette.darkModeGrey,
             background: palette.darkModeBlack,
             backgroundContainer: palette.darkModeGrey,
@@ -198,15 +191,15 @@ export const getSolar360Skin: GetKnownSkin = (variant) => {
             border: palette.darkModeGrey,
             buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.05),
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.05),
-            buttonPrimaryBackground: palette.repsolOrange,
-            buttonPrimaryBackgroundInverse: palette.repsolOrange,
-            buttonPrimaryBackgroundSelected: palette.repsolOrange60,
-            buttonPrimaryBackgroundHover: palette.repsolOrange60, // web only
-            buttonPrimaryBackgroundSelectedInverse: palette.repsolOrange60,
-            buttonSecondaryBackground: palette.repsolOrange,
-            buttonSecondaryBackgroundSelected: palette.repsolOrange60,
-            buttonSecondaryBorderInverse: palette.repsolOrange,
-            buttonSecondaryBorderSelectedInverse: palette.repsolOrange60,
+            buttonPrimaryBackground: palette.repsolOrange70,
+            buttonPrimaryBackgroundInverse: palette.repsolOrange70,
+            buttonPrimaryBackgroundSelected: palette.repsolOrange700,
+            buttonPrimaryBackgroundHover: palette.repsolOrange700, // web only
+            buttonPrimaryBackgroundSelectedInverse: palette.repsolOrange700,
+            buttonSecondaryBackground: palette.repsolOrange70,
+            buttonSecondaryBackgroundSelected: palette.repsolOrange700,
+            buttonSecondaryBorderInverse: palette.repsolOrange70,
+            buttonSecondaryBorderSelectedInverse: palette.repsolOrange700,
             textButtonPrimary: palette.grey2,
             textButtonPrimaryInverse: palette.grey2,
             textButtonPrimaryInverseSelected: palette.grey2,
@@ -259,16 +252,6 @@ export const getSolar360Skin: GetKnownSkin = (variant) => {
             textTagInactive: palette.grey4,
         },
     };
-
-    if (variant === 'prominent') {
-        skin.colors.brand = palette.movistarProminentBlue;
-        skin.colors.brandDark = palette.movistarProminentBlueDark;
-        skin.colors.backgroundBrand = palette.movistarProminentBlue;
-        skin.colors.navigationBarBackground = palette.movistarProminentBlue;
-        skin.colors.backgroundFeedbackBottom = palette.movistarProminentBlue;
-        skin.colors.controlActivated = palette.movistarProminentBlue;
-        skin.colors.dividerInverse = palette.movistarProminentBlueDark;
-    }
 
     return skin;
 };
