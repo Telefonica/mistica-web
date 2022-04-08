@@ -94,3 +94,5 @@ const skin: Skin = {
   <App />
 </ThemeContextProvider>;
 ```
+
+You can see an example in the [examples folder](../examples/custom-skin/).
