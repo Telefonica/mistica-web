@@ -122,17 +122,31 @@ interface CommonProps {
     extra?: React.ReactNode;
     dataAttributes?: DataAttributes;
     disabled?: boolean;
+    withChevron?: boolean;
 }
+
+type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
+
+const renderRight = (right: Right, centerY: boolean) => {
+    if (typeof right === 'function') return right?.({centerY});
+
+    return centerY ? (
+        <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>{right}</div>
+    ) : (
+        right
+    );
+};
 
 interface ContentProps extends CommonProps {
     isClickable?: boolean;
     type?: 'chevron' | 'basic' | 'custom' | 'control';
-    right?: React.ReactNode;
+    right?: Right;
     /** This id is to link the title with the related control */
     labelId?: string;
 }
 
 const Content: React.FC<ContentProps> = ({
+    withChevron,
     headline,
     title,
     titleLinesMax,
@@ -152,7 +166,7 @@ const Content: React.FC<ContentProps> = ({
     const classes = useStyles({isInverse});
     const {colors} = useTheme();
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
-    const shouldCenter = numTextLines === 1;
+    const centerY = numTextLines === 1;
 
     const renderBadge = () => {
         if (!badge) {
@@ -166,45 +180,19 @@ const Content: React.FC<ContentProps> = ({
             </Box>
         );
     };
-
-    const renderRight = () => {
-        switch (type) {
-            case 'chevron':
-                return (
-                    <Box
-                        paddingLeft={16}
-                        className={classNames(classes.center, {[classes.disabled]: disabled})}
-                    >
-                        <IconChevron
-                            color={isInverse ? colors.inverse : colors.neutralMedium}
-                            direction="right"
-                        />
-                    </Box>
-                );
-            case 'control':
-                return <div className={classes.right}>{right}</div>;
-            case 'custom':
-                return (
-                    <div className={classNames(classes.right, {[classes.disabled]: disabled})}>{right}</div>
-                );
-            default:
-                return null;
-        }
-    };
-
     return (
         <Box paddingY={16} className={classes.content}>
             {asset && (
                 <Box
                     paddingRight={16}
-                    className={classNames({[classes.center]: shouldCenter, [classes.disabled]: disabled})}
+                    className={classNames({[classes.center]: centerY, [classes.disabled]: disabled})}
                 >
                     <div className={classes.asset}>{asset}</div>
                 </Box>
             )}
             <div
                 className={classNames(classes.rowBody, {[classes.disabled]: disabled})}
-                style={{justifyContent: shouldCenter ? 'center' : 'flex-start'}}
+                style={{justifyContent: centerY ? 'center' : 'flex-start'}}
             >
                 <Stack space={4}>
                     {headline && (
@@ -242,7 +230,32 @@ const Content: React.FC<ContentProps> = ({
                 </Stack>
             </div>
             {renderBadge()}
-            {renderRight()}
+            {type === 'chevron' && (
+                <Box paddingLeft={16} className={classNames(classes.center, {[classes.disabled]: disabled})}>
+                    <IconChevron
+                        color={isInverse ? colors.inverse : colors.neutralMedium}
+                        direction="right"
+                    />
+                </Box>
+            )}
+            {type === 'control' && <div className={classes.right}>{renderRight(right, centerY)}</div>}
+            {type === 'custom' && (
+                <>
+                    <div className={classNames(classes.right, {[classes.disabled]: disabled})}>
+                        {renderRight(right, centerY)}
+                    </div>
+                    {withChevron && (
+                        <div className={classNames(classes.right, {[classes.disabled]: disabled})}>
+                            <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
+                                <IconChevron
+                                    color={isInverse ? colors.inverse : colors.neutralMedium}
+                                    direction="right"
+                                />
+                            </div>
+                        </div>
+                    )}
+                </>
+            )}
         </Box>
     );
 };
@@ -263,8 +276,7 @@ interface BasicRowContentProps extends CommonProps {
     radioValue?: undefined;
     newTab?: undefined;
     fullPageOnWebView?: undefined;
-
-    right?: React.ReactNode;
+    right?: Right;
 }
 
 interface SwitchRowContentProps extends CommonProps {
@@ -317,7 +329,7 @@ interface HrefRowContentProps extends CommonProps {
     newTab?: boolean;
     onPress?: undefined;
     to?: undefined;
-    right?: React.ReactNode;
+    right?: Right;
 }
 
 interface ToRowContentProps extends CommonProps {
@@ -332,7 +344,7 @@ interface ToRowContentProps extends CommonProps {
     replace?: boolean;
     href?: undefined;
     onPress?: undefined;
-    right?: React.ReactNode;
+    right?: Right;
 }
 
 interface OnPressRowContentProps extends CommonProps {
@@ -345,7 +357,7 @@ interface OnPressRowContentProps extends CommonProps {
     onPress: () => void;
     href?: undefined;
     to?: undefined;
-    right?: React.ReactNode;
+    right?: Right;
 }
 
 type RowContentProps =
@@ -437,6 +449,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                 extra={extra}
                 labelId={labelId}
                 disabled={disabled}
+                withChevron={!!props.onPress || !!props.href || !!props.to}
             />
         );
 
@@ -553,7 +566,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                                 {renderContent({
                                     labelId,
                                     type: 'control',
-                                    right: <Stack space="around">{controlElement}</Stack>,
+                                    right: () => <Stack space="around">{controlElement}</Stack>,
                                 })}
                             </Box>
                         )}
@@ -585,7 +598,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                             <Box paddingX={16}>
                                 {renderContent({
                                     type: 'control',
-                                    right: <Stack space="around">{controlElement}</Stack>,
+                                    right: () => <Stack space="around">{controlElement}</Stack>,
                                 })}
                             </Box>
                         )}
