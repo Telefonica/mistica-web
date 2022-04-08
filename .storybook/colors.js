@@ -45,10 +45,10 @@ export const getColors = (skin) => {
             };
         case 'Solar360':
             return {
-                primary: '#0070BF',
-                textPrimary: '#000000',
+                primary: '#E64D00',
+                textPrimary: '#041E42',
                 textPrimaryInverse: '#FFFFFF',
-                textSecondary: '#808285',
+                textSecondary: '#4F617B',
             };
         default:
             throw Error('Unexpected skin: ' + skin);
