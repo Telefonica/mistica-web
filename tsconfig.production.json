@@ -75,5 +75,13 @@
 
         "resolveJsonModule": true
     },
-    "exclude": ["dist", "**/__*__/**", ".storybook", "playroom", "src/test-utils/**", "setup-test-env.tsx"]
+    "exclude": [
+        "dist",
+        "**/__*__/**",
+        ".storybook",
+        "playroom",
+        "src/test-utils/**",
+        "setup-test-env.tsx",
+        "examples"
+    ]
 }
