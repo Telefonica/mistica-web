@@ -245,14 +245,15 @@ const Content: React.FC<ContentProps> = ({
                         {renderRight(right, centerY)}
                     </div>
                     {withChevron && (
-                        <div className={classNames(classes.right, {[classes.disabled]: disabled})}>
-                            <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
-                                <IconChevron
-                                    color={isInverse ? colors.inverse : colors.neutralMedium}
-                                    direction="right"
-                                />
-                            </div>
-                        </div>
+                        <Box
+                            paddingLeft={4}
+                            className={classNames(classes.center, {[classes.disabled]: disabled})}
+                        >
+                            <IconChevron
+                                color={isInverse ? colors.inverse : colors.neutralMedium}
+                                direction="right"
+                            />
+                        </Box>
                     )}
                 </>
             )}
