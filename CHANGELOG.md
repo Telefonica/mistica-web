@@ -1,3 +1,10 @@
+## [11.4.1](https://github.com/Telefonica/mistica-web/compare/v11.4.0...v11.4.1) (2022-04-11)
+
+
+### Bug Fixes
+
+* **Row:** fix gap between right and chevron ([#465](https://github.com/Telefonica/mistica-web/issues/465)) ([fe39d81](https://github.com/Telefonica/mistica-web/commit/fe39d815f9ab85b18e1280fc4346569406cd4433))
+
 # [11.4.0](https://github.com/Telefonica/mistica-web/compare/v11.3.0...v11.4.0) (2022-04-08)
 
 
