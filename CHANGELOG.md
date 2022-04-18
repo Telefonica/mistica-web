@@ -1,3 +1,24 @@
+## [11.4.1](https://github.com/Telefonica/mistica-web/compare/v11.4.0...v11.4.1) (2022-04-11)
+
+
+### Bug Fixes
+
+* **Row:** fix gap between right and chevron ([#465](https://github.com/Telefonica/mistica-web/issues/465)) ([fe39d81](https://github.com/Telefonica/mistica-web/commit/fe39d815f9ab85b18e1280fc4346569406cd4433))
+
+# [11.4.0](https://github.com/Telefonica/mistica-web/compare/v11.3.0...v11.4.0) (2022-04-08)
+
+
+### Bug Fixes
+
+* **dark mode:** dark constants in classic O2 ([#455](https://github.com/Telefonica/mistica-web/issues/455)) ([d44d233](https://github.com/Telefonica/mistica-web/commit/d44d2332ecb5a91de1195391de6f69019d391774))
+* **types:** make skin in ThemeConfig readonly ([#463](https://github.com/Telefonica/mistica-web/issues/463)) ([f0f72a7](https://github.com/Telefonica/mistica-web/commit/f0f72a73a0372273d4e49d9e688629ae4351c875))
+
+
+### Features
+
+* **FixedFooterLayout:** improve dark mode appearance ([#456](https://github.com/Telefonica/mistica-web/issues/456)) ([b21896c](https://github.com/Telefonica/mistica-web/commit/b21896cc651615429142cf5d966e3bbf4dbf526e))
+* **Rows:** auto center right node when needed and allow custom render function ([fe07a88](https://github.com/Telefonica/mistica-web/commit/fe07a8862d7f7e6c4c7d9276204e90820ae6e69a))
+
 # [11.3.0](https://github.com/Telefonica/mistica-web/compare/v11.2.1...v11.3.0) (2022-04-05)
 
 
