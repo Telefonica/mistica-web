@@ -30,6 +30,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         },
     },
     interactive: {
+        userSelect: 'none',
         [mq.supportsHover]: {
             '&:hover:not($active)': {
                 borderColor: ({isDarkMode}) => (isDarkMode ? colors.background : colors.tagBackgroundActive),
