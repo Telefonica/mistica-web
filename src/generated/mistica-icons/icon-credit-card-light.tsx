@@ -18,8 +18,6 @@ const IconCreditCardLight: React.FC<IconProps> = ({color, size = 24, children, .
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
                     d="M3.789 5h16.406c.989 0 1.789.843 1.805 1.888v9.856c0 1.045-.8 1.888-1.789 1.888a.363.363 0 01-.356-.367c0-.203.16-.368.356-.368.593 0 1.069-.517 1.069-1.153V9.785H2.72v6.963c0 .636.476 1.153 1.069 1.153h12.137c.196 0 .356.165.356.368 0 .202-.16.367-.356.367H3.789C2.8 18.636 2 17.793 2 16.748v-9.86C2 5.843 2.8 5 3.789 5zM2.712 6.884V9.05h18.552V6.884c0-.636-.476-1.153-1.069-1.153H3.781c-.593 0-1.069.517-1.069 1.153z"
                     fill={fillColor}
                 />
