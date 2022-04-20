@@ -168,11 +168,13 @@ export const TypeOfButtons: StoryComponent = () => {
                     <Text2 regular as="p">
                         Button (onPress):
                     </Text2>
-                    <ButtonLink onPress={handleOnPress}>{text}</ButtonLink>
+                    <ButtonLink onPress={handleOnPress} disabled={disabled}>
+                        {text}
+                    </ButtonLink>
                     <Text2 regular as="p">
                         Link (href):
                     </Text2>
-                    <ButtonLink href={href} newTab={newTab}>
+                    <ButtonLink href={href} newTab={newTab} disabled={disabled}>
                         {text}
                     </ButtonLink>
                 </Stack>

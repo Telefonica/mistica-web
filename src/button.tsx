@@ -497,6 +497,7 @@ export const ButtonLink = React.forwardRef<
     HTMLDivElement | HTMLAnchorElement | HTMLButtonElement,
     ButtonLinkProps
 >((props, ref) => {
+    const {formStatus} = useForm();
     const classes = useButtonLinkStyles();
     const isInverse = useIsInverseVariant();
     const commonProps = {
@@ -519,7 +520,7 @@ export const ButtonLink = React.forwardRef<
                 {props.children}
             </Text2>
         ),
-        disabled: props.disabled,
+        disabled: props.disabled || formStatus === 'sending',
     };
 
     if (process.env.NODE_ENV !== 'production') {
