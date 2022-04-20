@@ -18,7 +18,7 @@ const IconBoxFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M12.5 2L4.54 6.606l3.64 2.033 7.774-4.642L12.5 2zM9.24 9.233L16.993 4.6l3.468 2.006-7.96 4.45-3.26-1.823zm2.73 2.725L4 7.508v8.882L11.97 21v-9.042zM13.03 21v-9.042L21 7.508v8.882L13.03 21z"
+                    d="M12.007 2l-8.38 4.848 3.833 2.14 8.183-4.886L12.007 2zm-3.43 7.613l8.16-4.876 3.65 2.111-8.38 4.684-3.43-1.919zm2.872 2.869l-8.39-4.684v9.349L11.45 22v-9.518zM12.566 22v-9.518l8.389-4.684v9.349L12.565 22z"
                     fill={fillColor}
                 />
             </svg>

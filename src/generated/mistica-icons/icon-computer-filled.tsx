@@ -18,7 +18,7 @@ const IconComputerFilled: React.FC<IconProps> = ({color, size = 24, children, ..
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M18.787 5c.782 0 1.426.647 1.426 1.442h.005v7.947H3.792V6.442c0-.79.64-1.442 1.426-1.442h13.569zM2 15.832v-.36h20v.36C22 17.024 21.036 18 19.857 18H4.144C2.964 18 2 17.024 2 15.832z"
+                    d="M18.787 5.5c.782 0 1.426.647 1.426 1.442h.005v7.947H3.792V6.942c0-.79.64-1.442 1.426-1.442h13.569zM2 16.332v-.36h20v.36c0 1.192-.964 2.168-2.143 2.168H4.144C2.964 18.5 2 17.524 2 16.332z"
                     fill={fillColor}
                 />
             </svg>
