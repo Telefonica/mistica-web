@@ -18,7 +18,7 @@ const IconStatusChartFilled: React.FC<IconProps> = ({color, size = 24, children,
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M21 2v20h-4.437V2H21zM10.282 22h4.436V8.667h-4.436V22zm-1.845 0H4v-7.45h4.437V22z"
+                    d="M20.5 2v20h-4.437V2H20.5zM9.782 22h4.436V8.667H9.782V22zm-1.845 0H3.5v-7.45h4.437V22z"
                     fill={fillColor}
                 />
             </svg>
