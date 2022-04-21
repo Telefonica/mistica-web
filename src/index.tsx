@@ -1711,6 +1711,9 @@ export {default as IconUserAccountRegular} from './generated/mistica-icons/icon-
 export {default as IconUserSupportFilled} from './generated/mistica-icons/icon-user-support-filled';
 export {default as IconUserSupportLight} from './generated/mistica-icons/icon-user-support-light';
 export {default as IconUserSupportRegular} from './generated/mistica-icons/icon-user-support-regular';
+export {default as IconVideoCameraFilled} from './generated/mistica-icons/icon-video-camera-filled';
+export {default as IconVideoCameraLight} from './generated/mistica-icons/icon-video-camera-light';
+export {default as IconVideoCameraRegular} from './generated/mistica-icons/icon-video-camera-regular';
 export {default as IconVideoChatFilled} from './generated/mistica-icons/icon-video-chat-filled';
 export {default as IconVideoChatLight} from './generated/mistica-icons/icon-video-chat-light';
 export {default as IconVideoChatRegular} from './generated/mistica-icons/icon-video-chat-regular';
@@ -1718,14 +1721,11 @@ export {default as IconVideoDisabledFilled} from './generated/mistica-icons/icon
 export {default as IconVideoDisabledLight} from './generated/mistica-icons/icon-video-disabled-light';
 export {default as IconVideoDisabledRegular} from './generated/mistica-icons/icon-video-disabled-regular';
 export {default as IconVideoFilled} from './generated/mistica-icons/icon-video-filled';
-export {default as IconVideoFilledDuplicateName} from './generated/mistica-icons/icon-video-filled-duplicate-name';
 export {default as IconVideogamesFilled} from './generated/mistica-icons/icon-videogames-filled';
 export {default as IconVideogamesLight} from './generated/mistica-icons/icon-videogames-light';
 export {default as IconVideogamesRegular} from './generated/mistica-icons/icon-videogames-regular';
 export {default as IconVideoLight} from './generated/mistica-icons/icon-video-light';
-export {default as IconVideoLightDuplicateName} from './generated/mistica-icons/icon-video-light-duplicate-name';
 export {default as IconVideoRegular} from './generated/mistica-icons/icon-video-regular';
-export {default as IconVideoRegularDuplicateName} from './generated/mistica-icons/icon-video-regular-duplicate-name';
 export {default as IconVideoSurveillanceSecurityFilled} from './generated/mistica-icons/icon-video-surveillance-security-filled';
 export {default as IconVideoSurveillanceSecurityLight} from './generated/mistica-icons/icon-video-surveillance-security-light';
 export {default as IconView360Light} from './generated/mistica-icons/icon-view-360-light';
@@ -1770,8 +1770,8 @@ export {default as IconWifiFilled} from './generated/mistica-icons/icon-wifi-fil
 export {default as IconWifiLight} from './generated/mistica-icons/icon-wifi-light';
 export {default as IconWifiRegular} from './generated/mistica-icons/icon-wifi-regular';
 export {default as IconWinnerCheckFilled} from './generated/mistica-icons/icon-winner-check-filled';
+export {default as IconWinnerCheckLight} from './generated/mistica-icons/icon-winner-check-light';
 export {default as IconWinnerCheckRegular} from './generated/mistica-icons/icon-winner-check-regular';
-export {default as IconWinnerCheckRegularDuplicateName} from './generated/mistica-icons/icon-winner-check-regular-duplicate-name';
 export {default as IconWinnerEuroFilled} from './generated/mistica-icons/icon-winner-euro-filled';
 export {default as IconWinnerEuroLight} from './generated/mistica-icons/icon-winner-euro-light';
 export {default as IconWinnerEuroRegular} from './generated/mistica-icons/icon-winner-euro-regular';
