@@ -10,18 +10,18 @@ import {useIsInverseVariant} from '../../theme-variant-context';
 
 import type {IconProps} from '../../utils/types';
 
-const IconVideoRegularDuplicateName: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+const IconVideoCameraRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
-                d="M2 12c0 5.517 4.488 10 10 10s10-4.488 10-10S17.512 2 12 2 2 6.484 2 12zm1.43 0c0-4.726 3.844-8.57 8.57-8.57 4.726 0 8.57 3.844 8.57 8.57 0 4.726-3.844 8.57-8.57 8.57-4.726 0-8.57-3.844-8.57-8.57zm5.535 5.713A.71.71 0 018.252 17V7c0-.256.137-.494.357-.617a.708.708 0 01.717.005l8.57 4.995a.714.714 0 010 1.234l-8.57 5a.737.737 0 01-.36.096zm.713-1.96L16.118 12l-6.44-3.757v7.51z"
+                d="M21.554 6.062a.713.713 0 00-.806.16l-4.672 4.857V7.2c0-.66-.498-1.198-1.11-1.198H3.11C2.498 6.002 2 6.539 2 7.2v9.598c0 .66.498 1.198 1.11 1.198h11.856c.612 0 1.11-.538 1.11-1.198v-3.88l4.672 4.858a.71.71 0 00.801.164.803.803 0 00.45-.738V6.794a.783.783 0 00-.445-.732zm-6.957 10.33H3.48V7.599h11.117v8.795zm2.736-4.397l3.192-3.317v6.634l-3.192-3.317z"
                 fill={fillColor}
             />
         </svg>
     );
 };
 
-export default IconVideoRegularDuplicateName;
+export default IconVideoCameraRegular;
