@@ -36,6 +36,7 @@ export const palette = {
     repsolTurquoise80: '#016A7F',
 
     repsolPurple10: '#F4EBFC',
+    repsolPurple30: '#BF87EB',
     repsolPurple80: '#6F29A6',
 
     repsolOrangeDisabled: '#FFB080',
@@ -208,19 +209,19 @@ export const getSolar360Skin: GetKnownSkin = () => {
             textButtonSecondarySelected: palette.grey4,
             textButtonSecondaryInverse: palette.grey1,
             textButtonSecondaryInverseSelected: palette.grey4,
-            textLink: palette.movistarBlue,
-            textLinkInverse: palette.movistarBlue,
+            textLink: palette.repsolOrange70,
+            textLinkInverse: palette.repsolOrange70,
             control: palette.grey5,
             controlActivated: palette.movistarBlue,
-            loadingBar: palette.movistarBlue,
-            loadingBarBackground: applyAlpha(palette.white, 0.05),
+            loadingBar: palette.repsolOrange50,
+            loadingBarBackground: palette.repsolOrange20,
             toggleAndroidInactive: palette.grey4, // web only
             toggleAndroidBackgroundActive: palette.movistarBlue20, // web only
             iosControlKnob: palette.grey2, // web only
             divider: applyAlpha(palette.white, 0.05),
             dividerInverse: applyAlpha(palette.white, 0.05),
             navigationBarDivider: palette.darkModeBlack,
-            brandDark: palette.repsolBlue200,
+            brandDark: palette.grey5,
             inverse: palette.grey2,
             neutralHigh: palette.grey2,
             neutralMedium: palette.grey4,
@@ -229,7 +230,7 @@ export const getSolar360Skin: GetKnownSkin = () => {
             textPrimaryInverse: palette.grey2,
             textSecondary: palette.grey4,
             textSecondaryInverse: palette.grey4,
-            textAmount: palette.movistarBlue30,
+            textAmount: palette.repsolOrange50,
             textNavigationBarPrimary: palette.grey2,
             textNavigationBarSecondary: palette.grey4,
             textNavigationSearchBarHint: palette.grey4, // iOS
@@ -245,11 +246,11 @@ export const getSolar360Skin: GetKnownSkin = () => {
             tagBackgroundActive: applyAlpha(palette.white, 0.05),
             tagBackgroundInactive: applyAlpha(palette.white, 0.05),
 
-            textTagSuccess: palette.repsolTurquoise80,
-            textTagWarning: palette.repsolYellow90,
-            textTagError: palette.repsolRed80,
-            textTagPromo: palette.repsolBlue200,
-            textTagActive: palette.repsolPurple80,
+            textTagSuccess: palette.repsolTurquoise50,
+            textTagWarning: palette.repsolOrange50,
+            textTagError: palette.movistarRed,
+            textTagPromo: palette.repsolPurple30,
+            textTagActive: palette.movistarBlue30,
             textTagInactive: palette.grey4,
         },
     };
