@@ -59,6 +59,7 @@ export type ButtonProps =
   | HrefButtonProps;
 declare type ButtonLinkCommonProps = {
   children: React.Node,
+  disabled?: boolean,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   trackEvent?: boolean,
 

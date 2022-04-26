@@ -1,3 +1,25 @@
+## [11.5.1](https://github.com/Telefonica/mistica-web/compare/v11.5.0...v11.5.1) (2022-04-26)
+
+
+### Bug Fixes
+
+* **Carousel:** Set min-width to workaround issue when rendered on a hidden webview ([#469](https://github.com/Telefonica/mistica-web/issues/469)) ([040e732](https://github.com/Telefonica/mistica-web/commit/040e7323b7cd745948b10131a99db2a30654c2c0))
+* **FeedbackScreen:** background color ([#470](https://github.com/Telefonica/mistica-web/issues/470)) ([a5d962f](https://github.com/Telefonica/mistica-web/commit/a5d962ff644da5fc258f158d6a8679ab75491d0f))
+
+# [11.5.0](https://github.com/Telefonica/mistica-web/compare/v11.4.1...v11.5.0) (2022-04-26)
+
+
+### Bug Fixes
+
+* **Chip:** disable user select in interactive Chips ([#466](https://github.com/Telefonica/mistica-web/issues/466)) ([576697f](https://github.com/Telefonica/mistica-web/commit/576697fe5816969652773d112000f9644cf650fa))
+
+
+### Features
+
+* **icons:** added new icons to O2 ([#459](https://github.com/Telefonica/mistica-web/issues/459)) ([0da3f71](https://github.com/Telefonica/mistica-web/commit/0da3f71b0daad79d17fd74412533731f0ff1023d))
+* **icons:** new o2 credit-card-visa icon ([#468](https://github.com/Telefonica/mistica-web/issues/468)) ([207e17f](https://github.com/Telefonica/mistica-web/commit/207e17f0bb78aa53f25cc11d404b5c1fe0885f7e))
+* **NestableContext:** export type ([#472](https://github.com/Telefonica/mistica-web/issues/472)) ([fabe902](https://github.com/Telefonica/mistica-web/commit/fabe902779df62bf88015e093235ebddb8dfd91c))
+
 ## [11.4.1](https://github.com/Telefonica/mistica-web/compare/v11.4.0...v11.4.1) (2022-04-11)
 
 

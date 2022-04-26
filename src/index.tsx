@@ -16,6 +16,7 @@ export {Portal} from './portal';
 export {default as LoadingBar} from './loading-bar';
 export {default as FixedToTop, TopDistanceContext} from './fixed-to-top';
 export {default as createNestableContext} from './nestable-context';
+export type {NestableContext} from './nestable-context';
 export {default as OverscrollColor, OverscrollColorProvider} from './overscroll-color-context';
 export {
     FeedbackScreen,
