@@ -24,6 +24,7 @@ declare export {
   TopDistanceContext,
 } from "./fixed-to-top";
 declare export { default as createNestableContext } from "./nestable-context";
+export type { NestableContext } from "./nestable-context";
 declare export {
   default as OverscrollColor,
   OverscrollColorProvider,
