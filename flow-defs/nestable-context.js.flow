@@ -4,7 +4,7 @@ import * as React from "react";
 declare type ProviderProps = {
   children: React.Node,
 };
-declare type NestableContext<Value> = {
+export type NestableContext<Value> = {
   Getter: React.ComponentType<{
     children: (value: Value) => React.Node,
   }>,
