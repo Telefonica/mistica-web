@@ -4,7 +4,7 @@ import {useTheme, useScreenSize, useWindowHeight, useIsomorphicLayoutEffect} fro
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
 import OverscrollColor from './overscroll-color-context';
-import {VIVO_SKIN} from './skins/constants';
+import {O2_CLASSIC_SKIN, VIVO_SKIN} from './skins/constants';
 import IcnSuccess from './icons/icon-success';
 import IconSuccessVivo from './icons/icon-success-vivo';
 import IcnError from './icons/icon-error';
@@ -99,6 +99,18 @@ const useStyles = createUseStyles((theme) => ({
         transform: 'translate(0, 0)',
     },
 }));
+
+const BackgroundColor: React.FC = () => {
+    const {colors} = useTheme();
+    const isInverse = useIsInverseVariant();
+    React.useEffect(() => {
+        document.body.style.background = isInverse ? colors.backgroundBrand : colors.background;
+        return () => {
+            document.body.style.background = 'initial';
+        };
+    }, [isInverse, colors.background, colors.backgroundBrand]);
+    return null;
+};
 
 type HapticFeedback = 'error' | 'success';
 
@@ -255,7 +267,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
 }) => {
     useHapticFeedback(hapticFeedback);
     const isInverse = useIsInverseVariant();
-    const {colors, platformOverrides, isDarkMode} = useTheme();
+    const {colors, platformOverrides, isDarkMode, skinName} = useTheme();
     const windowHeight = useWindowHeight();
     const {isTabletOrSmaller} = useScreenSize();
     const [isServerSide, setIsServerSide] = React.useState(typeof self !== 'undefined');
@@ -325,7 +337,8 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                     {feedbackContent}
                 </ButtonFixedFooterLayout>
             </div>
-            <div className={classes.backgroundDiv} />
+            {skinName === O2_CLASSIC_SKIN && <div className={classes.backgroundDiv} />}
+            {skinName !== O2_CLASSIC_SKIN && <BackgroundColor />}
         </>
     ) : (
         <ResponsiveLayout>
