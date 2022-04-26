@@ -446,6 +446,7 @@ const useButtonLinkStyles = createUseStyles((theme) => {
                     backgroundColor: 'initial',
                 },
             },
+            '&[disabled]': disabledStyle,
         },
         inverse: {
             color: theme.colors.textLinkInverse,
@@ -465,6 +466,7 @@ const useButtonLinkStyles = createUseStyles((theme) => {
 
 interface ButtonLinkCommonProps {
     children: React.ReactNode;
+    disabled?: boolean;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     trackEvent?: boolean;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
@@ -495,6 +497,7 @@ export const ButtonLink = React.forwardRef<
     HTMLDivElement | HTMLAnchorElement | HTMLButtonElement,
     ButtonLinkProps
 >((props, ref) => {
+    const {formStatus} = useForm();
     const classes = useButtonLinkStyles();
     const isInverse = useIsInverseVariant();
     const commonProps = {
@@ -517,6 +520,7 @@ export const ButtonLink = React.forwardRef<
                 {props.children}
             </Text2>
         ),
+        disabled: props.disabled || formStatus === 'sending',
     };
 
     if (process.env.NODE_ENV !== 'production') {
