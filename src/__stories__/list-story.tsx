@@ -14,6 +14,7 @@ import {
     Image,
     Text3,
     Inline,
+    IconTrashCanRegular,
 } from '..';
 
 export default {
@@ -30,6 +31,7 @@ export default {
                 'radio',
                 'custom element',
                 'custom element with text',
+                'custom element without chevron',
                 'action with custom element',
                 'none',
             ],
@@ -77,7 +79,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 controlProps = {href: 'https://example.org', newTab: true};
                 break;
             case 'navigates without chevron':
-                controlProps = {href: 'https://example.org', newTab: true, right: null}; // right null removes the chevron
+                controlProps = {href: 'https://example.org', newTab: true, noChevron: true}; // right null removes the chevron
                 break;
             case 'switch':
                 controlProps = {switch: {defaultValue: true, onChange: () => {}}};
@@ -118,6 +120,17 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                             </Inline>
                         </div>
                     ),
+                };
+                break;
+            case 'custom element without chevron':
+                controlProps = {
+                    onPress,
+                    right: (
+                        <div style={{display: 'flex', alignItems: 'center', height: '100%'}}>
+                            <IconTrashCanRegular />
+                        </div>
+                    ),
+                    noChevron: true,
                 };
                 break;
             case 'action with custom element':

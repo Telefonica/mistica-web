@@ -122,7 +122,6 @@ interface CommonProps {
     extra?: React.ReactNode;
     dataAttributes?: DataAttributes;
     disabled?: boolean;
-    withChevron?: boolean;
 }
 
 type Right = (({centerY}: {centerY: boolean}) => React.ReactNode) | React.ReactNode;
@@ -143,6 +142,7 @@ interface ContentProps extends CommonProps {
     right?: Right;
     /** This id is to link the title with the related control */
     labelId?: string;
+    withChevron?: boolean;
 }
 
 const Content: React.FC<ContentProps> = ({
@@ -331,6 +331,7 @@ interface HrefRowContentProps extends CommonProps {
     onPress?: undefined;
     to?: undefined;
     right?: Right;
+    noChevron?: boolean;
 }
 
 interface ToRowContentProps extends CommonProps {
@@ -346,6 +347,7 @@ interface ToRowContentProps extends CommonProps {
     href?: undefined;
     onPress?: undefined;
     right?: Right;
+    noChevron?: boolean;
 }
 
 interface OnPressRowContentProps extends CommonProps {
@@ -359,6 +361,7 @@ interface OnPressRowContentProps extends CommonProps {
     href?: undefined;
     to?: undefined;
     right?: Right;
+    noChevron?: boolean;
 }
 
 type RowContentProps =
@@ -430,10 +433,12 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
             type,
             right,
             labelId,
+            withChevron = false,
         }: {
             type: ContentProps['type'];
             right?: ContentProps['right'];
             labelId?: string;
+            withChevron?: boolean;
         }) => (
             <Content
                 asset={asset}
@@ -450,7 +455,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                 extra={extra}
                 labelId={labelId}
                 disabled={disabled}
-                withChevron={!!props.onPress || !!props.href || !!props.to}
+                withChevron={withChevron}
             />
         );
 
@@ -469,7 +474,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
 
             return (
                 <Box paddingX={16} ref={ref as React.Ref<HTMLDivElement>}>
-                    {renderContent({type, right: props.right})}
+                    {renderContent({type, right: props.right, withChevron: !props.noChevron})}
                 </Box>
             );
         };

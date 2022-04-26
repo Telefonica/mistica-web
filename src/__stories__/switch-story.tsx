@@ -18,10 +18,10 @@ export const Default: StoryComponent = () => {
                     name="uncontrolled"
                     onChange={onUncontrolledChange}
                     aria-labelledby="uncontrolled-label"
-                    render={({controlElement}) => (
+                    render={({controlElement, labelId}) => (
                         <Inline alignItems="center" space={16}>
                             {controlElement}
-                            <Text3 regular transform="uppercase">
+                            <Text3 regular transform="uppercase" id={labelId}>
                                 {uncontrolledChecked ? 'on' : 'off'}
                             </Text3>
                         </Inline>
