@@ -1,3 +1,11 @@
+## [11.5.1](https://github.com/Telefonica/mistica-web/compare/v11.5.0...v11.5.1) (2022-04-26)
+
+
+### Bug Fixes
+
+* **Carousel:** Set min-width to workaround issue when rendered on a hidden webview ([#469](https://github.com/Telefonica/mistica-web/issues/469)) ([040e732](https://github.com/Telefonica/mistica-web/commit/040e7323b7cd745948b10131a99db2a30654c2c0))
+* **FeedbackScreen:** background color ([#470](https://github.com/Telefonica/mistica-web/issues/470)) ([a5d962f](https://github.com/Telefonica/mistica-web/commit/a5d962ff644da5fc258f158d6a8679ab75491d0f))
+
 # [11.5.0](https://github.com/Telefonica/mistica-web/compare/v11.4.1...v11.5.0) (2022-04-26)
 
 
