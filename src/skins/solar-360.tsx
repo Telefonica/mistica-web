@@ -51,8 +51,8 @@ export const palette = {
     white: '#FFFFFF',
 
     // specific for dark mode:
-    darkModeBlack: '#121212',
-    darkModeGrey: '#202020',
+    darkModeBlack: '#000D14',
+    darkModeGrey: '#142027',
 } as const;
 
 export const getSolar360Skin: GetKnownSkin = () => {
