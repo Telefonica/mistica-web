@@ -1,3 +1,17 @@
+# [11.5.0](https://github.com/Telefonica/mistica-web/compare/v11.4.1...v11.5.0) (2022-04-26)
+
+
+### Bug Fixes
+
+* **Chip:** disable user select in interactive Chips ([#466](https://github.com/Telefonica/mistica-web/issues/466)) ([576697f](https://github.com/Telefonica/mistica-web/commit/576697fe5816969652773d112000f9644cf650fa))
+
+
+### Features
+
+* **icons:** added new icons to O2 ([#459](https://github.com/Telefonica/mistica-web/issues/459)) ([0da3f71](https://github.com/Telefonica/mistica-web/commit/0da3f71b0daad79d17fd74412533731f0ff1023d))
+* **icons:** new o2 credit-card-visa icon ([#468](https://github.com/Telefonica/mistica-web/issues/468)) ([207e17f](https://github.com/Telefonica/mistica-web/commit/207e17f0bb78aa53f25cc11d404b5c1fe0885f7e))
+* **NestableContext:** export type ([#472](https://github.com/Telefonica/mistica-web/issues/472)) ([fabe902](https://github.com/Telefonica/mistica-web/commit/fabe902779df62bf88015e093235ebddb8dfd91c))
+
 ## [11.4.1](https://github.com/Telefonica/mistica-web/compare/v11.4.0...v11.4.1) (2022-04-11)
 
 
