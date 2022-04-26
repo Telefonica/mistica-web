@@ -103,13 +103,9 @@ const useStyles = createUseStyles((theme) => ({
 const BackgroundColor: React.FC = () => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
-    React.useEffect(() => {
-        document.body.style.background = isInverse ? colors.backgroundBrand : colors.background;
-        return () => {
-            document.body.style.background = 'initial';
-        };
-    }, [isInverse, colors.background, colors.backgroundBrand]);
-    return null;
+
+    const css = `body {background:${isInverse ? colors.backgroundBrand : colors.background}}`;
+    return <style>{css}</style>;
 };
 
 type HapticFeedback = 'error' | 'success';
