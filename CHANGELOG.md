@@ -1,3 +1,11 @@
+# [11.6.0](https://github.com/Telefonica/mistica-web/compare/v11.5.1...v11.6.0) (2022-04-27)
+
+
+### Features
+
+* **ButtonLink:** allow disabled state ([#467](https://github.com/Telefonica/mistica-web/issues/467)) ([aac0b60](https://github.com/Telefonica/mistica-web/commit/aac0b6018eae714fa3c327da925c335fa36de0d8))
+* **ResponsiveLayout:** add horizontal safe area for notch or similar ([#473](https://github.com/Telefonica/mistica-web/issues/473)) ([a8fd958](https://github.com/Telefonica/mistica-web/commit/a8fd958e3a903d97e581da8d508ca8bbf43c4250))
+
 ## [11.5.1](https://github.com/Telefonica/mistica-web/compare/v11.5.0...v11.5.1) (2022-04-26)
 
 
