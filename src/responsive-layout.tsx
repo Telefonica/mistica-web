@@ -15,6 +15,9 @@ const useStyles = createUseStyles((theme) => ({
     layout: {
         margin: 'auto',
 
+        paddingLeft: 'env(safe-area-inset-left)',
+        paddingRight: 'env(safe-area-inset-right)',
+
         [theme.mq.largeDesktop]: {
             width: LARGE_DESKTOP_MAX_WIDTH,
         },
