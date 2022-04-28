@@ -23,12 +23,13 @@ const useStyles = createUseStyles(() => ({
         objectFit: 'cover',
         maxWidth: '100%',
         maxHeight: '100%',
+        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
 
         '@supports (aspect-ratio: 1 / 1)': {
-            borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
             aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
         },
         '$wrapper &': {
+            borderRadius: 0, // the wrapper sets the border radius
             position: 'absolute',
             width: '100%',
             height: '100%',
@@ -68,7 +69,7 @@ export type ImageProps = {
     /** defaults to 100% when no width and no height are given */
     width?: string | number;
     height?: string | number;
-    /** defaults to 1:1, if both width and height are given, aspectRatio is ignored */
+    /** defaults to 1:1, if both width and height are given, aspectRatio is ignored. To use original image proportions, set aspectRatio to 0  */
     aspectRatio?: AspectRatio | number;
     /** defaults to empty string */
     alt?: string;
@@ -83,9 +84,11 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
         const noBorderRadiusContext = useDisableBorderRadius();
         const noBorderSetting = noBorderRadius ?? noBorderRadiusContext;
 
-        // if width or height are numeric, we can calculate the other with the ratio without css
-        const withCssAspectRatio = typeof props.width !== 'number' && typeof props.height !== 'number';
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
+        // if width or height are numeric, we can calculate the other with the ratio without css.
+        // if aspect ratio is 0, we use the original image proportions
+        const withCssAspectRatio =
+            typeof props.width !== 'number' && typeof props.height !== 'number' && ratio !== 0;
 
         const classes = useStyles({
             noBorderRadius: noBorderSetting,
