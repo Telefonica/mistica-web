@@ -1,3 +1,10 @@
+# [11.7.0](https://github.com/Telefonica/mistica-web/compare/v11.6.0...v11.7.0) (2022-04-28)
+
+
+### Features
+
+* **Image,Video:** use original proportion when setting `aspetRatio={0}` ([#474](https://github.com/Telefonica/mistica-web/issues/474)) ([f3aef36](https://github.com/Telefonica/mistica-web/commit/f3aef363695cc12b7ea0267d70950080e5332a7c))
+
 # [11.6.0](https://github.com/Telefonica/mistica-web/compare/v11.5.1...v11.6.0) (2022-04-27)
 
 
