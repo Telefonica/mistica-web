@@ -66,7 +66,7 @@ export type VideoProps = {
     /** defaults to 100% when no width and no height are given */
     width?: string | number;
     height?: string | number;
-    /** defaults to 1:1, if both width and height are given, aspectRatio is ignored */
+    /** defaults to 1:1, if both width and height are given, aspectRatio is ignored. To use original video proportions, set aspectRatio to 0 */
     aspectRatio?: AspectRatio | number;
     /** accepts multiple sources */
     src: string | Array<string> | VideoSource | Array<VideoSource>;
@@ -101,9 +101,11 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         const supportsAspectRatio = useSupportsAspectRatio();
         const noBorderRadius = useDisableBorderRadius();
 
-        // if width or height are numeric, we can calculate the other with the ratio without css
-        const withCssAspectRatio = typeof props.width !== 'number' && typeof props.height !== 'number';
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
+        // if width or height are numeric, we can calculate the other with the ratio without css
+        // if aspect ratio is 0, we use the original video proportions
+        const withCssAspectRatio =
+            typeof props.width !== 'number' && typeof props.height !== 'number' && ratio !== 0;
 
         const classes = useStyles({
             noBorderRadius,
