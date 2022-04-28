@@ -23,12 +23,13 @@ const useStyles = createUseStyles(() => ({
         objectFit: 'cover',
         maxWidth: '100%',
         maxHeight: '100%',
+        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
 
         '@supports (aspect-ratio: 1 / 1)': {
-            borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
             aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
         },
         '$wrapper &': {
+            borderRadius: 0, // the wrapper sets the border radius
             position: 'absolute',
             width: '100%',
             height: '100%',
