@@ -3,9 +3,9 @@ import {useFieldProps} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import {useTheme} from './hooks';
 import IconButton from './icon-button';
-import { IconAccesibilityRegular } from '../playroom/components';
-import { IconEyeRegular } from '../playroom/components';
-import { createUseStyles } from './jss';
+import {IconAccesibilityRegular} from '../playroom/components';
+import {IconEyeRegular} from '../playroom/components';
+import {createUseStyles} from './jss';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
