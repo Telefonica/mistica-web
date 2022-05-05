@@ -3,8 +3,8 @@ import {useFieldProps} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import {useTheme} from './hooks';
 import IconButton from './icon-button';
-import {IconAccesibilityRegular} from '../playroom/components';
-import {IconEyeRegular} from '../playroom/components';
+import IconAccesibilityRegular from './generated/mistica-icons/icon-accesibility-regular';
+import IconEyeRegular from './generated/mistica-icons/icon-eye-regular';
 import {createUseStyles} from './jss';
 
 import type {CommonFormFieldProps} from './text-field-base';
