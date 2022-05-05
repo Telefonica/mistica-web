@@ -20,7 +20,7 @@ const usePasswordAdornmentStyles = createUseStyles((theme) => ({
                 backgroundColor: theme.colors.backgroundAlternative,
             },
         },
-    }, 
+    },
 }));
 
 const PasswordAdornment: React.FC<{
@@ -49,8 +49,8 @@ const PasswordAdornment: React.FC<{
             className={classes.shadow}
             style={style}
         >
-                {isVisible ? <IconAccesibilityRegular /> : <IconEyeRegular />}
-            </IconButton> 
+            {isVisible ? <IconAccesibilityRegular /> : <IconEyeRegular />}
+        </IconButton>
     );
 };
 
