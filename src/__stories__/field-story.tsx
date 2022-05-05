@@ -24,7 +24,7 @@ import {
     Stack,
 } from '..';
 import {inspect} from 'util';
-import IconTrashCanRegular from '../generated/mistica-icons/icon-trash-can-regular';
+import IconMusicRegular from '../generated/mistica-icons/icon-music-regular';
 import {StorySection, countriesList, phoneNumbersList} from './helpers';
 import {getLocalDateString, getLocalDateTimeString} from '../utils/time';
 
@@ -192,7 +192,7 @@ export const Variants: StoryComponent = () => {
                     name="text"
                     label="Label"
                     defaultValue="Default value"
-                    endIcon={<IconTrashCanRegular />}
+                    endIcon={<IconMusicRegular />}
                 />
             </StorySection>
 
@@ -204,7 +204,7 @@ export const Variants: StoryComponent = () => {
                         disabled
                         label="Disabled"
                         defaultValue="Default value"
-                        endIcon={<IconTrashCanRegular />}
+                        endIcon={<IconMusicRegular />}
                     />
                     <SearchField name="search" disabled label="Search" />
                     <PhoneNumberField
