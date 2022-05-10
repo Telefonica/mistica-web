@@ -16,7 +16,7 @@ import {
     IconPhotoCameraRegular,
 } from '..';
 import DoubleField from '../double-field';
-import SectionTitle from '../section-title';
+import {Title1} from '../title';
 
 export default {
     title: 'Components/Touchables/Button',
@@ -96,7 +96,7 @@ export const TypeOfButtons: StoryComponent = () => {
 
             <div data-testid="content">
                 <Stack space={8}>
-                    <SectionTitle>ButtonPrimary</SectionTitle>
+                    <Title1>ButtonPrimary</Title1>
 
                     <Text2 regular as="p">
                         Button:
@@ -119,7 +119,7 @@ export const TypeOfButtons: StoryComponent = () => {
                         {text}
                     </ButtonPrimary>
 
-                    <SectionTitle>ButtonSecondary</SectionTitle>
+                    <Title1>ButtonSecondary</Title1>
                     <Text2 regular as="p">
                         Button:
                     </Text2>
@@ -141,7 +141,7 @@ export const TypeOfButtons: StoryComponent = () => {
                         {text}
                     </ButtonSecondary>
 
-                    <SectionTitle>ButtonDanger</SectionTitle>
+                    <Title1>ButtonDanger</Title1>
 
                     <Text2 regular as="p">
                         Button:
@@ -164,7 +164,7 @@ export const TypeOfButtons: StoryComponent = () => {
                         {text}
                     </ButtonDanger>
 
-                    <SectionTitle>ButtonLink</SectionTitle>
+                    <Title1>ButtonLink</Title1>
                     <Text2 regular as="p">
                         Button (onPress):
                     </Text2>
@@ -191,18 +191,18 @@ export const EllipsisInButtons: StoryComponent = () => {
     return (
         <div data-testid="content" style={{width: 160, border: `1px solid ${colors.border}`}}>
             <Stack space={8}>
-                <SectionTitle>ButtonPrimary</SectionTitle>
+                <Title1>ButtonPrimary</Title1>
                 <ButtonPrimary onPress={handleOnPress}>{text}</ButtonPrimary>
 
-                <SectionTitle>ButtonSecondary</SectionTitle>
+                <Title1>ButtonSecondary</Title1>
 
                 <ButtonSecondary onPress={handleOnPress}>{text}</ButtonSecondary>
 
-                <SectionTitle>ButtonDanger</SectionTitle>
+                <Title1>ButtonDanger</Title1>
 
                 <ButtonDanger onPress={handleOnPress}>{text}</ButtonDanger>
 
-                <SectionTitle>ButtonLink</SectionTitle>
+                <Title1>ButtonLink</Title1>
                 <Text2 as="p" regular>
                     Button (onPress):
                 </Text2>

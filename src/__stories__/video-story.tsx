@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, ButtonPrimary, Inline, SectionTitle, Video} from '..';
+import {Stack, ButtonPrimary, Inline, Title1, Video} from '..';
 
 export default {
     title: 'Components/Others/Video',
@@ -16,12 +16,12 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={64} data-testid="video">
             <Stack space={16}>
-                <SectionTitle>Auto Play</SectionTitle>
+                <Title1>Auto Play</Title1>
                 <Video width={480} height={480 / 2.4} src={VIDEO_SRC} />
             </Stack>
 
             <Stack space={16}>
-                <SectionTitle>Manual Play</SectionTitle>
+                <Title1>Manual Play</Title1>
                 <Video
                     width={480}
                     height={480 / 2.4}
@@ -50,7 +50,7 @@ export const Default: StoryComponent = () => {
             </Stack>
 
             <Stack space={16}>
-                <SectionTitle>Manual Play with Poster</SectionTitle>
+                <Title1>Manual Play with Poster</Title1>
                 <Video
                     poster={POSTER_SRC}
                     width={480}
@@ -84,13 +84,13 @@ export const Default: StoryComponent = () => {
             </Stack>
 
             <Stack space={16}>
-                <SectionTitle>Aspect ratio</SectionTitle>
+                <Title1>Aspect ratio</Title1>
                 <Video src={VIDEO_SRC} width={480} aspectRatio="16:9" />
                 <Video src={VIDEO_SRC} width={480} aspectRatio="4:3" />
             </Stack>
 
             <Stack space={16}>
-                <SectionTitle>Aspect ratio width 100%</SectionTitle>
+                <Title1>Aspect ratio width 100%</Title1>
                 <Video src={VIDEO_SRC} aspectRatio="16:9" />
                 <Video src={VIDEO_SRC} aspectRatio="4:3" />
             </Stack>

@@ -1,0 +1,12 @@
+// @flow
+
+import * as React from "react";
+declare type TitleProps = {
+  children: React.Node,
+  id?: string,
+  right?: React.Node,
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6",
+};
+declare export var Title1: (x: TitleProps) => React.Element<any>;
+declare export var Title2: (x: TitleProps) => React.Element<any>;
+declare export {};

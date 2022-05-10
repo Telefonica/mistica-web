@@ -73,6 +73,7 @@ declare export {
 declare export { default as Tag } from "./tag";
 export type { TagType } from "./tag";
 declare export { default as SectionTitle } from "./section-title";
+declare export { Title1, Title2 } from "./title";
 declare export { Placeholder, AvatarPlaceholder } from "./placeholder";
 declare export { RowList, Row, BoxedRowList, BoxedRow } from "./list";
 declare export { default as Switch } from "./switch-component";
