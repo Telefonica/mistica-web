@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Title1, Title2, Stack, TextLink, IconButton, IconInformationRegular} from '..';
+import {Title1, Title2, Stack, TextLink} from '..';
 
 export default {
     title: 'Components/Others/Title',
