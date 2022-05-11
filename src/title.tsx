@@ -2,46 +2,24 @@ import * as React from 'react';
 import {Text1, Text2, Text5} from './text';
 import {useTheme} from './hooks';
 import Inline from './inline';
-import {createUseStyles} from './jss';
-import {pxToRem} from './utils/css';
-
-const useStyles = createUseStyles((theme) => ({
-    right: {
-        display: 'flex',
-        alignItems: 'center',
-        paddingLeft: 16,
-        height: ({desktopLinkHeight}) => pxToRem(desktopLinkHeight),
-        [theme.mq.tabletOrSmaller]: {
-            height: ({mobileLinkHeight}) => pxToRem(mobileLinkHeight),
-        },
-    },
-}));
+import Box from './box';
 
 type TitleLayoutProps = {
     title: React.ReactElement;
-    desktopLinkHeight: number;
-    mobileLinkHeight: number;
     right?: React.ReactNode;
 };
 
-const TitleLayout = ({
-    title,
-    right,
-    desktopLinkHeight,
-    mobileLinkHeight,
-}: TitleLayoutProps): React.ReactElement => {
-    const classes = useStyles({desktopLinkHeight, mobileLinkHeight});
-
+const TitleLayout = ({title, right}: TitleLayoutProps): React.ReactElement => {
     if (!right) {
         return title;
     }
 
     return (
-        <Inline space="between">
+        <Inline space="between" alignItems="baseline">
             {title}
-            <div className={classes.right}>
+            <Box paddingLeft={16}>
                 <Text2 regular>{right}</Text2>
-            </div>
+            </Box>
         </Inline>
     );
 };
@@ -58,8 +36,6 @@ export const Title1 = ({children, as = 'h3', id, right}: TitleProps): React.Reac
 
     return (
         <TitleLayout
-            desktopLinkHeight={20}
-            mobileLinkHeight={16}
             title={
                 <Text1 color={theme.colors.textSecondary} transform="uppercase" medium as={as} id={id}>
                     {children}
@@ -73,8 +49,6 @@ export const Title1 = ({children, as = 'h3', id, right}: TitleProps): React.Reac
 export const Title2 = ({children, as = 'h3', id, right}: TitleProps): React.ReactElement => {
     return (
         <TitleLayout
-            desktopLinkHeight={32}
-            mobileLinkHeight={24}
             title={
                 <Text5 as={as} id={id}>
                     {children}
