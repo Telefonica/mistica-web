@@ -76,13 +76,19 @@ export type ImageProps = {
     children?: void;
     dataAttributes?: DataAttributes;
     noBorderRadius?: boolean;
+    onError?: (event: React.SyntheticEvent) => void;
+    onLoad?: (event: React.SyntheticEvent) => void;
 };
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
-    ({aspectRatio = '1:1', alt = '', dataAttributes, noBorderRadius, src, ...props}, ref) => {
+    (
+        {aspectRatio = '1:1', alt = '', dataAttributes, noBorderRadius, src, onError, onLoad, ...props},
+        ref
+    ) => {
         const supportsAspectRatio = useSupportsAspectRatio();
         const noBorderRadiusContext = useDisableBorderRadius();
         const noBorderSetting = noBorderRadius ?? noBorderRadiusContext;
+        const [isError, setIsError] = React.useState(false);
 
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
         // if width or height are numeric, we can calculate the other with the ratio without css.
@@ -113,15 +119,30 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
         const needsWrapper = withCssAspectRatio && !supportsAspectRatio;
 
         const img = (
+            // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/309
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
             <img
                 {...getPrefixedDataAttributes(dataAttributes)}
                 ref={ref}
                 src={src}
                 className={classes.image}
                 alt={alt}
+                onError={(event) => {
+                    setIsError(true);
+                    onError?.(event);
+                }}
+                onLoad={(event) => {
+                    setIsError(false);
+                    onLoad?.(event);
+                }}
                 {...(!needsWrapper ? {width, height} : {})}
             />
         );
+
+        if (isError) {
+            // to avoid showing the broken image icon
+            return null;
+        }
 
         if (needsWrapper) {
             return (
