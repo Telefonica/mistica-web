@@ -36,6 +36,8 @@ const TEXTS_ES = {
     closeNavigationMenu: 'Cerrar menú de navegación',
     backNavigationBar: 'Atrás',
     clearButton: 'Borrar',
+    carouselNextButton: 'siguiente',
+    carouselPrevButton: 'anterior',
 };
 
 const TEXTS_EN: ThemeTexts = {
@@ -67,6 +69,8 @@ const TEXTS_EN: ThemeTexts = {
     closeNavigationMenu: 'Close navigation menu',
     backNavigationBar: 'Back',
     clearButton: 'Clear',
+    carouselNextButton: 'next',
+    carouselPrevButton: 'previous',
 };
 
 const TEXTS_DE: ThemeTexts = {
@@ -98,6 +102,8 @@ const TEXTS_DE: ThemeTexts = {
     closeNavigationMenu: 'Navigationsmenü schließen',
     backNavigationBar: 'Zurück',
     clearButton: 'Löschen',
+    carouselNextButton: 'nächste',
+    carouselPrevButton: 'vorherige',
 };
 
 const TEXTS_PT: ThemeTexts = {
@@ -129,6 +135,8 @@ const TEXTS_PT: ThemeTexts = {
     closeNavigationMenu: 'Fechar menu de navegação',
     backNavigationBar: 'Voltar',
     clearButton: 'Apagar',
+    carouselNextButton: 'próximo',
+    carouselPrevButton: 'anterior',
 };
 
 export const getTexts = (locale: Locale): typeof TEXTS_ES => {
@@ -202,7 +210,7 @@ export type ColorScheme = 'dark' | 'light' | 'auto';
 // This is the type expected by ThemeContextProvider theme prop.
 // This config is provided by the user of the lib
 export type ThemeConfig = {
-    skin: Skin;
+    skin: Readonly<Skin>;
     colorScheme?: ColorScheme; // light by default. TODO: Change to auto by default in next major version
     i18n: {
         locale: Locale;

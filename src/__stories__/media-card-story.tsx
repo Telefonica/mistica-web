@@ -21,12 +21,16 @@ export default {
     title: 'Components/Cards/MediaCard',
 };
 
+const VIDEO_SRC = 'https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw';
+const POSTER_SRC = 'https://i.imgur.com/aEVtKsE.jpg';
+const IMAGE_SRC = 'https://i.imgur.com/aEVtKsE.jpg';
+
 export const Default: StoryComponent = () => {
     const tagColorNames = ['promo', 'active', 'inactive', 'success', 'warning', 'error'];
     const [headline, headlineTextField] = useTextField('Headline', 'Priority');
     const [headlineType, headlineTypeSelect] = useSelect('headline color', tagColorNames[0], tagColorNames);
-    const [pretitle, pretitleTextField] = useTextField('pretitle', 'Some pretitle');
-    const [title, titleTextField] = useTextField('title', 'Some title');
+    const [pretitle, pretitleTextField] = useTextField('Pretitle', 'Some pretitle');
+    const [title, titleTextField] = useTextField('Title', 'Some title');
     const [description, descriptionTextField] = useTextField(
         'description',
         'This is a description for the card'
@@ -65,9 +69,7 @@ export const Default: StoryComponent = () => {
                         pretitle={pretitle}
                         title={title}
                         description={description}
-                        media={{
-                            src: 'https://i.imgur.com/flZfkiX.png',
-                        }}
+                        media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                         button={button}
                         buttonLink={buttonLink}
                     />
@@ -87,7 +89,7 @@ export const WithBody: StoryComponent = () => {
             title="Title"
             description="Description"
             extra={<Placeholder />}
-            media={<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />}
+            media={<Image src={IMAGE_SRC} aspectRatio="16:9" dataAttributes={{qsysid: 'image'}} />}
             button={
                 <ButtonPrimary small href="https://google.com">
                     Action
@@ -103,16 +105,11 @@ WithBody.storyName = 'MediaCard with body';
 export const WithVideo: StoryComponent = () => {
     return (
         <MediaCard
-            headline={<Tag type="promo">headline</Tag>}
-            pretitle="pretitle"
-            title="title"
-            description="description"
-            media={
-                <Video
-                    src="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
-                    aspectRatio="12:5"
-                />
-            }
+            headline={<Tag type="promo">Headline</Tag>}
+            pretitle="Pretitle"
+            title="Title"
+            description="Description"
+            media={<Video src={VIDEO_SRC} aspectRatio="12:5" dataAttributes={{qsysid: 'video'}} />}
             button={
                 <ButtonPrimary small href="https://google.com">
                     Action
@@ -148,17 +145,13 @@ export const Group: StoryComponent = () => {
                         pretitle="Pretitle"
                         title="Title"
                         description="Description"
-                        media={{
-                            src: 'https://i.imgur.com/flZfkiX.png',
-                        }}
+                        media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />
                     <MediaCard
                         title="Title"
                         description="Description"
-                        media={{
-                            src: 'https://i.imgur.com/flZfkiX.png',
-                        }}
+                        media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />
                 </Inline>
@@ -188,10 +181,6 @@ const useCarouselStyles = createUseStyles((theme) => ({
         },
     },
 }));
-
-const VIDEO_SRC = 'https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw';
-const POSTER_SRC = 'https://i.imgur.com/Fu7RiuY.jpg';
-const IMAGE_SRC = 'https://i.imgur.com/flZfkiX.png';
 
 export const Carousel: StoryComponent = () => {
     const {isTabletOrSmaller} = useScreenSize();
@@ -238,16 +227,20 @@ export const Carousel: StoryComponent = () => {
                             pretitle="Pretitle"
                             title="Title"
                             description="Description"
-                            media={{src: IMAGE_SRC}}
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                             buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
                         />
                         <MediaCard
                             title="Title"
                             description="Description"
-                            media={{src: IMAGE_SRC}}
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                             buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
                         />
-                        <MediaCard title="Title" description="Description" media={{src: IMAGE_SRC}} />
+                        <MediaCard
+                            title="Title"
+                            description="Description"
+                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
+                        />
                     </Inline>
                 </ResponsiveLayout>
             </Stack>

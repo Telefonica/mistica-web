@@ -61,10 +61,13 @@ const App = () => (
   </Form>
 );
 
+const misticaTheme = {
+  skin: getMovistarSkin(),
+  i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+};
+
 ReactDOM.render(
-  <ThemeContextProvider
-    theme={{skin: getMovistarSkin(), i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}}}
-  >
+  <ThemeContextProvider theme={misticaTheme}>
     <App />
   </ThemeContextProvider>,
   document.getElementById('app')
@@ -74,6 +77,11 @@ ReactDOM.render(
 The `theme` prop in `ThemeContextProvider` is **mandatory**, and you can use it to configure some aspects of
 the library. There are multiple settings but the only two mandatory fields are `skin` and `i18n`. Read the
 [theme config doc](https://github.com/Telefonica/mistica-web/blob/master/doc/theme-config.md) for more info.
+
+:warning: Usually, the `theme` object is constant and won't need to change dynamically in your application, in
+that case we recommend to extract it to an external `const` variable outside of the component, this way the
+object reference will be the same in every re-render. If for some reason the `theme` must be dynamic in your
+app, consider to memoize it (for example, with `React.useMemo` hook).
 
 ## Components
 

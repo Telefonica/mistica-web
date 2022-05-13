@@ -1,7 +1,7 @@
 import {applyAlpha} from '../utils/color';
 import {TELEFONICA_SKIN} from './constants';
 
-import type {GetSkin} from './types';
+import type {GetKnownSkin} from './types';
 
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/telefonica-skin-schema.json
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/telefonica-constants.json
@@ -50,7 +50,7 @@ export const palette = {
     darkModeGrey: '#242424',
 } as const;
 
-export const getTelefonicaSkin: GetSkin = () => {
+export const getTelefonicaSkin: GetKnownSkin = () => {
     return {
         name: TELEFONICA_SKIN,
         colors: {
@@ -76,7 +76,6 @@ export const getTelefonicaSkin: GetSkin = () => {
 
             // BUTTONS
             buttonDangerBackground: palette.coral,
-            buttonDangerBackgroundDisabled: palette.grey2,
             buttonDangerBackgroundSelected: palette.coral80,
             buttonDangerBackgroundHover: palette.coral80, // web only
 
@@ -84,38 +83,26 @@ export const getTelefonicaSkin: GetSkin = () => {
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
 
             buttonPrimaryBackground: palette.telefonicaBlue,
-            buttonPrimaryBackgroundDisabled: palette.grey2,
-            buttonPrimaryBackgroundDisabledInverse: palette.telefonicaBlue30,
             buttonPrimaryBackgroundInverse: palette.white,
             buttonPrimaryBackgroundSelected: palette.telefonicaBlue70,
             buttonPrimaryBackgroundHover: palette.telefonicaBlue70, // web only
             buttonPrimaryBackgroundSelectedInverse: palette.telefonicaBlue30,
 
             buttonSecondaryBackground: palette.telefonicaBlue,
-            buttonSecondaryBackgroundDisabled: palette.grey2,
             buttonSecondaryBackgroundSelected: palette.telefonicaBlue70,
-            buttonSecondaryBorderDisabledInverse: palette.telefonicaBlue30,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.telefonicaBlue30,
 
             textButtonPrimary: palette.white,
-            textButtonPrimaryDisabled: palette.white,
             textButtonPrimaryInverse: palette.telefonicaBlue,
-            textButtonPrimaryInverseDisabled: palette.telefonicaBlue20,
             textButtonPrimaryInverseSelected: palette.telefonicaBlue,
-
             textButtonSecondary: palette.telefonicaBlue,
-            textButtonSecondaryDisabled: palette.grey2,
             textButtonSecondarySelected: palette.telefonicaBlue70,
             textButtonSecondaryInverse: palette.white,
-            textButtonSecondaryInverseDisabled: palette.telefonicaBlue30,
             textButtonSecondaryInverseSelected: palette.telefonicaBlue30,
-
             textLink: palette.telefonicaBlue,
             textLinkInverse: palette.white,
             textLinkDanger: palette.coral,
-            textLinkDangerDisabled: palette.grey2,
-            textLinkDisabled: palette.grey2,
             textLinkSnackbar: palette.telefonicaBlue30,
 
             // CONTROLS
@@ -124,8 +111,6 @@ export const getTelefonicaSkin: GetSkin = () => {
             controlError: palette.coral,
             loadingBar: palette.telefonicaBlue30,
             loadingBarBackground: palette.telefonicaBlue70,
-            loadingBarBackgroundInverse: palette.telefonicaBlue70,
-            loadingBarInverse: palette.telefonicaBlue30,
 
             toggleAndroidInactive: palette.grey2, // web only
             toggleAndroidBackgroundActive: palette.grey2, // web only
@@ -137,7 +122,7 @@ export const getTelefonicaSkin: GetSkin = () => {
             navigationBarDivider: palette.telefonicaBlue,
 
             // FEEDBACKS
-            badge: palette.coral80,
+            badge: palette.coral70,
             feedbackErrorBackground: palette.coral,
             feedbackInfoBackground: palette.grey9,
 
@@ -155,7 +140,6 @@ export const getTelefonicaSkin: GetSkin = () => {
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
             textSecondaryInverse: palette.white,
-            textDisabled: palette.grey4,
             textAmount: palette.telefonicaBlue,
 
             // STATES
@@ -200,42 +184,30 @@ export const getTelefonicaSkin: GetSkin = () => {
             skeletonWave: palette.grey5,
             borderLight: palette.darkModeBlack,
             border: palette.darkModeGrey,
-            buttonDangerBackgroundDisabled: applyAlpha(palette.white, 0.05),
             buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.05),
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.05),
             buttonPrimaryBackground: palette.telefonicaBlue,
-            buttonPrimaryBackgroundDisabled: applyAlpha(palette.white, 0.05),
-            buttonPrimaryBackgroundDisabledInverse: applyAlpha(palette.white, 0.05),
             buttonPrimaryBackgroundInverse: palette.telefonicaBlue,
             buttonPrimaryBackgroundSelected: palette.telefonicaBlue70,
             buttonPrimaryBackgroundHover: palette.telefonicaBlue70, // web only
             buttonPrimaryBackgroundSelectedInverse: palette.telefonicaBlue70,
             buttonSecondaryBackground: palette.telefonicaBlue,
-            buttonSecondaryBackgroundDisabled: applyAlpha(palette.white, 0.05),
             buttonSecondaryBackgroundSelected: palette.telefonicaBlue70,
-            buttonSecondaryBorderDisabledInverse: applyAlpha(palette.white, 0.05),
             buttonSecondaryBorderInverse: palette.telefonicaBlue,
             buttonSecondaryBorderSelectedInverse: palette.telefonicaBlue70,
             textButtonPrimary: palette.grey2,
-            textButtonPrimaryDisabled: palette.grey7,
             textButtonPrimaryInverse: palette.grey2,
-            textButtonPrimaryInverseDisabled: palette.grey5,
             textButtonPrimaryInverseSelected: palette.grey2,
             textButtonSecondary: palette.grey2,
-            textButtonSecondaryDisabled: palette.grey7,
             textButtonSecondarySelected: palette.grey4,
             textButtonSecondaryInverse: palette.grey2,
-            textButtonSecondaryInverseDisabled: palette.grey5,
             textButtonSecondaryInverseSelected: palette.grey4,
             textLink: palette.telefonicaBlue,
             textLinkInverse: palette.telefonicaBlue,
-            textLinkDisabled: palette.grey6,
             control: palette.darkModeGrey,
             controlActivated: palette.telefonicaBlue,
             loadingBar: palette.telefonicaBlue,
             loadingBarBackground: applyAlpha(palette.white, 0.05),
-            loadingBarBackgroundInverse: palette.telefonicaBlue70,
-            loadingBarInverse: palette.telefonicaBlue30,
             toggleAndroidInactive: palette.grey4, // web only
             toggleAndroidBackgroundActive: palette.grey1, // web only
             iosControlKnob: palette.grey2, // web only
@@ -252,7 +224,6 @@ export const getTelefonicaSkin: GetSkin = () => {
             textPrimaryInverse: palette.grey2,
             textSecondary: palette.grey4,
             textSecondaryInverse: palette.grey4,
-            textDisabled: palette.grey5,
             textAmount: palette.telefonicaBlue30,
             textNavigationBarPrimary: palette.grey2,
             textNavigationBarSecondary: palette.grey4,

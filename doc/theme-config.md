@@ -62,3 +62,37 @@ Here is a description of every attribute:
 - `useHrefDecorator`: it is a React hook that a function that takes a `href` and returns a new `href`. This is
   useful to automatically add parameters to the `href` being used in Touchable components (for example, to add
   a `utm_source` parameter to the `href`).
+
+## Create a custom skin
+
+If your app doesn't follow the branding of mistica builtin skins (Movistar, Vivo, O2, Telefonica, etc.), you
+can still use mistica with your custom skin. Just import the `Skin` type and create a new skin config that
+implements the `Skin` interface (you need to define all the required color constants):
+
+```ts
+import type {Skin} from '@telefonica/mistica';
+
+const skin: Skin = {
+  name: 'your skin name',
+  colors: {
+    // define here the required color constants
+  },
+  darkModeColors: {
+    // optionally define here the color constant overrides for dark mode
+  },
+};
+
+<ThemeContextProvider
+  theme={{
+    skin,
+    i18n: {
+      locale: 'es-ES',
+      phoneNumberFormattingRegionCode: 'ES',
+    },
+  }}
+>
+  <App />
+</ThemeContextProvider>;
+```
+
+You can see an example in the [examples folder](../examples/custom-skin/).

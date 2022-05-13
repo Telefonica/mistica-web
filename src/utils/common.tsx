@@ -14,3 +14,15 @@ export const combineRefs =
             }
         });
     };
+
+export const getTextFromChildren = (children: React.ReactNode): string => {
+    let text = '';
+
+    React.Children.forEach(children, (child) => {
+        if (typeof child === 'string') {
+            text += child;
+        }
+    });
+
+    return text;
+};

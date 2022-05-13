@@ -160,9 +160,9 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                             onColorSchemeChange(systemColorScheme);
                         }
                     }}
-                    render={(checkboxElement) => (
-                        <div className={classes.checkbox}>
-                            {checkboxElement} {capitalize(alternativeColorScheme)} mode
+                    render={({controlElement, labelId}) => (
+                        <div className={classes.checkbox} id={labelId}>
+                            {controlElement} {capitalize(alternativeColorScheme)} mode
                         </div>
                     )}
                 />
@@ -171,8 +171,10 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                         name="iOS"
                         checked={os === 'ios'}
                         onChange={(checked) => onOsChange(checked ? 'ios' : 'android')}
-                        render={(checkboxElement) => (
-                            <div className={classes.checkbox}>{checkboxElement} iOS</div>
+                        render={({controlElement, labelId}) => (
+                            <div className={classes.checkbox} id={labelId}>
+                                {controlElement} iOS
+                            </div>
                         )}
                     />
                 )}
@@ -205,9 +207,9 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                                 onColorSchemeChange(systemColorScheme);
                             }
                         }}
-                        render={(checkboxElement) => (
-                            <div className={classes.checkbox}>
-                                {checkboxElement} {capitalize(alternativeColorScheme)} mode
+                        render={({controlElement, labelId}) => (
+                            <div className={classes.checkbox} id={labelId}>
+                                {controlElement} {capitalize(alternativeColorScheme)} mode
                             </div>
                         )}
                     />
@@ -218,8 +220,10 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                             name="iOS"
                             checked={os === 'ios'}
                             onChange={(checked) => onOsChange(checked ? 'ios' : 'android')}
-                            render={(checkboxElement) => (
-                                <div className={classes.checkbox}>{checkboxElement} iOS</div>
+                            render={({controlElement, labelId}) => (
+                                <div className={classes.checkbox} id={labelId}>
+                                    {controlElement} iOS
+                                </div>
                             )}
                         />
                     </div>
@@ -298,16 +302,18 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
         }
     };
 
+    const theme: ThemeConfig = React.useMemo(() => {
+        return {
+            ...themesMap[skinName].themeConfig,
+            platformOverrides: {platform: os},
+            // Dont override mediaqueries for PreviewToolsControls, to avoid using Select instead of Tabs in desktop
+            enableTabFocus: false,
+            colorScheme: 'light',
+        };
+    }, [os, skinName]);
+
     const controls = (
-        <ThemeContextProvider
-            theme={{
-                ...themesMap[skinName].themeConfig,
-                platformOverrides: {platform: os},
-                // Dont override mediaqueries for PreviewToolsControls, to avoid using Select instead of Tabs in desktop
-                enableTabFocus: false,
-                colorScheme: 'light',
-            }}
-        >
+        <ThemeContextProvider theme={theme}>
             <PreviewToolsControls
                 skinName={skinName}
                 onSkinNameChange={setSkinName}

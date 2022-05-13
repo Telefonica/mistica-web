@@ -10,6 +10,9 @@ const common = {
     enableTabFocus: true,
     colorScheme: 'auto',
     i18n: {locale: 'en-US', phoneNumberFormattingRegionCode: 'ES'},
+    dimensions: {
+        headerMobileHeight: 0,
+    },
 } as const;
 
 export const Movistar: ThemeConfig = {...themes.Movistar, ...common};
@@ -24,5 +27,5 @@ export const Movistar_iOS: ThemeConfig = {...Movistar, platformOverrides: {platf
 export const Vivo_iOS: ThemeConfig = {...Vivo, platformOverrides: {platform: 'ios'}};
 export const O2_iOS: ThemeConfig = {...O2, platformOverrides: {platform: 'ios'}};
 export const O2_Classic_iOS: ThemeConfig = {...O2_Classic, platformOverrides: {platform: 'ios'}};
-export const Telefonica_iOS: ThemeConfig = {...themes.Telefonica, platformOverrides: {platform: 'ios'}};
-export const Blau_iOS: ThemeConfig = {...themes.Blau, platformOverrides: {platform: 'ios'}};
+export const Telefonica_iOS: ThemeConfig = {...Telefonica, platformOverrides: {platform: 'ios'}};
+export const Blau_iOS: ThemeConfig = {...Blau, platformOverrides: {platform: 'ios'}};

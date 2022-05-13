@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import classnames from 'classnames';
+import {useScreenSize} from './hooks';
 
 const MOBILE_SIDE_MARGIN = 16;
 const TABLET_SIDE_MARGIN = 32;
@@ -13,6 +14,9 @@ const useStyles = createUseStyles((theme) => ({
     },
     layout: {
         margin: 'auto',
+
+        paddingLeft: 'env(safe-area-inset-left)',
+        paddingRight: 'env(safe-area-inset-right)',
 
         [theme.mq.largeDesktop]: {
             width: LARGE_DESKTOP_MAX_WIDTH,
@@ -41,6 +45,9 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
+const ResponsiveLayoutMarginContext = React.createContext<null | number>(0);
+export const useResonsiveLayoutMargin = (): null | number => React.useContext(ResponsiveLayoutMarginContext);
+
 type Props = {
     children: React.ReactNode;
     fullWidth?: boolean;
@@ -49,13 +56,18 @@ type Props = {
 
 const ResponsiveLayout: React.FC<Props> = ({children, className, fullWidth}) => {
     const classes = useStyles();
+    const {isMobile, isTablet} = useScreenSize();
+
+    const sideMargin = isMobile ? MOBILE_SIDE_MARGIN : isTablet ? TABLET_SIDE_MARGIN : null;
 
     return (
-        <div className={classnames(classes.container, className)}>
-            <div className={classnames(classes.layout, {[classes.layoutFullWidth]: fullWidth})}>
-                {children}
+        <ResponsiveLayoutMarginContext.Provider value={sideMargin}>
+            <div className={classnames(classes.container, className)}>
+                <div className={classnames(classes.layout, {[classes.layoutFullWidth]: fullWidth})}>
+                    {children}
+                </div>
             </div>
-        </div>
+        </ResponsiveLayoutMarginContext.Provider>
     );
 };
 

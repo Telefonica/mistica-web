@@ -8,8 +8,10 @@ import {useForm} from './form-context';
 import {pxToRem} from './utils/css';
 import {Text, Text2, Text3} from './text';
 import Box from './box';
+import {getTextFromChildren} from './utils/common';
+import {eventActions, eventCategories} from './utils/analytics';
 
-import type {DataAttributes, TrackingEvent} from './utils/types';
+import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
 import type {Theme} from './theme';
 
@@ -214,6 +216,8 @@ const useDangerButtonStyles = createUseStyles((theme) => ({
     inverse: dangerButtonStyles(theme),
 }));
 
+type ButtonType = 'primary' | 'secondary' | 'danger';
+
 interface CommonProps {
     children: React.ReactNode;
     className?: string;
@@ -223,6 +227,7 @@ interface CommonProps {
     loadingText?: string;
     disabled?: boolean;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    trackEvent?: boolean;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-controls'?: string;
@@ -248,6 +253,7 @@ export interface OnPressButtonProps extends CommonProps {
 export interface HrefButtonProps extends CommonProps {
     href: string;
     newTab?: boolean;
+    loadOnTop?: boolean;
     submit?: undefined;
     fake?: undefined;
     onPress?: undefined;
@@ -275,7 +281,9 @@ export type ButtonProps =
     | OnPressButtonProps
     | HrefButtonProps;
 
-const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButtonStyles>}> = (props) => {
+const Button: React.FC<
+    ButtonProps & {classes: ReturnType<typeof usePrimaryButtonStyles>; type: ButtonType}
+> = (props) => {
     const {formStatus, formId} = useForm();
     const isInverse = useIsInverseVariant();
     const {classes, loadingText} = props;
@@ -317,7 +325,15 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
             [classes.isLoading]: showSpinner,
         }),
         style: {cursor: props.fake ? 'pointer' : undefined, ...props.style},
-        trackingEvent: props.trackingEvent,
+        trackingEvent:
+            props.trackingEvent ??
+            (props.trackEvent
+                ? {
+                      category: eventCategories.userInteraction,
+                      action: `${props.type}_button_tapped`,
+                      label: getTextFromChildren(props.children),
+                  }
+                : undefined),
         dataAttributes: props.dataAttributes,
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
@@ -396,7 +412,9 @@ const Button: React.FC<ButtonProps & {classes: ReturnType<typeof usePrimaryButto
     }
 
     if (props.href || props.href === '') {
-        return <Touchable {...commonProps} href={props.href} newTab={props.newTab} />;
+        return (
+            <Touchable {...commonProps} href={props.href} newTab={props.newTab} loadOnTop={props.loadOnTop} />
+        );
     }
 
     if (process.env.NODE_ENV !== 'production') {
@@ -428,6 +446,7 @@ const useButtonLinkStyles = createUseStyles((theme) => {
                     backgroundColor: 'initial',
                 },
             },
+            '&[disabled]': disabledStyle,
         },
         inverse: {
             color: theme.colors.textLinkInverse,
@@ -447,7 +466,9 @@ const useButtonLinkStyles = createUseStyles((theme) => {
 
 interface ButtonLinkCommonProps {
     children: React.ReactNode;
+    disabled?: boolean;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    trackEvent?: boolean;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     aligned?: boolean;
@@ -476,6 +497,7 @@ export const ButtonLink = React.forwardRef<
     HTMLDivElement | HTMLAnchorElement | HTMLButtonElement,
     ButtonLinkProps
 >((props, ref) => {
+    const {formStatus} = useForm();
     const classes = useButtonLinkStyles();
     const isInverse = useIsInverseVariant();
     const commonProps = {
@@ -483,13 +505,22 @@ export const ButtonLink = React.forwardRef<
             [classes.inverse]: isInverse,
             [classes.aligned]: props.aligned,
         }),
-        trackingEvent: props.trackingEvent,
+        trackingEvent:
+            props.trackingEvent ??
+            (props.trackEvent
+                ? {
+                      category: eventCategories.userInteraction,
+                      action: eventActions.linkTapped,
+                      label: getTextFromChildren(props.children),
+                  }
+                : undefined),
         dataAttributes: props.dataAttributes,
         children: (
             <Text2 medium truncate={1} color="inherit">
                 {props.children}
             </Text2>
         ),
+        disabled: props.disabled || formStatus === 'sending',
     };
 
     if (process.env.NODE_ENV !== 'production') {
@@ -522,20 +553,25 @@ export const ButtonLink = React.forwardRef<
 
 export const ButtonPrimary: React.FC<ButtonProps> = (props) => {
     const classes = usePrimaryButtonStyles();
-    return <Button {...props} classes={classes} />;
+    return <Button {...props} classes={classes} type="primary" />;
 };
 
 export const ButtonSecondary: React.FC<ButtonProps> = (props) => {
     const classes = useSecondaryButtonStyles();
-    return <Button {...props} classes={classes} />;
+    return <Button {...props} classes={classes} type="secondary" />;
 };
 
 export const ButtonDanger: React.FC<ButtonProps> = (props) => {
     const classes = useDangerButtonStyles();
-    return <Button {...props} classes={classes} />;
+    return <Button {...props} classes={classes} type="danger" />;
 };
 
 export type ButtonElement =
-    | React.ReactElement<ButtonProps, typeof ButtonPrimary>
-    | React.ReactElement<ButtonProps, typeof ButtonSecondary>
-    | React.ReactElement<ButtonProps, typeof ButtonDanger>;
+    | RendersElement<typeof ButtonPrimary>
+    | RendersElement<typeof ButtonSecondary>
+    | RendersElement<typeof ButtonDanger>;
+
+export type NullableButtonElement =
+    | RendersNullableElement<typeof ButtonPrimary>
+    | RendersNullableElement<typeof ButtonSecondary>
+    | RendersNullableElement<typeof ButtonDanger>;

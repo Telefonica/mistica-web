@@ -16,7 +16,13 @@ declare type CommonProps = {
   extra?: React.Node,
   dataAttributes?: DataAttributes,
   disabled?: boolean,
+  withChevron?: boolean,
 };
+declare type Right =
+  | ((x: {
+      centerY: boolean,
+    }) => React.Node)
+  | React.Node;
 declare type ControlProps = {
   name?: string,
   value?: boolean,
@@ -25,7 +31,7 @@ declare type ControlProps = {
 };
 declare type BasicRowContentProps = {
   ...$Exact<CommonProps>,
-  right?: React.Node,
+  right?: Right,
 };
 declare type SwitchRowContentProps = {
   ...$Exact<CommonProps>,
@@ -46,7 +52,7 @@ declare type HrefRowContentProps = {
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   href: string,
   newTab?: boolean,
-  right?: React.Node,
+  right?: Right,
 };
 declare type ToRowContentProps = {
   ...$Exact<CommonProps>,
@@ -54,13 +60,13 @@ declare type ToRowContentProps = {
   to: string,
   fullPageOnWebView?: boolean,
   replace?: boolean,
-  right?: React.Node,
+  right?: Right,
 };
 declare type OnPressRowContentProps = {
   ...$Exact<CommonProps>,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   onPress: () => void,
-  right?: React.Node,
+  right?: Right,
 };
 declare type RowContentProps =
   | BasicRowContentProps
@@ -70,10 +76,7 @@ declare type RowContentProps =
   | HrefRowContentProps
   | ToRowContentProps
   | OnPressRowContentProps;
-declare export var Row: React.ComponentType<{
-  ...RowContentProps,
-  ref?: React.Ref<HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>,
-}>;
+declare export var Row: React.AbstractComponent<RowContentProps, HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>;
 declare type RowListProps = {
   children: React.Node,
   ariaLabelledby?: string,
@@ -120,10 +123,7 @@ declare type BoxedRowProps =
   | HrefBoxedRowProps
   | ToBoxedRowProps
   | OnPressBoxedRowProps;
-declare export var BoxedRow: React.ComponentType<{
-  ...BoxedRowProps,
-  ref?: React.Ref<HTMLDivElement>,
-}>;
+declare export var BoxedRow: React.AbstractComponent<BoxedRowProps, HTMLDivElement>;
 declare type BoxedRowListProps = {
   children: React.Node,
   ariaLabelledby?: string,

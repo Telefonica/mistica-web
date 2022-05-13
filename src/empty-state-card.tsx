@@ -8,8 +8,7 @@ import Stack from './stack';
 import {Text2, Text4} from './text';
 import ButtonGroup from './button-group';
 
-import type {ButtonProps, ButtonLinkProps} from './button';
-import type {DataAttributes} from './utils/types';
+import type {DataAttributes, RendersNullableElement} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
     container: {
@@ -36,9 +35,9 @@ const useStyles = createUseStyles((theme) => ({
 
 interface CommonProps {
     title: string;
-    button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
-    secondaryButton?: React.ReactElement<ButtonProps, typeof ButtonSecondary>;
-    buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
+    button?: RendersNullableElement<typeof ButtonPrimary>;
+    secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
+    buttonLink?: RendersNullableElement<typeof ButtonLink>;
     description?: string;
     children?: void;
     'aria-label'?: string;

@@ -1,7 +1,12 @@
 // @flow
 
 import * as React from "react";
-import type { DataAttributes, TrackingEvent } from "./utils/types";
+import type {
+  DataAttributes,
+  RendersElement,
+  RendersNullableElement,
+  TrackingEvent,
+} from "./utils/types";
 import type { Location } from "history";
 declare export var BUTTON_MIN_WIDTH: 136;
 declare type CommonProps = {
@@ -13,6 +18,7 @@ declare type CommonProps = {
   loadingText?: string,
   disabled?: boolean,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
+  trackEvent?: boolean,
 
   /**
    * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
@@ -35,6 +41,7 @@ export type HrefButtonProps = {
   ...$Exact<CommonProps>,
   href: string,
   newTab?: boolean,
+  loadOnTop?: boolean,
 };
 export type FakeButtonProps = {
   ...$Exact<CommonProps>,
@@ -52,7 +59,9 @@ export type ButtonProps =
   | HrefButtonProps;
 declare type ButtonLinkCommonProps = {
   children: React.Node,
+  disabled?: boolean,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
+  trackEvent?: boolean,
 
   /**
    * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
@@ -78,17 +87,18 @@ export type ButtonLinkProps =
   | ButtonLinkOnPressProps
   | ButtonLinkHrefProps
   | ButtonLinkToProps;
-declare export var ButtonLink: React.ComponentType<{
-  ...ButtonLinkProps,
-  ref?: React.Ref<HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>,
-}>;
+declare export var ButtonLink: React.AbstractComponent<ButtonLinkProps, HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>;
 declare export var ButtonPrimary: React.ComponentType<ButtonProps>;
 declare export var ButtonSecondary: React.ComponentType<ButtonProps>;
 declare export var ButtonDanger: React.ComponentType<ButtonProps>;
 export type ButtonElement =
-  | React.Element<typeof ButtonPrimary>
-  | React.Element<typeof ButtonSecondary>
-  | React.Element<typeof ButtonDanger>;
+  | RendersElement<typeof ButtonPrimary>
+  | RendersElement<typeof ButtonSecondary>
+  | RendersElement<typeof ButtonDanger>;
+export type NullableButtonElement =
+  | RendersNullableElement<typeof ButtonPrimary>
+  | RendersNullableElement<typeof ButtonSecondary>
+  | RendersNullableElement<typeof ButtonDanger>;
 declare export {};
 
-import { type CssStyle } from "./__types__.js.flow";
+import { type CssStyle } from "./__css_types__.js.flow";

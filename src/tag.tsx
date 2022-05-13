@@ -5,12 +5,14 @@ import {createUseStyles} from './jss';
 import {Text} from './text';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {pxToRem} from './utils/css';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {IconProps} from './utils/types';
+import type {DataAttributes, IconProps} from './utils/types';
 
 const useStyles = createUseStyles(() => ({
     tag: {
         display: 'inline-flex',
+        verticalAlign: 'middle',
         flexDirection: 'row',
         alignItems: 'center',
         borderRadius: 50,
@@ -32,39 +34,16 @@ export type TagProps = {
     type?: 'promo' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
     children: string;
     Icon?: React.FC<IconProps>;
-
-    /** @deprecated use type prop */
-    color?: string;
+    dataAttributes?: DataAttributes;
 };
 
-const Tag: React.FC<TagProps> = ({Icon, children, type = 'promo', color}) => {
+const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'}) => {
     const classes = useStyles({hasIcon: !!Icon});
     const {colors, isDarkMode} = useTheme();
     const isInverse = useIsInverseVariant();
 
     if (!children) {
         return null;
-    }
-
-    /**
-     * Legacy implementation
-     *
-     * @deprecated to be removed in the next major version
-     */
-    if (color) {
-        // Hardcode black text in darkmode because there isn't a black text color constant that we can use in dark mode
-        const blackText = isDarkMode ? '#313235' : colors.textPrimary;
-
-        const textColor = color === colors.inverse ? blackText : colors.textPrimaryInverse;
-        return (
-            <ThemeVariant isInverse={false}>
-                <span className={classes.tag} style={{background: color}}>
-                    <Text color={textColor} size={14} lineHeight={20} weight="medium" truncate>
-                        {children}
-                    </Text>
-                </span>
-            </ThemeVariant>
-        );
     }
 
     const tagTypeToColors: Record<TagType, [string, string]> = {
@@ -81,6 +60,7 @@ const Tag: React.FC<TagProps> = ({Icon, children, type = 'promo', color}) => {
 
     return (
         <span
+            {...getPrefixedDataAttributes(dataAttributes)}
             className={classes.tag}
             style={{background: shouldUseInverseBackground ? colors.inverse : backgroundColor}}
         >

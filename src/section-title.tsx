@@ -29,7 +29,7 @@ const SectionTitle: React.FC<Props> = ({children, id, right, as = 'h3'}) => {
     const theme = useTheme();
     return (
         <Inline space="between">
-            <Text1 color={theme.colors.textSecondary} uppercase medium as={as} id={id}>
+            <Text1 color={theme.colors.textSecondary} transform="uppercase" medium as={as} id={id}>
                 {children}
             </Text1>
             {!!right && (

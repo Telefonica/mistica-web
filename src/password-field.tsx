@@ -3,8 +3,8 @@ import {useFieldProps} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import {useTheme} from './hooks';
 import IconButton from './icon-button';
-import Visibility from './icons/icon-visibility';
-import VisibilityOff from './icons/icon-visibility-off';
+import IconAccesibilityRegular from './generated/mistica-icons/icon-accesibility-regular';
+import IconEyeRegular from './generated/mistica-icons/icon-eye-regular';
 import {createUseStyles} from './jss';
 
 import type {CommonFormFieldProps} from './text-field-base';
@@ -17,7 +17,7 @@ const usePasswordAdornmentStyles = createUseStyles((theme) => ({
     shadow: {
         [theme.mq.supportsHover]: {
             '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, 0.08)',
+                backgroundColor: theme.colors.backgroundAlternative,
             },
         },
     },
@@ -32,10 +32,11 @@ const PasswordAdornment: React.FC<{
     const classes = usePasswordAdornmentStyles();
     const style = {
         backgroundSize: '200%',
-        padding: 12,
-        margin: -12,
+        padding: 8,
+        margin: -8,
         borderRadius: '50%',
         backgroundColor: undefined,
+        transition: 'background-color 0.2s ease-in-out',
     };
     return (
         <IconButton
@@ -44,11 +45,11 @@ const PasswordAdornment: React.FC<{
                 setVisibility(!isVisible);
                 focus();
             }}
-            size={48}
+            size={40}
             className={classes.shadow}
             style={style}
         >
-            {isVisible ? <VisibilityOff /> : <Visibility />}
+            {isVisible ? <IconAccesibilityRegular /> : <IconEyeRegular />}
         </IconButton>
     );
 };

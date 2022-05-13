@@ -1,0 +1,17 @@
+# https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions
+name: 'Size stats'
+description: 'Calculates mistica lib size overhead'
+inputs:
+    github-token:
+        description: 'GitHub token, required to comment on PRs'
+        required: true
+output:
+    total-js:
+        description: 'Total JS size'
+    js-without-icons:
+        description: 'JS size without icons'
+    lib-overhead:
+        description: 'Mistica lib size overhead'
+runs:
+    using: 'node12'
+    main: 'main.js'

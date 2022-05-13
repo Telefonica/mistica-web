@@ -1,7 +1,7 @@
 import {applyAlpha} from '../utils/color';
 import {O2_SKIN} from './constants';
 
-import type {GetSkin} from './types';
+import type {GetKnownSkin} from './types';
 
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/o2-constants.json
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/o2-skin-schema.json
@@ -60,7 +60,7 @@ export const palette = {
     darkModeO2BluePrimaryDark: '#000099',
 } as const;
 
-export const getO2Skin: GetSkin = () => {
+export const getO2Skin: GetKnownSkin = () => {
     return {
         name: O2_SKIN,
         colors: {
@@ -119,8 +119,6 @@ export const getO2Skin: GetSkin = () => {
             controlError: palette.pepper,
             loadingBar: palette.o2BluePrimary,
             loadingBarBackground: palette.grey1,
-            loadingBarBackgroundInverse: palette.grey1,
-            loadingBarInverse: palette.o2BluePrimary,
 
             toggleAndroidInactive: palette.grey2, // web only
             toggleAndroidBackgroundActive: palette.o2BluePrimary15, // web only
@@ -220,8 +218,6 @@ export const getO2Skin: GetSkin = () => {
             controlActivated: palette.o2BluePrimary30,
             loadingBar: palette.darkModeO2BluePrimary,
             loadingBarBackground: palette.darkModeGrey6,
-            loadingBarBackgroundInverse: palette.grey1,
-            loadingBarInverse: palette.darkModeO2BluePrimary,
             toggleAndroidInactive: palette.grey4,
             toggleAndroidBackgroundActive: palette.o2BlueLight30,
             iosControlKnob: palette.grey2,

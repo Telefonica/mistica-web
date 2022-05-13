@@ -4,6 +4,8 @@ import Touchable from './touchable';
 import classnames from 'classnames';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useForm} from './form-context';
+import {getTextFromChildren} from './utils/common';
+import {eventActions, eventCategories} from './utils/analytics';
 
 import type {TrackingEvent, DataAttributes} from './utils/types';
 
@@ -39,6 +41,7 @@ interface CommonProps {
     small?: boolean;
     disabled?: boolean;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    trackEvent?: boolean;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
 }
@@ -73,6 +76,16 @@ const TextLink: React.FC<TextLinkProps> = ({children, className = '', small, dis
     return (
         <Touchable
             {...props}
+            trackingEvent={
+                props.trackingEvent ??
+                (props.trackEvent
+                    ? {
+                          category: eventCategories.userInteraction,
+                          action: eventActions.linkTapped,
+                          label: getTextFromChildren(children),
+                      }
+                    : undefined)
+            }
             disabled={disabled || formStatus === 'sending'}
             className={classnames(classes.textLink, className, {
                 [classes.small]: small,

@@ -1,7 +1,7 @@
 import {applyAlpha} from '../utils/color';
 import {VIVO_SKIN} from './constants';
 
-import type {GetSkin} from './types';
+import type {GetKnownSkin} from './types';
 
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/vivo-constants.json
 // https://github.com/Telefonica/mistica-design/blob/production/tokens/vivo-skin-schema.json
@@ -50,7 +50,7 @@ export const palette = {
     darkModeGrey6: '#313235',
 } as const;
 
-export const getVivoSkin: GetSkin = () => {
+export const getVivoSkin: GetKnownSkin = () => {
     return {
         name: VIVO_SKIN,
         colors: {
@@ -108,8 +108,6 @@ export const getVivoSkin: GetSkin = () => {
             controlError: palette.pepper,
             loadingBar: palette.pink,
             loadingBarBackground: palette.pepperLight30,
-            loadingBarBackgroundInverse: palette.vivoPurpleLight50,
-            loadingBarInverse: palette.vivoPurple,
 
             toggleAndroidInactive: palette.grey2,
             toggleAndroidBackgroundActive: palette.vivoPurpleLight20,
@@ -209,8 +207,6 @@ export const getVivoSkin: GetSkin = () => {
             controlActivated: palette.vivoPurpleLight80,
             loadingBar: palette.vivoPurpleLight80,
             loadingBarBackground: palette.darkModeGrey6,
-            loadingBarBackgroundInverse: palette.grey1,
-            loadingBarInverse: palette.vivoPurpleLight80,
             toggleAndroidInactive: palette.grey4,
             toggleAndroidBackgroundActive: palette.vivoPurpleLight50,
             iosControlKnob: palette.grey2,

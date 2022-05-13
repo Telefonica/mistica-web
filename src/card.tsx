@@ -11,11 +11,7 @@ import ButtonGroup from './button-group';
 import Video from './video';
 import Image, {DisableBorderRadiusProvider} from './image';
 
-import type {ButtonProps, ButtonLinkProps} from './button';
-import type {DataAttributes} from './utils/types';
-import type {TagProps} from './tag';
-import type {VideoProps} from './video';
-import type {ImageProps} from './image';
+import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
 
 const useCardContentStyles = createUseStyles(() => ({
     actions: {
@@ -26,14 +22,14 @@ const useCardContentStyles = createUseStyles(() => ({
 }));
 
 type CardContentProps = {
-    headline?: string | React.ReactElement<TagProps, typeof Tag>;
+    headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     title?: string;
     subtitle?: string;
     description?: string;
     extra?: React.ReactNode;
-    button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
-    buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
+    button?: RendersNullableElement<typeof ButtonPrimary>;
+    buttonLink?: RendersNullableElement<typeof ButtonLink>;
 };
 
 const CardContent: React.FC<CardContentProps> = ({
@@ -62,11 +58,11 @@ const CardContent: React.FC<CardContentProps> = ({
             <Stack space={8}>
                 {(headline || pretitle || title || subtitle) && (
                     <header>
-                        <Stack space={16}>
+                        <Stack space={8}>
                             {renderHeadline()}
                             <Stack space={4}>
                                 {pretitle && (
-                                    <Text1 regular uppercase>
+                                    <Text1 regular transform="uppercase">
                                         {pretitle}
                                     </Text1>
                                 )}
@@ -97,27 +93,6 @@ const CardContent: React.FC<CardContentProps> = ({
     );
 };
 
-/** @deprecated */
-type CardMedia =
-    | {
-          src: string;
-          aspectRatio: number;
-
-          height?: undefined;
-      }
-    | {
-          src: string;
-          height: number;
-
-          aspectRatio?: undefined;
-      }
-    | {
-          src: string;
-
-          aspectRatio?: undefined;
-          height?: undefined;
-      };
-
 const useMediaCardStyles = createUseStyles(() => ({
     boxed: {
         height: '100%',
@@ -126,22 +101,6 @@ const useMediaCardStyles = createUseStyles(() => ({
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
-    },
-    media: {
-        width: '100%',
-        paddingTop: ({media}: {media: CardMedia}) => {
-            if (media.height) {
-                return media.height;
-            }
-            // padding percentage is relative to width. With this trick we can force aspect ratio
-            if (media.aspectRatio) {
-                return `${100 / media.aspectRatio}%`;
-            }
-            return '56.25%'; // 16/9 aspect ratio
-        },
-        backgroundImage: ({media}: {media: CardMedia}) => `url(${media.src})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
     },
     content: {
         flex: 1,
@@ -153,17 +112,14 @@ const useMediaCardStyles = createUseStyles(() => ({
 }));
 
 type MediaCardProps = {
-    media:
-        | CardMedia
-        | (React.ReactElement<ImageProps, typeof Image> & {src?: undefined})
-        | (React.ReactElement<VideoProps, typeof Video> & {src?: undefined});
-    headline?: string | React.ReactElement<TagProps, typeof Tag>;
+    media: RendersElement<typeof Image> | RendersElement<typeof Video>;
+    headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     title?: string;
     description?: string;
     extra?: React.ReactNode;
-    button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
-    buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
+    button?: RendersNullableElement<typeof ButtonPrimary>;
+    buttonLink?: RendersNullableElement<typeof ButtonLink>;
     children?: void;
     'aria-label'?: string;
 };
@@ -177,11 +133,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         return (
             <Boxed className={classes.boxed} ref={ref}>
                 <section className={classes.mediaCard} aria-label={ariaLabel}>
-                    {typeof media.src === 'string' ? (
-                        <div className={classes.media}></div>
-                    ) : (
-                        <DisableBorderRadiusProvider>{media}</DisableBorderRadiusProvider>
-                    )}
+                    <DisableBorderRadiusProvider>{media}</DisableBorderRadiusProvider>
                     <div className={classes.content}>
                         <CardContent
                             headline={headline}
@@ -216,13 +168,13 @@ interface DataCardProps {
      * Typically a mistica-icons component element
      */
     icon?: React.ReactElement;
-    headline?: string | React.ReactElement<TagProps, typeof Tag>;
+    headline?: string | RendersNullableElement<typeof Tag>;
     title?: string;
     subtitle?: string;
     description?: string;
     extra?: React.ReactNode;
-    button?: React.ReactElement<ButtonProps, typeof ButtonPrimary>;
-    buttonLink?: React.ReactElement<ButtonLinkProps, typeof ButtonLink>;
+    button?: RendersNullableElement<typeof ButtonPrimary>;
+    buttonLink?: RendersNullableElement<typeof ButtonLink>;
     children?: void;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;

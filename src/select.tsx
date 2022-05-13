@@ -53,6 +53,7 @@ const useStyles = createUseStyles((theme) => ({
         right: 48 + 1, // 48 for icon and +1 for border
         overflow: 'hidden',
         top: ({label}) => (label ? 27 : 17),
+        lineHeight: '20px',
         fontSize: 16,
         color: theme.colors.textPrimary,
         opacity: ({disabled}) => (disabled ? 0.5 : 1),
@@ -270,6 +271,11 @@ const Select: React.FC<SelectProps> = ({
 
     const focusableElement = focusableRef.current;
     const inputElement = inputRef.current;
+
+    React.useEffect(() => {
+        setRawValue({name, value});
+        formSetValue({name, value});
+    }, [name, setRawValue, formSetValue, value]);
 
     React.useEffect(() => {
         register(name, {

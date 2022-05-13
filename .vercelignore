@@ -3,8 +3,15 @@ dist-es
 reports
 flow-defs
 flow-typed
+flow-overrides
 doc
 scripts
+examples
+codemods
+__tests__
+__acceptance_tests__
+__screenshot_tests__
+__type_tests__
 .git
 .github
 .vscode

@@ -37,10 +37,12 @@ test('Row as a button', () => {
 });
 
 test('Row with switch', () => {
+    const spyOnChange = jest.fn();
+
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <RowList>
-                <Row title="Title" switch={{defaultValue: false}} />
+                <Row title="Title" switch={{defaultValue: false, onChange: spyOnChange}} />
             </RowList>
         </ThemeContextProvider>
     );
@@ -52,13 +54,20 @@ test('Row with switch', () => {
     fireEvent.click(switchEl);
 
     expect(switchEl).toBeChecked();
+    expect(spyOnChange).toHaveBeenCalledWith(true);
+
+    fireEvent.click(switchEl);
+
+    expect(spyOnChange).toHaveBeenCalledWith(false);
 });
 
 test('Row with checkbox', () => {
+    const spyOnChange = jest.fn();
+
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <RowList>
-                <Row title="Title" checkbox={{defaultValue: false}} />
+                <Row title="Title" checkbox={{defaultValue: false, onChange: spyOnChange}} />
             </RowList>
         </ThemeContextProvider>
     );
@@ -70,13 +79,18 @@ test('Row with checkbox', () => {
     fireEvent.click(checkboxEl);
 
     expect(checkboxEl).toBeChecked();
+    expect(spyOnChange).toHaveBeenCalledWith(true);
+
+    fireEvent.click(checkboxEl);
+
+    expect(spyOnChange).toHaveBeenCalledWith(false);
 });
 
 test('Row with custom right element', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <RowList>
-                <Row title="Title" right={<div>custom</div>} />
+                <Row title="Title" right={() => <div>custom</div>} />
             </RowList>
         </ThemeContextProvider>
     );

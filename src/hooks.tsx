@@ -2,6 +2,7 @@ import * as React from 'react';
 import ThemeContext from './theme-context';
 import ScreenSizeContext from './screen-size-context';
 import AriaIdGetterContext from './aria-id-getter-context';
+import {listenResize} from './utils/dom';
 
 import type {ScreenSizeContextType} from './screen-size-context';
 import type {Theme} from './theme';
@@ -62,18 +63,6 @@ export const useDisableBodyScroll = (disable: boolean): void => {
 
 export const useScreenSize = (): ScreenSizeContextType => React.useContext(ScreenSizeContext);
 
-const getResizeObserverPromise = (): Promise<typeof window.ResizeObserver | null> => {
-    if (typeof window === 'undefined') {
-        return Promise.resolve(null);
-    }
-
-    return window.ResizeObserver
-        ? Promise.resolve(ResizeObserver)
-        : import(/* webpackChunkName: "@juggle/resize-observer" */ '@juggle/resize-observer').then(
-              (m: any) => m.ResizeObserver
-          );
-};
-
 export const useElementDimensions = (): {
     width: number;
     height: number;
@@ -106,21 +95,7 @@ export const useElementDimensions = (): {
             return;
         }
 
-        let cancel = false;
-        const observerPromise = getResizeObserverPromise().then((ResizeObserver) => {
-            if (cancel || !ResizeObserver || !element) {
-                return null;
-            }
-
-            const observer = new ResizeObserver((entries) => updateSize(entries));
-            observer.observe(element);
-            return observer;
-        });
-
-        return () => {
-            cancel = true;
-            observerPromise.then((observer) => observer?.disconnect());
-        };
+        return listenResize(element, updateSize);
     }, [element, updateSize]);
 
     return {width, height, ref};
@@ -171,3 +146,42 @@ export const useWindowWidth = (): number => {
 // useLayoutEffect in the browser
 export const useIsomorphicLayoutEffect =
     typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
+
+type IntersectionObserverOptions = {
+    root?: Element | Document | null;
+    rootMargin?: string;
+    threshold?: number | number[];
+};
+
+export const useIsInViewport = (
+    ref: React.RefObject<HTMLElement>,
+    defaultValue: boolean,
+    options?: IntersectionObserverOptions
+): boolean => {
+    const [isInViewport, setIsInViewport] = React.useState<boolean>(defaultValue);
+
+    React.useEffect(() => {
+        if (!ref.current) {
+            return;
+        }
+
+        if (typeof window.IntersectionObserver === 'undefined') {
+            return () => {};
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                setIsInViewport(entries[0].isIntersecting);
+            },
+            {root: options?.root, rootMargin: options?.rootMargin, threshold: options?.threshold}
+        );
+
+        observer.observe(ref.current);
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [ref, options?.root, options?.rootMargin, options?.threshold]);
+
+    return isInViewport;
+};

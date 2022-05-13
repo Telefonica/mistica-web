@@ -577,7 +577,7 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             description="Description"
             extra={<Placeholder />}
-            media={<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />}
+            media={<Image src="https://i.imgur.com/aEVtKsE.jpg" aspectRatio="16:9" />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
@@ -1076,6 +1076,70 @@ const navigationBarSnippets = [
     },
 ];
 
+const carouselSnippets = [
+    {
+        group: 'Carousel',
+        name: 'Carousel',
+        code: `
+<Carousel
+  withBullets
+  items={Array.from({ length: 6 }, (_, idx) => (
+    <MediaCard
+      headline={<Tag type="promo">Headline</Tag>}
+      title={'Card ' + idx}
+      description="Description"
+      media={<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />}
+      button={
+        <ButtonPrimary small onPress={() => {}}>
+          Action
+        </ButtonPrimary>
+      }
+      buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+    />
+  ))}
+/>`,
+    },
+    {
+        group: 'Carousel',
+        name: 'Slideshow',
+        code: `
+<Slideshow
+  withBullets
+  items={[
+    <Image src="https://i.imgur.com/HRvhZ6F.jpeg" aspectRatio="16:9" />,
+    <Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />,
+  ]}
+/>`,
+    },
+    {
+        group: 'Carousel',
+        name: 'CenteredCarousel',
+        code: `
+<CenteredCarousel
+  withBullets
+  items={Array.from({length: 6}, (_, idx) => (
+      <div
+          style={{
+              border: \`1px solid \${colors.border}\`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+          }}
+      >
+          <div style={{flexShrink: 0}}>
+              <Circle backgroundColor={colors.brand} size={160}>
+                  <ThemeVariant isInverse>
+                      <Text10>{idx}</Text10>
+                  </ThemeVariant>
+              </Circle>
+          </div>
+      </div>
+  ))}
+/>
+`,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -1137,15 +1201,69 @@ export default [
     },
     ...navigationBarSnippets,
     menuSnippet,
+    {group: 'Chip', name: 'Chip', code: '<Chip>Chip</Chip>'},
+    {group: 'Chip', name: 'Chip closeable', code: '<Chip onClose={() => {}}>Chip</Chip>'},
+    {
+        group: 'Chip',
+        name: 'Chip icon',
+        code: '<Chip onClose={() => {}} Icon={IconLightningFilled}>Chip</Chip>',
+    },
+    {
+        group: 'Chip',
+        name: 'Chip checkbox',
+        code: `
+        <Checkbox
+          name="chip-checkbox"
+          render={({labelId, checked}) => (
+            <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                Chip
+            </Chip>
+          )}
+        />`,
+    },
+    {
+        group: 'Chip',
+        name: 'Chip radio group',
+        code: `
+        <RadioGroup name="chip-group" defaultValue="1">
+          <Inline space={8}>
+            <RadioButton
+              value="1"
+              render={({ checked, labelId }) => (
+                <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                  Chip 1
+                </Chip>
+              )}
+            />
+            <RadioButton
+              value="2"
+              render={({ checked, labelId }) => (
+                <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                  Chip 2
+                </Chip>
+              )}
+            />
+            <RadioButton
+              value="3"
+              render={({ checked, labelId }) => (
+                <Chip active={checked} id={labelId} Icon={IconLightningFilled}>
+                  Chip 3
+                </Chip>
+              )}
+            />
+          </Inline>
+        </RadioGroup>`,
+    },
     ...tagSnippets,
     {
         group: 'Media',
         name: 'Video',
-        code: `<Video src="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw" aspectRatio="16:9" />`,
+        code: `<Video src="https://cdn.kapwing.com/final_61f3e551955a8b003ec98e68_257607.mp4" aspectRatio="16:9" />`,
     },
     {
         group: 'Media',
         name: 'Image',
-        code: `<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />`,
+        code: `<Image src="https://i.imgur.com/aEVtKsE.jpg" aspectRatio="16:9" />`,
     },
+    ...carouselSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

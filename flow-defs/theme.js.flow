@@ -35,6 +35,8 @@ declare var TEXTS_ES: {
   closeNavigationMenu: string,
   backNavigationBar: string,
   clearButton: string,
+  carouselNextButton: string,
+  carouselPrevButton: string,
 };
 declare export var getTexts: (locale: Locale) => typeof TEXTS_ES;
 declare export var dimensions: {
@@ -77,7 +79,7 @@ declare type LinkComponent = React.ComponentType<{
 declare export var AnchorLink: LinkComponent;
 export type ColorScheme = "dark" | "light" | "auto";
 export type ThemeConfig = {
-  skin: Skin,
+  skin: $ReadOnly<Skin>,
   colorScheme?: ColorScheme,
   i18n: {
     locale: Locale,
@@ -141,4 +143,4 @@ export type Theme = {
 };
 declare export {};
 
-import { type CssStyle } from "./__types__.js.flow";
+import { type CssStyle } from "./__css_types__.js.flow";

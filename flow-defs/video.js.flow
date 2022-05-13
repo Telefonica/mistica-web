@@ -1,11 +1,13 @@
 // @flow
 
 import * as React from "react";
-export type AspectRatio = "1:1" | "16:9" | "12:5";
+import type { DataAttributes } from "./utils/types";
+export type AspectRatio = "1:1" | "16:9" | "12:5" | "4:3";
 declare export var RATIO: {
   "1:1": number,
   "16:9": number,
   "12:5": number,
+  "4:3": number,
 };
 declare type VideoSource = {
   src: string,
@@ -15,12 +17,12 @@ export type VideoProps = {
  /**
   * defaults to 100% when no width and no height are given
   */
- width?: number,
- height?: number,
+ width?: string | number,
+ height?: string | number,
  /**
-  * defaults to 1:1, if both width and height are given, aspectRatio is ignored
+  * defaults to 1:1, if both width and height are given, aspectRatio is ignored. To use original video proportions, set aspectRatio to 0
   */
- aspectRatio?: AspectRatio,
+ aspectRatio?: AspectRatio | number,
  /**
   * accepts multiple sources
   */
@@ -42,9 +44,7 @@ export type VideoProps = {
   * defaults to none
   */
  preload?: "none" | "metadata" | "auto",
+ dataAttributes?: DataAttributes,
 };
-declare var Video: React.ComponentType<{
-  ...VideoProps,
-  ref?: React.Ref<HTMLVideoElement>,
-}>;
+declare var Video: React.AbstractComponent<VideoProps, HTMLVideoElement>;
 declare export default typeof Video;

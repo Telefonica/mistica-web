@@ -17,7 +17,7 @@ const IconArrowDropDownFilled: React.FC<IconProps> = ({color, size = 24, childre
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
-                d="M21.753 7.863a1.304 1.304 0 00-1.182-.711L3.447 7c-.523-.01-1 .27-1.196.698a1.03 1.03 0 00.275 1.24l8.56 7.575a1.407 1.407 0 001.815 0l8.56-7.423c.356-.3.474-.798.292-1.227z"
+                d="M21.753 7.863a1.304 1.304 0 00-1.183-.711L3.447 7c-.524-.01-1 .27-1.196.698a1.03 1.03 0 00.275 1.24l8.56 7.575a1.407 1.407 0 001.815 0l8.56-7.423c.356-.3.474-.798.292-1.227z"
                 fill={fillColor}
             />
         </svg>

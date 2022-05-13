@@ -26,7 +26,7 @@ test('close option', () => {
             <Menu
                 width={400}
                 renderTarget={({ref, onPress, isMenuOpen}) => (
-                    <Touchable elementRef={ref} onPress={onPress}>
+                    <Touchable ref={ref} onPress={onPress}>
                         <Text3 regular>{isMenuOpen ? 'menu is open' : 'menu is close'}</Text3>
                     </Touchable>
                 )}

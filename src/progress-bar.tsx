@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useTheme} from './hooks';
 import {createUseStyles} from './jss';
 
 const transition = '1s cubic-bezier(0.75, 0, 0.27, 1)';
@@ -29,17 +30,29 @@ type Props = {
     progressPercent: number;
     color?: string;
     children?: void;
+    'aria-label'?: string;
+    'aria-labelledby'?: string;
 };
 
-const ProgressBar: React.FC<Props> = ({progressPercent, color}) => {
+const ProgressBar: React.FC<Props> = ({
+    progressPercent,
+    color,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+}) => {
     const classes = useStyles({progressPercent, color});
-
+    const {texts} = useTheme();
+    const defaultLabel = texts.loading;
+    const label = ariaLabelledBy ? undefined : ariaLabel || defaultLabel;
     return (
         <div
             className={classes.barBackground}
+            role="progressbar"
             aria-valuenow={progressPercent}
             aria-valuemin={0}
             aria-valuemax={100}
+            aria-label={label}
+            aria-labelledby={ariaLabelledBy}
         >
             <div className={classes.bar} />
         </div>
