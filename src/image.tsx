@@ -36,6 +36,7 @@ const useStyles = createUseStyles(() => ({
             top: 0,
             left: 0,
         },
+        opacity: ({isError}) => (isError ? 0 : 1), // to hide the broken image icon
     },
     wrapper: {
         borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
@@ -100,6 +101,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
             noBorderRadius: noBorderSetting,
             aspectRatio: withCssAspectRatio ? ratio : undefined,
             width: props.width,
+            isError,
         });
 
         let width: number | string | undefined = props.width;
@@ -138,11 +140,6 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
                 {...(!needsWrapper ? {width, height} : {})}
             />
         );
-
-        if (isError) {
-            // to avoid showing the broken image icon
-            return null;
-        }
 
         if (needsWrapper) {
             return (
