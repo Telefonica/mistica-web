@@ -1,9 +1,9 @@
 /* eslint-disable filenames/match-regex */
 import '@telefonica/mistica/css/reset.css';
 import '@telefonica/mistica/css/roboto.css';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import * as React from 'react';
-import {ThemeContextProvider, ServerSideStyles} from '@telefonica/mistica';
+import {ThemeContextProvider, ServerSideStyles, getMovistarSkin} from '@telefonica/mistica';
 
 /**
  * The to prop is used in mistica touchable components (Touchable, TextLink, Buttons, etc) to signal client side
@@ -21,12 +21,12 @@ const calcLinkProps = (to) => {
     return {href: to};
 };
 
-const NextLinkAdapter = ({to, innerRef, children, ...props}) => (
-    <Link {...calcLinkProps(to)}>
+const Link = ({to, innerRef, children, ...props}) => (
+    <NextLink {...calcLinkProps(to)}>
         <a ref={innerRef} {...props}>
             {children}
         </a>
-    </Link>
+    </NextLink>
 );
 
 const App = ({Component, pageProps}) => {
@@ -37,9 +37,9 @@ const App = ({Component, pageProps}) => {
     return (
         <ThemeContextProvider
             theme={{
-                skin: 'Movistar',
+                skin: getMovistarSkin(),
                 i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
-                Link: NextLinkAdapter, // Configure Mistica to use Next Links
+                Link, // Configure Mistica to use Next Links
             }}
         >
             <Component {...pageProps} />

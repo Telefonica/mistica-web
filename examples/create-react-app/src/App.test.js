@@ -1,13 +1,13 @@
 import React from 'react';
-import {ThemeContextProvider} from '@telefonica/mistica';
-import {render, screen, within, waitForElementToBeRemoved} from '@testing-library/react';
+import {getMovistarSkin, ThemeContextProvider} from '@telefonica/mistica';
+import {render, screen, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
 test('renders learn react link', async () => {
-    const {getByText} = render(
+    render(
         <ThemeContextProvider
-            theme={{skin: 'Movistar', i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}}}
+            theme={{skin: getMovistarSkin(), i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}}}
         >
             <App />
         </ThemeContextProvider>

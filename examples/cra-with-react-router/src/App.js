@@ -9,16 +9,19 @@ import {
     Stack,
     ButtonPrimary,
     SectionTitle,
+    Box,
     NegativeBox,
 } from '@telefonica/mistica';
-import {BrowserRouter as Router, Switch, Route, useRouteMatch, useParams, useHistory} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route, useMatch, useParams, useNavigate} from 'react-router-dom';
 
 const Section = ({title, button, children}) => (
     <>
         <MainSectionHeaderLayout>
             <MainSectionHeader title={title} description={`Welcome to ${title} section`} button={button} />
         </MainSectionHeaderLayout>
-        <ResponsiveLayout>{children}</ResponsiveLayout>
+        <ResponsiveLayout>
+            <Box paddingY={24}>{children}</Box>
+        </ResponsiveLayout>
     </>
 );
 
@@ -32,53 +35,51 @@ const Home = () => (
     </Section>
 );
 
-const About = () => <Section title="About" button={<ButtonPrimary to="/">Go home</ButtonPrimary>}></Section>;
+const About = () => (
+    <Section title="About" button={<ButtonPrimary to="/">Go home</ButtonPrimary>}>
+        About section
+    </Section>
+);
 
 const User = () => {
     const {name} = useParams();
-    const history = useHistory();
+    const navigate = useNavigate();
     return (
-        <>
+        <Stack space={16}>
             <SectionTitle>Hello, {name}</SectionTitle>
-            <ButtonPrimary onPress={history.goBack}>Go back</ButtonPrimary>
-        </>
+            <ButtonPrimary onPress={() => navigate(-1)}>Go back</ButtonPrimary>
+        </Stack>
     );
 };
 
 const Users = () => {
-    const match = useRouteMatch();
     return (
         <Section title="Users" button={<ButtonPrimary to="/">Go home</ButtonPrimary>}>
-            <Switch>
-                <Route path={`${match.url}/:name`}>
-                    <User />
-                </Route>
-                <Route path={match.url}>
-                    <NegativeBox>
-                        <RowList>
-                            <Row to="/users/Juan" title="Juan" />
-                            <Row to="/users/Luis" title="Luis" />
-                        </RowList>
-                    </NegativeBox>
-                </Route>
-            </Switch>
+            <Routes>
+                <Route path={`/:name`} element={<User />} />
+                <Route
+                    path={'/'}
+                    element={
+                        <NegativeBox>
+                            <RowList>
+                                <Row to="/users/Juan" title="Juan" />
+                                <Row to="/users/Luis" title="Luis" />
+                            </RowList>
+                        </NegativeBox>
+                    }
+                />
+            </Routes>
         </Section>
     );
 };
 
 const App = () => (
     <Router>
-        <Switch>
-            <Route path="/about">
-                <About />
-            </Route>
-            <Route path="/users">
-                <Users />
-            </Route>
-            <Route path="/">
-                <Home />
-            </Route>
-        </Switch>
+        <Routes>
+            <Route path="/about" element={<About />} />
+            <Route path="/users/*" element={<Users />} />
+            <Route path="/" element={<Home />} />
+        </Routes>
     </Router>
 );
 
