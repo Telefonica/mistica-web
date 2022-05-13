@@ -13,19 +13,19 @@ export const Default: StoryComponent<Args> = ({title, linkText}) => (
             as="h3"
             right={linkText ? <TextLink href="https://google.com">{linkText}</TextLink> : undefined}
         >
-            {title}
+            {title || 'Title 1'}
         </Title1>
         <Title2
             as="h2"
             right={linkText ? <TextLink href="https://google.com">{linkText}</TextLink> : undefined}
         >
-            {title}
+            {title || 'Title 2'}
         </Title2>
     </Stack>
 );
 
 Default.storyName = 'Title';
 Default.args = {
-    title: 'This is a title',
+    title: '',
     linkText: 'Link',
 };
