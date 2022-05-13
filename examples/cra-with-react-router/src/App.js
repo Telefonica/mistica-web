@@ -56,9 +56,9 @@ const Users = () => {
     return (
         <Section title="Users" button={<ButtonPrimary to="/">Go home</ButtonPrimary>}>
             <Routes>
-                <Route path={`/:name`} element={<User />} />
+                <Route path="/:name" element={<User />} />
                 <Route
-                    path={'/'}
+                    path="/"
                     element={
                         <NegativeBox>
                             <RowList>
