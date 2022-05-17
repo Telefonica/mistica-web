@@ -36,6 +36,7 @@ const useStyles = createUseStyles(() => ({
             top: 0,
             left: 0,
         },
+        opacity: ({isError}) => (isError ? 0 : 1), // to hide the broken image icon
     },
     wrapper: {
         borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
@@ -76,13 +77,19 @@ export type ImageProps = {
     children?: void;
     dataAttributes?: DataAttributes;
     noBorderRadius?: boolean;
+    onError?: (event: React.SyntheticEvent) => void;
+    onLoad?: (event: React.SyntheticEvent) => void;
 };
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
-    ({aspectRatio = '1:1', alt = '', dataAttributes, noBorderRadius, src, ...props}, ref) => {
+    (
+        {aspectRatio = '1:1', alt = '', dataAttributes, noBorderRadius, src, onError, onLoad, ...props},
+        ref
+    ) => {
         const supportsAspectRatio = useSupportsAspectRatio();
         const noBorderRadiusContext = useDisableBorderRadius();
         const noBorderSetting = noBorderRadius ?? noBorderRadiusContext;
+        const [isError, setIsError] = React.useState(false);
 
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
         // if width or height are numeric, we can calculate the other with the ratio without css.
@@ -94,6 +101,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
             noBorderRadius: noBorderSetting,
             aspectRatio: withCssAspectRatio ? ratio : undefined,
             width: props.width,
+            isError,
         });
 
         let width: number | string | undefined = props.width;
@@ -113,12 +121,22 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
         const needsWrapper = withCssAspectRatio && !supportsAspectRatio;
 
         const img = (
+            // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/309
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
             <img
                 {...getPrefixedDataAttributes(dataAttributes)}
                 ref={ref}
                 src={src}
                 className={classes.image}
                 alt={alt}
+                onError={(event) => {
+                    setIsError(true);
+                    onError?.(event);
+                }}
+                onLoad={(event) => {
+                    setIsError(false);
+                    onLoad?.(event);
+                }}
                 {...(!needsWrapper ? {width, height} : {})}
             />
         );
