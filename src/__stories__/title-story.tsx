@@ -13,13 +13,13 @@ export const Default: StoryComponent<Args> = ({title, linkText}) => (
             as="h3"
             right={linkText ? <TextLink href="https://google.com">{linkText}</TextLink> : undefined}
         >
-            {title || 'Title 1'}
+            {title || 'Title1'}
         </Title1>
         <Title2
             as="h2"
             right={linkText ? <TextLink href="https://google.com">{linkText}</TextLink> : undefined}
         >
-            {title || 'Title 2'}
+            {title || 'Title2'}
         </Title2>
     </Stack>
 );
