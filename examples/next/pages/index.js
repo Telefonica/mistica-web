@@ -9,8 +9,8 @@ import {
     TextLink,
     SectionTitle,
     Text,
-    FormTextField,
-    FormEmailField,
+    TextField,
+    EmailField,
     ButtonLayout,
     ButtonPrimary,
     alert,
@@ -44,8 +44,8 @@ const Home = () => {
                         <SectionTitle>Form example</SectionTitle>
                         <Form onSubmit={handleSubmit}>
                             <Stack space={16}>
-                                <FormTextField id="name" name="name" label="Name" />
-                                <FormEmailField id="email" name="email" label="e-mail" />
+                                <TextField id="name" name="name" label="Name" />
+                                <EmailField id="email" name="email" label="e-mail" />
                                 <ButtonLayout>
                                     <ButtonPrimary submit>Send</ButtonPrimary>
                                 </ButtonLayout>
@@ -71,7 +71,7 @@ const Home = () => {
                         <SectionTitle>Dynamic Links</SectionTitle>
                         <Stack space={16}>
                             <Text>Write a user name to navigate to their page.</Text>
-                            <FormTextField
+                            <TextField
                                 name="user-name"
                                 id="user-name"
                                 value={userName}
