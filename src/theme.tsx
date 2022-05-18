@@ -222,7 +222,10 @@ export type ThemeConfig = {
         userAgent?: string;
     };
     texts?: Partial<ThemeTexts>;
-    analytics?: {logEvent: (trackingEvent: TrackingEvent) => Promise<void>};
+    analytics?: {
+        logEvent: (trackingEvent: TrackingEvent) => Promise<void>;
+        eventFormat?: 'universal-analytics' | 'google-analytics-4';
+    };
     dimensions?: {headerMobileHeight: number};
     mediaQueries?: {
         tabletMinWidth: number;
@@ -248,7 +251,10 @@ export type Theme = {
         userAgent?: string;
     };
     texts: ThemeTexts;
-    analytics: {logEvent: (trackingEvent: TrackingEvent) => Promise<void>};
+    analytics: {
+        logEvent: (trackingEvent: TrackingEvent) => Promise<void>;
+        eventFormat: 'universal-analytics' | 'google-analytics-4';
+    };
     dimensions: {headerMobileHeight: number};
     mq: {
         mobile: string;

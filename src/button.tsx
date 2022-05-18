@@ -9,7 +9,8 @@ import {pxToRem} from './utils/css';
 import {Text, Text2, Text3} from './text';
 import Box from './box';
 import {getTextFromChildren} from './utils/common';
-import {eventActions, eventCategories} from './utils/analytics';
+import {eventActions, eventCategories, eventNames} from './utils/analytics';
+import {useTheme} from './hooks';
 
 import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
@@ -284,6 +285,7 @@ export type ButtonProps =
 const Button: React.FC<
     ButtonProps & {classes: ReturnType<typeof usePrimaryButtonStyles>; type: ButtonType}
 > = (props) => {
+    const {analytics} = useTheme();
     const {formStatus, formId} = useForm();
     const isInverse = useIsInverseVariant();
     const {classes, loadingText} = props;
@@ -317,6 +319,22 @@ const Button: React.FC<
             </Text3>
         );
 
+    const createDefaultTrackingEvent = (): TrackingEvent => {
+        if (analytics.eventFormat === 'google-analytics-4') {
+            return {
+                name: eventNames.userInteraction,
+                component_type: `${props.type}_button`,
+                component_copy: getTextFromChildren(props.children),
+            };
+        } else {
+            return {
+                category: eventCategories.userInteraction,
+                action: `${props.type}_button_tapped`,
+                label: getTextFromChildren(props.children),
+            };
+        }
+    };
+
     const commonProps = {
         className: classnames(classes.button, props.className, {
             [classes.small]: props.small,
@@ -325,15 +343,7 @@ const Button: React.FC<
             [classes.isLoading]: showSpinner,
         }),
         style: {cursor: props.fake ? 'pointer' : undefined, ...props.style},
-        trackingEvent:
-            props.trackingEvent ??
-            (props.trackEvent
-                ? {
-                      category: eventCategories.userInteraction,
-                      action: `${props.type}_button_tapped`,
-                      label: getTextFromChildren(props.children),
-                  }
-                : undefined),
+        trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
         dataAttributes: props.dataAttributes,
         'aria-controls': props['aria-controls'],
         'aria-expanded': props['aria-expanded'],
@@ -500,20 +510,30 @@ export const ButtonLink = React.forwardRef<
     const {formStatus} = useForm();
     const classes = useButtonLinkStyles();
     const isInverse = useIsInverseVariant();
+    const {analytics} = useTheme();
+
+    const createDefaultTrackingEvent = (): TrackingEvent => {
+        if (analytics.eventFormat === 'google-analytics-4') {
+            return {
+                name: eventNames.userInteraction,
+                component_type: 'link',
+                component_copy: getTextFromChildren(props.children),
+            };
+        } else {
+            return {
+                category: eventCategories.userInteraction,
+                action: eventActions.linkTapped,
+                label: getTextFromChildren(props.children),
+            };
+        }
+    };
+
     const commonProps = {
         className: classnames(classes.link, {
             [classes.inverse]: isInverse,
             [classes.aligned]: props.aligned,
         }),
-        trackingEvent:
-            props.trackingEvent ??
-            (props.trackEvent
-                ? {
-                      category: eventCategories.userInteraction,
-                      action: eventActions.linkTapped,
-                      label: getTextFromChildren(props.children),
-                  }
-                : undefined),
+        trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
         dataAttributes: props.dataAttributes,
         children: (
             <Text2 medium truncate={1} color="inherit">

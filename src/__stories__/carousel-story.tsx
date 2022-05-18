@@ -8,7 +8,7 @@ import {
     Callout,
     Stack,
     IconInformationRegular,
-    SectionTitle,
+    Title1,
     Text2,
     Image,
 } from '..';
@@ -75,7 +75,7 @@ export const Default: StoryComponent<Args> = ({
                         ))}
                     />
                     <Stack space={8}>
-                        <SectionTitle as="h2">Current page info</SectionTitle>
+                        <Title1 as="h2">Current page info</Title1>
                         {pageInfo && (
                             <Text2 regular as="pre">
                                 {JSON.stringify(pageInfo, null, 2)}

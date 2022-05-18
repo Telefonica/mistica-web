@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Switch, Stack, Inline, Text3, SectionTitle} from '..';
+import {Switch, Stack, Inline, Text3, Title1} from '..';
 
 export default {
     title: 'Components/Forms/Switch',
@@ -11,9 +11,9 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={32}>
             <>
-                <SectionTitle as="h1" id="uncontrolled-label">
+                <Title1 as="h1" id="uncontrolled-label">
                     Uncontrolled
-                </SectionTitle>
+                </Title1>
                 <Switch
                     name="uncontrolled"
                     onChange={onUncontrolledChange}
@@ -29,9 +29,9 @@ export const Default: StoryComponent = () => {
                 />
             </>
             <>
-                <SectionTitle as="h1" id="controlled-label">
+                <Title1 as="h1" id="controlled-label">
                     Controlled
-                </SectionTitle>
+                </Title1>
                 <Switch
                     name="controlled"
                     checked={checked}
@@ -48,15 +48,15 @@ export const Default: StoryComponent = () => {
                 />
             </>
             <>
-                <SectionTitle as="h1" id="without-children-label">
+                <Title1 as="h1" id="without-children-label">
                     Without children
-                </SectionTitle>
+                </Title1>
                 <Switch name="no-children" aria-labelledby="without-children-label" />
             </>
             <>
-                <SectionTitle as="h1" id="no-switch-label">
+                <Title1 as="h1" id="no-switch-label">
                     Without switch
-                </SectionTitle>
+                </Title1>
                 <Switch
                     name="no-switch"
                     checked={checked}
@@ -72,7 +72,7 @@ export const Default: StoryComponent = () => {
                 />
             </>
             <>
-                <SectionTitle as="h1">Disabled</SectionTitle>
+                <Title1 as="h1">Disabled</Title1>
                 <Switch name="disabled" checked={checked} onChange={onChange} disabled>
                     <Text3 regular transform="uppercase">
                         {checked ? 'on' : 'off'}

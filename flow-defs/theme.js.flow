@@ -93,6 +93,7 @@ export type ThemeConfig = {
   texts?: $Shape<ThemeTexts>,
   analytics?: {
     logEvent: (trackingEvent: TrackingEvent) => Promise<void>,
+    eventFormat?: "universal-analytics" | "google-analytics-4",
   },
   dimensions?: {
     headerMobileHeight: number,
@@ -121,6 +122,7 @@ export type Theme = {
   texts: ThemeTexts,
   analytics: {
     logEvent: (trackingEvent: TrackingEvent) => Promise<void>,
+    eventFormat: "universal-analytics" | "google-analytics-4",
   },
   dimensions: {
     headerMobileHeight: number,

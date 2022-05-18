@@ -12,7 +12,7 @@ import {
     IconInformationRegular,
     Text10,
     ThemeVariant,
-    SectionTitle,
+    Title1,
 } from '..';
 
 export default {
@@ -69,7 +69,7 @@ export const Default: StoryComponent<Args> = ({numItems}) => {
                         ))}
                     />
                     <Stack space={8}>
-                        <SectionTitle as="h2">Current page info</SectionTitle>
+                        <Title1 as="h2">Current page info</Title1>
                         {pageInfo && (
                             <Text2 regular as="pre">
                                 {JSON.stringify(pageInfo, null, 2)}

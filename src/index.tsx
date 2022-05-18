@@ -46,6 +46,7 @@ export {default as Tag} from './tag';
 export type {TagType} from './tag';
 export {default as SectionTitle} from './section-title';
 export {Placeholder} from './placeholder';
+export {Title1, Title2} from './title';
 export {RowList, Row, BoxedRowList, BoxedRow} from './list';
 export {default as Switch} from './switch-component';
 export {default as Checkbox} from './checkbox';
