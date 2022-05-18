@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
     ResponsiveLayout,
-    SectionTitle,
+    Title1,
     NegativeBox,
     RowList,
     Row,
@@ -12,7 +12,7 @@ import {
 
 const ListTest: React.FC = () => (
     <ResponsiveLayout>
-        <SectionTitle>Simple list</SectionTitle>
+        <Title1>Simple list</Title1>
         <NegativeBox>
             <RowList>
                 <Row
@@ -48,7 +48,7 @@ const ListTest: React.FC = () => (
             </RowList>
         </NegativeBox>
 
-        <SectionTitle>Boxed rows list</SectionTitle>
+        <Title1>Boxed rows list</Title1>
         <BoxedRowList>
             <BoxedRow
                 asset={<AvatarPlaceholder size={40} />}

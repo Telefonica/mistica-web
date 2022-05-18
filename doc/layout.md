@@ -316,14 +316,14 @@ This is how a page layout could look like:
   <Box spaceY={24}>
     <Stack space={32}>
       <Stack space={16}>
-        <SectionTitle>Section 1</SectionTitle>
+        <Title1>Section 1</Title1>
         <Text2 regular>
           Some example text
         </Text2>
       </Stack>
 
       <Stack space={16}>
-        <SectionTitle>Section 2</SectionTitle>
+        <Title1>Section 2</Title1>
         <NegativeBox>
           <RowList>
             <Row1 />
