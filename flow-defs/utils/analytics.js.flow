@@ -6,3 +6,6 @@ declare export var eventCategories: {
 declare export var eventActions: {
   +linkTapped: "link_tapped",
 };
+declare export var eventNames: {
+  +userInteraction: "user_interaction",
+};

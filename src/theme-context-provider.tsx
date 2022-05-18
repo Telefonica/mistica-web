@@ -127,6 +127,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) =>
             },
             analytics: {
                 logEvent: () => Promise.resolve(),
+                eventFormat: 'universal-analytics',
                 ...theme.analytics,
             },
             dimensions: {
