@@ -27,7 +27,7 @@ const IconSendFilled: React.FC<IconProps> = ({color, size = 24, children, ...res
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M21.378 11.205L3.336 2.235a.82.82 0 00-1.168.908l1.865 8.782-1.835 8.924a.823.823 0 001.177.9l18.008-9.074a.82.82 0 00-.005-1.47z"
+                    d="M21.383 11.215L3.34 2.245a.82.82 0 00-1.168.908l1.866 8.782-1.835 8.924a.823.823 0 001.177.9l18.008-9.074a.82.82 0 00-.006-1.47z"
                     fill={fillColor}
                 />
             </svg>

@@ -415,9 +415,6 @@ export {default as IconCalendarRegular} from './generated/mistica-icons/icon-cal
 export {default as IconCallbackFilled} from './generated/mistica-icons/icon-callback-filled';
 export {default as IconCallbackLight} from './generated/mistica-icons/icon-callback-light';
 export {default as IconCallbackRegular} from './generated/mistica-icons/icon-callback-regular';
-export {default as IconCallCenterUserSupportFilled} from './generated/mistica-icons/icon-call-center-user-support-filled';
-export {default as IconCallCenterUserSupportLight} from './generated/mistica-icons/icon-call-center-user-support-light';
-export {default as IconCallCenterUserSupportRegular} from './generated/mistica-icons/icon-call-center-user-support-regular';
 export {default as IconCallDetailsFilled} from './generated/mistica-icons/icon-call-details-filled';
 export {default as IconCallDetailsLight} from './generated/mistica-icons/icon-call-details-light';
 export {default as IconCallDetailsRegular} from './generated/mistica-icons/icon-call-details-regular';
@@ -1191,9 +1188,9 @@ export {default as IconMoonRegular} from './generated/mistica-icons/icon-moon-re
 export {default as IconMouseFilled} from './generated/mistica-icons/icon-mouse-filled';
 export {default as IconMouseLight} from './generated/mistica-icons/icon-mouse-light';
 export {default as IconMouseRegular} from './generated/mistica-icons/icon-mouse-regular';
+export {default as IconMultideviceFilled} from './generated/mistica-icons/icon-multidevice-filled';
 export {default as IconMultideviceLight} from './generated/mistica-icons/icon-multidevice-light';
-export {default as IconMultideviceoFilled} from './generated/mistica-icons/icon-multideviceo-filled';
-export {default as IconMultideviceoRegular} from './generated/mistica-icons/icon-multideviceo-regular';
+export {default as IconMultideviceRegular} from './generated/mistica-icons/icon-multidevice-regular';
 export {default as IconMultisaveFilled} from './generated/mistica-icons/icon-multisave-filled';
 export {default as IconMultisaveLight} from './generated/mistica-icons/icon-multisave-light';
 export {default as IconMultisaveRegular} from './generated/mistica-icons/icon-multisave-regular';
@@ -1414,9 +1411,6 @@ export {default as IconReportRegular} from './generated/mistica-icons/icon-repor
 export {default as IconRestaurantFilled} from './generated/mistica-icons/icon-restaurant-filled';
 export {default as IconRestaurantLight} from './generated/mistica-icons/icon-restaurant-light';
 export {default as IconRestaurantRegular} from './generated/mistica-icons/icon-restaurant-regular';
-export {default as IconRewardsFilled} from './generated/mistica-icons/icon-rewards-filled';
-export {default as IconRewardsLight} from './generated/mistica-icons/icon-rewards-light';
-export {default as IconRewardsRegular} from './generated/mistica-icons/icon-rewards-regular';
 export {default as IconRewindFilled} from './generated/mistica-icons/icon-rewind-filled';
 export {default as IconRewindLight} from './generated/mistica-icons/icon-rewind-light';
 export {default as IconRewindRegular} from './generated/mistica-icons/icon-rewind-regular';
@@ -1587,7 +1581,7 @@ export {default as IconTagFilled} from './generated/mistica-icons/icon-tag-fille
 export {default as IconTagLight} from './generated/mistica-icons/icon-tag-light';
 export {default as IconTagPoundFilled} from './generated/mistica-icons/icon-tag-pound-filled';
 export {default as IconTagPoundLight} from './generated/mistica-icons/icon-tag-pound-light';
-export {default as IconTagPoundregular} from './generated/mistica-icons/icon-tag-poundregular';
+export {default as IconTagPoundRegular} from './generated/mistica-icons/icon-tag-pound-regular';
 export {default as IconTagRegular} from './generated/mistica-icons/icon-tag-regular';
 export {default as IconTalkFilled} from './generated/mistica-icons/icon-talk-filled';
 export {default as IconTalkLight} from './generated/mistica-icons/icon-talk-light';
