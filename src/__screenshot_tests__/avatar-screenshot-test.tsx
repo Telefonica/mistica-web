@@ -56,3 +56,25 @@ test.each(sizes)('Avatar with custom icon', async (size) => {
     const element = await screen.findByTestId('avatar');
     expect(await element.screenshot()).toMatchImageSnapshot();
 });
+
+test('Avatar inverse with initials', async () => {
+    await openStoryPage({
+        id: 'components-avatar--default',
+        device: 'MOBILE_IOS',
+        args: {initials: 'PL', size: 64, url: '', inverse: 'true'},
+    });
+
+    const element = await screen.findByTestId('avatar');
+    expect(await element.screenshot()).toMatchImageSnapshot();
+});
+
+test('Avatar inverse with icon', async () => {
+    await openStoryPage({
+        id: 'components-avatar--default',
+        device: 'MOBILE_IOS',
+        args: {initials: '', size: 64, url: '', icon: 'IconFireRegular', inverse: 'true'},
+    });
+
+    const element = await screen.findByTestId('avatar');
+    expect(await element.screenshot()).toMatchImageSnapshot();
+});

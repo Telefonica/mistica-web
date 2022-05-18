@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Avatar, IconBrainRegular, IconFireRegular, IconStarFilled} from '..';
+import {Avatar, IconBrainRegular, IconFireRegular, IconStarFilled, ThemeVariant, useTheme} from '..';
 
 const badgeOptions = ['true', 'false', 'undefined', '0', '1', '5', '10'];
 
@@ -29,17 +29,34 @@ type Args = {
     initials: string;
     icon: string;
     badge: string;
+    inverse: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({size, initials, badge, url, icon}) => {
+export const Default: StoryComponent<Args> = ({size, initials, badge, url, icon, inverse}) => {
+    const {colors} = useTheme();
     // eslint-disable-next-line no-eval
     const badgeValue = badgeOptions.includes(badge) ? eval(badge) : undefined;
     const Icon = {IconStarFilled, IconFireRegular, IconBrainRegular}[icon];
 
     return (
-        <div style={{padding: 16, width: 'fit-content'}} data-testid="avatar">
-            <Avatar size={size} initials={initials} badge={badgeValue} url={url || undefined} Icon={Icon} />
-        </div>
+        <ThemeVariant isInverse={inverse}>
+            <div
+                style={{
+                    padding: 16,
+                    width: 'fit-content',
+                    background: inverse ? colors.backgroundBrand : colors.background,
+                }}
+                data-testid="avatar"
+            >
+                <Avatar
+                    size={size}
+                    initials={initials}
+                    badge={badgeValue}
+                    url={url || undefined}
+                    Icon={Icon}
+                />
+            </div>
+        </ThemeVariant>
     );
 };
 
@@ -51,4 +68,5 @@ Default.args = {
     initials: 'PL',
     icon: 'undefined',
     badge: '5',
+    inverse: false,
 };
