@@ -1,3 +1,13 @@
+# [11.8.0](https://github.com/Telefonica/mistica-web/compare/v11.7.0...v11.8.0) (2022-05-18)
+
+
+### Features
+
+* **Image:** expose onError and onLoad. Avoid broken icon  ([#478](https://github.com/Telefonica/mistica-web/issues/478)) ([2002741](https://github.com/Telefonica/mistica-web/commit/20027410e70e14fcd25a7227ae7cd1394190f937))
+* **PasswordField:** use mistica icon for show/hide password ([#475](https://github.com/Telefonica/mistica-web/issues/475)) ([491072f](https://github.com/Telefonica/mistica-web/commit/491072f316a9b98bf32b68bafe2c26c394210c23))
+* **Title1,Title2:** new components ([#477](https://github.com/Telefonica/mistica-web/issues/477)) ([9684e4f](https://github.com/Telefonica/mistica-web/commit/9684e4f954c640dabb6292f0df158209e1548d0c))
+* **trackingEvent:** add support for new GA4 event format ([#480](https://github.com/Telefonica/mistica-web/issues/480)) ([8e3851a](https://github.com/Telefonica/mistica-web/commit/8e3851a93d87a77375d93e326fe08178a419cd29))
+
 # [11.7.0](https://github.com/Telefonica/mistica-web/compare/v11.6.0...v11.7.0) (2022-04-28)
 
 
