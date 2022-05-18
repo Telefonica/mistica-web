@@ -1,12 +1,16 @@
 import * as React from 'react';
 import {Avatar, IconBrainRegular, IconFireRegular, IconStarFilled} from '..';
 
+const badgeOptions = ['true', 'false', 'undefined', '0', '1', '5', '10'];
+
 export default {
     title: 'Components/Avatar',
     argTypes: {
-        size: {control: {type: 'range', min: 24, max: 128, step: 4}},
+        size: {
+            control: {type: 'range', min: 24, max: 128, step: 4},
+        },
         badge: {
-            options: ['true', 'false', 'undefined', '0', '1', '5', '10'],
+            options: badgeOptions,
             control: {type: 'select'},
         },
         icon: {
@@ -29,7 +33,7 @@ type Args = {
 
 export const Default: StoryComponent<Args> = ({size, initials, badge, url, icon}) => {
     // eslint-disable-next-line no-eval
-    const badgeValue = eval(badge);
+    const badgeValue = badgeOptions.includes(badge) ? eval(badge) : undefined;
     const Icon = {IconStarFilled, IconFireRegular, IconBrainRegular}[icon];
 
     return (
