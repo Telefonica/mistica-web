@@ -1140,6 +1140,34 @@ const carouselSnippets = [
     },
 ];
 
+const avatarSnippets = [
+    {
+        group: 'Avatar',
+        name: 'Avatar with badge',
+        code: `<Avatar size={64} url="https://i.imgur.com/nRBEMMV.png" badge />`,
+    },
+    {
+        group: 'Avatar',
+        name: 'Avatar with numeric badge',
+        code: `<Avatar size={64} url="https://i.imgur.com/nRBEMMV.png" badge={5} />`,
+    },
+    {
+        group: 'Avatar',
+        name: 'Avatar with initials',
+        code: `<Avatar size={64} initials="PL" />`,
+    },
+    {
+        group: 'Avatar',
+        name: 'Avatar with icon',
+        code: `<Avatar size={64} />`,
+    },
+    {
+        group: 'Avatar',
+        name: 'Avatar with custom icon',
+        code: `<Avatar size={64} Icon={IconFireRegular} />`,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -1266,4 +1294,5 @@ export default [
         code: `<Image src="https://i.imgur.com/aEVtKsE.jpg" aspectRatio="16:9" />`,
     },
     ...carouselSnippets,
+    ...avatarSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

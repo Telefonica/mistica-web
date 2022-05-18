@@ -9,8 +9,8 @@ const useStyles = createUseStyles((theme) => ({
     },
     badge: {
         position: ({hasChildren}) => (hasChildren ? 'absolute' : 'static'),
-        top: -2,
-        right: -6,
+        top: ({top}) => top ?? -2,
+        right: ({right}) => right ?? -6,
         width: 8,
         height: 8,
         background: theme.colors.badge,
@@ -39,6 +39,8 @@ const useStyles = createUseStyles((theme) => ({
 type Props = {
     children?: React.ReactNode;
     value?: number;
+    right?: number;
+    top?: number;
 };
 
 /**
@@ -51,9 +53,9 @@ type Props = {
  *   </IconButton>
  * </Badge>
  */
-const Badge: React.FC<Props> = ({children, value}) => {
+const Badge: React.FC<Props> = ({children, value, right = 0, top = 0}) => {
     const hasChildren = !!children;
-    const classes = useStyles({hasChildren});
+    const classes = useStyles({hasChildren, right, top});
 
     if (children && value === 0) {
         return <>{children}</>;
