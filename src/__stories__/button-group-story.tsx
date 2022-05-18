@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ButtonLink, SectionTitle, Stack} from '..';
+import {ButtonLink, Title1, Stack} from '..';
 import {ButtonPrimary, ButtonSecondary} from '../button';
 import ButtonGroup from '../button-group';
 
@@ -25,29 +25,29 @@ export const Default: StoryComponent<Args> = ({primaryButtonText, secondaryButto
     );
     return (
         <Stack space={16}>
-            <SectionTitle as="h2">One Button</SectionTitle>
+            <Title1 as="h2">One Button</Title1>
             <ButtonGroup primaryButton={primaryButton}></ButtonGroup>
 
-            <SectionTitle as="h2">Two Buttons</SectionTitle>
+            <Title1 as="h2">Two Buttons</Title1>
             <ButtonGroup primaryButton={primaryButton} secondaryButton={secondaryButton}></ButtonGroup>
 
-            <SectionTitle as="h2">Primary Button and Link</SectionTitle>
+            <Title1 as="h2">Primary Button and Link</Title1>
             <ButtonGroup primaryButton={primaryButton} link={buttonLink}></ButtonGroup>
 
-            <SectionTitle as="h2">Secondary Button and Link</SectionTitle>
+            <Title1 as="h2">Secondary Button and Link</Title1>
             <ButtonGroup secondaryButton={secondaryButton} link={buttonLink}></ButtonGroup>
 
-            <SectionTitle as="h2">only Link</SectionTitle>
+            <Title1 as="h2">only Link</Title1>
             <ButtonGroup link={buttonLink}></ButtonGroup>
 
-            <SectionTitle as="h2">Two Buttons and Link</SectionTitle>
+            <Title1 as="h2">Two Buttons and Link</Title1>
             <ButtonGroup
                 primaryButton={primaryButton}
                 secondaryButton={secondaryButton}
                 link={buttonLink}
             ></ButtonGroup>
 
-            <SectionTitle as="h2">Different-length Buttons</SectionTitle>
+            <Title1 as="h2">Different-length Buttons</Title1>
             <ButtonGroup primaryButton={longButton} secondaryButton={secondaryButton}></ButtonGroup>
         </Stack>
     );

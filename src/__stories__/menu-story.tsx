@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Touchable, Menu, Stack, Inline, Text3, Box, Checkbox, IconKebabMenuLight} from '..';
-import SectionTitle from '../section-title';
+import Title1 from '../section-title';
 
 export default {
     title: 'Components/Controls/Menu',
@@ -44,7 +44,7 @@ export const Default: StoryComponent<MenuArgs> = ({position}) => {
     };
     return (
         <Stack space={16}>
-            <SectionTitle>Menu</SectionTitle>
+            <Title1>Menu</Title1>
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <Menu
                     position={position}

@@ -20,7 +20,7 @@ import {
     Text1,
     ButtonPrimary,
     Form,
-    SectionTitle,
+    Title1,
     Stack,
 } from '..';
 import {inspect} from 'util';
@@ -709,7 +709,7 @@ export const DateTimeLimits: StoryComponent = () => {
 
     return (
         <Form onSubmit={() => alert({message: 'Success!'})}>
-            <SectionTitle>Date Field with range</SectionTitle>
+            <Title1>Date Field with range</Title1>
             <Stack space={16}>
                 <DateField
                     name="date"
@@ -722,7 +722,7 @@ export const DateTimeLimits: StoryComponent = () => {
                 <Text1 regular>Selected value: {dateValue}</Text1>
             </Stack>
 
-            <SectionTitle>DateTime Field with range</SectionTitle>
+            <Title1>DateTime Field with range</Title1>
             <Stack space={16}>
                 <DateTimeField
                     name="datetime"
