@@ -53,7 +53,7 @@ type Props = {
  *   </IconButton>
  * </Badge>
  */
-const Badge: React.FC<Props> = ({children, value, right = 0, top = 0}) => {
+const Badge: React.FC<Props> = ({children, value, right, top}) => {
     const hasChildren = !!children;
     const classes = useStyles({hasChildren, right, top});
 
