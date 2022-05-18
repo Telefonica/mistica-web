@@ -24,7 +24,7 @@ test.each(sizes)('Avatar with simple badge. Size: %d', async (size) => {
     expect(await element.screenshot()).toMatchImageSnapshot();
 });
 
-test.each(sizes)('Avatar with initials', async (size) => {
+test.each(sizes)('Avatar with initials. Size: %d', async (size) => {
     await openStoryPage({
         id: 'components-avatar--default',
         device: 'MOBILE_IOS',
@@ -35,7 +35,7 @@ test.each(sizes)('Avatar with initials', async (size) => {
     expect(await element.screenshot()).toMatchImageSnapshot();
 });
 
-test.each(sizes)('Avatar with default icon', async (size) => {
+test.each(sizes)('Avatar with default icon. Size: %d', async (size) => {
     await openStoryPage({
         id: 'components-avatar--default',
         device: 'MOBILE_IOS',
@@ -46,7 +46,7 @@ test.each(sizes)('Avatar with default icon', async (size) => {
     expect(await element.screenshot()).toMatchImageSnapshot();
 });
 
-test.each(sizes)('Avatar with custom icon', async (size) => {
+test.each(sizes)('Avatar with custom icon. Size: %d', async (size) => {
     await openStoryPage({
         id: 'components-avatar--default',
         device: 'MOBILE_IOS',
