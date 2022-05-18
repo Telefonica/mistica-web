@@ -3,7 +3,8 @@ import {Text1, Text2, Text5} from './text';
 import {useTheme} from './hooks';
 import Inline from './inline';
 import Box from './box';
-import {DataAttributes} from './utils/types';
+
+import type {DataAttributes} from './utils/types';
 
 type TitleLayoutProps = {
     title: React.ReactElement;

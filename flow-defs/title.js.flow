@@ -1,11 +1,17 @@
 // @flow
 
 import * as React from "react";
+import type { DataAttributes } from "./utils/types";
 declare type TitleProps = {
   children: React.Node,
   id?: string,
   right?: React.Node,
   as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6",
+
+  /**
+   * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
+   */
+  dataAttributes?: DataAttributes,
 };
 declare export var Title1: (x: TitleProps) => React.Element<any>;
 declare export var Title2: (x: TitleProps) => React.Element<any>;
