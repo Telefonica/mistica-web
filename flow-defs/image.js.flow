@@ -28,6 +28,8 @@ export type ImageProps = {
  alt?: string,
  dataAttributes?: DataAttributes,
  noBorderRadius?: boolean,
+ onError?: (event: SyntheticEvent<any>) => void,
+ onLoad?: (event: SyntheticEvent<any>) => void,
 };
 declare var Image: React.AbstractComponent<ImageProps, HTMLImageElement>;
 declare export default typeof Image;
