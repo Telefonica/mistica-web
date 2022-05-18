@@ -96,10 +96,10 @@ const Avatar = ({
 
     return (
         <Badge value={badgeValue} top={badgePosition} right={badgePosition}>
-            <div className={classes.avatar} aria-label={ariaLabel ?? initials}>
+            <div className={classes.avatar} role="img" aria-label={ariaLabel ?? initials}>
                 {shouldRenderImage ? (
                     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-                    <img src={url} className={classes.image} onError={() => setImgLoadError(true)} />
+                    <img src={url} className={classes.image} onError={() => setImgLoadError(true)} alt="" />
                 ) : (
                     renderText(size, letters) || <Icon size={iconSize} color="currentColor" />
                 )}
