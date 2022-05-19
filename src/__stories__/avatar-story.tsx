@@ -58,6 +58,9 @@ export const Default: StoryComponent<Args> = ({
                     padding: 16,
                     width: 'fit-content',
                     background: inverse ? colors.backgroundBrand : colors.background,
+                    // prevent line-height from affecting the height of the container;
+                    // happens when changing the base font size
+                    lineHeight: 0,
                 }}
                 data-testid="avatar"
             >
