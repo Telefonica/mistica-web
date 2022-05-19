@@ -38,7 +38,7 @@ const getBadgeDistance = (size: number, badge?: boolean | number): number => {
         return 0;
     }
     const radius = size / 2;
-    const badgeOffset = badge === true ? 6 : 12; // badge=true renders a small circle
+    const badgeOffset = badge === true ? 6 : 10; // badge=true renders a small circle
     return radius * (1 - Math.sin(Math.PI / 4)) - badgeOffset;
 };
 
