@@ -37,7 +37,11 @@ export const Default: StoryComponent<Args> = ({isInverse}) => {
                         </Badge>
                     </NavigationBarAction>
                     <NavigationBarAction onPress={() => {}} aria-label="Open profile">
-                        <Avatar src="https://i.pravatar.cc/100?img=31" size={isDesktopOrBigger ? 32 : 24} />
+                        <Avatar
+                            src="https://i.pravatar.cc/100?img=31"
+                            size={isDesktopOrBigger ? 32 : 24}
+                            aria-label="Avatar"
+                        />
                         {isDesktopOrBigger && 'María López Serrano'}
                     </NavigationBarAction>
                 </NavigationBarActionGroup>
