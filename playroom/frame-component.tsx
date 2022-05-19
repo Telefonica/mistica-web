@@ -31,7 +31,7 @@ const App: React.FC = ({children}) => {
 
         ${isModalOpen ? 'body {overflow-y: hidden}' : ''}
 
-        *[class='n770de4e'] {
+        *[class^='_'] {
             display: none;
         }
     `;
