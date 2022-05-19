@@ -30,7 +30,7 @@ const useStyles = createUseStyles(() => ({
 /**
  * Returns a right/top distance for the badge.
  * The badge will be placed over the avatar's edge
- * This is calculated using the `radius * (1 - sin(90deg))` distance minus a
+ * This is calculated using the `radius * (1 - sin(45deg))` distance minus a
  * constant offset that depends on the badge size
  */
 const getBadgeDistance = (size: number, badge?: boolean | number): number => {
