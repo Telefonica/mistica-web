@@ -28,7 +28,7 @@ test.each(sizes)('Avatar with initials. Size: %d', async (size) => {
     await openStoryPage({
         id: 'components-avatar--default',
         device: 'MOBILE_IOS',
-        args: {initials: 'PL', size, url: ''},
+        args: {initials: 'PL', size, src: ''},
     });
 
     const element = await screen.findByTestId('avatar');
@@ -39,7 +39,7 @@ test.each(sizes)('Avatar with default icon. Size: %d', async (size) => {
     await openStoryPage({
         id: 'components-avatar--default',
         device: 'MOBILE_IOS',
-        args: {initials: '', size, url: ''},
+        args: {initials: '', size, src: ''},
     });
 
     const element = await screen.findByTestId('avatar');
@@ -50,7 +50,7 @@ test.each(sizes)('Avatar with custom icon. Size: %d', async (size) => {
     await openStoryPage({
         id: 'components-avatar--default',
         device: 'MOBILE_IOS',
-        args: {initials: '', size, url: '', icon: 'IconFireRegular'},
+        args: {initials: '', size, src: '', icon: 'IconFireRegular'},
     });
 
     const element = await screen.findByTestId('avatar');
@@ -61,7 +61,7 @@ test('Avatar inverse with initials', async () => {
     await openStoryPage({
         id: 'components-avatar--default',
         device: 'MOBILE_IOS',
-        args: {initials: 'PL', size: 64, url: '', inverse: 'true'},
+        args: {initials: 'PL', size: 64, src: '', inverse: 'true'},
     });
 
     const element = await screen.findByTestId('avatar');
@@ -72,7 +72,7 @@ test('Avatar inverse with icon', async () => {
     await openStoryPage({
         id: 'components-avatar--default',
         device: 'MOBILE_IOS',
-        args: {initials: '', size: 64, url: '', icon: 'IconFireRegular', inverse: 'true'},
+        args: {initials: '', size: 64, src: '', icon: 'IconFireRegular', inverse: 'true'},
     });
 
     const element = await screen.findByTestId('avatar');
