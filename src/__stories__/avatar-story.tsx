@@ -32,6 +32,7 @@ type Args = {
     icon: string;
     badge: string;
     inverse: boolean;
+    ariaLabel: string;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -43,6 +44,7 @@ export const Default: StoryComponent<Args> = ({
     inverse,
     hideImage,
     hideInitials,
+    ariaLabel,
 }) => {
     const {colors} = useTheme();
     // eslint-disable-next-line no-eval
@@ -65,6 +67,7 @@ export const Default: StoryComponent<Args> = ({
                     initials={hideInitials ? undefined : initials}
                     badge={badgeValue}
                     Icon={Icon}
+                    aria-label={ariaLabel}
                 />
             </div>
         </ThemeVariant>
@@ -82,4 +85,5 @@ Default.args = {
     icon: 'undefined',
     badge: '5',
     inverse: false,
+    ariaLabel: 'Avatar',
 };

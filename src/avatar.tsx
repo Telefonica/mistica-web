@@ -4,7 +4,7 @@ import Badge from './badge';
 import IconUserAccountRegular from './generated/mistica-icons/icon-user-account-regular';
 import {useTheme} from './hooks';
 import {createUseStyles} from './jss';
-import {Text2, Text3, Text4} from './text';
+import {Text} from './text';
 import {useIsInverseVariant} from './theme-variant-context';
 
 import type {IconProps} from './utils/types';
@@ -54,18 +54,22 @@ type AvatarProps = {
     'aria-label'?: string;
 };
 
+/**
+ * Not using TextPresets here because we don't want to scale the avatar text with the device settings
+ */
 const renderText = (size: number, text: string): JSX.Element | null => {
     if (!text) {
         return null;
     }
-    const props = {regular: true, transform: 'uppercase', color: 'currentColor'} as const;
+    let fontSize;
     if (size <= 40) {
-        return <Text2 {...props}>{text}</Text2>;
+        fontSize = 14;
+    } else if (size <= 64) {
+        fontSize = 16;
+    } else {
+        fontSize = 18;
     }
-    if (size <= 64) {
-        return <Text3 {...props}>{text}</Text3>;
-    }
-    return <Text4 {...props}>{text}</Text4>;
+    return <span style={{fontSize, textTransform: 'uppercase'}}>{text}</span>;
 };
 
 const Avatar = ({
