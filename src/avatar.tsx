@@ -102,7 +102,6 @@ const Avatar = ({
         <Badge value={badgeValue} top={badgePosition} right={badgePosition}>
             <div className={classes.avatar} role="img" aria-label={ariaLabel ?? initials}>
                 {shouldRenderImage ? (
-                    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
                     <img
                         src={src}
                         className={classes.image}
