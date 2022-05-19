@@ -40,7 +40,7 @@ export const Default: StoryComponent<Args> = ({isInverse}) => {
                         <Avatar
                             src="https://i.pravatar.cc/100?img=31"
                             size={isDesktopOrBigger ? 32 : 24}
-                            aria-label="Avatar"
+                            initials="ML"
                         />
                         {isDesktopOrBigger && 'María López Serrano'}
                     </NavigationBarAction>

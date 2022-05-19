@@ -84,7 +84,7 @@ const Avatar = ({
     const isInverse = useIsInverseVariant();
     const backgroundColor =
         props.backgroundColor ?? (isInverse ? colors.brandDark : colors.tagBackgroundActive);
-    const textColor = props.textColor ?? isInverse ? colors.textPrimaryInverse : colors.textTagActive;
+    const textColor = props.textColor ?? (isInverse ? colors.textPrimaryInverse : colors.textTagActive);
     const [imgLoadError, setImgLoadError] = React.useState(false);
     const classes = useStyles({textColor, backgroundColor, size});
 
