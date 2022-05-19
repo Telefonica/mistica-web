@@ -4,7 +4,7 @@ import * as React from "react";
 import type { IconProps } from "./utils/types";
 declare type AvatarProps = {
   size: number,
-  url?: string,
+  src?: string,
   initials?: string,
   textColor?: string,
   backgroundColor?: string,

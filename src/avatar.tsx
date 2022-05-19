@@ -44,7 +44,7 @@ const getBadgeDistance = (size: number, badge?: boolean | number): number => {
 
 type AvatarProps = {
     size: number;
-    url?: string;
+    src?: string;
     initials?: string;
     textColor?: string;
     backgroundColor?: string;
@@ -73,7 +73,7 @@ const renderText = (size: number, text: string): JSX.Element | null => {
 
 const Avatar = ({
     size,
-    url,
+    src,
     Icon = IconUserAccountRegular,
     badge,
     initials = '',
@@ -90,12 +90,12 @@ const Avatar = ({
 
     React.useEffect(() => {
         setImgLoadError(false); // reset error state when url changes
-    }, [url]);
+    }, [src]);
 
     const letters = initials.trim().slice(0, 2);
     const badgePosition = getBadgeDistance(size, badge);
     const badgeValue = badge === true ? undefined : badge || 0;
-    const shouldRenderImage = !!url && !imgLoadError;
+    const shouldRenderImage = !!src && !imgLoadError;
     const iconSize = size <= 40 ? 16 : 24;
 
     return (
@@ -104,7 +104,7 @@ const Avatar = ({
                 {shouldRenderImage ? (
                     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
                     <img
-                        src={url}
+                        src={src}
                         className={classes.image}
                         onError={() => setImgLoadError(true)}
                         role="none"

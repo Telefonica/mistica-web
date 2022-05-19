@@ -26,7 +26,7 @@ export default {
 type Args = {
     size: number;
     hideImage: boolean;
-    url: string;
+    src: string;
     hideInitials: boolean;
     initials: string;
     icon: string;
@@ -39,7 +39,7 @@ export const Default: StoryComponent<Args> = ({
     size,
     initials,
     badge,
-    url,
+    src,
     icon,
     inverse,
     hideImage,
@@ -63,7 +63,7 @@ export const Default: StoryComponent<Args> = ({
             >
                 <Avatar
                     size={size}
-                    url={hideImage ? undefined : url || undefined}
+                    src={hideImage ? undefined : src || undefined}
                     initials={hideInitials ? undefined : initials}
                     badge={badgeValue}
                     Icon={Icon}
@@ -79,7 +79,7 @@ Default.storyName = 'Avatar';
 Default.args = {
     size: 64,
     hideImage: false,
-    url: 'https://i.imgur.com/nRBEMMV.png',
+    src: 'https://i.imgur.com/nRBEMMV.png',
     hideInitials: false,
     initials: 'PL',
     icon: 'undefined',

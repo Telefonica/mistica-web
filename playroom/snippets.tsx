@@ -1152,12 +1152,12 @@ const avatarSnippets = [
     {
         group: 'Avatar',
         name: 'Avatar with badge',
-        code: `<Avatar size={64} url="https://i.imgur.com/nRBEMMV.png" badge />`,
+        code: `<Avatar size={64} src="https://i.imgur.com/nRBEMMV.png" badge />`,
     },
     {
         group: 'Avatar',
         name: 'Avatar with numeric badge',
-        code: `<Avatar size={64} url="https://i.imgur.com/nRBEMMV.png" badge={5} />`,
+        code: `<Avatar size={64} src="https://i.imgur.com/nRBEMMV.png" badge={5} />`,
     },
     {
         group: 'Avatar',
