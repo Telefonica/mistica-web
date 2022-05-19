@@ -1,10 +1,6 @@
 // @flow
 
 import * as React from "react";
-declare type AvatarPlaceholderProps = {
-  size?: string | number,
-};
-declare export var AvatarPlaceholder: React.ComponentType<AvatarPlaceholderProps>;
 declare type PlaceholderProps = {
   width?: string | number,
   height?: string | number,

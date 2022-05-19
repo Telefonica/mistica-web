@@ -6,7 +6,8 @@ import {useTheme} from './hooks';
 import {createUseStyles} from './jss';
 import {Text2, Text3, Text4} from './text';
 import {useIsInverseVariant} from './theme-variant-context';
-import {IconProps} from './utils/types';
+
+import type {IconProps} from './utils/types';
 
 const useStyles = createUseStyles(() => ({
     avatar: {
