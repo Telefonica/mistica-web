@@ -99,7 +99,12 @@ const Avatar = ({
             <div className={classes.avatar} role="img" aria-label={ariaLabel ?? initials}>
                 {shouldRenderImage ? (
                     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-                    <img src={url} className={classes.image} onError={() => setImgLoadError(true)} alt="" />
+                    <img
+                        src={url}
+                        className={classes.image}
+                        onError={() => setImgLoadError(true)}
+                        role="none"
+                    />
                 ) : (
                     renderText(size, letters) || <Icon size={iconSize} color="currentColor" />
                 )}

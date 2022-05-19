@@ -25,14 +25,25 @@ export default {
 
 type Args = {
     size: number;
+    hideImage: boolean;
     url: string;
+    hideInitials: boolean;
     initials: string;
     icon: string;
     badge: string;
     inverse: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({size, initials, badge, url, icon, inverse}) => {
+export const Default: StoryComponent<Args> = ({
+    size,
+    initials,
+    badge,
+    url,
+    icon,
+    inverse,
+    hideImage,
+    hideInitials,
+}) => {
     const {colors} = useTheme();
     // eslint-disable-next-line no-eval
     const badgeValue = badgeOptions.includes(badge) ? eval(badge) : undefined;
@@ -50,9 +61,9 @@ export const Default: StoryComponent<Args> = ({size, initials, badge, url, icon,
             >
                 <Avatar
                     size={size}
-                    initials={initials}
+                    url={hideImage ? undefined : url || undefined}
+                    initials={hideInitials ? undefined : initials}
                     badge={badgeValue}
-                    url={url || undefined}
                     Icon={Icon}
                 />
             </div>
@@ -64,7 +75,9 @@ Default.storyName = 'Avatar';
 
 Default.args = {
     size: 64,
+    hideImage: false,
     url: 'https://i.imgur.com/nRBEMMV.png',
+    hideInitials: false,
     initials: 'PL',
     icon: 'undefined',
     badge: '5',
