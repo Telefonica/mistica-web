@@ -4,7 +4,6 @@ import Badge from './badge';
 import IconUserAccountRegular from './generated/mistica-icons/icon-user-account-regular';
 import {useTheme} from './hooks';
 import {createUseStyles} from './jss';
-import {Text} from './text';
 import {useIsInverseVariant} from './theme-variant-context';
 
 import type {IconProps} from './utils/types';
