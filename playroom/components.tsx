@@ -37,8 +37,9 @@ const useControlsStyles = createUseStyles((theme) => ({
     },
     mobileControls: {
         alignItems: 'center',
-        paddingRight: 8,
-        gap: '8px',
+
+        gap: '16px',
+        paddingRight: 16,
         '& > :last-child': {flexShrink: 0},
     },
     desktopControls: {
@@ -47,7 +48,7 @@ const useControlsStyles = createUseStyles((theme) => ({
     },
     tabs: {
         flexBasis: '100%',
-        marginRight: 72,
+        marginRight: 104,
         whiteSpace: 'nowrap',
     },
     desktopControlItem: {
@@ -55,7 +56,6 @@ const useControlsStyles = createUseStyles((theme) => ({
         flexShrink: 0,
         display: 'flex',
         alignItems: 'center',
-        borderLeft: `1px solid ${theme.colors.divider}`,
     },
     checkbox: {
         display: 'flex',
@@ -162,7 +162,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                     }}
                     render={({controlElement, labelId}) => (
                         <div className={classes.checkbox} id={labelId}>
-                            {controlElement} {capitalize(alternativeColorScheme)} mode
+                            {controlElement}
                         </div>
                     )}
                 />
@@ -173,13 +173,13 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                         onChange={(checked) => onOsChange(checked ? 'ios' : 'android')}
                         render={({controlElement, labelId}) => (
                             <div className={classes.checkbox} id={labelId}>
-                                {controlElement} iOS
+                                {controlElement}
                             </div>
                         )}
                     />
                 )}
                 <IconButton aria-label="Edit in Playroom" size={32} onPress={onEditStoryPress}>
-                    <IconCodeFilled size={32} color={colors.neutralMedium} />
+                    <IconCodeFilled size={32} color={colors.neutralHigh} />
                 </IconButton>
             </div>
         );
@@ -209,7 +209,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                         }}
                         render={({controlElement, labelId}) => (
                             <div className={classes.checkbox} id={labelId}>
-                                {controlElement} {capitalize(alternativeColorScheme)} mode
+                                {controlElement}
                             </div>
                         )}
                     />
@@ -222,7 +222,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                             onChange={(checked) => onOsChange(checked ? 'ios' : 'android')}
                             render={({controlElement, labelId}) => (
                                 <div className={classes.checkbox} id={labelId}>
-                                    {controlElement} iOS
+                                    {controlElement}
                                 </div>
                             )}
                         />
@@ -230,7 +230,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                 )}
                 <div className={classes.desktopControlItem}>
                     <IconButton aria-label="Edit in Playroom" size={32} onPress={onEditStoryPress}>
-                        <IconCodeFilled size={32} color={colors.neutralMedium} />
+                        <IconCodeFilled size={32} color={colors.neutralHigh} />
                     </IconButton>
                 </div>
             </div>
@@ -312,6 +312,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
         };
     }, [os, skinName]);
 
+    const {isTabletOrBigger} = useScreenSize();
     const controls = (
         <ThemeContextProvider theme={theme}>
             <PreviewToolsControls
