@@ -52,7 +52,7 @@ const useControlsStyles = createUseStyles((theme) => ({
     },
     tabs: {
         flexBasis: '100%',
-        marginRight: 180,
+        marginRight: 150,
         whiteSpace: 'nowrap',
     },
     desktopControlItem: {
