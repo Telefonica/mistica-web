@@ -20,12 +20,9 @@ import IconAppleOn from '../src/icons/icon-apple-on';
 import IconAppleOff from '../src/icons/icon-apple-off';
 
 import type {ThemeConfig, ColorScheme, SkinName} from '../src';
-import overscrollColorStory from '../src/__stories__/overscroll-color-story';
 
 export * from '../src';
 export {default as ButtonGroup} from '../src/button-group';
-
-const capitalize = (str: string): string => str.charAt(0).toUpperCase() + str.slice(1);
 
 const useControlsStyles = createUseStyles((theme) => ({
     controls: {
