@@ -14,10 +14,10 @@ import {
 } from '../src';
 import {Movistar, Vivo, O2, Telefonica, Blau} from './themes';
 import {useOverrideTheme} from './frame-component';
-import IconSun from '../src/icons/icon-sun';
-import IconMoon from '../src/icons/icon-moon';
-import IconAppleOn from '../src/icons/icon-apple-on';
-import IconAppleOff from '../src/icons/icon-apple-off';
+import IconSun from './icons/icon-sun';
+import IconMoon from './icons/icon-moon';
+import IconAppleOn from './icons/icon-apple-on';
+import IconAppleOff from './icons/icon-apple-off';
 
 import type {ThemeConfig, ColorScheme, SkinName} from '../src';
 

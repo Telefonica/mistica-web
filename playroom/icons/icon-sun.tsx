@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useTheme} from '../hooks';
+import {useTheme} from '../../src/hooks';
 
 type Props = {
     size?: number;
