@@ -300,7 +300,6 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
         };
     }, [os, skinName]);
 
-    const {isTabletOrBigger} = useScreenSize();
     const controls = (
         <ThemeContextProvider theme={theme}>
             <PreviewToolsControls
