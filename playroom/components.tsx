@@ -18,7 +18,6 @@ import IconSun from '../src/icons/icon-sun';
 import IconMoon from '../src/icons/icon-moon';
 import IconAppleOn from '../src/icons/icon-apple-on';
 import IconAppleOff from '../src/icons/icon-apple-off';
-import IconMovistar from '../src/icons/icon-movistar';
 
 import type {ThemeConfig, ColorScheme, SkinName} from '../src';
 import overscrollColorStory from '../src/__stories__/overscroll-color-story';
@@ -96,30 +95,25 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-const themesMap: {[skinName: string]: {themeConfig: ThemeConfig; text: string; icon: React.ReactElement}} = {
+const themesMap: {[skinName: string]: {themeConfig: ThemeConfig; text: string}} = {
     Movistar: {
         text: 'Movistar',
-        icon: <IconMovistar />,
         themeConfig: Movistar,
     },
     Vivo: {
         text: 'Vivo',
-        icon: <IconMovistar />,
         themeConfig: Vivo,
     },
     O2: {
         text: 'O2',
-        icon: <IconMovistar />,
         themeConfig: O2,
     },
     Telefonica: {
         text: 'Telefónica',
-        icon: <IconMovistar />,
         themeConfig: Telefonica,
     },
     Blau: {
         text: 'Blau',
-        icon: <IconMovistar />,
         themeConfig: Blau,
     },
 };
