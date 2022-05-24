@@ -42,9 +42,8 @@ const useControlsStyles = createUseStyles((theme) => ({
     },
     mobileControls: {
         alignItems: 'center',
-
-        gap: '16px',
         paddingRight: 16,
+        gap: '16px',
         '& > :last-child': {flexShrink: 0},
     },
     desktopControls: {
