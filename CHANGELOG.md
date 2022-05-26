@@ -1,3 +1,15 @@
+# [11.9.0](https://github.com/Telefonica/mistica-web/compare/v11.8.0...v11.9.0) (2022-05-26)
+
+
+### Bug Fixes
+
+* **Text:** word break in Safari ([#484](https://github.com/Telefonica/mistica-web/issues/484)) ([807255d](https://github.com/Telefonica/mistica-web/commit/807255d4682763c4131a0d836e158de1dbd9c25f))
+
+
+### Features
+
+* **Avatar:** new component ([#482](https://github.com/Telefonica/mistica-web/issues/482)) ([c0beee5](https://github.com/Telefonica/mistica-web/commit/c0beee519e6d2206c8198efbc9461a49970258b8))
+
 # [11.8.0](https://github.com/Telefonica/mistica-web/compare/v11.7.0...v11.8.0) (2022-05-18)
 
 
