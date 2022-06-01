@@ -9,7 +9,7 @@ const PrintEventFormat = ({prefix}: {prefix: string}) => {
     return <div>{`${prefix}: ${eventFormat}`}</div>;
 };
 
-test('', () => {
+test('TrackingConfig context providers', () => {
     render(
         <ThemeContextProvider
             theme={makeTheme({
