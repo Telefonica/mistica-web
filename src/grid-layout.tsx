@@ -99,14 +99,6 @@ type PropsTemplate5_4 = {
     children?: undefined;
 };
 
-type PropsTemplate4_4_4 = {
-    template: '4+4+4';
-    left: React.ReactNode;
-    center: React.ReactNode;
-    right: React.ReactNode;
-    children?: undefined;
-};
-
 type PropsTemplate10 = {
     template: '10';
     children: React.ReactNode;
@@ -118,8 +110,7 @@ type Props =
     | PropsTemplate8_4
     | PropsTemplate4_6
     | PropsTemplate5_4
-    | PropsTemplate10
-    | PropsTemplate4_4_4;
+    | PropsTemplate10;
 
 const GridLayout: React.FC<Props> = (props) => {
     const classes = useStyles();
@@ -171,16 +162,6 @@ const GridLayout: React.FC<Props> = (props) => {
                 <div className={classes.span1} />
                 <div className={classes.span10}>{props.children}</div>
                 <div className={classes.span1} />
-            </div>
-        );
-    }
-
-    if (props.template === '4+4+4') {
-        return (
-            <div className={classes.grid}>
-                <div className={classes.span4}>{props.left}</div>
-                <div className={classes.span4}>{props.center}</div>
-                <div className={classes.span4}>{props.right}</div>
             </div>
         );
     }
