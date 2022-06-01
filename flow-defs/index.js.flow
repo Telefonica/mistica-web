@@ -146,7 +146,8 @@ declare export {
   useWindowWidth,
   useIsInViewport,
 } from "./hooks";
-export type { ThemeConfig, ColorScheme } from "./theme";
+export type { ThemeConfig, ColorScheme, EventFormat } from "./theme";
+declare export { TrackingConfig, useTrackingConfig } from "./utils/analytics";
 declare export { useDocumentVisibility } from "./utils/document-visibility";
 declare export {
   ThemeVariant,
