@@ -10,7 +10,7 @@ export const eventActions = {linkTapped: 'link_tapped'} as const;
 // Google analytics 4
 export const eventNames = {userInteraction: 'user_interaction'} as const;
 
-const TrackingContext = React.createContext<{eventFormat?: EventFormat}>({eventFormat: undefined});
+const TrackingContext = React.createContext<Readonly<{eventFormat?: EventFormat}>>({});
 
 type TrackingProviderProps = {
     children: React.ReactNode;
