@@ -125,7 +125,7 @@ When you set the `eventFormat` to `'google-analytics-4'` and use the
 
 ### TrackingConfig
 
-You can also define an eventFormat for a specific part of your app, using the `TrackingConfig` context
+You can also define an `eventFormat` for a specific part of your app, using the `TrackingConfig` context
 provider:
 
 ```ts
