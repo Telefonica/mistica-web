@@ -18,7 +18,7 @@ const IconChevronRightRegular: React.FC<IconProps> = ({color, size = 24, childre
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M8.533 20a.508.508 0 01-.374-.173.583.583 0 010-.8L14.723 12 8.16 4.97a.583.583 0 010-.8.494.494 0 01.747 0l6.935 7.428a.583.583 0 010 .8l-6.935 7.428a.503.503 0 01-.373.173z"
+                    d="M8.2 18.733a.79.79 0 000 1.05.64.64 0 00.962 0l6.639-7.238A.777.777 0 0016 12a.777.777 0 00-.2-.545L9.163 4.217a.641.641 0 00-.963 0 .79.79 0 000 1.05L14.376 12l-6.177 6.733z"
                     fill={fillColor}
                 />
             </svg>
