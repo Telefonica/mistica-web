@@ -11,12 +11,12 @@ declare export var eventActions: {
 declare export var eventNames: {
   +userInteraction: "user_interaction",
 };
-declare type TrackingProviderProps = {
+declare type TrackingConfigProps = {
   children: React.Node,
-  eventFormat?: EventFormat,
+  eventFormat: EventFormat,
 };
-declare export var TrackingConfig: (x: TrackingProviderProps) => React.Node;
+declare export var TrackingConfig: (x: TrackingConfigProps) => React.Node;
 declare export var useTrackingConfig: () => {
-  eventFormat?: EventFormat,
+  eventFormat: EventFormat,
 };
 declare export {};
