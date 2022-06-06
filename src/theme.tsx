@@ -206,6 +206,7 @@ export const AnchorLink: LinkComponent = ({to, innerRef, ...props}) => (
 );
 
 export type ColorScheme = 'dark' | 'light' | 'auto';
+export type EventFormat = 'universal-analytics' | 'google-analytics-4';
 
 // This is the type expected by ThemeContextProvider theme prop.
 // This config is provided by the user of the lib
@@ -224,7 +225,7 @@ export type ThemeConfig = {
     texts?: Partial<ThemeTexts>;
     analytics?: {
         logEvent: (trackingEvent: TrackingEvent) => Promise<void>;
-        eventFormat?: 'universal-analytics' | 'google-analytics-4';
+        eventFormat?: EventFormat;
     };
     dimensions?: {headerMobileHeight: number};
     mediaQueries?: {
@@ -253,7 +254,7 @@ export type Theme = {
     texts: ThemeTexts;
     analytics: {
         logEvent: (trackingEvent: TrackingEvent) => Promise<void>;
-        eventFormat: 'universal-analytics' | 'google-analytics-4';
+        eventFormat: EventFormat;
     };
     dimensions: {headerMobileHeight: number};
     mq: {

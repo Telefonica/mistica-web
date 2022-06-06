@@ -119,7 +119,9 @@ export {
     useWindowWidth,
     useIsInViewport,
 } from './hooks';
-export type {ThemeConfig, ColorScheme} from './theme';
+export type {ThemeConfig, ColorScheme, EventFormat} from './theme';
+
+export {TrackingConfig, useTrackingConfig} from './utils/analytics';
 
 export {useDocumentVisibility} from './utils/document-visibility';
 
