@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {useTheme} from '../hooks';
 
 import type {EventFormat} from '../theme';
 
@@ -10,22 +9,19 @@ export const eventActions = {linkTapped: 'link_tapped'} as const;
 // Google analytics 4
 export const eventNames = {userInteraction: 'user_interaction'} as const;
 
-const TrackingContext = React.createContext<{eventFormat?: EventFormat}>({eventFormat: undefined});
+const TrackingContext = React.createContext<{eventFormat: EventFormat}>({
+    eventFormat: 'universal-analytics',
+});
 
-type TrackingProviderProps = {
+type TrackingConfigProps = {
     children: React.ReactNode;
-    eventFormat?: EventFormat;
+    eventFormat: EventFormat;
 };
 
-export const TrackingConfig = ({children, eventFormat}: TrackingProviderProps): JSX.Element => {
+export const TrackingConfig = ({children, eventFormat}: TrackingConfigProps): JSX.Element => {
     const value = React.useMemo(() => ({eventFormat}), [eventFormat]);
 
     return <TrackingContext.Provider value={value}>{children}</TrackingContext.Provider>;
 };
 
-export const useTrackingConfig = (): {eventFormat?: EventFormat} => {
-    const {analytics} = useTheme();
-    const trackingConfig = React.useContext(TrackingContext);
-
-    return {eventFormat: trackingConfig.eventFormat || analytics.eventFormat};
-};
+export const useTrackingConfig = (): {eventFormat: EventFormat} => React.useContext(TrackingContext);
