@@ -628,6 +628,22 @@ const cardSnippets: Array<Snippet> = [
             buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
         />`,
     },
+    {
+        group: 'Cards',
+        name: 'SnapCard',
+        code: `
+        <SnapCard
+            title="Title"
+            subtitle="Subtitle"
+            icon={
+              <Circle size={40} backgroundColor={colors.brand}>
+                  <ThemeVariant isInverse>
+                      <IconAcademicRegular />
+                  </ThemeVariant>
+              </Circle>
+            }
+        />`,
+    },
 ];
 
 const titlesSnippets: Array<Snippet> = [
