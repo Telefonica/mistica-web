@@ -30,3 +30,12 @@ test('SnapCard', async () => {
         customSnapshotIdentifier: 'snapcard-screenshot-test-desktop',
     });
 });
+
+test('SnapCard group', async () => {
+    const page = await openStoryPage({
+        id: 'components-cards-snapcard--group',
+    });
+
+    const image = await page.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
