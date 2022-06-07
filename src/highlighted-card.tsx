@@ -247,25 +247,3 @@ const HighlightedCard: React.FC<Props> = ({'aria-label': ariaLabel, ...props}) =
 };
 
 export default HighlightedCard;
-
-export const test1 = <HighlightedCard title="title" description="" />;
-export const test2 = <HighlightedCard title="title" description="" href="/" />;
-export const test3 = <HighlightedCard title="title" description="" to="/" />;
-export const test4 = <HighlightedCard title="title" description="" onPress={() => {}} />;
-// @ts-expect-error onPress and href can't be used together
-export const test5 = <HighlightedCard title="title" description="" onPress={() => {}} href="/" />;
-// @ts-expect-error onPress and to can't be used together
-export const test6 = <HighlightedCard title="title" description="" onPress={() => {}} to="/" />;
-// @ts-expect-error href and to can't be used together
-export const test7 = <HighlightedCard title="title" description="" href="/" to="/" />;
-
-export const test8 = (isTouchable: boolean): React.ReactNode => (
-    <HighlightedCard title="title" description="" href={isTouchable ? '/' : undefined} />
-);
-
-export const test9 = (isTouchable: boolean): React.ReactNode =>
-    isTouchable ? (
-        <HighlightedCard title="title" description="" href="/" />
-    ) : (
-        <HighlightedCard title="title" description="asdf" />
-    );

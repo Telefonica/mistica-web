@@ -1,15 +1,19 @@
 import * as React from 'react';
-import {IconAcademicRegular, useTheme, Circle, SnapCard, ResponsiveLayout, Stack, Text2, Inline} from '..';
+import {
+    IconAcademicRegular,
+    useTheme,
+    Circle,
+    SnapCard,
+    ResponsiveLayout,
+    Stack,
+    Text2,
+    Inline,
+    Box,
+} from '..';
 import {ThemeVariant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Cards/SnapCard',
-    argTypes: {
-        asset: {
-            options: ['icon in circle', 'icon', 'image', 'none'],
-            control: {type: 'select'},
-        },
-    },
 };
 
 type Args = {
@@ -62,40 +66,51 @@ Default.args = {
     subtitle: 'Some subtitle',
     touchable: true,
 };
+Default.argTypes = {
+    asset: {
+        options: ['icon in circle', 'icon', 'image', 'none'],
+        control: {type: 'select'},
+    },
+};
 
 export const Group: StoryComponent = () => {
     const {colors} = useTheme();
     return (
-        <ResponsiveLayout>
-            <Stack space={16}>
-                <Text2 regular>We can group multiple cards and they adjust to the same height:</Text2>
-                <Inline space={8} fullWidth>
-                    <SnapCard
-                        title="Title 1"
-                        subtitle="Subtitle"
-                        icon={
-                            <Circle size={40} backgroundColor={colors.brand}>
-                                <ThemeVariant isInverse>
-                                    <IconAcademicRegular />
-                                </ThemeVariant>
-                            </Circle>
-                        }
-                    />
-                    <SnapCard
-                        title="Title 2"
-                        icon={
-                            <Circle size={40} backgroundColor={colors.brand}>
-                                <ThemeVariant isInverse>
-                                    <IconAcademicRegular />
-                                </ThemeVariant>
-                            </Circle>
-                        }
-                    />
-                    <SnapCard title="Title 3" />
-                </Inline>
-            </Stack>
-        </ResponsiveLayout>
+        <Box paddingY={24}>
+            <ResponsiveLayout>
+                <Stack space={16}>
+                    <Text2 regular>We can group multiple cards and they adjust to the same height:</Text2>
+                    <Inline space={8} fullWidth>
+                        <SnapCard
+                            title="Title 1"
+                            subtitle="Subtitle"
+                            icon={
+                                <Circle size={40} backgroundColor={colors.brand}>
+                                    <ThemeVariant isInverse>
+                                        <IconAcademicRegular />
+                                    </ThemeVariant>
+                                </Circle>
+                            }
+                        />
+                        <SnapCard
+                            title="Title 2"
+                            icon={
+                                <Circle size={40} backgroundColor={colors.brand}>
+                                    <ThemeVariant isInverse>
+                                        <IconAcademicRegular />
+                                    </ThemeVariant>
+                                </Circle>
+                            }
+                        />
+                        <SnapCard title="Title 3" />
+                    </Inline>
+                </Stack>
+            </ResponsiveLayout>
+        </Box>
     );
 };
 
 Group.storyName = 'SnapCard group';
+Group.parameters = {
+    fullScreen: true,
+};
