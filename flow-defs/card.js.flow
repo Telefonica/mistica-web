@@ -41,4 +41,33 @@ declare type DataCardProps = {
   "aria-label"?: string,
 };
 declare export var DataCard: React.AbstractComponent<DataCardProps, HTMLDivElement>;
+declare type SnapCardBaseProps = {
+  icon?: React.Element<any>,
+  title?: string,
+  subtitle?: string,
+  /**
+   * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
+   */
+  dataAttributes?: DataAttributes,
+  "aria-label"?: string,
+};
+declare type SnapCardToProps = {
+  ...$Exact<SnapCardBaseProps>,
+  to?: string,
+  fullPageOnWebView?: boolean,
+};
+declare type SnapCardHrefProps = {
+  ...$Exact<SnapCardBaseProps>,
+  href?: string,
+  newTab?: boolean,
+};
+declare type SnapCardOnPressProps = {
+  ...$Exact<SnapCardBaseProps>,
+  onPress?: () => void,
+};
+declare type SnapCardProps =
+  | SnapCardToProps
+  | SnapCardHrefProps
+  | SnapCardOnPressProps;
+declare export var SnapCard: React.AbstractComponent<SnapCardProps, HTMLDivElement>;
 declare export {};

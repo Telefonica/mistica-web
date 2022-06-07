@@ -43,3 +43,12 @@ declare type Props =
   | OnPressProps;
 declare var HighlightedCard: React.ComponentType<Props>;
 declare export default typeof HighlightedCard;
+declare export var test1: React.Node;
+declare export var test2: React.Node;
+declare export var test3: React.Node;
+declare export var test4: React.Node;
+declare export var test5: React.Node;
+declare export var test6: React.Node;
+declare export var test7: React.Node;
+declare export var test8: (isTouchable: boolean) => React.Node;
+declare export var test9: (isTouchable: boolean) => React.Node;
