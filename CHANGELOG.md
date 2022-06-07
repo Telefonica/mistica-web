@@ -1,3 +1,10 @@
+# [11.10.0](https://github.com/Telefonica/mistica-web/compare/v11.9.0...v11.10.0) (2022-06-06)
+
+
+### Features
+
+* **Analytics:** TrackingConfig context provider ([#486](https://github.com/Telefonica/mistica-web/issues/486)) ([afcf8d3](https://github.com/Telefonica/mistica-web/commit/afcf8d353c35d6b84352c07261fc1d1ef0fdff96))
+
 # [11.9.0](https://github.com/Telefonica/mistica-web/compare/v11.8.0...v11.9.0) (2022-05-26)
 
 

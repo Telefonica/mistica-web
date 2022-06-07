@@ -78,6 +78,7 @@ declare type LinkComponent = React.ComponentType<{
 }>;
 declare export var AnchorLink: LinkComponent;
 export type ColorScheme = "dark" | "light" | "auto";
+export type EventFormat = "universal-analytics" | "google-analytics-4";
 export type ThemeConfig = {
   skin: $ReadOnly<Skin>,
   colorScheme?: ColorScheme,
@@ -93,7 +94,7 @@ export type ThemeConfig = {
   texts?: $Shape<ThemeTexts>,
   analytics?: {
     logEvent: (trackingEvent: TrackingEvent) => Promise<void>,
-    eventFormat?: "universal-analytics" | "google-analytics-4",
+    eventFormat?: EventFormat,
   },
   dimensions?: {
     headerMobileHeight: number,
@@ -122,7 +123,7 @@ export type Theme = {
   texts: ThemeTexts,
   analytics: {
     logEvent: (trackingEvent: TrackingEvent) => Promise<void>,
-    eventFormat: "universal-analytics" | "google-analytics-4",
+    eventFormat: EventFormat,
   },
   dimensions: {
     headerMobileHeight: number,

@@ -122,3 +122,24 @@ When you set the `eventFormat` to `'google-analytics-4'` and use the
   component_copy: '<the button copy>',
 }
 ```
+
+### TrackingConfig
+
+You can also define an `eventFormat` for a specific part of your app, using the `TrackingConfig` context
+provider:
+
+```ts
+<SomeComponent/>
+
+<TrackingConfig eventFormat="google-analytics-4">
+    <AnotherComponent/> // this will track using GA4 format
+</TrackingConfig>
+
+<SomeOtherComponent/>
+```
+
+A hook to obtain the tracking config is also available:
+
+```ts
+const {eventFormat} = useTrackingConfig();
+```
