@@ -10,6 +10,7 @@ import {Boxed} from './boxed';
 import ButtonGroup from './button-group';
 import Video from './video';
 import Image, {DisableBorderRadiusProvider} from './image';
+import Touchable from './touchable';
 
 import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
 
@@ -212,6 +213,96 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                         buttonLink={buttonLink}
                     />
                 </section>
+            </Boxed>
+        );
+    }
+);
+
+const useSnapCardStyles = createUseStyles((theme) => ({
+    boxed: {
+        height: '100%',
+    },
+    touchable: {
+        display: 'flex',
+        height: '100%',
+        [theme.mq.supportsHover]: {
+            '&:hover': {
+                backgroundColor: ({isTouchable}) =>
+                    isTouchable ? theme.colors.backgroundAlternative : 'transparent',
+            },
+        },
+    },
+    snapCard: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: ({hasIcon}) => (hasIcon ? 'flex-start' : 'flex-end'),
+        padding: 16,
+        minHeight: 76,
+        minWidth: 104,
+        [theme.mq.desktopOrBigger]: {
+            padding: 24,
+        },
+    },
+}));
+
+interface SnapCardBaseProps {
+    icon?: React.ReactElement;
+    title?: string;
+    subtitle?: string;
+    /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
+    dataAttributes?: DataAttributes;
+    'aria-label'?: string;
+    children?: void;
+}
+
+interface SnapCardToProps extends SnapCardBaseProps {
+    to?: string;
+    fullPageOnWebView?: boolean;
+    href?: undefined;
+    onPress?: undefined;
+}
+
+interface SnapCardHrefProps extends SnapCardBaseProps {
+    href?: string;
+    newTab?: boolean;
+    onPress?: undefined;
+    to?: undefined;
+}
+
+interface SnapCardOnPressProps extends SnapCardBaseProps {
+    onPress?: () => void;
+    href?: undefined;
+    to?: undefined;
+}
+
+type SnapCardProps = SnapCardToProps | SnapCardHrefProps | SnapCardOnPressProps;
+
+export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
+    ({icon, title, subtitle, dataAttributes, 'aria-label': ariaLabel, ...touchableProps}, ref) => {
+        const isTouchable = Boolean(touchableProps.to || touchableProps.href || touchableProps.onPress);
+        const classes = useSnapCardStyles({isTouchable, hasIcon: !!icon});
+        const {colors} = useTheme();
+
+        return (
+            <Boxed className={classes.boxed} dataAttributes={dataAttributes} ref={ref}>
+                <Touchable maybe {...touchableProps} className={classes.touchable} aria-label={ariaLabel}>
+                    <section className={classes.snapCard}>
+                        {icon && <Box paddingBottom={16}>{icon}</Box>}
+                        <Stack space={4}>
+                            {title && (
+                                <Text2 as="h1" regular>
+                                    {title}
+                                </Text2>
+                            )}
+                            {subtitle && (
+                                <Text2 regular color={colors.textSecondary}>
+                                    {subtitle}
+                                </Text2>
+                            )}
+                        </Stack>
+                    </section>
+                </Touchable>
             </Boxed>
         );
     }
