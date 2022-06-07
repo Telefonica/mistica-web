@@ -26,24 +26,24 @@ type Args = {
 export const Default: StoryComponent<Args> = ({asset, title, subtitle, touchable}) => {
     const {colors} = useTheme();
 
-    let icon;
-    if (asset === 'icon') {
-        icon = <IconAcademicRegular />;
-    } else if (asset === 'icon in circle') {
-        icon = (
+    const assetToIcon: {
+        [asset in Args['asset']]: React.ReactElement | undefined;
+    } = {
+        icon: <IconAcademicRegular />,
+        image: <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />,
+        'icon in circle': (
             <Circle size={40} backgroundColor={colors.brand}>
                 <ThemeVariant isInverse>
                     <IconAcademicRegular />
                 </ThemeVariant>
             </Circle>
-        );
-    } else if (asset === 'image') {
-        icon = <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />;
-    }
+        ),
+        none: undefined,
+    };
 
     return (
         <SnapCard
-            icon={icon}
+            icon={assetToIcon[asset]}
             title={title}
             subtitle={subtitle}
             dataAttributes={{testid: 'snap-card'}}
