@@ -1,0 +1,16 @@
+// @flow
+
+import * as React from "react";
+import type { IconProps } from "./utils/types";
+declare type AvatarProps = {
+  size: number,
+  src?: string,
+  initials?: string,
+  textColor?: string,
+  backgroundColor?: string,
+  Icon?: React.ComponentType<IconProps>,
+  badge?: boolean | number,
+  "aria-label"?: string,
+};
+declare var Avatar: (x: AvatarProps) => React.Node;
+declare export default typeof Avatar;

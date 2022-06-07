@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
+    Avatar,
     Badge,
-    Circle,
     IconShoppingCartRegular,
     MainNavigationBar,
     NavigationBarAction,
@@ -37,9 +37,10 @@ export const Default: StoryComponent<Args> = ({isInverse}) => {
                         </Badge>
                     </NavigationBarAction>
                     <NavigationBarAction onPress={() => {}} aria-label="Open profile">
-                        <Circle
-                            backgroundImage="https://i.pravatar.cc/100?img=31"
+                        <Avatar
+                            src="https://i.pravatar.cc/100?img=31"
                             size={isDesktopOrBigger ? 32 : 24}
+                            initials="ML"
                         />
                         {isDesktopOrBigger && 'María López Serrano'}
                     </NavigationBarAction>
