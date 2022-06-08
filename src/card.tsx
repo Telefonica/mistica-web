@@ -238,7 +238,7 @@ const useSnapCardStyles = createUseStyles((theme) => ({
         alignItems: 'flex-start',
         justifyContent: ({hasIcon}) => (hasIcon ? 'flex-start' : 'flex-end'),
         padding: 16,
-        minHeight: 76,
+        minHeight: 80,
         minWidth: 104,
         [theme.mq.desktopOrBigger]: {
             padding: 24,
