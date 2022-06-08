@@ -223,7 +223,6 @@ const useSnapCardStyles = createUseStyles((theme) => ({
         height: '100%',
     },
     touchable: {
-        display: 'flex',
         height: '100%',
         [theme.mq.supportsHover]: {
             '&:hover': {
@@ -233,6 +232,7 @@ const useSnapCardStyles = createUseStyles((theme) => ({
         },
     },
     snapCard: {
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
