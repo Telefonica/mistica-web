@@ -5,8 +5,7 @@ import classnames from 'classnames';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {getTextFromChildren} from './utils/common';
-import {eventActions, eventCategories, eventNames} from './utils/analytics';
-import {useTheme} from './hooks';
+import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
 
 import type {TrackingEvent, DataAttributes} from './utils/types';
 
@@ -72,10 +71,10 @@ const TextLink: React.FC<TextLinkProps> = ({children, className = '', small, dis
     const classes = useStyles();
     const isInverse = useIsInverseVariant();
     const {formStatus} = useForm();
-    const {analytics} = useTheme();
+    const {eventFormat} = useTrackingConfig();
 
     const createDefaultTrackingEvent = (): TrackingEvent => {
-        if (analytics.eventFormat === 'google-analytics-4') {
+        if (eventFormat === 'google-analytics-4') {
             return {
                 name: eventNames.userInteraction,
                 component_type: 'link',

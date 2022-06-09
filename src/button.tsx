@@ -9,7 +9,7 @@ import {pxToRem} from './utils/css';
 import {Text, Text2, Text3} from './text';
 import Box from './box';
 import {getTextFromChildren} from './utils/common';
-import {eventActions, eventCategories, eventNames} from './utils/analytics';
+import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
 import {useTheme} from './hooks';
 
 import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEvent} from './utils/types';
@@ -285,7 +285,7 @@ export type ButtonProps =
 const Button: React.FC<
     ButtonProps & {classes: ReturnType<typeof usePrimaryButtonStyles>; type: ButtonType}
 > = (props) => {
-    const {analytics} = useTheme();
+    const {eventFormat} = useTrackingConfig();
     const {formStatus, formId} = useForm();
     const isInverse = useIsInverseVariant();
     const {classes, loadingText} = props;
@@ -320,7 +320,7 @@ const Button: React.FC<
         );
 
     const createDefaultTrackingEvent = (): TrackingEvent => {
-        if (analytics.eventFormat === 'google-analytics-4') {
+        if (eventFormat === 'google-analytics-4') {
             return {
                 name: eventNames.userInteraction,
                 component_type: `${props.type}_button`,

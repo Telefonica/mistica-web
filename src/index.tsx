@@ -45,8 +45,8 @@ export {default as Text, Text1, Text2, Text3, Text4, Text5, Text6, Text7, Text8,
 export {default as Tag} from './tag';
 export type {TagType} from './tag';
 export {default as SectionTitle} from './section-title';
+export {Placeholder} from './placeholder';
 export {Title1, Title2} from './title';
-export {Placeholder, AvatarPlaceholder} from './placeholder';
 export {RowList, Row, BoxedRowList, BoxedRow} from './list';
 export {default as Switch} from './switch-component';
 export {default as Checkbox} from './checkbox';
@@ -63,6 +63,7 @@ export {default as Menu} from './menu';
 export {default as EmptyState} from './empty-state';
 export {default as EmptyStateCard} from './empty-state-card';
 export {default as Callout} from './callout';
+export {default as Avatar} from './avatar';
 export {useModalState} from './modal-context-provider';
 export {
     NavigationBar,
@@ -118,7 +119,9 @@ export {
     useWindowWidth,
     useIsInViewport,
 } from './hooks';
-export type {ThemeConfig, ColorScheme} from './theme';
+export type {ThemeConfig, ColorScheme, EventFormat} from './theme';
+
+export {TrackingConfig, useTrackingConfig} from './utils/analytics';
 
 export {useDocumentVisibility} from './utils/document-visibility';
 
