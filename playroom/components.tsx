@@ -14,13 +14,15 @@ import {
 } from '../src';
 import {Movistar, Vivo, O2, Telefonica, Blau} from './themes';
 import {useOverrideTheme} from './frame-component';
+import IconSun from './icons/icon-sun';
+import IconMoon from './icons/icon-moon';
+import IconAppleOn from './icons/icon-apple-on';
+import IconAppleOff from './icons/icon-apple-off';
 
 import type {ThemeConfig, ColorScheme, SkinName} from '../src';
 
 export * from '../src';
 export {default as ButtonGroup} from '../src/button-group';
-
-const capitalize = (str: string): string => str.charAt(0).toUpperCase() + str.slice(1);
 
 const useControlsStyles = createUseStyles((theme) => ({
     controls: {
@@ -37,8 +39,8 @@ const useControlsStyles = createUseStyles((theme) => ({
     },
     mobileControls: {
         alignItems: 'center',
-        paddingRight: 8,
-        gap: '8px',
+        paddingRight: 16,
+        gap: '16px',
         '& > :last-child': {flexShrink: 0},
     },
     desktopControls: {
@@ -47,7 +49,7 @@ const useControlsStyles = createUseStyles((theme) => ({
     },
     tabs: {
         flexBasis: '100%',
-        marginRight: 72,
+        marginRight: 150,
         whiteSpace: 'nowrap',
     },
     desktopControlItem: {
@@ -55,7 +57,6 @@ const useControlsStyles = createUseStyles((theme) => ({
         flexShrink: 0,
         display: 'flex',
         alignItems: 'center',
-        borderLeft: `1px solid ${theme.colors.divider}`,
     },
     checkbox: {
         display: 'flex',
@@ -160,26 +161,18 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                             onColorSchemeChange(systemColorScheme);
                         }
                     }}
-                    render={({controlElement, labelId}) => (
-                        <div className={classes.checkbox} id={labelId}>
-                            {controlElement} {capitalize(alternativeColorScheme)} mode
-                        </div>
-                    )}
+                    render={({checked}) => (checked ? <IconSun /> : <IconMoon />)}
                 />
                 {showPlatformSelector && (
                     <Checkbox
                         name="iOS"
                         checked={os === 'ios'}
                         onChange={(checked) => onOsChange(checked ? 'ios' : 'android')}
-                        render={({controlElement, labelId}) => (
-                            <div className={classes.checkbox} id={labelId}>
-                                {controlElement} iOS
-                            </div>
-                        )}
+                        render={({checked}) => (checked ? <IconAppleOn /> : <IconAppleOff />)}
                     />
                 )}
                 <IconButton aria-label="Edit in Playroom" size={32} onPress={onEditStoryPress}>
-                    <IconCodeFilled size={32} color={colors.neutralMedium} />
+                    <IconCodeFilled size={32} color={colors.neutralHigh} />
                 </IconButton>
             </div>
         );
@@ -207,11 +200,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                                 onColorSchemeChange(systemColorScheme);
                             }
                         }}
-                        render={({controlElement, labelId}) => (
-                            <div className={classes.checkbox} id={labelId}>
-                                {controlElement} {capitalize(alternativeColorScheme)} mode
-                            </div>
-                        )}
+                        render={({checked}) => (checked ? <IconSun /> : <IconMoon />)}
                     />
                 </div>
                 {showPlatformSelector && (
@@ -220,17 +209,13 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                             name="iOS"
                             checked={os === 'ios'}
                             onChange={(checked) => onOsChange(checked ? 'ios' : 'android')}
-                            render={({controlElement, labelId}) => (
-                                <div className={classes.checkbox} id={labelId}>
-                                    {controlElement} iOS
-                                </div>
-                            )}
+                            render={({checked}) => (checked ? <IconAppleOn /> : <IconAppleOff />)}
                         />
                     </div>
                 )}
                 <div className={classes.desktopControlItem}>
                     <IconButton aria-label="Edit in Playroom" size={32} onPress={onEditStoryPress}>
-                        <IconCodeFilled size={32} color={colors.neutralMedium} />
+                        <IconCodeFilled size={32} color={colors.neutralHigh} />
                     </IconButton>
                 </div>
             </div>
