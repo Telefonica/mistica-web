@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, SectionTitle, RadioGroup, RadioButton, Inline, Text3, IconHandLeftRegular} from '..';
+import {Stack, Title1, RadioGroup, RadioButton, Inline, Text3, IconHandLeftRegular} from '..';
 
 export default {
     title: 'Components/Forms/Radio Button',
@@ -11,7 +11,7 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={32}>
             <>
-                <SectionTitle id="uncontrolled">Uncontrolled: {uncontrolledValue}</SectionTitle>
+                <Title1 id="uncontrolled">Uncontrolled: {uncontrolledValue}</Title1>
                 <RadioGroup
                     name="uncontrolled"
                     aria-labelledby="uncontrolled"
@@ -29,7 +29,7 @@ export const Default: StoryComponent = () => {
                 </RadioGroup>
             </>
             <>
-                <SectionTitle id="controlled">Selected fruit: {value}</SectionTitle>
+                <Title1 id="controlled">Selected fruit: {value}</Title1>
                 <RadioGroup name="group1" aria-labelledby="controlled" value={value} onChange={setValue}>
                     <Stack space={16}>
                         <RadioButton value="banana">
@@ -42,7 +42,7 @@ export const Default: StoryComponent = () => {
                 </RadioGroup>
             </>
             <>
-                <SectionTitle id="custom-render">Custom render - Selected fruit: {value}</SectionTitle>
+                <Title1 id="custom-render">Custom render - Selected fruit: {value}</Title1>
                 <RadioGroup name="group2" aria-labelledby="custom-render" value={value} onChange={setValue}>
                     <Stack space={16}>
                         <RadioButton
@@ -67,7 +67,7 @@ export const Default: StoryComponent = () => {
                 </RadioGroup>
             </>
             <>
-                <SectionTitle id="disabled">Disabled</SectionTitle>
+                <Title1 id="disabled">Disabled</Title1>
                 <RadioGroup
                     disabled
                     name="group3"
@@ -86,7 +86,7 @@ export const Default: StoryComponent = () => {
                 </RadioGroup>
             </>
             <>
-                <SectionTitle id="multiline">Multiline</SectionTitle>
+                <Title1 id="multiline">Multiline</Title1>
                 <RadioGroup name="group4" aria-labelledby="multiline" value={value} onChange={setValue}>
                     <Stack space={16}>
                         <RadioButton value="banana">

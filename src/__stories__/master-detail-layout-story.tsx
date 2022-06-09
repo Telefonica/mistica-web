@@ -6,7 +6,7 @@ import {
     NegativeBox,
     Box,
     Stack,
-    SectionTitle,
+    Title1,
     ButtonPrimary,
     IconCreditCardVisaRegular,
     IconInformationUserRegular,
@@ -54,7 +54,7 @@ export const Default: StoryComponent = () => {
                     <Stack space={32}>
                         {settings.map((category) => (
                             <Stack key={category.categoryName} space={8}>
-                                <SectionTitle>{category.categoryName}</SectionTitle>
+                                <Title1>{category.categoryName}</Title1>
                                 <NegativeBox>
                                     <RowList>
                                         {category.settings.map((setting) => (

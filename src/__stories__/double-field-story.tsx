@@ -9,7 +9,7 @@ import {
     Stack,
     CreditCardFields,
 } from '..';
-import SectionTitle from '../section-title';
+import Title1 from '../section-title';
 
 export default {
     title: 'Components/Forms/DoubleField',
@@ -20,17 +20,17 @@ export const Default: StoryComponent = () => {
     return (
         <>
             <StorySection title="Layouts">
-                <SectionTitle as="h2">50/50</SectionTitle>
+                <Title1 as="h2">50/50</Title1>
                 <DoubleField layout="50/50">
                     <CreditCardExpirationField name="credit-card-expiration" label="Expiration" />
                     <CvvField name="credit-card-cvv" label="CVV" />
                 </DoubleField>
-                <SectionTitle as="h2">60/40</SectionTitle>
+                <Title1 as="h2">60/40</Title1>
                 <DoubleField layout="60/40">
                     <CreditCardExpirationField name="credit-card-expiration" label="Expiration" />
                     <CvvField name="credit-card-cvv" label="CVV" />
                 </DoubleField>
-                <SectionTitle as="h2">40/60</SectionTitle>
+                <Title1 as="h2">40/60</Title1>
                 <DoubleField layout="40/60">
                     <CvvField name="credit-card-cvv" label="CVV" />
                     <CreditCardExpirationField name="credit-card-expiration" label="Expiration" />

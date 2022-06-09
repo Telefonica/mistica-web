@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {fruitEntries} from './helpers';
 import {Select, Stack} from '..';
-import SectionTitle from '../section-title';
+import Title1 from '../section-title';
 
 export default {
     title: 'Components/Forms/Select',
@@ -16,7 +16,7 @@ export const Default: StoryComponent = () => {
     return (
         <>
             <Stack space={16}>
-                <SectionTitle>Select</SectionTitle>
+                <Title1>Select</Title1>
                 <Select
                     name="normal"
                     value={value}
@@ -55,7 +55,7 @@ export const Default: StoryComponent = () => {
                     options={fruitOptions}
                 />
 
-                <SectionTitle>Native variant</SectionTitle>
+                <Title1>Native variant</Title1>
 
                 <Select
                     name="native"

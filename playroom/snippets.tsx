@@ -632,12 +632,20 @@ const cardSnippets: Array<Snippet> = [
 
 const titlesSnippets: Array<Snippet> = [
     {
-        name: 'SectionTitle',
-        code: '<SectionTitle>Some title</SectionTitle>',
+        name: 'Title1',
+        code: '<Title1>Some title</Title1>',
     },
     {
-        name: 'SectionTitle (with link)',
-        code: '<SectionTitle right={<TextLink onPress={() => {}}>Link</TextLink>}>Some title</SectionTitle>',
+        name: 'Title1 (with link)',
+        code: '<Title1 right={<TextLink onPress={() => {}}>Link</TextLink>}>Some title</Title1>',
+    },
+    {
+        name: 'Title2',
+        code: '<Title2>Some title</Title2>',
+    },
+    {
+        name: 'Title2 (with link)',
+        code: '<Title2 right={<TextLink onPress={() => {}}>Link</TextLink>}>Some title</Title2>',
     },
 ].map((snippet) => ({...snippet, group: 'Titles'}));
 
@@ -716,7 +724,7 @@ const layoutSnippets: Array<Snippet> = [
                 },
                 ].map((category) => (
                 <Stack key={category.categoryName} space={8}>
-                    <SectionTitle>{category.categoryName}</SectionTitle>
+                    <Title1>{category.categoryName}</Title1>
                     <NegativeBox>
                     <RowList>
                         {category.settings.map((setting) => (
@@ -863,7 +871,7 @@ const exampleScreens: Array<Snippet> = [
                   },
                 ].map((category) => (
                   <Stack key={category.categoryName} space={8}>
-                    <SectionTitle>{category.categoryName}</SectionTitle>
+                    <Title1>{category.categoryName}</Title1>
                     <NegativeBox left right={!isDesktopOrBigger}>
                       <RowList>
                         {category.settings.map((setting) => (
@@ -900,7 +908,7 @@ const exampleScreens: Array<Snippet> = [
                 </Text3>
               </Stack>
               <Stack space={8}>
-                <SectionTitle>Section 1</SectionTitle>
+                <Title1>Section 1</Title1>
                 <NegativeBox>
                   <RowList>
                     <Row title="Title" switch={{ defaultValue: false }} />
@@ -909,7 +917,7 @@ const exampleScreens: Array<Snippet> = [
                 </NegativeBox>
               </Stack>
               <Stack space={8}>
-                <SectionTitle>Section 2</SectionTitle>
+                <Title1>Section 2</Title1>
                 <NegativeBox>
                   <RowList>
                     <Row
@@ -1140,6 +1148,34 @@ const carouselSnippets = [
     },
 ];
 
+const avatarSnippets = [
+    {
+        group: 'Avatar',
+        name: 'Avatar with badge',
+        code: `<Avatar size={64} src="https://i.imgur.com/nRBEMMV.png" badge />`,
+    },
+    {
+        group: 'Avatar',
+        name: 'Avatar with numeric badge',
+        code: `<Avatar size={64} src="https://i.imgur.com/nRBEMMV.png" badge={5} />`,
+    },
+    {
+        group: 'Avatar',
+        name: 'Avatar with initials',
+        code: `<Avatar size={64} initials="PL" />`,
+    },
+    {
+        group: 'Avatar',
+        name: 'Avatar with icon',
+        code: `<Avatar size={64} />`,
+    },
+    {
+        group: 'Avatar',
+        name: 'Avatar with custom icon',
+        code: `<Avatar size={64} Icon={IconFireRegular} />`,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -1266,4 +1302,5 @@ export default [
         code: `<Image src="https://i.imgur.com/aEVtKsE.jpg" aspectRatio="16:9" />`,
     },
     ...carouselSnippets,
+    ...avatarSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

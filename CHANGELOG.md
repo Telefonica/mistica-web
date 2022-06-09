@@ -1,3 +1,32 @@
+# [11.10.0](https://github.com/Telefonica/mistica-web/compare/v11.9.0...v11.10.0) (2022-06-06)
+
+
+### Features
+
+* **Analytics:** TrackingConfig context provider ([#486](https://github.com/Telefonica/mistica-web/issues/486)) ([afcf8d3](https://github.com/Telefonica/mistica-web/commit/afcf8d353c35d6b84352c07261fc1d1ef0fdff96))
+
+# [11.9.0](https://github.com/Telefonica/mistica-web/compare/v11.8.0...v11.9.0) (2022-05-26)
+
+
+### Bug Fixes
+
+* **Text:** word break in Safari ([#484](https://github.com/Telefonica/mistica-web/issues/484)) ([807255d](https://github.com/Telefonica/mistica-web/commit/807255d4682763c4131a0d836e158de1dbd9c25f))
+
+
+### Features
+
+* **Avatar:** new component ([#482](https://github.com/Telefonica/mistica-web/issues/482)) ([c0beee5](https://github.com/Telefonica/mistica-web/commit/c0beee519e6d2206c8198efbc9461a49970258b8))
+
+# [11.8.0](https://github.com/Telefonica/mistica-web/compare/v11.7.0...v11.8.0) (2022-05-18)
+
+
+### Features
+
+* **Image:** expose onError and onLoad. Avoid broken icon  ([#478](https://github.com/Telefonica/mistica-web/issues/478)) ([2002741](https://github.com/Telefonica/mistica-web/commit/20027410e70e14fcd25a7227ae7cd1394190f937))
+* **PasswordField:** use mistica icon for show/hide password ([#475](https://github.com/Telefonica/mistica-web/issues/475)) ([491072f](https://github.com/Telefonica/mistica-web/commit/491072f316a9b98bf32b68bafe2c26c394210c23))
+* **Title1,Title2:** new components ([#477](https://github.com/Telefonica/mistica-web/issues/477)) ([9684e4f](https://github.com/Telefonica/mistica-web/commit/9684e4f954c640dabb6292f0df158209e1548d0c))
+* **trackingEvent:** add support for new GA4 event format ([#480](https://github.com/Telefonica/mistica-web/issues/480)) ([8e3851a](https://github.com/Telefonica/mistica-web/commit/8e3851a93d87a77375d93e326fe08178a419cd29))
+
 # [11.7.0](https://github.com/Telefonica/mistica-web/compare/v11.6.0...v11.7.0) (2022-04-28)
 
 

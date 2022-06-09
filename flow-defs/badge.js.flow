@@ -4,6 +4,8 @@ import * as React from "react";
 declare type Props = {
   children?: React.Node,
   value?: number,
+  right?: number,
+  top?: number,
 };
 /**
  * This Component is decorative and won't be read by screenreaders, to make it accessible,
