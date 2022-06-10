@@ -1,32 +1,46 @@
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
-test('SnapCard', async () => {
+import type {Device, StoryArgs} from '../test-utils';
+
+const renderSnapCard = async ({device, args}: {device: Device; args?: StoryArgs}) => {
     await openStoryPage({
         id: 'components-cards-snapcard--default',
-        device: 'MOBILE_IOS',
+        device,
+        args,
     });
+    return await screen.findByTestId('snap-card');
+};
 
-    const snapCard = await screen.findByTestId('snap-card');
+test('SnapCard', async () => {
+    const snapCard = await renderSnapCard({device: 'MOBILE_IOS'});
 
-    const image = await snapCard.screenshot();
-    expect(image).toMatchImageSnapshot({
+    expect(await snapCard.screenshot()).toMatchImageSnapshot({
         customSnapshotIdentifier: 'snapcard-screenshot-test-mobile',
     });
 
     setRootFontSize(32);
-    const bigFontImage = await snapCard.screenshot();
-    expect(bigFontImage).toMatchImageSnapshot({
+    expect(await snapCard.screenshot()).toMatchImageSnapshot({
         customSnapshotIdentifier: 'snapcard-screenshot-test-mobile-big-font',
     });
 
-    await openStoryPage({
-        id: 'components-cards-snapcard--default',
-        device: 'DESKTOP',
+    const snapCardInverse = await renderSnapCard({
+        device: 'MOBILE_IOS',
+        args: {isInverse: true, asset: 'icon in circle'},
     });
-    const desktopSnapCard = await screen.findByTestId('snap-card');
+    expect(await snapCardInverse.screenshot()).toMatchImageSnapshot({
+        customSnapshotIdentifier: 'snapcard-screenshot-test-inverse',
+    });
 
-    const desktopImage = await desktopSnapCard.screenshot();
-    expect(desktopImage).toMatchImageSnapshot({
+    const snapCardWithExtra = await renderSnapCard({
+        device: 'MOBILE_IOS',
+        args: {withExtra: true, asset: 'icon in circle'},
+    });
+    expect(await snapCardWithExtra.screenshot()).toMatchImageSnapshot({
+        customSnapshotIdentifier: 'snapcard-screenshot-test-with-extra',
+    });
+
+    const desktopSnapCard = await renderSnapCard({device: 'DESKTOP'});
+    expect(await desktopSnapCard.screenshot()).toMatchImageSnapshot({
         customSnapshotIdentifier: 'snapcard-screenshot-test-desktop',
     });
 });
@@ -36,6 +50,5 @@ test('SnapCard group', async () => {
         id: 'components-cards-snapcard--group',
     });
 
-    const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    expect(await page.screenshot()).toMatchImageSnapshot();
 });

@@ -9,7 +9,9 @@ import {
     Text2,
     Inline,
     Box,
+    Text4,
 } from '..';
+import {Placeholder} from '../placeholder';
 import {ThemeVariant} from '../theme-variant-context';
 
 export default {
@@ -21,9 +23,11 @@ type Args = {
     title: string;
     subtitle: string;
     touchable: boolean;
+    isInverse: boolean;
+    withExtra: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({asset, title, subtitle, touchable}) => {
+export const Default: StoryComponent<Args> = ({asset, title, subtitle, touchable, isInverse, withExtra}) => {
     const {colors} = useTheme();
 
     const assetToIcon: {
@@ -32,7 +36,7 @@ export const Default: StoryComponent<Args> = ({asset, title, subtitle, touchable
         icon: <IconAcademicRegular />,
         image: <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />,
         'icon in circle': (
-            <Circle size={40} backgroundColor={colors.brand}>
+            <Circle size={40} backgroundColor={isInverse ? colors.brandDark : colors.brand}>
                 <ThemeVariant isInverse>
                     <IconAcademicRegular />
                 </ThemeVariant>
@@ -48,6 +52,8 @@ export const Default: StoryComponent<Args> = ({asset, title, subtitle, touchable
             subtitle={subtitle}
             dataAttributes={{testid: 'snap-card'}}
             aria-label="SnapCard card label"
+            isInverse={isInverse}
+            extra={withExtra ? <Placeholder /> : undefined}
             onPress={
                 touchable
                     ? () => {
@@ -65,6 +71,8 @@ Default.args = {
     title: 'Some title',
     subtitle: 'Some subtitle',
     touchable: true,
+    isInverse: false,
+    withExtra: false,
 };
 Default.argTypes = {
     asset: {
@@ -103,6 +111,15 @@ export const Group: StoryComponent = () => {
                             }
                         />
                         <SnapCard title="Title 3" />
+                        <SnapCard
+                            title="Data left"
+                            extra={
+                                <Stack space={4}>
+                                    <Text4 regular>10 GB</Text4>
+                                    <Text2 regular>out of 50</Text2>
+                                </Stack>
+                            }
+                        />
                     </Inline>
                 </Stack>
             </ResponsiveLayout>
