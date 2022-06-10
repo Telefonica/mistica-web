@@ -50,6 +50,8 @@ declare type SnapCardBaseProps = {
    */
   dataAttributes?: DataAttributes,
   "aria-label"?: string,
+  extra?: React.Node,
+  isInverse?: boolean,
 };
 declare type SnapCardToProps = {
   ...$Exact<SnapCardBaseProps>,
