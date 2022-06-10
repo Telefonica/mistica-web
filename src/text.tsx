@@ -40,6 +40,9 @@ const useStyles = createUseStyles((theme) => {
             textDecoration: (p) => p.decoration ?? 'inherit',
             letterSpacing: ({letterSpacing}) => letterSpacing,
             overflowWrap: ({wordBreak}) => (wordBreak ? 'anywhere' : 'inherit'),
+            '@supports not (overflow-wrap: anywhere)': {
+                wordBreak: ({wordBreak}) => (wordBreak ? 'break-all' : 'normal'),
+            },
             // Needed to reset the default browser margin that adds to p, h1, h2... elements.
             margin: 0,
 
