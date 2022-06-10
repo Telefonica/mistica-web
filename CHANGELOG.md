@@ -1,3 +1,10 @@
+## [11.10.1](https://github.com/Telefonica/mistica-web/compare/v11.10.0...v11.10.1) (2022-06-09)
+
+
+### Bug Fixes
+
+* **Text:** wordBreak in old safari versions ([#489](https://github.com/Telefonica/mistica-web/issues/489)) ([c1372b5](https://github.com/Telefonica/mistica-web/commit/c1372b5b2d9d25557a0f30597362626b54533251))
+
 # [11.10.0](https://github.com/Telefonica/mistica-web/compare/v11.9.0...v11.10.0) (2022-06-06)
 
 

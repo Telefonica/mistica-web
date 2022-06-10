@@ -39,7 +39,7 @@ test('fake button', () => {
               class="textContent"
             >
               <div
-                class="text text-d0 truncate truncate-d2"
+                class="text text-d0 truncate truncate-d3"
               >
                 test
               </div>
@@ -80,7 +80,7 @@ test('submit button', () => {
               class="textContent"
             >
               <div
-                class="text text-d0 truncate truncate-d2"
+                class="text text-d0 truncate truncate-d3"
               >
                 test
               </div>
@@ -121,7 +121,7 @@ test('<button> is rendered when using "onPress" prop', () => {
               class="textContent"
             >
               <div
-                class="text text-d0 truncate truncate-d2"
+                class="text text-d0 truncate truncate-d3"
               >
                 test
               </div>
@@ -162,7 +162,7 @@ test('<a> is rendered when using "href" prop', () => {
               class="textContent"
             >
               <div
-                class="text text-d0 truncate truncate-d2"
+                class="text text-d0 truncate truncate-d3"
               >
                 test
               </div>
@@ -207,7 +207,7 @@ test('"href" with "newTab" renders required attributes', () => {
               class="textContent"
             >
               <div
-                class="text text-d0 truncate truncate-d2"
+                class="text text-d0 truncate truncate-d3"
               >
                 test
               </div>
@@ -255,7 +255,7 @@ test('"href" with "loadOnTop" renders required attributes', () => {
               class="textContent"
             >
               <div
-                class="text text-d0 truncate truncate-d2"
+                class="text text-d0 truncate truncate-d3"
               >
                 test
               </div>
@@ -312,7 +312,7 @@ test('<a> is rendered when using "to" prop', () => {
               class="textContent"
             >
               <div
-                class="text text-d0 truncate truncate-d2"
+                class="text text-d0 truncate truncate-d3"
               >
                 test
               </div>
@@ -362,7 +362,7 @@ test('button with spinner', () => {
               class="textContent"
             >
               <div
-                class="text text-d0 truncate truncate-d2"
+                class="text text-d0 truncate truncate-d3"
               >
                 test
               </div>
@@ -389,7 +389,7 @@ test('button with spinner', () => {
               class="textContent"
             >
               <div
-                class="text text-d8 truncate truncate-d10"
+                class="text text-d10 truncate truncate-d13"
               >
                 test
               </div>
@@ -429,7 +429,7 @@ test('dark theme', () => {
               class="textContent"
             >
               <div
-                class="text text-d0 truncate truncate-d2"
+                class="text text-d0 truncate truncate-d3"
               >
                 test
               </div>
