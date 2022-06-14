@@ -1,0 +1,12 @@
+// @flow
+
+import * as React from "react";
+declare export var useIsDismissable: () => boolean;
+declare type DismissableProps = {
+  children: React.Node,
+  onClose: () => void,
+  width?: string | number,
+  "aria-label"?: string,
+};
+declare var Dismissable: React.ComponentType<DismissableProps>;
+declare export default typeof Dismissable;

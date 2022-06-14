@@ -19,7 +19,9 @@ declare type MediaCardProps = {
   extra?: React.Node,
   button?: RendersNullableElement<typeof ButtonPrimary>,
   buttonLink?: RendersNullableElement<typeof ButtonLink>,
+  dataAttributes?: DataAttributes,
   "aria-label"?: string,
+  onClose?: () => void,
 };
 declare export var MediaCard: React.AbstractComponent<MediaCardProps, HTMLDivElement>;
 declare type DataCardProps = {
@@ -39,6 +41,7 @@ declare type DataCardProps = {
    */
   dataAttributes?: DataAttributes,
   "aria-label"?: string,
+  onClose?: () => void,
 };
 declare export var DataCard: React.AbstractComponent<DataCardProps, HTMLDivElement>;
 declare export {};
