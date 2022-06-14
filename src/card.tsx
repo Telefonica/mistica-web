@@ -10,6 +10,7 @@ import {Boxed} from './boxed';
 import ButtonGroup from './button-group';
 import Video from './video';
 import Image, {DisableBorderRadiusProvider} from './image';
+import Dismissable, {useIsDismissable} from './dismissable';
 
 import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
 
@@ -93,6 +94,21 @@ const CardContent: React.FC<CardContentProps> = ({
     );
 };
 
+type MaybeSectionProps = {
+    children: React.ReactNode;
+    'aria-label'?: string;
+    className?: string;
+};
+
+const MaybeSection = ({'aria-label': ariaLabel, className}: MaybeSectionProps) => {
+    const isDismissable = useIsDismissable();
+    if (isDismissable) {
+        return <div className={className} />;
+    } else {
+        return <section className={className} aria-label={ariaLabel} />;
+    }
+};
+
 const useMediaCardStyles = createUseStyles(() => ({
     boxed: {
         height: '100%',
@@ -121,18 +137,33 @@ type MediaCardProps = {
     button?: RendersNullableElement<typeof ButtonPrimary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
     children?: void;
+    dataAttributes?: DataAttributes;
     'aria-label'?: string;
+    onClose?: () => void;
 };
 
 export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
     (
-        {media, headline, pretitle, title, description, extra, button, buttonLink, 'aria-label': ariaLabel},
+        {
+            media,
+            headline,
+            pretitle,
+            title,
+            description,
+            extra,
+            button,
+            buttonLink,
+            dataAttributes,
+            'aria-label': ariaLabel,
+            onClose,
+        },
         ref
     ) => {
         const classes = useMediaCardStyles({media});
-        return (
-            <Boxed className={classes.boxed} ref={ref}>
-                <section className={classes.mediaCard} aria-label={ariaLabel}>
+
+        const content = (
+            <Boxed className={classes.boxed} dataAttributes={dataAttributes} ref={ref}>
+                <MaybeSection className={classes.mediaCard} aria-label={ariaLabel}>
                     <DisableBorderRadiusProvider>{media}</DisableBorderRadiusProvider>
                     <div className={classes.content}>
                         <CardContent
@@ -145,8 +176,15 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                             buttonLink={buttonLink}
                         />
                     </div>
-                </section>
+                </MaybeSection>
             </Boxed>
+        );
+        return onClose ? (
+            <Dismissable onClose={onClose} aria-label={ariaLabel}>
+                {content}
+            </Dismissable>
+        ) : (
+            content
         );
     }
 );
@@ -154,6 +192,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
 const useDataCardStyles = createUseStyles(() => ({
     boxed: {
         height: '100%',
+        width: '100%',
     },
     dataCard: {
         display: 'flex',
@@ -179,6 +218,7 @@ interface DataCardProps {
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
+    onClose?: () => void;
 }
 
 export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
@@ -194,13 +234,14 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
             buttonLink,
             dataAttributes,
             'aria-label': ariaLabel,
+            onClose,
         },
         ref
     ) => {
         const classes = useDataCardStyles();
-        return (
+        const content = (
             <Boxed className={classes.boxed} dataAttributes={dataAttributes} ref={ref}>
-                <section className={classes.dataCard} aria-label={ariaLabel}>
+                <MaybeSection className={classes.dataCard} aria-label={ariaLabel}>
                     {icon && <Box paddingBottom={16}>{icon}</Box>}
                     <CardContent
                         headline={headline}
@@ -211,8 +252,15 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                         button={button}
                         buttonLink={buttonLink}
                     />
-                </section>
+                </MaybeSection>
             </Boxed>
+        );
+        return onClose ? (
+            <Dismissable aria-label={ariaLabel} onClose={onClose}>
+                {content}
+            </Dismissable>
+        ) : (
+            content
         );
     }
 );

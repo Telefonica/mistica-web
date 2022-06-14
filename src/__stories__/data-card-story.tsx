@@ -41,6 +41,7 @@ type DataCardArgs = {
     subtitle: string;
     description: string;
     actions: 'button' | 'link' | 'button and link';
+    closable: boolean;
 };
 
 export const Default: StoryComponent<DataCardArgs> = ({
@@ -50,7 +51,8 @@ export const Default: StoryComponent<DataCardArgs> = ({
     title,
     subtitle,
     description,
-    actions,
+    actions = 'button',
+    closable,
 }) => {
     const {colors} = useTheme();
 
@@ -75,6 +77,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
 
     return (
         <DataCard
+            onClose={closable ? () => {} : undefined}
             icon={icon}
             headline={headline && <Tag type={headlineType}>{headline}</Tag>}
             title={title}
@@ -97,6 +100,7 @@ Default.args = {
     subtitle: 'Some subtitle',
     description: 'This is a description for the card',
     actions: 'button',
+    closable: false,
 };
 
 export const WithBody: StoryComponent = () => {
