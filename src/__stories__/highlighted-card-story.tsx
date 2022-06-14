@@ -1,8 +1,5 @@
 import * as React from 'react';
-import HighlightedCard from '../highlighted-card';
-import {StorySection, useCheckbox, useTextField, useSelect} from './helpers';
-import {ButtonPrimary, ButtonSecondary, ButtonLink} from '../button';
-import {Box, Stack, ThemeVariant, Text1} from '..';
+import {HighlightedCard, Box, ButtonPrimary, ButtonSecondary, ButtonLink} from '..';
 
 export default {
     title: 'Components/Cards/HighlightedCard',
