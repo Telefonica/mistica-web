@@ -13,6 +13,11 @@ declare export var isAndroid: (
 declare export var isIos: (
   platformOverrides: $PropertyType<Theme, "platformOverrides">
 ) => boolean;
+/**
+ * Returns true if the browser is a safari browser:
+ * webview, mobile, desktop or a browser like Chrome for iOS which is just a safari with a skin
+ */
+declare export var isSafari: () => boolean;
 declare export var isFirefox: (
   platformOverrides?: {
     platform?: "ios" | "android" | "desktop" | void,
