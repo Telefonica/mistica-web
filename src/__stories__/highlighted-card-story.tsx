@@ -8,26 +8,25 @@ export default {
     title: 'Components/Cards/HighlightedCard',
 };
 
-export const Default: StoryComponent = () => {
-    const [title, titleTextField] = useTextField('title', 'Resolver problema técnico', true);
-    const [description, descriptionTextField] = useTextField(
-        'description',
-        'Usa nuestra herramienta para resolver tus problemas técnicos',
-        true
-    );
-    const [href, hrefTextField] = useTextField('href *', 'url/url');
-    const [isInverse, inverseCheckbox] = useCheckbox('Is inverse', false);
-    const [withImage, withImageCheckbox] = useCheckbox('With Image', true);
-    const [onClose, onCloseCheckbox] = useCheckbox('Is closable', false);
-    const [button, buttonSelect] = useSelect('Button type', 'ButtonPrimary', [
-        'ButtonPrimary',
-        'ButtonSecondary',
-        'ButtonLink',
-    ]);
-    const [imageFit, imageFitSelect] = useSelect('Image fit background-size', 'fit', ['fit', 'fill']);
+type Args = {
+    title: string;
+    description: string;
+    action: 'ButtonPrimary' | 'ButtonSecondary' | 'ButtonLink' | 'touchable' | 'none';
+    image: 'fit' | 'fill' | 'none';
+    inverse: boolean;
+    closable: boolean;
+};
 
-    const getButton = (button: string) => {
-        switch (button) {
+export const Default: StoryComponent<Args> = ({
+    title,
+    description,
+    action = 'ButtonPrimary',
+    image = 'fit',
+    inverse,
+    closable,
+}) => {
+    const getButton = (action: string) => {
+        switch (action) {
             case 'ButtonPrimary':
                 return (
                     <ButtonPrimary href="#" small>
@@ -46,61 +45,47 @@ export const Default: StoryComponent = () => {
                         TextLink
                     </ButtonLink>
                 );
-            case 'None':
+            case 'none':
             default:
-                return null;
+                return undefined;
         }
     };
 
-    const commonProps = {
-        title,
-        description,
-        imageUrl: withImage ? 'https://i.imgur.com/jeDSXBU.jpg' : '',
-        imageFit: imageFit as any,
-        onClose: onClose ? () => alert('Close pressed') : undefined,
-    };
-
     return (
-        <>
-            <Stack space={16}>
-                <Box paddingTop={16}>
-                    <p>Highlighted options:</p>
-                </Box>
-                {titleTextField}
-                {descriptionTextField}
-                {hrefTextField}
-                <Text1 regular>
-                    * This could be <Text1 medium>to | href | onPress</Text1> prop. If it's empty the card
-                    will be not touchable.
-                </Text1>
-                {buttonSelect}
-                {imageFitSelect}
-                {withImageCheckbox}
-                {inverseCheckbox}
-                {onCloseCheckbox}
-            </Stack>
-            <div data-testid="highlighted-card">
-                <StorySection title="HighlightedCard - With button">
-                    <ThemeVariant isInverse={isInverse}>
-                        <HighlightedCard
-                            aria-label="With button"
-                            {...commonProps}
-                            button={getButton(button)}
-                        />
-                    </ThemeVariant>
-                </StorySection>
-
-                <StorySection title="HighlightedCard - Fully touchable card">
-                    <ThemeVariant isInverse={isInverse}>
-                        <HighlightedCard aria-label="Fully touchable" {...commonProps} href={href} />
-                    </ThemeVariant>
-                </StorySection>
-            </div>
-        </>
+        <HighlightedCard
+            title={title}
+            description={description}
+            imageUrl={image !== 'none' ? 'https://i.imgur.com/jeDSXBU.jpg' : undefined}
+            imageFit={image !== 'none' ? image : undefined}
+            dataAttributes={{testid: 'highlighted-card'}}
+            button={getButton(action) as any}
+            onPress={action === 'touchable' ? () => {} : undefined}
+            isInverse={inverse}
+            onClose={closable ? () => {} : undefined}
+        />
     );
 };
 
 Default.storyName = 'HighlightedCard';
+Default.args = {
+    title: 'Resolver problema técnico',
+    description: 'Usa nuestra herramienta para resolver tus problemas técnicos',
+    action: 'ButtonPrimary',
+    image: 'fit',
+    inverse: false,
+    closable: false,
+};
+
+Default.argTypes = {
+    action: {
+        options: ['ButtonPrimary', 'ButtonSecondary', 'ButtonLink', 'touchable', 'none'],
+        control: {type: 'select'},
+    },
+    image: {
+        options: ['fit', 'fill', 'none'],
+        control: {type: 'select'},
+    },
+};
 
 export const CustomCardSize: StoryComponent = () => {
     return (

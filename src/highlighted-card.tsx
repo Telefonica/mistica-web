@@ -9,7 +9,7 @@ import {ButtonLink} from './button';
 import {Boxed} from './boxed';
 import Dismissable, {useIsDismissable} from './dismissable';
 
-import type {RendersNullableElement, TrackingEvent} from './utils/types';
+import type {DataAttributes, RendersNullableElement, TrackingEvent} from './utils/types';
 import type {NullableButtonElement} from './button';
 
 const useStyles = createUseStyles((theme) => ({
@@ -60,6 +60,7 @@ interface CommonProps {
     children?: void;
     'aria-label'?: string;
     width?: string | number;
+    dataAttributes?: DataAttributes;
 }
 interface BasicProps extends CommonProps {
     button?: undefined;
@@ -105,7 +106,7 @@ const Content: React.FC<Props> = (props) => {
     const isDismissable = useIsDismissable();
 
     const content = (
-        <Boxed isInverse={isInverse} className={classes.container}>
+        <Boxed isInverse={isInverse} className={classes.container} dataAttributes={props.dataAttributes}>
             <div
                 // don't create another region when the Content is inside a Dismissable wrapper
                 role={!isDismissable ? 'region' : undefined}

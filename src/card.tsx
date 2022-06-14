@@ -100,12 +100,16 @@ type MaybeSectionProps = {
     className?: string;
 };
 
-const MaybeSection = ({'aria-label': ariaLabel, className}: MaybeSectionProps) => {
+const MaybeSection = ({'aria-label': ariaLabel, className, children}: MaybeSectionProps) => {
     const isDismissable = useIsDismissable();
     if (isDismissable) {
-        return <div className={className} />;
+        return <div className={className}>{children}</div>;
     } else {
-        return <section className={className} aria-label={ariaLabel} />;
+        return (
+            <section className={className} aria-label={ariaLabel}>
+                {children}
+            </section>
+        );
     }
 };
 
