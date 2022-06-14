@@ -39,6 +39,12 @@ export const isIos = (platformOverrides: Theme['platformOverrides']): boolean =>
     return false;
 };
 
+/**
+ * Returns true if the browser is a safari browser:
+ * webview, mobile, desktop or a browser like Chrome for iOS which is just a safari with a skin
+ */
+export const isSafari = (): boolean => navigator.vendor.includes('Apple');
+
 export const isFirefox = (platformOverrides?: Theme['platformOverrides']): boolean =>
     !!getUserAgent(platformOverrides).match(/Firefox\/([0-9]+)\./);
 
