@@ -13,7 +13,7 @@ import Image, {DisableBorderRadiusProvider} from './image';
 import MaybeDismissable, {useIsDismissable} from './maybe-dismissable';
 import Touchable from './touchable';
 
-import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
+import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEvent} from './utils/types';
 
 const useCardContentStyles = createUseStyles(() => ({
     actions: {
@@ -309,6 +309,7 @@ interface SnapCardBaseProps {
     'aria-label'?: string;
     extra?: React.ReactNode;
     isInverse?: boolean;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     children?: void;
 }
 
