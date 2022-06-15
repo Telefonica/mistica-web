@@ -16,6 +16,8 @@ declare export var isIos: (
 /**
  * Returns true if the browser is a safari browser:
  * webview, mobile, desktop or a browser like Chrome for iOS which is just a safari with a skin
+ *
+ * Note that this function checks the navigator vendor. It doesn't use platformOverrides or userAgent.
  */
 declare export var isSafari: () => boolean;
 declare export var isFirefox: (
