@@ -7,7 +7,7 @@ import {useTheme} from './hooks';
 import {Text4, Text2} from './text';
 import {ButtonLink} from './button';
 import {Boxed} from './boxed';
-import Dismissable, {useIsDismissable} from './dismissable';
+import MaybeDismissable, {useIsDismissable} from './maybe-dismissable';
 
 import type {DataAttributes, RendersNullableElement, TrackingEvent} from './utils/types';
 import type {NullableButtonElement} from './button';
@@ -186,12 +186,10 @@ const Content: React.FC<Props> = (props) => {
 
 const HighlightedCard: React.FC<Props> = ({'aria-label': ariaLabel, ...props}) => {
     const label = ariaLabel ?? props.title;
-    return props.onClose ? (
-        <Dismissable onClose={props.onClose} aria-label={label} width={props.width}>
-            <Content {...props} />
-        </Dismissable>
-    ) : (
-        <Content {...props} aria-label={label} />
+    return (
+        <MaybeDismissable onClose={props.onClose} aria-label={label} width={props.width}>
+            <Content {...props} aria-label={label} />
+        </MaybeDismissable>
     );
 };
 

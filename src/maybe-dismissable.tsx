@@ -38,22 +38,26 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-type DismissableProps = {
+type MaybeDismissableProps = {
     children: React.ReactNode;
-    onClose: () => void;
+    onClose?: () => void;
     width?: string | number;
     'aria-label'?: string;
 };
 
-const Dismissable: React.FC<DismissableProps> = ({
+const MaybeDismissable = ({
     children,
     width,
     onClose = () => {},
     'aria-label': ariaLabel,
-}) => {
+}: MaybeDismissableProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse, width});
     const {colors, texts} = useTheme();
+
+    if (!onClose) {
+        return <>{children}</>;
+    }
 
     return (
         <section className={classes.dismissableContainer} aria-label={ariaLabel}>
@@ -72,4 +76,4 @@ const Dismissable: React.FC<DismissableProps> = ({
     );
 };
 
-export default Dismissable;
+export default MaybeDismissable;

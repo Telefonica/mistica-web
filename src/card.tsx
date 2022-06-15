@@ -10,7 +10,7 @@ import {Boxed} from './boxed';
 import ButtonGroup from './button-group';
 import Video from './video';
 import Image, {DisableBorderRadiusProvider} from './image';
-import Dismissable, {useIsDismissable} from './dismissable';
+import MaybeDismissable, {useIsDismissable} from './maybe-dismissable';
 import Touchable from './touchable';
 
 import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
@@ -187,12 +187,10 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                 </MaybeSection>
             </Boxed>
         );
-        return onClose ? (
-            <Dismissable onClose={onClose} aria-label={ariaLabel}>
+        return (
+            <MaybeDismissable onClose={onClose} aria-label={ariaLabel}>
                 {content}
-            </Dismissable>
-        ) : (
-            content
+            </MaybeDismissable>
         );
     }
 );
@@ -263,12 +261,10 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                 </MaybeSection>
             </Boxed>
         );
-        return onClose ? (
-            <Dismissable aria-label={ariaLabel} onClose={onClose}>
+        return (
+            <MaybeDismissable aria-label={ariaLabel} onClose={onClose}>
                 {content}
-            </Dismissable>
-        ) : (
-            content
+            </MaybeDismissable>
         );
     }
 );
