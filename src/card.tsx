@@ -64,21 +64,23 @@ const CardContent: React.FC<CardContentProps> = ({
                             {renderHeadline()}
                             <Stack space={4}>
                                 {pretitle && (
-                                    <Text1 regular transform="uppercase">
+                                    <Text1 wordBreak regular transform="uppercase">
                                         {pretitle}
                                     </Text1>
                                 )}
-                                <Text4 as="h1" regular>
+                                <Text4 wordBreak as="h1" regular>
                                     {title}
                                 </Text4>
-                                <Text2 regular>{subtitle}</Text2>
+                                <Text2 wordBreak regular>
+                                    {subtitle}
+                                </Text2>
                             </Stack>
                         </Stack>
                     </header>
                 )}
 
                 {description && (
-                    <Text2 as="p" regular color={theme.colors.textSecondary}>
+                    <Text2 wordBreak as="p" regular color={theme.colors.textSecondary}>
                         {description}
                     </Text2>
                 )}
@@ -362,12 +364,12 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                             {icon && <Box paddingBottom={16}>{icon}</Box>}
                             <Stack space={4}>
                                 {title && (
-                                    <Text2 as="h1" regular>
+                                    <Text2 wordBreak as="h1" regular>
                                         {title}
                                     </Text2>
                                 )}
                                 {subtitle && (
-                                    <Text2 regular color={colors.textSecondary}>
+                                    <Text2 wordBreak regular color={colors.textSecondary}>
                                         {subtitle}
                                     </Text2>
                                 )}
