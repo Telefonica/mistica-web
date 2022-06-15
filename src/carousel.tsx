@@ -103,6 +103,9 @@ const arrowButtonStyle = (theme: Theme) => ({
 
 const useStyles = createUseStyles((theme) => ({
     carouselContainer: {
+        // This value is a workaround to solve an issue when the page is rendered in a hidden webview
+        // in that case the window size is reported as 0 and the scroll snap is placed at the wrong slide
+        minWidth: 64,
         position: 'relative',
     },
     arrowButton: {

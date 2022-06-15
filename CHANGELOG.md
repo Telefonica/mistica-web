@@ -1,3 +1,105 @@
+## [11.10.2](https://github.com/Telefonica/mistica-web/compare/v11.10.1...v11.10.2) (2022-06-14)
+
+
+### Bug Fixes
+
+* **Select:** menu item horizontal padding ([#490](https://github.com/Telefonica/mistica-web/issues/490)) ([eb48eae](https://github.com/Telefonica/mistica-web/commit/eb48eae942d77e75e727512722e191bf5e3f8e0a))
+* **Text:** inherit word-break style from parent when the wordBreak prop is not set ([#493](https://github.com/Telefonica/mistica-web/issues/493)) ([38638f3](https://github.com/Telefonica/mistica-web/commit/38638f341a976aecb201f19a35fd9f96589c9e01))
+
+## [11.10.1](https://github.com/Telefonica/mistica-web/compare/v11.10.0...v11.10.1) (2022-06-09)
+
+
+### Bug Fixes
+
+* **Text:** wordBreak in old safari versions ([#489](https://github.com/Telefonica/mistica-web/issues/489)) ([c1372b5](https://github.com/Telefonica/mistica-web/commit/c1372b5b2d9d25557a0f30597362626b54533251))
+
+# [11.10.0](https://github.com/Telefonica/mistica-web/compare/v11.9.0...v11.10.0) (2022-06-06)
+
+
+### Features
+
+* **Analytics:** TrackingConfig context provider ([#486](https://github.com/Telefonica/mistica-web/issues/486)) ([afcf8d3](https://github.com/Telefonica/mistica-web/commit/afcf8d353c35d6b84352c07261fc1d1ef0fdff96))
+
+# [11.9.0](https://github.com/Telefonica/mistica-web/compare/v11.8.0...v11.9.0) (2022-05-26)
+
+
+### Bug Fixes
+
+* **Text:** word break in Safari ([#484](https://github.com/Telefonica/mistica-web/issues/484)) ([807255d](https://github.com/Telefonica/mistica-web/commit/807255d4682763c4131a0d836e158de1dbd9c25f))
+
+
+### Features
+
+* **Avatar:** new component ([#482](https://github.com/Telefonica/mistica-web/issues/482)) ([c0beee5](https://github.com/Telefonica/mistica-web/commit/c0beee519e6d2206c8198efbc9461a49970258b8))
+
+# [11.8.0](https://github.com/Telefonica/mistica-web/compare/v11.7.0...v11.8.0) (2022-05-18)
+
+
+### Features
+
+* **Image:** expose onError and onLoad. Avoid broken icon  ([#478](https://github.com/Telefonica/mistica-web/issues/478)) ([2002741](https://github.com/Telefonica/mistica-web/commit/20027410e70e14fcd25a7227ae7cd1394190f937))
+* **PasswordField:** use mistica icon for show/hide password ([#475](https://github.com/Telefonica/mistica-web/issues/475)) ([491072f](https://github.com/Telefonica/mistica-web/commit/491072f316a9b98bf32b68bafe2c26c394210c23))
+* **Title1,Title2:** new components ([#477](https://github.com/Telefonica/mistica-web/issues/477)) ([9684e4f](https://github.com/Telefonica/mistica-web/commit/9684e4f954c640dabb6292f0df158209e1548d0c))
+* **trackingEvent:** add support for new GA4 event format ([#480](https://github.com/Telefonica/mistica-web/issues/480)) ([8e3851a](https://github.com/Telefonica/mistica-web/commit/8e3851a93d87a77375d93e326fe08178a419cd29))
+
+# [11.7.0](https://github.com/Telefonica/mistica-web/compare/v11.6.0...v11.7.0) (2022-04-28)
+
+
+### Features
+
+* **Image,Video:** use original proportion when setting `aspetRatio={0}` ([#474](https://github.com/Telefonica/mistica-web/issues/474)) ([f3aef36](https://github.com/Telefonica/mistica-web/commit/f3aef363695cc12b7ea0267d70950080e5332a7c))
+
+# [11.6.0](https://github.com/Telefonica/mistica-web/compare/v11.5.1...v11.6.0) (2022-04-27)
+
+
+### Features
+
+* **ButtonLink:** allow disabled state ([#467](https://github.com/Telefonica/mistica-web/issues/467)) ([aac0b60](https://github.com/Telefonica/mistica-web/commit/aac0b6018eae714fa3c327da925c335fa36de0d8))
+* **ResponsiveLayout:** add horizontal safe area for notch or similar ([#473](https://github.com/Telefonica/mistica-web/issues/473)) ([a8fd958](https://github.com/Telefonica/mistica-web/commit/a8fd958e3a903d97e581da8d508ca8bbf43c4250))
+
+## [11.5.1](https://github.com/Telefonica/mistica-web/compare/v11.5.0...v11.5.1) (2022-04-26)
+
+
+### Bug Fixes
+
+* **Carousel:** Set min-width to workaround issue when rendered on a hidden webview ([#469](https://github.com/Telefonica/mistica-web/issues/469)) ([040e732](https://github.com/Telefonica/mistica-web/commit/040e7323b7cd745948b10131a99db2a30654c2c0))
+* **FeedbackScreen:** background color ([#470](https://github.com/Telefonica/mistica-web/issues/470)) ([a5d962f](https://github.com/Telefonica/mistica-web/commit/a5d962ff644da5fc258f158d6a8679ab75491d0f))
+
+# [11.5.0](https://github.com/Telefonica/mistica-web/compare/v11.4.1...v11.5.0) (2022-04-26)
+
+
+### Bug Fixes
+
+* **Chip:** disable user select in interactive Chips ([#466](https://github.com/Telefonica/mistica-web/issues/466)) ([576697f](https://github.com/Telefonica/mistica-web/commit/576697fe5816969652773d112000f9644cf650fa))
+
+
+### Features
+
+* **icons:** added new icons to O2 ([#459](https://github.com/Telefonica/mistica-web/issues/459)) ([0da3f71](https://github.com/Telefonica/mistica-web/commit/0da3f71b0daad79d17fd74412533731f0ff1023d))
+* **icons:** new o2 credit-card-visa icon ([#468](https://github.com/Telefonica/mistica-web/issues/468)) ([207e17f](https://github.com/Telefonica/mistica-web/commit/207e17f0bb78aa53f25cc11d404b5c1fe0885f7e))
+* **NestableContext:** export type ([#472](https://github.com/Telefonica/mistica-web/issues/472)) ([fabe902](https://github.com/Telefonica/mistica-web/commit/fabe902779df62bf88015e093235ebddb8dfd91c))
+
+## [11.4.1](https://github.com/Telefonica/mistica-web/compare/v11.4.0...v11.4.1) (2022-04-11)
+
+
+### Bug Fixes
+
+* **Row:** fix gap between right and chevron ([#465](https://github.com/Telefonica/mistica-web/issues/465)) ([fe39d81](https://github.com/Telefonica/mistica-web/commit/fe39d815f9ab85b18e1280fc4346569406cd4433))
+
+# [11.4.0](https://github.com/Telefonica/mistica-web/compare/v11.3.0...v11.4.0) (2022-04-08)
+
+
+### Bug Fixes
+
+* **dark mode:** dark constants in classic O2 ([#455](https://github.com/Telefonica/mistica-web/issues/455)) ([d44d233](https://github.com/Telefonica/mistica-web/commit/d44d2332ecb5a91de1195391de6f69019d391774))
+* **types:** make skin in ThemeConfig readonly ([#463](https://github.com/Telefonica/mistica-web/issues/463)) ([f0f72a7](https://github.com/Telefonica/mistica-web/commit/f0f72a73a0372273d4e49d9e688629ae4351c875))
+
+
+### Features
+
+* **FixedFooterLayout:** improve dark mode appearance ([#456](https://github.com/Telefonica/mistica-web/issues/456)) ([b21896c](https://github.com/Telefonica/mistica-web/commit/b21896cc651615429142cf5d966e3bbf4dbf526e))
+* **Rows:** auto center right node when needed and allow custom render function ([fe07a88](https://github.com/Telefonica/mistica-web/commit/fe07a8862d7f7e6c4c7d9276204e90820ae6e69a))
+
 # [11.3.0](https://github.com/Telefonica/mistica-web/compare/v11.2.1...v11.3.0) (2022-04-05)
 
 

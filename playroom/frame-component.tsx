@@ -31,7 +31,7 @@ const App: React.FC = ({children}) => {
 
         ${isModalOpen ? 'body {overflow-y: hidden}' : ''}
 
-        *[class^='SplashScreen__'] {
+        *[class^='_1fu0koy1'] {
             display: none;
         }
     `;

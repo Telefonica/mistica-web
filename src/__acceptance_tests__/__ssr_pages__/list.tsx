@@ -1,29 +1,20 @@
 import * as React from 'react';
-import {
-    ResponsiveLayout,
-    SectionTitle,
-    NegativeBox,
-    RowList,
-    Row,
-    AvatarPlaceholder,
-    BoxedRowList,
-    BoxedRow,
-} from '../..';
+import {ResponsiveLayout, Title1, NegativeBox, RowList, Row, Avatar, BoxedRowList, BoxedRow} from '../..';
 
 const ListTest: React.FC = () => (
     <ResponsiveLayout>
-        <SectionTitle>Simple list</SectionTitle>
+        <Title1>Simple list</Title1>
         <NegativeBox>
             <RowList>
                 <Row
-                    asset={<AvatarPlaceholder size={40} />}
+                    asset={<Avatar size={40} />}
                     title="Title"
                     description="Description"
                     onPress={() => {}}
                 />
 
                 <Row
-                    asset={<AvatarPlaceholder size={40} />}
+                    asset={<Avatar size={40} />}
                     headline="Headline"
                     title="Title"
                     subtitle="Subtitle"
@@ -33,14 +24,14 @@ const ListTest: React.FC = () => (
                 />
 
                 <Row
-                    asset={<AvatarPlaceholder size={40} />}
+                    asset={<Avatar size={40} />}
                     title="Title"
                     description="Description"
                     switch={{defaultValue: false}}
                 />
 
                 <Row
-                    asset={<AvatarPlaceholder size={40} />}
+                    asset={<Avatar size={40} />}
                     title="Title"
                     description="Description"
                     checkbox={{defaultValue: true}}
@@ -48,17 +39,17 @@ const ListTest: React.FC = () => (
             </RowList>
         </NegativeBox>
 
-        <SectionTitle>Boxed rows list</SectionTitle>
+        <Title1>Boxed rows list</Title1>
         <BoxedRowList>
             <BoxedRow
-                asset={<AvatarPlaceholder size={40} />}
+                asset={<Avatar size={40} />}
                 title="Title"
                 description="Description"
                 onPress={() => {}}
             />
 
             <BoxedRow
-                asset={<AvatarPlaceholder size={40} />}
+                asset={<Avatar size={40} />}
                 headline="Headline"
                 title="Title"
                 subtitle="Subtitle"
@@ -68,14 +59,14 @@ const ListTest: React.FC = () => (
             />
 
             <BoxedRow
-                asset={<AvatarPlaceholder size={40} />}
+                asset={<Avatar size={40} />}
                 title="Title"
                 description="Description"
                 switch={{defaultValue: false}}
             />
 
             <BoxedRow
-                asset={<AvatarPlaceholder size={40} />}
+                asset={<Avatar size={40} />}
                 title="Title"
                 description="Description"
                 checkbox={{defaultValue: true}}

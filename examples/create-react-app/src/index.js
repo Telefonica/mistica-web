@@ -4,12 +4,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {ThemeContextProvider} from '@telefonica/mistica';
+import {getMovistarSkin, ThemeContextProvider} from '@telefonica/mistica';
 
 ReactDOM.render(
     <React.StrictMode>
         <ThemeContextProvider
-            theme={{skin: 'Movistar', i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'}}}
+            theme={{
+                skin: getMovistarSkin(),
+                i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+            }}
         >
             <App />
         </ThemeContextProvider>

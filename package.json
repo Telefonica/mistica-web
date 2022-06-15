@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "11.3.0",
+    "version": "11.10.2",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -77,7 +77,7 @@
         "@swc/core": "^1.2.160",
         "@swc/jest": "^0.2.20",
         "@telefonica/acceptance-testing": "^2.7.0",
-        "@telefonica/eslint-config": "^1.0.3",
+        "@telefonica/eslint-config": "^1.0.7",
         "@telefonica/prettier-config": "^1.1.0",
         "@telefonica/ts-to-flow": "1.2.0",
         "@testing-library/jest-dom": "^5.16.3",
@@ -107,7 +107,7 @@
         "jimp": "^0.16.1",
         "lint-staged": "^12.3.7",
         "node-fetch": "^2.6.7",
-        "playroom": "^0.27.9",
+        "playroom": "^0.28.0",
         "prettier": "^2.6.1",
         "pretty-bytes": "^5.6.0",
         "prop-types": "^15.8.1",
@@ -123,7 +123,7 @@
     },
     "dependencies": {
         "@juggle/resize-observer": "^3.3.1",
-        "@tef-novum/webview-bridge": "^3.4.0",
+        "@tef-novum/webview-bridge": "^3.8.0",
         "@telefonica/libphonenumber": "^2.8.1",
         "classnames": "^2.3.1",
         "jss": "^10.9.0",

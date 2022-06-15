@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {getTextFromChildren} from './utils/common';
-import {eventActions, eventCategories} from './utils/analytics';
+import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
 
 import type {TrackingEvent, DataAttributes} from './utils/types';
 
@@ -70,21 +70,30 @@ export type TextLinkProps = HrefProps | ToProps | OnPressProps;
 const TextLink: React.FC<TextLinkProps> = ({children, className = '', small, disabled, ...props}) => {
     const classes = useStyles();
     const isInverse = useIsInverseVariant();
-
     const {formStatus} = useForm();
+    const {eventFormat} = useTrackingConfig();
+
+    const createDefaultTrackingEvent = (): TrackingEvent => {
+        if (eventFormat === 'google-analytics-4') {
+            return {
+                name: eventNames.userInteraction,
+                component_type: 'link',
+                component_copy: getTextFromChildren(children),
+            };
+        } else {
+            return {
+                category: eventCategories.userInteraction,
+                action: eventActions.linkTapped,
+                label: getTextFromChildren(children),
+            };
+        }
+    };
 
     return (
         <Touchable
             {...props}
             trackingEvent={
-                props.trackingEvent ??
-                (props.trackEvent
-                    ? {
-                          category: eventCategories.userInteraction,
-                          action: eventActions.linkTapped,
-                          label: getTextFromChildren(children),
-                      }
-                    : undefined)
+                props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined)
             }
             disabled={disabled || formStatus === 'sending'}
             className={classnames(classes.textLink, className, {

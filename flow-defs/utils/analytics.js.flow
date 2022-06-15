@@ -1,8 +1,22 @@
 // @flow
 
+import * as React from "react";
+import type { EventFormat } from "../theme";
 declare export var eventCategories: {
   +userInteraction: "user_interaction",
 };
 declare export var eventActions: {
   +linkTapped: "link_tapped",
 };
+declare export var eventNames: {
+  +userInteraction: "user_interaction",
+};
+declare type TrackingConfigProps = {
+  children: React.Node,
+  eventFormat: EventFormat,
+};
+declare export var TrackingConfig: (x: TrackingConfigProps) => React.Node;
+declare export var useTrackingConfig: () => {
+  eventFormat: EventFormat,
+};
+declare export {};

@@ -35,7 +35,7 @@ type ProviderProps = {children: React.ReactNode};
 const isObject = (object: any): object is Record<string, unknown> =>
     object !== null && typeof object === 'object' && !Array.isArray(object);
 
-type NestableContext<Value> = {
+export type NestableContext<Value> = {
     Getter: React.FC<{children: (value: Value) => React.ReactNode}>;
     Provider: React.FC<ProviderProps>;
     Setter: React.FC<{value: Value}>;

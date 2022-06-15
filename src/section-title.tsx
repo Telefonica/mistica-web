@@ -24,6 +24,9 @@ type Props = {
     as?: 'h1' | 'h2' | 'h3' | 'h4';
 };
 
+/**
+ * @deprecated use Title1 instead
+ */
 const SectionTitle: React.FC<Props> = ({children, id, right, as = 'h3'}) => {
     const classes = useStyles();
     const theme = useTheme();

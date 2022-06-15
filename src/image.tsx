@@ -23,18 +23,20 @@ const useStyles = createUseStyles(() => ({
         objectFit: 'cover',
         maxWidth: '100%',
         maxHeight: '100%',
+        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
 
         '@supports (aspect-ratio: 1 / 1)': {
-            borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
             aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
         },
         '$wrapper &': {
+            borderRadius: 0, // the wrapper sets the border radius
             position: 'absolute',
             width: '100%',
             height: '100%',
             top: 0,
             left: 0,
         },
+        opacity: ({isError}) => (isError ? 0 : 1), // to hide the broken image icon
     },
     wrapper: {
         borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
@@ -68,29 +70,38 @@ export type ImageProps = {
     /** defaults to 100% when no width and no height are given */
     width?: string | number;
     height?: string | number;
-    /** defaults to 1:1, if both width and height are given, aspectRatio is ignored */
+    /** defaults to 1:1, if both width and height are given, aspectRatio is ignored. To use original image proportions, set aspectRatio to 0  */
     aspectRatio?: AspectRatio | number;
     /** defaults to empty string */
     alt?: string;
     children?: void;
     dataAttributes?: DataAttributes;
     noBorderRadius?: boolean;
+    onError?: (event: React.SyntheticEvent) => void;
+    onLoad?: (event: React.SyntheticEvent) => void;
 };
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
-    ({aspectRatio = '1:1', alt = '', dataAttributes, noBorderRadius, src, ...props}, ref) => {
+    (
+        {aspectRatio = '1:1', alt = '', dataAttributes, noBorderRadius, src, onError, onLoad, ...props},
+        ref
+    ) => {
         const supportsAspectRatio = useSupportsAspectRatio();
         const noBorderRadiusContext = useDisableBorderRadius();
         const noBorderSetting = noBorderRadius ?? noBorderRadiusContext;
+        const [isError, setIsError] = React.useState(false);
 
-        // if width or height are numeric, we can calculate the other with the ratio without css
-        const withCssAspectRatio = typeof props.width !== 'number' && typeof props.height !== 'number';
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
+        // if width or height are numeric, we can calculate the other with the ratio without css.
+        // if aspect ratio is 0, we use the original image proportions
+        const withCssAspectRatio =
+            typeof props.width !== 'number' && typeof props.height !== 'number' && ratio !== 0;
 
         const classes = useStyles({
             noBorderRadius: noBorderSetting,
             aspectRatio: withCssAspectRatio ? ratio : undefined,
             width: props.width,
+            isError,
         });
 
         let width: number | string | undefined = props.width;
@@ -110,12 +121,22 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
         const needsWrapper = withCssAspectRatio && !supportsAspectRatio;
 
         const img = (
+            // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/309
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
             <img
                 {...getPrefixedDataAttributes(dataAttributes)}
                 ref={ref}
                 src={src}
                 className={classes.image}
                 alt={alt}
+                onError={(event) => {
+                    setIsError(true);
+                    onError?.(event);
+                }}
+                onLoad={(event) => {
+                    setIsError(false);
+                    onLoad?.(event);
+                }}
                 {...(!needsWrapper ? {width, height} : {})}
             />
         );

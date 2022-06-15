@@ -18,7 +18,7 @@ const IconMobileDeviceFilled: React.FC<IconProps> = ({color, size = 24, children
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M18.988 5.388C18.897 3.504 17.402 2 15.578 2h-6.16C7.594 2 6.1 3.504 6.008 5.388h12.98zM6 6.46h13v11.08H6V6.46zM9.418 22c-1.828 0-3.322-1.504-3.41-3.388h12.977C18.897 20.496 17.402 22 15.575 22H9.418z"
+                    d="M18.488 5.388C18.397 3.504 16.902 2 15.078 2h-6.16C7.094 2 5.6 3.504 5.508 5.388h12.98zM5.5 6.46h13v11.08h-13V6.46zM8.918 22c-1.828 0-3.322-1.504-3.41-3.388h12.977C18.397 20.496 16.902 22 15.075 22H8.918z"
                     fill={fillColor}
                 />
             </svg>

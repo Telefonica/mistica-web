@@ -206,11 +206,12 @@ export const AnchorLink: LinkComponent = ({to, innerRef, ...props}) => (
 );
 
 export type ColorScheme = 'dark' | 'light' | 'auto';
+export type EventFormat = 'universal-analytics' | 'google-analytics-4';
 
 // This is the type expected by ThemeContextProvider theme prop.
 // This config is provided by the user of the lib
 export type ThemeConfig = {
-    skin: Skin;
+    skin: Readonly<Skin>;
     colorScheme?: ColorScheme; // light by default. TODO: Change to auto by default in next major version
     i18n: {
         locale: Locale;
@@ -222,7 +223,10 @@ export type ThemeConfig = {
         userAgent?: string;
     };
     texts?: Partial<ThemeTexts>;
-    analytics?: {logEvent: (trackingEvent: TrackingEvent) => Promise<void>};
+    analytics?: {
+        logEvent: (trackingEvent: TrackingEvent) => Promise<void>;
+        eventFormat?: EventFormat;
+    };
     dimensions?: {headerMobileHeight: number};
     mediaQueries?: {
         tabletMinWidth: number;
@@ -248,7 +252,10 @@ export type Theme = {
         userAgent?: string;
     };
     texts: ThemeTexts;
-    analytics: {logEvent: (trackingEvent: TrackingEvent) => Promise<void>};
+    analytics: {
+        logEvent: (trackingEvent: TrackingEvent) => Promise<void>;
+        eventFormat: EventFormat;
+    };
     dimensions: {headerMobileHeight: number};
     mq: {
         mobile: string;

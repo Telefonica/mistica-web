@@ -87,7 +87,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     menuItem: {
         color: theme.colors.textPrimary,
-        padding: '6px 16px',
+        padding: '8px 16px',
         height: 48,
         transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
         [theme.mq.supportsHover]: {

@@ -40,6 +40,9 @@ const useStyles = createUseStyles((theme) => {
             textDecoration: (p) => p.decoration ?? 'inherit',
             letterSpacing: ({letterSpacing}) => letterSpacing,
             overflowWrap: ({wordBreak}) => (wordBreak ? 'anywhere' : 'inherit'),
+            '@supports not (overflow-wrap: anywhere)': {
+                wordBreak: ({wordBreak}) => (wordBreak ? 'break-all' : 'inherit'),
+            },
             // Needed to reset the default browser margin that adds to p, h1, h2... elements.
             margin: 0,
 
@@ -51,7 +54,10 @@ const useStyles = createUseStyles((theme) => {
         truncate: {
             '-webkit-line-clamp': lineClamp,
             lineClamp,
-            wordBreak: ({truncate}) => (truncate === 1 || truncate === true ? 'break-all' : 'normal'),
+            wordBreak: ({wordBreak}) => (wordBreak ? 'break-all' : 'normal'),
+            '@supports (overflow-wrap: anywhere)': {
+                wordBreak: ({truncate}) => (truncate === 1 || truncate === true ? 'break-all' : 'normal'),
+            },
             display: 'box',
             boxOrient: 'vertical',
             overflow: 'hidden',

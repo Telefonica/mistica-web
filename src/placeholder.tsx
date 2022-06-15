@@ -2,12 +2,6 @@ import * as React from 'react';
 import {applyAlpha} from './utils/color';
 import {useTheme} from './hooks';
 
-type AvatarPlaceholderProps = {size?: string | number};
-
-export const AvatarPlaceholder: React.FC<AvatarPlaceholderProps> = ({size = '100%'}) => (
-    <div style={{width: size, height: size, borderRadius: '50%', background: 'gray'}} />
-);
-
 type PlaceholderProps = {
     width?: string | number;
     height?: string | number;

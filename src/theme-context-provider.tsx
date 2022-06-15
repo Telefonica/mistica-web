@@ -16,6 +16,7 @@ import TabFocus from './tab-focus';
 import ModalContextProvider from './modal-context-provider';
 import {DocumentVisibilityProvider} from './utils/document-visibility';
 import {AspectRatioSupportProvider} from './utils/aspect-ratio-support';
+import {TrackingConfig} from './utils/analytics';
 
 import type {Colors} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
@@ -127,6 +128,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) =>
             },
             analytics: {
                 logEvent: () => Promise.resolve(),
+                eventFormat: 'universal-analytics',
                 ...theme.analytics,
             },
             dimensions: {
@@ -147,15 +149,17 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) =>
             <TabFocus disabled={!theme.enableTabFocus}>
                 <ModalContextProvider>
                     <ThemeContext.Provider value={contextTheme}>
-                        <AspectRatioSupportProvider>
-                            <DocumentVisibilityProvider>
-                                <AriaIdGetterContext.Provider value={getAriaId}>
-                                    <ScreenSizeContextProvider>
-                                        <DialogRoot>{children}</DialogRoot>
-                                    </ScreenSizeContextProvider>
-                                </AriaIdGetterContext.Provider>
-                            </DocumentVisibilityProvider>
-                        </AspectRatioSupportProvider>
+                        <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
+                            <AspectRatioSupportProvider>
+                                <DocumentVisibilityProvider>
+                                    <AriaIdGetterContext.Provider value={getAriaId}>
+                                        <ScreenSizeContextProvider>
+                                            <DialogRoot>{children}</DialogRoot>
+                                        </ScreenSizeContextProvider>
+                                    </AriaIdGetterContext.Provider>
+                                </DocumentVisibilityProvider>
+                            </AspectRatioSupportProvider>
+                        </TrackingConfig>
                     </ThemeContext.Provider>
                 </ModalContextProvider>
             </TabFocus>
