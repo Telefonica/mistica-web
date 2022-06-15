@@ -48,7 +48,7 @@ type MaybeDismissableProps = {
 const MaybeDismissable = ({
     children,
     width,
-    onClose = () => {},
+    onClose,
     'aria-label': ariaLabel,
 }: MaybeDismissableProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
