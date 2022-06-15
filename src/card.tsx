@@ -117,6 +117,7 @@ const MaybeSection = ({'aria-label': ariaLabel, className, children}: MaybeSecti
 const useMediaCardStyles = createUseStyles(() => ({
     boxed: {
         height: '100%',
+        width: '100%',
     },
     mediaCard: {
         display: 'flex',
