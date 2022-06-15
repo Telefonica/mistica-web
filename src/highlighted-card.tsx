@@ -53,7 +53,6 @@ interface CommonProps {
     description: string;
     imageUrl?: string;
     imageFit?: 'fit' | 'fill';
-    backgroundImageUrl?: string;
     onClose?: () => void;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     isInverse?: boolean;
