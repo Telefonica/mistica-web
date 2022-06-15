@@ -266,7 +266,7 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
         skin.colors.backgroundBrand = palette.movistarProminentBlue;
         skin.colors.navigationBarBackground = palette.movistarProminentBlue;
         skin.colors.backgroundFeedbackBottom = palette.movistarProminentBlue;
-        skin.colors.controlActivated = palette.movistarProminentBlue;
+        skin.colors.controlActivated = palette.movistarBlue;
         skin.colors.dividerInverse = palette.movistarProminentBlueDark;
     }
 
