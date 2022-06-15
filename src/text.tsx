@@ -242,7 +242,7 @@ export const Text5: React.FC<TextPresetProps> = (props) => (
         mobileLineHeight="24px"
         desktopSize={28}
         desktopLineHeight="32px"
-        weight="light"
+        weight="medium"
         {...props}
     >
         {props.children}
