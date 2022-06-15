@@ -85,7 +85,7 @@ declare export { default as Inline } from "./inline";
 declare export { default as HighlightedCard } from "./highlighted-card";
 declare export { default as Stepper } from "./stepper";
 declare export { default as ProgressBar } from "./progress-bar";
-declare export { MediaCard, DataCard } from "./card";
+declare export { MediaCard, DataCard, SnapCard } from "./card";
 declare export { default as Divider } from "./divider";
 declare export { default as Menu } from "./menu";
 declare export { default as EmptyState } from "./empty-state";

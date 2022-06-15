@@ -11,7 +11,7 @@ import {MOVISTAR_SKIN} from '../skins/constants';
 export type {ElementHandle} from '@telefonica/acceptance-testing';
 export {screen, PageApi};
 
-type StoryArgs = {[key: string]: string | number | boolean};
+export type StoryArgs = {[key: string]: string | number | boolean};
 
 const MOBILE_DEVICE_IOS_SMALL = 'MOBILE_IOS_SMALL';
 const MOBILE_DEVICE_IOS = 'MOBILE_IOS';
