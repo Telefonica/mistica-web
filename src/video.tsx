@@ -183,6 +183,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                         height,
                         backgroundImage: poster ? `url("${poster}")` : undefined,
                         backgroundSize: 'cover',
+                        backgroundPosition: '50% 50%',
                     }}
                     className={classes.wrapper}
                 >
