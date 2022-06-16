@@ -26,9 +26,13 @@ const useCardContentStyles = createUseStyles(() => ({
 type CardContentProps = {
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
+    pretitleLinesMax?: number;
     title?: string;
+    titleLinesMax?: number;
     subtitle?: string;
+    subtitleLinesMax?: number;
     description?: string;
+    descriptionLinesMax?: number;
     extra?: React.ReactNode;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
@@ -37,9 +41,13 @@ type CardContentProps = {
 const CardContent: React.FC<CardContentProps> = ({
     headline,
     pretitle,
+    pretitleLinesMax,
     title,
+    titleLinesMax,
     subtitle,
+    subtitleLinesMax,
     description,
+    descriptionLinesMax,
     extra,
     button,
     buttonLink,
@@ -64,14 +72,19 @@ const CardContent: React.FC<CardContentProps> = ({
                             {renderHeadline()}
                             <Stack space={4}>
                                 {pretitle && (
-                                    <Text1 wordBreak regular transform="uppercase">
+                                    <Text1
+                                        wordBreak
+                                        truncate={pretitleLinesMax}
+                                        regular
+                                        transform="uppercase"
+                                    >
                                         {pretitle}
                                     </Text1>
                                 )}
-                                <Text4 wordBreak as="h1" regular>
+                                <Text4 wordBreak truncate={titleLinesMax} as="h1" regular>
                                     {title}
                                 </Text4>
-                                <Text2 wordBreak regular>
+                                <Text2 wordBreak truncate={subtitleLinesMax} regular>
                                     {subtitle}
                                 </Text2>
                             </Stack>
@@ -80,7 +93,13 @@ const CardContent: React.FC<CardContentProps> = ({
                 )}
 
                 {description && (
-                    <Text2 wordBreak as="p" regular color={theme.colors.textSecondary}>
+                    <Text2
+                        wordBreak
+                        truncate={descriptionLinesMax}
+                        as="p"
+                        regular
+                        color={theme.colors.textSecondary}
+                    >
                         {description}
                     </Text2>
                 )}
@@ -139,8 +158,11 @@ type MediaCardProps = {
     media: RendersElement<typeof Image> | RendersElement<typeof Video>;
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
+    pretitleLinesMax?: number;
     title?: string;
+    titleLinesMax?: number;
     description?: string;
+    descriptionLinesMax?: number;
     extra?: React.ReactNode;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
@@ -156,8 +178,11 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             media,
             headline,
             pretitle,
+            pretitleLinesMax,
             title,
+            titleLinesMax,
             description,
+            descriptionLinesMax,
             extra,
             button,
             buttonLink,
@@ -177,8 +202,11 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                         <CardContent
                             headline={headline}
                             pretitle={pretitle}
+                            pretitleLinesMax={pretitleLinesMax}
                             title={title}
+                            titleLinesMax={titleLinesMax}
                             description={description}
+                            descriptionLinesMax={descriptionLinesMax}
                             extra={extra}
                             button={button}
                             buttonLink={buttonLink}
@@ -215,8 +243,11 @@ interface DataCardProps {
     icon?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
     title?: string;
+    titleLinesMax?: number;
     subtitle?: string;
+    subtitleLinesMax?: number;
     description?: string;
+    descriptionLinesMax?: number;
     extra?: React.ReactNode;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
@@ -233,8 +264,11 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
             icon,
             headline,
             title,
+            titleLinesMax,
             subtitle,
+            subtitleLinesMax,
             description,
+            descriptionLinesMax,
             extra,
             button,
             buttonLink,
@@ -252,8 +286,11 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                     <CardContent
                         headline={headline}
                         title={title}
+                        titleLinesMax={titleLinesMax}
                         subtitle={subtitle}
+                        subtitleLinesMax={subtitleLinesMax}
                         description={description}
+                        descriptionLinesMax={descriptionLinesMax}
                         extra={extra}
                         button={button}
                         buttonLink={buttonLink}
@@ -303,7 +340,9 @@ const useSnapCardStyles = createUseStyles((theme) => ({
 interface SnapCardBaseProps {
     icon?: React.ReactElement;
     title?: string;
+    titleLinesMax?: number;
     subtitle?: string;
+    subtitleLinesMax?: number;
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
@@ -340,7 +379,9 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
         {
             icon,
             title,
+            titleLinesMax,
             subtitle,
+            subtitleLinesMax,
             dataAttributes,
             'aria-label': ariaLabel,
             extra,
@@ -361,12 +402,17 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                             {icon && <Box paddingBottom={16}>{icon}</Box>}
                             <Stack space={4}>
                                 {title && (
-                                    <Text2 wordBreak as="h1" regular>
+                                    <Text2 wordBreak truncate={titleLinesMax} as="h1" regular>
                                         {title}
                                     </Text2>
                                 )}
                                 {subtitle && (
-                                    <Text2 wordBreak regular color={colors.textSecondary}>
+                                    <Text2
+                                        wordBreak
+                                        truncate={subtitleLinesMax}
+                                        regular
+                                        color={colors.textSecondary}
+                                    >
                                         {subtitle}
                                     </Text2>
                                 )}
