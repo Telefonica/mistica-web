@@ -58,7 +58,7 @@ const useStyles = createUseStyles((theme) => {
             '@supports (overflow-wrap: anywhere)': {
                 wordBreak: ({truncate}) => (truncate === 1 || truncate === true ? 'break-all' : 'normal'),
             },
-            display: 'box',
+            display: '-webkit-box',
             boxOrient: 'vertical',
             overflow: 'hidden',
         },
