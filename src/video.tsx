@@ -4,6 +4,7 @@ import {createUseStyles} from './jss';
 import {useSupportsAspectRatio} from './utils/aspect-ratio-support';
 import {combineRefs} from './utils/common';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {isSafari} from './utils/platform';
 
 import type {DataAttributes} from './utils/types';
 
@@ -18,6 +19,7 @@ export const RATIO = {
 
 const useStyles = createUseStyles(() => ({
     video: {
+        background: 'transparent',
         display: 'block',
         objectFit: 'cover',
         maxWidth: '100%',
@@ -145,7 +147,12 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             width = props.width || '100%';
         }
 
-        const needsWrapper = withCssAspectRatio && !supportsAspectRatio;
+        /**
+         * In safari, when using a video with poster, the transition from pause to play does a flicker,
+         * To avoid this, in Safari browsers, instead of using the poster attribute, we use a
+         * wrapper with the poster as background image
+         */
+        const needsWrapper = isSafari() || (withCssAspectRatio && !supportsAspectRatio);
 
         const video = (
             <video
@@ -156,11 +163,11 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 autoPlay={autoPlay}
                 muted={muted}
                 loop={loop}
-                {...(!needsWrapper ? {width, height} : {})}
+                {...(needsWrapper ? {} : {width, height})}
                 className={classes.video}
                 preload={preload}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
-                poster={poster || TRANSPARENT_PIXEL}
+                poster={needsWrapper ? TRANSPARENT_PIXEL : poster || TRANSPARENT_PIXEL}
                 {...getPrefixedDataAttributes(dataAttributes)}
             >
                 {sources.map(({src, type}, index) => (
@@ -170,7 +177,16 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         );
         if (needsWrapper) {
             return (
-                <div style={{width, height}} className={classes.wrapper}>
+                <div
+                    style={{
+                        width,
+                        height,
+                        backgroundImage: poster ? `url("${poster}")` : undefined,
+                        backgroundSize: 'cover',
+                        backgroundPosition: '50% 50%',
+                    }}
+                    className={classes.wrapper}
+                >
                     {video}
                 </div>
             );
