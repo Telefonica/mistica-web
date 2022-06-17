@@ -178,9 +178,6 @@ export {default as Icon5GRegular} from './generated/mistica-icons/icon-5-g-regul
 export {default as IconAcademicFilled} from './generated/mistica-icons/icon-academic-filled';
 export {default as IconAcademicLight} from './generated/mistica-icons/icon-academic-light';
 export {default as IconAcademicRegular} from './generated/mistica-icons/icon-academic-regular';
-export {default as IconAccesibilityFilled} from './generated/mistica-icons/icon-accesibility-filled';
-export {default as IconAccesibilityLight} from './generated/mistica-icons/icon-accesibility-light';
-export {default as IconAccesibilityRegular} from './generated/mistica-icons/icon-accesibility-regular';
 export {default as IconAccessoriesFilled} from './generated/mistica-icons/icon-accessories-filled';
 export {default as IconAccessoriesLight} from './generated/mistica-icons/icon-accessories-light';
 export {default as IconAccessoriesRegular} from './generated/mistica-icons/icon-accessories-regular';
@@ -784,6 +781,9 @@ export {default as IconExportLight} from './generated/mistica-icons/icon-export-
 export {default as IconExportRegular} from './generated/mistica-icons/icon-export-regular';
 export {default as IconEyeFilled} from './generated/mistica-icons/icon-eye-filled';
 export {default as IconEyeLight} from './generated/mistica-icons/icon-eye-light';
+export {default as IconEyeOffFilled} from './generated/mistica-icons/icon-eye-off-filled';
+export {default as IconEyeOffLight} from './generated/mistica-icons/icon-eye-off-light';
+export {default as IconEyeOffRegular} from './generated/mistica-icons/icon-eye-off-regular';
 export {default as IconEyeRegular} from './generated/mistica-icons/icon-eye-regular';
 export {default as IconFamilyFilled} from './generated/mistica-icons/icon-family-filled';
 export {default as IconFamilyLight} from './generated/mistica-icons/icon-family-light';
