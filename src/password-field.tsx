@@ -3,7 +3,7 @@ import {useFieldProps} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import {useTheme} from './hooks';
 import IconButton from './icon-button';
-import IconAccesibilityRegular from './generated/mistica-icons/icon-accesibility-regular';
+import IconEyeOffRegular from './generated/mistica-icons/icon-eye-off-regular';
 import IconEyeRegular from './generated/mistica-icons/icon-eye-regular';
 import {createUseStyles} from './jss';
 
@@ -49,7 +49,7 @@ const PasswordAdornment: React.FC<{
             className={classes.shadow}
             style={style}
         >
-            {isVisible ? <IconAccesibilityRegular /> : <IconEyeRegular />}
+            {isVisible ? <IconEyeOffRegular /> : <IconEyeRegular />}
         </IconButton>
     );
 };
