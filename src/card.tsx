@@ -75,6 +75,7 @@ const CardContent: React.FC<CardContentProps> = ({
                                     <Text1
                                         wordBreak
                                         truncate={pretitleLinesMax}
+                                        as="div"
                                         regular
                                         transform="uppercase"
                                     >
@@ -84,7 +85,7 @@ const CardContent: React.FC<CardContentProps> = ({
                                 <Text4 wordBreak truncate={titleLinesMax} as="h1" regular>
                                     {title}
                                 </Text4>
-                                <Text2 wordBreak truncate={subtitleLinesMax} regular>
+                                <Text2 wordBreak truncate={subtitleLinesMax} as="div" regular>
                                     {subtitle}
                                 </Text2>
                             </Stack>
@@ -412,6 +413,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                         truncate={subtitleLinesMax}
                                         regular
                                         color={colors.textSecondary}
+                                        as="p"
                                     >
                                         {subtitle}
                                     </Text2>
