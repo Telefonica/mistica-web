@@ -12,45 +12,36 @@ import {
     useTheme,
     Circle,
     Tag,
+    TagType,
 } from '..';
 import {Placeholder} from '../placeholder';
 
 export default {
     title: 'Components/Cards/DataCard',
-    argTypes: {
-        asset: {
-            options: ['icon', 'image', 'none'],
-            control: {type: 'select'},
-        },
-        headlineType: {
-            options: ['promo', 'active', 'inactive', 'success', 'warning', 'error'],
-            control: {type: 'select'},
-        },
-        actions: {
-            options: ['button', 'link', 'button and link'],
-            control: {type: 'select'},
-        },
-    },
 };
 
 type DataCardArgs = {
     asset: 'icon' | 'image' | 'none';
-    headlineType: 'promo' | 'active' | 'inactive' | 'success' | 'warning' | 'error';
+    headlineType: TagType;
     headline: string;
     title: string;
     subtitle: string;
     description: string;
+    withExtra: boolean;
     actions: 'button' | 'link' | 'button and link';
+    closable: boolean;
 };
 
 export const Default: StoryComponent<DataCardArgs> = ({
-    asset,
+    asset = 'icon',
     headline,
     headlineType,
     title,
     subtitle,
     description,
-    actions,
+    withExtra,
+    actions = 'button',
+    closable,
 }) => {
     const {colors} = useTheme();
 
@@ -75,11 +66,13 @@ export const Default: StoryComponent<DataCardArgs> = ({
 
     return (
         <DataCard
+            onClose={closable ? () => {} : undefined}
             icon={icon}
             headline={headline && <Tag type={headlineType}>{headline}</Tag>}
             title={title}
             subtitle={subtitle}
             description={description}
+            extra={withExtra ? <Placeholder /> : undefined}
             button={button}
             buttonLink={buttonLink}
             dataAttributes={{testid: 'data-card'}}
@@ -96,54 +89,24 @@ Default.args = {
     title: 'Some title',
     subtitle: 'Some subtitle',
     description: 'This is a description for the card',
+    withExtra: false,
     actions: 'button',
+    closable: false,
 };
-
-export const WithBody: StoryComponent = () => {
-    const {colors} = useTheme();
-    return (
-        <DataCard
-            headline={<Tag type="promo">Headline</Tag>}
-            title="Title"
-            subtitle="Subtitle"
-            description="Description"
-            extra={<Placeholder />}
-            icon={
-                <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconAcademicRegular />
-                </Circle>
-            }
-            button={
-                <ButtonPrimary small href="https://google.com">
-                    Action
-                </ButtonPrimary>
-            }
-            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-        />
-    );
+Default.argTypes = {
+    asset: {
+        options: ['icon', 'image', 'none'],
+        control: {type: 'select'},
+    },
+    headlineType: {
+        options: ['promo', 'active', 'inactive', 'success', 'warning', 'error'],
+        control: {type: 'select'},
+    },
+    actions: {
+        options: ['button', 'link', 'button and link', 'none'],
+        control: {type: 'select'},
+    },
 };
-
-WithBody.storyName = 'DataCard with extra content';
-
-export const WithIconImage: StoryComponent = () => {
-    return (
-        <DataCard
-            headline={<Tag type="promo">Headline</Tag>}
-            title="Title"
-            subtitle="Subtitle"
-            description="Description"
-            icon={<Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />}
-            button={
-                <ButtonPrimary small href="https://google.com">
-                    Action
-                </ButtonPrimary>
-            }
-            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-        />
-    );
-};
-
-WithIconImage.storyName = 'DataCard with icon image';
 
 const useCardGroupStyles = createUseStyles(() => ({
     group: {

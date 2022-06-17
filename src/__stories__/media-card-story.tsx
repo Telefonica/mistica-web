@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {StorySection, useTextField, useSelect} from './helpers';
 import {
     Stack,
     MediaCard,
@@ -13,6 +12,7 @@ import {
     Video,
     Image,
     Tag,
+    TagType,
 } from '..';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
@@ -25,23 +25,29 @@ const VIDEO_SRC = 'https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV
 const POSTER_SRC = 'https://i.imgur.com/aEVtKsE.jpg';
 const IMAGE_SRC = 'https://i.imgur.com/aEVtKsE.jpg';
 
-export const Default: StoryComponent = () => {
-    const tagColorNames = ['promo', 'active', 'inactive', 'success', 'warning', 'error'];
-    const [headline, headlineTextField] = useTextField('Headline', 'Priority');
-    const [headlineType, headlineTypeSelect] = useSelect('headline color', tagColorNames[0], tagColorNames);
-    const [pretitle, pretitleTextField] = useTextField('Pretitle', 'Some pretitle');
-    const [title, titleTextField] = useTextField('Title', 'Some title');
-    const [description, descriptionTextField] = useTextField(
-        'description',
-        'This is a description for the card'
-    );
-    const [actions, actionsSelect] = useSelect('actions', 'button', [
-        'button',
-        'link',
-        'button & link',
-        'none',
-    ]);
+type Args = {
+    media: 'image' | 'video';
+    headlineType: TagType;
+    headline: string;
+    pretitle: string;
+    title: string;
+    description: string;
+    withExtra: boolean;
+    actions: 'button' | 'link' | 'button and link' | 'none';
+    closable: boolean;
+};
 
+export const Default: StoryComponent<Args> = ({
+    headline,
+    headlineType,
+    pretitle,
+    title,
+    description,
+    actions = 'button',
+    withExtra,
+    closable,
+    media,
+}) => {
     const button = actions.includes('button') ? (
         <ButtonPrimary small href="https://google.com">
             Action
@@ -53,74 +59,53 @@ export const Default: StoryComponent = () => {
     ) : undefined;
 
     return (
-        <>
-            <Stack space={16}>
-                {headlineTextField}
-                {headline && headlineTypeSelect}
-                {pretitleTextField}
-                {titleTextField}
-                {descriptionTextField}
-                {actionsSelect}
-            </Stack>
-            <div data-testid="media-card">
-                <StorySection title="MediaCard">
-                    <MediaCard
-                        headline={headline && <Tag type={headlineType as never}>{headline}</Tag>}
-                        pretitle={pretitle}
-                        title={title}
-                        description={description}
-                        media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
-                        button={button}
-                        buttonLink={buttonLink}
-                    />
-                </StorySection>
-            </div>
-        </>
+        <MediaCard
+            dataAttributes={{testid: 'media-card'}}
+            headline={headline && <Tag type={headlineType}>{headline}</Tag>}
+            pretitle={pretitle}
+            title={title}
+            description={description}
+            media={
+                media === 'video' ? (
+                    <Video src={VIDEO_SRC} aspectRatio="12:5" dataAttributes={{qsysid: 'video'}} />
+                ) : (
+                    <Image aspectRatio="16:9" src={IMAGE_SRC} />
+                )
+            }
+            button={button}
+            buttonLink={buttonLink}
+            extra={withExtra ? <Placeholder /> : undefined}
+            onClose={closable ? () => {} : undefined}
+        />
     );
 };
 
 Default.storyName = 'MediaCard';
-
-export const WithBody: StoryComponent = () => {
-    return (
-        <MediaCard
-            headline={<Tag type="promo">Headline</Tag>}
-            pretitle="Pretitle"
-            title="Title"
-            description="Description"
-            extra={<Placeholder />}
-            media={<Image src={IMAGE_SRC} aspectRatio="16:9" dataAttributes={{qsysid: 'image'}} />}
-            button={
-                <ButtonPrimary small href="https://google.com">
-                    Action
-                </ButtonPrimary>
-            }
-            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-        />
-    );
+Default.args = {
+    media: 'image',
+    headlineType: 'promo',
+    headline: 'Priority',
+    pretitle: 'Some pretitle',
+    title: 'Some title',
+    description: 'This is a description for the card',
+    withExtra: false,
+    actions: 'button',
+    closable: false,
 };
-
-WithBody.storyName = 'MediaCard with body';
-
-export const WithVideo: StoryComponent = () => {
-    return (
-        <MediaCard
-            headline={<Tag type="promo">Headline</Tag>}
-            pretitle="Pretitle"
-            title="Title"
-            description="Description"
-            media={<Video src={VIDEO_SRC} aspectRatio="12:5" dataAttributes={{qsysid: 'video'}} />}
-            button={
-                <ButtonPrimary small href="https://google.com">
-                    Action
-                </ButtonPrimary>
-            }
-            buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-        />
-    );
+Default.argTypes = {
+    media: {
+        options: ['image', 'video'],
+        control: {type: 'select'},
+    },
+    headlineType: {
+        options: ['promo', 'active', 'inactive', 'success', 'warning', 'error'],
+        control: {type: 'select'},
+    },
+    actions: {
+        options: ['button', 'link', 'button and link', 'none'],
+        control: {type: 'select'},
+    },
 };
-
-WithVideo.storyName = 'MediaCard with video';
 
 const useCardGroupStyles = createUseStyles(() => ({
     group: {

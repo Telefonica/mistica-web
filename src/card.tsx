@@ -10,9 +10,10 @@ import {Boxed} from './boxed';
 import ButtonGroup from './button-group';
 import Video from './video';
 import Image, {DisableBorderRadiusProvider} from './image';
+import MaybeDismissable, {useIsDismissable} from './maybe-dismissable';
 import Touchable from './touchable';
 
-import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
+import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEvent} from './utils/types';
 
 const useCardContentStyles = createUseStyles(() => ({
     actions: {
@@ -63,21 +64,23 @@ const CardContent: React.FC<CardContentProps> = ({
                             {renderHeadline()}
                             <Stack space={4}>
                                 {pretitle && (
-                                    <Text1 regular transform="uppercase">
+                                    <Text1 wordBreak regular transform="uppercase">
                                         {pretitle}
                                     </Text1>
                                 )}
-                                <Text4 as="h1" regular>
+                                <Text4 wordBreak as="h1" regular>
                                     {title}
                                 </Text4>
-                                <Text2 regular>{subtitle}</Text2>
+                                <Text2 wordBreak regular>
+                                    {subtitle}
+                                </Text2>
                             </Stack>
                         </Stack>
                     </header>
                 )}
 
                 {description && (
-                    <Text2 as="p" regular color={theme.colors.textSecondary}>
+                    <Text2 wordBreak as="p" regular color={theme.colors.textSecondary}>
                         {description}
                     </Text2>
                 )}
@@ -94,9 +97,29 @@ const CardContent: React.FC<CardContentProps> = ({
     );
 };
 
+type MaybeSectionProps = {
+    children: React.ReactNode;
+    'aria-label'?: string;
+    className?: string;
+};
+
+const MaybeSection = ({'aria-label': ariaLabel, className, children}: MaybeSectionProps) => {
+    const isDismissable = useIsDismissable();
+    if (isDismissable) {
+        return <div className={className}>{children}</div>;
+    } else {
+        return (
+            <section className={className} aria-label={ariaLabel}>
+                {children}
+            </section>
+        );
+    }
+};
+
 const useMediaCardStyles = createUseStyles(() => ({
     boxed: {
         height: '100%',
+        width: '100%',
     },
     mediaCard: {
         display: 'flex',
@@ -122,18 +145,33 @@ type MediaCardProps = {
     button?: RendersNullableElement<typeof ButtonPrimary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
     children?: void;
+    dataAttributes?: DataAttributes;
     'aria-label'?: string;
+    onClose?: () => void;
 };
 
 export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
     (
-        {media, headline, pretitle, title, description, extra, button, buttonLink, 'aria-label': ariaLabel},
+        {
+            media,
+            headline,
+            pretitle,
+            title,
+            description,
+            extra,
+            button,
+            buttonLink,
+            dataAttributes,
+            'aria-label': ariaLabel,
+            onClose,
+        },
         ref
     ) => {
         const classes = useMediaCardStyles({media});
-        return (
-            <Boxed className={classes.boxed} ref={ref}>
-                <section className={classes.mediaCard} aria-label={ariaLabel}>
+
+        const content = (
+            <Boxed className={classes.boxed} dataAttributes={dataAttributes} ref={ref}>
+                <MaybeSection className={classes.mediaCard} aria-label={ariaLabel}>
                     <DisableBorderRadiusProvider>{media}</DisableBorderRadiusProvider>
                     <div className={classes.content}>
                         <CardContent
@@ -146,8 +184,13 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                             buttonLink={buttonLink}
                         />
                     </div>
-                </section>
+                </MaybeSection>
             </Boxed>
+        );
+        return (
+            <MaybeDismissable onClose={onClose} aria-label={ariaLabel}>
+                {content}
+            </MaybeDismissable>
         );
     }
 );
@@ -155,6 +198,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
 const useDataCardStyles = createUseStyles(() => ({
     boxed: {
         height: '100%',
+        width: '100%',
     },
     dataCard: {
         display: 'flex',
@@ -180,6 +224,7 @@ interface DataCardProps {
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
+    onClose?: () => void;
 }
 
 export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
@@ -195,13 +240,14 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
             buttonLink,
             dataAttributes,
             'aria-label': ariaLabel,
+            onClose,
         },
         ref
     ) => {
         const classes = useDataCardStyles();
-        return (
+        const content = (
             <Boxed className={classes.boxed} dataAttributes={dataAttributes} ref={ref}>
-                <section className={classes.dataCard} aria-label={ariaLabel}>
+                <MaybeSection className={classes.dataCard} aria-label={ariaLabel}>
                     {icon && <Box paddingBottom={16}>{icon}</Box>}
                     <CardContent
                         headline={headline}
@@ -212,8 +258,13 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                         button={button}
                         buttonLink={buttonLink}
                     />
-                </section>
+                </MaybeSection>
             </Boxed>
+        );
+        return (
+            <MaybeDismissable aria-label={ariaLabel} onClose={onClose}>
+                {content}
+            </MaybeDismissable>
         );
     }
 );
@@ -258,6 +309,7 @@ interface SnapCardBaseProps {
     'aria-label'?: string;
     extra?: React.ReactNode;
     isInverse?: boolean;
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     children?: void;
 }
 
@@ -309,12 +361,12 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                             {icon && <Box paddingBottom={16}>{icon}</Box>}
                             <Stack space={4}>
                                 {title && (
-                                    <Text2 as="h1" regular>
+                                    <Text2 wordBreak as="h1" regular>
                                         {title}
                                     </Text2>
                                 )}
                                 {subtitle && (
-                                    <Text2 regular color={colors.textSecondary}>
+                                    <Text2 wordBreak regular color={colors.textSecondary}>
                                         {subtitle}
                                     </Text2>
                                 )}

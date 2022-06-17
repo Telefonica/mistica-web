@@ -44,8 +44,9 @@ test('DataCard group', async () => {
 
 test('DataCard with extra content', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-datacard--with-body',
+        id: 'components-cards-datacard--default',
         device: 'MOBILE_IOS',
+        args: {withExtra: true},
     });
 
     const image = await page.screenshot({fullPage: true});

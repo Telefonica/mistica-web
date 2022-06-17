@@ -9,6 +9,7 @@ import type {
   DataAttributes,
   RendersElement,
   RendersNullableElement,
+  TrackingEvent,
 } from "./utils/types";
 declare type MediaCardProps = {
   media: RendersElement<typeof Image> | RendersElement<typeof Video>,
@@ -19,7 +20,9 @@ declare type MediaCardProps = {
   extra?: React.Node,
   button?: RendersNullableElement<typeof ButtonPrimary>,
   buttonLink?: RendersNullableElement<typeof ButtonLink>,
+  dataAttributes?: DataAttributes,
   "aria-label"?: string,
+  onClose?: () => void,
 };
 declare export var MediaCard: React.AbstractComponent<MediaCardProps, HTMLDivElement>;
 declare type DataCardProps = {
@@ -39,6 +42,7 @@ declare type DataCardProps = {
    */
   dataAttributes?: DataAttributes,
   "aria-label"?: string,
+  onClose?: () => void,
 };
 declare export var DataCard: React.AbstractComponent<DataCardProps, HTMLDivElement>;
 declare type SnapCardBaseProps = {
@@ -52,6 +56,7 @@ declare type SnapCardBaseProps = {
   "aria-label"?: string,
   extra?: React.Node,
   isInverse?: boolean,
+  trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
 };
 declare type SnapCardToProps = {
   ...$Exact<SnapCardBaseProps>,

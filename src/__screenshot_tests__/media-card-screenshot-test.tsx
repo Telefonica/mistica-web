@@ -44,8 +44,12 @@ test('MediaCard group', async () => {
 
 test('MediaCard with body ', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-mediacard--with-body',
+        id: 'components-cards-mediacard--default',
         device: 'MOBILE_IOS',
+        args: {
+            withExtra: true,
+            actions: 'button and link',
+        },
     });
 
     const image = await page.screenshot({fullPage: true});

@@ -3,15 +3,13 @@ import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 import Box from './box';
 import Touchable from './touchable';
-import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import {applyAlpha} from './utils/color';
 import {useTheme} from './hooks';
 import {Text4, Text2} from './text';
-import IconButton from './icon-button';
 import {ButtonLink} from './button';
 import {Boxed} from './boxed';
+import MaybeDismissable, {useIsDismissable} from './maybe-dismissable';
 
-import type {RendersNullableElement, TrackingEvent} from './utils/types';
+import type {DataAttributes, RendersNullableElement, TrackingEvent} from './utils/types';
 import type {NullableButtonElement} from './button';
 
 const useStyles = createUseStyles((theme) => ({
@@ -28,32 +26,6 @@ const useStyles = createUseStyles((theme) => ({
         width: 100,
         minWidth: 100,
         height: 'inherit',
-    },
-    dismissableContainer: {
-        position: 'relative',
-        display: 'flex',
-        flexShrink: 0,
-        width: ({width}) => width || '100%',
-    },
-    dismissableButton: {
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        width: 48,
-        height: 48,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    dismissableCircleContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 24,
-        height: 24,
-        margin: '0 0 8px 8px',
-        borderRadius: '50%',
-        backgroundColor: applyAlpha(theme.colors.background, 0.7),
     },
     textContainer: {
         paddingLeft: 16,
@@ -76,46 +48,18 @@ const useStyles = createUseStyles((theme) => ({
     },
 }));
 
-type DismissableProps = {
-    children: React.ReactNode;
-    onClose?: () => void;
-    width?: string | number;
-};
-
-const Dismissable: React.FC<DismissableProps> = ({children, width, onClose = () => {}}) => {
-    const isInverse = useIsInverseVariant();
-    const classes = useStyles({isInverse, width});
-    const {colors, texts} = useTheme();
-
-    return (
-        <section className={classes.dismissableContainer}>
-            {children}
-            <IconButton
-                className={classes.dismissableButton}
-                onPress={onClose}
-                aria-label={texts.closeButtonLabel}
-                style={{display: 'flex', width: 48, height: 48}}
-            >
-                <div className={classes.dismissableCircleContainer}>
-                    <IconCloseRegular color={colors.neutralHigh} />
-                </div>
-            </IconButton>
-        </section>
-    );
-};
-
 interface CommonProps {
     title: string;
     description: string;
     imageUrl?: string;
     imageFit?: 'fit' | 'fill';
-    backgroundImageUrl?: string;
     onClose?: () => void;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     isInverse?: boolean;
     children?: void;
     'aria-label'?: string;
     width?: string | number;
+    dataAttributes?: DataAttributes;
 }
 interface BasicProps extends CommonProps {
     button?: undefined;
@@ -158,16 +102,20 @@ const Content: React.FC<Props> = (props) => {
     const isInverse = props.isInverse ?? isInverseOutside;
     const classes = useStyles({isInverse, hasImage: !!imageUrl, width: props.width});
     const theme = useTheme();
+    const isDismissable = useIsDismissable();
 
     const content = (
-        <Boxed isInverse={isInverse} className={classes.container}>
+        <Boxed isInverse={isInverse} className={classes.container} dataAttributes={props.dataAttributes}>
             <div
                 // don't create another region when the Content is inside a Dismissable wrapper
-                role={props['aria-label'] ? 'region' : undefined}
+                role={!isDismissable ? 'region' : undefined}
                 className={classes.textContainer}
-                aria-label={props['aria-label']}
+                // aria-label is already in Dismisable wrapper
+                aria-label={!isDismissable ? props['aria-label'] : undefined}
             >
-                <Text4 regular>{title}</Text4>
+                <Text4 as="h1" regular>
+                    {title}
+                </Text4>
                 <Box paddingTop={8}>
                     <Text2 regular color={theme.colors.textSecondary}>
                         {description}
@@ -237,12 +185,10 @@ const Content: React.FC<Props> = (props) => {
 
 const HighlightedCard: React.FC<Props> = ({'aria-label': ariaLabel, ...props}) => {
     const label = ariaLabel ?? props.title;
-    return props.onClose ? (
-        <Dismissable onClose={props.onClose} aria-label={label} width={props.width}>
-            <Content {...props} />
-        </Dismissable>
-    ) : (
-        <Content {...props} aria-label={label} />
+    return (
+        <MaybeDismissable onClose={props.onClose} aria-label={label} width={props.width}>
+            <Content {...props} aria-label={label} />
+        </MaybeDismissable>
     );
 };
 

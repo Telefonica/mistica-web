@@ -2,19 +2,23 @@
 
 import * as React from "react";
 import { ButtonLink } from "./button";
-import type { RendersNullableElement, TrackingEvent } from "./utils/types";
+import type {
+  DataAttributes,
+  RendersNullableElement,
+  TrackingEvent,
+} from "./utils/types";
 import type { NullableButtonElement } from "./button";
 declare type CommonProps = {
   title: string,
   description: string,
   imageUrl?: string,
   imageFit?: "fit" | "fill",
-  backgroundImageUrl?: string,
   onClose?: () => void,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   isInverse?: boolean,
   "aria-label"?: string,
   width?: string | number,
+  dataAttributes?: DataAttributes,
 };
 declare type BasicProps = { ...$Exact<CommonProps> };
 declare type ButtonProps = {
