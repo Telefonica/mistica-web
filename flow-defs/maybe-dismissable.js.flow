@@ -1,0 +1,12 @@
+// @flow
+
+import * as React from "react";
+declare export var useIsDismissable: () => boolean;
+declare type MaybeDismissableProps = {
+  children: React.Node,
+  onClose?: () => void,
+  width?: string | number,
+  "aria-label"?: string,
+};
+declare var MaybeDismissable: (x: MaybeDismissableProps) => React.Node;
+declare export default typeof MaybeDismissable;

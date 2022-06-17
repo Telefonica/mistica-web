@@ -10,7 +10,7 @@ const menuSnippet = {
     <Menu
       width={400}
       renderTarget={({ ref, onPress, isMenuOpen }) => (
-        <Touchable elementRef={ref} onPress={onPress} style={{ width: 100 }}>
+        <Touchable ref={ref} onPress={onPress} style={{ width: 100 }}>
           <Inline space={16}>
             <IconKebabMenuLight />
             <Text3 regular>{isMenuOpen ? "Close" : "Open"}</Text3>
@@ -626,6 +626,22 @@ const cardSnippets: Array<Snippet> = [
                 </ButtonPrimary>
             }
             buttonLink={<ButtonLink onPress={() => {}}>Link</ButtonLink>}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'SnapCard',
+        code: `
+        <SnapCard
+            title="Title"
+            subtitle="Subtitle"
+            icon={
+              <Circle size={40} backgroundColor={colors.brand}>
+                  <ThemeVariant isInverse>
+                      <IconAcademicRegular />
+                  </ThemeVariant>
+              </Circle>
+            }
         />`,
     },
 ];

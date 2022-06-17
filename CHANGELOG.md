@@ -1,3 +1,18 @@
+## [11.10.2](https://github.com/Telefonica/mistica-web/compare/v11.10.1...v11.10.2) (2022-06-14)
+
+
+### Bug Fixes
+
+* **Select:** menu item horizontal padding ([#490](https://github.com/Telefonica/mistica-web/issues/490)) ([eb48eae](https://github.com/Telefonica/mistica-web/commit/eb48eae942d77e75e727512722e191bf5e3f8e0a))
+* **Text:** inherit word-break style from parent when the wordBreak prop is not set ([#493](https://github.com/Telefonica/mistica-web/issues/493)) ([38638f3](https://github.com/Telefonica/mistica-web/commit/38638f341a976aecb201f19a35fd9f96589c9e01))
+
+## [11.10.1](https://github.com/Telefonica/mistica-web/compare/v11.10.0...v11.10.1) (2022-06-09)
+
+
+### Bug Fixes
+
+* **Text:** wordBreak in old safari versions ([#489](https://github.com/Telefonica/mistica-web/issues/489)) ([c1372b5](https://github.com/Telefonica/mistica-web/commit/c1372b5b2d9d25557a0f30597362626b54533251))
+
 # [11.10.0](https://github.com/Telefonica/mistica-web/compare/v11.9.0...v11.10.0) (2022-06-06)
 
 
