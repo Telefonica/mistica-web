@@ -124,6 +124,7 @@ const Content: React.FC<Props> = (props) => {
                         color={theme.colors.textSecondary}
                         wordBreak
                         truncate={props.descriptionLinesMax}
+                        as="p"
                     >
                         {description}
                     </Text2>
