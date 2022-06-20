@@ -1,6 +1,6 @@
 // @flow
 
-import { FontWeight } from "../text";
+import type { FontWeight } from "../text";
 export type SkinVariant = "prominent";
 export type KnownSkinName =
   | "Movistar"

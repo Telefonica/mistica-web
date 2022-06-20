@@ -1,4 +1,4 @@
-import {FontWeight} from '../text';
+import type {FontWeight} from '../text';
 
 export type SkinVariant = 'prominent';
 
