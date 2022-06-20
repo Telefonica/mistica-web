@@ -1,5 +1,6 @@
 // @flow
 
+import { FontWeight } from "../text";
 export type SkinVariant = "prominent";
 export type KnownSkinName =
   | "Movistar"
@@ -10,15 +11,36 @@ export type KnownSkinName =
   | "Blau";
 export type SkinName = KnownSkinName | string;
 export type GetKnownSkin = (variant?: SkinVariant) => KnownSkin;
+declare type TextPresetName =
+  | "text5"
+  | "text6"
+  | "text7"
+  | "text8"
+  | "text9"
+  | "text10";
+export type TextPresetsConfig = $ObjMapi<
+  { [k: TextPresetName]: any },
+  <preset>(preset) => {
+    weight: FontWeight,
+  }
+>;
+declare type PartialTextPresetsConfig = $ObjMapi<
+  { [k: TextPresetName]: any },
+  <preset>(preset) => {
+    weight?: FontWeight,
+  }
+>;
 export type Skin = {
   name: SkinName,
   colors: Colors,
   darkModeColors?: $Shape<Colors>,
+  textPresets?: PartialTextPresetsConfig,
 };
 export type KnownSkin = {
   name: KnownSkinName,
   colors: Colors,
   darkModeColors?: $Shape<Colors>,
+  textPresets?: PartialTextPresetsConfig,
 };
 export type Colors = {
   appBarBackground: string,
@@ -110,3 +132,4 @@ export type Colors = {
   textTagActive: string,
   textTagInactive: string,
 };
+declare export {};

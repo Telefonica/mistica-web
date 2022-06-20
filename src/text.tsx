@@ -4,6 +4,7 @@ import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 import {pxToRem} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {useTheme} from './hooks';
 
 import type {DataAttributes} from './utils/types';
 
@@ -65,7 +66,7 @@ const useStyles = createUseStyles((theme) => {
     };
 });
 
-type FontWeight = 'light' | 'regular' | 'medium';
+export type FontWeight = 'light' | 'regular' | 'medium';
 
 export interface TextPresetProps {
     color?: string;
@@ -171,83 +172,101 @@ const getRegularOrMediumWeight = (props: RegularMediumProps) =>
 const getWeight = (props: LightRegularMediumProps) =>
     (props.light && 'light') || (props.regular && 'regular') || (props.medium && 'medium');
 
-export const Text10: React.FC<TextPresetProps> = (props) => (
-    <Text
-        mobileSize={32}
-        mobileLineHeight="40px"
-        desktopSize={64}
-        desktopLineHeight="72px"
-        weight="light"
-        {...props}
-    >
-        {props.children}
-    </Text>
-);
+export const Text10: React.FC<TextPresetProps> = (props) => {
+    const {textPresets} = useTheme();
+    return (
+        <Text
+            mobileSize={32}
+            mobileLineHeight="40px"
+            desktopSize={64}
+            desktopLineHeight="72px"
+            weight={textPresets.text10.weight}
+            {...props}
+        >
+            {props.children}
+        </Text>
+    );
+};
 
-export const Text9: React.FC<TextPresetProps> = (props) => (
-    <Text
-        mobileSize={32}
-        mobileLineHeight="40px"
-        desktopSize={56}
-        desktopLineHeight="64px"
-        weight="light"
-        {...props}
-    >
-        {props.children}
-    </Text>
-);
+export const Text9: React.FC<TextPresetProps> = (props) => {
+    const {textPresets} = useTheme();
+    return (
+        <Text
+            mobileSize={32}
+            mobileLineHeight="40px"
+            desktopSize={56}
+            desktopLineHeight="64px"
+            weight={textPresets.text9.weight}
+            {...props}
+        >
+            {props.children}
+        </Text>
+    );
+};
 
-export const Text8: React.FC<TextPresetProps> = (props) => (
-    <Text
-        mobileSize={32}
-        mobileLineHeight="40px"
-        desktopSize={40}
-        desktopLineHeight="48px"
-        weight="light"
-        {...props}
-    >
-        {props.children}
-    </Text>
-);
+export const Text8: React.FC<TextPresetProps> = (props) => {
+    const {textPresets} = useTheme();
+    return (
+        <Text
+            mobileSize={32}
+            mobileLineHeight="40px"
+            desktopSize={40}
+            desktopLineHeight="48px"
+            weight={textPresets.text8.weight}
+            {...props}
+        >
+            {props.children}
+        </Text>
+    );
+};
 
-export const Text7: React.FC<TextPresetProps> = (props) => (
-    <Text
-        mobileSize={28}
-        mobileLineHeight="32px"
-        desktopSize={40}
-        desktopLineHeight="48px"
-        weight="light"
-        {...props}
-    >
-        {props.children}
-    </Text>
-);
+export const Text7: React.FC<TextPresetProps> = (props) => {
+    const {textPresets} = useTheme();
+    return (
+        <Text
+            mobileSize={28}
+            mobileLineHeight="32px"
+            desktopSize={40}
+            desktopLineHeight="48px"
+            weight={textPresets.text7.weight}
+            {...props}
+        >
+            {props.children}
+        </Text>
+    );
+};
 
-export const Text6: React.FC<TextPresetProps> = (props) => (
-    <Text
-        mobileSize={24}
-        mobileLineHeight="32px"
-        desktopSize={32}
-        desktopLineHeight="40px"
-        weight="light"
-        {...props}
-    >
-        {props.children}
-    </Text>
-);
+export const Text6: React.FC<TextPresetProps> = (props) => {
+    const {textPresets} = useTheme();
+    return (
+        <Text
+            mobileSize={24}
+            mobileLineHeight="32px"
+            desktopSize={32}
+            desktopLineHeight="40px"
+            weight={textPresets.text6.weight}
+            {...props}
+        >
+            {props.children}
+        </Text>
+    );
+};
 
-export const Text5: React.FC<TextPresetProps> = (props) => (
-    <Text
-        mobileSize={22}
-        mobileLineHeight="24px"
-        desktopSize={28}
-        desktopLineHeight="32px"
-        weight="light"
-        {...props}
-    >
-        {props.children}
-    </Text>
-);
+export const Text5: React.FC<TextPresetProps> = (props) => {
+    const {textPresets} = useTheme();
+    return (
+        <Text
+            mobileSize={22}
+            mobileLineHeight="24px"
+            desktopSize={28}
+            desktopLineHeight="32px"
+            weight={textPresets.text5.weight}
+            {...props}
+        >
+            {props.children}
+        </Text>
+    );
+};
 
 export const Text4: React.FC<LightRegularMediumProps> = (props) => (
     <Text

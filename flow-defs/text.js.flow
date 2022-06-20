@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import type { DataAttributes } from "./utils/types";
-declare type FontWeight = "light" | "regular" | "medium";
+export type FontWeight = "light" | "regular" | "medium";
 export type TextPresetProps = {
   color?: string,
   decoration?: "underline" | "line-through" | "inherit" | "none",

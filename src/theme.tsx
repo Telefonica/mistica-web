@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import type {RegionCode} from './utils/region-code';
 import type {Locale} from './utils/locale';
-import type {Skin, Colors, SkinName} from './skins/types';
+import type {Skin, Colors, SkinName, TextPresetsConfig} from './skins/types';
 import type {TrackingEvent} from './utils/types';
 
 export type ThemeTexts = typeof TEXTS_ES;
@@ -268,6 +268,7 @@ export type Theme = {
         supportsHover: string;
     };
     colors: Colors;
+    textPresets: TextPresetsConfig;
     Link: LinkComponent;
     isDarkMode: boolean;
     isIos: boolean;
