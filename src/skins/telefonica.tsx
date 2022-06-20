@@ -48,6 +48,7 @@ export const palette = {
     // specific for dark mode:
     darkModeBlack: '#191919',
     darkModeGrey: '#242424',
+    darkModeGrey6: '#313235',
 } as const;
 
 export const getTelefonicaSkin: GetKnownSkin = () => {
@@ -215,7 +216,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             inverse: palette.grey2,
             neutralHigh: palette.grey2,
             neutralMedium: palette.grey5,
-            neutralLow: palette.grey6,
+            neutralLow: palette.darkModeGrey6,
             textPrimary: palette.grey2,
             textPrimaryInverse: palette.grey2,
             textSecondary: palette.grey4,
