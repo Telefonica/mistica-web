@@ -1,3 +1,17 @@
+# [11.11.0](https://github.com/Telefonica/mistica-web/compare/v11.10.2...v11.11.0) (2022-06-20)
+
+
+### Bug Fixes
+
+* **Video:** avoid flickering when playing video in Safari ([#491](https://github.com/Telefonica/mistica-web/issues/491)) ([c17ba31](https://github.com/Telefonica/mistica-web/commit/c17ba312f466b224ffddec07a7c0d58c3bdd5c24))
+
+
+### Features
+
+* **DataCard,MediaCard,SnapCard:** allow limiting text lines ([#494](https://github.com/Telefonica/mistica-web/issues/494)) ([d3a201b](https://github.com/Telefonica/mistica-web/commit/d3a201b9a83432f34bd84fc5953eb18e2c87bd17))
+* **DataCard,MediaCard:** allow dismissable cards ([#492](https://github.com/Telefonica/mistica-web/issues/492)) ([a027fbb](https://github.com/Telefonica/mistica-web/commit/a027fbb566249936bbd79f203e6b080d7b79b39e))
+* **SnapCard:** new component ([#487](https://github.com/Telefonica/mistica-web/issues/487)) ([401a16b](https://github.com/Telefonica/mistica-web/commit/401a16ba3377094dcd7d7b70aae3016c41b77aa9))
+
 ## [11.10.2](https://github.com/Telefonica/mistica-web/compare/v11.10.1...v11.10.2) (2022-06-14)
 
 
