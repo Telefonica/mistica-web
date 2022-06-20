@@ -125,7 +125,7 @@ export const getVivoSkin: GetKnownSkin = () => {
 
             // GLOBAL
             brand: palette.vivoPurple,
-            brandDark: palette.vivoPurpleDark,
+            brandHigh: palette.vivoPurpleDark,
             inverse: palette.white,
             neutralHigh: palette.grey6,
             neutralMedium: palette.grey5,
@@ -137,7 +137,6 @@ export const getVivoSkin: GetKnownSkin = () => {
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
             textSecondaryInverse: palette.white,
-            textAmount: palette.vivoPurple,
 
             // STATES
             error: palette.pepper,
@@ -153,19 +152,16 @@ export const getVivoSkin: GetKnownSkin = () => {
             textAppBarSelected: palette.vivoPurple,
 
             // TAGS
-            tagBackgroundSuccess: palette.vivoGreenLight10,
-            tagBackgroundWarning: palette.orangeLight10,
-            tagBackgroundError: palette.pepperLight10,
-            tagBackgroundPromo: palette.vivoPurpleLight10,
-            tagBackgroundActive: palette.vivoPurpleLight10,
-            tagBackgroundInactive: palette.grey1,
+            successLow: palette.vivoGreenLight10,
+            warningLow: palette.orangeLight10,
+            errorLow: palette.pepperLight10,
+            promoLow: palette.vivoPurpleLight10,
+            brandLow: palette.vivoPurpleLight10,
 
-            textTagSuccess: palette.vivoGreenDark,
-            textTagWarning: palette.orangeDark,
-            textTagError: palette.pepperDark80,
-            textTagPromo: palette.vivoPurple,
-            textTagActive: palette.vivoPurple,
-            textTagInactive: palette.grey5,
+            successHigh: palette.vivoGreenDark,
+            warningHigh: palette.orangeDark,
+            errorHigh: palette.pepperDark80,
+            promoHigh: palette.vivoPurple,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
@@ -215,7 +211,7 @@ export const getVivoSkin: GetKnownSkin = () => {
             navigationBarDivider: palette.darkModeBlack,
             feedbackInfoBackground: palette.darkModeGrey6,
             brand: palette.vivoPurpleLight80,
-            brandDark: palette.darkModeGrey6,
+            brandHigh: palette.darkModeGrey6,
             inverse: palette.grey2,
             neutralHigh: palette.grey2,
             neutralMedium: palette.grey5,
@@ -225,7 +221,6 @@ export const getVivoSkin: GetKnownSkin = () => {
             textPrimaryInverse: palette.grey2,
             textSecondary: palette.grey4,
             textSecondaryInverse: palette.grey4,
-            textAmount: palette.vivoPurpleLight50,
             textNavigationBarPrimary: palette.grey2,
             textNavigationBarSecondary: palette.grey4,
             textNavigationSearchBarHint: palette.grey4,
@@ -234,19 +229,16 @@ export const getVivoSkin: GetKnownSkin = () => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            tagBackgroundSuccess: applyAlpha(palette.white, 0.05),
-            tagBackgroundWarning: applyAlpha(palette.white, 0.05),
-            tagBackgroundError: applyAlpha(palette.white, 0.05),
-            tagBackgroundPromo: applyAlpha(palette.white, 0.05),
-            tagBackgroundActive: applyAlpha(palette.white, 0.05),
-            tagBackgroundInactive: applyAlpha(palette.white, 0.05),
+            successLow: applyAlpha(palette.white, 0.05),
+            warningLow: applyAlpha(palette.white, 0.05),
+            errorLow: applyAlpha(palette.white, 0.05),
+            promoLow: applyAlpha(palette.white, 0.05),
+            brandLow: applyAlpha(palette.white, 0.05),
 
-            textTagSuccess: palette.vivoGreenLight30,
-            textTagWarning: palette.orangeLight40,
-            textTagError: palette.pepperLight40,
-            textTagPromo: palette.vivoPurpleLight50,
-            textTagActive: palette.vivoPurpleLight50,
-            textTagInactive: palette.grey4,
+            successHigh: palette.vivoGreenLight30,
+            warningHigh: palette.orangeLight40,
+            errorHigh: palette.pepperLight40,
+            promoHigh: palette.vivoPurpleLight50,
         },
     };
 };

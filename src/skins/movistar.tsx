@@ -139,7 +139,7 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
 
             // GLOBAL
             brand: palette.movistarBlue,
-            brandDark: palette.movistarBlue55,
+            brandHigh: palette.movistarBlue55,
             inverse: palette.white,
             neutralHigh: palette.grey6,
             neutralMedium: palette.grey5,
@@ -151,7 +151,6 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
             textSecondaryInverse: palette.white,
-            textAmount: palette.movistarBlue,
 
             // STATES
             error: palette.pepper,
@@ -167,19 +166,16 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             textAppBarSelected: palette.movistarBlue,
 
             // TAGS
-            tagBackgroundSuccess: palette.movistarGreen10,
-            tagBackgroundWarning: palette.egg10,
-            tagBackgroundError: palette.pepper10,
-            tagBackgroundPromo: palette.purple10,
-            tagBackgroundActive: palette.movistarBlue10,
-            tagBackgroundInactive: palette.grey1,
+            successLow: palette.movistarGreen10,
+            warningLow: palette.egg10,
+            errorLow: palette.pepper10,
+            promoLow: palette.purple10,
+            brandLow: palette.movistarBlue10,
 
-            textTagSuccess: palette.movistarGreen70,
-            textTagWarning: palette.egg80,
-            textTagError: palette.pepper70,
-            textTagPromo: palette.purple70,
-            textTagActive: palette.movistarBlue,
-            textTagInactive: palette.grey5,
+            successHigh: palette.movistarGreen70,
+            warningHigh: palette.egg80,
+            errorHigh: palette.pepper70,
+            promoHigh: palette.purple70,
         },
         darkModeColors: {
             brand: palette.movistarBlue, // this color needs to be in darkModeColors to revert the promient variant
@@ -226,7 +222,7 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             divider: applyAlpha(palette.white, 0.05),
             dividerInverse: applyAlpha(palette.white, 0.05),
             navigationBarDivider: palette.darkModeBlack,
-            brandDark: palette.grey6,
+            brandHigh: palette.grey6,
             inverse: palette.grey2,
             neutralHigh: palette.grey2,
             neutralMedium: palette.grey5,
@@ -235,7 +231,6 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             textPrimaryInverse: palette.grey2,
             textSecondary: palette.grey4,
             textSecondaryInverse: palette.grey4,
-            textAmount: palette.movistarBlue30,
             textNavigationBarPrimary: palette.grey2,
             textNavigationBarSecondary: palette.grey4,
             textNavigationSearchBarHint: palette.grey4, // iOS
@@ -244,19 +239,16 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            tagBackgroundSuccess: applyAlpha(palette.white, 0.05),
-            tagBackgroundWarning: applyAlpha(palette.white, 0.05),
-            tagBackgroundError: applyAlpha(palette.white, 0.05),
-            tagBackgroundPromo: applyAlpha(palette.white, 0.05),
-            tagBackgroundActive: applyAlpha(palette.white, 0.05),
-            tagBackgroundInactive: applyAlpha(palette.white, 0.05),
+            successLow: applyAlpha(palette.white, 0.05),
+            warningLow: applyAlpha(palette.white, 0.05),
+            errorLow: applyAlpha(palette.white, 0.05),
+            promoLow: applyAlpha(palette.white, 0.05),
+            brandLow: applyAlpha(palette.white, 0.05),
 
-            textTagSuccess: palette.movistarGreen40,
-            textTagWarning: palette.egg40,
-            textTagError: palette.pepper40,
-            textTagPromo: palette.purple40,
-            textTagActive: palette.movistarBlue40,
-            textTagInactive: palette.grey4,
+            successHigh: palette.movistarGreen40,
+            warningHigh: palette.egg40,
+            errorHigh: palette.pepper40,
+            promoHigh: palette.purple40,
         },
         // @todo: uncomment to apply movistar skin evolution
         // textPresets: {
@@ -271,7 +263,7 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
 
     if (variant === 'prominent') {
         skin.colors.brand = palette.movistarProminentBlue;
-        skin.colors.brandDark = palette.movistarProminentBlueDark;
+        skin.colors.brandHigh = palette.movistarProminentBlueDark;
         skin.colors.backgroundBrand = palette.movistarProminentBlue;
         skin.colors.navigationBarBackground = palette.movistarProminentBlue;
         skin.colors.backgroundFeedbackBottom = palette.movistarProminentBlue;

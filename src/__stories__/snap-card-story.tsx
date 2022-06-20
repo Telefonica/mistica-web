@@ -36,7 +36,7 @@ export const Default: StoryComponent<Args> = ({asset, title, subtitle, touchable
         icon: <IconAcademicRegular />,
         image: <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />,
         'icon in circle': (
-            <Circle size={40} backgroundColor={isInverse ? colors.brandDark : colors.brand}>
+            <Circle size={40} backgroundColor={isInverse ? colors.brandHigh : colors.brand}>
                 <ThemeVariant isInverse>
                     <IconAcademicRegular />
                 </ThemeVariant>

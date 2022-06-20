@@ -33,9 +33,9 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         userSelect: 'none',
         [mq.supportsHover]: {
             '&:hover:not($active)': {
-                borderColor: ({isDarkMode}) => (isDarkMode ? colors.background : colors.tagBackgroundActive),
+                borderColor: ({isDarkMode}) => (isDarkMode ? colors.background : colors.brandLow),
                 color: colors.controlActivated, // Giving color to icons on hover
-                backgroundColor: colors.tagBackgroundActive,
+                backgroundColor: colors.brandLow,
             },
             '&:hover > span': {
                 color: colors.controlActivated, // Giving color to text on hover
@@ -45,7 +45,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
     active: {
         borderColor: colors.controlActivated,
         color: colors.controlActivated,
-        backgroundColor: colors.tagBackgroundActive,
+        backgroundColor: colors.brandLow,
         '& > span': {
             color: colors.controlActivated,
         },

@@ -94,7 +94,8 @@ export type Colors = {
 
     // GLOBAL
     brand: string;
-    brandDark: string;
+    // brandHigh: string;
+    brandHigh: string;
     inverse: string;
     neutralHigh: string;
     neutralLow: string;
@@ -112,7 +113,6 @@ export type Colors = {
     textPrimaryInverse: string;
     textSecondary: string;
     textSecondaryInverse: string;
-    textAmount: string;
 
     // TEXT BUTTONS
     textButtonPrimary: string;
@@ -138,17 +138,13 @@ export type Colors = {
     textAppBarSelected: string;
 
     // TAGS
-    tagBackgroundSuccess: string;
-    tagBackgroundWarning: string;
-    tagBackgroundError: string;
-    tagBackgroundPromo: string;
-    tagBackgroundActive: string;
-    tagBackgroundInactive: string;
-
-    textTagSuccess: string;
-    textTagWarning: string;
-    textTagError: string;
-    textTagPromo: string;
-    textTagActive: string;
-    textTagInactive: string;
+    successLow: string;
+    warningLow: string;
+    errorLow: string;
+    promoLow: string;
+    brandLow: string;
+    successHigh: string;
+    warningHigh: string;
+    errorHigh: string;
+    promoHigh: string;
 };

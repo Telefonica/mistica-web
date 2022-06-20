@@ -146,7 +146,7 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
 
             // GLOBAL
             brand: palette.o2Blue,
-            brandDark: palette.o2Blue55,
+            brandHigh: palette.o2Blue55,
             inverse: palette.white,
             neutralHigh: palette.grey6,
             neutralLow: palette.grey3,
@@ -158,7 +158,6 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
             textSecondaryInverse: palette.white,
-            textAmount: palette.o2SkyBlue,
 
             // STATES
             error: palette.pepper,
@@ -174,19 +173,16 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             textAppBarSelected: palette.o2Blue,
 
             // TAGS
-            tagBackgroundSuccess: palette.o2Green10,
-            tagBackgroundWarning: palette.orange10,
-            tagBackgroundError: palette.pepper10,
-            tagBackgroundPromo: palette.pink10,
-            tagBackgroundActive: palette.o2Blue10,
-            tagBackgroundInactive: palette.grey1,
+            successLow: palette.o2Green10,
+            warningLow: palette.orange10,
+            errorLow: palette.pepper10,
+            promoLow: palette.pink10,
+            brandLow: palette.o2Blue10,
 
-            textTagSuccess: palette.o2Green75,
-            textTagWarning: palette.orange80,
-            textTagError: palette.pepper70,
-            textTagPromo: palette.pink60,
-            textTagActive: palette.o2Blue,
-            textTagInactive: palette.grey5,
+            successHigh: palette.o2Green75,
+            warningHigh: palette.orange80,
+            errorHigh: palette.pepper70,
+            promoHigh: palette.pink60,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
@@ -232,7 +228,7 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             navigationBarDivider: palette.darkModeBlack,
             feedbackInfoBackground: palette.darkModeGrey6,
             brand: palette.o2SkyBlue,
-            brandDark: palette.darkModeGrey6,
+            brandHigh: palette.darkModeGrey6,
             inverse: palette.grey2,
             neutralHigh: palette.grey2,
             neutralMedium: palette.grey5,
@@ -241,7 +237,6 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             textPrimaryInverse: palette.grey2,
             textSecondary: palette.grey4,
             textSecondaryInverse: palette.grey4,
-            textAmount: palette.o2SkyBlueLight45,
             textNavigationBarPrimary: palette.grey2,
             textNavigationBarSecondary: palette.grey4,
             textNavigationSearchBarHint: palette.grey4,
@@ -250,19 +245,16 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            tagBackgroundSuccess: applyAlpha(palette.white, 0.05),
-            tagBackgroundWarning: applyAlpha(palette.white, 0.05),
-            tagBackgroundError: applyAlpha(palette.white, 0.05),
-            tagBackgroundPromo: applyAlpha(palette.white, 0.05),
-            tagBackgroundActive: applyAlpha(palette.white, 0.05),
-            tagBackgroundInactive: applyAlpha(palette.white, 0.05),
+            successLow: applyAlpha(palette.white, 0.05),
+            warningLow: applyAlpha(palette.white, 0.05),
+            errorLow: applyAlpha(palette.white, 0.05),
+            promoLow: applyAlpha(palette.white, 0.05),
+            brandLow: applyAlpha(palette.white, 0.05),
 
-            textTagSuccess: palette.o2Green40,
-            textTagWarning: palette.orange40,
-            textTagError: palette.pepper40,
-            textTagPromo: palette.pink40,
-            textTagActive: palette.o2Blue30,
-            textTagInactive: palette.grey4,
+            successHigh: palette.o2Green40,
+            warningHigh: palette.orange40,
+            errorHigh: palette.pepper40,
+            promoHigh: palette.pink40,
         },
     };
 };
