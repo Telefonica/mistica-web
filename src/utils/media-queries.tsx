@@ -56,3 +56,9 @@ export const createMediaQueries = ({
     // See: https://hover-pointer-media-query.glitch.me/ and https://github.com/mui-org/material-ui/issues/15736
     supportsHover: '@media (pointer: fine), (pointer: none)',
 });
+
+/**
+ * Scopes the styles to touchable devices.
+ * See: https://stackoverflow.com/questions/12469875/how-to-code-css-media-queries-targeting-all-mobile-devices-and-tablets/42835826#42835826
+ */
+export const TOUCHABLE_ONLY = '@media (pointer: coarse), @media (hover: none)';

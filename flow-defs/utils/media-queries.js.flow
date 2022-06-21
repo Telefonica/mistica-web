@@ -15,3 +15,8 @@ declare export var createMediaQueries: (x: {
   desktopOrBigger: string,
   supportsHover: string,
 };
+/**
+ * Scopes the styles to touchable devices.
+ * See: https://stackoverflow.com/questions/12469875/how-to-code-css-media-queries-targeting-all-mobile-devices-and-tablets/42835826#42835826
+ */
+declare export var TOUCHABLE_ONLY: "@media (pointer: coarse), @media (hover: none)";

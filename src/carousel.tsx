@@ -14,6 +14,7 @@ import {DisableBorderRadiusProvider} from './image';
 import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 import {isAndroid} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
+import {TOUCHABLE_ONLY} from './utils/media-queries';
 
 import type {DataAttributes} from './utils/types';
 import type {Theme} from './theme';
@@ -96,7 +97,7 @@ const arrowButtonStyle = (theme: Theme) => ({
         opacity: 0,
     },
     // don't show carrousel arrow buttons in touch devices, just regular horizontal scroll
-    '@media (pointer: coarse)': {
+    [TOUCHABLE_ONLY]: {
         display: 'none',
     },
 });
