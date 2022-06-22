@@ -1,6 +1,5 @@
 // @flow
 
-import type { FontWeight } from "../text";
 export type SkinVariant = "prominent";
 export type KnownSkinName =
   | "Movistar"
@@ -11,6 +10,7 @@ export type KnownSkinName =
   | "Blau";
 export type SkinName = KnownSkinName | string;
 export type GetKnownSkin = (variant?: SkinVariant) => KnownSkin;
+export type FontWeight = "light" | "regular" | "medium";
 declare type TextPresetName =
   | "text5"
   | "text6"
