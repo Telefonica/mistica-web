@@ -1,3 +1,10 @@
+## [11.11.1](https://github.com/Telefonica/mistica-web/compare/v11.11.0...v11.11.1) (2022-06-22)
+
+
+### Bug Fixes
+
+* **MediaQuery:** Improve media query for touchable-only devices ([#496](https://github.com/Telefonica/mistica-web/issues/496)) ([927a103](https://github.com/Telefonica/mistica-web/commit/927a1032ec4f14d615acae0103a1985155180726))
+
 # [11.11.0](https://github.com/Telefonica/mistica-web/compare/v11.10.2...v11.11.0) (2022-06-20)
 
 
