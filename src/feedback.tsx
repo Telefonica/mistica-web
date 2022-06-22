@@ -37,6 +37,9 @@ const useStyles = createUseStyles((theme) => ({
     background: {
         background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : 'initial'),
     },
+    desktopBoxed: {
+        borderRadius: 16,
+    },
     desktopContainer: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -182,7 +185,7 @@ const renderFeedbackBody = (
             >
                 <Text6 as="h1">{title}</Text6>
                 {normalizedDescription && (
-                    <Text4 light color={colors.textSecondary}>
+                    <Text4 regular color={colors.textSecondary}>
                         {normalizedDescription}
                     </Text4>
                 )}
@@ -215,7 +218,7 @@ const renderFeedbackInDesktop = ({
     imageUrl?: string;
     dataAttributes?: DataAttributes;
 }) => (
-    <Boxed isInverse={isInverse} dataAttributes={dataAttributes}>
+    <Boxed className={classes.desktopBoxed} isInverse={isInverse} dataAttributes={dataAttributes}>
         <div className={classes.desktopContainer}>
             <div className={classes.desktopContent}>
                 <Box padding={64}>{inlineFeedbackBody}</Box>

@@ -34,7 +34,9 @@ const useStyles = createUseStyles((theme) => ({
         paddingRight: ({hasImage}) => (hasImage ? 8 : 56),
 
         [theme.mq.desktopOrBigger]: {
-            padding: 24,
+            paddingLeft: 24,
+            paddingTop: 32,
+            paddingBottom: 32,
             paddingRight: ({hasImage}) => (hasImage ? 24 : 56),
         },
         display: 'flex',

@@ -36,7 +36,7 @@ const useStyles = createUseStyles((theme) => ({
         minWidth: SNACKBAR_MIN_WIDTH,
         minHeight: SNACKBAR_MIN_HEIGHT,
         padding: `${PADDING_Y}px ${PADDING_X}px`,
-        borderRadius: 4,
+        borderRadius: 8,
         position: 'fixed',
         bottom: 24,
         zIndex: 1000, // above anything

@@ -184,7 +184,7 @@ const useFieldContainerStyles = createUseStyles((theme) => ({
     border: {
         overflow: 'hidden',
         border: `1px solid ${theme.colors.border}`,
-        borderRadius: 4,
+        borderRadius: 8,
         height: ({multiline}) => (multiline ? 152 : 60),
         [theme.mq.tabletOrSmaller]: {
             height: ({multiline}) => (multiline ? 152 : 56),

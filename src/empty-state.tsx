@@ -18,7 +18,9 @@ const useStyles = createUseStyles((theme) => ({
             maxWidth: 368,
         },
     },
-
+    desktopBoxed: {
+        borderRadius: 16,
+    },
     desktopContainer: {
         display: 'flex',
         justifyContent: 'spaceBetween',
@@ -142,7 +144,12 @@ const EmptyState: React.FC<Props> = ({
     }
 
     return (
-        <Boxed aria-label={ariaLabel} role="region" dataAttributes={dataAttributes}>
+        <Boxed
+            aria-label={ariaLabel}
+            role="region"
+            dataAttributes={dataAttributes}
+            className={classes.desktopBoxed}
+        >
             <div className={classes.desktopContainer}>
                 <div className={classes.desktopContent}>
                     <Box padding={64}>

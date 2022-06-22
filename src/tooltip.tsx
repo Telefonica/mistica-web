@@ -79,7 +79,7 @@ const useStyles = createUseStyles((theme) => {
             backgroundColor: theme.colors.background,
             zIndex: 12,
             border: `1px solid ${theme.colors.divider}`,
-            borderRadius: 2,
+            borderRadius: 8,
         },
         title: {
             margin: 0,

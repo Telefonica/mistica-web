@@ -24,11 +24,11 @@ const useStyles = createUseStyles((theme) => ({
         },
     },
     iconContainer: {
-        width: 80,
-        height: 80,
+        width: 56,
+        height: 56,
         [theme.mq.tabletOrSmaller]: {
-            width: 64,
-            height: 64,
+            width: 48,
+            height: 48,
         },
     },
 }));

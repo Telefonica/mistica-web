@@ -66,7 +66,7 @@ const useStylesModalDialog = createUseStyles((theme) => ({
     },
     modalContent: {
         background: theme.colors.background,
-        borderRadius: 4,
+        borderRadius: 8,
         animation: '$fadeScale .2s ease-in-out',
         willChange: 'transform, opacity',
         transition: 'opacity .2s ease-in-out, transform .2s ease-in-out',

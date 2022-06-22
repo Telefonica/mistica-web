@@ -24,7 +24,7 @@ const BORDER_PX = 1.5;
 const SPINNER_MARGIN_PX = 8;
 const X_PADDING_PX = 16 - BORDER_PX;
 const Y_PADDING_PX = 12 - BORDER_PX;
-const X_SMALL_PADDING_PX = 8 - BORDER_PX;
+const X_SMALL_PADDING_PX = 12 - BORDER_PX;
 const Y_SMALL_PADDING_PX = 6 - BORDER_PX;
 
 const commonClasses = () => ({
