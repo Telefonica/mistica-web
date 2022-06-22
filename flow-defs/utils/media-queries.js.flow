@@ -1,11 +1,6 @@
 // @flow
 
-declare export var createMediaQueries: (x: {
-  tabletMinWidth: number,
-  desktopMinWidth: number,
-  largeDesktopMinWidth: number,
-  desktopOrTabletMinHeight: number,
-}) => {
+export type MediaQueries = $ReadOnly<{
   mobile: string,
   tablet: string,
   desktop: string,
@@ -14,4 +9,11 @@ declare export var createMediaQueries: (x: {
   tabletOrSmaller: string,
   desktopOrBigger: string,
   supportsHover: string,
-};
+  touchableOnly: string,
+}>;
+declare export var createMediaQueries: (x: {
+  tabletMinWidth: number,
+  desktopMinWidth: number,
+  largeDesktopMinWidth: number,
+  desktopOrTabletMinHeight: number,
+}) => MediaQueries;

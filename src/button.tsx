@@ -116,7 +116,7 @@ const usePrimaryButtonStyles = createUseStyles((theme) => ({
         // Must be always declared for Firefox
         '&:hover:not([disabled])': {
             backgroundColor: theme.colors.buttonPrimaryBackgroundHover,
-            '@media (pointer: coarse)': {
+            [theme.mq.touchableOnly]: {
                 // Revert hover background in touch devices
                 backgroundColor: theme.colors.buttonPrimaryBackground,
             },
@@ -135,7 +135,7 @@ const usePrimaryButtonStyles = createUseStyles((theme) => ({
         '&:hover:not([disabled])': {
             color: theme.colors.textButtonPrimaryInverseSelected,
             backgroundColor: theme.colors.buttonPrimaryBackgroundSelectedInverse,
-            '@media (pointer: coarse)': {
+            [theme.mq.touchableOnly]: {
                 color: theme.colors.textButtonPrimaryInverse,
                 backgroundColor: theme.colors.buttonPrimaryBackgroundInverse,
             },
@@ -165,7 +165,7 @@ const useSecondaryButtonStyles = createUseStyles((theme) => ({
         '&[disabled]:not($isLoading)': disabledStyle,
         '&:hover:not([disabled])': {
             ...buttonSecondaryHoverLightStyle(theme),
-            '@media (pointer: coarse)': {
+            [theme.mq.touchableOnly]: {
                 ...buttonSecondaryLightStyle(theme),
             },
         },
@@ -183,7 +183,7 @@ const useSecondaryButtonStyles = createUseStyles((theme) => ({
         '&:hover:not([disabled])': {
             borderColor: theme.colors.buttonSecondaryBorderSelectedInverse,
             color: theme.colors.textButtonSecondaryInverseSelected,
-            '@media (pointer: coarse)': {
+            [theme.mq.touchableOnly]: {
                 borderColor: theme.colors.buttonSecondaryBorderInverse,
                 color: theme.colors.textButtonSecondaryInverse,
             },
@@ -204,7 +204,7 @@ const dangerButtonStyles = (theme: Theme) => ({
 
     '&:hover:not([disabled])': {
         backgroundColor: theme.colors.buttonDangerBackgroundHover,
-        '@media (pointer: coarse)': {
+        [theme.mq.touchableOnly]: {
             // Revert hover background in touch devices
             backgroundColor: theme.colors.buttonDangerBackground,
         },
@@ -452,7 +452,7 @@ const useButtonLinkStyles = createUseStyles((theme) => {
             },
             '&:hover:not([disabled])': {
                 backgroundColor: theme.colors.buttonLinkBackgroundSelected,
-                '@media (pointer: coarse)': {
+                [theme.mq.touchableOnly]: {
                     backgroundColor: 'initial',
                 },
             },
@@ -465,7 +465,7 @@ const useButtonLinkStyles = createUseStyles((theme) => {
             },
             '&:hover:not([disabled])': {
                 backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
-                '@media (pointer: coarse)': {
+                [theme.mq.touchableOnly]: {
                     backgroundColor: 'initial',
                 },
             },
