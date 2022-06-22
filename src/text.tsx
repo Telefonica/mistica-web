@@ -6,6 +6,7 @@ import {pxToRem} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {useTheme} from './hooks';
 
+import type {FontWeight} from './skins/types';
 import type {DataAttributes} from './utils/types';
 
 const useStyles = createUseStyles((theme) => {
@@ -65,8 +66,6 @@ const useStyles = createUseStyles((theme) => {
         },
     };
 });
-
-export type FontWeight = 'light' | 'regular' | 'medium';
 
 export interface TextPresetProps {
     color?: string;
