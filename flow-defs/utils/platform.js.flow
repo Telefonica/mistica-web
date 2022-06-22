@@ -22,7 +22,7 @@ declare export var isIos: (
 declare export var isSafari: () => boolean;
 declare export var isFirefox: (
   platformOverrides?: {
-    platform?: "ios" | "android" | "desktop" | void,
+    platform?: "desktop" | "ios" | "android" | void,
     insideNovumNativeApp?: boolean | void,
     userAgent?: string | void,
   } | void

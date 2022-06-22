@@ -1,3 +1,15 @@
+export type MediaQueries = Readonly<{
+    mobile: string;
+    tablet: string;
+    desktop: string;
+    largeDesktop: string;
+    tabletOrBigger: string;
+    tabletOrSmaller: string;
+    desktopOrBigger: string;
+    supportsHover: string;
+    touchableOnly: string;
+}>;
+
 export const createMediaQueries = ({
     desktopOrTabletMinHeight,
     tabletMinWidth,
@@ -8,16 +20,7 @@ export const createMediaQueries = ({
     desktopMinWidth: number;
     largeDesktopMinWidth: number;
     desktopOrTabletMinHeight: number;
-}): {
-    mobile: string;
-    tablet: string;
-    desktop: string;
-    largeDesktop: string;
-    tabletOrBigger: string;
-    tabletOrSmaller: string;
-    desktopOrBigger: string;
-    supportsHover: string;
-} => ({
+}): MediaQueries => ({
     mobile:
         `@media only screen and (max-width: ${tabletMinWidth - 1}px), ` +
         `(max-height: ${desktopOrTabletMinHeight - 1}px)`,
@@ -55,10 +58,10 @@ export const createMediaQueries = ({
     // WARNING: you may be tempted to use @media (hover: hover) instead, but that doesn't work as expected in some android browsers.
     // See: https://hover-pointer-media-query.glitch.me/ and https://github.com/mui-org/material-ui/issues/15736
     supportsHover: '@media (pointer: fine), (pointer: none)',
-});
 
-/**
- * Scopes the styles to touchable devices.
- * See: https://stackoverflow.com/questions/12469875/how-to-code-css-media-queries-targeting-all-mobile-devices-and-tablets/42835826#42835826
- */
-export const TOUCHABLE_ONLY = '@media (pointer: coarse), @media (hover: none)';
+    /**
+     * Scopes the styles to touchable devices.
+     * See: https://stackoverflow.com/questions/12469875/how-to-code-css-media-queries-targeting-all-mobile-devices-and-tablets/42835826#42835826
+     */
+    touchableOnly: '@media (pointer: coarse), @media (hover: none)',
+});

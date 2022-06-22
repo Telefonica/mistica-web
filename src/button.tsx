@@ -11,7 +11,6 @@ import Box from './box';
 import {getTextFromChildren} from './utils/common';
 import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
 import {useTheme} from './hooks';
-import {TOUCHABLE_ONLY} from './utils/media-queries';
 
 import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
@@ -117,7 +116,7 @@ const usePrimaryButtonStyles = createUseStyles((theme) => ({
         // Must be always declared for Firefox
         '&:hover:not([disabled])': {
             backgroundColor: theme.colors.buttonPrimaryBackgroundHover,
-            [TOUCHABLE_ONLY]: {
+            [theme.mq.touchableOnly]: {
                 // Revert hover background in touch devices
                 backgroundColor: theme.colors.buttonPrimaryBackground,
             },
@@ -136,7 +135,7 @@ const usePrimaryButtonStyles = createUseStyles((theme) => ({
         '&:hover:not([disabled])': {
             color: theme.colors.textButtonPrimaryInverseSelected,
             backgroundColor: theme.colors.buttonPrimaryBackgroundSelectedInverse,
-            [TOUCHABLE_ONLY]: {
+            [theme.mq.touchableOnly]: {
                 color: theme.colors.textButtonPrimaryInverse,
                 backgroundColor: theme.colors.buttonPrimaryBackgroundInverse,
             },
@@ -166,7 +165,7 @@ const useSecondaryButtonStyles = createUseStyles((theme) => ({
         '&[disabled]:not($isLoading)': disabledStyle,
         '&:hover:not([disabled])': {
             ...buttonSecondaryHoverLightStyle(theme),
-            [TOUCHABLE_ONLY]: {
+            [theme.mq.touchableOnly]: {
                 ...buttonSecondaryLightStyle(theme),
             },
         },
@@ -184,7 +183,7 @@ const useSecondaryButtonStyles = createUseStyles((theme) => ({
         '&:hover:not([disabled])': {
             borderColor: theme.colors.buttonSecondaryBorderSelectedInverse,
             color: theme.colors.textButtonSecondaryInverseSelected,
-            [TOUCHABLE_ONLY]: {
+            [theme.mq.touchableOnly]: {
                 borderColor: theme.colors.buttonSecondaryBorderInverse,
                 color: theme.colors.textButtonSecondaryInverse,
             },
@@ -205,7 +204,7 @@ const dangerButtonStyles = (theme: Theme) => ({
 
     '&:hover:not([disabled])': {
         backgroundColor: theme.colors.buttonDangerBackgroundHover,
-        [TOUCHABLE_ONLY]: {
+        [theme.mq.touchableOnly]: {
             // Revert hover background in touch devices
             backgroundColor: theme.colors.buttonDangerBackground,
         },
@@ -453,7 +452,7 @@ const useButtonLinkStyles = createUseStyles((theme) => {
             },
             '&:hover:not([disabled])': {
                 backgroundColor: theme.colors.buttonLinkBackgroundSelected,
-                [TOUCHABLE_ONLY]: {
+                [theme.mq.touchableOnly]: {
                     backgroundColor: 'initial',
                 },
             },
@@ -466,7 +465,7 @@ const useButtonLinkStyles = createUseStyles((theme) => {
             },
             '&:hover:not([disabled])': {
                 backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
-                [TOUCHABLE_ONLY]: {
+                [theme.mq.touchableOnly]: {
                     backgroundColor: 'initial',
                 },
             },
