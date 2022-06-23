@@ -138,7 +138,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             inverse: palette.white,
             neutralHigh: palette.grey6,
             neutralMedium: palette.grey5,
-            neutralLow: palette.grey2,
+            neutralLow: palette.grey1,
 
             textPrimary: palette.grey6,
             textPrimaryInverse: palette.white,

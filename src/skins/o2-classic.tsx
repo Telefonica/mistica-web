@@ -149,7 +149,7 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             brandHigh: palette.o2Blue55,
             inverse: palette.white,
             neutralHigh: palette.grey6,
-            neutralLow: palette.grey3,
+            neutralLow: palette.grey1,
             neutralMedium: palette.grey5,
             promo: palette.pink,
             highlight: palette.pink,
