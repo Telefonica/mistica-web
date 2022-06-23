@@ -35,8 +35,9 @@ Only `skin` and `i18n` are mandatory.
 
 Here is a description of every attribute:
 
-- `skin`: determines the color set used by the lib. You can use `getMovistarSkin`, `getVivoSkin` to use a
-  specific skin or `getSkinByName`.
+- `skin`: determines the look and feel used by the lib (colors, font weight, etc). You can use
+  `getMovistarSkin`, `getVivoSkin` to use a specific skin or `getSkinByName`. You can also create your own
+  custom skin.
 - `colorScheme`: used to enable/disable the dark mode support. It can be `'light'` (default value, force light
   mode), `'dark'` (force dark mode), or `'auto'` (uses OS/browser settings). We recommend using `'auto'` if
   you want to support dark mode in your app.

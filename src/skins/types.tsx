@@ -5,16 +5,33 @@ export type SkinName = KnownSkinName | string;
 
 export type GetKnownSkin = (variant?: SkinVariant) => KnownSkin;
 
+export type FontWeight = 'light' | 'regular' | 'medium';
+
+type TextPresetName = 'text5' | 'text6' | 'text7' | 'text8' | 'text9' | 'text10';
+export type TextPresetsConfig = {
+    [preset in TextPresetName]: {
+        weight: FontWeight;
+    };
+};
+
+type PartialTextPresetsConfig = {
+    [preset in TextPresetName]?: {
+        weight?: FontWeight;
+    };
+};
+
 export type Skin = {
     name: SkinName;
     colors: Colors;
     darkModeColors?: Partial<Colors>;
+    textPresets?: PartialTextPresetsConfig;
 };
 
 export type KnownSkin = {
     name: KnownSkinName;
     colors: Colors;
     darkModeColors?: Partial<Colors>;
+    textPresets?: PartialTextPresetsConfig;
 };
 
 export type Colors = {

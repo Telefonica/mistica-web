@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import type {RegionCode} from './utils/region-code';
 import type {Locale} from './utils/locale';
-import type {Skin, Colors, SkinName} from './skins/types';
+import type {Skin, Colors, SkinName, TextPresetsConfig} from './skins/types';
 import type {TrackingEvent} from './utils/types';
 import type {MediaQueries} from './utils/media-queries';
 
@@ -260,6 +260,7 @@ export type Theme = {
     dimensions: {headerMobileHeight: number};
     mq: MediaQueries;
     colors: Colors;
+    textPresets: TextPresetsConfig;
     Link: LinkComponent;
     isDarkMode: boolean;
     isIos: boolean;
