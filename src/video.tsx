@@ -4,7 +4,7 @@ import {createUseStyles} from './jss';
 import {useSupportsAspectRatio} from './utils/aspect-ratio-support';
 import {combineRefs} from './utils/common';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {isSafari} from './utils/platform';
+import {isRunningAcceptanceTest, isSafari} from './utils/platform';
 
 import type {DataAttributes} from './utils/types';
 
@@ -93,7 +93,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         {
             src,
             poster,
-            autoPlay = true,
+            autoPlay = !isRunningAcceptanceTest(), // default true, but disable autoPlay in screenshot tests
             muted = true,
             loop = true,
             preload = 'none',
