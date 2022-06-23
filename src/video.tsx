@@ -20,7 +20,6 @@ export const RATIO = {
 const useStyles = createUseStyles(() => ({
     video: {
         background: 'transparent',
-        transform: 'translate3d(0,0,0)', // required to avoid flickering in Safari
         display: 'block',
         objectFit: 'cover',
         maxWidth: '100%',
