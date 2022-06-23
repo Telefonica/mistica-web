@@ -113,9 +113,9 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
             width = props.width;
             height = props.height;
         } else if (typeof props.width === 'number') {
-            height = props.width / ratio;
+            height = ratio ? props.width / ratio : undefined;
         } else if (typeof props.height === 'number') {
-            width = props.height * ratio;
+            width = ratio ? props.height * ratio : undefined;
         } else {
             width = props.width || '100%';
         }

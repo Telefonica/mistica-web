@@ -20,6 +20,7 @@ export const RATIO = {
 const useStyles = createUseStyles(() => ({
     video: {
         background: 'transparent',
+        transform: 'translate3d(0,0,0)', // required to avoid flickering in Safari
         display: 'block',
         objectFit: 'cover',
         maxWidth: '100%',
@@ -142,9 +143,9 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             width = props.width;
             height = props.height;
         } else if (typeof props.width === 'number') {
-            height = props.width / ratio;
+            height = ratio ? props.width / ratio : undefined;
         } else if (typeof props.height === 'number') {
-            width = props.height * ratio;
+            width = ratio ? props.height * ratio : undefined;
         } else {
             width = props.width || '100%';
         }
@@ -169,7 +170,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 className={classes.video}
                 preload={preload}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
-                poster={needsWrapper ? TRANSPARENT_PIXEL : poster || TRANSPARENT_PIXEL}
+                poster={poster || TRANSPARENT_PIXEL}
                 {...getPrefixedDataAttributes(dataAttributes)}
             >
                 {sources.map(({src, type}, index) => (
