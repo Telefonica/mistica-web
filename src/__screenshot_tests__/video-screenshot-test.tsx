@@ -5,7 +5,5 @@ test('Video', async () => {
 
     const story = await screen.findByTestId('video');
 
-    await new Promise((r) => setTimeout(r, 2500));
-
     expect(await story.screenshot()).toMatchImageSnapshot();
 });
