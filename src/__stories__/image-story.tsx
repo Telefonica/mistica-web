@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Image, Stack, Text2, Text3, Title1, useTheme} from '..';
+import {isRunningAcceptanceTest} from '../utils/platform';
 
 export default {
     title: 'Components/Others/Image',
@@ -21,7 +22,7 @@ export const Default: StoryComponent = () => {
             <Image src="https://i.imgur.com/G8aJDhB.jpeg" width={230} height={100} />
             <div
                 style={{
-                    resize: 'both',
+                    resize: isRunningAcceptanceTest() ? undefined : 'both',
                     overflow: 'auto',
                     width: 300,
                     border: `1px solid ${colors.border}`,
