@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Image, Stack, Text2, Text3, Title1, useTheme} from '..';
+import {isRunningAcceptanceTest} from '../utils/platform';
 
 export default {
     title: 'Components/Others/Image',
@@ -31,6 +32,14 @@ export const Default: StoryComponent = () => {
                 <Stack space={16}>
                     <Title1>width: 50%; aspectRatio: 4:3</Title1>
                     <Image src="https://i.imgur.com/G8aJDhB.jpeg" width="50%" aspectRatio={4 / 3} />
+
+                    {!isRunningAcceptanceTest() && (
+                        // for some reason, adding this image to the screenshot test makes it unstable
+                        <>
+                            <Title1>width: 50%; aspectRatio: 0</Title1>
+                            <Image src="https://i.imgur.com/G8aJDhB.jpeg" width="50%" aspectRatio={0} />
+                        </>
+                    )}
 
                     <Title1>width: 100%; aspectRatio: 4:3</Title1>
                     <Image src="https://i.imgur.com/G8aJDhB.jpeg" aspectRatio={4 / 3} />
