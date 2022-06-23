@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, ButtonPrimary, Inline, Title1, Video} from '..';
+import {Stack, ButtonPrimary, Inline, Title2, Video, Title1} from '..';
 
 export default {
     title: 'Components/Others/Video',
@@ -14,14 +14,14 @@ export const Default: StoryComponent = () => {
     const videoRefWithPoster = React.useRef<HTMLVideoElement | null>(null);
 
     return (
-        <Stack space={64} data-testid="video">
+        <Stack space={64} dataAttributes={{testid: 'video'}}>
             <Stack space={16}>
-                <Title1>Auto Play</Title1>
-                <Video width={480} height={480 / 2.4} src={VIDEO_SRC} />
+                <Title2>Auto Play (default)</Title2>
+                <Video width={480} height={480 / 2.4} src={VIDEO_SRC} poster={POSTER_SRC} />
             </Stack>
 
             <Stack space={16}>
-                <Title1>Manual Play</Title1>
+                <Title2>Manual Play (without Poster)</Title2>
                 <Video
                     width={480}
                     height={480 / 2.4}
@@ -50,7 +50,7 @@ export const Default: StoryComponent = () => {
             </Stack>
 
             <Stack space={16}>
-                <Title1>Manual Play with Poster</Title1>
+                <Title2>Manual Play (with Poster)</Title2>
                 <Video
                     poster={POSTER_SRC}
                     width={480}
@@ -84,15 +84,23 @@ export const Default: StoryComponent = () => {
             </Stack>
 
             <Stack space={16}>
-                <Title1>Aspect ratio</Title1>
-                <Video src={VIDEO_SRC} width={480} aspectRatio="16:9" />
-                <Video src={VIDEO_SRC} width={480} aspectRatio="4:3" />
+                <Title2>Aspect ratio</Title2>
+                <Title1>16:9</Title1>
+                <Video src={VIDEO_SRC} poster={POSTER_SRC} width={480} aspectRatio="16:9" />
+                <Title1>4:3</Title1>
+                <Video src={VIDEO_SRC} poster={POSTER_SRC} width={480} aspectRatio="4:3" />
+                <Title1>0 (keep original aspect ratio)</Title1>
+                <Video src={VIDEO_SRC} poster={POSTER_SRC} width={480} aspectRatio={0} />
             </Stack>
 
             <Stack space={16}>
-                <Title1>Aspect ratio width 100%</Title1>
-                <Video src={VIDEO_SRC} aspectRatio="16:9" />
-                <Video src={VIDEO_SRC} aspectRatio="4:3" />
+                <Title2>Aspect ratio width 100%</Title2>
+                <Title1>16:9</Title1>
+                <Video width="100%" src={VIDEO_SRC} poster={POSTER_SRC} aspectRatio="16:9" />
+                <Title1>4:3</Title1>
+                <Video width="100%" src={VIDEO_SRC} poster={POSTER_SRC} aspectRatio="4:3" />
+                <Title1>0 (keep original aspect ratio)</Title1>
+                <Video width="100%" src={VIDEO_SRC} poster={POSTER_SRC} aspectRatio={0} />
             </Stack>
         </Stack>
     );
