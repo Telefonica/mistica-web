@@ -129,7 +129,7 @@ export const getVivoSkin: GetKnownSkin = () => {
             inverse: palette.white,
             neutralHigh: palette.grey6,
             neutralMedium: palette.grey5,
-            neutralLow: palette.grey3,
+            neutralLow: palette.grey1,
             promo: palette.vivoPurple,
             highlight: palette.pink,
 
