@@ -38,5 +38,6 @@ declare export var palette: {
   +white: "#FFFFFF",
   +darkModeBlack: "#191919",
   +darkModeGrey: "#242424",
+  +darkModeGrey6: "#313235",
 };
 declare export var getBlauSkin: GetKnownSkin;
