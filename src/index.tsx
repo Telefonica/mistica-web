@@ -44,7 +44,6 @@ export {default as NavigationBreadcrumbs} from './navigation-breadcrumbs';
 export {default as Text, Text1, Text2, Text3, Text4, Text5, Text6, Text7, Text8, Text9, Text10} from './text';
 export {default as Tag} from './tag';
 export type {TagType} from './tag';
-export {default as SectionTitle} from './section-title';
 export {Placeholder} from './placeholder';
 export {Title1, Title2} from './title';
 export {RowList, Row, BoxedRowList, BoxedRow} from './list';

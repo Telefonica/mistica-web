@@ -7,7 +7,7 @@ import {
     Stack,
     ResponsiveLayout,
     TextLink,
-    SectionTitle,
+    Title1,
     Text,
     TextField,
     EmailField,
@@ -41,7 +41,7 @@ const Home = () => {
             <ResponsiveLayout>
                 <Stack space={32}>
                     <Box>
-                        <SectionTitle>Form example</SectionTitle>
+                        <Title1>Form example</Title1>
                         <Form onSubmit={handleSubmit}>
                             <Stack space={16}>
                                 <TextField id="name" name="name" label="Name" />
@@ -53,7 +53,7 @@ const Home = () => {
                         </Form>
                     </Box>
                     <Box>
-                        <SectionTitle>Using links</SectionTitle>
+                        <Title1>Using links</Title1>
                         <Stack space={16}>
                             <Text>
                                 Inspect the browser network pannel to check that all these links navigate
@@ -68,7 +68,7 @@ const Home = () => {
                         </Stack>
                     </Box>
                     <Box>
-                        <SectionTitle>Dynamic Links</SectionTitle>
+                        <Title1>Dynamic Links</Title1>
                         <Stack space={16}>
                             <Text>Write a user name to navigate to their page.</Text>
                             <TextField
