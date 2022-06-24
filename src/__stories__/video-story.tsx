@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Stack, ButtonPrimary, Inline, Title2, Video, Title1} from '..';
+import {Stack, ButtonPrimary, Inline, Title2, Video, Title1, Text3} from '..';
 
 export default {
     title: 'Components/Others/Video',
@@ -15,6 +15,23 @@ export const Default: StoryComponent = () => {
 
     return (
         <Stack space={64} dataAttributes={{testid: 'video'}}>
+            <Stack space={8}>
+                <Title2>Video component issues/limitations</Title2>
+                <Text3 regular as="p">
+                    1. Using automatic aspect ratio (`aspectRatio={0}`), if the poster and video have
+                    different aspect ratios, the video size will resize when playing/stopping the video. This
+                    is how the HTML `video` element works and happens in all browsers.
+                </Text3>
+                <Text3 regular as="p">
+                    2. In Safari, with automatic aspect ratio. On the first video reproduction a strange
+                    resize happens. After stoping and playing the same video, it works as expected.
+                </Text3>
+                <Text3 regular as="p">
+                    To avoid these issues always try to use a specific aspect ratio or a fixed width and
+                    height.
+                </Text3>
+            </Stack>
+
             <Stack space={16}>
                 <Title2>Auto Play (default)</Title2>
                 <Video width={480} height={480 / 2.4} src={VIDEO_SRC} poster={POSTER_SRC} />
