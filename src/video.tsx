@@ -150,7 +150,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
          * To avoid this, in Safari browsers, instead of using the poster attribute, we use a
          * wrapper with the poster as background image
          */
-        const needsWrapper = true || isSafari() || (withCssAspectRatio && !supportsAspectRatio);
+        const needsWrapper = isSafari() || (withCssAspectRatio && !supportsAspectRatio);
 
         const video = (
             <video
