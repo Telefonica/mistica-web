@@ -1,3 +1,10 @@
+## [11.12.1](https://github.com/Telefonica/mistica-web/compare/v11.12.0...v11.12.1) (2022-06-24)
+
+
+### Bug Fixes
+
+* **Video:** Element size problem when playing in Safari ([bacdae1](https://github.com/Telefonica/mistica-web/commit/bacdae172a9e0399a4d738de0e92c74bdb0fa295))
+
 # [11.12.0](https://github.com/Telefonica/mistica-web/compare/v11.11.1...v11.12.0) (2022-06-23)
 
 
