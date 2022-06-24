@@ -133,7 +133,7 @@ const EmptyState: React.FC<Props> = ({
                     {largeImage ?? image ?? (icon && <div className={classes.iconContainer}>{icon}</div>)}
                     <Stack space={16}>
                         <Text6 as="h1">{title}</Text6>
-                        <Text4 light as="p" color={colors.textSecondary}>
+                        <Text4 regular as="p" color={colors.textSecondary}>
                             {description}
                         </Text4>
                     </Stack>
@@ -157,7 +157,7 @@ const EmptyState: React.FC<Props> = ({
                             {image ?? (icon && <div className={classes.iconContainer}>{icon}</div>)}
                             <Stack space={16}>
                                 <Text6 as="h1">{title}</Text6>
-                                <Text4 light as="p" color={colors.textSecondary}>
+                                <Text4 regular as="p" color={colors.textSecondary}>
                                     {description}
                                 </Text4>
                             </Stack>
