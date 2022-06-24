@@ -24,8 +24,6 @@ const useStyles = createUseStyles(() => ({
         objectFit: 'cover',
         maxWidth: '100%',
         maxHeight: '100%',
-        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
-
         '@supports (aspect-ratio: 1 / 1)': {
             aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
         },
@@ -41,7 +39,6 @@ const useStyles = createUseStyles(() => ({
         },
     },
     wrapper: {
-        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
         overflow: 'hidden',
         maxWidth: '100%',
         maxHeight: '100%',
@@ -113,7 +110,6 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             typeof props.width !== 'number' && typeof props.height !== 'number' && ratio !== 0;
 
         const classes = useStyles({
-            noBorderRadius,
             aspectRatio: withCssAspectRatio ? ratio : undefined,
             width: props.width,
         });
@@ -154,7 +150,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
          * To avoid this, in Safari browsers, instead of using the poster attribute, we use a
          * wrapper with the poster as background image
          */
-        const needsWrapper = isSafari() || (withCssAspectRatio && !supportsAspectRatio);
+        const needsWrapper = true || isSafari() || (withCssAspectRatio && !supportsAspectRatio);
 
         const video = (
             <video
@@ -171,6 +167,10 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
                 poster={poster || TRANSPARENT_PIXEL}
                 {...getPrefixedDataAttributes(dataAttributes)}
+                style={{
+                    // For some reason adding this style with JSS doesn't add the border radius in safari
+                    borderRadius: noBorderRadius ? 0 : 4,
+                }}
             >
                 {sources.map(({src, type}, index) => (
                     <source key={index} src={src} type={type} />
@@ -183,9 +183,11 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                     style={{
                         width,
                         height,
+                        // adding the poster as background image avoids the flicker in Safari
                         backgroundImage: poster ? `url("${poster}")` : undefined,
                         backgroundSize: 'cover',
                         backgroundPosition: '50% 50%',
+                        borderRadius: noBorderRadius ? 0 : 4,
                     }}
                     className={classes.wrapper}
                 >

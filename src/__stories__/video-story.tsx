@@ -16,39 +16,6 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={64} dataAttributes={{testid: 'video'}}>
             <Stack space={16}>
-                <Video
-                    ref={videoRef}
-                    width="100%"
-                    aspectRatio={0}
-                    autoPlay={false}
-                    src={VIDEO_SRC}
-                    poster={POSTER_SRC}
-                />
-                <Inline space={16}>
-                    <ButtonPrimary
-                        small
-                        onPress={() => {
-                            if (videoRef.current) {
-                                videoRef.current.currentTime = 0; // play from the beginning
-                                videoRef.current.play();
-                            }
-                        }}
-                    >
-                        Play
-                    </ButtonPrimary>
-                    <ButtonPrimary
-                        small
-                        onPress={() => {
-                            videoRef.current?.pause();
-                            videoRef.current?.load(); // to force showing the poster again
-                        }}
-                    >
-                        Stop
-                    </ButtonPrimary>
-                </Inline>
-            </Stack>
-
-            {/* <Stack space={16}>
                 <Title2>Auto Play (default)</Title2>
                 <Video width={480} height={480 / 2.4} src={VIDEO_SRC} poster={POSTER_SRC} />
             </Stack>
@@ -135,7 +102,6 @@ export const Default: StoryComponent = () => {
                 <Title1>0 (keep original aspect ratio)</Title1>
                 <Video width="100%" src={VIDEO_SRC} poster={POSTER_SRC} aspectRatio={0} />
             </Stack>
-    */}
         </Stack>
     );
 };
