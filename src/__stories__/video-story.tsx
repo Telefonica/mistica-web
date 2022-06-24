@@ -18,10 +18,9 @@ export const Default: StoryComponent = () => {
             <Stack space={8}>
                 <Title2>Video component issues/limitations</Title2>
                 <Text3 regular as="p">
-                    1. With automatic `aspectRatio` (with a value of 0), if the poster and video have
-                    different aspect ratios, the video size will resize when playing/stopping the video. The
-                    video and the poster will be displayed with its own height. This is how the HTML `video`
-                    element works and happens in all browsers.
+                    1. Using automatic aspect ratio (`aspectRatio={0}`), if the poster and video have
+                    different aspect ratios, the video size will resize when playing/stopping the video. This
+                    is how the HTML `video` element works and happens in all browsers.
                 </Text3>
                 <Text3 regular as="p">
                     2. In Safari, with automatic aspect ratio. On the first video reproduction a strange
