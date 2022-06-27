@@ -389,7 +389,7 @@ test('button with spinner', () => {
               class="textContent"
             >
               <div
-                class="text text-d10 truncate truncate-d13"
+                class="text text-d8 truncate truncate-d11"
               >
                 test
               </div>
