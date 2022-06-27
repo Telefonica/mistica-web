@@ -42,8 +42,8 @@ const useStyles = createUseStyles((theme) => {
             textDecoration: (p) => p.decoration ?? 'inherit',
             letterSpacing: ({letterSpacing}) => letterSpacing,
             overflowWrap: ({wordBreak}) => (wordBreak ? 'anywhere' : 'inherit'),
-            // for Safari
             '@supports not (overflow-wrap: anywhere)': {
+                // Safari
                 wordBreak: ({wordBreak}) => (wordBreak ? 'break-word' : 'inherit'),
             },
             // Needed to reset the default browser margin that adds to p, h1, h2... elements.
