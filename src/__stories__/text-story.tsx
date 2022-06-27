@@ -88,7 +88,7 @@ export const TextWrapping: StoryComponent = () => {
 
             <Wrapper>
                 <Title1>truncate=3</Title1>
-                <Text2 regular truncate={3}>
+                <Text2 regular truncate={4}>
                     Strawberry Friendship Everything Pneumonoultramicroscopicsilicovolcanoconiosis Appreciate
                     Motivation
                 </Text2>

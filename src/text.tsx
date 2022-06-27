@@ -42,7 +42,7 @@ const useStyles = createUseStyles((theme) => {
             textDecoration: (p) => p.decoration ?? 'inherit',
             letterSpacing: ({letterSpacing}) => letterSpacing,
             overflowWrap: ({wordBreak}) => (wordBreak ? 'anywhere' : 'inherit'),
-            // workaround for iOS 14
+            // for Safari
             '@supports not (overflow-wrap: anywhere)': {
                 wordBreak: ({wordBreak}) => (wordBreak ? 'break-word' : 'inherit'),
             },
@@ -57,9 +57,6 @@ const useStyles = createUseStyles((theme) => {
         truncate: {
             '-webkit-line-clamp': lineClamp,
             lineClamp,
-            // "break-all" on Safari breaks words that should go to the next line.
-            // We use "break-all" when truncate=1 to show the most posssible text.
-            // When truncate > 1, using "break-word" to avoid breaking words (crazy)
             wordBreak: ({truncate}) => (truncate === 1 || truncate === true ? 'break-all' : 'break-word'),
             display: '-webkit-box',
             boxOrient: 'vertical',
