@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {Touchable, Menu, Stack, Inline, Text3, Box, Checkbox, IconKebabMenuLight} from '..';
-import Title1 from '../section-title';
+import {Touchable, Menu, Stack, Inline, Text3, Box, Checkbox, IconKebabMenuLight, Title1} from '..';
 
 export default {
     title: 'Components/Controls/Menu',

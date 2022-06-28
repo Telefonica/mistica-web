@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {fruitEntries} from './helpers';
-import {Select, Stack} from '..';
-import Title1 from '../section-title';
+import {Select, Stack, Title1} from '..';
 
 export default {
     title: 'Components/Forms/Select',
