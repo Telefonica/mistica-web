@@ -10,7 +10,7 @@ import {useIsInverseVariant} from '../../theme-variant-context';
 
 import type {IconProps} from '../../utils/types';
 
-const IconMultideviceoFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+const IconMultideviceFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
@@ -27,15 +27,15 @@ const IconMultideviceoFilled: React.FC<IconProps> = ({color, size = 24, children
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M17.533 16.849c0-.457.294-.75.748-.75.453 0 .748.293.748.75 0 .28-.11.448-.2.54-.092.096-.263.208-.548.208-.286 0-.457-.112-.55-.207-.092-.093-.198-.26-.198-.541z"
+                    d="M17.528 16.569c0-.457.294-.75.748-.75s.748.293.748.75c0 .28-.11.448-.2.54-.092.096-.263.208-.548.208-.286 0-.457-.112-.55-.207-.092-.093-.198-.26-.198-.541z"
                     fill={fillColor}
                 />
                 <path
-                    d="M18.835 8.717h.916c1.37 0 2.095.726 2.095 2.096V17.3c0 1.37-.725 2.095-2.095 2.095h-2.938c-1.37 0-2.095-.725-2.095-2.095v-.1H5.45c-1.1 0-1.94-.326-2.504-.97-.524-.6-.787-1.468-.787-2.583V8.71c0-1.115.263-1.983.787-2.58.563-.641 1.406-.969 2.504-.969h10.093c1.1 0 1.941.325 2.504.97.521.599.787 1.467.787 2.582v.005zm1.684 9.359c.137-.137.207-.398.207-.773v-6.49c0-.748-.227-.975-.975-.975H16.81c-.728 0-.975.246-.975.975v6.49c0 .378.07.639.207.773.138.137.395.204.77.204h2.936c.376 0 .633-.07.77-.204z"
+                    d="M18.83 8.437h.916c1.37 0 2.096.726 2.096 2.096v6.487c0 1.37-.726 2.095-2.096 2.095h-2.938c-1.37 0-2.095-.725-2.095-2.095v-.1H5.447c-1.101 0-1.942-.326-2.505-.97-.523-.6-.787-1.468-.787-2.583V8.43c0-1.115.264-1.983.787-2.58.563-.641 1.407-.97 2.505-.97h10.092c1.1 0 1.941.326 2.504.97.521.6.787 1.468.787 2.583v.005zm1.684 9.359c.137-.137.207-.398.207-.773v-6.49c0-.748-.227-.975-.975-.975h-2.94c-.73 0-.976.246-.976.975v6.49c0 .378.07.639.208.773.137.137.395.204.77.204h2.936c.375 0 .633-.07.77-.204z"
                     fill={fillColor}
                 />
                 <path
-                    d="M12.818 18.283H7.902a.562.562 0 00-.56.56c0 .309.252.56.56.56h4.916a.56.56 0 00.56-.56.562.562 0 00-.56-.56z"
+                    d="M12.813 18.003H7.898a.562.562 0 00-.56.56c0 .309.251.56.56.56h4.915c.309 0 .56-.252.56-.56a.562.562 0 00-.56-.56z"
                     fill={fillColor}
                 />
             </svg>
@@ -43,4 +43,4 @@ const IconMultideviceoFilled: React.FC<IconProps> = ({color, size = 24, children
     }
 };
 
-export default IconMultideviceoFilled;
+export default IconMultideviceFilled;

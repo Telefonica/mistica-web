@@ -17,7 +17,7 @@ const IconChevronUpRegular: React.FC<IconProps> = ({color, size = 24, children, 
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
-                d="M20 15.467a.508.508 0 01-.173.374.583.583 0 01-.8 0L12 9.277 4.97 15.84a.583.583 0 01-.8 0 .494.494 0 010-.747l7.428-6.935a.583.583 0 01.8 0l7.428 6.935a.503.503 0 01.173.373z"
+                d="M18.733 15.8a.79.79 0 001.05 0 .641.641 0 000-.962L12.545 8.2A.777.777 0 0012 8a.777.777 0 00-.545.2l-7.238 6.638a.641.641 0 000 .963.79.79 0 001.05 0L12 9.624l6.733 6.177z"
                 fill={fillColor}
             />
         </svg>
