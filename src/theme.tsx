@@ -2,8 +2,9 @@ import * as React from 'react';
 
 import type {RegionCode} from './utils/region-code';
 import type {Locale} from './utils/locale';
-import type {Skin, Colors, SkinName} from './skins/types';
+import type {Skin, Colors, SkinName, TextPresetsConfig} from './skins/types';
 import type {TrackingEvent} from './utils/types';
+import type {MediaQueries} from './utils/media-queries';
 
 export type ThemeTexts = typeof TEXTS_ES;
 
@@ -257,17 +258,9 @@ export type Theme = {
         eventFormat: EventFormat;
     };
     dimensions: {headerMobileHeight: number};
-    mq: {
-        mobile: string;
-        tablet: string;
-        desktop: string;
-        largeDesktop: string;
-        tabletOrBigger: string;
-        tabletOrSmaller: string;
-        desktopOrBigger: string;
-        supportsHover: string;
-    };
+    mq: MediaQueries;
     colors: Colors;
+    textPresets: TextPresetsConfig;
     Link: LinkComponent;
     isDarkMode: boolean;
     isIos: boolean;

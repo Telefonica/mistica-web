@@ -1,3 +1,43 @@
+## [11.12.1](https://github.com/Telefonica/mistica-web/compare/v11.12.0...v11.12.1) (2022-06-24)
+
+
+### Bug Fixes
+
+* **Video:** Element size problem when playing in Safari ([bacdae1](https://github.com/Telefonica/mistica-web/commit/bacdae172a9e0399a4d738de0e92c74bdb0fa295))
+
+# [11.12.0](https://github.com/Telefonica/mistica-web/compare/v11.11.1...v11.12.0) (2022-06-23)
+
+
+### Bug Fixes
+
+* **Video:** problem with aspectRatio 0 in Safari ([#498](https://github.com/Telefonica/mistica-web/issues/498)) ([24452eb](https://github.com/Telefonica/mistica-web/commit/24452eb50a4d7335853b4c0f76747f7c229ce62c))
+
+
+### Features
+
+* **Skin:** allow to customize font weight of some text presets ([#495](https://github.com/Telefonica/mistica-web/issues/495)) ([cf5968c](https://github.com/Telefonica/mistica-web/commit/cf5968cca99eca56533fac4df5dec6f3ca95042a))
+
+## [11.11.1](https://github.com/Telefonica/mistica-web/compare/v11.11.0...v11.11.1) (2022-06-22)
+
+
+### Bug Fixes
+
+* **MediaQuery:** Improve media query for touchable-only devices ([#496](https://github.com/Telefonica/mistica-web/issues/496)) ([927a103](https://github.com/Telefonica/mistica-web/commit/927a1032ec4f14d615acae0103a1985155180726))
+
+# [11.11.0](https://github.com/Telefonica/mistica-web/compare/v11.10.2...v11.11.0) (2022-06-20)
+
+
+### Bug Fixes
+
+* **Video:** avoid flickering when playing video in Safari ([#491](https://github.com/Telefonica/mistica-web/issues/491)) ([c17ba31](https://github.com/Telefonica/mistica-web/commit/c17ba312f466b224ffddec07a7c0d58c3bdd5c24))
+
+
+### Features
+
+* **DataCard,MediaCard,SnapCard:** allow limiting text lines ([#494](https://github.com/Telefonica/mistica-web/issues/494)) ([d3a201b](https://github.com/Telefonica/mistica-web/commit/d3a201b9a83432f34bd84fc5953eb18e2c87bd17))
+* **DataCard,MediaCard:** allow dismissable cards ([#492](https://github.com/Telefonica/mistica-web/issues/492)) ([a027fbb](https://github.com/Telefonica/mistica-web/commit/a027fbb566249936bbd79f203e6b080d7b79b39e))
+* **SnapCard:** new component ([#487](https://github.com/Telefonica/mistica-web/issues/487)) ([401a16b](https://github.com/Telefonica/mistica-web/commit/401a16ba3377094dcd7d7b70aae3016c41b77aa9))
+
 ## [11.10.2](https://github.com/Telefonica/mistica-web/compare/v11.10.1...v11.10.2) (2022-06-14)
 
 

@@ -4,7 +4,7 @@ import {createUseStyles} from './jss';
 import {useSupportsAspectRatio} from './utils/aspect-ratio-support';
 import {combineRefs} from './utils/common';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {isSafari} from './utils/platform';
+import {isRunningAcceptanceTest, isSafari} from './utils/platform';
 
 import type {DataAttributes} from './utils/types';
 
@@ -24,14 +24,14 @@ const useStyles = createUseStyles(() => ({
         objectFit: 'cover',
         maxWidth: '100%',
         maxHeight: '100%',
-        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
-
         '@supports (aspect-ratio: 1 / 1)': {
             aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
         },
         '$wrapper &': {
             borderRadius: 0, // the wrapper sets the border radius
-            position: 'absolute',
+            position: ({aspectRatio}) =>
+                // when aspectRatio is 0, we want the video to use the original aspect ratio
+                aspectRatio ? 'absolute' : 'static',
             width: '100%',
             height: '100%',
             top: 0,
@@ -39,14 +39,13 @@ const useStyles = createUseStyles(() => ({
         },
     },
     wrapper: {
-        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
         overflow: 'hidden',
         maxWidth: '100%',
         maxHeight: '100%',
         position: 'relative',
         paddingTop: ({aspectRatio, width}) => {
             if (!aspectRatio) {
-                return 'initial';
+                return 0;
             }
             if (width && typeof width === 'string' && width.endsWith('%')) {
                 return `${Number(width.replace('%', '')) / aspectRatio}%`;
@@ -91,7 +90,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         {
             src,
             poster,
-            autoPlay = true,
+            autoPlay = !isRunningAcceptanceTest(), // default true, but disable autoPlay in screenshot tests
             muted = true,
             loop = true,
             preload = 'none',
@@ -111,7 +110,6 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             typeof props.width !== 'number' && typeof props.height !== 'number' && ratio !== 0;
 
         const classes = useStyles({
-            noBorderRadius,
             aspectRatio: withCssAspectRatio ? ratio : undefined,
             width: props.width,
         });
@@ -140,9 +138,9 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             width = props.width;
             height = props.height;
         } else if (typeof props.width === 'number') {
-            height = props.width / ratio;
+            height = ratio ? props.width / ratio : undefined;
         } else if (typeof props.height === 'number') {
-            width = props.height * ratio;
+            width = ratio ? props.height * ratio : undefined;
         } else {
             width = props.width || '100%';
         }
@@ -163,12 +161,16 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 autoPlay={autoPlay}
                 muted={muted}
                 loop={loop}
-                {...(needsWrapper ? {} : {width, height})}
+                {...(needsWrapper ? {width: '100%'} : {width, height})}
                 className={classes.video}
                 preload={preload}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
-                poster={needsWrapper ? TRANSPARENT_PIXEL : poster || TRANSPARENT_PIXEL}
+                poster={poster || TRANSPARENT_PIXEL}
                 {...getPrefixedDataAttributes(dataAttributes)}
+                style={{
+                    // For some reason adding this style with JSS doesn't add the border radius in safari
+                    borderRadius: noBorderRadius ? 0 : 4,
+                }}
             >
                 {sources.map(({src, type}, index) => (
                     <source key={index} src={src} type={type} />
@@ -181,9 +183,11 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                     style={{
                         width,
                         height,
+                        // adding the poster as background image avoids the flicker in Safari
                         backgroundImage: poster ? `url("${poster}")` : undefined,
                         backgroundSize: 'cover',
                         backgroundPosition: '50% 50%',
+                        borderRadius: noBorderRadius ? 0 : 4,
                     }}
                     className={classes.wrapper}
                 >

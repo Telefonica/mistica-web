@@ -30,7 +30,9 @@ const useStyles = createUseStyles(() => ({
         },
         '$wrapper &': {
             borderRadius: 0, // the wrapper sets the border radius
-            position: 'absolute',
+            position: ({aspectRatio}) =>
+                // when aspectRatio is 0, we want the video to use the original aspect ratio
+                aspectRatio ? 'absolute' : 'static',
             width: '100%',
             height: '100%',
             top: 0,
@@ -46,7 +48,7 @@ const useStyles = createUseStyles(() => ({
         position: 'relative',
         paddingTop: ({aspectRatio, width}) => {
             if (!aspectRatio) {
-                return 'initial';
+                return 0;
             }
             if (width && typeof width === 'string' && width.endsWith('%')) {
                 return `${Number(width.replace('%', '')) / aspectRatio}%`;
@@ -111,9 +113,9 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
             width = props.width;
             height = props.height;
         } else if (typeof props.width === 'number') {
-            height = props.width / ratio;
+            height = ratio ? props.width / ratio : undefined;
         } else if (typeof props.height === 'number') {
-            width = props.height * ratio;
+            width = ratio ? props.height * ratio : undefined;
         } else {
             width = props.width || '100%';
         }
@@ -137,7 +139,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
                     setIsError(false);
                     onLoad?.(event);
                 }}
-                {...(!needsWrapper ? {width, height} : {})}
+                {...(needsWrapper ? {width: '100%'} : {width, height})}
             />
         );
 

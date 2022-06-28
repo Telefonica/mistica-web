@@ -15,8 +15,11 @@ declare type MediaCardProps = {
   media: RendersElement<typeof Image> | RendersElement<typeof Video>,
   headline?: string | RendersNullableElement<typeof Tag>,
   pretitle?: string,
+  pretitleLinesMax?: number,
   title?: string,
+  titleLinesMax?: number,
   description?: string,
+  descriptionLinesMax?: number,
   extra?: React.Node,
   button?: RendersNullableElement<typeof ButtonPrimary>,
   buttonLink?: RendersNullableElement<typeof ButtonLink>,
@@ -32,8 +35,11 @@ declare type DataCardProps = {
   icon?: React.Element<any>,
   headline?: string | RendersNullableElement<typeof Tag>,
   title?: string,
+  titleLinesMax?: number,
   subtitle?: string,
+  subtitleLinesMax?: number,
   description?: string,
+  descriptionLinesMax?: number,
   extra?: React.Node,
   button?: RendersNullableElement<typeof ButtonPrimary>,
   buttonLink?: RendersNullableElement<typeof ButtonLink>,
@@ -48,7 +54,9 @@ declare export var DataCard: React.AbstractComponent<DataCardProps, HTMLDivEleme
 declare type SnapCardBaseProps = {
   icon?: React.Element<any>,
   title?: string,
+  titleLinesMax?: number,
   subtitle?: string,
+  subtitleLinesMax?: number,
   /**
    * "data-" prefix is automatically added. For example, use "testid" instead of "data-testid"
    */

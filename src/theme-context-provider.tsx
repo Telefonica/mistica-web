@@ -18,7 +18,7 @@ import {DocumentVisibilityProvider} from './utils/document-visibility';
 import {AspectRatioSupportProvider} from './utils/aspect-ratio-support';
 import {TrackingConfig} from './utils/analytics';
 
-import type {Colors} from './skins/types';
+import type {Colors, TextPresetsConfig} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
 
 const darkModeMedia = '(prefers-color-scheme: dark)';
@@ -82,6 +82,15 @@ const useDefaultHrefDecorator = () => {
     return (href: string) => href;
 };
 
+const defaultTextPresetsConfig: TextPresetsConfig = {
+    text5: {weight: 'light'},
+    text6: {weight: 'light'},
+    text7: {weight: 'light'},
+    text8: {weight: 'light'},
+    text9: {weight: 'light'},
+    text10: {weight: 'light'},
+};
+
 const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) => {
     const [instanceId] = React.useState(() => {
         if (providerId) {
@@ -137,6 +146,14 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) =>
             },
             mq: createMediaQueries(theme.mediaQueries ?? mediaQueriesConfig),
             colors,
+            textPresets: {
+                text5: {...defaultTextPresetsConfig.text5, ...theme.skin.textPresets?.text5},
+                text6: {...defaultTextPresetsConfig.text6, ...theme.skin.textPresets?.text6},
+                text7: {...defaultTextPresetsConfig.text7, ...theme.skin.textPresets?.text7},
+                text8: {...defaultTextPresetsConfig.text8, ...theme.skin.textPresets?.text8},
+                text9: {...defaultTextPresetsConfig.text9, ...theme.skin.textPresets?.text9},
+                text10: {...defaultTextPresetsConfig.text10, ...theme.skin.textPresets?.text10},
+            },
             Link: theme.Link ?? AnchorLink,
             isDarkMode: isDarkModeEnabled,
             isIos: getPlatform(platformOverrides) === 'ios',

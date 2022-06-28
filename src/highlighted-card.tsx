@@ -50,7 +50,9 @@ const useStyles = createUseStyles((theme) => ({
 
 interface CommonProps {
     title: string;
+    titleLinesMax?: number;
     description: string;
+    descriptionLinesMax?: number;
     imageUrl?: string;
     imageFit?: 'fit' | 'fill';
     onClose?: () => void;
@@ -113,11 +115,17 @@ const Content: React.FC<Props> = (props) => {
                 // aria-label is already in Dismisable wrapper
                 aria-label={!isDismissable ? props['aria-label'] : undefined}
             >
-                <Text4 as="h1" regular>
+                <Text4 as="h1" regular wordBreak truncate={props.titleLinesMax}>
                     {title}
                 </Text4>
                 <Box paddingTop={8}>
-                    <Text2 regular color={theme.colors.textSecondary}>
+                    <Text2
+                        regular
+                        color={theme.colors.textSecondary}
+                        wordBreak
+                        truncate={props.descriptionLinesMax}
+                        as="p"
+                    >
                         {description}
                     </Text2>
                 </Box>

@@ -96,7 +96,7 @@ const arrowButtonStyle = (theme: Theme) => ({
         opacity: 0,
     },
     // don't show carrousel arrow buttons in touch devices, just regular horizontal scroll
-    '@media (pointer: coarse)': {
+    [theme.mq.touchableOnly]: {
         display: 'none',
     },
 });

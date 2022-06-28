@@ -10,7 +10,9 @@ import type {
 import type { NullableButtonElement } from "./button";
 declare type CommonProps = {
   title: string,
+  titleLinesMax?: number,
   description: string,
+  descriptionLinesMax?: number,
   imageUrl?: string,
   imageFit?: "fit" | "fill",
   onClose?: () => void,
