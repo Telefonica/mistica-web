@@ -10,9 +10,9 @@ test.each(TESTABLE_DEVICES)('Text in %s', async (device) => {
         device,
     });
 
-    const tag = await screen.findByTestId('text');
+    const element = await screen.findByTestId('text');
 
-    const image = await tag.screenshot();
+    const image = await element.screenshot();
     expect(image).toMatchImageSnapshot();
 });
 
@@ -22,8 +22,8 @@ test('Text wrapping', async () => {
         device: 'DESKTOP',
     });
 
-    const tag = await screen.findByTestId('text');
+    const element = await screen.findByTestId('text');
 
-    const image = await tag.screenshot();
+    const image = await element.screenshot();
     expect(image).toMatchImageSnapshot();
 });
