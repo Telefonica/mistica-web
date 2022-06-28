@@ -72,7 +72,6 @@ declare export {
 } from "./text";
 declare export { default as Tag } from "./tag";
 export type { TagType } from "./tag";
-declare export { default as SectionTitle } from "./section-title";
 declare export { Placeholder } from "./placeholder";
 declare export { Title1, Title2 } from "./title";
 declare export { RowList, Row, BoxedRowList, BoxedRow } from "./list";
