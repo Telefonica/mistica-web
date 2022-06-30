@@ -1210,7 +1210,7 @@ const alertSnippets = [
     },
     {
         group: 'Dialogs',
-        name: 'Alert two buttons',
+        name: 'Confirm two buttons',
         code: `
 <ButtonPrimary
   onPress={() =>
@@ -1229,7 +1229,7 @@ const alertSnippets = [
     },
     {
         group: 'Dialogs',
-        name: 'Alert two buttons (with icon)',
+        name: 'Confirm two buttons (with icon)',
         code: `
 <ButtonPrimary
   onPress={() =>
@@ -1249,7 +1249,7 @@ const alertSnippets = [
     },
     {
         group: 'Dialogs',
-        name: 'Alert two buttons destructive',
+        name: 'Confirm two buttons destructive',
         code: `
 <ButtonPrimary
   onPress={() =>
