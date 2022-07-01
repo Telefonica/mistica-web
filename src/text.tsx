@@ -43,7 +43,10 @@ const useStyles = createUseStyles((theme) => {
             letterSpacing: ({letterSpacing}) => letterSpacing,
             overflowWrap: ({wordBreak}) => (wordBreak ? 'anywhere' : 'inherit'),
             '@supports not (overflow-wrap: anywhere)': {
-                wordBreak: ({wordBreak}) => (wordBreak ? 'break-all' : 'inherit'),
+                // "overflow-wrap: anywhere" is not supported in Safari
+                // "word-break: break-word" has the same effect as "word-break: normal" and "overflow-wrap: anywhere",
+                // regardless of the actual value of the overflow-wrap property.
+                wordBreak: ({wordBreak}) => (wordBreak ? 'break-word' : 'inherit'),
             },
             // Needed to reset the default browser margin that adds to p, h1, h2... elements.
             margin: 0,
@@ -56,8 +59,9 @@ const useStyles = createUseStyles((theme) => {
         truncate: {
             '-webkit-line-clamp': lineClamp,
             lineClamp,
-            wordBreak: ({wordBreak}) => (wordBreak ? 'break-all' : 'normal'),
+            wordBreak: ({truncate}) => (truncate === 1 || truncate === true ? 'break-all' : 'break-word'),
             '@supports (overflow-wrap: anywhere)': {
+                overflowWrap: 'anywhere',
                 wordBreak: ({truncate}) => (truncate === 1 || truncate === true ? 'break-all' : 'normal'),
             },
             display: '-webkit-box',
