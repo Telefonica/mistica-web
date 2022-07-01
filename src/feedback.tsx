@@ -15,7 +15,7 @@ import {
 } from '@tef-novum/webview-bridge';
 import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {Theme} from './theme';
-import {Text6, Text4, Text2} from './text';
+import {Text6, Text2, Text3} from './text';
 import Box from './box';
 import {Boxed} from './boxed';
 import ResponsiveLayout from './responsive-layout';
@@ -185,9 +185,9 @@ const renderFeedbackBody = (
             >
                 <Text6 as="h1">{title}</Text6>
                 {normalizedDescription && (
-                    <Text4 regular color={colors.textSecondary}>
+                    <Text3 regular color={colors.textSecondary}>
                         {normalizedDescription}
-                    </Text4>
+                    </Text3>
                 )}
                 {children}
             </Stack>
