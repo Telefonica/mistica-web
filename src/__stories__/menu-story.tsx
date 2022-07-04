@@ -3,7 +3,7 @@ import {Touchable, Menu, Stack, Inline, Text3, Box, Checkbox, IconKebabMenuLight
 import Title1 from '../section-title';
 
 export default {
-    title: 'Components/Controls/Menu',
+    title: 'Components/Menu',
     component: Menu,
     argTypes: {
         position: {

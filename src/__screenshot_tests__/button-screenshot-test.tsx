@@ -6,7 +6,7 @@ const DEVICES: Array<Device> = ['MOBILE_IOS', 'MOBILE_ANDROID'];
 
 test.each(DEVICES)('Buttons - normal (%s)', async (device) => {
     await openStoryPage({
-        id: 'components-touchables-button--type-of-buttons',
+        id: 'components-buttons--type-of-buttons',
         device,
     });
 
@@ -18,7 +18,7 @@ test.each(DEVICES)('Buttons - normal (%s)', async (device) => {
 
 test.each(DEVICES)('Buttons - disabled (%s)', async (device) => {
     const page = await openStoryPage({
-        id: 'components-touchables-button--type-of-buttons',
+        id: 'components-buttons--type-of-buttons',
         device,
     });
 
@@ -31,7 +31,7 @@ test.each(DEVICES)('Buttons - disabled (%s)', async (device) => {
 
 test.each(DEVICES)('Buttons - spinner (%s)', async (device) => {
     const page = await openStoryPage({
-        id: 'components-touchables-button--type-of-buttons',
+        id: 'components-buttons--type-of-buttons',
         device,
     });
 
@@ -44,7 +44,7 @@ test.each(DEVICES)('Buttons - spinner (%s)', async (device) => {
 
 test.each(DEVICES)('Buttons - small (%s)', async (device) => {
     const page = await openStoryPage({
-        id: 'components-touchables-button--type-of-buttons',
+        id: 'components-buttons--type-of-buttons',
         device,
     });
 
@@ -57,7 +57,7 @@ test.each(DEVICES)('Buttons - small (%s)', async (device) => {
 
 test.each(DEVICES)('Buttons - ellipsis (%s)', async (device) => {
     await openStoryPage({
-        id: 'components-touchables-button--ellipsis-in-buttons',
+        id: 'components-buttons--ellipsis-in-buttons',
         device,
     });
 

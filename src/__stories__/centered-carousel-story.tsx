@@ -16,7 +16,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components/Carousel/CenteredCarousel',
+    title: 'Components/Carousels/CenteredCarousel',
 };
 
 const centerStyle = {display: 'flex', alignItems: 'center', justifyContent: 'center'};

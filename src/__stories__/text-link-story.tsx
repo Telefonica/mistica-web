@@ -3,7 +3,7 @@ import {TextLink, Stack, Text2} from '..';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components/Touchables/TextLink',
+    title: 'Components/TextLink',
     component: TextLink,
 };
 

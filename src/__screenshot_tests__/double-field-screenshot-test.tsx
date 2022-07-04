@@ -6,7 +6,7 @@ const DEVICES: Array<Device> = ['MOBILE_IOS_SMALL', 'MOBILE_IOS', 'DESKTOP'];
 
 test.each(DEVICES)('Double Field', async (device) => {
     const page = await openStoryPage({
-        id: 'components-forms-doublefield--default',
+        id: 'layout-doublefield--default',
         device,
     });
 

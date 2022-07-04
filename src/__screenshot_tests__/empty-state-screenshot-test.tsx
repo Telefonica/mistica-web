@@ -16,7 +16,7 @@ const createCases = () => {
 
 test.each(devices)('EmptyState in %s with image', async (device) => {
     await openStoryPage({
-        id: 'components-others-emptystate--with-image',
+        id: 'patterns-empty-states-emptystate--with-image',
         device,
     });
 
@@ -28,7 +28,7 @@ test.each(devices)('EmptyState in %s with image', async (device) => {
 
 test.each(createCases())('EmptyState in %s with %s asset', async (device, asset) => {
     await openStoryPage({
-        id: 'components-others-emptystate--with-icon',
+        id: 'patterns-empty-states-emptystate--with-icon',
         device: device as Device,
         args: {asset},
     });
@@ -41,7 +41,7 @@ test.each(createCases())('EmptyState in %s with %s asset', async (device, asset)
 
 test.each(devices)('EmptyState in %s with small image', async (device) => {
     await openStoryPage({
-        id: 'components-others-emptystate--with-small-image',
+        id: 'patterns-empty-states-emptystate--with-small-image',
         device,
     });
 

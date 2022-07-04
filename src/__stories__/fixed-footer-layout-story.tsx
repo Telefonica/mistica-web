@@ -15,7 +15,7 @@ import {
 import {useCheckbox} from './helpers';
 
 export default {
-    title: 'Components/Layouts/FixedFooterLayout',
+    title: 'Layout/FixedFooterLayout',
     component: FixedFooterLayout,
 };
 

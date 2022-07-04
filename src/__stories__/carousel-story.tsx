@@ -14,7 +14,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components/Carousel/Carousel',
+    title: 'Components/Carousels/Carousel',
 };
 
 type Args = {

@@ -10,7 +10,7 @@ test.each`
     'Boxed inverseOutside($inverseOutside) inverseInside($inverseInside)',
     async ({inverseOutside, inverseInside}) => {
         await openStoryPage({
-            id: 'components-layouts-boxed--default',
+            id: 'layout-boxed--default',
             device: 'MOBILE_IOS',
         });
 

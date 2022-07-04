@@ -19,7 +19,7 @@ import DoubleField from '../double-field';
 import {Title1} from '../title';
 
 export default {
-    title: 'Components/Touchables/Button',
+    title: 'Components/Buttons',
 };
 
 const BackgroundTheme: StoryComponent = ({children}) => {

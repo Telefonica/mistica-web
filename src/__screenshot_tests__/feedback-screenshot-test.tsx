@@ -22,7 +22,7 @@ for (const skin of testableSkins) {
 
 test.each(cases)('Feedback %s screen appears properly on %s and %s', async (feedbackType, skin, device) => {
     const page = await openStoryPage({
-        id: `components-screens-feedbackscreen-${feedbackType}`,
+        id: `patterns-feedback-${feedbackType}`,
         skin: skin as never,
         device,
     });
@@ -33,7 +33,7 @@ test.each(cases)('Feedback %s screen appears properly on %s and %s', async (feed
 
 test('Feedback screen with large fontSize', async () => {
     const page = await openStoryPage({
-        id: 'components-screens-feedbackscreen-successfeedbackscreen--success',
+        id: 'patterns-feedback-successfeedbackscreen--success',
         skin: MOVISTAR_SKIN,
         device: 'MOBILE_IOS',
     });

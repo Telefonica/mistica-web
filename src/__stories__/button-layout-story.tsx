@@ -4,7 +4,7 @@ import {Title1} from '../title';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components/Layouts/ButtonLayout',
+    title: 'Layout/ButtonLayout',
     component: ButtonLayout,
 };
 

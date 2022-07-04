@@ -4,7 +4,7 @@ import {useCheckbox} from './helpers';
 import {ButtonPrimary} from '../button';
 
 export default {
-    title: 'Components/Utils/ThemeVariant',
+    title: 'Utilities/ThemeVariant',
 };
 
 const OtherComponent: React.FC = () => {

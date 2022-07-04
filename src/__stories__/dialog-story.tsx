@@ -5,7 +5,7 @@ import ButtonLayout from '../button-layout';
 import IcnInfo from '../icons/icon-info';
 
 export default {
-    title: 'Components/Dialogs/Alert',
+    title: 'Components/Dialog',
 };
 
 export const Default: StoryComponent = () => (
@@ -49,4 +49,4 @@ export const Default: StoryComponent = () => (
     </>
 );
 
-Default.storyName = 'alert() and confirm()';
+Default.storyName = 'Dialog';

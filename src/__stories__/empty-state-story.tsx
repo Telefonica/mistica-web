@@ -2,7 +2,7 @@ import * as React from 'react';
 import {EmptyState, ButtonPrimary, IconBoxLight, useTheme, ButtonLink, Image} from '..';
 
 export default {
-    title: 'Components/Others/EmptyState',
+    title: 'Patterns/Empty states/EmptyState',
     parameters: {
         fullScreen: true,
     },

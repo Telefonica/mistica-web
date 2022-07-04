@@ -4,7 +4,7 @@ import IcnCloseRegular from '../generated/mistica-icons/icon-close-regular';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components/Touchables/IconButton',
+    title: 'Components/Buttons/IconButton',
 };
 
 export const Default: StoryComponent = () => (

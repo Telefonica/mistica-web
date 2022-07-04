@@ -6,7 +6,7 @@ const DEVICES: Array<Device> = ['MOBILE_IOS', 'MOBILE_ANDROID', 'DESKTOP'];
 
 test.each(DEVICES)('ButtonGroup (%s)', async (device) => {
     const page = await openStoryPage({
-        id: 'components-touchables-buttongroup--default',
+        id: 'components-buttons-buttongroup--default',
         device,
     });
 

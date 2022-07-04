@@ -4,7 +4,7 @@ import {Select, Stack} from '..';
 import Title1 from '../section-title';
 
 export default {
-    title: 'Components/Forms/Select',
+    title: 'Components/Select',
     component: Select,
 };
 

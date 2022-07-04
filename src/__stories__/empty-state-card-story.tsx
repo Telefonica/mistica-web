@@ -2,7 +2,7 @@ import * as React from 'react';
 import {EmptyStateCard, ButtonPrimary, ButtonLink, IconBoxLight, useTheme, Image, ButtonSecondary} from '..';
 
 export default {
-    title: 'Components/Cards/EmptyStateCard',
+    title: 'Patterns/Empty states/EmptyStateCard',
     argTypes: {
         asset: {
             options: ['Icon', 'icon as Image', 'icon as img', 'image'],

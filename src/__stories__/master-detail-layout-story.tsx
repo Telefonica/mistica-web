@@ -20,7 +20,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components/Layouts/MasterDetailLayout',
+    title: 'Layout/MasterDetailLayout',
     parameters: {
         fullScreen: true,
     },

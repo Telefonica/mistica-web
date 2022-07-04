@@ -17,7 +17,7 @@ import {
 import {getCvvLength} from '../utils/credit-card';
 
 export default {
-    title: 'Components/Forms/Form with manual state management',
+    title: 'Patterns/Forms/Form with manual state management',
 };
 
 export const Default: StoryComponent = () => {

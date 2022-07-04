@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Title1, Title2, Stack, TextLink} from '..';
 
 export default {
-    title: 'Components/Others/Title',
+    title: 'Components/Title',
 };
 
 type Args = {title: string; linkText: string};

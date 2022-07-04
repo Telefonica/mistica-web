@@ -3,7 +3,7 @@ import {ResponsiveLayout} from '..';
 import {Placeholder} from '../placeholder';
 
 export default {
-    title: 'Components/Layouts/ResponsiveLayout',
+    title: 'Layout/ResponsiveLayout',
     parameters: {
         fullScreen: true,
     },

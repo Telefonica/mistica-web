@@ -12,7 +12,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components/Dialogs/Callout',
+    title: 'Components/Callout',
     argTypes: {
         actions: {
             options: ['none', 'button', 'link', 'button and secondary', 'button and link'],

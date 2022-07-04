@@ -2,7 +2,7 @@ import {Text2, Text6, Stack, Box, ResponsiveLayout, useTheme, ButtonLink, TextLi
 import logo from '../img/mistica-react-logo.svg';
 
 export default {
-    title: 'Welcome/Welcome',
+    title: 'Welcome',
 };
 
 const Paragraph = ({children}) => {
@@ -14,7 +14,7 @@ const Paragraph = ({children}) => {
     );
 };
 
-export const Mistica = () => {
+export const Welcome = () => {
     return (
         <ResponsiveLayout>
             <Box paddingY={32}>

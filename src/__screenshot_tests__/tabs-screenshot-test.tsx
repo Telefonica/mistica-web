@@ -11,7 +11,7 @@ test.each`
     ${'DESKTOP'}    | ${false}
 `('Tabs in $device withIcon ($withIcon)', async ({device, withIcon}) => {
     await openStoryPage({
-        id: 'components-controls-tabs--default',
+        id: 'components-tabs--default',
         device,
         args: {withIcon},
     });
@@ -21,7 +21,7 @@ test.each`
 
 test('Tabs with large fontSize', async () => {
     await openStoryPage({
-        id: 'components-controls-tabs--default',
+        id: 'components-tabs--default',
         device: 'MOBILE_IOS',
     });
 

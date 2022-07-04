@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Box, ResponsiveLayout, PageBullets} from '..';
 
 export default {
-    title: 'Components/Carousel/PageBullets',
+    title: 'Components/Carousels/PageBullets',
 };
 
 type Args = {
