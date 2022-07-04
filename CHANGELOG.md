@@ -1,3 +1,10 @@
+## [11.12.2](https://github.com/Telefonica/mistica-web/compare/v11.12.1...v11.12.2) (2022-07-04)
+
+
+### Bug Fixes
+
+* **Text:** Update text breaking rules ([#500](https://github.com/Telefonica/mistica-web/issues/500)) ([50f6d17](https://github.com/Telefonica/mistica-web/commit/50f6d1737b31d14180a9cfa1535b71488f3458a6))
+
 ## [11.12.1](https://github.com/Telefonica/mistica-web/compare/v11.12.0...v11.12.1) (2022-06-24)
 
 
