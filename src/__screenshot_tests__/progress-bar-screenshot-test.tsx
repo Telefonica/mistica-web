@@ -1,7 +1,7 @@
 import {openStoryPage, screen} from '../test-utils';
 
 test('ProgressBar', async () => {
-    await openStoryPage({id: 'components-progressbar--default'});
+    await openStoryPage({id: 'components-progress-bar--default'});
 
     const stepper = await screen.findByTestId('progress-bar');
 

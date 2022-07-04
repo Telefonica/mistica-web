@@ -11,7 +11,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components/NavigationBar/FunnelNavigationBar',
+    title: 'Components/Navigation bar/Funnel navigation bar',
     component: FunnelNavigationBar,
     parameters: {
         fullScreen: true,
@@ -46,7 +46,7 @@ export const Default: StoryComponent<Args> = ({isInverse}) => {
     );
 };
 
-Default.storyName = 'FunnelNavigationBar';
+Default.storyName = 'Funnel navigation bar';
 
 Default.args = {
     isInverse: false,

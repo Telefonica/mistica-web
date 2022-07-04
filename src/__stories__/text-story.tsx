@@ -58,7 +58,6 @@ const Wrapper = ({children}: any) => (
         {children}
     </div>
 );
-
 export const TextWrapping: StoryComponent = () => {
     return (
         <Stack space={16} dataAttributes={{testid: 'text'}}>
@@ -96,3 +95,5 @@ export const TextWrapping: StoryComponent = () => {
         </Stack>
     );
 };
+
+TextWrapping.storyName = 'Text wrapping';

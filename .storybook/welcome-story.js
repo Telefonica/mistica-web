@@ -1,4 +1,4 @@
-import {Text2, Text6, Stack, Box, ResponsiveLayout, useTheme, ButtonLink, TextLink} from '../src';
+import {Text2, Text6, Stack, Box, ResponsiveLayout, useTheme, ButtonLink, TextLink, Inline} from '../src';
 import logo from '../img/mistica-react-logo.svg';
 
 export default {
@@ -35,7 +35,7 @@ export const Welcome = () => {
                         <Paragraph>
                             Mistica comes with builtin support for the different Telefonica brand color
                             schemes. Use the theme selector in the toolbar above to switch between the
-                            supported themes (Movistar, O2 and Vivo)
+                            supported themes (Telefónica, Movistar, O2, Blau and Vivo)
                         </Paragraph>
                         <Paragraph>
                             For quick prototyping using Mistica components, use the{' '}
@@ -47,11 +47,15 @@ export const Welcome = () => {
                         </Paragraph>
                     </Stack>
                     <nav style={{margin: '0 -8px'}}>
-                        <ButtonLink href="https://github.com/Telefonica/mistica">About Mistica</ButtonLink>
-                        <ButtonLink href="https://github.com/Telefonica/mistica-web#getting-started">
-                            Getting started
-                        </ButtonLink>
-                        <ButtonLink href="/playroom">Go to playroom</ButtonLink>
+                        <Inline space={8}>
+                            <ButtonLink href="https://github.com/Telefonica/mistica">
+                                About Mistica
+                            </ButtonLink>
+                            <ButtonLink href="https://github.com/Telefonica/mistica-web#getting-started">
+                                Getting started
+                            </ButtonLink>
+                            <ButtonLink href="/playroom">Go to playroom</ButtonLink>
+                        </Inline>
                     </nav>
                 </Stack>
             </Box>

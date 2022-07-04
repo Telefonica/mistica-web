@@ -6,7 +6,7 @@ const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('MasterDetailLayout in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'layout-masterdetaillayout--default',
+        id: 'layout-master-detail-layout--default',
         device,
     });
 

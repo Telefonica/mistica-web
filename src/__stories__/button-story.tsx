@@ -17,6 +17,7 @@ import {
 } from '..';
 import DoubleField from '../double-field';
 import {Title1} from '../title';
+import {WithIcon} from './empty-state-story';
 
 export default {
     title: 'Components/Buttons',
@@ -327,3 +328,9 @@ export const SubmitButton: StoryComponent = () => (
         </form>
     </StorySection>
 );
+
+TypeOfButtons.storyName = 'Type of buttons';
+EllipsisInButtons.storyName = 'Ellipsis in buttons';
+withIcon.storyName = 'Button with icon';
+LoadingState.storyName = 'Loading state';
+SubmitButton.storyName = 'Submit button';

@@ -29,7 +29,7 @@ import {StorySection, countriesList, phoneNumbersList} from './helpers';
 import {getLocalDateString, getLocalDateTimeString} from '../utils/time';
 
 export default {
-    title: 'Components/InputFields',
+    title: 'Components/Input fields',
 };
 
 type UncontrolledProps = {
@@ -741,3 +741,5 @@ export const DateTimeLimits: StoryComponent = () => {
         </Form>
     );
 };
+
+DateTimeLimits.storyName = 'Date with time limits';

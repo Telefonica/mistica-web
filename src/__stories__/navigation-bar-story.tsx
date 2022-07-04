@@ -8,7 +8,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components/NavigationBar/NavigationBar',
+    title: 'Components/Navigation bar/Navigation bar',
     component: NavigationBar,
     parameters: {
         fullScreen: true,
@@ -37,7 +37,7 @@ export const Default: StoryComponent<Args> = ({isInverse, withBorder}) => {
     );
 };
 
-Default.storyName = 'NavigationBar';
+Default.storyName = 'Navigation bar';
 
 Default.args = {
     isInverse: false,

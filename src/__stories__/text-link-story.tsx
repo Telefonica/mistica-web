@@ -3,7 +3,7 @@ import {TextLink, Stack, Text2} from '..';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components/TextLink',
+    title: 'Components/Text link',
     component: TextLink,
 };
 
@@ -50,4 +50,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.storyName = 'TextLink';
+Default.storyName = 'Text link';

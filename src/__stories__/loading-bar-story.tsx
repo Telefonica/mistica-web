@@ -3,7 +3,7 @@ import LoadingBarComponent from '../loading-bar';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components/LoadingBar',
+    title: 'Components/Loading bar',
     parameters: {
         fullScreen: true,
     },
@@ -15,4 +15,4 @@ export const Default: StoryComponent = () => (
     </StorySection>
 );
 
-Default.storyName = 'LoadingBar';
+Default.storyName = 'Loading bar';

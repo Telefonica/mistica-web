@@ -4,7 +4,7 @@ import {ButtonPrimary, ButtonSecondary} from '../button';
 import ButtonGroup from '../button-group';
 
 export default {
-    title: 'Components/Buttons/ButtonGroup',
+    title: 'Components/Buttons/Button group',
 };
 
 const handleOnPress = () => window.alert('pressed!');
@@ -53,7 +53,7 @@ export const Default: StoryComponent<Args> = ({primaryButtonText, secondaryButto
     );
 };
 
-Default.storyName = 'ButtonGroup';
+Default.storyName = 'Button group';
 Default.args = {
     primaryButtonText: 'Action1',
     secondaryButtonText: 'Action2',

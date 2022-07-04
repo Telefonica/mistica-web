@@ -3,7 +3,7 @@ import * as React from 'react';
 import {ProgressBar} from '..';
 
 export default {
-    title: 'Components/ProgressBar',
+    title: 'Components/Progress bar',
 };
 
 export const Default: StoryComponent = () => (
@@ -12,4 +12,4 @@ export const Default: StoryComponent = () => (
     </div>
 );
 
-Default.storyName = 'ProgressBar';
+Default.storyName = 'Progress bar';

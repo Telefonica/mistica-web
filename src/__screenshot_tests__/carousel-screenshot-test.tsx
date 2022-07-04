@@ -73,7 +73,7 @@ test('Carousel desktop', async () => {
 // no screenshot test for desktop because it's like the regular carousel
 test('CenteredCarousel mobile', async () => {
     const page = await openStoryPage({
-        id: 'components-carousels-centeredcarousel--default',
+        id: 'components-carousels-centered-carousel--default',
         device: 'MOBILE_IOS',
     });
 
