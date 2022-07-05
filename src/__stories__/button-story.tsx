@@ -17,7 +17,6 @@ import {
 } from '..';
 import DoubleField from '../double-field';
 import {Title1} from '../title';
-import {WithIcon} from './empty-state-story';
 
 export default {
     title: 'Components/Buttons',
