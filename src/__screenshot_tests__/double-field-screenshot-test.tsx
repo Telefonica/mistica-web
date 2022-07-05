@@ -15,7 +15,7 @@ test.each(DEVICES)('Double Field', async (device) => {
 
 test.each(DEVICES)('Double Field: Full width', async (device) => {
     const page = await openStoryPage({
-        id: 'components-forms-double-field--full-width',
+        id: 'layout-double-field--full-width',
         device,
     });
 

@@ -6,7 +6,7 @@ const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('All variants in %s', async (device) => {
     const page = await openStoryPage({
-        id: '-forms-fields--variants',
+        id: 'components-input-fields--variants',
         device,
     });
 

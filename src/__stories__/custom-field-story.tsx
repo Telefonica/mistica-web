@@ -21,7 +21,7 @@ import {cancelEvent} from '../utils/dom';
 import {combineRefs} from '../utils/common';
 
 export default {
-    title: 'Experiments/Custom field',
+    title: 'Mística Lab/Custom field',
 };
 
 const OPTIONS = [
