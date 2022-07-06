@@ -1290,6 +1290,7 @@ declare export { default as IconPacifierLight } from "./generated/mistica-icons/
 declare export { default as IconPacifierRegular } from "./generated/mistica-icons/icon-pacifier-regular";
 declare export { default as IconPackageTrolleyFilled } from "./generated/mistica-icons/icon-package-trolley-filled";
 declare export { default as IconPackageTrolleyLight } from "./generated/mistica-icons/icon-package-trolley-light";
+declare export { default as IconPackageTrolleyRegular } from "./generated/mistica-icons/icon-package-trolley-regular";
 declare export { default as IconParkingFilled } from "./generated/mistica-icons/icon-parking-filled";
 declare export { default as IconParkingLight } from "./generated/mistica-icons/icon-parking-light";
 declare export { default as IconParkingRegular } from "./generated/mistica-icons/icon-parking-regular";
