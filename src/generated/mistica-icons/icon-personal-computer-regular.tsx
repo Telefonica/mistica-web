@@ -14,7 +14,16 @@ const IconPersonalComputerRegular: React.FC<IconProps> = ({color, size = 24, chi
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M20.642 6a.667.667 0 00-.666-.667h-16A.667.667 0 003.309 6v10c0 .367.299.666.667.666h16a.667.667 0 00.666-.666V6zm-7.078 13.333L12.897 18h-1.843l-.666 1.333h3.176zM21.975 6v10a2.002 2.002 0 01-1.999 2h-5.588l1.333 2.666h-7.49L9.564 18H3.976c-1.103 0-2-.897-2-1.999V6c0-1.103.897-2 2-2h16c1.102 0 1.999.897 1.999 2zm-3.999 9.333h1.333V14h-1.333v1.333z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

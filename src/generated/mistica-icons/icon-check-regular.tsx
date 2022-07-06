@@ -14,7 +14,16 @@ const IconCheckRegular: React.FC<IconProps> = ({color, size = 24, children, ...r
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M8.435 19.546l-6.172-6.509a.929.929 0 01.048-1.34.929.929 0 011.341.047l4.834 4.977 11.53-11.435a.929.929 0 011.34 0 .928.928 0 010 1.341L8.436 19.546z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

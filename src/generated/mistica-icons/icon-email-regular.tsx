@@ -14,7 +14,16 @@ const IconEmailRegular: React.FC<IconProps> = ({color, size = 24, children, ...r
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M3.355 17.984V6.291l7.068 7.087c.42.42.98.653 1.577.654h.002c.596 0 1.156-.232 1.576-.651l7.067-7.063v11.666H3.355zm16.338-12.63l-7.073 7.069a.87.87 0 01-.618.254h-.001a.87.87 0 01-.619-.255L4.334 5.355h15.359zM2 19.34h20V4H2v15.339z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

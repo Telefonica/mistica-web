@@ -14,7 +14,16 @@ const IconChevronDownRegular: React.FC<IconProps> = ({color, size = 24, children
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M19.84 8.16a.545.545 0 00-.77 0L12 15.23 4.93 8.16a.545.545 0 00-.77.77L12 16.77l7.84-7.84a.545.545 0 000-.77z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

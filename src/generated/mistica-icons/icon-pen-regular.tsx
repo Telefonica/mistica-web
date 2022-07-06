@@ -14,7 +14,16 @@ const IconPenRegular: React.FC<IconProps> = ({color, size = 24, children, ...res
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M20.37 5.633l-1.456 1.453-2.033-2.03 1.455-1.453a.842.842 0 011.154 0l.88.878a.815.815 0 010 1.152zM8.411 17.57l-2.033-2.03 9.535-9.518 2.033 2.03-9.535 9.518zM4.35 19.624L5.504 16.6l1.865 1.863-3.02 1.161zm16.988-16.11l-.879-.877A2.17 2.17 0 0018.914 2c-.585 0-1.134.226-1.546.637L4.443 15.542 1.976 22l6.435-2.496L21.337 6.599a2.18 2.18 0 000-3.085z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
