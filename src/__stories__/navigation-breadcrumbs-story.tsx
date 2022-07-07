@@ -2,11 +2,11 @@ import * as React from 'react';
 import NavigationBreadcrumbs from '../navigation-breadcrumbs';
 
 export default {
-    title: 'Components/Navigation breadcrumbs',
+    title: 'Components/Breadcrumbs',
 };
 
 export const Default: StoryComponent = () => (
     <NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: 'Cuenta', url: '/consumptions'}]} />
 );
 
-Default.storyName = 'Navigation breadcrumbs';
+Default.storyName = 'Breadcrumbs';

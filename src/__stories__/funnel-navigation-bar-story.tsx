@@ -11,7 +11,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components/Navigation bar/Funnel navigation bar',
+    title: 'Components/Navigation bars/Funnel navigation bar',
     component: FunnelNavigationBar,
     parameters: {
         fullScreen: true,

@@ -8,7 +8,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components/Navigation bar/Navigation bar',
+    title: 'Components/Navigation bars/Navigation bar',
     component: NavigationBar,
     parameters: {
         fullScreen: true,
