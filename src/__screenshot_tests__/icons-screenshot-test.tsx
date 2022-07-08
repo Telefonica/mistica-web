@@ -4,7 +4,7 @@ const SKINS = ['Movistar', 'O2', 'Blau'] as const;
 
 test.each(SKINS)('Icons catalog for %s', async ([skin]) => {
     const page = await openStoryPage({
-        id: 'icons-mistica-icons--catalog',
+        id: 'icons-catalog--catalog',
         device: 'DESKTOP',
         skin: skin as typeof SKINS[number],
     });

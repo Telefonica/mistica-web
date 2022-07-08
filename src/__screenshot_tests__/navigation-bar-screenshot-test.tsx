@@ -10,7 +10,7 @@ test.each`
     'MainNavigationBar desktop. isInverse={$isInverse} isDarkMode={$isDarkMode}',
     async ({isInverse, isDarkMode}) => {
         await openStoryPage({
-            id: 'components-navigation-bar-main-navigation-bar--default',
+            id: 'components-navigation-bars-main-navigation-bar--default',
             device: 'DESKTOP',
             args: {isInverse},
             isDarkMode,
@@ -32,7 +32,7 @@ test.each`
     'MainNavigationBar mobile. isInverse={$isInverse} isDarkMode={$isDarkMode}',
     async ({isInverse, isDarkMode}) => {
         const page = await openStoryPage({
-            id: 'components-navigation-bar-main-navigation-bar--default',
+            id: 'components-navigation-bars-main-navigation-bar--default',
             device: 'MOBILE_IOS',
             args: {isInverse},
             isDarkMode,
@@ -62,7 +62,7 @@ test.each`
     'NavigationBar. isInverse={$isInverse} isDarkMode={$isDarkMode} device={$device}',
     async ({isInverse, isDarkMode, device}) => {
         await openStoryPage({
-            id: 'components-navigation-bar-navigation-bar--default',
+            id: 'components-navigation-bars-navigation-bar--default',
             device,
             args: {isInverse},
             isDarkMode,
@@ -88,7 +88,7 @@ test.each`
     'FunnelNavigationBar. isInverse={$isInverse} isDarkMode={$isDarkMode} device={$device}',
     async ({isInverse, isDarkMode, device}) => {
         await openStoryPage({
-            id: 'components-navigation-bar-funnel-navigation-bar--default',
+            id: 'components-navigation-bars-funnel-navigation-bar--default',
             device,
             args: {isInverse},
             isDarkMode,

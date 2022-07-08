@@ -22,7 +22,7 @@ const misticaIcons = ((requireContext) => {
 })(require.context('../../generated/mistica-icons/', true, /\.tsx$/));
 
 export default {
-    title: 'Icons/Mistica Icons',
+    title: 'Icons/Catalog',
 };
 
 export const Catalog: React.FC = () => {
@@ -157,3 +157,4 @@ export const Catalog: React.FC = () => {
         </div>
     );
 };
+
