@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-    IconAcademicRegular,
+    IconMobileDeviceRegular,
     useTheme,
     Circle,
     SnapCard,
@@ -33,11 +33,11 @@ export const Default: StoryComponent<Args> = ({asset, title, subtitle, touchable
     const assetToIcon: {
         [asset in Args['asset']]: React.ReactElement | undefined;
     } = {
-        icon: <IconAcademicRegular />,
+        icon: <IconMobileDeviceRegular />,
         image: <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />,
         'icon in circle': (
             <Circle size={40} backgroundColor={isInverse ? colors.brandHigh : colors.brandLow}>
-                <IconAcademicRegular color={isInverse ? colors.inverse : colors.brand} />
+                <IconMobileDeviceRegular color={isInverse ? colors.inverse : colors.brand} />
             </Circle>
         ),
         none: undefined,
@@ -92,7 +92,7 @@ export const Group: StoryComponent = () => {
                             subtitle="Subtitle"
                             icon={
                                 <Circle size={40} backgroundColor={colors.brandLow}>
-                                    <IconAcademicRegular color={colors.brand} />
+                                    <IconMobileDeviceRegular color={colors.brand} />
                                 </Circle>
                             }
                         />
@@ -100,7 +100,7 @@ export const Group: StoryComponent = () => {
                             title="Title 2"
                             icon={
                                 <Circle size={40} backgroundColor={colors.brandLow}>
-                                    <IconAcademicRegular color={colors.brand} />
+                                    <IconMobileDeviceRegular color={colors.brand} />
                                 </Circle>
                             }
                         />

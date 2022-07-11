@@ -10,7 +10,7 @@ import {
     Placeholder,
     Tag,
     IconLikeFilled,
-    IconLightningRegular,
+    IconMobileDeviceRegular,
     Image,
     Text3,
     Inline,
@@ -176,7 +176,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
             <RowComponent
                 asset={
                     <Circle backgroundColor={colors.brandLow} size={40}>
-                        <IconLightningRegular color={colors.brand} />
+                        <IconMobileDeviceRegular color={colors.brand} />
                     </Circle>
                 }
                 headline={headline}
