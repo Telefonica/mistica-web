@@ -636,10 +636,8 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             subtitle="Subtitle"
             icon={
-              <Circle size={40} backgroundColor={colors.brand}>
-                  <ThemeVariant isInverse>
-                      <IconAcademicRegular />
-                  </ThemeVariant>
+              <Circle size={40} backgroundColor={colors.brandLow}>
+                <IconAcademicRegular />
               </Circle>
             }
         />`,

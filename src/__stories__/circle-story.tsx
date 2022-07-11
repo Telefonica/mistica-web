@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Circle, useTheme, Stack, IconAcademicLight} from '..';
+import {Circle, useTheme, Stack, IconShopRegular} from '..';
 
 export default {
     title: 'Components/Others/Circle',
@@ -14,8 +14,8 @@ export const Default: StoryComponent = () => {
                 <Circle size={32} backgroundColor="red" />
             </div>
             <div data-testid="circle-with-icon">
-                <Circle size={40} backgroundColor={colors.neutralLow}>
-                    <IconAcademicLight />
+                <Circle size={40} backgroundColor={colors.brandLow}>
+                    <IconShopRegular color={colors.brand} />
                 </Circle>
             </div>
             <div data-testid="circle-with-image">

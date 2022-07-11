@@ -175,8 +175,8 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
             />
             <RowComponent
                 asset={
-                    <Circle backgroundColor={colors.neutralLow} size={40}>
-                        <IconLightningRegular />
+                    <Circle backgroundColor={colors.brandLow} size={40}>
+                        <IconLightningRegular color={colors.brand} />
                     </Circle>
                 }
                 headline={headline}

@@ -36,10 +36,8 @@ export const Default: StoryComponent<Args> = ({asset, title, subtitle, touchable
         icon: <IconAcademicRegular />,
         image: <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />,
         'icon in circle': (
-            <Circle size={40} backgroundColor={isInverse ? colors.brandHigh : colors.brand}>
-                <ThemeVariant isInverse>
-                    <IconAcademicRegular />
-                </ThemeVariant>
+            <Circle size={40} backgroundColor={isInverse ? colors.brandHigh : colors.brandLow}>
+                <IconAcademicRegular color={isInverse ? colors.inverse : colors.brand} />
             </Circle>
         ),
         none: undefined,
@@ -93,20 +91,16 @@ export const Group: StoryComponent = () => {
                             title="Title 1"
                             subtitle="Subtitle"
                             icon={
-                                <Circle size={40} backgroundColor={colors.brand}>
-                                    <ThemeVariant isInverse>
-                                        <IconAcademicRegular />
-                                    </ThemeVariant>
+                                <Circle size={40} backgroundColor={colors.brandLow}>
+                                    <IconAcademicRegular color={colors.brand} />
                                 </Circle>
                             }
                         />
                         <SnapCard
                             title="Title 2"
                             icon={
-                                <Circle size={40} backgroundColor={colors.brand}>
-                                    <ThemeVariant isInverse>
-                                        <IconAcademicRegular />
-                                    </ThemeVariant>
+                                <Circle size={40} backgroundColor={colors.brandLow}>
+                                    <IconAcademicRegular color={colors.brand} />
                                 </Circle>
                             }
                         />
