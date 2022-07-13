@@ -13,7 +13,7 @@ export const TextComponents: StoryComponent = () => (
 
         <Text9>Text9 Light 32/40 (Mobile) | 56/64 (Desktop)</Text9>
 
-        <Text8>Text8 Light 32/40 (Mobile) | 48/58 (Desktop)</Text8>
+        <Text8>Text8 Light 32/40 (Mobile) | 48/56 (Desktop)</Text8>
 
         <Text7>Text7 Light 28/32 (Mobile) | 40/48 (Desktop)</Text7>
 
