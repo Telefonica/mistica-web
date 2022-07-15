@@ -2,6 +2,8 @@ import * as React from 'react';
 import {createUseStyles} from './jss';
 import classnames from 'classnames';
 import {useScreenSize} from './hooks';
+import {DataAttributes} from './utils/types';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 const MOBILE_SIDE_MARGIN = 16;
 const TABLET_SIDE_MARGIN = 32;
@@ -52,9 +54,10 @@ type Props = {
     children: React.ReactNode;
     fullWidth?: boolean;
     className?: string;
+    dataAttributes?: DataAttributes;
 };
 
-const ResponsiveLayout: React.FC<Props> = ({children, className, fullWidth}) => {
+const ResponsiveLayout: React.FC<Props> = ({children, className, fullWidth, dataAttributes}) => {
     const classes = useStyles();
     const {isMobile, isTablet} = useScreenSize();
 
@@ -62,7 +65,10 @@ const ResponsiveLayout: React.FC<Props> = ({children, className, fullWidth}) => 
 
     return (
         <ResponsiveLayoutMarginContext.Provider value={sideMargin}>
-            <div className={classnames(classes.container, className)}>
+            <div
+                className={classnames(classes.container, className)}
+                {...getPrefixedDataAttributes(dataAttributes)}
+            >
                 <div className={classnames(classes.layout, {[classes.layoutFullWidth]: fullWidth})}>
                     {children}
                 </div>
