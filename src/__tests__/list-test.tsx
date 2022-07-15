@@ -98,7 +98,7 @@ test('Row with custom right element', () => {
     expect(screen.getByText('custom')).toBeInTheDocument();
 });
 
-test('Row list with radio buttons', async () => {
+test('Row list with radio buttons', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <RadioGroup name="radio-group">
