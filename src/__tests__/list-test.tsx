@@ -98,20 +98,21 @@ test('Row with custom right element', () => {
     expect(screen.getByText('custom')).toBeInTheDocument();
 });
 
-test('Row list with radio buttons', () => {
+test('Row list with radio buttons', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <RadioGroup name="radio-group">
                 <RowList>
-                    <Row title="Banana" radioValue="banana" />
-                    <Row title="Apple" radioValue="apple" />
+                    <Row title="Banana" subtitle="bananabanana" radioValue="banana" />
+                    <Row title="Apple" subtitle="appleapple" radioValue="apple" />
                 </RowList>
             </RadioGroup>
         </ThemeContextProvider>
     );
 
     const radioBanana = screen.getByRole('radio', {name: 'Banana'});
-    const radioApple = screen.getByRole('radio', {name: 'Apple'});
+    // alternate accessible selector
+    const radioApple = screen.getByLabelText('Apple');
 
     expect(radioBanana).not.toBeChecked();
     expect(radioApple).not.toBeChecked();
