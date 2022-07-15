@@ -2,8 +2,9 @@ import * as React from 'react';
 import {createUseStyles} from './jss';
 import classnames from 'classnames';
 import {useScreenSize} from './hooks';
-import {DataAttributes} from './utils/types';
 import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 const MOBILE_SIDE_MARGIN = 16;
 const TABLET_SIDE_MARGIN = 32;
