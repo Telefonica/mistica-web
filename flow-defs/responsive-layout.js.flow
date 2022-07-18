@@ -1,11 +1,13 @@
 // @flow
 
 import * as React from "react";
+import type { DataAttributes } from "./utils/types";
 declare export var useResonsiveLayoutMargin: () => null | number;
 declare type Props = {
   children: React.Node,
   fullWidth?: boolean,
   className?: string,
+  dataAttributes?: DataAttributes,
 };
 declare var ResponsiveLayout: React.ComponentType<Props>;
 declare export default typeof ResponsiveLayout;
