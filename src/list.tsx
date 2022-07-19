@@ -598,6 +598,7 @@ const RowContent = React.forwardRef<HTMLDivElement | HTMLAnchorElement | HTMLBut
                         render={({controlElement}) => (
                             <Box paddingX={16}>
                                 {renderContent({
+                                    labelId: titleId,
                                     type: 'control',
                                     right: () => <Stack space="around">{controlElement}</Stack>,
                                 })}

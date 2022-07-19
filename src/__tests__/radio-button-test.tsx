@@ -1,15 +1,14 @@
 import * as React from 'react';
 import RadioButton, {RadioGroup} from '../radio-button';
-import SectionTitle from '../section-title';
 import {render, screen, within, fireEvent, waitFor} from '@testing-library/react';
-import {ButtonPrimary, Form, ThemeContextProvider} from '..';
+import {ButtonPrimary, Form, ThemeContextProvider, Title1} from '..';
 import userEvent from '@testing-library/user-event';
 import {makeTheme} from './test-utils';
 
 test('RadioGroup (uncontrolled)', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <SectionTitle id="label">Choose a fruit</SectionTitle>
+            <Title1 id="label">Choose a fruit</Title1>
             <RadioGroup name="radio-group" aria-labelledby="label" defaultValue="banana">
                 <RadioButton value="banana" />
                 <RadioButton value="apple" />
@@ -35,7 +34,7 @@ test('RadioGroup (uncontrolled)', async () => {
 test('RadioGroup (uncontrolled, no default value)', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <SectionTitle id="label">Choose a fruit</SectionTitle>
+            <Title1 id="label">Choose a fruit</Title1>
             <RadioGroup name="radio-group" aria-labelledby="label">
                 <RadioButton value="banana" />
                 <RadioButton value="apple" />
@@ -63,7 +62,7 @@ test('RadioGroup (controlled)', () => {
         const [fruit, setFruit] = React.useState('apple');
         return (
             <ThemeContextProvider theme={makeTheme()}>
-                <SectionTitle id="label">Choose a fruit</SectionTitle>
+                <Title1 id="label">Choose a fruit</Title1>
                 <RadioGroup name="radio-group" aria-labelledby="label" value={fruit} onChange={setFruit}>
                     <RadioButton value="banana" />
                     <RadioButton value="apple" />
@@ -102,7 +101,7 @@ test('RadioGroup (disabled)', () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <SectionTitle id="label">Choose a fruit</SectionTitle>
+            <Title1 id="label">Choose a fruit</Title1>
             <RadioGroup
                 disabled
                 name="radio-group"
@@ -146,7 +145,7 @@ test('RadioGroup (disabled)', () => {
 test('Radio custom render', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <SectionTitle id="label">Choose a fruit</SectionTitle>
+            <Title1 id="label">Choose a fruit</Title1>
             <RadioGroup name="radio-group" aria-labelledby="label" defaultValue="banana">
                 <RadioButton
                     value="banana"
@@ -163,7 +162,7 @@ test('Radio custom render', () => {
     expect(screen.getByText('banana').parentElement).toBeChecked();
     expect(screen.getByText('apple').parentElement).not.toBeChecked();
 
-    fireEvent.click(screen.getByText('apple'));
+    fireEvent.click(screen.getByRole('radio', {name: 'apple'}));
 
     expect(screen.getByText('banana').parentElement).not.toBeChecked();
     expect(screen.getByText('apple').parentElement).toBeChecked();
@@ -193,7 +192,7 @@ test('form controlled mode', async () => {
     expect(screen.getByText('banana').parentElement).not.toBeChecked();
     expect(screen.getByText('apple').parentElement).toBeChecked();
 
-    fireEvent.click(screen.getByText('banana'));
+    fireEvent.click(screen.getByRole('radio', {name: 'banana'}));
 
     expect(screen.getByText('banana').parentElement).toBeChecked();
     expect(screen.getByText('apple').parentElement).not.toBeChecked();
@@ -238,7 +237,7 @@ test('form uncontrolled mode', async () => {
     expect(screen.getByText('banana').parentElement).toBeChecked();
     expect(screen.getByText('apple').parentElement).not.toBeChecked();
 
-    fireEvent.click(screen.getByText('apple'));
+    fireEvent.click(screen.getByRole('radio', {name: 'apple'}));
 
     expect(screen.getByText('banana').parentElement).not.toBeChecked();
     expect(screen.getByText('apple').parentElement).toBeChecked();
