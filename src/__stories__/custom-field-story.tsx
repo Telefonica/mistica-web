@@ -21,7 +21,7 @@ import {cancelEvent} from '../utils/dom';
 import {combineRefs} from '../utils/common';
 
 export default {
-    title: 'Experiments/Custom field',
+    title: 'Mística Lab/Autocomplete',
 };
 
 const OPTIONS = [
@@ -284,7 +284,7 @@ const AutocompleteSelectField = ({name, options}: AutocompleteSelectFieldProps) 
 export const Default: StoryComponent = () => {
     const [formData, setFormData] = React.useState<any>({});
     return (
-        <StorySection title="Custom field">
+        <StorySection title="Autocomplete">
             <Stack space={32}>
                 <Text2 regular>
                     This is an example of how to create a custom form field based on Mistica's pieces. This
@@ -308,4 +308,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.storyName = 'Custom field';
+Default.storyName = 'Autocomplete';

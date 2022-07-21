@@ -6,7 +6,7 @@ const devices: Array<Device> = ['DESKTOP', 'MOBILE_IOS'];
 
 test.each(devices)('Select elements on the initial state appear properly on %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-forms-select--default',
+        id: 'components-select--default',
         device,
     });
 
@@ -16,7 +16,7 @@ test.each(devices)('Select elements on the initial state appear properly on %s',
 
 test.each(devices)('Select elements on a selected state appear properly on %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-forms-select--default',
+        id: 'components-select--default',
         device,
     });
 

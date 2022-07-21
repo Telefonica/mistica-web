@@ -7,7 +7,7 @@ import {Placeholder} from '../placeholder';
 import {useScreenSize} from '../hooks';
 
 export default {
-    title: 'Components/Others/SuccessFeedback',
+    title: 'Patterns/Feedback/SuccessFeedback',
     parameters: {
         fullScreen: true,
     },

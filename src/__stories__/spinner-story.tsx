@@ -3,7 +3,7 @@ import {Spinner, IntegerField, Stack} from '..';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components/Others/Spinner',
+    title: 'Components/Spinner',
     component: Spinner,
 };
 

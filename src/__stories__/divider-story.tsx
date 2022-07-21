@@ -3,7 +3,7 @@ import {Divider, ThemeVariant, useIsInverseVariant, useTheme} from '..';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components/Others/Divider',
+    title: 'Components/Divider',
 };
 
 const Container: React.FC = ({children}) => {

@@ -20,7 +20,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components/Layouts/MasterDetailLayout',
+    title: 'Layout/Master detail layout',
     parameters: {
         fullScreen: true,
     },
@@ -99,4 +99,4 @@ export const Default: StoryComponent = () => {
     );
 };
 
-Default.storyName = 'MasterDetailLayout';
+Default.storyName = 'Master detail layout';

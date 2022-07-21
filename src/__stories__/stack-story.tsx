@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Stack, Text2} from '..';
 
 export default {
-    title: 'Components/Layouts/Stack',
+    title: 'Layout/Stack',
     component: Stack,
     argTypes: {
         space: {

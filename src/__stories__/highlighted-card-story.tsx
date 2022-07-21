@@ -2,7 +2,7 @@ import * as React from 'react';
 import {HighlightedCard, Box, ButtonPrimary, ButtonSecondary, ButtonLink} from '..';
 
 export default {
-    title: 'Components/Cards/HighlightedCard',
+    title: 'Components/Cards/Highlighted card',
 };
 
 type Args = {
@@ -63,7 +63,7 @@ export const Default: StoryComponent<Args> = ({
     );
 };
 
-Default.storyName = 'HighlightedCard';
+Default.storyName = 'Highlighted card';
 Default.args = {
     title: 'Resolver problema técnico',
     description: 'Usa nuestra herramienta para resolver tus problemas técnicos',
@@ -144,6 +144,8 @@ export const CustomCardSize: StoryComponent = () => {
     );
 };
 
+CustomCardSize.storyName = ' Custom card size';
+
 const CardWrapper: React.FC = ({children}) => (
     <div style={{display: 'flex', width: '18%', marginRight: 8}}>{children}</div>
 );
@@ -182,3 +184,5 @@ export const CustomCardSizeInsideWrapper: StoryComponent = () => {
         </div>
     );
 };
+
+CustomCardSizeInsideWrapper.storyName = ' Custom card size inside wrapper';

@@ -3,7 +3,7 @@ import {Image, Stack, Text2, Text3, Title1, useTheme} from '..';
 import {isRunningAcceptanceTest} from '../utils/platform';
 
 export default {
-    title: 'Components/Others/Image',
+    title: 'Components/Primitives/Image',
 };
 
 export const Default: StoryComponent = () => {

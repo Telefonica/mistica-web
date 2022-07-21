@@ -8,7 +8,7 @@ test.each`
     ${'evenly'}
 `('Stack space: $space', async ({space}) => {
     const page = await openStoryPage({
-        id: 'components-layouts-stack--default',
+        id: 'layout-stack--default',
         args: {space},
         device: 'MOBILE_IOS',
     });

@@ -6,7 +6,7 @@ const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('Text in %s', async (device) => {
     await openStoryPage({
-        id: 'components-others-text--text-components',
+        id: 'components-text--text-components',
         device,
     });
 
@@ -18,7 +18,7 @@ test.each(TESTABLE_DEVICES)('Text in %s', async (device) => {
 
 test('Text wrapping', async () => {
     await openStoryPage({
-        id: 'components-others-text--text-wrapping',
+        id: 'components-text--text-wrapping',
         device: 'DESKTOP',
     });
 

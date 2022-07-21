@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Box, Stack, Placeholder, useTheme} from '..';
 
 export default {
-    title: 'Components/Layouts/Box',
+    title: 'Layout/Box',
 };
 
 export const Default: StoryComponent = () => {
