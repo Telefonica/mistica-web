@@ -4,7 +4,7 @@ const DEVICES = ['MOBILE_IOS', 'MOBILE_ANDROID'] as const;
 
 test.each(DEVICES)(`RadioGroup`, async (device) => {
     await openStoryPage({
-        id: 'components-forms-radio-button--default',
+        id: 'components-radio-button--default',
         device,
     });
 

@@ -3,7 +3,7 @@ import {Touchable, Stack, Text2, useTheme} from '..';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components/Touchables/Touchable',
+    title: 'Components/Primitives/Touchable',
     component: Touchable,
 };
 

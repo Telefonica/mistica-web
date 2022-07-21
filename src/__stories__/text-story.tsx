@@ -3,7 +3,7 @@ import {Text10, Text9, Text8, Text7, Text6, Text5, Text4, Text3, Text2, Text1, S
 import {isSafari} from '../utils/platform';
 
 export default {
-    title: 'Components/Others/Text',
+    title: 'Components/Text',
     component: Text,
 };
 
@@ -58,7 +58,6 @@ const Wrapper = ({children}: any) => (
         {children}
     </div>
 );
-
 export const TextWrapping: StoryComponent = () => {
     return (
         <Stack space={16} dataAttributes={{testid: 'text'}}>
@@ -96,3 +95,5 @@ export const TextWrapping: StoryComponent = () => {
         </Stack>
     );
 };
+
+TextWrapping.storyName = 'Text wrapping';

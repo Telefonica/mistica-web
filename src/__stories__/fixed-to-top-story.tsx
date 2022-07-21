@@ -2,7 +2,7 @@ import * as React from 'react';
 import {FixedToTop} from '..';
 
 export default {
-    title: 'Components/Utils/FixedToTop',
+    title: 'Utilities/FixedToTop',
 };
 
 type Props = {background: string; height: number; top: number};

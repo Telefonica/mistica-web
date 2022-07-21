@@ -12,7 +12,7 @@ import {
 import Title1 from '../section-title';
 
 export default {
-    title: 'Components/Forms/DoubleField',
+    title: 'Layout/Double field',
     component: DoubleField,
 };
 export const Default: StoryComponent = () => {

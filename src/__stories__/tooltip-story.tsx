@@ -7,7 +7,7 @@ import IconVisa from '../icons/icon-visa';
 import IconMastercard from '../icons/icon-mastercard';
 
 export default {
-    title: 'Components/Hints/Tooltip',
+    title: 'Components/Tooltip',
 };
 
 export const Default: StoryComponent = () => {

@@ -15,7 +15,7 @@ for (const skin of testableSkins) {
 
 test.each(cases)('Success Feedback component appears properly on %s and %s', async (skin, device) => {
     const page = await openStoryPage({
-        id: `components-others-successfeedback--success`,
+        id: `patterns-feedback-successfeedback--success`,
         skin: skin as never,
         device,
     });
@@ -28,7 +28,7 @@ test.each(testableDevices)(
     'Success Feedback component appears properly as a Success Header on %s',
     async (device) => {
         const page = await openStoryPage({
-            id: 'components-others-successfeedback--success-as-header',
+            id: 'patterns-feedback-successfeedback--success-as-header',
             skin: MOVISTAR_SKIN,
             device,
         });

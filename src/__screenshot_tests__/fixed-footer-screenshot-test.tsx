@@ -2,7 +2,7 @@ import {screen, openStoryPage} from '../test-utils';
 
 test('Dialog over fixed footer', async () => {
     const page = await openStoryPage({
-        id: 'components-layouts-fixedfooterlayout--dialog-over-fixed-footer',
+        id: 'layout-fixed-footer-layout--dialog-over-fixed-footer',
         device: 'MOBILE_IOS',
     });
 

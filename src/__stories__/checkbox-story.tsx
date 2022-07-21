@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Checkbox, Stack, Text3, Inline, Title1} from '..';
 
 export default {
-    title: 'Components/Forms/Checkbox',
+    title: 'Components/Checkbox',
 };
 
 export const Default: StoryComponent = () => {

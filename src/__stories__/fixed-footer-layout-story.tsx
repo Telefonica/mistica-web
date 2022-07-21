@@ -15,7 +15,7 @@ import {
 import {useCheckbox} from './helpers';
 
 export default {
-    title: 'Components/Layouts/FixedFooterLayout',
+    title: 'Layout/Fixed footer layout',
     component: FixedFooterLayout,
 };
 
@@ -56,7 +56,7 @@ export const FooterWithButtonsOnly: StoryComponent = () => {
     );
 };
 
-FooterWithButtonsOnly.storyName = 'ButtonFixedFooterLayout';
+FooterWithButtonsOnly.storyName = 'Button fixed footer layout';
 FooterWithButtonsOnly.parameters = {fullScreen: true};
 
 export const MoreComplexFooter: StoryComponent = () => {
@@ -96,7 +96,7 @@ export const MoreComplexFooter: StoryComponent = () => {
     );
 };
 
-MoreComplexFooter.storyName = 'FixedFooterLayout';
+MoreComplexFooter.storyName = 'Fixed footer layout';
 MoreComplexFooter.parameters = {fullScreen: true};
 
 export const DialogOverFixedFooter: StoryComponent = () => {
@@ -124,4 +124,5 @@ export const DialogOverFixedFooter: StoryComponent = () => {
     );
 };
 
+DialogOverFixedFooter.storyName = 'Dialog over fixed footer';
 DialogOverFixedFooter.parameters = {fullScreen: true};

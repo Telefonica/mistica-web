@@ -8,7 +8,7 @@ const isDisabled = async (element: ElementHandle) => {
 };
 
 test('Carousel mobile', async () => {
-    const page = await openStoryPage({id: 'components-carousel-carousel--default', device: 'MOBILE_IOS'});
+    const page = await openStoryPage({id: 'components-carousels-carousel--default', device: 'MOBILE_IOS'});
 
     expect(await page.screenshot()).toMatchImageSnapshot();
 
@@ -19,7 +19,7 @@ test('Carousel mobile', async () => {
 
 test('Carousel mobile with a single page', async () => {
     const page = await openStoryPage({
-        id: 'components-carousel-carousel--default',
+        id: 'components-carousels-carousel--default',
         device: 'MOBILE_IOS',
         args: {numItems: 1, itemsPerPageMobile: 1},
     });
@@ -27,7 +27,7 @@ test('Carousel mobile with a single page', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 
     const page2 = await openStoryPage({
-        id: 'components-carousel-carousel--default',
+        id: 'components-carousels-carousel--default',
         device: 'MOBILE_IOS',
         args: {numItems: 2, itemsPerPageMobile: 2},
     });
@@ -35,7 +35,7 @@ test('Carousel mobile with a single page', async () => {
     expect(await page2.screenshot()).toMatchImageSnapshot();
 
     const page3 = await openStoryPage({
-        id: 'components-carousel-carousel--default',
+        id: 'components-carousels-carousel--default',
         device: 'MOBILE_IOS',
         args: {numItems: 1, itemsPerPageMobile: 2},
     });
@@ -45,7 +45,7 @@ test('Carousel mobile with a single page', async () => {
 
 test('Carousel desktop', async () => {
     const page = await openStoryPage({
-        id: 'components-carousel-carousel--default',
+        id: 'components-carousels-carousel--default',
         device: 'DESKTOP',
         args: {numItems: 9},
     });
@@ -73,7 +73,7 @@ test('Carousel desktop', async () => {
 // no screenshot test for desktop because it's like the regular carousel
 test('CenteredCarousel mobile', async () => {
     const page = await openStoryPage({
-        id: 'components-carousel-centeredcarousel--default',
+        id: 'components-carousels-centered-carousel--default',
         device: 'MOBILE_IOS',
     });
 
@@ -86,7 +86,7 @@ test('CenteredCarousel mobile', async () => {
 
 test('Slideshow mobile', async () => {
     const page = await openStoryPage({
-        id: 'components-carousel-slideshow--default',
+        id: 'components-carousels-slideshow--default',
         device: 'MOBILE_IOS',
     });
 
@@ -95,7 +95,7 @@ test('Slideshow mobile', async () => {
 
 test('Slideshow desktop', async () => {
     const page = await openStoryPage({
-        id: 'components-carousel-slideshow--default',
+        id: 'components-carousels-slideshow--default',
         device: 'DESKTOP',
         args: {numItems: 3},
     });

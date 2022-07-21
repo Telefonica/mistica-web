@@ -4,7 +4,7 @@ import {Placeholder} from '../placeholder';
 import {StorySection, useSelect} from './helpers';
 
 export default {
-    title: 'Components/Layouts/Inline',
+    title: 'Layout/Inline',
 };
 
 const Row = ({

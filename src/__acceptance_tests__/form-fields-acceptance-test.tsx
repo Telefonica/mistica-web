@@ -10,9 +10,9 @@ const clearAndType = async (page: PageApi, element: ElementHandle, text: string)
 const getValue = async (element: Promise<ElementHandle> | ElementHandle) =>
     (await element).getProperty('value').then((t) => t?.jsonValue());
 
-const CONTROLLED_STORY = {id: 'components-forms-fields--types-controlled'};
+const CONTROLLED_STORY = {id: 'components-input-fields--types-controlled'};
 
-const UNCONTROLLED_STORY = {id: 'components-forms-fields--types-uncontrolled'};
+const UNCONTROLLED_STORY = {id: 'components-input-fields--types-uncontrolled'};
 
 const STORIES_MAP = {
     controlled: CONTROLLED_STORY,

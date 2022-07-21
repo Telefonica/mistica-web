@@ -5,7 +5,7 @@ import {ThemeVariant} from '../theme-variant-context';
 import {useCheckbox} from './helpers';
 
 export default {
-    title: 'Components/Layouts/Boxed',
+    title: 'Components/Primitives/Boxed',
 };
 
 export const Default: StoryComponent = () => {

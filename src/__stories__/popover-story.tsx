@@ -4,7 +4,7 @@ import {Popover, Text2, Stack, useTheme} from '..';
 import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
 
 export default {
-    title: 'Components/Hints/Popover',
+    title: 'Components/Popover',
     component: Popover,
 };
 

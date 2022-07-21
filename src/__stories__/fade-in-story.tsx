@@ -3,7 +3,7 @@ import {FadeIn, Stack, Text2} from '..';
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components/Animations/FadeIn',
+    title: 'Utilities/Animations/FadeIn',
     component: FadeIn,
 };
 

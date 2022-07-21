@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Slideshow, Stack, Box, ResponsiveLayout, Callout, IconInformationRegular, Image, Text4} from '..';
 
 export default {
-    title: 'Components/Carousel/Slideshow',
+    title: 'Components/Carousels/Slideshow',
 };
 
 type Args = {numItems: number; autoplay: boolean; loop: boolean; withBullets: boolean};

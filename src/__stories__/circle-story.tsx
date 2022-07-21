@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Circle, useTheme, Stack, IconAcademicLight} from '..';
 
 export default {
-    title: 'Components/Others/Circle',
+    title: 'Components/Primitives/Circle',
 };
 
 export const Default: StoryComponent = () => {
