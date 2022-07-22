@@ -3,7 +3,7 @@ import {SuccessFeedbackScreen} from '../feedback';
 import {ButtonPrimary, ButtonSecondary} from '../button';
 
 export default {
-    title: 'Components/Screens/FeedbackScreen/SuccessFeedbackScreen',
+    title: 'Patterns/Feedback/SuccessFeedbackScreen',
     parameters: {
         fullScreen: true,
     },

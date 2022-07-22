@@ -6,7 +6,7 @@ const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('MediaCard in %s', async (device) => {
     await openStoryPage({
-        id: 'components-cards-mediacard--default',
+        id: 'components-cards-media-card--default',
         device,
     });
 
@@ -19,7 +19,7 @@ test.each(TESTABLE_DEVICES)('MediaCard in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('MediaCard with large fontSize in %s', async (device) => {
     await openStoryPage({
-        id: 'components-cards-mediacard--default',
+        id: 'components-cards-media-card--default',
         device,
     });
 
@@ -34,7 +34,7 @@ test.each(TESTABLE_DEVICES)('MediaCard with large fontSize in %s', async (device
 
 test('MediaCard group', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-mediacard--group',
+        id: 'components-cards-media-card--group',
     });
 
     const image = await page.screenshot({fullPage: true});
@@ -44,7 +44,7 @@ test('MediaCard group', async () => {
 
 test('MediaCard with body ', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-mediacard--default',
+        id: 'components-cards-media-card--default',
         device: 'MOBILE_IOS',
         args: {
             withExtra: true,
@@ -59,7 +59,7 @@ test('MediaCard with body ', async () => {
 
 test('MediaCard carousel ', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-mediacard--carousel',
+        id: 'components-cards-media-card--carousel',
         device: 'DESKTOP',
     });
 

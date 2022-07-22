@@ -3,7 +3,7 @@ import {pxToRem} from '../utils/css';
 import {Tabs, IconCloseRegular} from '..';
 
 export default {
-    title: 'Components/Controls/Tabs',
+    title: 'Components/Tabs',
     component: Tabs,
 };
 

@@ -3,7 +3,7 @@ import {InfoFeedbackScreen} from '../feedback';
 import {ButtonPrimary} from '../button';
 
 export default {
-    title: 'Components/Screens/FeedbackScreen/InfoFeedbackScreen',
+    title: 'Patterns/Feedback/InfoFeedbackScreen',
     parameters: {
         fullScreen: true,
     },

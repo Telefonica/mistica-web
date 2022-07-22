@@ -85,6 +85,7 @@ type PropsRender = {
     }) => React.ReactNode;
     children?: undefined;
     dataAttributes?: DataAttributes;
+    'aria-labelledby'?: string;
 };
 
 type PropsChildren = {
@@ -93,11 +94,18 @@ type PropsChildren = {
     children?: React.ReactNode;
     render?: undefined;
     dataAttributes?: DataAttributes;
+    ['aria-labelledby']?: string;
 };
 
-const RadioButton: React.FC<PropsRender | PropsChildren> = ({value, id, dataAttributes, ...rest}) => {
+const RadioButton: React.FC<PropsRender | PropsChildren> = ({
+    value,
+    id,
+    dataAttributes,
+    'aria-labelledby': ariaLabelledby,
+    ...rest
+}) => {
     const {disabled, selectedValue, focusableValue, select, selectNext, selectPrev} = useRadioContext();
-    const labelId = useAriaId();
+    const labelId = useAriaId(ariaLabelledby);
     const ref = React.useRef<HTMLDivElement>(null);
     const checked = value === selectedValue;
     const tabIndex = focusableValue === value ? 0 : -1;

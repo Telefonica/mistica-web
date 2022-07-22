@@ -1,7 +1,7 @@
 import {openStoryPage, screen} from '../test-utils';
 
 test('TextLink common component screenshot', async () => {
-    await openStoryPage({id: 'components-touchables-textlink--default'});
+    await openStoryPage({id: 'components-text-link--default'});
 
     const textLink = await screen.findByTestId('text-link');
 

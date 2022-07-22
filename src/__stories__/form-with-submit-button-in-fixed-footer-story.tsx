@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Stack, ButtonPrimary, Form, Text2, FixedFooterLayout, Text4, Box} from '..';
 
 export default {
-    title: 'Components/Forms/Form with submit button in fixed footer',
+    title: 'Patterns/Forms/Form with submit button in fixed footer',
 };
 
 export const Default: StoryComponent = () => {

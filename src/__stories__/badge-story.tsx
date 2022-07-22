@@ -3,10 +3,10 @@ import {StorySection} from './helpers';
 import {Badge, IconButton, useTheme, IconBellFilled, IconShoppingCartFilled, IconStarFilled} from '..';
 
 export default {
-    title: 'Components/Hints/Badge',
+    title: 'Components/Badge',
 };
 
-export const BadgeStory: StoryComponent = () => {
+export const Default: StoryComponent = () => {
     const {colors} = useTheme();
     return (
         <>
@@ -63,4 +63,4 @@ export const BadgeStory: StoryComponent = () => {
     );
 };
 
-BadgeStory.storyName = 'Badge';
+Default.storyName = 'Badge';

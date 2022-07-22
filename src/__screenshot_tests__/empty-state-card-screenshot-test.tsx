@@ -20,7 +20,7 @@ const createCases = () => {
 
 test.each(createCases())('EmptyState %p %p %p', async (device, asset, actions) => {
     await openStoryPage({
-        id: 'components-cards-emptystatecard--default',
+        id: 'patterns-empty-states-emptystatecard--default',
         device: device as Device,
         args: {asset, actions},
     });

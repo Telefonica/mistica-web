@@ -4,7 +4,7 @@ import type {Device, StoryArgs} from '../test-utils';
 
 const renderSnapCard = async ({device, args}: {device: Device; args?: StoryArgs}) => {
     await openStoryPage({
-        id: 'components-cards-snapcard--default',
+        id: 'components-cards-snap-card--default',
         device,
         args,
     });
@@ -47,7 +47,7 @@ test('SnapCard', async () => {
 
 test('SnapCard group', async () => {
     const page = await openStoryPage({
-        id: 'components-cards-snapcard--group',
+        id: 'components-cards-snap-card--group',
     });
 
     expect(await page.screenshot()).toMatchImageSnapshot();

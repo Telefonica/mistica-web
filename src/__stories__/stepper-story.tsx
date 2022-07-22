@@ -5,7 +5,7 @@ import {Stepper, ButtonPrimary, ButtonLayout, Stack} from '..';
 const texts = ['Basic Details', 'Company Details', 'Subscription Plan', 'Payment Details', 'Confirmation'];
 
 export default {
-    title: 'Components/Others/Stepper',
+    title: 'Components/Stepper',
 };
 
 export const Default: StoryComponent = () => {

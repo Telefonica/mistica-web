@@ -6,7 +6,7 @@ const DEVICES: Array<Device> = ['MOBILE_IOS_SMALL', 'MOBILE_IOS', 'DESKTOP'];
 
 test.each(DEVICES)('Double Field', async (device) => {
     const page = await openStoryPage({
-        id: 'components-forms-doublefield--default',
+        id: 'layout-double-field--default',
         device,
     });
 
@@ -15,7 +15,7 @@ test.each(DEVICES)('Double Field', async (device) => {
 
 test.each(DEVICES)('Double Field: Full width', async (device) => {
     const page = await openStoryPage({
-        id: 'components-forms-doublefield--full-width',
+        id: 'layout-double-field--full-width',
         device,
     });
 

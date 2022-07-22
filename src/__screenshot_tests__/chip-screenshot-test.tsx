@@ -1,7 +1,7 @@
 import {openStoryPage, screen} from '../test-utils';
 
 test('Chip', async () => {
-    const page = await openStoryPage({id: 'components-others-chip--default'});
+    const page = await openStoryPage({id: 'components-chip--default'});
 
     const story = await screen.findByTestId('chip-story');
 

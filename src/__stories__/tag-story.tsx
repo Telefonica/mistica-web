@@ -19,7 +19,7 @@ type Args = {
 };
 
 export default {
-    title: 'Components/Others/Tag',
+    title: 'Components/Tag',
 };
 
 const Container: React.FC<{inverse?: boolean}> = ({children, inverse = false}) => {

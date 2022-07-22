@@ -24,7 +24,7 @@ test('Title', async () => {
     for (const {caseName, title, linkText} of argsCases) {
         for (const device of devices) {
             await openStoryPage({
-                id: 'components-others-title--default',
+                id: 'components-title--default',
                 device,
                 args: {title, linkText},
             });
