@@ -1278,6 +1278,7 @@ export {default as IconPacifierLight} from './generated/mistica-icons/icon-pacif
 export {default as IconPacifierRegular} from './generated/mistica-icons/icon-pacifier-regular';
 export {default as IconPackageTrolleyFilled} from './generated/mistica-icons/icon-package-trolley-filled';
 export {default as IconPackageTrolleyLight} from './generated/mistica-icons/icon-package-trolley-light';
+export {default as IconPackageTrolleyRegular} from './generated/mistica-icons/icon-package-trolley-regular';
 export {default as IconParkingFilled} from './generated/mistica-icons/icon-parking-filled';
 export {default as IconParkingLight} from './generated/mistica-icons/icon-parking-light';
 export {default as IconParkingRegular} from './generated/mistica-icons/icon-parking-regular';

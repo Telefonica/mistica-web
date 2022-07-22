@@ -14,7 +14,16 @@ const IconBriefcaseRegular: React.FC<IconProps> = ({color, size = 24, children, 
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M16.668 7.332a.662.662 0 00.012-.128V4.68A.68.68 0 0016 4H8a.68.68 0 00-.68.68v2.652H2v13.36h20V7.332h-5.332zm-.012 1.36v10.64H7.344V8.692h9.312zM8.68 5.36h6.64v1.844c0 .044.004.088.012.128H8.68V5.36zM3.36 8.692h2.624v10.64H3.36V8.692zm17.28 10.64h-2.624V8.692h2.624v10.64z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

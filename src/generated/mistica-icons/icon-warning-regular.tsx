@@ -14,7 +14,20 @@ const IconWarningRegular: React.FC<IconProps> = ({color, size = 24, children, ..
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M11.992 17.86a1.2 1.2 0 010-2.4 1.2 1.2 0 010 2.4zm-.668-11.792h1.356V14h-1.356V6.068z"
+                    fill={fillColor}
+                />
+                <path
+                    d="M12 2c5.328 0 10 4.672 10 10s-4.672 10-10 10S2 17.328 2 12 6.672 2 12 2zm0 18.644c4.604 0 8.644-4.04 8.644-8.644S16.604 3.356 12 3.356 3.356 7.396 3.356 12s4.04 8.644 8.644 8.644z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

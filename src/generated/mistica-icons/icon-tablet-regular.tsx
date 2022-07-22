@@ -14,7 +14,16 @@ const IconTabletRegular: React.FC<IconProps> = ({color, size = 24, children, ...
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M18.692 20v-2H5.333v2c0 .368.299.667.667.667h12.026a.667.667 0 00.666-.667zM5.333 4v12.667h13.359V4a.667.667 0 00-.666-.667H6A.667.667 0 005.333 4zm14.692 0v16c0 1.103-.897 2-1.999 2H6c-1.103 0-2-.897-2-2V4c0-1.103.897-2 2-2h12.026c1.102 0 1.999.897 1.999 2zm-8.666 16h1.333v-1.334h-1.333V20z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

@@ -14,7 +14,20 @@ const IconCreditCardRegular: React.FC<IconProps> = ({color, size = 24, children,
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M12 14.32H4.676v1.36H12v-1.36zm3.996-1.984h3.328v3.328h-3.328v-3.328z"
+                    fill={fillColor}
+                />
+                <path
+                    d="M2 5v13.344h20V5H2zm18.64 1.36v2.636H3.36V6.36h17.28zM3.36 16.984v-6.632h17.28v6.632H3.36z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

@@ -14,7 +14,16 @@ const IconShoppingCartRegular: React.FC<IconProps> = ({color, size = 24, childre
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M4.598 3.362L8.21 17.09l10.332-2.384 2.524-8.412H6.778L5.648 2H2.976v1.362h1.622zM9.19 15.466l-2.055-7.81h12.098l-1.77 5.9-8.273 1.91zm.585 3.334a1.6 1.6 0 11-.003 3.2 1.6 1.6 0 01.003-3.2zm6.44 0a1.6 1.6 0 11-.002 3.2 1.6 1.6 0 01.002-3.2z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

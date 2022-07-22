@@ -14,7 +14,16 @@ const IconArrowUpLeftRegular: React.FC<IconProps> = ({color, size = 24, children
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M17.574 20.08L8.393 10.9l-5.06 5.06V3.356h12.602l-5.059 5.06 9.18 9.18-2.482 2.483zM12.795 8.416l5.258-5.258L17.574 2H1.976v15.598l1.158.48 5.258-5.26L17.574 22l4.402-4.402-9.181-9.182z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
