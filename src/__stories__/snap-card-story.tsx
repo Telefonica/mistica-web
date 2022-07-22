@@ -15,7 +15,7 @@ import {Placeholder} from '../placeholder';
 import {ThemeVariant} from '../theme-variant-context';
 
 export default {
-    title: 'Components/Cards/SnapCard',
+    title: 'Components/Cards/Snap card',
 };
 
 type Args = {
@@ -65,7 +65,7 @@ export const Default: StoryComponent<Args> = ({asset, title, subtitle, touchable
     );
 };
 
-Default.storyName = 'SnapCard';
+Default.storyName = 'Snap card';
 Default.args = {
     asset: 'icon in circle',
     title: 'Some title',
@@ -127,7 +127,7 @@ export const Group: StoryComponent = () => {
     );
 };
 
-Group.storyName = 'SnapCard group';
+Group.storyName = 'Snap card group';
 Group.parameters = {
     fullScreen: true,
 };

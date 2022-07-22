@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Stack, ButtonPrimary, Inline, Title2, Video, Title1, Text3} from '..';
 
 export default {
-    title: 'Components/Others/Video',
+    title: 'Components/Primitives/Video',
     component: Video,
 };
 

@@ -3,7 +3,7 @@ import {Snackbar, Stack} from '..';
 import {StorySection, useTextField, useSelect} from './helpers';
 
 export default {
-    title: 'Components/Dialogs/Snackbar',
+    title: 'Components/Snackbar',
     component: Snackbar,
 };
 

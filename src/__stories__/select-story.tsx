@@ -3,7 +3,7 @@ import {fruitEntries} from './helpers';
 import {Select, Stack, Title1} from '..';
 
 export default {
-    title: 'Components/Forms/Select',
+    title: 'Components/Select',
     component: Select,
 };
 

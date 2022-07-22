@@ -214,8 +214,8 @@ export const Text8: React.FC<TextPresetProps> = (props) => {
         <Text
             mobileSize={32}
             mobileLineHeight="40px"
-            desktopSize={40}
-            desktopLineHeight="48px"
+            desktopSize={48}
+            desktopLineHeight="56px"
             weight={textPresets.text8.weight}
             {...props}
         >

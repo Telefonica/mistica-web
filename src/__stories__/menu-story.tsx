@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Touchable, Menu, Stack, Inline, Text3, Box, Checkbox, IconKebabMenuLight, Title1} from '..';
 
 export default {
-    title: 'Components/Controls/Menu',
+    title: 'Components/Menu',
     component: Menu,
     argTypes: {
         position: {

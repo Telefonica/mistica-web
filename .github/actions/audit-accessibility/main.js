@@ -83,6 +83,8 @@ const audit = async (browser, url, disabledRules = []) => {
             'autocomplete-valid',
             // ignored because disabled input fields have a low contrast by design spec
             'color-contrast',
+            // https://jira.tid.es/browse/WEB-612
+            'scrollable-region-focusable',
             ...disabledRules,
         ])
         .analyze();

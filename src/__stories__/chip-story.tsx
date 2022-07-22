@@ -3,7 +3,7 @@ import {Checkbox, Chip, IconLightningFilled, Inline, RadioButton, RadioGroup} fr
 import {StorySection} from './helpers';
 
 export default {
-    title: 'Components/Others/Chip',
+    title: 'Components/Chip',
 };
 
 export const Default: StoryComponent = () => (

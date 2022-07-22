@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Placeholder, Stack} from '..';
 
 export default {
-    title: 'Components/Placeholders/Placeholder',
+    title: 'Components/Primitives/Placeholder',
 };
 
 export const Default: StoryComponent = () => (

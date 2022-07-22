@@ -1,7 +1,7 @@
 import {openStoryPage, screen} from '../test-utils';
 
 test('Image', async () => {
-    await openStoryPage({id: 'components-others-image--default'});
+    await openStoryPage({id: 'components-primitives-image--default'});
 
     const story = await screen.findByTestId('image-story');
 

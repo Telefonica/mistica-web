@@ -2,7 +2,7 @@ import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 test('Tags', async () => {
     await openStoryPage({
-        id: 'components-others-tag--default',
+        id: 'components-tag--default',
         device: 'DESKTOP',
     });
 
@@ -14,7 +14,7 @@ test('Tags', async () => {
 
 test('Tags dark mode', async () => {
     await openStoryPage({
-        id: 'components-others-tag--default',
+        id: 'components-tag--default',
         device: 'DESKTOP',
         isDarkMode: true,
     });
@@ -27,7 +27,7 @@ test('Tags dark mode', async () => {
 
 test('Tags short label', async () => {
     await openStoryPage({
-        id: 'components-others-tag--default',
+        id: 'components-tag--default',
         device: 'DESKTOP',
         args: {label: '1'},
     });
@@ -40,7 +40,7 @@ test('Tags short label', async () => {
 
 test('Tags long label', async () => {
     await openStoryPage({
-        id: 'components-others-tag--default',
+        id: 'components-tag--default',
         device: 'DESKTOP',
         args: {label: 'Super long label is long'},
     });
@@ -53,7 +53,7 @@ test('Tags long label', async () => {
 
 test('Tags with large fontSize', async () => {
     await openStoryPage({
-        id: 'components-others-tag--default',
+        id: 'components-tag--default',
         device: 'DESKTOP',
     });
 

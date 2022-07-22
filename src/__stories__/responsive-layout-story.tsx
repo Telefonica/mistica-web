@@ -3,7 +3,7 @@ import {ResponsiveLayout} from '..';
 import {Placeholder} from '../placeholder';
 
 export default {
-    title: 'Components/Layouts/ResponsiveLayout',
+    title: 'Layout/Responsive layout',
     parameters: {
         fullScreen: true,
     },
@@ -15,4 +15,4 @@ export const Default: StoryComponent = () => (
     </ResponsiveLayout>
 );
 
-Default.storyName = 'ResponsiveLayout';
+Default.storyName = 'Responsive layout';

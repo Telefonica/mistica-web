@@ -6,7 +6,7 @@ const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('HighlightedCard in %s', async (device) => {
     await openStoryPage({
-        id: 'components-cards-highlightedcard--default',
+        id: 'components-cards-highlighted-card--default',
         device,
     });
 
@@ -17,7 +17,7 @@ test.each(TESTABLE_DEVICES)('HighlightedCard in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('HighlightedCard with large fontSize in %s', async (device) => {
     await openStoryPage({
-        id: 'components-cards-highlightedcard--default',
+        id: 'components-cards-highlighted-card--default',
         device,
     });
 
@@ -30,7 +30,7 @@ test.each(TESTABLE_DEVICES)('HighlightedCard with large fontSize in %s', async (
 
 test('Custom card size', async () => {
     await openStoryPage({
-        id: 'components-cards-highlightedcard--custom-card-size',
+        id: 'components-cards-highlighted-card--custom-card-size',
         device: 'DESKTOP',
     });
 
@@ -41,7 +41,7 @@ test('Custom card size', async () => {
 
 test('Custom card size inside wrapper', async () => {
     await openStoryPage({
-        id: 'components-cards-highlightedcard--custom-card-size-inside-wrapper',
+        id: 'components-cards-highlighted-card--custom-card-size-inside-wrapper',
         device: 'DESKTOP',
     });
 

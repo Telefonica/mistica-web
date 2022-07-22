@@ -24,7 +24,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components/Forms/Form with automatic state management',
+    title: 'Patterns/Forms/Form with automatic state management',
 };
 
 const fakeApiCall = (data: any): Promise<void> =>
