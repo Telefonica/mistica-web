@@ -94,7 +94,7 @@ type PropsChildren = {
     children?: React.ReactNode;
     render?: undefined;
     dataAttributes?: DataAttributes;
-    ['aria-labelledby']?: string;
+    'aria-labelledby'?: string;
 };
 
 const RadioButton: React.FC<PropsRender | PropsChildren> = ({

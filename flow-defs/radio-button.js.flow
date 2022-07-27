@@ -28,7 +28,7 @@ declare type PropsChildren = {
   id?: string,
   children?: React.Node,
   dataAttributes?: DataAttributes,
-  "aria-labelledby": string | void,
+  "aria-labelledby"?: string,
 };
 declare var RadioButton: React.ComponentType<PropsRender | PropsChildren>;
 declare type RadioGroupProps = {
