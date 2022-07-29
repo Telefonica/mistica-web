@@ -10,7 +10,7 @@ export type KnownSkinName =
   | "Blau";
 export type SkinName = KnownSkinName | string;
 export type GetKnownSkin = (variant?: SkinVariant) => KnownSkin;
-export type FontWeight = "light" | "regular" | "medium";
+export type FontWeight = "light" | "regular" | "medium" | "bold";
 declare type TextPresetName =
   | "text5"
   | "text6"

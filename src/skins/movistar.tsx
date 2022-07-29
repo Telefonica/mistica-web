@@ -251,12 +251,12 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             promoHigh: palette.purple40,
         },
         textPresets: {
-            text5: {weight: 'medium'},
-            text6: {weight: 'medium'},
-            text7: {weight: 'medium'},
-            text8: {weight: 'medium'},
-            text9: {weight: 'medium'},
-            text10: {weight: 'medium'},
+            text5: {weight: 'bold'},
+            text6: {weight: 'bold'},
+            text7: {weight: 'bold'},
+            text8: {weight: 'bold'},
+            text9: {weight: 'bold'},
+            text10: {weight: 'bold'},
         },
         // @todo: uncomment to apply movistar skin evolution
         // textPresets: {

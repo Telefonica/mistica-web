@@ -14,7 +14,16 @@ const IconAddMoreRegular: React.FC<IconProps> = ({color, size = 24, children, ..
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M18.524 11.525h-6.057v-6.05a.475.475 0 00-.951 0v6.05H5.459a.476.476 0 100 .95h6.057v6.05a.476.476 0 00.95 0v-6.05h6.058a.475.475 0 100-.95z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

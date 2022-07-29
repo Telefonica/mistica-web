@@ -14,7 +14,16 @@ const IconUserAccountRegular: React.FC<IconProps> = ({color, size = 24, children
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M6.636 8.33a5.342 5.342 0 005.336 5.337 5.342 5.342 0 005.336-5.336 5.342 5.342 0 00-5.336-5.337 5.342 5.342 0 00-5.336 5.337zm1.354 0a3.987 3.987 0 013.982-3.98 3.986 3.986 0 013.982 3.98 3.986 3.986 0 01-3.982 3.982A3.987 3.987 0 017.99 8.331zM1.976 21.384h1.355l-.001-2.14.002-.079-.001-.028a.632.632 0 01.039-.182.915.915 0 01.325-.467l.049-.042c.879-.808 3.072-1.498 5.646-1.783l2.573 2.93 2.711-2.931c2.53.28 4.632.955 5.534 1.784l.049.042a.94.94 0 01.364.65v2.237h1.355v-2.22c0-.199-.034-.403-.096-.587a2.246 2.246 0 00-.778-1.14c-1.19-1.076-3.604-1.86-6.631-2.15l-.334-.031-2.148 2.323-2.041-2.324-.344.033c-3.068.293-5.588 1.097-6.754 2.15a2.24 2.24 0 00-.773 1.12 1.94 1.94 0 00-.101.606v2.229z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

@@ -14,7 +14,16 @@ const IconLockClosedRegular: React.FC<IconProps> = ({color, size = 24, children,
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M14.058 14.692v3.2h-3.2v-3.2h3.2zm.095-11.34a4.415 4.415 0 014.41 4.41v2.714h-8.82V7.762a4.415 4.415 0 014.41-4.41zm3.39 17.296H7.373a1.02 1.02 0 01-1.02-1.02v-7.8h12.21v7.8a1.02 1.02 0 01-1.018 1.02zM8.392 7.762v2.714H5v9.152A2.374 2.374 0 007.373 22h10.172a2.374 2.374 0 002.37-2.371V7.762A5.768 5.768 0 0014.155 2 5.768 5.768 0 008.39 7.762z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

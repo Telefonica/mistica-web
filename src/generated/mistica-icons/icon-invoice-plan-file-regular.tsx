@@ -14,7 +14,20 @@ const IconInvoicePlanFileRegular: React.FC<IconProps> = ({color, size = 24, chil
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M7.622 16.782h7.756c.388 0 .705.33.705.734 0 .404-.317.734-.705.734H7.622c-.388 0-.705-.33-.705-.734 0-.404.317-.734.705-.734zm-.705-2.937c0-.404.317-.734.705-.734h7.756c.388 0 .705.33.705.734 0 .404-.317.734-.705.734H7.622c-.388 0-.705-.33-.705-.734z"
+                    fill={fillColor}
+                />
+                <path
+                    d="M4 7.429L9.479 2h9.66v20H4V7.429zM9.046 7V4.429L6.451 7h2.595zM5.442 20.571h12.255V3.43h-7.209v5H5.442v12.14z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

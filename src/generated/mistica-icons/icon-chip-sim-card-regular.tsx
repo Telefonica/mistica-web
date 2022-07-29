@@ -14,7 +14,20 @@ const IconChipSimCardRegular: React.FC<IconProps> = ({color, size = 24, children
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M7.482 18.88h9.93v-8.511c0-.78-.639-1.419-1.42-1.419h-7.09c-.78 0-1.419.639-1.419 1.419v8.51zm8.51-1.419h-7.09v-7.092h7.092v7.092z"
+                    fill={fillColor}
+                />
+                <path
+                    d="M5 21.858h14.894V7.922c0-.567-.237-1.1-.61-1.49l-3.621-3.794A1.855 1.855 0 0014.24 2H7.03C5.914 2 5 2.957 5 4.128v17.73zm13.54-1.418H6.354V4.128c0-.39.305-.71.677-.71h7.21c.203 0 .372.071.508.213l3.588 3.795a.716.716 0 01.203.496V20.44z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path

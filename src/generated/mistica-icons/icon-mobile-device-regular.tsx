@@ -14,7 +14,16 @@ const IconMobileDeviceRegular: React.FC<IconProps> = ({color, size = 24, childre
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M15 2H8.571A3.582 3.582 0 005 5.571V18.43A3.582 3.582 0 008.571 22H15a3.582 3.582 0 003.571-3.571V5.57A3.582 3.582 0 0015 2zM6.429 17.357V6.643h10.714v10.714H6.429zM8.57 3.43H15c1.071 0 1.929.785 2.107 1.785H6.464c.179-1 1.036-1.785 2.107-1.785zM15 20.57H8.571c-1.071 0-1.928-.785-2.107-1.785h10.643c-.178 1-1.036 1.785-2.107 1.785z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
