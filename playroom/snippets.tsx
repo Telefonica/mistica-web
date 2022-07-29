@@ -172,10 +172,44 @@ const listSnippets: Array<Snippet> = [
     code: `
         <${listName}>
             <${rowName}
+                asset={<IconShopRegular />}
+                title="Title"
+                description="Description"
+                onPress={() => {}}
+            />
+            <${rowName}
+                asset={<IconShopRegular />}
+                title="Title"
+                description="Description"
+                onPress={() => {}}
+            />
+            <${rowName}
+                asset={<IconShopRegular />}
+                title="Title"
+                description="Description"
+                onPress={() => {}}
+            />
+            <${rowName}
+                asset={<IconShopRegular />}
+                title="Title"
+                description="Description"
+                onPress={() => {}}
+            />
+        </${listName}>
+        `,
+}));
+
+const listSnippetsAvatar: Array<Snippet> = [
+    ['RowList', 'Row'],
+    ['BoxedRowList', 'BoxedRow'],
+].map(([listName, rowName]) => ({
+    group: 'Lists with Avatar',
+    name: listName,
+    code: `
+        <${listName}>
+            <${rowName}
                 asset={
-                    <Circle backgroundColor={colors.neutralLow} size={40}>
-                        <IconShopRegular />
-                    </Circle>
+                    <Avatar size={40} initials="HS" />
                 }
                 title="Title"
                 description="Description"
@@ -183,9 +217,7 @@ const listSnippets: Array<Snippet> = [
             />
             <${rowName}
                 asset={
-                    <Circle backgroundColor={colors.neutralLow} size={40}>
-                        <IconShopRegular />
-                    </Circle>
+                    <Avatar size={40} initials="AL" />
                 }
                 title="Title"
                 description="Description"
@@ -193,16 +225,20 @@ const listSnippets: Array<Snippet> = [
             />
             <${rowName}
                 asset={
-                    <Circle backgroundColor={colors.neutralLow} size={40}>
-                        <IconShopRegular />
-                    </Circle>
+                  <Avatar
+                    size={isDesktopOrBigger ? 32 : 24}
+                    initials="ML"
+                    src="https://i.pravatar.cc/100?img=31"
+                  />
                 }
                 title="Title"
                 description="Description"
                 onPress={() => {}}
             />
             <${rowName}
-                asset={<Image src="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
+                asset={
+                  <Avatar size={40} initials="AR" />
+                }
                 title="Title"
                 description="Description"
                 onPress={() => {}}
@@ -219,9 +255,7 @@ listSnippets.push({
         <RowList>
             <Row
                 asset={
-                    <Circle backgroundColor={colors.neutralLow} size={40}>
-                        <IconShopRegular />
-                    </Circle>
+                    <IconShopRegular />
                 }
                 title="Banana"
                 description="Yellow"
@@ -229,9 +263,7 @@ listSnippets.push({
             />
             <Row
                 asset={
-                    <Circle backgroundColor={colors.neutralLow} size={40}>
-                        <IconShopRegular />
-                    </Circle>
+                    <IconShopRegular />
                 }
                 title="Apple"
                 description="Green"
@@ -270,9 +302,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         code: `
         <${rowName}
             asset={
-                <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconShopRegular />
-                </Circle>
+                <IconShopRegular />
             }
             headline="Headline"
             title="Title"
@@ -288,9 +318,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         code: `
         <${rowName}
             asset={
-                <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconShopRegular />
-                </Circle>
+                <IconShopRegular />
             }
             title="Title"
             description="Description"
@@ -303,9 +331,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         code: `
         <${rowName}
             asset={
-                <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconShopRegular />
-                </Circle>
+                <IconShopRegular />
             }
             title="Title"
             description="Description"
@@ -318,9 +344,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         code: `
         <${rowName}
             asset={
-                <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconShopRegular />
-                </Circle>
+                <IconShopRegular />
             }
             title="Orange"
             description="orange"
@@ -333,9 +357,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         code: `
         <${rowName}
             asset={
-                <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconShopRegular />
-                </Circle>
+                <IconShopRegular />
             }
             title="Title"
             description="Description"
@@ -616,8 +638,8 @@ const cardSnippets: Array<Snippet> = [
             description="Description"
             extra={<Placeholder />}
             icon={
-                <Circle backgroundColor={colors.neutralLow} size={40}>
-                    <IconShopRegular />
+                <Circle backgroundColor={colors.brandLow} size={40}>
+                    <IconShopRegular color={colors.brand} />
                 </Circle>
             }
             button={
@@ -637,7 +659,7 @@ const cardSnippets: Array<Snippet> = [
             subtitle="Subtitle"
             icon={
               <Circle size={40} backgroundColor={colors.brandLow}>
-                <IconAcademicRegular />
+                <IconAcademicRegular color={colors.brand} />
               </Circle>
             }
         />`,
@@ -831,9 +853,10 @@ const exampleScreens: Array<Snippet> = [
               </Badge>
             </NavigationBarAction>
             <NavigationBarAction onPress={() => {}} aria-label="Open profile">
-              <Circle
-                backgroundImage="https://i.pravatar.cc/100?img=31"
+              <Avatar
                 size={isDesktopOrBigger ? 32 : 24}
+                initials="ML"
+                src="https://i.pravatar.cc/100?img=31"
               />
               {isDesktopOrBigger && "María López Serrano"}
             </NavigationBarAction>
@@ -1046,9 +1069,10 @@ const navigationBarSnippets = [
         </Badge>
       </NavigationBarAction>
       <NavigationBarAction onPress={() => {}} aria-label="Open profile">
-        <Circle
-          backgroundImage="https://i.pravatar.cc/100?img=31"
+        <Avatar
           size={isDesktopOrBigger ? 32 : 24}
+          initials="ML"
+          src="https://i.pravatar.cc/100?img=31"
         />
         {isDesktopOrBigger && "María López Serrano"}
       </NavigationBarAction>
@@ -1287,6 +1311,7 @@ export default [
     {group: 'Text', name: 'Text', code: '<Text>some text</Text>'},
     ...headerSnippets,
     ...listSnippets,
+    ...listSnippetsAvatar,
     ...listRowSnippets,
     ...tabsSnippets,
     ...cardSnippets,
