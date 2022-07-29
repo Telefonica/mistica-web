@@ -66,7 +66,7 @@ Horizontally distributes its children using the given `space` separation. This c
 an horizontal `Stack`
 
 :information_source: Items can be aligned vertically. Check `Inline` component in
-[Storybook](https://mistica-web.vercel.app/?path=/story/components-layouts-inline) to learn more about it.
+[Storybook](https://mistica-web.vercel.app/?path=/story/layout-inline--default) to learn more about it.
 
 ### numeric space
 

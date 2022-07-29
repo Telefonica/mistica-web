@@ -21,12 +21,14 @@ declare type PropsRender = {
     checked: boolean,
   }) => React.Node,
   dataAttributes?: DataAttributes,
+  "aria-labelledby"?: string,
 };
 declare type PropsChildren = {
   value: string,
   id?: string,
   children?: React.Node,
   dataAttributes?: DataAttributes,
+  "aria-labelledby"?: string,
 };
 declare var RadioButton: React.ComponentType<PropsRender | PropsChildren>;
 declare type RadioGroupProps = {

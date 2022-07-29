@@ -2,7 +2,7 @@ import {openStoryPage} from '../test-utils';
 
 test('Switch', async () => {
     await openStoryPage({
-        id: 'components-forms-switch--default',
+        id: 'components-switch--default',
     });
 
     const image = await page.screenshot();

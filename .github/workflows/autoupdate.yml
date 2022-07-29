@@ -1,0 +1,22 @@
+name: autoupdate
+on:
+    push:
+        branches:
+            - master
+
+jobs:
+    autoupdate:
+        name: autoupdate
+        runs-on: ubuntu-latest
+
+        concurrency:
+            group: autoupdate-${{ github.ref }}
+            cancel-in-progress: true
+
+        steps:
+            - uses: docker://chinthakagodawita/autoupdate-action:v1
+              env:
+                  GITHUB_TOKEN: '${{ secrets.NOVUM_PRIVATE_REPOS }}'
+                  PR_FILTER: 'auto_merge'
+                  PR_READY_STATE: 'ready_for_review'
+                  MERGE_CONFLICT_ACTION: 'fail'

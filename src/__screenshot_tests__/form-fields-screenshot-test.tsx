@@ -6,7 +6,7 @@ const TESTABLE_DEVICES: Array<Device> = ['MOBILE_IOS', 'DESKTOP'];
 
 test.each(TESTABLE_DEVICES)('All variants in %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-forms-fields--variants',
+        id: 'components-input-fields--variants',
         device,
     });
 
@@ -17,7 +17,7 @@ test.each(TESTABLE_DEVICES)('All variants in %s', async (device) => {
 
 test.each(TESTABLE_DEVICES)('Default textfield appears properly on %s', async (device) => {
     await openStoryPage({
-        id: 'components-forms-fields--variants',
+        id: 'components-input-fields--variants',
         device,
     });
 
@@ -29,7 +29,7 @@ test.each(TESTABLE_DEVICES)('Default textfield appears properly on %s', async (d
 
 test.each(TESTABLE_DEVICES)('Default textfield appears properly (focus) on %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-forms-fields--variants',
+        id: 'components-input-fields--variants',
         device,
     });
 
@@ -42,7 +42,7 @@ test.each(TESTABLE_DEVICES)('Default textfield appears properly (focus) on %s', 
 
 test.each(TESTABLE_DEVICES)('Default textfield appears properly (typing) on %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-forms-fields--variants',
+        id: 'components-input-fields--variants',
         device,
     });
 
@@ -55,7 +55,7 @@ test.each(TESTABLE_DEVICES)('Default textfield appears properly (typing) on %s',
 
 test.each(TESTABLE_DEVICES)('Default textfield appears properly (typing and blur) on %s', async (device) => {
     const page = await openStoryPage({
-        id: 'components-forms-fields--variants',
+        id: 'components-input-fields--variants',
         device,
     });
 
@@ -69,7 +69,7 @@ test.each(TESTABLE_DEVICES)('Default textfield appears properly (typing and blur
 
 test('Search text field', async () => {
     const page = await openStoryPage({
-        id: 'components-forms-fields--types-controlled',
+        id: 'components-input-fields--types-controlled',
         device: 'MOBILE_ANDROID',
     });
 
@@ -88,7 +88,7 @@ test('Search text field', async () => {
 
 test('Multiline text field', async () => {
     const page = await openStoryPage({
-        id: 'components-forms-fields--variants',
+        id: 'components-input-fields--variants',
         device: 'MOBILE_ANDROID',
     });
 
@@ -127,7 +127,7 @@ test('Multiline text field', async () => {
 
 test('date field', async () => {
     await openStoryPage({
-        id: 'components-forms-fields--types-uncontrolled',
+        id: 'components-input-fields--types-uncontrolled',
         device: 'MOBILE_ANDROID',
     });
 
@@ -148,7 +148,7 @@ test('date field', async () => {
 
 test('date-time field', async () => {
     await openStoryPage({
-        id: 'components-forms-fields--types-uncontrolled',
+        id: 'components-input-fields--types-uncontrolled',
         device: 'MOBILE_ANDROID',
     });
 
@@ -169,7 +169,7 @@ test('date-time field', async () => {
 
 test('month field', async () => {
     await openStoryPage({
-        id: 'components-forms-fields--types-uncontrolled',
+        id: 'components-input-fields--types-uncontrolled',
         device: 'MOBILE_ANDROID',
     });
 
@@ -193,7 +193,7 @@ test('month field', async () => {
 
 test('Very long label should show ellipsis', async () => {
     await openStoryPage({
-        id: 'components-forms-fields--variants',
+        id: 'components-input-fields--variants',
         device: 'MOBILE_IOS',
     });
 

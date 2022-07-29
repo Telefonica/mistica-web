@@ -1,8 +1,7 @@
 import * as React from 'react';
 import RadioButton, {RadioGroup} from '../radio-button';
-import {Title1} from '../title';
 import {render, screen, within, fireEvent, waitFor} from '@testing-library/react';
-import {ButtonPrimary, Form, ThemeContextProvider} from '..';
+import {ButtonPrimary, Form, ThemeContextProvider, Title1} from '..';
 import userEvent from '@testing-library/user-event';
 import {makeTheme} from './test-utils';
 
@@ -163,7 +162,7 @@ test('Radio custom render', () => {
     expect(screen.getByText('banana').parentElement).toBeChecked();
     expect(screen.getByText('apple').parentElement).not.toBeChecked();
 
-    fireEvent.click(screen.getByText('apple'));
+    fireEvent.click(screen.getByRole('radio', {name: 'apple'}));
 
     expect(screen.getByText('banana').parentElement).not.toBeChecked();
     expect(screen.getByText('apple').parentElement).toBeChecked();
@@ -193,7 +192,7 @@ test('form controlled mode', async () => {
     expect(screen.getByText('banana').parentElement).not.toBeChecked();
     expect(screen.getByText('apple').parentElement).toBeChecked();
 
-    fireEvent.click(screen.getByText('banana'));
+    fireEvent.click(screen.getByRole('radio', {name: 'banana'}));
 
     expect(screen.getByText('banana').parentElement).toBeChecked();
     expect(screen.getByText('apple').parentElement).not.toBeChecked();
@@ -238,7 +237,7 @@ test('form uncontrolled mode', async () => {
     expect(screen.getByText('banana').parentElement).toBeChecked();
     expect(screen.getByText('apple').parentElement).not.toBeChecked();
 
-    fireEvent.click(screen.getByText('apple'));
+    fireEvent.click(screen.getByRole('radio', {name: 'apple'}));
 
     expect(screen.getByText('banana').parentElement).not.toBeChecked();
     expect(screen.getByText('apple').parentElement).toBeChecked();

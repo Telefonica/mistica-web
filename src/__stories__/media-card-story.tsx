@@ -18,7 +18,7 @@ import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
 
 export default {
-    title: 'Components/Cards/MediaCard',
+    title: 'Components/Cards/Media card',
 };
 
 const VIDEO_SRC = 'https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw';
@@ -80,7 +80,7 @@ export const Default: StoryComponent<Args> = ({
     );
 };
 
-Default.storyName = 'MediaCard';
+Default.storyName = 'Media card';
 Default.args = {
     media: 'image',
     headlineType: 'promo',
@@ -145,7 +145,7 @@ export const Group: StoryComponent = () => {
     );
 };
 
-Group.storyName = 'MediaCard group';
+Group.storyName = 'Media card group';
 
 const useCarouselStyles = createUseStyles((theme) => ({
     carousel: {
@@ -233,5 +233,5 @@ export const Carousel: StoryComponent = () => {
     );
 };
 
-Carousel.storyName = 'MediaCards carousel';
+Carousel.storyName = 'Media cards carousel';
 Carousel.parameters = {fullScreen: true};

@@ -3,7 +3,7 @@ import {ScreenReaderOnly, Stack, Text6, Text2} from '..';
 import {useTheme} from '../hooks';
 
 export default {
-    title: 'Components/Accesibility/ScreenReaderOnly',
+    title: 'Utilities/Accesibility/ScreenReaderOnly',
 };
 
 export const Default: StoryComponent = () => {

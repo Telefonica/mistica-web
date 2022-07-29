@@ -19,7 +19,7 @@ import DoubleField from '../double-field';
 import {Title1} from '../title';
 
 export default {
-    title: 'Components/Touchables/Button',
+    title: 'Components/Buttons',
 };
 
 const BackgroundTheme: StoryComponent = ({children}) => {
@@ -327,3 +327,9 @@ export const SubmitButton: StoryComponent = () => (
         </form>
     </StorySection>
 );
+
+TypeOfButtons.storyName = 'Type of buttons';
+EllipsisInButtons.storyName = 'Ellipsis in buttons';
+withIcon.storyName = 'Button with icon';
+LoadingState.storyName = 'Loading state';
+SubmitButton.storyName = 'Submit button';

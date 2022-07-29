@@ -100,7 +100,6 @@ const useDialogStyles = createUseStyles((theme) => ({
         justifyContent: 'space-between',
         width: 680,
         padding: 40,
-        minHeight: 192,
         maxHeight: 'calc(100vh - 64px)',
     },
 
@@ -112,7 +111,6 @@ const useDialogStyles = createUseStyles((theme) => ({
 
     [theme.mq.tabletOrSmaller]: {
         dialogContainer: {
-            minHeight: 298,
             width: 'calc(100vw - 48px)',
             margin: 'auto',
             padding: '48px 24px 24px',

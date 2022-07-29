@@ -17,7 +17,7 @@ import {
 import {Placeholder} from '../placeholder';
 
 export default {
-    title: 'Components/Cards/DataCard',
+    title: 'Components/Cards/Data card',
 };
 
 type DataCardArgs = {
@@ -81,7 +81,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
     );
 };
 
-Default.storyName = 'DataCard';
+Default.storyName = 'Data card';
 Default.args = {
     asset: 'icon',
     headlineType: 'promo',
@@ -155,4 +155,4 @@ export const Group: StoryComponent = () => {
     );
 };
 
-Group.storyName = 'DataCard group';
+Group.storyName = 'Data card group';

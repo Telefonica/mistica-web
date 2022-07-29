@@ -29,7 +29,7 @@ import {StorySection, countriesList, phoneNumbersList} from './helpers';
 import {getLocalDateString, getLocalDateTimeString} from '../utils/time';
 
 export default {
-    title: 'Components/Forms/Fields',
+    title: 'Components/Input fields',
 };
 
 type UncontrolledProps = {
@@ -450,7 +450,7 @@ export const TypesUncontrolled: StoryComponent = () => (
     </>
 );
 
-TypesUncontrolled.storyName = 'Types (uncontrolled)';
+TypesUncontrolled.storyName = 'Uncontrolled';
 
 export const TypesControlled = (): React.ReactNode => (
     <>
@@ -697,7 +697,7 @@ export const TypesControlled = (): React.ReactNode => (
     </>
 );
 
-TypesControlled.storyName = 'Types (controlled)';
+TypesControlled.storyName = 'Controlled';
 
 const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
 
@@ -741,3 +741,5 @@ export const DateTimeLimits: StoryComponent = () => {
         </Form>
     );
 };
+
+DateTimeLimits.storyName = 'Date with time limits';

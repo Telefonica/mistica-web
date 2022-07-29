@@ -11,7 +11,7 @@ test.each`
     ${'none'}            | ${''}           | ${false}      | ${true}    | ${false} | ${'only description and closable'}
 `('Callout $case', async ({actions, title, isOverInverse, isClosable, withIcon}) => {
     await openStoryPage({
-        id: 'components-dialogs-callout--default',
+        id: 'components-callout--default',
         args: {actions, title, isOverInverse, isClosable, withIcon},
     });
 

@@ -1190,6 +1190,82 @@ const avatarSnippets = [
     },
 ];
 
+const alertSnippets = [
+    {
+        group: 'Dialogs',
+        name: 'Alert one button',
+        code: `
+<ButtonPrimary
+  onPress={() =>
+    alert({
+      message: "Changes successfully saved",
+      acceptText: "Continue",
+    })
+  }
+>
+  Open one button
+</ButtonPrimary>`,
+    },
+    {
+        group: 'Dialogs',
+        name: 'Confirm two buttons',
+        code: `
+<ButtonPrimary
+  onPress={() =>
+    confirm({
+      message:
+        "Sign up to ensure that you don't miss the next promotion and other important events in Personal Account.",
+      title: "Stay with your business",
+      acceptText: "Sign up",
+      cancelText: "Next time",
+    })
+  }
+>
+  Open two buttons
+</ButtonPrimary>
+`,
+    },
+    {
+        group: 'Dialogs',
+        name: 'Confirm two buttons (with icon)',
+        code: `
+<ButtonPrimary
+  onPress={() =>
+    confirm({
+      title: "Stay with your business",
+      message:
+        "Sign up to ensure that you don't miss the next promotion and other important events in Personal Account.",
+      icon: <IconInformationUserLight size={64} color={colors.brand} />,
+      acceptText: "Sign up",
+      cancelText: "Next time",
+    })
+  }
+>
+  Open two buttons (with icon)
+</ButtonPrimary>        
+      `,
+    },
+    {
+        group: 'Dialogs',
+        name: 'Confirm two buttons destructive',
+        code: `
+<ButtonPrimary
+  onPress={() =>
+    confirm({
+      message:
+        "Sign up to ensure that you don't miss the next promotion and other important events in Personal Account.",
+      acceptText: "Erase all data",
+      cancelText: "Cancel",
+      destructive: true,
+    })
+  }
+>
+  Open two buttons destructive
+</ButtonPrimary>  
+      `,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -1317,4 +1393,5 @@ export default [
     },
     ...carouselSnippets,
     ...avatarSnippets,
+    ...alertSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
