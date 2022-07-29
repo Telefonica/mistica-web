@@ -14,6 +14,7 @@ import {
     Image,
     Text3,
     Inline,
+    Avatar,
 } from '..';
 
 export default {
@@ -235,6 +236,34 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
             />
             <RowComponent
                 asset={<Image src="https://i.imgur.com/0T2IYB2.jpeg" width={80} />}
+                headline={headline}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                badge={withBadge ? 22 : undefined}
+                titleLinesMax={oneLineTitle ? 1 : 2}
+                subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                descriptionLinesMax={oneLineDescription ? 1 : 2}
+                extra={extra}
+                disabled={disabled}
+                {...getControlProps(row++)}
+            />
+            <RowComponent
+                asset={<Avatar size={40} src="https://i.imgur.com/nRBEMMV.png" />}
+                headline={headline}
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                badge={withBadge ? 22 : undefined}
+                titleLinesMax={oneLineTitle ? 1 : 2}
+                subtitleLinesMax={oneLineSubtitle ? 1 : 2}
+                descriptionLinesMax={oneLineDescription ? 1 : 2}
+                extra={extra}
+                disabled={disabled}
+                {...getControlProps(row++)}
+            />
+            <RowComponent
+                asset={<Avatar size={40} initials="MS" />}
                 headline={headline}
                 title={title}
                 subtitle={subtitle}
