@@ -226,7 +226,7 @@ const listSnippetsAvatar: Array<Snippet> = [
             <${rowName}
                 asset={
                   <Avatar
-                    size={isDesktopOrBigger ? 32 : 24}
+                    size={40}
                     initials="ML"
                     src="https://i.pravatar.cc/100?img=31"
                   />
