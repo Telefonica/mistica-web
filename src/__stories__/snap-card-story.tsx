@@ -12,7 +12,6 @@ import {
     Text4,
 } from '..';
 import {Placeholder} from '../placeholder';
-import {ThemeVariant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Cards/Snap card',
