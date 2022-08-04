@@ -1,3 +1,26 @@
+# [12.0.0](https://github.com/Telefonica/mistica-web/compare/v11.12.2...v12.0.0) (2022-08-04)
+
+
+### Bug Fixes
+
+* **RadioButton:** flow types ([#510](https://github.com/Telefonica/mistica-web/issues/510)) ([5b751ec](https://github.com/Telefonica/mistica-web/commit/5b751ecaeb65536693f7ed5b8f7f2bfb6a038e0c))
+
+
+### Features
+
+* **Dialog:** remove min height ([#506](https://github.com/Telefonica/mistica-web/issues/506)) ([5df0158](https://github.com/Telefonica/mistica-web/commit/5df015868633190e238dd1a23b8a9d7ff5bfc524))
+* **General:** multiple style changes in components and color changes in Movistar skin ([#497](https://github.com/Telefonica/mistica-web/issues/497)) ([08ada4e](https://github.com/Telefonica/mistica-web/commit/08ada4e6e3036a1141ad2bbb062b2fe4c02b582c))
+* **GridLayoutNew:** new 3+9 template ([#512](https://github.com/Telefonica/mistica-web/issues/512)) ([dfc81ec](https://github.com/Telefonica/mistica-web/commit/dfc81ec81d6826f540a7b50d8732c80df835af0e))
+* **ResponsiveLayout:** dataAttributes support ([#508](https://github.com/Telefonica/mistica-web/issues/508)) ([398f462](https://github.com/Telefonica/mistica-web/commit/398f462a7ea75fa6128e5a80e0a884842880c156))
+* **Row:** make radio button rows accessible ([#507](https://github.com/Telefonica/mistica-web/issues/507)) ([3c15ff7](https://github.com/Telefonica/mistica-web/commit/3c15ff7df6d0deb1059bdb44d9b7e99efc31c46e))
+* **Text8:** update sizes for desktop ([#505](https://github.com/Telefonica/mistica-web/issues/505)) ([c328b8e](https://github.com/Telefonica/mistica-web/commit/c328b8eac552024cddabcd477cbbcd9686ee8eac))
+
+
+### BREAKING CHANGES
+
+* **General:** Removed SectionTitle.
+Renamed and removed multiple icons
+
 ## [11.12.2](https://github.com/Telefonica/mistica-web/compare/v11.12.1...v11.12.2) (2022-07-04)
 
 
