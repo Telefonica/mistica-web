@@ -61,3 +61,11 @@ export const FiveAndFour: StoryComponent = () => (
 );
 
 FiveAndFour.storyName = 'Template 5+4';
+
+export const ThreeAndNine: StoryComponent = () => (
+    <ResponsiveLayout>
+        <GridLayout template="3+9" left={<Placeholder />} right={<Placeholder />} />
+    </ResponsiveLayout>
+);
+
+ThreeAndNine.storyName = 'Template 3+9';
