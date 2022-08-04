@@ -169,7 +169,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 {...getPrefixedDataAttributes(dataAttributes)}
                 style={{
                     // For some reason adding this style with JSS doesn't add the border radius in safari
-                    borderRadius: noBorderRadius ? 0 : 4,
+                    borderRadius: noBorderRadius ? 0 : 8,
                 }}
             >
                 {sources.map(({src, type}, index) => (
@@ -187,7 +187,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                         backgroundImage: poster ? `url("${poster}")` : undefined,
                         backgroundSize: 'cover',
                         backgroundPosition: '50% 50%',
-                        borderRadius: noBorderRadius ? 0 : 4,
+                        borderRadius: noBorderRadius ? 0 : 8,
                     }}
                     className={classes.wrapper}
                 >

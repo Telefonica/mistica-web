@@ -14,11 +14,20 @@ const IconAddMoreRegular: React.FC<IconProps> = ({color, size = 24, children, ..
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M18.49 10.957h-5.824V4.552A.538.538 0 0012.141 4a.538.538 0 00-.525.552v6.396H5.525A.538.538 0 005 11.5c0 .303.237.552.525.552h6.083v6.396c0 .309.236.552.525.552a.538.538 0 00.525-.552v-6.39h5.817a.538.538 0 00.525-.552c0-.303-.223-.549-.51-.549z"
+                    d="M18.524 11.525h-6.057v-6.05a.475.475 0 00-.951 0v6.05H5.459a.476.476 0 100 .95h6.057v6.05a.476.476 0 00.95 0v-6.05h6.058a.475.475 0 100-.95z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M11.42 4.72a.722.722 0 01.716-.716.722.722 0 01.716.716l.003 6.064 5.426.003a.722.722 0 01.716.716.84.84 0 01-.22.552c-.127.127-.3.16-.493.16l-5.432.003v6.073a.703.703 0 01-.713.712.722.722 0 01-.715-.715v-6.072l-5.712.005a.722.722 0 01-.716-.715.722.722 0 01.716-.716l5.712-.006-.003-6.064z"
                     fill={fillColor}
                 />
             </svg>
@@ -27,7 +36,7 @@ const IconAddMoreRegular: React.FC<IconProps> = ({color, size = 24, children, ..
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M20.169 11.123h-7.294V3.829a.876.876 0 00-1.75 0v7.296H3.83a.876.876 0 000 1.75h7.296v7.297a.876.876 0 001.75 0v-7.297h7.297a.876.876 0 00-.003-1.752z"
+                    d="M20.169 11.123H12.8V3.829a.792.792 0 00-.805-.798.802.802 0 00-.802.798v7.361H3.829c-.485.026-.853.376-.828.857.023.446.382.737.828.76h7.296v7.365a.876.876 0 001.75 0v-7.297h7.297a.876.876 0 00-.003-1.752z"
                     fill={fillColor}
                 />
             </svg>

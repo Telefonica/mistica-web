@@ -27,7 +27,7 @@ const useStyles = createUseStyles(({colors, isDarkMode}) => ({
 
             return `1px solid ${colors.border}`;
         },
-        borderRadius: 4,
+        borderRadius: 8,
         overflow: 'hidden',
     },
 }));

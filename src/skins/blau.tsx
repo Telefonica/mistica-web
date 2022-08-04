@@ -51,6 +51,7 @@ export const palette = {
     // specific for dark mode:
     darkModeBlack: '#191919',
     darkModeGrey: '#242424',
+    darkModeGrey6: '#313235',
 } as const;
 
 export const getBlauSkin: GetKnownSkin = () => {
@@ -133,17 +134,16 @@ export const getBlauSkin: GetKnownSkin = () => {
 
             // GLOBAL
             brand: palette.blauBluePrimary,
-            brandDark: palette.blauBlueSecondary,
+            brandHigh: palette.blauBlueSecondary,
             inverse: palette.white,
             neutralHigh: palette.grey6,
             neutralMedium: palette.grey5,
-            neutralLow: palette.grey2,
+            neutralLow: palette.grey1,
 
             textPrimary: palette.grey6,
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
             textSecondaryInverse: palette.white,
-            textAmount: palette.blauBlueSecondary,
 
             // STATES
             error: palette.blauRed,
@@ -161,19 +161,16 @@ export const getBlauSkin: GetKnownSkin = () => {
             textAppBarSelected: palette.blauBlueSecondary60,
 
             // TAGS
-            tagBackgroundSuccess: palette.blauGreen10,
-            tagBackgroundWarning: palette.blauYellow10,
-            tagBackgroundError: palette.blauRed10,
-            tagBackgroundPromo: palette.blauPurple10,
-            tagBackgroundActive: palette.blauBlueSecondary10,
-            tagBackgroundInactive: palette.grey2,
+            successLow: palette.blauGreen10,
+            warningLow: palette.blauYellow10,
+            errorLow: palette.blauRed10,
+            promoLow: palette.blauPurple10,
+            brandLow: palette.blauBlueSecondary10,
 
-            textTagSuccess: palette.blauGreen70,
-            textTagWarning: palette.blauYellow70,
-            textTagError: palette.blauRed70,
-            textTagPromo: palette.blauPurple,
-            textTagActive: palette.blauBlueSecondary,
-            textTagInactive: palette.grey5,
+            successHigh: palette.blauGreen70,
+            warningHigh: palette.blauYellow70,
+            errorHigh: palette.blauRed70,
+            promoHigh: palette.blauPurple,
         },
         darkModeColors: {
             // BACKGROUNDS
@@ -233,17 +230,16 @@ export const getBlauSkin: GetKnownSkin = () => {
 
             // GLOBAL
             brand: palette.blauBluePrimary,
-            brandDark: palette.grey5,
+            brandHigh: palette.grey5,
             inverse: palette.grey2,
             neutralHigh: palette.grey2,
             neutralMedium: palette.grey5,
-            neutralLow: palette.darkModeGrey,
+            neutralLow: palette.darkModeGrey6,
 
             textPrimary: palette.grey2,
             textPrimaryInverse: palette.grey2,
             textSecondary: palette.grey4,
             textSecondaryInverse: palette.grey4,
-            textAmount: palette.blauBlueSecondary,
 
             textNavigationBarPrimary: palette.grey2,
             textNavigationBarSecondary: palette.grey4,
@@ -253,19 +249,16 @@ export const getBlauSkin: GetKnownSkin = () => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            tagBackgroundSuccess: applyAlpha(palette.white, 0.05),
-            tagBackgroundWarning: applyAlpha(palette.white, 0.05),
-            tagBackgroundError: applyAlpha(palette.white, 0.05),
-            tagBackgroundPromo: applyAlpha(palette.white, 0.05),
-            tagBackgroundActive: applyAlpha(palette.white, 0.05),
-            tagBackgroundInactive: applyAlpha(palette.white, 0.05),
+            successLow: applyAlpha(palette.white, 0.05),
+            warningLow: applyAlpha(palette.white, 0.05),
+            errorLow: applyAlpha(palette.white, 0.05),
+            promoLow: applyAlpha(palette.white, 0.05),
+            brandLow: applyAlpha(palette.white, 0.05),
 
-            textTagSuccess: palette.blauGreen30,
-            textTagWarning: palette.blauYellow40,
-            textTagError: palette.blauRed40,
-            textTagPromo: palette.blauPurple30,
-            textTagActive: palette.blauBluePrimary30,
-            textTagInactive: palette.grey4,
+            successHigh: palette.blauGreen30,
+            warningHigh: palette.blauYellow40,
+            errorHigh: palette.blauRed40,
+            promoHigh: palette.blauPurple30,
         },
     };
 };

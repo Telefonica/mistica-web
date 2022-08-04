@@ -48,6 +48,7 @@ export const palette = {
     // specific for dark mode:
     darkModeBlack: '#191919',
     darkModeGrey: '#242424',
+    darkModeGrey6: '#313235',
 } as const;
 
 export const getTelefonicaSkin: GetKnownSkin = () => {
@@ -128,7 +129,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
 
             // GLOBAL
             brand: palette.telefonicaBlue,
-            brandDark: palette.telefonicaBlue70,
+            brandHigh: palette.telefonicaBlue70,
             inverse: palette.white,
             neutralHigh: palette.grey9,
             neutralMedium: palette.grey5,
@@ -140,7 +141,6 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
             textSecondaryInverse: palette.white,
-            textAmount: palette.telefonicaBlue,
 
             // STATES
             error: palette.coral,
@@ -156,19 +156,16 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             textAppBarSelected: palette.telefonicaBlue,
 
             // TAGS
-            tagBackgroundSuccess: palette.turquoise10,
-            tagBackgroundWarning: palette.ambar10,
-            tagBackgroundError: palette.coral10,
-            tagBackgroundPromo: palette.orchid10,
-            tagBackgroundActive: palette.grey1,
-            tagBackgroundInactive: palette.grey1,
+            successLow: palette.turquoise10,
+            warningLow: palette.ambar10,
+            errorLow: palette.coral10,
+            promoLow: palette.orchid10,
+            brandLow: palette.grey1,
 
-            textTagSuccess: palette.turquoise70,
-            textTagWarning: palette.ambar70,
-            textTagError: palette.coral70,
-            textTagPromo: palette.orchid70,
-            textTagActive: palette.telefonicaBlue,
-            textTagInactive: palette.grey6,
+            successHigh: palette.turquoise70,
+            warningHigh: palette.ambar70,
+            errorHigh: palette.coral70,
+            promoHigh: palette.orchid70,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
@@ -215,16 +212,15 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             dividerInverse: applyAlpha(palette.white, 0.05),
             navigationBarDivider: palette.darkModeBlack,
             feedbackInfoBackground: palette.grey8,
-            brandDark: palette.grey6,
+            brandHigh: palette.grey6,
             inverse: palette.grey2,
             neutralHigh: palette.grey2,
             neutralMedium: palette.grey5,
-            neutralLow: palette.grey6,
+            neutralLow: palette.darkModeGrey6,
             textPrimary: palette.grey2,
             textPrimaryInverse: palette.grey2,
             textSecondary: palette.grey4,
             textSecondaryInverse: palette.grey4,
-            textAmount: palette.telefonicaBlue30,
             textNavigationBarPrimary: palette.grey2,
             textNavigationBarSecondary: palette.grey4,
             textNavigationSearchBarHint: palette.grey4, // iOS
@@ -233,19 +229,16 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            tagBackgroundSuccess: applyAlpha(palette.white, 0.05),
-            tagBackgroundWarning: applyAlpha(palette.white, 0.05),
-            tagBackgroundError: applyAlpha(palette.white, 0.05),
-            tagBackgroundPromo: applyAlpha(palette.white, 0.05),
-            tagBackgroundActive: applyAlpha(palette.white, 0.05),
-            tagBackgroundInactive: applyAlpha(palette.white, 0.05),
+            successLow: applyAlpha(palette.white, 0.05),
+            warningLow: applyAlpha(palette.white, 0.05),
+            errorLow: applyAlpha(palette.white, 0.05),
+            promoLow: applyAlpha(palette.white, 0.05),
+            brandLow: applyAlpha(palette.white, 0.05),
 
-            textTagSuccess: palette.turquoise40,
-            textTagWarning: palette.ambar40,
-            textTagError: palette.coral40,
-            textTagPromo: palette.orchid40,
-            textTagActive: palette.telefonicaBlue30,
-            textTagInactive: palette.grey4,
+            successHigh: palette.turquoise40,
+            warningHigh: palette.ambar40,
+            errorHigh: palette.coral40,
+            promoHigh: palette.orchid40,
         },
     };
 };

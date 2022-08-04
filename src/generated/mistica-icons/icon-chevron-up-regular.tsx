@@ -11,17 +11,28 @@ import {useIsInverseVariant} from '../../theme-variant-context';
 import type {IconProps} from '../../utils/types';
 
 const IconChevronUpRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
-    const {colors} = useTheme();
+    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    return (
-        <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
-            <path
-                d="M20 15.467a.508.508 0 01-.173.374.583.583 0 01-.8 0L12 9.277 4.97 15.84a.583.583 0 01-.8 0 .494.494 0 010-.747l7.428-6.935a.583.583 0 01.8 0l7.428 6.935a.503.503 0 01.173.373z"
-                fill={fillColor}
-            />
-        </svg>
-    );
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M4.16 16.612a.545.545 0 00.77 0L12 9.542l7.07 7.07a.544.544 0 10.77-.771L12 8l-7.84 7.84a.545.545 0 000 .772z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M18.733 15.8a.79.79 0 001.05 0 .641.641 0 000-.962L12.545 8.2A.777.777 0 0012 8a.777.777 0 00-.545.2l-7.238 6.638a.641.641 0 000 .963.79.79 0 001.05 0L12 9.624l6.733 6.177z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    }
 };
 
 export default IconChevronUpRegular;

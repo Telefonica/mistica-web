@@ -85,6 +85,8 @@ const audit = async (browser, url, disabledRules = []) => {
             'color-contrast',
             // https://jira.tid.es/browse/WEB-612
             'scrollable-region-focusable',
+            // https://jira.tid.es/browse/WEB-616
+            'role-img-alt',
             ...disabledRules,
         ])
         .analyze();

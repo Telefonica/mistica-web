@@ -8,8 +8,8 @@ import {
     TextField,
     Stack,
     CreditCardFields,
+    Title1,
 } from '..';
-import Title1 from '../section-title';
 
 export default {
     title: 'Layout/Double field',

@@ -20,7 +20,7 @@ const PATH_OUTPUT_INDEX_FILENAME = join(PATH_OUTPUT, 'index.tsx.txt');
 const GIT_MISTICA_ICONS_BRANCH = 'production';
 const GIT_MISTICA_ICONS = 'git@github.com:Telefonica/mistica-icons.git';
 
-const SKIN_BLACKLIST = ['blau'];
+const SKIN_BLACKLIST = [];
 
 const checkoutMisticaIconsRepo = () => {
     mkdirp.sync(PATH_CACHE);

@@ -8,7 +8,7 @@ import {
     ButtonLink,
     Stack,
     ButtonPrimary,
-    SectionTitle,
+    Title1,
     Box,
     NegativeBox,
 } from '@telefonica/mistica';
@@ -27,7 +27,7 @@ const Section = ({title, button, children}) => (
 
 const Home = () => (
     <Section title="Home">
-        <SectionTitle>Navigate to other sections:</SectionTitle>
+        <Title1>Navigate to other sections:</Title1>
         <Stack>
             <ButtonLink to="/about">About</ButtonLink>
             <ButtonLink to="/users">Users</ButtonLink>
@@ -46,7 +46,7 @@ const User = () => {
     const navigate = useNavigate();
     return (
         <Stack space={16}>
-            <SectionTitle>Hello, {name}</SectionTitle>
+            <Title1>Hello, {name}</Title1>
             <ButtonPrimary onPress={() => navigate(-1)}>Go back</ButtonPrimary>
         </Stack>
     );

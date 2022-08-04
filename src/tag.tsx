@@ -47,12 +47,12 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
     }
 
     const tagTypeToColors: Record<TagType, [string, string]> = {
-        promo: [colors.textTagPromo, colors.tagBackgroundPromo],
-        active: [colors.textTagActive, colors.tagBackgroundActive],
-        inactive: [colors.textTagInactive, colors.tagBackgroundInactive],
-        success: [colors.textTagSuccess, colors.tagBackgroundSuccess],
-        warning: [colors.textTagWarning, colors.tagBackgroundWarning],
-        error: [colors.textTagError, colors.tagBackgroundError],
+        promo: [colors.promoHigh, colors.promoLow],
+        active: [colors.brand, colors.brandLow],
+        inactive: [colors.neutralMedium, colors.neutralLow],
+        success: [colors.successHigh, colors.successLow],
+        warning: [colors.warningHigh, colors.warningLow],
+        error: [colors.errorHigh, colors.errorLow],
     };
     const [textColor, backgroundColor] = tagTypeToColors[type];
 

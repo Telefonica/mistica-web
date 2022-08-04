@@ -14,7 +14,16 @@ const IconSearchRegular: React.FC<IconProps> = ({color, size = 24, children, ...
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M21.786 20.786l-5.893-5.893a7.84 7.84 0 001.821-5.036C17.714 5.536 14.18 2 9.857 2 5.536 2 2 5.536 2 9.857c0 4.322 3.536 7.857 7.857 7.857a7.84 7.84 0 005.036-1.821l5.893 5.893a.705.705 0 00.5.214.705.705 0 00.5-.214.69.69 0 000-1zM3.429 9.857c0-3.536 2.892-6.428 6.428-6.428s6.429 2.892 6.429 6.428-2.893 6.429-6.429 6.429c-3.536 0-6.428-2.893-6.428-6.429z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -27,7 +36,7 @@ const IconSearchRegular: React.FC<IconProps> = ({color, size = 24, children, ...
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M9.871 17.605A7.846 7.846 0 014.322 4.21a7.848 7.848 0 0111.473 10.677l5.704 5.704a.561.561 0 01-.793.793l-5.697-5.697a7.792 7.792 0 01-5.138 1.918zm0-14.571a6.726 6.726 0 00-4.756 11.482 6.728 6.728 0 009.512-.037 6.724 6.724 0 000-9.473 6.672 6.672 0 00-4.756-1.972z"
+                    d="M10.021 17.83A7.846 7.846 0 014.472 4.435a7.848 7.848 0 0111.473 10.677l5.704 5.704a.561.561 0 01-.793.793l-5.697-5.697a7.792 7.792 0 01-5.138 1.918zm0-14.571A6.726 6.726 0 005.265 14.74a6.728 6.728 0 009.512-.036 6.724 6.724 0 000-9.473 6.672 6.672 0 00-4.756-1.972z"
                     fill={fillColor}
                 />
             </svg>

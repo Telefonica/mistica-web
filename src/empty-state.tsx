@@ -4,7 +4,7 @@ import {Boxed} from './boxed';
 import {ButtonPrimary, ButtonSecondary, ButtonLink} from './button';
 import {useScreenSize, useTheme} from './hooks';
 import Stack from './stack';
-import {Text4, Text6} from './text';
+import {Text3, Text6} from './text';
 import {createUseStyles} from './jss';
 import ButtonGroup from './button-group';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -18,7 +18,9 @@ const useStyles = createUseStyles((theme) => ({
             maxWidth: 368,
         },
     },
-
+    desktopBoxed: {
+        borderRadius: 16,
+    },
     desktopContainer: {
         display: 'flex',
         justifyContent: 'spaceBetween',
@@ -131,9 +133,9 @@ const EmptyState: React.FC<Props> = ({
                     {largeImage ?? image ?? (icon && <div className={classes.iconContainer}>{icon}</div>)}
                     <Stack space={16}>
                         <Text6 as="h1">{title}</Text6>
-                        <Text4 light as="p" color={colors.textSecondary}>
+                        <Text3 regular as="p" color={colors.textSecondary}>
                             {description}
-                        </Text4>
+                        </Text3>
                     </Stack>
                     {button && <ButtonGroup {...buttons} />}
                 </Stack>
@@ -142,7 +144,12 @@ const EmptyState: React.FC<Props> = ({
     }
 
     return (
-        <Boxed aria-label={ariaLabel} role="region" dataAttributes={dataAttributes}>
+        <Boxed
+            aria-label={ariaLabel}
+            role="region"
+            dataAttributes={dataAttributes}
+            className={classes.desktopBoxed}
+        >
             <div className={classes.desktopContainer}>
                 <div className={classes.desktopContent}>
                     <Box padding={64}>
@@ -150,9 +157,9 @@ const EmptyState: React.FC<Props> = ({
                             {image ?? (icon && <div className={classes.iconContainer}>{icon}</div>)}
                             <Stack space={16}>
                                 <Text6 as="h1">{title}</Text6>
-                                <Text4 light as="p" color={colors.textSecondary}>
+                                <Text3 regular as="p" color={colors.textSecondary}>
                                     {description}
-                                </Text4>
+                                </Text3>
                             </Stack>
                             {button && <ButtonGroup {...buttons} />}
                         </Stack>

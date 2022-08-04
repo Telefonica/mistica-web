@@ -10,7 +10,7 @@ export type KnownSkinName =
   | "Blau";
 export type SkinName = KnownSkinName | string;
 export type GetKnownSkin = (variant?: SkinVariant) => KnownSkin;
-export type FontWeight = "light" | "regular" | "medium";
+export type FontWeight = "light" | "regular" | "medium" | "bold";
 declare type TextPresetName =
   | "text5"
   | "text6"
@@ -87,7 +87,7 @@ export type Colors = {
   feedbackErrorBackground: string,
   feedbackInfoBackground: string,
   brand: string,
-  brandDark: string,
+  brandHigh: string,
   inverse: string,
   neutralHigh: string,
   neutralLow: string,
@@ -101,7 +101,6 @@ export type Colors = {
   textPrimaryInverse: string,
   textSecondary: string,
   textSecondaryInverse: string,
-  textAmount: string,
   textButtonPrimary: string,
   textButtonPrimaryInverse: string,
   textButtonPrimaryInverseSelected: string,
@@ -119,17 +118,14 @@ export type Colors = {
   textNavigationSearchBarText: string,
   textAppBar: string,
   textAppBarSelected: string,
-  tagBackgroundSuccess: string,
-  tagBackgroundWarning: string,
-  tagBackgroundError: string,
-  tagBackgroundPromo: string,
-  tagBackgroundActive: string,
-  tagBackgroundInactive: string,
-  textTagSuccess: string,
-  textTagWarning: string,
-  textTagError: string,
-  textTagPromo: string,
-  textTagActive: string,
-  textTagInactive: string,
+  successLow: string,
+  warningLow: string,
+  errorLow: string,
+  promoLow: string,
+  brandLow: string,
+  successHigh: string,
+  warningHigh: string,
+  errorHigh: string,
+  promoHigh: string,
 };
 declare export {};

@@ -82,9 +82,8 @@ const Avatar = ({
 }: AvatarProps): JSX.Element => {
     const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
-    const backgroundColor =
-        props.backgroundColor ?? (isInverse ? colors.brandDark : colors.tagBackgroundActive);
-    const textColor = props.textColor ?? (isInverse ? colors.textPrimaryInverse : colors.textTagActive);
+    const backgroundColor = props.backgroundColor ?? (isInverse ? colors.brandHigh : colors.brandLow);
+    const textColor = props.textColor ?? (isInverse ? colors.textPrimaryInverse : colors.brand);
     const [imgLoadError, setImgLoadError] = React.useState(false);
     const classes = useStyles({textColor, backgroundColor, size});
 

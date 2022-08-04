@@ -136,11 +136,11 @@ export const getO2Skin: GetKnownSkin = () => {
 
             // GLOBAL
             brand: palette.o2BluePrimary,
-            brandDark: palette.o2BluePrimary70,
+            brandHigh: palette.o2BluePrimary70,
             inverse: palette.white,
             neutralHigh: palette.grey6,
             neutralMedium: palette.grey5,
-            neutralLow: palette.grey3,
+            neutralLow: palette.grey1,
             promo: palette.o2Purple,
             highlight: palette.o2Pink,
 
@@ -148,7 +148,6 @@ export const getO2Skin: GetKnownSkin = () => {
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
             textSecondaryInverse: palette.white,
-            textAmount: palette.o2BluePrimary,
 
             // STATES
             error: palette.pepper,
@@ -164,19 +163,16 @@ export const getO2Skin: GetKnownSkin = () => {
             textAppBarSelected: palette.o2BluePrimary,
 
             // TAGS
-            tagBackgroundSuccess: palette.o2Green10,
-            tagBackgroundWarning: palette.o2Orange10,
-            tagBackgroundError: palette.pepper10,
-            tagBackgroundPromo: palette.o2Purple10,
-            tagBackgroundActive: palette.o2BluePrimary10,
-            tagBackgroundInactive: palette.grey1,
+            successLow: palette.o2Green10,
+            warningLow: palette.o2Orange10,
+            errorLow: palette.pepper10,
+            promoLow: palette.o2Purple10,
+            brandLow: palette.o2BluePrimary10,
 
-            textTagSuccess: palette.o2Green80,
-            textTagWarning: palette.o2Orange75,
-            textTagError: palette.pepper60,
-            textTagPromo: palette.o2Purple,
-            textTagActive: palette.o2BluePrimary,
-            textTagInactive: palette.grey5,
+            successHigh: palette.o2Green80,
+            warningHigh: palette.o2Orange75,
+            errorHigh: palette.pepper60,
+            promoHigh: palette.o2Purple,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
@@ -226,7 +222,7 @@ export const getO2Skin: GetKnownSkin = () => {
             navigationBarDivider: palette.darkModeBlack,
             feedbackInfoBackground: palette.darkModeGrey6,
             brand: palette.o2BluePrimary30,
-            brandDark: palette.darkModeGrey6,
+            brandHigh: palette.darkModeGrey6,
             inverse: palette.grey2,
             neutralHigh: palette.grey2,
             neutralMedium: palette.grey5,
@@ -235,7 +231,6 @@ export const getO2Skin: GetKnownSkin = () => {
             textPrimaryInverse: palette.grey2,
             textSecondary: palette.grey4,
             textSecondaryInverse: palette.grey4,
-            textAmount: palette.o2BluePrimary15,
             textNavigationBarPrimary: palette.grey2,
             textNavigationBarSecondary: palette.grey4,
             textNavigationSearchBarHint: palette.grey4,
@@ -244,19 +239,16 @@ export const getO2Skin: GetKnownSkin = () => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            tagBackgroundSuccess: applyAlpha(palette.white, 0.05),
-            tagBackgroundWarning: applyAlpha(palette.white, 0.05),
-            tagBackgroundError: applyAlpha(palette.white, 0.05),
-            tagBackgroundPromo: applyAlpha(palette.white, 0.05),
-            tagBackgroundActive: applyAlpha(palette.white, 0.05),
-            tagBackgroundInactive: applyAlpha(palette.white, 0.05),
+            successLow: applyAlpha(palette.white, 0.05),
+            warningLow: applyAlpha(palette.white, 0.05),
+            errorLow: applyAlpha(palette.white, 0.05),
+            promoLow: applyAlpha(palette.white, 0.05),
+            brandLow: applyAlpha(palette.white, 0.05),
 
-            textTagSuccess: palette.o2Green40,
-            textTagWarning: palette.o2Orange40,
-            textTagError: palette.pepper40,
-            textTagPromo: palette.o2Purple30,
-            textTagActive: palette.o2BluePrimary15,
-            textTagInactive: palette.grey4,
+            successHigh: palette.o2Green40,
+            warningHigh: palette.o2Orange40,
+            errorHigh: palette.pepper40,
+            promoHigh: palette.o2Purple30,
         },
     };
 };

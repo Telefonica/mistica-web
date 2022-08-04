@@ -10,9 +10,9 @@
     "main": "dist/index.js",
     "module": "dist-es/index.js",
     "files": [
-        "dist/*",
-        "dist-es/*",
-        "css/*"
+        "dist/**",
+        "dist-es/**",
+        "css/**"
     ],
     "scripts": {
         "test": "jest --config jest.unit.config.js",

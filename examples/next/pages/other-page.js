@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {ButtonPrimary, ResponsiveLayout, SectionTitle} from '@telefonica/mistica';
+import {ButtonPrimary, ResponsiveLayout, Title1} from '@telefonica/mistica';
 
 const OtherPage = () => (
     <ResponsiveLayout>
-        <SectionTitle>Other page</SectionTitle>
+        <Title1>Other page</Title1>
         <ButtonPrimary to="/">Go home</ButtonPrimary>
     </ResponsiveLayout>
 );

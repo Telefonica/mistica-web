@@ -17,7 +17,7 @@ const IconAddMoreFilled: React.FC<IconProps> = ({color, size = 24, children, ...
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
-                d="M18.49 10.957h-5.824V4.552A.538.538 0 0012.141 4a.538.538 0 00-.525.552v6.396H5.525A.538.538 0 005 11.5c0 .303.237.552.525.552h6.083v6.396c0 .309.236.552.525.552a.538.538 0 00.525-.552v-6.39h5.817a.538.538 0 00.525-.552c0-.303-.223-.549-.51-.549z"
+                d="M12 4a1 1 0 00-1 1v5.498H6.002a1.002 1.002 0 100 2.004H11V18a1 1 0 102 0v-5.498h4.998a1.002 1.002 0 100-2.004H13V5a1 1 0 00-1-1z"
                 fill={fillColor}
             />
         </svg>

@@ -14,7 +14,20 @@ const IconCreditCardRegular: React.FC<IconProps> = ({color, size = 24, children,
     const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
-    if (skinName.match(/^o2/i)) {
+    if (skinName.match(/^blau/i)) {
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
+                <path
+                    d="M12 14.32H4.676v1.36H12v-1.36zm3.996-1.984h3.328v3.328h-3.328v-3.328z"
+                    fill={fillColor}
+                />
+                <path
+                    d="M2 5v13.344h20V5H2zm18.64 1.36v2.636H3.36V6.36h17.28zM3.36 16.984v-6.632h17.28v6.632H3.36z"
+                    fill={fillColor}
+                />
+            </svg>
+        );
+    } else if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
@@ -31,7 +44,7 @@ const IconCreditCardRegular: React.FC<IconProps> = ({color, size = 24, children,
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M21.714 13.095V9.328a.158.158 0 00-.009-.049.2.2 0 01-.008-.035V6.793c0-.807-.666-1.46-1.484-1.46H3.523c-.82 0-1.487.653-1.487 1.46V9.28a.133.133 0 01-.005.02c-.003.009-.006.018-.006.028v3.767c0 .01.003.019.006.028l.005.02v4.678c0 .804.667 1.46 1.488 1.46h16.689c.818 0 1.484-.656 1.484-1.46v-4.642a.193.193 0 01.009-.038c.004-.015.008-.029.008-.046zm-1.269 4.723a.233.233 0 01-.232.227s-16.69 0-16.69.003a.229.229 0 01-.232-.227v-4.11h17.154v4.107zM3.524 6.566H20.21c.129 0 .232.1.232.227V8.71H3.293V6.793c0-.126.106-.23.232-.227zm16.918 5.913H3.293V9.944h17.15v2.535z"
+                    d="M21.84 12.79V9.023c0-.018-.005-.033-.01-.049a.2.2 0 01-.008-.035V6.488c0-.807-.666-1.46-1.484-1.46H3.648c-.82 0-1.487.653-1.487 1.46v2.487a.133.133 0 01-.005.02c-.003.009-.006.018-.006.028v3.767c0 .01.003.02.006.028l.005.02v4.678c0 .804.667 1.46 1.488 1.46h16.689c.818 0 1.484-.656 1.484-1.46v-4.642a.193.193 0 01.009-.038c.004-.015.008-.029.008-.046zm-1.27 4.723a.233.233 0 01-.232.227s-16.69 0-16.69.003a.229.229 0 01-.232-.227v-4.11H20.57v4.107zM3.65 6.26h16.686c.129 0 .232.1.232.227v1.918H3.418V6.488c0-.126.106-.23.232-.227zm16.918 5.913H3.418V9.639h17.15v2.535z"
                     fill={fillColor}
                 />
             </svg>

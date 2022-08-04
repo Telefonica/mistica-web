@@ -17,7 +17,7 @@ import type {RendersNullableElement} from './utils/types';
 const useStyles = createUseStyles(({colors}) => ({
     container: {
         background: colors.backgroundAlternative,
-        borderRadius: 4,
+        borderRadius: 8,
         padding: 16,
         overflow: 'hidden',
         display: 'flex',

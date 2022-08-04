@@ -23,7 +23,7 @@ const useStyles = createUseStyles(() => ({
         objectFit: 'cover',
         maxWidth: '100%',
         maxHeight: '100%',
-        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
+        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 8),
 
         '@supports (aspect-ratio: 1 / 1)': {
             aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
@@ -41,7 +41,7 @@ const useStyles = createUseStyles(() => ({
         opacity: ({isError}) => (isError ? 0 : 1), // to hide the broken image icon
     },
     wrapper: {
-        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 4),
+        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 8),
         overflow: 'hidden',
         maxWidth: '100%',
         maxHeight: '100%',

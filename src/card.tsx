@@ -136,7 +136,7 @@ const MaybeSection = ({'aria-label': ariaLabel, className, children}: MaybeSecti
     }
 };
 
-const useMediaCardStyles = createUseStyles(() => ({
+const useMediaCardStyles = createUseStyles(({mq}) => ({
     boxed: {
         height: '100%',
         width: '100%',
@@ -152,6 +152,10 @@ const useMediaCardStyles = createUseStyles(() => ({
         paddingBottom: 24,
         display: 'flex',
         flexDirection: 'column',
+        [mq.desktopOrBigger]: {
+            padding: 24,
+            paddingBottom: 32,
+        },
     },
 }));
 
@@ -195,36 +199,33 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
     ) => {
         const classes = useMediaCardStyles({media});
 
-        const content = (
-            <Boxed className={classes.boxed} dataAttributes={dataAttributes} ref={ref}>
-                <MaybeSection className={classes.mediaCard} aria-label={ariaLabel}>
-                    <DisableBorderRadiusProvider>{media}</DisableBorderRadiusProvider>
-                    <div className={classes.content}>
-                        <CardContent
-                            headline={headline}
-                            pretitle={pretitle}
-                            pretitleLinesMax={pretitleLinesMax}
-                            title={title}
-                            titleLinesMax={titleLinesMax}
-                            description={description}
-                            descriptionLinesMax={descriptionLinesMax}
-                            extra={extra}
-                            button={button}
-                            buttonLink={buttonLink}
-                        />
-                    </div>
-                </MaybeSection>
-            </Boxed>
-        );
         return (
             <MaybeDismissable onClose={onClose} aria-label={ariaLabel}>
-                {content}
+                <Boxed className={classes.boxed} dataAttributes={dataAttributes} ref={ref}>
+                    <MaybeSection className={classes.mediaCard} aria-label={ariaLabel}>
+                        <DisableBorderRadiusProvider>{media}</DisableBorderRadiusProvider>
+                        <div className={classes.content}>
+                            <CardContent
+                                headline={headline}
+                                pretitle={pretitle}
+                                pretitleLinesMax={pretitleLinesMax}
+                                title={title}
+                                titleLinesMax={titleLinesMax}
+                                description={description}
+                                descriptionLinesMax={descriptionLinesMax}
+                                extra={extra}
+                                button={button}
+                                buttonLink={buttonLink}
+                            />
+                        </div>
+                    </MaybeSection>
+                </Boxed>
             </MaybeDismissable>
         );
     }
 );
 
-const useDataCardStyles = createUseStyles(() => ({
+const useDataCardStyles = createUseStyles(({mq}) => ({
     boxed: {
         height: '100%',
         width: '100%',
@@ -234,6 +235,9 @@ const useDataCardStyles = createUseStyles(() => ({
         flexDirection: 'column',
         padding: '24px 16px',
         height: '100%',
+        [mq.desktopOrBigger]: {
+            padding: '32px 24px',
+        },
     },
 }));
 
@@ -280,28 +284,26 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
         ref
     ) => {
         const classes = useDataCardStyles();
-        const content = (
-            <Boxed className={classes.boxed} dataAttributes={dataAttributes} ref={ref}>
-                <MaybeSection className={classes.dataCard} aria-label={ariaLabel}>
-                    {icon && <Box paddingBottom={16}>{icon}</Box>}
-                    <CardContent
-                        headline={headline}
-                        title={title}
-                        titleLinesMax={titleLinesMax}
-                        subtitle={subtitle}
-                        subtitleLinesMax={subtitleLinesMax}
-                        description={description}
-                        descriptionLinesMax={descriptionLinesMax}
-                        extra={extra}
-                        button={button}
-                        buttonLink={buttonLink}
-                    />
-                </MaybeSection>
-            </Boxed>
-        );
+
         return (
             <MaybeDismissable aria-label={ariaLabel} onClose={onClose}>
-                {content}
+                <Boxed className={classes.boxed} dataAttributes={dataAttributes} ref={ref}>
+                    <MaybeSection className={classes.dataCard} aria-label={ariaLabel}>
+                        {icon && <Box paddingBottom={16}>{icon}</Box>}
+                        <CardContent
+                            headline={headline}
+                            title={title}
+                            titleLinesMax={titleLinesMax}
+                            subtitle={subtitle}
+                            subtitleLinesMax={subtitleLinesMax}
+                            description={description}
+                            descriptionLinesMax={descriptionLinesMax}
+                            extra={extra}
+                            button={button}
+                            buttonLink={buttonLink}
+                        />
+                    </MaybeSection>
+                </Boxed>
             </MaybeDismissable>
         );
     }
