@@ -65,7 +65,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             backgroundBrand: palette.blauBluePrimary,
             backgroundOverlay: applyAlpha(palette.blauBlueSecondary, 0.75),
             backgroundSkeleton: palette.grey2,
-            backgroundSkeletonInverse: palette.white,
+            backgroundSkeletonInverse: applyAlpha(palette.white, 0.2),
             navigationBarBackground: palette.blauBluePrimary,
             backgroundAlternative: palette.blauBluePrimary20,
             backgroundFeedbackBottom: palette.blauBluePrimary,
