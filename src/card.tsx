@@ -333,6 +333,7 @@ const useSnapCardStyles = createUseStyles((theme) => ({
         justifyContent: 'space-between',
         padding: 16,
         minHeight: 80,
+        flex: 1,
         minWidth: 104,
         [theme.mq.desktopOrBigger]: {
             padding: 24,
