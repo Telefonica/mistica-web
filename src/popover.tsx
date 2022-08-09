@@ -258,35 +258,31 @@ const Popover: React.FC<Props> = ({
                     <div className={classes.arrow} />
                 </div>
                 <Box padding={16}>
-                    <Stack space={0}>
-                        <Box paddingRight={24}>
-                            <Inline space={16}>
-                                {asset}
-                                <Box className={classes.textAlign}>
-                                    <Stack space={4} className={classes.textContent}>
-                                        {title && <Text3 regular>{title}</Text3>}
-                                        <Text2 regular color={colors.textSecondary}>
-                                            {description}
-                                        </Text2>
-                                    </Stack>
-                                </Box>
-                            </Inline>
-                        </Box>
-
-                        <IconButton
-                            className={classes.closeButtonIcon}
-                            onPress={(e) => {
-                                onClose?.();
-                                e.stopPropagation();
-                            }}
-                            trackingEvent={trackingEvent}
-                            aria-label={texts.modalClose}
-                        >
-                            <IcnCloseRegular color={colors.neutralHigh} />
-                        </IconButton>
-
-                        {extra}
-                    </Stack>
+                    <Box paddingRight={24}>
+                        <Inline space={16}>
+                            {asset}
+                            <Box className={classes.textAlign}>
+                                <Stack space={4} className={classes.textContent}>
+                                    {title && <Text3 regular>{title}</Text3>}
+                                    <Text2 regular color={colors.textSecondary}>
+                                        {description}
+                                    </Text2>
+                                </Stack>
+                            </Box>
+                        </Inline>
+                    </Box>
+                    <IconButton
+                        className={classes.closeButtonIcon}
+                        onPress={(e) => {
+                            onClose?.();
+                            e.stopPropagation();
+                        }}
+                        trackingEvent={trackingEvent}
+                        aria-label={texts.modalClose}
+                    >
+                        <IcnCloseRegular color={colors.neutralHigh} />
+                    </IconButton>
+                    {extra}
                 </Box>
             </div>
         );
