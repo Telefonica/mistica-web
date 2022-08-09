@@ -258,19 +258,17 @@ const Popover: React.FC<Props> = ({
                 </div>
                 <Box padding={16}>
                     <Stack space={0}>
-                        <Stack space={0}>
-                            <Box paddingRight={24}>
-                                <Inline space={16} className={classes.textAlign}>
-                                    {asset}
-                                    <Stack space={4} className={classes.textContent}>
-                                        {title && <Text3 regular>{title}</Text3>}
-                                        <Text2 regular color={colors.textSecondary}>
-                                            {description}
-                                        </Text2>
-                                    </Stack>
-                                </Inline>
-                            </Box>
-                        </Stack>
+                        <Box paddingRight={24}>
+                            <Inline space={16} className={classes.textAlign}>
+                                {asset}
+                                <Stack space={4} className={classes.textContent}>
+                                    {title && <Text3 regular>{title}</Text3>}
+                                    <Text2 regular color={colors.textSecondary}>
+                                        {description}
+                                    </Text2>
+                                </Stack>
+                            </Inline>
+                        </Box>
 
                         <IconButton
                             className={classes.closeButtonIcon}
