@@ -13,6 +13,7 @@ declare type Props = {
   width?: number,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   isVisible?: boolean,
+  extra?: React.Node,
 };
 declare var Popover: React.ComponentType<Props>;
 declare export default typeof Popover;
