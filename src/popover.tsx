@@ -64,8 +64,6 @@ const useStyles = createUseStyles((theme) => {
             textAlign: 'left',
             width: '100%',
             wordBreak: 'break-word',
-            display: 'flex',
-            flexDirection: 'column',
         },
         closeButtonIcon: {
             position: 'absolute',
