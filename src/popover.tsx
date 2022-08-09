@@ -60,6 +60,10 @@ const useStyles = createUseStyles((theme) => {
             border: `1px solid ${theme.colors.divider}`,
             borderRadius: 8,
         },
+        textAlign: {
+            display: 'flex',
+            alignItems: 'center',
+        },
         textContent: {
             textAlign: 'left',
             width: '100%',
@@ -256,7 +260,7 @@ const Popover: React.FC<Props> = ({
                     <Stack space={0}>
                         <Stack space={0}>
                             <Box paddingRight={24}>
-                                <Inline space={16}>
+                                <Inline space={16} className={classes.textAlign}>
                                     {asset}
                                     <Stack space={4} className={classes.textContent}>
                                         {title && <Text3 regular>{title}</Text3>}
