@@ -23,39 +23,52 @@ exports[`popover default(bottom) style 1`] = `
         />
       </div>
       <div
-        class="boxContainer"
+        class="box box-d0"
       >
         <div
-          class="textContent"
+          class="boxContent box box-d1"
         >
-          <span
-            class="text"
+          <div
+            class="inline inline-d0"
           >
-            Content
-          </span>
+            <div>
+              <div
+                class="textAlign box box-d2"
+              >
+                <div
+                  class="textContent marginStack marginStack-d0"
+                >
+                  <div />
+                  <div>
+                    <span
+                      class="text text-d0"
+                    >
+                      Content
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div
-          class="closeButtonIcon"
+        <button
+          aria-label="Cerrar"
+          class="touchable closeButtonIcon"
+          style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
+          type="button"
         >
-          <button
-            aria-label="Cerrar"
-            class="touchable"
-            style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
-            type="button"
+          <svg
+            height="24"
+            role="presentation"
+            viewBox="0 0 24 24"
+            width="24"
           >
-            <svg
-              height="24"
-              role="presentation"
-              viewBox="0 0 24 24"
-              width="24"
-            >
-              <path
-                d="M16.841 17.853a.722.722 0 00.948-1.086L13.022 12l4.766-4.767.065-.074a.722.722 0 00-1.086-.947L12 10.978 7.233 6.211l-.074-.064a.722.722 0 00-.947 1.086L10.979 12 6.21 16.767l-.064.074a.722.722 0 001.086.947L12 13.021l4.767 4.767.074.065z"
-                fill="#313235"
-              />
-            </svg>
-          </button>
-        </div>
+            <path
+              d="M16.841 17.853a.722.722 0 00.948-1.086L13.022 12l4.766-4.767.065-.074a.722.722 0 00-1.086-.947L12 10.978 7.233 6.211l-.074-.064a.722.722 0 00-.947 1.086L10.979 12 6.21 16.767l-.064.074a.722.722 0 001.086.947L12 13.021l4.767 4.767.074.065z"
+              fill="#313235"
+            />
+          </svg>
+        </button>
       </div>
     </div>
   </div>
@@ -85,39 +98,52 @@ exports[`popover left style 1`] = `
         />
       </div>
       <div
-        class="boxContainer"
+        class="box box-d0"
       >
         <div
-          class="textContent"
+          class="boxContent box box-d1"
         >
-          <span
-            class="text"
+          <div
+            class="inline inline-d0"
           >
-            Content
-          </span>
+            <div>
+              <div
+                class="textAlign box box-d2"
+              >
+                <div
+                  class="textContent marginStack marginStack-d0"
+                >
+                  <div />
+                  <div>
+                    <span
+                      class="text text-d0"
+                    >
+                      Content
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div
-          class="closeButtonIcon"
+        <button
+          aria-label="Cerrar"
+          class="touchable closeButtonIcon"
+          style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
+          type="button"
         >
-          <button
-            aria-label="Cerrar"
-            class="touchable"
-            style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
-            type="button"
+          <svg
+            height="24"
+            role="presentation"
+            viewBox="0 0 24 24"
+            width="24"
           >
-            <svg
-              height="24"
-              role="presentation"
-              viewBox="0 0 24 24"
-              width="24"
-            >
-              <path
-                d="M16.841 17.853a.722.722 0 00.948-1.086L13.022 12l4.766-4.767.065-.074a.722.722 0 00-1.086-.947L12 10.978 7.233 6.211l-.074-.064a.722.722 0 00-.947 1.086L10.979 12 6.21 16.767l-.064.074a.722.722 0 001.086.947L12 13.021l4.767 4.767.074.065z"
-                fill="#313235"
-              />
-            </svg>
-          </button>
-        </div>
+            <path
+              d="M16.841 17.853a.722.722 0 00.948-1.086L13.022 12l4.766-4.767.065-.074a.722.722 0 00-1.086-.947L12 10.978 7.233 6.211l-.074-.064a.722.722 0 00-.947 1.086L10.979 12 6.21 16.767l-.064.074a.722.722 0 001.086.947L12 13.021l4.767 4.767.074.065z"
+              fill="#313235"
+            />
+          </svg>
+        </button>
       </div>
     </div>
   </div>
@@ -147,39 +173,52 @@ exports[`popover right style 1`] = `
         />
       </div>
       <div
-        class="boxContainer"
+        class="box box-d0"
       >
         <div
-          class="textContent"
+          class="boxContent box box-d1"
         >
-          <span
-            class="text"
+          <div
+            class="inline inline-d0"
           >
-            Content
-          </span>
+            <div>
+              <div
+                class="textAlign box box-d2"
+              >
+                <div
+                  class="textContent marginStack marginStack-d0"
+                >
+                  <div />
+                  <div>
+                    <span
+                      class="text text-d0"
+                    >
+                      Content
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div
-          class="closeButtonIcon"
+        <button
+          aria-label="Cerrar"
+          class="touchable closeButtonIcon"
+          style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
+          type="button"
         >
-          <button
-            aria-label="Cerrar"
-            class="touchable"
-            style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
-            type="button"
+          <svg
+            height="24"
+            role="presentation"
+            viewBox="0 0 24 24"
+            width="24"
           >
-            <svg
-              height="24"
-              role="presentation"
-              viewBox="0 0 24 24"
-              width="24"
-            >
-              <path
-                d="M16.841 17.853a.722.722 0 00.948-1.086L13.022 12l4.766-4.767.065-.074a.722.722 0 00-1.086-.947L12 10.978 7.233 6.211l-.074-.064a.722.722 0 00-.947 1.086L10.979 12 6.21 16.767l-.064.074a.722.722 0 001.086.947L12 13.021l4.767 4.767.074.065z"
-                fill="#313235"
-              />
-            </svg>
-          </button>
-        </div>
+            <path
+              d="M16.841 17.853a.722.722 0 00.948-1.086L13.022 12l4.766-4.767.065-.074a.722.722 0 00-1.086-.947L12 10.978 7.233 6.211l-.074-.064a.722.722 0 00-.947 1.086L10.979 12 6.21 16.767l-.064.074a.722.722 0 001.086.947L12 13.021l4.767 4.767.074.065z"
+              fill="#313235"
+            />
+          </svg>
+        </button>
       </div>
     </div>
   </div>
@@ -209,39 +248,52 @@ exports[`popover top style 1`] = `
         />
       </div>
       <div
-        class="boxContainer"
+        class="box box-d0"
       >
         <div
-          class="textContent"
+          class="boxContent box box-d1"
         >
-          <span
-            class="text"
+          <div
+            class="inline inline-d0"
           >
-            Content
-          </span>
+            <div>
+              <div
+                class="textAlign box box-d2"
+              >
+                <div
+                  class="textContent marginStack marginStack-d0"
+                >
+                  <div />
+                  <div>
+                    <span
+                      class="text text-d0"
+                    >
+                      Content
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div
-          class="closeButtonIcon"
+        <button
+          aria-label="Cerrar"
+          class="touchable closeButtonIcon"
+          style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
+          type="button"
         >
-          <button
-            aria-label="Cerrar"
-            class="touchable"
-            style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
-            type="button"
+          <svg
+            height="24"
+            role="presentation"
+            viewBox="0 0 24 24"
+            width="24"
           >
-            <svg
-              height="24"
-              role="presentation"
-              viewBox="0 0 24 24"
-              width="24"
-            >
-              <path
-                d="M16.841 17.853a.722.722 0 00.948-1.086L13.022 12l4.766-4.767.065-.074a.722.722 0 00-1.086-.947L12 10.978 7.233 6.211l-.074-.064a.722.722 0 00-.947 1.086L10.979 12 6.21 16.767l-.064.074a.722.722 0 001.086.947L12 13.021l4.767 4.767.074.065z"
-                fill="#313235"
-              />
-            </svg>
-          </button>
-        </div>
+            <path
+              d="M16.841 17.853a.722.722 0 00.948-1.086L13.022 12l4.766-4.767.065-.074a.722.722 0 00-1.086-.947L12 10.978 7.233 6.211l-.074-.064a.722.722 0 00-.947 1.086L10.979 12 6.21 16.767l-.064.074a.722.722 0 001.086.947L12 13.021l4.767 4.767.074.065z"
+              fill="#313235"
+            />
+          </svg>
+        </button>
       </div>
     </div>
   </div>
