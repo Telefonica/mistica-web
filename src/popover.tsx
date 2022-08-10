@@ -77,6 +77,7 @@ const useStyles = createUseStyles((theme) => {
             position: 'absolute',
             top: 8,
             right: 8,
+            zIndex: 1,
         },
     };
 });
