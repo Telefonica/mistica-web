@@ -33,7 +33,7 @@ const useStyles = createUseStyles((theme) => {
             top: 0,
             left: '50%',
             transform: 'translate(-50%, -50%) rotate(45deg)',
-            border: `1px solid ${theme.colors.divider}`,
+            border: `1px solid ${theme.colors.border}`,
             borderRadius: 2,
             boxShadow: ({position}) =>
                 position === 'bottom' ? 'initial' : `0 0 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
