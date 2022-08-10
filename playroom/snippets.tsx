@@ -362,20 +362,82 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
             title="Title"
             description="Description"
             right={<Placeholder width={32} height={32} />}
-        />`,
+        />
+        `,
     },
 ]);
 
-const tooltipSnippets: Array<Snippet> = ['Tooltip', 'Popover'].map((name) => ({
-    group: 'Tooltip',
-    name,
-    code: `
-    <${name}
-        target="some target, this can be any component"
-        description="Some description to be shown inside the tooltip"
-    />
-    `,
-}));
+const tooltipSnippets = [
+    {
+        group: 'Tooltip',
+        name: 'Tooltip',
+        code: `
+        <Tooltip
+          target="some target, this can be any component"
+          description="Settings"
+        />
+        `,
+    },
+];
+
+const popoverSnippets = [
+    {
+        group: 'Popover',
+        name: 'Popover informative',
+        code: `
+        <Popover
+          target="some target, this can be any component"
+          title="Informative popover"
+          description="You can use this popover to give more information to the user"
+        />
+        `,
+    },
+    {
+        group: 'Popover',
+        name: 'Popover informative with icon',
+        code: `
+        <Popover
+          target="some target, this can be any component"
+          asset={<Circle size={40} backgroundColor={colors.brandLow}><IconShopRegular color={colors.brand} /></Circle>}
+          title="Informative popover"
+          description="You can use this popover to give more information to the user"
+        />
+        `,
+    },
+    {
+        group: 'Popover',
+        name: 'Popover custom',
+        code: `
+        <Popover
+          target="some target, this can be any component"
+          asset={<Avatar size={40} initials="AH" src="" />}
+          title="Amanda Harvey"
+          description="Product designer"
+          extra={
+            <Box paddingTop={16}>
+              <Stack space={16}>
+                <Divider />
+                <Stack space={16}>
+                  <Inline space={16} alignItems="center">
+                    <IconApartmentBuildingRegular />
+                    <Text2>Tuenti S.L</Text2>
+                  </Inline>
+                  <Inline space={16} alignItems="center">
+                    <IconMobileDeviceRegular />
+                    <Text2>+34 655 444 333</Text2>
+                  </Inline>
+                  <Inline space={16} alignItems="center">
+                    <IconEmailRegular />
+                    <Text2>amandaharvey@tuenti.com</Text2>
+                  </Inline>
+                </Stack>
+              </Stack>
+            </Box>
+          }
+        />
+        `,
+    },
+];
 
 const headerSnippets: Array<Snippet> = [
     {
@@ -1299,7 +1361,6 @@ export default [
     ...formSnippets,
     ...feedbackSnippets,
     {group: 'Feedbacks', name: 'Snackbar', code: '<Snackbar message="Some message here" />'},
-    ...tooltipSnippets,
     ...layoutSnippets,
     {
         group: 'Layout',
@@ -1423,4 +1484,6 @@ export default [
     ...carouselSnippets,
     ...avatarSnippets,
     ...alertSnippets,
+    ...tooltipSnippets,
+    ...popoverSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
