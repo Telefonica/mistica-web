@@ -57,7 +57,7 @@ const useStyles = createUseStyles((theme) => {
             zIndex: 9,
             boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
             backgroundColor: theme.colors.backgroundContainer,
-            border: `1px solid ${theme.colors.divider}`,
+            border: `1px solid ${theme.colors.border}`,
             borderRadius: 8,
         },
         textAlign: {
