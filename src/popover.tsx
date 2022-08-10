@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import IcnCloseRegular from './generated/mistica-icons/icon-close-regular';
+import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import {useTheme, useScreenSize} from './hooks';
 import Stack from './stack';
@@ -284,7 +284,7 @@ const Popover: React.FC<Props> = ({
                         trackingEvent={trackingEvent}
                         aria-label={texts.modalClose}
                     >
-                        <IcnCloseRegular color={colors.neutralHigh} />
+                        <IconCloseRegular color={colors.neutralHigh} />
                     </IconButton>
                     {extra}
                 </Box>
