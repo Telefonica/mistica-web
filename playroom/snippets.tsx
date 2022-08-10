@@ -409,8 +409,24 @@ const popoverSnippets = [
         name: 'Popover custom',
         code: `
         <Popover
-          target="some target, this can be any component"
-          asset={<Avatar size={40} initials="AH" src="" />}
+          target={
+            <IconButton onPress={() => setState("isClosed", false)}>
+              <Avatar
+                size={40}
+                initials="AH"
+                src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+              />
+            </IconButton>
+          }
+          isVisible={!getState("isClosed")}
+          onClose={() => setState("isClosed", true)}
+          asset={
+            <Avatar
+              size={40}
+              initials="AH"
+              src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+            />
+          }
           title="Amanda Harvey"
           description="Product designer"
           extra={
