@@ -4,7 +4,7 @@ import * as React from "react";
 import type { TrackingEvent } from "./utils/types";
 declare type Position = "top" | "bottom" | "left" | "right";
 declare type Props = {
-  description: string,
+  description?: string,
   target: React.Node,
   title?: string,
   asset?: React.Node,
