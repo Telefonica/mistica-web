@@ -65,6 +65,9 @@ const useStyles = createUseStyles((theme) => {
             alignItems: 'center',
             height: '100%',
         },
+        boxContent: {
+            display: 'flex',
+        },
         textContent: {
             textAlign: 'left',
             width: '100%',
@@ -183,7 +186,7 @@ const getTargetPosition = (targetWrapper: HTMLDivElement | null): TargetPosition
         : null;
 
 type Props = {
-    description: string;
+    description?: string;
     target: React.ReactNode;
     title?: string;
     asset?: React.ReactNode;
@@ -258,7 +261,7 @@ const Popover: React.FC<Props> = ({
                     <div className={classes.arrow} />
                 </div>
                 <Box padding={16}>
-                    <Box paddingRight={24}>
+                    <Box paddingRight={24} className={classes.boxContent}>
                         <Inline space={16}>
                             {asset}
                             <Box className={classes.textAlign}>
