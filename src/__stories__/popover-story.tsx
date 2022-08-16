@@ -44,6 +44,7 @@ export const Default: StoryComponent<PopoverArgs> = ({
         icon = <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />;
     }
 
+    const [isClosed, setIsClosed] = React.useState(false);
     return (
         <div
             style={{
@@ -57,11 +58,13 @@ export const Default: StoryComponent<PopoverArgs> = ({
             <Popover
                 target={
                     <div style={{display: 'flex', justifyContent: 'center'}}>
-                        <IconButton>
+                        <IconButton onPress={() => setIsClosed(false)}>
                             <IconShopRegular />
                         </IconButton>
                     </div>
                 }
+                isVisible={!isClosed}
+                onClose={() => setIsClosed(true)}
                 width={width}
                 position={position}
                 asset={icon}
