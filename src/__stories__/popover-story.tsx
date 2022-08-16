@@ -57,11 +57,9 @@ export const Default: StoryComponent<PopoverArgs> = ({
         >
             <Popover
                 target={
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
-                        <IconButton onPress={() => setIsClosed(false)}>
-                            <IconShopRegular />
-                        </IconButton>
-                    </div>
+                    <IconButton onPress={() => setIsClosed(false)}>
+                        <IconShopRegular />
+                    </IconButton>
                 }
                 isVisible={!isClosed}
                 onClose={() => setIsClosed(true)}
