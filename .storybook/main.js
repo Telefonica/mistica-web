@@ -38,6 +38,8 @@ module.exports = {
         './dark-mode-addon/register',
         './font-size-addon/register',
         '@storybook/addon-controls',
+        '@storybook/addon-docs',
+        'storybook-addon-react-docgen',
     ],
     webpackFinal: async (config) => {
         config.watchOptions = {
@@ -52,6 +54,6 @@ module.exports = {
     },
     typescript: {
         // workaround for https://github.com/storybookjs/storybook/issues/15067
-        reactDocgen: 'none',
+         reactDocgen: 'react-docgen-typescript',
     },
 };
