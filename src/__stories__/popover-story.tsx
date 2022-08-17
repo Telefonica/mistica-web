@@ -1,100 +1,105 @@
 import * as React from 'react';
-import {
-    Popover,
-    useTheme,
-    IconMobileDeviceRegular,
-    IconShopRegular,
-    Circle,
-    Placeholder,
-    IconButton,
-} from '..';
+import {StorySection} from './helpers';
+import {Popover, Text2, Stack, useTheme} from '..';
+import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
 
 export default {
     title: 'Components/Popover',
     component: Popover,
 };
 
-type PopoverArgs = {
-    asset: 'icon' | 'image' | 'none';
-    position: 'top' | 'right' | 'bottom' | 'left';
-    width: number;
-    title: string;
-    description: string;
-    withExtra: boolean;
-};
-
-export const Default: StoryComponent<PopoverArgs> = ({
-    asset = 'icon',
-    position,
-    width,
-    title,
-    description,
-    withExtra,
-}) => {
+export const Default: StoryComponent = () => {
     const {colors} = useTheme();
+    const description =
+        'When working on a project and the customer has not yet delivered the copy, something is missing...';
 
-    let icon;
-    if (asset === 'icon') {
-        icon = (
-            <Circle size={40} backgroundColor={colors.brandLow}>
-                <IconMobileDeviceRegular color={colors.brand} />
-            </Circle>
-        );
-    } else if (asset === 'image') {
-        icon = <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />;
-    }
-
-    const [isClosed, setIsClosed] = React.useState(false);
     return (
-        <div
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: 'calc(100vh - 56px',
-                width: '100%',
-            }}
-        >
-            <Popover
-                target={
-                    <IconButton onPress={() => setIsClosed(false)}>
-                        <IconShopRegular />
-                    </IconButton>
-                }
-                isVisible={!isClosed}
-                onClose={() => setIsClosed(true)}
-                width={width}
-                position={position}
-                asset={icon}
-                title={title}
-                description={description}
-                extra={withExtra ? <Placeholder /> : undefined}
-            />
-        </div>
+        <StorySection title="Popover">
+            <Text2 medium>Desktop examples:</Text2>
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'space-around',
+                    width: '100%',
+                    height: 1300,
+                }}
+            >
+                <Popover
+                    target={<Text2 regular>Popover with only description</Text2>}
+                    description={description}
+                />
+                <Popover
+                    target={<Text2 regular>Popover with title</Text2>}
+                    title="default"
+                    description={description}
+                />
+                <Popover
+                    target={<Text2 regular>Popover with Icon</Text2>}
+                    title="default"
+                    asset={
+                        <img width={40} src="https://imrl.tuenti.net/1gIGjpc4i4R8x6O0HA-AmhQA" alt="asset" />
+                    }
+                    description={description}
+                />
+                <Popover
+                    target={<Text2 regular>Popover default (bottom)</Text2>}
+                    title="default"
+                    description={description}
+                />
+                <Popover
+                    target={<Text2 regular>Popover right</Text2>}
+                    position="right"
+                    title="right"
+                    description={description}
+                    width={300}
+                />
+                <Popover
+                    target={<Text2 regular>Popover top</Text2>}
+                    position="top"
+                    title="top"
+                    description={description}
+                    width={360}
+                />
+                <Popover
+                    target={<Text2 regular>Popover left</Text2>}
+                    position="left"
+                    title="left"
+                    description={description}
+                    width={200}
+                />
+            </div>
+            <div style={{width: 600}} />
+            <Stack space={16}>
+                <Text2 medium>Mobile examples: (look on mobile mode)</Text2>
+
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-around',
+                        paddingTop: 20,
+                        borderTop: `1px solid ${colors.border}`,
+                    }}
+                >
+                    <Popover
+                        target={<IconCloseRegular />}
+                        position="left"
+                        title="left"
+                        description={description}
+                        width={150}
+                    />
+                    <Popover
+                        target={<IconCloseRegular />}
+                        position="right"
+                        title="right"
+                        description={description}
+                        width={150}
+                    />
+                </div>
+            </Stack>
+        </StorySection>
     );
-};
-
-Default.args = {
-    position: 'top',
-    asset: 'icon',
-    title: 'Some title',
-    description: 'This is a description for the popover',
-    withExtra: false,
-    width: 400,
-};
-
-Default.argTypes = {
-    position: {
-        options: ['top', 'right', 'bottom', 'left'],
-        control: {type: 'radio'},
-    },
-    asset: {
-        options: ['icon', 'image', 'none'],
-        control: {type: 'select'},
-    },
-    width: {
-        control: {type: 'range', min: 200, max: 800},
-    },
 };
 
 Default.storyName = 'Popover';
