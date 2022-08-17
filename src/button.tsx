@@ -16,7 +16,7 @@ import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEve
 import type {Location} from 'history';
 import type {Theme} from './theme';
 
-export const BUTTON_MIN_WIDTH = 104;
+export const BUTTON_MIN_WIDTH = 136;
 
 const transitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
 
