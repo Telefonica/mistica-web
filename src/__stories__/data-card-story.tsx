@@ -24,6 +24,7 @@ type DataCardArgs = {
     asset: 'icon' | 'image' | 'none';
     headlineType: TagType;
     headline: string;
+    pretitle: string;
     title: string;
     subtitle: string;
     description: string;
@@ -36,6 +37,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
     asset = 'icon',
     headline,
     headlineType,
+    pretitle,
     title,
     subtitle,
     description,
@@ -69,6 +71,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
             onClose={closable ? () => {} : undefined}
             icon={icon}
             headline={headline && <Tag type={headlineType}>{headline}</Tag>}
+            pretitle={pretitle}
             title={title}
             subtitle={subtitle}
             description={description}
@@ -86,8 +89,9 @@ Default.args = {
     asset: 'icon',
     headlineType: 'promo',
     headline: 'Priority',
-    title: 'Some title',
-    subtitle: 'Some subtitle',
+    pretitle: 'Pretitle',
+    title: 'Title',
+    subtitle: 'Subtitle',
     description: 'This is a description for the card',
     withExtra: false,
     actions: 'button',
@@ -129,6 +133,7 @@ export const Group: StoryComponent = () => {
                 <Inline space={16} className={classes.group}>
                     <DataCard
                         headline={<Tag type="promo">Headline</Tag>}
+                        pretitle="Pretitle"
                         title="Title"
                         subtitle="Subtitle"
                         description="Description"

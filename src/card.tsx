@@ -166,6 +166,8 @@ type MediaCardProps = {
     pretitleLinesMax?: number;
     title?: string;
     titleLinesMax?: number;
+    subtitle?: string;
+    subtitleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
@@ -184,6 +186,8 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             headline,
             pretitle,
             pretitleLinesMax,
+            subtitle,
+            subtitleLinesMax,
             title,
             titleLinesMax,
             description,
@@ -211,6 +215,8 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                 pretitleLinesMax={pretitleLinesMax}
                                 title={title}
                                 titleLinesMax={titleLinesMax}
+                                subtitle={subtitle}
+                                subtitleLinesMax={subtitleLinesMax}
                                 description={description}
                                 descriptionLinesMax={descriptionLinesMax}
                                 extra={extra}
@@ -247,6 +253,8 @@ interface DataCardProps {
      */
     icon?: React.ReactElement;
     headline?: string | RendersNullableElement<typeof Tag>;
+    pretitle?: string;
+    pretitleLinesMax?: number;
     title?: string;
     titleLinesMax?: number;
     subtitle?: string;
@@ -268,6 +276,8 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
         {
             icon,
             headline,
+            pretitle,
+            pretitleLinesMax,
             title,
             titleLinesMax,
             subtitle,
@@ -292,6 +302,8 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                         {icon && <Box paddingBottom={16}>{icon}</Box>}
                         <CardContent
                             headline={headline}
+                            pretitle={pretitle}
+                            pretitleLinesMax={pretitleLinesMax}
                             title={title}
                             titleLinesMax={titleLinesMax}
                             subtitle={subtitle}
