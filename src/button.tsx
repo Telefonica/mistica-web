@@ -16,7 +16,7 @@ import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEve
 import type {Location} from 'history';
 import type {Theme} from './theme';
 
-export const BUTTON_MIN_WIDTH = 136;
+export const BUTTON_MIN_WIDTH = 104;
 
 const transitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
 
@@ -436,12 +436,13 @@ const Button: React.FC<
 };
 
 const useButtonLinkStyles = createUseStyles((theme) => {
-    const padding = 6;
+    const paddingY = 6;
+    const paddingX = 12;
     return {
         link: {
             display: 'inline-block',
             width: 'auto',
-            padding,
+            padding: `${paddingY}px ${paddingX}px`,
             fontWeight: 500,
             borderRadius: 4,
             overflow: 'hidden',
@@ -470,7 +471,7 @@ const useButtonLinkStyles = createUseStyles((theme) => {
                 },
             },
         },
-        aligned: {marginLeft: -padding},
+        aligned: {marginLeft: -paddingX},
     };
 });
 
