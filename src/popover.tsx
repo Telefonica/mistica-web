@@ -1,12 +1,8 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import IcnCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import {useTheme, useScreenSize} from './hooks';
-import Stack from './stack';
-import Box from './box';
-import Inline from './inline';
-import {Text3, Text2} from './text';
 
 import type {TrackingEvent} from './utils/types';
 
@@ -33,7 +29,7 @@ const useStyles = createUseStyles((theme) => {
             top: 0,
             left: '50%',
             transform: 'translate(-50%, -50%) rotate(45deg)',
-            border: `1px solid ${theme.colors.border}`,
+            border: `1px solid ${theme.colors.divider}`,
             borderRadius: 2,
             boxShadow: ({position}) =>
                 position === 'bottom' ? 'initial' : `0 0 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
@@ -57,27 +53,50 @@ const useStyles = createUseStyles((theme) => {
             zIndex: 9,
             boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
             backgroundColor: theme.colors.backgroundContainer,
-            border: `1px solid ${theme.colors.border}`,
+            border: `1px solid ${theme.colors.divider}`,
             borderRadius: 8,
         },
-        textAlign: {
-            display: 'flex',
-            alignItems: 'center',
-            height: '100%',
+
+        title: {
+            marginBottom: 4,
+            color: theme.colors.textPrimary,
+            fontWeight: 400,
+            lineHeight: 1.5,
+            fontSize: 16,
         },
-        boxContent: {
+
+        boxContainer: {
+            position: 'relative',
             display: 'flex',
+            justifyContent: 'space-between',
         },
+
         textContent: {
-            textAlign: 'left',
+            display: 'flex',
+            flexDirection: 'column',
+            margin: 16,
+            marginRight: 8,
+            justifyContent: 'center',
             width: '100%',
             wordBreak: 'break-word',
         },
+        assetContent: {
+            width: 40,
+            minWidth: 40,
+            height: 40,
+            margin: 16,
+            marginRight: 0,
+        },
+        text: {
+            color: theme.colors.textSecondary,
+            textAlign: 'left',
+            lineHeight: 1.42857142,
+            fontSize: 14,
+        },
+
         closeButtonIcon: {
-            position: 'absolute',
-            top: 8,
-            right: 8,
-            zIndex: 1,
+            paddingTop: 8,
+            paddingRight: 8,
         },
     };
 });
@@ -187,7 +206,7 @@ const getTargetPosition = (targetWrapper: HTMLDivElement | null): TargetPosition
         : null;
 
 type Props = {
-    description?: string;
+    description: string;
     target: React.ReactNode;
     title?: string;
     asset?: React.ReactNode;
@@ -197,7 +216,6 @@ type Props = {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     isVisible?: boolean;
     children?: void;
-    extra?: React.ReactNode;
 };
 
 const Popover: React.FC<Props> = ({
@@ -210,7 +228,6 @@ const Popover: React.FC<Props> = ({
     target,
     asset,
     isVisible = true,
-    extra,
 }) => {
     const {texts, colors, isIos} = useTheme();
     const {isTabletOrSmaller} = useScreenSize();
@@ -261,33 +278,25 @@ const Popover: React.FC<Props> = ({
                 <div className={classes.arrowWrapper} style={arrowStyles}>
                     <div className={classes.arrow} />
                 </div>
-                <Box padding={16}>
-                    <Box paddingRight={24} className={classes.boxContent}>
-                        <Inline space={16}>
-                            {asset}
-                            <Box className={classes.textAlign}>
-                                <Stack space={4} className={classes.textContent}>
-                                    {title && <Text3 regular>{title}</Text3>}
-                                    <Text2 regular color={colors.textSecondary}>
-                                        {description}
-                                    </Text2>
-                                </Stack>
-                            </Box>
-                        </Inline>
-                    </Box>
-                    <IconButton
-                        className={classes.closeButtonIcon}
-                        onPress={(e) => {
-                            onClose?.();
-                            e.stopPropagation();
-                        }}
-                        trackingEvent={trackingEvent}
-                        aria-label={texts.modalClose}
-                    >
-                        <IconCloseRegular color={colors.neutralHigh} />
-                    </IconButton>
-                    {extra}
-                </Box>
+                <div className={classes.boxContainer}>
+                    {asset && <div className={classes.assetContent}>{asset}</div>}
+                    <div className={classes.textContent}>
+                        {title && <span className={classes.title}>{title}</span>}
+                        <span className={classes.text}>{description}</span>
+                    </div>
+                    <div className={classes.closeButtonIcon}>
+                        <IconButton
+                            onPress={(e) => {
+                                onClose?.();
+                                e.stopPropagation();
+                            }}
+                            trackingEvent={trackingEvent}
+                            aria-label={texts.modalClose}
+                        >
+                            <IcnCloseRegular color={colors.neutralHigh} />
+                        </IconButton>
+                    </div>
+                </div>
             </div>
         );
     }
