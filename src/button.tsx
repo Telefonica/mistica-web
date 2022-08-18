@@ -436,12 +436,13 @@ const Button: React.FC<
 };
 
 const useButtonLinkStyles = createUseStyles((theme) => {
-    const padding = 6;
+    const paddingY = 6;
+    const paddingX = 12;
     return {
         link: {
             display: 'inline-block',
             width: 'auto',
-            padding,
+            padding: `${paddingY}px ${paddingX}px`,
             fontWeight: 500,
             borderRadius: 4,
             overflow: 'hidden',
@@ -470,7 +471,7 @@ const useButtonLinkStyles = createUseStyles((theme) => {
                 },
             },
         },
-        aligned: {marginLeft: -padding},
+        aligned: {marginLeft: -paddingX},
     };
 });
 

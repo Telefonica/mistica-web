@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import type {RendersNullableElement} from './utils/types';
 
 const buttonLayoutSpacing = 16;
-const buttonLinkPadding = 6;
+const buttonLinkPadding = 12;
 
 const useStyles = createUseStyles(() => ({
     inline: {
