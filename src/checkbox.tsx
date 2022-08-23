@@ -19,6 +19,7 @@ const useIconCheckboxStyles = createUseStyles(({colors, isIos}) => ({
         justifyContent: 'center',
         alignItems: 'center',
         userSelect: 'none',
+        outline: '1px solid transparent',
         borderRadius: 2,
         verticalAlign: 'middle',
         background: colors.background,
