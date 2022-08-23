@@ -6,18 +6,17 @@ import {useIsInverseVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {getTextFromChildren} from './utils/common';
 import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
-
 import type {TrackingEvent, DataAttributes} from './utils/types';
 
-const useStyles = createUseStyles((theme) => ({
+const useStyles = createUseStyles(({colors, isDarkMode, mq}) => ({
     textLink: {
         width: 'auto',
         lineHeight: 'inherit',
         display: 'inline-block',
-        color: theme.colors.textLink,
+        color: colors.textLink,
         wordBreak: 'break-word',
         cursor: 'pointer',
-        [theme.mq.supportsHover]: {
+        [mq.supportsHover]: {
             '&:hover:not([disabled])': {
                 textDecoration: 'underline',
             },
@@ -28,11 +27,11 @@ const useStyles = createUseStyles((theme) => ({
         },
     },
     inverse: {
-        color: theme.colors.textLinkInverse,
-        textDecoration: 'underline',
-        [theme.mq.supportsHover]: {
+        color: colors.textLinkInverse,
+        textDecoration: isDarkMode ? 'none' : 'underline',
+        [mq.supportsHover]: {
             '&:hover:not([disabled])': {
-                textDecorationThickness: 2,
+                textDecorationThickness: isDarkMode ? 1 : 2,
             },
         },
     },
