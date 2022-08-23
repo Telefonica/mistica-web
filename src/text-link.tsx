@@ -16,6 +16,7 @@ const useStyles = createUseStyles((theme) => ({
         display: 'inline-block',
         color: theme.colors.textLink,
         wordBreak: 'break-word',
+        cursor: 'pointer',
         [theme.mq.supportsHover]: {
             '&:hover:not([disabled])': {
                 textDecoration: 'underline',
@@ -23,10 +24,17 @@ const useStyles = createUseStyles((theme) => ({
         },
         '&[disabled]': {
             opacity: 0.5,
+            textDecoration: 'none',
         },
     },
     inverse: {
         color: theme.colors.textLinkInverse,
+        textDecoration: 'underline',
+        [theme.mq.supportsHover]: {
+            '&:hover:not([disabled])': {
+                textDecorationThickness: 2,
+            },
+        },
     },
     small: {
         fontSize: 14,
