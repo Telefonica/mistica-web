@@ -18,6 +18,8 @@ declare type MediaCardProps = {
   pretitleLinesMax?: number,
   title?: string,
   titleLinesMax?: number,
+  subtitle?: string,
+  subtitleLinesMax?: number,
   description?: string,
   descriptionLinesMax?: number,
   extra?: React.Node,
@@ -34,6 +36,8 @@ declare type DataCardProps = {
    */
   icon?: React.Element<any>,
   headline?: string | RendersNullableElement<typeof Tag>,
+  pretitle?: string,
+  pretitleLinesMax?: number,
   title?: string,
   titleLinesMax?: number,
   subtitle?: string,

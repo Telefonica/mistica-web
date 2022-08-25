@@ -31,6 +31,7 @@ type Args = {
     headline: string;
     pretitle: string;
     title: string;
+    subtitle: string;
     description: string;
     withExtra: boolean;
     actions: 'button' | 'link' | 'button and link' | 'none';
@@ -42,6 +43,7 @@ export const Default: StoryComponent<Args> = ({
     headlineType,
     pretitle,
     title,
+    subtitle,
     description,
     actions = 'button',
     withExtra,
@@ -64,6 +66,7 @@ export const Default: StoryComponent<Args> = ({
             headline={headline && <Tag type={headlineType}>{headline}</Tag>}
             pretitle={pretitle}
             title={title}
+            subtitle={subtitle}
             description={description}
             media={
                 media === 'video' ? (
@@ -85,8 +88,9 @@ Default.args = {
     media: 'image',
     headlineType: 'promo',
     headline: 'Priority',
-    pretitle: 'Some pretitle',
-    title: 'Some title',
+    pretitle: 'Pretitle',
+    title: 'Title',
+    subtitle: 'Subtitle',
     description: 'This is a description for the card',
     withExtra: false,
     actions: 'button',
@@ -129,6 +133,7 @@ export const Group: StoryComponent = () => {
                         headline={<Tag type="promo">Headline</Tag>}
                         pretitle="Pretitle"
                         title="Title"
+                        subtitle="Subtitle"
                         description="Description"
                         media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
