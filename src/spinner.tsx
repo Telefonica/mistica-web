@@ -158,7 +158,6 @@ const Spinner: React.FC<Props> = ({color, delay = '500ms', size = 24, style, rol
                     r="30"
                     role="presentation"
                     stroke={color}
-                    strokeLinecap="square"
                     strokeWidth="6"
                 />
             </svg>
