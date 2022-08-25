@@ -35,17 +35,3 @@ test('TextLink in dark mode screenshot', async () => {
 
     expect(image).toMatchImageSnapshot();
 });
-
-test('TextLink inverse in dark mode screenshot', async () => {
-    await openStoryPage({
-        id: 'components-text-link--default',
-        isDarkMode: true,
-        args: {inverse: true},
-    });
-
-    const textLink = await screen.findByTestId('text-link');
-
-    const image = await textLink.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
