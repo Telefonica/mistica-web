@@ -9,24 +9,32 @@ import {eventActions, eventCategories, eventNames, useTrackingConfig} from './ut
 
 import type {TrackingEvent, DataAttributes} from './utils/types';
 
-const useStyles = createUseStyles((theme) => ({
+const useStyles = createUseStyles(({colors, isDarkMode, mq}) => ({
     textLink: {
         width: 'auto',
         lineHeight: 'inherit',
         display: 'inline-block',
-        color: theme.colors.textLink,
+        color: colors.textLink,
         wordBreak: 'break-word',
-        [theme.mq.supportsHover]: {
+        cursor: 'pointer',
+        [mq.supportsHover]: {
             '&:hover:not([disabled])': {
                 textDecoration: 'underline',
             },
         },
         '&[disabled]': {
             opacity: 0.5,
+            textDecoration: 'none',
         },
     },
     inverse: {
-        color: theme.colors.textLinkInverse,
+        color: colors.textLinkInverse,
+        textDecoration: isDarkMode ? 'none' : 'underline',
+        [mq.supportsHover]: {
+            '&:hover:not([disabled])': {
+                textDecorationThickness: isDarkMode ? 1 : 2,
+            },
+        },
     },
     small: {
         fontSize: 14,
