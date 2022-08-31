@@ -16,12 +16,12 @@ export const Default: StoryComponent<Args> = () => {
                     itemsPerPage={1}
                     items={[
                         <HighlightedCard
-                            title="Title"
+                            title="Title1"
                             description="This is the best offer for you. Please check it out!"
                             imageUrl="https://imrl.movistar-es-dev.svc.dev.mad.tuenti.io/2YMvRiZT9QdEAAAuUAAAAFw0oaVgG"
                         />,
                         <HighlightedCard
-                            title="Title"
+                            title="Title2"
                             description="This is the best offer for you. Please check it out!"
                             imageUrl="https://imrl.movistar-es-dev.svc.dev.mad.tuenti.io/2YMvRiZT9QdEAAAuUAAAAFw0oaVgG"
                             button={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
