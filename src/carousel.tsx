@@ -282,6 +282,8 @@ const DEFAULT_AUTOPLAY_TIME = 5000;
 
 type BaseCarouselProps = {
     items: ReadonlyArray<React.ReactNode>;
+    itemStyle?: React.CSSProperties;
+    itemClassName?: string;
     withBullets?: boolean;
     renderBullets?: (bulletsProps: PageBulletsProps) => React.ReactNode;
     itemsPerPage?: ItemsPerPageProp;
@@ -297,12 +299,13 @@ type BaseCarouselProps = {
     autoplay?: boolean | {time: number; loop?: boolean};
     onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
     dataAttributes?: DataAttributes;
-
     children?: void;
 };
 
 const BaseCarousel: React.FC<BaseCarouselProps> = ({
     items,
+    itemStyle,
+    itemClassName,
     withBullets,
     renderBullets,
     itemsPerPage,
@@ -507,7 +510,12 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                     ref={carouselRef}
                 >
                     {items.map((item, index) => (
-                        <div key={index} className={classes.item} data-item>
+                        <div
+                            key={index}
+                            className={classNames(classes.item, itemClassName)}
+                            style={itemStyle}
+                            data-item
+                        >
                             {item}
                         </div>
                     ))}
@@ -530,6 +538,8 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
 
 type CarouselProps = {
     items: ReadonlyArray<React.ReactNode>;
+    itemStyle?: React.CSSProperties;
+    itemClassName?: string;
     withBullets?: boolean;
     renderBullets?: (bulletsProps: PageBulletsProps) => React.ReactNode;
     itemsPerPage?: ItemsPerPageProp;
@@ -550,6 +560,8 @@ export const Carousel: React.FC<CarouselProps> = (props) => <BaseCarousel {...pr
 
 type CenteredCarouselProps = {
     items: ReadonlyArray<React.ReactNode>;
+    itemStyle?: React.CSSProperties;
+    itemClassName?: string;
     withBullets?: boolean;
     renderBullets?: (bulletsProps: PageBulletsProps) => React.ReactNode;
     onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
@@ -560,6 +572,8 @@ type CenteredCarouselProps = {
 
 export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({
     items,
+    itemStyle,
+    itemClassName,
     withBullets,
     renderBullets,
     onPageChange,
@@ -567,6 +581,8 @@ export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({
 }) => (
     <BaseCarousel
         items={items}
+        itemStyle={itemStyle}
+        itemClassName={itemClassName}
         itemsPerPage={{mobile: 1, desktop: 3}}
         centered
         itemsToScroll={1}

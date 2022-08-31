@@ -22,6 +22,8 @@ declare type MobilePageOffset =
     };
 declare type CarouselProps = {
   items: $ReadOnlyArray<React.Node>,
+  itemStyle?: CssStyle,
+  itemClassName?: string,
   withBullets?: boolean,
   renderBullets?: (bulletsProps: PageBulletsProps) => React.Node,
   itemsPerPage?: ItemsPerPageProp,
@@ -52,6 +54,8 @@ declare type CarouselProps = {
 declare export var Carousel: React.ComponentType<CarouselProps>;
 declare type CenteredCarouselProps = {
   items: $ReadOnlyArray<React.Node>,
+  itemStyle?: CssStyle,
+  itemClassName?: string,
   withBullets?: boolean,
   renderBullets?: (bulletsProps: PageBulletsProps) => React.Node,
   onPageChange?: (newPageInfo: {
@@ -75,3 +79,5 @@ declare type SlideshowProps = {
 };
 declare export var Slideshow: React.ComponentType<SlideshowProps>;
 declare export {};
+
+import { type CssStyle } from "./__css_types__.js.flow";
