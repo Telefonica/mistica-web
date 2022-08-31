@@ -119,3 +119,12 @@ test('Slideshow desktop', async () => {
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(true);
 });
+
+test('Highlighted Card Carousel mobile', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousels-highlighted-card-carousel--default',
+        device: 'MOBILE_IOS',
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
