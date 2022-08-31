@@ -1,3 +1,23 @@
+# [12.1.0](https://github.com/Telefonica/mistica-web/compare/v12.0.0...v12.1.0) (2022-08-31)
+
+
+### Bug Fixes
+
+* **Blau skin:** backgroundSkeletonInverse color ([#513](https://github.com/Telefonica/mistica-web/issues/513)) ([d076a29](https://github.com/Telefonica/mistica-web/commit/d076a296006292f721b129113b90dba335064275))
+* **ButtonLink:** Fix paddings ([#518](https://github.com/Telefonica/mistica-web/issues/518)) ([25dbc1a](https://github.com/Telefonica/mistica-web/commit/25dbc1a14565cce203fb9784dfce3fe61da15e0a))
+* **Cards:** Media & Data card content structure unification ([#519](https://github.com/Telefonica/mistica-web/issues/519)) ([439cc54](https://github.com/Telefonica/mistica-web/commit/439cc54c069544311d652dfc1cc07c3fc84642b1))
+* **Checkbox:** fix junk pixel in checkbox ([#521](https://github.com/Telefonica/mistica-web/issues/521)) ([16a5e08](https://github.com/Telefonica/mistica-web/commit/16a5e08d390fee6351a11745de0d362bf121e76f))
+* **Snapcard:** `extra` now fits the whole width bug ([#514](https://github.com/Telefonica/mistica-web/issues/514)) ([9e06869](https://github.com/Telefonica/mistica-web/commit/9e06869db9a082b4074116352fed44dcd5dc19d6))
+* **Spinner:** fix flicker pixel in spinner ([#522](https://github.com/Telefonica/mistica-web/issues/522)) ([74d07e0](https://github.com/Telefonica/mistica-web/commit/74d07e01cc7b41dbd6710c1ab2863f084be9893f))
+
+
+### Features
+
+* **Carousel:** allow passing styles to item container ([#525](https://github.com/Telefonica/mistica-web/issues/525)) ([998556f](https://github.com/Telefonica/mistica-web/commit/998556f760cfd7d9e6ca19182d1c116dd55e5414))
+* **IconPhotoCamera:** changed telefonica icon ([#515](https://github.com/Telefonica/mistica-web/issues/515)) ([13f0b95](https://github.com/Telefonica/mistica-web/commit/13f0b95f7c4db58e757c256d8867d1ae10ad0f88))
+* **Popover:** refactor and extra prop ([#516](https://github.com/Telefonica/mistica-web/issues/516)) ([d49ccb3](https://github.com/Telefonica/mistica-web/commit/d49ccb36ec14017056c8bdbfc2008c43969b1890))
+* **TextLink:** improve inverse variant ([#520](https://github.com/Telefonica/mistica-web/issues/520)) ([9b5af26](https://github.com/Telefonica/mistica-web/commit/9b5af266917ec4132d735ef876f1f17416e91f3e))
+
 # [12.0.0](https://github.com/Telefonica/mistica-web/compare/v11.12.2...v12.0.0) (2022-08-04)
 
 
