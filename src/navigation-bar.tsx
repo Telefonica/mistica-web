@@ -109,25 +109,40 @@ type NavigationBarLogoProps = {
     children?: undefined;
 };
 
+const useLogoStyles = createUseStyles(() => ({
+    logoContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+    },
+}));
+
 export const NavigationBarLogo: React.FC<NavigationBarLogoProps> = ({size}) => {
+    const classes = useLogoStyles();
     const {skinName} = useTheme();
     const {isTabletOrSmaller} = useScreenSize();
     size = size ?? (isTabletOrSmaller ? 40 : 48);
+    let logo;
     switch (skinName) {
         case 'Movistar':
-            return <MovistarLogo size={size} />;
+            logo = <MovistarLogo size={size} />;
+            break;
         case 'Vivo':
-            return <VivoLogo size={size} />;
+            logo = <VivoLogo size={size} />;
+            break;
         case 'O2':
         case 'O2-classic':
-            return <O2Logo size={size} />;
+            logo = <O2Logo size={size} />;
+            break;
         case 'Telefonica':
-            return <TelefonicaLogo size={size} />;
+            logo = <TelefonicaLogo size={size} />;
+            break;
         case 'Blau':
-            return <BlauLogo size={size} />;
+            logo = <BlauLogo size={size} />;
+            break;
         default:
-            return null;
+            logo = null;
     }
+    return <div className={classes.logoContainer}>{logo}</div>;
 };
 
 const useBurgerStyles = createUseStyles(() => ({
