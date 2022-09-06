@@ -343,7 +343,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                                             >
                                                 <BurgerMenuIcon isOpen={isMenuOpen} />
                                             </IconButton>
-                                            {logo}
+                                            <div className={classes.logoContainer}>{logo}</div>
                                         </Inline>
                                         {right}
                                     </Inline>
@@ -411,7 +411,6 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                     <Inline space="between" alignItems="center">
                         <Inline space={48} alignItems="center">
                             <div className={classes.logoContainer}>{logo}</div>
-
                             <nav>
                                 <Inline space={32}>
                                     {sections.map(({title, ...touchableProps}, idx) => (
