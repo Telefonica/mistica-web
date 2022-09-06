@@ -215,7 +215,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             textLinkInverse: palette.blauPurple30,
 
             // CONTROLS
-            control: palette.darkModeGrey,
+            control: palette.darkModeGrey6,
             loadingBar: palette.blauBluePrimary,
             loadingBarBackground: palette.darkModeGrey,
 
