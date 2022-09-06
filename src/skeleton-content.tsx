@@ -1,0 +1,20 @@
+// https://www.figma.com/file/w7E0mmB92eio0zHw7h9iS2/%5BREADY%5D-Skeletons-Specs?node-id=986%3A1161
+
+import * as React from 'react';
+import {SkeletonRow} from './skeleton-row';
+
+type SkeletonContentProps = {
+    height: string | number;
+    ariaValueText?: string;
+    disableAnimation?: boolean;
+};
+
+const SkeletonContent = ({
+    height,
+    ariaValueText,
+    disableAnimation = false,
+}: SkeletonContentProps): JSX.Element => {
+    return <SkeletonRow height={height} ariaValueText={ariaValueText} disableAnimation={disableAnimation} />;
+};
+
+export default SkeletonContent;
