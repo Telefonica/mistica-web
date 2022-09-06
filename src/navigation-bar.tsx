@@ -109,40 +109,25 @@ type NavigationBarLogoProps = {
     children?: undefined;
 };
 
-const useLogoStyles = createUseStyles(() => ({
-    logoContainer: {
-        display: 'flex',
-        justifyContent: 'center',
-    },
-}));
-
 export const NavigationBarLogo: React.FC<NavigationBarLogoProps> = ({size}) => {
-    const classes = useLogoStyles();
     const {skinName} = useTheme();
     const {isTabletOrSmaller} = useScreenSize();
     size = size ?? (isTabletOrSmaller ? 40 : 48);
-    let logo;
     switch (skinName) {
         case 'Movistar':
-            logo = <MovistarLogo size={size} />;
-            break;
+            return <MovistarLogo size={size} />;
         case 'Vivo':
-            logo = <VivoLogo size={size} />;
-            break;
+            return <VivoLogo size={size} />;
         case 'O2':
         case 'O2-classic':
-            logo = <O2Logo size={size} />;
-            break;
+            return <O2Logo size={size} />;
         case 'Telefonica':
-            logo = <TelefonicaLogo size={size} />;
-            break;
+            return <TelefonicaLogo size={size} />;
         case 'Blau':
-            logo = <BlauLogo size={size} />;
-            break;
+            return <BlauLogo size={size} />;
         default:
-            logo = null;
+            return null;
     }
-    return <div className={classes.logoContainer}>{logo}</div>;
 };
 
 const useBurgerStyles = createUseStyles(() => ({
@@ -280,6 +265,10 @@ const useStyles = createUseStyles((theme) => {
                     color: ({isInverse}) => (isInverse ? theme.colors.inverse : theme.colors.neutralMedium),
                 },
             },
+        },
+        logoContainer: {
+            display: 'flex',
+            justifyContent: 'center',
         },
     };
 });
@@ -421,7 +410,8 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                 <ResponsiveLayout>
                     <Inline space="between" alignItems="center">
                         <Inline space={48} alignItems="center">
-                            {logo}
+                            <div className={classes.logoContainer}>{logo}</div>
+
                             <nav>
                                 <Inline space={32}>
                                     {sections.map(({title, ...touchableProps}, idx) => (
