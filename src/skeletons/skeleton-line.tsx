@@ -1,9 +1,7 @@
-import {useIsInverseVariant} from './theme-variant-context';
-import {createUseStyles} from './jss';
+import {useIsInverseVariant} from '../theme-variant-context';
+import {createUseStyles} from '../jss';
 import * as React from 'react';
-import CSS from 'csstype';
-
-const transition = '1s linear';
+import {useAnimation} from './styles';
 
 type RowStylesProps = {
     width?: string | number;
@@ -11,27 +9,7 @@ type RowStylesProps = {
     isInverse: boolean;
 };
 
-const useAnimation = createUseStyles(() => ({
-    animation: {
-        animation: ({disableAnimation}: RowProps) =>
-            disableAnimation ? '' : `$pulse ${transition} infinite`,
-    },
-    '@keyframes pulse': {
-        '0%': {
-            opacity: 1,
-        },
-
-        '50%': {
-            opacity: 0.5,
-        },
-
-        '100%': {
-            opacity: 1,
-        },
-    },
-}));
-
-const useRowStyle = createUseStyles(({colors}) => ({
+const useLineStyle = createUseStyles(({colors}) => ({
     row: {
         borderRadius: 8,
         height: ({height = 8}: RowStylesProps) => height,
@@ -42,21 +20,21 @@ const useRowStyle = createUseStyles(({colors}) => ({
 }));
 
 type RowProps = {
-    width?: CSS.Property.Width;
+    width?: string | number;
     height?: string | number;
     disableAnimation?: boolean;
     ariaValueText?: string;
 };
 
-export const SkeletonRow = ({
+export const SkeletonLine: React.FC<RowProps> = ({
     width,
     height,
     disableAnimation = false,
     ariaValueText,
-}: RowProps): JSX.Element => {
+}) => {
     const isInverse = useIsInverseVariant();
-    const animationClasses = useAnimation({isInverse, disableAnimation});
-    const classes = useRowStyle({width, height, isInverse});
+    const animationClasses = useAnimation({disableAnimation});
+    const classes = useLineStyle({width, height, isInverse});
 
     return (
         <div

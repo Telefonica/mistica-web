@@ -1,0 +1,10 @@
+// @flow
+
+import * as React from "react";
+declare type SkeletonCircleProps = {
+  size?: string | number,
+  ariaValueText?: string,
+  disableAnimation?: boolean,
+};
+declare var SkeletonCircle: React.ComponentType<SkeletonCircleProps>;
+declare export default typeof SkeletonCircle;

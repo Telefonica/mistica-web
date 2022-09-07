@@ -1,0 +1,9 @@
+// @flow
+
+import * as React from "react";
+declare type SkeletonRowProps = {
+  ariaValueText?: string,
+  disableAnimation?: boolean,
+};
+declare var SkeletonRow: React.ComponentType<SkeletonRowProps>;
+declare export default typeof SkeletonRow;

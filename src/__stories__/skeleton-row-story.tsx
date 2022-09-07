@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {ThemeVariant, useTheme} from '..';
-import SkeletonText from '../skeletons/skeleton-text';
+import SkeletonRow from '../skeletons/skeleton-row';
 
 export default {
-    title: 'Components/Skeletons/Skeleton Text',
+    title: 'Components/Skeletons/Skeleton Row',
 };
 
 type Args = {
@@ -26,15 +26,15 @@ export const Default: StoryComponent<Args> = ({disableAnimation, inverse, ariaVa
                     // happens when changing the base font size
                     lineHeight: 0,
                 }}
-                data-testid="skeleton-text"
+                data-testid="skeleton-row"
             >
-                <SkeletonText disableAnimation={disableAnimation} ariaValueText={ariaValueText} />
+                <SkeletonRow disableAnimation={disableAnimation} ariaValueText={ariaValueText} />
             </div>
         </ThemeVariant>
     );
 };
 
-Default.storyName = 'Skeleton Text';
+Default.storyName = 'Skeleton Row';
 
 Default.args = {
     inverse: false,

@@ -1372,10 +1372,56 @@ const alertSnippets = [
     },
 ];
 
+const skeletonSnippets = [
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Text',
+        code: `
+               <SkeletonText
+                    ariaValueText="loading"
+                    disableAnimation={false}
+                /> 
+        `,
+    },
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Circle',
+        code: `
+               <SkeletonCircle
+                    size={40}
+                    ariaValueText="loading"
+                    disableAnimation={false}
+               />
+        `,
+    },
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Row',
+        code: `
+               <SkeletonRow
+                    ariaValueText="loading"
+                    disableAnimation={false}
+               /> 
+        `,
+    },
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Media',
+        code: `
+            <SkeletonMedia
+                height={150}
+                ariaValueText="loading"
+                disableAnimation={false}
+            />
+        `,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
     ...feedbackSnippets,
+    ...skeletonSnippets,
     {group: 'Feedbacks', name: 'Snackbar', code: '<Snackbar message="Some message here" />'},
     ...layoutSnippets,
     {

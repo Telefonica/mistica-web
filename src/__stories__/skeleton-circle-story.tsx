@@ -1,18 +1,19 @@
 import * as React from 'react';
 import {ThemeVariant, useTheme} from '..';
-import SkeletonText from '../skeletons/skeleton-text';
+import SkeletonCircle from '../skeletons/skeleton-circle';
 
 export default {
-    title: 'Components/Skeletons/Skeleton Text',
+    title: 'Components/Skeletons/Skeleton Circle',
 };
 
 type Args = {
+    size: number;
     inverse: boolean;
     disableAnimation: boolean;
     ariaValueText: string;
 };
 
-export const Default: StoryComponent<Args> = ({disableAnimation, inverse, ariaValueText}) => {
+export const Default: StoryComponent<Args> = ({size, disableAnimation, inverse, ariaValueText}) => {
     const {colors} = useTheme();
 
     return (
@@ -26,17 +27,22 @@ export const Default: StoryComponent<Args> = ({disableAnimation, inverse, ariaVa
                     // happens when changing the base font size
                     lineHeight: 0,
                 }}
-                data-testid="skeleton-text"
+                data-testid="skeleton-circle"
             >
-                <SkeletonText disableAnimation={disableAnimation} ariaValueText={ariaValueText} />
+                <SkeletonCircle
+                    size={size}
+                    disableAnimation={disableAnimation}
+                    ariaValueText={ariaValueText}
+                />
             </div>
         </ThemeVariant>
     );
 };
 
-Default.storyName = 'Skeleton Text';
+Default.storyName = 'Skeleton Circle';
 
 Default.args = {
+    size: 40,
     inverse: false,
     disableAnimation: false,
     ariaValueText: '',

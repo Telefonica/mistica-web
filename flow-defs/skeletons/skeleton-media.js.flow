@@ -1,0 +1,10 @@
+// @flow
+
+import * as React from "react";
+declare type SkeletonContentProps = {
+  height: string | number,
+  ariaValueText?: string,
+  disableAnimation?: boolean,
+};
+declare var SkeletonMedia: React.ComponentType<SkeletonContentProps>;
+declare export default typeof SkeletonMedia;

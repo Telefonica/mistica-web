@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ThemeVariant, useTheme} from '..';
-import SkeletonMedia from '../skeleton-media';
+import SkeletonMedia from '../skeletons/skeleton-media';
 
 export default {
     title: 'Components/Skeletons/Skeleton Media',
