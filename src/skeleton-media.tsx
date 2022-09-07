@@ -9,12 +9,12 @@ type SkeletonContentProps = {
     disableAnimation?: boolean;
 };
 
-const SkeletonContent = ({
+const SkeletonMedia = ({
     height,
     ariaValueText,
     disableAnimation = false,
 }: SkeletonContentProps): JSX.Element => {
-    return <SkeletonRow height={height} ariaValueText={ariaValueText} disableAnimation={disableAnimation} />;
+    return <SkeletonRow height={height} disableAnimation={disableAnimation} ariaValueText={ariaValueText} />;
 };
 
-export default SkeletonContent;
+export default SkeletonMedia;

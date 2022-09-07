@@ -1,18 +1,19 @@
 import * as React from 'react';
 import {ThemeVariant, useTheme} from '..';
-import SkeletonContent from '../skeleton-content';
+import SkeletonMedia from '../skeleton-media';
 
 export default {
-    title: 'Components/Skeletons/Skeleton Content',
+    title: 'Components/Skeletons/Skeleton Media',
 };
 
 type Args = {
     height: number;
     inverse: boolean;
     disableAnimation: boolean;
+    ariaValueText: string;
 };
 
-export const Default: StoryComponent<Args> = ({height, disableAnimation, inverse}) => {
+export const Default: StoryComponent<Args> = ({height, disableAnimation, inverse, ariaValueText}) => {
     const {colors} = useTheme();
 
     return (
@@ -26,18 +27,23 @@ export const Default: StoryComponent<Args> = ({height, disableAnimation, inverse
                     // happens when changing the base font size
                     lineHeight: 0,
                 }}
-                data-testid="skeleton-content"
+                data-testid="skeleton-media"
             >
-                <SkeletonContent height={height} disableAnimation={disableAnimation} />
+                <SkeletonMedia
+                    height={height}
+                    disableAnimation={disableAnimation}
+                    ariaValueText={ariaValueText}
+                />
             </div>
         </ThemeVariant>
     );
 };
 
-Default.storyName = 'Skeleton Content';
+Default.storyName = 'Skeleton Media';
 
 Default.args = {
     height: 100,
     inverse: false,
     disableAnimation: false,
+    ariaValueText: '',
 };

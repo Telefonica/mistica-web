@@ -44,15 +44,15 @@ const useRowStyle = createUseStyles(({colors}) => ({
 type RowProps = {
     width?: CSS.Property.Width;
     height?: string | number;
-    ariaValueText?: string;
     disableAnimation?: boolean;
+    ariaValueText?: string;
 };
 
 export const SkeletonRow = ({
     width,
     height,
-    ariaValueText,
     disableAnimation = false,
+    ariaValueText,
 }: RowProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const animationClasses = useAnimation({isInverse, disableAnimation});
@@ -61,12 +61,13 @@ export const SkeletonRow = ({
     return (
         <div
             className={`${classes.row} ${animationClasses.animation}`}
-            tabIndex={0}
-            role="progressbar"
-            aria-busy
-            aria-valuemin={0}
-            aria-valuemax={100}
             aria-valuetext={ariaValueText}
+            role={ariaValueText === undefined ? undefined : 'progressbar'}
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+            tabIndex={ariaValueText === undefined ? undefined : 0}
+            aria-busy={ariaValueText === undefined ? undefined : true}
+            aria-valuemin={ariaValueText === undefined ? undefined : 0}
+            aria-valuemax={ariaValueText === undefined ? undefined : 100}
         />
     );
 };
