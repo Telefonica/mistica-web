@@ -52,14 +52,18 @@ const useStyles = createUseStyles((theme) => ({
         left: 12 + 1, // 12 for select paddingLeft and +1 for border
         right: 48 + 1, // 48 for icon and +1 for border
         overflow: 'hidden',
-        top: ({label}) => (label ? 27 : 17),
+        top: ({label}) => (label ? 30 : 17),
         lineHeight: '20px',
-        fontSize: 16,
+        fontSize: 18,
         color: theme.colors.textPrimary,
         opacity: ({disabled}) => (disabled ? 0.5 : 1),
         maxWidth: '100%',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
+        [theme.mq.tabletOrSmaller]: {
+            top: ({label}) => (label ? 27 : 27),
+            fontSize: 16,
+        },
     },
     optionsContainer: {
         margin: 0,
