@@ -1,10 +1,10 @@
 // @flow
+import * as React from "react"; // mio
 
-import * as React from "react";
 declare type SkeletonCircleProps = {
   size?: string | number,
   ariaValueText?: string,
   disableAnimation?: boolean,
 };
-declare var SkeletonCircle: React.ComponentType<SkeletonCircleProps>;
+declare var SkeletonCircle: (x: SkeletonCircleProps) => React.Node;
 declare export default typeof SkeletonCircle;

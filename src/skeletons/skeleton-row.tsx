@@ -26,7 +26,7 @@ type SkeletonRowProps = {
     disableAnimation?: boolean;
 };
 
-const SkeletonRow: React.FC<SkeletonRowProps> = ({ariaValueText, disableAnimation = false}) => {
+const SkeletonRow = ({ariaValueText, disableAnimation = false}: SkeletonRowProps): JSX.Element => {
     const animationClasses = useAnimation({disableAnimation});
     const classes = useRowStyles();
 

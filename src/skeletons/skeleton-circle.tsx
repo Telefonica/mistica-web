@@ -25,7 +25,7 @@ type SkeletonCircleProps = {
     disableAnimation?: boolean;
 };
 
-const SkeletonCircle: React.FC<SkeletonCircleProps> = ({size = 40, disableAnimation, ariaValueText}) => {
+const SkeletonCircle = ({size = 40, disableAnimation, ariaValueText}: SkeletonCircleProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const animationClasses = useAnimation({disableAnimation});
     const classes = useCircleStyle({size, isInverse});

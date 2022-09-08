@@ -1,11 +1,11 @@
 // @flow
+import * as React from "react"; // mio
 
-import * as React from "react";
 declare type RowProps = {
   width?: string | number,
   height?: string | number,
   disableAnimation?: boolean,
   ariaValueText?: string,
 };
-declare export var SkeletonLine: React.ComponentType<RowProps>;
+declare export var SkeletonLine: (x: RowProps) => React.Node;
 declare export {};

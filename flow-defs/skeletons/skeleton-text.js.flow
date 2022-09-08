@@ -1,9 +1,9 @@
 // @flow
+import * as React from "react"; // mio
 
-import * as React from "react";
 declare type SkeletonTextProps = {
   ariaValueText?: string,
   disableAnimation?: boolean,
 };
-declare var SkeletonText: React.ComponentType<SkeletonTextProps>;
+declare var SkeletonText: (x: SkeletonTextProps) => React.Node;
 declare export default typeof SkeletonText;

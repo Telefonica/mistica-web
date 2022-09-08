@@ -13,7 +13,7 @@ const SkeletonMedia: React.FC<SkeletonContentProps> = ({
     height,
     ariaValueText,
     disableAnimation = false,
-}): JSX.Element => {
+}: SkeletonContentProps): JSX.Element => {
     return <SkeletonLine height={height} disableAnimation={disableAnimation} ariaValueText={ariaValueText} />;
 };
 

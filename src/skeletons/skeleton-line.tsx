@@ -26,12 +26,12 @@ type RowProps = {
     ariaValueText?: string;
 };
 
-export const SkeletonLine: React.FC<RowProps> = ({
+export const SkeletonLine = ({
     width,
     height,
     disableAnimation = false,
     ariaValueText,
-}) => {
+}: RowProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const animationClasses = useAnimation({disableAnimation});
     const classes = useLineStyle({width, height, isInverse});

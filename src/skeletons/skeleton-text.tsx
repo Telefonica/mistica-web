@@ -9,7 +9,7 @@ type SkeletonTextProps = {
     disableAnimation?: boolean;
 };
 
-const SkeletonText: React.FC<SkeletonTextProps> = ({ariaValueText, disableAnimation = false}) => {
+const SkeletonText = ({ariaValueText, disableAnimation = false}: SkeletonTextProps): JSX.Element => {
     return (
         <Stack
             space={16}
