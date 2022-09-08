@@ -34,12 +34,11 @@ const SkeletonCircle = ({size = 40, disableAnimation, ariaValueText}: SkeletonCi
         <div
             className={`${classes.circle} ${animationClasses.animation}`}
             aria-valuetext={ariaValueText}
-            role={ariaValueText === undefined ? undefined : 'progressbar'}
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-            tabIndex={ariaValueText === undefined ? undefined : 0}
-            aria-busy={ariaValueText === undefined ? undefined : true}
-            aria-valuemin={ariaValueText === undefined ? undefined : 0}
-            aria-valuemax={ariaValueText === undefined ? undefined : 100}
+            role="progressbar"
+            tabIndex={0}
+            aria-busy
+            aria-valuemin={0}
+            aria-valuemax={100}
         />
     );
 };

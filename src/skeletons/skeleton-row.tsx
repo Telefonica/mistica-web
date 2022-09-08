@@ -1,12 +1,15 @@
 // https://www.figma.com/file/w7E0mmB92eio0zHw7h9iS2/%5BREADY%5D-Skeletons-Specs?node-id=986%3A1161
 
 import * as React from 'react';
-import SkeletonCircle from './skeleton-circle';
-import {SkeletonLine} from './skeleton-line';
 import {useAnimation} from './styles';
 import {createUseStyles} from '../jss';
+import {useIsInverseVariant} from '../theme-variant-context';
 
-const useRowStyles = createUseStyles(() => ({
+type RowStylesProps = {
+    isInverse: boolean;
+};
+
+const useRowStyles = createUseStyles(({colors}) => ({
     row: {
         display: 'flex',
         alignItems: 'center',
@@ -14,10 +17,19 @@ const useRowStyles = createUseStyles(() => ({
     },
     circle: {
         flexShrink: 0,
+        borderRadius: '50%',
+        height: 40,
+        width: 40,
+        background: ({isInverse}: RowStylesProps) =>
+            isInverse ? colors.backgroundSkeletonInverse : colors.backgroundSkeleton,
     },
     line: {
-        paddingLeft: 16,
         flexGrow: 1,
+        marginLeft: 16,
+        borderRadius: 8,
+        height: 8,
+        background: ({isInverse}: RowStylesProps) =>
+            isInverse ? colors.backgroundSkeletonInverse : colors.backgroundSkeleton,
     },
 }));
 
@@ -27,8 +39,9 @@ type SkeletonRowProps = {
 };
 
 const SkeletonRow = ({ariaValueText, disableAnimation = false}: SkeletonRowProps): JSX.Element => {
+    const isInverse = useIsInverseVariant();
     const animationClasses = useAnimation({disableAnimation});
-    const classes = useRowStyles();
+    const classes = useRowStyles({isInverse});
 
     return (
         <div
@@ -40,12 +53,8 @@ const SkeletonRow = ({ariaValueText, disableAnimation = false}: SkeletonRowProps
             aria-valuemin={0}
             aria-valuemax={100}
         >
-            <div className={classes.circle}>
-                <SkeletonCircle size={40} disableAnimation />
-            </div>
-            <div className={classes.line}>
-                <SkeletonLine disableAnimation />
-            </div>
+            <div className={classes.circle} />
+            <div className={classes.line} />
         </div>
     );
 };
