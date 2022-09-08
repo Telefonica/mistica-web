@@ -218,10 +218,32 @@ export const EllipsisInButtons: StoryComponent = () => {
 
 export const withIcon: StoryComponent = () => (
     <StorySection title="Buttons can have an icon">
-        <ButtonPrimary onPress={() => window.alert('photo!')}>
-            <IconPhotoCameraRegular color="currentColor" />
-            Take a photo
-        </ButtonPrimary>
+        <Stack space={16}>
+            <ButtonPrimary onPress={() => window.alert('photo!')}>
+                <IconPhotoCameraRegular color="currentColor" />
+                Take a photo
+            </ButtonPrimary>
+            <ButtonPrimary small onPress={() => window.alert('photo!')}>
+                <IconPhotoCameraRegular color="currentColor" />
+                Take a photo
+            </ButtonPrimary>
+            <ButtonLink onPress={() => window.alert('photo!')}>
+                <IconPhotoCameraRegular color="currentColor" />
+                Take a photo
+            </ButtonLink>
+            <ButtonPrimary onPress={() => window.alert('photo!')}>
+                Take a photo {2} {5}
+                <IconPhotoCameraRegular color="currentColor" />
+            </ButtonPrimary>
+            <ButtonPrimary small onPress={() => window.alert('photo!')}>
+                Take a photo
+                <IconPhotoCameraRegular color="currentColor" />
+            </ButtonPrimary>
+            <ButtonLink onPress={() => window.alert('photo!')}>
+                Take a photo
+                <IconPhotoCameraRegular color="currentColor" />
+            </ButtonLink>
+        </Stack>
     </StorySection>
 );
 
