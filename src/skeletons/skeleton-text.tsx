@@ -1,8 +1,8 @@
 // https://www.figma.com/file/w7E0mmB92eio0zHw7h9iS2/%5BREADY%5D-Skeletons-Specs?node-id=986%3A1161
 
 import * as React from 'react';
+import Stack from '../stack';
 import {SkeletonLine} from './skeleton-line';
-import {Stack} from '../index';
 
 type SkeletonTextProps = {
     ariaValueText?: string;
