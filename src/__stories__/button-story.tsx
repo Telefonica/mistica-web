@@ -232,7 +232,7 @@ export const withIcon: StoryComponent = () => (
                 Take a photo
             </ButtonLink>
             <ButtonPrimary onPress={() => window.alert('photo!')}>
-                Take a photo {2} {5}
+                Take a photo
                 <IconPhotoCameraRegular color="currentColor" />
             </ButtonPrimary>
             <ButtonPrimary small onPress={() => window.alert('photo!')}>
