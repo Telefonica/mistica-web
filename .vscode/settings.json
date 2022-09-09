@@ -11,5 +11,6 @@
         "**/.yarn": true
     },
     // required by Markdown TOC extension
-    "files.eol": "\n"
+    "files.eol": "\n",
+    "task.allowAutomaticTasks": "on"
 }
