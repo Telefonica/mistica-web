@@ -118,8 +118,8 @@ const commonInputStyles = (theme: Theme) => ({
     background: 'none',
     border: 0,
     outline: 0,
-    fontSize: 'inherit',
-    lineHeight: 'inherit',
+    fontSize: 18,
+    lineHeight: '24px',
     paddingRight: ({endIcon}: {endIcon: boolean}) => (endIcon ? 0 : 16),
     paddingLeft: ({prefix, startIcon}: {prefix: boolean; startIcon: boolean}) => {
         if (prefix) {
@@ -153,6 +153,9 @@ const commonInputStyles = (theme: Theme) => ({
         },
     },
     boxShadow: 'none', // reset FF red shadow styles for required inputs
+    [theme.mq.tabletOrSmaller]: {
+        fontSize: 16,
+    },
 });
 
 const useStyles = createUseStyles((theme) => ({
@@ -172,18 +175,19 @@ const useStyles = createUseStyles((theme) => ({
     },
     textArea: {
         resize: 'none',
-        marginTop: ({hasLabel}) => (hasLabel ? 28 : 16),
-        [theme.mq.tabletOrSmaller]: {
-            marginTop: ({hasLabel}) => (hasLabel ? 24 : 16),
+        padding: 0,
+        marginTop: ({hasLabel}) => (hasLabel ? 24 : 16),
+        [theme.mq.desktopOrBigger]: {
+            marginTop: ({hasLabel}) => (hasLabel ? 28 : 16),
         },
         paddingBottom: '8px',
         ...commonInputStyles(theme),
     },
     input: {
         position: 'relative',
-        paddingTop: ({hasLabel}) => (hasLabel ? 28 : 16),
-        [theme.mq.tabletOrSmaller]: {
-            paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
+        paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
+        [theme.mq.desktopOrBigger]: {
+            paddingTop: ({hasLabel}) => (hasLabel ? 28 : 16),
         },
         paddingBottom: ({hasLabel}) => (hasLabel ? 8 : 16),
         height: '100%',
@@ -259,7 +263,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     prefix: {
         alignSelf: 'baseline',
-        paddingTop: ({hasLabel}) => (hasLabel ? 28 : 16),
+        paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
         [theme.mq.tabletOrSmaller]: {
             paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
         },

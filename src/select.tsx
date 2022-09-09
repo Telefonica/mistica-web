@@ -52,8 +52,8 @@ const useStyles = createUseStyles((theme) => ({
         left: 12 + 1, // 12 for select paddingLeft and +1 for border
         right: 48 + 1, // 48 for icon and +1 for border
         overflow: 'hidden',
-        top: ({label}) => (label ? 30 : 17),
-        lineHeight: '20px',
+        top: 29,
+        lineHeight: '24px',
         fontSize: 18,
         color: theme.colors.textPrimary,
         opacity: ({disabled}) => (disabled ? 0.5 : 1),
@@ -61,7 +61,7 @@ const useStyles = createUseStyles((theme) => ({
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
         [theme.mq.tabletOrSmaller]: {
-            top: 27,
+            top: 25,
             fontSize: 16,
         },
     },
