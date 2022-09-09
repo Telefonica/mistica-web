@@ -61,7 +61,7 @@ const useStyles = createUseStyles((theme) => ({
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
         [theme.mq.tabletOrSmaller]: {
-            top: ({label}) => (label ? 27 : 27),
+            top: 27,
             fontSize: 16,
         },
     },
