@@ -244,10 +244,7 @@ const renderButtonContent = ({
         const isFirstChild = idx === 0;
         const isLastChild = idx === length - 1;
 
-        const isIconElement =
-            React.isValidElement(element) &&
-            typeof element.type !== 'string' &&
-            element.type.name?.startsWith('Icon'); // all mistica icons start with Icon prefix
+        const isIconElement = React.isValidElement(element);
 
         if (isIconElement) {
             if (accText.length) {
