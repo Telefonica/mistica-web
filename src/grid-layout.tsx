@@ -12,17 +12,15 @@ const useStyles = createUseStyles((theme) => ({
             gridTemplateColumns: 'repeat(12, 1fr)',
             gridColumnGap: 16,
         },
-        [theme.mq.tablet]: {
+        [theme.mq.tabletOrSmaller]: {
             gridTemplateColumns: 'minmax(0, 1fr)',
             gridColumnGap: 16,
-        },
-        [theme.mq.mobile]: {
-            gridTemplateColumns: 'minmax(0, 1fr)',
-            gridColumnGap: 16,
+            gap: ({verticalSpace}) => verticalSpace,
         },
     },
     span1: {
         gridColumn: 'span 1',
+        gap: ({verticalSpace}) => verticalSpace,
     },
     span3: {
         [theme.mq.desktopOrBigger]: {
@@ -30,6 +28,7 @@ const useStyles = createUseStyles((theme) => ({
         },
         [theme.mq.tabletOrSmaller]: {
             gridColumn: 'span 1',
+            gap: ({verticalSpace}) => verticalSpace,
         },
     },
     span4: {
@@ -38,6 +37,7 @@ const useStyles = createUseStyles((theme) => ({
         },
         [theme.mq.tabletOrSmaller]: {
             gridColumn: 'span 1',
+            gap: ({verticalSpace}) => verticalSpace,
         },
     },
     span5: {
@@ -46,6 +46,7 @@ const useStyles = createUseStyles((theme) => ({
         },
         [theme.mq.tabletOrSmaller]: {
             gridColumn: 'span 1',
+            gap: ({verticalSpace}) => verticalSpace,
         },
     },
     span6: {
@@ -54,6 +55,7 @@ const useStyles = createUseStyles((theme) => ({
         },
         [theme.mq.tabletOrSmaller]: {
             gridColumn: 'span 1',
+            gap: ({verticalSpace}) => verticalSpace,
         },
     },
     span8: {
@@ -62,6 +64,7 @@ const useStyles = createUseStyles((theme) => ({
         },
         [theme.mq.tabletOrSmaller]: {
             gridColumn: 'span 1',
+            gap: ({verticalSpace}) => verticalSpace,
         },
     },
     span9: {
@@ -70,6 +73,7 @@ const useStyles = createUseStyles((theme) => ({
         },
         [theme.mq.tabletOrSmaller]: {
             gridColumn: 'span 1',
+            gap: ({verticalSpace}) => verticalSpace,
         },
     },
     span10: {
@@ -78,13 +82,17 @@ const useStyles = createUseStyles((theme) => ({
         },
         [theme.mq.tabletOrSmaller]: {
             gridColumn: 'span 1',
+            gap: ({verticalSpace}) => verticalSpace,
         },
     },
 }));
 
+type VerticalSpace = 0 | 2 | 4 | 8 | 12 | 16 | 24 | 32 | 40 | 48 | 56 | 64 | 72 | 80;
+
 type PropsChildren = {
     template?: undefined;
     children: React.ReactNode;
+    verticalSpace?: VerticalSpace;
 };
 
 type PropsTemplate6_6 = {
@@ -92,6 +100,7 @@ type PropsTemplate6_6 = {
     left: React.ReactNode;
     right: React.ReactNode;
     children?: undefined;
+    verticalSpace?: VerticalSpace;
 };
 
 type PropsTemplate8_4 = {
@@ -99,6 +108,7 @@ type PropsTemplate8_4 = {
     left: React.ReactNode;
     right: React.ReactNode;
     children?: undefined;
+    verticalSpace?: VerticalSpace;
 };
 
 type PropsTemplate4_6 = {
@@ -106,6 +116,7 @@ type PropsTemplate4_6 = {
     left: React.ReactNode;
     right: React.ReactNode;
     children?: undefined;
+    verticalSpace?: VerticalSpace;
 };
 
 type PropsTemplate5_4 = {
@@ -113,6 +124,7 @@ type PropsTemplate5_4 = {
     left: React.ReactNode;
     right: React.ReactNode;
     children?: undefined;
+    verticalSpace?: VerticalSpace;
 };
 
 type PropsTemplate3_9 = {
@@ -120,11 +132,13 @@ type PropsTemplate3_9 = {
     left: React.ReactNode;
     right: React.ReactNode;
     children?: undefined;
+    verticalSpace?: VerticalSpace;
 };
 
 type PropsTemplate10 = {
     template: '10';
     children: React.ReactNode;
+    verticalSpace?: VerticalSpace;
 };
 
 type Props =
@@ -137,7 +151,7 @@ type Props =
     | PropsTemplate10;
 
 const GridLayout: React.FC<Props> = (props) => {
-    const classes = useStyles();
+    const classes = useStyles({verticalSpace: props.verticalSpace ?? 0});
 
     if (props.template === '6+6') {
         return (
