@@ -26,8 +26,10 @@ const X_PADDING_PX = 16 - BORDER_PX;
 const Y_PADDING_PX = 12 - BORDER_PX;
 const X_SMALL_PADDING_PX = 12 - BORDER_PX;
 const Y_SMALL_PADDING_PX = 6 - BORDER_PX;
-const SMALL_ICON_SIZE = 20;
 const ICON_SIZE = 24;
+const SMALL_ICON_SIZE = 20;
+const SPINNER_SIZE = 24;
+const SMALL_SPINNER_SIZE = 16;
 
 const commonClasses = () => ({
     button: {
@@ -381,7 +383,7 @@ const Button: React.FC<
     };
 
     const defaultIconSize = props.small ? SMALL_ICON_SIZE : ICON_SIZE;
-    const spinnerSizeRem = pxToRem(defaultIconSize);
+    const spinnerSizeRem = pxToRem(props.small ? SMALL_SPINNER_SIZE : SPINNER_SIZE);
 
     const renderText = (element: React.ReactNode) =>
         props.small ? (
