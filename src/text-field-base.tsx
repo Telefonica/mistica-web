@@ -9,7 +9,7 @@ import {
     LABEL_SCALE_DESKTOP,
 } from './text-field-components';
 import {Text3} from './text';
-import {isIos, isRunningAcceptanceTest, isFirefox} from './utils/platform';
+import {isRunningAcceptanceTest, isFirefox} from './utils/platform';
 import {useAriaId, useTheme, useScreenSize} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
