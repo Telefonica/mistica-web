@@ -17,7 +17,7 @@ import Text2 from './text';
 import type {CommonFormFieldProps} from './text-field-base';
 import type {CardOptions} from './utils/credit-card';
 
-const useStyles = createUseStyles((theme) => ({
+const useStyles = createUseStyles(() => ({
     cvvText: {
         lineHeight: '20px',
     },
