@@ -9,40 +9,39 @@ import IcnInfo from './icons/icon-info-cvv';
 import {useFieldProps, useForm} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import {IntegerInput} from './integer-field';
+import Inline from './inline';
+import Stack from './stack';
+import Divider from './divider';
+import Text2 from './text';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type {CardOptions} from './utils/credit-card';
 
 const useStyles = createUseStyles((theme) => ({
     cvvText: {
-        margin: 0,
-        marginLeft: 16,
-        color: theme.colors.textPrimary,
-        lineHeight: 1.42857142,
-        fontSize: 14,
-    },
-    tooltipContainer: {
-        display: 'flex',
-        alignItems: 'center',
+        lineHeight: '20px',
     },
 }));
 
 const TooltipContent = ({acceptedCards}: {acceptedCards: CardOptions}) => {
     const classes = useStyles();
-    const {texts} = useTheme();
+    const {texts, colors} = useTheme();
 
     return (
         <>
-            <div className={classes.tooltipContainer}>
-                <IconCvvVisaMc size={48} role="img" />
-                <p className={classes.cvvText}>{texts.formCreditCardCvvTooltipVisaMc}</p>
-            </div>
-            {acceptedCards?.americanExpress && (
-                <div className={classes.tooltipContainer}>
-                    <IconCvvAmex size={48} role="img" />
-                    <p className={classes.cvvText}>{texts.formCreditCardCvvTooltipAmex}</p>
-                </div>
-            )}
+            <Stack space={8} className={classes.cvvText}>
+                <Inline space={16} alignItems="center">
+                    <IconCvvVisaMc size={48} role="img" />
+                    <Text2 color={colors.textPrimary}>{texts.formCreditCardCvvTooltipVisaMc}</Text2>
+                </Inline>
+                <Divider />
+                {acceptedCards?.americanExpress && (
+                    <Inline space={16} alignItems="center">
+                        <IconCvvAmex size={48} role="img" />
+                        <Text2 color={colors.textPrimary}>{texts.formCreditCardCvvTooltipAmex}</Text2>
+                    </Inline>
+                )}
+            </Stack>
         </>
     );
 };
