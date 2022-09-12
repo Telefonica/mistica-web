@@ -7,8 +7,9 @@ import {useAriaId, useElementDimensions} from './hooks';
 import {Text3} from './text';
 import {pxToRem} from './utils/css';
 import {isRunningAcceptanceTest} from './utils/platform';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {TrackingEvent} from './utils/types';
+import type {DataAttributes, TrackingEvent} from './utils/types';
 
 const TAB_MAX_WIDTH = 284;
 const TAB_HEIGHT = 56;
@@ -110,9 +111,10 @@ export type TabsProps = {
         readonly 'aria-controls'?: string;
     }>;
     children?: void;
+    dataAttributes?: DataAttributes;
 };
 
-const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) => {
+const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttributes}: TabsProps) => {
     const id = useAriaId();
     const {width, ref} = useElementDimensions();
     const animatedLineRef = React.useRef<HTMLDivElement>(null);
@@ -147,7 +149,13 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs}: TabsProps) =
     };
 
     return (
-        <div id={id} role="tablist" ref={ref} className={classes.outerBorder}>
+        <div
+            id={id}
+            role="tablist"
+            ref={ref}
+            className={classes.outerBorder}
+            {...getPrefixedDataAttributes(dataAttributes)}
+        >
             <ResponsiveLayout fullWidth>
                 <div className={classes.outer}>
                     <div ref={scrollableContainerRef} className={classes.inner}>
