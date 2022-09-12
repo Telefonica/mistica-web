@@ -132,10 +132,8 @@ const commonInputStyles = (theme: Theme) => ({
     },
     /* Workaround to avoid huge bullets on ios devices (-apple-system font related) */
     fontFamily: ({type}: {type: string}) =>
-        type === 'password' &&
-        isIos(theme.platformOverrides) &&
-        !isRunningAcceptanceTest(theme.platformOverrides)
-            ? 'arial'
+        type === 'password' && !isRunningAcceptanceTest(theme.platformOverrides)
+            ? 'Lucida Grande, Arial, sans-serif'
             : 'inherit',
     color: theme.colors.textPrimary,
     caretColor: theme.colors.controlActivated,
