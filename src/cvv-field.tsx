@@ -17,9 +17,12 @@ import Text2 from './text';
 import type {CommonFormFieldProps} from './text-field-base';
 import type {CardOptions} from './utils/credit-card';
 
-const useStyles = createUseStyles(() => ({
+const useStyles = createUseStyles((theme) => ({
     cvvText: {
-        lineHeight: '20px',
+        lineHeight: '24px',
+        [theme.mq.tabletOrSmaller]: {
+            lineHeight: '20px',
+        },
     },
 }));
 
