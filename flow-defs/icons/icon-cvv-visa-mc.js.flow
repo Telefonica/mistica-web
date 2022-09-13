@@ -4,6 +4,7 @@ import * as React from "react";
 declare type Props = {
   role?: string,
   size?: number,
+  color?: string,
 };
 declare var IconCvvVisaMc: React.ComponentType<Props>;
 declare export default typeof IconCvvVisaMc;
