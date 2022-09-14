@@ -33,7 +33,6 @@ const useStyles = createUseStyles(({colors, isIos}) => {
         switchCheckboxLabel: {
             display: 'block',
             overflow: 'hidden',
-            borderRadius: 40,
             '& > *': {pointerEvents: 'none'},
         },
         bar: {
