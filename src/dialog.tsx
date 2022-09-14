@@ -573,4 +573,4 @@ export const confirm: (props: ConfirmProps) => void = showDialog(true, false);
 /**
  * Shows dialog with supplied props
  */
-export const dialog: (props: ExtendedDialogProps) => void = showDialog(true, true);
+export const dialog: (props: ExtendedDialogProps) => void = showDialog(false, true);
