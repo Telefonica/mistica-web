@@ -118,7 +118,7 @@ const useDialogStyles = createUseStyles((theme) => ({
     },
 }));
 
-interface DialogProps {
+interface BaseDialogProps {
     className?: string;
     title?: string;
     icon?: React.ReactElement;
@@ -131,6 +131,22 @@ interface DialogProps {
     destructive?: boolean;
 }
 
+interface AlertProps extends BaseDialogProps {
+    extra?: undefined;
+    forceNonNative?: undefined;
+}
+
+interface ConfirmProps extends BaseDialogProps {
+    extra?: undefined;
+    forceNonNative?: undefined;
+}
+interface ExtendedDialogProps extends BaseDialogProps {
+    extra: React.ReactNode;
+    forceNonNative?: boolean;
+}
+
+type DialogProps = AlertProps | ConfirmProps | ExtendedDialogProps;
+
 const Dialog: React.FC<DialogProps> = (props) => {
     const {texts, colors} = useTheme();
     const {
@@ -138,6 +154,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
         title,
         message,
         icon,
+        extra,
         cancelText = texts.dialogCancelButton,
         acceptText = texts.dialogAcceptButton,
         onCancel: handleCancel,
@@ -168,6 +185,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
                     {message}
                 </Text3>
             </div>
+            {extra && <Box paddingTop={8}>{extra}</Box>}
             <Box paddingTop={isTabletOrSmaller ? 24 : 32}>
                 <ButtonLayout>
                     {destructive ? (
@@ -213,13 +231,13 @@ const showNativeDialog = ({
           )
         : nativeAlert({message, title, buttonText: acceptText}).then(onAccept);
 
-interface ModalDialogProps extends DialogProps {
+type ModalDialogProps = DialogProps & {
     onCancel: () => void;
     onAccept: () => void;
     showCancel?: boolean;
     isClosing: boolean;
     onCloseTransitionEnd?: () => void;
-}
+};
 
 const useNativeDialog = ({
     renderNative,
@@ -257,6 +275,34 @@ const useNativeDialog = ({
     }, [onAcceptRef, onCancelRef, acceptText, cancelText, showCancel, message, title, renderNative]);
 };
 
+type NativeModalDialogProps = ModalDialogProps & {
+    dialogAcceptButton: string;
+    dialogCancelButton: string;
+};
+
+const NativeModalDialog = (props: NativeModalDialogProps) => {
+    const renderNative = isWebViewBridgeAvailable();
+
+    useNativeDialog({
+        renderNative,
+        acceptText: props.acceptText || props.dialogAcceptButton,
+        cancelText: props.cancelText || props.dialogCancelButton,
+        showCancel: props.showCancel,
+        message: props.message,
+        title: props.title,
+        onAccept: props.onAccept,
+        onCancel: props.onCancel,
+    });
+
+    React.useEffect(() => {
+        if (renderNative && props.isClosing && props.onCloseTransitionEnd) {
+            props.onCloseTransitionEnd();
+        }
+    }, [props, renderNative]);
+
+    return null;
+};
+
 const ModalDialog = (props: ModalDialogProps) => {
     const {platformOverrides} = useTheme();
     const context = React.useContext(ThemeContext);
@@ -272,7 +318,7 @@ const ModalDialog = (props: ModalDialogProps) => {
             `To use @telefonica/mistica components you must instantiate <ThemeContextProvider> as their parent.`
         );
     }
-    const renderNative = isWebViewBridgeAvailable();
+    const renderNative = !props.forceNonNative && isWebViewBridgeAvailable();
 
     const {onAccept, isClosing, onCancel, onCloseTransitionEnd, ...dialogProps} = props;
 
@@ -312,34 +358,19 @@ const ModalDialog = (props: ModalDialogProps) => {
         document.addEventListener('keydown', handleKeyDown);
     }, [handleKeyDown]);
 
-    useNativeDialog({
-        renderNative,
-        acceptText: props.acceptText || context.texts.dialogAcceptButton,
-        cancelText: props.cancelText || context.texts.dialogCancelButton,
-        showCancel: props.showCancel,
-        message: props.message,
-        title: props.title,
-        onAccept: props.onAccept,
-        onCancel: props.onCancel,
-    });
-
     React.useEffect(() => {
         if (!animationsSupported(platformOverrides)) {
             addKeyDownListener();
         }
 
-        if (
-            (renderNative || !animationsSupported(platformOverrides)) &&
-            props.isClosing &&
-            props.onCloseTransitionEnd
-        ) {
+        if (!animationsSupported(platformOverrides) && props.isClosing && props.onCloseTransitionEnd) {
             props.onCloseTransitionEnd();
         }
 
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [addKeyDownListener, handleKeyDown, props, renderNative, platformOverrides]);
+    }, [addKeyDownListener, handleKeyDown, props, platformOverrides]);
 
     const setModalState = useSetModalState();
     React.useEffect(() => {
@@ -350,7 +381,13 @@ const ModalDialog = (props: ModalDialogProps) => {
     }, [setModalState]);
 
     /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions */
-    return renderNative ? null : (
+    return renderNative ? (
+        <NativeModalDialog
+            {...props}
+            dialogAcceptButton={context.texts.dialogAcceptButton}
+            dialogCancelButton={context.texts.dialogCancelButton}
+        />
+    ) : (
         <Portal>
             <div className={classes.wrapper}>
                 <FocusTrap>
@@ -400,7 +437,7 @@ let dialogRootInstances = 0;
 type DialogRootProps = {children?: React.ReactNode};
 
 type DialogRootState = {
-    dialogProps: DialogProps | null;
+    dialogProps: BaseDialogProps | null;
     isClosing: boolean;
     instanceNumber: number;
 };
@@ -513,22 +550,27 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
 }
 
 const showDialog =
-    (showCancel = false) =>
+    (showCancel = false, forceNonNative: boolean) =>
     (props: DialogProps): void => {
         if (!dialogInstance) {
             throw Error(
                 'Tried to show a dialog but the DialogRoot component was not mounted (mount <ThemeContextProvider>)'
             );
         }
-        dialogInstance.show({showCancel, ...props});
+        dialogInstance.show({showCancel, forceNonNative, ...props});
     };
 
 /**
  * Shows alert dialog with supplied props
  */
-export const alert: (props: DialogProps) => void = showDialog(false);
+export const alert: (props: AlertProps) => void = showDialog(false, false);
 
 /**
  * Shows confirm dialog with supplied props
  */
-export const confirm: (props: DialogProps) => void = showDialog(true);
+export const confirm: (props: ConfirmProps) => void = showDialog(true, false);
+
+/**
+ * Shows dialog with supplied props
+ */
+export const dialog: (props: ExtendedDialogProps) => void = showDialog(true, true);
