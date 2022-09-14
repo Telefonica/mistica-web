@@ -185,7 +185,11 @@ const Dialog: React.FC<DialogProps> = (props) => {
                     {message}
                 </Text3>
             </div>
-            {extra && <Box paddingTop={8}>{extra}</Box>}
+            {extra && (
+                <Box paddingTop={8} className={classes.dialogContent}>
+                    {extra}
+                </Box>
+            )}
             <Box paddingTop={isTabletOrSmaller ? 24 : 32}>
                 <ButtonLayout>
                     {destructive ? (
