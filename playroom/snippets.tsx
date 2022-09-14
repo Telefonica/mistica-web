@@ -1375,12 +1375,12 @@ const alertSnippets = [
 const skeletonSnippets = [
     {
         group: 'Skeletons',
-        name: 'Skeleton Text',
+        name: 'Skeleton Line',
         code: `
-               <SkeletonText
-                    ariaValueText="loading"
+               <SkeletonLine
+                    ariaLabel="loading"
                     disableAnimation={false}
-                /> 
+                />
         `,
     },
     {
@@ -1389,7 +1389,17 @@ const skeletonSnippets = [
         code: `
                <SkeletonCircle
                     size={40}
-                    ariaValueText="loading"
+                    ariaLabel="loading"
+                    disableAnimation={false}
+               />
+        `,
+    },
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Text',
+        code: `
+               <SkeletonText
+                    ariaLabel="loading"
                     disableAnimation={false}
                />
         `,
@@ -1398,19 +1408,20 @@ const skeletonSnippets = [
         group: 'Skeletons',
         name: 'Skeleton Row',
         code: `
-               <SkeletonRow
-                    ariaValueText="loading"
-                    disableAnimation={false}
-               /> 
+            <SkeletonRow
+                ariaLabel="loading"
+                disableAnimation={false}
+            />
         `,
     },
     {
         group: 'Skeletons',
-        name: 'Skeleton Media',
+        name: 'Skeleton Rectangle',
         code: `
-            <SkeletonMedia
-                height={150}
-                ariaValueText="loading"
+            <SkeletonRectangle
+                ariaLabel="loading"
+                height={100}
+                width={200}
                 disableAnimation={false}
             />
         `,

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ThemeVariant, useTheme} from '..';
-import SkeletonText from '../skeletons/skeleton-text';
+import {SkeletonText} from '../skeletons';
 
 export default {
     title: 'Components/Skeletons/Skeleton Text',
@@ -9,10 +9,10 @@ export default {
 type Args = {
     inverse: boolean;
     disableAnimation: boolean;
-    ariaValueText: string;
+    ariaLabel: string;
 };
 
-export const Default: StoryComponent<Args> = ({disableAnimation, inverse, ariaValueText}) => {
+export const Default: StoryComponent<Args> = ({disableAnimation, inverse, ariaLabel}) => {
     const {colors} = useTheme();
 
     return (
@@ -28,7 +28,7 @@ export const Default: StoryComponent<Args> = ({disableAnimation, inverse, ariaVa
                 }}
                 data-testid="skeleton-text"
             >
-                <SkeletonText disableAnimation={disableAnimation} ariaValueText={ariaValueText} />
+                <SkeletonText disableAnimation={disableAnimation} ariaLabel={ariaLabel} />
             </div>
         </ThemeVariant>
     );
@@ -39,5 +39,5 @@ Default.storyName = 'Skeleton Text';
 Default.args = {
     inverse: false,
     disableAnimation: false,
-    ariaValueText: '',
+    ariaLabel: '',
 };

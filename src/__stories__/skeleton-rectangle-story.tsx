@@ -1,19 +1,20 @@
 import * as React from 'react';
 import {ThemeVariant, useTheme} from '..';
-import SkeletonMedia from '../skeletons/skeleton-media';
+import {SkeletonRectangle} from '../skeletons';
 
 export default {
-    title: 'Components/Skeletons/Skeleton Media',
+    title: 'Components/Skeletons/Skeleton Rectangle',
 };
 
 type Args = {
     height: number;
+    width: number;
     inverse: boolean;
     disableAnimation: boolean;
-    ariaValueText: string;
+    ariaLabel: string;
 };
 
-export const Default: StoryComponent<Args> = ({height, disableAnimation, inverse, ariaValueText}) => {
+export const Default: StoryComponent<Args> = ({height, width, disableAnimation, inverse, ariaLabel}) => {
     const {colors} = useTheme();
 
     return (
@@ -27,23 +28,25 @@ export const Default: StoryComponent<Args> = ({height, disableAnimation, inverse
                     // happens when changing the base font size
                     lineHeight: 0,
                 }}
-                data-testid="skeleton-media"
+                data-testid="skeleton-rectangle"
             >
-                <SkeletonMedia
+                <SkeletonRectangle
                     height={height}
+                    width={width}
                     disableAnimation={disableAnimation}
-                    ariaValueText={ariaValueText}
+                    ariaLabel={ariaLabel}
                 />
             </div>
         </ThemeVariant>
     );
 };
 
-Default.storyName = 'Skeleton Media';
+Default.storyName = 'Skeleton Rectangle';
 
 Default.args = {
     height: 100,
+    width: 100,
     inverse: false,
     disableAnimation: false,
-    ariaValueText: '',
+    ariaLabel: '',
 };

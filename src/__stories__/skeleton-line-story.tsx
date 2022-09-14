@@ -1,15 +1,15 @@
 import * as React from 'react';
 import {ThemeVariant, useTheme} from '..';
-import {SkeletonRow, SkeletonText} from '../skeletons';
+import {SkeletonLine} from '../skeletons';
 
 export default {
-    title: 'Components/Skeletons/Skeleton Row',
+    title: 'Components/Skeletons/Skeleton Line',
 };
 
 type Args = {
     inverse: boolean;
     disableAnimation: boolean;
-    ariaLabel: string;
+    ariaLabel?: string;
 };
 
 export const Default: StoryComponent<Args> = ({disableAnimation, inverse, ariaLabel}) => {
@@ -26,15 +26,15 @@ export const Default: StoryComponent<Args> = ({disableAnimation, inverse, ariaLa
                     // happens when changing the base font size
                     lineHeight: 0,
                 }}
-                data-testid="skeleton-row"
+                data-testid="skeleton-line"
             >
-                <SkeletonRow disableAnimation={disableAnimation} ariaLabel={ariaLabel} />
+                <SkeletonLine disableAnimation={disableAnimation} ariaLabel={ariaLabel} />
             </div>
         </ThemeVariant>
     );
 };
 
-Default.storyName = 'Skeleton Row';
+Default.storyName = 'Skeleton Line';
 
 Default.args = {
     inverse: false,

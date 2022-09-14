@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {ThemeVariant, useTheme} from '..';
-import SkeletonCircle from '../skeletons/skeleton-circle';
+import {SkeletonCircle} from '../skeletons';
 
 export default {
     title: 'Components/Skeletons/Skeleton Circle',
 };
 
 type Args = {
-    size: number;
+    size?: number;
     inverse: boolean;
     disableAnimation: boolean;
     ariaValueText: string;
@@ -29,11 +29,7 @@ export const Default: StoryComponent<Args> = ({size, disableAnimation, inverse, 
                 }}
                 data-testid="skeleton-circle"
             >
-                <SkeletonCircle
-                    size={size}
-                    disableAnimation={disableAnimation}
-                    ariaValueText={ariaValueText}
-                />
+                <SkeletonCircle size={size} disableAnimation={disableAnimation} ariaLabel={ariaValueText} />
             </div>
         </ThemeVariant>
     );

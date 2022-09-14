@@ -106,11 +106,7 @@ export {default as IconError} from './icons/icon-error';
 export {default as IconSuccess} from './icons/icon-success';
 export {default as IconSuccessVivo} from './icons/icon-success-vivo';
 
-// Skeletons
-export {default as SkeletonText} from './skeletons/skeleton-text';
-export {default as SkeletonCircle} from './skeletons/skeleton-circle';
-export {default as SkeletonRow} from './skeletons/skeleton-row';
-export {default as SkeletonMedia} from './skeletons/skeleton-media';
+export * from './skeletons';
 
 export {default as Circle} from './circle';
 
