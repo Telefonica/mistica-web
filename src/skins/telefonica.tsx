@@ -201,7 +201,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             textButtonSecondaryInverseSelected: palette.grey4,
             textLink: palette.telefonicaBlue,
             textLinkInverse: palette.telefonicaBlue,
-            control: palette.darkModeGrey,
+            control: palette.darkModeGrey6,
             controlActivated: palette.telefonicaBlue,
             loadingBar: palette.telefonicaBlue,
             loadingBarBackground: applyAlpha(palette.white, 0.05),
