@@ -30,7 +30,7 @@ export const getSkinByName = (name: KnownSkinName, variant?: SkinVariant): Known
     }
 };
 
-// copyed/addapted from https://github.com/gregberge/react-flatten-children/blob/master/src/index.tsxgit
+// copied/adapted from https://github.com/gregberge/react-flatten-children/blob/master/src/index.tsx
 export const flattenChildren = (children: React.ReactNode): Array<React.ReactNode> => {
     const childrenArray = React.Children.toArray(children);
     return childrenArray.reduce((flatChildren: Array<React.ReactNode>, child) => {
