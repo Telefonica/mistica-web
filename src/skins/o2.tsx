@@ -70,7 +70,7 @@ export const getO2Skin: GetKnownSkin = () => {
             backgroundContainer: palette.white,
             backgroundBrand: palette.o2BluePrimary,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
-            backgroundSkeleton: palette.grey1,
+            backgroundSkeleton: palette.grey2,
             backgroundSkeletonInverse: applyAlpha(palette.white, 0.2),
             navigationBarBackground: palette.o2BluePrimary,
             backgroundAlternative: palette.grey1,
