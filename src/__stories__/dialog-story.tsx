@@ -55,7 +55,7 @@ export const Default: StoryComponent = () => (
                         message: 'Message',
                         acceptText: 'Accept terms and conditions',
                         extra: <Text1 regular>This is the extra zone</Text1>,
-                        forceNonNative: true,
+                        forceWeb: true,
                     })
                 }
             >
