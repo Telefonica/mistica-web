@@ -69,7 +69,7 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             backgroundContainer: palette.white,
             backgroundBrand: palette.movistarBlue,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
-            backgroundSkeleton: palette.grey1,
+            backgroundSkeleton: palette.grey2,
             backgroundSkeletonInverse: palette.movistarBlue55,
             navigationBarBackground: palette.movistarBlue,
             backgroundAlternative: palette.grey1,
