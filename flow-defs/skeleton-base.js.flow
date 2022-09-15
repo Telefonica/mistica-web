@@ -1,0 +1,11 @@
+// @flow
+import * as React from "react";
+
+declare type SkeletonBaseProps = {
+  width?: string | number,
+  height?: string | number,
+  radius?: string | number,
+  className?: string,
+};
+declare var SkeletonBase: (x: SkeletonBaseProps) => React.Node;
+declare export default typeof SkeletonBase;

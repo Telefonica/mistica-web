@@ -1,7 +1,0 @@
-// @flow
-
-declare var useAnimation: (props?: any) => {
-  animation: string,
-  "@keyframes pulse": string,
-};
-declare export { useAnimation };

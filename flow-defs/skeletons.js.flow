@@ -1,0 +1,34 @@
+// @flow
+import * as React from "react";
+
+declare type SkeletonLineProps = {
+  width?: string | number,
+  disableAnimation?: boolean,
+  ariaLabel?: string,
+};
+declare var SkeletonLine: (x: SkeletonLineProps) => React.Node;
+declare type SkeletonTextProps = $Diff<SkeletonLineProps, { width: any }>;
+declare var SkeletonText: (x: SkeletonTextProps) => React.Node;
+declare type SkeletonCircleProps = {
+  ...$Diff<SkeletonLineProps, { width: any }>,
+  ...{
+    size?: number | string,
+  },
+};
+declare var SkeletonCircle: (x: SkeletonCircleProps) => React.Node;
+declare type SkeletonRowProps = SkeletonLineProps;
+declare var SkeletonRow: (x: SkeletonRowProps) => React.Node;
+declare type SkeletonRectangleProps = {
+  ...SkeletonLineProps,
+  ...{
+    height: number | string,
+  },
+};
+declare var SkeletonRectangle: (x: SkeletonRectangleProps) => React.Node;
+declare export {
+  SkeletonLine,
+  SkeletonText,
+  SkeletonCircle,
+  SkeletonRow,
+  SkeletonRectangle,
+};
