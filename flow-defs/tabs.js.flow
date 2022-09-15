@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from "react";
-import type { TrackingEvent } from "./utils/types";
+import type { DataAttributes, TrackingEvent } from "./utils/types";
 export type TabsProps = {
   selectedIndex: number,
   onChange: (selectedIndex: number) => void,
@@ -11,6 +11,7 @@ export type TabsProps = {
     +icon?: React.Node,
     +"aria-controls"?: string,
   }>,
+  dataAttributes?: DataAttributes,
 };
 declare var Tabs: React.ComponentType<TabsProps>;
 declare export default typeof Tabs;
