@@ -15,9 +15,9 @@ import {ESC} from './utils/key-codes';
 import Box from './box';
 import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {useSetModalState} from './modal-context-provider';
+import Stack from './stack';
 
 import type {Theme} from './theme';
-import Stack from './stack';
 
 const animationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) &&
@@ -134,16 +134,16 @@ interface BaseDialogProps {
 
 interface AlertProps extends BaseDialogProps {
     extra?: undefined;
-    forceNonNative?: undefined;
+    forceWeb?: undefined;
 }
 
 interface ConfirmProps extends BaseDialogProps {
     extra?: undefined;
-    forceNonNative?: undefined;
+    forceWeb?: undefined;
 }
 interface ExtendedDialogProps extends BaseDialogProps {
     extra: React.ReactNode;
-    forceNonNative?: boolean;
+    forceWeb?: boolean;
 }
 
 type DialogProps = AlertProps | ConfirmProps | ExtendedDialogProps;
@@ -322,7 +322,7 @@ const ModalDialog = (props: ModalDialogProps) => {
             `To use @telefonica/mistica components you must instantiate <ThemeContextProvider> as their parent.`
         );
     }
-    const renderNative = !props.forceNonNative && isWebViewBridgeAvailable();
+    const renderNative = !props.forceWeb && isWebViewBridgeAvailable();
 
     const {onAccept, isClosing, onCancel, onCloseTransitionEnd, ...dialogProps} = props;
 
@@ -554,27 +554,27 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
 }
 
 const showDialog =
-    (showCancel = false, forceNonNative: boolean) =>
+    ({showCancel, forceWeb}: {showCancel: boolean; forceWeb: boolean}) =>
     (props: DialogProps): void => {
         if (!dialogInstance) {
             throw Error(
                 'Tried to show a dialog but the DialogRoot component was not mounted (mount <ThemeContextProvider>)'
             );
         }
-        dialogInstance.show({showCancel, forceNonNative, ...props});
+        dialogInstance.show({showCancel, forceWeb, ...props});
     };
 
 /**
  * Shows alert dialog with supplied props
  */
-export const alert: (props: AlertProps) => void = showDialog(false, false);
+export const alert: (props: AlertProps) => void = showDialog({showCancel: false, forceWeb: false});
 
 /**
  * Shows confirm dialog with supplied props
  */
-export const confirm: (props: ConfirmProps) => void = showDialog(true, false);
+export const confirm: (props: ConfirmProps) => void = showDialog({showCancel: true, forceWeb: false});
 
 /**
  * Shows dialog with supplied props
  */
-export const dialog: (props: ExtendedDialogProps) => void = showDialog(false, true);
+export const dialog: (props: ExtendedDialogProps) => void = showDialog({showCancel: false, forceWeb: true});
