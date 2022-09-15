@@ -619,7 +619,7 @@ export const ButtonLink = React.forwardRef<
         dataAttributes: props.dataAttributes,
         children: (
             <div className={classes.textContent}>
-                {renderButtonContent({content: props.children, defaultIconSize: SMALL_ICON_SIZE, renderText})}
+                {renderButtonContent({content: props.children, defaultIconSize: ICON_SIZE, renderText})}
             </div>
         ),
         disabled: props.disabled || formStatus === 'sending',
