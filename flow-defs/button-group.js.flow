@@ -2,11 +2,12 @@
 
 import * as React from "react";
 import { ButtonLink, ButtonPrimary, ButtonSecondary } from "./button";
-import type { RendersNullableElement } from "./utils/types";
+import type { DataAttributes, RendersNullableElement } from "./utils/types";
 export type ButtonGroupProps = {
   primaryButton?: RendersNullableElement<typeof ButtonPrimary>,
   secondaryButton?: RendersNullableElement<typeof ButtonSecondary>,
   link?: RendersNullableElement<typeof ButtonLink>,
+  dataAttributes?: DataAttributes,
 };
 declare var ButtonGroup: React.ComponentType<ButtonGroupProps>;
 declare export default typeof ButtonGroup;
