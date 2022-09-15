@@ -285,10 +285,8 @@ type NativeModalDialogProps = ModalDialogProps & {
 };
 
 const NativeModalDialog = (props: NativeModalDialogProps) => {
-    const renderNative = isWebViewBridgeAvailable();
-
     useNativeDialog({
-        renderNative,
+        renderNative: true,
         acceptText: props.acceptText || props.dialogAcceptButton,
         cancelText: props.cancelText || props.dialogCancelButton,
         showCancel: props.showCancel,
@@ -297,12 +295,6 @@ const NativeModalDialog = (props: NativeModalDialogProps) => {
         onAccept: props.onAccept,
         onCancel: props.onCancel,
     });
-
-    React.useEffect(() => {
-        if (renderNative && props.isClosing && props.onCloseTransitionEnd) {
-            props.onCloseTransitionEnd();
-        }
-    }, [props, renderNative]);
 
     return null;
 };
@@ -367,14 +359,18 @@ const ModalDialog = (props: ModalDialogProps) => {
             addKeyDownListener();
         }
 
-        if (!animationsSupported(platformOverrides) && props.isClosing && props.onCloseTransitionEnd) {
+        if (
+            (renderNative || !animationsSupported(platformOverrides)) &&
+            props.isClosing &&
+            props.onCloseTransitionEnd
+        ) {
             props.onCloseTransitionEnd();
         }
 
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [addKeyDownListener, handleKeyDown, props, platformOverrides]);
+    }, [addKeyDownListener, handleKeyDown, props, renderNative, platformOverrides]);
 
     const setModalState = useSetModalState();
     React.useEffect(() => {
