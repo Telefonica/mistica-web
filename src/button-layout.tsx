@@ -4,8 +4,9 @@ import {useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 import {BUTTON_MIN_WIDTH, ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 import classNames from 'classnames';
 import debounce from 'lodash/debounce';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {RendersNullableElement} from './utils/types';
+import type {DataAttributes, RendersNullableElement} from './utils/types';
 import type {NullableButtonElement} from './button';
 
 type MaybeButtonElement = NullableButtonElement | void | false;
@@ -105,6 +106,7 @@ type ButtonLayoutProps = {
     align?: 'center' | 'left' | 'right' | 'full-width';
     link?: RendersNullableElement<typeof ButtonLink>;
     withMargins?: boolean;
+    dataAttributes?: DataAttributes;
 };
 
 const buttonsRange = [ButtonSecondary, ButtonDanger, ButtonPrimary];
@@ -114,6 +116,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     align = 'full-width',
     link,
     withMargins = false,
+    dataAttributes,
 }) => {
     const {isTabletOrSmaller} = useScreenSize();
     const childrenCount = React.Children.count(children);
@@ -202,7 +205,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     const needsLinkAlignment = !isTabletOrSmaller && align === 'left';
 
     const content = (
-        <div ref={wrapperElRef} className={classes.container}>
+        <div ref={wrapperElRef} className={classes.container} {...getPrefixedDataAttributes(dataAttributes)}>
             {link ? (
                 <div className={classNames(classes.link, {[classes.linkAlignment]: needsLinkAlignment})}>
                     {link}
