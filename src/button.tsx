@@ -11,6 +11,7 @@ import Box from './box';
 import {getTextFromChildren} from './utils/common';
 import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
 import {useTheme} from './hooks';
+import {flattenChildren} from './skins/utils';
 
 import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEvent} from './utils/types';
 import type {Location} from 'history';
@@ -230,8 +231,8 @@ const renderButtonContent = ({
     defaultIconSize: number;
     renderText: (text: React.ReactNode) => React.ReactNode;
 }): React.ReactNode => {
-    const length = React.Children.count(content);
-    const childrenArr = React.Children.toArray(content);
+    const childrenArr = flattenChildren(content);
+    const length = childrenArr.length;
     const resultChildrenArr: Array<React.ReactNode> = [];
     let accText: Array<React.ReactNode> = [];
     const flushAccText = () => {
@@ -240,6 +241,7 @@ const renderButtonContent = ({
         );
         accText = [];
     };
+
     childrenArr.forEach((element, idx) => {
         const isFirstChild = idx === 0;
         const isLastChild = idx === length - 1;
