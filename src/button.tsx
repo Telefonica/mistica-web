@@ -29,7 +29,7 @@ const X_SMALL_PADDING_PX = 12 - BORDER_PX;
 const Y_SMALL_PADDING_PX = 6 - BORDER_PX;
 const ICON_SIZE = 24;
 const SMALL_ICON_SIZE = 20;
-const SPINNER_SIZE = 24;
+const SPINNER_SIZE = 20;
 const SMALL_SPINNER_SIZE = 16;
 
 const commonClasses = () => ({
