@@ -17,6 +17,7 @@ import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {useSetModalState} from './modal-context-provider';
 
 import type {Theme} from './theme';
+import Stack from './stack';
 
 const animationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) &&
@@ -181,15 +182,14 @@ const Dialog: React.FC<DialogProps> = (props) => {
                 </Box>
             )}
             <div className={classes.dialogContent}>
-                <Text3 color={colors.textSecondary} light>
-                    {message}
-                </Text3>
-            </div>
-            {extra && (
-                <Box paddingTop={8} className={classes.dialogContent}>
+                <Stack space={16}>
+                    <Text3 color={colors.textSecondary} light>
+                        {message}
+                    </Text3>
                     {extra}
-                </Box>
-            )}
+                </Stack>
+            </div>
+
             <Box paddingTop={isTabletOrSmaller ? 24 : 32}>
                 <ButtonLayout>
                     {destructive ? (
