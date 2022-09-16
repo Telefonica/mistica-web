@@ -1,9 +1,0 @@
-// @flow
-
-import * as React from "react";
-declare type Props = {
-  role?: string,
-  size?: number,
-};
-declare var IconCreditcard: React.ComponentType<Props>;
-declare export default typeof IconCreditcard;
