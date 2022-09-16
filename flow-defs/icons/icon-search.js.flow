@@ -1,9 +1,0 @@
-// @flow
-
-import * as React from "react";
-declare type Props = {
-  size?: number,
-  color?: string,
-};
-declare var IconSearch: React.ComponentType<Props>;
-declare export default typeof IconSearch;
