@@ -14,7 +14,7 @@ import Stack from './stack';
 import Badge from './badge';
 import {useAriaId, useTheme} from './hooks';
 import {useIsInverseVariant} from './theme-variant-context';
-import IconChevron from './icons/icon-chevron';
+import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
 import Switch from './switch-component';
 import RadioButton, {useRadioContext} from './radio-button';
 import Checkbox from './checkbox';
@@ -232,9 +232,9 @@ const Content: React.FC<ContentProps> = ({
             {renderBadge()}
             {type === 'chevron' && (
                 <Box paddingLeft={16} className={classNames(classes.center, {[classes.disabled]: disabled})}>
-                    <IconChevron
+                    <IconChevronRightRegular
+                        size={16}
                         color={isInverse ? colors.inverse : colors.neutralMedium}
-                        direction="right"
                     />
                 </Box>
             )}
@@ -249,9 +249,9 @@ const Content: React.FC<ContentProps> = ({
                             paddingLeft={4}
                             className={classNames(classes.center, {[classes.disabled]: disabled})}
                         >
-                            <IconChevron
+                            <IconChevronRightRegular
+                                size={16}
                                 color={isInverse ? colors.inverse : colors.neutralMedium}
-                                direction="right"
                             />
                         </Box>
                     )}
