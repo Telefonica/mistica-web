@@ -1,10 +1,12 @@
 // @flow
 import * as React from "react";
 
+import type { DataAttributes } from "./utils/types";
 declare type SkeletonLineProps = {
   width?: string | number,
   disableAnimation?: boolean,
   ariaLabel?: string,
+  dataAttributes?: DataAttributes,
 };
 declare export var SkeletonLine: (x: SkeletonLineProps) => React.Node;
 declare type SkeletonTextProps = $Diff<SkeletonLineProps, { width: any }>;
