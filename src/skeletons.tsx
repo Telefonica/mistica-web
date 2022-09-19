@@ -41,7 +41,7 @@ const useSkeletonStyles = createUseStyles(() => ({
     wrap: {
         borderRadius: 8,
         height: ({height = 8}: SkeletonStylesProps) => height,
-        width: ({width = 'content-initial'}) => width,
+        width: ({width = '100%'}) => width,
     },
 }));
 
@@ -51,7 +51,7 @@ type SkeletonLineProps = {
     ariaLabel?: string;
 };
 
-const SkeletonLine = ({
+export const SkeletonLine = ({
     width = '100%',
     disableAnimation = false,
     ariaLabel,
@@ -67,14 +67,14 @@ const SkeletonLine = ({
             aria-busy={ariaLabel !== undefined}
             aria-label={ariaLabel}
         >
-            <SkeletonBase></SkeletonBase>
+            <SkeletonBase />
         </div>
     );
 };
 
 type SkeletonTextProps = Omit<SkeletonLineProps, 'width'>;
 
-const SkeletonText = ({disableAnimation = false, ariaLabel}: SkeletonTextProps): JSX.Element => {
+export const SkeletonText = ({disableAnimation = false, ariaLabel}: SkeletonTextProps): JSX.Element => {
     const animationClasses = useAnimation({disableAnimation});
     const styleClass = useSkeletonStyles({height: 'fit-content'});
 
@@ -96,7 +96,7 @@ const SkeletonText = ({disableAnimation = false, ariaLabel}: SkeletonTextProps):
 
 type SkeletonCircleProps = Omit<SkeletonLineProps, 'width'> & {size?: number | string};
 
-const SkeletonCircle = ({
+export const SkeletonCircle = ({
     disableAnimation = false,
     ariaLabel,
     size = 40,
@@ -135,13 +135,13 @@ const useSkeletonRowStyles = createUseStyles(() => ({
 
 type SkeletonRowProps = SkeletonLineProps;
 
-const SkeletonRow = ({
+export const SkeletonRow = ({
     width = '100%',
     disableAnimation = false,
     ariaLabel,
 }: SkeletonRowProps): JSX.Element => {
     const animationClasses = useAnimation({disableAnimation});
-    const styleClass = useSkeletonStyles({width, height: 'content-initial'});
+    const styleClass = useSkeletonStyles({width, height: '100%'});
     const rowClass = useSkeletonRowStyles();
 
     return (
@@ -160,25 +160,24 @@ const SkeletonRow = ({
 
 type SkeletonRectangleProps = SkeletonLineProps & {height: number | string};
 
-const SkeletonRectangle = ({
+export const SkeletonRectangle = ({
     width = '100%',
     height = '100%',
     disableAnimation = false,
     ariaLabel,
 }: SkeletonRectangleProps): JSX.Element => {
     const animationClasses = useAnimation({disableAnimation});
-    const styleClass = useSkeletonStyles({width, height: 'content-initial'});
+    const styleClass = useSkeletonStyles({width, height: '100%'});
 
     return (
         <div
             className={classNames(animationClasses.animation, styleClass.wrap)}
             role="status"
-            aria-hidden={ariaLabel === undefined}
-            aria-busy={ariaLabel !== undefined}
+            aria-hidden
+            aria-busy
             aria-label={ariaLabel}
         >
             <SkeletonBase height={height} width={width} />
         </div>
     );
 };
-export {SkeletonLine, SkeletonText, SkeletonCircle, SkeletonRow, SkeletonRectangle};
