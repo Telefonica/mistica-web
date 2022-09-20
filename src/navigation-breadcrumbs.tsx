@@ -8,6 +8,8 @@ import {useTheme} from './hooks';
 import {createUseStyles} from './jss';
 import {DataAttributes} from './utils/types';
 import {getPrefixedDataAttributes} from './utils/dom';
+import TextLink from './text-link';
+import {useIsInverseVariant} from './theme-variant-context';
 
 const BREADCRUMB_SEPARATOR = ' / ';
 
@@ -48,19 +50,19 @@ const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({
     dataAttributes,
     'aria-label': ariaLabel = 'Breadcrumb',
 }) => {
-    const theme = useTheme();
-    const Link = theme.Link;
+    const {colors} = useTheme();
     const classes = useStyles();
+    const isInverse = useIsInverseVariant();
     return (
         <nav aria-label={ariaLabel} {...getPrefixedDataAttributes(dataAttributes)}>
             <ol className={classes.list}>
                 {breadcrumbs.map(({title, url}, index) => (
                     <li key={index}>
-                        <Link style={{textDecoration: 'none'}} to={url}>
+                        <TextLink style={{textDecoration: 'none'}} to={url}>
                             <span className={classes.link}>
                                 <Text1 regular>{title}</Text1>
                             </span>
-                        </Link>
+                        </TextLink>
                         <span role="presentation">
                             <Text1 regular>{BREADCRUMB_SEPARATOR}</Text1>
                         </span>
@@ -76,7 +78,7 @@ const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({
                             e.preventDefault();
                         }}
                     >
-                        <Text1 regular color={theme.colors.textSecondary}>
+                        <Text1 regular color={isInverse ? colors.textSecondaryInverse : colors.textSecondary}>
                             {title}
                         </Text1>
                     </a>
