@@ -6,7 +6,14 @@ export default {
 };
 
 export const Default: StoryComponent = () => (
-    <NavigationBreadcrumbs title="Facturas" breadcrumbs={[{title: 'Cuenta', url: '/consumptions'}]} />
+    <NavigationBreadcrumbs
+        dataAttributes={{testid: 'story'}}
+        title="Subsection"
+        breadcrumbs={[
+            {title: 'Home', url: 'https://example.org?path=home'},
+            {title: 'Section', url: 'https://example.org?path=section'},
+        ]}
+    />
 );
 
 Default.storyName = 'Breadcrumbs';
