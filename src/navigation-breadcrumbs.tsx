@@ -70,7 +70,7 @@ const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({
                     {/* this anchor is added for accessibility, it is disabled */}
                     <a
                         aria-current="page"
-                        href={document.location.href}
+                        href="#"
                         className={classes.current}
                         onClick={(e) => {
                             e.preventDefault();
