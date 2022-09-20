@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { ButtonLink } from "./button";
-import type { RendersNullableElement } from "./utils/types";
+import type { DataAttributes, RendersNullableElement } from "./utils/types";
 import type { NullableButtonElement } from "./button";
 declare type MaybeButtonElement = NullableButtonElement | void | false;
 declare type ButtonLayoutProps = {
@@ -10,6 +10,7 @@ declare type ButtonLayoutProps = {
   align?: "center" | "left" | "right" | "full-width",
   link?: RendersNullableElement<typeof ButtonLink>,
   withMargins?: boolean,
+  dataAttributes?: DataAttributes,
 };
 declare var ButtonLayout: React.ComponentType<ButtonLayoutProps>;
 declare export default typeof ButtonLayout;
