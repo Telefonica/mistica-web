@@ -59,11 +59,15 @@ const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({
             <ol className={classes.list}>
                 {breadcrumbs.map(({title, url}, index) => (
                     <li key={index}>
-                        <TextLink to={url}>
-                            <span className={classes.link}>
-                                <Text1 regular>{title}</Text1>
-                            </span>
-                        </TextLink>
+                        <Text1 regular>
+                            <TextLink
+                                to={url}
+                                style={{color: isInverse ? colors.textPrimaryInverse : colors.textPrimary}}
+                                className={classes.link}
+                            >
+                                {title}
+                            </TextLink>
+                        </Text1>
                         <span role="presentation">
                             <Text1 regular>{BREADCRUMB_SEPARATOR}</Text1>
                         </span>
