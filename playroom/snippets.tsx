@@ -1348,7 +1348,7 @@ const alertSnippets = [
   }
 >
   Open two buttons (with icon)
-</ButtonPrimary>        
+</ButtonPrimary>
       `,
     },
     {
@@ -1367,8 +1367,28 @@ const alertSnippets = [
   }
 >
   Open two buttons destructive
-</ButtonPrimary>  
+</ButtonPrimary>
       `,
+    },
+    {
+        group: 'Dialogs',
+        name: 'Dialog',
+        code: `
+<ButtonPrimary
+onPress={() =>
+  dialog({
+    message:
+      "Sign up to ensure that you don't miss the next promotion and other important events in Personal Account.",
+    acceptText: "Erase all data",
+    cancelText: "Cancel",
+    destructive: true,
+    extra: <Text1 regular>This is the extra zone</Text1>
+  })
+}
+>
+Open two buttons destructive
+</ButtonPrimary>
+    `,
     },
 ];
 

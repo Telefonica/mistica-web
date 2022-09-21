@@ -11,7 +11,7 @@ export default {
 
 export const WithoutTemplate: StoryComponent = () => (
     <ResponsiveLayout>
-        <GridLayout>
+        <GridLayout verticalSpace={8}>
             <Placeholder />
             <Placeholder />
             <Placeholder />
