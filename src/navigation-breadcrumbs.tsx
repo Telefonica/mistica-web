@@ -59,7 +59,7 @@ const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({
             <ol className={classes.list}>
                 {breadcrumbs.map(({title, url}, index) => (
                     <li key={index}>
-                        <TextLink style={{textDecoration: 'none'}} to={url}>
+                        <TextLink to={url}>
                             <span className={classes.link}>
                                 <Text1 regular>{title}</Text1>
                             </span>
