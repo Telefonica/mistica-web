@@ -60,7 +60,7 @@ export const getVivoSkin: GetKnownSkin = () => {
             backgroundContainer: palette.white,
             backgroundBrand: palette.vivoPurple,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
-            backgroundSkeleton: palette.grey1,
+            backgroundSkeleton: palette.grey2,
             backgroundSkeletonInverse: applyAlpha(palette.white, 0.2),
             backgroundFeedbackBottom: palette.vivoPurple,
             navigationBarBackground: palette.vivoPurple,
