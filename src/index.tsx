@@ -1792,3 +1792,6 @@ export {default as IconWorkflowRegular} from './generated/mistica-icons/icon-wor
 export {default as IconWorkshopMeetingFilled} from './generated/mistica-icons/icon-workshop-meeting-filled';
 export {default as IconWorkshopMeetingLight} from './generated/mistica-icons/icon-workshop-meeting-light';
 export {default as IconWorkshopMeetingRegular} from './generated/mistica-icons/icon-workshop-meeting-regular';
+export {default as IconWorldDeviceFilled} from './generated/mistica-icons/icon-world-device-filled';
+export {default as IconWorldDeviceLight} from './generated/mistica-icons/icon-world-device-light';
+export {default as IconWorldDeviceRegular} from './generated/mistica-icons/icon-world-device-regular';
