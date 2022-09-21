@@ -9,11 +9,10 @@ export default {
 type Args = {
     size?: number;
     inverse: boolean;
-    disableAnimation: boolean;
     ariaValueText: string;
 };
 
-export const Default: StoryComponent<Args> = ({size, disableAnimation, inverse, ariaValueText}) => {
+export const Default: StoryComponent<Args> = ({size, inverse, ariaValueText}) => {
     const {colors} = useTheme();
 
     return (
@@ -29,7 +28,7 @@ export const Default: StoryComponent<Args> = ({size, disableAnimation, inverse, 
                 }}
                 data-testid="skeleton-circle"
             >
-                <SkeletonCircle size={size} disableAnimation={disableAnimation} ariaLabel={ariaValueText} />
+                <SkeletonCircle size={size} ariaLabel={ariaValueText} />
             </div>
         </ThemeVariant>
     );
@@ -40,6 +39,5 @@ Default.storyName = 'Skeleton Circle';
 Default.args = {
     size: 40,
     inverse: false,
-    disableAnimation: false,
     ariaValueText: '',
 };

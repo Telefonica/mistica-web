@@ -10,11 +10,10 @@ type Args = {
     height: number;
     width: number;
     inverse: boolean;
-    disableAnimation: boolean;
     ariaLabel: string;
 };
 
-export const Default: StoryComponent<Args> = ({height, width, disableAnimation, inverse, ariaLabel}) => {
+export const Default: StoryComponent<Args> = ({height, width, inverse, ariaLabel}) => {
     const {colors} = useTheme();
 
     return (
@@ -30,12 +29,7 @@ export const Default: StoryComponent<Args> = ({height, width, disableAnimation, 
                 }}
                 data-testid="skeleton-rectangle"
             >
-                <SkeletonRectangle
-                    height={height}
-                    width={width}
-                    disableAnimation={disableAnimation}
-                    ariaLabel={ariaLabel}
-                />
+                <SkeletonRectangle height={height} width={width} ariaLabel={ariaLabel} />
             </div>
         </ThemeVariant>
     );
@@ -47,6 +41,5 @@ Default.args = {
     height: 100,
     width: 100,
     inverse: false,
-    disableAnimation: false,
     ariaLabel: '',
 };

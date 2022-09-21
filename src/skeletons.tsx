@@ -8,16 +8,11 @@ import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
 
-type AnimationProps = {
-    disableAnimation: boolean;
-};
-
 const transition = '1.5s linear';
 
 const useAnimation = createUseStyles(() => ({
     animation: {
-        animation: ({disableAnimation}: AnimationProps) =>
-            disableAnimation ? '' : `$pulse ${transition} infinite`,
+        animation: `$pulse ${transition} infinite`,
     },
     '@keyframes pulse': {
         '0%': {
@@ -50,18 +45,12 @@ const useSkeletonStyles = createUseStyles(() => ({
 
 type SkeletonLineProps = {
     width?: string | number;
-    disableAnimation?: boolean;
     ariaLabel?: string;
     dataAttributes?: DataAttributes;
 };
 
-export const SkeletonLine = ({
-    width = '100%',
-    disableAnimation = false,
-    ariaLabel,
-    dataAttributes,
-}: SkeletonLineProps): JSX.Element => {
-    const animationClasses = useAnimation({disableAnimation});
+export const SkeletonLine = ({width = '100%', ariaLabel, dataAttributes}: SkeletonLineProps): JSX.Element => {
+    const animationClasses = useAnimation();
     const styleClass = useSkeletonStyles({width});
 
     return (
@@ -80,12 +69,8 @@ export const SkeletonLine = ({
 
 type SkeletonTextProps = Omit<SkeletonLineProps, 'width'>;
 
-export const SkeletonText = ({
-    disableAnimation = false,
-    ariaLabel,
-    dataAttributes,
-}: SkeletonTextProps): JSX.Element => {
-    const animationClasses = useAnimation({disableAnimation});
+export const SkeletonText = ({ariaLabel, dataAttributes}: SkeletonTextProps): JSX.Element => {
+    const animationClasses = useAnimation();
     const styleClass = useSkeletonStyles({height: 'fit-content'});
 
     return (
@@ -107,13 +92,8 @@ export const SkeletonText = ({
 
 type SkeletonCircleProps = Omit<SkeletonLineProps, 'width'> & {size?: number | string};
 
-export const SkeletonCircle = ({
-    disableAnimation = false,
-    ariaLabel,
-    size = 40,
-    dataAttributes,
-}: SkeletonCircleProps): JSX.Element => {
-    const animationClasses = useAnimation({disableAnimation});
+export const SkeletonCircle = ({ariaLabel, size = 40, dataAttributes}: SkeletonCircleProps): JSX.Element => {
+    const animationClasses = useAnimation();
     const styleClass = useSkeletonStyles({width: size, height: size});
 
     return (
@@ -148,13 +128,8 @@ const useSkeletonRowStyles = createUseStyles(() => ({
 
 type SkeletonRowProps = SkeletonLineProps;
 
-export const SkeletonRow = ({
-    width = '100%',
-    disableAnimation = false,
-    ariaLabel,
-    dataAttributes,
-}: SkeletonRowProps): JSX.Element => {
-    const animationClasses = useAnimation({disableAnimation});
+export const SkeletonRow = ({width = '100%', ariaLabel, dataAttributes}: SkeletonRowProps): JSX.Element => {
+    const animationClasses = useAnimation();
     const styleClass = useSkeletonStyles({width, height: '100%'});
     const rowClass = useSkeletonRowStyles();
 
@@ -178,11 +153,10 @@ type SkeletonRectangleProps = SkeletonLineProps & {height: number | string};
 export const SkeletonRectangle = ({
     width = '100%',
     height = '100%',
-    disableAnimation = false,
     ariaLabel,
     dataAttributes,
 }: SkeletonRectangleProps): JSX.Element => {
-    const animationClasses = useAnimation({disableAnimation});
+    const animationClasses = useAnimation();
     const styleClass = useSkeletonStyles({width, height: '100%'});
 
     return (

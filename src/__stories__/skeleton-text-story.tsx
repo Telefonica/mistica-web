@@ -8,11 +8,10 @@ export default {
 
 type Args = {
     inverse: boolean;
-    disableAnimation: boolean;
     ariaLabel: string;
 };
 
-export const Default: StoryComponent<Args> = ({disableAnimation, inverse, ariaLabel}) => {
+export const Default: StoryComponent<Args> = ({inverse, ariaLabel}) => {
     const {colors} = useTheme();
 
     return (
@@ -28,7 +27,7 @@ export const Default: StoryComponent<Args> = ({disableAnimation, inverse, ariaLa
                 }}
                 data-testid="skeleton-text"
             >
-                <SkeletonText disableAnimation={disableAnimation} ariaLabel={ariaLabel} />
+                <SkeletonText ariaLabel={ariaLabel} />
             </div>
         </ThemeVariant>
     );
@@ -38,6 +37,5 @@ Default.storyName = 'Skeleton Text';
 
 Default.args = {
     inverse: false,
-    disableAnimation: false,
     ariaLabel: '',
 };
