@@ -6,10 +6,11 @@ import * as React from 'react';
 import {Text1} from './text';
 import {useTheme} from './hooks';
 import {createUseStyles} from './jss';
-import {DataAttributes} from './utils/types';
 import {getPrefixedDataAttributes} from './utils/dom';
 import TextLink from './text-link';
 import {useIsInverseVariant} from './theme-variant-context';
+
+import type {DataAttributes} from './utils/types';
 
 const BREADCRUMB_SEPARATOR = ' / ';
 
