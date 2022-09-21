@@ -6,50 +6,49 @@ import {isInsideNovumNativeApp, getPlatform} from './utils/platform';
 
 const {Provider, Getter, useSetValue} = createNestableContext('');
 
-const shouldRender = getPlatform() === 'ios';
+const shouldRender = () => getPlatform() === 'ios';
 
 type ProviderProps = {children: React.ReactNode};
 
-const OverscrollColorProviderNoOp: React.FC<ProviderProps> = ({children}) => <>{children || null}</>;
-
-const OverscrollColorProviderComponent: React.FC<ProviderProps> = ({children}) => {
+export const OverscrollColorProvider = ({children}: ProviderProps): JSX.Element => {
     const {platformOverrides} = useTheme();
     const {isTabletOrSmaller} = useScreenSize();
     const theme = useTheme();
-    return isTabletOrSmaller ? (
+
+    if (!shouldRender()) {
+        return <>{children}</>;
+    }
+
+    return (
         <Provider>
             <Getter>
                 {(color) => (
                     <>
-                        <div
-                            style={{
-                                position: 'absolute',
-                                zIndex: 1,
-                                background: color || theme.colors.background,
-                                width: '100%',
-                                height:
-                                    500 +
-                                    (isInsideNovumNativeApp(platformOverrides)
-                                        ? 0
-                                        : theme.dimensions.headerMobileHeight),
-                                left: 0,
-                                marginTop: -500,
-                                transform: 'translate3d(0,0,0)',
-                            }}
-                        />
+                        {isTabletOrSmaller ? (
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    zIndex: 1,
+                                    background: color || theme.colors.background,
+                                    width: '100%',
+                                    height:
+                                        500 +
+                                        (isInsideNovumNativeApp(platformOverrides)
+                                            ? 0
+                                            : theme.dimensions.headerMobileHeight),
+                                    left: 0,
+                                    marginTop: -500,
+                                    transform: 'translate3d(0,0,0)',
+                                }}
+                            />
+                        ) : null}
                         {children}
                     </>
                 )}
             </Getter>
         </Provider>
-    ) : (
-        <>{children}</>
     );
 };
-
-export const OverscrollColorProvider = shouldRender
-    ? OverscrollColorProviderComponent
-    : OverscrollColorProviderNoOp;
 
 const OverscrollColorComponent = () => {
     const isInverseVariant = useIsInverseVariant();
@@ -61,6 +60,6 @@ const OverscrollColorComponent = () => {
 
 const OverscrollColorNoOp = () => null;
 
-const OverscrollColor = shouldRender ? OverscrollColorComponent : OverscrollColorNoOp;
+const OverscrollColor = shouldRender() ? OverscrollColorComponent : OverscrollColorNoOp;
 
 export default OverscrollColor;

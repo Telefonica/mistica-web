@@ -28,7 +28,7 @@ export {
 export {default as IconButton} from './icon-button';
 export {default as Popover} from './popover';
 export {default as FocusTrap} from './focus-trap';
-export {confirm, alert} from './dialog';
+export {confirm, alert, dialog} from './dialog';
 export {default as Badge} from './badge';
 export {default as TextLink} from './text-link';
 export {default as Overlay} from './overlay';
