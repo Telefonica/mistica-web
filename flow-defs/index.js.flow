@@ -134,6 +134,13 @@ declare export { default as IconChevron } from "./icons/icon-chevron";
 declare export { default as IconError } from "./icons/icon-error";
 declare export { default as IconSuccess } from "./icons/icon-success";
 declare export { default as IconSuccessVivo } from "./icons/icon-success-vivo";
+declare export {
+  SkeletonCircle,
+  SkeletonRow,
+  SkeletonLine,
+  SkeletonRectangle,
+  SkeletonText,
+} from "./skeletons";
 declare export { default as Circle } from "./circle";
 declare export {
   useTheme,

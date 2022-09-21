@@ -1392,10 +1392,67 @@ Open two buttons destructive
     },
 ];
 
+const skeletonSnippets = [
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Line',
+        code: `
+               <SkeletonLine
+                    ariaLabel="loading"
+                    disableAnimation={false}
+                />
+        `,
+    },
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Circle',
+        code: `
+               <SkeletonCircle
+                    size={40}
+                    ariaLabel="loading"
+                    disableAnimation={false}
+               />
+        `,
+    },
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Text',
+        code: `
+               <SkeletonText
+                    ariaLabel="loading"
+                    disableAnimation={false}
+               />
+        `,
+    },
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Row',
+        code: `
+            <SkeletonRow
+                ariaLabel="loading"
+                disableAnimation={false}
+            />
+        `,
+    },
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Rectangle',
+        code: `
+            <SkeletonRectangle
+                ariaLabel="loading"
+                height={100}
+                width={200}
+                disableAnimation={false}
+            />
+        `,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
     ...feedbackSnippets,
+    ...skeletonSnippets,
     {group: 'Feedbacks', name: 'Snackbar', code: '<Snackbar message="Some message here" />'},
     ...layoutSnippets,
     {
