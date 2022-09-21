@@ -4,7 +4,6 @@ import * as React from "react";
 import type { DataAttributes } from "./utils/types";
 declare type SkeletonLineProps = {
   width?: string | number,
-  disableAnimation?: boolean,
   ariaLabel?: string,
   dataAttributes?: DataAttributes,
 };
