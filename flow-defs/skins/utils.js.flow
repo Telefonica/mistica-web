@@ -1,7 +1,9 @@
 // @flow
 
+import * as React from "react";
 import type { KnownSkin, KnownSkinName } from "./types";
 declare export var getSkinByName: (
   name: KnownSkinName,
   variant?: "prominent" | void
 ) => KnownSkin;
+declare export var flattenChildren: (children: React.Node) => Array<React.Node>;
