@@ -1,3 +1,23 @@
+# [12.2.0](https://github.com/Telefonica/mistica-web/compare/v12.1.0...v12.2.0) (2022-09-21)
+
+
+### Bug Fixes
+
+* **NavigationBarLogo:** alignment and Blau's size ([#527](https://github.com/Telefonica/mistica-web/issues/527)) ([180d943](https://github.com/Telefonica/mistica-web/commit/180d9437262ec22ac2aa27e97e88c1a3f3f677da))
+* **OverscrollColorProvider:** avoid re-mounts ([#539](https://github.com/Telefonica/mistica-web/issues/539)) ([5f4c1ce](https://github.com/Telefonica/mistica-web/commit/5f4c1ce72c2fb9082692d5ff6914b3137bf8debc))
+* **skin:** change backgroundSkeleton to grey2 ([#524](https://github.com/Telefonica/mistica-web/issues/524)) ([3734548](https://github.com/Telefonica/mistica-web/commit/3734548404cded20295407fe7a90d8907f3a7ebb))
+* **Skin:** improve control constant in dark mode in Blau & Telefónica ([#526](https://github.com/Telefonica/mistica-web/issues/526)) ([3d747bb](https://github.com/Telefonica/mistica-web/commit/3d747bbb8321a35c76e28773de6f414b1c3898d1))
+
+
+### Features
+
+* **Button:** support for pre/post icons ([#530](https://github.com/Telefonica/mistica-web/issues/530)) ([17c2b96](https://github.com/Telefonica/mistica-web/commit/17c2b9647fa03c004ff1ba506090894657d6b6b3))
+* **dataAttributes:** add dataAttributes prop to several components ([#534](https://github.com/Telefonica/mistica-web/issues/534)) ([90471f6](https://github.com/Telefonica/mistica-web/commit/90471f66d6c1d2f52ec34becf80fa001148949d2))
+* **dialog:** allow extra content in web ([#536](https://github.com/Telefonica/mistica-web/issues/536)) ([3568ea8](https://github.com/Telefonica/mistica-web/commit/3568ea83115caf4a94b80aa6fbe000ead69f12e1))
+* **GridLayout:** add support for vertical space ([#533](https://github.com/Telefonica/mistica-web/issues/533)) ([f2ffe75](https://github.com/Telefonica/mistica-web/commit/f2ffe75d6966dd1a06dc05181651c9a56ccd0b50))
+* **icons:** new O2 icons and fixes ([#538](https://github.com/Telefonica/mistica-web/issues/538)) ([ab7985b](https://github.com/Telefonica/mistica-web/commit/ab7985ba3ef91336b50f257128739ee56ca33ff3))
+* **Skeletons:** new components ([7671168](https://github.com/Telefonica/mistica-web/commit/767116875b4254b9932107ece4a75db3805f319c))
+
 # [12.1.0](https://github.com/Telefonica/mistica-web/compare/v12.0.0...v12.1.0) (2022-08-31)
 
 
