@@ -1,5 +1,8 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
     grid: {
@@ -93,6 +96,7 @@ type PropsChildren = {
     template?: undefined;
     children: React.ReactNode;
     verticalSpace?: VerticalSpace;
+    dataAttributes?: DataAttributes;
 };
 
 type PropsTemplate6_6 = {
@@ -101,6 +105,7 @@ type PropsTemplate6_6 = {
     right: React.ReactNode;
     children?: undefined;
     verticalSpace?: VerticalSpace;
+    dataAttributes?: DataAttributes;
 };
 
 type PropsTemplate8_4 = {
@@ -109,6 +114,7 @@ type PropsTemplate8_4 = {
     right: React.ReactNode;
     children?: undefined;
     verticalSpace?: VerticalSpace;
+    dataAttributes?: DataAttributes;
 };
 
 type PropsTemplate4_6 = {
@@ -117,6 +123,7 @@ type PropsTemplate4_6 = {
     right: React.ReactNode;
     children?: undefined;
     verticalSpace?: VerticalSpace;
+    dataAttributes?: DataAttributes;
 };
 
 type PropsTemplate5_4 = {
@@ -125,6 +132,7 @@ type PropsTemplate5_4 = {
     right: React.ReactNode;
     children?: undefined;
     verticalSpace?: VerticalSpace;
+    dataAttributes?: DataAttributes;
 };
 
 type PropsTemplate3_9 = {
@@ -133,12 +141,14 @@ type PropsTemplate3_9 = {
     right: React.ReactNode;
     children?: undefined;
     verticalSpace?: VerticalSpace;
+    dataAttributes?: DataAttributes;
 };
 
 type PropsTemplate10 = {
     template: '10';
     children: React.ReactNode;
     verticalSpace?: VerticalSpace;
+    dataAttributes?: DataAttributes;
 };
 
 type Props =
@@ -152,10 +162,11 @@ type Props =
 
 const GridLayout: React.FC<Props> = (props) => {
     const classes = useStyles({verticalSpace: props.verticalSpace ?? 0});
+    const dataAttributes = getPrefixedDataAttributes(props.dataAttributes);
 
     if (props.template === '6+6') {
         return (
-            <div className={classes.grid}>
+            <div className={classes.grid} {...dataAttributes}>
                 <div className={classes.span6}>{props.left}</div>
                 <div className={classes.span6}>{props.right}</div>
             </div>
@@ -164,7 +175,7 @@ const GridLayout: React.FC<Props> = (props) => {
 
     if (props.template === '8+4') {
         return (
-            <div className={classes.grid}>
+            <div className={classes.grid} {...dataAttributes}>
                 <div className={classes.span8}>{props.left}</div>
                 <div className={classes.span4}>{props.right}</div>
             </div>
@@ -173,7 +184,7 @@ const GridLayout: React.FC<Props> = (props) => {
 
     if (props.template === '4+6') {
         return (
-            <div className={classes.grid}>
+            <div className={classes.grid} {...dataAttributes}>
                 <div className={classes.span4}>{props.left}</div>
                 <div className={classes.span1} />
                 <div className={classes.span6}>{props.right}</div>
@@ -184,7 +195,7 @@ const GridLayout: React.FC<Props> = (props) => {
 
     if (props.template === '5+4') {
         return (
-            <div className={classes.grid}>
+            <div className={classes.grid} {...dataAttributes}>
                 <div className={classes.span1} />
                 <div className={classes.span5}>{props.left}</div>
                 <div className={classes.span1} />
@@ -196,7 +207,7 @@ const GridLayout: React.FC<Props> = (props) => {
 
     if (props.template === '3+9') {
         return (
-            <div className={classes.grid}>
+            <div className={classes.grid} {...dataAttributes}>
                 <div className={classes.span3}>{props.left}</div>
                 <div className={classes.span9}>{props.right}</div>
             </div>
@@ -205,7 +216,7 @@ const GridLayout: React.FC<Props> = (props) => {
 
     if (props.template === '10') {
         return (
-            <div className={classes.grid}>
+            <div className={classes.grid} {...dataAttributes}>
                 <div className={classes.span1} />
                 <div className={classes.span10}>{props.children}</div>
                 <div className={classes.span1} />
@@ -213,7 +224,11 @@ const GridLayout: React.FC<Props> = (props) => {
         );
     }
 
-    return <div className={classes.grid}>{props.children}</div>;
+    return (
+        <div className={classes.grid} {...dataAttributes}>
+            {props.children}
+        </div>
+    );
 };
 
 export default GridLayout;

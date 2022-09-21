@@ -39,7 +39,7 @@ declare export {
 declare export { default as IconButton } from "./icon-button";
 declare export { default as Popover } from "./popover";
 declare export { default as FocusTrap } from "./focus-trap";
-declare export { confirm, alert } from "./dialog";
+declare export { confirm, alert, dialog } from "./dialog";
 declare export { default as Badge } from "./badge";
 declare export { default as TextLink } from "./text-link";
 declare export { default as Overlay } from "./overlay";

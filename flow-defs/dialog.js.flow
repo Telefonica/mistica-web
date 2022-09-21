@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from "react";
-declare type DialogProps = {
+declare type BaseDialogProps = {
   className?: string,
   title?: string,
   icon?: React.Element<any>,
@@ -13,11 +13,20 @@ declare type DialogProps = {
   showCancel?: boolean,
   destructive?: boolean,
 };
+declare type AlertProps = { ...$Exact<BaseDialogProps> };
+declare type ConfirmProps = { ...$Exact<BaseDialogProps> };
+declare type ExtendedDialogProps = {
+  ...$Exact<BaseDialogProps>,
+
+  extra: React.Node,
+  forceWeb?: boolean,
+};
+declare type DialogProps = AlertProps | ConfirmProps | ExtendedDialogProps;
 declare type DialogRootProps = {
   children?: React.Node,
 };
 declare type DialogRootState = {
-  dialogProps: DialogProps | null,
+  dialogProps: BaseDialogProps | null,
   isClosing: boolean,
   instanceNumber: number,
 };
@@ -39,9 +48,13 @@ declare export default class DialogRoot
 /**
  * Shows alert dialog with supplied props
  */
-declare export var alert: (props: DialogProps) => void;
+declare export var alert: (props: AlertProps) => void;
 /**
  * Shows confirm dialog with supplied props
  */
-declare export var confirm: (props: DialogProps) => void;
+declare export var confirm: (props: ConfirmProps) => void;
+/**
+ * Shows dialog with supplied props
+ */
+declare export var dialog: (props: ExtendedDialogProps) => void;
 declare export {};

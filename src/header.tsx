@@ -12,7 +12,7 @@ import NavigationBreadcrumbs from './navigation-breadcrumbs';
 import {ButtonPrimary, ButtonSecondary} from './button';
 import ButtonGroup from './button-group';
 
-import type {RendersElement, RendersNullableElement} from './utils/types';
+import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
 import type {TextPresetProps} from './text';
 
 type OverridableTextProps = {
@@ -32,6 +32,7 @@ type HeaderProps = {
     secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     subtitle?: RichText;
     isErrorAmount?: boolean;
+    dataAttributes?: DataAttributes;
 };
 
 export const Header: React.FC<HeaderProps> = ({
@@ -43,6 +44,7 @@ export const Header: React.FC<HeaderProps> = ({
     subtitle,
     isErrorAmount,
     secondaryButton,
+    dataAttributes,
 }) => {
     const {isTabletOrSmaller} = useScreenSize();
     const theme = useTheme();
@@ -65,7 +67,7 @@ export const Header: React.FC<HeaderProps> = ({
     };
 
     return (
-        <Stack space={isTabletOrSmaller ? 24 : 32}>
+        <Stack space={isTabletOrSmaller ? 24 : 32} dataAttributes={dataAttributes}>
             {(title || pretitle) && (
                 <Box paddingRight={16}>
                     <Stack space={8}>
@@ -142,6 +144,7 @@ type HeaderLayoutProps = {
     extra?: React.ReactNode;
     sideBySideExtraOnDesktop?: boolean;
     children?: void;
+    dataAttributes?: DataAttributes;
 };
 
 export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
@@ -150,12 +153,13 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
     header,
     extra,
     sideBySideExtraOnDesktop = false,
+    dataAttributes,
 }) => {
     const classes = useHeaderLayoutStyles({isInverse});
     const {isTabletOrSmaller} = useScreenSize();
 
     return (
-        <ResponsiveLayout className={classes.background}>
+        <ResponsiveLayout className={classes.background} dataAttributes={dataAttributes}>
             <ThemeVariant isInverse={isInverse}>
                 <OverscrollColor />
                 {isTabletOrSmaller ? (
