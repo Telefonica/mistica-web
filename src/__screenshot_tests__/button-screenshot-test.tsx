@@ -66,3 +66,12 @@ test.each(DEVICES)('Buttons - ellipsis (%s)', async (device) => {
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test('Buttons with icon', async () => {
+    const page = await openStoryPage({
+        id: 'components-buttons--with-icon',
+    });
+
+    const image = await page.screenshot();
+    expect(image).toMatchImageSnapshot();
+});

@@ -134,6 +134,13 @@ declare export { default as IconChevron } from "./icons/icon-chevron";
 declare export { default as IconError } from "./icons/icon-error";
 declare export { default as IconSuccess } from "./icons/icon-success";
 declare export { default as IconSuccessVivo } from "./icons/icon-success-vivo";
+declare export {
+  SkeletonCircle,
+  SkeletonRow,
+  SkeletonLine,
+  SkeletonRectangle,
+  SkeletonText,
+} from "./skeletons";
 declare export { default as Circle } from "./circle";
 declare export {
   useTheme,
@@ -1804,3 +1811,6 @@ declare export { default as IconWorkflowRegular } from "./generated/mistica-icon
 declare export { default as IconWorkshopMeetingFilled } from "./generated/mistica-icons/icon-workshop-meeting-filled";
 declare export { default as IconWorkshopMeetingLight } from "./generated/mistica-icons/icon-workshop-meeting-light";
 declare export { default as IconWorkshopMeetingRegular } from "./generated/mistica-icons/icon-workshop-meeting-regular";
+declare export { default as IconWorldDeviceFilled } from "./generated/mistica-icons/icon-world-device-filled";
+declare export { default as IconWorldDeviceLight } from "./generated/mistica-icons/icon-world-device-light";
+declare export { default as IconWorldDeviceRegular } from "./generated/mistica-icons/icon-world-device-regular";
