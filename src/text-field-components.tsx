@@ -192,7 +192,7 @@ const useFieldContainerStyles = createUseStyles((theme) => ({
         display: 'flex',
         position: 'relative',
         backgroundColor: ({readOnly}) =>
-            readOnly ? theme.colors.backgroundAlternative : theme.colors.backgroundContainer,
+            readOnly ? theme.colors.neutralLow : theme.colors.backgroundContainer,
     },
 }));
 
