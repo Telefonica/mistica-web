@@ -3,7 +3,11 @@
 import * as React from "react";
 import NavigationBreadcrumbs from "./navigation-breadcrumbs";
 import { ButtonPrimary, ButtonSecondary } from "./button";
-import type { RendersElement, RendersNullableElement } from "./utils/types";
+import type {
+  DataAttributes,
+  RendersElement,
+  RendersNullableElement,
+} from "./utils/types";
 import type { TextPresetProps } from "./text";
 declare type OverridableTextProps = {
   color?: $PropertyType<TextPresetProps, "color">,
@@ -27,6 +31,7 @@ declare type HeaderProps = {
   secondaryButton?: RendersNullableElement<typeof ButtonSecondary>,
   subtitle?: RichText,
   isErrorAmount?: boolean,
+  dataAttributes?: DataAttributes,
 };
 declare export var Header: React.ComponentType<HeaderProps>;
 declare type MainSectionHeaderProps = {
@@ -43,6 +48,7 @@ declare type HeaderLayoutProps = {
   header: React.Node,
   extra?: React.Node,
   sideBySideExtraOnDesktop?: boolean,
+  dataAttributes?: DataAttributes,
 };
 declare export var HeaderLayout: React.ComponentType<HeaderLayoutProps>;
 declare type MainSectionHeaderLayoutProps = {

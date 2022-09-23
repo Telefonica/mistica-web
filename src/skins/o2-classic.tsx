@@ -81,7 +81,7 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             backgroundContainer: palette.white,
             backgroundBrand: `linear-gradient(to bottom, ${palette.o2Blue}, ${palette.o2GradientSecond} 51%, ${palette.o2GradientThird} 72%, ${palette.o2GradientFourth})`,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
-            backgroundSkeleton: palette.grey1,
+            backgroundSkeleton: palette.grey2,
             backgroundSkeletonInverse: applyAlpha(palette.white, 0.2),
             navigationBarBackground: palette.o2Blue,
             backgroundAlternative: palette.grey1,
