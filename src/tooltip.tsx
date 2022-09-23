@@ -77,7 +77,7 @@ const useStyles = createUseStyles((theme) => {
             boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
             padding: 16,
             backgroundColor: theme.colors.backgroundContainer,
-            zIndex: 12,
+            zIndex: 50,
             border: `1px solid ${theme.colors.divider}`,
             borderRadius: 8,
         },
