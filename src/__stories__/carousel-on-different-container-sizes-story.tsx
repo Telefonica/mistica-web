@@ -10,6 +10,7 @@ import {
     IconInformationRegular,
     Image,
     GridLayout,
+    Placeholder,
 } from '..';
 
 export default {
@@ -76,7 +77,16 @@ export const Default: StoryComponent<Args> = ({
                         description="Arrow controls disappear in touch devices"
                         icon={<IconInformationRegular />}
                     />
-                    <GridLayout template="8+4" left={carousel} right={carousel}></GridLayout>
+                    <GridLayout
+                        template="8+4"
+                        left={carousel}
+                        right={<Placeholder height={240} />}
+                    ></GridLayout>
+                    <GridLayout
+                        template="8+4"
+                        left={<Placeholder height={240} />}
+                        right={carousel}
+                    ></GridLayout>
                     {carousel}
                 </Stack>
             </ResponsiveLayout>

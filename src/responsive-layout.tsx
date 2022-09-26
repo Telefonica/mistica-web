@@ -3,7 +3,7 @@ import {createUseStyles} from './jss';
 import classnames from 'classnames';
 import {useScreenSize} from './hooks';
 import {getPrefixedDataAttributes} from './utils/dom';
-import ContainerSizeContext from './container-size-context';
+import ContainerSizeContext from './container-type-context';
 
 import type {DataAttributes} from './utils/types';
 
@@ -65,9 +65,11 @@ const ResponsiveLayout: React.FC<Props> = ({children, className, fullWidth, data
 
     const sideMargin = isMobile ? MOBILE_SIDE_MARGIN : isTablet ? TABLET_SIDE_MARGIN : null;
 
+    const containerType = isMobile ? 'mobile-column' : isTablet ? 'tablet-column' : 'desktop-wide-column';
+
     return (
         <ResponsiveLayoutMarginContext.Provider value={sideMargin}>
-            <ContainerSizeContext.Provider value={400}>
+            <ContainerSizeContext.Provider value={containerType}>
                 <div
                     className={classnames(classes.container, className)}
                     {...getPrefixedDataAttributes(dataAttributes)}

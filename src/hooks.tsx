@@ -3,10 +3,11 @@ import ThemeContext from './theme-context';
 import ScreenSizeContext from './screen-size-context';
 import AriaIdGetterContext from './aria-id-getter-context';
 import {listenResize} from './utils/dom';
-import ContainerWidthContext from './container-width-context';
-import {mediaQueriesConfig, Theme} from './theme';
+import {Theme} from './theme';
+import ContainerTypeContext from './container-type-context';
 
 import type {ScreenSizeContextType} from './screen-size-context';
+import type {ContainerType} from './utils/types';
 
 export const useTheme = (): Theme => {
     const theme = React.useContext(ThemeContext);
@@ -187,18 +188,13 @@ export const useIsInViewport = (
     return isInViewport;
 };
 
-type ContainerType = 'largue-desktop' | 'small-desktop' | 'tablet' | 'mobile';
-
 export const useContainerType = (): ContainerType => {
-    const width = React.useContext(ContainerWidthContext);
-    if (!width) {
+    const containerType = React.useContext(ContainerTypeContext);
+    if (!containerType) {
         throw Error(
-            'To use container width you must instantiate <ContainerWidthContext.Provider> as their parent.'
+            'To use container type you must instantiate <GridLayout> or <ResponsiveLayout> as parent.'
         );
     }
 
-    if (width >= mediaQueriesConfig.largeDesktopMinWidth) return 'largue-desktop';
-    else if (width >= mediaQueriesConfig.desktopMinWidth) return 'small-desktop';
-    else if (width >= mediaQueriesConfig.tabletMinWidth) return 'tablet';
-    else return 'mobile';
+    return containerType;
 };

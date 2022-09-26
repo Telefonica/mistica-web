@@ -15,7 +15,7 @@ import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 import {isAndroid} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
 
-import type {DataAttributes} from './utils/types';
+import type {ContainerType, DataAttributes} from './utils/types';
 import type {Theme} from './theme';
 
 const useShouldAutoplay = (autoplay: boolean, ref: React.RefObject<HTMLElement>): boolean => {
@@ -101,14 +101,12 @@ const arrowButtonStyle = (theme: Theme) => ({
     },
 });
 
-const arrowButtonSeparation = (containerType, sideMargin) => {
+const arrowButtonSeparation = (containerType: ContainerType, isLargueDesktop: boolean) => {
     switch (containerType) {
-        case 'large-desktop':
-            return -(24 + arrowButtonSize);
-        case 'small-desktop':
-            return -arrowButtonSize / 2;
+        case 'desktop-wide-column':
+            return isLargueDesktop ? -(24 + arrowButtonSize) : -arrowButtonSize / 2;
         default:
-            return -sideMargin;
+            return -arrowButtonSize / 2;
     }
 };
 
@@ -125,16 +123,11 @@ const useStyles = createUseStyles((theme) => ({
         zIndex: 1,
         top: `calc(50% - ${arrowButtonSize / 2}px)`,
         '&.prev': {
-            left: arrowButtonSeparation(
-                ({containerType}) => containerType,
-                ({sideMargin}) => sideMargin
-            ),
+            left: ({containerType, isLargueDesktop}) => arrowButtonSeparation(containerType, isLargueDesktop),
         },
         '&.next': {
-            right: arrowButtonSeparation(
-                ({containerType}) => containerType,
-                ({sideMargin}) => sideMargin
-            ),
+            right: ({containerType, isLargueDesktop}) =>
+                arrowButtonSeparation(containerType, isLargueDesktop),
         },
     },
     hasScroll: {},
@@ -327,7 +320,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const containerType = useContainerType();
     const itemsPerPageConfig = normalizeItemsPerPage(itemsPerPage);
     const mobilePageOffsetConfig = normalizeMobilePageOffset(mobilePageOffset);
-    const {isDesktopOrBigger} = useScreenSize();
+    const {isDesktopOrBigger, isLargueDesktop} = useScreenSize();
     const gap: number = gapProp ?? (isDesktopOrBigger ? 16 : 8);
     const sideMargin = useResonsiveLayoutMargin();
     const classes = useStyles({
@@ -337,6 +330,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
         gap,
         sideMargin,
         containerType,
+        isLargueDesktop,
     });
     const carouselRef = React.useRef<HTMLDivElement>(null);
     const itemsPerPageFloor = isDesktopOrBigger
