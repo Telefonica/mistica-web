@@ -1,7 +1,7 @@
 import * as React from 'react';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
-import {useIsInViewport, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
+import {useContainerType, useIsInViewport, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
 import {createUseStyles} from './jss';
 import Stack from './stack';
@@ -101,6 +101,17 @@ const arrowButtonStyle = (theme: Theme) => ({
     },
 });
 
+const arrowButtonSeparation = (containerType, sideMargin) => {
+    switch (containerType) {
+        case 'large-desktop':
+            return -(24 + arrowButtonSize);
+        case 'small-desktop':
+            return -arrowButtonSize / 2;
+        default:
+            return -sideMargin;
+    }
+};
+
 const useStyles = createUseStyles((theme) => ({
     carouselContainer: {
         // This value is a workaround to solve an issue when the page is rendered in a hidden webview
@@ -114,22 +125,16 @@ const useStyles = createUseStyles((theme) => ({
         zIndex: 1,
         top: `calc(50% - ${arrowButtonSize / 2}px)`,
         '&.prev': {
-            left: -arrowButtonSize / 2,
-            [theme.mq.tabletOrSmaller]: {
-                left: ({sideMargin}) => -sideMargin,
-            },
-            [theme.mq.largeDesktop]: {
-                left: -(24 + arrowButtonSize),
-            },
+            left: arrowButtonSeparation(
+                ({containerType}) => containerType,
+                ({sideMargin}) => sideMargin
+            ),
         },
         '&.next': {
-            right: -arrowButtonSize / 2,
-            [theme.mq.tabletOrSmaller]: {
-                right: ({sideMargin}) => -sideMargin,
-            },
-            [theme.mq.largeDesktop]: {
-                right: -(24 + arrowButtonSize),
-            },
+            right: arrowButtonSeparation(
+                ({containerType}) => containerType,
+                ({sideMargin}) => sideMargin
+            ),
         },
     },
     hasScroll: {},
@@ -319,12 +324,20 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     dataAttributes,
 }) => {
     const {texts} = useTheme();
+    const containerType = useContainerType();
     const itemsPerPageConfig = normalizeItemsPerPage(itemsPerPage);
     const mobilePageOffsetConfig = normalizeMobilePageOffset(mobilePageOffset);
     const {isDesktopOrBigger} = useScreenSize();
     const gap: number = gapProp ?? (isDesktopOrBigger ? 16 : 8);
     const sideMargin = useResonsiveLayoutMargin();
-    const classes = useStyles({itemsPerPageConfig, mobilePageOffsetConfig, free, gap, sideMargin});
+    const classes = useStyles({
+        itemsPerPageConfig,
+        mobilePageOffsetConfig,
+        free,
+        gap,
+        sideMargin,
+        containerType,
+    });
     const carouselRef = React.useRef<HTMLDivElement>(null);
     const itemsPerPageFloor = isDesktopOrBigger
         ? Math.floor(itemsPerPageConfig.desktop)

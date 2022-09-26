@@ -3,9 +3,10 @@ import ThemeContext from './theme-context';
 import ScreenSizeContext from './screen-size-context';
 import AriaIdGetterContext from './aria-id-getter-context';
 import {listenResize} from './utils/dom';
+import ContainerWidthContext from './container-width-context';
+import {mediaQueriesConfig, Theme} from './theme';
 
 import type {ScreenSizeContextType} from './screen-size-context';
-import type {Theme} from './theme';
 
 export const useTheme = (): Theme => {
     const theme = React.useContext(ThemeContext);
@@ -184,4 +185,20 @@ export const useIsInViewport = (
     }, [ref, options?.root, options?.rootMargin, options?.threshold]);
 
     return isInViewport;
+};
+
+type ContainerType = 'largue-desktop' | 'small-desktop' | 'tablet' | 'mobile';
+
+export const useContainerType = (): ContainerType => {
+    const width = React.useContext(ContainerWidthContext);
+    if (!width) {
+        throw Error(
+            'To use container width you must instantiate <ContainerWidthContext.Provider> as their parent.'
+        );
+    }
+
+    if (width >= mediaQueriesConfig.largeDesktopMinWidth) return 'largue-desktop';
+    else if (width >= mediaQueriesConfig.desktopMinWidth) return 'small-desktop';
+    else if (width >= mediaQueriesConfig.tabletMinWidth) return 'tablet';
+    else return 'mobile';
 };

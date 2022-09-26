@@ -1,4 +1,5 @@
 import * as React from 'react';
+import ContainerSizeContext from './container-size-context';
 import {createUseStyles} from './jss';
 import {getPrefixedDataAttributes} from './utils/dom';
 
@@ -167,8 +168,12 @@ const GridLayout: React.FC<Props> = (props) => {
     if (props.template === '6+6') {
         return (
             <div className={classes.grid} {...dataAttributes}>
-                <div className={classes.span6}>{props.left}</div>
-                <div className={classes.span6}>{props.right}</div>
+                <ContainerSizeContext.Provider value={600}>
+                    <div className={classes.span6}>{props.left}</div>
+                </ContainerSizeContext.Provider>
+                <ContainerSizeContext.Provider value={600}>
+                    <div className={classes.span6}>{props.right}</div>
+                </ContainerSizeContext.Provider>
             </div>
         );
     }
@@ -176,8 +181,12 @@ const GridLayout: React.FC<Props> = (props) => {
     if (props.template === '8+4') {
         return (
             <div className={classes.grid} {...dataAttributes}>
-                <div className={classes.span8}>{props.left}</div>
-                <div className={classes.span4}>{props.right}</div>
+                <ContainerSizeContext.Provider value={800}>
+                    <div className={classes.span8}>{props.left}</div>
+                </ContainerSizeContext.Provider>
+                <ContainerSizeContext.Provider value={400}>
+                    <div className={classes.span4}>{props.right}</div>
+                </ContainerSizeContext.Provider>
             </div>
         );
     }
@@ -185,9 +194,13 @@ const GridLayout: React.FC<Props> = (props) => {
     if (props.template === '4+6') {
         return (
             <div className={classes.grid} {...dataAttributes}>
-                <div className={classes.span4}>{props.left}</div>
+                <ContainerSizeContext.Provider value={400}>
+                    <div className={classes.span4}>{props.left}</div>
+                </ContainerSizeContext.Provider>
                 <div className={classes.span1} />
-                <div className={classes.span6}>{props.right}</div>
+                <ContainerSizeContext.Provider value={600}>
+                    <div className={classes.span6}>{props.right}</div>
+                </ContainerSizeContext.Provider>
                 <div className={classes.span1} />
             </div>
         );
@@ -197,9 +210,13 @@ const GridLayout: React.FC<Props> = (props) => {
         return (
             <div className={classes.grid} {...dataAttributes}>
                 <div className={classes.span1} />
-                <div className={classes.span5}>{props.left}</div>
+                <ContainerSizeContext.Provider value={500}>
+                    <div className={classes.span5}>{props.left}</div>
+                </ContainerSizeContext.Provider>
                 <div className={classes.span1} />
-                <div className={classes.span4}>{props.right}</div>
+                <ContainerSizeContext.Provider value={400}>
+                    <div className={classes.span4}>{props.right}</div>
+                </ContainerSizeContext.Provider>
                 <div className={classes.span1} />
             </div>
         );
@@ -208,8 +225,12 @@ const GridLayout: React.FC<Props> = (props) => {
     if (props.template === '3+9') {
         return (
             <div className={classes.grid} {...dataAttributes}>
-                <div className={classes.span3}>{props.left}</div>
-                <div className={classes.span9}>{props.right}</div>
+                <ContainerSizeContext.Provider value={300}>
+                    <div className={classes.span3}>{props.left}</div>
+                </ContainerSizeContext.Provider>
+                <ContainerSizeContext.Provider value={900}>
+                    <div className={classes.span9}>{props.right}</div>
+                </ContainerSizeContext.Provider>
             </div>
         );
     }
@@ -218,7 +239,9 @@ const GridLayout: React.FC<Props> = (props) => {
         return (
             <div className={classes.grid} {...dataAttributes}>
                 <div className={classes.span1} />
-                <div className={classes.span10}>{props.children}</div>
+                <ContainerSizeContext.Provider value={1000}>
+                    <div className={classes.span10}>{props.children}</div>
+                </ContainerSizeContext.Provider>
                 <div className={classes.span1} />
             </div>
         );
@@ -226,7 +249,7 @@ const GridLayout: React.FC<Props> = (props) => {
 
     return (
         <div className={classes.grid} {...dataAttributes}>
-            {props.children}
+            <ContainerSizeContext.Provider value={1200}>{props.children}</ContainerSizeContext.Provider>
         </div>
     );
 };
