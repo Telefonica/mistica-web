@@ -184,7 +184,7 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
                                         aria-selected={isSelected ? 'true' : 'false'}
                                     >
                                         {icon && <div className={classes.icon}>{icon}</div>}
-                                        <Text3 medium color="inherit">
+                                        <Text3 medium color="inherit" wordBreak={false}>
                                             {text}
                                         </Text3>
                                     </Touchable>
