@@ -10,7 +10,9 @@ test.each`
     ${'DESKTOP'}    | ${'Open two buttons (with icon)'}
     ${'MOBILE_IOS'} | ${'Open two buttons destructive'}
     ${'DESKTOP'}    | ${'Open two buttons destructive'}
-`('ButtonLayout UI package, device: $device, action: $action', async ({device, action}) => {
+    ${'MOBILE_IOS'} | ${'Open dialog'}
+    ${'DESKTOP'}    | ${'Open dialog'}
+`('Dialog, device: $device, action: $action', async ({device, action}) => {
     const page = await openStoryPage({
         id: 'components-dialog--default',
         device,

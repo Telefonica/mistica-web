@@ -28,7 +28,7 @@ export {
 export {default as IconButton} from './icon-button';
 export {default as Popover} from './popover';
 export {default as FocusTrap} from './focus-trap';
-export {confirm, alert} from './dialog';
+export {confirm, alert, dialog} from './dialog';
 export {default as Badge} from './badge';
 export {default as TextLink} from './text-link';
 export {default as Overlay} from './overlay';
@@ -105,6 +105,8 @@ export {default as IconChevron} from './icons/icon-chevron';
 export {default as IconError} from './icons/icon-error';
 export {default as IconSuccess} from './icons/icon-success';
 export {default as IconSuccessVivo} from './icons/icon-success-vivo';
+
+export {SkeletonCircle, SkeletonRow, SkeletonLine, SkeletonRectangle, SkeletonText} from './skeletons';
 
 export {default as Circle} from './circle';
 
@@ -1792,3 +1794,6 @@ export {default as IconWorkflowRegular} from './generated/mistica-icons/icon-wor
 export {default as IconWorkshopMeetingFilled} from './generated/mistica-icons/icon-workshop-meeting-filled';
 export {default as IconWorkshopMeetingLight} from './generated/mistica-icons/icon-workshop-meeting-light';
 export {default as IconWorkshopMeetingRegular} from './generated/mistica-icons/icon-workshop-meeting-regular';
+export {default as IconWorldDeviceFilled} from './generated/mistica-icons/icon-world-device-filled';
+export {default as IconWorldDeviceLight} from './generated/mistica-icons/icon-world-device-light';
+export {default as IconWorldDeviceRegular} from './generated/mistica-icons/icon-world-device-regular';

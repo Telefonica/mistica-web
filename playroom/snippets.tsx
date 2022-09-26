@@ -1348,7 +1348,7 @@ const alertSnippets = [
   }
 >
   Open two buttons (with icon)
-</ButtonPrimary>        
+</ButtonPrimary>
       `,
     },
     {
@@ -1367,8 +1367,84 @@ const alertSnippets = [
   }
 >
   Open two buttons destructive
-</ButtonPrimary>  
+</ButtonPrimary>
       `,
+    },
+    {
+        group: 'Dialogs',
+        name: 'Dialog',
+        code: `
+<ButtonPrimary
+onPress={() =>
+  dialog({
+    message:
+      "Sign up to ensure that you don't miss the next promotion and other important events in Personal Account.",
+    acceptText: "Erase all data",
+    cancelText: "Cancel",
+    destructive: true,
+    extra: <Text1 regular>This is the extra zone</Text1>
+  })
+}
+>
+Open two buttons destructive
+</ButtonPrimary>
+    `,
+    },
+];
+
+const skeletonSnippets = [
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Line',
+        code: `
+               <SkeletonLine
+                    ariaLabel="loading"
+                    disableAnimation={false}
+                />
+        `,
+    },
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Circle',
+        code: `
+               <SkeletonCircle
+                    size={40}
+                    ariaLabel="loading"
+                    disableAnimation={false}
+               />
+        `,
+    },
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Text',
+        code: `
+               <SkeletonText
+                    ariaLabel="loading"
+                    disableAnimation={false}
+               />
+        `,
+    },
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Row',
+        code: `
+            <SkeletonRow
+                ariaLabel="loading"
+                disableAnimation={false}
+            />
+        `,
+    },
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Rectangle',
+        code: `
+            <SkeletonRectangle
+                ariaLabel="loading"
+                height={100}
+                width={200}
+                disableAnimation={false}
+            />
+        `,
     },
 ];
 
@@ -1376,6 +1452,7 @@ export default [
     ...buttonSnippets,
     ...formSnippets,
     ...feedbackSnippets,
+    ...skeletonSnippets,
     {group: 'Feedbacks', name: 'Snackbar', code: '<Snackbar message="Some message here" />'},
     ...layoutSnippets,
     {
