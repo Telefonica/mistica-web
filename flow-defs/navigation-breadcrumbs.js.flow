@@ -1,12 +1,15 @@
 // @flow
 
 import * as React from "react";
+import type { DataAttributes } from "./utils/types";
 export type NavigationBreadcrumbsProps = {
   title: string,
   breadcrumbs: $ReadOnlyArray<{
     +title: string,
     +url: string,
   }>,
+  dataAttributes?: DataAttributes,
+  "aria-label"?: string,
 };
 declare var NavigationBreadcrumbs: React.ComponentType<NavigationBreadcrumbsProps>;
 declare export default typeof NavigationBreadcrumbs;
