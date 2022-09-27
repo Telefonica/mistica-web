@@ -51,7 +51,7 @@ const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
         () => !isServerSide && window.matchMedia(mediaQueries.tabletOrSmaller).matches
     );
 
-    const [isLargueDesktop, setIsLargueDesktop] = React.useState(
+    const [isLargeDesktop, setIsLargeDesktop] = React.useState(
         () => !isServerSide && window.matchMedia(mediaQueries.largueDesktop).matches
     );
 
@@ -65,7 +65,7 @@ const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
             [mediaQueries.tablet, setIsTablet],
             [mediaQueries.tabletOrBigger, setIsTabletOrBigger],
             [mediaQueries.tabletOrSmaller, setIsTabletOrSmaller],
-            [mediaQueries.largueDesktop, setIsLargueDesktop],
+            [mediaQueries.largueDesktop, setIsLargeDesktop],
         ];
 
         const cleanupFunctions = entries.map(([query, setState]) => {
@@ -94,9 +94,9 @@ const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
             isTabletOrBigger,
             isTabletOrSmaller,
             isDesktopOrBigger: !isTabletOrSmaller,
-            isLargueDesktop,
+            isLargeDesktop,
         }),
-        [isMobile, isTablet, isTabletOrBigger, isTabletOrSmaller, isLargueDesktop]
+        [isMobile, isTablet, isTabletOrBigger, isTabletOrSmaller, isLargeDesktop]
     );
 
     return <ScreenSizeContext.Provider value={value}>{children}</ScreenSizeContext.Provider>;

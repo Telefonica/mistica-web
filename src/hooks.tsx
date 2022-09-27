@@ -3,11 +3,9 @@ import ThemeContext from './theme-context';
 import ScreenSizeContext from './screen-size-context';
 import AriaIdGetterContext from './aria-id-getter-context';
 import {listenResize} from './utils/dom';
-import ContainerTypeContext from './container-type-context';
 
 import type {Theme} from './theme';
 import type {ScreenSizeContextType} from './screen-size-context';
-import type {ContainerType} from './utils/types';
 
 export const useTheme = (): Theme => {
     const theme = React.useContext(ThemeContext);
@@ -186,15 +184,4 @@ export const useIsInViewport = (
     }, [ref, options?.root, options?.rootMargin, options?.threshold]);
 
     return isInViewport;
-};
-
-export const useContainerType = (): ContainerType => {
-    const containerType = React.useContext(ContainerTypeContext);
-    if (!containerType) {
-        throw Error(
-            'To use container type you must instantiate <GridLayout> or <ResponsiveLayout> as parent.'
-        );
-    }
-
-    return containerType;
 };

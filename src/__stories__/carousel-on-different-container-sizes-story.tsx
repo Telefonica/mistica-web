@@ -14,7 +14,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components/Carousels/Carousel on grid layout',
+    title: 'Components/Carousels/Carousel on different container types',
 };
 
 type Args = {
@@ -94,7 +94,7 @@ export const Default: StoryComponent<Args> = ({
     );
 };
 
-Default.storyName = 'Carousel on different container sizes';
+Default.storyName = 'Carousel on different container types';
 Default.parameters = {fullScreen: true};
 Default.args = {
     withBullets: true,

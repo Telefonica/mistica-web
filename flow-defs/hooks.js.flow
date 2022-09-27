@@ -3,7 +3,6 @@
 import * as React from "react";
 import type { Theme } from "./theme";
 import type { ScreenSizeContextType } from "./screen-size-context";
-import type { ContainerType } from "./utils/types";
 declare export var useTheme: () => Theme;
 declare export var useDisableBodyScroll: (disable: boolean) => void;
 declare export var useScreenSize: () => ScreenSizeContextType;
@@ -30,5 +29,4 @@ declare export var useIsInViewport: (
   defaultValue: boolean,
   options?: IntersectionObserverOptions | void
 ) => boolean;
-declare export var useContainerType: () => ContainerType;
 declare export {};
