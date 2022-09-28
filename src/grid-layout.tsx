@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useScreenSize} from '.';
+import {useScreenSize} from './hooks';
 import ContainerTypeContext from './container-type-context';
 import {createUseStyles} from './jss';
 import {getPrefixedDataAttributes} from './utils/dom';
