@@ -13,7 +13,7 @@ export type IconProps = {
 };
 export type ContainerType =
   | "desktop-small-column"
-  | "desktop-mid-column"
+  | "desktop-medium-column"
   | "desktop-wide-column"
   | "tablet-column"
   | "mobile-column";

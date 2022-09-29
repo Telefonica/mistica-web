@@ -173,10 +173,10 @@ const GridLayout: React.FC<Props> = (props) => {
     if (props.template === '6+6') {
         return (
             <div className={classes.grid} {...dataAttributes}>
-                <ContainerTypeContext.Provider value={getContainerType('desktop-mid-column')}>
+                <ContainerTypeContext.Provider value={getContainerType('desktop-medium-column')}>
                     <div className={classes.span6}>{props.left}</div>
                 </ContainerTypeContext.Provider>
-                <ContainerTypeContext.Provider value={getContainerType('desktop-mid-column')}>
+                <ContainerTypeContext.Provider value={getContainerType('desktop-medium-column')}>
                     <div className={classes.span6}>{props.right}</div>
                 </ContainerTypeContext.Provider>
             </div>
@@ -186,7 +186,7 @@ const GridLayout: React.FC<Props> = (props) => {
     if (props.template === '8+4') {
         return (
             <div className={classes.grid} {...dataAttributes}>
-                <ContainerTypeContext.Provider value={getContainerType('desktop-mid-column')}>
+                <ContainerTypeContext.Provider value={getContainerType('desktop-medium-column')}>
                     <div className={classes.span8}>{props.left}</div>
                 </ContainerTypeContext.Provider>
                 <ContainerTypeContext.Provider value={getContainerType('desktop-small-column')}>
@@ -203,7 +203,7 @@ const GridLayout: React.FC<Props> = (props) => {
                     <div className={classes.span4}>{props.left}</div>
                 </ContainerTypeContext.Provider>
                 <div className={classes.span1} />
-                <ContainerTypeContext.Provider value={getContainerType('desktop-mid-column')}>
+                <ContainerTypeContext.Provider value={getContainerType('desktop-medium-column')}>
                     <div className={classes.span6}>{props.right}</div>
                 </ContainerTypeContext.Provider>
                 <div className={classes.span1} />
@@ -233,7 +233,7 @@ const GridLayout: React.FC<Props> = (props) => {
                 <ContainerTypeContext.Provider value={getContainerType('desktop-small-column')}>
                     <div className={classes.span3}>{props.left}</div>
                 </ContainerTypeContext.Provider>
-                <ContainerTypeContext.Provider value={getContainerType('desktop-mid-column')}>
+                <ContainerTypeContext.Provider value={getContainerType('desktop-medium-column')}>
                     <div className={classes.span9}>{props.right}</div>
                 </ContainerTypeContext.Provider>
             </div>

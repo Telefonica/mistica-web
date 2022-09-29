@@ -16,7 +16,7 @@ export const useContainerType = (): ContainerType => {
         return 'desktop-wide-column';
     }
     if (isDesktopOrBigger) {
-        return 'desktop-mid-column';
+        return 'desktop-medium-column';
     }
     if (isTablet) {
         return 'tablet-column';

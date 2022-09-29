@@ -103,7 +103,6 @@ const arrowButtonStyle = (theme: Theme) => ({
 });
 
 const arrowButtonSeparation = (containerType: ContainerType, isLargeDesktop: boolean, sideMargin: number) => {
-    console.log(containerType);
     switch (containerType) {
         case 'mobile-column':
         case 'tablet-column':
