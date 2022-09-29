@@ -1,3 +1,15 @@
+# [12.3.0](https://github.com/Telefonica/mistica-web/compare/v12.2.0...v12.3.0) (2022-09-29)
+
+
+### Bug Fixes
+
+* **NavigationBreadcrumbs:** Improve Breadcrumbs UI and accessibility. Small fix in snackbar. ([#542](https://github.com/Telefonica/mistica-web/issues/542)) ([817985a](https://github.com/Telefonica/mistica-web/commit/817985a26bca3d82bfa648b87da9ed36eb54a274))
+
+
+### Features
+
+* **Carousel:** improve styles inside GridLayout columns ([#547](https://github.com/Telefonica/mistica-web/issues/547)) ([dbdd288](https://github.com/Telefonica/mistica-web/commit/dbdd288903419ba62ab7342660d8f5b3a35df49a))
+
 # [12.2.0](https://github.com/Telefonica/mistica-web/compare/v12.1.0...v12.2.0) (2022-09-21)
 
 
