@@ -162,6 +162,7 @@ export const getTexts = (locale: Locale): typeof TEXTS_ES => {
 
 export const dimensions = {
     headerMobileHeight: 56,
+    headerDesktopHeight: 80,
 };
 
 export const mediaQueriesConfig = {
@@ -228,7 +229,7 @@ export type ThemeConfig = {
         logEvent: (trackingEvent: TrackingEvent) => Promise<void>;
         eventFormat?: EventFormat;
     };
-    dimensions?: {headerMobileHeight: number};
+    dimensions?: {headerMobileHeight: number; headerDesktopHeight: number};
     mediaQueries?: {
         tabletMinWidth: number;
         desktopMinWidth: number;
@@ -257,7 +258,7 @@ export type Theme = {
         logEvent: (trackingEvent: TrackingEvent) => Promise<void>;
         eventFormat: EventFormat;
     };
-    dimensions: {headerMobileHeight: number};
+    dimensions: {headerMobileHeight: number; headerDesktopHeight: number};
     mq: MediaQueries;
     colors: Colors;
     textPresets: TextPresetsConfig;

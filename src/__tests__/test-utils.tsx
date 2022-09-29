@@ -23,7 +23,7 @@ type ThemeOverrides = {
     };
     texts?: Partial<ThemeTexts>;
     analytics?: {logEvent: (trackingEvent: TrackingEvent) => Promise<void>; eventFormat?: EventFormat};
-    dimensions?: {headerMobileHeight: number};
+    dimensions?: {headerMobileHeight: number; headerDesktopHeight: number};
     useHrefDecorator?: () => (href: string) => string;
     Link?: ThemeConfig['Link'];
 };
