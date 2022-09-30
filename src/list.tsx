@@ -196,32 +196,21 @@ const Content: React.FC<ContentProps> = ({
             >
                 <Stack space={4}>
                     {headline && (
-                        <Text1 wordBreak regular color={colors.textPrimary}>
+                        <Text1 regular color={colors.textPrimary}>
                             {headline}
                         </Text1>
                     )}
                     <Stack space={2}>
-                        <Text3
-                            wordBreak
-                            regular
-                            color={colors.textPrimary}
-                            truncate={titleLinesMax}
-                            id={labelId}
-                        >
+                        <Text3 regular color={colors.textPrimary} truncate={titleLinesMax} id={labelId}>
                             {title}
                         </Text3>
                         {subtitle && (
-                            <Text2 wordBreak regular color={colors.textSecondary} truncate={subtitleLinesMax}>
+                            <Text2 regular color={colors.textSecondary} truncate={subtitleLinesMax}>
                                 {subtitle}
                             </Text2>
                         )}
                         {description && (
-                            <Text2
-                                wordBreak
-                                regular
-                                color={colors.textSecondary}
-                                truncate={descriptionLinesMax}
-                            >
+                            <Text2 regular color={colors.textSecondary} truncate={descriptionLinesMax}>
                                 {description}
                             </Text2>
                         )}

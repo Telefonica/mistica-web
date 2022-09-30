@@ -398,7 +398,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
 
                 {prefix && (
                     <div className={classes.prefix}>
-                        <Text3 color={colors.textSecondary} regular>
+                        <Text3 color={colors.textSecondary} regular wordBreak={false}>
                             {prefix}
                         </Text3>
                     </div>
