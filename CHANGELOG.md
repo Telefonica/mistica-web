@@ -1,3 +1,10 @@
+# [12.4.0](https://github.com/Telefonica/mistica-web/compare/v12.3.0...v12.4.0) (2022-09-30)
+
+
+### Features
+
+* **Text:** make word break by default ([#545](https://github.com/Telefonica/mistica-web/issues/545)) ([845a87d](https://github.com/Telefonica/mistica-web/commit/845a87dc8fa56c13683d03c2c852449a76e8df1e))
+
 # [12.3.0](https://github.com/Telefonica/mistica-web/compare/v12.2.0...v12.3.0) (2022-09-29)
 
 
