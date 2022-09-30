@@ -15,6 +15,8 @@ const defaultWidthDesktop = 340;
 const arrowWrapperWidth = arrowSize * 2;
 const arrowWrapperHeight = arrowSize;
 
+let isPointerOver = false;
+
 const useStyles = createUseStyles((theme) => {
     const shadowAlpha = theme.isDarkMode ? 1 : 0.2;
     return {
@@ -101,8 +103,6 @@ type Position = 'top' | 'bottom' | 'left' | 'right';
 
 const getWidthDesktop = (customWidth?: number) => (customWidth ? customWidth : defaultWidthDesktop);
 
-const EVENT_THROTTLE_TIME = process.env.NODE_ENV === 'test' ? 0 : 200;
-
 type Props = {
     children?: React.ReactNode;
     description?: string;
@@ -130,6 +130,8 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
     const lastChangeTime = React.useRef(0);
     const classes = useStyles();
 
+    const isTouchableDevice = window.matchMedia('(pointer: coarse)').matches;
+
     const closeTooltip = () => {
         if (isVisible) {
             setIsVisible(false);
@@ -144,17 +146,11 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
     });
 
     const handleClickOutside = () => {
-        if (Date.now() - lastChangeTime.current < EVENT_THROTTLE_TIME) {
-            return;
-        }
         lastChangeTime.current = Date.now();
         setIsVisible(false);
     };
 
     const toggleVisibility = (e: React.FocusEvent<HTMLDivElement> | React.PointerEvent<HTMLDivElement>) => {
-        if (Date.now() - lastChangeTime.current < EVENT_THROTTLE_TIME) {
-            return;
-        }
         lastChangeTime.current = Date.now();
         targetBoundingClientRect.current = e.currentTarget.getBoundingClientRect();
         setIsVisible(!isVisible);
@@ -246,7 +242,19 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
         <>
             <div
                 className={classes.wrapper}
-                onPointerDown={toggleVisibility}
+                onPointerOver={(e) => {
+                    if (isPointerOver) return;
+                    isPointerOver = true;
+                    toggleVisibility(e);
+                }}
+                onPointerLeave={
+                    !isTouchableDevice
+                        ? (e) => {
+                              isPointerOver = false;
+                              toggleVisibility(e);
+                          }
+                        : () => {}
+                }
                 onFocus={handleFocus}
                 onKeyDown={handleKeyDown}
                 touch-action="auto" // Prop needed for Pointer Events Polyfill to work properly
@@ -260,7 +268,7 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
             </div>
             {isVisible && (
                 <Portal>
-                    <Overlay onPress={handleClickOutside} />
+                    {isTouchableDevice && <Overlay onPress={handleClickOutside} />}
                     <div
                         role="tooltip"
                         id={ariaId}
