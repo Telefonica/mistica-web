@@ -48,18 +48,15 @@ export const palette = {
     grey6: '#313235',
     white: '#FFFFFF',
 
-    movistarProminentBlue: '#0B2739',
-    movistarProminentBlueDark: '#081F2D',
-    movistarProminentBlueLight20: '#CED3D7',
-    movistarProminentBlueLight50: '#85939C',
-    movistarProminentBlueLight70: '#546874',
+    movistarBlueDark: '#0B2739',
+    movistarBlueDark70: '#081F2D',
 
     // specific for dark mode:
-    darkModeBlack: '#191919',
-    darkModeGrey: '#242424',
+    darkModeBlack: '#081F2D',
+    darkModeGrey: '#0B2739',
 } as const;
 
-export const getMovistarSkin: GetKnownSkin = (variant) => {
+export const getMovistarSkin: GetKnownSkin = () => {
     const skin: KnownSkin = {
         name: MOVISTAR_SKIN,
         colors: {
@@ -67,13 +64,13 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             appBarBackground: palette.white,
             background: palette.white,
             backgroundContainer: palette.white,
-            backgroundBrand: palette.movistarBlue,
+            backgroundBrand: palette.movistarBlueDark,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
             backgroundSkeleton: palette.grey2,
             backgroundSkeletonInverse: palette.movistarBlue55,
-            navigationBarBackground: palette.movistarBlue,
+            navigationBarBackground: palette.movistarBlueDark,
             backgroundAlternative: palette.grey1,
-            backgroundFeedbackBottom: palette.movistarBlue,
+            backgroundFeedbackBottom: palette.movistarBlueDark,
 
             skeletonWave: palette.grey2,
 
@@ -92,10 +89,10 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
 
             buttonPrimaryBackground: palette.movistarBlue,
-            buttonPrimaryBackgroundInverse: palette.white,
+            buttonPrimaryBackgroundInverse: palette.movistarBlue,
             buttonPrimaryBackgroundSelected: palette.movistarBlue55,
             buttonPrimaryBackgroundHover: palette.movistarBlue55, // web only
-            buttonPrimaryBackgroundSelectedInverse: palette.movistarBlue30,
+            buttonPrimaryBackgroundSelectedInverse: palette.movistarBlue55,
 
             buttonSecondaryBackground: palette.movistarBlue,
             buttonSecondaryBackgroundSelected: palette.movistarBlue55,
@@ -103,8 +100,8 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             buttonSecondaryBorderSelectedInverse: palette.movistarBlue30,
 
             textButtonPrimary: palette.white,
-            textButtonPrimaryInverse: palette.movistarBlue,
-            textButtonPrimaryInverseSelected: palette.movistarBlue,
+            textButtonPrimaryInverse: palette.white,
+            textButtonPrimaryInverseSelected: palette.white,
 
             textButtonSecondary: palette.movistarBlue,
             textButtonSecondarySelected: palette.movistarBlue55,
@@ -129,8 +126,8 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
 
             // DIVIDERS
             divider: palette.grey2,
-            dividerInverse: palette.movistarBlue55,
-            navigationBarDivider: palette.movistarBlue,
+            dividerInverse: palette.movistarBlueDark70,
+            navigationBarDivider: palette.movistarBlueDark,
 
             // FEEDBACKS
             badge: palette.pepper55,
@@ -268,16 +265,6 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
         //     text10: {weight: 'medium'},
         // },
     };
-
-    if (variant === 'prominent') {
-        skin.colors.brand = palette.movistarProminentBlue;
-        skin.colors.brandHigh = palette.movistarProminentBlueDark;
-        skin.colors.backgroundBrand = palette.movistarProminentBlue;
-        skin.colors.navigationBarBackground = palette.movistarProminentBlue;
-        skin.colors.backgroundFeedbackBottom = palette.movistarProminentBlue;
-        skin.colors.controlActivated = palette.movistarProminentBlue;
-        skin.colors.dividerInverse = palette.movistarProminentBlueDark;
-    }
 
     return skin;
 };
