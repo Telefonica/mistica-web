@@ -1,8 +1,10 @@
 import * as React from 'react';
+import {useScreenSize} from './hooks';
+import ContainerTypeContext from './container-type-context';
 import {createUseStyles} from './jss';
 import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {DataAttributes} from './utils/types';
+import type {ContainerType, DataAttributes} from './utils/types';
 
 const useStyles = createUseStyles((theme) => ({
     grid: {
@@ -163,12 +165,20 @@ type Props =
 const GridLayout: React.FC<Props> = (props) => {
     const classes = useStyles({verticalSpace: props.verticalSpace ?? 0});
     const dataAttributes = getPrefixedDataAttributes(props.dataAttributes);
+    const {isMobile, isTablet} = useScreenSize();
+
+    const getContainerType = (containerType: ContainerType) =>
+        isMobile ? 'mobile-column' : isTablet ? 'tablet-column' : containerType;
 
     if (props.template === '6+6') {
         return (
             <div className={classes.grid} {...dataAttributes}>
-                <div className={classes.span6}>{props.left}</div>
-                <div className={classes.span6}>{props.right}</div>
+                <ContainerTypeContext.Provider value={getContainerType('desktop-medium-column')}>
+                    <div className={classes.span6}>{props.left}</div>
+                </ContainerTypeContext.Provider>
+                <ContainerTypeContext.Provider value={getContainerType('desktop-medium-column')}>
+                    <div className={classes.span6}>{props.right}</div>
+                </ContainerTypeContext.Provider>
             </div>
         );
     }
@@ -176,8 +186,12 @@ const GridLayout: React.FC<Props> = (props) => {
     if (props.template === '8+4') {
         return (
             <div className={classes.grid} {...dataAttributes}>
-                <div className={classes.span8}>{props.left}</div>
-                <div className={classes.span4}>{props.right}</div>
+                <ContainerTypeContext.Provider value={getContainerType('desktop-medium-column')}>
+                    <div className={classes.span8}>{props.left}</div>
+                </ContainerTypeContext.Provider>
+                <ContainerTypeContext.Provider value={getContainerType('desktop-small-column')}>
+                    <div className={classes.span4}>{props.right}</div>
+                </ContainerTypeContext.Provider>
             </div>
         );
     }
@@ -185,9 +199,13 @@ const GridLayout: React.FC<Props> = (props) => {
     if (props.template === '4+6') {
         return (
             <div className={classes.grid} {...dataAttributes}>
-                <div className={classes.span4}>{props.left}</div>
+                <ContainerTypeContext.Provider value={getContainerType('desktop-small-column')}>
+                    <div className={classes.span4}>{props.left}</div>
+                </ContainerTypeContext.Provider>
                 <div className={classes.span1} />
-                <div className={classes.span6}>{props.right}</div>
+                <ContainerTypeContext.Provider value={getContainerType('desktop-medium-column')}>
+                    <div className={classes.span6}>{props.right}</div>
+                </ContainerTypeContext.Provider>
                 <div className={classes.span1} />
             </div>
         );
@@ -197,9 +215,13 @@ const GridLayout: React.FC<Props> = (props) => {
         return (
             <div className={classes.grid} {...dataAttributes}>
                 <div className={classes.span1} />
-                <div className={classes.span5}>{props.left}</div>
+                <ContainerTypeContext.Provider value={getContainerType('desktop-small-column')}>
+                    <div className={classes.span5}>{props.left}</div>
+                </ContainerTypeContext.Provider>
                 <div className={classes.span1} />
-                <div className={classes.span4}>{props.right}</div>
+                <ContainerTypeContext.Provider value={getContainerType('desktop-small-column')}>
+                    <div className={classes.span4}>{props.right}</div>
+                </ContainerTypeContext.Provider>
                 <div className={classes.span1} />
             </div>
         );
@@ -208,8 +230,12 @@ const GridLayout: React.FC<Props> = (props) => {
     if (props.template === '3+9') {
         return (
             <div className={classes.grid} {...dataAttributes}>
-                <div className={classes.span3}>{props.left}</div>
-                <div className={classes.span9}>{props.right}</div>
+                <ContainerTypeContext.Provider value={getContainerType('desktop-small-column')}>
+                    <div className={classes.span3}>{props.left}</div>
+                </ContainerTypeContext.Provider>
+                <ContainerTypeContext.Provider value={getContainerType('desktop-medium-column')}>
+                    <div className={classes.span9}>{props.right}</div>
+                </ContainerTypeContext.Provider>
             </div>
         );
     }
@@ -218,7 +244,9 @@ const GridLayout: React.FC<Props> = (props) => {
         return (
             <div className={classes.grid} {...dataAttributes}>
                 <div className={classes.span1} />
-                <div className={classes.span10}>{props.children}</div>
+                <ContainerTypeContext.Provider value={getContainerType('desktop-wide-column')}>
+                    <div className={classes.span10}>{props.children}</div>
+                </ContainerTypeContext.Provider>
                 <div className={classes.span1} />
             </div>
         );

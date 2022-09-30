@@ -4,8 +4,8 @@ import ScreenSizeContext from './screen-size-context';
 import AriaIdGetterContext from './aria-id-getter-context';
 import {listenResize} from './utils/dom';
 
-import type {ScreenSizeContextType} from './screen-size-context';
 import type {Theme} from './theme';
+import type {ScreenSizeContextType} from './screen-size-context';
 
 export const useTheme = (): Theme => {
     const theme = React.useContext(ThemeContext);

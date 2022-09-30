@@ -1,0 +1,7 @@
+// @flow
+
+import * as React from "react";
+import type { ContainerType } from "./utils/types";
+declare var ContainerTypeContext: React.Context<ContainerType | null>;
+declare export var useContainerType: () => ContainerType;
+declare export default typeof ContainerTypeContext;
