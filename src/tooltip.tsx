@@ -16,7 +16,8 @@ const defaultWidthDesktop = 340;
 const arrowWrapperWidth = arrowSize * 2;
 const arrowWrapperHeight = arrowSize;
 
-const TRANSITION_DURATION_MS = 800;
+const transitionDurationMs = 600;
+const animationMovement = 12;
 const animationTiming = 'cubic-bezier(0.215, 0.61, 0.355, 1)';
 
 const noOp = () => {};
@@ -107,22 +108,22 @@ const useAnimationStyles = createUseStyles(() => ({
     enter: {
         transform: ({position}: {position: Position}) => {
             if (position === 'bottom') {
-                return 'translateY(16px)';
+                return `translateY(${animationMovement}px)`;
             }
 
             if (position === 'top') {
-                return 'translateY(calc(-100% - 16px))';
+                return `translateY(calc(-100% - ${animationMovement}px))`;
             }
 
             if (position === 'right') {
-                return 'translateX(16px) translateY(-50%)';
+                return `translateX(${animationMovement}px) translateY(-50%)`;
             }
 
             if (position === 'left') {
-                return 'translateX(-16px) translateY(-50%)';
+                return `translateX(-${animationMovement}px) translateY(-50%)`;
             }
 
-            return 'translateY(-16px)';
+            return `translateY(-${animationMovement}px)`;
         },
     },
 
@@ -135,7 +136,7 @@ const useAnimationStyles = createUseStyles(() => ({
             return '$fadeInX';
         },
         animationFillMode: 'both',
-        animationDuration: `${TRANSITION_DURATION_MS}ms`,
+        animationDuration: `${transitionDurationMs}ms`,
         animationTimingFunction: animationTiming,
     },
     enterDone: {
@@ -167,7 +168,7 @@ const useAnimationStyles = createUseStyles(() => ({
 
             return 'translateY(0px)';
         },
-        transition: `transform ${TRANSITION_DURATION_MS}ms ${animationTiming}`,
+        transition: `transform ${transitionDurationMs}ms ${animationTiming}`,
 
         animation: '$fadeOut 0.3s',
         animationTimingFunction: animationTiming,
@@ -177,18 +178,18 @@ const useAnimationStyles = createUseStyles(() => ({
     exitActive: {
         transform: ({position}: {position: Position}) => {
             if (position === 'bottom') {
-                return 'translateY(16px)';
+                return `translateY(${animationMovement}px)`;
             }
 
             if (position === 'top') {
-                return 'translateY(calc(-100% - 16px))';
+                return `translateY(calc(-100% - ${animationMovement}px))`;
             }
 
             if (position === 'right') {
-                return 'translateX(16px) translateY(-50%)';
+                return `translateX(${animationMovement}px) translateY(-50%)`;
             }
 
-            return 'translateX(-16px) translateY(-50%)';
+            return `translateX(-${animationMovement}px) translateY(-50%)`;
         },
     },
 
@@ -383,6 +384,8 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
                         ? noOp
                         : () => {
                               closeTooltipTimeoutId.current = setTimeout(() => {
+                                  if (!isPointerOver.current) return;
+
                                   closeTooltipTimeoutId.current = null;
                                   isPointerOver.current = false;
                                   toggleVisibility();
@@ -402,10 +405,10 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
             </div>
 
             <Portal>
-                {isTouchableDevice && <Overlay onPress={handleClickOutside} />}
+                {isVisible && isTouchableDevice && <Overlay onPress={handleClickOutside} />}
                 <CSSTransition
                     in={isVisible}
-                    timeout={TRANSITION_DURATION_MS}
+                    timeout={transitionDurationMs}
                     classNames={{
                         enter: animationClasses.enter,
                         enterActive: animationClasses.enterActive,
@@ -435,6 +438,8 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
                                 ? noOp
                                 : () => {
                                       closeTooltipTimeoutId.current = setTimeout(() => {
+                                          if (!isPointerOver.current) return;
+
                                           closeTooltipTimeoutId.current = null;
                                           isPointerOver.current = false;
                                           toggleVisibility();
