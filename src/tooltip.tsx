@@ -284,7 +284,8 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
     const classes = useStyles();
     const animationClasses = useAnimationStyles({position});
 
-    const isTouchableDevice = window.matchMedia('(pointer: coarse)').matches;
+    const isTouchableDevice =
+        typeof window !== 'undefined' ? window.matchMedia('(pointer: coarse)').matches : false;
 
     const closeTooltip = () => {
         if (isVisible) {
@@ -323,6 +324,10 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
     };
 
     const getContainerPosition = (position: Position, width: number) => {
+        if (typeof window === 'undefined') {
+            return {};
+        }
+
         const containerPos = {
             right: {
                 left: targetBoundingClientRect.current.right + distanceToTarget,
