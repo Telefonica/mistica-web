@@ -151,7 +151,7 @@ const useAnimationStyles = createUseStyles(() => ({
     exit: {
         transform: ({position}: {position: Position}) => {
             if (position === 'bottom') {
-                return 'translateY(0px)';
+                return 'translateY(0)';
             }
 
             if (position === 'top') {
@@ -168,29 +168,21 @@ const useAnimationStyles = createUseStyles(() => ({
 
             return 'translateY(0px)';
         },
-        transition: `transform ${transitionDurationMs}ms ${animationTiming}`,
-
-        animation: '$fadeOut 0.3s',
-        animationTimingFunction: animationTiming,
-        animationFillMode: 'both',
     },
 
     exitActive: {
-        transform: ({position}: {position: Position}) => {
-            if (position === 'bottom') {
-                return `translateY(${animationMovement}px)`;
-            }
+        animationName: ({position}: {position: Position}) => {
+            if (position === 'top') return '$fadeOutTop';
 
-            if (position === 'top') {
-                return `translateY(calc(-100% - ${animationMovement}px))`;
-            }
+            if (position === 'bottom') return '$fadeOutBottom';
 
-            if (position === 'right') {
-                return `translateX(${animationMovement}px) translateY(-50%)`;
-            }
+            if (position === 'right') return '$fadeOutRight';
 
-            return `translateX(-${animationMovement}px) translateY(-50%)`;
+            return '$fadeOutLeft';
         },
+        animationFillMode: 'both',
+        animationDuration: `${transitionDurationMs}ms`,
+        animationTimingFunction: animationTiming,
     },
 
     '@keyframes fadeInBottom': {
@@ -219,7 +211,39 @@ const useAnimationStyles = createUseStyles(() => ({
         },
     },
 
-    '@keyframes fadeOut': {from: {opacity: 1}, to: {opacity: 0}},
+    '@keyframes fadeOutTop': {
+        from: {opacity: 1},
+        '40%': {opacity: 0},
+        to: {
+            opacity: 0,
+            transform: `translateY(calc(-100% - ${animationMovement}px))`,
+        },
+    },
+    '@keyframes fadeOutBottom': {
+        from: {opacity: 1},
+        '40%': {opacity: 0},
+        to: {
+            opacity: 0,
+            transform: `translateY(${animationMovement}px)`,
+        },
+    },
+    '@keyframes fadeOutRight': {
+        from: {opacity: 1},
+        '40%': {opacity: 0},
+        to: {
+            opacity: 0,
+            transform: `translateX(${animationMovement}px) translateY(-50%)`,
+        },
+    },
+
+    '@keyframes fadeOutLeft': {
+        from: {opacity: 1},
+        '40%': {opacity: 0},
+        to: {
+            opacity: 0,
+            transform: `translateX(-${animationMovement}px) translateY(-50%)`,
+        },
+    },
 }));
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
@@ -251,9 +275,6 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
         width: 0,
         height: 0,
     });
-    // This property is needed because safari is making a mess with the events (it has problems
-    // when the overlay layer appears and disappears). This way we ensure that events don't get handled twice
-    const lastChangeTime = React.useRef(0);
 
     const getPosition = (position: Position = defaultPositionDesktop) =>
         isTabletOrSmaller && (position === 'left' || position === 'right') ? defaultPositionMobile : position;
@@ -279,14 +300,14 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
     });
 
     const handleClickOutside = () => {
-        lastChangeTime.current = Date.now();
-        setIsVisible(false);
+        setTimeout(() => {
+            setIsVisible(false);
+        }, 100);
     };
 
     const toggleVisibility = () => {
         if (!targetRef.current) return;
 
-        lastChangeTime.current = Date.now();
         targetBoundingClientRect.current = targetRef.current.getBoundingClientRect();
         setIsVisible(!isVisible);
     };
