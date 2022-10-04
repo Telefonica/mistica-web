@@ -300,9 +300,7 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
     });
 
     const handleClickOutside = () => {
-        setTimeout(() => {
-            setIsVisible(false);
-        }, 100);
+        setIsVisible(false);
     };
 
     const toggleVisibility = () => {
