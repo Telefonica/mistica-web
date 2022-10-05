@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from "react";
+import type { TouchableElement } from "./touchable";
 import type {
   DataAttributes,
   RendersElement,
@@ -87,10 +88,10 @@ export type ButtonLinkProps =
   | ButtonLinkOnPressProps
   | ButtonLinkHrefProps
   | ButtonLinkToProps;
-declare export var ButtonLink: React.AbstractComponent<ButtonLinkProps, HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>;
-declare export var ButtonPrimary: React.ComponentType<ButtonProps>;
-declare export var ButtonSecondary: React.ComponentType<ButtonProps>;
-declare export var ButtonDanger: React.ComponentType<ButtonProps>;
+declare export var ButtonLink: React.AbstractComponent<ButtonLinkProps, TouchableElement>;
+declare export var ButtonPrimary: React.AbstractComponent<ButtonProps, TouchableElement>;
+declare export var ButtonSecondary: React.AbstractComponent<ButtonProps, TouchableElement>;
+declare export var ButtonDanger: React.AbstractComponent<ButtonProps, TouchableElement>;
 export type ButtonElement =
   | RendersElement<typeof ButtonPrimary>
   | RendersElement<typeof ButtonSecondary>
