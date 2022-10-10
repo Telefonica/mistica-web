@@ -581,10 +581,7 @@ export const NavigationBarAction: React.FC<NavigationBarActionProps> = ({childre
     const isInverse = useIsInverseVariant();
     const classes = useNavigationBarActionStyles({isInverse});
     return (
-        <Touchable
-            {...touchableProps}
-            className={touchableProps.className ? touchableProps.className : classes.touchable}
-        >
+        <Touchable {...touchableProps} className={classes.touchable}>
             <Inline space={16} alignItems="center">
                 {React.Children.map(children, (child) =>
                     typeof child === 'string' ? <Text2 regular>{child}</Text2> : child
