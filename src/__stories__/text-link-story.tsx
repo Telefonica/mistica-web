@@ -1,11 +1,13 @@
 import * as React from 'react';
-import {TextLink, Stack, Text3, useTheme} from '..';
-import {StorySection} from './helpers';
+import {TextLink, Stack, Text3, Title1, Divider, useTheme, Text1, Text5, alert} from '..';
 import {ThemeVariant} from '../theme-variant-context';
 
 export default {
     title: 'Components/Text link',
     component: TextLink,
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 type textLinkArgs = {
@@ -13,76 +15,89 @@ type textLinkArgs = {
     inverse: boolean;
 };
 
+const Section = ({title, children}: {title: string; children: React.ReactNode}): JSX.Element => {
+    return (
+        <Stack space={16}>
+            <Title1>{title}</Title1>
+            {children}
+            <Divider />
+        </Stack>
+    );
+};
+
 export const Default: StoryComponent<textLinkArgs> = ({text, inverse}) => {
     const [count, setCount] = React.useState(0);
     const {colors} = useTheme();
-    return (
-        <div data-testid="text-link">
-            <ThemeVariant isInverse={inverse}>
-                <div
-                    style={{
-                        padding: 16,
-                        background: inverse ? colors.backgroundBrand : colors.background,
-                    }}
-                >
-                    <StorySection title="TextLink">
-                        <TextLink href="https://web.tuenti.com/">{text}</TextLink>
-                    </StorySection>
 
-                    <StorySection title="TextLink small">
-                        <TextLink small href="https://web.tuenti.com/">
+    return (
+        <div
+            data-testid="text-link"
+            style={{
+                padding: 16,
+                background: inverse ? colors.backgroundBrand : colors.background,
+            }}
+        >
+            <ThemeVariant isInverse={inverse}>
+                <Stack space={32}>
+                    <Section title="TextLink">
+                        <TextLink href="https://example.org">{text}</TextLink>
+                    </Section>
+
+                    <Section title="TextLink opened in new tab">
+                        <Text3 regular as="p">
+                            Use TextLink with 'newTab' prop for all links that takes the user out off webapp.
+                            The main reason is because it's prepared, in terms of accessibility, to inform
+                            users that uses a screen reader, that we are going to open a new tab if they click
+                            the link.
+                        </Text3>
+                        <TextLink href="https://example.org" newTab>
                             {text}
                         </TextLink>
-                    </StorySection>
+                    </Section>
 
-                    <StorySection title="TextLink opened in new tab">
-                        <Stack space={16}>
-                            <Text3 regular as="p">
-                                Use TextLink with 'newTab' prop for all links that takes the user out off
-                                webapp. The main reason is because it's prepared, in terms of accessibility,
-                                to inform users that uses a screen reader, that we are going to open a new tab
-                                if they click the link.
+                    <Section title="TextLink in a paragraph">
+                        <div style={{maxWidth: 300}}>
+                            <Text3 regular>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.{' '}
+                                <TextLink onPress={() => alert({message: 'Pressed!'})}>
+                                    Nulla ultricies ante ac sapien faucibus
+                                </TextLink>
+                                , et rhoncus tellus sagittis. Aliquam et orci gravida, tempus ex ut...
                             </Text3>
-                            <TextLink href="https://web.tuenti.com/" newTab>
-                                {text}
-                            </TextLink>
-                        </Stack>
-                    </StorySection>
+                        </div>
+                    </Section>
 
-                    <StorySection title="TextLink in a paragraph">
-                        <Text3 regular>
-                            Want to find out more about any of our offers? You’re in the right place. If
-                            you’re interested in phone stock availability, check out our{' '}
-                            <TextLink
-                                href="https://www.o2.co.uk/help/pay-monthly/how-to-track-your-order"
-                                newTab
-                            >
-                                How to track your order page
-                            </TextLink>{' '}
-                            for the latest information.
-                        </Text3>
-                    </StorySection>
+                    <Section title="TextLink with onPress">
+                        <TextLink onPress={() => setCount(count + 1)}>{text}</TextLink>
+                        <Text3 regular>Clicked {count} times</Text3>
+                    </Section>
 
-                    <StorySection title="TextLink with onPress">
-                        <Stack space={16}>
-                            <TextLink onPress={() => setCount(count + 1)}>{text}</TextLink>
-                            <Text3 regular>Clicked {count} times</Text3>
-                        </Stack>
-                    </StorySection>
-
-                    <StorySection title="TextLink disabled">
-                        <TextLink disabled onPress={() => {}}>
-                            Text
+                    <Section title="TextLink disabled">
+                        <TextLink disabled href="https://example.org">
+                            {text}
                         </TextLink>
-                    </StorySection>
-                </div>
+                    </Section>
+
+                    <Section title="TextLink inherits text style">
+                        <Text1 regular>
+                            Text1 regular <TextLink href="https://example.org">{text}</TextLink> with href
+                        </Text1>
+                        <Text3 regular>
+                            Text3 regular <TextLink href="https://example.org">{text}</TextLink> with href
+                        </Text3>
+                        <Text5>
+                            Text5 <TextLink onPress={() => alert({message: 'Pressed!'})}>{text}</TextLink>{' '}
+                            with onPress
+                        </Text5>
+                    </Section>
+                </Stack>
             </ThemeVariant>
         </div>
     );
 };
 
 Default.args = {
-    text: 'this is a link',
+    text: 'Text link',
     inverse: false,
 };
 
