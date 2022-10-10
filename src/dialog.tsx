@@ -9,7 +9,7 @@ import IconButton from './icon-button';
 import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/webview-bridge';
 import ThemeContext from './theme-context';
 import {useTheme, useScreenSize} from './hooks';
-import ButtonLayout from './button-layout';
+import ButtonGroup from './button-group';
 import {Text5, Text3} from './text';
 import {ESC} from './utils/key-codes';
 import Box from './box';
@@ -124,26 +124,35 @@ interface BaseDialogProps {
     title?: string;
     icon?: React.ReactElement;
     message: string;
-    cancelText?: string;
     acceptText?: string;
-    onCancel?: () => void;
     onAccept?: () => void;
-    showCancel?: boolean;
     destructive?: boolean;
 }
 
 interface AlertProps extends BaseDialogProps {
     extra?: undefined;
     forceWeb?: undefined;
+    showClose?: boolean;
+    showCancel?: never;
+    cancelText?: never;
+    onCancel?: never;
 }
 
 interface ConfirmProps extends BaseDialogProps {
     extra?: undefined;
     forceWeb?: undefined;
+    showClose?: boolean;
+    showCancel?: boolean;
+    cancelText?: string;
+    onCancel?: () => void;
 }
 interface ExtendedDialogProps extends BaseDialogProps {
     extra: React.ReactNode;
     forceWeb?: boolean;
+    showClose?: boolean;
+    showCancel?: boolean;
+    cancelText?: string;
+    onCancel?: () => void;
 }
 
 type DialogProps = AlertProps | ConfirmProps | ExtendedDialogProps;
@@ -191,22 +200,26 @@ const Dialog: React.FC<DialogProps> = (props) => {
             </div>
 
             <Box paddingTop={isTabletOrSmaller ? 24 : 32}>
-                <ButtonLayout>
-                    {destructive ? (
-                        <ButtonDanger tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
-                    ) : (
-                        <ButtonPrimary tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
-                    )}
-                    {showCancel && !!handleCancel && (
-                        <ButtonSecondary
-                            tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
-                            onPress={handleCancel}
-                            dataAttributes={{testid: 'dialog-cancel-button'}}
-                        >
-                            {cancelText}
-                        </ButtonSecondary>
-                    )}
-                </ButtonLayout>
+                <ButtonGroup
+                    primaryButton={
+                        destructive ? (
+                            <ButtonDanger tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
+                        ) : (
+                            <ButtonPrimary tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
+                        )
+                    }
+                    secondaryButton={
+                        showCancel && !!handleCancel ? (
+                            <ButtonSecondary
+                                tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
+                                onPress={handleCancel}
+                                dataAttributes={{testid: 'dialog-cancel-button'}}
+                            >
+                                {cancelText}
+                            </ButtonSecondary>
+                        ) : undefined
+                    }
+                />
             </Box>
         </div>
     );
@@ -334,10 +347,12 @@ const ModalDialog = (props: ModalDialogProps) => {
 
     const handleOverlayPress = React.useCallback(
         (event: React.SyntheticEvent<any> | Event) => {
-            handleClose();
-            event.stopPropagation();
+            if (props.showClose) {
+                handleClose();
+                event.stopPropagation();
+            }
         },
-        [handleClose]
+        [handleClose, props.showClose]
     );
 
     const handleKeyDown = React.useCallback(
@@ -407,16 +422,18 @@ const ModalDialog = (props: ModalDialogProps) => {
                                 }}
                                 className={classnames(classes.modalContent, {closed: isClosing})}
                             >
-                                <div className={classes.modalCloseButtonContainer}>
-                                    <IconButton
-                                        onPress={handleClose}
-                                        aria-label={
-                                            context.texts.modalClose ?? context.texts.closeButtonLabel
-                                        }
-                                    >
-                                        <IcnCloseRegular color={context.colors.neutralHigh} />
-                                    </IconButton>
-                                </div>
+                                {props.showClose && (
+                                    <div className={classes.modalCloseButtonContainer}>
+                                        <IconButton
+                                            onPress={handleClose}
+                                            aria-label={
+                                                context.texts.modalClose ?? context.texts.closeButtonLabel
+                                            }
+                                        >
+                                            <IcnCloseRegular color={context.colors.neutralHigh} />
+                                        </IconButton>
+                                    </div>
+                                )}
                                 <Dialog {...dialogProps} onCancel={handleCancel} onAccept={handleAccept} />
                             </div>
                         </div>
@@ -437,7 +454,7 @@ let dialogRootInstances = 0;
 type DialogRootProps = {children?: React.ReactNode};
 
 type DialogRootState = {
-    dialogProps: BaseDialogProps | null;
+    dialogProps: DialogProps | null;
     isClosing: boolean;
     instanceNumber: number;
 };
@@ -550,27 +567,39 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
 }
 
 const showDialog =
-    ({showCancel, forceWeb}: {showCancel: boolean; forceWeb: boolean}) =>
+    ({showCancel, showClose, forceWeb}: {showCancel: boolean; showClose: boolean; forceWeb: boolean}) =>
     (props: DialogProps): void => {
         if (!dialogInstance) {
             throw Error(
                 'Tried to show a dialog but the DialogRoot component was not mounted (mount <ThemeContextProvider>)'
             );
         }
-        dialogInstance.show({showCancel, forceWeb, ...props});
+        dialogInstance.show({showCancel, showClose, forceWeb, ...props});
     };
 
 /**
  * Shows alert dialog with supplied props
  */
-export const alert: (props: AlertProps) => void = showDialog({showCancel: false, forceWeb: false});
+export const alert: (props: AlertProps) => void = showDialog({
+    showCancel: false,
+    forceWeb: false,
+    showClose: false,
+});
 
 /**
  * Shows confirm dialog with supplied props
  */
-export const confirm: (props: ConfirmProps) => void = showDialog({showCancel: true, forceWeb: false});
+export const confirm: (props: ConfirmProps) => void = showDialog({
+    showCancel: true,
+    forceWeb: false,
+    showClose: false,
+});
 
 /**
  * Shows dialog with supplied props
  */
-export const dialog: (props: ExtendedDialogProps) => void = showDialog({showCancel: false, forceWeb: true});
+export const dialog: (props: ExtendedDialogProps) => void = showDialog({
+    showCancel: false,
+    forceWeb: true,
+    showClose: true,
+});
