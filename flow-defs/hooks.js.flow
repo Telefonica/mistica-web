@@ -1,8 +1,8 @@
 // @flow
 
 import * as React from "react";
-import type { ScreenSizeContextType } from "./screen-size-context";
 import type { Theme } from "./theme";
+import type { ScreenSizeContextType } from "./screen-size-context";
 declare export var useTheme: () => Theme;
 declare export var useDisableBodyScroll: (disable: boolean) => void;
 declare export var useScreenSize: () => ScreenSizeContextType;

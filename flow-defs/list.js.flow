@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from "react";
+import type { TouchableElement } from "./touchable";
 import type { DataAttributes, TrackingEvent } from "./utils/types";
 declare type CommonProps = {
   headline?: string | React.Node,
@@ -76,7 +77,7 @@ declare type RowContentProps =
   | HrefRowContentProps
   | ToRowContentProps
   | OnPressRowContentProps;
-declare export var Row: React.AbstractComponent<RowContentProps, HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>;
+declare export var Row: React.AbstractComponent<RowContentProps, TouchableElement>;
 declare type RowListProps = {
   children: React.Node,
   ariaLabelledby?: string,
