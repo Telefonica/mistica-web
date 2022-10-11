@@ -150,6 +150,26 @@ const useAnimationStyles = createUseStyles(() => ({
     },
 
     exit: {
+        transform: ({position}: {position: Position}) => {
+            if (position === 'bottom') {
+                return 'translateY(0)';
+            }
+
+            if (position === 'top') {
+                return 'translateY(-100%)';
+            }
+
+            if (position === 'right') {
+                return 'translateX(0px) translateY(-50%)';
+            }
+
+            if (position === 'left') {
+                return 'translateX(0px) translateY(-50%)';
+            }
+
+            return 'translateY(0px)';
+        },
+
         opacity: 1,
         transition: `opacity 0.3s ${animationTiming}`,
     },
