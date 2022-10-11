@@ -88,7 +88,7 @@ const useStyles = createUseStyles((theme) => {
             padding: 8,
             backgroundColor: theme.colors.backgroundContainer,
             zIndex: 12,
-            border: `1px solid ${theme.colors.divider}`,
+            border: `1px solid ${theme.colors.border}`,
             borderRadius: 8,
         },
     };
