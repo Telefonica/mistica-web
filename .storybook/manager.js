@@ -7,3 +7,6 @@ addons.setConfig({
     panelPosition: 'right',
     theme: createStorybookTheme('Movistar'),
 });
+
+window.STORYBOOK_GA_ID = 'G-G928X876KM';
+window.STORYBOOK_REACT_GA_OPTIONS = {};
