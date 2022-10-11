@@ -71,7 +71,11 @@ export type Props =
   | PropsMaybeHref
   | PropsMaybeTo
   | PropsMaybeOnPress;
-declare var Touchable: React.AbstractComponent<Props, HTMLAnchorElement | HTMLDivElement | HTMLButtonElement>;
+export type TouchableElement =
+  | HTMLDivElement
+  | HTMLAnchorElement
+  | HTMLButtonElement;
+declare var Touchable: React.AbstractComponent<Props, TouchableElement>;
 declare export default typeof Touchable;
 
 import { type CssStyle } from "./__css_types__.js.flow";
