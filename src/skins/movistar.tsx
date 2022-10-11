@@ -53,7 +53,7 @@ export const palette = {
 
     // specific for dark mode:
     darkModeBlack: '#081F2D',
-    darkModeGrey: '#0B2739',
+    darkModeGrey: '#3C5261',
 } as const;
 
 export const getMovistarSkin: GetKnownSkin = () => {
@@ -181,8 +181,8 @@ export const getMovistarSkin: GetKnownSkin = () => {
             backgroundContainer: palette.darkModeGrey,
             backgroundBrand: palette.darkModeBlack,
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
-            backgroundSkeleton: palette.grey6,
-            backgroundSkeletonInverse: palette.grey6,
+            backgroundSkeleton: palette.darkModeGrey,
+            backgroundSkeletonInverse: palette.darkModeGrey,
             navigationBarBackground: palette.darkModeBlack,
             backgroundAlternative: palette.darkModeGrey,
             backgroundFeedbackBottom: palette.darkModeBlack,
@@ -209,7 +209,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             textButtonSecondaryInverseSelected: palette.grey4,
             textLink: palette.movistarBlue,
             textLinkInverse: palette.movistarBlue,
-            control: palette.grey6,
+            control: palette.darkModeGrey,
             controlActivated: palette.movistarBlue,
             loadingBar: palette.movistarBlue,
             loadingBarBackground: applyAlpha(palette.white, 0.05),
@@ -219,11 +219,11 @@ export const getMovistarSkin: GetKnownSkin = () => {
             divider: applyAlpha(palette.white, 0.05),
             dividerInverse: applyAlpha(palette.white, 0.05),
             navigationBarDivider: palette.darkModeBlack,
-            brandHigh: palette.grey6,
+            brandHigh: palette.darkModeGrey,
             inverse: palette.grey2,
             neutralHigh: palette.grey2,
             neutralMedium: palette.grey5,
-            neutralLow: palette.grey6,
+            neutralLow: palette.darkModeGrey,
             textPrimary: palette.grey2,
             textPrimaryInverse: palette.grey2,
             textSecondary: palette.grey4,
