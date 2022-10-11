@@ -4,8 +4,10 @@ import {CSSTransition} from 'react-transition-group';
 import {useAriaId, useScreenSize} from './hooks';
 import {Portal} from './portal';
 import Overlay from './overlay';
+import {Text2, Text3} from './text';
 import * as key from './utils/key-codes';
 import {createUseStyles} from './jss';
+import Stack from './stack';
 
 const defaultPositionDesktop = 'bottom';
 const defaultPositionMobile = 'top';
@@ -88,19 +90,6 @@ const useStyles = createUseStyles((theme) => {
             zIndex: 12,
             border: `1px solid ${theme.colors.divider}`,
             borderRadius: 8,
-        },
-        title: {
-            margin: 0,
-            marginBottom: 12,
-            color: theme.colors.textPrimary,
-            lineHeight: 1.42857142,
-            fontSize: 14,
-        },
-        description: {
-            margin: 0,
-            color: theme.colors.textPrimary,
-            lineHeight: 1.42857142,
-            fontSize: 14,
         },
     };
 });
@@ -464,10 +453,10 @@ const Tooltip: React.FC<Props> = ({
                             <div className={classes.arrow} />
                         </div>
                         {(title || description) && (
-                            <>
-                                {title && <p className={classes.title}>{title}</p>}
-                                {description && <p className={classes.description}>{description}</p>}
-                            </>
+                            <Stack space={12}>
+                                {title && <Text3 regular>{title}</Text3>}
+                                {description && <Text2 regular>{description}</Text2>}
+                            </Stack>
                         )}
                         {extra || children}
                     </div>
