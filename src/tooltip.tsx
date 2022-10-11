@@ -453,8 +453,8 @@ const Tooltip: React.FC<Props> = ({
                             <div className={classes.arrow} />
                         </div>
                         {(title || description) && (
-                            <Stack space={12}>
-                                {title && <Text3 regular>{title}</Text3>}
+                            <Stack space={4}>
+                                {title && <Text2 medium>{title}</Text2>}
                                 {description && <Text2 regular>{description}</Text2>}
                             </Stack>
                         )}
