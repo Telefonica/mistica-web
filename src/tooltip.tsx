@@ -10,13 +10,13 @@ import {createUseStyles} from './jss';
 const defaultPositionDesktop = 'bottom';
 const defaultPositionMobile = 'top';
 const arrowSize = 12;
-const distanceToTarget = 8 + arrowSize;
+const distanceToTarget = 4 + arrowSize;
 const marginLeftRightMobile = 16;
 const defaultWidthDesktop = 340;
 const arrowWrapperWidth = arrowSize * 2;
 const arrowWrapperHeight = arrowSize;
 
-const transitionDurationMs = 600;
+const transitionDurationMs = 500;
 const animationMovement = 12;
 const animationTiming = 'cubic-bezier(0.215, 0.61, 0.355, 1)';
 
@@ -82,7 +82,7 @@ const useStyles = createUseStyles((theme) => {
             left: 16,
             width: 'auto',
             boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
-            padding: 16,
+            padding: 8,
             backgroundColor: theme.colors.backgroundContainer,
             zIndex: 12,
             border: `1px solid ${theme.colors.divider}`,
@@ -149,40 +149,12 @@ const useAnimationStyles = createUseStyles(() => ({
     },
 
     exit: {
-        transform: ({position}: {position: Position}) => {
-            if (position === 'bottom') {
-                return 'translateY(0)';
-            }
-
-            if (position === 'top') {
-                return 'translateY(-100%)';
-            }
-
-            if (position === 'right') {
-                return 'translateX(0px) translateY(-50%)';
-            }
-
-            if (position === 'left') {
-                return 'translateX(0px) translateY(-50%)';
-            }
-
-            return 'translateY(0px)';
-        },
+        opacity: 1,
+        transition: `opacity 0.3s ${animationTiming}`,
     },
 
     exitActive: {
-        animationName: ({position}: {position: Position}) => {
-            if (position === 'top') return '$fadeOutTop';
-
-            if (position === 'bottom') return '$fadeOutBottom';
-
-            if (position === 'right') return '$fadeOutRight';
-
-            return '$fadeOutLeft';
-        },
-        animationFillMode: 'both',
-        animationDuration: `${transitionDurationMs}ms`,
-        animationTimingFunction: animationTiming,
+        animation: `$fadeOut 0.3s ${animationTiming} both`,
     },
 
     '@keyframes fadeInBottom': {
@@ -211,39 +183,7 @@ const useAnimationStyles = createUseStyles(() => ({
         },
     },
 
-    '@keyframes fadeOutTop': {
-        from: {opacity: 1},
-        '40%': {opacity: 0},
-        to: {
-            opacity: 0,
-            transform: `translateY(calc(-100% - ${animationMovement}px))`,
-        },
-    },
-    '@keyframes fadeOutBottom': {
-        from: {opacity: 1},
-        '40%': {opacity: 0},
-        to: {
-            opacity: 0,
-            transform: `translateY(${animationMovement}px)`,
-        },
-    },
-    '@keyframes fadeOutRight': {
-        from: {opacity: 1},
-        '40%': {opacity: 0},
-        to: {
-            opacity: 0,
-            transform: `translateX(${animationMovement}px) translateY(-50%)`,
-        },
-    },
-
-    '@keyframes fadeOutLeft': {
-        from: {opacity: 1},
-        '40%': {opacity: 0},
-        to: {
-            opacity: 0,
-            transform: `translateX(-${animationMovement}px) translateY(-50%)`,
-        },
-    },
+    '@keyframes fadeOut': {from: {opacity: 1}, to: {opacity: 0}},
 }));
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
@@ -252,15 +192,26 @@ const getWidthDesktop = (customWidth?: number) => (customWidth ? customWidth : d
 
 type Props = {
     children?: React.ReactNode;
+    extra?: React.ReactNode;
     description?: string;
     target: React.ReactNode;
     title?: string;
     position?: Position;
     width?: number;
     targetLabel: string;
+    delay?: boolean;
 };
 
-const Tooltip: React.FC<Props> = ({children, description, target, title, targetLabel, ...rest}) => {
+const Tooltip: React.FC<Props> = ({
+    children,
+    extra,
+    description,
+    target,
+    title,
+    targetLabel,
+    delay,
+    ...rest
+}) => {
     const [isVisible, setIsVisible] = React.useState(false);
     const {isTabletOrSmaller} = useScreenSize();
     const ariaId = useAriaId();
@@ -483,7 +434,7 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
                                 {description && <p className={classes.description}>{description}</p>}
                             </>
                         )}
-                        {children}
+                        {extra || children}
                     </div>
                 </CSSTransition>
             </Portal>
