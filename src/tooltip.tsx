@@ -19,6 +19,7 @@ const arrowWrapperHeight = arrowSize;
 const transitionDurationMs = 500;
 const animationMovement = 12;
 const animationTiming = 'cubic-bezier(0.215, 0.61, 0.355, 1)';
+const defaultShowTooltipDelayMs = 2000;
 
 const noOp = () => {};
 
@@ -209,7 +210,7 @@ const Tooltip: React.FC<Props> = ({
     target,
     title,
     targetLabel,
-    delay,
+    delay = 0,
     ...rest
 }) => {
     const [isVisible, setIsVisible] = React.useState(false);
@@ -217,6 +218,7 @@ const Tooltip: React.FC<Props> = ({
     const ariaId = useAriaId();
     const isPointerOver = React.useRef(false);
     const closeTooltipTimeoutId = React.useRef<NodeJS.Timeout | null>(null);
+    const showTooltipTimeoutId = React.useRef<NodeJS.Timeout | null>(null);
     const targetRef = React.useRef<HTMLDivElement>(null);
     const targetBoundingClientRect = React.useRef({
         top: 0,
@@ -352,15 +354,28 @@ const Tooltip: React.FC<Props> = ({
                     if (isPointerOver.current) return;
 
                     isPointerOver.current = true;
-                    toggleVisibility();
+
+                    showTooltipTimeoutId.current = setTimeout(
+                        () => {
+                            showTooltipTimeoutId.current = null;
+                            toggleVisibility();
+                        },
+                        delay ? defaultShowTooltipDelayMs : 0
+                    );
                 }}
                 onPointerLeave={
                     isTouchableDevice
                         ? noOp
                         : () => {
+                              if (showTooltipTimeoutId.current) {
+                                  clearTimeout(showTooltipTimeoutId.current);
+                                  showTooltipTimeoutId.current = null;
+                                  isPointerOver.current = false;
+                                  return;
+                              }
+
                               closeTooltipTimeoutId.current = setTimeout(() => {
                                   if (!isPointerOver.current) return;
-
                                   closeTooltipTimeoutId.current = null;
                                   isPointerOver.current = false;
                                   toggleVisibility();

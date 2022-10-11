@@ -66,7 +66,13 @@ export const Default: StoryComponent = () => {
                     position="top"
                     description={description}
                     extra={<a href="#whatever">Ir a la web</a>}
-                ></Tooltip>
+                />
+                <Tooltip
+                    targetLabel="help text"
+                    target={<Text2 regular>Tooltip with delay</Text2>}
+                    description={description}
+                    delay
+                />
             </div>
             <div style={{width: 600}} />
             <Stack space={16}>
