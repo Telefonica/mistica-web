@@ -6,27 +6,40 @@ declare type BaseDialogProps = {
   title?: string,
   icon?: React.Element<any>,
   message: string,
-  cancelText?: string,
   acceptText?: string,
-  onCancel?: () => void,
   onAccept?: () => void,
-  showCancel?: boolean,
   destructive?: boolean,
 };
-declare type AlertProps = { ...$Exact<BaseDialogProps> };
-declare type ConfirmProps = { ...$Exact<BaseDialogProps> };
+declare type AlertProps = {
+  ...$Exact<BaseDialogProps>,
+  showClose?: boolean,
+  showCancel?: empty,
+  cancelText?: empty,
+  onCancel?: empty,
+};
+declare type ConfirmProps = {
+  ...$Exact<BaseDialogProps>,
+  showClose?: boolean,
+  showCancel?: boolean,
+  cancelText?: string,
+  onCancel?: () => void,
+};
 declare type ExtendedDialogProps = {
   ...$Exact<BaseDialogProps>,
 
   extra: React.Node,
   forceWeb?: boolean,
+  showClose?: boolean,
+  showCancel?: boolean,
+  cancelText?: string,
+  onCancel?: () => void,
 };
 declare type DialogProps = AlertProps | ConfirmProps | ExtendedDialogProps;
 declare type DialogRootProps = {
   children?: React.Node,
 };
 declare type DialogRootState = {
-  dialogProps: BaseDialogProps | null,
+  dialogProps: DialogProps | null,
   isClosing: boolean,
   instanceNumber: number,
 };

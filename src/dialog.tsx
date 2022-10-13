@@ -10,11 +10,12 @@ import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/w
 import ThemeContext from './theme-context';
 import {useTheme, useScreenSize} from './hooks';
 import ButtonGroup from './button-group';
-import {Text5, Text3} from './text';
+import {Text5, Text4, Text3} from './text';
 import {ESC} from './utils/key-codes';
 import Box from './box';
 import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {useSetModalState} from './modal-context-provider';
+import {pxToRem} from './utils/css';
 import Stack from './stack';
 
 import type {Theme} from './theme';
@@ -181,13 +182,25 @@ const Dialog: React.FC<DialogProps> = (props) => {
         dataAttributes: {testid: 'dialog-accept-button'},
         children: acceptText,
     };
-
+    console.log(isTabletOrSmaller ? 40 : 64);
     return (
         <div className={classnames(classes.dialogContainer, className)}>
-            {icon && <Box paddingBottom={24}>{icon}</Box>}
+            {icon && (
+                <Box paddingBottom={24}>
+                    {React.cloneElement(icon, {
+                        size: pxToRem(isTabletOrSmaller ? 40 : 64),
+                    })}
+                </Box>
+            )}
             {title && (
                 <Box paddingBottom={16}>
-                    <Text5 as="h2">{title}</Text5>
+                    {props.forceWeb ? (
+                        <Text5 as="h2">{title}</Text5>
+                    ) : (
+                        <Text4 regular as="h2">
+                            {title}
+                        </Text4>
+                    )}
                 </Box>
             )}
             <div className={classes.dialogContent}>

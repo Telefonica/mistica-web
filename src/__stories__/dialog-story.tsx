@@ -1,9 +1,5 @@
 import * as React from 'react';
-import {ButtonPrimary} from '../button';
-import {confirm, alert, dialog} from '../dialog';
-import ButtonLayout from '../button-layout';
-import IcnInfo from '../icons/icon-info';
-import {Text1} from '../text';
+import {ButtonPrimary, ButtonLayout, confirm, alert, dialog, Text1, IconInformationRegular} from '..';
 
 export default {
     title: 'Components/Dialog',
@@ -35,7 +31,7 @@ export const Default: StoryComponent = () => (
                     confirm({
                         title: 'Title',
                         message: 'This is the dialog message',
-                        icon: <IcnInfo />,
+                        icon: <IconInformationRegular />,
                     })
                 }
             >
