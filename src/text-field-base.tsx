@@ -258,12 +258,7 @@ const useStyles = createUseStyles((theme) => ({
         position: 'absolute',
     },
     prefix: {
-        /**
-         * Safari check to workaround https://jira.tid.es/browse/WEB-648
-         * For some reason it is super hard to align the prefix text with the input text
-         * and get the same result in chrome and safari
-         */
-        alignSelf: isSafari() ? 'initial' : 'baseline',
+        alignSelf: ({prefixAlignSelf}) => prefixAlignSelf,
         paddingTop: ({hasLabel}) => (hasLabel ? 28 : 16),
         [theme.mq.tabletOrSmaller]: {
             paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
@@ -321,6 +316,18 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             ((rest.type === 'date' || rest.type === 'datetime-local' || rest.type === 'month') &&
                 !rest.required);
 
+        const [prefixAlignSelf, setPrefixAlignSelf] = React.useState('baseline');
+        React.useEffect(() => {
+            /**
+             * Safari check to workaround https://jira.tid.es/browse/WEB-648
+             * For some reason it is super hard to align the prefix text with the input text
+             * and get the same result in chrome and safari
+             */
+            if (isSafari()) {
+                setPrefixAlignSelf('initial');
+            }
+        }, []);
+
         const classes = useStyles({
             inputState,
             error,
@@ -332,6 +339,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             multiline,
             type: rest.type,
             disabled: rest.disabled,
+            prefixAlignSelf,
         });
 
         React.useEffect(() => {
