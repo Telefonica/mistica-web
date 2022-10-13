@@ -26,6 +26,7 @@ declare type CommonProps = {
   role?: string,
   type?: "button" | "submit",
   tabIndex?: number,
+  as?: "a",
 };
 export type PropsHref = {
   ...$Exact<CommonProps>,
