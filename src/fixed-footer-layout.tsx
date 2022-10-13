@@ -3,7 +3,13 @@ import classnames from 'classnames';
 import debounce from 'lodash/debounce';
 import {createUseStyles} from './jss';
 import {isRunningAcceptanceTest} from './utils/platform';
-import {useElementDimensions, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
+import {
+    useElementDimensions,
+    useIsomorphicLayoutEffect,
+    useScreenSize,
+    useTheme,
+    useWindowHeight,
+} from './hooks';
 import {
     addPassiveEventListener,
     getScrollableParentElement,
@@ -27,23 +33,24 @@ const useStyles = createUseStyles((theme) => ({
         backgroundColor: theme.colors.background,
         transition: 'background 0.2s linear, box-shadow 0.2s linear',
     },
-
     elevated: {
         backgroundColor: theme.colors.backgroundContainer,
     },
-
     withoutFooter: {
         display: 'none',
     },
-
     containerSmall: {
-        paddingBottom: ({height}) => height,
+        paddingBottom: ({footerHeight}) => footerHeight,
         backgroundColor: ({containerBgColor}) => containerBgColor || theme.colors.background,
     },
-
     [theme.mq.tabletOrSmaller]: {
+        containerSmall: {
+            paddingBottom: ({footerHeight, windowHeight}) =>
+                footerHeight * 2 < windowHeight ? footerHeight : 0,
+        },
         footer: {
-            position: 'fixed',
+            position: ({footerHeight, windowHeight}) =>
+                footerHeight * 2 < windowHeight ? 'fixed' : 'relative',
             left: 0,
             bottom: 0,
             zIndex: 1,
@@ -77,14 +84,15 @@ const FixedFooterLayout: React.FC<Props> = ({
     const containerRef = React.useRef<HTMLDivElement>(null);
     const {isTabletOrSmaller} = useScreenSize();
     const {platformOverrides} = useTheme();
-    const {height: realHeight, ref} = useElementDimensions();
+    const {height: realFooterHeight, ref} = useElementDimensions();
+    const windowHeight = useWindowHeight();
 
     useIsomorphicLayoutEffect(() => {
-        onChangeFooterHeight?.(realHeight);
-    }, [onChangeFooterHeight, realHeight]);
+        onChangeFooterHeight?.(realFooterHeight);
+    }, [onChangeFooterHeight, realFooterHeight]);
 
     React.useEffect(() => {
-        const scrollable = getScrollableParentElement(containerRef.current);
+        const scrollable = getScrollableParentElement(containerRef.current as HTMLDivElement);
 
         const shouldDisplayElevation = () => {
             if (isRunningAcceptanceTest(platformOverrides)) {
@@ -116,7 +124,12 @@ const FixedFooterLayout: React.FC<Props> = ({
         };
     }, [children, containerRef, platformOverrides]);
 
-    const classes = useStyles({footerBgColor, containerBgColor, height: realHeight});
+    const classes = useStyles({
+        footerBgColor,
+        containerBgColor,
+        footerHeight: realFooterHeight,
+        windowHeight,
+    });
 
     return (
         <>
