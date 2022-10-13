@@ -148,7 +148,7 @@ interface ConfirmProps extends BaseDialogProps {
     onCancel?: () => void;
 }
 interface ExtendedDialogProps extends BaseDialogProps {
-    extra: React.ReactNode;
+    extra?: React.ReactNode;
     forceWeb?: boolean;
     showClose?: boolean;
     showCancel?: boolean;
@@ -182,7 +182,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
         dataAttributes: {testid: 'dialog-accept-button'},
         children: acceptText,
     };
-    console.log(isTabletOrSmaller ? 40 : 64);
+
     return (
         <div className={classnames(classes.dialogContainer, className)}>
             {icon && (
