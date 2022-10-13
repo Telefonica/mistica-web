@@ -4,7 +4,7 @@ import {CSSTransition} from 'react-transition-group';
 import {useAriaId, useScreenSize} from './hooks';
 import {Portal} from './portal';
 import Overlay from './overlay';
-import {Text2, Text3} from './text';
+import {Text2} from './text';
 import * as key from './utils/key-codes';
 import {createUseStyles} from './jss';
 import Stack from './stack';

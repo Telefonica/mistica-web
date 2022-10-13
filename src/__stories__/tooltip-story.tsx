@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Tooltip, Text2, Stack, useTheme} from '..';
+import {Tooltip, Text2, Stack, TextLink, useTheme} from '..';
 import {StorySection} from './helpers';
 import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
 import IcnInfo from '../icons/icon-info-cvv';
@@ -65,7 +65,7 @@ export const Default: StoryComponent = () => {
                     target={<Text2 regular>Tooltip with link</Text2>}
                     position="top"
                     description={description}
-                    extra={<a href="#whatever">Ir a la web</a>}
+                    extra={<TextLink href="#whatever">Ir a la web</TextLink>}
                 />
                 <Tooltip
                     targetLabel="help text"
