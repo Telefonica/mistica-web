@@ -122,6 +122,8 @@ export {
 } from './hooks';
 export type {ThemeConfig, ColorScheme, EventFormat} from './theme';
 
+export {pxToRem} from './utils/css';
+
 export {TrackingConfig, useTrackingConfig} from './utils/analytics';
 
 export {useDocumentVisibility} from './utils/document-visibility';
