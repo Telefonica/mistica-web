@@ -27,7 +27,7 @@ declare type ConfirmProps = {
 declare type ExtendedDialogProps = {
   ...$Exact<BaseDialogProps>,
 
-  extra: React.Node,
+  extra?: React.Node,
   forceWeb?: boolean,
   showClose?: boolean,
   showCancel?: boolean,
