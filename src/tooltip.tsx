@@ -364,13 +364,14 @@ const Tooltip: React.FC<Props> = ({
 
                     isPointerOver.current = true;
 
-                    showTooltipTimeoutId.current = setTimeout(
-                        () => {
+                    if (delay) {
+                        showTooltipTimeoutId.current = setTimeout(() => {
                             showTooltipTimeoutId.current = null;
                             toggleVisibility();
-                        },
-                        delay ? defaultShowTooltipDelayMs : 0
-                    );
+                        }, defaultShowTooltipDelayMs);
+                    } else {
+                        toggleVisibility();
+                    }
                 }}
                 onPointerLeave={
                     isTouchableDevice

@@ -8,9 +8,12 @@ type Props = Omit<React.ComponentProps<typeof Tooltip>, 'children' | 'targetLabe
 
 const TestTooltip: React.FC<Props> = (props) => (
     <ThemeContextProvider theme={makeTheme()}>
-        <Tooltip {...props} targetLabel="help text" target={<span className="target">Press me!</span>}>
-            <div className="content">Content</div>
-        </Tooltip>
+        <Tooltip
+            {...props}
+            targetLabel="help text"
+            target={<span className="target">Press me!</span>}
+            extra={<div className="content">Content</div>}
+        />
     </ThemeContextProvider>
 );
 
@@ -52,7 +55,7 @@ test('set default width', () => {
     const content = screen.getByText('Content');
 
     expect(content).toBeInTheDocument();
-    expect(content.parentElement).toHaveStyle('width: 340px; top: 20px; left: -170px;');
+    expect(content.parentElement).toHaveStyle('width: 340px; top: 16px; left: -170px;');
 });
 
 test('set custom width', () => {
@@ -62,7 +65,7 @@ test('set custom width', () => {
     const content = screen.getByText('Content');
 
     expect(content).toBeInTheDocument();
-    expect(content.parentElement).toHaveStyle('width: 500px; top: 20px; left: -250px;');
+    expect(content.parentElement).toHaveStyle('width: 500px; top: 16px; left: -250px;');
 });
 
 test('set title and description', () => {
@@ -80,7 +83,7 @@ const targetBottom = 600;
 const targetLeft = 500;
 const targetHeight = 100;
 const targetWidth = 100;
-const distanceToTarget = 20;
+const distanceToTarget = 16;
 const scrollY = 0;
 const scrollX = 0;
 const defaultWidth = 340;
