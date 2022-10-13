@@ -46,7 +46,7 @@ export const isIos = (platformOverrides: Theme['platformOverrides']): boolean =>
  * Note that this function checks the navigator vendor. It doesn't use platformOverrides or userAgent.
  */
 export const isSafari = (): boolean => {
-    return navigator.vendor.includes('Apple');
+    return typeof navigator !== 'undefined' ? navigator.vendor.includes('Apple') : false;
 };
 
 export const isFirefox = (platformOverrides?: Theme['platformOverrides']): boolean =>
