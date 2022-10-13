@@ -1,6 +1,8 @@
 // @flow
 
 import * as React from "react";
+import { ButtonLink } from "./button";
+import type { RendersNullableElement } from "./utils/types";
 declare type BaseDialogProps = {
   className?: string,
   title?: string,
@@ -33,6 +35,7 @@ declare type ExtendedDialogProps = {
   showCancel?: boolean,
   cancelText?: string,
   onCancel?: () => void,
+  link?: RendersNullableElement<typeof ButtonLink>,
 };
 declare type DialogProps = AlertProps | ConfirmProps | ExtendedDialogProps;
 declare type DialogRootProps = {

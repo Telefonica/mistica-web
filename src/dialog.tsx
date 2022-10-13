@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
+import {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 import {createUseStyles} from './jss';
 import {Portal} from './portal';
 import FocusTrap from './focus-trap';
@@ -9,7 +9,7 @@ import IconButton from './icon-button';
 import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/webview-bridge';
 import ThemeContext from './theme-context';
 import {useTheme, useScreenSize} from './hooks';
-import ButtonGroup from './button-group';
+import ButtonLayout from './button-layout';
 import {Text5, Text4, Text3} from './text';
 import {ESC} from './utils/key-codes';
 import Box from './box';
@@ -19,6 +19,7 @@ import {pxToRem} from './utils/css';
 import Stack from './stack';
 
 import type {Theme} from './theme';
+import type {RendersNullableElement} from './utils/types';
 
 const animationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) &&
@@ -154,6 +155,7 @@ interface ExtendedDialogProps extends BaseDialogProps {
     showCancel?: boolean;
     cancelText?: string;
     onCancel?: () => void;
+    link?: RendersNullableElement<typeof ButtonLink>;
 }
 
 type DialogProps = AlertProps | ConfirmProps | ExtendedDialogProps;
@@ -213,26 +215,22 @@ const Dialog: React.FC<DialogProps> = (props) => {
             </div>
 
             <Box paddingTop={isTabletOrSmaller ? 24 : 32}>
-                <ButtonGroup
-                    primaryButton={
-                        destructive ? (
-                            <ButtonDanger tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
-                        ) : (
-                            <ButtonPrimary tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
-                        )
-                    }
-                    secondaryButton={
-                        showCancel && !!handleCancel ? (
-                            <ButtonSecondary
-                                tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
-                                onPress={handleCancel}
-                                dataAttributes={{testid: 'dialog-cancel-button'}}
-                            >
-                                {cancelText}
-                            </ButtonSecondary>
-                        ) : undefined
-                    }
-                />
+                <ButtonLayout link={props.forceWeb ? props.link : undefined}>
+                    {destructive ? (
+                        <ButtonDanger tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
+                    ) : (
+                        <ButtonPrimary tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
+                    )}
+                    {showCancel && !!handleCancel && (
+                        <ButtonSecondary
+                            tabIndex={2} // eslint-disable-line jsx-a11y/tabindex-no-positive
+                            onPress={handleCancel}
+                            dataAttributes={{testid: 'dialog-cancel-button'}}
+                        >
+                            {cancelText}
+                        </ButtonSecondary>
+                    )}
+                </ButtonLayout>
             </Box>
         </div>
     );

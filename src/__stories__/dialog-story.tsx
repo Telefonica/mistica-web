@@ -1,5 +1,14 @@
 import * as React from 'react';
-import {ButtonPrimary, ButtonLayout, confirm, alert, dialog, Text1, IconInformationRegular} from '..';
+import {
+    ButtonPrimary,
+    ButtonLayout,
+    confirm,
+    alert,
+    dialog,
+    Text1,
+    IconInformationRegular,
+    ButtonLink,
+} from '..';
 
 export default {
     title: 'Components/Dialog',
@@ -52,6 +61,8 @@ export const Default: StoryComponent = () => (
                         acceptText: 'Accept terms and conditions',
                         extra: <Text1 regular>This is the extra zone</Text1>,
                         forceWeb: true,
+                        showCancel: true,
+                        link: <ButtonLink href="https://google.com">Link</ButtonLink>,
                     })
                 }
             >
