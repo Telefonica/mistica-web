@@ -92,7 +92,7 @@ const FixedFooterLayout: React.FC<Props> = ({
     }, [onChangeFooterHeight, realFooterHeight]);
 
     React.useEffect(() => {
-        const scrollable = getScrollableParentElement(containerRef.current as HTMLDivElement);
+        const scrollable = getScrollableParentElement(containerRef.current);
 
         const shouldDisplayElevation = () => {
             if (isRunningAcceptanceTest(platformOverrides)) {
