@@ -53,7 +53,7 @@ export const palette = {
 
     // specific for dark mode:
     darkModeBlack: '#061824',
-    darkModeGrey: '#081E2C',
+    darkModeGrey: '#0B2739',
 } as const;
 
 export const getMovistarSkin: GetKnownSkin = () => {
@@ -132,19 +132,19 @@ export const getMovistarSkin: GetKnownSkin = () => {
             // FEEDBACKS
             badge: palette.pepper55,
             feedbackErrorBackground: palette.pepper,
-            feedbackInfoBackground: palette.grey6,
+            feedbackInfoBackground: palette.movistarBlueDark,
 
             // GLOBAL
             brand: palette.movistarBlue,
             brandHigh: palette.movistarBlue55,
             inverse: palette.white,
-            neutralHigh: palette.grey6,
+            neutralHigh: palette.movistarBlueDark,
             neutralMedium: palette.grey5,
             neutralLow: palette.grey1,
             promo: palette.purple,
             highlight: palette.pink,
 
-            textPrimary: palette.grey6,
+            textPrimary: palette.movistarBlueDark,
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
             textSecondaryInverse: palette.white,
@@ -180,13 +180,14 @@ export const getMovistarSkin: GetKnownSkin = () => {
             background: palette.darkModeBlack,
             backgroundContainer: palette.darkModeGrey,
             backgroundBrand: palette.darkModeBlack,
-            backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.9),
+            backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.6),
             backgroundSkeleton: palette.darkModeGrey,
             backgroundSkeletonInverse: palette.darkModeGrey,
             navigationBarBackground: palette.darkModeBlack,
             backgroundAlternative: palette.darkModeGrey,
             backgroundFeedbackBottom: palette.darkModeBlack,
             skeletonWave: palette.grey5,
+            feedbackInfoBackground: palette.movistarBlueDark,
             borderLight: palette.darkModeBlack,
             border: palette.darkModeGrey,
             buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.05),
