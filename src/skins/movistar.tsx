@@ -49,11 +49,11 @@ export const palette = {
     white: '#FFFFFF',
 
     movistarBlueDark: '#0B2739',
-    movistarBlueDark70: '#081F2D',
+    movistarBlueDark60: '#091F2E',
 
     // specific for dark mode:
-    darkModeBlack: '#081F2D',
-    darkModeGrey: '#3C5261',
+    darkModeBlack: '#061824',
+    darkModeGrey: '#081E2C',
 } as const;
 
 export const getMovistarSkin: GetKnownSkin = () => {
@@ -65,7 +65,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             background: palette.white,
             backgroundContainer: palette.white,
             backgroundBrand: palette.movistarBlueDark,
-            backgroundOverlay: applyAlpha(palette.grey6, 0.6),
+            backgroundOverlay: applyAlpha(palette.movistarBlueDark, 0.6),
             backgroundSkeleton: palette.grey2,
             backgroundSkeletonInverse: palette.movistarBlue55,
             navigationBarBackground: palette.movistarBlueDark,
@@ -126,7 +126,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
 
             // DIVIDERS
             divider: palette.grey2,
-            dividerInverse: palette.movistarBlueDark70,
+            dividerInverse: applyAlpha(palette.white, 0.2),
             navigationBarDivider: palette.movistarBlueDark,
 
             // FEEDBACKS
@@ -180,7 +180,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             background: palette.darkModeBlack,
             backgroundContainer: palette.darkModeGrey,
             backgroundBrand: palette.darkModeBlack,
-            backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
+            backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.9),
             backgroundSkeleton: palette.darkModeGrey,
             backgroundSkeletonInverse: palette.darkModeGrey,
             navigationBarBackground: palette.darkModeBlack,
