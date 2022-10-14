@@ -10,7 +10,7 @@ import {
 } from './text-field-components';
 import {Text3} from './text';
 import {isIos, isRunningAcceptanceTest, isFirefox, isSafari} from './utils/platform';
-import {useAriaId, useTheme, useScreenSize} from './hooks';
+import {useAriaId, useTheme, useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
 
@@ -317,11 +317,13 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                 !rest.required);
 
         const [prefixAlignSelf, setPrefixAlignSelf] = React.useState('baseline');
-        React.useEffect(() => {
+        useIsomorphicLayoutEffect(() => {
             /**
              * Safari check to workaround https://jira.tid.es/browse/WEB-648
              * For some reason it is super hard to align the prefix text with the input text
              * and get the same result in chrome and safari
+             *
+             * Using an effect to set the style to avoid problems with SSR
              */
             if (isSafari()) {
                 setPrefixAlignSelf('initial');
