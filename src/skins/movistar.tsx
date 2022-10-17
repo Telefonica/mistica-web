@@ -53,7 +53,7 @@ export const palette = {
 
     // specific for dark mode:
     darkModeBlack: '#061824',
-    darkModeGrey: '#0B2739',
+    darkModeGrey: '#092232',
 } as const;
 
 export const getMovistarSkin: GetKnownSkin = () => {
@@ -180,7 +180,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             background: palette.darkModeBlack,
             backgroundContainer: palette.darkModeGrey,
             backgroundBrand: palette.darkModeBlack,
-            backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.6),
+            backgroundOverlay: applyAlpha(palette.movistarBlueDark, 0.8),
             backgroundSkeleton: palette.darkModeGrey,
             backgroundSkeletonInverse: palette.darkModeGrey,
             navigationBarBackground: palette.darkModeBlack,
@@ -210,11 +210,11 @@ export const getMovistarSkin: GetKnownSkin = () => {
             textButtonSecondaryInverseSelected: palette.grey4,
             textLink: palette.movistarBlue,
             textLinkInverse: palette.movistarBlue,
-            control: palette.darkModeGrey,
+            control: palette.grey4,
             controlActivated: palette.movistarBlue,
             loadingBar: palette.movistarBlue,
             loadingBarBackground: applyAlpha(palette.white, 0.05),
-            toggleAndroidInactive: palette.grey4, // web only
+            toggleAndroidInactive: palette.grey2, // web only
             toggleAndroidBackgroundActive: palette.movistarBlue20, // web only
             iosControlKnob: palette.grey2, // web only
             divider: applyAlpha(palette.white, 0.05),
