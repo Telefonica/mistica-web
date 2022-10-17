@@ -46,11 +46,11 @@ const useStyles = createUseStyles((theme) => ({
     [theme.mq.tabletOrSmaller]: {
         containerSmall: {
             paddingBottom: ({footerHeight, windowHeight}) =>
-                footerHeight * 2 < windowHeight ? footerHeight : 0,
+                footerHeight * 4 < windowHeight ? footerHeight : 0,
         },
         footer: {
             position: ({footerHeight, windowHeight}) =>
-                footerHeight * 2 < windowHeight ? 'fixed' : 'relative',
+                footerHeight * 4 < windowHeight ? 'fixed' : 'relative',
             left: 0,
             bottom: 0,
             zIndex: 1,
@@ -98,9 +98,15 @@ const FixedFooterLayout: React.FC<Props> = ({
             if (isRunningAcceptanceTest(platformOverrides)) {
                 return false;
             }
+
+            if (realFooterHeight * 4 >= windowHeight) {
+                return false;
+            }
+
             if (hasScroll(scrollable)) {
                 return getScrollDistanceToBottom(scrollable) > 1; // This is 1 and not 0 because a weird bug with Safari
             }
+
             return false;
         };
 
@@ -122,7 +128,7 @@ const FixedFooterLayout: React.FC<Props> = ({
             removePassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
             transitionAwaiter.cancel();
         };
-    }, [children, containerRef, platformOverrides]);
+    }, [children, containerRef, platformOverrides, realFooterHeight, windowHeight]);
 
     const classes = useStyles({
         footerBgColor,
