@@ -18,6 +18,7 @@ import {
     removePassiveEventListener,
 } from './utils/dom';
 
+const FOOTER_CANVAS_RATIO = 4;
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
 
 const waitForSwitchTransitionToStart = (fn: () => void) => {
@@ -45,12 +46,14 @@ const useStyles = createUseStyles((theme) => ({
     },
     [theme.mq.tabletOrSmaller]: {
         containerSmall: {
-            paddingBottom: ({footerHeight, windowHeight}) =>
-                footerHeight * 4 < windowHeight ? footerHeight : 0,
+            paddingBottom: ({footerHeight, windowHeight, isContentWithScroll}) =>
+                footerHeight * FOOTER_CANVAS_RATIO < windowHeight || !isContentWithScroll ? footerHeight : 0,
         },
         footer: {
-            position: ({footerHeight, windowHeight}) =>
-                footerHeight * 4 < windowHeight ? 'fixed' : 'relative',
+            position: ({footerHeight, windowHeight, isContentWithScroll}) =>
+                footerHeight * FOOTER_CANVAS_RATIO < windowHeight || !isContentWithScroll
+                    ? 'fixed'
+                    : 'relative',
             left: 0,
             bottom: 0,
             zIndex: 1,
@@ -86,6 +89,7 @@ const FixedFooterLayout: React.FC<Props> = ({
     const {platformOverrides} = useTheme();
     const {height: realFooterHeight, ref} = useElementDimensions();
     const windowHeight = useWindowHeight();
+    const hasContentScroll = () => hasScroll(getScrollableParentElement(containerRef.current));
 
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(realFooterHeight);
@@ -99,7 +103,7 @@ const FixedFooterLayout: React.FC<Props> = ({
                 return false;
             }
 
-            if (realFooterHeight * 4 >= windowHeight) {
+            if (realFooterHeight * FOOTER_CANVAS_RATIO >= windowHeight) {
                 return false;
             }
 
@@ -135,6 +139,7 @@ const FixedFooterLayout: React.FC<Props> = ({
         containerBgColor,
         footerHeight: realFooterHeight,
         windowHeight,
+        isContentWithScroll: hasContentScroll(),
     });
 
     return (
