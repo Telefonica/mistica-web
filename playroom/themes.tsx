@@ -12,6 +12,7 @@ const common = {
     i18n: {locale: 'en-US', phoneNumberFormattingRegionCode: 'ES'},
     dimensions: {
         headerMobileHeight: 0,
+        headerDesktopHeight: 0,
     },
 } as const;
 
