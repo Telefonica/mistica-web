@@ -9,8 +9,8 @@ import {
     LABEL_SCALE_DESKTOP,
 } from './text-field-components';
 import {Text3} from './text';
-import {isIos, isRunningAcceptanceTest, isFirefox} from './utils/platform';
-import {useAriaId, useTheme, useScreenSize} from './hooks';
+import {isIos, isRunningAcceptanceTest, isFirefox, isSafari} from './utils/platform';
+import {useAriaId, useTheme, useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
 
@@ -258,7 +258,7 @@ const useStyles = createUseStyles((theme) => ({
         position: 'absolute',
     },
     prefix: {
-        alignSelf: 'baseline',
+        alignSelf: ({prefixAlignSelf}) => prefixAlignSelf,
         paddingTop: ({hasLabel}) => (hasLabel ? 28 : 16),
         [theme.mq.tabletOrSmaller]: {
             paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
@@ -316,6 +316,20 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             ((rest.type === 'date' || rest.type === 'datetime-local' || rest.type === 'month') &&
                 !rest.required);
 
+        const [prefixAlignSelf, setPrefixAlignSelf] = React.useState('baseline');
+        useIsomorphicLayoutEffect(() => {
+            /**
+             * Safari check to workaround https://jira.tid.es/browse/WEB-648
+             * For some reason it is super hard to align the prefix text with the input text
+             * and get the same result in chrome and safari
+             *
+             * Using an effect to set the style to avoid problems with SSR
+             */
+            if (isSafari()) {
+                setPrefixAlignSelf('initial');
+            }
+        }, []);
+
         const classes = useStyles({
             inputState,
             error,
@@ -327,6 +341,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             multiline,
             type: rest.type,
             disabled: rest.disabled,
+            prefixAlignSelf,
         });
 
         React.useEffect(() => {

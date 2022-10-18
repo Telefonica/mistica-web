@@ -1,3 +1,10 @@
+# [12.5.0](https://github.com/Telefonica/mistica-web/compare/v12.4.0...v12.5.0) (2022-10-11)
+
+
+### Features
+
+* **Button:** use forwardRef ([#551](https://github.com/Telefonica/mistica-web/issues/551)) ([ce3449d](https://github.com/Telefonica/mistica-web/commit/ce3449d9120dfe9c329e8d755c5bb549cc12b894))
+
 # [12.4.0](https://github.com/Telefonica/mistica-web/compare/v12.3.0...v12.4.0) (2022-09-30)
 
 
