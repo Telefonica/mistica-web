@@ -49,6 +49,7 @@ const useStyles = createUseStyles((theme) => {
                 // regardless of the actual value of the overflow-wrap property.
                 wordBreak: ({wordBreak}) => (wordBreak ? 'break-word' : 'inherit'),
             },
+            hyphens: ({hyphens}) => hyphens,
             // Needed to reset the default browser margin that adds to p, h1, h2... elements.
             margin: 0,
 
@@ -79,6 +80,7 @@ export interface TextPresetProps {
     children?: React.ReactNode;
     truncate?: boolean | number;
     wordBreak?: boolean;
+    hyphens?: 'auto' | 'manual' | 'none';
     id?: string;
     as?: React.ComponentType<any> | string;
     role?: string;
@@ -109,7 +111,8 @@ export const Text: React.FC<TextProps> = ({
     decoration,
     truncate,
     transform,
-    wordBreak,
+    wordBreak = true,
+    hyphens,
     as = 'span',
     children,
     size,
@@ -136,6 +139,7 @@ export const Text: React.FC<TextProps> = ({
         decoration,
         transform,
         wordBreak,
+        hyphens,
         letterSpacing,
         truncate,
     });

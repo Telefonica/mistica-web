@@ -117,14 +117,13 @@ const Content: React.FC<Props> = (props) => {
                 // aria-label is already in Dismisable wrapper
                 aria-label={!isDismissable ? props['aria-label'] : undefined}
             >
-                <Text4 as="h1" regular wordBreak truncate={props.titleLinesMax}>
+                <Text4 as="h1" regular truncate={props.titleLinesMax}>
                     {title}
                 </Text4>
                 <Box paddingTop={8}>
                     <Text2
                         regular
                         color={theme.colors.textSecondary}
-                        wordBreak
                         truncate={props.descriptionLinesMax}
                         as="p"
                     >

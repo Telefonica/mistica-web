@@ -10,6 +10,7 @@ export type TextPresetProps = {
   children?: React.Node,
   truncate?: boolean | number,
   wordBreak?: boolean,
+  hyphens?: "auto" | "manual" | "none",
   id?: string,
   as?: React.ComponentType<any> | string,
   role?: string,

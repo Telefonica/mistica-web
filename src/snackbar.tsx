@@ -3,7 +3,8 @@ import {createUseStyles} from './jss';
 import Touchable from './touchable';
 import classNames from 'classnames';
 import {isWebViewBridgeAvailable, nativeMessage} from '@tef-novum/webview-bridge';
-import {useElementDimensions, useScreenSize} from './hooks';
+import {useElementDimensions, useScreenSize, useTheme} from './hooks';
+import {Text2} from './text';
 
 const PADDING_Y = 14;
 const PADDING_X = 16;
@@ -47,9 +48,6 @@ const useStyles = createUseStyles((theme) => ({
         transition: `transform ${TRANSITION_TIME_IN_MS}ms ease-in-out, opacity ${TRANSITION_TIME_IN_MS}ms ease-in-out`,
     },
     snackbarContent: {
-        fontSize: 14,
-        lineHeight: `20px`,
-        color: theme.colors.textPrimaryInverse,
         display: 'flex',
         flexDirection: ({isLongButton}) => (isLongButton ? 'column' : 'row'),
         justifyContent: 'space-between',
@@ -100,6 +98,7 @@ const SnackbarComponent: React.FC<Props> = ({
     const {width: buttonWidth, ref: buttonRef} = useElementDimensions();
     const {isDesktopOrBigger} = useScreenSize();
     const longButtonWidth = isDesktopOrBigger ? 160 : 128;
+    const {colors} = useTheme();
     const classes = useStyles({
         type,
         isOpen,
@@ -134,7 +133,9 @@ const SnackbarComponent: React.FC<Props> = ({
                 className={classNames(classes.snackbarWrapper, {[classes.snackbarOpen]: isOpen})}
             >
                 <div className={classes.snackbarContent}>
-                    <span>{message}</span>
+                    <Text2 regular color={colors.textPrimaryInverse}>
+                        {message}
+                    </Text2>
                     {buttonText && (
                         <Touchable ref={buttonRef} className={classes.snackbarButton} onPress={close}>
                             {buttonText}
