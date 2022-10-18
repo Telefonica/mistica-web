@@ -78,9 +78,9 @@ export const Default: StoryComponent = () => {
                 />
                 <Tooltip
                     targetLabel="help text"
-                    target={<Text2 regular>Tooltip with delay</Text2>}
+                    target={<Text2 regular>Tooltip without delay</Text2>}
                     description={description}
-                    delay
+                    delay={false}
                 />
             </div>
             <div style={{width: 600}} />
