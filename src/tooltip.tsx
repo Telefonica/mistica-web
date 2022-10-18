@@ -21,7 +21,7 @@ const arrowWrapperHeight = arrowSize;
 const transitionDurationMs = 500;
 const animationMovement = 12;
 const animationTiming = 'cubic-bezier(0.215, 0.61, 0.355, 1)';
-const defaultShowTooltipDelayMs = 2000;
+const defaultShowTooltipDelayMs = 500;
 
 const noOp = () => {};
 
@@ -219,7 +219,7 @@ const Tooltip: React.FC<Props> = ({
     target,
     title,
     targetLabel,
-    delay = 0,
+    delay = true,
     ...rest
 }) => {
     const [isVisible, setIsVisible] = React.useState(false);
