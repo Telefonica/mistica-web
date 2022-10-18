@@ -72,20 +72,14 @@ const CardContent: React.FC<CardContentProps> = ({
                             {renderHeadline()}
                             <Stack space={4}>
                                 {pretitle && (
-                                    <Text1
-                                        wordBreak
-                                        truncate={pretitleLinesMax}
-                                        as="div"
-                                        regular
-                                        transform="uppercase"
-                                    >
+                                    <Text1 truncate={pretitleLinesMax} as="div" regular transform="uppercase">
                                         {pretitle}
                                     </Text1>
                                 )}
-                                <Text4 wordBreak truncate={titleLinesMax} as="h1" regular>
+                                <Text4 truncate={titleLinesMax} as="h1" regular>
                                     {title}
                                 </Text4>
-                                <Text2 wordBreak truncate={subtitleLinesMax} as="div" regular>
+                                <Text2 truncate={subtitleLinesMax} as="div" regular>
                                     {subtitle}
                                 </Text2>
                             </Stack>
@@ -94,13 +88,7 @@ const CardContent: React.FC<CardContentProps> = ({
                 )}
 
                 {description && (
-                    <Text2
-                        wordBreak
-                        truncate={descriptionLinesMax}
-                        as="p"
-                        regular
-                        color={theme.colors.textSecondary}
-                    >
+                    <Text2 truncate={descriptionLinesMax} as="p" regular color={theme.colors.textSecondary}>
                         {description}
                     </Text2>
                 )}
@@ -418,13 +406,12 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                             {icon && <Box paddingBottom={16}>{icon}</Box>}
                             <Stack space={4}>
                                 {title && (
-                                    <Text2 wordBreak truncate={titleLinesMax} as="h1" regular>
+                                    <Text2 truncate={titleLinesMax} as="h1" regular>
                                         {title}
                                     </Text2>
                                 )}
                                 {subtitle && (
                                     <Text2
-                                        wordBreak
                                         truncate={subtitleLinesMax}
                                         regular
                                         color={colors.textSecondary}

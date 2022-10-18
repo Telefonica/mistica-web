@@ -37,7 +37,7 @@ const App: React.FC = ({children}) => {
     `;
 
     return (
-        <div aria-hidden={isModalOpen}>
+        <div lang="en" aria-hidden={isModalOpen}>
             <style>{styles}</style>
             {children}
         </div>
