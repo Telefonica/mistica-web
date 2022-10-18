@@ -13,6 +13,7 @@ const TestTooltip: React.FC<Props> = (props) => (
             targetLabel="help text"
             target={<span className="target">Press me!</span>}
             extra={<div className="content">Content</div>}
+            delay={false}
         />
     </ThemeContextProvider>
 );
@@ -159,7 +160,7 @@ test('click anchor does not close tooltip', () => {
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Tooltip targetLabel="help text" target={<span className="target">Press me!</span>}>
+            <Tooltip targetLabel="help text" target={<span className="target">Press me!</span>} delay={false}>
                 <div className="content">
                     Content
                     <a tabIndex={-1} role="link" onClick={() => linkSpy()}>
