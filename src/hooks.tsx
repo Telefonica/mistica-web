@@ -3,7 +3,6 @@ import ThemeContext from './theme-context';
 import ScreenSizeContext from './screen-size-context';
 import AriaIdGetterContext from './aria-id-getter-context';
 import {listenResize} from './utils/dom';
-import {setScreenName} from '@tef-novum/webview-bridge';
 
 import type {Theme} from './theme';
 import type {ScreenSizeContextType} from './screen-size-context';
