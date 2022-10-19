@@ -134,7 +134,7 @@ const FixedFooterLayout: React.FC<Props> = ({
             removePassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
             transitionAwaiter.cancel();
         };
-    }, [children, containerRef, platformOverrides, realFooterHeight, screenHeight, windowHeight]);
+    }, [hasContentEnoughVSpace, platformOverrides]);
 
     const classes = useStyles({
         footerBgColor,
