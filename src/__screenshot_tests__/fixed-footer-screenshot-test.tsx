@@ -23,7 +23,7 @@ test('Fixed footer with relative position when height is smaller than the footer
 
     await page.setViewport({
         width: 564,
-        height: 154,
+        height: 100,
         deviceScaleFactor: 1,
         isMobile: true,
         isLandscape: false,
