@@ -1298,95 +1298,76 @@ const avatarSnippets = [
 
 const alertSnippets = [
     {
-        group: 'Dialogs',
+        group: 'Modal',
         name: 'Alert one button',
         code: `
 <ButtonPrimary
-  onPress={() =>
-    alert({
-      message: "Changes successfully saved",
-      acceptText: "Continue",
-    })
-  }
+    onPress={() =>
+        alert({
+            title: 'Profile updated',
+            message: 'Your changes have been successfully saved',
+            acceptText: 'Ok',
+        })
+    }
 >
-  Open one button
+    Open one button
 </ButtonPrimary>`,
     },
     {
-        group: 'Dialogs',
+        group: 'Modal',
         name: 'Confirm two buttons',
         code: `
 <ButtonPrimary
-  onPress={() =>
-    confirm({
-      message:
-        "Sign up to ensure that you don't miss the next promotion and other important events in Personal Account.",
-      title: "Stay with your business",
-      acceptText: "Sign up",
-      cancelText: "Next time",
-    })
-  }
+    onPress={() =>
+        confirm({
+            message:
+                'Are you sure you want to delete "rainy_day.jpg"? You cant undo this action.',
+            title: 'Delete media?',
+        })
+    }
 >
-  Open two buttons
+    Open two buttons
 </ButtonPrimary>
 `,
     },
     {
-        group: 'Dialogs',
-        name: 'Confirm two buttons (with icon)',
-        code: `
-<ButtonPrimary
-  onPress={() =>
-    confirm({
-      title: "Stay with your business",
-      message:
-        "Sign up to ensure that you don't miss the next promotion and other important events in Personal Account.",
-      icon: <IconInformationUserLight size={64} color={colors.brand} />,
-      acceptText: "Sign up",
-      cancelText: "Next time",
-    })
-  }
->
-  Open two buttons (with icon)
-</ButtonPrimary>
-      `,
-    },
-    {
-        group: 'Dialogs',
+        group: 'Modal',
         name: 'Confirm two buttons destructive',
         code: `
 <ButtonPrimary
-  onPress={() =>
-    confirm({
-      message:
-        "Sign up to ensure that you don't miss the next promotion and other important events in Personal Account.",
-      acceptText: "Erase all data",
-      cancelText: "Cancel",
-      destructive: true,
-    })
-  }
+    onPress={() =>
+        confirm({
+            title: 'Delete Account',
+            message:
+                'Deleting your account will remove all of your information from our database. This cannot be undone.',
+            destructive: true,
+            acceptText: 'Delete account',
+        })
+    }
 >
-  Open two buttons destructive
+    Open two buttons destructive
 </ButtonPrimary>
       `,
     },
     {
-        group: 'Dialogs',
+        group: 'Modal',
         name: 'Dialog',
         code: `
 <ButtonPrimary
-onPress={() =>
-  dialog({
-    message:
-      "Sign up to ensure that you don't miss the next promotion and other important events in Personal Account.",
-    acceptText: "Erase all data",
-    cancelText: "Cancel",
-    destructive: true,
-    extra: <Text1 regular>This is the extra zone</Text1>
-  })
-}
+    onPress={() =>
+        dialog({
+            title: 'Title',
+            message: 'Message',
+            acceptText: 'Accept terms and conditions',
+            extra: <Text1 regular>This is the extra zone</Text1>,
+            forceWeb: true,
+            showCancel: true,
+            link: <ButtonLink href="https://google.com">Link</ButtonLink>,
+            icon: <IconInformationUserLight color={colors.brand} />,
+        })
+    }
 >
-Open two buttons destructive
+    Open dialog
 </ButtonPrimary>
     `,
     },
