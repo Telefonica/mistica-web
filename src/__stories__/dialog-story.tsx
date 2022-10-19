@@ -12,9 +12,11 @@ import {
     Stack,
     useTheme,
 } from '..';
+
 export default {
     title: 'Components/Dialog',
 };
+
 export const Default: StoryComponent = () => {
     const {colors} = useTheme();
     return (

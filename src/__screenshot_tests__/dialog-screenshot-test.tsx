@@ -6,8 +6,6 @@ test.each`
     ${'DESKTOP'}    | ${'Open one button'}
     ${'MOBILE_IOS'} | ${'Open two buttons'}
     ${'DESKTOP'}    | ${'Open two buttons'}
-    ${'MOBILE_IOS'} | ${'Open two buttons (with icon)'}
-    ${'DESKTOP'}    | ${'Open two buttons (with icon)'}
     ${'MOBILE_IOS'} | ${'Open two buttons destructive'}
     ${'DESKTOP'}    | ${'Open two buttons destructive'}
     ${'MOBILE_IOS'} | ${'Open dialog'}

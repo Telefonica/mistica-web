@@ -116,7 +116,7 @@ const useDialogStyles = createUseStyles((theme) => ({
         dialogContainer: {
             width: 'calc(100vw - 48px)',
             margin: 'auto',
-            padding: '48px 24px 24px',
+            padding: 24,
         },
     },
 }));
