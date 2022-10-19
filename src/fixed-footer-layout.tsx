@@ -47,16 +47,12 @@ const useStyles = createUseStyles((theme) => ({
     },
     [theme.mq.tabletOrSmaller]: {
         containerSmall: {
-            paddingBottom: ({footerHeight, windowHeight, screenHeight, isContentWithScroll}) =>
-                windowHeight - footerHeight > screenHeight / FOOTER_CANVAS_RATIO || !isContentWithScroll
-                    ? footerHeight
-                    : 0,
+            paddingBottom: ({footerHeight, isContentWithScroll, hasContentEnoughVSpace}) =>
+                hasContentEnoughVSpace || !isContentWithScroll ? footerHeight : 0,
         },
         footer: {
-            position: ({footerHeight, windowHeight, screenHeight, isContentWithScroll}) =>
-                windowHeight - footerHeight > screenHeight / FOOTER_CANVAS_RATIO || !isContentWithScroll
-                    ? 'fixed'
-                    : 'relative',
+            position: ({hasContentEnoughVSpace, isContentWithScroll}) =>
+                hasContentEnoughVSpace || !isContentWithScroll ? 'fixed' : 'initial',
             left: 0,
             bottom: 0,
             zIndex: 1,
@@ -94,6 +90,7 @@ const FixedFooterLayout: React.FC<Props> = ({
     const windowHeight = useWindowHeight();
     const screenHeight = useScreenHeight();
 
+    const hasContentEnoughVSpace = windowHeight - realFooterHeight > screenHeight / FOOTER_CANVAS_RATIO;
     const hasContentScroll = () => hasScroll(getScrollableParentElement(containerRef.current));
 
     useIsomorphicLayoutEffect(() => {
@@ -108,7 +105,7 @@ const FixedFooterLayout: React.FC<Props> = ({
                 return false;
             }
 
-            if (windowHeight - realFooterHeight < screenHeight / FOOTER_CANVAS_RATIO) {
+            if (hasContentEnoughVSpace) {
                 return false;
             }
 
@@ -146,6 +143,7 @@ const FixedFooterLayout: React.FC<Props> = ({
         windowHeight,
         screenHeight,
         isContentWithScroll: hasContentScroll(),
+        hasContentEnoughVSpace,
     });
 
     return (
