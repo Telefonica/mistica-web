@@ -207,7 +207,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
             )}
             <div className={classes.dialogContent}>
                 <Stack space={16}>
-                    <Text3 color={colors.textSecondary} light>
+                    <Text3 color={colors.textSecondary} regular>
                         {message}
                     </Text3>
                     {extra}
