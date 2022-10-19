@@ -1202,6 +1202,20 @@ const navigationBarSnippets = [
   }
 />`,
     },
+    {
+        group: 'NavigationBar',
+        name: 'NavigationBarCustomRight',
+        code: `
+<NavigationBar
+  onBack={() => {}}
+  title="Settings"
+  right={
+    <NavigationBarActionGroup>
+      <Avatar size={32} />
+    </NavigationBarActionGroup>
+  }
+/>`,
+    },
 ];
 
 const carouselSnippets = [

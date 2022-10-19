@@ -76,6 +76,7 @@ interface CommonProps {
     role?: string;
     type?: 'button' | 'submit';
     tabIndex?: number;
+    as?: 'a';
 }
 
 /*
@@ -268,23 +269,23 @@ const Touchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
     }
 
     if (props.onPress) {
-        return (
-            <button
-                {...commonProps}
-                // this "form" attribute is useful when the form's submit button
-                // is located outside the <form> element, for example if you use
-                // a ButtonFixedFooter layout inside a form with the submit
-                // button located at the footer, which is redered using a Portal
-                form={type === 'submit' && props.formId ? props.formId : undefined}
-                aria-label={props['aria-label']}
-                aria-labelledby={props['aria-labelledby']}
-                type={type}
-                ref={ref as React.RefObject<HTMLButtonElement>}
-                onClick={handleButtonClick}
-            >
-                {children}
-            </button>
-        );
+        const elementType = props.as ?? 'button';
+        const role = commonProps.role ?? (props.as === 'a' ? 'button' : undefined);
+        return React.createElement(elementType, {
+            ...commonProps,
+            role,
+            // this "form" attribute is useful when the form's submit button
+            // is located outside the <form> element, for example if you use
+            // a ButtonFixedFooter layout inside a form with the submit
+            // button located at the footer, which is redered using a Portal
+            form: type === 'submit' && props.formId ? props.formId : undefined,
+            'aria-label': props['aria-label'],
+            'aria-labelledby': props['aria-labelledby'],
+            type,
+            ref: ref as React.RefObject<HTMLButtonElement>,
+            onClick: handleButtonClick,
+            children,
+        });
     }
 
     return (

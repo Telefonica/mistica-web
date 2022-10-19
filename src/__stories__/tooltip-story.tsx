@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Tooltip, Text2, Stack, useTheme} from '..';
+import {Tooltip, Text2, Text1, Stack, useTheme, Placeholder} from '..';
 import {StorySection} from './helpers';
 import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
 import IcnInfo from '../icons/icon-info-cvv';
@@ -62,12 +62,26 @@ export const Default: StoryComponent = () => {
                 />
                 <Tooltip
                     targetLabel="help text"
-                    target={<Text2 regular>Tooltip with link</Text2>}
+                    target={
+                        <div style={{textAlign: 'center'}}>
+                            <Stack space={0}>
+                                <Text2 regular>Tooltip with custom elements</Text2>
+                                <Text1 regular color={colors.textSecondary}>
+                                    (do not use interactive elements inside)
+                                </Text1>
+                            </Stack>
+                        </div>
+                    }
                     position="top"
                     description={description}
-                >
-                    <a href="#whatever">Ir a la web</a>
-                </Tooltip>
+                    extra={<Placeholder />}
+                />
+                <Tooltip
+                    targetLabel="help text"
+                    target={<Text2 regular>Tooltip without delay</Text2>}
+                    description={description}
+                    delay={false}
+                />
             </div>
             <div style={{width: 600}} />
             <Stack space={16}>
