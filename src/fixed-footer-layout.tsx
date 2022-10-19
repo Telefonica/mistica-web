@@ -6,6 +6,7 @@ import {isRunningAcceptanceTest} from './utils/platform';
 import {
     useElementDimensions,
     useIsomorphicLayoutEffect,
+    useScreenHeight,
     useScreenSize,
     useTheme,
     useWindowHeight,
@@ -46,12 +47,14 @@ const useStyles = createUseStyles((theme) => ({
     },
     [theme.mq.tabletOrSmaller]: {
         containerSmall: {
-            paddingBottom: ({footerHeight, windowHeight, isContentWithScroll}) =>
-                footerHeight * FOOTER_CANVAS_RATIO < windowHeight || !isContentWithScroll ? footerHeight : 0,
+            paddingBottom: ({footerHeight, windowHeight, screenHeight, isContentWithScroll}) =>
+                windowHeight - footerHeight > screenHeight / FOOTER_CANVAS_RATIO || !isContentWithScroll
+                    ? footerHeight
+                    : 0,
         },
         footer: {
-            position: ({footerHeight, windowHeight, isContentWithScroll}) =>
-                footerHeight * FOOTER_CANVAS_RATIO < windowHeight || !isContentWithScroll
+            position: ({footerHeight, windowHeight, screenHeight, isContentWithScroll}) =>
+                windowHeight - footerHeight > screenHeight / FOOTER_CANVAS_RATIO || !isContentWithScroll
                     ? 'fixed'
                     : 'relative',
             left: 0,
@@ -89,6 +92,8 @@ const FixedFooterLayout: React.FC<Props> = ({
     const {platformOverrides} = useTheme();
     const {height: realFooterHeight, ref} = useElementDimensions();
     const windowHeight = useWindowHeight();
+    const screenHeight = useScreenHeight();
+
     const hasContentScroll = () => hasScroll(getScrollableParentElement(containerRef.current));
 
     useIsomorphicLayoutEffect(() => {
@@ -103,7 +108,7 @@ const FixedFooterLayout: React.FC<Props> = ({
                 return false;
             }
 
-            if (realFooterHeight * FOOTER_CANVAS_RATIO >= windowHeight) {
+            if (windowHeight - realFooterHeight < screenHeight / FOOTER_CANVAS_RATIO) {
                 return false;
             }
 
@@ -132,13 +137,14 @@ const FixedFooterLayout: React.FC<Props> = ({
             removePassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
             transitionAwaiter.cancel();
         };
-    }, [children, containerRef, platformOverrides, realFooterHeight, windowHeight]);
+    }, [children, containerRef, platformOverrides, realFooterHeight, screenHeight, windowHeight]);
 
     const classes = useStyles({
         footerBgColor,
         containerBgColor,
         footerHeight: realFooterHeight,
         windowHeight,
+        screenHeight,
         isContentWithScroll: hasContentScroll(),
     });
 
