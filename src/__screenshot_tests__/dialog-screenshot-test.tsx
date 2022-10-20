@@ -12,7 +12,7 @@ test.each`
     ${'DESKTOP'}    | ${'Open dialog'}
 `('Dialog, device: $device, action: $action', async ({device, action}) => {
     const page = await openStoryPage({
-        id: 'components-dialog--default',
+        id: 'components-modals--default',
         device,
     });
 

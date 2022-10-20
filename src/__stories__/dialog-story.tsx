@@ -14,7 +14,7 @@ import {
 } from '..';
 
 export default {
-    title: 'Components/Dialog',
+    title: 'Components/Modals',
 };
 
 export const Default: StoryComponent = () => {
@@ -94,4 +94,4 @@ export const Default: StoryComponent = () => {
         </>
     );
 };
-Default.storyName = 'Dialog';
+Default.storyName = 'Modals';
