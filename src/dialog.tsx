@@ -116,7 +116,7 @@ const useDialogStyles = createUseStyles((theme) => ({
         dialogContainer: {
             width: 'calc(100vw - 48px)',
             margin: 'auto',
-            padding: 24,
+            padding: ({isDialog}) => (isDialog ? '40px 24px 24px' : 24),
         },
     },
 }));
@@ -176,8 +176,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
         destructive = false,
     } = props;
     const {isTabletOrSmaller} = useScreenSize();
-    const withSecondaryButton = showCancel && !!handleCancel;
-    const classes = useDialogStyles({withSecondaryButton});
+    const classes = useDialogStyles({isDialog: !!props.forceWeb});
 
     const mainButtonProps = {
         onPress: handleAccept ? handleAccept : () => {},
