@@ -1,19 +1,29 @@
 import * as React from 'react';
 import classnames from 'classnames';
+import {CSSTransition} from 'react-transition-group';
 import {useAriaId, useScreenSize} from './hooks';
 import {Portal} from './portal';
 import Overlay from './overlay';
+import {Text2} from './text';
 import * as key from './utils/key-codes';
 import {createUseStyles} from './jss';
+import Stack from './stack';
 
 const defaultPositionDesktop = 'bottom';
 const defaultPositionMobile = 'top';
 const arrowSize = 12;
-const distanceToTarget = 8 + arrowSize;
+const distanceToTarget = 4 + arrowSize;
 const marginLeftRightMobile = 16;
 const defaultWidthDesktop = 340;
 const arrowWrapperWidth = arrowSize * 2;
 const arrowWrapperHeight = arrowSize;
+
+const transitionDurationMs = 500;
+const animationMovement = 12;
+const animationTiming = 'cubic-bezier(0.215, 0.61, 0.355, 1)';
+const defaultShowTooltipDelayMs = 500;
+
+const noOp = () => {};
 
 const useStyles = createUseStyles((theme) => {
     const shadowAlpha = theme.isDarkMode ? 1 : 0.2;
@@ -26,7 +36,7 @@ const useStyles = createUseStyles((theme) => {
             top: 0,
             left: '50%',
             transform: 'translate(-50%, -50%) rotate(45deg)',
-            border: `1px solid ${theme.colors.divider}`,
+            border: `1px solid ${theme.colors.border}`,
             borderRadius: 2,
         },
         arrowTop: {
@@ -75,48 +85,150 @@ const useStyles = createUseStyles((theme) => {
             left: 16,
             width: 'auto',
             boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
-            padding: 16,
+            padding: 8,
             backgroundColor: theme.colors.backgroundContainer,
-            zIndex: 12,
-            border: `1px solid ${theme.colors.divider}`,
+            zIndex: 50,
+            border: `1px solid ${theme.colors.border}`,
             borderRadius: 8,
-        },
-        title: {
-            margin: 0,
-            marginBottom: 12,
-            color: theme.colors.textPrimary,
-            lineHeight: 1.42857142,
-            fontSize: 14,
-        },
-        description: {
-            margin: 0,
-            color: theme.colors.textPrimary,
-            lineHeight: 1.42857142,
-            fontSize: 14,
         },
     };
 });
+
+const useAnimationStyles = createUseStyles(() => ({
+    enter: {
+        transform: ({position}: {position: Position}) => {
+            if (position === 'bottom') {
+                return `translateY(${animationMovement}px)`;
+            }
+
+            if (position === 'top') {
+                return `translateY(calc(-100% - ${animationMovement}px))`;
+            }
+
+            if (position === 'right') {
+                return `translateX(${animationMovement}px) translateY(-50%)`;
+            }
+
+            if (position === 'left') {
+                return `translateX(-${animationMovement}px) translateY(-50%)`;
+            }
+
+            return `translateY(-${animationMovement}px)`;
+        },
+    },
+
+    enterActive: {
+        animationName: ({position}: {position: Position}) => {
+            if (position === 'top') return '$fadeInTop';
+
+            if (position === 'bottom') return '$fadeInBottom';
+
+            return '$fadeInX';
+        },
+        animationFillMode: 'both',
+        animationDuration: `${transitionDurationMs}ms`,
+        animationTimingFunction: animationTiming,
+    },
+    enterDone: {
+        transform: ({position}: {position: Position}) => {
+            if (position === 'top') return 'translateY(-100%)';
+            if (position === 'bottom') return 'translateY(0)';
+
+            return 'translateY(-50%)';
+        },
+    },
+
+    exit: {
+        transform: ({position}: {position: Position}) => {
+            if (position === 'bottom') {
+                return 'translateY(0)';
+            }
+
+            if (position === 'top') {
+                return 'translateY(-100%)';
+            }
+
+            if (position === 'right') {
+                return 'translateX(0px) translateY(-50%)';
+            }
+
+            if (position === 'left') {
+                return 'translateX(0px) translateY(-50%)';
+            }
+
+            return 'translateY(0px)';
+        },
+
+        opacity: 1,
+        transition: `opacity 0.3s ${animationTiming}`,
+    },
+
+    exitActive: {
+        animation: `$fadeOut 0.3s ${animationTiming} both`,
+    },
+
+    '@keyframes fadeInBottom': {
+        from: {opacity: 0},
+        '40%': {opacity: 1},
+        to: {
+            opacity: 1,
+            transform: 'translateY(0)',
+        },
+    },
+    '@keyframes fadeInTop': {
+        from: {opacity: 0},
+        '40%': {opacity: 1},
+        to: {
+            opacity: 1,
+            transform: 'translateY(-100%)',
+        },
+    },
+
+    '@keyframes fadeInX': {
+        from: {opacity: 0},
+        '40%': {opacity: 1},
+        to: {
+            opacity: 1,
+            transform: 'translateX(0) translateY(-50%)',
+        },
+    },
+
+    '@keyframes fadeOut': {from: {opacity: 1}, to: {opacity: 0}},
+}));
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
 const getWidthDesktop = (customWidth?: number) => (customWidth ? customWidth : defaultWidthDesktop);
 
-const EVENT_THROTTLE_TIME = process.env.NODE_ENV === 'test' ? 0 : 200;
-
 type Props = {
     children?: React.ReactNode;
+    extra?: React.ReactNode;
     description?: string;
     target: React.ReactNode;
     title?: string;
     position?: Position;
     width?: number;
     targetLabel: string;
+    delay?: boolean;
 };
 
-const Tooltip: React.FC<Props> = ({children, description, target, title, targetLabel, ...rest}) => {
+const Tooltip: React.FC<Props> = ({
+    children,
+    extra,
+    description,
+    target,
+    title,
+    targetLabel,
+    delay = true,
+    ...rest
+}) => {
     const [isVisible, setIsVisible] = React.useState(false);
     const {isTabletOrSmaller} = useScreenSize();
     const ariaId = useAriaId();
+    const isPointerOver = React.useRef(false);
+    const closeTooltipTimeoutId = React.useRef<NodeJS.Timeout | null>(null);
+    const showTooltipTimeoutId = React.useRef<NodeJS.Timeout | null>(null);
+    const targetRef = React.useRef<HTMLDivElement>(null);
     const targetBoundingClientRect = React.useRef({
         top: 0,
         right: 0,
@@ -125,10 +237,17 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
         width: 0,
         height: 0,
     });
-    // This property is needed because safari is making a mess with the events (it has problems
-    // when the overlay layer appears and disappears). This way we ensure that events don't get handled twice
-    const lastChangeTime = React.useRef(0);
+
+    const getPosition = (position: Position = defaultPositionDesktop) =>
+        isTabletOrSmaller && (position === 'left' || position === 'right') ? defaultPositionMobile : position;
+
+    const position = getPosition(rest.position);
+
     const classes = useStyles();
+    const animationClasses = useAnimationStyles({position});
+
+    const isTouchableDevice =
+        typeof window !== 'undefined' ? window.matchMedia('(pointer: coarse)').matches : false;
 
     const closeTooltip = () => {
         if (isVisible) {
@@ -144,25 +263,19 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
     });
 
     const handleClickOutside = () => {
-        if (Date.now() - lastChangeTime.current < EVENT_THROTTLE_TIME) {
-            return;
-        }
-        lastChangeTime.current = Date.now();
         setIsVisible(false);
     };
 
-    const toggleVisibility = (e: React.FocusEvent<HTMLDivElement> | React.PointerEvent<HTMLDivElement>) => {
-        if (Date.now() - lastChangeTime.current < EVENT_THROTTLE_TIME) {
-            return;
-        }
-        lastChangeTime.current = Date.now();
-        targetBoundingClientRect.current = e.currentTarget.getBoundingClientRect();
+    const toggleVisibility = () => {
+        if (!targetRef.current) return;
+
+        targetBoundingClientRect.current = targetRef.current.getBoundingClientRect();
         setIsVisible(!isVisible);
     };
 
-    const handleFocus = (e: React.FocusEvent<HTMLDivElement>) => {
+    const handleFocus = () => {
         if (!isVisible) {
-            toggleVisibility(e);
+            toggleVisibility();
         }
     };
 
@@ -173,6 +286,10 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
     };
 
     const getContainerPosition = (position: Position, width: number) => {
+        if (typeof window === 'undefined') {
+            return {};
+        }
+
         const containerPos = {
             right: {
                 left: targetBoundingClientRect.current.right + distanceToTarget,
@@ -180,8 +297,6 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
                     window.pageYOffset +
                     targetBoundingClientRect.current.top +
                     targetBoundingClientRect.current.height / 2,
-                transform: 'translateY(-50%)',
-                WebKitTransform: 'translateY(-50%)',
             },
             left: {
                 left: targetBoundingClientRect.current.left - width - distanceToTarget,
@@ -189,12 +304,8 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
                     window.pageYOffset +
                     targetBoundingClientRect.current.top +
                     targetBoundingClientRect.current.height / 2,
-                transform: 'translateY(-50%)',
-                WebKitTransform: 'translateY(-50%)',
             },
             top: {
-                transform: 'translateY(-100%)',
-                WebKitTransform: 'translateY(-100%)',
                 top: window.pageYOffset + targetBoundingClientRect.current.top - distanceToTarget,
                 left: isTabletOrSmaller
                     ? marginLeftRightMobile
@@ -216,9 +327,6 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
         return containerPos[position];
     };
 
-    const getPosition = (position: Position = defaultPositionDesktop) =>
-        isTabletOrSmaller && (position === 'left' || position === 'right') ? defaultPositionMobile : position;
-
     const getCustomStylesForMobile = () =>
         isTabletOrSmaller
             ? {
@@ -232,7 +340,6 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
     const getWidth = () =>
         isTabletOrSmaller ? window.innerWidth - marginLeftRightMobile * 2 : getWidthDesktop(rest.width);
 
-    const position = getPosition(rest.position);
     const width = getWidth();
 
     const classNameByPosition = {
@@ -245,8 +352,46 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
     return (
         <>
             <div
+                ref={targetRef}
                 className={classes.wrapper}
-                onPointerDown={toggleVisibility}
+                onPointerOver={() => {
+                    if (closeTooltipTimeoutId.current) {
+                        clearTimeout(closeTooltipTimeoutId.current);
+                        closeTooltipTimeoutId.current = null;
+                    }
+
+                    if (isPointerOver.current) return;
+
+                    isPointerOver.current = true;
+
+                    if (delay) {
+                        showTooltipTimeoutId.current = setTimeout(() => {
+                            showTooltipTimeoutId.current = null;
+                            toggleVisibility();
+                        }, defaultShowTooltipDelayMs);
+                    } else {
+                        toggleVisibility();
+                    }
+                }}
+                onPointerLeave={
+                    isTouchableDevice
+                        ? noOp
+                        : () => {
+                              if (showTooltipTimeoutId.current) {
+                                  clearTimeout(showTooltipTimeoutId.current);
+                                  showTooltipTimeoutId.current = null;
+                                  isPointerOver.current = false;
+                                  return;
+                              }
+
+                              closeTooltipTimeoutId.current = setTimeout(() => {
+                                  if (!isPointerOver.current) return;
+                                  closeTooltipTimeoutId.current = null;
+                                  isPointerOver.current = false;
+                                  toggleVisibility();
+                              }, 100);
+                          }
+                }
                 onFocus={handleFocus}
                 onKeyDown={handleKeyDown}
                 touch-action="auto" // Prop needed for Pointer Events Polyfill to work properly
@@ -258,9 +403,22 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
             >
                 {target}
             </div>
-            {isVisible && (
-                <Portal>
-                    <Overlay onPress={handleClickOutside} />
+
+            <Portal>
+                {isVisible && isTouchableDevice && <Overlay onPress={handleClickOutside} />}
+                <CSSTransition
+                    in={isVisible}
+                    timeout={transitionDurationMs}
+                    classNames={{
+                        enter: animationClasses.enter,
+                        enterActive: animationClasses.enterActive,
+                        enterDone: animationClasses.enterDone,
+
+                        exit: animationClasses.exit,
+                        exitActive: animationClasses.exitActive,
+                    }}
+                    unmountOnExit
+                >
                     <div
                         role="tooltip"
                         id={ariaId}
@@ -269,6 +427,25 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
                             width,
                             ...getContainerPosition(position, width),
                         }}
+                        onPointerOver={() => {
+                            if (closeTooltipTimeoutId.current) {
+                                clearTimeout(closeTooltipTimeoutId.current);
+                                closeTooltipTimeoutId.current = null;
+                            }
+                        }}
+                        onPointerLeave={
+                            isTouchableDevice
+                                ? noOp
+                                : () => {
+                                      closeTooltipTimeoutId.current = setTimeout(() => {
+                                          if (!isPointerOver.current) return;
+
+                                          closeTooltipTimeoutId.current = null;
+                                          isPointerOver.current = false;
+                                          toggleVisibility();
+                                      }, 100);
+                                  }
+                        }
                     >
                         <div
                             className={classnames(classes.arrowWrapper, classNameByPosition[position])}
@@ -277,15 +454,15 @@ const Tooltip: React.FC<Props> = ({children, description, target, title, targetL
                             <div className={classes.arrow} />
                         </div>
                         {(title || description) && (
-                            <>
-                                {title && <p className={classes.title}>{title}</p>}
-                                {description && <p className={classes.description}>{description}</p>}
-                            </>
+                            <Stack space={4}>
+                                {title && <Text2 medium>{title}</Text2>}
+                                {description && <Text2 regular>{description}</Text2>}
+                            </Stack>
                         )}
-                        {children}
+                        {extra || children}
                     </div>
-                </Portal>
-            )}
+                </CSSTransition>
+            </Portal>
         </>
     );
 };

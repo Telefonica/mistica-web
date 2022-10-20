@@ -9,8 +9,8 @@ import {
     LABEL_SCALE_DESKTOP,
 } from './text-field-components';
 import {Text3} from './text';
-import {isRunningAcceptanceTest, isFirefox} from './utils/platform';
-import {useAriaId, useTheme, useScreenSize} from './hooks';
+import {isIos, isRunningAcceptanceTest, isFirefox, isSafari} from './utils/platform';
+import {useAriaId, useTheme, useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
 
@@ -118,8 +118,8 @@ const commonInputStyles = (theme: Theme) => ({
     background: 'none',
     border: 0,
     outline: 0,
-    fontSize: 18,
-    lineHeight: '24px',
+    fontSize: 'inherit',
+    lineHeight: 'inherit',
     paddingRight: ({endIcon}: {endIcon: boolean}) => (endIcon ? 0 : 16),
     paddingLeft: ({prefix, startIcon}: {prefix: boolean; startIcon: boolean}) => {
         if (prefix) {
@@ -132,8 +132,10 @@ const commonInputStyles = (theme: Theme) => ({
     },
     /* Workaround to avoid huge bullets on ios devices (-apple-system font related) */
     fontFamily: ({type}: {type: string}) =>
-        type === 'password' && !isRunningAcceptanceTest(theme.platformOverrides)
-            ? 'Lucida Grande, Arial, sans-serif'
+        type === 'password' &&
+        isIos(theme.platformOverrides) &&
+        !isRunningAcceptanceTest(theme.platformOverrides)
+            ? 'arial'
             : 'inherit',
     color: theme.colors.textPrimary,
     caretColor: theme.colors.controlActivated,
@@ -151,9 +153,6 @@ const commonInputStyles = (theme: Theme) => ({
         },
     },
     boxShadow: 'none', // reset FF red shadow styles for required inputs
-    [theme.mq.tabletOrSmaller]: {
-        fontSize: 16,
-    },
 });
 
 const useStyles = createUseStyles((theme) => ({
@@ -173,19 +172,18 @@ const useStyles = createUseStyles((theme) => ({
     },
     textArea: {
         resize: 'none',
-        padding: 0,
-        marginTop: ({hasLabel}) => (hasLabel ? 24 : 16),
-        [theme.mq.desktopOrBigger]: {
-            marginTop: ({hasLabel}) => (hasLabel ? 28 : 16),
+        marginTop: ({hasLabel}) => (hasLabel ? 28 : 16),
+        [theme.mq.tabletOrSmaller]: {
+            marginTop: ({hasLabel}) => (hasLabel ? 24 : 16),
         },
         paddingBottom: '8px',
         ...commonInputStyles(theme),
     },
     input: {
         position: 'relative',
-        paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
-        [theme.mq.desktopOrBigger]: {
-            paddingTop: ({hasLabel}) => (hasLabel ? 28 : 16),
+        paddingTop: ({hasLabel}) => (hasLabel ? 28 : 16),
+        [theme.mq.tabletOrSmaller]: {
+            paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
         },
         paddingBottom: ({hasLabel}) => (hasLabel ? 8 : 16),
         height: '100%',
@@ -260,8 +258,8 @@ const useStyles = createUseStyles((theme) => ({
         position: 'absolute',
     },
     prefix: {
-        alignSelf: 'baseline',
-        paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
+        alignSelf: ({prefixAlignSelf}) => prefixAlignSelf,
+        paddingTop: ({hasLabel}) => (hasLabel ? 28 : 16),
         [theme.mq.tabletOrSmaller]: {
             paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
         },
@@ -318,6 +316,20 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             ((rest.type === 'date' || rest.type === 'datetime-local' || rest.type === 'month') &&
                 !rest.required);
 
+        const [prefixAlignSelf, setPrefixAlignSelf] = React.useState('baseline');
+        useIsomorphicLayoutEffect(() => {
+            /**
+             * Safari check to workaround https://jira.tid.es/browse/WEB-648
+             * For some reason it is super hard to align the prefix text with the input text
+             * and get the same result in chrome and safari
+             *
+             * Using an effect to set the style to avoid problems with SSR
+             */
+            if (isSafari()) {
+                setPrefixAlignSelf('initial');
+            }
+        }, []);
+
         const classes = useStyles({
             inputState,
             error,
@@ -329,6 +341,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             multiline,
             type: rest.type,
             disabled: rest.disabled,
+            prefixAlignSelf,
         });
 
         React.useEffect(() => {
