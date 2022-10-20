@@ -105,7 +105,7 @@ const FixedFooterLayout: React.FC<Props> = ({
                 return false;
             }
 
-            if (hasContentEnoughVSpace) {
+            if (!hasContentEnoughVSpace) {
                 return false;
             }
 
