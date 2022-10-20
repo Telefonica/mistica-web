@@ -1,40 +1,7 @@
+/* eslint-disable import/extensions */
 import * as React from 'react';
 import classnames from 'classnames';
-import {createUseStyles} from './jss';
-
-const useStyles = createUseStyles((theme) => ({
-    container: {
-        position: 'relative',
-        display: 'inline-block',
-    },
-    badge: {
-        position: ({hasChildren}) => (hasChildren ? 'absolute' : 'static'),
-        top: ({top}) => top ?? -2,
-        right: ({right}) => right ?? -6,
-        width: 8,
-        height: 8,
-        background: theme.colors.badge,
-        borderRadius: '50%',
-        boxShadow: `0px 0px 0px 1.5px ${theme.colors.borderLight}`,
-    },
-    badgeNumber: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        top: ({top}) => top ?? -8,
-        right: ({right}) => right ?? -9,
-        width: 18,
-        height: 18,
-        fontSize: 12,
-        fontWeight: 500,
-        color: theme.colors.textPrimaryInverse,
-    },
-    badgeBigNumber: {
-        right: ({right}) => right ?? -14,
-        width: 24,
-        borderRadius: 24,
-    },
-}));
+import * as classes from './badge.css';
 
 type Props = {
     children?: React.ReactNode;
@@ -54,9 +21,6 @@ type Props = {
  * </Badge>
  */
 const Badge: React.FC<Props> = ({children, value, right, top}) => {
-    const hasChildren = !!children;
-    const classes = useStyles({hasChildren, right, top});
-
     if (children && value === 0) {
         return <>{children}</>;
     }
@@ -72,8 +36,10 @@ const Badge: React.FC<Props> = ({children, value, right, top}) => {
                     role="presentation"
                     aria-hidden="true" // otherwise OSX VoiceOver reads this number
                     className={classnames(classes.badge, classes.badgeNumber, {
+                        [classes.badgeWithChildren]: !!children,
                         [classes.badgeBigNumber]: value > 9,
                     })}
+                    style={{right, top}}
                 >
                     {value > 9 ? '+9' : value}
                 </div>

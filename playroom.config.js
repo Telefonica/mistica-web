@@ -1,4 +1,6 @@
 const path = require('path');
+const {VanillaExtractPlugin} = require('@vanilla-extract/webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const exampleCode = `
 <Form
@@ -51,8 +53,26 @@ const config = {
                     test: /(reset|roboto)\.css$/,
                     use: ['style-loader', 'css-loader'],
                 },
+                {
+                    test: /\.vanilla\.css$/i,
+                    // Don't process vanilla files from Playroom as they are handled separately.
+                    // Virtual file paths will look more realistic in the future allowing
+                    // more standard handling of include/exclude path matching.
+                    exclude: /node_modules\/playroom/,
+                    use: [
+                        'style-loader',
+                        // MiniCssExtractPlugin.loader,
+                        {
+                            loader: require.resolve('css-loader'),
+                            options: {
+                                url: false,
+                            },
+                        },
+                    ],
+                },
             ],
         },
+        // plugins: [new MiniCssExtractPlugin({ignoreOrder: true})],
     }),
 };
 
