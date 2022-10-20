@@ -168,9 +168,6 @@ const BurgerMenuIcon = ({isOpen}: {isOpen: boolean}) => {
 const NAVBAR_ZINDEX = 25;
 const BURGER_ZINDEX = 26;
 
-const DESKTOP_NAVBAR_HEIGHT = 80;
-const MOBILE_NAVBAR_HEIGHT = 56;
-
 const BURGER_MENU_ANIMATION_DURATION_MS = 300;
 
 const useStyles = createUseStyles((theme) => {
@@ -194,7 +191,7 @@ const useStyles = createUseStyles((theme) => {
             alignItems: 'center',
             background: ({isInverse}) =>
                 isInverse ? theme.colors.navigationBarBackground : theme.colors.background,
-            height: DESKTOP_NAVBAR_HEIGHT,
+            height: theme.dimensions.headerDesktopHeight,
             padding: '16px 0',
             borderBottomStyle: 'solid',
             borderBottomWidth: ({withBorder}) => (withBorder ? 1 : 0),
@@ -204,12 +201,12 @@ const useStyles = createUseStyles((theme) => {
                 transition: 'border-color 300ms',
                 borderColor: ({isMenuOpen, isInverse}) =>
                     isMenuOpen || (isInverse && !theme.isDarkMode) ? 'transparent' : theme.colors.divider,
-                height: MOBILE_NAVBAR_HEIGHT,
+                height: theme.dimensions.headerMobileHeight,
                 padding: '8px 0',
             },
         },
         section: {
-            height: DESKTOP_NAVBAR_HEIGHT,
+            height: theme.dimensions.headerDesktopHeight,
             display: 'flex',
             alignItems: 'center',
             padding: '0 8px',
@@ -227,18 +224,18 @@ const useStyles = createUseStyles((theme) => {
             borderColor: ({isInverse}) => (isInverse ? theme.colors.inverse : theme.colors.controlActivated),
         },
         spacer: {
-            height: DESKTOP_NAVBAR_HEIGHT,
+            height: theme.dimensions.headerDesktopHeight,
             [theme.mq.tabletOrSmaller]: {
-                height: MOBILE_NAVBAR_HEIGHT,
+                height: theme.dimensions.headerMobileHeight,
             },
         },
         burgerMenu: {
             zIndex: BURGER_ZINDEX,
             position: 'fixed',
-            top: MOBILE_NAVBAR_HEIGHT,
+            top: theme.dimensions.headerMobileHeight,
             left: 0,
             right: 0,
-            height: `calc(100vh - ${MOBILE_NAVBAR_HEIGHT}px)`,
+            height: `calc(100vh - ${theme.dimensions.headerMobileHeight}px)`,
             overflowY: 'auto',
             background: theme.colors.background,
             boxShadow: ({menuTransitionState}) =>

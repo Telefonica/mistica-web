@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {render, fireEvent, screen} from '@testing-library/react';
+import {render, fireEvent, screen, waitForElementToBeRemoved} from '@testing-library/react';
 import Tooltip from '../tooltip';
 import {ThemeContextProvider} from '..';
 import {makeTheme} from './test-utils';
@@ -8,9 +8,13 @@ type Props = Omit<React.ComponentProps<typeof Tooltip>, 'children' | 'targetLabe
 
 const TestTooltip: React.FC<Props> = (props) => (
     <ThemeContextProvider theme={makeTheme()}>
-        <Tooltip {...props} targetLabel="help text" target={<span className="target">Press me!</span>}>
-            <div className="content">Content</div>
-        </Tooltip>
+        <Tooltip
+            {...props}
+            targetLabel="help text"
+            target={<span className="target">Press me!</span>}
+            extra={<div className="content">Content</div>}
+            delay={false}
+        />
     </ThemeContextProvider>
 );
 
@@ -26,10 +30,10 @@ test('does not render content initially', () => {
     expect(screen.queryByText('Content')).toBe(null);
 });
 
-test('render content after press down target', async () => {
+test('render content after press down target', () => {
     render(<TestTooltip position="bottom" />);
 
-    fireEvent.pointerDown(screen.getByText('Press me!'));
+    fireEvent.pointerOver(screen.getByText('Press me!'));
 
     expect(screen.getByText('Content')).toBeInTheDocument();
 });
@@ -41,33 +45,34 @@ test('tooltip is accessible', async () => {
     fireEvent.focus(screen.getByLabelText('help text'));
     expect(screen.getByText('Content')).toBeInTheDocument();
     fireEvent.keyDown(screen.getByLabelText('help text'), {key: 'tab', keyCode: 9});
-    expect(screen.queryByText('Content')).toBe(null);
+
+    await waitForElementToBeRemoved(screen.queryByText('Content'));
 });
 
-test('set default width', async () => {
+test('set default width', () => {
     render(<TestTooltip position="bottom" />);
 
-    fireEvent.pointerDown(screen.getByText('Press me!'));
+    fireEvent.pointerOver(screen.getByText('Press me!'));
     const content = screen.getByText('Content');
 
     expect(content).toBeInTheDocument();
-    expect(content.parentElement).toHaveStyle('width: 340px; top: 20px; left: -170px;');
+    expect(content.parentElement).toHaveStyle('width: 340px; top: 16px; left: -170px;');
 });
 
-test('set custom width', async () => {
+test('set custom width', () => {
     render(<TestTooltip position="bottom" width={500} />);
 
-    fireEvent.pointerDown(screen.getByText('Press me!'));
+    fireEvent.pointerOver(screen.getByText('Press me!'));
     const content = screen.getByText('Content');
 
     expect(content).toBeInTheDocument();
-    expect(content.parentElement).toHaveStyle('width: 500px; top: 20px; left: -250px;');
+    expect(content.parentElement).toHaveStyle('width: 500px; top: 16px; left: -250px;');
 });
 
-test('set title and description', async () => {
+test('set title and description', () => {
     render(<TestTooltip title="Title" description="Description" />);
 
-    fireEvent.pointerDown(screen.getByText('Press me!'));
+    fireEvent.pointerOver(screen.getByText('Press me!'));
 
     expect(screen.getByText('Title')).toBeInTheDocument();
     expect(screen.getByText('Description')).toBeInTheDocument();
@@ -79,7 +84,7 @@ const targetBottom = 600;
 const targetLeft = 500;
 const targetHeight = 100;
 const targetWidth = 100;
-const distanceToTarget = 20;
+const distanceToTarget = 16;
 const scrollY = 0;
 const scrollX = 0;
 const defaultWidth = 340;
@@ -94,12 +99,12 @@ const getBoundingClientRect = () =>
         width: targetWidth,
     } as DOMRect);
 
-test('check container styles for right position', async () => {
+test('check container styles for right position', () => {
     jest.spyOn(global.Element.prototype, 'getBoundingClientRect').mockReturnValue(getBoundingClientRect());
 
     render(<TestTooltip position="right" />);
 
-    fireEvent.pointerDown(screen.getByText('Press me!'));
+    fireEvent.pointerOver(screen.getByText('Press me!'));
     const content = screen.getByText('Content');
 
     expect(content).toBeInTheDocument();
@@ -108,12 +113,12 @@ test('check container styles for right position', async () => {
         left: ${targetRight + distanceToTarget}px;`);
 });
 
-test('check container styles for left position', async () => {
+test('check container styles for left position', () => {
     jest.spyOn(global.Element.prototype, 'getBoundingClientRect').mockReturnValue(getBoundingClientRect());
 
     render(<TestTooltip position="left" />);
 
-    fireEvent.pointerDown(screen.getByText('Press me!'));
+    fireEvent.pointerOver(screen.getByText('Press me!'));
     const content = screen.getByText('Content');
 
     expect(content).toBeInTheDocument();
@@ -122,12 +127,12 @@ test('check container styles for left position', async () => {
         left: ${targetLeft - defaultWidth - distanceToTarget}px;`);
 });
 
-test('check container styles for top position', async () => {
+test('check container styles for top position', () => {
     jest.spyOn(global.Element.prototype, 'getBoundingClientRect').mockReturnValue(getBoundingClientRect());
 
     render(<TestTooltip position="top" />);
 
-    fireEvent.pointerDown(screen.getByText('Press me!'));
+    fireEvent.pointerOver(screen.getByText('Press me!'));
     const content = screen.getByText('Content');
 
     expect(content).toBeInTheDocument();
@@ -136,12 +141,12 @@ test('check container styles for top position', async () => {
     left: ${scrollX + targetLeft + targetWidth / 2 - defaultWidth / 2}px;`);
 });
 
-test('check container styles for bottom position', async () => {
+test('check container styles for bottom position', () => {
     jest.spyOn(global.Element.prototype, 'getBoundingClientRect').mockReturnValue(getBoundingClientRect());
 
     render(<TestTooltip position="bottom" />);
 
-    fireEvent.pointerDown(screen.getByText('Press me!'));
+    fireEvent.pointerOver(screen.getByText('Press me!'));
     const content = screen.getByText('Content');
 
     expect(content).toBeInTheDocument();
@@ -150,12 +155,12 @@ test('check container styles for bottom position', async () => {
     left: ${scrollX + targetLeft + targetWidth / 2 - defaultWidth / 2}px;`);
 });
 
-test('click anchor does not close tooltip', async () => {
+test('click anchor does not close tooltip', () => {
     const linkSpy = jest.fn();
 
     render(
         <ThemeContextProvider theme={makeTheme()}>
-            <Tooltip targetLabel="help text" target={<span className="target">Press me!</span>}>
+            <Tooltip targetLabel="help text" target={<span className="target">Press me!</span>} delay={false}>
                 <div className="content">
                     Content
                     <a tabIndex={-1} role="link" onClick={() => linkSpy()}>
@@ -166,7 +171,7 @@ test('click anchor does not close tooltip', async () => {
         </ThemeContextProvider>
     );
 
-    fireEvent.pointerDown(screen.getByText('Press me!'));
+    fireEvent.pointerOver(screen.getByText('Press me!'));
 
     fireEvent.click(screen.getByText('Link'));
 
