@@ -19,7 +19,7 @@ import {
     removePassiveEventListener,
 } from './utils/dom';
 
-const FOOTER_CANVAS_RATIO = 4;
+const FOOTER_CANVAS_RATIO = 2;
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
 
 const waitForSwitchTransitionToStart = (fn: () => void) => {

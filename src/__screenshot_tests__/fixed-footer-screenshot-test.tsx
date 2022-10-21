@@ -12,7 +12,6 @@ test('Dialog over fixed footer', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-jest.setTimeout(900000);
 test('Fixed footer with relative position when height is smaller than the footer itself', async () => {
     const page = await openStoryPage({
         id: 'layout-fixed-footer-layout--more-complex-footer',
