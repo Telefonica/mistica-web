@@ -76,6 +76,7 @@ export const Default: StoryComponent = () => {
                             onPress={() =>
                                 dialog({
                                     title: 'Title',
+                                    subtitle: 'Subtitle',
                                     message: 'Message',
                                     acceptText: 'Accept terms and conditions',
                                     extra: <Text1 regular>This is the extra zone</Text1>,

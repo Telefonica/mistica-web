@@ -132,6 +132,7 @@ interface BaseDialogProps {
 }
 
 interface AlertProps extends BaseDialogProps {
+    subtitle?: undefined;
     extra?: undefined;
     forceWeb?: undefined;
     showClose?: boolean;
@@ -141,6 +142,7 @@ interface AlertProps extends BaseDialogProps {
 }
 
 interface ConfirmProps extends BaseDialogProps {
+    subtitle?: undefined;
     extra?: undefined;
     forceWeb?: undefined;
     showClose?: boolean;
@@ -149,6 +151,7 @@ interface ConfirmProps extends BaseDialogProps {
     onCancel?: () => void;
 }
 interface ExtendedDialogProps extends BaseDialogProps {
+    subtitle?: string;
     extra?: React.ReactNode;
     forceWeb?: boolean;
     showClose?: boolean;
@@ -202,6 +205,13 @@ const Dialog: React.FC<DialogProps> = (props) => {
                             {title}
                         </Text4>
                     )}
+                </Box>
+            )}
+            {props.subtitle && (
+                <Box paddingBottom={16}>
+                    <Text4 regular as="h2">
+                        {props.subtitle}
+                    </Text4>
                 </Box>
             )}
             <div className={classes.dialogContent}>
