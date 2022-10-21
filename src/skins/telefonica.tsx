@@ -89,8 +89,9 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             buttonPrimaryBackgroundHover: palette.telefonicaBlue70, // web only
             buttonPrimaryBackgroundSelectedInverse: palette.telefonicaBlue30,
 
-            buttonSecondaryBackground: palette.telefonicaBlue,
-            buttonSecondaryBackgroundSelected: palette.telefonicaBlue70,
+            buttonSecondaryBackgroundSelected: palette.telefonicaBlue10,
+            buttonSecondaryBorder: palette.telefonicaBlue,
+            buttonSecondaryBorderSelected: palette.telefonicaBlue70,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.telefonicaBlue30,
 

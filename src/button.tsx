@@ -158,12 +158,13 @@ const usePrimaryButtonStyles = createUseStyles((theme) => ({
 const buttonSecondaryLightStyle = (theme: Theme) => ({
     color: theme.colors.textButtonSecondary,
     backgroundColor: 'transparent',
-    borderColor: theme.colors.buttonSecondaryBackground,
+    borderColor: theme.colors.buttonSecondaryBorder,
 });
 
 const buttonSecondaryHoverLightStyle = (theme: Theme) => ({
     color: theme.colors.textButtonSecondarySelected,
-    borderColor: theme.colors.buttonSecondaryBackgroundSelected,
+    backgroundColor: theme.colors.buttonSecondaryBackgroundSelected,
+    borderColor: theme.colors.buttonSecondaryBorderSelected,
 });
 
 const useSecondaryButtonStyles = createUseStyles((theme) => ({

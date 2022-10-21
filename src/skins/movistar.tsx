@@ -60,8 +60,6 @@ export const palette = {
     darkModeGrey4: '#85939C',
     darkModeGrey5: '#6D7D88',
     darkModeGrey6: '#3C5261',
-
-
 } as const;
 
 export const getMovistarSkin: GetKnownSkin = () => {
@@ -102,8 +100,9 @@ export const getMovistarSkin: GetKnownSkin = () => {
             buttonPrimaryBackgroundHover: palette.movistarBlue55, // web only
             buttonPrimaryBackgroundSelectedInverse: palette.movistarBlue55,
 
-            buttonSecondaryBackground: palette.movistarBlue,
-            buttonSecondaryBackgroundSelected: palette.movistarBlue55,
+            buttonSecondaryBackgroundSelected: palette.movistarBlue10,
+            buttonSecondaryBorder: palette.movistarBlue,
+            buttonSecondaryBorderSelected: palette.movistarBlue55,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.movistarBlue30,
 
@@ -183,7 +182,6 @@ export const getMovistarSkin: GetKnownSkin = () => {
             promoHigh: palette.purple70,
         },
         darkModeColors: {
-
             brand: palette.movistarBlue, // this color needs to be in darkModeColors to revert the promient variant
 
             // BACKGROUNDS

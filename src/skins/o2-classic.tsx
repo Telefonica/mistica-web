@@ -106,8 +106,10 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             buttonPrimaryBackgroundSelected: palette.o2SkyBlue55,
             buttonPrimaryBackgroundHover: palette.o2SkyBlue55,
             buttonPrimaryBackgroundSelectedInverse: palette.o2SkyBlueLight45,
-            buttonSecondaryBackground: palette.o2SkyBlue,
-            buttonSecondaryBackgroundSelected: palette.o2SkyBlue55,
+
+            buttonSecondaryBackgroundSelected: palette.o2SkyBlueLight10,
+            buttonSecondaryBorder: palette.o2SkyBlue,
+            buttonSecondaryBorderSelected: palette.o2SkyBlue55,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.o2SkyBlueLight45,
 
