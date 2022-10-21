@@ -185,6 +185,7 @@ const useSecondaryButtonStyles = createUseStyles((theme) => ({
     },
     inverse: {
         borderColor: theme.colors.buttonSecondaryBorderInverse,
+        backgroundColor: theme.colors.buttonSecondaryBackgroundSelectedInverse,
         color: theme.colors.textButtonSecondaryInverse,
 
         '&:enabled:active': {
@@ -195,6 +196,7 @@ const useSecondaryButtonStyles = createUseStyles((theme) => ({
 
         '&:hover:not([disabled])': {
             borderColor: theme.colors.buttonSecondaryBorderSelectedInverse,
+            backgroundColor: theme.colors.buttonSecondaryBackgroundSelectedInverse,
             color: theme.colors.textButtonSecondaryInverseSelected,
             [theme.mq.touchableOnly]: {
                 borderColor: theme.colors.buttonSecondaryBorderInverse,
