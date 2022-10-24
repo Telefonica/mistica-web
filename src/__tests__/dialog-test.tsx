@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {render, fireEvent, waitFor, screen} from '@testing-library/react';
-import {alert, confirm} from '../dialog';
+import {alert, confirm, dialog} from '../dialog';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import * as webviewBridge from '@tef-novum/webview-bridge';
@@ -70,7 +70,7 @@ test('Closes a dialog on click outside', async () => {
     render(<ThemeContextProvider theme={makeTheme()} />);
 
     const onCancelSpy = jest.fn();
-    confirm({...confirmProps, onCancel: onCancelSpy});
+    dialog({...confirmProps, onCancel: onCancelSpy, showCancel: true});
 
     await waitFor(() => {
         expect(screen.getByText('Cancelar')).toBeInTheDocument();
