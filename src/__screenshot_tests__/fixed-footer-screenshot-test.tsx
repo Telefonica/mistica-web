@@ -12,7 +12,7 @@ test('Dialog over fixed footer', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('Fixed footer with relative position when height is smaller than the footer itself', async () => {
+test('Fixed footer with static position when height is smaller than the footer itself', async () => {
     const page = await openStoryPage({
         id: 'layout-fixed-footer-layout--more-complex-footer',
         device: 'MOBILE_IOS_SMALL',
