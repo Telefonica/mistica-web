@@ -289,6 +289,7 @@ type BaseCarouselProps = {
     itemClassName?: string;
     withBullets?: boolean;
     renderBullets?: (bulletsProps: PageBulletsProps) => React.ReactNode;
+    initialActiveItem?: number;
     itemsPerPage?: ItemsPerPageProp;
     /** scrolls one page by default */
     itemsToScroll?: number;
@@ -311,6 +312,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     itemClassName,
     withBullets,
     renderBullets,
+    initialActiveItem,
     itemsPerPage,
     itemsToScroll,
     mobilePageOffset = 16,
@@ -352,6 +354,11 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
 
     const showNextArrow = scrollRight !== 0;
     const showPrevArrow = scrollLeft !== 0;
+
+    const initialItemInfo = React.useRef({
+        initialItem: 0,
+        itemsPerPage: itemsPerPageFloor,
+    });
 
     useIsomorphicLayoutEffect(() => {
         if (carouselRef.current) {
@@ -458,6 +465,24 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const shouldAutoplay = useShouldAutoplay(!!autoplay, carouselRef);
 
     React.useEffect(() => {
+        if (
+            initialActiveItem &&
+            (initialActiveItem !== initialItemInfo.current.initialItem ||
+                itemsPerPageFloor !== initialItemInfo.current.itemsPerPage)
+        ) {
+            goToPage(Math.floor(initialActiveItem / itemsPerPageFloor));
+            initialItemInfo.current.initialItem = initialActiveItem;
+            initialItemInfo.current.itemsPerPage = itemsPerPageFloor;
+        }
+    }, [
+        initialActiveItem,
+        itemsPerPageFloor,
+        goToPage,
+        initialItemInfo.current.initialItem,
+        initialItemInfo.current.initialItem,
+    ]);
+
+    React.useEffect(() => {
         if (shouldAutoplay && autoplay) {
             const time = typeof autoplay === 'boolean' ? DEFAULT_AUTOPLAY_TIME : autoplay.time;
             const loop = typeof autoplay === 'object' && autoplay.loop;
@@ -554,6 +579,7 @@ type CarouselProps = {
     itemClassName?: string;
     withBullets?: boolean;
     renderBullets?: (bulletsProps: PageBulletsProps) => React.ReactNode;
+    initialActiveItem?: number;
     itemsPerPage?: ItemsPerPageProp;
     /** scrolls one page by default */
     itemsToScroll?: number;
@@ -576,6 +602,7 @@ type CenteredCarouselProps = {
     itemClassName?: string;
     withBullets?: boolean;
     renderBullets?: (bulletsProps: PageBulletsProps) => React.ReactNode;
+    initialActiveItem?: number;
     onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
     dataAttributes?: DataAttributes;
 
@@ -588,6 +615,7 @@ export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({
     itemClassName,
     withBullets,
     renderBullets,
+    initialActiveItem,
     onPageChange,
     dataAttributes,
 }) => (
@@ -602,6 +630,7 @@ export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({
         gap={0}
         withBullets={withBullets}
         renderBullets={renderBullets}
+        initialActiveItem={initialActiveItem}
         onPageChange={onPageChange}
         dataAttributes={dataAttributes}
     />

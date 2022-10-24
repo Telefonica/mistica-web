@@ -21,9 +21,9 @@ export default {
 
 const centerStyle = {display: 'flex', alignItems: 'center', justifyContent: 'center'};
 
-type Args = {numItems: number};
+type Args = {numItems: number; initialActiveItem: number};
 
-export const Default: StoryComponent<Args> = ({numItems}) => {
+export const Default: StoryComponent<Args> = ({numItems, initialActiveItem}) => {
     const [pageInfo, setPageInfo] = React.useState<{
         pageIndex: number;
         shownItemIndexes: Array<number>;
@@ -67,6 +67,7 @@ export const Default: StoryComponent<Args> = ({numItems}) => {
                                 </div>
                             </div>
                         ))}
+                        initialActiveItem={initialActiveItem}
                     />
                     <Stack space={8}>
                         <Title1 as="h2">Current page info</Title1>
@@ -86,4 +87,5 @@ Default.storyName = 'Centered carousel';
 Default.parameters = {fullScreen: true};
 Default.args = {
     numItems: 6,
+    initialActiveItem: 0,
 };
