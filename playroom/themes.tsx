@@ -11,7 +11,8 @@ const common = {
     colorScheme: 'auto',
     i18n: {locale: 'en-US', phoneNumberFormattingRegionCode: 'ES'},
     dimensions: {
-        headerMobileHeight: 0,
+        headerMobileHeight: 56,
+        headerDesktopHeight: 80,
     },
 } as const;
 
