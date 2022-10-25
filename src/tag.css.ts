@@ -13,6 +13,7 @@ export const tag = style([
         paddingRight: 12,
     }),
     {
+        boxSizing: 'border-box',
         verticalAlign: 'middle',
         borderRadius: 50,
     },
