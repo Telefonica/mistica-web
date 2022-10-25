@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
+import {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 import {createUseStyles} from './jss';
 import {Portal} from './portal';
 import FocusTrap from './focus-trap';
@@ -10,14 +10,16 @@ import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/w
 import ThemeContext from './theme-context';
 import {useTheme, useScreenSize} from './hooks';
 import ButtonLayout from './button-layout';
-import {Text5, Text3} from './text';
+import {Text5, Text4, Text3} from './text';
 import {ESC} from './utils/key-codes';
 import Box from './box';
 import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {useSetModalState} from './modal-context-provider';
+import {pxToRem} from './utils/css';
 import Stack from './stack';
 
 import type {Theme} from './theme';
+import type {RendersNullableElement} from './utils/types';
 
 const animationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) &&
@@ -114,7 +116,7 @@ const useDialogStyles = createUseStyles((theme) => ({
         dialogContainer: {
             width: 'calc(100vw - 48px)',
             margin: 'auto',
-            padding: '48px 24px 24px',
+            padding: ({isDialog}) => (isDialog ? '40px 24px 24px' : 24),
         },
     },
 }));
@@ -124,26 +126,39 @@ interface BaseDialogProps {
     title?: string;
     icon?: React.ReactElement;
     message: string;
-    cancelText?: string;
     acceptText?: string;
-    onCancel?: () => void;
     onAccept?: () => void;
-    showCancel?: boolean;
     destructive?: boolean;
 }
 
 interface AlertProps extends BaseDialogProps {
+    subtitle?: undefined;
     extra?: undefined;
     forceWeb?: undefined;
+    showClose?: boolean;
+    showCancel?: never;
+    cancelText?: never;
+    onCancel?: never;
 }
 
 interface ConfirmProps extends BaseDialogProps {
+    subtitle?: undefined;
     extra?: undefined;
     forceWeb?: undefined;
+    showClose?: boolean;
+    showCancel?: boolean;
+    cancelText?: string;
+    onCancel?: () => void;
 }
 interface ExtendedDialogProps extends BaseDialogProps {
-    extra: React.ReactNode;
+    subtitle?: string;
+    extra?: React.ReactNode;
     forceWeb?: boolean;
+    showClose?: boolean;
+    showCancel?: boolean;
+    cancelText?: string;
+    onCancel?: () => void;
+    link?: RendersNullableElement<typeof ButtonLink>;
 }
 
 type DialogProps = AlertProps | ConfirmProps | ExtendedDialogProps;
@@ -164,8 +179,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
         destructive = false,
     } = props;
     const {isTabletOrSmaller} = useScreenSize();
-    const withSecondaryButton = showCancel && !!handleCancel;
-    const classes = useDialogStyles({withSecondaryButton});
+    const classes = useDialogStyles({isDialog: !!props.forceWeb});
 
     const mainButtonProps = {
         onPress: handleAccept ? handleAccept : () => {},
@@ -175,15 +189,34 @@ const Dialog: React.FC<DialogProps> = (props) => {
 
     return (
         <div className={classnames(classes.dialogContainer, className)}>
-            {icon && <Box paddingBottom={24}>{icon}</Box>}
+            {icon && (
+                <Box paddingBottom={24}>
+                    {React.cloneElement(icon, {
+                        size: pxToRem(isTabletOrSmaller ? 40 : 64),
+                    })}
+                </Box>
+            )}
             {title && (
                 <Box paddingBottom={16}>
-                    <Text5 as="h2">{title}</Text5>
+                    {props.forceWeb ? (
+                        <Text5 as="h2">{title}</Text5>
+                    ) : (
+                        <Text4 regular as="h2">
+                            {title}
+                        </Text4>
+                    )}
+                </Box>
+            )}
+            {props.subtitle && (
+                <Box paddingBottom={16}>
+                    <Text4 regular as="h2">
+                        {props.subtitle}
+                    </Text4>
                 </Box>
             )}
             <div className={classes.dialogContent}>
                 <Stack space={16}>
-                    <Text3 color={colors.textSecondary} light>
+                    <Text3 color={colors.textSecondary} regular>
                         {message}
                     </Text3>
                     {extra}
@@ -191,7 +224,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
             </div>
 
             <Box paddingTop={isTabletOrSmaller ? 24 : 32}>
-                <ButtonLayout>
+                <ButtonLayout link={props.forceWeb ? props.link : undefined}>
                     {destructive ? (
                         <ButtonDanger tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
                     ) : (
@@ -334,10 +367,12 @@ const ModalDialog = (props: ModalDialogProps) => {
 
     const handleOverlayPress = React.useCallback(
         (event: React.SyntheticEvent<any> | Event) => {
-            handleClose();
-            event.stopPropagation();
+            if (props.showClose) {
+                handleClose();
+                event.stopPropagation();
+            }
         },
-        [handleClose]
+        [handleClose, props.showClose]
     );
 
     const handleKeyDown = React.useCallback(
@@ -407,16 +442,18 @@ const ModalDialog = (props: ModalDialogProps) => {
                                 }}
                                 className={classnames(classes.modalContent, {closed: isClosing})}
                             >
-                                <div className={classes.modalCloseButtonContainer}>
-                                    <IconButton
-                                        onPress={handleClose}
-                                        aria-label={
-                                            context.texts.modalClose ?? context.texts.closeButtonLabel
-                                        }
-                                    >
-                                        <IcnCloseRegular color={context.colors.neutralHigh} />
-                                    </IconButton>
-                                </div>
+                                {props.showClose && (
+                                    <div className={classes.modalCloseButtonContainer}>
+                                        <IconButton
+                                            onPress={handleClose}
+                                            aria-label={
+                                                context.texts.modalClose ?? context.texts.closeButtonLabel
+                                            }
+                                        >
+                                            <IcnCloseRegular color={context.colors.neutralHigh} />
+                                        </IconButton>
+                                    </div>
+                                )}
                                 <Dialog {...dialogProps} onCancel={handleCancel} onAccept={handleAccept} />
                             </div>
                         </div>
@@ -437,7 +474,7 @@ let dialogRootInstances = 0;
 type DialogRootProps = {children?: React.ReactNode};
 
 type DialogRootState = {
-    dialogProps: BaseDialogProps | null;
+    dialogProps: DialogProps | null;
     isClosing: boolean;
     instanceNumber: number;
 };
@@ -550,27 +587,39 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
 }
 
 const showDialog =
-    ({showCancel, forceWeb}: {showCancel: boolean; forceWeb: boolean}) =>
+    ({showCancel, showClose, forceWeb}: {showCancel: boolean; showClose: boolean; forceWeb: boolean}) =>
     (props: DialogProps): void => {
         if (!dialogInstance) {
             throw Error(
                 'Tried to show a dialog but the DialogRoot component was not mounted (mount <ThemeContextProvider>)'
             );
         }
-        dialogInstance.show({showCancel, forceWeb, ...props});
+        dialogInstance.show({showCancel, showClose, forceWeb, ...props});
     };
 
 /**
  * Shows alert dialog with supplied props
  */
-export const alert: (props: AlertProps) => void = showDialog({showCancel: false, forceWeb: false});
+export const alert: (props: AlertProps) => void = showDialog({
+    showCancel: false,
+    forceWeb: false,
+    showClose: false,
+});
 
 /**
  * Shows confirm dialog with supplied props
  */
-export const confirm: (props: ConfirmProps) => void = showDialog({showCancel: true, forceWeb: false});
+export const confirm: (props: ConfirmProps) => void = showDialog({
+    showCancel: true,
+    forceWeb: false,
+    showClose: false,
+});
 
 /**
  * Shows dialog with supplied props
  */
-export const dialog: (props: ExtendedDialogProps) => void = showDialog({showCancel: false, forceWeb: true});
+export const dialog: (props: ExtendedDialogProps) => void = showDialog({
+    showCancel: false,
+    forceWeb: true,
+    showClose: true,
+});

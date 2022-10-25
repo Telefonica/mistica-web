@@ -3,7 +3,14 @@ import classnames from 'classnames';
 import debounce from 'lodash/debounce';
 import {createUseStyles} from './jss';
 import {isRunningAcceptanceTest} from './utils/platform';
-import {useElementDimensions, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
+import {
+    useElementDimensions,
+    useIsomorphicLayoutEffect,
+    useScreenHeight,
+    useScreenSize,
+    useTheme,
+    useWindowHeight,
+} from './hooks';
 import {
     addPassiveEventListener,
     getScrollableParentElement,
@@ -12,6 +19,7 @@ import {
     removePassiveEventListener,
 } from './utils/dom';
 
+const FOOTER_CANVAS_RATIO = 2;
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
 
 const waitForSwitchTransitionToStart = (fn: () => void) => {
@@ -27,23 +35,24 @@ const useStyles = createUseStyles((theme) => ({
         backgroundColor: theme.colors.background,
         transition: 'background 0.2s linear, box-shadow 0.2s linear',
     },
-
     elevated: {
         backgroundColor: theme.colors.backgroundContainer,
     },
-
     withoutFooter: {
         display: 'none',
     },
-
     containerSmall: {
-        paddingBottom: ({height}) => height,
+        paddingBottom: ({footerHeight}) => footerHeight,
         backgroundColor: ({containerBgColor}) => containerBgColor || theme.colors.background,
     },
-
     [theme.mq.tabletOrSmaller]: {
+        containerSmall: {
+            paddingBottom: ({footerHeight, isContentWithScroll, hasContentEnoughVSpace}) =>
+                hasContentEnoughVSpace || !isContentWithScroll ? footerHeight : 0,
+        },
         footer: {
-            position: 'fixed',
+            position: ({hasContentEnoughVSpace, isContentWithScroll}) =>
+                hasContentEnoughVSpace || !isContentWithScroll ? 'fixed' : 'initial',
             left: 0,
             bottom: 0,
             zIndex: 1,
@@ -77,11 +86,16 @@ const FixedFooterLayout: React.FC<Props> = ({
     const containerRef = React.useRef<HTMLDivElement>(null);
     const {isTabletOrSmaller} = useScreenSize();
     const {platformOverrides} = useTheme();
-    const {height: realHeight, ref} = useElementDimensions();
+    const {height: realFooterHeight, ref} = useElementDimensions();
+    const windowHeight = useWindowHeight();
+    const screenHeight = useScreenHeight();
+
+    const hasContentEnoughVSpace = windowHeight - realFooterHeight > screenHeight / FOOTER_CANVAS_RATIO;
+    const hasContentScroll = () => hasScroll(getScrollableParentElement(containerRef.current));
 
     useIsomorphicLayoutEffect(() => {
-        onChangeFooterHeight?.(realHeight);
-    }, [onChangeFooterHeight, realHeight]);
+        onChangeFooterHeight?.(realFooterHeight);
+    }, [onChangeFooterHeight, realFooterHeight]);
 
     React.useEffect(() => {
         const scrollable = getScrollableParentElement(containerRef.current);
@@ -90,9 +104,15 @@ const FixedFooterLayout: React.FC<Props> = ({
             if (isRunningAcceptanceTest(platformOverrides)) {
                 return false;
             }
+
+            if (!hasContentEnoughVSpace) {
+                return false;
+            }
+
             if (hasScroll(scrollable)) {
                 return getScrollDistanceToBottom(scrollable) > 1; // This is 1 and not 0 because a weird bug with Safari
             }
+
             return false;
         };
 
@@ -114,9 +134,17 @@ const FixedFooterLayout: React.FC<Props> = ({
             removePassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
             transitionAwaiter.cancel();
         };
-    }, [children, containerRef, platformOverrides]);
+    }, [hasContentEnoughVSpace, platformOverrides]);
 
-    const classes = useStyles({footerBgColor, containerBgColor, height: realHeight});
+    const classes = useStyles({
+        footerBgColor,
+        containerBgColor,
+        footerHeight: realFooterHeight,
+        windowHeight,
+        screenHeight,
+        isContentWithScroll: hasContentScroll(),
+        hasContentEnoughVSpace,
+    });
 
     return (
         <>
