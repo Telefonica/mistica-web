@@ -29,22 +29,29 @@ const Badge: React.FC<Props> = ({children, value, right, top}) => {
         return null;
     }
 
+    const isBigNumber = value && value > 9;
+
     return (
         <div className={classes.container}>
             {value ? (
                 <div
                     role="presentation"
                     aria-hidden="true" // otherwise OSX VoiceOver reads this number
-                    className={classnames(classes.badge, classes.badgeNumber, {
+                    className={classnames(classes.badgeNumber, {
                         [classes.badgeWithChildren]: !!children,
-                        [classes.badgeBigNumber]: value > 9,
+                        [classes.badgeBigNumber]: isBigNumber,
                     })}
                     style={{right, top}}
                 >
-                    {value > 9 ? '+9' : value}
+                    {isBigNumber ? '+9' : value}
                 </div>
             ) : (
-                <div className={classes.badge} />
+                <div
+                    style={{right, top}}
+                    className={classnames(classes.badge, {
+                        [classes.badgeWithChildren]: !!children,
+                    })}
+                />
             )}
             {children}
         </div>

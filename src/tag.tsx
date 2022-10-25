@@ -6,7 +6,9 @@ import {Text} from './text';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {pxToRem} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {tag, withIcon} from './tag.css';
+import * as classes from './tag.css';
+import {sprinkles} from './sprinkles.css';
+import {vars} from './skins/skin-contract.css';
 import classNames from 'classnames';
 
 import type {DataAttributes, IconProps} from './utils/types';
@@ -21,22 +23,25 @@ export type TagProps = {
     dataAttributes?: DataAttributes;
 };
 
+const {colors} = vars;
+
 const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'}) => {
-    const {colors, isDarkMode} = useTheme();
+    const {isDarkMode} = useTheme();
     const isInverse = useIsInverseVariant();
 
     if (!children) {
         return null;
     }
 
-    const tagTypeToColors: Record<TagType, [string, string]> = {
+    const tagTypeToColors = {
         promo: [colors.promoHigh, colors.promoLow],
         active: [colors.brand, colors.brandLow],
         inactive: [colors.neutralMedium, colors.neutralLow],
         success: [colors.successHigh, colors.successLow],
         warning: [colors.warningHigh, colors.warningLow],
         error: [colors.errorHigh, colors.errorLow],
-    };
+    } as const;
+
     const [textColor, backgroundColor] = tagTypeToColors[type];
 
     const shouldUseInverseBackground = isInverse && !isDarkMode;
@@ -44,12 +49,17 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
     return (
         <span
             {...getPrefixedDataAttributes(dataAttributes)}
-            className={classNames(tag, {[withIcon]: !!Icon})}
-            style={{background: shouldUseInverseBackground ? colors.inverse : backgroundColor}}
+            className={classNames(
+                classes.tag,
+                sprinkles({
+                    paddingLeft: Icon ? 8 : 12,
+                    background: shouldUseInverseBackground ? colors.inverse : backgroundColor,
+                })
+            )}
         >
             {Icon && (
                 <Box paddingRight={4}>
-                    <Icon color={textColor} size={pxToRem(16)} style={{display: 'block'}} />
+                    <Icon color={textColor} size={pxToRem(16)} className={sprinkles({display: 'block'})} />
                 </Box>
             )}
             <ThemeVariant isInverse={false}>

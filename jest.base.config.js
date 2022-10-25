@@ -10,6 +10,7 @@ module.exports = {
         '!**/__*__/**', // ignore tests, acceptance, stories, etc
     ],
     transform: {
+        '\\.css\\.ts$': '@vanilla-extract/jest-transform',
         '^.+\\.(t|j)sx?$': ['@swc/jest', {...swcConfig, sourceMaps: 'inline'}],
     },
     coverageReporters: ['json-summary', 'lcov'],

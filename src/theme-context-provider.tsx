@@ -1,5 +1,7 @@
+/* eslint-disable import/extensions */
 import * as React from 'react';
 import {JssProvider} from 'react-jss';
+import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {createGenerateId} from 'jss';
 import {getJss} from './jss';
 import DialogRoot from './dialog';
@@ -17,6 +19,7 @@ import ModalContextProvider from './modal-context-provider';
 import {DocumentVisibilityProvider} from './utils/document-visibility';
 import {AspectRatioSupportProvider} from './utils/aspect-ratio-support';
 import {TrackingConfig} from './utils/analytics';
+import {vars} from './skins/skin-contract.css';
 
 import type {Colors, TextPresetsConfig} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
@@ -161,6 +164,8 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) =>
         };
     }, [theme, isOsDarkModeEnabled]);
 
+    const themeStyle = `:root {${assignInlineVars(vars, {colors: contextTheme.colors})}}`;
+
     return (
         <JssProvider jss={getJss()} classNamePrefix={classNamePrefix} generateId={generateId}>
             <TabFocus disabled={!theme.enableTabFocus}>
@@ -171,7 +176,10 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) =>
                                 <DocumentVisibilityProvider>
                                     <AriaIdGetterContext.Provider value={getAriaId}>
                                         <ScreenSizeContextProvider>
-                                            <DialogRoot>{children}</DialogRoot>
+                                            <DialogRoot>
+                                                <style>{themeStyle}</style>
+                                                {children}
+                                            </DialogRoot>
                                         </ScreenSizeContextProvider>
                                     </AriaIdGetterContext.Provider>
                                 </DocumentVisibilityProvider>
