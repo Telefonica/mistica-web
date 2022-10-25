@@ -35,7 +35,7 @@ const config = {
         module: {
             rules: [
                 {
-                    test: /\.tsx$/,
+                    test: /\.tsx?$/,
                     include: [
                         path.resolve(__dirname, 'src'),
                         path.resolve(__dirname, 'playroom'),
@@ -54,12 +54,9 @@ const config = {
                 {
                     test: /\.vanilla\.css$/i,
                     // Don't process vanilla files from Playroom as they are handled separately.
-                    // Virtual file paths will look more realistic in the future allowing
-                    // more standard handling of include/exclude path matching.
                     exclude: /node_modules\/playroom/,
                     use: [
                         'style-loader',
-                        // MiniCssExtractPlugin.loader,
                         {
                             loader: require.resolve('css-loader'),
                             options: {
@@ -70,7 +67,6 @@ const config = {
                 },
             ],
         },
-        // plugins: [new MiniCssExtractPlugin({ignoreOrder: true})],
     }),
 };
 
