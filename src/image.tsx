@@ -1,9 +1,12 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
+import {SkeletonRectangle} from './skeletons';
 import {useSupportsAspectRatio} from './utils/aspect-ratio-support';
 import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
+
+const FADE_IN_DURATION_MS = 300;
 
 /**
  * This context is used internally to disable the border radius. This is useful for example
@@ -24,6 +27,9 @@ const useStyles = createUseStyles(() => ({
         maxWidth: '100%',
         maxHeight: '100%',
         borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 8),
+        transition: `opacity ${FADE_IN_DURATION_MS}ms`,
+        position: 'relative',
+        zIndex: 1,
 
         '@supports (aspect-ratio: 1 / 1)': {
             aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
@@ -57,7 +63,6 @@ const useStyles = createUseStyles(() => ({
         },
     },
 }));
-
 export type AspectRatio = '1:1' | '16:9' | '7:10' | '4:3';
 
 export const RATIO = {
@@ -81,17 +86,32 @@ export type ImageProps = {
     noBorderRadius?: boolean;
     onError?: (event: React.SyntheticEvent) => void;
     onLoad?: (event: React.SyntheticEvent) => void;
+    loadingFallback?: boolean;
+    errorFallback?: boolean;
 };
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
     (
-        {aspectRatio = '1:1', alt = '', dataAttributes, noBorderRadius, src, onError, onLoad, ...props},
+        {
+            aspectRatio = '1:1',
+            alt = '',
+            dataAttributes,
+            noBorderRadius,
+            src,
+            onError,
+            onLoad,
+            loadingFallback = true,
+            errorFallback,
+            ...props
+        },
         ref
     ) => {
         const supportsAspectRatio = useSupportsAspectRatio();
         const noBorderRadiusContext = useDisableBorderRadius();
         const noBorderSetting = noBorderRadius ?? noBorderRadiusContext;
         const [isError, setIsError] = React.useState(false);
+        const [isLoading, setIsLoading] = React.useState(true);
+        const [hideLoadingFallback, setHideLoadingFallback] = React.useState(false);
 
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
         // if width or height are numeric, we can calculate the other with the ratio without css.
@@ -121,37 +141,53 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
         }
 
         const needsWrapper = withCssAspectRatio && !supportsAspectRatio;
+        const withLoadingFallback = !!loadingFallback && !!(aspectRatio || (width && height));
 
         const img = (
             // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/309
             // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
             <img
                 {...getPrefixedDataAttributes(dataAttributes)}
+                style={{
+                    ...(isLoading && withLoadingFallback ? {opacity: 0} : {opacity: 1}),
+                }}
                 ref={ref}
                 src={src}
                 className={classes.image}
                 alt={alt}
                 onError={(event) => {
                     setIsError(true);
+                    setIsLoading(false);
+                    setTimeout(() => {
+                        setHideLoadingFallback(true);
+                    }, FADE_IN_DURATION_MS);
                     onError?.(event);
                 }}
                 onLoad={(event) => {
                     setIsError(false);
+                    setIsLoading(false);
+                    setTimeout(() => {
+                        setHideLoadingFallback(true);
+                    }, FADE_IN_DURATION_MS);
                     onLoad?.(event);
                 }}
                 {...(needsWrapper ? {width: '100%'} : {width, height})}
             />
         );
 
-        if (needsWrapper) {
-            return (
-                <div style={{width, height}} className={classes.wrapper}>
-                    {img}
-                </div>
-            );
-        } else {
-            return img;
-        }
+        return (
+            <div
+                style={{...(needsWrapper ? {width, height, position: 'relative'} : {position: 'relative'})}}
+                className={needsWrapper ? classes.wrapper : ''}
+            >
+                {withLoadingFallback && !hideLoadingFallback && (
+                    <div style={{position: 'absolute'}}>
+                        <SkeletonRectangle aspectRatio={ratio} width={width} height={height} />
+                    </div>
+                )}
+                {img}
+            </div>
+        );
     }
 );
 

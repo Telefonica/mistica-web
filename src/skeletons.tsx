@@ -154,23 +154,13 @@ const useSkeletonRectangleStyles = createUseStyles(() => ({
     },
 }));
 
-type SkeletonRectangleFixed = {
+type SkeletonRectangleProps = {
     ariaLabel?: string;
     dataAttributes?: DataAttributes;
     width?: number | string;
-    height: number | string;
-    aspectRatio?: undefined;
-};
-
-type SkeletonRectangleAspectRatio = {
-    ariaLabel?: string;
-    dataAttributes?: DataAttributes;
-    width?: undefined;
-    height?: undefined;
+    height?: number | string;
     aspectRatio?: AspectRatio | number;
 };
-
-type SkeletonRectangleProps = SkeletonRectangleFixed | SkeletonRectangleAspectRatio;
 
 export const SkeletonRectangle = ({
     width = '100%',
