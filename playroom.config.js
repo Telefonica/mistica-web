@@ -1,6 +1,4 @@
 const path = require('path');
-const {VanillaExtractPlugin} = require('@vanilla-extract/webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const exampleCode = `
 <Form
