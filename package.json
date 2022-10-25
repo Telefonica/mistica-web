@@ -49,6 +49,7 @@
     "acceptanceTests": {
         "devServer": {
             "command": "yarn storybook-for-acceptance-tests",
+            "host": "0.0.0.0",
             "port": 6006
         },
         "ciServer": {
