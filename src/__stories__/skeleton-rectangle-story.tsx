@@ -1,45 +1,36 @@
 import * as React from 'react';
-import {ThemeVariant, useTheme} from '..';
 import {SkeletonRectangle} from '../skeletons';
+import {StorySection} from './helpers';
 
 export default {
     title: 'Components/Skeletons/Skeleton Rectangle',
 };
 
 type Args = {
-    height: number;
-    width: number;
+    height: number | string;
+    width: number | string;
     inverse: boolean;
     ariaLabel: string;
 };
 
-export const Default: StoryComponent<Args> = ({height, width, inverse, ariaLabel}) => {
-    const {colors} = useTheme();
-
+export const Default: StoryComponent<Args> = ({height, width, ariaLabel}) => {
     return (
-        <ThemeVariant isInverse={inverse}>
-            <div
-                style={{
-                    padding: 16,
-                    width: '50%',
-                    background: inverse ? colors.backgroundBrand : colors.background,
-                    // prevent line-height from affecting the height of the container;
-                    // happens when changing the base font size
-                    lineHeight: 0,
-                }}
-                data-testid="skeleton-rectangle"
-            >
-                <SkeletonRectangle height={height} width={width} ariaLabel={ariaLabel} />
-            </div>
-        </ThemeVariant>
+        <div data-testid="skeleton-rectangle">
+            <StorySection title="Skeleton Rectangle (Fixed)">
+                <SkeletonRectangle ariaLabel={ariaLabel} height={height} width={width} />
+            </StorySection>
+            <StorySection title="Skeleton Rectangle (AspectRatio)">
+                <SkeletonRectangle ariaLabel={ariaLabel} aspectRatio="16:9" />
+            </StorySection>
+        </div>
     );
 };
 
 Default.storyName = 'Skeleton Rectangle';
 
 Default.args = {
-    height: 100,
-    width: 100,
+    height: '100px',
+    width: '50%',
     inverse: false,
     ariaLabel: '',
 };
