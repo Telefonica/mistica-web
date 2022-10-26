@@ -71,6 +71,8 @@ export type Colors = {
     buttonSecondaryBorderSelected: string;
     buttonSecondaryBorderInverse: string;
     buttonSecondaryBorderSelectedInverse: string;
+    buttonSecondaryBackground: string;
+    buttonSecondaryBackgroundSelectedInverse: string;
 
     // CONTROLS
     control: string;

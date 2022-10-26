@@ -185,7 +185,7 @@ const useSecondaryButtonStyles = createUseStyles((theme) => ({
     },
     inverse: {
         borderColor: theme.colors.buttonSecondaryBorderInverse,
-        backgroundColor: theme.colors.buttonSecondaryBackgroundSelectedInverse,
+        backgroundColor: 'transparent',
         color: theme.colors.textButtonSecondaryInverse,
 
         '&:enabled:active': {

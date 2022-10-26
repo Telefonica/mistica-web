@@ -55,11 +55,13 @@ export const palette = {
     darkModeBlack: '#061824',
     darkModeGrey: '#092130',
 
+    darkModeGrey1: '#F8F8FA',
     darkModeGrey2: '#EAEBEE',
     darkModeGrey3: '#CED4D7',
     darkModeGrey4: '#85939C',
     darkModeGrey5: '#6D7D88',
     darkModeGrey6: '#3C5261',
+
 } as const;
 
 export const getMovistarSkin: GetKnownSkin = () => {
@@ -103,8 +105,10 @@ export const getMovistarSkin: GetKnownSkin = () => {
             buttonSecondaryBackgroundSelected: palette.movistarBlue10,
             buttonSecondaryBorder: palette.movistarBlue,
             buttonSecondaryBorderSelected: palette.movistarBlue55,
+            buttonSecondaryBackgroundHover: palette.movistarBlue10,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.movistarBlue30,
+            buttonSecondaryBackgroundSelectedInverse: applyAlpha(palette.movistarBlue, 0.2),
 
             textButtonPrimary: palette.white,
             textButtonPrimaryInverse: palette.white,
@@ -190,12 +194,12 @@ export const getMovistarSkin: GetKnownSkin = () => {
             backgroundContainer: palette.darkModeGrey,
             backgroundBrand: palette.darkModeBlack,
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
-            backgroundSkeleton: palette.darkModeGrey,
+            backgroundSkeleton: palette.movistarBlueDark,
             backgroundSkeletonInverse: palette.darkModeGrey,
             navigationBarBackground: palette.darkModeBlack,
             backgroundAlternative: palette.darkModeGrey,
             backgroundFeedbackBottom: palette.darkModeBlack,
-            skeletonWave: palette.darkModeGrey6,
+            skeletonWave: palette.darkModeGrey,
             feedbackInfoBackground: palette.movistarBlueDark,
 
             borderLight: palette.darkModeBlack,
@@ -216,11 +220,12 @@ export const getMovistarSkin: GetKnownSkin = () => {
             buttonSecondaryBackgroundSelected: palette.movistarBlue55,
             buttonSecondaryBorderInverse: palette.movistarBlue40,
             buttonSecondaryBorderSelectedInverse: palette.movistarBlue55,
+            buttonSecondaryBackgroundSelectedInverse: applyAlpha(palette.movistarBlue, 0.02),
 
-            textButtonPrimary: palette.darkModeGrey2,
-            textButtonPrimaryInverse: palette.darkModeGrey2,
-            textButtonPrimaryInverseSelected: palette.darkModeGrey2,
-            textButtonSecondary: palette.darkModeGrey2,
+            textButtonPrimary: palette.darkModeGrey1,
+            textButtonPrimaryInverse: palette.darkModeGrey1,
+            textButtonPrimaryInverseSelected: palette.darkModeGrey1,
+            textButtonSecondary: palette.darkModeGrey1,
             textButtonSecondarySelected: palette.darkModeGrey4,
             textButtonSecondaryInverse: palette.white,
             textButtonSecondaryInverseSelected: palette.darkModeGrey4,
