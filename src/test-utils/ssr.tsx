@@ -90,7 +90,7 @@ export const compileSsrClient = (): Promise<webpack.Stats> => {
                 },
             ],
         },
-        plugins: [new VanillaExtractPlugin(), new MiniCssExtractPlugin()],
+        plugins: [new VanillaExtractPlugin(), new MiniCssExtractPlugin() as any],
         resolve: {
             extensions: ['.tsx', '.ts', '.js', '.json', '.wasm', '.mjs', '*'],
         },
