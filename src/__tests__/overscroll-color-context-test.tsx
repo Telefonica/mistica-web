@@ -3,7 +3,6 @@ import {OverscrollColorProvider} from '../overscroll-color-context';
 import {render} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
-import * as platform from '../utils/platform';
 
 const resizeWindow = (x: number, y: number) => {
     window.innerWidth = x;
@@ -22,7 +21,6 @@ const DummyComponent = ({callback}: {callback: jest.Mock}) => {
 test('overscroll does not cause a remount of its children', async () => {
     resizeWindow(640, 480);
 
-    jest.spyOn(platform, 'getPlatform').mockReturnValue('ios');
     const theme = makeTheme();
 
     const callbackSpy = jest.fn();

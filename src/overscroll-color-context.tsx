@@ -4,9 +4,12 @@ import {useTheme, useScreenSize} from './hooks';
 import createNestableContext from './nestable-context';
 import {isInsideNovumNativeApp, getPlatform} from './utils/platform';
 
+import type {Theme} from './theme';
+
 const {Provider, Getter, useSetValue} = createNestableContext('');
 
-const shouldRender = () => getPlatform() === 'ios';
+const shouldRender = (platformOverrides: Theme['platformOverrides']) =>
+    getPlatform(platformOverrides) === 'ios';
 
 type ProviderProps = {children: React.ReactNode};
 
@@ -15,7 +18,7 @@ export const OverscrollColorProvider = ({children}: ProviderProps): JSX.Element 
     const {isTabletOrSmaller} = useScreenSize();
     const theme = useTheme();
 
-    if (!shouldRender()) {
+    if (!shouldRender(platformOverrides)) {
         return <>{children}</>;
     }
 
@@ -58,8 +61,7 @@ const OverscrollColorComponent = () => {
     return null;
 };
 
-const OverscrollColorNoOp = () => null;
-
-const OverscrollColor = shouldRender() ? OverscrollColorComponent : OverscrollColorNoOp;
+const OverscrollColor = (): JSX.Element =>
+    shouldRender(useTheme().platformOverrides) ? <OverscrollColorComponent /> : <></>;
 
 export default OverscrollColor;
