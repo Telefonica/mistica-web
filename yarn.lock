@@ -4461,9 +4461,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/cli@npm:^0.1.56":
-  version: 0.1.56
-  resolution: "@swc/cli@npm:0.1.56"
+"@swc/cli@npm:^0.1.57":
+  version: 0.1.57
+  resolution: "@swc/cli@npm:0.1.57"
   dependencies:
     commander: ^7.1.0
     fast-glob: ^3.2.5
@@ -4478,118 +4478,130 @@ __metadata:
   bin:
     spack: bin/spack.js
     swc: bin/swc.js
-  checksum: c735896d9c5b5c65e5f63c8ac470cadb975e87c4be6c51a3ab86d1f46728032d78abcdf50790e87d83df1339607581717fae57f66b96bd91712f6fe5e36e3e6f
+  checksum: d19f02233f5ca18df9d5e9da1d0c847d47c81f4548d8465553b9c54b9ab0aca6ebc61b47f1eff085fe211aea0594e0c694bac3d5097f836fbfaa40d31d0a8dfd
   languageName: node
   linkType: hard
 
-"@swc/core-android-arm-eabi@npm:1.2.160":
-  version: 1.2.160
-  resolution: "@swc/core-android-arm-eabi@npm:1.2.160"
+"@swc/core-android-arm-eabi@npm:1.3.11":
+  version: 1.3.11
+  resolution: "@swc/core-android-arm-eabi@npm:1.3.11"
+  dependencies:
+    "@swc/wasm": 1.2.122
   conditions: os=android & cpu=arm
   languageName: node
   linkType: hard
 
-"@swc/core-android-arm64@npm:1.2.160":
-  version: 1.2.160
-  resolution: "@swc/core-android-arm64@npm:1.2.160"
+"@swc/core-android-arm64@npm:1.3.11":
+  version: 1.3.11
+  resolution: "@swc/core-android-arm64@npm:1.3.11"
+  dependencies:
+    "@swc/wasm": 1.2.130
   conditions: os=android & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-arm64@npm:1.2.160":
-  version: 1.2.160
-  resolution: "@swc/core-darwin-arm64@npm:1.2.160"
+"@swc/core-darwin-arm64@npm:1.3.11":
+  version: 1.3.11
+  resolution: "@swc/core-darwin-arm64@npm:1.3.11"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-x64@npm:1.2.160":
-  version: 1.2.160
-  resolution: "@swc/core-darwin-x64@npm:1.2.160"
+"@swc/core-darwin-x64@npm:1.3.11":
+  version: 1.3.11
+  resolution: "@swc/core-darwin-x64@npm:1.3.11"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core-freebsd-x64@npm:1.2.160":
-  version: 1.2.160
-  resolution: "@swc/core-freebsd-x64@npm:1.2.160"
+"@swc/core-freebsd-x64@npm:1.3.11":
+  version: 1.3.11
+  resolution: "@swc/core-freebsd-x64@npm:1.3.11"
+  dependencies:
+    "@swc/wasm": 1.2.130
   conditions: os=freebsd & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm-gnueabihf@npm:1.2.160":
-  version: 1.2.160
-  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.2.160"
+"@swc/core-linux-arm-gnueabihf@npm:1.3.11":
+  version: 1.3.11
+  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.3.11"
+  dependencies:
+    "@swc/wasm": 1.2.130
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-gnu@npm:1.2.160":
-  version: 1.2.160
-  resolution: "@swc/core-linux-arm64-gnu@npm:1.2.160"
+"@swc/core-linux-arm64-gnu@npm:1.3.11":
+  version: 1.3.11
+  resolution: "@swc/core-linux-arm64-gnu@npm:1.3.11"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-musl@npm:1.2.160":
-  version: 1.2.160
-  resolution: "@swc/core-linux-arm64-musl@npm:1.2.160"
+"@swc/core-linux-arm64-musl@npm:1.3.11":
+  version: 1.3.11
+  resolution: "@swc/core-linux-arm64-musl@npm:1.3.11"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-gnu@npm:1.2.160":
-  version: 1.2.160
-  resolution: "@swc/core-linux-x64-gnu@npm:1.2.160"
+"@swc/core-linux-x64-gnu@npm:1.3.11":
+  version: 1.3.11
+  resolution: "@swc/core-linux-x64-gnu@npm:1.3.11"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-musl@npm:1.2.160":
-  version: 1.2.160
-  resolution: "@swc/core-linux-x64-musl@npm:1.2.160"
+"@swc/core-linux-x64-musl@npm:1.3.11":
+  version: 1.3.11
+  resolution: "@swc/core-linux-x64-musl@npm:1.3.11"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core-win32-arm64-msvc@npm:1.2.160":
-  version: 1.2.160
-  resolution: "@swc/core-win32-arm64-msvc@npm:1.2.160"
+"@swc/core-win32-arm64-msvc@npm:1.3.11":
+  version: 1.3.11
+  resolution: "@swc/core-win32-arm64-msvc@npm:1.3.11"
+  dependencies:
+    "@swc/wasm": 1.2.130
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-win32-ia32-msvc@npm:1.2.160":
-  version: 1.2.160
-  resolution: "@swc/core-win32-ia32-msvc@npm:1.2.160"
+"@swc/core-win32-ia32-msvc@npm:1.3.11":
+  version: 1.3.11
+  resolution: "@swc/core-win32-ia32-msvc@npm:1.3.11"
+  dependencies:
+    "@swc/wasm": 1.2.130
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@swc/core-win32-x64-msvc@npm:1.2.160":
-  version: 1.2.160
-  resolution: "@swc/core-win32-x64-msvc@npm:1.2.160"
+"@swc/core-win32-x64-msvc@npm:1.3.11":
+  version: 1.3.11
+  resolution: "@swc/core-win32-x64-msvc@npm:1.3.11"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core@npm:^1.2.160":
-  version: 1.2.160
-  resolution: "@swc/core@npm:1.2.160"
+"@swc/core@npm:^1.3.11":
+  version: 1.3.11
+  resolution: "@swc/core@npm:1.3.11"
   dependencies:
-    "@swc/core-android-arm-eabi": 1.2.160
-    "@swc/core-android-arm64": 1.2.160
-    "@swc/core-darwin-arm64": 1.2.160
-    "@swc/core-darwin-x64": 1.2.160
-    "@swc/core-freebsd-x64": 1.2.160
-    "@swc/core-linux-arm-gnueabihf": 1.2.160
-    "@swc/core-linux-arm64-gnu": 1.2.160
-    "@swc/core-linux-arm64-musl": 1.2.160
-    "@swc/core-linux-x64-gnu": 1.2.160
-    "@swc/core-linux-x64-musl": 1.2.160
-    "@swc/core-win32-arm64-msvc": 1.2.160
-    "@swc/core-win32-ia32-msvc": 1.2.160
-    "@swc/core-win32-x64-msvc": 1.2.160
+    "@swc/core-android-arm-eabi": 1.3.11
+    "@swc/core-android-arm64": 1.3.11
+    "@swc/core-darwin-arm64": 1.3.11
+    "@swc/core-darwin-x64": 1.3.11
+    "@swc/core-freebsd-x64": 1.3.11
+    "@swc/core-linux-arm-gnueabihf": 1.3.11
+    "@swc/core-linux-arm64-gnu": 1.3.11
+    "@swc/core-linux-arm64-musl": 1.3.11
+    "@swc/core-linux-x64-gnu": 1.3.11
+    "@swc/core-linux-x64-musl": 1.3.11
+    "@swc/core-win32-arm64-msvc": 1.3.11
+    "@swc/core-win32-ia32-msvc": 1.3.11
+    "@swc/core-win32-x64-msvc": 1.3.11
   dependenciesMeta:
     "@swc/core-android-arm-eabi":
       optional: true
@@ -4619,18 +4631,33 @@ __metadata:
       optional: true
   bin:
     swcx: run_swcx.js
-  checksum: 2926a1b6a2f059a682331f318edf1086a47684a09f77bd75516d7df7dd419a882872946aa5ae26437afcae5b69bc65b1cc1cc398fc1d04410a723812898d76de
+  checksum: 1d617f0707700b1b4137487acad24e2515c99cfcaba45e7ca3032acecc4faa6146cfcf20eca7a9c57e01f3cbea7995d5c46216cf665de897f6e4e2e4d4a7fa86
   languageName: node
   linkType: hard
 
-"@swc/jest@npm:^0.2.20":
-  version: 0.2.20
-  resolution: "@swc/jest@npm:0.2.20"
+"@swc/jest@npm:^0.2.23":
+  version: 0.2.23
+  resolution: "@swc/jest@npm:0.2.23"
   dependencies:
     "@jest/create-cache-key-function": ^27.4.2
+    jsonc-parser: ^3.2.0
   peerDependencies:
     "@swc/core": "*"
-  checksum: 160a2d0336c416ec38ad267892ba67696c853318b207cfc9924da09a3318345bc37ca255782764ef651399cb8c0e9976ebdf90284799acb6b0c45c5d8bc4edbc
+  checksum: 1c7db1f6995916ad77369311be078e9d33f2c6a586be9c87927f6a36d124dcd49c29d8c596758cd9dbf4e388ec30f41989e70e574eb59bef3fb41d3131629763
+  languageName: node
+  linkType: hard
+
+"@swc/wasm@npm:1.2.122":
+  version: 1.2.122
+  resolution: "@swc/wasm@npm:1.2.122"
+  checksum: 563345370c5ad18373d3b403590ab880fe52dcd8fc8c8601be263fcd9886520b28a7f4e46236cf49ca2b136c79d4ef50c960bc34b7cdc2068118b0d84dfca1f4
+  languageName: node
+  linkType: hard
+
+"@swc/wasm@npm:1.2.130":
+  version: 1.2.130
+  resolution: "@swc/wasm@npm:1.2.130"
+  checksum: 02203bfef3e382c64cbbd63c138c8fdf61865e74d923b317e9d9e9f33f5a3f0a9533b5fdbc9505e76d78e864be04a82fc847eb987a1e47ccac5850146c858292
   languageName: node
   linkType: hard
 
@@ -4751,9 +4778,9 @@ __metadata:
     "@storybook/components": 6.4.19
     "@storybook/react": 6.4.19
     "@storybook/theming": 6.4.19
-    "@swc/cli": ^0.1.56
-    "@swc/core": ^1.2.160
-    "@swc/jest": ^0.2.20
+    "@swc/cli": ^0.1.57
+    "@swc/core": ^1.3.11
+    "@swc/jest": ^0.2.23
     "@tef-novum/webview-bridge": ^3.8.0
     "@telefonica/acceptance-testing": ^2.7.0
     "@telefonica/eslint-config": ^1.0.7
@@ -15702,6 +15729,13 @@ __metadata:
   bin:
     json5: lib/cli.js
   checksum: 74b8a23b102a6f2bf2d224797ae553a75488b5adbaee9c9b6e5ab8b510a2fc6e38f876d4c77dea672d4014a44b2399e15f2051ac2b37b87f74c0c7602003543b
+  languageName: node
+  linkType: hard
+
+"jsonc-parser@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "jsonc-parser@npm:3.2.0"
+  checksum: 946dd9a5f326b745aa326d48a7257e3f4a4b62c5e98ec8e49fa2bdd8d96cef7e6febf1399f5c7016114fd1f68a1c62c6138826d5d90bc650448e3cf0951c53c7
   languageName: node
   linkType: hard
 
