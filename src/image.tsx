@@ -181,7 +181,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
                 className={needsWrapper ? classes.wrapper : ''}
             >
                 {withLoadingFallback && !hideLoadingFallback && (
-                    <div style={{position: 'absolute'}}>
+                    <div style={{position: 'absolute', width}}>
                         <SkeletonRectangle aspectRatio={ratio} width={width} height={height} />
                     </div>
                 )}
