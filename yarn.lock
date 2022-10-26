@@ -3549,6 +3549,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/addon-postcss@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@storybook/addon-postcss@npm:2.0.0"
+  dependencies:
+    "@storybook/node-logger": ^6.1.14
+    css-loader: ^3.6.0
+    postcss: ^7.0.35
+    postcss-loader: ^4.2.0
+    style-loader: ^1.3.0
+  checksum: 3dee9003a5fa3d6348c093308b3264d58d415be06b01092c1f62e52a22c3a44f4575a49f3960fbc0f211de0608728fdb139fa0501897221fed5ffc04cd11fa09
+  languageName: node
+  linkType: hard
+
 "@storybook/addon-storysource@npm:6.4.19":
   version: 6.4.19
   resolution: "@storybook/addon-storysource@npm:6.4.19"
@@ -4202,6 +4215,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/node-logger@npm:^6.1.14":
+  version: 6.5.13
+  resolution: "@storybook/node-logger@npm:6.5.13"
+  dependencies:
+    "@types/npmlog": ^4.1.2
+    chalk: ^4.1.0
+    core-js: ^3.8.2
+    npmlog: ^5.0.1
+    pretty-hrtime: ^1.0.3
+  checksum: bcd1d98822687580e39f27003e16c73e3c775cdfe6e9f8fd8fbe9f4626a82f3f63fe281f9c894f3917faa52202ccb8217916978032d27ba6dbfa9720064e7739
+  languageName: node
+  linkType: hard
+
 "@storybook/preview-web@npm:6.4.19":
   version: 6.4.19
   resolution: "@storybook/preview-web@npm:6.4.19"
@@ -4717,6 +4743,7 @@ __metadata:
     "@storybook/addon-actions": 6.4.19
     "@storybook/addon-controls": 6.4.19
     "@storybook/addon-links": 6.4.19
+    "@storybook/addon-postcss": ^2.0.0
     "@storybook/addon-storysource": 6.4.19
     "@storybook/addon-viewport": 6.4.19
     "@storybook/addons": 6.4.19
@@ -4780,6 +4807,7 @@ __metadata:
     node-fetch: ^2.6.7
     playroom: ^0.28.0
     postcss: ^8.4.18
+    postcss-loader: ^4.2.0
     prettier: ^2.6.1
     pretty-bytes: ^5.6.0
     prop-types: ^15.8.1
@@ -15993,9 +16021,9 @@ __metadata:
   linkType: hard
 
 "klona@npm:^2.0.4":
-  version: 2.0.4
-  resolution: "klona@npm:2.0.4"
-  checksum: abc6690882e0e6f5cf70451b79a6de95a27be56ced283d1d6d7e610db7d824e5da1f142f8073466dfbcfa887ee001b98f6dcfbcf02759828ba356b90202a74c5
+  version: 2.0.5
+  resolution: "klona@npm:2.0.5"
+  checksum: 8c976126ea252b766e648a4866e1bccff9d3b08432474ad80c559f6c7265cf7caede2498d463754d8c88c4759895edd8210c85c0d3155e6aae4968362889466f
   languageName: node
   linkType: hard
 
@@ -19309,7 +19337,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^7.0.14, postcss@npm:^7.0.16, postcss@npm:^7.0.26, postcss@npm:^7.0.32, postcss@npm:^7.0.36, postcss@npm:^7.0.5, postcss@npm:^7.0.6":
+"postcss@npm:^7.0.14, postcss@npm:^7.0.16, postcss@npm:^7.0.26, postcss@npm:^7.0.32, postcss@npm:^7.0.35, postcss@npm:^7.0.36, postcss@npm:^7.0.5, postcss@npm:^7.0.6":
   version: 7.0.39
   resolution: "postcss@npm:7.0.39"
   dependencies:
@@ -21399,13 +21427,13 @@ __metadata:
   linkType: hard
 
 "semver@npm:^7.1.1, semver@npm:^7.1.2, semver@npm:^7.1.3, semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5":
-  version: 7.3.5
-  resolution: "semver@npm:7.3.5"
+  version: 7.3.8
+  resolution: "semver@npm:7.3.8"
   dependencies:
     lru-cache: ^6.0.0
   bin:
     semver: bin/semver.js
-  checksum: 5eafe6102bea2a7439897c1856362e31cc348ccf96efd455c8b5bc2c61e6f7e7b8250dc26b8828c1d76a56f818a7ee907a36ae9fb37a599d3d24609207001d60
+  checksum: ba9c7cbbf2b7884696523450a61fee1a09930d888b7a8d7579025ad93d459b2d1949ee5bbfeb188b2be5f4ac163544c5e98491ad6152df34154feebc2cc337c1
   languageName: node
   linkType: hard
 

@@ -46,6 +46,7 @@ const addVanillaExtractSupport = (config) => {
                     url: false, // Required as image imports should be handled via JS/TS import statements
                 },
             },
+            require.resolve('postcss-loader'),
         ],
     });
 };
@@ -53,6 +54,14 @@ const addVanillaExtractSupport = (config) => {
 module.exports = {
     stories: ['./welcome-story.js', '../src/**/__stories__/*-story.tsx'],
     addons: [
+        {
+            name: '@storybook/addon-postcss',
+            options: {
+                postcssLoaderOptions: {
+                    implementation: require('postcss'),
+                },
+            },
+        },
         '@storybook/addon-links',
         {
             name: '@storybook/addon-storysource',
