@@ -195,7 +195,11 @@ export const getMovistarSkin: GetKnownSkin = () => {
             backgroundBrand: palette.darkModeBlack,
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
             backgroundSkeleton: palette.movistarBlueDark,
+<<<<<<< Updated upstream
             backgroundSkeletonInverse: palette.movistarBlueDark,
+=======
+            backgroundSkeletonInverse: palette.darkModeGrey,
+>>>>>>> Stashed changes
             navigationBarBackground: palette.darkModeBlack,
             backgroundAlternative: palette.darkModeGrey,
             backgroundFeedbackBottom: palette.darkModeBlack,
