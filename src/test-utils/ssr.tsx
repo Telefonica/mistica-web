@@ -57,11 +57,7 @@ const createWebpackEntries = (): {[entryName: string]: string} => {
 export const compileSsrClient = (): Promise<webpack.Stats> => {
     const entries = createWebpackEntries();
     const webpackConfig: webpack.Configuration = {
-        mode: 'development',
-        // While testing NODE_ENV will get evaluated to test on the server, so it should be the same on the browser bundles.
-        optimization: {
-            nodeEnv: 'test',
-        },
+        mode: 'production',
         entry: entries,
         output: {
             path: path.resolve(__dirname, '..', '..', 'public', 'ssr'),
