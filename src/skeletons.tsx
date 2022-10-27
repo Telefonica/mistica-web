@@ -4,16 +4,15 @@ import SkeletonBase from './skeleton-base';
 import {createUseStyles} from './jss';
 import Stack from './stack';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {RATIO} from './image';
-import {useSupportsAspectRatio} from './utils/aspect-ratio-support';
 
-import type {AspectRatio} from './image';
 import type {DataAttributes} from './utils/types';
 
 const transition = '1.5s linear';
 
 const useAnimation = createUseStyles(() => ({
     animation: {
+        width: '100%',
+        height: '100%',
         animation: `$pulse ${transition} infinite`,
     },
     '@keyframes pulse': {
@@ -44,8 +43,8 @@ const SkeletonAnimation = ({children, ariaLabel, dataAttributes}: SkeletonAnimat
         <div
             className={animationClasses.animation}
             role="status"
+            aria-busy
             aria-hidden={ariaLabel === undefined}
-            aria-busy={ariaLabel !== undefined}
             aria-label={ariaLabel}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
@@ -123,43 +122,11 @@ export const SkeletonRow = ({width = '100%', ariaLabel, dataAttributes}: Skeleto
     );
 };
 
-const useSkeletonRectangleStyles = createUseStyles(() => ({
-    container: {
-        '@supports (aspect-ratio: 1 / 1)': {
-            aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
-        },
-        '$wrapper &': {
-            position: ({aspectRatio}) => (aspectRatio ? 'absolute' : 'static'),
-            width: '100%',
-            height: '100%',
-            top: 0,
-            left: 0,
-        },
-    },
-
-    wrapper: {
-        overflow: 'hidden',
-        maxWidth: '100%',
-        maxHeight: '100%',
-        position: 'relative',
-        paddingTop: ({aspectRatio, width}) => {
-            if (!aspectRatio) {
-                return 0;
-            }
-            if (width && typeof width === 'string' && width.endsWith('%')) {
-                return `${Number(width.replace('%', '')) / aspectRatio}%`;
-            }
-            return `${100 / aspectRatio}%`;
-        },
-    },
-}));
-
 type SkeletonRectangleProps = {
     ariaLabel?: string;
     dataAttributes?: DataAttributes;
     width?: number | string;
     height?: number | string;
-    aspectRatio?: AspectRatio | number;
 };
 
 export const SkeletonRectangle = ({
@@ -167,34 +134,10 @@ export const SkeletonRectangle = ({
     height = '100%',
     ariaLabel,
     dataAttributes,
-    aspectRatio = '1:1',
 }: SkeletonRectangleProps): JSX.Element => {
-    const supportsAspectRatio = useSupportsAspectRatio();
-    const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
-    const withCssAspectRatio = typeof width !== 'number' && typeof height !== 'number' && ratio !== 0;
-
-    const classes = useSkeletonRectangleStyles({
-        aspectRatio: withCssAspectRatio ? ratio : undefined,
-    });
-
-    const needsWrapper = withCssAspectRatio && !supportsAspectRatio;
-
-    const skeleton = (
+    return (
         <SkeletonAnimation ariaLabel={ariaLabel} {...getPrefixedDataAttributes(dataAttributes)}>
-            <SkeletonBase
-                className={classes.container}
-                {...(needsWrapper ? {width: '100%'} : {width, height})}
-            />
+            <SkeletonBase height={height} width={width} />
         </SkeletonAnimation>
     );
-
-    if (needsWrapper) {
-        return (
-            <div style={{width, height}} className={classes.wrapper}>
-                {skeleton}
-            </div>
-        );
-    } else {
-        return skeleton;
-    }
 };

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {useIsomorphicLayoutEffect} from '../hooks';
+import {createUseStyles} from '../jss';
 
 const AspectRatioSupport = React.createContext<boolean>(true);
 
@@ -26,3 +27,92 @@ export const AspectRatioSupportProvider: React.FC<Props> = ({children}) => {
 };
 
 export const useSupportsAspectRatio = (): boolean => React.useContext(AspectRatioSupport);
+
+const useSkeletonRectangleStyles = createUseStyles(() => ({
+    container: {
+        '@supports (aspect-ratio: 1 / 1)': {
+            aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
+        },
+        '$wrapper &': {
+            position: ({aspectRatio}) => (aspectRatio ? 'absolute' : 'static'),
+            width: '100%',
+            height: '100%',
+            top: 0,
+            left: 0,
+        },
+    },
+
+    wrapper: {
+        overflow: 'hidden',
+        maxWidth: '100%',
+        maxHeight: '100%',
+        position: 'relative',
+        paddingTop: ({aspectRatio, width}) => {
+            if (!aspectRatio) {
+                return 0;
+            }
+            if (width && typeof width === 'string' && width.endsWith('%')) {
+                return `${Number(width.replace('%', '')) / aspectRatio}%`;
+            }
+            return `${100 / aspectRatio}%`;
+        },
+    },
+}));
+
+type SkeletonRectangleProps = {
+    width?: number | string;
+    height?: number | string;
+    aspectRatio: number;
+    children: React.ReactNode;
+    as?: React.ComponentType<any> | string;
+    style?: React.CSSProperties;
+    className?: string;
+};
+
+export const AspectRatioElement = (props: SkeletonRectangleProps): JSX.Element => {
+    const supportsAspectRatio = useSupportsAspectRatio();
+    const withCssAspectRatio =
+        typeof props.width !== 'number' && typeof props.height !== 'number' && props.aspectRatio !== 0;
+
+    const classes = useSkeletonRectangleStyles({
+        aspectRatio: withCssAspectRatio ? props.aspectRatio : undefined,
+        width: props.width,
+    });
+
+    let width: number | string | undefined = props.width;
+    let height = props.height;
+
+    if (props.width !== undefined && props.height !== undefined) {
+        width = props.width;
+        height = props.height;
+    } else if (typeof props.width === 'number') {
+        height = props.aspectRatio !== 0 ? props.width / props.aspectRatio : undefined;
+    } else if (typeof props.height === 'number') {
+        width = props.aspectRatio !== 0 ? props.height * props.aspectRatio : undefined;
+    } else {
+        width = props.width || '100%';
+    }
+
+    const needsWrapper = withCssAspectRatio && !supportsAspectRatio;
+
+    const container = React.createElement(
+        props.as ?? 'div',
+        {
+            className: `${props.className} ${classes.container}`,
+            style: {
+                ...(needsWrapper ? {...props.style, width: '100%'} : {...props.style, width, height}),
+            },
+        },
+        props.children
+    );
+
+    if (needsWrapper) {
+        return (
+            <div style={{width, height}} className={classes.wrapper}>
+                {container}
+            </div>
+        );
+    } else {
+        return container;
+    }
+};

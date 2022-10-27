@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {SkeletonRectangle} from '../skeletons';
-import {StorySection} from './helpers';
 
 export default {
     title: 'Components/Skeletons/Skeleton Rectangle',
@@ -16,12 +15,7 @@ type Args = {
 export const Default: StoryComponent<Args> = ({height, width, ariaLabel}) => {
     return (
         <div data-testid="skeleton-rectangle">
-            <StorySection title="Skeleton Rectangle (Fixed)">
-                <SkeletonRectangle ariaLabel={ariaLabel} height={height} width={width} />
-            </StorySection>
-            <StorySection title="Skeleton Rectangle (AspectRatio)">
-                <SkeletonRectangle ariaLabel={ariaLabel} aspectRatio="16:9" />
-            </StorySection>
+            <SkeletonRectangle ariaLabel={ariaLabel} height={height} width={width} />
         </div>
     );
 };
