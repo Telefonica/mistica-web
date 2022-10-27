@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import {defineProperties, createSprinkles} from '@vanilla-extract/sprinkles';
 import {vars} from './skins/skin-contract.css';
 

@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 // https://www.figma.com/file/U4ipIXOk64bdM5tSvaqPKS/%5BREADY%5D--Avatar?node-id=2%3A61
 import * as React from 'react';
 import Badge from './badge';

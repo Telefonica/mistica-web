@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import * as React from 'react';
 import Box from './box';
 import {useTheme} from './hooks';

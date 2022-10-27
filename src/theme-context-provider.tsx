@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import * as React from 'react';
 import {JssProvider} from 'react-jss';
 import {assignInlineVars} from '@vanilla-extract/dynamic';

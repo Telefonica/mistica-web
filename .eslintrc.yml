@@ -3,3 +3,5 @@ extends:
 overrides:
     - files: ['*.js']
       parser: espree
+rules:
+    import/extensions: [error, {js: never, json: always, css: always}]
