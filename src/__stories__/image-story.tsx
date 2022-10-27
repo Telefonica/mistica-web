@@ -53,7 +53,7 @@ export const Default: StoryComponent = () => {
                     Image with broken src: the broken image icon shouldn't be visible and the element gets the
                     correct size.
                 </Text3>
-                <Image src="https://example.com/broken/image" aspectRatio={16 / 9} width="100%" />
+                <Image src="https://example.com/broken/image" aspectRatio={16 / 9} height={100} />
             </Stack>
         </Stack>
     );
