@@ -7,8 +7,8 @@ export default {
 };
 
 type Args = {
-    height: number | string;
-    width: number | string;
+    height: number;
+    width: number;
     inverse: boolean;
     ariaLabel: string;
 };
@@ -37,8 +37,8 @@ export const Default: StoryComponent<Args> = ({height, width, inverse, ariaLabel
 Default.storyName = 'Skeleton Rectangle';
 
 Default.args = {
-    height: '100px',
-    width: '50%',
+    height: 100,
+    width: 100,
     inverse: false,
     ariaLabel: '',
 };
