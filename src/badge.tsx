@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import * as React from 'react';
 import classnames from 'classnames';
 import * as classes from './badge.css';
