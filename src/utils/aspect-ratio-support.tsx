@@ -28,7 +28,7 @@ export const AspectRatioSupportProvider: React.FC<Props> = ({children}) => {
 
 export const useSupportsAspectRatio = (): boolean => React.useContext(AspectRatioSupport);
 
-const useSkeletonRectangleStyles = createUseStyles(() => ({
+const useAspectRatioStyles = createUseStyles(() => ({
     container: {
         '@supports (aspect-ratio: 1 / 1)': {
             aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
@@ -59,7 +59,7 @@ const useSkeletonRectangleStyles = createUseStyles(() => ({
     },
 }));
 
-type SkeletonRectangleProps = {
+type AspectRatioElementProps = {
     width?: number | string;
     height?: number | string;
     aspectRatio: number;
@@ -69,12 +69,12 @@ type SkeletonRectangleProps = {
     className?: string;
 };
 
-export const AspectRatioElement = (props: SkeletonRectangleProps): JSX.Element => {
+export const AspectRatioElement = (props: AspectRatioElementProps): JSX.Element => {
     const supportsAspectRatio = useSupportsAspectRatio();
     const withCssAspectRatio =
         typeof props.width !== 'number' && typeof props.height !== 'number' && props.aspectRatio !== 0;
 
-    const classes = useSkeletonRectangleStyles({
+    const classes = useAspectRatioStyles({
         aspectRatio: withCssAspectRatio ? props.aspectRatio : undefined,
         width: props.width,
     });
