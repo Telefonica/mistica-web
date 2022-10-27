@@ -7,6 +7,7 @@ const main = async () => {
     core.setOutput('total-js', sizeStats.totalJs);
     core.setOutput('js-without-icons', sizeStats.jsWithoutIcons);
     core.setOutput('lib-overhead', sizeStats.libOverhead);
+    core.setOutput('lib-overhead-gzip', sizeStats.libOverheadGzip);
 };
 
 main().catch((error) => {
