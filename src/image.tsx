@@ -67,6 +67,9 @@ const ImageError = () => {
 
 const useStyles = createUseStyles(() => ({
     image: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
         display: 'block',
         objectFit: 'cover',
         width: '100%',
