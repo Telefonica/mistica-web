@@ -33,6 +33,7 @@ const useBulletsStyles = createUseStyles((theme) => ({
         height: 8,
         borderRadius: '50%',
         transition: 'transform 0.3s ease-in-out, background-color 0.3s ease-in-out',
+        zIndex: 2,
 
         '&.active': {
             backgroundColor: ({isInverse}) =>
@@ -124,7 +125,7 @@ const useStyles = createUseStyles((theme) => ({
     arrowButton: {
         ...arrowButtonStyle(theme),
         position: 'absolute',
-        zIndex: 1,
+        zIndex: 2,
         top: `calc(50% - ${arrowButtonSize / 2}px)`,
         '&.prev': {
             left: ({containerType, isLargeDesktop, sideMargin}) =>
@@ -631,7 +632,7 @@ const useSlideshowStyles = createUseStyles((theme) => ({
         ...arrowButtonStyle(theme),
         border: 'none',
         position: 'absolute',
-        zIndex: 1,
+        zIndex: 2,
         top: `calc(50% - ${arrowButtonSize / 2}px)`,
         '&.prev': {
             left: 24,
@@ -652,6 +653,7 @@ const useSlideshowStyles = createUseStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         width: '100%',
+        zIndex: 2,
     },
 }));
 

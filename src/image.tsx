@@ -59,7 +59,11 @@ const ImageError = () => {
             {skinName === VIVO_SKIN ? (
                 <VivoLogo style={{width: '10%', minWidth: 24, maxWidth: 48}} />
             ) : (
-                <IconImageRegular size="" style={{width: '10%', minWidth: 24, maxWidth: 48}} />
+                <IconImageRegular
+                    color={colors.neutralMedium}
+                    size=""
+                    style={{width: '10%', minWidth: 24, maxWidth: 48}}
+                />
             )}
         </div>
     );
