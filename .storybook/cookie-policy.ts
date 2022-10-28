@@ -10,7 +10,7 @@ function setGDPRCookie(expirationInDays = 365) {
 }
 
 function hasGdprCookie() {
-    return document.cookie.split(/;\s/).includes(`${COOKIE_ACCEPT_GDPR_NAME}=${COOKIE_ACCEPT_VALUE}`);
+    return document.cookie.includes(`${COOKIE_ACCEPT_GDPR_NAME}=${COOKIE_ACCEPT_VALUE}`);
 }
 
 function showGDPRPrompt() {
@@ -40,7 +40,7 @@ function showGDPRPrompt() {
 export default function checkAcceptedCookies(): boolean {
     const gdpr = hasGdprCookie();
 
-    if (gdpr !== null) {
+    if (gdpr) {
         setGDPRCookie();
         return true;
     }
