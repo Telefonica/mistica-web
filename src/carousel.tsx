@@ -474,13 +474,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
             initialItemInfo.current.initialItem = initialActiveItem;
             initialItemInfo.current.itemsPerPage = itemsPerPageFloor;
         }
-    }, [
-        initialActiveItem,
-        itemsPerPageFloor,
-        goToPage,
-        initialItemInfo.current.initialItem,
-        initialItemInfo.current.initialItem,
-    ]);
+    }, [initialActiveItem, itemsPerPageFloor, goToPage]);
 
     React.useEffect(() => {
         if (shouldAutoplay && autoplay) {
