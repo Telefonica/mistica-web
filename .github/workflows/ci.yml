@@ -20,8 +20,15 @@ jobs:
             - name: Install dependencies
               run: yarn install --immutable --immutable-cache
 
-            - name: Run tests
-              run: yarn ci
+            - run: yarn lint
+            - run: yarn prettier-check
+            - run: yarn ts-check
+            - run: yarn circular-dependencies
+            - run: yarn build
+            - run: yarn storybook-static
+            - run: yarn test --ci
+            - run: NO_BUILD=true yarn test-ssr --ci
+            - run: yarn test-acceptance --ci
 
             - name: 'Upload failed screenshot diffs'
               uses: './.github/actions/upload-failed-screenshots'
