@@ -22,9 +22,9 @@ jobs:
 
             - run: yarn lint
             - run: yarn prettier-check
-            - run: yarn ts-check
             - run: yarn circular-dependencies
             - run: yarn build
+            - run: yarn ts-check
             - run: yarn storybook-static
             - run: yarn test --ci
             - run: NO_BUILD=true yarn test-ssr --ci
