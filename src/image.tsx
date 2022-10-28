@@ -71,7 +71,8 @@ const ImageError = () => {
 
 const useStyles = createUseStyles(() => ({
     image: {
-        position: 'absolute',
+        // needeed because images with aspect-ratio 0 and position absolute does not work
+        position: ({ratio}) => (ratio !== 0 ? 'absolute' : 'static'),
         top: 0,
         left: 0,
         display: 'block',
@@ -139,6 +140,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
 
         const classes = useStyles({
             noBorderRadius: noBorderSetting,
+            ratio,
         });
 
         const withLoadingFallback = loadingFallback && !!(ratio !== 0 || (props.width && props.height));

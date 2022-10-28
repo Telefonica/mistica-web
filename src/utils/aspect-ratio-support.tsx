@@ -98,7 +98,7 @@ export const AspectRatioElement = (props: AspectRatioElementProps): JSX.Element 
     const container = React.createElement(
         props.as ?? 'div',
         {
-            className: `${props.className} ${classes.container}`,
+            className: props.className ? `${props.className} ${classes.container}` : classes.container,
             style: {
                 ...(needsWrapper ? {...props.style, width: '100%'} : {...props.style, width, height}),
             },
