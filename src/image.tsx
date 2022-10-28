@@ -60,7 +60,7 @@ const ImageError = () => {
                 <VivoLogo style={{width: '10%', minWidth: 24, maxWidth: 48}} />
             ) : (
                 <IconImageRegular
-                    color={colors.neutralMedium}
+                    color={isInverse ? colors.inverse : colors.neutralMedium}
                     size=""
                     style={{width: '10%', minWidth: 24, maxWidth: 48}}
                 />
