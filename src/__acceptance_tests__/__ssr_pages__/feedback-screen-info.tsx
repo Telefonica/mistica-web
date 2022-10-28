@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {InfoFeedbackScreen, ButtonPrimary} from '../..';
+import {InfoFeedbackScreen, ButtonPrimary} from '../../..';
 
 const InfoFeedbackScreenTest: React.FC = () => (
     <InfoFeedbackScreen

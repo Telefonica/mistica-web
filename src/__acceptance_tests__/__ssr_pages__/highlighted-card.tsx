@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ButtonPrimary, HighlightedCard} from '../..';
+import {ButtonPrimary, HighlightedCard} from '../../..';
 
 const HighlightedCardTest: React.FC = () => (
     <HighlightedCard
