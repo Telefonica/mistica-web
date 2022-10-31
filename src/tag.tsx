@@ -70,7 +70,7 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
                 </Box>
             )}
             <ThemeVariant isInverse={false}>
-                <Text color={textColor} size={14} lineHeight={21} weight="medium" truncate>
+                <Text color={textColor} size={14} lineHeight={20} weight="medium" truncate>
                     {children}
                 </Text>
             </ThemeVariant>
