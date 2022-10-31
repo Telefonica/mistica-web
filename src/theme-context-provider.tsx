@@ -64,6 +64,7 @@ type Props = {
      * Once we migrate to React18, we could remove this prop and use the useId hook instead.
      */
     providerId?: string;
+    as?: string;
     children?: React.ReactNode;
 };
 
@@ -93,7 +94,7 @@ const defaultTextPresetsConfig: TextPresetsConfig = {
     text10: {weight: 'light'},
 };
 
-const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) => {
+const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId, as}) => {
     const [instanceId] = React.useState(() => {
         if (providerId) {
             return providerId;
@@ -163,7 +164,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) =>
         };
     }, [theme, isOsDarkModeEnabled]);
 
-    const themeStyle = `:root {${assignInlineVars(vars, {colors: contextTheme.colors})}}`;
+    const themeVars = assignInlineVars(vars, {colors: contextTheme.colors});
 
     return (
         <JssProvider jss={getJss()} classNamePrefix={classNamePrefix} generateId={generateId}>
@@ -176,10 +177,16 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) =>
                                     <AriaIdGetterContext.Provider value={getAriaId}>
                                         <ScreenSizeContextProvider>
                                             <DialogRoot>
-                                                {process.env.NODE_ENV !== 'test' && (
-                                                    <style>{themeStyle}</style>
+                                                {as ? (
+                                                    React.createElement(as, {style: themeVars}, children)
+                                                ) : (
+                                                    <>
+                                                        {process.env.NODE_ENV !== 'test' && (
+                                                            <style>{`:root {${themeVars}}`}</style>
+                                                        )}
+                                                        {children}
+                                                    </>
                                                 )}
-                                                {children}
                                             </DialogRoot>
                                         </ScreenSizeContextProvider>
                                     </AriaIdGetterContext.Provider>

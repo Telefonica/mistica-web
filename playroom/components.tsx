@@ -298,7 +298,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     }, [os, skinName]);
 
     const controls = (
-        <ThemeContextProvider theme={theme}>
+        <ThemeContextProvider theme={theme} as="div">
             <PreviewToolsControls
                 skinName={skinName}
                 onSkinNameChange={setSkinName}
