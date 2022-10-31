@@ -24,11 +24,11 @@ export const DisableBorderRadiusProvider: React.FC = ({children}) => (
     <DisableBorderRadiusContext.Provider value>{children}</DisableBorderRadiusContext.Provider>
 );
 
-type VivoLogoPRops = {
+type VivoLogoProps = {
     style?: React.CSSProperties;
 };
 
-const VivoLogo = ({style}: VivoLogoPRops) => {
+const VivoLogo = ({style}: VivoLogoProps) => {
     const {colors} = useTheme();
     return (
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style={style}>
