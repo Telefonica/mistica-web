@@ -25,6 +25,7 @@ const commonProperties = defineProperties({
         alignItems: ['stretch', 'flex-start', 'center', 'flex-end'],
         flexShrink: [0],
         flexGrow: [0, 1],
+        flex: [1],
         paddingTop: sizes,
         paddingBottom: sizes,
         paddingLeft: sizes,
