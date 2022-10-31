@@ -176,7 +176,9 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId}) =>
                                     <AriaIdGetterContext.Provider value={getAriaId}>
                                         <ScreenSizeContextProvider>
                                             <DialogRoot>
-                                                <style>{themeStyle}</style>
+                                                {process.env.NODE_ENV !== 'test' && (
+                                                    <style>{themeStyle}</style>
+                                                )}
                                                 {children}
                                             </DialogRoot>
                                         </ScreenSizeContextProvider>
