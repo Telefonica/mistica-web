@@ -37,7 +37,7 @@ const useStyles = createUseStyles(({isDarkMode}) => ({
             top: 0,
             left: 0,
         },
-        filter: isDarkMode ? 'brightness(.8) contrast(1.2)' : 'none',
+        filter: isDarkMode ? 'brightness(.8) contrast(1.05)' : 'none',
     },
     wrapper: {
         overflow: 'hidden',
