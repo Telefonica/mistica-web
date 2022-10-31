@@ -17,12 +17,13 @@ export const DisableBorderRadiusProvider: React.FC = ({children}) => (
     <DisableBorderRadiusContext.Provider value>{children}</DisableBorderRadiusContext.Provider>
 );
 
-const useStyles = createUseStyles(() => ({
+const useStyles = createUseStyles(({isDarkMode}) => ({
     image: {
         display: 'block',
         objectFit: 'cover',
         maxWidth: '100%',
         maxHeight: '100%',
+        filter: isDarkMode ? 'brightness(.8) contrast(1.2)' : 'none',
         borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 8),
 
         '@supports (aspect-ratio: 1 / 1)': {

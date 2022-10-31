@@ -17,7 +17,7 @@ export const RATIO = {
     '4:3': 4 / 3,
 };
 
-const useStyles = createUseStyles(() => ({
+const useStyles = createUseStyles(({isDarkMode}) => ({
     video: {
         background: 'transparent',
         display: 'block',
@@ -37,6 +37,7 @@ const useStyles = createUseStyles(() => ({
             top: 0,
             left: 0,
         },
+        filter: isDarkMode ? 'brightness(.8) contrast(1.2)' : 'none',
     },
     wrapper: {
         overflow: 'hidden',
