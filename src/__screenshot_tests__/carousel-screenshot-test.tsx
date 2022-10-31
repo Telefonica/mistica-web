@@ -53,19 +53,19 @@ test('Carousel desktop', async () => {
     const prevArrow = await screen.findByRole('button', {name: /anterior/i});
     const nextArrow = await screen.findByRole('button', {name: /siguiente/i});
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.001});
     expect(await isDisabled(prevArrow)).toBe(true);
     expect(await isDisabled(nextArrow)).toBe(false);
 
     await page.click(nextArrow);
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.001});
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(false);
 
     await page.click(nextArrow);
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.001});
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(true);
 });
