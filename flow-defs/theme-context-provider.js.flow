@@ -16,6 +16,7 @@ declare type Props = {
    * Once we migrate to React18, we could remove this prop and use the useId hook instead.
    */
   providerId?: string,
+  as?: string,
   children?: React.Node,
 };
 declare var ThemeContextProvider: React.ComponentType<Props>;
