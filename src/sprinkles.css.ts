@@ -30,7 +30,7 @@ const commonProperties = defineProperties({
         paddingBottom: sizes,
         paddingLeft: sizes,
         paddingRight: sizes,
-        width: sizes,
+        width: ['100%', ...sizes],
         height: sizes,
         minWidth: sizes,
         minHeight: sizes,

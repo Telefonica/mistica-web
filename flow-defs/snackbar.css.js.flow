@@ -1,0 +1,14 @@
+// @flow
+
+declare export var TRANSITION_TIME_IN_MS: 300;
+declare export var snackbar: string;
+declare export var snackbarOpen: string;
+declare export var wrapper: string;
+declare export var wrapperCritical: string;
+declare export var wrapperInfo: string;
+declare export var wrapperOpen: string;
+declare export var content: string;
+declare export var button: string;
+declare export var longButton: string;
+declare export var buttonInfo: string;
+declare export var buttonCritical: string;
