@@ -1562,7 +1562,7 @@ export default [
     {
         group: 'Media',
         name: 'Video',
-        code: `<Video src="https://cdn.kapwing.com/final_61f3e551955a8b003ec98e68_257607.mp4" aspectRatio="16:9" />`,
+        code: `<Video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4" aspectRatio="16:9" />`,
     },
     {
         group: 'Media',
