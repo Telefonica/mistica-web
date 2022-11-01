@@ -672,12 +672,13 @@ const cardSnippets: Array<Snippet> = [
         name: 'MediaCard with Image',
         code: `
         <MediaCard
+            media={<Image src="https://i.imgur.com/aEVtKsE.jpg" aspectRatio="16:9" />}
             headline={<Tag type="promo">Headline</Tag>}
             pretitle="Pretitle"
             title="Title"
+            subtitle="Subtitle"
             description="Description"
             extra={<Placeholder />}
-            media={<Image src="https://i.imgur.com/aEVtKsE.jpg" aspectRatio="16:9" />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
@@ -691,12 +692,13 @@ const cardSnippets: Array<Snippet> = [
         name: 'MediaCard with Video',
         code: `
         <MediaCard
+            media={<Video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" aspectRatio="16:9" />}
             headline={<Tag color={colors.promo}>headline</Tag>}
             pretitle="Pretitle"
             title="Title"
+            subtitle="Subtitle"
             description="Description"
             extra={<Placeholder />}
-            media={<Video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" aspectRatio="16:9" />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
@@ -710,16 +712,16 @@ const cardSnippets: Array<Snippet> = [
         name: 'DataCard',
         code: `
         <DataCard
-            headline={<Tag type="promo">Headline</Tag>}
-            title="Title"
-            subtitle="Subtitle"
-            description="Description"
-            extra={<Placeholder />}
             icon={
                 <Circle backgroundColor={colors.brandLow} size={40}>
                     <IconShopRegular color={colors.brand} />
                 </Circle>
             }
+            headline={<Tag type="promo">Headline</Tag>}
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+            extra={<Placeholder />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
@@ -733,13 +735,13 @@ const cardSnippets: Array<Snippet> = [
         name: 'SnapCard',
         code: `
         <SnapCard
-            title="Title"
-            subtitle="Subtitle"
             icon={
               <Circle size={40} backgroundColor={colors.brandLow}>
                 <IconAcademicRegular color={colors.brand} />
               </Circle>
             }
+            title="Title"
+            subtitle="Subtitle"
         />`,
     },
 ];
