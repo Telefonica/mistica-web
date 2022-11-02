@@ -2,7 +2,7 @@ export const mediaQueriesConfig = {
     tabletMinWidth: 768,
     desktopMinWidth: 1024,
     largeDesktopMinWidth: 1368,
-    desktopOrTabletMinHeight: 550,
+    desktopOrTabletMinHeight: process.env.PLAYROOM ? 0 : 550,
 };
 
 export const mobile =

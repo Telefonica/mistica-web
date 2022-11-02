@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 const exampleCode = `
 <Form
@@ -67,6 +68,13 @@ const config = {
                 },
             ],
         },
+        plugins: [
+            new webpack.DefinePlugin({
+                'process.env': {
+                    PLAYROOM: true,
+                },
+            }),
+        ],
     }),
 };
 
