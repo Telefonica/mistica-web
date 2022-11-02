@@ -3,7 +3,7 @@ import * as themes from '../.storybook/themes';
 
 import type {ThemeConfig} from '../src/theme';
 
-const common = {
+const common: Partial<ThemeConfig> = {
     // Override the media query desktopOrTabletMinHeight to avoid to show the components mobile version
     // when playroom height is too short.
     mediaQueries: {...mediaQueriesConfig, desktopOrTabletMinHeight: 0},
@@ -12,7 +12,6 @@ const common = {
     i18n: {locale: 'en-US', phoneNumberFormattingRegionCode: 'ES'},
     dimensions: {
         headerMobileHeight: 0,
-        headerDesktopHeight: 0,
     },
 } as const;
 
