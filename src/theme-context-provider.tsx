@@ -9,7 +9,7 @@ import {createMediaQueries} from './utils/media-queries';
 import {PACKAGE_VERSION} from './package-version';
 import AriaIdGetterContext from './aria-id-getter-context';
 import {isServerSide} from './utils/environment';
-import {AnchorLink, mediaQueriesConfig, dimensions, getTexts} from './theme';
+import {AnchorLink, mediaQueriesConfig, dimensions, getTexts, NAVBAR_HEIGHT_MOBILE} from './theme';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
@@ -94,6 +94,15 @@ const defaultTextPresetsConfig: TextPresetsConfig = {
     text10: {weight: 'light'},
 };
 
+const sanitizeDimensions = (dimensions: ThemeConfig['dimensions']): Partial<Theme['dimensions']> => {
+    return {
+        headerMobileHeight:
+            dimensions?.headerMobileHeight === 'mistica'
+                ? NAVBAR_HEIGHT_MOBILE
+                : dimensions?.headerMobileHeight,
+    };
+};
+
 const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId, as}) => {
     const [instanceId] = React.useState(() => {
         if (providerId) {
@@ -145,7 +154,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId, as}
             },
             dimensions: {
                 ...dimensions,
-                ...theme.dimensions,
+                ...sanitizeDimensions(theme.dimensions),
             },
             mq: createMediaQueries(theme.mediaQueries ?? mediaQueriesConfig),
             colors,
