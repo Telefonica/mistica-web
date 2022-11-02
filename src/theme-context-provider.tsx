@@ -195,7 +195,9 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId, as}
                                     <AriaIdGetterContext.Provider value={getAriaId}>
                                         <ScreenSizeContextProvider>
                                             <DialogRoot>
-                                                <style>{misticaCss}</style>
+                                                {process.env.NODE_ENV !== 'test' && (
+                                                    <style>{misticaCss}</style>
+                                                )}
                                                 {as ? (
                                                     React.createElement(as, {style: themeVars}, children)
                                                 ) : (
