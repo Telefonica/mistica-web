@@ -159,12 +159,9 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
                 className={classes.image}
                 alt={alt}
                 onError={(event) => {
-                    setTimeout(() => {
-                        setIsError(true);
-                        setIsLoading(false);
-                        setHideLoadingFallback(true);
-                    }, 1000);
-                    setTimeout(() => {}, FADE_IN_DURATION_MS);
+                    setIsError(true);
+                    setIsLoading(false);
+                    setHideLoadingFallback(true);
                     onError?.(event);
                 }}
                 onLoad={(event) => {
