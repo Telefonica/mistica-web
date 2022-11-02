@@ -1,6 +1,20 @@
 import {PACKAGE_VERSION} from './package-version';
 
-export {createUseStyles, getJss, ServerSideStyles} from './jss';
+export {
+    /**
+     * @deprecated JSS will be removed from mistica in future versions. Use JSS or other styling solution as a direct dependency of your project
+     */
+    createUseStyles,
+    /**
+     * @deprecated JSS will be removed from mistica in future versions. Use JSS or other styling solution as a direct dependency of your project
+     */
+    getJss,
+    /**
+     * @deprecated JSS will be removed from mistica in future versions. Use JSS or other styling solution as a direct dependency of your project
+     */
+    ServerSideStyles,
+} from './jss';
+
 export {default as ThemeContext} from './theme-context';
 export {default as ThemeContextProvider} from './theme-context-provider';
 export {default as ScreenReaderOnly} from './screen-reader-only';
