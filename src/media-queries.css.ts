@@ -1,39 +1,41 @@
-const tabletMinWidth = 768;
-const desktopMinWidth = 1024;
-const largeDesktopMinWidth = 1368;
-const desktopOrTabletMinHeight = 550;
+export const mediaQueriesConfig = {
+    tabletMinWidth: 768,
+    desktopMinWidth: 1024,
+    largeDesktopMinWidth: 1368,
+    desktopOrTabletMinHeight: 550,
+};
 
 export const mobile =
-    `only screen and (max-width: ${tabletMinWidth - 1}px), ` +
-    `(max-height: ${desktopOrTabletMinHeight - 1}px)`;
+    `only screen and (max-width: ${mediaQueriesConfig.tabletMinWidth - 1}px), ` +
+    `(max-height: ${mediaQueriesConfig.desktopOrTabletMinHeight - 1}px)`;
 export const tablet =
     `only screen ` +
-    `and (min-height: ${desktopOrTabletMinHeight}px) ` +
-    `and (min-width: ${tabletMinWidth}px) ` +
-    `and (max-width: ${desktopMinWidth - 1}px)`;
+    `and (min-height: ${mediaQueriesConfig.desktopOrTabletMinHeight}px) ` +
+    `and (min-width: ${mediaQueriesConfig.tabletMinWidth}px) ` +
+    `and (max-width: ${mediaQueriesConfig.desktopMinWidth - 1}px)`;
 export const desktop =
     `only screen ` +
-    `and (min-height: ${desktopOrTabletMinHeight}px) ` +
-    `and (min-width: ${desktopMinWidth}px) ` +
-    `and (max-width: ${largeDesktopMinWidth - 1}px)`;
+    `and (min-height: ${mediaQueriesConfig.desktopOrTabletMinHeight}px) ` +
+    `and (min-width: ${mediaQueriesConfig.desktopMinWidth}px) ` +
+    `and (max-width: ${mediaQueriesConfig.largeDesktopMinWidth - 1}px)`;
 export const largeDesktop =
     `only screen ` +
-    `and (min-height: ${desktopOrTabletMinHeight}px) ` +
-    `and (min-width: ${largeDesktopMinWidth}px)`;
+    `and (min-height: ${mediaQueriesConfig.desktopOrTabletMinHeight}px) ` +
+    `and (min-width: ${mediaQueriesConfig.largeDesktopMinWidth}px)`;
 
 export const tabletOrBigger =
     `only screen ` +
-    `and (min-height: ${desktopOrTabletMinHeight}px) ` +
-    `and (min-width: ${tabletMinWidth}px)`;
+    `and (min-height: ${mediaQueriesConfig.desktopOrTabletMinHeight}px) ` +
+    `and (min-width: ${mediaQueriesConfig.tabletMinWidth}px)`;
 
 export const tabletOrSmaller =
-    `only screen and (max-width: ${desktopMinWidth - 1}px), ` +
-    `(max-height: ${desktopOrTabletMinHeight - 1}px)`;
+    `only screen and (max-width: ${mediaQueriesConfig.desktopMinWidth - 1}px), ` +
+    `(max-height: ${mediaQueriesConfig.desktopOrTabletMinHeight - 1}px)`;
 
 export const desktopOrBigger =
     `only screen ` +
-    `and (min-height: ${desktopOrTabletMinHeight}px) ` +
-    `and (min-width: ${desktopMinWidth}px)`;
+    `and (min-height: ${mediaQueriesConfig.desktopOrTabletMinHeight}px) ` +
+    `and (min-width: ${mediaQueriesConfig.desktopMinWidth}px)`;
 
 // Only apply hover effect to user agents using fine pointer devices (a mouse, for example)
 // Also enabled for (pointer: none) for acceptance tests, where (pointer: fine) doesn't match.

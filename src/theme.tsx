@@ -168,12 +168,7 @@ export const dimensions = {
     headerDesktopHeight: NAVBAR_HEIGHT_DESKTOP,
 };
 
-export const mediaQueriesConfig = {
-    tabletMinWidth: 768,
-    desktopMinWidth: 1024,
-    largeDesktopMinWidth: 1368,
-    desktopOrTabletMinHeight: 550,
-};
+export {mediaQueriesConfig} from './media-queries.css';
 
 type LinkComponent = React.ComponentType<{
     style?: React.CSSProperties;
@@ -233,6 +228,10 @@ export type ThemeConfig = {
         eventFormat?: EventFormat;
     };
     dimensions?: {headerMobileHeight: number | 'mistica'};
+
+    /**
+     * @deprecated in future versions, mistica won't allow to configure media query breakpoints.
+     */
     mediaQueries?: {
         tabletMinWidth: number;
         desktopMinWidth: number;
