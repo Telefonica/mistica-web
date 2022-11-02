@@ -1,4 +1,9 @@
-export const mediaQueriesConfig = {
+export const mediaQueriesConfig: {
+    tabletMinWidth: number;
+    desktopMinWidth: number;
+    largeDesktopMinWidth: number;
+    desktopOrTabletMinHeight: number;
+} = {
     tabletMinWidth: 768,
     desktopMinWidth: 1024,
     largeDesktopMinWidth: 1368,
