@@ -672,7 +672,7 @@ const cardSnippets: Array<Snippet> = [
         name: 'MediaCard with Image',
         code: `
         <MediaCard
-            media={<Image src="https://i.imgur.com/aEVtKsE.jpg" aspectRatio="16:9" />}
+            media={<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />}
             headline={<Tag type="promo">Headline</Tag>}
             pretitle="Pretitle"
             title="Title"
@@ -1569,7 +1569,7 @@ export default [
     {
         group: 'Media',
         name: 'Image',
-        code: `<Image src="https://i.imgur.com/aEVtKsE.jpg" aspectRatio="16:9" />`,
+        code: `<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />`,
     },
     ...carouselSnippets,
     ...avatarSnippets,
