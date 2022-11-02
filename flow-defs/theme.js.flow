@@ -40,6 +40,8 @@ declare var TEXTS_ES: {
   carouselPrevButton: string,
 };
 declare export var getTexts: (locale: Locale) => typeof TEXTS_ES;
+declare export var NAVBAR_HEIGHT_MOBILE: 56;
+declare export var NAVBAR_HEIGHT_DESKTOP: 80;
 declare export var dimensions: {
   headerMobileHeight: number,
   headerDesktopHeight: number,
@@ -99,7 +101,7 @@ export type ThemeConfig = {
     eventFormat?: EventFormat,
   },
   dimensions?: {
-    headerMobileHeight: number,
+    headerMobileHeight: number | "mistica",
   },
   mediaQueries?: {
     tabletMinWidth: number,
