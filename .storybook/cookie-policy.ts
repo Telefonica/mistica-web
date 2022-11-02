@@ -29,12 +29,11 @@ function showGDPRPrompt() {
     acceptButton.type = 'button';
     root.appendChild(acceptButton);
 
-    window.document.addEventListener('click', (evt) => {
+    acceptButton.addEventListener('click', (evt) => {
         evt.preventDefault();
         setGDPRCookie();
         window.location.reload();
     });
-    window.document.getElementById('accept-GDPR');
 }
 
 export default function checkAcceptedCookies(): boolean {
