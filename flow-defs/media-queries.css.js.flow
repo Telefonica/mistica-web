@@ -1,5 +1,11 @@
 // @flow
 
+declare export var mediaQueriesConfig: {
+  tabletMinWidth: number,
+  desktopMinWidth: number,
+  largeDesktopMinWidth: number,
+  desktopOrTabletMinHeight: number,
+};
 declare export var mobile: string;
 declare export var tablet: string;
 declare export var desktop: string;
