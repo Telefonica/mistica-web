@@ -2,7 +2,8 @@ export const mediaQueriesConfig = {
     tabletMinWidth: 768,
     desktopMinWidth: 1024,
     largeDesktopMinWidth: 1368,
-    desktopOrTabletMinHeight: process.env.PLAYROOM ? 0 : 550,
+    desktopOrTabletMinHeight: 550,
+    ...(process.env.MISTICA_MEDIA_QUERIES_CONFIG ? JSON.parse(process.env.MISTICA_MEDIA_QUERIES_CONFIG) : {}),
 };
 
 export const mobile =

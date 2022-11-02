@@ -1,6 +1,52 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const getMediaQueriesConfig = () => {
+    const impossibleSize = 999999;
+
+    if (process.env.FORCE_MOBILE) {
+        return {
+            tabletMinWidth: impossibleSize,
+            desktopMinWidth: impossibleSize,
+            largeDesktopMinWidth: impossibleSize,
+            desktopOrTabletMinHeight: impossibleSize,
+        };
+    }
+    if (process.env.FORCE_DESKTOP) {
+        return {
+            tabletMinWidth: 0,
+            desktopMinWidth: 0,
+            largeDesktopMinWidth: impossibleSize,
+            desktopOrTabletMinHeight: 0,
+        };
+    }
+    return {
+        desktopOrTabletMinHeight: 0,
+    };
+};
+
+const getOutputPath = () => {
+    if (process.env.FORCE_MOBILE) {
+        return './public/playroom-mobile/';
+    }
+    if (process.env.FORCE_DESKTOP) {
+        return './public/playroom-desktop/';
+    }
+    return './public/playroom/';
+};
+
+const getBaseUrl = () => getOutputPath().replace('./public', '');
+
+const getWidths = () => {
+    if (process.env.FORCE_MOBILE) {
+        return [360];
+    }
+    if (process.env.FORCE_DESKTOP) {
+        return [1024];
+    }
+    return [320, 360, 768, 1024, 1368];
+};
+
 const exampleCode = `
 <Form
   onSubmit={(formData) =>
@@ -24,13 +70,13 @@ const exampleCode = `
 const config = {
     title: 'Mística Design System',
     components: './playroom/components.tsx',
-    outputPath: './public/playroom',
-    baseUrl: '/playroom/',
+    outputPath: getOutputPath(),
+    baseUrl: getBaseUrl(),
     themes: './playroom/themes.tsx',
     snippets: './playroom/snippets.tsx',
     frameComponent: './playroom/frame-component.tsx',
     scope: './playroom/use-scope.tsx',
-    widths: [320, 360, 768, 1024, 1368],
+    widths: getWidths(),
     exampleCode,
     webpackConfig: () => ({
         module: {
@@ -70,9 +116,9 @@ const config = {
         },
         plugins: [
             new webpack.DefinePlugin({
-                'process.env': {
-                    PLAYROOM: true,
-                },
+                'process.env.MISTICA_MEDIA_QUERIES_CONFIG': JSON.stringify(
+                    JSON.stringify(getMediaQueriesConfig())
+                ),
             }),
         ],
     }),
