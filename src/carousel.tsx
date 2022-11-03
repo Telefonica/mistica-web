@@ -14,8 +14,9 @@ import {DisableBorderRadiusProvider} from './image';
 import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 import {isAndroid} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
+import {useContainerType} from './container-type-context';
 
-import type {DataAttributes} from './utils/types';
+import type {ContainerType, DataAttributes} from './utils/types';
 import type {Theme} from './theme';
 
 const useShouldAutoplay = (autoplay: boolean, ref: React.RefObject<HTMLElement>): boolean => {
@@ -32,6 +33,7 @@ const useBulletsStyles = createUseStyles((theme) => ({
         height: 8,
         borderRadius: '50%',
         transition: 'transform 0.3s ease-in-out, background-color 0.3s ease-in-out',
+        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
 
         '&.active': {
             backgroundColor: ({isInverse}) =>
@@ -101,6 +103,18 @@ const arrowButtonStyle = (theme: Theme) => ({
     },
 });
 
+const arrowButtonSeparation = (containerType: ContainerType, isLargeDesktop: boolean, sideMargin: number) => {
+    switch (containerType) {
+        case 'mobile-column':
+        case 'tablet-column':
+            return -sideMargin;
+        case 'desktop-wide-column':
+            return isLargeDesktop ? -(24 + arrowButtonSize) : -arrowButtonSize / 2;
+        default:
+            return -arrowButtonSize / 2;
+    }
+};
+
 const useStyles = createUseStyles((theme) => ({
     carouselContainer: {
         // This value is a workaround to solve an issue when the page is rendered in a hidden webview
@@ -111,25 +125,15 @@ const useStyles = createUseStyles((theme) => ({
     arrowButton: {
         ...arrowButtonStyle(theme),
         position: 'absolute',
-        zIndex: 1,
+        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
         top: `calc(50% - ${arrowButtonSize / 2}px)`,
         '&.prev': {
-            left: -arrowButtonSize / 2,
-            [theme.mq.tabletOrSmaller]: {
-                left: ({sideMargin}) => -sideMargin,
-            },
-            [theme.mq.largeDesktop]: {
-                left: -(24 + arrowButtonSize),
-            },
+            left: ({containerType, isLargeDesktop, sideMargin}) =>
+                arrowButtonSeparation(containerType, isLargeDesktop, sideMargin),
         },
         '&.next': {
-            right: -arrowButtonSize / 2,
-            [theme.mq.tabletOrSmaller]: {
-                right: ({sideMargin}) => -sideMargin,
-            },
-            [theme.mq.largeDesktop]: {
-                right: -(24 + arrowButtonSize),
-            },
+            right: ({containerType, isLargeDesktop, sideMargin}) =>
+                arrowButtonSeparation(containerType, isLargeDesktop, sideMargin),
         },
     },
     hasScroll: {},
@@ -319,12 +323,21 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     dataAttributes,
 }) => {
     const {texts} = useTheme();
+    const containerType = useContainerType();
     const itemsPerPageConfig = normalizeItemsPerPage(itemsPerPage);
     const mobilePageOffsetConfig = normalizeMobilePageOffset(mobilePageOffset);
-    const {isDesktopOrBigger} = useScreenSize();
+    const {isDesktopOrBigger, isLargeDesktop} = useScreenSize();
     const gap: number = gapProp ?? (isDesktopOrBigger ? 16 : 8);
     const sideMargin = useResonsiveLayoutMargin();
-    const classes = useStyles({itemsPerPageConfig, mobilePageOffsetConfig, free, gap, sideMargin});
+    const classes = useStyles({
+        itemsPerPageConfig,
+        mobilePageOffsetConfig,
+        free,
+        gap,
+        sideMargin,
+        containerType,
+        isLargeDesktop,
+    });
     const carouselRef = React.useRef<HTMLDivElement>(null);
     const itemsPerPageFloor = isDesktopOrBigger
         ? Math.floor(itemsPerPageConfig.desktop)
@@ -619,7 +632,7 @@ const useSlideshowStyles = createUseStyles((theme) => ({
         ...arrowButtonStyle(theme),
         border: 'none',
         position: 'absolute',
-        zIndex: 1,
+        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
         top: `calc(50% - ${arrowButtonSize / 2}px)`,
         '&.prev': {
             left: 24,
@@ -640,6 +653,7 @@ const useSlideshowStyles = createUseStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         width: '100%',
+        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
     },
 }));
 

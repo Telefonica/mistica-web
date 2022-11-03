@@ -6,6 +6,8 @@ import {makeTheme} from './test-utils';
 import userEvent from '@testing-library/user-event';
 import IconPhotoCameraRegular from '../generated/mistica-icons/icon-photo-camera-regular';
 
+import type {TouchableElement} from '../touchable';
+
 test('button is accesible', () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
@@ -191,4 +193,41 @@ test('buttons track default events', async () => {
         label: 'link',
     });
     expect(logEventSpy).toHaveBeenCalledTimes(5);
+});
+
+test('Button ref', () => {
+    const TestComponent = () => {
+        const refOnPress = React.useRef<TouchableElement>(null);
+        const refHref = React.useRef<TouchableElement>(null);
+        const refTo = React.useRef<TouchableElement>(null);
+
+        React.useEffect(() => {
+            expect(refOnPress.current?.tagName).toBe('BUTTON');
+            expect(refOnPress.current?.textContent).toBe('onPress');
+
+            expect(refHref.current?.tagName).toBe('A');
+            expect(refHref.current?.textContent).toBe('href');
+
+            expect(refTo.current?.tagName).toBe('A');
+            expect(refTo.current?.textContent).toBe('to');
+        });
+
+        return (
+            <ThemeContextProvider theme={makeTheme()}>
+                <ButtonPrimary ref={refOnPress} onPress={() => {}}>
+                    onPress
+                </ButtonPrimary>
+
+                <ButtonSecondary ref={refHref} href="/">
+                    href
+                </ButtonSecondary>
+
+                <ButtonDanger ref={refTo} to="/">
+                    to
+                </ButtonDanger>
+            </ThemeContextProvider>
+        );
+    };
+
+    render(<TestComponent />);
 });

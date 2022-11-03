@@ -67,7 +67,7 @@ const MisticaThemeProvider = ({Story, context}): React.ReactElement => {
     }, []);
 
     return (
-        <ThemeContextProvider theme={getTheme(skin, platform, colorScheme)}>
+        <ThemeContextProvider theme={getTheme(skin as string, platform, colorScheme)}>
             <Story {...context} />
         </ThemeContextProvider>
     );
@@ -103,7 +103,7 @@ const withLayoutDecorator = (Story, context): React.ReactElement => {
         <>
             <Styles />
             {/* role main required by accessibility rules */}
-            <main style={{padding: isFullscreen ? 0 : 16}}>
+            <main lang="en" style={{padding: isFullscreen ? 0 : 16}}>
                 <Story {...context} />
             </main>
         </>

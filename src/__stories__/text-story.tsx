@@ -62,7 +62,7 @@ export const TextWrapping: StoryComponent = () => {
     return (
         <Stack space={16} dataAttributes={{testid: 'text'}}>
             <Wrapper>
-                <Title1>Default</Title1>
+                <Title1>Default (with workBreak)</Title1>
                 <Text2 regular>
                     Strawberry Friendship Everything Pneumonoultramicroscopicsilicovolcanoconiosis Appreciate
                     Motivation
@@ -70,8 +70,8 @@ export const TextWrapping: StoryComponent = () => {
             </Wrapper>
 
             <Wrapper>
-                <Title1>wordBreak</Title1>
-                <Text2 regular wordBreak>
+                <Title1>Without wordBreak</Title1>
+                <Text2 regular wordBreak={false}>
                     Strawberry Friendship Everything Pneumonoultramicroscopicsilicovolcanoconiosis Appreciate
                     Motivation
                 </Text2>

@@ -5,6 +5,7 @@ export {default as ThemeContext} from './theme-context';
 export {default as ThemeContextProvider} from './theme-context-provider';
 export {default as ScreenReaderOnly} from './screen-reader-only';
 export {default as Touchable} from './touchable';
+export type {TouchableElement} from './touchable';
 export {default as Spinner} from './spinner';
 export {default as FadeIn} from './fade-in';
 export {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
@@ -121,6 +122,8 @@ export {
     useIsInViewport,
 } from './hooks';
 export type {ThemeConfig, ColorScheme, EventFormat} from './theme';
+
+export {pxToRem} from './utils/css';
 
 export {TrackingConfig, useTrackingConfig} from './utils/analytics';
 
@@ -1648,6 +1651,9 @@ export {default as IconTipsAndTricksRegular} from './generated/mistica-icons/ico
 export {default as IconTkFilled} from './generated/mistica-icons/icon-tk-filled';
 export {default as IconTkLight} from './generated/mistica-icons/icon-tk-light';
 export {default as IconTkRegular} from './generated/mistica-icons/icon-tk-regular';
+export {default as IconTokensFilled} from './generated/mistica-icons/icon-tokens-filled';
+export {default as IconTokensLight} from './generated/mistica-icons/icon-tokens-light';
+export {default as IconTokensRegular} from './generated/mistica-icons/icon-tokens-regular';
 export {default as IconTongueFilled} from './generated/mistica-icons/icon-tongue-filled';
 export {default as IconTongueLight} from './generated/mistica-icons/icon-tongue-light';
 export {default as IconTongueRegular} from './generated/mistica-icons/icon-tongue-regular';

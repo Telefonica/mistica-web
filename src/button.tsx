@@ -13,7 +13,14 @@ import {eventActions, eventCategories, eventNames, useTrackingConfig} from './ut
 import {useTheme} from './hooks';
 import {flattenChildren} from './skins/utils';
 
-import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEvent} from './utils/types';
+import type {TouchableElement} from './touchable';
+import type {
+    DataAttributes,
+    IconProps,
+    RendersElement,
+    RendersNullableElement,
+    TrackingEvent,
+} from './utils/types';
 import type {Location} from 'history';
 import type {Theme} from './theme';
 
@@ -263,7 +270,9 @@ const renderButtonContent = ({
                         marginRight: isLastChild ? 0 : ICON_MARGIN_PX,
                     }}
                 >
-                    {React.cloneElement(element, {size: pxToRem(sizeInPx)})}
+                    {React.cloneElement(element as React.ReactElement<IconProps>, {
+                        size: pxToRem(sizeInPx),
+                    })}
                 </div>
             );
         } else {
@@ -341,9 +350,10 @@ export type ButtonProps =
     | OnPressButtonProps
     | HrefButtonProps;
 
-const Button: React.FC<
+const Button = React.forwardRef<
+    TouchableElement,
     ButtonProps & {classes: ReturnType<typeof usePrimaryButtonStyles>; type: ButtonType}
-> = (props) => {
+>((props, ref) => {
     const {eventFormat} = useTrackingConfig();
     const {formStatus, formId} = useForm();
     const isInverse = useIsInverseVariant();
@@ -396,6 +406,7 @@ const Button: React.FC<
         );
 
     const commonProps = {
+        ref,
         className: classnames(classes.button, props.className, {
             [classes.small]: props.small,
             [classes.inverse]: isInverse,
@@ -450,7 +461,11 @@ const Button: React.FC<
                         />
                     ) : (
                         <div
-                            style={{display: 'inline-block', width: spinnerSizeRem, height: spinnerSizeRem}}
+                            style={{
+                                display: 'inline-block',
+                                width: spinnerSizeRem,
+                                height: spinnerSizeRem,
+                            }}
                         />
                     )}
                     {loadingText ? (
@@ -500,7 +515,7 @@ const Button: React.FC<
     }
 
     return null;
-};
+});
 
 const useButtonLinkStyles = createUseStyles((theme) => {
     const paddingY = 6;
@@ -579,10 +594,7 @@ interface ButtonLinkToProps extends ButtonLinkCommonProps {
 
 export type ButtonLinkProps = ButtonLinkOnPressProps | ButtonLinkHrefProps | ButtonLinkToProps;
 
-export const ButtonLink = React.forwardRef<
-    HTMLDivElement | HTMLAnchorElement | HTMLButtonElement,
-    ButtonLinkProps
->((props, ref) => {
+export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((props, ref) => {
     const {formStatus} = useForm();
     const classes = useButtonLinkStyles();
     const isInverse = useIsInverseVariant();
@@ -653,20 +665,20 @@ export const ButtonLink = React.forwardRef<
     return null;
 });
 
-export const ButtonPrimary: React.FC<ButtonProps> = (props) => {
+export const ButtonPrimary = React.forwardRef<TouchableElement, ButtonProps>((props, ref) => {
     const classes = usePrimaryButtonStyles();
-    return <Button {...props} classes={classes} type="primary" />;
-};
+    return <Button {...props} ref={ref} classes={classes} type="primary" />;
+});
 
-export const ButtonSecondary: React.FC<ButtonProps> = (props) => {
+export const ButtonSecondary = React.forwardRef<TouchableElement, ButtonProps>((props, ref) => {
     const classes = useSecondaryButtonStyles();
-    return <Button {...props} classes={classes} type="secondary" />;
-};
+    return <Button {...props} ref={ref} classes={classes} type="secondary" />;
+});
 
-export const ButtonDanger: React.FC<ButtonProps> = (props) => {
+export const ButtonDanger = React.forwardRef<TouchableElement, ButtonProps>((props, ref) => {
     const classes = useDangerButtonStyles();
-    return <Button {...props} classes={classes} type="danger" />;
-};
+    return <Button {...props} ref={ref} classes={classes} type="danger" />;
+});
 
 export type ButtonElement =
     | RendersElement<typeof ButtonPrimary>

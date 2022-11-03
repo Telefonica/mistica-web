@@ -4,12 +4,14 @@ import * as React from "react";
 declare type Position = "top" | "bottom" | "left" | "right";
 declare type Props = {
   children?: React.Node,
+  extra?: React.Node,
   description?: string,
   target: React.Node,
   title?: string,
   position?: Position,
   width?: number,
   targetLabel: string,
+  delay?: boolean,
 };
 declare var Tooltip: React.ComponentType<Props>;
 declare export default typeof Tooltip;

@@ -10,3 +10,10 @@ export type IconProps = {
     className?: string;
     style?: React.CSSProperties;
 };
+
+export type ContainerType =
+    | 'desktop-small-column'
+    | 'desktop-medium-column'
+    | 'desktop-wide-column'
+    | 'tablet-column'
+    | 'mobile-column';

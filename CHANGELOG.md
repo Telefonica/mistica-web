@@ -1,3 +1,46 @@
+# [12.6.0](https://github.com/Telefonica/mistica-web/compare/v12.5.0...v12.6.0) (2022-10-24)
+
+
+### Bug Fixes
+
+* **NavigationBar:** Add nabvarHeight to playroom ([#558](https://github.com/Telefonica/mistica-web/issues/558)) ([dc6ea00](https://github.com/Telefonica/mistica-web/commit/dc6ea00adf1a17a5169010a2b5ba2d2de67d6158))
+* **PhoneNumberField:** Safari workaround for prefix alignment ([#555](https://github.com/Telefonica/mistica-web/issues/555)) ([db28ec4](https://github.com/Telefonica/mistica-web/commit/db28ec443f3a91fd6f890e17e102df7be9a5449b))
+* **TextLink:** always use inline anchors for TextLink ([#553](https://github.com/Telefonica/mistica-web/issues/553)) ([1d3cc49](https://github.com/Telefonica/mistica-web/commit/1d3cc496be0a05f2b9b230bb1621e6750a43b4c3))
+* **Tooltip:** increase tooltip z-index ([#544](https://github.com/Telefonica/mistica-web/issues/544)) ([39ee208](https://github.com/Telefonica/mistica-web/commit/39ee2085522835ee8f09f4f5fde5582549dcc24c))
+
+
+### Features
+
+* **Dialog:** design improvements ([#554](https://github.com/Telefonica/mistica-web/issues/554)) ([ca98c50](https://github.com/Telefonica/mistica-web/commit/ca98c50a0b0b33b9a7484d0f1cb95d09900fd0ba))
+* **NavigationBar:** Move navigation bar height to context ([#548](https://github.com/Telefonica/mistica-web/issues/548)) ([bb3e2c1](https://github.com/Telefonica/mistica-web/commit/bb3e2c1a46881dc63813768db475ca14d2465062))
+* **Tooltip:** open on hover in desktop ([#550](https://github.com/Telefonica/mistica-web/issues/550)) ([c9f8c88](https://github.com/Telefonica/mistica-web/commit/c9f8c8827e32150b093e76bea72cbfc513230504))
+
+# [12.5.0](https://github.com/Telefonica/mistica-web/compare/v12.4.0...v12.5.0) (2022-10-11)
+
+
+### Features
+
+* **Button:** use forwardRef ([#551](https://github.com/Telefonica/mistica-web/issues/551)) ([ce3449d](https://github.com/Telefonica/mistica-web/commit/ce3449d9120dfe9c329e8d755c5bb549cc12b894))
+
+# [12.4.0](https://github.com/Telefonica/mistica-web/compare/v12.3.0...v12.4.0) (2022-09-30)
+
+
+### Features
+
+* **Text:** make word break by default ([#545](https://github.com/Telefonica/mistica-web/issues/545)) ([845a87d](https://github.com/Telefonica/mistica-web/commit/845a87dc8fa56c13683d03c2c852449a76e8df1e))
+
+# [12.3.0](https://github.com/Telefonica/mistica-web/compare/v12.2.0...v12.3.0) (2022-09-29)
+
+
+### Bug Fixes
+
+* **NavigationBreadcrumbs:** Improve Breadcrumbs UI and accessibility. Small fix in snackbar. ([#542](https://github.com/Telefonica/mistica-web/issues/542)) ([817985a](https://github.com/Telefonica/mistica-web/commit/817985a26bca3d82bfa648b87da9ed36eb54a274))
+
+
+### Features
+
+* **Carousel:** improve styles inside GridLayout columns ([#547](https://github.com/Telefonica/mistica-web/issues/547)) ([dbdd288](https://github.com/Telefonica/mistica-web/commit/dbdd288903419ba62ab7342660d8f5b3a35df49a))
+
 # [12.2.0](https://github.com/Telefonica/mistica-web/compare/v12.1.0...v12.2.0) (2022-09-21)
 
 
