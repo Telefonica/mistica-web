@@ -30,6 +30,7 @@ declare type FieldContainerProps = {
   className?: string,
   fieldRef?: React.Ref<"div">,
   fullWidth?: boolean,
+  readOnly?: boolean,
 };
 declare export var FieldContainer: React.ComponentType<FieldContainerProps>;
 declare export {};

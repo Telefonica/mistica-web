@@ -191,7 +191,8 @@ const useFieldContainerStyles = createUseStyles((theme) => ({
         },
         display: 'flex',
         position: 'relative',
-        backgroundColor: theme.colors.backgroundContainer,
+        backgroundColor: ({readOnly}) =>
+            readOnly ? theme.colors.neutralLow : theme.colors.backgroundContainer,
     },
 }));
 
@@ -203,6 +204,7 @@ type FieldContainerProps = {
     className?: string;
     fieldRef?: React.RefObject<HTMLDivElement>;
     fullWidth?: boolean;
+    readOnly?: boolean;
 };
 
 export const FieldContainer: React.FC<FieldContainerProps> = ({
@@ -213,8 +215,9 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
     className,
     fieldRef,
     fullWidth,
+    readOnly,
 }) => {
-    const classes = useFieldContainerStyles({multiline, fullWidth, disabled});
+    const classes = useFieldContainerStyles({multiline, fullWidth, disabled, readOnly});
 
     return (
         <div className={classes.fieldContainer}>
