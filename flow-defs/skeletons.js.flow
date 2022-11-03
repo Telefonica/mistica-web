@@ -20,10 +20,10 @@ declare export var SkeletonCircle: (x: SkeletonCircleProps) => React.Node;
 declare type SkeletonRowProps = SkeletonLineProps;
 declare export var SkeletonRow: (x: SkeletonRowProps) => React.Node;
 declare type SkeletonRectangleProps = {
-  ...SkeletonLineProps,
-  ...{
-    height: number | string,
-  },
+  ariaLabel?: string,
+  dataAttributes?: DataAttributes,
+  width?: number | string,
+  height?: number | string,
 };
 declare export var SkeletonRectangle: (x: SkeletonRectangleProps) => React.Node;
 declare export {};
