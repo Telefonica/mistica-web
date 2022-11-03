@@ -1,12 +1,8 @@
-import {mediaQueriesConfig} from '../src/theme';
 import * as themes from '../.storybook/themes';
 
 import type {ThemeConfig} from '../src/theme';
 
 const common: Partial<ThemeConfig> = {
-    // Override the media query desktopOrTabletMinHeight to avoid to show the components mobile version
-    // when playroom height is too short.
-    mediaQueries: {...mediaQueriesConfig, desktopOrTabletMinHeight: 0},
     enableTabFocus: true,
     colorScheme: 'auto',
     i18n: {locale: 'en-US', phoneNumberFormattingRegionCode: 'ES'},
