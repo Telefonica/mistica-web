@@ -30,6 +30,8 @@ export type ImageProps = {
  noBorderRadius?: boolean,
  onError?: (event: SyntheticEvent<any>) => void,
  onLoad?: (event: SyntheticEvent<any>) => void,
+ loadingFallback?: boolean,
+ errorFallback?: boolean,
 };
 declare var Image: React.AbstractComponent<ImageProps, HTMLImageElement>;
 declare export default typeof Image;
