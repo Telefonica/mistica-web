@@ -256,15 +256,22 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
 
     React.useEffect(() => {
         const selectedThemeConfig = themesMap[skinName].themeConfig;
-        if (forceMobile !== undefined) {
+        if (forceMobile) {
             document.location.pathname = document.location.pathname.replace(
                 /playroom(-mobile|-desktop)?/,
-                forceMobile ? 'playroom-mobile' : 'playroom'
+                'playroom-mobile'
             );
-        } else if (forceDesktop !== undefined) {
+        }
+        if (forceDesktop) {
             document.location.pathname = document.location.pathname.replace(
                 /playroom(-mobile|-desktop)?/,
-                forceDesktop ? 'playroom-desktop' : 'playroom'
+                'playroom-desktop'
+            );
+        }
+        if (!forceMobile && !forceDesktop) {
+            document.location.pathname = document.location.pathname.replace(
+                /playroom(-mobile|-desktop)?/,
+                'playroom'
             );
         }
         overrideTheme({
