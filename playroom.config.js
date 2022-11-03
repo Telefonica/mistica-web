@@ -1,6 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
 
+// We deploy 3 different builds of playroom, one with all the breakpoints, one forcing mobile,
+// and one forcing desktop. This is needed for Brand Factory documentation site, where we need
+// to embed playroom examples to document the desktop or mobile version of a component.
+// See package.json vercel-build script.
 const getMediaQueriesConfig = () => {
     const impossibleSize = 999999;
 
