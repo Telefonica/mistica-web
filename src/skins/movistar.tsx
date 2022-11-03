@@ -105,9 +105,9 @@ export const getMovistarSkin: GetKnownSkin = () => {
             buttonSecondaryBackgroundSelected: palette.movistarBlue10,
             buttonSecondaryBorder: palette.movistarBlue,
             buttonSecondaryBorderSelected: palette.movistarBlue55,
-            buttonSecondaryBackgroundHover: palette.movistarBlue10,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.movistarBlue30,
+            buttonSecondaryBackgroundHover: palette.movistarBlue10,
             buttonSecondaryBackgroundSelectedInverse: applyAlpha(palette.movistarBlue, 0.2),
 
             textButtonPrimary: palette.white,
@@ -195,7 +195,6 @@ export const getMovistarSkin: GetKnownSkin = () => {
             backgroundBrand: palette.darkModeBlack,
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
             backgroundSkeleton: palette.movistarBlueDark,
-<<<<<<< Updated upstream
             backgroundSkeletonInverse: palette.movistarBlueDark,
 =======
             backgroundSkeletonInverse: palette.darkModeGrey,
@@ -230,9 +229,9 @@ export const getMovistarSkin: GetKnownSkin = () => {
             textButtonPrimaryInverse: palette.darkModeGrey1,
             textButtonPrimaryInverseSelected: palette.darkModeGrey1,
             textButtonSecondary: palette.darkModeGrey1,
-            textButtonSecondarySelected: palette.darkModeGrey4,
+            textButtonSecondarySelected: palette.darkModeGrey3,
             textButtonSecondaryInverse: palette.white,
-            textButtonSecondaryInverseSelected: palette.darkModeGrey4,
+            textButtonSecondaryInverseSelected: palette.darkModeGrey3,
             textLink: palette.movistarBlue,
             textLinkInverse: palette.white,
             control: palette.darkModeGrey6,
