@@ -358,6 +358,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const initialItemInfo = React.useRef({
         initialItem: 0,
         itemsPerPage: itemsPerPageFloor,
+        scrollPositionsLength: 0,
     });
 
     useIsomorphicLayoutEffect(() => {
@@ -468,13 +469,15 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
         if (
             initialActiveItem &&
             (initialActiveItem !== initialItemInfo.current.initialItem ||
-                itemsPerPageFloor !== initialItemInfo.current.itemsPerPage)
+                itemsPerPageFloor !== initialItemInfo.current.itemsPerPage ||
+                itemScrollPositions.length !== initialItemInfo.current.scrollPositionsLength)
         ) {
             goToPage(Math.floor(initialActiveItem / itemsPerPageFloor));
             initialItemInfo.current.initialItem = initialActiveItem;
             initialItemInfo.current.itemsPerPage = itemsPerPageFloor;
+            initialItemInfo.current.scrollPositionsLength = itemScrollPositions.length;
         }
-    }, [initialActiveItem, itemsPerPageFloor, goToPage]);
+    }, [initialActiveItem, itemsPerPageFloor, goToPage, itemScrollPositions.length]);
 
     React.useEffect(() => {
         if (shouldAutoplay && autoplay) {

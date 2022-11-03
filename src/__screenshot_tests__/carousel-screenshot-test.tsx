@@ -80,6 +80,16 @@ test('Carousel desktop', async () => {
     expect(await isDisabled(nextArrow)).toBe(true);
 });
 
+test('Carousel desktop selecting second page initially', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousels-carousel--default',
+        device: 'DESKTOP',
+        args: {initialActiveItem: 3},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
 // no screenshot test for desktop because it's like the regular carousel
 test('CenteredCarousel mobile', async () => {
     const page = await openStoryPage({
