@@ -17,6 +17,16 @@ test('Carousel mobile', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
+test('Carousel mobile selecting second page initially', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousels-carousel--default',
+        device: 'MOBILE_IOS',
+        args: {initialActiveItem: 1},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
 test('Carousel mobile with a single page', async () => {
     const page = await openStoryPage({
         id: 'components-carousels-carousel--default',
@@ -80,6 +90,16 @@ test('CenteredCarousel mobile', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 
     await (await screen.findByLabelText('Carousel item 1')).evaluate((el) => el.scrollIntoView());
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
+test('CenteredCarousel mobile selecting second page initially', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousels-centered-carousel--default',
+        device: 'MOBILE_IOS',
+        args: {initialActiveItem: 1},
+    });
 
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
