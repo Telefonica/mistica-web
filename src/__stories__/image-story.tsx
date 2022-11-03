@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Image, Stack, Text2, Text3, Title1, useTheme} from '..';
+import {Image, Stack, Text3, Title1, useTheme} from '..';
 import {isRunningAcceptanceTest} from '../utils/platform';
 
 export default {
@@ -48,16 +48,23 @@ export const Default: StoryComponent = () => {
                     <Image src="https://i.imgur.com/G8aJDhB.jpeg" aspectRatio={0} />
                 </Stack>
             </div>
-            <Stack space={16}>
-                <Text3 regular>
-                    Image with broken src: the broken image icon shouldn't be visible and the element gets the
-                    correct size.
-                </Text3>
-                <div style={{border: `1px dashed ${colors.border}`, width: 'fit-content'}}>
-                    <Image src="https://example.com/broken/image" aspectRatio={16 / 9} height={100} />
-                </div>
-                <Text2 regular>The border has been added to the example to make it easier to see.</Text2>
-            </Stack>
+            <div
+                style={{
+                    resize: 'both',
+                    overflow: 'auto',
+                    width: 320,
+                    border: `1px solid ${colors.border}`,
+                    padding: 16,
+                }}
+            >
+                <Stack space={16}>
+                    <Text3 regular>
+                        Image with broken src: the broken image icon shouldn't be visible and the element gets
+                        the correct size.
+                    </Text3>
+                    <Image src="https://example.com/broken/image" aspectRatio={16 / 9} />
+                </Stack>
+            </div>
         </Stack>
     );
 };

@@ -5,6 +5,7 @@ import {
     NavigationBarActionGroup,
     useScreenSize,
     IconSearchRegular,
+    Avatar,
 } from '..';
 
 export default {
@@ -40,6 +41,29 @@ export const Default: StoryComponent<Args> = ({isInverse, withBorder}) => {
 Default.storyName = 'Navigation bar';
 
 Default.args = {
+    isInverse: false,
+    withBorder: true,
+};
+
+export const Custom: StoryComponent<Args> = ({isInverse, withBorder}) => {
+    return (
+        <NavigationBar
+            withBorder={withBorder}
+            isInverse={isInverse}
+            onBack={() => {}}
+            title="Settings"
+            right={
+                <NavigationBarActionGroup>
+                    <Avatar size={32} />
+                </NavigationBarActionGroup>
+            }
+        />
+    );
+};
+
+Custom.storyName = 'Navigation bar custom right children';
+
+Custom.args = {
     isInverse: false,
     withBorder: true,
 };

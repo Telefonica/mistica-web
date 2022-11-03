@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "12.2.0",
+    "version": "12.6.0",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -49,6 +49,7 @@
     "acceptanceTests": {
         "devServer": {
             "command": "yarn storybook-for-acceptance-tests",
+            "host": "0.0.0.0",
             "port": 6006
         },
         "ciServer": {
