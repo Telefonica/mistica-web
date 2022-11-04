@@ -1,3 +1,18 @@
+# [12.7.0](https://github.com/Telefonica/mistica-web/compare/v12.6.0...v12.7.0) (2022-11-03)
+
+
+### Bug Fixes
+
+* **colors O2:** buttonLinkBackgroundSelected ([#543](https://github.com/Telefonica/mistica-web/issues/543)) ([80ae976](https://github.com/Telefonica/mistica-web/commit/80ae9761f48d265f70a835b9ed49e0e95df60b86))
+* **FixedFooter:** fixed footer layout as fixed only when enough height available ([#557](https://github.com/Telefonica/mistica-web/issues/557)) ([1f8d0da](https://github.com/Telefonica/mistica-web/commit/1f8d0da69cad3ddad2bc2facbcfe86597a1b7f82))
+* **TextField:** improve styles for readOnly state ([#528](https://github.com/Telefonica/mistica-web/issues/528)) ([624e55e](https://github.com/Telefonica/mistica-web/commit/624e55e4477a23e78e67a5039ec6455f6b261a21))
+
+
+### Features
+
+* **icons:** new tokens icon and fixes for buy-data, eco, and justice ([#559](https://github.com/Telefonica/mistica-web/issues/559)) ([e957475](https://github.com/Telefonica/mistica-web/commit/e95747566cda33e4ee87a8427ceb6ab729b91353))
+* **Image:** add loading/error experience ([#562](https://github.com/Telefonica/mistica-web/issues/562)) ([08b0a73](https://github.com/Telefonica/mistica-web/commit/08b0a7388dcc3604fbf7af6823d6614df9ff0c88))
+
 # [12.6.0](https://github.com/Telefonica/mistica-web/compare/v12.5.0...v12.6.0) (2022-10-24)
 
 
