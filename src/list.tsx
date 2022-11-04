@@ -23,8 +23,7 @@ import Divider from './divider';
 import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {TouchableElement} from './touchable';
-import type {DataAttributes, TrackingEvent} from './utils/types';
-import type {ExclusifyUnion} from './types/utility';
+import type {DataAttributes, ExclusifyUnion, TrackingEvent} from './utils/types';
 
 const useStyles = createUseStyles(({colors, mq}) => ({
     disabled: {
@@ -322,7 +321,7 @@ function areSwitchRowContentProps(obj: any): obj is SwitchRowContentProps {
 }
 
 function arePressableProps(obj: any): obj is PressableProps {
-    return Object.hasOwn(obj, 'onPress');
+    return obj.hasOwnProperty('onPress');
 }
 
 function areOnPressRowContentProps(obj: any): obj is OnPressRowContentProps {
@@ -336,15 +335,15 @@ function areOnPressRowContentProps(obj: any): obj is OnPressRowContentProps {
 }
 
 function areRightyRowProps(obj: any): obj is RightyRowProps {
-    return Object.hasOwn(obj, 'right');
+    return obj.hasOwnProperty('right');
 }
 
 function areHrefRowContentProps(obj: any): obj is HrefRowContentProps {
-    return Object.hasOwn(obj, 'href');
+    return obj.hasOwnProperty('href');
 }
 
 function areToRowContentProps(obj: any): obj is ToRowContentProps {
-    return Object.hasOwn(obj, 'to');
+    return obj.hasOwnProperty('to');
 }
 
 const useControlState = ({

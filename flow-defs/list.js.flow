@@ -2,7 +2,11 @@
 
 import * as React from "react";
 import type { TouchableElement } from "./touchable";
-import type { DataAttributes, TrackingEvent } from "./utils/types";
+import type {
+  DataAttributes,
+  ExclusifyUnion,
+  TrackingEvent,
+} from "./utils/types";
 declare type CommonProps = {
   headline?: string | React.Node,
   title: string,
@@ -30,53 +34,77 @@ declare type ControlProps = {
   defaultValue?: boolean,
   onChange?: (checked: boolean) => void,
 };
-declare type BasicRowContentProps = {
-  ...$Exact<CommonProps>,
+declare type PressableProps = {
+  onPress?: () => void,
+};
+declare type RightyRowProps = {
   right?: Right,
 };
-declare type SwitchRowContentProps = {
+declare type BasicRowContentProps = {
+  ...$Exact<RightyRowProps>,
   ...$Exact<CommonProps>,
-  onPress?: () => void,
+};
+declare type SwitchRowContentProps = {
+  ...$Exact<PressableProps>,
+  ...$Exact<CommonProps>,
+
   switch: ControlProps,
 };
 declare type CheckboxRowContentProps = {
+  ...$Exact<PressableProps>,
   ...$Exact<CommonProps>,
-  onPress?: () => void,
+
   checkbox: ControlProps,
 };
 declare type RadioRowContentProps = {
   ...$Exact<CommonProps>,
+
   radioValue: string,
 };
 declare type HrefRowContentProps = {
+  ...$Exact<RightyRowProps>,
   ...$Exact<CommonProps>,
+
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   href: string,
   newTab?: boolean,
-  right?: Right,
 };
 declare type ToRowContentProps = {
+  ...$Exact<RightyRowProps>,
   ...$Exact<CommonProps>,
+
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   to: string,
   fullPageOnWebView?: boolean,
   replace?: boolean,
-  right?: Right,
 };
 declare type OnPressRowContentProps = {
+  ...$Exact<PressableProps>,
+  ...$Exact<RightyRowProps>,
   ...$Exact<CommonProps>,
+
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   onPress: () => void,
-  right?: Right,
 };
-declare type RowContentProps =
+declare type RowContentProps = ExclusifyUnion<
+  | {
+      ...$Diff<SwitchRowContentProps, { switch: any }>,
+      ...{
+        switch: ControlProps | void,
+      },
+    }
+  | {
+      ...$Diff<CheckboxRowContentProps, { checkbox: any }>,
+      ...{
+        checkbox: ControlProps | void,
+      },
+    }
+  | OnPressRowContentProps
   | BasicRowContentProps
-  | SwitchRowContentProps
   | RadioRowContentProps
-  | CheckboxRowContentProps
   | HrefRowContentProps
   | ToRowContentProps
-  | OnPressRowContentProps;
+>;
 declare export var Row: React.AbstractComponent<RowContentProps, TouchableElement>;
 declare type RowListProps = {
   children: React.Node,
@@ -116,14 +144,25 @@ declare type OnPressBoxedRowProps = {
   ...$Exact<OnPressRowContentProps>,
   ...$Exact<CommonBoxedRowProps>,
 };
-declare type BoxedRowProps =
+declare type BoxedRowProps = ExclusifyUnion<
   | BasicBoxedRowProps
-  | SwitchBoxedRowProps
+  | {
+      ...$Diff<SwitchBoxedRowProps, { switch: any }>,
+      ...{
+        switch: ControlProps | void,
+      },
+    }
   | RadioBoxedRowProps
-  | CheckboxBoxedRowProps
+  | {
+      ...$Diff<CheckboxBoxedRowProps, { checkbox: any }>,
+      ...{
+        checkbox: ControlProps | void,
+      },
+    }
   | HrefBoxedRowProps
   | ToBoxedRowProps
-  | OnPressBoxedRowProps;
+  | OnPressBoxedRowProps
+>;
 declare export var BoxedRow: React.AbstractComponent<BoxedRowProps, HTMLDivElement>;
 declare type BoxedRowListProps = {
   children: React.Node,
