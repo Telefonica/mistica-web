@@ -17,7 +17,7 @@ test('Carousel mobile', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
-test('Carousel mobile selecting second page initially', async () => {
+test('Carousel mobile with initialActiveItem=1', async () => {
     const page = await openStoryPage({
         id: 'components-carousels-carousel--default',
         device: 'MOBILE_IOS',
