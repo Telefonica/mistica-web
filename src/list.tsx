@@ -309,15 +309,15 @@ type RowContentProps = ExclusifyUnion<
     | ToRowContentProps
 >;
 
-function isRadioRowContentProps(obj: any): obj is RadioRowContentProps {
+function areRadioRowContentProps(obj: any): obj is RadioRowContentProps {
     return typeof obj.radioValue !== 'undefined';
 }
 
-function isCheckboxRowContentProps(obj: any): obj is CheckboxRowContentProps {
+function areCheckboxRowContentProps(obj: any): obj is CheckboxRowContentProps {
     return typeof obj.checkbox !== 'undefined';
 }
 
-function isSwitchRowContentProps(obj: any): obj is SwitchRowContentProps {
+function areSwitchRowContentProps(obj: any): obj is SwitchRowContentProps {
     return typeof obj.switch !== 'undefined';
 }
 
@@ -329,9 +329,9 @@ function areOnPressRowContentProps(obj: any): obj is OnPressRowContentProps {
     return (
         arePressableProps(obj) &&
         typeof obj.onPress !== 'undefined' &&
-        !isSwitchRowContentProps(obj) &&
-        !isRadioRowContentProps(obj) &&
-        isCheckboxRowContentProps(obj)
+        !areSwitchRowContentProps(obj) &&
+        !areRadioRowContentProps(obj) &&
+        !areCheckboxRowContentProps(obj)
     );
 }
 
@@ -394,15 +394,16 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     } = props;
 
     const radioContext = useRadioContext();
-    const disabled = props.disabled || (isRadioRowContentProps(props) !== undefined && radioContext.disabled);
+    const disabled =
+        props.disabled || (areRadioRowContentProps(props) !== undefined && radioContext.disabled);
 
     const classes = useStyles({
         isInverse,
         disabled,
     });
     const [isChecked, toggle] = useControlState(
-        (isSwitchRowContentProps(props) && props.switch) ||
-            (isCheckboxRowContentProps(props) && props.checkbox) ||
+        (areSwitchRowContentProps(props) && props.switch) ||
+            (areCheckboxRowContentProps(props) && props.checkbox) ||
             {}
     );
 
@@ -508,8 +509,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     const renderRowWithControl = (Control: typeof Switch | typeof Checkbox) => {
         const name =
-            ((isSwitchRowContentProps(props) && (props.switch?.name ?? undefined)) || undefined) ??
-            ((isCheckboxRowContentProps(props) && (props.checkbox?.name ?? undefined)) || undefined) ??
+            ((areSwitchRowContentProps(props) && (props.switch?.name ?? undefined)) || undefined) ??
+            ((areCheckboxRowContentProps(props) && (props.checkbox?.name ?? undefined)) || undefined) ??
             titleId;
 
         return arePressableProps(props) && props.onPress ? (
@@ -559,15 +560,15 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         );
     };
 
-    if (isSwitchRowContentProps(props)) {
+    if (areSwitchRowContentProps(props)) {
         return renderRowWithControl(Switch);
     }
 
-    if (isCheckboxRowContentProps(props)) {
+    if (areCheckboxRowContentProps(props)) {
         return renderRowWithControl(Checkbox);
     }
 
-    if (isRadioRowContentProps(props)) {
+    if (areRadioRowContentProps(props)) {
         return (
             <div
                 className={classNames(classes.rowContent, classes.hover)}
@@ -675,5 +676,3 @@ export const BoxedRowList: React.FC<BoxedRowListProps> = ({
         {children}
     </Stack>
 );
-
-//test
