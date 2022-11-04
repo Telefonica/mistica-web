@@ -23,7 +23,8 @@ import Divider from './divider';
 import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {TouchableElement} from './touchable';
-import type {DataAttributes, ExclusifyUnion, TrackingEvent} from './utils/types';
+import type {DataAttributes, TrackingEvent} from './utils/types';
+import type {ExclusifyUnion} from './utils/utility-types';
 
 const useStyles = createUseStyles(({colors, mq}) => ({
     disabled: {

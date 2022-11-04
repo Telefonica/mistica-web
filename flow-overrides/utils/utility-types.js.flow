@@ -1,0 +1,2 @@
+// todo WEB-461 improve this
+export type ExclusifyUnion<T> = any;
