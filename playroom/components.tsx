@@ -86,8 +86,8 @@ const useStyles = createUseStyles((theme) => ({
     floattingButtonBackground: {
         borderRadius: '50%',
         display: 'inline-block',
-        width: 32,
-        height: 32,
+        width: 24,
+        height: 24,
     },
 }));
 
@@ -324,7 +324,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                     <div className={classes.floattingButton}>
                         <IconButton size={56} aria-label="settings" onPress={() => setShowOverlay(true)}>
                             <div className={classes.floattingButtonBackground}>
-                                <IconSettingsRegular size={32} color={colors.neutralHigh} />
+                                <IconSettingsRegular size={24} color={colors.neutralHigh} />
                             </div>
                         </IconButton>
                     </div>

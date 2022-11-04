@@ -69,7 +69,6 @@ export interface CommonFormFieldProps {
     defaultValue?: string;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     children?: void;
-    readOnly?: boolean;
 }
 
 interface TextFieldBaseProps {
@@ -172,6 +171,7 @@ const useStyles = createUseStyles((theme) => ({
     },
     textArea: {
         resize: 'none',
+        padding: 0,
         marginTop: ({hasLabel}) => (hasLabel ? 28 : 16),
         [theme.mq.tabletOrSmaller]: {
             marginTop: ({hasLabel}) => (hasLabel ? 24 : 16),
@@ -408,6 +408,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                 multiline={multiline}
                 fullWidth={fullWidth}
                 fieldRef={fieldRef}
+                readOnly={rest.readOnly}
             >
                 {startIcon && <div className={classes.startIcon}>{startIcon}</div>}
 
