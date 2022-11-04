@@ -66,7 +66,6 @@
         "@semantic-release/git": "^10.0.1",
         "@storybook/addon-actions": "6.4.19",
         "@storybook/addon-controls": "6.4.19",
-        "@storybook/addon-google-analytics": "^6.2.9",
         "@storybook/addon-links": "6.4.19",
         "@storybook/addon-storysource": "6.4.19",
         "@storybook/addon-viewport": "6.4.19",

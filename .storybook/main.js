@@ -38,7 +38,6 @@ module.exports = {
         './dark-mode-addon/register',
         './font-size-addon/register',
         '@storybook/addon-controls',
-        '@storybook/addon-google-analytics',
     ],
     webpackFinal: async (config) => {
         config.watchOptions = {
