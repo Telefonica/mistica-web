@@ -24,6 +24,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {TouchableElement} from './touchable';
 import type {DataAttributes, TrackingEvent} from './utils/types';
+import type {ExclusifyUnion} from './types/utility';
 
 const useStyles = createUseStyles(({colors, mq}) => ({
     disabled: {
@@ -258,107 +259,93 @@ type ControlProps = {
     onChange?: (checked: boolean) => void;
 };
 
-interface BasicRowContentProps extends CommonProps {
-    href?: undefined;
-    onPress?: undefined;
-    to?: undefined;
-    checkbox?: undefined;
-    switch?: undefined;
-    radioValue?: undefined;
-    newTab?: undefined;
-    fullPageOnWebView?: undefined;
+interface PressableProps {
+    onPress?: () => void;
+}
+
+interface RightyRowProps {
     right?: Right;
 }
 
-interface SwitchRowContentProps extends CommonProps {
-    href?: undefined;
-    onPress?: () => void;
-    to?: undefined;
-    right?: undefined;
-    checkbox?: undefined;
-    radioValue?: undefined;
-    newTab?: undefined;
-    fullPageOnWebView?: undefined;
+interface BasicRowContentProps extends RightyRowProps, CommonProps {}
 
+interface SwitchRowContentProps extends PressableProps, CommonProps {
     switch: ControlProps;
 }
 
-interface CheckboxRowContentProps extends CommonProps {
-    href?: undefined;
-    onPress?: () => void;
-    to?: undefined;
-    right?: undefined;
-    switch?: undefined;
-    radioValue?: undefined;
-    newTab?: undefined;
-    fullPageOnWebView?: undefined;
-
+interface CheckboxRowContentProps extends PressableProps, CommonProps {
     checkbox: ControlProps;
 }
 
 interface RadioRowContentProps extends CommonProps {
-    href?: undefined;
-    onPress?: undefined;
-    to?: undefined;
-    right?: undefined;
-    switch?: undefined;
-    checkbox?: undefined;
-    newTab?: undefined;
-    fullPageOnWebView?: undefined;
-
     radioValue: string;
 }
 
-interface HrefRowContentProps extends CommonProps {
-    checkbox?: undefined;
-    switch?: undefined;
-    radioValue?: undefined;
-    fullPageOnWebView?: undefined;
-
+interface HrefRowContentProps extends RightyRowProps, CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     href: string;
     newTab?: boolean;
-    onPress?: undefined;
-    to?: undefined;
-    right?: Right;
 }
 
-interface ToRowContentProps extends CommonProps {
-    checkbox?: undefined;
-    switch?: undefined;
-    radioValue?: undefined;
-    newTab?: undefined;
-
+interface ToRowContentProps extends RightyRowProps, CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     to: string;
     fullPageOnWebView?: boolean;
     replace?: boolean;
-    href?: undefined;
-    onPress?: undefined;
-    right?: Right;
 }
 
-interface OnPressRowContentProps extends CommonProps {
-    checkbox?: undefined;
-    switch?: undefined;
-    radioValue?: undefined;
-    fullPageOnWebView?: undefined;
-
+interface OnPressRowContentProps extends PressableProps, RightyRowProps, CommonProps {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     onPress: () => void;
-    href?: undefined;
-    to?: undefined;
-    right?: Right;
 }
 
-type RowContentProps =
+type RowContentProps = ExclusifyUnion<
+    | (Omit<SwitchRowContentProps, 'switch'> & {switch: ControlProps | undefined})
+    | (Omit<CheckboxRowContentProps, 'checkbox'> & {checkbox: ControlProps | undefined})
+    | OnPressRowContentProps
     | BasicRowContentProps
-    | SwitchRowContentProps
     | RadioRowContentProps
-    | CheckboxRowContentProps
     | HrefRowContentProps
     | ToRowContentProps
-    | OnPressRowContentProps;
+>;
+
+function isRadioRowContentProps(obj: any): obj is RadioRowContentProps {
+    return typeof obj.radioValue !== 'undefined';
+}
+
+function isCheckboxRowContentProps(obj: any): obj is CheckboxRowContentProps {
+    return typeof obj.checkbox !== 'undefined';
+}
+
+function isSwitchRowContentProps(obj: any): obj is SwitchRowContentProps {
+    return typeof obj.switch !== 'undefined';
+}
+
+function arePressableProps(obj: any): obj is PressableProps {
+    return Object.hasOwn(obj, 'onPress');
+}
+
+function areOnPressRowContentProps(obj: any): obj is OnPressRowContentProps {
+    return (
+        arePressableProps(obj) &&
+        typeof obj.onPress !== 'undefined' &&
+        !isSwitchRowContentProps(obj) &&
+        !isRadioRowContentProps(obj) &&
+        isCheckboxRowContentProps(obj)
+    );
+}
+
+function areRightyRowProps(obj: any): obj is RightyRowProps {
+    return Object.hasOwn(obj, 'right');
+}
+
+function areHrefRowContentProps(obj: any): obj is HrefRowContentProps {
+    return Object.hasOwn(obj, 'href');
+}
+
+function areToRowContentProps(obj: any): obj is ToRowContentProps {
+    return Object.hasOwn(obj, 'to');
+}
 
 const useControlState = ({
     value,
@@ -407,13 +394,17 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     } = props;
 
     const radioContext = useRadioContext();
-    const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
+    const disabled = props.disabled || (isRadioRowContentProps(props) !== undefined && radioContext.disabled);
 
     const classes = useStyles({
         isInverse,
         disabled,
     });
-    const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
+    const [isChecked, toggle] = useControlState(
+        (isSwitchRowContentProps(props) && props.switch) ||
+            (isCheckboxRowContentProps(props) && props.checkbox) ||
+            {}
+    );
 
     const renderContent = ({
         type,
@@ -439,7 +430,11 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             extra={extra}
             labelId={labelId}
             disabled={disabled}
-            withChevron={!!props.onPress || !!props.href || !!props.to}
+            withChevron={
+                (arePressableProps(props) && props.onPress !== undefined) ||
+                (areHrefRowContentProps(props) && props.href !== undefined) ||
+                (areToRowContentProps(props) && props.to !== undefined)
+            }
         />
     );
 
@@ -463,12 +458,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         );
     };
 
-    if (
-        props.onPress &&
-        props.switch === undefined &&
-        props.radioValue === undefined &&
-        props.checkbox === undefined
-    ) {
+    if (areOnPressRowContentProps(props)) {
         return (
             <Touchable
                 ref={ref}
@@ -484,7 +474,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         );
     }
 
-    if (props.to) {
+    if (areToRowContentProps(props)) {
         return (
             <Touchable
                 className={classNames(classes.rowContent, classes.hover)}
@@ -500,7 +490,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         );
     }
 
-    if (props.href) {
+    if (areHrefRowContentProps(props)) {
         return (
             <Touchable
                 className={classNames(classes.rowContent, classes.hover)}
@@ -517,8 +507,12 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     }
 
     const renderRowWithControl = (Control: typeof Switch | typeof Checkbox) => {
-        const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
-        return props.onPress ? (
+        const name =
+            ((isSwitchRowContentProps(props) && (props.switch?.name ?? undefined)) || undefined) ??
+            ((isCheckboxRowContentProps(props) && (props.checkbox?.name ?? undefined)) || undefined) ??
+            titleId;
+
+        return arePressableProps(props) && props.onPress ? (
             <div className={classes.dualActionContainer}>
                 <Touchable
                     disabled={disabled}
@@ -565,15 +559,15 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         );
     };
 
-    if (props.switch) {
+    if (isSwitchRowContentProps(props)) {
         return renderRowWithControl(Switch);
     }
 
-    if (props.checkbox) {
+    if (isCheckboxRowContentProps(props)) {
         return renderRowWithControl(Checkbox);
     }
 
-    if (props.radioValue) {
+    if (isRadioRowContentProps(props)) {
         return (
             <div
                 className={classNames(classes.rowContent, classes.hover)}
@@ -604,7 +598,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             className={classNames(classes.rowContent, classes.hover, classes.hoverDisabled)}
             role={role}
         >
-            {props.right
+            {areRightyRowProps(props) && props.right !== undefined
                 ? renderContent({type: 'custom', right: props.right})
                 : renderContent({type: 'basic'})}
         </Box>
@@ -648,14 +642,15 @@ interface HrefBoxedRowProps extends HrefRowContentProps, CommonBoxedRowProps {}
 interface ToBoxedRowProps extends ToRowContentProps, CommonBoxedRowProps {}
 interface OnPressBoxedRowProps extends OnPressRowContentProps, CommonBoxedRowProps {}
 
-type BoxedRowProps =
+type BoxedRowProps = ExclusifyUnion<
     | BasicBoxedRowProps
-    | SwitchBoxedRowProps
+    | (Omit<SwitchBoxedRowProps, 'switch'> & {switch: ControlProps | undefined})
     | RadioBoxedRowProps
-    | CheckboxBoxedRowProps
+    | (Omit<CheckboxBoxedRowProps, 'checkbox'> & {checkbox: ControlProps | undefined})
     | HrefBoxedRowProps
     | ToBoxedRowProps
-    | OnPressBoxedRowProps;
+    | OnPressBoxedRowProps
+>;
 
 export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>((props, ref) => (
     <Boxed isInverse={props.isInverse} ref={ref}>
@@ -680,3 +675,34 @@ export const BoxedRowList: React.FC<BoxedRowListProps> = ({
         {children}
     </Stack>
 );
+
+// Content test
+const Test = () => {
+    const v = true;
+
+    return (
+        <BoxedRow
+            title="hola"
+            onPress={() => {
+                //  nada
+            }}
+            checkbox={v ? {defaultValue: true, onChange: (val) => console.log(val)} : undefined}
+            // switch={v ? {defaultValue: true, onChange: (val) => console.log(val)} : undefined}
+        />
+    );
+};
+
+const SecondTest = () => {
+    const v = true;
+
+    return (
+        <Row
+            title="hola"
+            onPress={() => {
+                //  nada
+            }}
+            // checkbox={v ? {defaultValue: true, onChange: (val) => console.log(val)} : undefined}
+            switch={v ? {defaultValue: true, onChange: (val) => console.log(val)} : undefined}
+        />
+    );
+};
