@@ -675,34 +675,3 @@ export const BoxedRowList: React.FC<BoxedRowListProps> = ({
         {children}
     </Stack>
 );
-
-// Content test
-const Test = () => {
-    const v = true;
-
-    return (
-        <BoxedRow
-            title="hola"
-            onPress={() => {
-                //  nada
-            }}
-            checkbox={v ? {defaultValue: true, onChange: (val) => console.log(val)} : undefined}
-            // switch={v ? {defaultValue: true, onChange: (val) => console.log(val)} : undefined}
-        />
-    );
-};
-
-const SecondTest = () => {
-    const v = true;
-
-    return (
-        <Row
-            title="hola"
-            onPress={() => {
-                //  nada
-            }}
-            // checkbox={v ? {defaultValue: true, onChange: (val) => console.log(val)} : undefined}
-            switch={v ? {defaultValue: true, onChange: (val) => console.log(val)} : undefined}
-        />
-    );
-};
