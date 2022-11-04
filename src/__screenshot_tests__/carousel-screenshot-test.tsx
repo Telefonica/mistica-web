@@ -80,7 +80,7 @@ test('Carousel desktop', async () => {
     expect(await isDisabled(nextArrow)).toBe(true);
 });
 
-test('Carousel desktop selecting second page initially', async () => {
+test('Carousel desktop  with initialActiveItem=3', async () => {
     const page = await openStoryPage({
         id: 'components-carousels-carousel--default',
         device: 'DESKTOP',
@@ -104,7 +104,7 @@ test('CenteredCarousel mobile', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
-test('CenteredCarousel mobile selecting second page initially', async () => {
+test('CenteredCarousel mobile with initialActiveItem=1', async () => {
     const page = await openStoryPage({
         id: 'components-carousels-centered-carousel--default',
         device: 'MOBILE_IOS',

@@ -347,19 +347,16 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const [{scrollLeft, scrollRight}, setScroll] = React.useState({scrollLeft: 0, scrollRight: 0});
     const [itemScrollPositions, setItemScrollPositions] = React.useState<Array<number>>([]);
 
-    const pagesScrollPositions = calcPagesScrollPositions(itemScrollPositions, pagesCount);
+    const pagesScrollPositions = React.useMemo(
+        () => calcPagesScrollPositions(itemScrollPositions, pagesCount),
+        [itemScrollPositions, pagesCount]
+    );
     const scrollPositions = itemsToScroll
         ? calcPagesScrollPositions(itemScrollPositions, Math.ceil(items.length / itemsToScroll))
         : pagesScrollPositions;
 
     const showNextArrow = scrollRight !== 0;
     const showPrevArrow = scrollLeft !== 0;
-
-    const initialItemInfo = React.useRef({
-        initialItem: 0,
-        itemsPerPage: itemsPerPageFloor,
-        scrollPositionsLength: 0,
-    });
 
     useIsomorphicLayoutEffect(() => {
         if (carouselRef.current) {
@@ -466,18 +463,10 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const shouldAutoplay = useShouldAutoplay(!!autoplay, carouselRef);
 
     React.useEffect(() => {
-        if (
-            initialActiveItem &&
-            (initialActiveItem !== initialItemInfo.current.initialItem ||
-                itemsPerPageFloor !== initialItemInfo.current.itemsPerPage ||
-                itemScrollPositions.length !== initialItemInfo.current.scrollPositionsLength)
-        ) {
+        if (initialActiveItem !== undefined) {
             goToPage(Math.floor(initialActiveItem / itemsPerPageFloor));
-            initialItemInfo.current.initialItem = initialActiveItem;
-            initialItemInfo.current.itemsPerPage = itemsPerPageFloor;
-            initialItemInfo.current.scrollPositionsLength = itemScrollPositions.length;
         }
-    }, [initialActiveItem, itemsPerPageFloor, goToPage, itemScrollPositions.length]);
+    }, [initialActiveItem, goToPage, itemsPerPageFloor]);
 
     React.useEffect(() => {
         if (shouldAutoplay && autoplay) {
