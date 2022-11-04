@@ -34,7 +34,7 @@
         "storybook-static": "rimraf public && yarn build-storybook -s ./.storybook/css/fonts -o public --quiet",
         "serve-static-storybook": "node ./scripts/serve-static-storybook.js",
         "detect-circular-dependencies": "npx dpdm --circular src/index.tsx",
-        "audit-accessibility": "node .github/actions/audit-accessibility/main.js",
+        "audit-accessibility": "cross-env PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true node .github/actions/audit-accessibility/main.js",
         "circular-dependencies": "yarn dpdm src/index.tsx --tree=false --warning=false --exit-code circular:1",
         "prepare": "husky install"
     },

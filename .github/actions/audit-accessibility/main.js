@@ -200,7 +200,10 @@ const main = async () => {
     const stories = getStories().filter((story) => !STORIES_BLACKLIST.has(story));
     const {closeStorybook, getStoryUrl} = await startStorybook();
 
-    const browser = await puppeteer.launch({args: ['--incognito', '--no-sandbox']});
+    const browser = await puppeteer.launch({
+        executablePath: '/usr/bin/chromium',
+        args: ['--incognito', '--no-sandbox'],
+    });
 
     /** @type Array<[name: string, results: import('axe-core').AxeResults]> */
     const results = [];
