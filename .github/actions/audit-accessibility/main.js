@@ -190,6 +190,7 @@ const disabledRules = {
 };
 
 const main = async () => {
+    const isCi = process.env.CI;
     process.chdir(PATH_REPO_ROOT);
 
     if (!process.env.CI) {
@@ -201,7 +202,8 @@ const main = async () => {
     const {closeStorybook, getStoryUrl} = await startStorybook();
 
     const browser = await puppeteer.launch({
-        executablePath: '/usr/bin/chromium',
+        // Launch chromium installed in docker in CI
+        ...(isCi ? {executablePath: '/usr/bin/chromium'} : {}),
         args: ['--incognito', '--no-sandbox'],
     });
 

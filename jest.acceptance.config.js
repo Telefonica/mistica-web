@@ -6,7 +6,7 @@ const getMaxWorkers = () => {
         return '50%';
     }
     if (process.argv.includes('--ci')) {
-        return 4;
+        return 2;
     }
     return '100%';
 };
