@@ -97,6 +97,8 @@ export const getBlauSkin: GetKnownSkin = () => {
             buttonSecondaryBorderSelected: palette.blauBlueSecondary60,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.blauBluePrimary30,
+            buttonSecondaryBackgroundHover: palette.blauBlueSecondary10
+            buttonSecondaryBackgroundSelectedInverse: applyAlpha(palette.blauBluePrimary, 0.2),
 
             textButtonPrimary: palette.white,
             textButtonPrimaryInverse: palette.blauBlueSecondary,
