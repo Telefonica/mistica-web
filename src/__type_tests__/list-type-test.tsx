@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {RowList, BoxedRowList, BoxedRow, Row} from '../list';
 
+const v = true;
+
 // @ts-expect-error - missing children
 <RowList />;
 
@@ -85,8 +87,28 @@ import {RowList, BoxedRowList, BoxedRow, Row} from '../list';
     {/* OK - switch */}
     <BoxedRow title="switch" switch={{name: 'switch', value: true}} />
 
+    {/* OK - switch */}
+    <BoxedRow
+        title="with conditional switch"
+        switch={v ? {name: 'switch', value: true} : undefined}
+        onPress={() => {}}
+    />
+
+    {/* OK - switch */}
+    <BoxedRow title="with switch" switch={v ? {name: 'switch', value: true} : undefined} />
+
     {/* OK - checkbox */}
     <BoxedRow title="checkbox" checkbox={{name: 'checkbox', value: true}} />
+
+    {/* OK - checkbox */}
+    <BoxedRow
+        title="with conditional checkbox"
+        checkbox={v ? {name: 'checkbox', value: true} : undefined}
+        onPress={() => {}}
+    />
+
+    {/* OK - checkbox */}
+    <BoxedRow title="with checkbox" checkbox={v ? {name: 'checkbox', value: true} : undefined} />
 
     {/* OK - radio */}
     <BoxedRow title="radio" radioValue="radio" />

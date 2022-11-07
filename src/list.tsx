@@ -644,9 +644,9 @@ interface OnPressBoxedRowProps extends OnPressRowContentProps, CommonBoxedRowPro
 
 type BoxedRowProps = ExclusifyUnion<
     | BasicBoxedRowProps
-    | (SwitchBoxedRowProps & {switch: ControlProps | undefined})
+    | (Omit<SwitchBoxedRowProps, 'switch'> & {switch: ControlProps | undefined})
     | RadioBoxedRowProps
-    | (CheckboxBoxedRowProps & {checkbox: ControlProps | undefined})
+    | (Omit<CheckboxBoxedRowProps, 'checkbox'> & {checkbox: ControlProps | undefined})
     | HrefBoxedRowProps
     | ToBoxedRowProps
     | OnPressBoxedRowProps
@@ -675,3 +675,8 @@ export const BoxedRowList: React.FC<BoxedRowListProps> = ({
         {children}
     </Stack>
 );
+
+const A = () => {
+    const v = true;
+    return <BoxedRow title="with switch" switch={v ? {} : undefined} onPress={() => {}} />;
+};
