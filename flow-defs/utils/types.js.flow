@@ -1,18 +1,5 @@
 // @flow
 
-// see https://gist.github.com/thecotne/6e5969f4aaf8f253985ed36b30ac9fe0
-type $FlowGen$If<X: boolean, Then, Else = empty> = $Call<
-  ((true, Then, Else) => Then) & ((false, Then, Else) => Else),
-  X,
-  Then,
-  Else
->;
-
-type $FlowGen$Assignable<A, B> = $Call<
-  ((...r: [B]) => true) & ((...r: [A]) => false),
-  A
->;
-
 export type { RendersElement, RendersNullableElement } from "./renders-element";
 export type { TrackingEvent } from "@tef-novum/webview-bridge";
 export type DataAttributes = {
@@ -30,21 +17,5 @@ export type ContainerType =
   | "desktop-wide-column"
   | "tablet-column"
   | "mobile-column";
-declare type AllKeys<T> = $FlowGen$If<
-  $FlowGen$Assignable<T, mixed>,
-  $Keys<T>,
-  empty
->;
-declare type Id<T> = $FlowGen$If<
-  $FlowGen$Assignable<T, U>,
-  $ObjMapi<U, <K>(K) => $ElementType<U, K>>,
-  empty
->;
-declare type _ExclusifyUnion<T, K: PropertyKey> = $FlowGen$If<
-  $FlowGen$Assignable<T, mixed>,
-  Id<{ ...T, ...$Rest<{ [key: Exclude<K, $Keys<T>>]: empty }, {}> }>,
-  empty
->;
-export type ExclusifyUnion<T> = _ExclusifyUnion<T, AllKeys<T>>;
 
 import { type CssStyle } from "../__css_types__.js.flow";

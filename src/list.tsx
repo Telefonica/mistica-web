@@ -300,8 +300,8 @@ interface OnPressRowContentProps extends PressableProps, RightyRowProps, CommonP
 }
 
 type RowContentProps = ExclusifyUnion<
-    | (Omit<SwitchRowContentProps, 'switch'> & {switch: ControlProps | undefined})
-    | (Omit<CheckboxRowContentProps, 'checkbox'> & {checkbox: ControlProps | undefined})
+    | (SwitchRowContentProps & {switch: ControlProps | undefined})
+    | (CheckboxRowContentProps & {checkbox: ControlProps | undefined})
     | OnPressRowContentProps
     | BasicRowContentProps
     | RadioRowContentProps
@@ -394,8 +394,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     } = props;
 
     const radioContext = useRadioContext();
-    const disabled =
-        props.disabled || (areRadioRowContentProps(props) !== undefined && radioContext.disabled);
+    const disabled = props.disabled || (areRadioRowContentProps(props) && radioContext.disabled);
 
     const classes = useStyles({
         isInverse,
@@ -433,8 +432,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
             disabled={disabled}
             withChevron={
                 (arePressableProps(props) && props.onPress !== undefined) ||
-                (areHrefRowContentProps(props) && props.href !== undefined) ||
-                (areToRowContentProps(props) && props.to !== undefined)
+                areHrefRowContentProps(props) ||
+                areToRowContentProps(props)
             }
         />
     );
@@ -645,9 +644,9 @@ interface OnPressBoxedRowProps extends OnPressRowContentProps, CommonBoxedRowPro
 
 type BoxedRowProps = ExclusifyUnion<
     | BasicBoxedRowProps
-    | (Omit<SwitchBoxedRowProps, 'switch'> & {switch: ControlProps | undefined})
+    | (SwitchBoxedRowProps & {switch: ControlProps | undefined})
     | RadioBoxedRowProps
-    | (Omit<CheckboxBoxedRowProps, 'checkbox'> & {checkbox: ControlProps | undefined})
+    | (CheckboxBoxedRowProps & {checkbox: ControlProps | undefined})
     | HrefBoxedRowProps
     | ToBoxedRowProps
     | OnPressBoxedRowProps

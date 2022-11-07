@@ -2,11 +2,8 @@
 
 import * as React from "react";
 import type { TouchableElement } from "./touchable";
-import type {
-  DataAttributes,
-  ExclusifyUnion,
-  TrackingEvent,
-} from "./utils/types";
+import type { DataAttributes, TrackingEvent } from "./utils/types";
+import type { ExclusifyUnion } from "./utils/utility-types";
 declare type CommonProps = {
   headline?: string | React.Node,
   title: string,
@@ -88,13 +85,13 @@ declare type OnPressRowContentProps = {
 };
 declare type RowContentProps = ExclusifyUnion<
   | {
-      ...$Diff<SwitchRowContentProps, { switch: any }>,
+      ...SwitchRowContentProps,
       ...{
         switch: ControlProps | void,
       },
     }
   | {
-      ...$Diff<CheckboxRowContentProps, { checkbox: any }>,
+      ...CheckboxRowContentProps,
       ...{
         checkbox: ControlProps | void,
       },
@@ -147,14 +144,14 @@ declare type OnPressBoxedRowProps = {
 declare type BoxedRowProps = ExclusifyUnion<
   | BasicBoxedRowProps
   | {
-      ...$Diff<SwitchBoxedRowProps, { switch: any }>,
+      ...SwitchBoxedRowProps,
       ...{
         switch: ControlProps | void,
       },
     }
   | RadioBoxedRowProps
   | {
-      ...$Diff<CheckboxBoxedRowProps, { checkbox: any }>,
+      ...CheckboxBoxedRowProps,
       ...{
         checkbox: ControlProps | void,
       },

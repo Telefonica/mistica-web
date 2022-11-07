@@ -1,2 +1,3 @@
-// todo WEB-461 improve this
-export type ExclusifyUnion<T> = any;
+// @flow
+
+export type ExclusifyUnion<T> = T;
