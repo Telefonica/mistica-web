@@ -102,6 +102,8 @@ export const getO2Skin: GetKnownSkin = () => {
             buttonSecondaryBorderSelected: palette.o2BluePrimary70,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.o2BluePrimary30,
+            buttonSecondaryBackgroundHover: palette.o2BluePrimary10,
+            buttonSecondaryBackgroundSelectedInverse: applyAlpha(palette.o2BluePrimary70, 0.2),
 
             textButtonPrimary: palette.white,
             textButtonPrimaryInverse: palette.o2BluePrimary,
@@ -109,7 +111,7 @@ export const getO2Skin: GetKnownSkin = () => {
             textButtonSecondary: palette.o2BluePrimary,
             textButtonSecondarySelected: palette.o2BluePrimary70,
             textButtonSecondaryInverse: palette.white,
-            textButtonSecondaryInverseSelected: palette.white,
+            textButtonSecondaryInverseSelected: palette.o2BluePrimary30,
             textLink: palette.o2BluePrimary,
             textLinkInverse: palette.white,
             textLinkDanger: palette.pepper,
@@ -188,28 +190,37 @@ export const getO2Skin: GetKnownSkin = () => {
             backgroundAlternative: palette.darkModeGrey,
             backgroundFeedbackBottom: palette.darkModeBlack,
             skeletonWave: palette.grey5,
+
             borderLight: palette.darkModeBlack,
             border: palette.darkModeGrey,
             borderDark: palette.grey5,
             borderSelected: palette.darkModeO2BluePrimary,
+            
             buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.05),
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.05),
+
             buttonPrimaryBackground: palette.darkModeO2BluePrimary,
             buttonPrimaryBackgroundInverse: palette.darkModeO2BluePrimary,
             buttonPrimaryBackgroundSelected: palette.darkModeO2BluePrimaryDark,
             buttonPrimaryBackgroundHover: palette.darkModeO2BluePrimaryDark,
             buttonPrimaryBackgroundSelectedInverse: palette.darkModeO2BluePrimaryDark,
+
             buttonSecondaryBackground: palette.darkModeO2BluePrimary,
             buttonSecondaryBackgroundSelected: palette.darkModeO2BluePrimaryDark,
             buttonSecondaryBorderInverse: palette.darkModeO2BluePrimary,
             buttonSecondaryBorderSelectedInverse: palette.darkModeO2BluePrimaryDark,
+            buttonSecondaryBackgroundHover: palette.darkModeO2BluePrimaryDark,
+            buttonSecondaryBackgroundSelectedInverse: applyAlpha(palette.darkModeO2BluePrimary, 0.2),
+
             textButtonPrimary: palette.grey2,
             textButtonPrimaryInverse: palette.grey2,
-            textButtonPrimaryInverseSelected: palette.grey2,
+            textButtonPrimaryInverseSelected: palette.grey3,
+
             textButtonSecondary: palette.grey2,
-            textButtonSecondarySelected: palette.grey4,
+            textButtonSecondarySelected: palette.grey3,
             textButtonSecondaryInverse: palette.grey2,
-            textButtonSecondaryInverseSelected: palette.grey4,
+            textButtonSecondaryInverseSelected: palette.grey3,
+
             textLink: palette.o2BluePrimary30,
             textLinkInverse: palette.o2BluePrimary30,
             control: palette.darkModeGrey6,
