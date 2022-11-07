@@ -675,8 +675,3 @@ export const BoxedRowList: React.FC<BoxedRowListProps> = ({
         {children}
     </Stack>
 );
-
-const A = () => {
-    const v = true;
-    return <BoxedRow title="with switch" switch={v ? {} : undefined} onPress={() => {}} />;
-};
