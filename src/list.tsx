@@ -630,8 +630,7 @@ export const RowList: React.FC<RowListProps> = ({
     dataAttributes,
     noLastDivider,
 }) => {
-    const rowCount = React.Children.count(children);
-    const lastIndex = rowCount - 1;
+    const lastIndex = React.Children.count(children) - 1;
     const showLastDivider = !noLastDivider;
     return (
         <div role={role} aria-labelledby={ariaLabelledby} {...getPrefixedDataAttributes(dataAttributes)}>
