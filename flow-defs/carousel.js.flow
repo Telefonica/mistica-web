@@ -26,6 +26,7 @@ declare type CarouselProps = {
   itemClassName?: string,
   withBullets?: boolean,
   renderBullets?: (bulletsProps: PageBulletsProps) => React.Node,
+  initialActiveItem?: number,
   itemsPerPage?: ItemsPerPageProp,
   /**
    * scrolls one page by default
@@ -58,6 +59,7 @@ declare type CenteredCarouselProps = {
   itemClassName?: string,
   withBullets?: boolean,
   renderBullets?: (bulletsProps: PageBulletsProps) => React.Node,
+  initialActiveItem?: number,
   onPageChange?: (newPageInfo: {
     pageIndex: number,
     shownItemIndexes: Array<number>,

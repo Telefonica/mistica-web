@@ -1,3 +1,11 @@
+# [12.8.0](https://github.com/Telefonica/mistica-web/compare/v12.7.0...v12.8.0) (2022-11-07)
+
+
+### Features
+
+* **Carousel:** initialActiveItem prop ([#560](https://github.com/Telefonica/mistica-web/issues/560)) ([262f833](https://github.com/Telefonica/mistica-web/commit/262f833d8a1f49e3837fdb69ff22f9543f9a7e71))
+* **RowList:** noLastDivider prop ([#535](https://github.com/Telefonica/mistica-web/issues/535)) ([5a0999f](https://github.com/Telefonica/mistica-web/commit/5a0999f2f3ea6afde2616f9a2a96c4247859130b))
+
 # [12.7.0](https://github.com/Telefonica/mistica-web/compare/v12.6.0...v12.7.0) (2022-11-03)
 
 
