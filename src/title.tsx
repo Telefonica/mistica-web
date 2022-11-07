@@ -48,6 +48,7 @@ export const Title1 = ({children, as = 'h3', id, right, dataAttributes}: TitlePr
                     as={as}
                     id={id}
                     dataAttributes={dataAttributes}
+                    wordBreak={false}
                 >
                     {children}
                 </Text1>

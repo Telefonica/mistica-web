@@ -11,8 +11,16 @@ import Box from './box';
 import {getTextFromChildren} from './utils/common';
 import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
 import {useTheme} from './hooks';
+import {flattenChildren} from './skins/utils';
 
-import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEvent} from './utils/types';
+import type {TouchableElement} from './touchable';
+import type {
+    DataAttributes,
+    IconProps,
+    RendersElement,
+    RendersNullableElement,
+    TrackingEvent,
+} from './utils/types';
 import type {Location} from 'history';
 import type {Theme} from './theme';
 
@@ -21,11 +29,15 @@ export const BUTTON_MIN_WIDTH = 136;
 const transitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
 
 const BORDER_PX = 1.5;
-const SPINNER_MARGIN_PX = 8;
+const ICON_MARGIN_PX = 8;
 const X_PADDING_PX = 16 - BORDER_PX;
 const Y_PADDING_PX = 12 - BORDER_PX;
 const X_SMALL_PADDING_PX = 12 - BORDER_PX;
 const Y_SMALL_PADDING_PX = 6 - BORDER_PX;
+const ICON_SIZE = 24;
+const SMALL_ICON_SIZE = 20;
+const SPINNER_SIZE = 20;
+const SMALL_SPINNER_SIZE = 16;
 
 const commonClasses = () => ({
     button: {
@@ -33,7 +45,6 @@ const commonClasses = () => ({
         position: 'relative',
         width: 'auto',
         minWidth: BUTTON_MIN_WIDTH,
-        textAlign: 'center',
         border: `${BORDER_PX}px solid transparent`,
         borderRadius: 4,
         overflow: 'hidden',
@@ -68,6 +79,9 @@ const commonClasses = () => ({
         },
     },
     textContent: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         padding: `${Y_PADDING_PX}px ${X_PADDING_PX}px`, // height 48
         opacity: 1,
         transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
@@ -75,9 +89,7 @@ const commonClasses = () => ({
             padding: `${Y_SMALL_PADDING_PX}px ${X_SMALL_PADDING_PX}px`, // height 32
         },
         '& svg': {
-            marginRight: SPINNER_MARGIN_PX,
-            verticalAlign: 'bottom',
-            height: '100%',
+            display: 'block',
         },
     },
     isLoading: {
@@ -217,6 +229,62 @@ const useDangerButtonStyles = createUseStyles((theme) => ({
     inverse: dangerButtonStyles(theme),
 }));
 
+const renderButtonContent = ({
+    content,
+    defaultIconSize,
+    renderText,
+}: {
+    content: React.ReactNode;
+    defaultIconSize: number;
+    renderText: (text: React.ReactNode) => React.ReactNode;
+}): React.ReactNode => {
+    const childrenArr = flattenChildren(content);
+    const length = childrenArr.length;
+    const resultChildrenArr: Array<React.ReactNode> = [];
+    let accText: Array<React.ReactNode> = [];
+    const flushAccText = () => {
+        resultChildrenArr.push(
+            <React.Fragment key={resultChildrenArr.length}>{renderText(accText)}</React.Fragment>
+        );
+        accText = [];
+    };
+
+    childrenArr.forEach((element, idx) => {
+        const isFirstChild = idx === 0;
+        const isLastChild = idx === length - 1;
+
+        const isIconElement = React.isValidElement(element);
+
+        if (isIconElement) {
+            if (accText.length) {
+                flushAccText();
+            }
+            const sizeInPx = element.props.size ?? defaultIconSize;
+            resultChildrenArr.push(
+                <div
+                    key={resultChildrenArr.length}
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginLeft: isFirstChild ? 0 : ICON_MARGIN_PX,
+                        marginRight: isLastChild ? 0 : ICON_MARGIN_PX,
+                    }}
+                >
+                    {React.cloneElement(element as React.ReactElement<IconProps>, {
+                        size: pxToRem(sizeInPx),
+                    })}
+                </div>
+            );
+        } else {
+            accText.push(element);
+            if (isLastChild) {
+                flushAccText();
+            }
+        }
+    });
+    return resultChildrenArr;
+};
+
 type ButtonType = 'primary' | 'secondary' | 'danger';
 
 interface CommonProps {
@@ -282,9 +350,10 @@ export type ButtonProps =
     | OnPressButtonProps
     | HrefButtonProps;
 
-const Button: React.FC<
+const Button = React.forwardRef<
+    TouchableElement,
     ButtonProps & {classes: ReturnType<typeof usePrimaryButtonStyles>; type: ButtonType}
-> = (props) => {
+>((props, ref) => {
     const {eventFormat} = useTrackingConfig();
     const {formStatus, formId} = useForm();
     const isInverse = useIsInverseVariant();
@@ -306,19 +375,6 @@ const Button: React.FC<
         }
     }, [showSpinner, shouldRenderSpinner, formStatus]);
 
-    const spinnerSizeRem = pxToRem(props.small ? 16 : 24);
-
-    const renderText = (text: React.ReactNode) =>
-        props.small ? (
-            <Text size={14} lineHeight={20} weight="medium" truncate={1} color="inherit" as="div">
-                {text}
-            </Text>
-        ) : (
-            <Text3 medium truncate={1} color="inherit" as="div">
-                {text}
-            </Text3>
-        );
-
     const createDefaultTrackingEvent = (): TrackingEvent => {
         if (eventFormat === 'google-analytics-4') {
             return {
@@ -335,7 +391,22 @@ const Button: React.FC<
         }
     };
 
+    const defaultIconSize = props.small ? SMALL_ICON_SIZE : ICON_SIZE;
+    const spinnerSizeRem = pxToRem(props.small ? SMALL_SPINNER_SIZE : SPINNER_SIZE);
+
+    const renderText = (element: React.ReactNode) =>
+        props.small ? (
+            <Text size={14} lineHeight={20} weight="medium" truncate={1} color="inherit" as="div">
+                {element}
+            </Text>
+        ) : (
+            <Text3 medium truncate={1} color="inherit" as="div">
+                {element}
+            </Text3>
+        );
+
     const commonProps = {
+        ref,
         className: classnames(classes.button, props.className, {
             [classes.small]: props.small,
             [classes.inverse]: isInverse,
@@ -352,7 +423,11 @@ const Button: React.FC<
             <>
                 {/* text content */}
                 <div aria-hidden={showSpinner ? true : undefined} className={classes.textContent}>
-                    {renderText(props.children)}
+                    {renderButtonContent({
+                        content: props.children,
+                        defaultIconSize,
+                        renderText,
+                    })}
                 </div>
 
                 {/* the following div won't be visible (see loadingFiller class), this is used to force the button width */}
@@ -361,11 +436,10 @@ const Button: React.FC<
                     aria-hidden
                     style={{
                         paddingLeft: spinnerSizeRem,
-                        paddingRight:
-                            SPINNER_MARGIN_PX + 2 * (props.small ? X_SMALL_PADDING_PX : X_PADDING_PX),
+                        paddingRight: ICON_MARGIN_PX + 2 * (props.small ? X_SMALL_PADDING_PX : X_PADDING_PX),
                     }}
                 >
-                    {renderText(loadingText)}
+                    {renderButtonContent({content: loadingText, defaultIconSize, renderText})}
                 </div>
 
                 {/* loading content */}
@@ -387,10 +461,18 @@ const Button: React.FC<
                         />
                     ) : (
                         <div
-                            style={{display: 'inline-block', width: spinnerSizeRem, height: spinnerSizeRem}}
+                            style={{
+                                display: 'inline-block',
+                                width: spinnerSizeRem,
+                                height: spinnerSizeRem,
+                            }}
                         />
                     )}
-                    {loadingText ? <Box paddingLeft={8}>{renderText(loadingText)}</Box> : null}
+                    {loadingText ? (
+                        <Box paddingLeft={8}>
+                            {renderButtonContent({content: loadingText, defaultIconSize, renderText})}
+                        </Box>
+                    ) : null}
                 </div>
             </>
         ),
@@ -433,7 +515,7 @@ const Button: React.FC<
     }
 
     return null;
-};
+});
 
 const useButtonLinkStyles = createUseStyles((theme) => {
     const paddingY = 6;
@@ -458,6 +540,14 @@ const useButtonLinkStyles = createUseStyles((theme) => {
                 },
             },
             '&[disabled]': disabledStyle,
+        },
+        textContent: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            '& svg': {
+                display: 'block',
+            },
         },
         inverse: {
             color: theme.colors.textLinkInverse,
@@ -504,10 +594,7 @@ interface ButtonLinkToProps extends ButtonLinkCommonProps {
 
 export type ButtonLinkProps = ButtonLinkOnPressProps | ButtonLinkHrefProps | ButtonLinkToProps;
 
-export const ButtonLink = React.forwardRef<
-    HTMLDivElement | HTMLAnchorElement | HTMLButtonElement,
-    ButtonLinkProps
->((props, ref) => {
+export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((props, ref) => {
     const {formStatus} = useForm();
     const classes = useButtonLinkStyles();
     const isInverse = useIsInverseVariant();
@@ -529,6 +616,12 @@ export const ButtonLink = React.forwardRef<
         }
     };
 
+    const renderText = (element: React.ReactNode) => (
+        <Text2 medium truncate={1} color="inherit">
+            {element}
+        </Text2>
+    );
+
     const commonProps = {
         className: classnames(classes.link, {
             [classes.inverse]: isInverse,
@@ -537,9 +630,9 @@ export const ButtonLink = React.forwardRef<
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
         dataAttributes: props.dataAttributes,
         children: (
-            <Text2 medium truncate={1} color="inherit">
-                {props.children}
-            </Text2>
+            <div className={classes.textContent}>
+                {renderButtonContent({content: props.children, defaultIconSize: SMALL_ICON_SIZE, renderText})}
+            </div>
         ),
         disabled: props.disabled || formStatus === 'sending',
     };
@@ -572,20 +665,20 @@ export const ButtonLink = React.forwardRef<
     return null;
 });
 
-export const ButtonPrimary: React.FC<ButtonProps> = (props) => {
+export const ButtonPrimary = React.forwardRef<TouchableElement, ButtonProps>((props, ref) => {
     const classes = usePrimaryButtonStyles();
-    return <Button {...props} classes={classes} type="primary" />;
-};
+    return <Button {...props} ref={ref} classes={classes} type="primary" />;
+});
 
-export const ButtonSecondary: React.FC<ButtonProps> = (props) => {
+export const ButtonSecondary = React.forwardRef<TouchableElement, ButtonProps>((props, ref) => {
     const classes = useSecondaryButtonStyles();
-    return <Button {...props} classes={classes} type="secondary" />;
-};
+    return <Button {...props} ref={ref} classes={classes} type="secondary" />;
+});
 
-export const ButtonDanger: React.FC<ButtonProps> = (props) => {
+export const ButtonDanger = React.forwardRef<TouchableElement, ButtonProps>((props, ref) => {
     const classes = useDangerButtonStyles();
-    return <Button {...props} classes={classes} type="danger" />;
-};
+    return <Button {...props} ref={ref} classes={classes} type="danger" />;
+});
 
 export type ButtonElement =
     | RendersElement<typeof ButtonPrimary>

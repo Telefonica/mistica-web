@@ -1,18 +1,44 @@
 // @flow
 
 import * as React from "react";
-declare type DialogProps = {
+import { ButtonLink } from "./button";
+import type { RendersNullableElement } from "./utils/types";
+declare type BaseDialogProps = {
   className?: string,
   title?: string,
   icon?: React.Element<any>,
   message: string,
-  cancelText?: string,
   acceptText?: string,
-  onCancel?: () => void,
   onAccept?: () => void,
-  showCancel?: boolean,
   destructive?: boolean,
 };
+declare type AlertProps = {
+  ...$Exact<BaseDialogProps>,
+  showClose?: boolean,
+  showCancel?: empty,
+  cancelText?: empty,
+  onCancel?: empty,
+};
+declare type ConfirmProps = {
+  ...$Exact<BaseDialogProps>,
+  showClose?: boolean,
+  showCancel?: boolean,
+  cancelText?: string,
+  onCancel?: () => void,
+};
+declare type ExtendedDialogProps = {
+  ...$Exact<BaseDialogProps>,
+
+  subtitle?: string,
+  extra?: React.Node,
+  forceWeb?: boolean,
+  showClose?: boolean,
+  showCancel?: boolean,
+  cancelText?: string,
+  onCancel?: () => void,
+  link?: RendersNullableElement<typeof ButtonLink>,
+};
+declare type DialogProps = AlertProps | ConfirmProps | ExtendedDialogProps;
 declare type DialogRootProps = {
   children?: React.Node,
 };
@@ -39,9 +65,13 @@ declare export default class DialogRoot
 /**
  * Shows alert dialog with supplied props
  */
-declare export var alert: (props: DialogProps) => void;
+declare export var alert: (props: AlertProps) => void;
 /**
  * Shows confirm dialog with supplied props
  */
-declare export var confirm: (props: DialogProps) => void;
+declare export var confirm: (props: ConfirmProps) => void;
+/**
+ * Shows dialog with supplied props
+ */
+declare export var dialog: (props: ExtendedDialogProps) => void;
 declare export {};

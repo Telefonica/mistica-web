@@ -5,6 +5,7 @@ declare export { default as ThemeContext } from "./theme-context";
 declare export { default as ThemeContextProvider } from "./theme-context-provider";
 declare export { default as ScreenReaderOnly } from "./screen-reader-only";
 declare export { default as Touchable } from "./touchable";
+export type { TouchableElement } from "./touchable";
 declare export { default as Spinner } from "./spinner";
 declare export { default as FadeIn } from "./fade-in";
 declare export {
@@ -39,7 +40,7 @@ declare export {
 declare export { default as IconButton } from "./icon-button";
 declare export { default as Popover } from "./popover";
 declare export { default as FocusTrap } from "./focus-trap";
-declare export { confirm, alert } from "./dialog";
+declare export { confirm, alert, dialog } from "./dialog";
 declare export { default as Badge } from "./badge";
 declare export { default as TextLink } from "./text-link";
 declare export { default as Overlay } from "./overlay";
@@ -134,6 +135,13 @@ declare export { default as IconChevron } from "./icons/icon-chevron";
 declare export { default as IconError } from "./icons/icon-error";
 declare export { default as IconSuccess } from "./icons/icon-success";
 declare export { default as IconSuccessVivo } from "./icons/icon-success-vivo";
+declare export {
+  SkeletonCircle,
+  SkeletonRow,
+  SkeletonLine,
+  SkeletonRectangle,
+  SkeletonText,
+} from "./skeletons";
 declare export { default as Circle } from "./circle";
 declare export {
   useTheme,
@@ -146,6 +154,7 @@ declare export {
   useIsInViewport,
 } from "./hooks";
 export type { ThemeConfig, ColorScheme, EventFormat } from "./theme";
+declare export { pxToRem } from "./utils/css";
 declare export { TrackingConfig, useTrackingConfig } from "./utils/analytics";
 declare export { useDocumentVisibility } from "./utils/document-visibility";
 declare export {
@@ -1658,6 +1667,9 @@ declare export { default as IconTipsAndTricksRegular } from "./generated/mistica
 declare export { default as IconTkFilled } from "./generated/mistica-icons/icon-tk-filled";
 declare export { default as IconTkLight } from "./generated/mistica-icons/icon-tk-light";
 declare export { default as IconTkRegular } from "./generated/mistica-icons/icon-tk-regular";
+declare export { default as IconTokensFilled } from "./generated/mistica-icons/icon-tokens-filled";
+declare export { default as IconTokensLight } from "./generated/mistica-icons/icon-tokens-light";
+declare export { default as IconTokensRegular } from "./generated/mistica-icons/icon-tokens-regular";
 declare export { default as IconTongueFilled } from "./generated/mistica-icons/icon-tongue-filled";
 declare export { default as IconTongueLight } from "./generated/mistica-icons/icon-tongue-light";
 declare export { default as IconTongueRegular } from "./generated/mistica-icons/icon-tongue-regular";
@@ -1804,3 +1816,6 @@ declare export { default as IconWorkflowRegular } from "./generated/mistica-icon
 declare export { default as IconWorkshopMeetingFilled } from "./generated/mistica-icons/icon-workshop-meeting-filled";
 declare export { default as IconWorkshopMeetingLight } from "./generated/mistica-icons/icon-workshop-meeting-light";
 declare export { default as IconWorkshopMeetingRegular } from "./generated/mistica-icons/icon-workshop-meeting-regular";
+declare export { default as IconWorldDeviceFilled } from "./generated/mistica-icons/icon-world-device-filled";
+declare export { default as IconWorldDeviceLight } from "./generated/mistica-icons/icon-world-device-light";
+declare export { default as IconWorldDeviceRegular } from "./generated/mistica-icons/icon-world-device-regular";

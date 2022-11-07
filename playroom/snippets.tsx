@@ -1,6 +1,6 @@
 import {capitalize} from 'lodash';
 
-const imagePlaceholder = 'https://i.imgur.com/jeDSXBU.jpg';
+const imagePlaceholder = 'https://source.unsplash.com/800x800/?abstract';
 
 type Snippet = {group: string; name: string; code: string};
 
@@ -228,7 +228,7 @@ const listSnippetsAvatar: Array<Snippet> = [
                   <Avatar
                     size={40}
                     initials="ML"
-                    src="https://i.pravatar.cc/100?img=31"
+                    src="https://api.lorem.space/image/face?w=200&h=200"
                   />
                 }
                 title="Title"
@@ -290,7 +290,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         name: `${rowName} (image)`,
         code: `
         <${rowName}
-            asset={<Image src="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
+            asset={<Image src="https://api.lorem.space/image/album?w=300&h=300" height={80} aspectRatio="1:1" />}
             title="Title"
             description="Description"
             onPress={() => {}}
@@ -373,7 +373,7 @@ const tooltipSnippets = [
         name: 'Tooltip',
         code: `
         <Tooltip
-          target="some target, this can be any component"
+          target={<Text3>some target, this can be any component</Text3>}
           description="Settings"
         />
         `,
@@ -658,7 +658,7 @@ const cardSnippets: Array<Snippet> = [
             title="Title"
             description="Some description here"
             imageUrl="${imagePlaceholder}"
-            imageFit="fit"
+            imageFit="fill"
             onClose={() => {}}
             button={
                 <ButtonPrimary href="#" small>
@@ -672,12 +672,13 @@ const cardSnippets: Array<Snippet> = [
         name: 'MediaCard with Image',
         code: `
         <MediaCard
+            media={<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />}
             headline={<Tag type="promo">Headline</Tag>}
             pretitle="Pretitle"
             title="Title"
+            subtitle="Subtitle"
             description="Description"
             extra={<Placeholder />}
-            media={<Image src="https://i.imgur.com/aEVtKsE.jpg" aspectRatio="16:9" />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
@@ -691,12 +692,13 @@ const cardSnippets: Array<Snippet> = [
         name: 'MediaCard with Video',
         code: `
         <MediaCard
+            media={<Video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" aspectRatio="16:9" />}
             headline={<Tag color={colors.promo}>headline</Tag>}
             pretitle="Pretitle"
             title="Title"
+            subtitle="Subtitle"
             description="Description"
             extra={<Placeholder />}
-            media={<Video src="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw" aspectRatio="16:9" />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
@@ -710,16 +712,16 @@ const cardSnippets: Array<Snippet> = [
         name: 'DataCard',
         code: `
         <DataCard
-            headline={<Tag type="promo">Headline</Tag>}
-            title="Title"
-            subtitle="Subtitle"
-            description="Description"
-            extra={<Placeholder />}
             icon={
                 <Circle backgroundColor={colors.brandLow} size={40}>
                     <IconShopRegular color={colors.brand} />
                 </Circle>
             }
+            headline={<Tag type="promo">Headline</Tag>}
+            title="Title"
+            subtitle="Subtitle"
+            description="Description"
+            extra={<Placeholder />}
             button={
                 <ButtonPrimary small onPress={() => {}}>
                     Action
@@ -733,13 +735,13 @@ const cardSnippets: Array<Snippet> = [
         name: 'SnapCard',
         code: `
         <SnapCard
-            title="Title"
-            subtitle="Subtitle"
             icon={
               <Circle size={40} backgroundColor={colors.brandLow}>
                 <IconAcademicRegular color={colors.brand} />
               </Circle>
             }
+            title="Title"
+            subtitle="Subtitle"
         />`,
     },
 ];
@@ -915,7 +917,7 @@ const emptyStatesGroup: Array<Snippet> = [
 
 const exampleScreens: Array<Snippet> = [
     {
-        group: '💎 Example Screens',
+        group: 'Ξ ✨ Example Screens',
         name: 'Settings',
         code: `
       <MainNavigationBar
@@ -938,7 +940,7 @@ const exampleScreens: Array<Snippet> = [
               <Avatar
                 size={isDesktopOrBigger ? 32 : 24}
                 initials="ML"
-                src="https://i.pravatar.cc/100?img=31"
+                src="https://api.lorem.space/image/face?w=200&h=200"
               />
               {isDesktopOrBigger && "María López Serrano"}
             </NavigationBarAction>
@@ -1069,7 +1071,7 @@ const exampleScreens: Array<Snippet> = [
       `,
     },
     {
-        group: '💎 Example Screens',
+        group: 'Ξ ✨ Example Screens',
         name: 'Login',
         code: `
       <Form
@@ -1154,7 +1156,7 @@ const navigationBarSnippets = [
         <Avatar
           size={isDesktopOrBigger ? 32 : 24}
           initials="ML"
-          src="https://i.pravatar.cc/100?img=31"
+          src="https://api.lorem.space/image/face?w=200&h=200"
         />
         {isDesktopOrBigger && "María López Serrano"}
       </NavigationBarAction>
@@ -1202,6 +1204,20 @@ const navigationBarSnippets = [
   }
 />`,
     },
+    {
+        group: 'NavigationBar',
+        name: 'NavigationBarCustomRight',
+        code: `
+<NavigationBar
+  onBack={() => {}}
+  title="Settings"
+  right={
+    <NavigationBarActionGroup>
+      <Avatar size={32} />
+    </NavigationBarActionGroup>
+  }
+/>`,
+    },
 ];
 
 const carouselSnippets = [
@@ -1216,7 +1232,7 @@ const carouselSnippets = [
       headline={<Tag type="promo">Headline</Tag>}
       title={'Card ' + idx}
       description="Description"
-      media={<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />}
+      media={<Image src="https://api.lorem.space/image/watch?w=700&h=700" aspectRatio="16:9" />}
       button={
         <ButtonPrimary small onPress={() => {}}>
           Action
@@ -1234,8 +1250,8 @@ const carouselSnippets = [
 <Slideshow
   withBullets
   items={[
-    <Image src="https://i.imgur.com/HRvhZ6F.jpeg" aspectRatio="16:9" />,
-    <Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />,
+    <Image src="https://api.lorem.space/image/furniture?w=1500&h=1500&hash=8B7BCDC2" aspectRatio="16:9" />,
+    <Image src="https://api.lorem.space/image/furniture?w=1500&h=1500&hash=500B67FB" aspectRatio="16:9" />,
   ]}
 />`,
     },
@@ -1272,12 +1288,12 @@ const avatarSnippets = [
     {
         group: 'Avatar',
         name: 'Avatar with badge',
-        code: `<Avatar size={64} src="https://i.imgur.com/nRBEMMV.png" badge />`,
+        code: `<Avatar size={64} src="https://api.lorem.space/image/face?w=200&h=200" badge />`,
     },
     {
         group: 'Avatar',
         name: 'Avatar with numeric badge',
-        code: `<Avatar size={64} src="https://i.imgur.com/nRBEMMV.png" badge={5} />`,
+        code: `<Avatar size={64} src="https://api.lorem.space/image/face?w=200&h=200" badge={5} />`,
     },
     {
         group: 'Avatar',
@@ -1298,77 +1314,134 @@ const avatarSnippets = [
 
 const alertSnippets = [
     {
-        group: 'Dialogs',
+        group: 'Modals',
         name: 'Alert one button',
         code: `
 <ButtonPrimary
-  onPress={() =>
-    alert({
-      message: "Changes successfully saved",
-      acceptText: "Continue",
-    })
-  }
+    onPress={() =>
+        alert({
+            title: 'Profile updated',
+            message: 'Your changes have been successfully saved',
+            acceptText: 'Ok',
+        })
+    }
 >
-  Open one button
+    Open one button
 </ButtonPrimary>`,
     },
     {
-        group: 'Dialogs',
+        group: 'Modals',
         name: 'Confirm two buttons',
         code: `
 <ButtonPrimary
-  onPress={() =>
-    confirm({
-      message:
-        "Sign up to ensure that you don't miss the next promotion and other important events in Personal Account.",
-      title: "Stay with your business",
-      acceptText: "Sign up",
-      cancelText: "Next time",
-    })
-  }
+    onPress={() =>
+        confirm({
+            message:
+                'Are you sure you want to delete "rainy_day.jpg"? You cant undo this action.',
+            title: 'Delete media?',
+        })
+    }
 >
-  Open two buttons
+    Open two buttons
 </ButtonPrimary>
 `,
     },
     {
-        group: 'Dialogs',
-        name: 'Confirm two buttons (with icon)',
-        code: `
-<ButtonPrimary
-  onPress={() =>
-    confirm({
-      title: "Stay with your business",
-      message:
-        "Sign up to ensure that you don't miss the next promotion and other important events in Personal Account.",
-      icon: <IconInformationUserLight size={64} color={colors.brand} />,
-      acceptText: "Sign up",
-      cancelText: "Next time",
-    })
-  }
->
-  Open two buttons (with icon)
-</ButtonPrimary>        
-      `,
-    },
-    {
-        group: 'Dialogs',
+        group: 'Modals',
         name: 'Confirm two buttons destructive',
         code: `
 <ButtonPrimary
-  onPress={() =>
-    confirm({
-      message:
-        "Sign up to ensure that you don't miss the next promotion and other important events in Personal Account.",
-      acceptText: "Erase all data",
-      cancelText: "Cancel",
-      destructive: true,
-    })
-  }
+    onPress={() =>
+        confirm({
+            title: 'Delete Account',
+            message:
+                'Deleting your account will remove all of your information from our database. This cannot be undone.',
+            destructive: true,
+            acceptText: 'Delete account',
+        })
+    }
 >
-  Open two buttons destructive
-</ButtonPrimary>  
+    Open two buttons destructive
+</ButtonPrimary>
       `,
+    },
+    {
+        group: 'Modals',
+        name: 'Dialog',
+        code: `
+<ButtonPrimary
+    onPress={() =>
+        dialog({
+            title: 'Title',
+            message: 'Message',
+            acceptText: 'Accept terms and conditions',
+            extra: <Text1 regular>This is the extra zone</Text1>,
+            forceWeb: true,
+            showCancel: true,
+            link: <ButtonLink href="https://google.com">Link</ButtonLink>,
+            icon: <IconInformationUserLight color={colors.brand} />,
+        })
+    }
+>
+    Open dialog
+</ButtonPrimary>
+    `,
+    },
+];
+
+const skeletonSnippets = [
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Line',
+        code: `
+               <SkeletonLine
+                    ariaLabel="loading"
+                    disableAnimation={false}
+                />
+        `,
+    },
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Circle',
+        code: `
+               <SkeletonCircle
+                    size={40}
+                    ariaLabel="loading"
+                    disableAnimation={false}
+               />
+        `,
+    },
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Text',
+        code: `
+               <SkeletonText
+                    ariaLabel="loading"
+                    disableAnimation={false}
+               />
+        `,
+    },
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Row',
+        code: `
+            <SkeletonRow
+                ariaLabel="loading"
+                disableAnimation={false}
+            />
+        `,
+    },
+    {
+        group: 'Skeletons',
+        name: 'Skeleton Rectangle',
+        code: `
+            <SkeletonRectangle
+                ariaLabel="loading"
+                height={100}
+                width={200}
+                disableAnimation={false}
+            />
+        `,
     },
 ];
 
@@ -1376,6 +1449,7 @@ export default [
     ...buttonSnippets,
     ...formSnippets,
     ...feedbackSnippets,
+    ...skeletonSnippets,
     {group: 'Feedbacks', name: 'Snackbar', code: '<Snackbar message="Some message here" />'},
     ...layoutSnippets,
     {
@@ -1490,12 +1564,12 @@ export default [
     {
         group: 'Media',
         name: 'Video',
-        code: `<Video src="https://cdn.kapwing.com/final_61f3e551955a8b003ec98e68_257607.mp4" aspectRatio="16:9" />`,
+        code: `<Video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4" aspectRatio="16:9" />`,
     },
     {
         group: 'Media',
         name: 'Image',
-        code: `<Image src="https://i.imgur.com/aEVtKsE.jpg" aspectRatio="16:9" />`,
+        code: `<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />`,
     },
     ...carouselSnippets,
     ...avatarSnippets,

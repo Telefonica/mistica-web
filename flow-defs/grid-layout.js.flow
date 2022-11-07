@@ -1,35 +1,67 @@
 // @flow
 
 import * as React from "react";
-declare type PropsChildren = { children: React.Node };
+import type { DataAttributes } from "./utils/types";
+declare type VerticalSpace =
+  | 0
+  | 2
+  | 4
+  | 8
+  | 12
+  | 16
+  | 24
+  | 32
+  | 40
+  | 48
+  | 56
+  | 64
+  | 72
+  | 80;
+declare type PropsChildren = {
+  children: React.Node,
+  verticalSpace?: VerticalSpace,
+  dataAttributes?: DataAttributes,
+};
 declare type PropsTemplate6_6 = {
   template: "6+6",
   left: React.Node,
   right: React.Node,
+  verticalSpace?: VerticalSpace,
+  dataAttributes?: DataAttributes,
 };
 declare type PropsTemplate8_4 = {
   template: "8+4",
   left: React.Node,
   right: React.Node,
+  verticalSpace?: VerticalSpace,
+  dataAttributes?: DataAttributes,
 };
 declare type PropsTemplate4_6 = {
   template: "4+6",
   left: React.Node,
   right: React.Node,
+  verticalSpace?: VerticalSpace,
+  dataAttributes?: DataAttributes,
 };
 declare type PropsTemplate5_4 = {
   template: "5+4",
   left: React.Node,
   right: React.Node,
+  verticalSpace?: VerticalSpace,
+  dataAttributes?: DataAttributes,
 };
 declare type PropsTemplate3_9 = {
   template: "3+9",
   left: React.Node,
   right: React.Node,
+  verticalSpace?: VerticalSpace,
+  dataAttributes?: DataAttributes,
 };
 declare type PropsTemplate10 = {
   template: "10",
   children: React.Node,
+  verticalSpace?: VerticalSpace,
+  dataAttributes?: DataAttributes,
 };
 declare type Props =
   | PropsChildren

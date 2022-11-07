@@ -1,3 +1,4 @@
+// Specs: https://www.figma.com/file/koROdh3HpEPG2O8jG52Emh/Buttons-Component-Specs?node-id=0%3A1
 import * as React from 'react';
 import {createUseStyles} from './jss';
 import Touchable from './touchable';
@@ -13,7 +14,7 @@ const useStyles = createUseStyles(({colors, isDarkMode, mq}) => ({
     textLink: {
         width: 'auto',
         lineHeight: 'inherit',
-        display: 'inline-block',
+        display: 'inline',
         color: colors.textLink,
         wordBreak: 'break-word',
         cursor: 'pointer',
@@ -46,6 +47,7 @@ interface CommonProps {
     className?: string;
     style?: React.CSSProperties;
     classes?: {[className: string]: string};
+    // @deprecated - Use a Text component to wrap the TextLink
     small?: boolean;
     disabled?: boolean;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
@@ -100,6 +102,7 @@ const TextLink: React.FC<TextLinkProps> = ({children, className = '', small, dis
     return (
         <Touchable
             {...props}
+            as={props.onPress ? 'a' : undefined}
             trackingEvent={
                 props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined)
             }

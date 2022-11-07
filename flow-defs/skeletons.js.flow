@@ -1,0 +1,29 @@
+// @flow
+import * as React from "react";
+
+import type { DataAttributes } from "./utils/types";
+declare type SkeletonLineProps = {
+  width?: string | number,
+  ariaLabel?: string,
+  dataAttributes?: DataAttributes,
+};
+declare export var SkeletonLine: (x: SkeletonLineProps) => React.Node;
+declare type SkeletonTextProps = $Diff<SkeletonLineProps, { width: any }>;
+declare export var SkeletonText: (x: SkeletonTextProps) => React.Node;
+declare type SkeletonCircleProps = {
+  ...$Diff<SkeletonLineProps, { width: any }>,
+  ...{
+    size?: number | string,
+  },
+};
+declare export var SkeletonCircle: (x: SkeletonCircleProps) => React.Node;
+declare type SkeletonRowProps = SkeletonLineProps;
+declare export var SkeletonRow: (x: SkeletonRowProps) => React.Node;
+declare type SkeletonRectangleProps = {
+  ariaLabel?: string,
+  dataAttributes?: DataAttributes,
+  width?: number | string,
+  height?: number | string,
+};
+declare export var SkeletonRectangle: (x: SkeletonRectangleProps) => React.Node;
+declare export {};

@@ -1,6 +1,6 @@
 {
     "name": "@telefonica/mistica",
-    "version": "12.1.0",
+    "version": "12.7.0",
     "license": "MIT",
     "repository": {
         "type": "git",
@@ -49,6 +49,7 @@
     "acceptanceTests": {
         "devServer": {
             "command": "yarn storybook-for-acceptance-tests",
+            "host": "0.0.0.0",
             "port": 6006
         },
         "ciServer": {
@@ -79,7 +80,7 @@
         "@telefonica/acceptance-testing": "^2.7.0",
         "@telefonica/eslint-config": "^1.0.7",
         "@telefonica/prettier-config": "^1.1.0",
-        "@telefonica/ts-to-flow": "1.2.0",
+        "@telefonica/ts-to-flow": "1.2.2",
         "@testing-library/jest-dom": "^5.16.3",
         "@testing-library/react": "^12.1.4",
         "@testing-library/user-event": "^13.5.0",
