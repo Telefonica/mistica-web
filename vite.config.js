@@ -10,7 +10,7 @@ export default defineConfig({
         vanillaExtractPlugin(),
         noBundlePlugin({
             // Change .css.js files to something else so that they don't get re-processed by consumer apps using vanilla extract too
-            fileNames: ({name}) => `${name.replace(/\.css$/, '.css.vanilla')}.js`,
+            fileNames: ({name}) => `${name.replace(/\.css$/, '.css-mistica')}.js`,
         }),
     ],
     publicDir: false,
