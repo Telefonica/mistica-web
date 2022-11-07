@@ -15,6 +15,7 @@ export {
     ServerSideStyles,
 } from './jss';
 
+export {vars as skinVars} from './skins/skin-contract.css';
 export {default as ThemeContext} from './theme-context';
 export {default as ThemeContextProvider} from './theme-context-provider';
 export {default as ScreenReaderOnly} from './screen-reader-only';

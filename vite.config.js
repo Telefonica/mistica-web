@@ -5,7 +5,14 @@ import {vanillaExtractPlugin} from '@vanilla-extract/vite-plugin';
 import noBundlePlugin from 'vite-plugin-no-bundle';
 
 export default defineConfig({
-    plugins: [react(), vanillaExtractPlugin(), noBundlePlugin()],
+    plugins: [
+        react(),
+        vanillaExtractPlugin(),
+        noBundlePlugin({
+            // Change .css.js files to something else so that they don't get re-processed by consumer apps using vanilla extract too
+            fileNames: ({name}) => `${name.replace(/\.css$/, '.css.vanilla')}.js`,
+        }),
+    ],
     publicDir: false,
     build: {
         lib: {
