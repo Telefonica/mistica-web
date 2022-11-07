@@ -111,7 +111,8 @@ export const getO2Skin: GetKnownSkin = () => {
             textButtonSecondary: palette.o2BluePrimary,
             textButtonSecondarySelected: palette.o2BluePrimary70,
             textButtonSecondaryInverse: palette.white,
-            textButtonSecondaryInverseSelected: palette.o2BluePrimary30,
+            textButtonSecondaryInverseSelected: palette.white,
+
             textLink: palette.o2BluePrimary,
             textLinkInverse: palette.white,
             textLinkDanger: palette.pepper,
@@ -207,10 +208,6 @@ export const getO2Skin: GetKnownSkin = () => {
 
             buttonSecondaryBackground: palette.darkModeO2BluePrimary,
             buttonSecondaryBackgroundSelected: palette.darkModeO2BluePrimaryDark,
-            buttonSecondaryBorderInverse: palette.darkModeO2BluePrimary,
-            buttonSecondaryBorderSelectedInverse: palette.darkModeO2BluePrimaryDark,
-            buttonSecondaryBackgroundHover: palette.darkModeO2BluePrimaryDark,
-            buttonSecondaryBackgroundSelectedInverse: applyAlpha(palette.darkModeO2BluePrimary, 0.2),
 
             textButtonPrimary: palette.grey2,
             textButtonPrimaryInverse: palette.grey2,
@@ -219,7 +216,7 @@ export const getO2Skin: GetKnownSkin = () => {
             textButtonSecondary: palette.grey2,
             textButtonSecondarySelected: palette.grey3,
             textButtonSecondaryInverse: palette.grey2,
-            textButtonSecondaryInverseSelected: palette.grey3,
+            textButtonSecondaryInverseSelected: palette.grey2,
 
             textLink: palette.o2BluePrimary30,
             textLinkInverse: palette.o2BluePrimary30,
