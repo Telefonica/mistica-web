@@ -64,7 +64,7 @@ test('MediaCard with body closeable', async () => {
         args: {
             withExtra: true,
             actions: 'button and link',
-            closeable: true,
+            closable: true,
         },
     });
 
