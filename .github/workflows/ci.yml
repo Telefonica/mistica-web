@@ -75,7 +75,7 @@ jobs:
                   name: failed-screenshots
 
             - name: Display structure of downloaded files
-              run: ls -R
+              run: find . | grep diff.png
 
             - name: 'Upload failed screenshot diffs'
               uses: './.github/actions/upload-failed-screenshots'
