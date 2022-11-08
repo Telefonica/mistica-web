@@ -223,6 +223,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             buttonSecondaryBackgroundHover: palette.movistarBlue10,
             buttonSecondaryBackgroundSelectedInverse: applyAlpha(palette.movistarBlue, 0.2),
 
+
             textButtonPrimary: palette.darkModeGrey1,
             textButtonPrimaryInverse: palette.darkModeGrey1,
             textButtonPrimaryInverseSelected: palette.darkModeGrey1,
