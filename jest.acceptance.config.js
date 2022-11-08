@@ -21,10 +21,11 @@ module.exports = {
     testMatch: [
         '**/__acceptance_tests__/*-acceptance-test.tsx',
         '**/__screenshot_tests__/*-screenshot-test.tsx',
+        '!**/__acceptance_tests__/*-ssr-acceptance-test.tsx', // these are handled in jest.ssr.config.js
     ],
 
-    globalSetup: require.resolve('./src/test-utils/environment/setup.tsx'),
+    globalSetup: 'jest-environment-puppeteer/setup',
     globalTeardown: 'jest-environment-puppeteer/teardown',
     testEnvironment: 'jest-environment-puppeteer',
-    setupFilesAfterEnv: [require.resolve('./src/test-utils/setup-acceptance-test-env.tsx')],
+    setupFilesAfterEnv: [require.resolve('./src/test-utils/fail-test-on-console-error.tsx')],
 };

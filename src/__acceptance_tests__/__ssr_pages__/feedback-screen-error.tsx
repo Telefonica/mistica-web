@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ErrorFeedbackScreen, ButtonPrimary} from '../..';
+import {ErrorFeedbackScreen, ButtonPrimary} from '../../..';
 
 const ErrorFeedbackScreenTest: React.FC = () => (
     <ErrorFeedbackScreen

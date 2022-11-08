@@ -12,6 +12,7 @@ jobs:
             total-js: ${{ steps.stats.outputs.total-js }}
             js-without-icons: ${{ steps.stats.outputs.js-without-icons }}
             lib-overhead: ${{ steps.stats.outputs.lib-overhead }}
+            lib-overhead-gzip: ${{ steps.stats.outputs.lib-overhead-gzip }}
 
         steps:
             - uses: actions/checkout@v2
@@ -30,6 +31,7 @@ jobs:
             total-js: ${{ steps.stats.outputs.total-js }}
             js-without-icons: ${{ steps.stats.outputs.js-without-icons }}
             lib-overhead: ${{ steps.stats.outputs.lib-overhead }}
+            lib-overhead-gzip: ${{ steps.stats.outputs.lib-overhead-gzip }}
 
         steps:
             - uses: actions/checkout@v2
@@ -63,9 +65,11 @@ jobs:
                   master-total-js: ${{ needs.master-size-stats.outputs.total-js }}
                   master-js-without-icons: ${{ needs.master-size-stats.outputs.js-without-icons }}
                   master-lib-overhead: ${{ needs.master-size-stats.outputs.lib-overhead }}
+                  master-lib-overhead-gzip: ${{ needs.master-size-stats.outputs.lib-overhead-gzip }}
                   pr-total-js: ${{ needs.branch-size-stats.outputs.total-js }}
                   pr-js-without-icons: ${{ needs.branch-size-stats.outputs.js-without-icons }}
                   pr-lib-overhead: ${{ needs.branch-size-stats.outputs.lib-overhead }}
+                  pr-lib-overhead-gzip: ${{ needs.branch-size-stats.outputs.lib-overhead-gzip }}
 
             - name: Comment on PR
               uses: ./.github/shared-actions/novum/comment-pr

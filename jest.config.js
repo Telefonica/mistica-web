@@ -1,4 +1,8 @@
 module.exports = {
     ...require('./jest.base.config'),
-    projects: ['<rootDir>/jest.unit.config.js', '<rootDir>/jest.acceptance.config.js'],
+    projects: [
+        '<rootDir>/jest.unit.config.js',
+        '<rootDir>/jest.ssr.config.js',
+        '<rootDir>/jest.acceptance.config.js',
+    ],
 };
