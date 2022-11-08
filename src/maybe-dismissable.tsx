@@ -25,7 +25,7 @@ const useStyles = createUseStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
+        zIndex: 1, // needed because images has zIndex 1, otherwise this component won't be shown
     },
     dismissableCircleContainer: {
         display: 'flex',
