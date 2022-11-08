@@ -10,8 +10,6 @@ const main = async () => {
     const filenames = glob.sync(core.getInput('glob') || process.env.INPUT_GLOB);
 
     core.info('Upload failed screenshot test diffs');
-    core.info('Using glob: ' + core.getInput('glob'));
-    core.info(`Found ${filenames.length} files`);
 
     const uploads = [];
 
