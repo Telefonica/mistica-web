@@ -1,0 +1,4 @@
+// @flow
+
+declare export var touchable: string;
+declare export var notTouchable: string;
