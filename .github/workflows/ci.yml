@@ -57,7 +57,7 @@ jobs:
         runs-on: ubuntu-latest
         container: telefonica/web-builder:chromium93.0.4577-1.2.4
         needs: [build-acceptance]
-        if: [needs.build-acceptance.result == 'failure']
+        if: needs.build-acceptance.result == 'failure'
 
         steps:
             - uses: actions/checkout@v2
