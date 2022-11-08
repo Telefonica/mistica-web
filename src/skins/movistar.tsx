@@ -102,12 +102,14 @@ export const getMovistarSkin: GetKnownSkin = () => {
             buttonPrimaryBackgroundHover: palette.movistarBlue55, // web only
             buttonPrimaryBackgroundSelectedInverse: palette.movistarBlue55,
 
-            buttonSecondaryBackgroundSelected: palette.movistarBlue10,
+            
             buttonSecondaryBorder: palette.movistarBlue,
             buttonSecondaryBorderSelected: palette.movistarBlue55,
+            buttonSecondaryBackgroundHover: palette.movistarBlue10, // web only
+            buttonSecondaryBackgroundSelected: palette.movistarBlue10,     
             buttonSecondaryBorderInverse: palette.white,
-            buttonSecondaryBorderSelectedInverse: palette.movistarBlue30,
-            buttonSecondaryBackgroundHover: palette.movistarBlue10,
+            buttonSecondaryBorderSelectedInverse: palette.movistarBlue30, 
+            buttonSecondaryBackgroundHoverInverse: applyAlpha(palette.movistarBlue, 0.2), // web only
             buttonSecondaryBackgroundSelectedInverse: applyAlpha(palette.movistarBlue, 0.2),
 
             textButtonPrimary: palette.white,
@@ -216,12 +218,12 @@ export const getMovistarSkin: GetKnownSkin = () => {
             buttonPrimaryBackgroundHover: palette.movistarBlue55, // web only
             buttonPrimaryBackgroundSelectedInverse: palette.movistarBlue55,
 
-            buttonSecondaryBackground: palette.movistarBlue,
-            buttonSecondaryBackgroundSelected: palette.movistarBlue55,
-            buttonSecondaryBorderInverse: palette.white,
-            buttonSecondaryBorderSelectedInverse: palette.movistarBlue30,
+
             buttonSecondaryBackgroundHover: palette.movistarBlue10,
-            buttonSecondaryBackgroundSelectedInverse: applyAlpha(palette.movistarBlue, 0.2),
+            buttonSecondaryBackgroundSelected: applyAlpha(palette.movistarBlue, 0.2),
+            buttonSecondaryBorder:palette.white,
+            buttonSecondaryBorderSelected:palette.movistarBlue30,
+            
 
             textButtonPrimary: palette.darkModeGrey1,
             textButtonPrimaryInverse: palette.darkModeGrey1,

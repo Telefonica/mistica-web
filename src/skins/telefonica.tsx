@@ -94,7 +94,8 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             buttonSecondaryBorderSelected: palette.telefonicaBlue70,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.telefonicaBlue20,
-            buttonSecondaryBackgroundHover: palette.telefonicaBlue70,
+            buttonSecondaryBackgroundHover: palette.telefonicaBlue70, // web only
+            buttonSecondaryBackgroundHoverInverse: applyAlpha(palette.telefonicaBlue70, 0.2), // web only
             buttonSecondaryBackgroundSelectedInverse: applyAlpha(palette.telefonicaBlue70, 0.2),
 
 
@@ -196,8 +197,11 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             buttonPrimaryBackgroundHover: palette.telefonicaBlue70, // web only
             buttonPrimaryBackgroundSelectedInverse: palette.telefonicaBlue70,
 
-            buttonSecondaryBackground: palette.telefonicaBlue,
-            buttonSecondaryBackgroundSelected: palette.telefonicaBlue70,
+            buttonSecondaryBackgroundSelected: applyAlpha(palette.telefonicaBlue70, 0.2),
+            buttonSecondaryBorder: palette.white,
+            buttonSecondaryBorderSelected: palette.telefonicaBlue20,
+            buttonSecondaryBackgroundHover: applyAlpha(palette.telefonicaBlue70, 0.2),
+  
 
             textButtonPrimary: palette.grey2,
             textButtonPrimaryInverse: palette.grey2,
