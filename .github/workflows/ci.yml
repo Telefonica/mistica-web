@@ -74,9 +74,11 @@ jobs:
               with:
                   name: failed-screenshots
 
+            - name: Display structure of downloaded files
+              run: ls -R
+
             - name: 'Upload failed screenshot diffs'
               uses: './.github/actions/upload-failed-screenshots'
-              if: always()
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   azure-account-name: ${{ secrets.AZURE_ACCOUNT_NAME }}
