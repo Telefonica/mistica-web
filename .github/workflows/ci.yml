@@ -73,9 +73,7 @@ jobs:
               uses: actions/download-artifact@v3
               with:
                   name: failed-screenshots
-
-            - name: Display structure of downloaded files
-              run: find . | grep diff.png
+                  path: src/
 
             - name: 'Upload failed screenshot diffs'
               uses: './.github/actions/upload-failed-screenshots'
