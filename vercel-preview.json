@@ -1,0 +1,8 @@
+{
+    "version": 2,
+    "buildCommand": "yarn vercel-preview-build",
+    "outputDirectory": "public",
+    "github": {
+        "enabled": false
+    }
+}

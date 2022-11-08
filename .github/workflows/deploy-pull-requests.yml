@@ -3,6 +3,8 @@ on: [pull_request]
 jobs:
     deploy:
         runs-on: ubuntu-latest
+        outputs:
+            preview-url: ${{ steps.vercel-deploy.outputs.preview-url }}
         steps:
             - uses: actions/checkout@v2
 
@@ -14,7 +16,14 @@ jobs:
                   vercel-org-id: ${{ secrets.MISTICA_WEB_VERCEL_ORG_ID}} # required
                   vercel-project-id: ${{ secrets.MISTICA_WEB_VERCEL_PROJECT_ID}} # required
                   vercel-project-name: mistica-web # not required by the docs, but the action fails if not specified. See https://github.com/amondnet/vercel-action/issues/30#issuecomment-678608424
+                  vercel-args: '--local-config=vercel-preview.json'
                   working-directory: ./
+
+    audit-a11y:
+        runs-on: ubuntu-latest
+        needs: [deploy]
+        steps:
+            - uses: actions/checkout@v2
 
             - name: Install dependencies
               env:
@@ -27,7 +36,7 @@ jobs:
             - name: 'Audit accessibility'
               uses: './.github/actions/audit-accessibility'
               with:
-                  storybook-url: ${{steps.vercel-deploy.outputs.preview-url}}
+                  storybook-url: ${{ needs.deploy.outputs.preview-url }}
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   azure-account-name: ${{ secrets.AZURE_ACCOUNT_NAME }}
                   azure-account-key: ${{ secrets.AZURE_ACCOUNT_KEY }}
