@@ -36,6 +36,7 @@ jobs:
         strategy:
             matrix:
                 shard: [1, 2, 3]
+            fail-fast: false
 
         steps:
             - uses: actions/checkout@v2
