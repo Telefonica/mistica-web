@@ -1,37 +1,10 @@
 import * as React from 'react';
-import {createUseStyles} from './jss';
 import classnames from 'classnames';
+import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {getPrefixedDataAttributes} from './utils/dom';
+import * as classes from './inline.css';
 
 import type {DataAttributes} from './utils/types';
-
-const useStyles = createUseStyles(() => ({
-    inline: {
-        display: (p) => (p.fullWidth ? 'flex' : 'inline-flex'),
-        flexDirection: 'row',
-        '@supports (display: grid)': {
-            display: (p) => (p.fullWidth ? 'grid' : 'inline-grid'),
-            gridAutoFlow: 'column',
-        },
-        alignItems: ({alignItems}) => alignItems,
-        justifyContent: (p) => {
-            switch (p.space) {
-                case 'between':
-                case 'around':
-                case 'evenly':
-                    return `space-${p.space}`;
-                default:
-                    return 'initial';
-            }
-        },
-        '& > div:not(:empty) ~ div:not(:empty)': {
-            marginLeft: (p) => (typeof p.space === 'number' ? p.space : undefined),
-        },
-        '& > div:empty': {
-            display: 'none',
-        },
-    },
-}));
 
 type Props = {
     space: 0 | 2 | 4 | 8 | 12 | 16 | 24 | 32 | 40 | 48 | 56 | 64 | 'between' | 'around' | 'evenly';
@@ -44,6 +17,17 @@ type Props = {
     dataAttributes?: DataAttributes;
 };
 
+const getJustifyContent = (space: Props['space']) => {
+    switch (space) {
+        case 'between':
+        case 'around':
+        case 'evenly':
+            return `space-${space}`;
+        default:
+            return 'initial';
+    }
+};
+
 const Inline: React.FC<Props> = ({
     space,
     className,
@@ -54,11 +38,19 @@ const Inline: React.FC<Props> = ({
     fullWidth,
     dataAttributes,
 }) => {
-    const classes = useStyles({space, alignItems, fullWidth: fullWidth || typeof space === 'string'});
+    const isFullWith = fullWidth || typeof space === 'string';
 
     return (
         <div
-            className={classnames(className, classes.inline)}
+            className={classnames(className, {
+                [classes.fullWidth]: isFullWith,
+                [classes.noFullWidth]: !isFullWith,
+            })}
+            style={assignInlineVars({
+                [classes.space]: typeof space === 'number' ? `${space}px` : '',
+                justifyContent: getJustifyContent(space),
+                alignItems,
+            })}
             role={role}
             aria-labelledby={ariaLabelledBy}
             {...getPrefixedDataAttributes(dataAttributes)}

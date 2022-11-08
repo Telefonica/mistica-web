@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import ScreenReaderOnly from './screen-reader-only';
-import {createUseStyles} from './jss';
+import * as classes from './touchable.css';
 import {useTheme} from './hooks';
 import {isInsideNovumNativeApp} from './utils/platform';
 import {ENTER, SPACE} from './utils/key-codes';
@@ -19,41 +19,6 @@ const redirect = (url: string, external = false, loadOnTop = false): void => {
         document.location.href = url;
     }
 };
-
-const useStyles = createUseStyles(() => ({
-    touchable: {
-        color: 'inherit',
-        verticalAlign: 'bottom', // required to remove bottom gap when rendered as inline-block div
-        fontFamily: 'inherit',
-        overflow: 'visible',
-        appearance: 'none',
-        border: 'none',
-        cursor: 'pointer',
-        display: 'block',
-        userSelect: 'none',
-        backgroundColor: 'transparent',
-        padding: 0,
-        textAlign: 'inherit',
-        textDecoration: 'none',
-        fontSize: 'inherit',
-        WebkitTapHighlightColor: 'transparent',
-        width: '100%',
-        '&::-moz-focus-inner': {
-            padding: 0,
-            border: 'none',
-        },
-        '&[disabled]': {
-            cursor: 'default',
-        },
-        '&:active, &:hover': {
-            textDecoration: 'none',
-        },
-    },
-
-    notTouchable: {
-        cursor: 'auto',
-    },
-}));
 
 export type PressHandler = (event: React.MouseEvent<HTMLElement>) => void;
 
@@ -134,7 +99,6 @@ export type TouchableElement = HTMLDivElement | HTMLAnchorElement | HTMLButtonEl
 const Touchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
     const {texts, analytics, platformOverrides, Link, useHrefDecorator} = useTheme();
     const hrefDecorator = useHrefDecorator();
-    const classes = useStyles();
     const isClicked = React.useRef(false);
     let trackingEvents: ReadonlyArray<TrackingEvent> = [];
     if (props.trackingEvent) {
