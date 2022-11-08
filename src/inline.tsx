@@ -2,7 +2,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {getPrefixedDataAttributes} from './utils/dom';
-import * as classes from './inline.css';
+import * as styles from './inline.css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -43,14 +43,16 @@ const Inline: React.FC<Props> = ({
     return (
         <div
             className={classnames(className, {
-                [classes.fullWidth]: isFullWith,
-                [classes.noFullWidth]: !isFullWith,
+                [styles.fullWidth]: isFullWith,
+                [styles.noFullWidth]: !isFullWith,
             })}
-            style={assignInlineVars({
-                [classes.space]: typeof space === 'number' ? `${space}px` : '',
+            style={{
+                ...assignInlineVars({
+                    [styles.vars.space]: typeof space === 'number' ? `${space}px` : '',
+                }),
                 justifyContent: getJustifyContent(space),
                 alignItems,
-            })}
+            }}
             role={role}
             aria-labelledby={ariaLabelledBy}
             {...getPrefixedDataAttributes(dataAttributes)}

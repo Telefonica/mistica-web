@@ -2,7 +2,7 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {getPrefixedDataAttributes} from './utils/dom';
-import * as classes from './stack.css';
+import * as styles from './stack.css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -22,8 +22,8 @@ const Stack: React.FC<Props> = (props) => {
 
     return (
         <div
-            className={classnames(className, isNumeric ? classes.marginStack : classes.flexStack)}
-            style={assignInlineVars({[classes.space]: isNumeric ? `${space}px` : `space-${space}`})}
+            className={classnames(className, isNumeric ? styles.marginStack : styles.flexStack)}
+            style={assignInlineVars({[styles.vars.space]: isNumeric ? `${space}px` : `space-${space}`})}
             role={role}
             aria-labelledby={props['aria-labelledby']}
             {...getPrefixedDataAttributes(props.dataAttributes)}

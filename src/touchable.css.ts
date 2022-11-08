@@ -25,6 +25,7 @@ export const touchable = style({
     },
 
     selectors: {
+        // Why needed?
         '&::-moz-focus-inner': {
             padding: 0,
             border: 'none',

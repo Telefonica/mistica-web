@@ -1,0 +1,73 @@
+import {style, createVar} from '@vanilla-extract/css';
+import * as mq from './media-queries.css';
+
+const mobileSize = createVar();
+const desktopSize = createVar();
+const mobileLineHeight = createVar();
+const desktopLineHeight = createVar();
+const wordBreak = createVar();
+const lineClamp = createVar();
+
+export const vars = {
+    mobileSize,
+    desktopSize,
+    mobileLineHeight,
+    desktopLineHeight,
+    lineClamp,
+    wordBreak,
+};
+
+export const text = style({
+    '@supports': {
+        'not (overflow-wrap: anywhere)': {
+            // "overflow-wrap: anywhere" is not supported in Safari
+            // "word-break: break-word" has the same effect as "word-break: normal" and "overflow-wrap: anywhere",
+            // regardless of the actual value of the overflow-wrap property.
+            wordBreak,
+        },
+    },
+    fontSize: desktopSize,
+    lineHeight: desktopLineHeight,
+
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            lineHeight: mobileLineHeight,
+            fontSize: mobileSize,
+        },
+    },
+});
+
+export const truncate = style({
+    WebkitLineClamp: lineClamp,
+    lineClamp,
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical', // Needed, maybe postcss does not work?
+    boxOrient: 'vertical',
+    overflow: 'hidden',
+});
+
+export const truncateToOneLine = style([
+    truncate,
+    {
+        wordBreak: 'break-all',
+        '@supports': {
+            '(overflow-wrap: anywhere)': {
+                overflowWrap: 'anywhere',
+                wordBreak: 'break-all',
+            },
+        },
+    },
+]);
+
+export const truncateToMoreThanOneLine = style([
+    truncate,
+    {
+        wordBreak: 'break-word',
+        '@supports': {
+            '(overflow-wrap: anywhere)': {
+                overflowWrap: 'anywhere',
+                wordBreak: 'normal',
+            },
+        },
+    },
+]);

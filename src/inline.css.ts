@@ -1,6 +1,8 @@
 import {style, createVar, globalStyle} from '@vanilla-extract/css';
 
-export const space = createVar();
+const space = createVar();
+
+export const vars = {space};
 
 export const inline = style({
     flexDirection: 'row',
