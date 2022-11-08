@@ -102,7 +102,13 @@ export const AspectRatioElement = (props: AspectRatioElementProps): JSX.Element 
         {
             className: props.className ? `${props.className} ${classes.container}` : classes.container,
             style: {
-                ...(needsWrapper ? {...props.style, width: '100%'} : {...props.style, width, height}),
+                ...(needsWrapper
+                    ? {...props.style, width: '100%'}
+                    : {
+                          ...props.style,
+                          width: !isNaN(Number(width)) ? Number(width) : width,
+                          height: !isNaN(Number(height)) ? Number(height) : height,
+                      }),
             },
         },
         props.children
