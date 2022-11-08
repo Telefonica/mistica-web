@@ -27,10 +27,48 @@ jobs:
             - run: yarn circular-dependencies
             - run: yarn build
             - run: yarn ts-check
-            - run: yarn storybook-static
             - run: yarn test --ci
             - run: NO_BUILD=true yarn test-ssr --ci
-            - run: yarn test-acceptance --ci
+
+    build-acceptance:
+        runs-on: ubuntu-latest
+        container: telefonica/web-builder:chromium93.0.4577-1.2.4
+        strategy:
+            matrix:
+                shard: [1, 2, 3]
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Install dependencies
+              env:
+                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+              run: yarn install --immutable --immutable-cache
+
+            - run: yarn storybook-static
+            - run: yarn test-acceptance --ci --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+
+            - uses: actions/upload-artifact@v3
+              with:
+                  name: failed-screenshots
+                  path: src/**/__diff_output__/*-diff.png
+
+    build-upload-failed-screenshots:
+        runs-on: ubuntu-latest
+        container: telefonica/web-builder:chromium93.0.4577-1.2.4
+        needs: [build-acceptance]
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Install dependencies
+              env:
+                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+              run: yarn install --immutable --immutable-cache
+
+            - uses: actions/download-artifact@v3
+              with:
+                  name: failed-screenshots
 
             - name: 'Upload failed screenshot diffs'
               uses: './.github/actions/upload-failed-screenshots'
