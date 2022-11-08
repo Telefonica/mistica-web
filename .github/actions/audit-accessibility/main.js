@@ -190,6 +190,7 @@ const disabledRules = {
 };
 
 const main = async () => {
+    const isCi = process.env.CI;
     process.chdir(PATH_REPO_ROOT);
 
     if (!process.env.CI) {
@@ -200,7 +201,11 @@ const main = async () => {
     const stories = getStories().filter((story) => !STORIES_BLACKLIST.has(story));
     const {closeStorybook, getStoryUrl} = await startStorybook();
 
-    const browser = await puppeteer.launch({args: ['--incognito', '--no-sandbox']});
+    const browser = await puppeteer.launch({
+        // Launch chromium installed in docker in CI
+        ...(isCi ? {executablePath: '/usr/bin/chromium'} : {}),
+        args: ['--incognito', '--no-sandbox'],
+    });
 
     /** @type Array<[name: string, results: import('axe-core').AxeResults]> */
     const results = [];
