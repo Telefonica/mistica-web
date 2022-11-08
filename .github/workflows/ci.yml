@@ -50,6 +50,7 @@ jobs:
             - run: yarn test-acceptance --ci --shard=${{ matrix.shard }}/${{ strategy.job-total }}
 
             - uses: actions/upload-artifact@v3
+              if: always()
               with:
                   name: failed-screenshots
                   path: src/**/__diff_output__/*-diff.png
@@ -58,7 +59,7 @@ jobs:
         runs-on: ubuntu-latest
         container: telefonica/web-builder:chromium93.0.4577-1.2.4
         needs: [build-acceptance]
-        if: always() && needs.build-acceptance.result == 'failure'
+        if: always()
 
         steps:
             - uses: actions/checkout@v2
@@ -68,7 +69,8 @@ jobs:
                   PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
               run: yarn install --immutable --immutable-cache
 
-            - uses: actions/download-artifact@v3
+            - if: needs.build-acceptance.result == 'failure'
+              uses: actions/download-artifact@v3
               with:
                   name: failed-screenshots
 
