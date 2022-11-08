@@ -110,6 +110,14 @@ const v = true;
     {/* OK - checkbox */}
     <BoxedRow title="with checkbox" checkbox={v ? {name: 'checkbox', value: true} : undefined} />
 
+    {/* @ts-expect-error - both checkbox and switch cannot be defined at the same time */}
+    <BoxedRow
+        title="both switch and checkbox"
+        onPress={() => {}}
+        checkbox={v ? {defaultValue: true, onChange: () => {}} : undefined}
+        switch={v ? {defaultValue: true, onChange: () => {}} : undefined}
+    />
+
     {/* OK - radio */}
     <BoxedRow title="radio" radioValue="radio" />
 </BoxedRowList>;
