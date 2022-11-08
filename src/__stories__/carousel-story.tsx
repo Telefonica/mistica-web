@@ -28,6 +28,7 @@ type Args = {
     itemsToScroll: number;
     autoplay: boolean;
     loop: boolean;
+    initialActiveItem: number;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -41,6 +42,7 @@ export const Default: StoryComponent<Args> = ({
     itemsToScroll,
     autoplay,
     loop,
+    initialActiveItem,
 }) => {
     const [pageInfo, setPageInfo] = React.useState<{
         pageIndex: number;
@@ -73,6 +75,7 @@ export const Default: StoryComponent<Args> = ({
                                 buttonLink={<ButtonLink href="https://google.com">Link {idx}</ButtonLink>}
                             />
                         ))}
+                        initialActiveItem={initialActiveItem}
                     />
                     <Stack space={8}>
                         <Title1 as="h2">Current page info</Title1>
@@ -101,4 +104,5 @@ Default.args = {
     autoplay: false,
     loop: false,
     itemsToScroll: 0,
+    initialActiveItem: 0,
 };

@@ -18,6 +18,8 @@ jobs:
             - uses: actions/checkout@v2
 
             - name: Install dependencies
+              env:
+                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
               run: yarn install --immutable --immutable-cache
 
             - run: yarn lint
