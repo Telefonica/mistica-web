@@ -24,9 +24,11 @@ exports[`popover default(bottom) style 1`] = `
       </div>
       <div
         class="sprinkles_paddingTop_16__1y2v1nf5m sprinkles_paddingBottom_16__1y2v1nf60 sprinkles_paddingLeft_16__1y2v1nf6e sprinkles_paddingRight_16__1y2v1nf6s"
+        style="box-sizing: border-box;"
       >
         <div
           class="boxContent sprinkles_paddingTop_0__1y2v1nf5h sprinkles_paddingBottom_0__1y2v1nf5v sprinkles_paddingLeft_0__1y2v1nf69 sprinkles_paddingRight_24__1y2v1nf6t"
+          style="box-sizing: border-box;"
         >
           <div
             class="sprinkles_alignItems_stretch__1y2v1nf58 inline_noFullWidth__kkfbnv3 inline_inline__kkfbnv1"
@@ -35,6 +37,7 @@ exports[`popover default(bottom) style 1`] = `
             <div>
               <div
                 class="textAlign sprinkles_paddingTop_0__1y2v1nf5h sprinkles_paddingBottom_0__1y2v1nf5v sprinkles_paddingLeft_0__1y2v1nf69 sprinkles_paddingRight_0__1y2v1nf6n"
+                style="box-sizing: border-box;"
               >
                 <div
                   class="textContent stack_marginStack__xjgm6d1"
@@ -102,9 +105,11 @@ exports[`popover left style 1`] = `
       </div>
       <div
         class="sprinkles_paddingTop_16__1y2v1nf5m sprinkles_paddingBottom_16__1y2v1nf60 sprinkles_paddingLeft_16__1y2v1nf6e sprinkles_paddingRight_16__1y2v1nf6s"
+        style="box-sizing: border-box;"
       >
         <div
           class="boxContent sprinkles_paddingTop_0__1y2v1nf5h sprinkles_paddingBottom_0__1y2v1nf5v sprinkles_paddingLeft_0__1y2v1nf69 sprinkles_paddingRight_24__1y2v1nf6t"
+          style="box-sizing: border-box;"
         >
           <div
             class="sprinkles_alignItems_stretch__1y2v1nf58 inline_noFullWidth__kkfbnv3 inline_inline__kkfbnv1"
@@ -113,6 +118,7 @@ exports[`popover left style 1`] = `
             <div>
               <div
                 class="textAlign sprinkles_paddingTop_0__1y2v1nf5h sprinkles_paddingBottom_0__1y2v1nf5v sprinkles_paddingLeft_0__1y2v1nf69 sprinkles_paddingRight_0__1y2v1nf6n"
+                style="box-sizing: border-box;"
               >
                 <div
                   class="textContent stack_marginStack__xjgm6d1"
@@ -180,9 +186,11 @@ exports[`popover right style 1`] = `
       </div>
       <div
         class="sprinkles_paddingTop_16__1y2v1nf5m sprinkles_paddingBottom_16__1y2v1nf60 sprinkles_paddingLeft_16__1y2v1nf6e sprinkles_paddingRight_16__1y2v1nf6s"
+        style="box-sizing: border-box;"
       >
         <div
           class="boxContent sprinkles_paddingTop_0__1y2v1nf5h sprinkles_paddingBottom_0__1y2v1nf5v sprinkles_paddingLeft_0__1y2v1nf69 sprinkles_paddingRight_24__1y2v1nf6t"
+          style="box-sizing: border-box;"
         >
           <div
             class="sprinkles_alignItems_stretch__1y2v1nf58 inline_noFullWidth__kkfbnv3 inline_inline__kkfbnv1"
@@ -191,6 +199,7 @@ exports[`popover right style 1`] = `
             <div>
               <div
                 class="textAlign sprinkles_paddingTop_0__1y2v1nf5h sprinkles_paddingBottom_0__1y2v1nf5v sprinkles_paddingLeft_0__1y2v1nf69 sprinkles_paddingRight_0__1y2v1nf6n"
+                style="box-sizing: border-box;"
               >
                 <div
                   class="textContent stack_marginStack__xjgm6d1"
@@ -258,9 +267,11 @@ exports[`popover top style 1`] = `
       </div>
       <div
         class="sprinkles_paddingTop_16__1y2v1nf5m sprinkles_paddingBottom_16__1y2v1nf60 sprinkles_paddingLeft_16__1y2v1nf6e sprinkles_paddingRight_16__1y2v1nf6s"
+        style="box-sizing: border-box;"
       >
         <div
           class="boxContent sprinkles_paddingTop_0__1y2v1nf5h sprinkles_paddingBottom_0__1y2v1nf5v sprinkles_paddingLeft_0__1y2v1nf69 sprinkles_paddingRight_24__1y2v1nf6t"
+          style="box-sizing: border-box;"
         >
           <div
             class="sprinkles_alignItems_stretch__1y2v1nf58 inline_noFullWidth__kkfbnv3 inline_inline__kkfbnv1"
@@ -269,6 +280,7 @@ exports[`popover top style 1`] = `
             <div>
               <div
                 class="textAlign sprinkles_paddingTop_0__1y2v1nf5h sprinkles_paddingBottom_0__1y2v1nf5v sprinkles_paddingLeft_0__1y2v1nf69 sprinkles_paddingRight_0__1y2v1nf6n"
+                style="box-sizing: border-box;"
               >
                 <div
                   class="textContent stack_marginStack__xjgm6d1"
