@@ -94,7 +94,7 @@ export const Text: React.FC<TextProps> = ({
     if (!children && children !== 0) {
         return null;
     }
-    const className = classnames(styles.text, {
+    const className = classnames(styles.text, wordBreak ? styles.withWordBreak : styles.withoutWordBreak, {
         [styles.truncateToOneLine]: truncate === 1 || truncate === true,
         [styles.truncateToMoreThanOneLine]: truncate && truncate > 1,
     });
@@ -108,9 +108,8 @@ export const Text: React.FC<TextProps> = ({
     const textVars = truncate
         ? assignInlineVars({
               [styles.vars.lineClamp]: String(lineClampValue),
-              [styles.vars.wordBreak]: wordBreak ? 'break-word' : 'inherit',
           })
-        : assignInlineVars({[styles.vars.wordBreak]: wordBreak ? 'break-word' : 'inherit'});
+        : {};
 
     return React.createElement(
         as,

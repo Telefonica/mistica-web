@@ -1,6 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
+import {sprinkles} from './sprinkles.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './inline.css';
 
@@ -42,16 +43,16 @@ const Inline: React.FC<Props> = ({
 
     return (
         <div
-            className={classnames(className, {
-                [styles.fullWidth]: isFullWith,
-                [styles.noFullWidth]: !isFullWith,
-            })}
+            className={classnames(
+                className,
+                sprinkles({alignItems}),
+                isFullWith ? styles.fullWidth : styles.noFullWidth
+            )}
             style={{
                 ...assignInlineVars({
                     [styles.vars.space]: typeof space === 'number' ? `${space}px` : '',
                 }),
                 justifyContent: getJustifyContent(space),
-                alignItems,
             }}
             role={role}
             aria-labelledby={ariaLabelledBy}

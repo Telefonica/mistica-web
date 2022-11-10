@@ -1,4 +1,6 @@
 import * as React from 'react';
+import classnames from 'classnames';
+import {sprinkles} from './sprinkles.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
@@ -44,13 +46,15 @@ const Box = React.forwardRef<HTMLDivElement, Props>(
         return (
             <div
                 {...getPrefixedDataAttributes(dataAttributes)}
-                className={className}
                 role={role}
                 aria-label={ariaLabel}
                 ref={ref}
+                className={classnames(
+                    className,
+                    sprinkles({paddingTop, paddingBottom, paddingLeft, paddingRight})
+                )}
                 style={{
                     width,
-                    padding: `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`,
                 }}
             >
                 {children}

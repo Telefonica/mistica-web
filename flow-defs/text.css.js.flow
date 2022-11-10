@@ -21,11 +21,9 @@ declare export var vars: {
     $Exports<"@vanilla-extract/private">,
     "CSSVarFunction"
   >,
-  wordBreak: $PropertyType<
-    $Exports<"@vanilla-extract/private">,
-    "CSSVarFunction"
-  >,
 };
+declare export var withWordBreak: string;
+declare export var withoutWordBreak: string;
 declare export var text: string;
 declare export var truncate: string;
 declare export var truncateToOneLine: string;

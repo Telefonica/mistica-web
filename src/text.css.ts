@@ -5,7 +5,6 @@ const mobileSize = createVar();
 const desktopSize = createVar();
 const mobileLineHeight = createVar();
 const desktopLineHeight = createVar();
-const wordBreak = createVar();
 const lineClamp = createVar();
 
 export const vars = {
@@ -14,18 +13,30 @@ export const vars = {
     mobileLineHeight,
     desktopLineHeight,
     lineClamp,
-    wordBreak,
 };
 
-export const text = style({
+export const withWordBreak = style({
+    overflowWrap: 'anywhere',
     '@supports': {
         'not (overflow-wrap: anywhere)': {
             // "overflow-wrap: anywhere" is not supported in Safari
             // "word-break: break-word" has the same effect as "word-break: normal" and "overflow-wrap: anywhere",
             // regardless of the actual value of the overflow-wrap property.
-            wordBreak,
+            wordBreak: 'break-word',
         },
     },
+});
+
+export const withoutWordBreak = style({
+    overflowWrap: 'inherit',
+    '@supports': {
+        'not (overflow-wrap: anywhere)': {
+            wordBreak: 'inherit',
+        },
+    },
+});
+
+export const text = style({
     fontSize: desktopSize,
     lineHeight: desktopLineHeight,
 
