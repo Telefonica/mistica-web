@@ -1,3 +1,16 @@
+# [12.9.0](https://github.com/Telefonica/mistica-web/compare/v12.8.0...v12.9.0) (2022-11-10)
+
+
+### Bug Fixes
+
+* **Cards:** close button ([#576](https://github.com/Telefonica/mistica-web/issues/576)) ([4c27059](https://github.com/Telefonica/mistica-web/commit/4c27059fbe702c47d4e85813e659ac577896f954))
+* **playroom:** PreviewTools tabs in desktop ([#574](https://github.com/Telefonica/mistica-web/issues/574)) ([76f39cc](https://github.com/Telefonica/mistica-web/commit/76f39cce00bbaf15ee7b7ac44004f6c92e6dcbe6))
+
+
+### Features
+
+* **Vanilla Extract:** as a future replacement of jss ([#561](https://github.com/Telefonica/mistica-web/issues/561)) ([8e54a95](https://github.com/Telefonica/mistica-web/commit/8e54a95ed2b9f24499ab7dcca196ed4c3953d6fe))
+
 # [12.8.0](https://github.com/Telefonica/mistica-web/compare/v12.7.0...v12.8.0) (2022-11-07)
 
 
