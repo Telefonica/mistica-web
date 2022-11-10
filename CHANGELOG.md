@@ -1,3 +1,10 @@
+## [12.9.1](https://github.com/Telefonica/mistica-web/compare/v12.9.0...v12.9.1) (2022-11-10)
+
+
+### Bug Fixes
+
+* **build:** use browserslist as compilation target ([#578](https://github.com/Telefonica/mistica-web/issues/578)) ([c81fe5d](https://github.com/Telefonica/mistica-web/commit/c81fe5d9de29ded2a54f7657717abf8620bebada))
+
 # [12.9.0](https://github.com/Telefonica/mistica-web/compare/v12.8.0...v12.9.0) (2022-11-10)
 
 
