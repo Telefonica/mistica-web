@@ -41,9 +41,9 @@
     "browserslist": [
         "chrome >= 36",
         "firefox >= 67",
-        "safari >= 10.1",
+        "safari >= 13",
         "edge >= 17",
-        "ios_saf >= 10"
+        "ios_saf >= 13"
     ],
     "prettier": "@telefonica/prettier-config",
     "acceptanceTests": {

@@ -38,12 +38,12 @@ export const text = style({
 });
 
 export const truncate = style({
+    display: '-webkit-box',
+    overflow: 'hidden',
     WebkitLineClamp: lineClamp,
     lineClamp,
-    display: '-webkit-box',
-    WebkitBoxOrient: 'vertical', // Needed, maybe postcss does not work?
+    WebkitBoxOrient: 'vertical',
     boxOrient: 'vertical',
-    overflow: 'hidden',
 });
 
 export const truncateToOneLine = style([

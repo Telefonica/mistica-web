@@ -46,7 +46,7 @@ test('<a> is rendered when using "to" prop', () => {
     expect(asFragment()).toMatchInlineSnapshot(`
         <DocumentFragment>
           <a
-            class="touchable button light"
+            class="touchable_touchable__mhti6u0 button light"
             href="/test"
             role="button"
           >
@@ -54,7 +54,8 @@ test('<a> is rendered when using "to" prop', () => {
               class="textContent"
             >
               <div
-                class="text text-d0 truncate truncate-d3"
+                class="text_text__splu5g6 text_truncateToOneLine__splu5g8 text_truncate__splu5g7"
+                style="--mobileSize__splu5g0: 1.000rem; --mobileLineHeight__splu5g2: 1.500rem; --desktopSize__splu5g1: 1.125rem; --desktopLineHeight__splu5g3: 1.500rem; --lineClamp__splu5g5: 1; --wordBreak__splu5g4: break-word; margin: 0px; font-weight: 500; text-transform: inherit; text-decoration: inherit; overflow-wrap: anywhere;"
               >
                 test
               </div>
