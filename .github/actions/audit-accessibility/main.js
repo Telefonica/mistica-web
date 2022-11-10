@@ -38,30 +38,20 @@ const getStories = () => {
  * >}
  */
 const startStorybook = () => {
-    if (process.env.CI) {
-        const baseUrl = require('@actions/core').getInput('storybook-url');
-        return Promise.resolve({
-            getStoryUrl: (id) => {
-                return `${baseUrl}/iframe.html?viewMode=story&id=${id}`;
-            },
-            closeStorybook: () => {},
-        });
-    } else {
-        return new Promise((resolve) => {
-            const port = 6006;
-            const storybookServer = new StaticServer({rootPath: 'public', port: port});
-            storybookServer.start(() => {
-                console.log(`Serving static storybook at: http://localhost:${port}`);
-                resolve({
-                    getStoryUrl: (id) => `http://localhost:${port}/iframe.html?viewMode=story&id=${id}`,
-                    closeStorybook: () => {
-                        console.log('Stopping static storybook server');
-                        storybookServer.stop();
-                    },
-                });
+    return new Promise((resolve) => {
+        const port = 6006;
+        const storybookServer = new StaticServer({rootPath: 'public', port: port});
+        storybookServer.start(() => {
+            console.log(`Serving static storybook at: http://localhost:${port}`);
+            resolve({
+                getStoryUrl: (id) => `http://localhost:${port}/iframe.html?viewMode=story&id=${id}`,
+                closeStorybook: () => {
+                    console.log('Stopping static storybook server');
+                    storybookServer.stop();
+                },
             });
         });
-    }
+    });
 };
 
 /**

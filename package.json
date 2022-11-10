@@ -31,6 +31,7 @@
         "playroom": "playroom start",
         "gen-ts-defs": "rimraf dist-ts && tsc --project tsconfig.production.json --emitDeclarationOnly && cp -r dist-ts/src/* dist && rimraf dist-ts",
         "vercel-build": "yarn storybook-static && ./node_modules/.bin/playroom build && FORCE_MOBILE=1 ./node_modules/.bin/playroom build && FORCE_DESKTOP=1 ./node_modules/.bin/playroom build && cp img/favicon.ico public/",
+        "vercel-preview-build": "yarn storybook-static && ./node_modules/.bin/playroom build && cp img/favicon.ico public/",
         "storybook-static": "rimraf public && yarn build-storybook -s ./.storybook/css/fonts -o public --quiet",
         "serve-static-storybook": "node ./scripts/serve-static-storybook.js",
         "detect-circular-dependencies": "npx dpdm --circular src/index.tsx",
