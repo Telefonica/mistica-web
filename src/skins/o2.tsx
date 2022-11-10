@@ -206,8 +206,7 @@ export const getO2Skin: GetKnownSkin = () => {
             buttonPrimaryBackgroundSelected: palette.darkModeO2BluePrimaryDark,
             buttonPrimaryBackgroundHover: palette.darkModeO2BluePrimaryDark,
             buttonPrimaryBackgroundSelectedInverse: palette.darkModeO2BluePrimaryDark,
-
-  
+            
 
             buttonSecondaryBackgroundSelected: applyAlpha(palette.o2BluePrimary70, 0.2),
             buttonSecondaryBorder: palette.white,

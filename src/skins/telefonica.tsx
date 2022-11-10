@@ -199,7 +199,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
 
             buttonSecondaryBackgroundSelected: applyAlpha(palette.telefonicaBlue70, 0.2),
             buttonSecondaryBorder: palette.white,
-            buttonSecondaryBorderSelected: palette.telefonicaBlue20,
+            buttonSecondaryBorderSelected: palette.telefonicaBlue70,
             buttonSecondaryBackgroundHover: applyAlpha(palette.telefonicaBlue70, 0.2),
   
 
