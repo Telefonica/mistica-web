@@ -62,8 +62,7 @@ const Avatar = ({
     ...props
 }: AvatarProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
-    const backgroundColor =
-        props.backgroundColor ?? (isInverse ? vars.colors.brandHigh : vars.colors.brandLow);
+    const backgroundColor = props.backgroundColor ?? (isInverse ? vars.colors.brand : vars.colors.brandLow);
     const textColor = props.textColor ?? (isInverse ? vars.colors.textPrimaryInverse : vars.colors.brand);
     const [imgLoadError, setImgLoadError] = React.useState(false);
 
