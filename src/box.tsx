@@ -55,6 +55,7 @@ const Box = React.forwardRef<HTMLDivElement, Props>(
                 )}
                 style={{
                     width,
+                    boxSizing: 'border-box',
                 }}
             >
                 {children}
