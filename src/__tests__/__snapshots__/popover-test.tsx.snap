@@ -23,20 +23,18 @@ exports[`popover default(bottom) style 1`] = `
         />
       </div>
       <div
-        style="padding: 16px 16px 16px 16px;"
+        class="sprinkles_paddingTop_16__1y2v1nf5m sprinkles_paddingBottom_16__1y2v1nf60 sprinkles_paddingLeft_16__1y2v1nf6e sprinkles_paddingRight_16__1y2v1nf6s"
       >
         <div
-          class="boxContent"
-          style="padding: 0px 24px 0px 0px;"
+          class="boxContent sprinkles_paddingTop_0__1y2v1nf5h sprinkles_paddingBottom_0__1y2v1nf5v sprinkles_paddingLeft_0__1y2v1nf69 sprinkles_paddingRight_24__1y2v1nf6t"
         >
           <div
-            class="inline_noFullWidth__kkfbnv3 inline_inline__kkfbnv1"
-            style="--space__kkfbnv0: 16px; justify-content: initial; align-items: stretch;"
+            class="sprinkles_alignItems_stretch__1y2v1nf58 inline_noFullWidth__kkfbnv3 inline_inline__kkfbnv1"
+            style="--space__kkfbnv0: 16px; justify-content: initial;"
           >
             <div>
               <div
-                class="textAlign"
-                style="padding: 0px 0px 0px 0px;"
+                class="textAlign sprinkles_paddingTop_0__1y2v1nf5h sprinkles_paddingBottom_0__1y2v1nf5v sprinkles_paddingLeft_0__1y2v1nf69 sprinkles_paddingRight_0__1y2v1nf6n"
               >
                 <div
                   class="textContent stack_marginStack__xjgm6d1"
@@ -45,8 +43,8 @@ exports[`popover default(bottom) style 1`] = `
                   <div />
                   <div>
                     <span
-                      class="text_text__splu5g6"
-                      style="--mobileSize__splu5g0: 0.875rem; --mobileLineHeight__splu5g2: 1.250rem; --desktopSize__splu5g1: 1.000rem; --desktopLineHeight__splu5g3: 1.500rem; --wordBreak__splu5g4: break-word; margin: 0px; font-weight: 400; text-transform: inherit; text-decoration: inherit; overflow-wrap: anywhere; color: rgb(134, 136, 140);"
+                      class="text_text__splu5g7 text_withWordBreak__splu5g5"
+                      style="--mobileSize__splu5g0: 0.875rem; --mobileLineHeight__splu5g2: 1.250rem; --desktopSize__splu5g1: 1.000rem; --desktopLineHeight__splu5g3: 1.500rem; margin: 0px; font-weight: 400; text-transform: inherit; text-decoration: inherit; overflow-wrap: anywhere; color: rgb(134, 136, 140);"
                     >
                       Content
                     </span>
@@ -58,7 +56,7 @@ exports[`popover default(bottom) style 1`] = `
         </div>
         <button
           aria-label="Cerrar"
-          class="touchable_touchable__mhti6u0 closeButtonIcon"
+          class="touchable_touchable__mhti6u1 touchable__mhti6u0 sprinkles_display_block__1y2v1nf4x sprinkles_border_none__1y2v1nf8n sprinkles_cursor_pointer__1y2v1nf8t closeButtonIcon"
           style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
           type="button"
         >
@@ -103,20 +101,18 @@ exports[`popover left style 1`] = `
         />
       </div>
       <div
-        style="padding: 16px 16px 16px 16px;"
+        class="sprinkles_paddingTop_16__1y2v1nf5m sprinkles_paddingBottom_16__1y2v1nf60 sprinkles_paddingLeft_16__1y2v1nf6e sprinkles_paddingRight_16__1y2v1nf6s"
       >
         <div
-          class="boxContent"
-          style="padding: 0px 24px 0px 0px;"
+          class="boxContent sprinkles_paddingTop_0__1y2v1nf5h sprinkles_paddingBottom_0__1y2v1nf5v sprinkles_paddingLeft_0__1y2v1nf69 sprinkles_paddingRight_24__1y2v1nf6t"
         >
           <div
-            class="inline_noFullWidth__kkfbnv3 inline_inline__kkfbnv1"
-            style="--space__kkfbnv0: 16px; justify-content: initial; align-items: stretch;"
+            class="sprinkles_alignItems_stretch__1y2v1nf58 inline_noFullWidth__kkfbnv3 inline_inline__kkfbnv1"
+            style="--space__kkfbnv0: 16px; justify-content: initial;"
           >
             <div>
               <div
-                class="textAlign"
-                style="padding: 0px 0px 0px 0px;"
+                class="textAlign sprinkles_paddingTop_0__1y2v1nf5h sprinkles_paddingBottom_0__1y2v1nf5v sprinkles_paddingLeft_0__1y2v1nf69 sprinkles_paddingRight_0__1y2v1nf6n"
               >
                 <div
                   class="textContent stack_marginStack__xjgm6d1"
@@ -125,8 +121,8 @@ exports[`popover left style 1`] = `
                   <div />
                   <div>
                     <span
-                      class="text_text__splu5g6"
-                      style="--mobileSize__splu5g0: 0.875rem; --mobileLineHeight__splu5g2: 1.250rem; --desktopSize__splu5g1: 1.000rem; --desktopLineHeight__splu5g3: 1.500rem; --wordBreak__splu5g4: break-word; margin: 0px; font-weight: 400; text-transform: inherit; text-decoration: inherit; overflow-wrap: anywhere; color: rgb(134, 136, 140);"
+                      class="text_text__splu5g7 text_withWordBreak__splu5g5"
+                      style="--mobileSize__splu5g0: 0.875rem; --mobileLineHeight__splu5g2: 1.250rem; --desktopSize__splu5g1: 1.000rem; --desktopLineHeight__splu5g3: 1.500rem; margin: 0px; font-weight: 400; text-transform: inherit; text-decoration: inherit; overflow-wrap: anywhere; color: rgb(134, 136, 140);"
                     >
                       Content
                     </span>
@@ -138,7 +134,7 @@ exports[`popover left style 1`] = `
         </div>
         <button
           aria-label="Cerrar"
-          class="touchable_touchable__mhti6u0 closeButtonIcon"
+          class="touchable_touchable__mhti6u1 touchable__mhti6u0 sprinkles_display_block__1y2v1nf4x sprinkles_border_none__1y2v1nf8n sprinkles_cursor_pointer__1y2v1nf8t closeButtonIcon"
           style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
           type="button"
         >
@@ -183,20 +179,18 @@ exports[`popover right style 1`] = `
         />
       </div>
       <div
-        style="padding: 16px 16px 16px 16px;"
+        class="sprinkles_paddingTop_16__1y2v1nf5m sprinkles_paddingBottom_16__1y2v1nf60 sprinkles_paddingLeft_16__1y2v1nf6e sprinkles_paddingRight_16__1y2v1nf6s"
       >
         <div
-          class="boxContent"
-          style="padding: 0px 24px 0px 0px;"
+          class="boxContent sprinkles_paddingTop_0__1y2v1nf5h sprinkles_paddingBottom_0__1y2v1nf5v sprinkles_paddingLeft_0__1y2v1nf69 sprinkles_paddingRight_24__1y2v1nf6t"
         >
           <div
-            class="inline_noFullWidth__kkfbnv3 inline_inline__kkfbnv1"
-            style="--space__kkfbnv0: 16px; justify-content: initial; align-items: stretch;"
+            class="sprinkles_alignItems_stretch__1y2v1nf58 inline_noFullWidth__kkfbnv3 inline_inline__kkfbnv1"
+            style="--space__kkfbnv0: 16px; justify-content: initial;"
           >
             <div>
               <div
-                class="textAlign"
-                style="padding: 0px 0px 0px 0px;"
+                class="textAlign sprinkles_paddingTop_0__1y2v1nf5h sprinkles_paddingBottom_0__1y2v1nf5v sprinkles_paddingLeft_0__1y2v1nf69 sprinkles_paddingRight_0__1y2v1nf6n"
               >
                 <div
                   class="textContent stack_marginStack__xjgm6d1"
@@ -205,8 +199,8 @@ exports[`popover right style 1`] = `
                   <div />
                   <div>
                     <span
-                      class="text_text__splu5g6"
-                      style="--mobileSize__splu5g0: 0.875rem; --mobileLineHeight__splu5g2: 1.250rem; --desktopSize__splu5g1: 1.000rem; --desktopLineHeight__splu5g3: 1.500rem; --wordBreak__splu5g4: break-word; margin: 0px; font-weight: 400; text-transform: inherit; text-decoration: inherit; overflow-wrap: anywhere; color: rgb(134, 136, 140);"
+                      class="text_text__splu5g7 text_withWordBreak__splu5g5"
+                      style="--mobileSize__splu5g0: 0.875rem; --mobileLineHeight__splu5g2: 1.250rem; --desktopSize__splu5g1: 1.000rem; --desktopLineHeight__splu5g3: 1.500rem; margin: 0px; font-weight: 400; text-transform: inherit; text-decoration: inherit; overflow-wrap: anywhere; color: rgb(134, 136, 140);"
                     >
                       Content
                     </span>
@@ -218,7 +212,7 @@ exports[`popover right style 1`] = `
         </div>
         <button
           aria-label="Cerrar"
-          class="touchable_touchable__mhti6u0 closeButtonIcon"
+          class="touchable_touchable__mhti6u1 touchable__mhti6u0 sprinkles_display_block__1y2v1nf4x sprinkles_border_none__1y2v1nf8n sprinkles_cursor_pointer__1y2v1nf8t closeButtonIcon"
           style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
           type="button"
         >
@@ -263,20 +257,18 @@ exports[`popover top style 1`] = `
         />
       </div>
       <div
-        style="padding: 16px 16px 16px 16px;"
+        class="sprinkles_paddingTop_16__1y2v1nf5m sprinkles_paddingBottom_16__1y2v1nf60 sprinkles_paddingLeft_16__1y2v1nf6e sprinkles_paddingRight_16__1y2v1nf6s"
       >
         <div
-          class="boxContent"
-          style="padding: 0px 24px 0px 0px;"
+          class="boxContent sprinkles_paddingTop_0__1y2v1nf5h sprinkles_paddingBottom_0__1y2v1nf5v sprinkles_paddingLeft_0__1y2v1nf69 sprinkles_paddingRight_24__1y2v1nf6t"
         >
           <div
-            class="inline_noFullWidth__kkfbnv3 inline_inline__kkfbnv1"
-            style="--space__kkfbnv0: 16px; justify-content: initial; align-items: stretch;"
+            class="sprinkles_alignItems_stretch__1y2v1nf58 inline_noFullWidth__kkfbnv3 inline_inline__kkfbnv1"
+            style="--space__kkfbnv0: 16px; justify-content: initial;"
           >
             <div>
               <div
-                class="textAlign"
-                style="padding: 0px 0px 0px 0px;"
+                class="textAlign sprinkles_paddingTop_0__1y2v1nf5h sprinkles_paddingBottom_0__1y2v1nf5v sprinkles_paddingLeft_0__1y2v1nf69 sprinkles_paddingRight_0__1y2v1nf6n"
               >
                 <div
                   class="textContent stack_marginStack__xjgm6d1"
@@ -285,8 +277,8 @@ exports[`popover top style 1`] = `
                   <div />
                   <div>
                     <span
-                      class="text_text__splu5g6"
-                      style="--mobileSize__splu5g0: 0.875rem; --mobileLineHeight__splu5g2: 1.250rem; --desktopSize__splu5g1: 1.000rem; --desktopLineHeight__splu5g3: 1.500rem; --wordBreak__splu5g4: break-word; margin: 0px; font-weight: 400; text-transform: inherit; text-decoration: inherit; overflow-wrap: anywhere; color: rgb(134, 136, 140);"
+                      class="text_text__splu5g7 text_withWordBreak__splu5g5"
+                      style="--mobileSize__splu5g0: 0.875rem; --mobileLineHeight__splu5g2: 1.250rem; --desktopSize__splu5g1: 1.000rem; --desktopLineHeight__splu5g3: 1.500rem; margin: 0px; font-weight: 400; text-transform: inherit; text-decoration: inherit; overflow-wrap: anywhere; color: rgb(134, 136, 140);"
                     >
                       Content
                     </span>
@@ -298,7 +290,7 @@ exports[`popover top style 1`] = `
         </div>
         <button
           aria-label="Cerrar"
-          class="touchable_touchable__mhti6u0 closeButtonIcon"
+          class="touchable_touchable__mhti6u1 touchable__mhti6u0 sprinkles_display_block__1y2v1nf4x sprinkles_border_none__1y2v1nf8n sprinkles_cursor_pointer__1y2v1nf8t closeButtonIcon"
           style="display: inline-block; vertical-align: middle; text-align: center; background-color: transparent; background-position: 50% 50%; background-size: 100% 100%; background-repeat: no-repeat; border: 0px; cursor: pointer; height: 24px; width: 24px;"
           type="button"
         >

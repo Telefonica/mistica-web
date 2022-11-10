@@ -35,6 +35,7 @@ const commonProperties = defineProperties({
         minHeight: sizes,
         border: {
             regular: `1px solid ${vars.colors.border}`,
+            none: 'none',
         },
         borderRadius: ['50%', 2, 4, 8, 16],
         cursor: ['pointer'],

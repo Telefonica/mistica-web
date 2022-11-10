@@ -1,8 +1,11 @@
 import * as React from 'react';
+import classnames from 'classnames';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {vars} from './skins/skin-contract.css';
 import {useTheme} from './hooks';
+import * as styles from './boxed.css';
+import {sprinkles} from './sprinkles.css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -18,14 +21,14 @@ type Props = {
 
 const getBorderStyle = (isInverseOutside: boolean, isInverseInside: boolean) => {
     if (isInverseOutside && !isInverseInside) {
-        return `1px solid ${vars.colors.backgroundContainer}`;
+        return styles.inverseBorder;
     }
 
     if (isInverseInside) {
-        return 'none';
+        return sprinkles({border: 'none'});
     }
 
-    return `1px solid ${vars.colors.border}`;
+    return sprinkles({border: 'regular'});
 };
 
 export const Boxed = React.forwardRef<HTMLDivElement, Props>(
@@ -46,19 +49,21 @@ export const Boxed = React.forwardRef<HTMLDivElement, Props>(
         return (
             <div
                 ref={ref}
-                className={className}
+                className={classnames(
+                    className,
+                    getBorderStyle(isInverseOutside, isInverseInside),
+                    sprinkles({
+                        borderRadius: 8,
+                        overflow: 'hidden',
+                        backgroundColor:
+                            isInverseInside && !isDarkMode
+                                ? vars.colors.backgroundBrand
+                                : vars.colors.backgroundContainer,
+                    })
+                )}
                 role={role}
                 {...getPrefixedDataAttributes(dataAttributes)}
                 aria-label={ariaLabel}
-                style={{
-                    borderRadius: 8,
-                    overflow: 'hidden',
-                    background:
-                        isInverseInside && !isDarkMode
-                            ? vars.colors.backgroundBrand
-                            : vars.colors.backgroundContainer,
-                    border: getBorderStyle(isInverseOutside, isInverseInside),
-                }}
             >
                 <ThemeVariant isInverse={isInverseInside}>{children}</ThemeVariant>
             </div>
