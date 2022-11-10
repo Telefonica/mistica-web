@@ -22,23 +22,21 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         minHeight: 32,
         minWidth: 56,
         cursor: 'default',
-
-        color: colors.neutralMedium, // Giving color to icons
-
-        '& > span': {
-            color: colors.textPrimary, // Giving color to text
-        },
+        color: colors.textPrimary,
+    },
+    icon: {
+        color: colors.neutralMedium,
     },
     interactive: {
         userSelect: 'none',
         [mq.supportsHover]: {
             '&:hover:not($active)': {
                 borderColor: ({isDarkMode}) => (isDarkMode ? colors.background : colors.brandLow),
-                color: colors.controlActivated, // Giving color to icons on hover
+                color: colors.controlActivated,
+                '& > $icon': {
+                    color: colors.controlActivated,
+                },
                 backgroundColor: colors.brandLow,
-            },
-            '&:hover > span': {
-                color: colors.controlActivated, // Giving color to text on hover
             },
         },
     },
@@ -46,7 +44,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
         borderColor: colors.controlActivated,
         color: colors.controlActivated,
         backgroundColor: colors.brandLow,
-        '& > span': {
+        '& > $icon': {
             color: colors.controlActivated,
         },
     },
@@ -78,7 +76,7 @@ interface ToggleChipProps extends ChipBaseProps {
 type ChipProps = SimpleChipProps | ClosableChipProps | ToggleChipProps;
 
 const Chip: React.FC<ChipProps> = (props) => {
-    const {texts, isDarkMode} = useTheme();
+    const {texts, isDarkMode, colors} = useTheme();
     const classes = useStyles({isDarkMode});
 
     const {Icon, children, id} = props;
@@ -86,7 +84,7 @@ const Chip: React.FC<ChipProps> = (props) => {
     const body = (
         <>
             {Icon && (
-                <Box paddingRight={4}>
+                <Box paddingRight={4} className={classes.icon}>
                     <Icon color="currentColor" size={pxToRem(16)} />
                 </Box>
             )}
@@ -113,7 +111,7 @@ const Chip: React.FC<ChipProps> = (props) => {
                         aria-label={texts.closeButtonLabel}
                         onPress={() => props.onClose()}
                     >
-                        <IconCloseRegular size={16} color="currentColor" />
+                        <IconCloseRegular size={16} color={colors.neutralMedium} />
                     </IconButton>
                 </Box>
             </Box>
