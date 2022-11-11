@@ -98,14 +98,14 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             // BUTTONS
             buttonDangerBackground: palette.pepper,
             buttonDangerBackgroundSelected: palette.pepper55,
-            buttonDangerBackgroundHover: palette.pepper55,
+            buttonDangerBackgroundHover: palette.pepper55, // web only
             buttonLinkBackgroundSelected: palette.o2SkyBlueLight10,
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
 
             buttonPrimaryBackground: palette.o2SkyBlue,
             buttonPrimaryBackgroundInverse: palette.white,
             buttonPrimaryBackgroundSelected: palette.o2SkyBlue55,
-            buttonPrimaryBackgroundHover: palette.o2SkyBlue55,
+            buttonPrimaryBackgroundHover: palette.o2SkyBlue55, // web only
             buttonPrimaryBackgroundSelectedInverse: palette.o2SkyBlueLight20,
 
             buttonSecondaryBackgroundSelected: palette.o2SkyBlueLight10,
@@ -163,7 +163,7 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             textPrimary: palette.grey6,
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
-            textSecondaryInverse: palette.white,
+            textSecondaryInverse: palette.grey3,
 
             // STATES
             error: palette.pepper,
@@ -213,9 +213,9 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
 
 
             buttonPrimaryBackground: palette.o2SkyBlue,
-            buttonPrimaryBackgroundInverse: palette.o2SkyBlue,
             buttonPrimaryBackgroundSelected: palette.o2SkyBlue55,
-            buttonPrimaryBackgroundHover: palette.o2SkyBlue55,
+            buttonPrimaryBackgroundHover: palette.o2SkyBlue55,// web only
+            buttonPrimaryBackgroundInverse: palette.o2SkyBlue,
             buttonPrimaryBackgroundSelectedInverse: palette.o2SkyBlue55,
 
             buttonSecondaryBackgroundSelected: applyAlpha(palette.o2SkyBlue55, 0.2),

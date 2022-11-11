@@ -141,7 +141,7 @@ export const getVivoSkin: GetKnownSkin = () => {
             textPrimary: palette.grey6,
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
-            textSecondaryInverse: palette.white,
+            textSecondaryInverse: palette.grey3,
 
             // STATES
             error: palette.pepper,

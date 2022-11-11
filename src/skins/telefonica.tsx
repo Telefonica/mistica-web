@@ -145,7 +145,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             textPrimary: palette.grey9,
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
-            textSecondaryInverse: palette.white,
+            textSecondaryInverse: palette.grey2,
 
             // STATES
             error: palette.coral,

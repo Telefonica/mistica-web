@@ -148,7 +148,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             textPrimary: palette.grey6,
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
-            textSecondaryInverse: palette.white,
+            textSecondaryInverse: palette.grey2,
 
             // STATES
             error: palette.blauRed,

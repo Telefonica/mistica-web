@@ -97,9 +97,9 @@ export const getMovistarSkin: GetKnownSkin = () => {
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
 
             buttonPrimaryBackground: palette.movistarBlue,
-            buttonPrimaryBackgroundInverse: palette.movistarBlue,
             buttonPrimaryBackgroundSelected: palette.movistarBlue55,
             buttonPrimaryBackgroundHover: palette.movistarBlue55, // web only
+            buttonPrimaryBackgroundInverse: palette.movistarBlue,
             buttonPrimaryBackgroundSelectedInverse: palette.movistarBlue55,
 
             
@@ -160,7 +160,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             textPrimary: palette.movistarBlueDark,
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
-            textSecondaryInverse: palette.white,
+            textSecondaryInverse: palette.grey3,
 
             // STATES
             error: palette.pepper,
