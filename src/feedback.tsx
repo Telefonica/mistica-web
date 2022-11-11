@@ -20,9 +20,9 @@ import Box from './box';
 import {Boxed} from './boxed';
 import ResponsiveLayout from './responsive-layout';
 import Stack from './stack';
-import {Colors} from './skins/types';
 import classnames from 'classnames';
 import ButtonGroup from './button-group';
+import {vars} from './skins/skin-contract.css';
 
 import type {DataAttributes} from './utils/types';
 import type {ButtonGroupProps} from './button-group';
@@ -165,8 +165,7 @@ const renderFeedbackBody = (
     }: Pick<FeedbackScreenProps, 'icon' | 'title' | 'description' | 'children'>,
     animateText: boolean,
     appear: boolean,
-    classes: any,
-    colors: Colors
+    classes: any
 ) => {
     const normalizedDescription =
         description && Array.isArray(description)
@@ -185,7 +184,7 @@ const renderFeedbackBody = (
             >
                 <Text6 as="h1">{title}</Text6>
                 {normalizedDescription && (
-                    <Text3 regular color={colors.textSecondary}>
+                    <Text3 regular color={vars.colors.textSecondary}>
                         {normalizedDescription}
                     </Text3>
                 )}
@@ -266,7 +265,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
 }) => {
     useHapticFeedback(hapticFeedback);
     const isInverse = useIsInverseVariant();
-    const {colors, platformOverrides, isDarkMode, skinName} = useTheme();
+    const {platformOverrides, isDarkMode, skinName} = useTheme();
     const windowHeight = useWindowHeight();
     const {isTabletOrSmaller} = useScreenSize();
     const [isServerSide, setIsServerSide] = React.useState(typeof self !== 'undefined');
@@ -299,8 +298,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
         {icon, title, description, children},
         animateText && areAnimationsSupported(platformOverrides),
         appear,
-        classes,
-        colors
+        classes
     );
     const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
         primaryButton,
@@ -329,8 +327,12 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                     button={primaryButton}
                     secondaryButton={secondaryButton}
                     link={link}
-                    footerBgColor={isInverse && !isDarkMode ? colors.backgroundFeedbackBottom : undefined}
-                    containerBgColor={isInverse && !isDarkMode ? colors.backgroundFeedbackBottom : undefined}
+                    footerBgColor={
+                        isInverse && !isDarkMode ? vars.colors.backgroundFeedbackBottom : undefined
+                    }
+                    containerBgColor={
+                        isInverse && !isDarkMode ? vars.colors.backgroundFeedbackBottom : undefined
+                    }
                     onChangeFooterHeight={setFooterHeight}
                 >
                     {feedbackContent}
@@ -406,7 +408,7 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
 }) => {
     useHapticFeedback('success');
     const {isTabletOrSmaller} = useScreenSize();
-    const {skinName, platformOverrides, colors} = useTheme();
+    const {skinName, platformOverrides} = useTheme();
     const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
 
     const classes = useStyles({
@@ -425,8 +427,7 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
         {icon, title, description, children},
         areAnimationsSupported(platformOverrides),
         appear,
-        classes,
-        colors
+        classes
     );
     const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
         primaryButton,

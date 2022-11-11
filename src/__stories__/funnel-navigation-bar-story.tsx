@@ -7,8 +7,8 @@ import {
     IconQuestionRegular,
     IconCloseRegular,
     Text2,
-    useTheme,
 } from '..';
+import {vars} from '../skins/skin-contract.css';
 
 export default {
     title: 'Components/Navigation bars/Funnel navigation bar',
@@ -21,7 +21,6 @@ export default {
 type Args = {isInverse: boolean};
 
 export const Default: StoryComponent<Args> = ({isInverse}) => {
-    const {colors} = useTheme();
     const {isDesktopOrBigger} = useScreenSize();
     return (
         <FunnelNavigationBar
@@ -31,7 +30,7 @@ export const Default: StoryComponent<Args> = ({isInverse}) => {
                     <NavigationBarAction aria-label="need help?" href="/help">
                         <IconQuestionRegular color="currentColor" />
                         {isDesktopOrBigger && (
-                            <Text2 regular color={colors.textLink}>
+                            <Text2 regular color={vars.colors.textLink}>
                                 Need help?
                             </Text2>
                         )}

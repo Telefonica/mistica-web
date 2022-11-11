@@ -75,27 +75,3 @@ test('popover is not painted after click the close icon', async () => {
 
     expect(screen.queryByText('Content')).toBe(null);
 });
-
-test('popover default(bottom) style', () => {
-    const {container} = render(<TestPopover />);
-
-    expect(container).toMatchSnapshot();
-});
-
-test('popover top style', () => {
-    const {container} = render(<TestPopover position="top" />);
-
-    expect(container).toMatchSnapshot();
-});
-
-test('popover right style', () => {
-    const {container} = render(<TestPopover position="right" />);
-
-    expect(container).toMatchSnapshot();
-});
-
-test('popover left style', () => {
-    const {container} = render(<TestPopover position="left" />);
-
-    expect(container).toMatchSnapshot();
-});
