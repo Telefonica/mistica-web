@@ -339,15 +339,15 @@ const useControlState = ({
 };
 
 const areSwitchRowContentProps = (obj: any): obj is SwitchRowContentProps => {
-    return Object.hasOwn(obj, 'switch');
+    return 'switch' in obj;
 };
 
 const areCheckboxRowContentProps = (obj: any): obj is CheckboxRowContentProps => {
-    return Object.hasOwn(obj, 'checkbox');
+    return 'checkbox' in obj;
 };
 
 const areRadioRowContentProps = (obj: any): obj is RadioRowContentProps => {
-    return Object.hasOwn(obj, 'radioValue');
+    return 'radioValue' in obj;
 };
 
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
