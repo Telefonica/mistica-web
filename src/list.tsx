@@ -613,9 +613,9 @@ interface OnPressBoxedRowProps extends OnPressRowContentProps, CommonBoxedRowPro
 
 type BoxedRowProps = ExclusifyUnion<
     | BasicBoxedRowProps
-    | SwitchBoxedRowProps
+    | (Omit<SwitchBoxedRowProps, 'switch'> & {switch: ControlProps | undefined})
     | RadioBoxedRowProps
-    | CheckboxBoxedRowProps
+    | (Omit<CheckboxBoxedRowProps, 'checkbox'> & {checkbox: ControlProps | undefined})
     | HrefBoxedRowProps
     | ToBoxedRowProps
     | OnPressBoxedRowProps
