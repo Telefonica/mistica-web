@@ -272,7 +272,7 @@ interface SwitchRowContentProps extends CommonProps {
 interface CheckboxRowContentProps extends CommonProps {
     onPress?: () => void;
 
-    checkbox: ControlProps;
+    checkbox: ControlProps | undefined;
 }
 
 interface RadioRowContentProps extends CommonProps {
@@ -613,9 +613,9 @@ interface OnPressBoxedRowProps extends OnPressRowContentProps, CommonBoxedRowPro
 
 type BoxedRowProps = ExclusifyUnion<
     | BasicBoxedRowProps
-    | (Omit<SwitchBoxedRowProps, 'switch'> & {switch: ControlProps | undefined})
+    | SwitchBoxedRowProps
     | RadioBoxedRowProps
-    | (Omit<CheckboxBoxedRowProps, 'checkbox'> & {checkbox: ControlProps | undefined})
+    | CheckboxBoxedRowProps
     | HrefBoxedRowProps
     | ToBoxedRowProps
     | OnPressBoxedRowProps

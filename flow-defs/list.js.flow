@@ -46,7 +46,7 @@ declare type CheckboxRowContentProps = {
   ...$Exact<CommonProps>,
 
   onPress?: () => void,
-  checkbox: ControlProps,
+  checkbox: ControlProps | void,
 };
 declare type RadioRowContentProps = {
   ...$Exact<CommonProps>,
