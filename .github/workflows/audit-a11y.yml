@@ -1,0 +1,22 @@
+name: audit-a11y
+on: [pull_request]
+jobs:
+    audit-a11y:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Install dependencies
+              env:
+                  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+              run: yarn install --immutable --immutable-cache
+
+            - name: 'Build storybook'
+              run: 'yarn storybook-static'
+
+            - name: 'Audit accessibility'
+              uses: './.github/actions/audit-accessibility'
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  azure-account-name: ${{ secrets.AZURE_ACCOUNT_NAME }}
+                  azure-account-key: ${{ secrets.AZURE_ACCOUNT_KEY }}
