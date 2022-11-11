@@ -13,6 +13,7 @@ const compile = () => {
     themeContextProviderJs = themeContextProviderJs.replace('"<MISTICA_CSS>"', `\`${styles}\``);
     writeFileSync('dist-es/theme-context-provider.js', themeContextProviderJs);
     run(`cp dist-es/style.css css/mistica.css`);
+    run(`yarn swc dist-es --out-dir dist-es`); // transpile to es5 (package.json browserslist)
     run(`yarn swc dist-es --out-dir dist -C module.type=commonjs`);
 };
 
