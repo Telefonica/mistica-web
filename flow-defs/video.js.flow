@@ -26,7 +26,11 @@ export type VideoProps = {
  /**
   * accepts multiple sources
   */
- src: string | Array<string> | VideoSource | Array<VideoSource>,
+ src:
+   | string
+   | $ReadOnlyArray<string>
+   | VideoSource
+   | $ReadOnlyArray<VideoSource>,
  /**
   * defaults to true
   */

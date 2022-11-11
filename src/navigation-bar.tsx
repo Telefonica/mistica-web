@@ -277,7 +277,7 @@ type MainNavigationBarSection =
     | {onPress: () => void; to?: undefined; href?: undefined; title: string};
 
 type MainNavigationBarProps = {
-    sections: Array<MainNavigationBarSection>;
+    sections: ReadonlyArray<MainNavigationBarSection>;
     selectedIndex?: number;
     right?: React.ReactElement;
     logo?: React.ReactElement;

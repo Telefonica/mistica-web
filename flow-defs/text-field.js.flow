@@ -10,7 +10,7 @@ export type TextFieldProps = {
   multiline?: boolean,
   prefix?: React.Node,
   endIcon?: React.Node,
-  getSuggestions?: (value: string) => Array<string>,
+  getSuggestions?: (value: string) => $ReadOnlyArray<string>,
 };
 declare var TextField: React.AbstractComponent<TextFieldProps, HTMLInputElement>;
 declare export default typeof TextField;
