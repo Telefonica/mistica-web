@@ -49,6 +49,7 @@ export const container = style([base]);
 export const fullWidthContainer = style([base]);
 
 globalStyle(`${container} > *:not(${link})`, {
+    minWidth: buttonWidth, // needed to override button.css value
     margin: buttonLayoutSpacing / 2,
     width: `calc(50% - ${buttonLayoutSpacing}px)`,
 
@@ -60,6 +61,7 @@ globalStyle(`${container} > *:not(${link})`, {
 });
 
 globalStyle(`${fullWidthContainer} > *:not(${link})`, {
+    minWidth: buttonWidth, // needed to override button.css value
     margin: buttonLayoutSpacing / 2,
     width: `calc(100% - ${buttonLayoutSpacing}px)`,
 
