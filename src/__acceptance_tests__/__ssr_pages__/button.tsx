@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ButtonPrimary, ButtonSecondary, ButtonLink, ButtonDanger, ButtonLayout, Stack} from '../..';
+import {ButtonPrimary, ButtonSecondary, ButtonLink, ButtonDanger, ButtonLayout, Stack} from '../../..';
 
 const ButtonTest: React.FC = () => (
     <Stack space={8}>

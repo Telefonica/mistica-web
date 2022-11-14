@@ -88,7 +88,7 @@ export const getO2Skin: GetKnownSkin = () => {
             buttonDangerBackground: palette.pepper,
             buttonDangerBackgroundSelected: palette.pepper60,
             buttonDangerBackgroundHover: palette.pepper60,
-            buttonLinkBackgroundSelected: palette.o2BluePrimary15,
+            buttonLinkBackgroundSelected: palette.o2BluePrimary10,
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
 
             buttonPrimaryBackground: palette.o2BluePrimary,

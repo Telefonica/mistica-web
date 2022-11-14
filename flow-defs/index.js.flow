@@ -1,6 +1,7 @@
 // @flow
 
 declare export { createUseStyles, getJss, ServerSideStyles } from "./jss";
+declare export { vars as skinVars } from "./skins/skin-contract.css";
 declare export { default as ThemeContext } from "./theme-context";
 declare export { default as ThemeContextProvider } from "./theme-context-provider";
 declare export { default as ScreenReaderOnly } from "./screen-reader-only";

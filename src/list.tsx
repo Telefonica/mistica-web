@@ -619,23 +619,36 @@ type RowListProps = {
     children: React.ReactNode;
     ariaLabelledby?: string;
     role?: string;
+    noLastDivider?: boolean;
     dataAttributes?: DataAttributes;
 };
 
-export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role, dataAttributes}) => (
-    <div role={role} aria-labelledby={ariaLabelledby} {...getPrefixedDataAttributes(dataAttributes)}>
-        {React.Children.toArray(children)
-            .filter(Boolean)
-            .map((child, index) => (
-                <React.Fragment key={index}>
-                    {child}
-                    <Box paddingX={16}>
-                        <Divider />
-                    </Box>
-                </React.Fragment>
-            ))}
-    </div>
-);
+export const RowList: React.FC<RowListProps> = ({
+    children,
+    ariaLabelledby,
+    role,
+    dataAttributes,
+    noLastDivider,
+}) => {
+    const lastIndex = React.Children.count(children) - 1;
+    const showLastDivider = !noLastDivider;
+    return (
+        <div role={role} aria-labelledby={ariaLabelledby} {...getPrefixedDataAttributes(dataAttributes)}>
+            {React.Children.toArray(children)
+                .filter(Boolean)
+                .map((child, index) => (
+                    <React.Fragment key={index}>
+                        {child}
+                        {(index < lastIndex || showLastDivider) && (
+                            <Box paddingX={16}>
+                                <Divider />
+                            </Box>
+                        )}
+                    </React.Fragment>
+                ))}
+        </div>
+    );
+};
 
 interface CommonBoxedRowProps {
     isInverse?: boolean;

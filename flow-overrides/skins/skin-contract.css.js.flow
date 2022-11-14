@@ -1,0 +1,6 @@
+// @flow
+import type {Colors} from './types';
+
+declare export var vars: {
+    colors: Colors,
+};

@@ -33,6 +33,7 @@ const useBulletsStyles = createUseStyles((theme) => ({
         height: 8,
         borderRadius: '50%',
         transition: 'transform 0.3s ease-in-out, background-color 0.3s ease-in-out',
+        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
 
         '&.active': {
             backgroundColor: ({isInverse}) =>
@@ -124,7 +125,7 @@ const useStyles = createUseStyles((theme) => ({
     arrowButton: {
         ...arrowButtonStyle(theme),
         position: 'absolute',
-        zIndex: 1,
+        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
         top: `calc(50% - ${arrowButtonSize / 2}px)`,
         '&.prev': {
             left: ({containerType, isLargeDesktop, sideMargin}) =>
@@ -289,6 +290,7 @@ type BaseCarouselProps = {
     itemClassName?: string;
     withBullets?: boolean;
     renderBullets?: (bulletsProps: PageBulletsProps) => React.ReactNode;
+    initialActiveItem?: number;
     itemsPerPage?: ItemsPerPageProp;
     /** scrolls one page by default */
     itemsToScroll?: number;
@@ -311,6 +313,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     itemClassName,
     withBullets,
     renderBullets,
+    initialActiveItem,
     itemsPerPage,
     itemsToScroll,
     mobilePageOffset = 16,
@@ -345,7 +348,10 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const [{scrollLeft, scrollRight}, setScroll] = React.useState({scrollLeft: 0, scrollRight: 0});
     const [itemScrollPositions, setItemScrollPositions] = React.useState<Array<number>>([]);
 
-    const pagesScrollPositions = calcPagesScrollPositions(itemScrollPositions, pagesCount);
+    const pagesScrollPositions = React.useMemo(
+        () => calcPagesScrollPositions(itemScrollPositions, pagesCount),
+        [itemScrollPositions, pagesCount]
+    );
     const scrollPositions = itemsToScroll
         ? calcPagesScrollPositions(itemScrollPositions, Math.ceil(items.length / itemsToScroll))
         : pagesScrollPositions;
@@ -458,6 +464,12 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const shouldAutoplay = useShouldAutoplay(!!autoplay, carouselRef);
 
     React.useEffect(() => {
+        if (initialActiveItem !== undefined) {
+            goToPage(Math.floor(initialActiveItem / itemsPerPageFloor));
+        }
+    }, [initialActiveItem, goToPage, itemsPerPageFloor]);
+
+    React.useEffect(() => {
         if (shouldAutoplay && autoplay) {
             const time = typeof autoplay === 'boolean' ? DEFAULT_AUTOPLAY_TIME : autoplay.time;
             const loop = typeof autoplay === 'object' && autoplay.loop;
@@ -554,6 +566,7 @@ type CarouselProps = {
     itemClassName?: string;
     withBullets?: boolean;
     renderBullets?: (bulletsProps: PageBulletsProps) => React.ReactNode;
+    initialActiveItem?: number;
     itemsPerPage?: ItemsPerPageProp;
     /** scrolls one page by default */
     itemsToScroll?: number;
@@ -576,6 +589,7 @@ type CenteredCarouselProps = {
     itemClassName?: string;
     withBullets?: boolean;
     renderBullets?: (bulletsProps: PageBulletsProps) => React.ReactNode;
+    initialActiveItem?: number;
     onPageChange?: (newPageInfo: {pageIndex: number; shownItemIndexes: Array<number>}) => void;
     dataAttributes?: DataAttributes;
 
@@ -588,6 +602,7 @@ export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({
     itemClassName,
     withBullets,
     renderBullets,
+    initialActiveItem,
     onPageChange,
     dataAttributes,
 }) => (
@@ -602,6 +617,7 @@ export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({
         gap={0}
         withBullets={withBullets}
         renderBullets={renderBullets}
+        initialActiveItem={initialActiveItem}
         onPageChange={onPageChange}
         dataAttributes={dataAttributes}
     />
@@ -631,7 +647,7 @@ const useSlideshowStyles = createUseStyles((theme) => ({
         ...arrowButtonStyle(theme),
         border: 'none',
         position: 'absolute',
-        zIndex: 1,
+        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
         top: `calc(50% - ${arrowButtonSize / 2}px)`,
         '&.prev': {
             left: 24,
@@ -652,6 +668,7 @@ const useSlideshowStyles = createUseStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         width: '100%',
+        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
     },
 }));
 

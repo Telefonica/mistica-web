@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Spinner} from '../..';
+import {Spinner} from '../../..';
 
 const SpinnerTest: React.FC = () => <Spinner />;
 

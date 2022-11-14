@@ -17,6 +17,16 @@ test('Carousel mobile', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
+test('Carousel mobile with initialActiveItem=1', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousels-carousel--default',
+        device: 'MOBILE_IOS',
+        args: {initialActiveItem: 1},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
 test('Carousel mobile with a single page', async () => {
     const page = await openStoryPage({
         id: 'components-carousels-carousel--default',
@@ -53,21 +63,32 @@ test('Carousel desktop', async () => {
     const prevArrow = await screen.findByRole('button', {name: /anterior/i});
     const nextArrow = await screen.findByRole('button', {name: /siguiente/i});
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    // https://jira.tid.es/browse/WEB-680
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.001});
     expect(await isDisabled(prevArrow)).toBe(true);
     expect(await isDisabled(nextArrow)).toBe(false);
 
     await page.click(nextArrow);
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.001});
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(false);
 
     await page.click(nextArrow);
 
-    expect(await page.screenshot()).toMatchImageSnapshot();
+    expect(await page.screenshot()).toMatchImageSnapshot({failureThreshold: 0.001});
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(true);
+});
+
+test('Carousel desktop  with initialActiveItem=3', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousels-carousel--default',
+        device: 'DESKTOP',
+        args: {initialActiveItem: 3},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
 // no screenshot test for desktop because it's like the regular carousel
@@ -80,6 +101,16 @@ test('CenteredCarousel mobile', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 
     await (await screen.findByLabelText('Carousel item 1')).evaluate((el) => el.scrollIntoView());
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
+test('CenteredCarousel mobile with initialActiveItem=1', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousels-centered-carousel--default',
+        device: 'MOBILE_IOS',
+        args: {initialActiveItem: 1},
+    });
 
     expect(await page.screenshot()).toMatchImageSnapshot();
 });

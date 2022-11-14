@@ -18,6 +18,7 @@ storybook-static/
 .vercel
 src/generated/mistica-icons/index.tsx.txt
 reports
+css/mistica.css
 
 .yarn/*
 !.yarn/cache

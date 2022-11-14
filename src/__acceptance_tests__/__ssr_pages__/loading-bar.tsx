@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {LoadingBar} from '../..';
+import {LoadingBar} from '../../..';
 
 const LoadingBarTest: React.FC = () => <LoadingBar visible />;
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Popover} from '../..';
+import {Popover} from '../../..';
 
 const PopoverTest: React.FC = () => (
     <Popover

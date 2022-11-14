@@ -20,7 +20,7 @@ export type TextPresetProps = {
 declare type TextProps = {
   ...$Exact<TextPresetProps>,
 
-  weight?: FontWeight | boolean,
+  weight?: FontWeight,
 
   /**
    * in pixels, will be converted to rem in runtime

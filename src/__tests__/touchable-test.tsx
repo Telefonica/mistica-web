@@ -39,7 +39,7 @@ test('<a> element is rendered when "to" prop is used and no Link component injec
     expect(container).toMatchInlineSnapshot(`
         <div>
           <a
-            class="touchable"
+            class="touchable_touchable__mhti6u1 touchable__mhti6u0 sprinkles_display_block__1y2v1nf4x sprinkles_border_none__1y2v1nf8n sprinkles_cursor_pointer__1y2v1nf8t"
             href="/to"
           >
             Test

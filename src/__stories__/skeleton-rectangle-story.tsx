@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {ThemeVariant, useTheme} from '..';
 import {SkeletonRectangle} from '../skeletons';
+import {ThemeVariant, useTheme} from '..';
 
 export default {
     title: 'Components/Skeletons/Skeleton Rectangle',
@@ -15,7 +15,6 @@ type Args = {
 
 export const Default: StoryComponent<Args> = ({height, width, inverse, ariaLabel}) => {
     const {colors} = useTheme();
-
     return (
         <ThemeVariant isInverse={inverse}>
             <div
