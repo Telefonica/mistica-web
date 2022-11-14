@@ -1131,7 +1131,7 @@ const exampleScreens: Array<Snippet> = [
     },
     {
         group: 'Ξ ✨ Example Screens',
-        name: 'Search screen',
+        name: 'Search filter screen',
         code: `
 <ButtonFixedFooterLayout
   button={<ButtonPrimary onPress={() => {}}>Continue</ButtonPrimary>}
