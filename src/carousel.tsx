@@ -7,7 +7,6 @@ import {createUseStyles} from './jss';
 import Stack from './stack';
 import Touchable from './touchable';
 import classNames from 'classnames';
-import {useResonsiveLayoutMargin} from './responsive-layout';
 import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
 import {applyAlpha} from './utils/color';
 import {DisableBorderRadiusProvider} from './image';
@@ -15,6 +14,7 @@ import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 import {isAndroid} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
 import {useContainerType} from './container-type-context';
+import {responsiveLayoutSideMargin} from './responsive-layout.css';
 
 import type {ContainerType, DataAttributes} from './utils/types';
 import type {Theme} from './theme';
@@ -103,15 +103,15 @@ const arrowButtonStyle = (theme: Theme) => ({
     },
 });
 
-const arrowButtonSeparation = (containerType: ContainerType, isLargeDesktop: boolean, sideMargin: number) => {
+const arrowButtonSeparation = (containerType: ContainerType, isLargeDesktop: boolean): string => {
     switch (containerType) {
         case 'mobile-column':
         case 'tablet-column':
-            return -sideMargin;
+            return `calc(${responsiveLayoutSideMargin} * -1px)`;
         case 'desktop-wide-column':
-            return isLargeDesktop ? -(24 + arrowButtonSize) : -arrowButtonSize / 2;
+            return `${isLargeDesktop ? -(24 + arrowButtonSize) : -arrowButtonSize / 2}px`;
         default:
-            return -arrowButtonSize / 2;
+            return `${-arrowButtonSize / 2}px`;
     }
 };
 
@@ -128,12 +128,10 @@ const useStyles = createUseStyles((theme) => ({
         zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
         top: `calc(50% - ${arrowButtonSize / 2}px)`,
         '&.prev': {
-            left: ({containerType, isLargeDesktop, sideMargin}) =>
-                arrowButtonSeparation(containerType, isLargeDesktop, sideMargin),
+            left: ({containerType, isLargeDesktop}) => arrowButtonSeparation(containerType, isLargeDesktop),
         },
         '&.next': {
-            right: ({containerType, isLargeDesktop, sideMargin}) =>
-                arrowButtonSeparation(containerType, isLargeDesktop, sideMargin),
+            right: ({containerType, isLargeDesktop}) => arrowButtonSeparation(containerType, isLargeDesktop),
         },
     },
     hasScroll: {},
@@ -146,7 +144,7 @@ const useStyles = createUseStyles((theme) => ({
         ...hideScrollbar,
         [theme.mq.tabletOrSmaller]: {
             '&$hasScroll': {
-                margin: ({sideMargin}) => `0 -${sideMargin}px`,
+                margin: `0 calc(${responsiveLayoutSideMargin} * -1px)`,
             },
             '&$centered::before, &$centered::after': {
                 content: '""',
@@ -186,16 +184,16 @@ const useStyles = createUseStyles((theme) => ({
                     // prettier-ignore
                     `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile}px)`,
                 '&:first-child': {
-                    paddingLeft: ({sideMargin}) => sideMargin,
-                    width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap, sideMargin}) =>
+                    paddingLeft: `calc(${responsiveLayoutSideMargin} * 1px)`,
+                    width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap}) =>
                         // prettier-ignore
-                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile + gap - sideMargin}px)`,
+                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile + gap}px + ${responsiveLayoutSideMargin} * 1px)`,
                 },
                 '&:last-child': {
-                    paddingRight: ({sideMargin}) => sideMargin,
-                    width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap, sideMargin}) =>
+                    paddingRight: `calc(${responsiveLayoutSideMargin} * 1px)`,
+                    width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap}) =>
                         // prettier-ignore
-                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile - sideMargin}px)`,
+                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile}px + ${responsiveLayoutSideMargin} * 1px)`,
                 },
             },
 
@@ -330,13 +328,11 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const mobilePageOffsetConfig = normalizeMobilePageOffset(mobilePageOffset);
     const {isDesktopOrBigger, isLargeDesktop} = useScreenSize();
     const gap: number = gapProp ?? (isDesktopOrBigger ? 16 : 8);
-    const sideMargin = useResonsiveLayoutMargin();
     const classes = useStyles({
         itemsPerPageConfig,
         mobilePageOffsetConfig,
         free,
         gap,
-        sideMargin,
         containerType,
         isLargeDesktop,
     });
@@ -426,16 +422,15 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
         gap,
         centered,
         isDesktopOrBigger,
-        sideMargin,
         items.length,
     ]);
 
     const goToPage = React.useCallback(
-        (pageIndex: number) => {
+        (pageIndex: number, animate = true) => {
             const carouselEl = carouselRef.current;
             if (carouselEl) {
                 const scroll = pagesScrollPositions[pageIndex];
-                carouselEl.scrollTo({left: scroll, behavior: 'smooth'});
+                carouselEl.scrollTo({left: scroll, behavior: animate ? 'smooth' : 'auto'});
             }
         },
         [pagesScrollPositions]
@@ -465,7 +460,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
 
     React.useEffect(() => {
         if (initialActiveItem !== undefined) {
-            goToPage(Math.floor(initialActiveItem / itemsPerPageFloor));
+            goToPage(Math.floor(initialActiveItem / itemsPerPageFloor), false);
         }
     }, [initialActiveItem, goToPage, itemsPerPageFloor]);
 
@@ -634,7 +629,7 @@ const useSlideshowStyles = createUseStyles((theme) => ({
         scrollSnapType: 'x mandatory',
         ...hideScrollbar,
         [theme.mq.tabletOrSmaller]: {
-            margin: ({sideMargin}) => `0 -${sideMargin}px`,
+            margin: `0 calc(${responsiveLayoutSideMargin} * -1px)`,
         },
     },
     item: {
@@ -690,8 +685,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
     dataAttributes,
 }) => {
     const {texts} = useTheme();
-    const sideMargin = useResonsiveLayoutMargin();
-    const classes = useSlideshowStyles({sideMargin});
+    const classes = useSlideshowStyles();
 
     const carouselRef = React.useRef<HTMLDivElement>(null);
 
