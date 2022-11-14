@@ -32,7 +32,7 @@ export const linkAlignment = style({
     marginLeft: buttonLayoutSpacing / 2 - 6,
 });
 
-const base = style([
+export const container = style([
     sprinkles({display: 'flex'}),
     {
         flexWrap: 'wrap-reverse',
@@ -44,9 +44,17 @@ const base = style([
     },
 ]);
 
-export const container = style([base]);
+export const fullWidthContainer = style([
+    sprinkles({display: 'flex'}),
+    {
+        flexWrap: 'wrap-reverse',
+        margin: -buttonLayoutSpacing / 2,
 
-export const fullWidthContainer = style([base]);
+        ':empty': {
+            margin: 0,
+        },
+    },
+]);
 
 globalStyle(`${container} > *:not(${link})`, {
     minWidth: buttonWidth, // needed to override button.css value
