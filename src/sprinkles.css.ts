@@ -4,7 +4,11 @@ import {vars} from './skins/skin-contract.css';
 type ColorKeys = keyof typeof vars.colors;
 type ColorValues = typeof vars.colors[ColorKeys];
 
-const colors: Array<ColorValues | 'transparent'> = [...Object.values(vars.colors), 'transparent'];
+const colors: Array<ColorValues | 'transparent' | 'inherit'> = [
+    ...Object.values(vars.colors),
+    'transparent',
+    'inherit',
+];
 
 const colorProperties = defineProperties({
     properties: {
@@ -13,7 +17,7 @@ const colorProperties = defineProperties({
     },
 });
 
-const sizes = [0, 2, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64, 72, 80] as const;
+const sizes = [0, 2, 4, 6, 8, 12, 16, 24, 32, 40, 48, 56, 64, 72, 80] as const;
 
 const commonProperties = defineProperties({
     properties: {
@@ -29,8 +33,8 @@ const commonProperties = defineProperties({
         paddingBottom: sizes,
         paddingLeft: sizes,
         paddingRight: sizes,
-        width: ['100%', ...sizes],
-        height: sizes,
+        width: ['100%', 'auto', ...sizes],
+        height: ['100%', ...sizes],
         minWidth: sizes,
         minHeight: sizes,
         border: {

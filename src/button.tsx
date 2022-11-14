@@ -2,7 +2,6 @@ import * as React from 'react';
 import classnames from 'classnames';
 import Spinner from './spinner';
 import Touchable from './touchable';
-import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {pxToRem} from './utils/css';
@@ -12,6 +11,7 @@ import {getTextFromChildren} from './utils/common';
 import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
 import {useTheme} from './hooks';
 import {flattenChildren} from './skins/utils';
+import * as styles from './button.css';
 
 import type {TouchableElement} from './touchable';
 import type {
@@ -22,212 +22,6 @@ import type {
     TrackingEvent,
 } from './utils/types';
 import type {Location} from 'history';
-import type {Theme} from './theme';
-
-export const BUTTON_MIN_WIDTH = 136;
-
-const transitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
-
-const BORDER_PX = 1.5;
-const ICON_MARGIN_PX = 8;
-const X_PADDING_PX = 16 - BORDER_PX;
-const Y_PADDING_PX = 12 - BORDER_PX;
-const X_SMALL_PADDING_PX = 12 - BORDER_PX;
-const Y_SMALL_PADDING_PX = 6 - BORDER_PX;
-const ICON_SIZE = 24;
-const SMALL_ICON_SIZE = 20;
-const SPINNER_SIZE = 20;
-const SMALL_SPINNER_SIZE = 16;
-
-const commonClasses = () => ({
-    button: {
-        display: 'inline-block',
-        position: 'relative',
-        width: 'auto',
-        minWidth: BUTTON_MIN_WIDTH,
-        border: `${BORDER_PX}px solid transparent`,
-        borderRadius: 4,
-        overflow: 'hidden',
-        '&:hover:not([disabled])': {
-            transition: `background-color ${transitionTiming}, color ${transitionTiming}, border-color ${transitionTiming}`,
-        },
-    },
-    loadingFiller: {
-        display: 'block',
-        height: 0,
-        opacity: 0,
-        overflow: 'hidden',
-    },
-    small: {
-        minWidth: 104,
-    },
-    loadingContent: {
-        display: 'inline-flex',
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: X_PADDING_PX,
-        right: X_PADDING_PX,
-        justifyContent: 'center',
-        alignItems: 'center',
-        opacity: 0,
-        transform: 'translateY(2rem)',
-        transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
-        '$small &': {
-            left: X_SMALL_PADDING_PX,
-            right: X_SMALL_PADDING_PX,
-        },
-    },
-    textContent: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: `${Y_PADDING_PX}px ${X_PADDING_PX}px`, // height 48
-        opacity: 1,
-        transition: `opacity ${transitionTiming}, transform ${transitionTiming}`,
-        '$small &': {
-            padding: `${Y_SMALL_PADDING_PX}px ${X_SMALL_PADDING_PX}px`, // height 32
-        },
-        '& svg': {
-            display: 'block',
-        },
-    },
-    isLoading: {
-        '& $textContent': {
-            transform: 'translateY(-2rem)',
-            opacity: 0,
-        },
-        '& $loadingContent': {
-            transform: 'translateY(0)',
-            opacity: 1,
-        },
-    },
-});
-
-const disabledStyle = {opacity: 0.5};
-
-const usePrimaryButtonStyles = createUseStyles((theme) => ({
-    ...commonClasses(),
-    light: {
-        color: theme.colors.textButtonPrimary,
-        backgroundColor: theme.colors.buttonPrimaryBackground,
-
-        '&:enabled:active': {
-            backgroundColor: theme.colors.buttonPrimaryBackgroundSelected,
-        },
-        '&[disabled]:not($isLoading)': disabledStyle,
-
-        // Next media queries were added in each button style, because a pair of bugs in mobile devices (related to: https://jira.tuenti.io/jira/browse/APPS-1882):
-        // - When tapping on a button that takes you to next screen and then go back to the previous one, button still have the focus styles
-        // - Same behavior if you do long press on the button
-
-        // What these media queries do, is:
-        // - Make sure that in FF hover still has it's proper styles
-        // - Media query with "coarse" (mobile), avoids that in devices that have coarse implemented, focus style doesn't get stuck
-
-        // Must be always declared for Firefox
-        '&:hover:not([disabled])': {
-            backgroundColor: theme.colors.buttonPrimaryBackgroundHover,
-            [theme.mq.touchableOnly]: {
-                // Revert hover background in touch devices
-                backgroundColor: theme.colors.buttonPrimaryBackground,
-            },
-        },
-    },
-    inverse: {
-        color: theme.colors.textButtonPrimaryInverse,
-        backgroundColor: theme.colors.buttonPrimaryBackgroundInverse,
-
-        '&:enabled:active': {
-            backgroundColor: theme.colors.buttonPrimaryBackgroundSelectedInverse,
-            color: theme.colors.textButtonPrimaryInverseSelected,
-        },
-        '&[disabled]:not($isLoading)': disabledStyle,
-
-        '&:hover:not([disabled])': {
-            color: theme.colors.textButtonPrimaryInverseSelected,
-            backgroundColor: theme.colors.buttonPrimaryBackgroundSelectedInverse,
-            [theme.mq.touchableOnly]: {
-                color: theme.colors.textButtonPrimaryInverse,
-                backgroundColor: theme.colors.buttonPrimaryBackgroundInverse,
-            },
-        },
-    },
-}));
-
-const buttonSecondaryLightStyle = (theme: Theme) => ({
-    color: theme.colors.textButtonSecondary,
-    backgroundColor: 'transparent',
-    borderColor: theme.colors.buttonSecondaryBackground,
-});
-
-const buttonSecondaryHoverLightStyle = (theme: Theme) => ({
-    color: theme.colors.textButtonSecondarySelected,
-    borderColor: theme.colors.buttonSecondaryBackgroundSelected,
-});
-
-const useSecondaryButtonStyles = createUseStyles((theme) => ({
-    ...commonClasses(),
-    light: {
-        ...buttonSecondaryLightStyle(theme),
-
-        '&:enabled:active': {
-            ...buttonSecondaryHoverLightStyle(theme),
-        },
-        '&[disabled]:not($isLoading)': disabledStyle,
-        '&:hover:not([disabled])': {
-            ...buttonSecondaryHoverLightStyle(theme),
-            [theme.mq.touchableOnly]: {
-                ...buttonSecondaryLightStyle(theme),
-            },
-        },
-    },
-    inverse: {
-        borderColor: theme.colors.buttonSecondaryBorderInverse,
-        color: theme.colors.textButtonSecondaryInverse,
-
-        '&:enabled:active': {
-            borderColor: theme.colors.buttonSecondaryBorderSelectedInverse,
-            color: theme.colors.textButtonSecondaryInverseSelected,
-        },
-        '&[disabled]:not($isLoading)': disabledStyle,
-
-        '&:hover:not([disabled])': {
-            borderColor: theme.colors.buttonSecondaryBorderSelectedInverse,
-            color: theme.colors.textButtonSecondaryInverseSelected,
-            [theme.mq.touchableOnly]: {
-                borderColor: theme.colors.buttonSecondaryBorderInverse,
-                color: theme.colors.textButtonSecondaryInverse,
-            },
-        },
-    },
-}));
-
-const dangerButtonStyles = (theme: Theme) => ({
-    color: theme.colors.textButtonPrimary,
-    backgroundColor: theme.colors.buttonDangerBackground,
-
-    '&:enabled:active': {
-        backgroundColor: theme.colors.buttonDangerBackgroundSelected,
-    },
-    '&[disabled]:not($isLoading)': {
-        opacity: 0.5,
-    },
-
-    '&:hover:not([disabled])': {
-        backgroundColor: theme.colors.buttonDangerBackgroundHover,
-        [theme.mq.touchableOnly]: {
-            // Revert hover background in touch devices
-            backgroundColor: theme.colors.buttonDangerBackground,
-        },
-    },
-});
-
-const useDangerButtonStyles = createUseStyles((theme) => ({
-    ...commonClasses(),
-    light: dangerButtonStyles(theme),
-    inverse: dangerButtonStyles(theme),
-}));
 
 const renderButtonContent = ({
     content,
@@ -266,8 +60,8 @@ const renderButtonContent = ({
                     style={{
                         display: 'flex',
                         alignItems: 'center',
-                        marginLeft: isFirstChild ? 0 : ICON_MARGIN_PX,
-                        marginRight: isLastChild ? 0 : ICON_MARGIN_PX,
+                        marginLeft: isFirstChild ? 0 : styles.ICON_MARGIN_PX,
+                        marginRight: isLastChild ? 0 : styles.ICON_MARGIN_PX,
                     }}
                 >
                     {React.cloneElement(element as React.ReactElement<IconProps>, {
@@ -352,7 +146,7 @@ export type ButtonProps =
 
 const Button = React.forwardRef<
     TouchableElement,
-    ButtonProps & {classes: ReturnType<typeof usePrimaryButtonStyles>; type: ButtonType}
+    ButtonProps & {classes: {light: string; inverse: string}; type: ButtonType}
 >((props, ref) => {
     const {eventFormat} = useTrackingConfig();
     const {formStatus, formId} = useForm();
@@ -391,8 +185,8 @@ const Button = React.forwardRef<
         }
     };
 
-    const defaultIconSize = props.small ? SMALL_ICON_SIZE : ICON_SIZE;
-    const spinnerSizeRem = pxToRem(props.small ? SMALL_SPINNER_SIZE : SPINNER_SIZE);
+    const defaultIconSize = props.small ? styles.SMALL_ICON_SIZE : styles.ICON_SIZE;
+    const spinnerSizeRem = pxToRem(props.small ? styles.SMALL_SPINNER_SIZE : styles.SPINNER_SIZE);
 
     const renderText = (element: React.ReactNode) =>
         props.small ? (
@@ -407,11 +201,11 @@ const Button = React.forwardRef<
 
     const commonProps = {
         ref,
-        className: classnames(classes.button, props.className, {
-            [classes.small]: props.small,
+        className: classnames(styles.button, props.className, {
+            [styles.small]: props.small,
             [classes.inverse]: isInverse,
             [classes.light]: !isInverse,
-            [classes.isLoading]: showSpinner,
+            [styles.isLoading]: showSpinner,
         }),
         style: {cursor: props.fake ? 'pointer' : undefined, ...props.style},
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
@@ -422,7 +216,7 @@ const Button = React.forwardRef<
         children: (
             <>
                 {/* text content */}
-                <div aria-hidden={showSpinner ? true : undefined} className={classes.textContent}>
+                <div aria-hidden={showSpinner ? true : undefined} className={styles.textContent}>
                     {renderButtonContent({
                         content: props.children,
                         defaultIconSize,
@@ -432,11 +226,13 @@ const Button = React.forwardRef<
 
                 {/* the following div won't be visible (see loadingFiller class), this is used to force the button width */}
                 <div
-                    className={classes.loadingFiller}
+                    className={styles.loadingFiller}
                     aria-hidden
                     style={{
                         paddingLeft: spinnerSizeRem,
-                        paddingRight: ICON_MARGIN_PX + 2 * (props.small ? X_SMALL_PADDING_PX : X_PADDING_PX),
+                        paddingRight:
+                            styles.ICON_MARGIN_PX +
+                            2 * (props.small ? styles.X_SMALL_PADDING_PX : styles.X_PADDING_PX),
                     }}
                 >
                     {renderButtonContent({content: loadingText, defaultIconSize, renderText})}
@@ -445,7 +241,7 @@ const Button = React.forwardRef<
                 {/* loading content */}
                 <div
                     aria-hidden={showSpinner ? undefined : true}
-                    className={classes.loadingContent}
+                    className={styles.loadingContent}
                     onTransitionEnd={() => {
                         if (showSpinner !== shouldRenderSpinner) {
                             setShouldRenderSpinner(showSpinner);
@@ -517,54 +313,6 @@ const Button = React.forwardRef<
     return null;
 });
 
-const useButtonLinkStyles = createUseStyles((theme) => {
-    const paddingY = 6;
-    const paddingX = 12;
-    return {
-        link: {
-            display: 'inline-block',
-            width: 'auto',
-            padding: `${paddingY}px ${paddingX}px`,
-            fontWeight: 500,
-            borderRadius: 4,
-            overflow: 'hidden',
-            transition: `background-color ${transitionTiming}, color ${transitionTiming}`,
-            color: theme.colors.textLink,
-            '&:enabled:active': {
-                backgroundColor: theme.colors.buttonLinkBackgroundSelected,
-            },
-            '&:hover:not([disabled])': {
-                backgroundColor: theme.colors.buttonLinkBackgroundSelected,
-                [theme.mq.touchableOnly]: {
-                    backgroundColor: 'initial',
-                },
-            },
-            '&[disabled]': disabledStyle,
-        },
-        textContent: {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            '& svg': {
-                display: 'block',
-            },
-        },
-        inverse: {
-            color: theme.colors.textLinkInverse,
-            '&:enabled:active': {
-                backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
-            },
-            '&:hover:not([disabled])': {
-                backgroundColor: theme.colors.buttonLinkBackgroundSelectedInverse,
-                [theme.mq.touchableOnly]: {
-                    backgroundColor: 'initial',
-                },
-            },
-        },
-        aligned: {marginLeft: -paddingX},
-    };
-});
-
 interface ButtonLinkCommonProps {
     children: React.ReactNode;
     disabled?: boolean;
@@ -596,7 +344,6 @@ export type ButtonLinkProps = ButtonLinkOnPressProps | ButtonLinkHrefProps | But
 
 export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((props, ref) => {
     const {formStatus} = useForm();
-    const classes = useButtonLinkStyles();
     const isInverse = useIsInverseVariant();
     const {analytics} = useTheme();
 
@@ -623,15 +370,19 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
     );
 
     const commonProps = {
-        className: classnames(classes.link, {
-            [classes.inverse]: isInverse,
-            [classes.aligned]: props.aligned,
+        className: classnames(styles.link, {
+            [styles.inverseLink]: isInverse,
+            [styles.alignedLink]: props.aligned,
         }),
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
         dataAttributes: props.dataAttributes,
         children: (
-            <div className={classes.textContent}>
-                {renderButtonContent({content: props.children, defaultIconSize: SMALL_ICON_SIZE, renderText})}
+            <div className={styles.textContentLink}>
+                {renderButtonContent({
+                    content: props.children,
+                    defaultIconSize: styles.SMALL_ICON_SIZE,
+                    renderText,
+                })}
             </div>
         ),
         disabled: props.disabled || formStatus === 'sending',
@@ -666,17 +417,17 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
 });
 
 export const ButtonPrimary = React.forwardRef<TouchableElement, ButtonProps>((props, ref) => {
-    const classes = usePrimaryButtonStyles();
+    const classes = {light: styles.lightPrimary, inverse: styles.lightPrimaryInverse};
     return <Button {...props} ref={ref} classes={classes} type="primary" />;
 });
 
 export const ButtonSecondary = React.forwardRef<TouchableElement, ButtonProps>((props, ref) => {
-    const classes = useSecondaryButtonStyles();
+    const classes = {light: styles.lightSecondary, inverse: styles.lightSecondaryInverse};
     return <Button {...props} ref={ref} classes={classes} type="secondary" />;
 });
 
 export const ButtonDanger = React.forwardRef<TouchableElement, ButtonProps>((props, ref) => {
-    const classes = useDangerButtonStyles();
+    const classes = {light: styles.danger, inverse: styles.danger};
     return <Button {...props} ref={ref} classes={classes} type="danger" />;
 });
 

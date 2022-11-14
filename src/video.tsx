@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {useDisableBorderRadius} from './image';
-import {createUseStyles} from './jss';
 import {AspectRatioElement} from './utils/aspect-ratio-support';
 import {combineRefs} from './utils/common';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isRunningAcceptanceTest, isSafari} from './utils/platform';
+import * as styles from './video.css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -16,18 +16,6 @@ export const RATIO = {
     '12:5': 12 / 5,
     '4:3': 4 / 3,
 };
-
-const useStyles = createUseStyles(() => ({
-    video: {
-        width: '100%',
-        height: '100%',
-        background: 'transparent',
-        display: 'block',
-        objectFit: 'cover',
-        maxWidth: '100%',
-        maxHeight: '100%',
-    },
-}));
 
 type VideoSource = {
     src: string;
@@ -78,7 +66,6 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
 
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
 
-        const classes = useStyles();
         const videoRef = React.useRef<HTMLVideoElement | null>(null);
 
         React.useEffect(() => {
@@ -106,7 +93,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 autoPlay={autoPlay}
                 muted={muted}
                 loop={loop}
-                className={classes.video}
+                className={styles.video}
                 preload={preload}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
                 poster={poster || TRANSPARENT_PIXEL}
