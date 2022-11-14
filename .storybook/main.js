@@ -53,6 +53,10 @@ const addVanillaExtractSupport = (config) => {
 };
 
 module.exports = {
+    core: {
+        builder: 'webpack5',
+    },
+
     stories: ['./welcome-story.js', '../src/**/__stories__/*-story.tsx'],
     addons: [
         {
@@ -85,9 +89,13 @@ module.exports = {
     webpackFinal: async (config) => {
         config.watchOptions = {
             ...config.watchOptions,
-            ignored: [/node_modules/, /__tests__/, /__acceptance_tests__/, /__screenshot_tests__/],
+            ignored: [
+                '**/node_modules',
+                '**/__tests__',
+                '**/__acceptance_tests__',
+                '**/__screenshot_tests__',
+            ],
         };
-
         addVanillaExtractSupport(config);
 
         return replaceBabelWithSwc(config);
