@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {useScreenSize, useIsomorphicLayoutEffect} from './hooks';
-import {BUTTON_MIN_WIDTH, ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
+import {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
+import {BUTTON_MIN_WIDTH} from './button.css';
 import classnames from 'classnames';
 import debounce from 'lodash/debounce';
 import {getPrefixedDataAttributes} from './utils/dom';

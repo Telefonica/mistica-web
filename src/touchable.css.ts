@@ -9,6 +9,7 @@ export const touchable = style([
         width: '100%',
         color: 'inherit',
         backgroundColor: 'transparent',
+        padding: 0,
     }),
     {
         verticalAlign: 'bottom', // required to remove bottom gap when rendered as inline-block div
@@ -16,7 +17,6 @@ export const touchable = style([
         overflow: 'visible',
         appearance: 'none',
         userSelect: 'none',
-        padding: 0,
         textAlign: 'inherit',
         textDecoration: 'none',
         fontSize: 'inherit',
