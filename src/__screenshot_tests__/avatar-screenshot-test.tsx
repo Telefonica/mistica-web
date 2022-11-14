@@ -33,7 +33,7 @@ test('Avatar with initials', async () => {
         await openStoryPage({
             id: 'components-avatar--default',
             device: 'MOBILE_IOS',
-            args: {initials: 'PL', size, src: '', badge: '0'},
+            args: {initials: 'PL', size, src: ''},
         });
 
         const element = await screen.findByTestId('avatar');
@@ -44,7 +44,7 @@ test('Avatar with initials', async () => {
     await openStoryPage({
         id: 'components-avatar--default',
         device: 'MOBILE_IOS',
-        args: {initials: 'PL', size: 64, src: '', inverse: 'true', badge: '0'},
+        args: {initials: 'PL', size: 64, src: '', inverse: 'true'},
     });
 
     const element = await screen.findByTestId('avatar');
@@ -57,7 +57,7 @@ test('Avatar with icon', async () => {
         await openStoryPage({
             id: 'components-avatar--default',
             device: 'MOBILE_IOS',
-            args: {initials: '', size, src: '', badge: '0'},
+            args: {initials: '', size, src: ''},
         });
 
         const element = await screen.findByTestId('avatar');
@@ -69,7 +69,7 @@ test('Avatar with icon', async () => {
         await openStoryPage({
             id: 'components-avatar--default',
             device: 'MOBILE_IOS',
-            args: {initials: '', size: 64, src: '', icon: 'IconFireRegular', badge: '0'},
+            args: {initials: '', size: 64, src: '', icon: 'IconFireRegular'},
         });
 
         const element = await screen.findByTestId('avatar');
@@ -81,7 +81,7 @@ test('Avatar with icon', async () => {
         await openStoryPage({
             id: 'components-avatar--default',
             device: 'MOBILE_IOS',
-            args: {initials: '', size: 64, src: '', icon: 'IconFireRegular', inverse: 'true', badge: '0'},
+            args: {initials: '', size: 64, src: '', icon: 'IconFireRegular', inverse: 'true'},
         });
 
         const element = await screen.findByTestId('avatar');
