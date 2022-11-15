@@ -1,7 +1,9 @@
-import {style, globalStyle, styleVariants, ComplexStyleRule} from '@vanilla-extract/css';
+import {style, globalStyle, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
+
+import type {ComplexStyleRule} from '@vanilla-extract/css';
 
 const transitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
 
@@ -18,6 +20,10 @@ export const SPINNER_SIZE = 20;
 export const SMALL_SPINNER_SIZE = 16;
 const PADDING_Y_LINK = 6;
 const PADDING_X_LINK = 12;
+
+const disabledStyle = {opacity: 0.5};
+
+export const isLoading = style({});
 
 const button = style([
     sprinkles({
@@ -36,6 +42,8 @@ const button = style([
             '&:hover:not([disabled])': {
                 transition: `background-color ${transitionTiming}, color ${transitionTiming}, border-color ${transitionTiming}`,
             },
+
+            [`&[disabled]:not(${isLoading})`]: disabledStyle,
         },
     },
 ]);
@@ -54,8 +62,6 @@ export const loadingFiller = style([
 export const small = style({
     minWidth: 104,
 });
-
-export const isLoading = style({});
 
 export const loadingContent = style([
     sprinkles({
@@ -113,8 +119,6 @@ globalStyle(`${textContent} svg`, {
     display: 'block',
 });
 
-const disabledStyle = {opacity: 0.5};
-
 const lightPrimary: ComplexStyleRule = [
     button,
     sprinkles({
@@ -126,8 +130,6 @@ const lightPrimary: ComplexStyleRule = [
             '&:enabled:active': {
                 backgroundColor: vars.colors.buttonPrimaryBackgroundSelected,
             },
-
-            [`&[disabled]:not(${isLoading})`]: disabledStyle,
 
             // Next media queries were added in each button style, because a pair of bugs in mobile devices (related to: https://jira.tid.es/browse/APPS-1882):
             // - When tapping on a button that takes you to next screen and then go back to the previous one, button still have the focus styles
@@ -165,8 +167,6 @@ const lightPrimaryInverse: ComplexStyleRule = [
                 color: vars.colors.textButtonPrimaryInverseSelected,
             },
 
-            [`&[disabled]:not(${isLoading})`]: disabledStyle,
-
             '&:hover:not([disabled])': {
                 color: vars.colors.textButtonPrimaryInverseSelected,
                 backgroundColor: vars.colors.buttonPrimaryBackgroundSelectedInverse,
@@ -196,8 +196,6 @@ const lightSecondary: ComplexStyleRule = [
                 color: vars.colors.textButtonSecondarySelected,
                 borderColor: vars.colors.buttonSecondaryBackgroundSelected,
             },
-
-            [`&[disabled]:not(${isLoading})`]: disabledStyle,
 
             '&:hover:not([disabled])': {
                 color: vars.colors.textButtonSecondarySelected,
@@ -230,8 +228,6 @@ const lightSecondaryInverse: ComplexStyleRule = [
                 color: vars.colors.textButtonSecondaryInverseSelected,
             },
 
-            [`&[disabled]:not(${isLoading})`]: disabledStyle,
-
             '&:hover:not([disabled])': {
                 borderColor: vars.colors.buttonSecondaryBorderSelectedInverse,
                 color: vars.colors.textButtonSecondaryInverseSelected,
@@ -258,8 +254,6 @@ const danger: ComplexStyleRule = [
             '&:enabled:active': {
                 backgroundColor: vars.colors.buttonDangerBackgroundSelected,
             },
-
-            [`&[disabled]:not(${isLoading})`]: disabledStyle,
 
             '&:hover:not([disabled])': {
                 backgroundColor: vars.colors.buttonDangerBackgroundHover,

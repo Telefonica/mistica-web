@@ -46,7 +46,7 @@ test('<a> is rendered when using "to" prop', () => {
     expect(asFragment()).toMatchInlineSnapshot(`
         <DocumentFragment>
           <a
-            class="touchable_touchable__mhti6u1 touchable__mhti6u0 sprinkles_paddingTop_0__1y2v1nf5j sprinkles_paddingBottom_0__1y2v1nf5y sprinkles_paddingLeft_0__1y2v1nf6d sprinkles_paddingRight_0__1y2v1nf6s sprinkles_display_block__1y2v1nf4z sprinkles_border_none__1y2v1nf8z sprinkles_cursor_pointer__1y2v1nf95 sprinkles_width_100%__1y2v1nf77 sprinkles_color_inherit__1y2v1nf2d sprinkles_backgroundColor_transparent__1y2v1nf4q sprinkles_overflow_visible__1y2v1nf97 button_button__rrbrpn1 button__rrbrpn0 sprinkles_display_inline-block__1y2v1nf51 sprinkles_position_relative__1y2v1nf4s sprinkles_width_auto__1y2v1nf78 sprinkles_borderRadius_4__1y2v1nf92 button_lightPrimary__rrbrpna"
+            class="touchable_base__mhti6u1 touchable__mhti6u0 sprinkles_cursor_pointer__1y2v1nf95 button_variants_primary__rrbrpnl button_button__rrbrpn2 button__rrbrpn1 sprinkles_paddingTop_0__1y2v1nf5j sprinkles_paddingBottom_0__1y2v1nf5y sprinkles_paddingLeft_0__1y2v1nf6d sprinkles_paddingRight_0__1y2v1nf6s sprinkles_display_inline-block__1y2v1nf51 sprinkles_position_relative__1y2v1nf4s sprinkles_width_auto__1y2v1nf78 sprinkles_borderRadius_4__1y2v1nf92 sprinkles_overflow_hidden__1y2v1nf96 button__rrbrpna sprinkles_color_var(--colors-textButtonPrimary__1vqcj1i1m)__1y2v1nf1m sprinkles_backgroundColor_var(--colors-buttonPrimaryBackground__1vqcj1ik)__1y2v1nf2y"
             href="/test"
             role="button"
           >
@@ -62,7 +62,7 @@ test('<a> is rendered when using "to" prop', () => {
             </div>
             <div
               aria-hidden="true"
-              class="button_loadingFiller__rrbrpn3 button__rrbrpn2 sprinkles_display_block__1y2v1nf4z sprinkles_height_0__1y2v1nf7p"
+              class="button_loadingFiller__rrbrpn4 button__rrbrpn3 sprinkles_display_block__1y2v1nf4z sprinkles_height_0__1y2v1nf7p sprinkles_overflow_hidden__1y2v1nf96"
               style="padding-left: 1.250rem; padding-right: 37px;"
             />
             <div

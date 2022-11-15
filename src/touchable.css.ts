@@ -30,6 +30,7 @@ export const base = style([
 ]);
 
 export const touchable = style([
+    base,
     sprinkles({
         display: 'block',
         border: 'none',
@@ -39,7 +40,6 @@ export const touchable = style([
         padding: 0,
         overflow: 'visible',
     }),
-    base,
 ]);
 
 export const notTouchable = style({
