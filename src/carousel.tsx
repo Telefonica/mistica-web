@@ -107,7 +107,7 @@ const arrowButtonSeparation = (containerType: ContainerType, isLargeDesktop: boo
     switch (containerType) {
         case 'mobile-column':
         case 'tablet-column':
-            return `calc(${responsiveLayoutSideMargin} * -1px)`;
+            return `calc(${responsiveLayoutSideMargin} * -1)`;
         case 'desktop-wide-column':
             return `${isLargeDesktop ? -(24 + arrowButtonSize) : -arrowButtonSize / 2}px`;
         default:
@@ -144,7 +144,7 @@ const useStyles = createUseStyles((theme) => ({
         ...hideScrollbar,
         [theme.mq.tabletOrSmaller]: {
             '&$hasScroll': {
-                margin: `0 calc(${responsiveLayoutSideMargin} * -1px)`,
+                margin: `0 calc(${responsiveLayoutSideMargin} * -1)`,
             },
             '&$centered::before, &$centered::after': {
                 content: '""',
@@ -184,16 +184,16 @@ const useStyles = createUseStyles((theme) => ({
                     // prettier-ignore
                     `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile}px)`,
                 '&:first-child': {
-                    paddingLeft: `calc(${responsiveLayoutSideMargin} * 1px)`,
+                    paddingLeft: responsiveLayoutSideMargin,
                     width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap}) =>
                         // prettier-ignore
-                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile + gap}px + ${responsiveLayoutSideMargin} * 1px)`,
+                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile + gap}px + ${responsiveLayoutSideMargin})`,
                 },
                 '&:last-child': {
-                    paddingRight: `calc(${responsiveLayoutSideMargin} * 1px)`,
+                    paddingRight: responsiveLayoutSideMargin,
                     width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap}) =>
                         // prettier-ignore
-                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile}px + ${responsiveLayoutSideMargin} * 1px)`,
+                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile}px + ${responsiveLayoutSideMargin})`,
                 },
             },
 
@@ -629,7 +629,7 @@ const useSlideshowStyles = createUseStyles((theme) => ({
         scrollSnapType: 'x mandatory',
         ...hideScrollbar,
         [theme.mq.tabletOrSmaller]: {
-            margin: `0 calc(${responsiveLayoutSideMargin} * -1px)`,
+            margin: `0 calc(${responsiveLayoutSideMargin} * -1)`,
         },
     },
     item: {

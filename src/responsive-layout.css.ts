@@ -18,7 +18,7 @@ export const responsiveLayout = style({
     paddingRight: 'env(safe-area-inset-right)',
 
     vars: {
-        [responsiveLayoutSideMargin]: '0',
+        [responsiveLayoutSideMargin]: '0px',
     },
 
     '@media': {
@@ -34,7 +34,7 @@ export const responsiveLayout = style({
             margin: `0 ${TABLET_SIDE_MARGIN}px`,
 
             vars: {
-                [responsiveLayoutSideMargin]: String(TABLET_SIDE_MARGIN),
+                [responsiveLayoutSideMargin]: `${TABLET_SIDE_MARGIN}px`,
             },
         },
         [mq.mobile]: {
@@ -42,7 +42,7 @@ export const responsiveLayout = style({
             margin: `0 ${MOBILE_SIDE_MARGIN}px`,
 
             vars: {
-                [responsiveLayoutSideMargin]: String(MOBILE_SIDE_MARGIN),
+                [responsiveLayoutSideMargin]: `${MOBILE_SIDE_MARGIN}px`,
             },
         },
     },
