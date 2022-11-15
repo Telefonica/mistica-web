@@ -46,7 +46,7 @@ test('<a> is rendered when using "to" prop', () => {
     expect(asFragment()).toMatchInlineSnapshot(`
         <DocumentFragment>
           <a
-            class="touchable_touchable__mhti6u1 touchable__mhti6u0 sprinkles_display_block__1y2v1nf4x sprinkles_border_none__1y2v1nf8n sprinkles_cursor_pointer__1y2v1nf8t button light"
+            class="touchable_touchable__mhti6u1 touchable__mhti6u0 sprinkles_display_block__1y2v1nf4x sprinkles_border_none__1y2v1nf8q sprinkles_cursor_pointer__1y2v1nf8w button light"
             href="/test"
             role="button"
           >
