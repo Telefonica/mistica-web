@@ -7,7 +7,8 @@ const TABLET_SIDE_MARGIN = 32;
 const SMALL_DESKTOP_SIDE_MARGIN = 40;
 const LARGE_DESKTOP_MAX_WIDTH = 1224;
 
-export const responsiveLayoutSideMargin = createVar();
+const responsiveLayoutSideMargin = createVar();
+export const vars = {responsiveLayoutSideMargin};
 
 export const container = sprinkles({width: '100%'});
 

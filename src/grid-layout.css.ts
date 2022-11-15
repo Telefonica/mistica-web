@@ -1,7 +1,7 @@
 import {createVar, fallbackVar, style} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 
-export const verticalSpace = createVar();
+const verticalSpace = createVar();
 export const grid = style({
     display: 'grid',
     '@media': {
@@ -21,7 +21,7 @@ export const grid = style({
     },
 });
 
-export const colSpan = createVar();
+const colSpan = createVar();
 export const span = style({
     '@media': {
         [mq.desktopOrBigger]: {
@@ -32,3 +32,5 @@ export const span = style({
         },
     },
 });
+
+export const vars = {colSpan, verticalSpace};

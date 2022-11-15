@@ -86,13 +86,13 @@ const GridLayout: React.FC<Props> = (props) => {
 
     const spanStyles = (n: number) => ({
         className: styles.span,
-        style: assignInlineVars({[styles.colSpan]: String(n)}),
+        style: assignInlineVars({[styles.vars.colSpan]: String(n)}),
     });
 
     const gridStyles = {
         className: styles.grid,
         style: assignInlineVars({
-            [styles.verticalSpace]: props.verticalSpace ? `${props.verticalSpace}px` : '',
+            [styles.vars.verticalSpace]: props.verticalSpace ? `${props.verticalSpace}px` : '',
         }),
     };
 

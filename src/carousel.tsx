@@ -14,7 +14,7 @@ import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 import {isAndroid} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
 import {useContainerType} from './container-type-context';
-import {responsiveLayoutSideMargin} from './responsive-layout.css';
+import {vars} from './responsive-layout.css';
 
 import type {ContainerType, DataAttributes} from './utils/types';
 import type {Theme} from './theme';
@@ -107,7 +107,7 @@ const arrowButtonSeparation = (containerType: ContainerType, isLargeDesktop: boo
     switch (containerType) {
         case 'mobile-column':
         case 'tablet-column':
-            return `calc(${responsiveLayoutSideMargin} * -1)`;
+            return `calc(${vars.responsiveLayoutSideMargin} * -1)`;
         case 'desktop-wide-column':
             return `${isLargeDesktop ? -(24 + arrowButtonSize) : -arrowButtonSize / 2}px`;
         default:
@@ -144,7 +144,7 @@ const useStyles = createUseStyles((theme) => ({
         ...hideScrollbar,
         [theme.mq.tabletOrSmaller]: {
             '&$hasScroll': {
-                margin: `0 calc(${responsiveLayoutSideMargin} * -1)`,
+                margin: `0 calc(${vars.responsiveLayoutSideMargin} * -1)`,
             },
             '&$centered::before, &$centered::after': {
                 content: '""',
@@ -184,16 +184,16 @@ const useStyles = createUseStyles((theme) => ({
                     // prettier-ignore
                     `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile}px)`,
                 '&:first-child': {
-                    paddingLeft: responsiveLayoutSideMargin,
+                    paddingLeft: vars.responsiveLayoutSideMargin,
                     width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap}) =>
                         // prettier-ignore
-                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile + gap}px + ${responsiveLayoutSideMargin})`,
+                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile + gap}px + ${vars.responsiveLayoutSideMargin})`,
                 },
                 '&:last-child': {
-                    paddingRight: responsiveLayoutSideMargin,
+                    paddingRight: vars.responsiveLayoutSideMargin,
                     width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap}) =>
                         // prettier-ignore
-                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile}px + ${responsiveLayoutSideMargin})`,
+                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile}px + ${vars.responsiveLayoutSideMargin})`,
                 },
             },
 
@@ -629,7 +629,7 @@ const useSlideshowStyles = createUseStyles((theme) => ({
         scrollSnapType: 'x mandatory',
         ...hideScrollbar,
         [theme.mq.tabletOrSmaller]: {
-            margin: `0 calc(${responsiveLayoutSideMargin} * -1)`,
+            margin: `0 calc(${vars.responsiveLayoutSideMargin} * -1)`,
         },
     },
     item: {

@@ -1,9 +1,11 @@
 // @flow
 
-declare export var responsiveLayoutSideMargin: $PropertyType<
-  $Exports<"@vanilla-extract/private">,
-  "CSSVarFunction"
->;
+declare export var vars: {
+  responsiveLayoutSideMargin: $PropertyType<
+    $Exports<"@vanilla-extract/private">,
+    "CSSVarFunction"
+  >,
+};
 declare export var container: string;
 declare export var responsiveLayout: string;
 declare export var fullWidth: string;
