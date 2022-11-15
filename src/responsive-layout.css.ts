@@ -48,4 +48,10 @@ export const responsiveLayout = style({
     },
 });
 
-export const fullWidth = sprinkles({width: '100%'});
+export const fullWidth = style([
+    sprinkles({width: '100%'}),
+    {
+        paddingLeft: 'env(safe-area-inset-left)',
+        paddingRight: 'env(safe-area-inset-right)',
+    },
+]);
