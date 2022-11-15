@@ -43,7 +43,7 @@ const commonProperties = defineProperties({
         },
         borderRadius: ['50%', 2, 4, 8, 16],
         cursor: ['pointer'],
-        overflow: ['hidden'],
+        overflow: ['hidden', 'visible'],
         top: sizes,
         left: sizes,
         right: sizes,

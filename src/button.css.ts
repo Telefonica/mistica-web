@@ -25,9 +25,9 @@ export const button = style([
         position: 'relative',
         width: 'auto',
         borderRadius: 4,
-        overflow: 'hidden',
     }),
     {
+        overflow: 'hidden',
         minWidth: BUTTON_MIN_WIDTH,
         border: `${BORDER_PX}px solid transparent`,
 
@@ -43,9 +43,9 @@ export const loadingFiller = style([
     sprinkles({
         display: 'block',
         height: 0,
-        overflow: 'hidden',
     }),
     {
+        overflow: 'hidden',
         opacity: 0,
     },
 ]);
@@ -253,11 +253,11 @@ export const link = style([
         display: 'inline-block',
         width: 'auto',
         borderRadius: 4,
-        overflow: 'hidden',
         paddingX: PADDING_X_LINK,
         paddingY: PADDING_Y_LINK,
     }),
     {
+        overflow: 'hidden',
         fontWeight: 500,
         transition: `background-color ${transitionTiming}, color ${transitionTiming}`,
         color: vars.colors.textLink,
