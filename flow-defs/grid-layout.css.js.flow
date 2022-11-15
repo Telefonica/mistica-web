@@ -1,0 +1,12 @@
+// @flow
+
+declare export var verticalSpace: $PropertyType<
+  $Exports<"@vanilla-extract/private">,
+  "CSSVarFunction"
+>;
+declare export var grid: string;
+declare export var colSpan: $PropertyType<
+  $Exports<"@vanilla-extract/private">,
+  "CSSVarFunction"
+>;
+declare export var span: string;
