@@ -56,10 +56,12 @@ export const fullWidthContainer = style([
     },
 ]);
 
+export const noButtonWidth = style({});
+
 globalStyle(`${container} > *:not(${link})`, {
     minWidth: buttonWidth, // needed to override button.css value
-    margin: buttonLayoutSpacing / 2,
     width: `calc(50% - ${buttonLayoutSpacing}px)`,
+    margin: buttonLayoutSpacing / 2,
 
     '@media': {
         [mq.desktopOrBigger]: {
@@ -70,12 +72,18 @@ globalStyle(`${container} > *:not(${link})`, {
 
 globalStyle(`${fullWidthContainer} > *:not(${link})`, {
     minWidth: buttonWidth, // needed to override button.css value
-    margin: buttonLayoutSpacing / 2,
     width: `calc(100% - ${buttonLayoutSpacing}px)`,
+    margin: buttonLayoutSpacing / 2,
 
     '@media': {
         [mq.desktopOrBigger]: {
             width: buttonWidth,
         },
     },
+});
+
+globalStyle(`${noButtonWidth} > *:not(${link})`, {
+    minWidth: 'auto', // needed to override button.css value
+    width: 'auto',
+    margin: buttonLayoutSpacing / 2,
 });

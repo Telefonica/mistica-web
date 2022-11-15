@@ -22,7 +22,7 @@ export const Default: StoryComponent = () => {
     return (
         <>
             <Stack space={32}>
-                <Stack space={8}>
+                {/* <Stack space={8}>
                     <Title1>Alerts</Title1>
                     <ButtonLayout>
                         <ButtonPrimary
@@ -68,7 +68,7 @@ export const Default: StoryComponent = () => {
                             Open two buttons destructive
                         </ButtonPrimary>
                     </ButtonLayout>
-                </Stack>
+                </Stack> */}
                 <Stack space={8}>
                     <Title1>Dialog</Title1>
                     <ButtonLayout>

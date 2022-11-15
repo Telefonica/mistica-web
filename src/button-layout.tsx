@@ -157,7 +157,11 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
             ref={wrapperElRef}
             className={classnames(
                 sprinkles({justifyContent: getJustifyContent()}),
-                align === 'full-width' ? styles.fullWidthContainer : styles.container
+                buttonStatus.buttonWidth
+                    ? align === 'full-width'
+                        ? styles.fullWidthContainer
+                        : styles.container
+                    : styles.noButtonWidth
             )}
             style={{
                 ...assignInlineVars({
