@@ -1,5 +1,6 @@
 import {createVar, style} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
+import {sprinkles} from './sprinkles.css';
 
 const MOBILE_SIDE_MARGIN = 16;
 const TABLET_SIDE_MARGIN = 32;
@@ -8,9 +9,7 @@ const LARGE_DESKTOP_MAX_WIDTH = 1224;
 
 export const responsiveLayoutSideMargin = createVar();
 
-export const container = style({
-    width: '100%',
-});
+export const container = sprinkles({width: '100%'});
 
 export const responsiveLayout = style({
     margin: 'auto',
@@ -48,13 +47,4 @@ export const responsiveLayout = style({
     },
 });
 
-export const fullWidth = style({
-    width: '100%',
-    margin: 0,
-    '@media': {
-        [mq.largeDesktop]: {
-            width: 'auto',
-            margin: 'auto',
-        },
-    },
-});
+export const fullWidth = sprinkles({width: '100%'});
