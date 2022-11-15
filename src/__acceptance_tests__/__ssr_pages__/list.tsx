@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ResponsiveLayout, Title1, NegativeBox, RowList, Row, Avatar, BoxedRowList, BoxedRow} from '../..';
+import {ResponsiveLayout, Title1, NegativeBox, RowList, Row, Avatar, BoxedRowList, BoxedRow} from '../../..';
 
 const ListTest: React.FC = () => (
     <ResponsiveLayout>

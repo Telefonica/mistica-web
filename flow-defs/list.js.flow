@@ -91,6 +91,7 @@ declare type RowListProps = {
   children: React.Node,
   ariaLabelledby?: string,
   role?: string,
+  noLastDivider?: boolean,
   dataAttributes?: DataAttributes,
 };
 declare export var RowList: React.ComponentType<RowListProps>;

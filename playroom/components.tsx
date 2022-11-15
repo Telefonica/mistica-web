@@ -48,8 +48,7 @@ const useControlsStyles = createUseStyles((theme) => ({
         height: 57,
     },
     tabs: {
-        flexBasis: '100%',
-        marginRight: 150,
+        flexBasis: '73%',
         whiteSpace: 'nowrap',
     },
     desktopControlItem: {
@@ -255,29 +254,29 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     const overrideTheme = useOverrideTheme();
 
     React.useEffect(() => {
-        const impossibleSize = 999999;
         const selectedThemeConfig = themesMap[skinName].themeConfig;
-        let mediaQueries;
         if (forceMobile) {
-            mediaQueries = {
-                tabletMinWidth: impossibleSize,
-                desktopMinWidth: impossibleSize,
-                largeDesktopMinWidth: impossibleSize,
-                desktopOrTabletMinHeight: impossibleSize,
-            };
-        } else if (forceDesktop) {
-            mediaQueries = {
-                tabletMinWidth: 0,
-                desktopMinWidth: 0,
-                largeDesktopMinWidth: impossibleSize,
-                desktopOrTabletMinHeight: 0,
-            };
+            document.location.pathname = document.location.pathname.replace(
+                /playroom(-mobile|-desktop)?/,
+                'playroom-mobile'
+            );
+        }
+        if (forceDesktop) {
+            document.location.pathname = document.location.pathname.replace(
+                /playroom(-mobile|-desktop)?/,
+                'playroom-desktop'
+            );
+        }
+        if (!forceMobile && !forceDesktop) {
+            document.location.pathname = document.location.pathname.replace(
+                /playroom(-mobile|-desktop)?/,
+                'playroom'
+            );
         }
         overrideTheme({
             ...selectedThemeConfig,
             colorScheme,
             platformOverrides: {platform: os},
-            mediaQueries,
         });
     }, [overrideTheme, os, skinName, forceMobile, colorScheme, forceDesktop]);
 
@@ -298,7 +297,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     }, [os, skinName]);
 
     const controls = (
-        <ThemeContextProvider theme={theme}>
+        <ThemeContextProvider theme={theme} as="div">
             <PreviewToolsControls
                 skinName={skinName}
                 onSkinNameChange={setSkinName}

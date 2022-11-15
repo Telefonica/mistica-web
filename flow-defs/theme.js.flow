@@ -40,16 +40,13 @@ declare var TEXTS_ES: {
   carouselPrevButton: string,
 };
 declare export var getTexts: (locale: Locale) => typeof TEXTS_ES;
+declare export var NAVBAR_HEIGHT_MOBILE: 56;
+declare export var NAVBAR_HEIGHT_DESKTOP: 80;
 declare export var dimensions: {
   headerMobileHeight: number,
   headerDesktopHeight: number,
 };
-declare export var mediaQueriesConfig: {
-  tabletMinWidth: number,
-  desktopMinWidth: number,
-  largeDesktopMinWidth: number,
-  desktopOrTabletMinHeight: number,
-};
+declare export { mediaQueriesConfig } from "./media-queries.css";
 declare type LinkComponent = React.ComponentType<{
   style?: CssStyle,
   className?: string,
@@ -99,8 +96,12 @@ export type ThemeConfig = {
     eventFormat?: EventFormat,
   },
   dimensions?: {
-    headerMobileHeight: number,
+    headerMobileHeight: number | "mistica",
   },
+
+  /**
+   * @deprecated in future versions, mistica won't allow to configure media query breakpoints.
+   */
   mediaQueries?: {
     tabletMinWidth: number,
     desktopMinWidth: number,
@@ -139,6 +140,5 @@ export type Theme = {
   isIos: boolean,
   useHrefDecorator: () => (href: string) => string,
 };
-declare export {};
 
 import { type CssStyle } from "./__css_types__.js.flow";

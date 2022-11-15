@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {Text1, Text2, Text5} from './text';
-import {useTheme} from './hooks';
 import Inline from './inline';
 import Box from './box';
+import {vars} from './skins/skin-contract.css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -36,13 +36,11 @@ type TitleProps = {
 };
 
 export const Title1 = ({children, as = 'h3', id, right, dataAttributes}: TitleProps): React.ReactElement => {
-    const theme = useTheme();
-
     return (
         <TitleLayout
             title={
                 <Text1
-                    color={theme.colors.textSecondary}
+                    color={vars.colors.textSecondary}
                     transform="uppercase"
                     medium
                     as={as}

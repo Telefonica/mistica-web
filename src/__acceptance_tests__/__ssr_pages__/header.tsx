@@ -1,5 +1,12 @@
 import * as React from 'react';
-import {HeaderLayout, Header, MainSectionHeaderLayout, MainSectionHeader, ButtonPrimary, Stack} from '../..';
+import {
+    HeaderLayout,
+    Header,
+    MainSectionHeaderLayout,
+    MainSectionHeader,
+    ButtonPrimary,
+    Stack,
+} from '../../..';
 
 const HeaderTest: React.FC = () => (
     <Stack space={8}>

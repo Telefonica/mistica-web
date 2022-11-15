@@ -160,17 +160,15 @@ export const getTexts = (locale: Locale): typeof TEXTS_ES => {
     }
 };
 
+export const NAVBAR_HEIGHT_MOBILE = 56;
+export const NAVBAR_HEIGHT_DESKTOP = 80;
+
 export const dimensions = {
-    headerMobileHeight: 56,
-    headerDesktopHeight: 80,
+    headerMobileHeight: NAVBAR_HEIGHT_MOBILE,
+    headerDesktopHeight: NAVBAR_HEIGHT_DESKTOP,
 };
 
-export const mediaQueriesConfig = {
-    tabletMinWidth: 768,
-    desktopMinWidth: 1024,
-    largeDesktopMinWidth: 1368,
-    desktopOrTabletMinHeight: 550,
-};
+export {mediaQueriesConfig} from './media-queries.css';
 
 type LinkComponent = React.ComponentType<{
     style?: React.CSSProperties;
@@ -229,7 +227,11 @@ export type ThemeConfig = {
         logEvent: (trackingEvent: TrackingEvent) => Promise<void>;
         eventFormat?: EventFormat;
     };
-    dimensions?: {headerMobileHeight: number};
+    dimensions?: {headerMobileHeight: number | 'mistica'};
+
+    /**
+     * @deprecated in future versions, mistica won't allow to configure media query breakpoints.
+     */
     mediaQueries?: {
         tabletMinWidth: number;
         desktopMinWidth: number;

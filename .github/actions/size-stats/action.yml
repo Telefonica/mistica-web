@@ -12,6 +12,8 @@ output:
         description: 'JS size without icons'
     lib-overhead:
         description: 'Mistica lib size overhead'
+    lib-overhead-gzip:
+        description: 'Mistica lib size overhead (gzip)'
 runs:
     using: 'node12'
     main: 'main.js'

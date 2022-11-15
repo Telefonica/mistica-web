@@ -11,6 +11,9 @@ inputs:
     master-lib-overhead:
         description: 'Mistica lib size overhead (on master)'
         required: true
+    master-lib-overhead-gzip:
+        description: 'Mistica lib size overhead gzip (on master)'
+        required: true
     pr-total-js:
         description: 'Total JS size (on pr)'
         required: true
@@ -19,6 +22,9 @@ inputs:
         required: true
     pr-lib-overhead:
         description: 'Mistica lib size overhead (on pr)'
+        required: true
+    pr-lib-overhead-gzip:
+        description: 'Mistica lib size overhead gzip (on pr)'
         required: true
 runs:
     using: 'node12'

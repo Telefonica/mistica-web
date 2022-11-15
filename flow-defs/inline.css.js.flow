@@ -1,0 +1,8 @@
+// @flow
+
+declare export var vars: {
+  space: $PropertyType<$Exports<"@vanilla-extract/private">, "CSSVarFunction">,
+};
+declare export var inline: string;
+declare export var fullWidth: string;
+declare export var noFullWidth: string;

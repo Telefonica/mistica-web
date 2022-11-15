@@ -38,30 +38,20 @@ const getStories = () => {
  * >}
  */
 const startStorybook = () => {
-    if (process.env.CI) {
-        const baseUrl = require('@actions/core').getInput('storybook-url');
-        return Promise.resolve({
-            getStoryUrl: (id) => {
-                return `${baseUrl}/iframe.html?viewMode=story&id=${id}`;
-            },
-            closeStorybook: () => {},
-        });
-    } else {
-        return new Promise((resolve) => {
-            const port = 6006;
-            const storybookServer = new StaticServer({rootPath: 'public', port: port});
-            storybookServer.start(() => {
-                console.log(`Serving static storybook at: http://localhost:${port}`);
-                resolve({
-                    getStoryUrl: (id) => `http://localhost:${port}/iframe.html?viewMode=story&id=${id}`,
-                    closeStorybook: () => {
-                        console.log('Stopping static storybook server');
-                        storybookServer.stop();
-                    },
-                });
+    return new Promise((resolve) => {
+        const port = 6006;
+        const storybookServer = new StaticServer({rootPath: 'public', port: port});
+        storybookServer.start(() => {
+            console.log(`Serving static storybook at: http://localhost:${port}`);
+            resolve({
+                getStoryUrl: (id) => `http://localhost:${port}/iframe.html?viewMode=story&id=${id}`,
+                closeStorybook: () => {
+                    console.log('Stopping static storybook server');
+                    storybookServer.stop();
+                },
             });
         });
-    }
+    });
 };
 
 /**
@@ -190,6 +180,7 @@ const disabledRules = {
 };
 
 const main = async () => {
+    const isCi = process.env.CI;
     process.chdir(PATH_REPO_ROOT);
 
     if (!process.env.CI) {
@@ -200,7 +191,11 @@ const main = async () => {
     const stories = getStories().filter((story) => !STORIES_BLACKLIST.has(story));
     const {closeStorybook, getStoryUrl} = await startStorybook();
 
-    const browser = await puppeteer.launch({args: ['--incognito', '--no-sandbox']});
+    const browser = await puppeteer.launch({
+        // Launch chromium installed in docker in CI
+        ...(isCi ? {executablePath: '/usr/bin/chromium'} : {}),
+        args: ['--incognito', '--no-sandbox'],
+    });
 
     /** @type Array<[name: string, results: import('axe-core').AxeResults]> */
     const results = [];

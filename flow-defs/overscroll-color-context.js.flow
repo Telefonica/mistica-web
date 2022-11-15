@@ -5,5 +5,5 @@ declare type ProviderProps = {
   children: React.Node,
 };
 declare export var OverscrollColorProvider: (x: ProviderProps) => React.Node;
-declare var OverscrollColor: () => null;
+declare var OverscrollColor: () => React.Node;
 declare export default typeof OverscrollColor;

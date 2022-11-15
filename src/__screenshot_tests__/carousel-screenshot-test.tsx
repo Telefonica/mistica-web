@@ -17,6 +17,16 @@ test('Carousel mobile', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
+test('Carousel mobile with initialActiveItem=1', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousels-carousel--default',
+        device: 'MOBILE_IOS',
+        args: {initialActiveItem: 1},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
 test('Carousel mobile with a single page', async () => {
     const page = await openStoryPage({
         id: 'components-carousels-carousel--default',
@@ -71,6 +81,16 @@ test('Carousel desktop', async () => {
     expect(await isDisabled(nextArrow)).toBe(true);
 });
 
+test('Carousel desktop  with initialActiveItem=3', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousels-carousel--default',
+        device: 'DESKTOP',
+        args: {initialActiveItem: 3},
+    });
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
 // no screenshot test for desktop because it's like the regular carousel
 test('CenteredCarousel mobile', async () => {
     const page = await openStoryPage({
@@ -81,6 +101,16 @@ test('CenteredCarousel mobile', async () => {
     expect(await page.screenshot()).toMatchImageSnapshot();
 
     await (await screen.findByLabelText('Carousel item 1')).evaluate((el) => el.scrollIntoView());
+
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});
+
+test('CenteredCarousel mobile with initialActiveItem=1', async () => {
+    const page = await openStoryPage({
+        id: 'components-carousels-centered-carousel--default',
+        device: 'MOBILE_IOS',
+        args: {initialActiveItem: 1},
+    });
 
     expect(await page.screenshot()).toMatchImageSnapshot();
 });
