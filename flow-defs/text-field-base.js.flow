@@ -52,6 +52,7 @@ export type CommonFormFieldProps = {
   value?: string,
   defaultValue?: string,
   onChange?: (event: SyntheticEvent<HTMLInputElement>) => void,
+  readOnly?: boolean,
 };
 declare type TextFieldBaseProps = {
   id?: string,
