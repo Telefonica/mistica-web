@@ -267,6 +267,7 @@ const Touchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
     return <RawTouchable {...props} className={classnames(classes.touchable, props.className)} ref={ref} />;
 });
 
+// Used internally by Mistica's components to avoid styles collisions
 export const BaseTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
     return <RawTouchable {...props} className={classnames(classes.base, props.className)} ref={ref} />;
 });
