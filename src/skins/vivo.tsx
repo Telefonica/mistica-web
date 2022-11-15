@@ -91,7 +91,7 @@ export const getVivoSkin: GetKnownSkin = () => {
             buttonSecondaryBorderSelected: palette.vivoPurpleDark,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.vivoPurpleLight50,
-            buttonSecondaryBackgroundHover: palette.vivoPurpleDark, // web only
+            buttonSecondaryBackgroundHover: palette.vivoPurpleLight10, // web only
             buttonSecondaryBackgroundHoverInverse: applyAlpha (palette.vivoPurpleLight50, 0.2), // web only
             buttonSecondaryBackgroundSelectedInverse: applyAlpha (palette.vivoPurpleLight50, 0.2),
 
