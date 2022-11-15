@@ -1129,6 +1129,63 @@ const exampleScreens: Array<Snippet> = [
         </ButtonFixedFooterLayout>
       </Form>`,
     },
+    {
+        group: 'Ξ ✨ Example Screens',
+        name: 'Search filter screen',
+        code: `
+<ButtonFixedFooterLayout
+  button={<ButtonPrimary onPress={() => {}}>Continue</ButtonPrimary>}
+>
+  <ResponsiveLayout>
+    <Box paddingY={24}>
+      <Stack space={24}>
+        <SearchField
+          autoComplete="off"
+          label="Search provider"
+          value={getState("search", "")}
+          onChangeValue={setState("search")}
+        />
+
+        <Stack space={8}>
+          {!getState("search") && <Title1>Most popular providers</Title1>}
+          <NegativeBox>
+            <RadioGroup
+              value={getState("provider")}
+              onChange={setState("provider")}
+            >
+              <RowList>
+                {[
+                  "Movistar",
+                  "Vodafone",
+                  "Orange",
+                  "Vivo",
+                  "O2",
+                  "Tuenti",
+                  "Pepephone",
+                  "MasMovil",
+                ]
+                  .filter(
+                    (provider) =>
+                      provider === getState("provider") ||
+                      provider
+                        .toLocaleLowerCase()
+                        .startsWith(
+                          getState("search", "").toLocaleLowerCase()
+                        )
+                  )
+                  .map((provider) => (
+                    <Row title={provider} radioValue={provider} />
+                  ))}
+              </RowList>
+            </RadioGroup>
+          </NegativeBox>
+        </Stack>
+      </Stack>
+    </Box>
+  </ResponsiveLayout>
+</ButtonFixedFooterLayout>
+`,
+    },
 ];
 
 const navigationBarSnippets = [
