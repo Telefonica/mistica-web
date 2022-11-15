@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import Spinner from './spinner';
-import Touchable from './touchable';
+import {BaseTouchable} from './touchable';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {pxToRem} from './utils/css';
@@ -144,14 +144,11 @@ export type ButtonProps =
     | OnPressButtonProps
     | HrefButtonProps;
 
-const Button = React.forwardRef<
-    TouchableElement,
-    ButtonProps & {classes: {light: string; inverse: string}; type: ButtonType}
->((props, ref) => {
+const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonType}>((props, ref) => {
     const {eventFormat} = useTrackingConfig();
     const {formStatus, formId} = useForm();
     const isInverse = useIsInverseVariant();
-    const {classes, loadingText} = props;
+    const {loadingText} = props;
     const isSubmitButton = !!props.submit;
     const isFormSending = formStatus === 'sending';
 
@@ -201,12 +198,14 @@ const Button = React.forwardRef<
 
     const commonProps = {
         ref,
-        className: classnames(styles.button, props.className, {
-            [styles.small]: props.small,
-            [classes.inverse]: isInverse,
-            [classes.light]: !isInverse,
-            [styles.isLoading]: showSpinner,
-        }),
+        className: classnames(
+            isInverse ? styles.inverseVariants[props.type] : styles.variants[props.type],
+            props.className,
+            {
+                [styles.small]: props.small,
+                [styles.isLoading]: showSpinner,
+            }
+        ),
         style: {cursor: props.fake ? 'pointer' : undefined, ...props.style},
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
         dataAttributes: props.dataAttributes,
@@ -283,25 +282,30 @@ const Button = React.forwardRef<
     }
 
     if (props.fake) {
-        return <Touchable maybe {...commonProps} role="presentation" aria-hidden="true" />;
+        return <BaseTouchable maybe {...commonProps} role="presentation" aria-hidden="true" />;
     }
 
     if (props.submit) {
         // using empty onPress handler so it gets rendered as a button
-        return <Touchable type="submit" formId={formId} onPress={() => {}} {...commonProps} />;
+        return <BaseTouchable type="submit" formId={formId} onPress={() => {}} {...commonProps} />;
     }
 
     if (props.onPress) {
-        return <Touchable {...commonProps} onPress={props.onPress} />;
+        return <BaseTouchable {...commonProps} onPress={props.onPress} />;
     }
 
     if (props.to || props.to === '') {
-        return <Touchable {...commonProps} to={props.to} fullPageOnWebView={props.fullPageOnWebView} />;
+        return <BaseTouchable {...commonProps} to={props.to} fullPageOnWebView={props.fullPageOnWebView} />;
     }
 
     if (props.href || props.href === '') {
         return (
-            <Touchable {...commonProps} href={props.href} newTab={props.newTab} loadOnTop={props.loadOnTop} />
+            <BaseTouchable
+                {...commonProps}
+                href={props.href}
+                newTab={props.newTab}
+                loadOnTop={props.loadOnTop}
+            />
         );
     }
 
@@ -395,17 +399,22 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
     }
 
     if (props.onPress) {
-        return <Touchable ref={ref} {...commonProps} onPress={props.onPress} />;
+        return <BaseTouchable ref={ref} {...commonProps} onPress={props.onPress} />;
     }
 
     if (props.to || props.to === '') {
         return (
-            <Touchable ref={ref} {...commonProps} to={props.to} fullPageOnWebView={props.fullPageOnWebView} />
+            <BaseTouchable
+                ref={ref}
+                {...commonProps}
+                to={props.to}
+                fullPageOnWebView={props.fullPageOnWebView}
+            />
         );
     }
 
     if (props.href || props.href === '') {
-        return <Touchable ref={ref} {...commonProps} href={props.href} newTab={props.newTab} />;
+        return <BaseTouchable ref={ref} {...commonProps} href={props.href} newTab={props.newTab} />;
     }
 
     if (process.env.NODE_ENV !== 'production') {
@@ -417,18 +426,15 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
 });
 
 export const ButtonPrimary = React.forwardRef<TouchableElement, ButtonProps>((props, ref) => {
-    const classes = {light: styles.lightPrimary, inverse: styles.lightPrimaryInverse};
-    return <Button {...props} ref={ref} classes={classes} type="primary" />;
+    return <Button {...props} ref={ref} type="primary" />;
 });
 
 export const ButtonSecondary = React.forwardRef<TouchableElement, ButtonProps>((props, ref) => {
-    const classes = {light: styles.lightSecondary, inverse: styles.lightSecondaryInverse};
-    return <Button {...props} ref={ref} classes={classes} type="secondary" />;
+    return <Button {...props} ref={ref} type="secondary" />;
 });
 
 export const ButtonDanger = React.forwardRef<TouchableElement, ButtonProps>((props, ref) => {
-    const classes = {light: styles.danger, inverse: styles.danger};
-    return <Button {...props} ref={ref} classes={classes} type="danger" />;
+    return <Button {...props} ref={ref} type="danger" />;
 });
 
 export type ButtonElement =

@@ -1,16 +1,9 @@
 import {style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 
-export const touchable = style([
+export const base = style([
     sprinkles({
-        display: 'block',
-        border: 'none',
         cursor: 'pointer',
-        width: '100%',
-        color: 'inherit',
-        backgroundColor: 'transparent',
-        padding: 0,
-        overflow: 'visible',
     }),
     {
         verticalAlign: 'bottom', // required to remove bottom gap when rendered as inline-block div
@@ -34,6 +27,19 @@ export const touchable = style([
             },
         },
     },
+]);
+
+export const touchable = style([
+    sprinkles({
+        display: 'block',
+        border: 'none',
+        width: '100%',
+        color: 'inherit',
+        backgroundColor: 'transparent',
+        padding: 0,
+        overflow: 'visible',
+    }),
+    base,
 ]);
 
 export const notTouchable = style({

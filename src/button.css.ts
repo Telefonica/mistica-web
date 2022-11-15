@@ -1,4 +1,4 @@
-import {style, globalStyle} from '@vanilla-extract/css';
+import {style, globalStyle, styleVariants, ComplexStyleRule} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
@@ -19,17 +19,18 @@ export const SMALL_SPINNER_SIZE = 16;
 const PADDING_Y_LINK = 6;
 const PADDING_X_LINK = 12;
 
-export const button = style([
+const button = style([
     sprinkles({
         display: 'inline-block',
         position: 'relative',
         width: 'auto',
         borderRadius: 4,
+        overflow: 'hidden',
+        padding: 0,
     }),
     {
-        overflow: 'hidden',
-        minWidth: BUTTON_MIN_WIDTH,
         border: `${BORDER_PX}px solid transparent`,
+        minWidth: BUTTON_MIN_WIDTH,
 
         selectors: {
             '&:hover:not([disabled])': {
@@ -43,9 +44,9 @@ export const loadingFiller = style([
     sprinkles({
         display: 'block',
         height: 0,
+        overflow: 'hidden',
     }),
     {
-        overflow: 'hidden',
         opacity: 0,
     },
 ]);
@@ -114,139 +115,164 @@ globalStyle(`${textContent} svg`, {
 
 const disabledStyle = {opacity: 0.5};
 
-export const lightPrimary = style({
-    color: vars.colors.textButtonPrimary,
-    backgroundColor: vars.colors.buttonPrimaryBackground,
-    selectors: {
-        '&:enabled:active': {
-            backgroundColor: vars.colors.buttonPrimaryBackgroundSelected,
-        },
+const lightPrimary: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textButtonPrimary,
+        backgroundColor: vars.colors.buttonPrimaryBackground,
+    }),
+    {
+        selectors: {
+            '&:enabled:active': {
+                backgroundColor: vars.colors.buttonPrimaryBackgroundSelected,
+            },
 
-        [`&[disabled]:not(${isLoading})`]: disabledStyle,
+            [`&[disabled]:not(${isLoading})`]: disabledStyle,
 
-        // Next media queries were added in each button style, because a pair of bugs in mobile devices (related to: https://jira.tid.es/browse/APPS-1882):
-        // - When tapping on a button that takes you to next screen and then go back to the previous one, button still have the focus styles
-        // - Same behavior if you do long press on the button
+            // Next media queries were added in each button style, because a pair of bugs in mobile devices (related to: https://jira.tid.es/browse/APPS-1882):
+            // - When tapping on a button that takes you to next screen and then go back to the previous one, button still have the focus styles
+            // - Same behavior if you do long press on the button
 
-        // What these media queries do, is:
-        // - Make sure that in FF hover still has it's proper styles
-        // - Media query with "coarse" (mobile), avoids that in devices that have coarse implemented, focus style doesn't get stuck
+            // What these media queries do, is:
+            // - Make sure that in FF hover still has it's proper styles
+            // - Media query with "coarse" (mobile), avoids that in devices that have coarse implemented, focus style doesn't get stuck
 
-        // Must be always declared for Firefox
-        '&:hover:not([disabled])': {
-            backgroundColor: vars.colors.buttonPrimaryBackgroundHover,
+            // Must be always declared for Firefox
+            '&:hover:not([disabled])': {
+                backgroundColor: vars.colors.buttonPrimaryBackgroundHover,
 
-            '@media': {
-                [mq.touchableOnly]: {
-                    // Revert hover background in touch devices
-                    backgroundColor: vars.colors.buttonPrimaryBackground,
+                '@media': {
+                    [mq.touchableOnly]: {
+                        // Revert hover background in touch devices
+                        backgroundColor: vars.colors.buttonPrimaryBackground,
+                    },
                 },
             },
         },
     },
-});
+];
 
-export const lightPrimaryInverse = style({
-    color: vars.colors.textButtonPrimaryInverse,
-    backgroundColor: vars.colors.buttonPrimaryBackgroundInverse,
-    selectors: {
-        '&:enabled:active': {
-            backgroundColor: vars.colors.buttonPrimaryBackgroundSelectedInverse,
-            color: vars.colors.textButtonPrimaryInverseSelected,
-        },
+const lightPrimaryInverse: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textButtonPrimaryInverse,
+        backgroundColor: vars.colors.buttonPrimaryBackgroundInverse,
+    }),
+    {
+        selectors: {
+            '&:enabled:active': {
+                backgroundColor: vars.colors.buttonPrimaryBackgroundSelectedInverse,
+                color: vars.colors.textButtonPrimaryInverseSelected,
+            },
 
-        [`&[disabled]:not(${isLoading})`]: disabledStyle,
+            [`&[disabled]:not(${isLoading})`]: disabledStyle,
 
-        '&:hover:not([disabled])': {
-            color: vars.colors.textButtonPrimaryInverseSelected,
-            backgroundColor: vars.colors.buttonPrimaryBackgroundSelectedInverse,
+            '&:hover:not([disabled])': {
+                color: vars.colors.textButtonPrimaryInverseSelected,
+                backgroundColor: vars.colors.buttonPrimaryBackgroundSelectedInverse,
 
-            '@media': {
-                [mq.touchableOnly]: {
-                    color: vars.colors.textButtonPrimaryInverse,
-                    backgroundColor: vars.colors.buttonPrimaryBackgroundInverse,
+                '@media': {
+                    [mq.touchableOnly]: {
+                        color: vars.colors.textButtonPrimaryInverse,
+                        backgroundColor: vars.colors.buttonPrimaryBackgroundInverse,
+                    },
                 },
             },
         },
     },
-});
+];
 
-export const lightSecondary = style({
-    color: vars.colors.textButtonSecondary,
-    backgroundColor: 'transparent',
-    borderColor: vars.colors.buttonSecondaryBackground,
+const lightSecondary: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textButtonSecondary,
+        backgroundColor: 'transparent',
+    }),
+    {
+        borderColor: vars.colors.buttonSecondaryBackground,
 
-    selectors: {
-        '&:enabled:active': {
-            color: vars.colors.textButtonSecondarySelected,
-            borderColor: vars.colors.buttonSecondaryBackgroundSelected,
-        },
+        selectors: {
+            '&:enabled:active': {
+                color: vars.colors.textButtonSecondarySelected,
+                borderColor: vars.colors.buttonSecondaryBackgroundSelected,
+            },
 
-        [`&[disabled]:not(${isLoading})`]: disabledStyle,
+            [`&[disabled]:not(${isLoading})`]: disabledStyle,
 
-        '&:hover:not([disabled])': {
-            color: vars.colors.textButtonSecondarySelected,
-            borderColor: vars.colors.buttonSecondaryBackgroundSelected,
+            '&:hover:not([disabled])': {
+                color: vars.colors.textButtonSecondarySelected,
+                borderColor: vars.colors.buttonSecondaryBackgroundSelected,
 
-            '@media': {
-                [mq.touchableOnly]: {
-                    color: vars.colors.textButtonSecondary,
-                    backgroundColor: 'transparent',
-                    borderColor: vars.colors.buttonSecondaryBackground,
+                '@media': {
+                    [mq.touchableOnly]: {
+                        color: vars.colors.textButtonSecondary,
+                        backgroundColor: 'transparent',
+                        borderColor: vars.colors.buttonSecondaryBackground,
+                    },
                 },
             },
         },
     },
-});
+];
 
-export const lightSecondaryInverse = style({
-    borderColor: vars.colors.buttonSecondaryBorderInverse,
-    color: vars.colors.textButtonSecondaryInverse,
+const lightSecondaryInverse: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textButtonSecondaryInverse,
+        backgroundColor: 'transparent',
+    }),
+    {
+        borderColor: vars.colors.buttonSecondaryBorderInverse,
 
-    selectors: {
-        '&:enabled:active': {
-            borderColor: vars.colors.buttonSecondaryBorderSelectedInverse,
-            color: vars.colors.textButtonSecondaryInverseSelected,
-        },
+        selectors: {
+            '&:enabled:active': {
+                borderColor: vars.colors.buttonSecondaryBorderSelectedInverse,
+                color: vars.colors.textButtonSecondaryInverseSelected,
+            },
 
-        [`&[disabled]:not(${isLoading})`]: disabledStyle,
+            [`&[disabled]:not(${isLoading})`]: disabledStyle,
 
-        '&:hover:not([disabled])': {
-            borderColor: vars.colors.buttonSecondaryBorderSelectedInverse,
-            color: vars.colors.textButtonSecondaryInverseSelected,
+            '&:hover:not([disabled])': {
+                borderColor: vars.colors.buttonSecondaryBorderSelectedInverse,
+                color: vars.colors.textButtonSecondaryInverseSelected,
 
-            '@media': {
-                [mq.touchableOnly]: {
-                    borderColor: vars.colors.buttonSecondaryBorderInverse,
-                    color: vars.colors.textButtonSecondaryInverse,
+                '@media': {
+                    [mq.touchableOnly]: {
+                        borderColor: vars.colors.buttonSecondaryBorderInverse,
+                        color: vars.colors.textButtonSecondaryInverse,
+                    },
                 },
             },
         },
     },
-});
+];
 
-export const danger = style({
-    color: vars.colors.textButtonPrimary,
-    backgroundColor: vars.colors.buttonDangerBackground,
+const danger: ComplexStyleRule = [
+    button,
+    sprinkles({
+        color: vars.colors.textButtonPrimary,
+        backgroundColor: vars.colors.buttonDangerBackground,
+    }),
+    {
+        selectors: {
+            '&:enabled:active': {
+                backgroundColor: vars.colors.buttonDangerBackgroundSelected,
+            },
 
-    selectors: {
-        '&:enabled:active': {
-            backgroundColor: vars.colors.buttonDangerBackgroundSelected,
-        },
+            [`&[disabled]:not(${isLoading})`]: disabledStyle,
 
-        [`&[disabled]:not(${isLoading})`]: disabledStyle,
+            '&:hover:not([disabled])': {
+                backgroundColor: vars.colors.buttonDangerBackgroundHover,
 
-        '&:hover:not([disabled])': {
-            backgroundColor: vars.colors.buttonDangerBackgroundHover,
-
-            '@media': {
-                [mq.touchableOnly]: {
-                    backgroundColor: vars.colors.buttonDangerBackground,
+                '@media': {
+                    [mq.touchableOnly]: {
+                        backgroundColor: vars.colors.buttonDangerBackground,
+                    },
                 },
             },
         },
     },
-});
+];
 
 export const link = style([
     sprinkles({
@@ -255,12 +281,14 @@ export const link = style([
         borderRadius: 4,
         paddingX: PADDING_X_LINK,
         paddingY: PADDING_Y_LINK,
+        border: 'none',
+        color: vars.colors.textLink,
+        backgroundColor: 'transparent',
+        overflow: 'hidden',
     }),
     {
-        overflow: 'hidden',
         fontWeight: 500,
         transition: `background-color ${transitionTiming}, color ${transitionTiming}`,
-        color: vars.colors.textLink,
 
         selectors: {
             '&:enabled:active': {
@@ -282,25 +310,28 @@ export const link = style([
     },
 ]);
 
-export const inverseLink = style({
-    color: vars.colors.textLinkInverse,
+export const inverseLink = style([
+    sprinkles({
+        color: vars.colors.textLinkInverse,
+    }),
+    {
+        selectors: {
+            '&:enabled:active': {
+                backgroundColor: vars.colors.buttonLinkBackgroundSelectedInverse,
+            },
 
-    selectors: {
-        '&:enabled:active': {
-            backgroundColor: vars.colors.buttonLinkBackgroundSelectedInverse,
-        },
+            '&:hover:not([disabled])': {
+                backgroundColor: vars.colors.buttonLinkBackgroundSelectedInverse,
 
-        '&:hover:not([disabled])': {
-            backgroundColor: vars.colors.buttonLinkBackgroundSelectedInverse,
-
-            '@media': {
-                [mq.touchableOnly]: {
-                    backgroundColor: 'initial',
+                '@media': {
+                    [mq.touchableOnly]: {
+                        backgroundColor: 'initial',
+                    },
                 },
             },
         },
     },
-});
+]);
 
 export const textContentLink = sprinkles({
     display: 'flex',
@@ -313,3 +344,15 @@ globalStyle(`${textContent} svg`, {
 });
 
 export const alignedLink = style({marginLeft: -PADDING_X_LINK});
+
+export const variants = styleVariants({
+    primary: lightPrimary,
+    secondary: lightSecondary,
+    danger,
+});
+
+export const inverseVariants = styleVariants({
+    primary: lightPrimaryInverse,
+    secondary: lightSecondaryInverse,
+    danger,
+});
