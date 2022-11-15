@@ -15,5 +15,5 @@ output:
     lib-overhead-gzip:
         description: 'Mistica lib size overhead (gzip)'
 runs:
-    using: 'node12'
+    using: 'node16'
     main: 'main.js'
