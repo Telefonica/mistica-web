@@ -5,7 +5,7 @@ inputs:
     github-token:
         description: 'GitHub token, required to comment on PRs'
         required: true
-output:
+outputs:
     total-js:
         description: 'Total JS size'
     js-without-icons:
