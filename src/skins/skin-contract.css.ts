@@ -115,5 +115,10 @@ const colors = {
 
 export const vars = createThemeContract({
     colors,
+    /**
+     * Raw colors are defined as rgb components to allow applying alpha channel when using the css var
+     * See ThemeContextProvider, where the colors provided in the themeConfig are transformed into rgb components
+     * See utils/color.tsx applyAlha, where the alpha channel is applied to the css var
+     */
     rawColors: colors,
 });

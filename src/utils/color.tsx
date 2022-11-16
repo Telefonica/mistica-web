@@ -16,10 +16,15 @@ export const fromHexToRgb = (hexColor: string): [number, number, number] => {
     throw Error('Bad color');
 };
 
+/**
+ * @param color hex color or css variable with rgb components
+ * @param alpha the alpha value to apply
+ * @returns The same color with the alpha channel applied
+ */
 export const applyAlpha = (color: string, alpha: number): string => {
     try {
         if (color.startsWith('var(')) {
-            // it's a css variable
+            // it's a css variable with rgb components. See skin-contract rawColors
             return `rgba(${color}, ${alpha})`;
         } else {
             // it's a hex color

@@ -183,6 +183,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId, as}
         };
     }, [theme, isOsDarkModeEnabled]);
 
+    // Define the same colors in css variables as rgb components, to allow applying alpha aftherwards. See utils/color.tsx
     const rawColors = Object.fromEntries(
         Object.entries(contextTheme.colors).map(([colorName, colorValue]) => {
             let rawColorValue = '';
