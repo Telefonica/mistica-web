@@ -18,7 +18,7 @@ export const ICON_SIZE = 24;
 export const SMALL_ICON_SIZE = 20;
 export const SPINNER_SIZE = 20;
 export const SMALL_SPINNER_SIZE = 16;
-const PADDING_Y_LINK = 6;
+export const PADDING_Y_LINK = 6;
 const PADDING_X_LINK = 12;
 
 const disabledStyle = {opacity: 0.5};

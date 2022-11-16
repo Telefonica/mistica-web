@@ -1,6 +1,7 @@
-import {style, createVar, globalStyle} from '@vanilla-extract/css';
+import {style, createVar, globalStyle, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
+import {PADDING_Y_LINK} from './button.css';
 
 const buttonWidth = createVar();
 
@@ -29,7 +30,11 @@ export const link = style([
 ]);
 
 export const linkAlignment = style({
-    marginLeft: buttonLayoutSpacing / 2 - 6,
+    '@media': {
+        [mq.desktopOrBigger]: {
+            marginLeft: buttonLayoutSpacing / 2 - PADDING_Y_LINK,
+        },
+    },
 });
 
 export const container = style([
@@ -87,3 +92,29 @@ globalStyle(`${noButtonWidth} > *:not(${link})`, {
     width: 'auto',
     margin: buttonLayoutSpacing / 2,
 });
+
+export const alignVariant = styleVariants({
+    right: [sprinkles({justifyContent: 'flex-end'})],
+    left: [sprinkles({justifyContent: 'flex-start'})],
+    center: [sprinkles({justifyContent: 'center'})],
+    'full-width': [
+        sprinkles({justifyContent: 'center'}),
+        {
+            '@media': {
+                [mq.desktopOrBigger]: {
+                    justifyContent: 'flex-start',
+                },
+            },
+        },
+    ],
+});
+
+export const alignMoreThanOneChildred = style([
+    {
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                justifyContent: 'center',
+            },
+        },
+    },
+]);

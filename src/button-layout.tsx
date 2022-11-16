@@ -1,13 +1,12 @@
 import * as React from 'react';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
-import {useScreenSize, useIsomorphicLayoutEffect} from './hooks';
+import {useIsomorphicLayoutEffect} from './hooks';
 import {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
 import {BUTTON_MIN_WIDTH} from './button.css';
 import classnames from 'classnames';
 import debounce from 'lodash/debounce';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './button-layout.css';
-import {sprinkles} from './sprinkles.css';
 
 import type {DataAttributes, RendersNullableElement} from './utils/types';
 import type {NullableButtonElement} from './button';
@@ -60,7 +59,6 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     withMargins = false,
     dataAttributes,
 }) => {
-    const {isTabletOrSmaller} = useScreenSize();
     const childrenCount = React.Children.count(children);
     const [buttonStatus, setButtonStatus] = React.useState({isMeasuring: true, buttonWidth: 0});
 
@@ -137,31 +135,19 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         return range1 - range2;
     });
 
-    const needsLinkAlignment = !isTabletOrSmaller && align === 'left';
-
-    const getJustifyContent = () => {
-        if (align === 'center' || (align === 'full-width' && isTabletOrSmaller)) {
-            return 'center';
-        }
-        if (childrenCount > 1 && isTabletOrSmaller) {
-            return 'center';
-        }
-        if (align === 'right') {
-            return 'flex-end';
-        }
-        return 'flex-start';
-    };
-
     const content = (
         <div
             ref={wrapperElRef}
             className={classnames(
-                sprinkles({justifyContent: getJustifyContent()}),
+                styles.alignVariant[align],
                 buttonStatus.buttonWidth
                     ? align === 'full-width'
                         ? styles.fullWidthContainer
                         : styles.container
-                    : styles.noButtonWidth
+                    : styles.noButtonWidth,
+                {
+                    [styles.alignMoreThanOneChildred]: childrenCount > 1,
+                }
             )}
             style={{
                 ...assignInlineVars({
@@ -174,7 +160,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         >
             {link ? (
                 <div
-                    className={classnames(styles.link, {[styles.linkAlignment]: needsLinkAlignment})}
+                    className={classnames(styles.link, {[styles.linkAlignment]: align === 'left'})}
                     data-link="true"
                 >
                     {link}

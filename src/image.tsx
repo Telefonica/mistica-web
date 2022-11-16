@@ -135,8 +135,10 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
                 src={src}
                 className={classnames(
                     styles.image,
-                    ratio !== 0 ? sprinkles({position: 'absolute'}) : sprinkles({position: 'static'}),
-                    noBorderSetting ? styles.noBorder : sprinkles({borderRadius: 8})
+                    sprinkles({
+                        position: ratio !== 0 ? 'absolute' : 'static',
+                        borderRadius: noBorderSetting ? undefined : 8,
+                    })
                 )}
                 alt={alt}
                 onError={(event) => {
