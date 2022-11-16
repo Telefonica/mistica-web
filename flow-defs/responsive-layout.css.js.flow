@@ -1,7 +1,7 @@
 // @flow
 
 declare export var vars: {
-  responsiveLayoutSideMargin: $PropertyType<
+  sideMargin: $PropertyType<
     $Exports<"@vanilla-extract/private">,
     "CSSVarFunction"
   >,

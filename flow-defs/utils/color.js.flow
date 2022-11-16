@@ -1,3 +1,4 @@
 // @flow
 
+declare export var fromHexToRgb: (hexColor: string) => [number, number, number];
 declare export var applyAlpha: (color: string, alpha: number) => string;
