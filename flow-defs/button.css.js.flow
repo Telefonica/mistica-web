@@ -8,6 +8,7 @@ declare export var ICON_SIZE: 24;
 declare export var SMALL_ICON_SIZE: 20;
 declare export var SPINNER_SIZE: 20;
 declare export var SMALL_SPINNER_SIZE: 16;
+declare export var PADDING_Y_LINK: 6;
 declare export var isLoading: string;
 declare export var loadingFiller: string;
 declare export var small: string;

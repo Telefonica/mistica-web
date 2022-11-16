@@ -109,12 +109,10 @@ export const alignVariant = styleVariants({
     ],
 });
 
-export const alignMoreThanOneChildred = style([
-    {
-        '@media': {
-            [mq.tabletOrSmaller]: {
-                justifyContent: 'center',
-            },
+export const alignMoreThanOneChildred = style({
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            justifyContent: 'center',
         },
     },
-]);
+});

@@ -13,6 +13,7 @@ const colors: Array<ColorValues | 'transparent' | 'inherit'> = [
 const colorProperties = defineProperties({
     properties: {
         color: colors,
+        background: colors,
         backgroundColor: colors,
     },
 });
@@ -37,6 +38,8 @@ const commonProperties = defineProperties({
         height: ['100%', ...sizes],
         minWidth: sizes,
         minHeight: sizes,
+        maxWidth: ['100%'],
+        maxHeight: ['100%'],
         border: {
             regular: `1px solid ${vars.colors.border}`,
             none: 'none',
@@ -48,6 +51,7 @@ const commonProperties = defineProperties({
         left: sizes,
         right: sizes,
         bottom: sizes,
+        objectFit: ['cover'],
     },
     shorthands: {
         padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
