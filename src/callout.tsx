@@ -42,9 +42,12 @@ const Callout: React.FC<Props> = ({
     const {colors, texts} = useTheme();
     return (
         <section
-            className={classNames(styles.container, {
-                [sprinkles({background: vars.colors.backgroundContainer})]: isInverse,
-            })}
+            className={classNames(
+                styles.container,
+                isInverse
+                    ? sprinkles({backgroundColor: vars.colors.backgroundContainer})
+                    : sprinkles({backgroundColor: vars.colors.backgroundAlternative})
+            )}
             aria-label={ariaLabel ?? title}
         >
             <ThemeVariant isInverse={false}>
