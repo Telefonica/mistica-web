@@ -1,0 +1,11 @@
+// @flow
+
+declare export var actions: string;
+declare export var boxed: string;
+declare export var mediaCard: string;
+declare export var mediaCardContent: string;
+declare export var dataCard: string;
+declare export var snapCard: string;
+declare export var snapCardTouchableBase: string;
+declare export var snapCardTouchableHover: string;
+declare export var snapCardTouchableHoverTransparent: string;
