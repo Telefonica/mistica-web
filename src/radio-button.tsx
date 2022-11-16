@@ -207,6 +207,8 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
         disabled: props.disabled,
     });
 
+    const isControlledByParent = typeof valueContext !== 'undefined';
+
     // This state is needed because the component should be able to work outside a Form context
     const [value, setValue] = React.useState<string>(valueContext ?? defaultValue ?? '');
 
@@ -218,7 +220,9 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
     }, [valueContext]);
 
     const onChange = (value: string) => {
-        setValue(value);
+        if (!isControlledByParent) {
+            setValue(value);
+        }
         onChangeContext(value);
     };
 

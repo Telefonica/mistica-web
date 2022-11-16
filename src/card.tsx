@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Tag from './tag';
 import Stack from './stack';
-import {useTheme} from './hooks';
 import Box from './box';
 import {Text1, Text2, Text4} from './text';
 import {createUseStyles} from './jss';
@@ -12,6 +11,7 @@ import Video from './video';
 import Image, {DisableBorderRadiusProvider} from './image';
 import MaybeDismissable, {useIsDismissable} from './maybe-dismissable';
 import Touchable from './touchable';
+import {vars} from './skins/skin-contract.css';
 
 import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEvent} from './utils/types';
 
@@ -52,7 +52,6 @@ const CardContent: React.FC<CardContentProps> = ({
     button,
     buttonLink,
 }) => {
-    const theme = useTheme();
     const classes = useCardContentStyles();
     const renderHeadline = () => {
         if (!headline) {
@@ -88,7 +87,7 @@ const CardContent: React.FC<CardContentProps> = ({
                 )}
 
                 {description && (
-                    <Text2 truncate={descriptionLinesMax} as="p" regular color={theme.colors.textSecondary}>
+                    <Text2 truncate={descriptionLinesMax} as="p" regular color={vars.colors.textSecondary}>
                         {description}
                     </Text2>
                 )}
@@ -396,7 +395,6 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
     ) => {
         const isTouchable = Boolean(touchableProps.to || touchableProps.href || touchableProps.onPress);
         const classes = useSnapCardStyles({isTouchable, isInverse, hasIcon: !!icon});
-        const {colors} = useTheme();
 
         return (
             <Boxed className={classes.boxed} dataAttributes={dataAttributes} ref={ref} isInverse={isInverse}>
@@ -414,7 +412,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                     <Text2
                                         truncate={subtitleLinesMax}
                                         regular
-                                        color={colors.textSecondary}
+                                        color={vars.colors.textSecondary}
                                         as="p"
                                     >
                                         {subtitle}

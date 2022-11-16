@@ -218,6 +218,28 @@ export const Variants: StoryComponent = () => {
                 </Stack>
             </StorySection>
 
+            <StorySection title="Read only">
+                <Stack space={16}>
+                    <TextField name="text" readOnly label="Read only" defaultValue="Default value" />
+                    <TextField
+                        name="text"
+                        readOnly
+                        label="Read only"
+                        defaultValue="Default value"
+                        endIcon={<IconMusicRegular />}
+                    />
+                    <SearchField name="search" readOnly label="Search" />
+                    <PhoneNumberField
+                        e164
+                        name="phone"
+                        label="Phone with prefix"
+                        prefix="+34"
+                        defaultValue="654834455"
+                        readOnly
+                    />
+                </Stack>
+            </StorySection>
+
             <div style={{backgroundColor: colors.backgroundBrand}}>
                 <ThemeVariant isInverse>
                     <Box padding={16}>

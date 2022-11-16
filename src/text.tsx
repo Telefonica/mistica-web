@@ -1,77 +1,38 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import {createUseStyles} from './jss';
+import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {useIsInverseVariant} from './theme-variant-context';
 import {pxToRem} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {useTheme} from './hooks';
+import {vars} from './skins/skin-contract.css';
+import * as styles from './text.css';
 
 import type {FontWeight} from './skins/types';
 import type {DataAttributes} from './utils/types';
 
-const useStyles = createUseStyles((theme) => {
-    const mapToWeight: Record<string, number> = {
-        light: 300,
-        regular: 400,
-        medium: 500,
-        bold: 700,
-    };
-    const inverseColorsMap: Record<string, string> = {
-        [theme.colors.textPrimary]: theme.colors.textPrimaryInverse,
-        [theme.colors.textSecondary]: theme.colors.textSecondaryInverse,
-        [theme.colors.textLink]: theme.colors.textLinkInverse,
-    };
+const mapToWeight = {
+    light: 300,
+    regular: 400,
+    medium: 500,
+    bold: 700,
+};
 
-    const lineClamp = ({truncate}: {truncate: boolean | number}) => {
-        if (truncate === true) {
-            return 1;
-        }
-        if (truncate) {
-            return truncate;
-        }
-        return 'initial';
-    };
+const inverseColorsMap = {
+    [vars.colors.textPrimary]: vars.colors.textPrimaryInverse,
+    [vars.colors.textSecondary]: vars.colors.textSecondaryInverse,
+    [vars.colors.textLink]: vars.colors.textLinkInverse,
+};
 
-    return {
-        text: {
-            lineHeight: ({desktopLineHeight}) => pxToRem(desktopLineHeight),
-            textTransform: ({transform}) => transform || 'inherit',
-            fontSize: ({desktopSize}) => pxToRem(desktopSize),
-            fontWeight: ({weight}) => (weight ? mapToWeight[weight] : 'inherit'),
-            color: ({isInverse, color = theme.colors.textPrimary}) =>
-                isInverse ? inverseColorsMap[color] ?? color : color,
-            textDecoration: (p) => p.decoration ?? 'inherit',
-            letterSpacing: ({letterSpacing}) => letterSpacing,
-            overflowWrap: ({wordBreak}) => (wordBreak ? 'anywhere' : 'inherit'),
-            '@supports not (overflow-wrap: anywhere)': {
-                // "overflow-wrap: anywhere" is not supported in Safari
-                // "word-break: break-word" has the same effect as "word-break: normal" and "overflow-wrap: anywhere",
-                // regardless of the actual value of the overflow-wrap property.
-                wordBreak: ({wordBreak}) => (wordBreak ? 'break-word' : 'inherit'),
-            },
-            hyphens: ({hyphens}) => hyphens,
-            // Needed to reset the default browser margin that adds to p, h1, h2... elements.
-            margin: 0,
-
-            [theme.mq.tabletOrSmaller]: {
-                lineHeight: ({mobileLineHeight}) => pxToRem(mobileLineHeight),
-                fontSize: ({mobileSize}) => pxToRem(mobileSize),
-            },
-        },
-        truncate: {
-            '-webkit-line-clamp': lineClamp,
-            lineClamp,
-            wordBreak: ({truncate}) => (truncate === 1 || truncate === true ? 'break-all' : 'break-word'),
-            '@supports (overflow-wrap: anywhere)': {
-                overflowWrap: 'anywhere',
-                wordBreak: ({truncate}) => (truncate === 1 || truncate === true ? 'break-all' : 'normal'),
-            },
-            display: '-webkit-box',
-            boxOrient: 'vertical',
-            overflow: 'hidden',
-        },
-    };
-});
+const lineClamp = (truncate?: boolean | number) => {
+    if (truncate === true) {
+        return 1;
+    }
+    if (truncate) {
+        return truncate;
+    }
+    return 'initial';
+};
 
 export interface TextPresetProps {
     color?: string;
@@ -89,7 +50,7 @@ export interface TextPresetProps {
 }
 
 interface TextProps extends TextPresetProps {
-    weight?: FontWeight | boolean;
+    weight?: FontWeight;
     /** in pixels, will be converted to rem in runtime */
     size?: number;
     /** in pixels, will be converted to rem in runtime */
@@ -107,7 +68,7 @@ interface TextProps extends TextPresetProps {
 
 export const Text: React.FC<TextProps> = ({
     weight,
-    color,
+    color = vars.colors.textPrimary,
     decoration,
     truncate,
     transform,
@@ -128,28 +89,49 @@ export const Text: React.FC<TextProps> = ({
     dataAttributes,
 }) => {
     const isInverse = useIsInverseVariant();
-    const classes = useStyles({
-        isInverse,
-        mobileSize,
-        desktopSize,
-        mobileLineHeight,
-        desktopLineHeight,
-        weight,
-        color,
-        decoration,
-        transform,
-        wordBreak,
-        hyphens,
-        letterSpacing,
-        truncate,
-    });
+    const lineClampValue = lineClamp(truncate);
+
     if (!children && children !== 0) {
         return null;
     }
-    const className = classnames(classes.text, {[classes.truncate]: !!truncate});
+    const className = classnames(styles.text, wordBreak ? styles.withWordBreak : styles.withoutWordBreak, {
+        [styles.truncateToOneLine]: truncate === 1 || truncate === true,
+        [styles.truncateToMoreThanOneLine]: truncate && truncate > 1,
+    });
+
+    const sizeVars = assignInlineVars({
+        [styles.vars.mobileSize]: mobileSize ? pxToRem(mobileSize) : '',
+        [styles.vars.mobileLineHeight]: mobileLineHeight ? pxToRem(mobileLineHeight) : '',
+        [styles.vars.desktopSize]: desktopSize ? pxToRem(desktopSize) : '',
+        [styles.vars.desktopLineHeight]: desktopLineHeight ? pxToRem(desktopLineHeight) : '',
+    });
+    const textVars = truncate
+        ? assignInlineVars({
+              [styles.vars.lineClamp]: String(lineClampValue),
+          })
+        : {};
+
     return React.createElement(
         as,
-        {className, id, role, 'aria-level': ariaLevel, ...getPrefixedDataAttributes(dataAttributes)},
+        {
+            className,
+            id,
+            role,
+            'aria-level': ariaLevel,
+            ...getPrefixedDataAttributes(dataAttributes),
+            style: {
+                ...sizeVars,
+                ...textVars,
+                margin: 0, // Needed to reset the default browser margin that adds to p, h1, h2... elements.
+                hyphens,
+                letterSpacing,
+                fontWeight: weight ? mapToWeight[weight] : 'inherit',
+                textTransform: transform || 'inherit',
+                textDecoration: decoration ?? 'inherit',
+                overflowWrap: wordBreak ? 'anywhere' : 'inherit',
+                color: isInverse ? inverseColorsMap[color] ?? color : color,
+            },
+        },
         children
     );
 };
@@ -175,10 +157,18 @@ interface RegularProps extends TextPresetProps {
 type RegularMediumProps = RegularProps | MediumProps;
 type LightRegularMediumProps = LightProps | RegularProps | MediumProps;
 
-const getRegularOrMediumWeight = (props: RegularMediumProps) =>
-    (props.regular && 'regular') || (props.medium && 'medium');
-const getWeight = (props: LightRegularMediumProps) =>
-    (props.light && 'light') || (props.regular && 'regular') || (props.medium && 'medium');
+const getWeight = (props: LightRegularMediumProps) => {
+    if (props.light) {
+        return 'light';
+    }
+    if (props.regular) {
+        return 'regular';
+    }
+    if (props.medium) {
+        return 'medium';
+    }
+    return undefined;
+};
 
 export const Text10: React.FC<TextPresetProps> = (props) => {
     const {textPresets} = useTheme();
@@ -301,7 +291,7 @@ export const Text2: React.FC<RegularMediumProps> = (props) => (
         mobileLineHeight="20px"
         desktopSize={16}
         desktopLineHeight="24px"
-        weight={getRegularOrMediumWeight(props)}
+        weight={getWeight(props)}
         {...props}
     >
         {props.children}
@@ -314,7 +304,7 @@ export const Text1: React.FC<RegularMediumProps> = (props) => (
         mobileLineHeight="16px"
         desktopSize={14}
         desktopLineHeight="20px"
-        weight={getRegularOrMediumWeight(props)}
+        weight={getWeight(props)}
         {...props}
     >
         {props.children}

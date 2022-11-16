@@ -69,6 +69,7 @@ export interface CommonFormFieldProps {
     defaultValue?: string;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     children?: void;
+    readOnly?: boolean;
 }
 
 interface TextFieldBaseProps {

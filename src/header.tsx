@@ -5,12 +5,13 @@ import {createUseStyles} from './jss';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import ResponsiveLayout from './responsive-layout';
 import GridLayout from './grid-layout';
-import {useScreenSize, useTheme} from './hooks';
+import {useScreenSize} from './hooks';
 import OverscrollColor from './overscroll-color-context';
 import {Text8, Text7, Text6, Text3} from './text';
 import NavigationBreadcrumbs from './navigation-breadcrumbs';
 import {ButtonPrimary, ButtonSecondary} from './button';
 import ButtonGroup from './button-group';
+import {vars} from './skins/skin-contract.css';
 
 import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
 import type {TextPresetProps} from './text';
@@ -47,7 +48,6 @@ export const Header: React.FC<HeaderProps> = ({
     dataAttributes,
 }) => {
     const {isTabletOrSmaller} = useScreenSize();
-    const theme = useTheme();
     const isInverse = useIsInverseVariant();
 
     const renderRichText = (richText: RichText, baseProps: Omit<TextPresetProps, 'children'>) => {
@@ -71,7 +71,7 @@ export const Header: React.FC<HeaderProps> = ({
             {(title || pretitle) && (
                 <Box paddingRight={16}>
                     <Stack space={8}>
-                        {pretitle && renderRichText(pretitle, {color: theme.colors.textPrimary})}
+                        {pretitle && renderRichText(pretitle, {color: vars.colors.textPrimary})}
                         <Text6 role="heading" aria-level={2}>
                             {title}
                         </Text6>
@@ -82,12 +82,12 @@ export const Header: React.FC<HeaderProps> = ({
                 <Stack space={16}>
                     {(preamount || amount) && (
                         <Stack space={8}>
-                            {preamount && renderRichText(preamount, {color: theme.colors.textPrimary})}
+                            {preamount && renderRichText(preamount, {color: vars.colors.textPrimary})}
                             <Text8
                                 color={
                                     isErrorAmount && !isInverse
-                                        ? theme.colors.highlight
-                                        : theme.colors.textPrimary
+                                        ? vars.colors.highlight
+                                        : vars.colors.textPrimary
                                 }
                             >
                                 {amount}
