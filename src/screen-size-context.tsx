@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-export type ScreenSizeContextType = {
+export type ScreenSizeContextType = Readonly<{
     isMobile: boolean;
     isTablet: boolean;
     isTabletOrBigger: boolean;
     isTabletOrSmaller: boolean;
     isDesktopOrBigger: boolean;
     isLargeDesktop: boolean;
-};
+}>;
 
 const ScreenSizeContext = React.createContext<ScreenSizeContextType>({
     isMobile: false,

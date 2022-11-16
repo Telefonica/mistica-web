@@ -33,7 +33,7 @@ export type VideoProps = {
     /** defaults to 1:1, if both width and height are given, aspectRatio is ignored. To use original video proportions, set aspectRatio to 0 */
     aspectRatio?: AspectRatio | number;
     /** accepts multiple sources */
-    src: string | Array<string> | VideoSource | Array<VideoSource>;
+    src: string | ReadonlyArray<string> | VideoSource | ReadonlyArray<VideoSource>;
     /** defaults to true */
     loop?: boolean;
     /** defaults to true */

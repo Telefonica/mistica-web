@@ -6,7 +6,7 @@ import type { Locale } from "./utils/locale";
 import type { Skin, Colors, SkinName, TextPresetsConfig } from "./skins/types";
 import type { TrackingEvent } from "./utils/types";
 import type { MediaQueries } from "./utils/media-queries";
-export type ThemeTexts = typeof TEXTS_ES;
+export type ThemeTexts = $ReadOnly<typeof TEXTS_ES>;
 declare var TEXTS_ES: {
   expirationDatePlaceholder: string,
   togglePasswordVisibilityLabel: string,
@@ -78,40 +78,40 @@ declare type LinkComponent = React.ComponentType<{
 declare export var AnchorLink: LinkComponent;
 export type ColorScheme = "dark" | "light" | "auto";
 export type EventFormat = "universal-analytics" | "google-analytics-4";
-export type ThemeConfig = {
+export type ThemeConfig = $ReadOnly<{
   skin: $ReadOnly<Skin>,
   colorScheme?: ColorScheme,
-  i18n: {
+  i18n: $ReadOnly<{
     locale: Locale,
     phoneNumberFormattingRegionCode: RegionCode,
-  },
-  platformOverrides?: {
+  }>,
+  platformOverrides?: $ReadOnly<{
     platform?: "ios" | "android" | "desktop",
     insideNovumNativeApp?: boolean,
     userAgent?: string,
-  },
+  }>,
   texts?: $Shape<ThemeTexts>,
-  analytics?: {
+  analytics?: $ReadOnly<{
     logEvent: (trackingEvent: TrackingEvent) => Promise<void>,
     eventFormat?: EventFormat,
-  },
-  dimensions?: {
+  }>,
+  dimensions?: $ReadOnly<{
     headerMobileHeight: number | "mistica",
-  },
+  }>,
 
   /**
    * @deprecated in future versions, mistica won't allow to configure media query breakpoints.
    */
-  mediaQueries?: {
+  mediaQueries?: $ReadOnly<{
     tabletMinWidth: number,
     desktopMinWidth: number,
     largeDesktopMinWidth: number,
     desktopOrTabletMinHeight: number,
-  },
+  }>,
   Link?: LinkComponent,
   useHrefDecorator?: () => (href: string) => string,
   enableTabFocus?: boolean,
-};
+}>;
 export type Theme = {
   skinName: SkinName,
   i18n: {

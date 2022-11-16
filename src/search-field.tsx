@@ -11,7 +11,7 @@ import type {CommonFormFieldProps} from './text-field-base';
 
 export interface SearchFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
-    getSuggestions?: (value: string) => Array<string>;
+    getSuggestions?: (value: string) => ReadonlyArray<string>;
 }
 
 const SearchField: React.FC<SearchFieldProps> = ({
