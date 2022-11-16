@@ -19,6 +19,7 @@ import {DocumentVisibilityProvider} from './utils/document-visibility';
 import {AspectRatioSupportProvider} from './utils/aspect-ratio-support';
 import {TrackingConfig} from './utils/analytics';
 import {vars} from './skins/skin-contract.css';
+import {fromHexToRgb} from './utils/color';
 
 import type {Colors, TextPresetsConfig} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
@@ -182,7 +183,17 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId, as}
         };
     }, [theme, isOsDarkModeEnabled]);
 
-    const themeVars = assignInlineVars(vars, {colors: contextTheme.colors});
+    const rawColors = Object.fromEntries(
+        Object.entries(contextTheme.colors).map(([colorName, colorValue]) => {
+            let rawColorValue = '';
+            if (colorValue.startsWith('#')) {
+                const [r, g, b] = fromHexToRgb(colorValue);
+                rawColorValue = `${r}, ${g}, ${b}`;
+            }
+            return [colorName, rawColorValue];
+        })
+    ) as Colors;
+    const themeVars = assignInlineVars(vars, {colors: contextTheme.colors, rawColors});
 
     return (
         <JssProvider jss={getJss()} classNamePrefix={classNamePrefix} generateId={generateId}>

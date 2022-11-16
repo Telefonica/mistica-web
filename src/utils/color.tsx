@@ -1,4 +1,4 @@
-const fromHexToRgb = (hexColor: string): [number, number, number] => {
+export const fromHexToRgb = (hexColor: string): [number, number, number] => {
     if (hexColor.length === 4) {
         return [
             parseInt(hexColor.substr(-3, 1).repeat(2), 16),
@@ -20,7 +20,7 @@ export const applyAlpha = (color: string, alpha: number): string => {
     try {
         if (color.startsWith('var(')) {
             // it's a css variable
-            return `rgba(${color.slice(0, -1)}_RAW, ${alpha})`;
+            return `rgba(${color}, ${alpha})`;
         } else {
             // it's a hex color
             return `rgba(${fromHexToRgb(color).join(',')}, ${alpha})`;

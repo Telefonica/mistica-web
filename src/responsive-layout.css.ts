@@ -7,8 +7,8 @@ const TABLET_SIDE_MARGIN = 32;
 const SMALL_DESKTOP_SIDE_MARGIN = 40;
 const LARGE_DESKTOP_MAX_WIDTH = 1224;
 
-const responsiveLayoutSideMargin = createVar();
-export const vars = {responsiveLayoutSideMargin};
+const sideMargin = createVar();
+export const vars = {sideMargin};
 
 export const container = sprinkles({width: '100%'});
 
@@ -18,7 +18,7 @@ export const responsiveLayout = style({
     paddingRight: 'env(safe-area-inset-right)',
 
     vars: {
-        [responsiveLayoutSideMargin]: '0px',
+        [sideMargin]: '0px',
     },
 
     '@media': {
@@ -34,7 +34,7 @@ export const responsiveLayout = style({
             margin: `0 ${TABLET_SIDE_MARGIN}px`,
 
             vars: {
-                [responsiveLayoutSideMargin]: `${TABLET_SIDE_MARGIN}px`,
+                [sideMargin]: `${TABLET_SIDE_MARGIN}px`,
             },
         },
         [mq.mobile]: {
@@ -42,7 +42,7 @@ export const responsiveLayout = style({
             margin: `0 ${MOBILE_SIDE_MARGIN}px`,
 
             vars: {
-                [responsiveLayoutSideMargin]: `${MOBILE_SIDE_MARGIN}px`,
+                [sideMargin]: `${MOBILE_SIDE_MARGIN}px`,
             },
         },
     },
