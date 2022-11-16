@@ -18,7 +18,7 @@ const useDeepCompareEffect: typeof React.useEffect = (create, inputs) =>
     // eslint-disable-next-line react-hooks/exhaustive-deps
     React.useEffect(create, useDeepCompareMemoize(inputs));
 
-type Action<Value> =
+type Action<Value> = Readonly<
     | {
           type: 'add';
           value: Value;
@@ -26,7 +26,8 @@ type Action<Value> =
     | {
           type: 'remove';
           value: Value;
-      };
+      }
+>;
 
 type Dispatch<Value> = (action: Action<Value>) => void;
 

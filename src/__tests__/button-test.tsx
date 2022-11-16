@@ -46,12 +46,12 @@ test('<a> is rendered when using "to" prop', () => {
     expect(asFragment()).toMatchInlineSnapshot(`
         <DocumentFragment>
           <a
-            class="touchable_touchable__mhti6u1 touchable__mhti6u0 sprinkles_display_block__1y2v1nf4x sprinkles_border_none__1y2v1nf8q sprinkles_cursor_pointer__1y2v1nf8w button light"
+            class="touchable_base__mhti6u1 touchable__mhti6u0 sprinkles_cursor_pointer__1y2v1nfbd button_variants_primary__rrbrpnl button_button__rrbrpn2 button__rrbrpn1 sprinkles_paddingTop_0__1y2v1nf7x sprinkles_paddingBottom_0__1y2v1nf8b sprinkles_paddingLeft_0__1y2v1nf8p sprinkles_paddingRight_0__1y2v1nf93 sprinkles_display_inline-block__1y2v1nf7f sprinkles_position_relative__1y2v1nf76 sprinkles_width_auto__1y2v1nf9i sprinkles_borderRadius_4__1y2v1nfba sprinkles_overflow_hidden__1y2v1nfbe button__rrbrpna sprinkles_color_var(--colors-textButtonPrimary__1vqcj1i1m)__1y2v1nf1m sprinkles_backgroundColor_var(--colors-buttonPrimaryBackground__1vqcj1ik)__1y2v1nf5c"
             href="/test"
             role="button"
           >
             <div
-              class="textContent"
+              class="button_textContent__rrbrpn9 button__rrbrpn8 sprinkles_display_flex__1y2v1nf7b sprinkles_alignItems_center__1y2v1nf7q sprinkles_justifyContent_center__1y2v1nf7k"
             >
               <div
                 class="text_text__splu5g7 text_withWordBreak__splu5g5 text_truncateToOneLine__splu5g9 text_truncate__splu5g8"
@@ -62,12 +62,12 @@ test('<a> is rendered when using "to" prop', () => {
             </div>
             <div
               aria-hidden="true"
-              class="loadingFiller"
+              class="button_loadingFiller__rrbrpn4 button__rrbrpn3 sprinkles_display_block__1y2v1nf7d sprinkles_height_0__1y2v1nf9y sprinkles_overflow_hidden__1y2v1nfbe"
               style="padding-left: 1.250rem; padding-right: 37px;"
             />
             <div
               aria-hidden="true"
-              class="loadingContent"
+              class="button_loadingContent__rrbrpn7 button__rrbrpn6 sprinkles_display_inline-flex__1y2v1nf7c sprinkles_position_absolute__1y2v1nf77 sprinkles_top_0__1y2v1nfbg sprinkles_bottom_0__1y2v1nfcm sprinkles_justifyContent_center__1y2v1nf7k sprinkles_alignItems_center__1y2v1nf7q"
             >
               <div
                 style="display: inline-block; width: 1.250rem; height: 1.250rem;"

@@ -63,7 +63,7 @@ export interface CommonFormFieldProps {
     onFocus?: (event: React.FocusEvent) => void;
     onBlur?: (event: React.FocusEvent) => void;
     fullWidth?: boolean;
-    getSuggestions?: (text: string) => Array<string>;
+    getSuggestions?: (text: string) => ReadonlyArray<string>;
     placeholder?: string;
     value?: string;
     defaultValue?: string;
@@ -95,7 +95,7 @@ interface TextFieldBaseProps {
     style?: React.CSSProperties;
     value?: string;
     inputRef?: React.Ref<HTMLInputElement | HTMLSelectElement>;
-    getSuggestions?: (value: string) => Array<string>;
+    getSuggestions?: (value: string) => ReadonlyArray<string>;
     onClick?: (event: React.MouseEvent) => void;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (event: React.FocusEvent) => void;
@@ -507,7 +507,7 @@ const Autosuggest = React.lazy(() => import(/* webpackChunkName: "react-autosugg
 
 export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps>(
     ({getSuggestions, id: idProp, ...props}, ref) => {
-        const [suggestions, setSuggestions] = React.useState<Array<string>>([]);
+        const [suggestions, setSuggestions] = React.useState<ReadonlyArray<string>>([]);
         const inputRef = React.useRef<HTMLInputElement>(null);
         const classes = useSuggestionsStyles();
         const {platformOverrides, texts} = useTheme();

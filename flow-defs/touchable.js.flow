@@ -77,6 +77,7 @@ export type TouchableElement =
   | HTMLAnchorElement
   | HTMLButtonElement;
 declare var Touchable: React.AbstractComponent<Props, TouchableElement>;
+declare export var BaseTouchable: React.AbstractComponent<Props, TouchableElement>;
 declare export default typeof Touchable;
 
 import { type CssStyle } from "./__css_types__.js.flow";

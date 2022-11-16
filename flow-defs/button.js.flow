@@ -9,7 +9,6 @@ import type {
   TrackingEvent,
 } from "./utils/types";
 import type { Location } from "history";
-declare export var BUTTON_MIN_WIDTH: 136;
 declare type CommonProps = {
   children: React.Node,
   className?: string,
