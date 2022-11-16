@@ -1,4 +1,3 @@
-import {style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 
 export const avatar = sprinkles({
@@ -9,6 +8,6 @@ export const avatar = sprinkles({
     overflow: 'hidden',
 });
 
-export const image = style({
+export const image = sprinkles({
     objectFit: 'cover',
 });

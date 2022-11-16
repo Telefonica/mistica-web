@@ -96,7 +96,7 @@ export interface PropsMaybeOnPress extends CommonProps {
 export type Props = PropsHref | PropsTo | PropsOnPress | PropsMaybeHref | PropsMaybeTo | PropsMaybeOnPress;
 export type TouchableElement = HTMLDivElement | HTMLAnchorElement | HTMLButtonElement;
 
-const Touchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
+const RawTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
     const {texts, analytics, platformOverrides, Link, useHrefDecorator} = useTheme();
     const hrefDecorator = useHrefDecorator();
     const isClicked = React.useRef(false);
@@ -112,7 +112,7 @@ const Touchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
     const children = props.children;
 
     const commonProps = {
-        className: classnames(classes.touchable, props.className),
+        className: props.className,
         disabled: props.disabled,
         style: props.style,
         role: props.role,
@@ -261,6 +261,15 @@ const Touchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
             {children}
         </div>
     );
+});
+
+const Touchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
+    return <RawTouchable {...props} className={classnames(classes.touchable, props.className)} ref={ref} />;
+});
+
+// Used internally by Mistica's components to avoid styles collisions
+export const BaseTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
+    return <RawTouchable {...props} className={classnames(classes.base, props.className)} ref={ref} />;
 });
 
 export default Touchable;

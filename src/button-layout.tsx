@@ -1,76 +1,17 @@
 import * as React from 'react';
-import {createUseStyles} from './jss';
-import {useScreenSize, useIsomorphicLayoutEffect} from './hooks';
-import {BUTTON_MIN_WIDTH, ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
-import classNames from 'classnames';
+import {assignInlineVars} from '@vanilla-extract/dynamic';
+import {useIsomorphicLayoutEffect} from './hooks';
+import {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
+import {BUTTON_MIN_WIDTH} from './button.css';
+import classnames from 'classnames';
 import debounce from 'lodash/debounce';
 import {getPrefixedDataAttributes} from './utils/dom';
+import * as styles from './button-layout.css';
 
 import type {DataAttributes, RendersNullableElement} from './utils/types';
 import type {NullableButtonElement} from './button';
 
 type MaybeButtonElement = NullableButtonElement | void | false;
-
-const buttonLayoutSpacing = 16;
-
-const useStyles = createUseStyles((theme) => ({
-    margins: {
-        margin: '16px 0',
-        padding: '0 16px',
-    },
-    [theme.mq.desktopOrBigger]: {
-        margins: {
-            padding: 0,
-            margin: 16,
-        },
-    },
-    container: {
-        display: 'flex',
-        justifyContent: ({align, childrenCount, isTabletOrSmaller}) => {
-            if (align === 'center' || (align === 'full-width' && isTabletOrSmaller)) {
-                return 'center';
-            }
-            if (childrenCount > 1 && isTabletOrSmaller) {
-                return 'center';
-            }
-            if (align === 'right') {
-                return 'flex-end';
-            }
-            return 'flex-start';
-        },
-        flexWrap: 'wrap-reverse',
-        margin: -buttonLayoutSpacing / 2,
-
-        '&:empty': {
-            margin: 0,
-        },
-        '& > *:not($link)': {
-            width: ({buttonWidth, isTabletOrSmaller, align}) => {
-                if (!buttonWidth) {
-                    return 'auto';
-                }
-                if (!isTabletOrSmaller) {
-                    return buttonWidth;
-                }
-                if (align === 'full-width') {
-                    return `calc(100% - ${buttonLayoutSpacing}px)`;
-                }
-                return `calc(50% - ${buttonLayoutSpacing}px)`;
-            },
-            minWidth: ({buttonWidth}) => buttonWidth,
-            margin: buttonLayoutSpacing / 2,
-        },
-    },
-    link: {
-        margin: buttonLayoutSpacing / 2,
-        display: 'flex',
-        width: '100%',
-        justifyContent: 'inherit',
-    },
-    linkAlignment: {
-        marginLeft: buttonLayoutSpacing / 2 - 6,
-    },
-}));
 
 const useOnFontsReadyEffect = (effect: () => void) => {
     React.useEffect(() => {
@@ -92,7 +33,7 @@ const useOnChildrenChangeEffect = (el: HTMLElement | null, effect: MutationCallb
     React.useEffect(() => {
         if (el) {
             const observer = new MutationObserver(effect);
-            observer.observe(el, {childList: true, attributes: true, subtree: true});
+            observer.observe(el, {childList: true, attributes: false, subtree: true});
             return () => {
                 observer.disconnect();
             };
@@ -118,7 +59,6 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
     withMargins = false,
     dataAttributes,
 }) => {
-    const {isTabletOrSmaller} = useScreenSize();
     const childrenCount = React.Children.count(children);
     const [buttonStatus, setButtonStatus] = React.useState({isMeasuring: true, buttonWidth: 0});
 
@@ -128,19 +68,12 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         }
     };
 
-    const classes = useStyles({
-        buttonWidth: buttonStatus.buttonWidth,
-        isTabletOrSmaller,
-        align,
-        childrenCount,
-    });
-
     const wrapperElRef = React.useRef<HTMLDivElement | null>(null);
     useIsomorphicLayoutEffect(() => {
         if (buttonStatus.isMeasuring) {
             const req = window.requestAnimationFrame(() => {
                 if (wrapperElRef.current) {
-                    const childrenWidths = Array.from(wrapperElRef.current.children).map((el) =>
+                    const childrenWidths = Array.from(wrapperElRef.current.children).map((el) => {
                         /*
                         We are using offsetWidth instead of getBoundingClientRect().width because
                         getBoundingClientRect returns the scaled size when the element has some CSS transform applied.
@@ -148,8 +81,8 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
                         getBoundingClientRect returns a float (eg: 268.65625) and offsetWidth an integer (eg: 268)
                         The `+1` is important, it rounds up the size to avoid unwanted text truncation with ellipsis.
                         */
-                        el.classList.contains(classes.link) ? 0 : (el as HTMLElement).offsetWidth + 1
-                    );
+                        return (el as HTMLElement).dataset.link ? 0 : (el as HTMLElement).offsetWidth + 1;
+                    });
                     const maxChildWidth = Math.ceil(Math.max(...childrenWidths, BUTTON_MIN_WIDTH));
                     updateButtonStatus({isMeasuring: false, buttonWidth: maxChildWidth});
                 }
@@ -159,7 +92,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
             };
         }
         return () => {};
-    }, [classes.link, buttonStatus]);
+    }, [buttonStatus.isMeasuring]);
 
     /**
      * Multiple calls to calcLayout are debounced to workaround an issue that can be reproduced in chrome when pressing
@@ -202,12 +135,34 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         return range1 - range2;
     });
 
-    const needsLinkAlignment = !isTabletOrSmaller && align === 'left';
-
     const content = (
-        <div ref={wrapperElRef} className={classes.container} {...getPrefixedDataAttributes(dataAttributes)}>
+        <div
+            ref={wrapperElRef}
+            className={classnames(
+                styles.alignVariant[align],
+                buttonStatus.buttonWidth
+                    ? align === 'full-width'
+                        ? styles.fullWidthContainer
+                        : styles.container
+                    : styles.noButtonWidth,
+                {
+                    [styles.alignMoreThanOneChildred]: childrenCount > 1,
+                }
+            )}
+            style={{
+                ...assignInlineVars({
+                    [styles.vars.buttonWidth]: buttonStatus.buttonWidth
+                        ? `${buttonStatus.buttonWidth}px`
+                        : 'auto',
+                }),
+            }}
+            {...getPrefixedDataAttributes(dataAttributes)}
+        >
             {link ? (
-                <div className={classNames(classes.link, {[classes.linkAlignment]: needsLinkAlignment})}>
+                <div
+                    className={classnames(styles.link, {[styles.linkAlignment]: align === 'left'})}
+                    data-link="true"
+                >
                     {link}
                 </div>
             ) : null}
@@ -215,7 +170,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         </div>
     );
 
-    return withMargins ? <div className={classes.margins}>{content}</div> : content;
+    return withMargins ? <div className={styles.margins}>{content}</div> : content;
 };
 
 export default ButtonLayout;
