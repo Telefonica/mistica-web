@@ -2,7 +2,7 @@
 
 import * as React from "react";
 declare type StepperProps = {
-  steps: Array<string>,
+  steps: $ReadOnlyArray<string>,
   currentIndex: number,
   "aria-label"?: string,
 };
