@@ -96,6 +96,42 @@ test('RadioGroup (controlled)', () => {
     expect(screen.getByText('you have selected banana')).toBeInTheDocument();
 });
 
+test('RadioGroup (controlled) with a immutable value', () => {
+    const spyOnChange = jest.fn();
+    const Component = () => {
+        return (
+            <ThemeContextProvider theme={makeTheme()}>
+                <Title1 id="label">Choose a fruit</Title1>
+                <RadioGroup name="radio-group" aria-labelledby="label" value="banana" onChange={spyOnChange}>
+                    <RadioButton value="banana" />
+                    <RadioButton value="apple" />
+                </RadioGroup>
+            </ThemeContextProvider>
+        );
+    };
+
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Component />
+        </ThemeContextProvider>
+    );
+
+    const group = screen.getByLabelText('Choose a fruit');
+    const radios = within(group).getAllByRole('radio');
+
+    expect(radios).toHaveLength(2);
+
+    expect(radios[0]).toBeChecked();
+    expect(radios[1]).not.toBeChecked();
+
+    fireEvent.click(radios[1]);
+
+    expect(radios[0]).toBeChecked();
+    expect(radios[1]).not.toBeChecked();
+
+    expect(spyOnChange).toHaveBeenCalledWith('apple');
+});
+
 test('RadioGroup (disabled)', () => {
     const setFruit = jest.fn();
 

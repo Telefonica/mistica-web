@@ -171,7 +171,7 @@ const useStyles = createUseStyles(({colors, mq}) => ({
 }));
 
 type StepperProps = {
-    steps: Array<string>;
+    steps: ReadonlyArray<string>;
     currentIndex: number;
     'aria-label'?: string;
     children?: void;
