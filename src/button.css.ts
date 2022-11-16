@@ -274,13 +274,14 @@ export const link = style([
         width: 'auto',
         borderRadius: 4,
         paddingX: PADDING_X_LINK,
-        paddingY: PADDING_Y_LINK,
         border: 'none',
         color: vars.colors.textLink,
         backgroundColor: 'transparent',
         overflow: 'hidden',
     }),
     {
+        paddingTop: PADDING_Y_LINK,
+        paddingBottom: PADDING_Y_LINK,
         fontWeight: 500,
         transition: `background-color ${transitionTiming}, color ${transitionTiming}`,
 
