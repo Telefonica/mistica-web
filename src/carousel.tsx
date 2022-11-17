@@ -7,7 +7,6 @@ import {createUseStyles} from './jss';
 import Stack from './stack';
 import Touchable from './touchable';
 import classNames from 'classnames';
-import {useResonsiveLayoutMargin} from './responsive-layout';
 import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
 import {applyAlpha} from './utils/color';
 import {DisableBorderRadiusProvider} from './image';
@@ -15,6 +14,8 @@ import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 import {isAndroid} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
 import {useContainerType} from './container-type-context';
+import {vars as responsiveLayoutVars} from './responsive-layout.css';
+import {vars} from './skins/skin-contract.css';
 
 import type {ContainerType, DataAttributes} from './utils/types';
 import type {Theme} from './theme';
@@ -28,7 +29,7 @@ const useShouldAutoplay = (autoplay: boolean, ref: React.RefObject<HTMLElement>)
 const useBulletsStyles = createUseStyles((theme) => ({
     bullet: {
         backgroundColor: ({isInverse}) =>
-            isInverse ? applyAlpha(theme.colors.inverse, 0.5) : theme.colors.control,
+            isInverse ? applyAlpha(vars.rawColors.inverse, 0.5) : vars.colors.control,
         width: 8,
         height: 8,
         borderRadius: '50%',
@@ -37,7 +38,7 @@ const useBulletsStyles = createUseStyles((theme) => ({
 
         '&.active': {
             backgroundColor: ({isInverse}) =>
-                isInverse ? theme.colors.inverse : theme.colors.controlActivated,
+                isInverse ? vars.colors.inverse : vars.colors.controlActivated,
             transform: 'scale(1.25)', // 10px
         },
 
@@ -91,8 +92,8 @@ const arrowButtonStyle = (theme: Theme) => ({
     width: arrowButtonSize,
     height: arrowButtonSize,
     borderRadius: '50%',
-    backgroundColor: theme.colors.backgroundContainer,
-    border: `1px solid ${theme.colors.border}`,
+    backgroundColor: vars.colors.backgroundContainer,
+    border: `1px solid ${vars.colors.border}`,
     transition: 'opacity 0.2s',
     '&[disabled]': {
         opacity: 0,
@@ -103,15 +104,15 @@ const arrowButtonStyle = (theme: Theme) => ({
     },
 });
 
-const arrowButtonSeparation = (containerType: ContainerType, isLargeDesktop: boolean, sideMargin: number) => {
+const arrowButtonSeparation = (containerType: ContainerType, isLargeDesktop: boolean): string => {
     switch (containerType) {
         case 'mobile-column':
         case 'tablet-column':
-            return -sideMargin;
+            return `calc(${responsiveLayoutVars.sideMargin} * -1)`;
         case 'desktop-wide-column':
-            return isLargeDesktop ? -(24 + arrowButtonSize) : -arrowButtonSize / 2;
+            return `${isLargeDesktop ? -(24 + arrowButtonSize) : -arrowButtonSize / 2}px`;
         default:
-            return -arrowButtonSize / 2;
+            return `${-arrowButtonSize / 2}px`;
     }
 };
 
@@ -128,12 +129,10 @@ const useStyles = createUseStyles((theme) => ({
         zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
         top: `calc(50% - ${arrowButtonSize / 2}px)`,
         '&.prev': {
-            left: ({containerType, isLargeDesktop, sideMargin}) =>
-                arrowButtonSeparation(containerType, isLargeDesktop, sideMargin),
+            left: ({containerType, isLargeDesktop}) => arrowButtonSeparation(containerType, isLargeDesktop),
         },
         '&.next': {
-            right: ({containerType, isLargeDesktop, sideMargin}) =>
-                arrowButtonSeparation(containerType, isLargeDesktop, sideMargin),
+            right: ({containerType, isLargeDesktop}) => arrowButtonSeparation(containerType, isLargeDesktop),
         },
     },
     hasScroll: {},
@@ -146,7 +145,7 @@ const useStyles = createUseStyles((theme) => ({
         ...hideScrollbar,
         [theme.mq.tabletOrSmaller]: {
             '&$hasScroll': {
-                margin: ({sideMargin}) => `0 -${sideMargin}px`,
+                margin: `0 calc(${responsiveLayoutVars.sideMargin} * -1)`,
             },
             '&$centered::before, &$centered::after': {
                 content: '""',
@@ -186,16 +185,16 @@ const useStyles = createUseStyles((theme) => ({
                     // prettier-ignore
                     `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile}px)`,
                 '&:first-child': {
-                    paddingLeft: ({sideMargin}) => sideMargin,
-                    width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap, sideMargin}) =>
+                    paddingLeft: responsiveLayoutVars.sideMargin,
+                    width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap}) =>
                         // prettier-ignore
-                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile + gap - sideMargin}px)`,
+                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile + gap}px + ${responsiveLayoutVars.sideMargin})`,
                 },
                 '&:last-child': {
-                    paddingRight: ({sideMargin}) => sideMargin,
-                    width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap, sideMargin}) =>
+                    paddingRight: responsiveLayoutVars.sideMargin,
+                    width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap}) =>
                         // prettier-ignore
-                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile - sideMargin}px)`,
+                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile}px + ${responsiveLayoutVars.sideMargin})`,
                 },
             },
 
@@ -330,13 +329,11 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const mobilePageOffsetConfig = normalizeMobilePageOffset(mobilePageOffset);
     const {isDesktopOrBigger, isLargeDesktop} = useScreenSize();
     const gap: number = gapProp ?? (isDesktopOrBigger ? 16 : 8);
-    const sideMargin = useResonsiveLayoutMargin();
     const classes = useStyles({
         itemsPerPageConfig,
         mobilePageOffsetConfig,
         free,
         gap,
-        sideMargin,
         containerType,
         isLargeDesktop,
     });
@@ -426,16 +423,15 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
         gap,
         centered,
         isDesktopOrBigger,
-        sideMargin,
         items.length,
     ]);
 
     const goToPage = React.useCallback(
-        (pageIndex: number) => {
+        (pageIndex: number, animate = true) => {
             const carouselEl = carouselRef.current;
             if (carouselEl) {
                 const scroll = pagesScrollPositions[pageIndex];
-                carouselEl.scrollTo({left: scroll, behavior: 'smooth'});
+                carouselEl.scrollTo({left: scroll, behavior: animate ? 'smooth' : 'auto'});
             }
         },
         [pagesScrollPositions]
@@ -465,7 +461,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
 
     React.useEffect(() => {
         if (initialActiveItem !== undefined) {
-            goToPage(Math.floor(initialActiveItem / itemsPerPageFloor));
+            goToPage(Math.floor(initialActiveItem / itemsPerPageFloor), false);
         }
     }, [initialActiveItem, goToPage, itemsPerPageFloor]);
 
@@ -634,7 +630,7 @@ const useSlideshowStyles = createUseStyles((theme) => ({
         scrollSnapType: 'x mandatory',
         ...hideScrollbar,
         [theme.mq.tabletOrSmaller]: {
-            margin: ({sideMargin}) => `0 -${sideMargin}px`,
+            margin: `0 calc(${responsiveLayoutVars.sideMargin} * -1)`,
         },
     },
     item: {
@@ -690,8 +686,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
     dataAttributes,
 }) => {
     const {texts} = useTheme();
-    const sideMargin = useResonsiveLayoutMargin();
-    const classes = useSlideshowStyles({sideMargin});
+    const classes = useSlideshowStyles();
 
     const carouselRef = React.useRef<HTMLDivElement>(null);
 

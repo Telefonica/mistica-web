@@ -5,11 +5,12 @@ import {useTheme} from './hooks';
 import IconButton from './icon-button';
 import {useIsInverseVariant} from './theme-variant-context';
 import {applyAlpha} from './utils/color';
+import {vars} from './skins/skin-contract.css';
 
 const DismissableContext = React.createContext<boolean>(false);
 export const useIsDismissable = (): boolean => React.useContext(DismissableContext);
 
-const useStyles = createUseStyles((theme) => ({
+const useStyles = createUseStyles(() => ({
     dismissableContainer: {
         position: 'relative',
         display: 'flex',
@@ -35,7 +36,7 @@ const useStyles = createUseStyles((theme) => ({
         height: 24,
         margin: '0 0 8px 8px',
         borderRadius: '50%',
-        backgroundColor: applyAlpha(theme.colors.background, 0.7),
+        backgroundColor: applyAlpha(vars.rawColors.background, 0.7),
     },
 }));
 
@@ -54,7 +55,7 @@ const MaybeDismissable = ({
 }: MaybeDismissableProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const classes = useStyles({isInverse, width});
-    const {colors, texts} = useTheme();
+    const {texts} = useTheme();
 
     if (!onClose) {
         return <>{children}</>;
@@ -70,7 +71,7 @@ const MaybeDismissable = ({
                 style={{display: 'flex', width: 48, height: 48}}
             >
                 <div className={classes.dismissableCircleContainer}>
-                    <IconCloseRegular color={colors.neutralHigh} />
+                    <IconCloseRegular color={vars.colors.neutralHigh} />
                 </div>
             </IconButton>
         </section>

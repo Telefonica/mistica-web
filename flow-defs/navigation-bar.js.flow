@@ -18,7 +18,7 @@ declare type MainNavigationBarSection =
   title: string,
 };
 declare type MainNavigationBarProps = {
-  sections: Array<MainNavigationBarSection>,
+  sections: $ReadOnlyArray<MainNavigationBarSection>,
   selectedIndex?: number,
   right?: React.Element<any>,
   logo?: React.Element<any>,

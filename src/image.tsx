@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {createUseStyles} from './jss';
+import classnames from 'classnames';
 import {SkeletonRectangle} from './skeletons';
 import {AspectRatioElement} from './utils/aspect-ratio-support';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -7,10 +7,10 @@ import IconImageRegular from './generated/mistica-icons/icon-image-regular';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
 import {VIVO_SKIN} from './skins/constants';
+import {sprinkles} from './sprinkles.css';
+import * as styles from './image.css';
 
 import type {DataAttributes} from './utils/types';
-
-const FADE_IN_DURATION_MS = 300;
 
 /**
  * This context is used internally to disable the border radius. This is useful for example
@@ -69,24 +69,6 @@ const ImageError = () => {
     );
 };
 
-const useStyles = createUseStyles(() => ({
-    image: {
-        // needeed because images with aspect-ratio 0 and position absolute does not work
-        position: ({ratio}) => (ratio !== 0 ? 'absolute' : 'static'),
-        top: 0,
-        left: 0,
-        display: 'block',
-        objectFit: 'cover',
-        width: '100%',
-        height: '100%',
-        maxWidth: '100%',
-        maxHeight: '100%',
-        borderRadius: ({noBorderRadius}) => (noBorderRadius ? 0 : 8),
-        transition: `opacity ${FADE_IN_DURATION_MS}ms`,
-        zIndex: 1,
-    },
-}));
-
 export type AspectRatio = '1:1' | '16:9' | '7:10' | '4:3';
 
 export const RATIO = {
@@ -138,11 +120,6 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
 
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
 
-        const classes = useStyles({
-            noBorderRadius: noBorderSetting,
-            ratio,
-        });
-
         const withLoadingFallback = loadingFallback && !!(ratio !== 0 || (props.width && props.height));
         const withErrorFallback = errorFallback && !!(ratio !== 0 || (props.width && props.height));
 
@@ -156,7 +133,13 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
                 }}
                 ref={ref}
                 src={src}
-                className={classes.image}
+                className={classnames(
+                    styles.image,
+                    sprinkles({
+                        position: ratio !== 0 ? 'absolute' : 'static',
+                        borderRadius: noBorderSetting ? undefined : 8,
+                    })
+                )}
                 alt={alt}
                 onError={(event) => {
                     setIsError(true);
@@ -169,7 +152,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
                     setIsLoading(false);
                     setTimeout(() => {
                         setHideLoadingFallback(true);
-                    }, FADE_IN_DURATION_MS);
+                    }, styles.FADE_IN_DURATION_MS);
                     onLoad?.(event);
                 }}
             />
