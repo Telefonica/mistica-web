@@ -1,4 +1,4 @@
-import {createVar, keyframes, style} from '@vanilla-extract/css';
+import {createVar, globalStyle, keyframes, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
@@ -144,18 +144,17 @@ export const number = style([
 ]);
 
 export const currentNumber = style({
-    selectors: {
-        '& span': {
-            animation: `${currentNumberTextKeyframes} .3s ease-in-out`,
-            willChange: 'color',
-            transition: 'color .3s ease-in-out',
-        },
-    },
     transition: 'border-color .3s ease-in-out, background-color .3s ease-in-out',
     willChange: 'border-color, background-color',
     animation: `${currentNumberKeyframes} .3s ease-in-out`,
     background: skinVars.colors.controlActivated,
     borderColor: skinVars.colors.controlActivated,
+});
+
+globalStyle(`${currentNumber} span`, {
+    animation: `${currentNumberTextKeyframes} .3s ease-in-out`,
+    willChange: 'color',
+    transition: 'color .3s ease-in-out',
 });
 
 export const textContainer = style([

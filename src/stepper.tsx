@@ -54,7 +54,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex, 'aria-label': ari
                                     className={classnames(styles.stepIconNumber, {
                                         [styles.iconAnimation]: hasAnimation && !isBack,
                                     })}
-                                    role="presentation"
+                                    aria-hidden="true"
                                 >
                                     <IconSuccess
                                         color={colors.controlActivated}
@@ -72,15 +72,16 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex, 'aria-label': ari
                                         as="span"
                                         medium
                                         color={isCurrent ? colors.textPrimaryInverse : colors.textSecondary}
-                                        role="presentation"
+                                        aria-hidden="true"
                                     >
                                         {index + 1}
                                     </Text1>
                                 </div>
                             )}
                             {isDesktopOrBigger && (
-                                <div className={styles.textContainer} ref={ref} role="presentation">
+                                <div className={styles.textContainer} ref={ref} aria-hidden="true">
                                     <Text2
+                                        as="span"
                                         regular
                                         color={
                                             isCompleted || isCurrent
@@ -94,7 +95,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex, 'aria-label': ari
                             )}
                         </div>
                         {!isLastStep && (
-                            <div className={styles.bar} role="presentation">
+                            <div className={styles.bar} aria-hidden="true">
                                 {(isCompleted || isCurrent) && (
                                     <div
                                         className={classnames({
