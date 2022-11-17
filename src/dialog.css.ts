@@ -2,6 +2,7 @@ import {style, keyframes, styleVariants} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
+import {pxToRem} from './utils/css';
 
 const fadeIn = keyframes({
     '0%': {opacity: 0},
@@ -127,3 +128,28 @@ export const dialogContent = style([
         overflowY: 'auto',
     },
 ]);
+
+export const dialogActions = style([
+    sprinkles({
+        paddingTop: 24,
+    }),
+    {
+        '@media': {
+            [mq.desktopOrBigger]: {
+                paddingTop: 32,
+            },
+        },
+    },
+]);
+
+export const iconContainer = style({
+    width: pxToRem(40),
+    height: pxToRem(40),
+
+    '@media': {
+        [mq.desktopOrBigger]: {
+            width: pxToRem(64),
+            height: pxToRem(64),
+        },
+    },
+});

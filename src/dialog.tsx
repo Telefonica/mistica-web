@@ -7,14 +7,13 @@ import IcnCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/webview-bridge';
 import ThemeContext from './theme-context';
-import {useTheme, useScreenSize} from './hooks';
+import {useTheme} from './hooks';
 import ButtonLayout from './button-layout';
 import {Text5, Text4, Text3} from './text';
 import {ESC} from './utils/key-codes';
 import Box from './box';
 import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {useSetModalState} from './modal-context-provider';
-import {pxToRem} from './utils/css';
 import Stack from './stack';
 import * as styles from './dialog.css';
 
@@ -83,7 +82,6 @@ const Dialog: React.FC<DialogProps> = (props) => {
         showCancel = false,
         destructive = false,
     } = props;
-    const {isTabletOrSmaller} = useScreenSize();
     const isDialog = !!props.forceWeb;
 
     const mainButtonProps = {
@@ -96,9 +94,11 @@ const Dialog: React.FC<DialogProps> = (props) => {
         <div className={classnames(styles.variants[isDialog ? 'dialog' : 'default'], className)}>
             {icon && (
                 <Box paddingBottom={24}>
-                    {React.cloneElement(icon, {
-                        size: pxToRem(isTabletOrSmaller ? 40 : 64),
-                    })}
+                    <div className={styles.iconContainer}>
+                        {React.cloneElement(icon, {
+                            size: '100%',
+                        })}
+                    </div>
                 </Box>
             )}
             {title && (
@@ -128,7 +128,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
                 </Stack>
             </div>
 
-            <Box paddingTop={isTabletOrSmaller ? 24 : 32}>
+            <div className={styles.dialogActions}>
                 <ButtonLayout link={props.forceWeb ? props.link : undefined}>
                     {destructive ? (
                         <ButtonDanger tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
@@ -145,7 +145,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
                         </ButtonSecondary>
                     )}
                 </ButtonLayout>
-            </Box>
+            </div>
         </div>
     );
 };

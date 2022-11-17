@@ -13,16 +13,20 @@ export const variants = styleVariants({
     default: [
         container,
         {
-            [mq.desktopOrBigger]: {
-                width: DEFAULT_WIDTH,
+            '@media': {
+                [mq.desktopOrBigger]: {
+                    width: DEFAULT_WIDTH,
+                },
             },
         },
     ],
     fullWidth: [
         container,
         {
-            [mq.desktopOrBigger]: {
-                width: '100%',
+            '@media': {
+                [mq.desktopOrBigger]: {
+                    width: '100%',
+                },
             },
         },
     ],

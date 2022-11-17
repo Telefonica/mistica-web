@@ -8,3 +8,5 @@ declare export var modalContent: string;
 declare export var closedModalContent: string;
 declare export var variants: { default: string, dialog: string };
 declare export var dialogContent: string;
+declare export var dialogActions: string;
+declare export var iconContainer: string;
