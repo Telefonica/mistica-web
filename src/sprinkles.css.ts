@@ -27,7 +27,7 @@ const commonProperties = defineProperties({
         flexDirection: ['row', 'column'],
         justifyContent: ['stretch', 'flex-start', 'center', 'flex-end', 'space-around', 'space-between'],
         alignItems: ['stretch', 'flex-start', 'center', 'flex-end', 'baseline'],
-        flexShrink: [0],
+        flexShrink: [0, 1],
         flexGrow: [0, 1],
         flex: [1],
         paddingTop: sizes,
