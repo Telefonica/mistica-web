@@ -44,7 +44,7 @@ const commonProperties = defineProperties({
             regular: `1px solid ${vars.colors.border}`,
             none: 'none',
         },
-        borderRadius: ['50%', 2, 4, 8, 16],
+        borderRadius: ['50%', 2, 4, 8, 16, 20],
         cursor: ['pointer'],
         overflow: ['hidden', 'visible'],
         top: sizes,
@@ -52,7 +52,7 @@ const commonProperties = defineProperties({
         right: sizes,
         bottom: sizes,
         objectFit: ['cover'],
-    },
+    } as const,
     shorthands: {
         padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
         paddingX: ['paddingLeft', 'paddingRight'],
