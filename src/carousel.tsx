@@ -3,54 +3,24 @@ import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-
 import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-right-regular';
 import {useIsInViewport, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
-import {createUseStyles} from './jss';
 import Stack from './stack';
-import Touchable from './touchable';
+import Touchable, {BaseTouchable} from './touchable';
 import classNames from 'classnames';
 import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
-import {applyAlpha} from './utils/color';
 import {DisableBorderRadiusProvider} from './image';
 import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 import {isAndroid} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
-import {useContainerType} from './container-type-context';
-import {vars as responsiveLayoutVars} from './responsive-layout.css';
-import {vars} from './skins/skin-contract.css';
+import * as styles from './carousel.css';
+import {assignInlineVars} from '@vanilla-extract/dynamic';
 
-import type {ContainerType, DataAttributes} from './utils/types';
-import type {Theme} from './theme';
+import type {DataAttributes} from './utils/types';
 
 const useShouldAutoplay = (autoplay: boolean, ref: React.RefObject<HTMLElement>): boolean => {
     const isDocumentVisible = useDocumentVisibility();
     const isInViewport = useIsInViewport(ref, false);
     return isInViewport && isDocumentVisible && !!autoplay;
 };
-
-const useBulletsStyles = createUseStyles((theme) => ({
-    bullet: {
-        backgroundColor: ({isInverse}) =>
-            isInverse ? applyAlpha(vars.rawColors.inverse, 0.5) : vars.colors.control,
-        width: 8,
-        height: 8,
-        borderRadius: '50%',
-        transition: 'transform 0.3s ease-in-out, background-color 0.3s ease-in-out',
-        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
-
-        '&.active': {
-            backgroundColor: ({isInverse}) =>
-                isInverse ? vars.colors.inverse : vars.colors.controlActivated,
-            transform: 'scale(1.25)', // 10px
-        },
-
-        [theme.mq.tabletOrSmaller]: {
-            width: 4,
-            height: 4,
-            '&.active': {
-                transform: 'scale(1.5)', // 6px
-            },
-        },
-    },
-}));
 
 type PageBulletsProps = {
     currentIndex: number;
@@ -60,8 +30,16 @@ type PageBulletsProps = {
 
 export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages, onPress}) => {
     const isInverse = useIsInverseVariant();
-    const classes = useBulletsStyles({isInverse});
     const {isDesktopOrBigger} = useScreenSize();
+    const getClassName = (index: number) => {
+        const isActive = index === currentIndex;
+        if (isInverse) {
+            return isActive ? styles.bulletActiveInverse : styles.bulletInverse;
+        } else {
+            return isActive ? styles.bulletActive : styles.bullet;
+        }
+    };
+
     return (
         <Inline space={isDesktopOrBigger ? 16 : 8} alignItems="center">
             {Array.from({length: numPages}, (_, i: number) => (
@@ -70,152 +48,12 @@ export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages,
                     maybe
                     onPress={isDesktopOrBigger && onPress ? () => onPress(i) : undefined}
                 >
-                    <div className={classNames(classes.bullet, {active: i === currentIndex})} />
+                    <div className={getClassName(i)} />
                 </Touchable>
             ))}
         </Inline>
     );
 };
-
-const hideScrollbar = {
-    scrollbarWidth: 'none', // Hide in FF
-    '&::-webkit-scrollbar': {
-        display: 'none', // Hide in Chrome/Safari
-    },
-};
-
-const arrowButtonSize = 40;
-const arrowButtonStyle = (theme: Theme) => ({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: arrowButtonSize,
-    height: arrowButtonSize,
-    borderRadius: '50%',
-    backgroundColor: vars.colors.backgroundContainer,
-    border: `1px solid ${vars.colors.border}`,
-    transition: 'opacity 0.2s',
-    '&[disabled]': {
-        opacity: 0,
-    },
-    // don't show carrousel arrow buttons in touch devices, just regular horizontal scroll
-    [theme.mq.touchableOnly]: {
-        display: 'none',
-    },
-});
-
-const arrowButtonSeparation = (containerType: ContainerType, isLargeDesktop: boolean): string => {
-    switch (containerType) {
-        case 'mobile-column':
-        case 'tablet-column':
-            return `calc(${responsiveLayoutVars.sideMargin} * -1)`;
-        case 'desktop-wide-column':
-            return `${isLargeDesktop ? -(24 + arrowButtonSize) : -arrowButtonSize / 2}px`;
-        default:
-            return `${-arrowButtonSize / 2}px`;
-    }
-};
-
-const useStyles = createUseStyles((theme) => ({
-    carouselContainer: {
-        // This value is a workaround to solve an issue when the page is rendered in a hidden webview
-        // in that case the window size is reported as 0 and the scroll snap is placed at the wrong slide
-        minWidth: 64,
-        position: 'relative',
-    },
-    arrowButton: {
-        ...arrowButtonStyle(theme),
-        position: 'absolute',
-        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
-        top: `calc(50% - ${arrowButtonSize / 2}px)`,
-        '&.prev': {
-            left: ({containerType, isLargeDesktop}) => arrowButtonSeparation(containerType, isLargeDesktop),
-        },
-        '&.next': {
-            right: ({containerType, isLargeDesktop}) => arrowButtonSeparation(containerType, isLargeDesktop),
-        },
-    },
-    hasScroll: {},
-    centered: {},
-    carousel: {
-        display: 'flex',
-        overflowX: 'auto',
-        minWidth: '100%',
-        scrollSnapType: ({free}) => (free ? 'initial' : 'x mandatory'),
-        ...hideScrollbar,
-        [theme.mq.tabletOrSmaller]: {
-            '&$hasScroll': {
-                margin: `0 calc(${responsiveLayoutVars.sideMargin} * -1)`,
-            },
-            '&$centered::before, &$centered::after': {
-                content: '""',
-                flexShrink: 0,
-                display: 'block',
-                width: '25%',
-            },
-        },
-    },
-    item: {
-        scrollSnapStop: isAndroid(theme.platformOverrides) ? 'always' : 'normal',
-        scrollSnapAlign: 'start',
-        flexShrink: 0,
-        width: ({itemsPerPageConfig, gap}) =>
-            `calc(${100 / itemsPerPageConfig.desktop}% + ${gap / itemsPerPageConfig.desktop}px)`,
-        scrollMargin: ({gap}) => `-${gap}px`,
-        '&:first-child': {
-            width: ({itemsPerPageConfig, gap}) =>
-                // prettier-ignore
-                `calc(${100 / itemsPerPageConfig.desktop}% - ${(gap * (itemsPerPageConfig.desktop - 1)) / itemsPerPageConfig.desktop}px)`,
-            scrollMargin: 0,
-        },
-        [theme.mq.tabletOrSmaller]: {
-            width: ({itemsPerPageConfig, gap}) =>
-                `calc(${100 / itemsPerPageConfig.mobile}% + ${gap / itemsPerPageConfig.mobile}px)`,
-            '&:first-child': {
-                width: ({itemsPerPageConfig, gap}) =>
-                    // prettier-ignore
-                    `calc(${100 / itemsPerPageConfig.mobile}% - ${(gap * (itemsPerPageConfig.mobile - 1)) / itemsPerPageConfig.mobile}px)`,
-            },
-
-            scrollSnapAlign: 'start',
-            scrollMargin: ({mobilePageOffsetConfig}) => `${mobilePageOffsetConfig.prev}px`,
-
-            '$hasScroll:not($centered) &': {
-                width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap}) =>
-                    // prettier-ignore
-                    `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile}px)`,
-                '&:first-child': {
-                    paddingLeft: responsiveLayoutVars.sideMargin,
-                    width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap}) =>
-                        // prettier-ignore
-                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile + gap}px + ${responsiveLayoutVars.sideMargin})`,
-                },
-                '&:last-child': {
-                    paddingRight: responsiveLayoutVars.sideMargin,
-                    width: ({itemsPerPageConfig, mobilePageOffsetConfig, gap}) =>
-                        // prettier-ignore
-                        `calc(${100 / itemsPerPageConfig.mobile}% - ${(mobilePageOffsetConfig.next + mobilePageOffsetConfig.prev + gap) / itemsPerPageConfig.mobile}px + ${responsiveLayoutVars.sideMargin})`,
-                },
-            },
-
-            '$centered &': {
-                width: () => '50%',
-                scrollSnapAlign: 'center',
-                scrollMargin: () => 0,
-            },
-        },
-        '&:not(:empty) ~ &:not(:empty)': {
-            paddingLeft: ({gap}) => gap,
-        },
-        '&:empty': {
-            display: 'none',
-        },
-    },
-    bullets: {
-        display: 'flex',
-        justifyContent: 'center',
-    },
-}));
 
 type ItemsPerPageProp = {mobile?: number; desktop?: number} | number;
 
@@ -323,20 +161,11 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     onPageChange,
     dataAttributes,
 }) => {
-    const {texts} = useTheme();
-    const containerType = useContainerType();
+    const {texts, platformOverrides} = useTheme();
     const itemsPerPageConfig = normalizeItemsPerPage(itemsPerPage);
     const mobilePageOffsetConfig = normalizeMobilePageOffset(mobilePageOffset);
-    const {isDesktopOrBigger, isLargeDesktop} = useScreenSize();
+    const {isDesktopOrBigger} = useScreenSize();
     const gap: number = gapProp ?? (isDesktopOrBigger ? 16 : 8);
-    const classes = useStyles({
-        itemsPerPageConfig,
-        mobilePageOffsetConfig,
-        free,
-        gap,
-        containerType,
-        isLargeDesktop,
-    });
     const carouselRef = React.useRef<HTMLDivElement>(null);
     const itemsPerPageFloor = isDesktopOrBigger
         ? Math.floor(itemsPerPageConfig.desktop)
@@ -511,29 +340,42 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
 
     return (
         <Stack space={24} dataAttributes={dataAttributes}>
-            <div className={classes.carouselContainer}>
+            <div className={styles.carouselContainer}>
                 <ThemeVariant isInverse={false}>
-                    <Touchable
-                        className={classNames(classes.arrowButton, 'prev')}
+                    <BaseTouchable
+                        className={styles.carouselPrevArrowButton}
                         aria-label={texts.carouselPrevButton}
                         onPress={goPrev}
                         disabled={!showPrevArrow}
                     >
                         <IconChevronLeftRegular />
-                    </Touchable>
+                    </BaseTouchable>
                 </ThemeVariant>
                 <div
-                    className={classNames(classes.carousel, {
-                        [classes.centered]: centered,
-                        [classes.hasScroll]: pagesCount > 1,
+                    className={classNames(styles.carousel, {
+                        [styles.centeredCarousel]: centered,
+                        [styles.carouselWithScroll]: pagesCount > 1,
                     })}
+                    style={{
+                        ...assignInlineVars({
+                            [styles.vars.itemsPerPageDesktop]: String(itemsPerPageConfig.desktop),
+                            [styles.vars.itemsPerPageMobile]: String(itemsPerPageConfig.mobile),
+                            [styles.vars.gap]: String(gap),
+                            [styles.vars.mobilePageOffsetNext]: String(mobilePageOffsetConfig.next),
+                            [styles.vars.mobilePageOffsetPrev]: String(mobilePageOffsetConfig.prev),
+                        }),
+                        scrollSnapType: free ? 'initial' : 'x mandatory',
+                    }}
                     ref={carouselRef}
                 >
                     {items.map((item, index) => (
                         <div
                             key={index}
-                            className={classNames(classes.item, itemClassName)}
-                            style={itemStyle}
+                            className={classNames(styles.carouselItem, itemClassName)}
+                            style={{
+                                ...itemStyle,
+                                scrollSnapStop: isAndroid(platformOverrides) ? 'always' : 'normal',
+                            }}
                             data-item
                         >
                             {item}
@@ -541,17 +383,17 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                     ))}
                 </div>
                 <ThemeVariant isInverse={false}>
-                    <Touchable
-                        className={classNames(classes.arrowButton, 'next')}
+                    <BaseTouchable
+                        className={styles.carouselNextArrowButton}
                         aria-label={texts.carouselNextButton}
                         onPress={goNext}
                         disabled={!showNextArrow}
                     >
                         <IconChevronRightRegular />
-                    </Touchable>
+                    </BaseTouchable>
                 </ThemeVariant>
             </div>
-            {bullets && <div className={classes.bullets}>{bullets}</div>}
+            {bullets && <div className={styles.carouselBullets}>{bullets}</div>}
         </Stack>
     );
 };
@@ -619,55 +461,6 @@ export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({
     />
 );
 
-const useSlideshowStyles = createUseStyles((theme) => ({
-    slideshowContainer: {
-        position: 'relative',
-    },
-    slideshow: {
-        display: 'flex',
-        overflowX: 'auto',
-        minWidth: '100%',
-        scrollSnapType: 'x mandatory',
-        ...hideScrollbar,
-        [theme.mq.tabletOrSmaller]: {
-            margin: `0 calc(${responsiveLayoutVars.sideMargin} * -1)`,
-        },
-    },
-    item: {
-        width: '100%',
-        scrollSnapStop: isAndroid(theme.platformOverrides) ? 'always' : 'normal',
-        scrollSnapAlign: 'start',
-        flexShrink: 0,
-    },
-    arrowButton: {
-        ...arrowButtonStyle(theme),
-        border: 'none',
-        position: 'absolute',
-        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
-        top: `calc(50% - ${arrowButtonSize / 2}px)`,
-        '&.prev': {
-            left: 24,
-            [theme.mq.tabletOrSmaller]: {
-                left: 0,
-            },
-        },
-        '&.next': {
-            right: 24,
-            [theme.mq.tabletOrSmaller]: {
-                right: 0,
-            },
-        },
-    },
-    bullets: {
-        position: 'absolute',
-        bottom: 24,
-        display: 'flex',
-        justifyContent: 'center',
-        width: '100%',
-        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
-    },
-}));
-
 type SlideshowProps = {
     items: ReadonlyArray<React.ReactNode>;
     withBullets?: boolean;
@@ -685,8 +478,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
     onPageChange,
     dataAttributes,
 }) => {
-    const {texts} = useTheme();
-    const classes = useSlideshowStyles();
+    const {texts, platformOverrides} = useTheme();
 
     const carouselRef = React.useRef<HTMLDivElement>(null);
 
@@ -758,39 +550,45 @@ export const Slideshow: React.FC<SlideshowProps> = ({
     }, [currentIndex, onPageChange]);
 
     return (
-        <div className={classes.slideshowContainer} {...getPrefixedDataAttributes(dataAttributes)}>
+        <div className={styles.slideshowContainer} {...getPrefixedDataAttributes(dataAttributes)}>
             <ThemeVariant isInverse={false}>
-                <Touchable
-                    className={classNames(classes.arrowButton, 'prev')}
+                <BaseTouchable
+                    className={styles.slideshowPrevArrowButton}
                     aria-label={texts.carouselPrevButton}
                     onPress={goPrev}
                     disabled={!showPrevArrow}
                 >
                     <IconChevronLeftRegular />
-                </Touchable>
+                </BaseTouchable>
             </ThemeVariant>
             <DisableBorderRadiusProvider>
-                <div className={classes.slideshow} ref={carouselRef}>
+                <div className={styles.slideshow} ref={carouselRef}>
                     {items.map((item, index) => (
-                        <div key={index} className={classes.item}>
+                        <div
+                            key={index}
+                            className={styles.slideshowItem}
+                            style={{
+                                scrollSnapStop: isAndroid(platformOverrides) ? 'always' : 'normal',
+                            }}
+                        >
                             {item}
                         </div>
                     ))}
                 </div>
             </DisableBorderRadiusProvider>
             <ThemeVariant isInverse={false}>
-                <Touchable
-                    className={classNames(classes.arrowButton, 'next')}
+                <BaseTouchable
+                    className={styles.slideshowNextArrowButton}
                     aria-label={texts.carouselNextButton}
                     onPress={goNext}
                     disabled={!showNextArrow}
                 >
                     <IconChevronRightRegular />
-                </Touchable>
+                </BaseTouchable>
             </ThemeVariant>
             {withBullets && items.length > 1 && (
                 <ThemeVariant isInverse>
-                    <div className={classes.bullets}>
+                    <div className={styles.slideshowBullets}>
                         <PageBullets numPages={items.length} currentIndex={currentIndex} />
                     </div>
                 </ThemeVariant>
