@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {createUseStyles} from './jss';
 import {useTheme} from './hooks';
 import IconCvvVisaMc from './icons/icon-cvv-visa-mc';
 import IconCvvAmex from './icons/icon-cvv-amex';
@@ -9,38 +8,24 @@ import IcnInfo from './icons/icon-info-cvv';
 import {useFieldProps, useForm} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import {IntegerInput} from './integer-field';
+import * as styles from './cvv-field.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type {CardOptions} from './utils/credit-card';
 
-const useStyles = createUseStyles((theme) => ({
-    cvvText: {
-        margin: 0,
-        marginLeft: 16,
-        color: theme.colors.textPrimary,
-        lineHeight: 1.42857142,
-        fontSize: 14,
-    },
-    tooltipContainer: {
-        display: 'flex',
-        alignItems: 'center',
-    },
-}));
-
 const TooltipContent = ({acceptedCards}: {acceptedCards: CardOptions}) => {
-    const classes = useStyles();
     const {texts} = useTheme();
 
     return (
         <>
-            <div className={classes.tooltipContainer}>
+            <div className={styles.tooltipContainer}>
                 <IconCvvVisaMc size={48} role="img" />
-                <p className={classes.cvvText}>{texts.formCreditCardCvvTooltipVisaMc}</p>
+                <p className={styles.cvvText}>{texts.formCreditCardCvvTooltipVisaMc}</p>
             </div>
             {acceptedCards?.americanExpress && (
-                <div className={classes.tooltipContainer}>
+                <div className={styles.tooltipContainer}>
                     <IconCvvAmex size={48} role="img" />
-                    <p className={classes.cvvText}>{texts.formCreditCardCvvTooltipAmex}</p>
+                    <p className={styles.cvvText}>{texts.formCreditCardCvvTooltipAmex}</p>
                 </div>
             )}
         </>
