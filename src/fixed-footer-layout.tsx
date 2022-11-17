@@ -170,7 +170,6 @@ const FixedFooterLayout: React.FC<Props> = ({
                  * other fixed footers during the page animation transition
                  */
                 style={{
-                    // position: hasContentScroll ? 'initial' : 'fixed',
                     background: isTabletOrSmaller ? footerBgColor : undefined,
                 }}
                 data-testid={`fixed-footer${isFooterVisible ? '-visible' : '-hidden'}`}
