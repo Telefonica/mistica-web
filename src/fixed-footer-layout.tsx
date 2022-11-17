@@ -34,6 +34,13 @@ const useStyles = createUseStyles((theme) => ({
         width: '100%',
         backgroundColor: theme.colors.background,
         transition: 'background 0.2s linear, box-shadow 0.2s linear',
+        [theme.mq.tabletOrSmaller]: {
+            position: ({hasContentEnoughVSpace, isContentWithScroll}) =>
+                hasContentEnoughVSpace || !isContentWithScroll ? 'fixed' : 'initial',
+            left: 0,
+            bottom: 0,
+            zIndex: 1,
+        },
     },
     elevated: {
         backgroundColor: theme.colors.backgroundContainer,
@@ -51,8 +58,6 @@ const useStyles = createUseStyles((theme) => ({
                 hasContentEnoughVSpace || !isContentWithScroll ? footerHeight : 0,
         },
         footer: {
-            position: ({hasContentEnoughVSpace, isContentWithScroll}) =>
-                hasContentEnoughVSpace || !isContentWithScroll ? 'fixed' : 'initial',
             left: 0,
             bottom: 0,
             zIndex: 1,
@@ -91,7 +96,6 @@ const FixedFooterLayout: React.FC<Props> = ({
     const screenHeight = useScreenHeight();
 
     const hasContentEnoughVSpace = windowHeight - realFooterHeight > screenHeight / FOOTER_CANVAS_RATIO;
-    const hasContentScroll = () => hasScroll(getScrollableParentElement(containerRef.current));
 
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(realFooterHeight);
@@ -136,6 +140,10 @@ const FixedFooterLayout: React.FC<Props> = ({
         };
     }, [hasContentEnoughVSpace, platformOverrides]);
 
+    const hasContentScroll = React.useMemo(() => {
+        return () => hasScroll(getScrollableParentElement(containerRef.current));
+    }, [containerRef]);
+
     const classes = useStyles({
         footerBgColor,
         containerBgColor,
@@ -162,6 +170,7 @@ const FixedFooterLayout: React.FC<Props> = ({
                  * other fixed footers during the page animation transition
                  */
                 style={{
+                    // position: hasContentScroll ? 'initial' : 'fixed',
                     background: isTabletOrSmaller ? footerBgColor : undefined,
                 }}
                 data-testid={`fixed-footer${isFooterVisible ? '-visible' : '-hidden'}`}
@@ -173,7 +182,12 @@ const FixedFooterLayout: React.FC<Props> = ({
                 data-position-fixed="bottom"
             >
                 {isFooterVisible && (
-                    <aside style={{height: footerHeight, marginBottom: 'env(safe-area-inset-bottom)'}}>
+                    <aside
+                        style={{
+                            height: footerHeight,
+                            marginBottom: 'env(safe-area-inset-bottom)',
+                        }}
+                    >
                         {footer}
                     </aside>
                 )}
