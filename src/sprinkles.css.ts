@@ -52,7 +52,7 @@ const commonProperties = defineProperties({
         right: sizes,
         bottom: sizes,
         objectFit: ['cover'],
-    },
+    } as const,
     shorthands: {
         padding: ['paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight'],
         paddingX: ['paddingLeft', 'paddingRight'],
