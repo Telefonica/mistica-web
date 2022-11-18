@@ -58,6 +58,22 @@ export const largeImageContainer = style({
     },
 });
 
+export const largeImage = style([
+    {
+        height: '100%',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+
+        '@media': {
+            [mq.desktopOrBigger]: {
+                backgroundSize: 'contain',
+                backgroundPosition: 'bottom right',
+            },
+        },
+    },
+]);
+
 export const iconContainer = style([
     sprinkles({
         width: 64,

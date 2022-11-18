@@ -115,13 +115,8 @@ const EmptyState: React.FC<Props> = ({
                         height="100%"
                     >
                         <div
-                            style={{
-                                height: '100%',
-                                backgroundImage: `url(${largeImageUrl})`,
-                                backgroundPosition: 'bottom right',
-                                backgroundRepeat: 'no-repeat',
-                                backgroundSize: 'contain',
-                            }}
+                            className={styles.largeImage}
+                            style={{backgroundImage: `url(${largeImageUrl})`}}
                         />
                     </AspectRatioElement>
                 )}
