@@ -189,7 +189,7 @@ const lightSecondary: ComplexStyleRule = [
         backgroundColor: 'transparent',
     }),
     {
-        borderColor: vars.colors.buttonSecondaryBackground,
+        borderColor: vars.colors.buttonSecondaryBorder,
 
         selectors: {
             '&:enabled:active': {
@@ -205,7 +205,7 @@ const lightSecondary: ComplexStyleRule = [
                     [mq.touchableOnly]: {
                         color: vars.colors.textButtonSecondary,
                         backgroundColor: 'transparent',
-                        borderColor: vars.colors.buttonSecondaryBackground,
+                        borderColor: vars.colors.buttonSecondaryBorder,
                     },
                 },
             },
