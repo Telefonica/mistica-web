@@ -1,0 +1,11 @@
+// @flow
+
+declare export var TRANSITION_DURATION_MS: 400;
+declare export var portal: string;
+declare export var progressContainer: string;
+declare export var progress: string;
+declare export var innerProgress: string;
+declare export var enter: string;
+declare export var enterActive: string;
+declare export var exit: string;
+declare export var exitActive: string;
