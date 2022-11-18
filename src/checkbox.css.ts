@@ -11,7 +11,7 @@ export const checkboxContainer = style([
     },
 ]);
 
-export const boxBase = style([
+const boxBase = style([
     sprinkles({
         display: 'inline-flex',
         justifyContent: 'center',
