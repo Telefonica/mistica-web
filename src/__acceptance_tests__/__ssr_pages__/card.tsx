@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {MediaCard, DataCard, Inline, Image, ButtonPrimary, ButtonLink, IconAcademicLight} from '../..';
+import {MediaCard, DataCard, Inline, Image, ButtonPrimary, ButtonLink, IconAcademicLight} from '../../..';
 
 const CardsTest: React.FC = () => (
     <Inline space={16}>

@@ -18,7 +18,7 @@ import {
     CvvField,
     SearchField,
     Select,
-} from '../..';
+} from '../../..';
 
 const FormTest: React.FC = () => (
     <Form onSubmit={() => {}}>

@@ -1,82 +1,14 @@
 import * as React from 'react';
-import {createUseStyles} from './jss';
 import Touchable from './touchable';
 import classNames from 'classnames';
 import {isWebViewBridgeAvailable, nativeMessage} from '@tef-novum/webview-bridge';
-import {useElementDimensions, useScreenSize, useTheme} from './hooks';
+import {useElementDimensions, useScreenSize} from './hooks';
 import {Text2} from './text';
-
-const PADDING_Y = 14;
-const PADDING_X = 16;
-const TRANSITION_TIME_IN_MS = 300;
-const SNACKBAR_MAX_WIDTH = 800;
-const SNACKBAR_MIN_WIDTH = 360;
-const SNACKBAR_MIN_HEIGHT = 48;
+import * as styles from './snackbar.css';
+import {sprinkles} from './sprinkles.css';
+import {vars} from './skins/skin-contract.css';
 
 type SnackbarType = 'INFORMATIVE' | 'CRITICAL';
-
-const useStyles = createUseStyles((theme) => ({
-    snackbar: {
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        transition: `visibility ${TRANSITION_TIME_IN_MS}ms ease-in-out`,
-        visibility: ({isOpen}) => (isOpen ? 'visible' : 'hidden'),
-    },
-    snackbarOpen: {
-        animation: `$snackbarAnimation ${TRANSITION_TIME_IN_MS}ms`,
-    },
-    '@keyframes snackbarAnimation': {
-        '0%': {
-            transform: 'translateY(100px)',
-            opacity: 0,
-        },
-    },
-    snackbarWrapper: {
-        maxWidth: SNACKBAR_MAX_WIDTH,
-        minWidth: SNACKBAR_MIN_WIDTH,
-        minHeight: SNACKBAR_MIN_HEIGHT,
-        padding: `${PADDING_Y}px ${PADDING_X}px`,
-        borderRadius: 8,
-        position: 'fixed',
-        bottom: 24,
-        zIndex: 1000, // above anything
-        backgroundColor: ({type}) =>
-            type === 'CRITICAL' ? theme.colors.feedbackErrorBackground : theme.colors.feedbackInfoBackground,
-        opacity: ({isOpen}) => (isOpen ? 1 : 0),
-        transform: ({isOpen}) => (isOpen ? '' : 'translateY(100px)'),
-        transition: `transform ${TRANSITION_TIME_IN_MS}ms ease-in-out, opacity ${TRANSITION_TIME_IN_MS}ms ease-in-out`,
-    },
-    snackbarContent: {
-        display: 'flex',
-        flexDirection: ({isLongButton}) => (isLongButton ? 'column' : 'row'),
-        justifyContent: 'space-between',
-        alignItems: ({isLongButton}) => (isLongButton ? 'unset' : 'center'),
-    },
-    snackbarButton: {
-        marginTop: ({isLongButton}) => (isLongButton ? 18 : -6),
-        marginLeft: ({isLongButton, isDesktopOrBigger}) => (isLongButton ? 0 : isDesktopOrBigger ? 48 : 16),
-        marginBottom: -6,
-        marginRight: -8,
-        fontWeight: 500,
-        fontSize: 16,
-        lineHeight: `24px`,
-        padding: '4px 8px',
-        whiteSpace: 'nowrap',
-        width: 'auto',
-        alignSelf: ({isLongButton}) => (isLongButton ? 'flex-end' : 'unset'),
-        color: ({type}) =>
-            type === 'INFORMATIVE' ? theme.colors.textLinkSnackbar : theme.colors.textPrimaryInverse,
-    },
-    [theme.mq.tabletOrSmaller]: {
-        snackbarWrapper: {
-            left: 8,
-            right: 8,
-            bottom: 8,
-            minWidth: 0,
-        },
-    },
-}));
 
 type Props = {
     buttonText?: string;
@@ -98,19 +30,13 @@ const SnackbarComponent: React.FC<Props> = ({
     const {width: buttonWidth, ref: buttonRef} = useElementDimensions();
     const {isDesktopOrBigger} = useScreenSize();
     const longButtonWidth = isDesktopOrBigger ? 160 : 128;
-    const {colors} = useTheme();
-    const classes = useStyles({
-        type,
-        isOpen,
-        isDesktopOrBigger,
-        isLongButton: buttonWidth >= longButtonWidth,
-    });
+    const hasLongButton = buttonWidth > longButtonWidth;
 
     const close = React.useCallback(() => {
         setIsOpen(false);
         setTimeout(() => {
             onClose();
-        }, TRANSITION_TIME_IN_MS);
+        }, styles.TRANSITION_TIME_IN_MS);
     }, [onClose]);
 
     React.useEffect(() => {
@@ -127,19 +53,43 @@ const SnackbarComponent: React.FC<Props> = ({
     }, [close, duration]);
 
     return (
-        <div className={classes.snackbar}>
+        <div className={classNames(styles.snackbar, {[styles.snackbarOpen]: isOpen})}>
             <div
                 role="alert"
-                className={classNames(classes.snackbarWrapper, {[classes.snackbarOpen]: isOpen})}
+                className={classNames(
+                    styles.wrapper,
+                    type === 'CRITICAL' ? styles.wrapperCritical : styles.wrapperInfo,
+                    {[styles.wrapperOpen]: isOpen}
+                )}
             >
-                <div className={classes.snackbarContent}>
-                    <Text2 regular color={colors.textPrimaryInverse}>
+                <div
+                    className={classNames(
+                        styles.content,
+                        sprinkles({
+                            flexDirection: hasLongButton ? 'column' : 'row',
+                            alignItems: hasLongButton ? undefined : 'center',
+                        })
+                    )}
+                >
+                    <Text2 regular color={vars.colors.textPrimaryInverse}>
                         {message}
                     </Text2>
                     {buttonText && (
-                        <Touchable ref={buttonRef} className={classes.snackbarButton} onPress={close}>
-                            {buttonText}
-                        </Touchable>
+                        <div
+                            className={classNames(
+                                styles.button,
+                                type === 'CRITICAL' ? styles.buttonCritical : styles.buttonInfo,
+                                {[styles.longButton]: hasLongButton}
+                            )}
+                        >
+                            <Touchable
+                                style={{lineHeight: 'inherit', fontWeight: 'inherit'}}
+                                ref={buttonRef}
+                                onPress={close}
+                            >
+                                {buttonText}
+                            </Touchable>
+                        </div>
                     )}
                 </div>
             </div>

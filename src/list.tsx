@@ -24,6 +24,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {TouchableElement} from './touchable';
 import type {DataAttributes, TrackingEvent} from './utils/types';
+import type {ExclusifyUnion} from './utils/utility-types';
 
 const useStyles = createUseStyles(({colors, mq}) => ({
     disabled: {
@@ -259,106 +260,55 @@ type ControlProps = {
 };
 
 interface BasicRowContentProps extends CommonProps {
-    href?: undefined;
-    onPress?: undefined;
-    to?: undefined;
-    checkbox?: undefined;
-    switch?: undefined;
-    radioValue?: undefined;
-    newTab?: undefined;
-    fullPageOnWebView?: undefined;
     right?: Right;
 }
 
 interface SwitchRowContentProps extends CommonProps {
-    href?: undefined;
     onPress?: () => void;
-    to?: undefined;
-    right?: undefined;
-    checkbox?: undefined;
-    radioValue?: undefined;
-    newTab?: undefined;
-    fullPageOnWebView?: undefined;
 
-    switch: ControlProps;
+    switch: ControlProps | undefined;
 }
 
 interface CheckboxRowContentProps extends CommonProps {
-    href?: undefined;
     onPress?: () => void;
-    to?: undefined;
-    right?: undefined;
-    switch?: undefined;
-    radioValue?: undefined;
-    newTab?: undefined;
-    fullPageOnWebView?: undefined;
 
-    checkbox: ControlProps;
+    checkbox: ControlProps | undefined;
 }
 
 interface RadioRowContentProps extends CommonProps {
-    href?: undefined;
-    onPress?: undefined;
-    to?: undefined;
-    right?: undefined;
-    switch?: undefined;
-    checkbox?: undefined;
-    newTab?: undefined;
-    fullPageOnWebView?: undefined;
-
     radioValue: string;
 }
 
 interface HrefRowContentProps extends CommonProps {
-    checkbox?: undefined;
-    switch?: undefined;
-    radioValue?: undefined;
-    fullPageOnWebView?: undefined;
-
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     href: string;
     newTab?: boolean;
-    onPress?: undefined;
-    to?: undefined;
     right?: Right;
 }
 
 interface ToRowContentProps extends CommonProps {
-    checkbox?: undefined;
-    switch?: undefined;
-    radioValue?: undefined;
-    newTab?: undefined;
-
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     to: string;
     fullPageOnWebView?: boolean;
     replace?: boolean;
-    href?: undefined;
-    onPress?: undefined;
     right?: Right;
 }
 
 interface OnPressRowContentProps extends CommonProps {
-    checkbox?: undefined;
-    switch?: undefined;
-    radioValue?: undefined;
-    fullPageOnWebView?: undefined;
-
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     onPress: () => void;
-    href?: undefined;
-    to?: undefined;
     right?: Right;
 }
 
-type RowContentProps =
+type RowContentProps = ExclusifyUnion<
     | BasicRowContentProps
     | SwitchRowContentProps
     | RadioRowContentProps
     | CheckboxRowContentProps
     | HrefRowContentProps
     | ToRowContentProps
-    | OnPressRowContentProps;
+    | OnPressRowContentProps
+>;
 
 const useControlState = ({
     value,
@@ -386,6 +336,18 @@ const useControlState = ({
     }
 
     return [isChecked, toggle];
+};
+
+const areSwitchRowContentProps = (obj: any): obj is SwitchRowContentProps => {
+    return 'switch' in obj;
+};
+
+const areCheckboxRowContentProps = (obj: any): obj is CheckboxRowContentProps => {
+    return 'checkbox' in obj;
+};
+
+const areRadioRowContentProps = (obj: any): obj is RadioRowContentProps => {
+    return 'radioValue' in obj;
 };
 
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
@@ -465,9 +427,9 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     if (
         props.onPress &&
-        props.switch === undefined &&
-        props.radioValue === undefined &&
-        props.checkbox === undefined
+        !areSwitchRowContentProps(props) &&
+        !areCheckboxRowContentProps(props) &&
+        !areRadioRowContentProps(props)
     ) {
         return (
             <Touchable
@@ -518,6 +480,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     const renderRowWithControl = (Control: typeof Switch | typeof Checkbox) => {
         const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
+
         return props.onPress ? (
             <div className={classes.dualActionContainer}>
                 <Touchable
@@ -619,23 +582,36 @@ type RowListProps = {
     children: React.ReactNode;
     ariaLabelledby?: string;
     role?: string;
+    noLastDivider?: boolean;
     dataAttributes?: DataAttributes;
 };
 
-export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role, dataAttributes}) => (
-    <div role={role} aria-labelledby={ariaLabelledby} {...getPrefixedDataAttributes(dataAttributes)}>
-        {React.Children.toArray(children)
-            .filter(Boolean)
-            .map((child, index) => (
-                <React.Fragment key={index}>
-                    {child}
-                    <Box paddingX={16}>
-                        <Divider />
-                    </Box>
-                </React.Fragment>
-            ))}
-    </div>
-);
+export const RowList: React.FC<RowListProps> = ({
+    children,
+    ariaLabelledby,
+    role,
+    dataAttributes,
+    noLastDivider,
+}) => {
+    const lastIndex = React.Children.count(children) - 1;
+    const showLastDivider = !noLastDivider;
+    return (
+        <div role={role} aria-labelledby={ariaLabelledby} {...getPrefixedDataAttributes(dataAttributes)}>
+            {React.Children.toArray(children)
+                .filter(Boolean)
+                .map((child, index) => (
+                    <React.Fragment key={index}>
+                        {child}
+                        {(index < lastIndex || showLastDivider) && (
+                            <Box paddingX={16}>
+                                <Divider />
+                            </Box>
+                        )}
+                    </React.Fragment>
+                ))}
+        </div>
+    );
+};
 
 interface CommonBoxedRowProps {
     isInverse?: boolean;
@@ -648,14 +624,15 @@ interface HrefBoxedRowProps extends HrefRowContentProps, CommonBoxedRowProps {}
 interface ToBoxedRowProps extends ToRowContentProps, CommonBoxedRowProps {}
 interface OnPressBoxedRowProps extends OnPressRowContentProps, CommonBoxedRowProps {}
 
-type BoxedRowProps =
+type BoxedRowProps = ExclusifyUnion<
     | BasicBoxedRowProps
     | SwitchBoxedRowProps
     | RadioBoxedRowProps
     | CheckboxBoxedRowProps
     | HrefBoxedRowProps
     | ToBoxedRowProps
-    | OnPressBoxedRowProps;
+    | OnPressBoxedRowProps
+>;
 
 export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>((props, ref) => (
     <Boxed isInverse={props.isInverse} ref={ref}>

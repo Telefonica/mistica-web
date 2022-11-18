@@ -5,13 +5,15 @@ inputs:
     github-token:
         description: 'GitHub token, required to comment on PRs'
         required: true
-output:
+outputs:
     total-js:
         description: 'Total JS size'
     js-without-icons:
         description: 'JS size without icons'
     lib-overhead:
         description: 'Mistica lib size overhead'
+    lib-overhead-gzip:
+        description: 'Mistica lib size overhead (gzip)'
 runs:
-    using: 'node12'
+    using: 'node16'
     main: 'main.js'

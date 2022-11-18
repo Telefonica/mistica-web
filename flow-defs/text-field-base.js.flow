@@ -47,11 +47,12 @@ export type CommonFormFieldProps = {
   onFocus?: (event: SyntheticFocusEvent<>) => void,
   onBlur?: (event: SyntheticFocusEvent<>) => void,
   fullWidth?: boolean,
-  getSuggestions?: (text: string) => Array<string>,
+  getSuggestions?: (text: string) => $ReadOnlyArray<string>,
   placeholder?: string,
   value?: string,
   defaultValue?: string,
   onChange?: (event: SyntheticEvent<HTMLInputElement>) => void,
+  readOnly?: boolean,
 };
 declare type TextFieldBaseProps = {
   id?: string,
@@ -76,7 +77,7 @@ declare type TextFieldBaseProps = {
   style?: CssStyle,
   value?: string,
   inputRef?: React.Ref<HTMLInputElement | HTMLSelectElement>,
-  getSuggestions?: (value: string) => Array<string>,
+  getSuggestions?: (value: string) => $ReadOnlyArray<string>,
   onClick?: (event: SyntheticMouseEvent<>) => void,
   onChange?: (event: SyntheticEvent<HTMLInputElement>) => void,
   onBlur?: (event: SyntheticFocusEvent<>) => void,
