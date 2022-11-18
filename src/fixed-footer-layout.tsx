@@ -57,11 +57,6 @@ const useStyles = createUseStyles((theme) => ({
             paddingBottom: ({footerHeight, isContentWithScroll, hasContentEnoughVSpace}) =>
                 hasContentEnoughVSpace || !isContentWithScroll ? footerHeight : 0,
         },
-        footer: {
-            left: 0,
-            bottom: 0,
-            zIndex: 1,
-        },
         elevated: {
             boxShadow: '0 -2px 8px 0 rgba(0, 0, 0, 0.10)',
         },
