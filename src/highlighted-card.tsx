@@ -70,7 +70,13 @@ const Content: React.FC<Props> = (props) => {
     const isDismissable = useIsDismissable();
 
     const content = (
-        <div style={assignInlineVars({[styles.vars.width]: props.width ? `${props.width}px` : '100%'})}>
+        <div
+            style={{
+                ...assignInlineVars({[styles.vars.width]: props.width ? `${props.width}px` : '100%'}),
+                display: 'flex',
+                width: '100%',
+            }}
+        >
             <Boxed isInverse={isInverse} className={styles.container} dataAttributes={props.dataAttributes}>
                 <div
                     // don't create another region when the Content is inside a Dismissable wrapper
