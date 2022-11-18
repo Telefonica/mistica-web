@@ -3,7 +3,7 @@ import * as React from 'react';
 import SkeletonBase from './skeleton-base';
 import Stack from './stack';
 import {getPrefixedDataAttributes} from './utils/dom';
-import * as classes from './skeletons.css';
+import * as styles from './skeletons.css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -16,7 +16,7 @@ type SkeletonAnimationProps = {
 const SkeletonAnimation = ({children, ariaLabel, dataAttributes}: SkeletonAnimationProps) => {
     return (
         <div
-            className={classes.animation}
+            className={styles.animation}
             role="status"
             aria-busy
             aria-hidden={ariaLabel === undefined}
@@ -71,9 +71,9 @@ type SkeletonRowProps = SkeletonLineProps;
 export const SkeletonRow = ({width = '100%', ariaLabel, dataAttributes}: SkeletonRowProps): JSX.Element => {
     return (
         <SkeletonAnimation ariaLabel={ariaLabel} {...getPrefixedDataAttributes(dataAttributes)}>
-            <div className={classes.row}>
-                <SkeletonBase height={40} width={40} radius="50%" className={classes.circle} />
-                <SkeletonBase width={width} className={classes.line} />
+            <div className={styles.row}>
+                <SkeletonBase height={40} width={40} radius="50%" className={styles.circle} />
+                <SkeletonBase width={width} className={styles.line} />
             </div>
         </SkeletonAnimation>
     );

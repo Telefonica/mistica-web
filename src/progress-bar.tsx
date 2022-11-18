@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useTheme} from './hooks';
 import {vars} from './skins/skin-contract.css';
-import * as classes from './progress-bar.css';
+import * as styles from './progress-bar.css';
 
 type Props = {
     progressPercent: number;
@@ -22,7 +22,7 @@ const ProgressBar: React.FC<Props> = ({
     const label = ariaLabelledBy ? undefined : ariaLabel || defaultLabel;
     return (
         <div
-            className={classes.barBackground}
+            className={styles.barBackground}
             role="progressbar"
             aria-valuenow={progressPercent}
             aria-valuemin={0}
@@ -31,7 +31,7 @@ const ProgressBar: React.FC<Props> = ({
             aria-labelledby={ariaLabelledBy}
         >
             <div
-                className={classes.bar}
+                className={styles.bar}
                 style={{
                     maxWidth: `${progressPercent}%`,
                     backgroundColor: color ?? vars.colors.controlActivated,
