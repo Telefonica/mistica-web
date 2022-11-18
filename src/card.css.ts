@@ -62,7 +62,6 @@ export const snapCard = style([
     sprinkles({
         display: 'flex',
         height: '100%',
-
         flexDirection: 'column',
         justifyContent: 'space-between',
         padding: 16,
@@ -80,7 +79,7 @@ export const snapCard = style([
     },
 ]);
 
-export const snapCardTouchableBase = sprinkles({display: 'flex', height: '100%'});
+const snapCardTouchableBase = sprinkles({display: 'flex', height: '100%'});
 
 export const snapCardTouchableHover = style([
     snapCardTouchableBase,

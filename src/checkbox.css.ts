@@ -18,6 +18,7 @@ export const boxBase = style([
         alignItems: 'center',
         flexShrink: 0,
         borderRadius: 2,
+        background: vars.colors.background,
     }),
     {
         height: 18,
@@ -25,7 +26,6 @@ export const boxBase = style([
         userSelect: 'none',
         outline: '1px solid transparent',
         verticalAlign: 'middle',
-        background: vars.colors.background,
         transition: 'box-shadow 0.3s',
     },
 ]);

@@ -56,7 +56,14 @@ const CardContent: React.FC<CardContentProps> = ({
         return headline;
     };
     return (
-        <Stack space="between" className={sprinkles({display: 'flex', flex: 1})}>
+        <div
+            className={sprinkles({
+                display: 'flex',
+                flex: 1,
+                justifyContent: 'space-between',
+                flexDirection: 'column',
+            })}
+        >
             <Stack space={16}>
                 <Stack space={8}>
                     {(headline || pretitle || title || subtitle) && (
@@ -105,7 +112,7 @@ const CardContent: React.FC<CardContentProps> = ({
                     <ButtonGroup primaryButton={button} link={buttonLink} />
                 </div>
             )}
-        </Stack>
+        </div>
     );
 };
 

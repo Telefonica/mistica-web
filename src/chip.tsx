@@ -43,7 +43,7 @@ const Chip: React.FC<ChipProps> = (props) => {
     const body = (
         <>
             {Icon && (
-                <Box paddingRight={4} className={classnames(props.active ? styles.iconActive : styles.icon)}>
+                <Box paddingRight={4} className={props.active ? styles.iconActive : styles.icon}>
                     <Icon color="currentColor" size={pxToRem(16)} />
                 </Box>
             )}

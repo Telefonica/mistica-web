@@ -73,7 +73,6 @@ const CreditCardInput: React.FC<Props> = ({inputRef, value, defaultValue, onChan
 };
 
 const getAnimationTarget = (value?: string) => {
-    console.log({value});
     if (isVisa(value)) {
         return <IconVisa />;
     }
