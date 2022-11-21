@@ -9,8 +9,10 @@ export const desktopContainer = sprinkles({
 });
 
 export const desktopContent = style({
-    [mq.desktopOrBigger]: {
-        width: '50%',
+    '@media': {
+        [mq.desktopOrBigger]: {
+            width: '50%',
+        },
     },
 });
 
