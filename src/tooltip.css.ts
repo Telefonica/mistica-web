@@ -63,12 +63,12 @@ export const arrow = style([
         width: arrowSize,
         height: arrowSize,
         borderRadius: 2,
+        backgroundColor: skinVars.colors.backgroundContainer,
+        border: 'regular',
     }),
     {
-        backgroundColor: skinVars.colors.backgroundContainer,
         left: '50%',
         transform: 'translate(-50%, -50%) rotate(45deg)',
-        border: `1px solid ${skinVars.colors.border}`,
         boxShadow: arrowBoxShadow,
     },
 ]);
@@ -99,17 +99,13 @@ export const arrowLeft = style({
     transformOrigin: 'bottom',
 });
 
-export const arrowWrapper = style([
-    sprinkles({
-        position: 'absolute',
-        width: arrowWrapperWidth,
-        height: arrowWrapperHeight,
-        overflow: 'hidden',
-    }),
-    {
-        color: skinVars.colors.backgroundContainer,
-    },
-]);
+export const arrowWrapper = sprinkles({
+    position: 'absolute',
+    width: arrowWrapperWidth,
+    height: arrowWrapperHeight,
+    overflow: 'hidden',
+    color: skinVars.colors.backgroundContainer,
+});
 
 export const wrapper = sprinkles({
     display: 'inline-block',
@@ -122,12 +118,12 @@ export const container = style([
         width: 'auto',
         padding: 8,
         borderRadius: 8,
+        border: 'regular',
     }),
     {
         zIndex: 50,
         boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
         backgroundColor: skinVars.colors.backgroundContainer,
-        border: `1px solid ${skinVars.colors.border}`,
     },
 ]);
 
