@@ -14,20 +14,17 @@ export const container = style([
         flexShrink: 0,
     }),
     {
-        width,
         alignSelf: 'stretch',
     },
 ]);
 
-export const touchableContainer = style([
-    sprinkles({
-        display: 'flex',
-        flexShrink: 0,
-    }),
-    {
-        width,
-    },
-]);
+export const touchableContainer = sprinkles({
+    display: 'flex',
+    flexShrink: 0,
+    border: 'none',
+    padding: 0,
+    width: '100%',
+});
 
 export const imageContent = style([
     sprinkles({

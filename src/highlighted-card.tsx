@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {useIsInverseVariant} from './theme-variant-context';
 import Box from './box';
-import Touchable from './touchable';
+import {BaseTouchable} from './touchable';
 import {Text4, Text2} from './text';
 import {ButtonLink} from './button';
 import {Boxed} from './boxed';
@@ -70,53 +69,50 @@ const Content: React.FC<Props> = (props) => {
     const isDismissable = useIsDismissable();
 
     const content = (
-        <div
-            style={{
-                ...assignInlineVars({[styles.vars.width]: props.width ? `${props.width}px` : '100%'}),
-                display: 'flex',
-                width: '100%',
-            }}
+        <Boxed
+            isInverse={isInverse}
+            className={styles.container}
+            dataAttributes={props.dataAttributes}
+            width={props.width ? `${props.width}px` : '100%'}
         >
-            <Boxed isInverse={isInverse} className={styles.container} dataAttributes={props.dataAttributes}>
-                <div
-                    // don't create another region when the Content is inside a Dismissable wrapper
-                    role={!isDismissable ? 'region' : undefined}
-                    className={styles.textContainerVariant[imageUrl ? 'withImage' : 'withoutImage']}
-                    // aria-label is already in Dismisable wrapper
-                    aria-label={!isDismissable ? props['aria-label'] : undefined}
-                >
-                    <Text4 as="h1" regular truncate={props.titleLinesMax}>
-                        {title}
-                    </Text4>
-                    <Box paddingTop={8}>
-                        <Text2
-                            regular
-                            color={vars.colors.textSecondary}
-                            truncate={props.descriptionLinesMax}
-                            as="p"
-                        >
-                            {description}
-                        </Text2>
-                    </Box>
-                    {props.button && (
-                        <>
-                            <div style={{minHeight: 16, flexGrow: 1}} />
-                            {props.button}
-                        </>
-                    )}
-                </div>
-                {imageUrl && (
-                    <div
-                        className={styles.imageContent}
-                        style={{
-                            background: `url(${imageUrl}) no-repeat`,
-                            backgroundSize: imageFit === 'fit' ? 'contain' : 'cover',
-                            backgroundPosition: imageFit === 'fit' ? 'bottom right' : 'center right',
-                        }}
-                    />
+            <div
+                // don't create another region when the Content is inside a Dismissable wrapper
+                role={!isDismissable ? 'region' : undefined}
+                className={styles.textContainerVariant[imageUrl ? 'withImage' : 'withoutImage']}
+                // aria-label is already in Dismisable wrapper
+                aria-label={!isDismissable ? props['aria-label'] : undefined}
+            >
+                <Text4 as="h1" regular truncate={props.titleLinesMax}>
+                    {title}
+                </Text4>
+                <Box paddingTop={8}>
+                    <Text2
+                        regular
+                        color={vars.colors.textSecondary}
+                        truncate={props.descriptionLinesMax}
+                        as="p"
+                    >
+                        {description}
+                    </Text2>
+                </Box>
+                {props.button && (
+                    <>
+                        <div style={{minHeight: 16, flexGrow: 1}} />
+                        {props.button}
+                    </>
                 )}
-            </Boxed>
-        </div>
+            </div>
+            {imageUrl && (
+                <div
+                    className={styles.imageContent}
+                    style={{
+                        background: `url(${imageUrl}) no-repeat`,
+                        backgroundSize: imageFit === 'fit' ? 'contain' : 'cover',
+                        backgroundPosition: imageFit === 'fit' ? 'bottom right' : 'center right',
+                    }}
+                />
+            )}
+        </Boxed>
     );
 
     if (props.button) {
@@ -124,37 +120,37 @@ const Content: React.FC<Props> = (props) => {
     }
     if (props.onPress) {
         return (
-            <Touchable
+            <BaseTouchable
                 onPress={props.onPress}
                 trackingEvent={props.trackingEvent}
                 className={styles.touchableContainer}
             >
                 {content}
-            </Touchable>
+            </BaseTouchable>
         );
     }
     if (props.to) {
         return (
-            <Touchable
+            <BaseTouchable
                 to={props.to}
                 trackingEvent={props.trackingEvent}
                 fullPageOnWebView={props.fullPageOnWebView}
                 className={styles.touchableContainer}
             >
                 {content}
-            </Touchable>
+            </BaseTouchable>
         );
     }
     if (props.href) {
         return (
-            <Touchable
+            <BaseTouchable
                 trackingEvent={props.trackingEvent}
                 href={props.href}
                 newTab={props.newTab}
                 className={styles.touchableContainer}
             >
                 {content}
-            </Touchable>
+            </BaseTouchable>
         );
     }
 
