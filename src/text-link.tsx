@@ -1,46 +1,15 @@
 // Specs: https://www.figma.com/file/koROdh3HpEPG2O8jG52Emh/Buttons-Component-Specs?node-id=0%3A1
 import * as React from 'react';
-import {createUseStyles} from './jss';
-import Touchable from './touchable';
+import * as styles from './text-link.css';
+import {BaseTouchable} from './touchable';
 import classnames from 'classnames';
+import {useTheme} from './hooks';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {getTextFromChildren} from './utils/common';
 import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
 
 import type {TrackingEvent, DataAttributes} from './utils/types';
-
-const useStyles = createUseStyles(({colors, isDarkMode, mq}) => ({
-    textLink: {
-        width: 'auto',
-        lineHeight: 'inherit',
-        display: 'inline',
-        color: colors.textLink,
-        wordBreak: 'break-word',
-        cursor: 'pointer',
-        [mq.supportsHover]: {
-            '&:hover:not([disabled])': {
-                textDecoration: 'underline',
-            },
-        },
-        '&[disabled]': {
-            opacity: 0.5,
-            textDecoration: 'none',
-        },
-    },
-    inverse: {
-        color: colors.textLinkInverse,
-        textDecoration: isDarkMode ? 'none' : 'underline',
-        [mq.supportsHover]: {
-            '&:hover:not([disabled])': {
-                textDecorationThickness: isDarkMode ? 1 : 2,
-            },
-        },
-    },
-    small: {
-        fontSize: 14,
-    },
-}));
 
 interface CommonProps {
     children?: React.ReactNode;
@@ -78,8 +47,8 @@ export interface OnPressProps extends CommonProps {
 export type TextLinkProps = HrefProps | ToProps | OnPressProps;
 
 const TextLink: React.FC<TextLinkProps> = ({children, className = '', small, disabled, ...props}) => {
-    const classes = useStyles();
     const isInverse = useIsInverseVariant();
+    const {isDarkMode} = useTheme();
     const {formStatus} = useForm();
     const {eventFormat} = useTrackingConfig();
 
@@ -100,20 +69,27 @@ const TextLink: React.FC<TextLinkProps> = ({children, className = '', small, dis
     };
 
     return (
-        <Touchable
+        <BaseTouchable
             {...props}
             as={props.onPress ? 'a' : undefined}
             trackingEvent={
                 props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined)
             }
             disabled={disabled || formStatus === 'sending'}
-            className={classnames(classes.textLink, className, {
-                [classes.small]: small,
-                [classes.inverse]: isInverse,
-            })}
+            className={classnames(
+                isInverse
+                    ? isDarkMode
+                        ? styles.variants.inverseDark
+                        : styles.variants.inverseLight
+                    : styles.variants.default,
+                className,
+                {
+                    [styles.small]: small,
+                }
+            )}
         >
             {children}
-        </Touchable>
+        </BaseTouchable>
     );
 };
 
