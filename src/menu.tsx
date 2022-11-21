@@ -1,34 +1,12 @@
 import * as React from 'react';
+import classnames from 'classnames';
+import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {ESC, TAB} from './utils/key-codes';
-import {createUseStyles} from './jss';
 import {cancelEvent} from './utils/dom';
 import Overlay from './overlay';
+import * as styles from './menu.css';
 
 const MAX_HEIGHT_DEFAULT = 416;
-
-const useStyles = createUseStyles(({colors}) => ({
-    menuContainer: {
-        zIndex: 12,
-        margin: 0,
-        padding: 0,
-        listStyleType: 'none',
-        position: 'absolute',
-        top: ({itemsComputedProps}) => itemsComputedProps.top,
-        bottom: ({itemsComputedProps}) => itemsComputedProps.bottom,
-        right: ({itemsComputedProps}) => itemsComputedProps.right,
-        width: ({width}) => width ?? '100%',
-        borderRadius: 8,
-        boxShadow:
-            '0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)',
-        backgroundColor: colors.backgroundContainer,
-        transformOrigin: ({itemsComputedProps}) => itemsComputedProps.transformOrigin,
-        transition: 'opacity .03s linear,transform .12s cubic-bezier(0,0,.2,1) .15s',
-        opacity: ({animateShowItems}) => (animateShowItems ? 1 : 0),
-        transform: ({animateShowItems}) => (animateShowItems ? 'scale(1)' : 'scale(0)'),
-        maxHeight: ({itemsComputedProps}) => itemsComputedProps.maxHeight,
-        overflowY: 'auto',
-    },
-}));
 
 type MenuRenderProps = {
     ref: (element: HTMLElement | null) => void;
@@ -56,7 +34,13 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
     const [menu, setMenu] = React.useState<HTMLElement | null>(null);
 
     const [animateShowItems, setAnimateShowItems] = React.useState(false);
-    const [itemsComputedProps, setItemsComputedProps] = React.useState({});
+    const [itemsComputedProps, setItemsComputedProps] = React.useState<{
+        right?: string;
+        bottom?: string;
+        top?: string;
+        maxHeight?: number;
+        transformOrigin?: string;
+    }>({});
 
     React.useEffect(() => {
         const targetRect = target?.getBoundingClientRect();
@@ -118,12 +102,6 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
         };
     }, [position, isMenuOpen, menu, target, width]);
 
-    const classes = useStyles({
-        itemsComputedProps,
-        animateShowItems,
-        width,
-    });
-
     const targetProps = React.useMemo(
         () => ({
             ref: setTarget,
@@ -137,12 +115,15 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
     const menuProps = React.useMemo(
         () => ({
             ref: setMenu,
-            className: classes.menuContainer,
+            className: classnames(
+                styles.menuContainer,
+                animateShowItems ? styles.showItems : styles.hideItems
+            ),
             close: () => {
                 setIsMenuOpen(false);
             },
         }),
-        [classes.menuContainer, setMenu]
+        [animateShowItems]
     );
 
     React.useEffect(() => {
@@ -163,7 +144,21 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
     });
 
     return (
-        <div style={{position: 'relative'}}>
+        <div
+            style={{
+                ...assignInlineVars({
+                    [styles.vars.width]: width ? `${width}px` : '100%',
+                    [styles.vars.top]: itemsComputedProps.top ?? '',
+                    [styles.vars.bottom]: itemsComputedProps.bottom ?? '',
+                    [styles.vars.right]: itemsComputedProps.right ?? '',
+                    [styles.vars.transformOrigin]: itemsComputedProps.transformOrigin ?? '',
+                    [styles.vars.maxHeight]: itemsComputedProps.maxHeight
+                        ? `${itemsComputedProps.maxHeight}px`
+                        : '',
+                }),
+                position: 'relative',
+            }}
+        >
             {isMenuOpen ? (
                 <Overlay
                     onPress={(e) => {
