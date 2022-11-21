@@ -107,15 +107,17 @@ const dialogContainer = style([
 export const variants = styleVariants({
     dialog: [
         dialogContainer,
-        {
-            padding: '40px 24px 24px',
-        },
+        sprinkles({
+            paddingTop: 40,
+            paddingBottom: 24,
+            paddingX: 24,
+        }),
     ],
     default: [
         dialogContainer,
-        {
+        sprinkles({
             padding: 24,
-        },
+        }),
     ],
 });
 
