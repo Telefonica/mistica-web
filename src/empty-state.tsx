@@ -48,14 +48,6 @@ interface IconProps extends BaseProps {
     largeImageUrl?: undefined;
 }
 
-const getBorderStyle = (isInverse: boolean) => {
-    if (isInverse) {
-        return styles.inverseBorder;
-    }
-
-    return sprinkles({border: 'regular'});
-};
-
 type Props = IconProps | ImageProps | LargeImageProps;
 
 const EmptyState: React.FC<Props> = ({
@@ -81,7 +73,10 @@ const EmptyState: React.FC<Props> = ({
 
     return (
         <div
-            className={classnames(styles.container, getBorderStyle(isInverse))}
+            className={classnames(
+                styles.container,
+                isInverse ? styles.inverseBorder : sprinkles({border: 'regular'})
+            )}
             style={assignInlineVars({
                 [styles.vars.backgroundColor]:
                     isInverse && !isDarkMode ? vars.colors.backgroundBrand : vars.colors.backgroundContainer,

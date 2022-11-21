@@ -59,8 +59,10 @@ export const largeImageContainer = style({
 });
 
 export const largeImage = style([
-    {
+    sprinkles({
         height: '100%',
+    }),
+    {
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
