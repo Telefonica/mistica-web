@@ -4,15 +4,11 @@ import {style, keyframes} from '@vanilla-extract/css';
 
 const transition = '1s cubic-bezier(0.75, 0, 0.27, 1)';
 
-export const barBackground = style([
-    sprinkles({
-        borderRadius: 2,
-        height: 4,
-    }),
-    {
-        backgroundColor: vars.colors.control,
-    },
-]);
+export const barBackground = sprinkles({
+    borderRadius: 2,
+    height: 4,
+    backgroundColor: vars.colors.control,
+});
 
 const barKeyFrames = keyframes({
     '0%': {
