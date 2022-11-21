@@ -18,7 +18,7 @@ interface CommonProps {
     description: string;
     descriptionLinesMax?: number;
     imageUrl?: string;
-    imageFit?: 'fit' | 'fill';
+    imageFit?: 'fit' | 'fill' | 'fill-center';
     onClose?: () => void;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     isInverse?: boolean;
@@ -108,7 +108,10 @@ const Content: React.FC<Props> = (props) => {
                     style={{
                         background: `url(${imageUrl}) no-repeat`,
                         backgroundSize: imageFit === 'fit' ? 'contain' : 'cover',
-                        backgroundPosition: imageFit === 'fit' ? 'bottom right' : 'center right',
+                        backgroundPosition:
+                            imageFit === 'fit'
+                                ? 'bottom right'
+                                : `center ${imageFit === 'fill-center' ? 'center' : 'right'}`,
                     }}
                 />
             )}
