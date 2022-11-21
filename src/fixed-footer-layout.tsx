@@ -135,9 +135,7 @@ const FixedFooterLayout: React.FC<Props> = ({
         };
     }, [hasContentEnoughVSpace, platformOverrides]);
 
-    const hasContentScroll = React.useMemo(() => {
-        return () => hasScroll(getScrollableParentElement(containerRef.current));
-    }, [containerRef]);
+    const hasContentScroll = () => hasScroll(getScrollableParentElement(containerRef.current));
 
     const classes = useStyles({
         footerBgColor,
