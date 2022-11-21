@@ -1,0 +1,7 @@
+// @flow
+
+declare export var checkboxContainer: string;
+declare export var boxVariant: { ios: string, rest: string, checked: string };
+declare export var check: string;
+declare export var checkChecked: string;
+declare export var disabled: string;
