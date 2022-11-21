@@ -1,22 +1,21 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
-import {createUseStyles} from './jss';
 import {Portal} from './portal';
 import FocusTrap from './focus-trap';
 import IcnCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import {isWebViewBridgeAvailable, nativeConfirm, nativeAlert} from '@tef-novum/webview-bridge';
 import ThemeContext from './theme-context';
-import {useTheme, useScreenSize} from './hooks';
+import {useTheme} from './hooks';
 import ButtonLayout from './button-layout';
 import {Text5, Text4, Text3} from './text';
 import {ESC} from './utils/key-codes';
 import Box from './box';
 import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {useSetModalState} from './modal-context-provider';
-import {pxToRem} from './utils/css';
 import Stack from './stack';
+import * as styles from './dialog.css';
 
 import type {Theme} from './theme';
 import type {RendersNullableElement} from './utils/types';
@@ -25,101 +24,6 @@ const animationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) &&
     process.env.NODE_ENV !== 'test' &&
     !isRunningAcceptanceTest(platformOverrides);
-
-/** Must be higher than the fixed footer's z-index */
-const Z_INDEX = 26;
-
-const useStylesModalDialog = createUseStyles((theme) => ({
-    wrapper: {
-        position: 'relative',
-        zIndex: Z_INDEX,
-    },
-    modalOpacityLayer: {
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'fixed',
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0,
-        zIndex: Z_INDEX,
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: 0,
-        minWidth: 0,
-        background: theme.colors.backgroundOverlay,
-        animation: '$fadeIn .2s ease-in-out',
-        transition: 'opacity .2s ease-in-out',
-
-        '&.closed': {
-            opacity: 0,
-        },
-    },
-
-    '@keyframes fadeIn': {
-        '0%': {opacity: 0},
-        '100%': {opacity: 1},
-    },
-
-    modalCloseButtonContainer: {
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        padding: 24,
-    },
-    modalContent: {
-        background: theme.colors.background,
-        borderRadius: 8,
-        animation: '$fadeScale .2s ease-in-out',
-        willChange: 'transform, opacity',
-        transition: 'opacity .2s ease-in-out, transform .2s ease-in-out',
-
-        '&.closed': {
-            opacity: 0,
-            transform: 'scale(.8)',
-        },
-    },
-    [theme.mq.tabletOrSmaller]: {
-        modalCloseButtonContainer: {
-            padding: 16,
-        },
-    },
-    '@keyframes fadeScale': {
-        '0%': {
-            opacity: 0,
-            transform: 'scale(.8)',
-        },
-        '100%': {
-            opacity: 1,
-            transform: 'scale(1)',
-        },
-    },
-}));
-
-const useDialogStyles = createUseStyles((theme) => ({
-    dialogContainer: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        width: 680,
-        padding: 40,
-        maxHeight: 'calc(100vh - 64px)',
-    },
-
-    dialogContent: {
-        flex: 1,
-        minHeight: 0,
-        overflowY: 'auto',
-    },
-
-    [theme.mq.tabletOrSmaller]: {
-        dialogContainer: {
-            width: 'calc(100vw - 48px)',
-            margin: 'auto',
-            padding: ({isDialog}) => (isDialog ? '40px 24px 24px' : 24),
-        },
-    },
-}));
 
 interface BaseDialogProps {
     className?: string;
@@ -178,8 +82,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
         showCancel = false,
         destructive = false,
     } = props;
-    const {isTabletOrSmaller} = useScreenSize();
-    const classes = useDialogStyles({isDialog: !!props.forceWeb});
+    const isDialog = !!props.forceWeb;
 
     const mainButtonProps = {
         onPress: handleAccept ? handleAccept : () => {},
@@ -188,12 +91,14 @@ const Dialog: React.FC<DialogProps> = (props) => {
     };
 
     return (
-        <div className={classnames(classes.dialogContainer, className)}>
+        <div className={classnames(styles.variants[isDialog ? 'dialog' : 'default'], className)}>
             {icon && (
                 <Box paddingBottom={24}>
-                    {React.cloneElement(icon, {
-                        size: pxToRem(isTabletOrSmaller ? 40 : 64),
-                    })}
+                    <div className={styles.iconContainer}>
+                        {React.cloneElement(icon, {
+                            size: '100%',
+                        })}
+                    </div>
                 </Box>
             )}
             {title && (
@@ -214,7 +119,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
                     </Text4>
                 </Box>
             )}
-            <div className={classes.dialogContent}>
+            <div className={styles.dialogContent}>
                 <Stack space={16}>
                     <Text3 color={colors.textSecondary} regular>
                         {message}
@@ -223,7 +128,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
                 </Stack>
             </div>
 
-            <Box paddingTop={isTabletOrSmaller ? 24 : 32}>
+            <div className={styles.dialogActions}>
                 <ButtonLayout link={props.forceWeb ? props.link : undefined}>
                     {destructive ? (
                         <ButtonDanger tabIndex={1} {...mainButtonProps} /> // eslint-disable-line jsx-a11y/tabindex-no-positive
@@ -240,7 +145,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
                         </ButtonSecondary>
                     )}
                 </ButtonLayout>
-            </Box>
+            </div>
         </div>
     );
 };
@@ -335,7 +240,6 @@ const NativeModalDialog = (props: NativeModalDialogProps) => {
 const ModalDialog = (props: ModalDialogProps) => {
     const {platformOverrides} = useTheme();
     const context = React.useContext(ThemeContext);
-    const classes = useStylesModalDialog();
 
     // Closing the dialog before the animation has ended leaves the component in a broken state
     // To avoid race conditions, we don't allow closing the dialog until the animation has ended
@@ -424,11 +328,13 @@ const ModalDialog = (props: ModalDialogProps) => {
         />
     ) : (
         <Portal>
-            <div className={classes.wrapper}>
+            <div className={styles.wrapper}>
                 <FocusTrap>
                     <div
                         onClick={handleOverlayPress}
-                        className={classnames(classes.modalOpacityLayer, {closed: isClosing})}
+                        className={classnames(styles.modalOpacityLayer, {
+                            [styles.closedOpactityLayer]: isClosing,
+                        })}
                         role="dialog"
                     >
                         <div onClick={(e) => e.stopPropagation()}>
@@ -440,10 +346,12 @@ const ModalDialog = (props: ModalDialogProps) => {
                                     canCloseRef.current = true;
                                     addKeyDownListener();
                                 }}
-                                className={classnames(classes.modalContent, {closed: isClosing})}
+                                className={classnames(styles.modalContent, {
+                                    [styles.closedModalContent]: isClosing,
+                                })}
                             >
                                 {props.showClose && (
-                                    <div className={classes.modalCloseButtonContainer}>
+                                    <div className={styles.modalCloseButtonContainer}>
                                         <IconButton
                                             onPress={handleClose}
                                             aria-label={
