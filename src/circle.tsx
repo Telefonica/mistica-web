@@ -1,20 +1,5 @@
 import * as React from 'react';
-import {createUseStyles} from './jss';
-
-const useStyles = createUseStyles(() => ({
-    circle: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: ({backgroundColor}) => backgroundColor,
-        backgroundImage: ({backgroundImage}) => (backgroundImage ? `url(${backgroundImage})` : 'none'),
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        width: ({size}) => size,
-        height: ({size}) => size,
-        borderRadius: '50%',
-    },
-}));
+import * as styles from './circle.css';
 
 type Props = {
     backgroundColor?: string;
@@ -24,8 +9,19 @@ type Props = {
 };
 
 const Circle: React.FC<Props> = ({children, backgroundColor, backgroundImage, size}) => {
-    const classes = useStyles({backgroundColor, backgroundImage, size});
-    return <div className={classes.circle}>{children}</div>;
+    return (
+        <div
+            className={styles.circle}
+            style={{
+                width: size,
+                height: size,
+                backgroundColor,
+                backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none',
+            }}
+        >
+            {children}
+        </div>
+    );
 };
 
 export default Circle;

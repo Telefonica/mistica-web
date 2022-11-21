@@ -1,7 +1,5 @@
 import * as React from 'react';
 import Box from './box';
-import {createUseStyles} from './jss';
-import {DEFAULT_WIDTH} from './text-field-components';
 import CreditCardExpirationField from './credit-card-expiration-field';
 import CvvField from './cvv-field';
 import DateField from './date-field';
@@ -12,6 +10,7 @@ import PasswordField from './password-field';
 import PhoneNumberField from './phone-number-field';
 import Select from './select';
 import TextField from './text-field';
+import * as styles from './double-field.css';
 
 import type {RendersElement} from './utils/types';
 
@@ -33,22 +32,7 @@ type Props = {
     layout?: '50/50' | '40/60' | '60/40';
 };
 
-const useStyles = createUseStyles((theme) => ({
-    container: {
-        display: 'flex',
-        flexDirection: 'row',
-        [theme.mq.tabletOrSmaller]: {
-            width: '100%',
-        },
-        [theme.mq.desktopOrBigger]: {
-            width: ({fullWidth}) => (fullWidth ? '100%' : DEFAULT_WIDTH),
-        },
-    },
-}));
-
 const DoubleField: React.FC<Props> = ({children, fullWidth, layout}) => {
-    const classes = useStyles({fullWidth});
-
     let rightWidth: string;
     let leftWidth: string;
     if (layout === '40/60') {
@@ -81,7 +65,7 @@ const DoubleField: React.FC<Props> = ({children, fullWidth, layout}) => {
         );
     };
 
-    return <div className={classes.container}>{renderChildren()}</div>;
+    return <div className={styles.variants[fullWidth ? 'fullWidth' : 'default']}>{renderChildren()}</div>;
 };
 
 export default DoubleField;

@@ -1,0 +1,6 @@
+// @flow
+
+declare export var chipVariants: { default: string, active: string };
+declare export var chipInteractiveVariants: { dark: string, light: string };
+declare export var icon: string;
+declare export var iconActive: string;
