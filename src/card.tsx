@@ -179,7 +179,13 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
     ) => {
         return (
             <MaybeDismissable onClose={onClose} aria-label={ariaLabel}>
-                <Boxed className={styles.boxed} dataAttributes={dataAttributes} ref={ref}>
+                <Boxed
+                    className={styles.boxed}
+                    dataAttributes={dataAttributes}
+                    ref={ref}
+                    width="100%"
+                    height="100%"
+                >
                     <MaybeSection className={styles.mediaCard} aria-label={ariaLabel}>
                         <DisableBorderRadiusProvider>{media}</DisableBorderRadiusProvider>
                         <div className={styles.mediaCardContent}>
@@ -253,7 +259,13 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
     ) => {
         return (
             <MaybeDismissable aria-label={ariaLabel} onClose={onClose}>
-                <Boxed className={styles.boxed} dataAttributes={dataAttributes} ref={ref}>
+                <Boxed
+                    className={styles.boxed}
+                    dataAttributes={dataAttributes}
+                    ref={ref}
+                    width="100%"
+                    height="100%"
+                >
                     <MaybeSection className={styles.dataCard} aria-label={ariaLabel}>
                         {icon && <Box paddingBottom={16}>{icon}</Box>}
                         <CardContent
@@ -334,7 +346,14 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
         const isTouchable = Boolean(touchableProps.to || touchableProps.href || touchableProps.onPress);
 
         return (
-            <Boxed className={styles.boxed} dataAttributes={dataAttributes} ref={ref} isInverse={isInverse}>
+            <Boxed
+                className={styles.boxed}
+                dataAttributes={dataAttributes}
+                ref={ref}
+                isInverse={isInverse}
+                width="100%"
+                height="100%"
+            >
                 <Touchable
                     maybe
                     {...touchableProps}

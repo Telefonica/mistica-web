@@ -8,7 +8,7 @@ export const actions = style([
     {marginTop: 16},
 ]);
 
-export const boxed = sprinkles({display: 'flex', width: '100%', height: '100%'});
+export const boxed = sprinkles({display: 'flex'});
 
 export const mediaCard = sprinkles({
     display: 'flex',
