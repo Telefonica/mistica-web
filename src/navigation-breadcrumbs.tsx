@@ -52,7 +52,7 @@ const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({
                         </span>
                     </li>
                 ))}
-                <li>
+                <li className={styles.listItem}>
                     {/* this anchor is added for accessibility, it is disabled */}
                     <a
                         aria-current="page"
