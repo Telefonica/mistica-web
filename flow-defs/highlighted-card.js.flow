@@ -14,7 +14,7 @@ declare type CommonProps = {
   description: string,
   descriptionLinesMax?: number,
   imageUrl?: string,
-  imageFit?: "fit" | "fill",
+  imageFit?: "fit" | "fill" | "fill-center",
   onClose?: () => void,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   isInverse?: boolean,
