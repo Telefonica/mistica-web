@@ -78,6 +78,12 @@ export const Default: StoryComponent<textLinkArgs> = ({text, inverse}) => {
                         </TextLink>
                     </Section>
 
+                    <Section title="TextLink small">
+                        <TextLink small href="https://example.org">
+                            {text}
+                        </TextLink>
+                    </Section>
+
                     <Section title="TextLink inherits text style">
                         <Text1 regular>
                             Text1 regular <TextLink href="https://example.org">{text}</TextLink> with href
