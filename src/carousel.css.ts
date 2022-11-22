@@ -97,6 +97,23 @@ export const carouselContainer = sprinkles({
     position: 'relative',
 });
 
+const itemsPerPageMobile = createVar();
+const itemsPerPageDesktop = createVar();
+const mobilePageOffsetPrev = createVar();
+const mobilePageOffsetNext = createVar();
+const gap = createVar();
+
+export const vars = {
+    itemsPerPageMobile,
+    itemsPerPageDesktop,
+    mobilePageOffsetPrev,
+    mobilePageOffsetNext,
+    gap,
+};
+
+export const DEFAULT_DESKTOP_GAP = 16;
+const DEFAULT_MOBILE_GAP = 8;
+
 export const carousel = style([
     hideScrollbar,
     sprinkles({
@@ -105,6 +122,18 @@ export const carousel = style([
     }),
     {
         overflowX: 'auto',
+
+        vars: {
+            [gap]: String(DEFAULT_MOBILE_GAP),
+        },
+
+        '@media': {
+            [mq.desktopOrBigger]: {
+                vars: {
+                    [gap]: String(DEFAULT_DESKTOP_GAP),
+                },
+            },
+        },
     },
 ]);
 
@@ -130,20 +159,6 @@ export const centeredCarousel = style({
         },
     },
 });
-
-const itemsPerPageMobile = createVar();
-const itemsPerPageDesktop = createVar();
-const mobilePageOffsetPrev = createVar();
-const mobilePageOffsetNext = createVar();
-const gap = createVar();
-
-export const vars = {
-    itemsPerPageMobile,
-    itemsPerPageDesktop,
-    mobilePageOffsetPrev,
-    mobilePageOffsetNext,
-    gap,
-};
 
 export const carouselItem = style({
     scrollSnapAlign: 'start',

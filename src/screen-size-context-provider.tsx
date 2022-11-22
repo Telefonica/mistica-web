@@ -93,10 +93,10 @@ const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
             isTablet,
             isTabletOrBigger,
             isTabletOrSmaller,
-            isDesktopOrBigger: !isTabletOrSmaller,
+            isDesktopOrBigger: isServerSide ? false : !isTabletOrSmaller,
             isLargeDesktop,
         }),
-        [isMobile, isTablet, isTabletOrBigger, isTabletOrSmaller, isLargeDesktop]
+        [isMobile, isTablet, isTabletOrBigger, isTabletOrSmaller, isLargeDesktop, isServerSide]
     );
 
     return <ScreenSizeContext.Provider value={value}>{children}</ScreenSizeContext.Provider>;

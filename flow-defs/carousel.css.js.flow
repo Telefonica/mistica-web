@@ -6,9 +6,6 @@ declare export var bulletActive: string;
 declare export var bulletActiveInverse: string;
 declare export var slideshowContainer: string;
 declare export var carouselContainer: string;
-declare export var carousel: string;
-declare export var carouselWithScroll: string;
-declare export var centeredCarousel: string;
 declare export var vars: {
   itemsPerPageMobile: $PropertyType<
     $Exports<"@vanilla-extract/private">,
@@ -28,6 +25,10 @@ declare export var vars: {
   >,
   gap: $PropertyType<$Exports<"@vanilla-extract/private">, "CSSVarFunction">,
 };
+declare export var DEFAULT_DESKTOP_GAP: 16;
+declare export var carousel: string;
+declare export var carouselWithScroll: string;
+declare export var centeredCarousel: string;
 declare export var carouselItem: string;
 declare export var carouselArrowButton: string;
 declare export var carouselPrevArrowButton: string;

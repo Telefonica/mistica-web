@@ -214,7 +214,8 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId, as}
                                                     React.createElement(as, {style: themeVars}, children)
                                                 ) : (
                                                     <>
-                                                        {process.env.NODE_ENV !== 'test' && (
+                                                        {(process.env.NODE_ENV !== 'test' ||
+                                                            process.env.SSR_TEST) && (
                                                             <style>{`:root {${themeVars}}`}</style>
                                                         )}
                                                         {children}

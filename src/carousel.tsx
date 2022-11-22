@@ -154,7 +154,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     itemsPerPage,
     itemsToScroll,
     mobilePageOffset = 16,
-    gap: gapProp,
+    gap,
     free,
     centered,
     autoplay,
@@ -165,7 +165,6 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const itemsPerPageConfig = normalizeItemsPerPage(itemsPerPage);
     const mobilePageOffsetConfig = normalizeMobilePageOffset(mobilePageOffset);
     const {isDesktopOrBigger} = useScreenSize();
-    const gap: number = gapProp ?? (isDesktopOrBigger ? 16 : 8);
     const carouselRef = React.useRef<HTMLDivElement>(null);
     const itemsPerPageFloor = isDesktopOrBigger
         ? Math.floor(itemsPerPageConfig.desktop)
@@ -209,7 +208,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                         return 0;
                     }
                     if (isDesktopOrBigger) {
-                        return -gap;
+                        return -(gap ?? styles.DEFAULT_DESKTOP_GAP);
                     }
                     return mobilePageOffsetConfig.prev;
                 };
@@ -360,9 +359,9 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                         ...assignInlineVars({
                             [styles.vars.itemsPerPageDesktop]: String(itemsPerPageConfig.desktop),
                             [styles.vars.itemsPerPageMobile]: String(itemsPerPageConfig.mobile),
-                            [styles.vars.gap]: String(gap),
                             [styles.vars.mobilePageOffsetNext]: String(mobilePageOffsetConfig.next),
                             [styles.vars.mobilePageOffsetPrev]: String(mobilePageOffsetConfig.prev),
+                            ...(gap !== undefined ? {[styles.vars.gap]: String(gap)} : {}),
                         }),
                         scrollSnapType: free ? 'initial' : 'x mandatory',
                     }}
