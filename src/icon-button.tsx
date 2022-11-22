@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Touchable from './touchable';
+import {BaseTouchable} from './touchable';
 
 import type {DataAttributes, TrackingEvent} from './utils/types';
 
@@ -14,6 +14,7 @@ const getButtonStyle = (
 ): React.CSSProperties => {
     const normalizedIconSize = iconSize ? `${iconSize}px ${iconSize}px` : '100% 100%';
     return {
+        padding: 0,
         display: 'inline-block',
         verticalAlign: 'middle',
         textAlign: 'center',
@@ -104,19 +105,19 @@ const IconButton: React.FC<Props> = (props) => {
 
     if (props.href) {
         return (
-            <Touchable
+            <BaseTouchable
                 {...commonProps}
                 href={props.href}
                 newTab={props.newTab}
                 aria-label={props['aria-label']}
             >
                 {!icon && React.Children.only(children)}
-            </Touchable>
+            </BaseTouchable>
         );
     }
     if (props.to) {
         return (
-            <Touchable
+            <BaseTouchable
                 {...commonProps}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
@@ -124,22 +125,22 @@ const IconButton: React.FC<Props> = (props) => {
                 aria-label={props['aria-label']}
             >
                 {!icon && React.Children.only(children)}
-            </Touchable>
+            </BaseTouchable>
         );
     }
 
     if (props.onPress) {
         return (
-            <Touchable {...commonProps} onPress={props.onPress} aria-label={props['aria-label']}>
+            <BaseTouchable {...commonProps} onPress={props.onPress} aria-label={props['aria-label']}>
                 {!icon && React.Children.only(children)}
-            </Touchable>
+            </BaseTouchable>
         );
     }
 
     return (
-        <Touchable {...commonProps} maybe>
+        <BaseTouchable {...commonProps} maybe>
             {!icon && React.Children.only(children)}
-        </Touchable>
+        </BaseTouchable>
     );
 };
 

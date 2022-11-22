@@ -7,7 +7,6 @@ import Box from './box';
 import Touchable from './touchable';
 import {Text2, Text3} from './text';
 import {useScreenSize, useTheme, useAriaId} from './hooks';
-import {createUseStyles} from './jss';
 import IconMenuRegular from './generated/mistica-icons/icon-menu-regular';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconChevronLeftRegular from './generated/mistica-icons/icon-chevron-left-regular';
@@ -19,8 +18,9 @@ import FocusTrap from './focus-trap';
 import {Portal} from './portal';
 import GridLayout from './grid-layout';
 import {useSetModalState} from './modal-context-provider';
-import {NAVBAR_HEIGHT_DESKTOP, NAVBAR_HEIGHT_MOBILE} from './theme';
 import {vars} from './skins/skin-contract.css';
+import * as styles from './navigation-bar.css';
+import {sprinkles} from './sprinkles.css';
 
 import type {Props as TouchableProps} from './touchable';
 
@@ -132,145 +132,54 @@ export const NavigationBarLogo: React.FC<NavigationBarLogoProps> = ({size}) => {
     }
 };
 
-const useBurgerStyles = createUseStyles(() => ({
-    burgerIconContainer: {
-        position: 'relative',
-        width: 24,
-        height: 24,
-        '& > *': {
-            position: 'absolute',
-            opacity: 1,
-            transform: 'rotate(0) scale(1)',
-            transition: 'transform 300ms, opacity 100ms',
-        },
-    },
-    iconCloseHidden: {
-        opacity: 0,
-        transform: 'rotate(-45deg) scale(0.9)',
-    },
-    iconMenuHidden: {
-        opacity: 0,
-        transform: 'rotate(0deg) scale(0.7)',
-    },
-}));
-
 const BurgerMenuIcon = ({isOpen}: {isOpen: boolean}) => {
-    const classes = useBurgerStyles();
     return (
-        <div className={classes.burgerIconContainer} role="presentation">
-            <div className={isOpen ? '' : classes.iconCloseHidden}>
+        <div className={styles.burgerIconContainer} role="presentation">
+            <div className={isOpen ? '' : styles.iconCloseHidden}>
                 <IconCloseRegular />
             </div>
-            <div className={isOpen ? classes.iconMenuHidden : ''}>
+            <div className={isOpen ? styles.iconMenuHidden : ''}>
                 <IconMenuRegular />
             </div>
         </div>
     );
 };
 
-const NAVBAR_ZINDEX = 25;
-const BURGER_ZINDEX = 26;
-
 const BURGER_MENU_ANIMATION_DURATION_MS = 300;
 
-const useStyles = createUseStyles((theme) => {
-    const shadowAlpha = theme.isDarkMode ? 1 : 0.2;
+type HeaderProps = {
+    children: React.ReactNode;
+    topFixed?: boolean;
+    isInverse?: boolean;
+    withBorder?: boolean;
+    isMenuOpen?: boolean;
+};
 
-    return {
-        topFixed: {
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            zIndex: NAVBAR_ZINDEX,
-        },
-        notFixedPadding: {
-            width: '100%',
-            padding: ({paddingX}) => `0 ${paddingX}px`,
-        },
-        navbar: {
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            background: ({isInverse}) =>
-                isInverse ? vars.colors.navigationBarBackground : vars.colors.background,
-            height: NAVBAR_HEIGHT_DESKTOP,
-            padding: '16px 0',
-            borderBottomStyle: 'solid',
-            borderBottomWidth: ({withBorder}) => (withBorder ? 1 : 0),
-            borderColor: ({isInverse}) =>
-                isInverse && !theme.isDarkMode ? 'transparent' : vars.colors.divider,
-            [theme.mq.tabletOrSmaller]: {
-                transition: 'border-color 300ms',
-                borderColor: ({isMenuOpen, isInverse}) =>
-                    isMenuOpen || (isInverse && !theme.isDarkMode) ? 'transparent' : vars.colors.divider,
-                height: NAVBAR_HEIGHT_MOBILE,
-                padding: '8px 0',
-            },
-        },
-        section: {
-            height: NAVBAR_HEIGHT_DESKTOP,
-            display: 'flex',
-            alignItems: 'center',
-            padding: '0 8px',
-            borderBottom: `2px solid transparent`,
-            transition: 'border-color 300ms ease-in-out',
+const Header = ({children, topFixed, withBorder, isMenuOpen, isInverse}: HeaderProps) => {
+    const {isDarkMode} = useTheme();
 
-            [theme.mq.supportsHover]: {
-                '&:hover span': {
-                    color: ({isInverse}) =>
-                        isInverse ? vars.colors.textSecondaryInverse : vars.colors.textSecondary,
-                },
-            },
-        },
-        selectedSection: {
-            borderColor: ({isInverse}) => (isInverse ? vars.colors.inverse : vars.colors.controlActivated),
-        },
-        spacer: {
-            height: NAVBAR_HEIGHT_DESKTOP,
-            [theme.mq.tabletOrSmaller]: {
-                height: NAVBAR_HEIGHT_MOBILE,
-            },
-        },
-        burgerMenu: {
-            zIndex: BURGER_ZINDEX,
-            position: 'fixed',
-            top: NAVBAR_HEIGHT_MOBILE,
-            left: 0,
-            right: 0,
-            height: `calc(100vh - ${NAVBAR_HEIGHT_MOBILE}px)`,
-            overflowY: 'auto',
-            background: vars.colors.background,
-            boxShadow: ({menuTransitionState}) =>
-                menuTransitionState !== 'closed' ? `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})` : 'none',
-            transition: `transform ${BURGER_MENU_ANIMATION_DURATION_MS}ms ease-out`,
-        },
-        burgerMenuEnter: {
-            transform: 'translate(-100vw)',
-        },
-        burgerMenuEnterActive: {
-            transform: 'translate(0)',
-        },
-        burgerMenuExit: {
-            transform: 'translate(0)',
-        },
-        burgerMenuExitActive: {
-            transform: 'translate(-100vw)',
-        },
-        iconButton: {
-            color: ({isInverse}) => (isInverse ? vars.colors.inverse : vars.colors.neutralHigh),
-            [theme.mq.supportsHover]: {
-                '&:hover': {
-                    color: ({isInverse}) => (isInverse ? vars.colors.inverse : vars.colors.neutralMedium),
-                },
-            },
-        },
-        logoContainer: {
-            display: 'flex',
-            justifyContent: 'center',
-        },
+    const getBorderClass = () => {
+        const inverse = isInverse && !isDarkMode;
+
+        if (isMenuOpen || inverse) return styles.navbarBorderColorVariants.inverse;
+
+        if (isMenuOpen && !inverse) return styles.navbarBorderColorVariants.menuOpen;
+
+        return styles.navbarBorderColorVariants.default;
     };
-});
+
+    return (
+        <header
+            className={classnames(getBorderClass(), {[styles.topFixed]: topFixed})}
+            style={{
+                borderBottomWidth: withBorder ? 1 : 0,
+                background: isInverse ? vars.colors.navigationBarBackground : vars.colors.background,
+            }}
+        >
+            {children}
+        </header>
+    );
+};
 
 type MainNavigationBarSection =
     | {href: string; to?: undefined; onPress?: undefined; title: string}
@@ -297,11 +206,11 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     isInverse = false,
     topFixed = true,
 }) => {
-    const {texts} = useTheme();
+    const {texts, isDarkMode} = useTheme();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [menuTransitionState, setMenuTransitionState] = React.useState<MenuTransitionState>('closed');
     const menuId = useAriaId();
-    const classes = useStyles({isMenuOpen, isInverse, menuTransitionState, withBorder: true});
+    const shadowAlpha = isDarkMode ? 1 : 0.2;
     const {isTabletOrSmaller} = useScreenSize();
     const setModalState = useSetModalState();
 
@@ -323,34 +232,32 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
         return (
             <>
                 <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
-                    <header>
-                        <ThemeVariant isInverse={isInverse}>
-                            <div className={classnames(classes.navbar, {[classes.topFixed]: topFixed})}>
-                                <ResponsiveLayout>
-                                    <Inline space="between" alignItems="center">
-                                        <Inline space={24} alignItems="center">
-                                            <IconButton
-                                                aria-live="polite"
-                                                aria-label={
-                                                    isMenuOpen
-                                                        ? texts.closeNavigationMenu
-                                                        : texts.openNavigationMenu
-                                                }
-                                                aria-expanded={isMenuOpen}
-                                                aria-controls={menuId}
-                                                onPress={isMenuOpen ? closeMenu : openMenu}
-                                            >
-                                                <BurgerMenuIcon isOpen={isMenuOpen} />
-                                            </IconButton>
-                                            <div className={classes.logoContainer}>{logo}</div>
-                                        </Inline>
-                                        {right}
+                    <ThemeVariant isInverse={isInverse}>
+                        <Header topFixed={topFixed} withBorder isMenuOpen={isMenuOpen} isInverse={isInverse}>
+                            <ResponsiveLayout>
+                                <Inline space="between" alignItems="center">
+                                    <Inline space={24} alignItems="center">
+                                        <IconButton
+                                            aria-live="polite"
+                                            aria-label={
+                                                isMenuOpen
+                                                    ? texts.closeNavigationMenu
+                                                    : texts.openNavigationMenu
+                                            }
+                                            aria-expanded={isMenuOpen}
+                                            aria-controls={menuId}
+                                            onPress={isMenuOpen ? closeMenu : openMenu}
+                                        >
+                                            <BurgerMenuIcon isOpen={isMenuOpen} />
+                                        </IconButton>
+                                        <div className={styles.logoContainer}>{logo}</div>
                                     </Inline>
-                                </ResponsiveLayout>
-                            </div>
-                        </ThemeVariant>
-                        {topFixed && <div className={classes.spacer} />}
-                    </header>
+                                    {right}
+                                </Inline>
+                            </ResponsiveLayout>
+                        </Header>
+                    </ThemeVariant>
+                    {topFixed && <div className={styles.spacer} />}
                 </FocusTrap>
                 <Portal>
                     <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
@@ -370,16 +277,22 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                             in={isMenuOpen}
                             timeout={BURGER_MENU_ANIMATION_DURATION_MS}
                             classNames={{
-                                enter: classes.burgerMenuEnter,
-                                enterActive: classes.burgerMenuEnterActive,
-                                exit: classes.burgerMenuExit,
-                                exitActive: classes.burgerMenuExitActive,
+                                enter: styles.burgerMenuEnter,
+                                enterActive: styles.burgerMenuEnterActive,
+                                exit: styles.burgerMenuExit,
+                                exitActive: styles.burgerMenuExitActive,
                             }}
                             unmountOnExit
                         >
                             {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
                             <nav
-                                className={classes.burgerMenu}
+                                className={styles.burgerMenu}
+                                style={{
+                                    boxShadow:
+                                        menuTransitionState !== 'closed'
+                                            ? `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`
+                                            : 'none',
+                                }}
                                 id={menuId}
                                 onClick={() => {
                                     // Capture bubbling click events to close the burger menu when any row is pressed
@@ -405,22 +318,34 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
 
     return (
         <ThemeVariant isInverse={isInverse}>
-            <header className={classnames(classes.navbar, {[classes.topFixed]: topFixed})}>
+            <Header topFixed={topFixed} withBorder isMenuOpen={isMenuOpen} isInverse={isInverse}>
                 <ResponsiveLayout>
                     <Inline space="between" alignItems="center">
                         <Inline space={48} alignItems="center">
-                            <div className={classes.logoContainer}>{logo}</div>
+                            <div className={styles.logoContainer}>{logo}</div>
                             <nav>
                                 <Inline space={32}>
                                     {sections.map(({title, ...touchableProps}, idx) => (
                                         <Touchable
                                             {...touchableProps}
                                             key={idx}
-                                            className={classnames(classes.section, {
-                                                [classes.selectedSection]: idx === selectedIndex,
+                                            className={classnames(styles.section, {
+                                                [styles.selectedSectionVariantes[
+                                                    isInverse ? 'inverse' : 'default'
+                                                ]]: idx === selectedIndex,
                                             })}
                                         >
-                                            <Text3 regular>{title}</Text3>
+                                            <div
+                                                className={
+                                                    styles.textWrapperVariants[
+                                                        isInverse ? 'inverse' : 'default'
+                                                    ]
+                                                }
+                                            >
+                                                <Text3 regular color="inherit">
+                                                    {title}
+                                                </Text3>
+                                            </div>
                                         </Touchable>
                                     ))}
                                 </Inline>
@@ -429,8 +354,8 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                         {right}
                     </Inline>
                 </ResponsiveLayout>
-            </header>
-            {topFixed && <div className={classes.spacer} />}
+            </Header>
+            {topFixed && <div className={styles.spacer} />}
         </ThemeVariant>
     );
 };
@@ -462,11 +387,10 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     right,
     isInverse = false,
     topFixed = true,
-    paddingX,
+    paddingX = 0,
     withBorder = true,
 }) => {
     const {texts} = useTheme();
-    const classes = useStyles({isInverse, paddingX: paddingX ?? 0, withBorder});
     const content = (
         <Inline space="between" alignItems="center">
             <Inline space={24} alignItems="center">
@@ -474,7 +398,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                     <IconButton
                         aria-label={texts.backNavigationBar}
                         onPress={onBack}
-                        className={classes.iconButton}
+                        className={styles.iconButtonVariants[isInverse ? 'inverse' : 'default']}
                     >
                         <IconChevronLeftRegular color="currentColor" />
                     </IconButton>
@@ -488,14 +412,23 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     );
     return (
         <ThemeVariant isInverse={isInverse}>
-            <header className={classnames(classes.navbar, {[classes.topFixed]: topFixed})}>
+            <Header topFixed={topFixed} withBorder={withBorder} isInverse={isInverse}>
                 {topFixed ? (
                     <ResponsiveLayout>{content}</ResponsiveLayout>
                 ) : (
-                    <div className={classes.notFixedPadding}>{content}</div>
+                    <div
+                        className={sprinkles({
+                            width: '100%',
+                        })}
+                        style={{
+                            padding: `0 ${paddingX}px`,
+                        }}
+                    >
+                        {content}
+                    </div>
                 )}
-            </header>
-            {topFixed && <div className={classes.spacer} />}
+            </Header>
+            {topFixed && <div className={styles.spacer} />}
         </ThemeVariant>
     );
 };
@@ -514,10 +447,9 @@ export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
     isInverse = false,
     topFixed = true,
 }) => {
-    const classes = useStyles({isInverse, withBorder: true});
     return (
         <ThemeVariant isInverse={isInverse}>
-            <header className={classnames(classes.navbar, {[classes.topFixed]: topFixed})}>
+            <Header topFixed={topFixed} withBorder isInverse={isInverse}>
                 <ResponsiveLayout>
                     <GridLayout template="10">
                         <Inline space="between" alignItems="center">
@@ -526,28 +458,19 @@ export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
                         </Inline>
                     </GridLayout>
                 </ResponsiveLayout>
-            </header>
-            {topFixed && <div className={classes.spacer} />}
+            </Header>
+            {topFixed && <div className={styles.spacer} />}
         </ThemeVariant>
     );
 };
-
-const useNavigationBarActionGroupStyles = createUseStyles(() => ({
-    lineHeightFix: {
-        // This fixes vertical alignment issues with icons in the secondary navigation, because mistica icons
-        // use display inline and other components like Badge use inline-block.
-        lineHeight: 0,
-    },
-}));
 
 type NavigationBarActionGroupProps = {
     children: React.ReactNode;
 };
 
 export const NavigationBarActionGroup: React.FC<NavigationBarActionGroupProps> = ({children}) => {
-    const classes = useNavigationBarActionGroupStyles();
     return (
-        <div className={classes.lineHeightFix}>
+        <div className={styles.lineHeightFix}>
             <Inline space={24} alignItems="center">
                 {children}
             </Inline>
@@ -557,33 +480,25 @@ export const NavigationBarActionGroup: React.FC<NavigationBarActionGroupProps> =
 
 type NavigationBarActionProps = TouchableProps;
 
-const useNavigationBarActionStyles = createUseStyles((theme) => ({
-    touchable: {
-        lineHeight: 0,
-        '& svg': {
-            color: ({isInverse}) => (isInverse ? vars.colors.inverse : vars.colors.neutralHigh),
-        },
-
-        [theme.mq.supportsHover]: {
-            '&:hover span': {
-                color: ({isInverse}) =>
-                    isInverse ? vars.colors.textSecondaryInverse : vars.colors.textSecondary,
-            },
-            '&:hover svg': {
-                color: ({isInverse}) => (isInverse ? vars.colors.inverse : vars.colors.neutralMedium),
-            },
-        },
-    },
-}));
-
 export const NavigationBarAction: React.FC<NavigationBarActionProps> = ({children, ...touchableProps}) => {
     const isInverse = useIsInverseVariant();
-    const classes = useNavigationBarActionStyles({isInverse});
     return (
-        <Touchable {...touchableProps} className={classes.touchable}>
+        <Touchable
+            {...touchableProps}
+            className={classnames(
+                styles.lineHeightFix,
+                styles.textWrapperVariants[isInverse ? 'inverse' : 'default']
+            )}
+        >
             <Inline space={16} alignItems="center">
                 {React.Children.map(children, (child) =>
-                    typeof child === 'string' ? <Text2 regular>{child}</Text2> : child
+                    typeof child === 'string' ? (
+                        <Text2 regular color="inherit">
+                            {child}
+                        </Text2>
+                    ) : (
+                        child
+                    )
                 )}
             </Inline>
         </Touchable>
