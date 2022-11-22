@@ -1,0 +1,4 @@
+// @flow
+
+declare export var tooltipContainer: string;
+declare export var cvvText: string;
