@@ -13,10 +13,10 @@ import IconCreditcard from './icons/icon-creditcard';
 import IconVisa from './icons/icon-visa';
 import IconMastercard from './icons/icon-mastercard';
 import IconAmex from './icons/icon-amex';
-import {createUseStyles} from './jss';
 import {useRifm} from 'rifm';
 import {createChangeEvent} from './utils/dom';
 import {combineRefs} from './utils/common';
+import * as styles from './credit-card-number-field.css';
 
 import type {CardOptions} from './utils/credit-card';
 import type {CommonFormFieldProps} from './text-field-base';
@@ -122,45 +122,22 @@ const reducer = (
     return state;
 };
 
-const useStylesCCAdornment = createUseStyles(() => ({
-    flip: {
-        perspective: 1000,
-    },
-    flipInner: {
-        position: 'relative',
-        transition: 'transform 0.4s',
-        transformStyle: 'preserve-3d',
-        '& div': {
-            backfaceVisibility: 'hidden',
-        },
-        transform: ({showBackface}) => (showBackface ? 'rotateY(180deg)' : 'none'),
-    },
-    flipFront: {
-        position: 'absolute',
-    },
-    flipBack: {
-        transform: 'rotateY(180deg)',
-    },
-}));
-
 const CreditcardAdornment = ({value}: {value?: string}) => {
     const [{showBackface, animationTarget, isAnimating}, dispatch] = React.useReducer(reducer, initialState);
     React.useEffect(() => {
         dispatch({type: 'INPUT', value});
     }, [value]);
 
-    const classes = useStylesCCAdornment({showBackface});
-
     return (
-        <div className={classes.flip}>
+        <div className={styles.flip}>
             <div
-                className={classes.flipInner}
+                className={styles.variants[showBackface ? 'backface' : 'default']}
                 onTransitionEnd={() => isAnimating && dispatch({type: 'TRANSITION_END'})}
             >
-                <div className={classes.flipFront}>
+                <div className={styles.flipFront}>
                     <IconCreditcard />
                 </div>
-                <div className={classes.flipBack}>{animationTarget}</div>
+                <div className={styles.flipBack}>{animationTarget}</div>
             </div>
         </div>
     );

@@ -149,13 +149,11 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
                     [styles.alignMoreThanOneChildred]: childrenCount > 1,
                 }
             )}
-            style={{
-                ...assignInlineVars({
-                    [styles.vars.buttonWidth]: buttonStatus.buttonWidth
-                        ? `${buttonStatus.buttonWidth}px`
-                        : 'auto',
-                }),
-            }}
+            style={assignInlineVars({
+                [styles.vars.buttonWidth]: buttonStatus.buttonWidth
+                    ? `${buttonStatus.buttonWidth}px`
+                    : 'auto',
+            })}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
             {link ? (

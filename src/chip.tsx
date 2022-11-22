@@ -1,54 +1,14 @@
 import * as React from 'react';
-import {createUseStyles} from './jss';
+import classnames from 'classnames';
 import {useTheme} from './hooks';
 import Box from './box';
 import {Text2} from './text';
 import IconButton from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {pxToRem} from './utils/css';
-import classNames from 'classnames';
+import * as styles from './chip.css';
 
 import type {IconProps} from './utils/types';
-
-const useStyles = createUseStyles(({colors, mq}) => ({
-    container: {
-        display: 'inline-flex',
-        verticalAlign: 'middle',
-        justifyContent: 'center',
-        alignItems: 'center',
-        border: `1px solid ${colors.border}`,
-        borderRadius: 20,
-        backgroundColor: colors.backgroundContainer,
-        minHeight: 32,
-        minWidth: 56,
-        cursor: 'default',
-        color: colors.textPrimary,
-    },
-    icon: {
-        color: colors.neutralMedium,
-    },
-    interactive: {
-        userSelect: 'none',
-        [mq.supportsHover]: {
-            '&:hover:not($active)': {
-                borderColor: ({isDarkMode}) => (isDarkMode ? colors.background : colors.brandLow),
-                color: colors.controlActivated,
-                '& > $icon': {
-                    color: colors.controlActivated,
-                },
-                backgroundColor: colors.brandLow,
-            },
-        },
-    },
-    active: {
-        borderColor: colors.controlActivated,
-        color: colors.controlActivated,
-        backgroundColor: colors.brandLow,
-        '& > $icon': {
-            color: colors.controlActivated,
-        },
-    },
-}));
 
 interface ChipBaseProps {
     children: string;
@@ -77,14 +37,13 @@ type ChipProps = SimpleChipProps | ClosableChipProps | ToggleChipProps;
 
 const Chip: React.FC<ChipProps> = (props) => {
     const {texts, isDarkMode, colors} = useTheme();
-    const classes = useStyles({isDarkMode});
 
     const {Icon, children, id} = props;
 
     const body = (
         <>
             {Icon && (
-                <Box paddingRight={4} className={classes.icon}>
+                <Box paddingRight={4} className={props.active ? styles.iconActive : styles.icon}>
                     <Icon color="currentColor" size={pxToRem(16)} />
                 </Box>
             )}
@@ -98,7 +57,7 @@ const Chip: React.FC<ChipProps> = (props) => {
 
     if (props.onClose) {
         return (
-            <Box className={classes.container} paddingLeft={paddingLeft}>
+            <Box className={styles.chipVariants.default} paddingLeft={paddingLeft}>
                 {body}
                 <Box paddingLeft={4}>
                     <IconButton
@@ -120,9 +79,8 @@ const Chip: React.FC<ChipProps> = (props) => {
         const isInteractive = props.active !== undefined;
         return (
             <Box
-                className={classNames(classes.container, {
-                    [classes.interactive]: isInteractive,
-                    [classes.active]: props.active,
+                className={classnames(styles.chipVariants[props.active ? 'active' : 'default'], {
+                    [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,
                 })}
                 paddingLeft={paddingLeft}
                 paddingRight={12}

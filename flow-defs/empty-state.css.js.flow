@@ -1,0 +1,15 @@
+// @flow
+
+declare export var vars: {
+  backgroundColor: $PropertyType<
+    $Exports<"@vanilla-extract/private">,
+    "CSSVarFunction"
+  >,
+};
+declare export var container: string;
+declare export var contentVariants: { default: string, largeImage: string };
+declare export var largeImageContainer: string;
+declare export var largeImage: string;
+declare export var iconContainer: string;
+declare export var smallImage: string;
+declare export var inverseBorder: string;
