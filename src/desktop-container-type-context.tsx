@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-export type ContainerType = 'small' | 'medium' | 'large';
+export type DesktopContainerType = 'small' | 'medium' | 'large';
 
-const DesktopContainerTypeContext = React.createContext<ContainerType | null>(null);
+const DesktopContainerTypeContext = React.createContext<DesktopContainerType | null>(null);
 
-export const useDesktopContainerType = (): ContainerType | null =>
+export const useDesktopContainerType = (): DesktopContainerType | null =>
     React.useContext(DesktopContainerTypeContext);
 
 export default DesktopContainerTypeContext;
