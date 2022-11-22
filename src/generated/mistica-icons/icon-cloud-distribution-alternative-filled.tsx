@@ -5,8 +5,8 @@
  */
 
 import * as React from 'react';
-import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
+import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
@@ -16,9 +16,9 @@ const IconCloudDistributionAlternativeFilled: React.FC<IconProps> = ({
     children,
     ...rest
 }) => {
-    const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
-    const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
+    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
