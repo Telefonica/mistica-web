@@ -86,6 +86,11 @@ export const compileSsrClient = ({build = true}: {build: boolean}): Promise<webp
         resolve: {
             extensions: ['.tsx', '.ts', '.js', '.json', '.wasm', '.mjs', '*'],
         },
+        plugins: [
+            new webpack.DefinePlugin({
+                'process.env.SSR_TEST': JSON.stringify(true),
+            }),
+        ],
     };
 
     const stats = new Promise<webpack.Stats>((resolve, reject) => {

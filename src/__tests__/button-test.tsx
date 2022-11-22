@@ -46,7 +46,7 @@ test('<a> is rendered when using "to" prop', () => {
     expect(asFragment()).toMatchInlineSnapshot(`
         <DocumentFragment>
           <a
-            class="touchable_base__mhti6u1 touchable__mhti6u0 sprinkles_cursor_pointer__1y2v1nfbf button_variants_primary__rrbrpnl button_button__rrbrpn2 button__rrbrpn1 sprinkles_paddingTop_0__1y2v1nf7y sprinkles_paddingBottom_0__1y2v1nf8c sprinkles_paddingLeft_0__1y2v1nf8q sprinkles_paddingRight_0__1y2v1nf94 sprinkles_display_inline-block__1y2v1nf7f sprinkles_position_relative__1y2v1nf76 sprinkles_width_auto__1y2v1nf9j sprinkles_borderRadius_4__1y2v1nfbb sprinkles_overflow_hidden__1y2v1nfbg button__rrbrpna sprinkles_color_var(--colors-textButtonPrimary__1vqcj1i1m)__1y2v1nf1m sprinkles_backgroundColor_var(--colors-buttonPrimaryBackground__1vqcj1ik)__1y2v1nf5c"
+            class="touchable_base__mhti6u1 touchable__mhti6u0 sprinkles_cursor_pointer__1y2v1nfbg button_variants_primary__rrbrpnl button_button__rrbrpn2 button__rrbrpn1 sprinkles_paddingTop_0__1y2v1nf7y sprinkles_paddingBottom_0__1y2v1nf8c sprinkles_paddingLeft_0__1y2v1nf8q sprinkles_paddingRight_0__1y2v1nf94 sprinkles_display_inline-block__1y2v1nf7f sprinkles_position_relative__1y2v1nf76 sprinkles_width_auto__1y2v1nf9j sprinkles_borderRadius_4__1y2v1nfbc sprinkles_overflow_hidden__1y2v1nfbh button__rrbrpna sprinkles_color_var(--colors-textButtonPrimary__1vqcj1i1m)__1y2v1nf1m sprinkles_backgroundColor_var(--colors-buttonPrimaryBackground__1vqcj1ik)__1y2v1nf5c"
             href="/test"
             role="button"
           >
@@ -62,12 +62,12 @@ test('<a> is rendered when using "to" prop', () => {
             </div>
             <div
               aria-hidden="true"
-              class="button_loadingFiller__rrbrpn4 button__rrbrpn3 sprinkles_display_block__1y2v1nf7d sprinkles_height_0__1y2v1nf9z sprinkles_overflow_hidden__1y2v1nfbg"
+              class="button_loadingFiller__rrbrpn4 button__rrbrpn3 sprinkles_display_block__1y2v1nf7d sprinkles_height_0__1y2v1nf9z sprinkles_overflow_hidden__1y2v1nfbh"
               style="padding-left: 1.250rem; padding-right: 37px;"
             />
             <div
               aria-hidden="true"
-              class="button_loadingContent__rrbrpn7 button__rrbrpn6 sprinkles_display_inline-flex__1y2v1nf7c sprinkles_position_absolute__1y2v1nf77 sprinkles_top_0__1y2v1nfbi sprinkles_bottom_0__1y2v1nfco sprinkles_justifyContent_center__1y2v1nf7k sprinkles_alignItems_center__1y2v1nf7q"
+              class="button_loadingContent__rrbrpn7 button__rrbrpn6 sprinkles_display_inline-flex__1y2v1nf7c sprinkles_position_absolute__1y2v1nf77 sprinkles_top_0__1y2v1nfbj sprinkles_bottom_0__1y2v1nfcp sprinkles_justifyContent_center__1y2v1nf7k sprinkles_alignItems_center__1y2v1nf7q"
             >
               <div
                 style="display: inline-block; width: 1.250rem; height: 1.250rem;"
