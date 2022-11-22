@@ -7,7 +7,7 @@ const transition = '1s cubic-bezier(0.75, 0, 0.27, 1)';
 export const barBackground = sprinkles({
     borderRadius: 2,
     height: 4,
-    backgroundColor: vars.colors.control,
+    background: vars.colors.control,
 });
 
 const barKeyFrames = keyframes({

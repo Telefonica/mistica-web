@@ -123,7 +123,7 @@ const lightPrimary: ComplexStyleRule = [
     button,
     sprinkles({
         color: vars.colors.textButtonPrimary,
-        backgroundColor: vars.colors.buttonPrimaryBackground,
+        background: vars.colors.buttonPrimaryBackground,
     }),
     {
         selectors: {
@@ -158,7 +158,7 @@ const lightPrimaryInverse: ComplexStyleRule = [
     button,
     sprinkles({
         color: vars.colors.textButtonPrimaryInverse,
-        backgroundColor: vars.colors.buttonPrimaryBackgroundInverse,
+        background: vars.colors.buttonPrimaryBackgroundInverse,
     }),
     {
         selectors: {
@@ -186,7 +186,7 @@ const lightSecondary: ComplexStyleRule = [
     button,
     sprinkles({
         color: vars.colors.textButtonSecondary,
-        backgroundColor: 'transparent',
+        background: 'transparent',
     }),
     {
         borderColor: vars.colors.buttonSecondaryBackground,
@@ -217,7 +217,7 @@ const lightSecondaryInverse: ComplexStyleRule = [
     button,
     sprinkles({
         color: vars.colors.textButtonSecondaryInverse,
-        backgroundColor: 'transparent',
+        background: 'transparent',
     }),
     {
         borderColor: vars.colors.buttonSecondaryBorderInverse,
@@ -247,7 +247,7 @@ const danger: ComplexStyleRule = [
     button,
     sprinkles({
         color: vars.colors.textButtonPrimary,
-        backgroundColor: vars.colors.buttonDangerBackground,
+        background: vars.colors.buttonDangerBackground,
     }),
     {
         selectors: {
@@ -276,7 +276,7 @@ export const link = style([
         paddingX: PADDING_X_LINK,
         border: 'none',
         color: vars.colors.textLink,
-        backgroundColor: 'transparent',
+        background: 'transparent',
         overflow: 'hidden',
     }),
     {
