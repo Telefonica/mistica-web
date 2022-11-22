@@ -1,0 +1,5 @@
+// @flow
+
+declare export var container: string;
+declare export var image: string;
+declare export var iconContainer: string;
