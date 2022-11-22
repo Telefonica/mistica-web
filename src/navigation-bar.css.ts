@@ -104,6 +104,8 @@ export const section = style([
         display: 'flex',
         alignItems: 'center',
         paddingX: 8,
+        border: 'none',
+        backgroundColor: 'transparent',
     }),
     {
         borderBottom: `2px solid transparent`,

@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import ResponsiveLayout from './responsive-layout';
 import Inline from './inline';
 import Box from './box';
-import Touchable from './touchable';
+import {BaseTouchable} from './touchable';
 import {Text2, Text3} from './text';
 import {useScreenSize, useTheme, useAriaId} from './hooks';
 import IconMenuRegular from './generated/mistica-icons/icon-menu-regular';
@@ -326,7 +326,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                             <nav>
                                 <Inline space={32}>
                                     {sections.map(({title, ...touchableProps}, idx) => (
-                                        <Touchable
+                                        <BaseTouchable
                                             {...touchableProps}
                                             key={idx}
                                             className={classnames(styles.section, {
@@ -346,7 +346,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                                                     {title}
                                                 </Text3>
                                             </div>
-                                        </Touchable>
+                                        </BaseTouchable>
                                     ))}
                                 </Inline>
                             </nav>
@@ -483,9 +483,14 @@ type NavigationBarActionProps = TouchableProps;
 export const NavigationBarAction: React.FC<NavigationBarActionProps> = ({children, ...touchableProps}) => {
     const isInverse = useIsInverseVariant();
     return (
-        <Touchable
+        <BaseTouchable
             {...touchableProps}
             className={classnames(
+                sprinkles({
+                    border: 'none',
+                    backgroundColor: 'transparent',
+                    padding: 0,
+                }),
                 styles.lineHeightFix,
                 styles.textWrapperVariants[isInverse ? 'inverse' : 'default']
             )}
@@ -501,6 +506,6 @@ export const NavigationBarAction: React.FC<NavigationBarActionProps> = ({childre
                     )
                 )}
             </Inline>
-        </Touchable>
+        </BaseTouchable>
     );
 };
