@@ -4,40 +4,17 @@ import Inline from './inline';
 import Box from './box';
 import {useTheme} from './hooks';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
-import {createUseStyles} from './jss';
 import {Text2, Text3} from './text';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import classNames from 'classnames';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import ButtonGroup from './button-group';
+import * as styles from './callout.css';
+import {sprinkles} from './sprinkles.css';
+import {vars} from './skins/skin-contract.css';
 
 import type {RendersNullableElement} from './utils/types';
-
-const useStyles = createUseStyles(({colors}) => ({
-    container: {
-        background: colors.backgroundAlternative,
-        borderRadius: 8,
-        padding: 16,
-        overflow: 'hidden',
-        display: 'flex',
-        minHeight: 56,
-        '& > *': {
-            flexShrink: 0,
-        },
-    },
-    icon: {
-        display: 'flex',
-        marginRight: 16,
-    },
-    content: {
-        alignSelf: 'center',
-        flex: 1,
-    },
-    overInverse: {
-        background: colors.backgroundContainer,
-    },
-}));
 
 type Props = {
     title?: string;
@@ -61,18 +38,21 @@ const Callout: React.FC<Props> = ({
     buttonLink,
     'aria-label': ariaLabel,
 }) => {
-    const needsButtonLinkAlignment = buttonLink && !button;
     const isInverse = useIsInverseVariant();
-    const classes = useStyles({needsButtonLinkAlignment});
     const {colors, texts} = useTheme();
     return (
         <section
-            className={classNames(classes.container, {[classes.overInverse]: isInverse})}
+            className={classNames(
+                styles.container,
+                isInverse
+                    ? sprinkles({backgroundColor: vars.colors.backgroundContainer})
+                    : sprinkles({backgroundColor: vars.colors.backgroundAlternative})
+            )}
             aria-label={ariaLabel ?? title}
         >
             <ThemeVariant isInverse={false}>
                 {icon && <Box paddingRight={16}>{icon}</Box>}
-                <div className={classes.content}>
+                <div className={styles.content}>
                     <Stack space={16}>
                         <Inline fullWidth alignItems="flex-start" space="between">
                             <Stack space={4}>

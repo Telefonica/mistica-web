@@ -1,0 +1,6 @@
+// @flow
+
+declare export var animation: string;
+declare export var row: string;
+declare export var circle: string;
+declare export var line: string;

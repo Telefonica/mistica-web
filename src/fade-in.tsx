@@ -1,20 +1,7 @@
 import * as React from 'react';
-import {createUseStyles} from './jss';
+import * as styles from './fade-in.css';
 
 const defaultDuration = '0.3s';
-
-const useStyles = createUseStyles(() => ({
-    wrapper: {
-        animationName: '$fadeIn',
-        animationTimingFunction: 'ease',
-        animationFillMode: 'both',
-    },
-
-    '@keyframes fadeIn': {
-        from: {opacity: 0},
-        to: {opacity: 1},
-    },
-}));
 
 type Props = {
     children?: React.ReactNode;
@@ -24,11 +11,9 @@ type Props = {
 };
 
 const FadeIn: React.FC<Props> = ({children, className = '', duration = defaultDuration, delay = '0'}) => {
-    const classes = useStyles();
-
     return (
         <div
-            className={`${classes.wrapper} ${className}`}
+            className={`${styles.wrapper} ${className}`}
             style={{
                 animationDelay: delay,
                 WebkitAnimationDelay: delay,
