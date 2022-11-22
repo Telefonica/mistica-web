@@ -1,13 +1,7 @@
 import * as React from 'react';
 import {createUseStyles} from './jss';
-import {
-    Label,
-    HelperText,
-    FieldContainer,
-    LABEL_LEFT_POSITION,
-    LABEL_SCALE_MOBILE,
-    LABEL_SCALE_DESKTOP,
-} from './text-field-components';
+import {Label, HelperText, FieldContainer} from './text-field-components';
+import {LABEL_LEFT_POSITION, LABEL_SCALE_MOBILE, LABEL_SCALE_DESKTOP} from './text-field-components.css';
 import {Text3} from './text';
 import {isIos, isRunningAcceptanceTest, isFirefox, isSafari} from './utils/platform';
 import {useAriaId, useTheme, useScreenSize, useIsomorphicLayoutEffect} from './hooks';
