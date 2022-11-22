@@ -7,6 +7,7 @@
 import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
+import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
@@ -16,9 +17,9 @@ const IconRenovateDeviceChangeMobileRegular: React.FC<IconProps> = ({
     children,
     ...rest
 }) => {
-    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
-    const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
+    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+    const {skinName} = useTheme();
     if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
