@@ -17,6 +17,8 @@ type Props = {
     /** "data-" prefix is automatically added. For example, use "testid" instead of "data-testid" */
     dataAttributes?: DataAttributes;
     'aria-label'?: string;
+    width?: number | string;
+    height?: number | string;
 };
 
 const getBorderStyle = (isInverseOutside: boolean, isInverseInside: boolean) => {
@@ -40,6 +42,8 @@ export const Boxed = React.forwardRef<HTMLDivElement, Props>(
             role,
             dataAttributes,
             'aria-label': ariaLabel,
+            width,
+            height,
         },
         ref
     ) => {
@@ -49,6 +53,7 @@ export const Boxed = React.forwardRef<HTMLDivElement, Props>(
         return (
             <div
                 ref={ref}
+                style={{width, height, boxSizing: 'border-box'}}
                 className={classnames(
                     className,
                     getBorderStyle(isInverseOutside, isInverseInside),

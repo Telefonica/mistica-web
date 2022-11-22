@@ -1,13 +1,14 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {CSSTransition} from 'react-transition-group';
-import {useAriaId, useScreenSize} from './hooks';
+import {useAriaId, useScreenSize, useTheme} from './hooks';
 import {Portal} from './portal';
 import Overlay from './overlay';
 import {Text2} from './text';
 import * as key from './utils/key-codes';
-import {createUseStyles} from './jss';
 import Stack from './stack';
+import * as styles from './tooltip.css';
+import {assignInlineVars} from '@vanilla-extract/dynamic';
 
 const defaultPositionDesktop = 'bottom';
 const defaultPositionMobile = 'top';
@@ -15,190 +16,79 @@ const arrowSize = 12;
 const distanceToTarget = 4 + arrowSize;
 const marginLeftRightMobile = 16;
 const defaultWidthDesktop = 340;
-const arrowWrapperWidth = arrowSize * 2;
-const arrowWrapperHeight = arrowSize;
-
 const transitionDurationMs = 500;
 const animationMovement = 12;
-const animationTiming = 'cubic-bezier(0.215, 0.61, 0.355, 1)';
 const defaultShowTooltipDelayMs = 500;
 
 const noOp = () => {};
 
-const useStyles = createUseStyles((theme) => {
-    const shadowAlpha = theme.isDarkMode ? 1 : 0.2;
-    return {
-        arrow: {
-            position: 'absolute',
-            backgroundColor: theme.colors.backgroundContainer,
-            width: arrowSize,
-            height: arrowSize,
-            top: 0,
-            left: '50%',
-            transform: 'translate(-50%, -50%) rotate(45deg)',
-            border: `1px solid ${theme.colors.border}`,
-            borderRadius: 2,
-        },
-        arrowTop: {
-            top: '100%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            '& > div': {
-                boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
-            },
-        },
-        arrowRight: {
-            right: '100%',
-            top: '50%',
-            transform: 'translateY(-100%) rotate(90deg)',
-            transformOrigin: 'bottom',
-            '& > div': {
-                boxShadow: `0 0 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
-            },
-        },
-        arrowBottom: {
-            bottom: '100%',
-            left: '50%',
-            transform: 'translateX(-50%) rotate(180deg)',
-        },
-        arrowLeft: {
-            left: '100%',
-            top: '50%',
-            transform: 'translateY(-100%) rotate(-90deg)',
-            transformOrigin: 'bottom',
-            '& > div': {
-                boxShadow: `0 0 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
-            },
-        },
-        arrowWrapper: {
-            position: 'absolute',
-            color: theme.colors.backgroundContainer,
-            width: arrowWrapperWidth,
-            height: arrowWrapperHeight,
-            overflow: 'hidden',
-        },
-        wrapper: {
-            display: 'inline-block',
-        },
-        container: {
-            position: 'absolute',
-            left: 16,
-            width: 'auto',
-            boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
-            padding: 8,
-            backgroundColor: theme.colors.backgroundContainer,
-            zIndex: 50,
-            border: `1px solid ${theme.colors.border}`,
-            borderRadius: 8,
-        },
-    };
-});
-
-const useAnimationStyles = createUseStyles(() => ({
-    enter: {
-        transform: ({position}: {position: Position}) => {
-            if (position === 'bottom') {
-                return `translateY(${animationMovement}px)`;
-            }
-
-            if (position === 'top') {
-                return `translateY(calc(-100% - ${animationMovement}px))`;
-            }
-
-            if (position === 'right') {
-                return `translateX(${animationMovement}px) translateY(-50%)`;
-            }
-
-            if (position === 'left') {
-                return `translateX(-${animationMovement}px) translateY(-50%)`;
-            }
-
-            return `translateY(-${animationMovement}px)`;
-        },
-    },
-
-    enterActive: {
-        animationName: ({position}: {position: Position}) => {
-            if (position === 'top') return '$fadeInTop';
-
-            if (position === 'bottom') return '$fadeInBottom';
-
-            return '$fadeInX';
-        },
-        animationFillMode: 'both',
-        animationDuration: `${transitionDurationMs}ms`,
-        animationTimingFunction: animationTiming,
-    },
-    enterDone: {
-        transform: ({position}: {position: Position}) => {
-            if (position === 'top') return 'translateY(-100%)';
-            if (position === 'bottom') return 'translateY(0)';
-
-            return 'translateY(-50%)';
-        },
-    },
-
-    exit: {
-        transform: ({position}: {position: Position}) => {
-            if (position === 'bottom') {
-                return 'translateY(0)';
-            }
-
-            if (position === 'top') {
-                return 'translateY(-100%)';
-            }
-
-            if (position === 'right') {
-                return 'translateX(0px) translateY(-50%)';
-            }
-
-            if (position === 'left') {
-                return 'translateX(0px) translateY(-50%)';
-            }
-
-            return 'translateY(0px)';
-        },
-
-        opacity: 1,
-        transition: `opacity 0.3s ${animationTiming}`,
-    },
-
-    exitActive: {
-        animation: `$fadeOut 0.3s ${animationTiming} both`,
-    },
-
-    '@keyframes fadeInBottom': {
-        from: {opacity: 0},
-        '40%': {opacity: 1},
-        to: {
-            opacity: 1,
-            transform: 'translateY(0)',
-        },
-    },
-    '@keyframes fadeInTop': {
-        from: {opacity: 0},
-        '40%': {opacity: 1},
-        to: {
-            opacity: 1,
-            transform: 'translateY(-100%)',
-        },
-    },
-
-    '@keyframes fadeInX': {
-        from: {opacity: 0},
-        '40%': {opacity: 1},
-        to: {
-            opacity: 1,
-            transform: 'translateX(0) translateY(-50%)',
-        },
-    },
-
-    '@keyframes fadeOut': {from: {opacity: 1}, to: {opacity: 0}},
-}));
-
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
 const getWidthDesktop = (customWidth?: number) => (customWidth ? customWidth : defaultWidthDesktop);
+
+const getEnterTransform = (position: Position) => {
+    if (position === 'bottom') {
+        return `translateY(${animationMovement}px)`;
+    }
+    if (position === 'top') {
+        return `translateY(calc(-100% - ${animationMovement}px))`;
+    }
+    if (position === 'right') {
+        return `translateX(${animationMovement}px) translateY(-50%)`;
+    }
+    if (position === 'left') {
+        return `translateX(-${animationMovement}px) translateY(-50%)`;
+    }
+    return `translateY(-${animationMovement}px)`;
+};
+
+const getEnterDoneTransform = (position: Position) => {
+    if (position === 'top') return 'translateY(-100%)';
+    if (position === 'bottom') return 'translateY(0)';
+    return 'translateY(-50%)';
+};
+
+const getExitTransform = (position: Position) => {
+    if (position === 'bottom') {
+        return 'translateY(0)';
+    }
+    if (position === 'top') {
+        return 'translateY(-100%)';
+    }
+    if (position === 'right') {
+        return 'translateX(0px) translateY(-50%)';
+    }
+    if (position === 'left') {
+        return 'translateX(0px) translateY(-50%)';
+    }
+    return 'translateY(0px)';
+};
+
+const getEnterActiveAnimationName = (position: Position) => {
+    if (position === 'top') return styles.fadeInTopKeyframes;
+    if (position === 'bottom') return styles.fadeInBottomKeyframes;
+    return styles.fadeInXKeyframes;
+};
+
+const getShadowAlpha = (isDarkMode: boolean) => {
+    return isDarkMode ? '1' : '0.2';
+};
+
+const getArrowBoxShadow = (position: Position) => {
+    if (position === 'top') {
+        return `2px 2px 4px 0 rgba(0, 0, 0, ${styles.vars.shadowAlpha})`;
+    }
+    if (position === 'right') {
+        return `0 0 4px 0 rgba(0, 0, 0, ${styles.vars.shadowAlpha})`;
+    }
+    if (position === 'left') {
+        return `0 0 4px 0 rgba(0, 0, 0, ${styles.vars.shadowAlpha})`;
+    }
+    if (position === 'bottom') {
+        return `-1px -1px 4px 0 rgba(0, 0, 0, ${styles.vars.shadowAlpha})`;
+    }
+    return '';
+};
 
 type Props = {
     children?: React.ReactNode;
@@ -222,6 +112,7 @@ const Tooltip: React.FC<Props> = ({
     delay = true,
     ...rest
 }) => {
+    const {isDarkMode} = useTheme();
     const [isVisible, setIsVisible] = React.useState(false);
     const {isTabletOrSmaller} = useScreenSize();
     const ariaId = useAriaId();
@@ -242,9 +133,6 @@ const Tooltip: React.FC<Props> = ({
         isTabletOrSmaller && (position === 'left' || position === 'right') ? defaultPositionMobile : position;
 
     const position = getPosition(rest.position);
-
-    const classes = useStyles();
-    const animationClasses = useAnimationStyles({position});
 
     const isTouchableDevice =
         typeof window !== 'undefined' ? window.matchMedia('(pointer: coarse)').matches : false;
@@ -342,18 +230,27 @@ const Tooltip: React.FC<Props> = ({
 
     const width = getWidth();
 
-    const classNameByPosition = {
-        top: classes.arrowTop,
-        bottom: classes.arrowBottom,
-        left: classes.arrowLeft,
-        right: classes.arrowRight,
+    const arrowClassNameByPosition = {
+        top: styles.arrowTop,
+        bottom: styles.arrowBottom,
+        left: styles.arrowLeft,
+        right: styles.arrowRight,
     };
+
+    const vars = assignInlineVars({
+        [styles.vars.enterTransform]: getEnterTransform(position),
+        [styles.vars.exitTransform]: getExitTransform(position),
+        [styles.vars.enterActiveAnimationName]: getEnterActiveAnimationName(position),
+        [styles.vars.enterDoneTransform]: getEnterDoneTransform(position),
+        [styles.vars.shadowAlpha]: getShadowAlpha(isDarkMode),
+        [styles.vars.arrowBoxShadow]: getArrowBoxShadow(position),
+    });
 
     return (
         <>
             <div
                 ref={targetRef}
-                className={classes.wrapper}
+                className={styles.wrapper}
                 onPointerOver={() => {
                     if (closeTooltipTimeoutId.current) {
                         clearTimeout(closeTooltipTimeoutId.current);
@@ -410,22 +307,22 @@ const Tooltip: React.FC<Props> = ({
                     in={isVisible}
                     timeout={transitionDurationMs}
                     classNames={{
-                        enter: animationClasses.enter,
-                        enterActive: animationClasses.enterActive,
-                        enterDone: animationClasses.enterDone,
-
-                        exit: animationClasses.exit,
-                        exitActive: animationClasses.exitActive,
+                        enter: styles.enter,
+                        enterActive: styles.enterActive,
+                        enterDone: styles.enterDone,
+                        exit: styles.exit,
+                        exitActive: styles.exitActive,
                     }}
                     unmountOnExit
                 >
                     <div
                         role="tooltip"
                         id={ariaId}
-                        className={classes.container}
+                        className={styles.container}
                         style={{
                             width,
                             ...getContainerPosition(position, width),
+                            ...vars,
                         }}
                         onPointerOver={() => {
                             if (closeTooltipTimeoutId.current) {
@@ -448,10 +345,10 @@ const Tooltip: React.FC<Props> = ({
                         }
                     >
                         <div
-                            className={classnames(classes.arrowWrapper, classNameByPosition[position])}
+                            className={classnames(styles.arrowWrapper, arrowClassNameByPosition[position])}
                             style={getCustomStylesForMobile()}
                         >
-                            <div className={classes.arrow} />
+                            <div className={styles.arrow} />
                         </div>
                         {(title || description) && (
                             <Stack space={4}>
