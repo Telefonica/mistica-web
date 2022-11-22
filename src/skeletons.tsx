@@ -1,34 +1,11 @@
 // https://www.figma.com/file/w7E0mmB92eio0zHw7h9iS2/%5BREADY%5D-Skeletons-Specs?node-id=986%3A1161
 import * as React from 'react';
 import SkeletonBase from './skeleton-base';
-import {createUseStyles} from './jss';
 import Stack from './stack';
 import {getPrefixedDataAttributes} from './utils/dom';
+import * as styles from './skeletons.css';
 
 import type {DataAttributes} from './utils/types';
-
-const transition = '1.5s linear';
-
-const useAnimation = createUseStyles(() => ({
-    animation: {
-        width: '100%',
-        height: '100%',
-        animation: `$pulse ${transition} infinite`,
-    },
-    '@keyframes pulse': {
-        '0%': {
-            opacity: 1,
-        },
-
-        '50%': {
-            opacity: 0.5,
-        },
-
-        '100%': {
-            opacity: 1,
-        },
-    },
-}));
 
 type SkeletonAnimationProps = {
     children: React.ReactNode;
@@ -37,11 +14,9 @@ type SkeletonAnimationProps = {
 };
 
 const SkeletonAnimation = ({children, ariaLabel, dataAttributes}: SkeletonAnimationProps) => {
-    const animationClasses = useAnimation();
-
     return (
         <div
-            className={animationClasses.animation}
+            className={styles.animation}
             role="status"
             aria-busy
             aria-hidden={ariaLabel === undefined}
@@ -91,32 +66,14 @@ export const SkeletonCircle = ({ariaLabel, size = 40, dataAttributes}: SkeletonC
     );
 };
 
-const useSkeletonRowStyles = createUseStyles(() => ({
-    row: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    circle: {
-        flexShrink: 0,
-        flexGrow: 0,
-    },
-    line: {
-        flexShrink: 1,
-        marginLeft: 16,
-    },
-}));
-
 type SkeletonRowProps = SkeletonLineProps;
 
 export const SkeletonRow = ({width = '100%', ariaLabel, dataAttributes}: SkeletonRowProps): JSX.Element => {
-    const rowClass = useSkeletonRowStyles();
-
     return (
         <SkeletonAnimation ariaLabel={ariaLabel} {...getPrefixedDataAttributes(dataAttributes)}>
-            <div className={rowClass.row}>
-                <SkeletonBase height={40} width={40} radius="50%" className={rowClass.circle} />
-                <SkeletonBase width={width} className={rowClass.line} />
+            <div className={styles.row}>
+                <SkeletonBase height={40} width={40} radius="50%" className={styles.circle} />
+                <SkeletonBase width={width} className={styles.line} />
             </div>
         </SkeletonAnimation>
     );
