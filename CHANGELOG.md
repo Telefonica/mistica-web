@@ -1,3 +1,23 @@
+# [12.10.0](https://github.com/Telefonica/mistica-web/compare/v12.9.1...v12.10.0) (2022-11-22)
+
+
+### Bug Fixes
+
+* **FixedFooterLayout:** mediaquery to not be fixed when viewport isn't tall enough ([#588](https://github.com/Telefonica/mistica-web/issues/588)) ([cf183ec](https://github.com/Telefonica/mistica-web/commit/cf183eca04b13147a6f9fc527234117283363606))
+* **Inputs:** Review readonly input props ([#577](https://github.com/Telefonica/mistica-web/issues/577)) ([c2349bd](https://github.com/Telefonica/mistica-web/commit/c2349bdb991a8b8417f14a84030c409c2959f2df))
+* **RadioButton:** controlled by parent ([#586](https://github.com/Telefonica/mistica-web/issues/586)) ([38b1f47](https://github.com/Telefonica/mistica-web/commit/38b1f478b6dbb7ad1839c88c953747ab12f16eab))
+* **Row:** types for runtime conditional values ([#570](https://github.com/Telefonica/mistica-web/issues/570)) ([566d1bb](https://github.com/Telefonica/mistica-web/commit/566d1bbc98c5429bcc0ac29bc813a84aaa5daf36))
+
+
+### Features
+
+* **FormFields:** restore readonly type ([#584](https://github.com/Telefonica/mistica-web/issues/584)) ([94549f1](https://github.com/Telefonica/mistica-web/commit/94549f1153e88d393e3b3ce671a7798bb4ee357b))
+* **vanilla-extract:** Dialog, Divider, DoubleField, EmptyState, EmptyStateCard ([#590](https://github.com/Telefonica/mistica-web/issues/590)) ([73f62d6](https://github.com/Telefonica/mistica-web/commit/73f62d676ab3a658407070f46767d9b01579c47f))
+* **vanilla-extract:** migrate ButtonGroup, ButtonLayout, Button, Touchable, Image and Video ([#581](https://github.com/Telefonica/mistica-web/issues/581)) ([2e699ff](https://github.com/Telefonica/mistica-web/commit/2e699fff504047b164020198e13b131f8eef546d))
+* **vanilla-extract:** migrate Callouts, Cards, Checkbox, Chip, Circle, CreditCard, CVV and DateTimePicker ([#587](https://github.com/Telefonica/mistica-web/issues/587)) ([3aadcdb](https://github.com/Telefonica/mistica-web/commit/3aadcdbe0aecfebdd25105c73569b251f42427c6))
+* **vanilla-extract:** migrate ResponsiveLayout and GridLayout ([#580](https://github.com/Telefonica/mistica-web/issues/580)) ([e97f801](https://github.com/Telefonica/mistica-web/commit/e97f801435207ef688d6202717a00b2687867c2f))
+* **VE:** migrate to Vanilla Extract: box, stack, inline, touchable and text ([#575](https://github.com/Telefonica/mistica-web/issues/575)) ([9c3cd72](https://github.com/Telefonica/mistica-web/commit/9c3cd72b4abb09d3bdf2f40c5a898d69cc1e1e40))
+
 ## [12.9.1](https://github.com/Telefonica/mistica-web/compare/v12.9.0...v12.9.1) (2022-11-10)
 
 

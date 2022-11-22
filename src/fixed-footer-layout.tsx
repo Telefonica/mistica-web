@@ -34,6 +34,13 @@ const useStyles = createUseStyles((theme) => ({
         width: '100%',
         backgroundColor: theme.colors.background,
         transition: 'background 0.2s linear, box-shadow 0.2s linear',
+        [theme.mq.tabletOrSmaller]: {
+            position: ({hasContentEnoughVSpace, isContentWithScroll}) =>
+                hasContentEnoughVSpace || !isContentWithScroll ? 'fixed' : 'initial',
+            left: 0,
+            bottom: 0,
+            zIndex: 1,
+        },
     },
     elevated: {
         backgroundColor: theme.colors.backgroundContainer,
@@ -49,13 +56,6 @@ const useStyles = createUseStyles((theme) => ({
         containerSmall: {
             paddingBottom: ({footerHeight, isContentWithScroll, hasContentEnoughVSpace}) =>
                 hasContentEnoughVSpace || !isContentWithScroll ? footerHeight : 0,
-        },
-        footer: {
-            position: ({hasContentEnoughVSpace, isContentWithScroll}) =>
-                hasContentEnoughVSpace || !isContentWithScroll ? 'fixed' : 'initial',
-            left: 0,
-            bottom: 0,
-            zIndex: 1,
         },
         elevated: {
             boxShadow: '0 -2px 8px 0 rgba(0, 0, 0, 0.10)',
@@ -91,7 +91,6 @@ const FixedFooterLayout: React.FC<Props> = ({
     const screenHeight = useScreenHeight();
 
     const hasContentEnoughVSpace = windowHeight - realFooterHeight > screenHeight / FOOTER_CANVAS_RATIO;
-    const hasContentScroll = () => hasScroll(getScrollableParentElement(containerRef.current));
 
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(realFooterHeight);
@@ -136,6 +135,8 @@ const FixedFooterLayout: React.FC<Props> = ({
         };
     }, [hasContentEnoughVSpace, platformOverrides]);
 
+    const hasContentScroll = () => hasScroll(getScrollableParentElement(containerRef.current));
+
     const classes = useStyles({
         footerBgColor,
         containerBgColor,
@@ -173,7 +174,12 @@ const FixedFooterLayout: React.FC<Props> = ({
                 data-position-fixed="bottom"
             >
                 {isFooterVisible && (
-                    <aside style={{height: footerHeight, marginBottom: 'env(safe-area-inset-bottom)'}}>
+                    <aside
+                        style={{
+                            height: footerHeight,
+                            marginBottom: 'env(safe-area-inset-bottom)',
+                        }}
+                    >
                         {footer}
                     </aside>
                 )}
