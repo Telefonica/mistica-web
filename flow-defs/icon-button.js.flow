@@ -37,7 +37,8 @@ declare type OnPressProps = {
 };
 declare type MaybeProps = { ...$Exact<CommonProps> };
 declare type Props = HrefProps | ToProps | OnPressProps | MaybeProps;
-declare var IconButton: React.ComponentType<Props>;
+declare var IconButton: (props: Props) => React.Node;
+declare export var BaseIconButton: (props: Props) => React.Node;
 declare export default typeof IconButton;
 
 import { type CssStyle } from "./__css_types__.js.flow";

@@ -1,5 +1,7 @@
 import * as React from 'react';
+import classnames from 'classnames';
 import {BaseTouchable} from './touchable';
+import * as styles from './icon-button.css';
 
 import type {DataAttributes, TrackingEvent} from './utils/types';
 
@@ -15,15 +17,9 @@ const getButtonStyle = (
     const normalizedIconSize = iconSize ? `${iconSize}px ${iconSize}px` : '100% 100%';
     return {
         padding: 0,
-        display: 'inline-block',
-        verticalAlign: 'middle',
-        textAlign: 'center',
         backgroundColor,
         backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : '',
-        backgroundPosition: '50% 50%',
         backgroundSize: normalizedIconSize,
-        backgroundRepeat: 'no-repeat',
-        border: 0,
         cursor: disabled ? 'default' : 'pointer',
         height: size,
         width: size,
@@ -89,15 +85,12 @@ type Props = HrefProps | ToProps | OnPressProps | MaybeProps;
  *     </IconButton />
  *
  */
-const IconButton: React.FC<Props> = (props) => {
-    const {icon, children, backgroundColor = 'transparent', iconSize, size = ICON_SIZE_1} = props;
+const RawIconButton: React.FC<Props> = (props) => {
+    const {icon, children} = props;
     const commonProps = {
         className: props.className || '',
         disabled: props.disabled,
-        style: {
-            ...getButtonStyle(icon, size, backgroundColor, iconSize, props.disabled),
-            ...props.style,
-        },
+        style: props.style,
         trackingEvent: props.trackingEvent,
         'aria-live': props['aria-live'],
         dataAttributes: props.dataAttributes,
@@ -141,6 +134,29 @@ const IconButton: React.FC<Props> = (props) => {
         <BaseTouchable {...commonProps} maybe>
             {!icon && React.Children.only(children)}
         </BaseTouchable>
+    );
+};
+
+const IconButton = (props: Props): JSX.Element => {
+    const {icon, backgroundColor = 'transparent', iconSize, size = ICON_SIZE_1} = props;
+    return (
+        <RawIconButton
+            {...props}
+            className={classnames(styles.base, props.className)}
+            style={{...getButtonStyle(icon, size, backgroundColor, iconSize, props.disabled), ...props.style}}
+        />
+    );
+};
+
+// Used internally by Mistica's components to avoid styles collisions
+export const BaseIconButton = (props: Props): JSX.Element => {
+    const {size = ICON_SIZE_1, disabled} = props;
+    return (
+        <RawIconButton
+            {...props}
+            className={classnames(styles.base, props.className)}
+            style={{height: size, width: size, cursor: disabled ? 'default' : 'pointer'}}
+        />
     );
 };
 
