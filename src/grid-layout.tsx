@@ -3,6 +3,7 @@ import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './grid-layout.css';
 import classnames from 'classnames';
+import DesktopContainerTypeContext from './desktop-container-type-context';
 
 import type {DataAttributes} from './utils/types';
 
@@ -98,8 +99,10 @@ const GridLayout: React.FC<Props> = (props) => {
     if (props.template === '6+6') {
         return (
             <div {...gridStyles} {...dataAttributes}>
-                <div {...spanStyles(6)}>{props.left}</div>
-                <div {...spanStyles(6)}>{props.right}</div>
+                <DesktopContainerTypeContext.Provider value="medium">
+                    <div {...spanStyles(6)}>{props.left}</div>
+                    <div {...spanStyles(6)}>{props.right}</div>
+                </DesktopContainerTypeContext.Provider>
             </div>
         );
     }
@@ -107,8 +110,12 @@ const GridLayout: React.FC<Props> = (props) => {
     if (props.template === '8+4') {
         return (
             <div {...gridStyles} {...dataAttributes}>
-                <div {...spanStyles(8)}>{props.left}</div>
-                <div {...spanStyles(4)}>{props.right}</div>
+                <DesktopContainerTypeContext.Provider value="medium">
+                    <div {...spanStyles(8)}>{props.left}</div>
+                </DesktopContainerTypeContext.Provider>
+                <DesktopContainerTypeContext.Provider value="small">
+                    <div {...spanStyles(4)}>{props.right}</div>
+                </DesktopContainerTypeContext.Provider>
             </div>
         );
     }
@@ -116,9 +123,13 @@ const GridLayout: React.FC<Props> = (props) => {
     if (props.template === '4+6') {
         return (
             <div {...gridStyles} {...dataAttributes}>
-                <div {...spanStyles(4)}>{props.left}</div>
+                <DesktopContainerTypeContext.Provider value="small">
+                    <div {...spanStyles(4)}>{props.left}</div>
+                </DesktopContainerTypeContext.Provider>
                 <div {...spanStyles(1)} />
-                <div {...spanStyles(6)}>{props.right}</div>
+                <DesktopContainerTypeContext.Provider value="medium">
+                    <div {...spanStyles(6)}>{props.right}</div>
+                </DesktopContainerTypeContext.Provider>
                 <div {...spanStyles(1)} />
             </div>
         );
@@ -127,11 +138,13 @@ const GridLayout: React.FC<Props> = (props) => {
     if (props.template === '5+4') {
         return (
             <div {...gridStyles} {...dataAttributes}>
-                <div {...spanStyles(1)} />
-                <div {...spanStyles(5)}>{props.left}</div>
-                <div {...spanStyles(1)} />
-                <div {...spanStyles(4)}>{props.right}</div>
-                <div {...spanStyles(1)} />
+                <DesktopContainerTypeContext.Provider value="small">
+                    <div {...spanStyles(1)} />
+                    <div {...spanStyles(5)}>{props.left}</div>
+                    <div {...spanStyles(1)} />
+                    <div {...spanStyles(4)}>{props.right}</div>
+                    <div {...spanStyles(1)} />
+                </DesktopContainerTypeContext.Provider>
             </div>
         );
     }
@@ -139,8 +152,12 @@ const GridLayout: React.FC<Props> = (props) => {
     if (props.template === '3+9') {
         return (
             <div {...gridStyles} {...dataAttributes}>
-                <div {...spanStyles(3)}>{props.left}</div>
-                <div {...spanStyles(9)}>{props.right}</div>
+                <DesktopContainerTypeContext.Provider value="small">
+                    <div {...spanStyles(3)}>{props.left}</div>
+                </DesktopContainerTypeContext.Provider>
+                <DesktopContainerTypeContext.Provider value="medium">
+                    <div {...spanStyles(9)}>{props.right}</div>
+                </DesktopContainerTypeContext.Provider>
             </div>
         );
     }
@@ -149,7 +166,9 @@ const GridLayout: React.FC<Props> = (props) => {
         return (
             <div {...gridStyles} {...dataAttributes}>
                 <div {...spanStyles(1)} />
-                <div {...spanStyles(10)}>{props.children}</div>
+                <DesktopContainerTypeContext.Provider value="large">
+                    <div {...spanStyles(10)}>{props.children}</div>
+                </DesktopContainerTypeContext.Provider>
                 <div {...spanStyles(1)} />
             </div>
         );
