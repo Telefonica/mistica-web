@@ -13,6 +13,8 @@ declare type Props = {
    */
   dataAttributes?: DataAttributes,
   "aria-label"?: string,
+  width?: number | string,
+  height?: number | string,
 };
 declare export var Boxed: React.AbstractComponent<Props, HTMLDivElement>;
 declare export {};
