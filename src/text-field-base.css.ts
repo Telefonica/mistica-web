@@ -1,0 +1,265 @@
+import {globalStyle, style} from '@vanilla-extract/css';
+import {sprinkles} from './sprinkles.css';
+import {vars} from './skins/skin-contract.css';
+import * as mq from './media-queries.css';
+
+const commonInputStyles = style([
+    sprinkles({
+        border: 'none',
+        minWidth: 0,
+        color: vars.colors.textPrimary,
+        width: '100%',
+    }),
+    {
+        background: 'none',
+        outline: 0,
+        fontSize: 'inherit',
+        lineHeight: 'inherit',
+        caretColor: vars.colors.controlActivated,
+        // Seems like 'display: flex' is causing issues on firefox and the input takes over the whole space https://stackoverflow.com/questions/43314921/strange-input-widths-in-firefox-vs-chrome
+        textOverflow: 'ellipsis',
+        selectors: {
+            '&::placeholder ': {
+                opacity: 0,
+                transition: 'opacity 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms',
+            },
+            '&:focus::placeholder ': {
+                opacity: 0.5,
+            },
+        },
+        boxShadow: 'none', // reset FF red shadow styles for required inputs
+    },
+]);
+
+export const container = style([
+    sprinkles({
+        display: 'flex',
+        flexDirection: 'column',
+    }),
+    {
+        minWidth: 96,
+    },
+]);
+
+export const fullWidth = style([
+    sprinkles({
+        width: '100%',
+        display: 'inline-flex',
+    }),
+]);
+
+globalStyle(`${fullWidth} > div`, {
+    width: '100%',
+    display: 'inline-flex',
+});
+
+export const textArea = style([
+    sprinkles({
+        padding: 0,
+    }),
+    {
+        resize: 'none',
+        paddingBottom: '8px',
+    },
+    commonInputStyles,
+]);
+
+export const textAreaWithLabel = style({
+    marginTop: 28,
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            marginTop: 24,
+        },
+    },
+});
+
+export const textAreaWithoutLabel = style({
+    marginTop: 16,
+});
+
+export const input = style([
+    sprinkles({
+        position: 'relative',
+        height: '100%',
+    }),
+    {
+        WebkitAppearance: 'none',
+        appearance: 'none',
+
+        selectors: {
+            '&::-webkit-search-cancel-button': {
+                WebkitAppearance: 'none',
+                appearance: 'none',
+            },
+            '&::-webkit-search-decoration': {
+                WebkitAppearance: 'none',
+                appearance: 'none',
+            },
+            // Chrome: make the native icon invisible and stretch it over the whole field so you can click
+            // anywhere in the input field to trigger the native datepicker
+            '&::-webkit-calendar-picker-indicator': {
+                position: 'absolute',
+                top: 0,
+                left: -24, // to fully cover input area
+                right: 0,
+                bottom: 0,
+                width: 'auto',
+                height: 'auto',
+                opacity: 0,
+                color: 'transparent',
+                background: 'transparent',
+            },
+
+            // Chrome: hide value if not valid or focused
+            // `opacity: 0` is needed when min/max is set and some parts of the date are disabled
+            // be sure to check that case when updating these styles
+            '&[type="month"]:not(:valid):not(:focus)::-webkit-datetime-edit': {
+                color: 'transparent',
+                opacity: 0,
+            },
+            '&[type="date"]:not(:valid):not(:focus)::-webkit-datetime-edit': {
+                color: 'transparent',
+                opacity: 0,
+            },
+            '&[type="datetime-local"]:not(:valid):not(:focus)::-webkit-datetime-edit': {
+                color: 'transparent',
+                opacity: 0,
+            },
+
+            // Override Chrome input autocomplete styles:
+            '&:-webkit-autofill': {
+                WebkitTextFillColor: vars.colors.textPrimary,
+                // The background can not be overriden, but we can delay the background color transition to avoid the change
+                transitionProperty: 'background-color',
+                transitionDelay: '99999s',
+            },
+        },
+    },
+    commonInputStyles,
+]);
+
+// Firefox: hide value if not valid or focused
+// Only apply when Firefox, otherwise it breaks styles in safari mobile
+export const inputFirefoxStyles = style({
+    selectors: {
+        '&[type="month"]:not(:valid):not(:focus)': {
+            color: 'transparent',
+        },
+        '&[type="date"]:not(:valid):not(:focus)': {
+            color: 'transparent',
+        },
+        '&[type="datetime-local"]:not(:valid):not(:focus)': {
+            color: 'transparent',
+        },
+    },
+});
+
+export const inputWithLabel = style({
+    paddingTop: 28,
+    '@media': {
+        [mq.tabletOrSmaller]: {
+            paddingTop: 24,
+        },
+    },
+    paddingBottom: 8,
+});
+
+export const inputWithoutLabel = style({
+    paddingTop: 16,
+    paddingBottom: 16,
+});
+
+export const endIcon = style([
+    sprinkles({
+        paddingLeft: 8,
+        paddingRight: 16,
+        display: 'flex',
+        alignItems: 'center',
+    }),
+    {
+        alignSelf: 'center',
+    },
+]);
+
+export const startIcon = style([
+    sprinkles({
+        paddingLeft: 12,
+        paddingRight: 12,
+        display: 'flex',
+        alignItems: 'center',
+        height: '100%',
+        position: 'absolute',
+    }),
+    {
+        pointerEvents: 'none', // passthrough click events to the input
+    },
+]);
+
+export const prefix = style([
+    sprinkles({
+        paddingLeft: 12,
+        paddingRight: 16,
+    }),
+    {
+        transition: 'opacity 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms',
+    },
+]);
+
+export const prefixWithLabel = style([
+    sprinkles({
+        paddingBottom: 8,
+    }),
+    {
+        paddingTop: 28,
+        '@media': {
+            [mq.tabletOrSmaller]: {
+                paddingTop: 24,
+            },
+        },
+    },
+]);
+
+export const prefixWithoutLabel = sprinkles({
+    paddingTop: 16,
+    paddingBottom: 16,
+});
+
+export const menuItem = style([
+    sprinkles({
+        height: 48,
+        display: 'flex',
+        alignItems: 'center',
+        cursor: 'pointer',
+    }),
+    {
+        padding: '6px 16px',
+        transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+        selectors: {
+            '&:hover': {
+                background: 'rgba(0, 0, 0, 0.08)',
+            },
+        },
+    },
+]);
+
+export const menuItemSelected = style({
+    background: 'rgba(0, 0, 0, 0.14)',
+});
+
+export const suggestionsContainer = style([
+    sprinkles({
+        position: 'absolute',
+    }),
+    {
+        boxShadow:
+            '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
+        background: 'white',
+        zIndex: 2, // one more than TextField label
+    },
+]);
+
+globalStyle(`${suggestionsContainer} > ul`, {
+    listStyleType: 'none',
+    padding: 0,
+    margin: 0,
+});

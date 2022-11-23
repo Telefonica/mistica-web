@@ -3,7 +3,7 @@ import {TextFieldBaseAutosuggest} from './text-field-base';
 import IconCalendarRegular from './generated/mistica-icons/icon-calendar-regular';
 import Datetime from 'react-datetime';
 import Overlay from './overlay';
-import {DEFAULT_WIDTH} from './text-field-components';
+import {DEFAULT_WIDTH} from './text-field-components.css';
 import IconButton from './icon-button';
 import {cancelEvent, createChangeEvent} from './utils/dom';
 import {useElementDimensions, useTheme} from './hooks';
