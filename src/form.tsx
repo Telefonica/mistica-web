@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {useAriaId, useTheme} from './hooks';
 import {FormContext} from './form-context';
-import {createUseStyles} from './jss';
 import classnames from 'classnames';
+import {sprinkles} from './sprinkles.css';
 
 import type {FormStatus, FormErrors, FieldRegistration} from './form-context';
 
@@ -17,12 +17,6 @@ if (
 }
 
 type FormValues = {[name: string]: any};
-
-const useStyles = createUseStyles(() => ({
-    form: {
-        width: '100%',
-    },
-}));
 
 type FormProps = {
     id?: string;
@@ -51,7 +45,6 @@ const Form: React.FC<FormProps> = ({
     const fieldRegistrations = React.useRef(new Map<string, FieldRegistration>());
     const formRef = React.useRef<HTMLFormElement | null>(null);
     const {texts} = useTheme();
-    const classes = useStyles();
     const id = useAriaId(idProp);
 
     React.useEffect(
@@ -207,7 +200,7 @@ const Form: React.FC<FormProps> = ({
                 id={id}
                 onSubmit={handleSubmit}
                 ref={formRef}
-                className={classnames(classes.form, className)}
+                className={classnames(sprinkles({width: '100%'}), className)}
                 noValidate
             >
                 {children}

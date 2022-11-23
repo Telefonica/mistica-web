@@ -1,105 +1,27 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import {createUseStyles} from './jss';
-import Touchable from './touchable';
+import {BaseTouchable} from './touchable';
 import ResponsiveLayout from './responsive-layout';
 import {useAriaId, useElementDimensions} from './hooks';
 import {Text3} from './text';
-import {pxToRem} from './utils/css';
 import {isRunningAcceptanceTest} from './utils/platform';
 import {getPrefixedDataAttributes} from './utils/dom';
+import * as styles from './tabs.css';
 
 import type {DataAttributes, TrackingEvent} from './utils/types';
 
-const TAB_MAX_WIDTH = 284;
-const TAB_HEIGHT = 56;
 const LINE_ANIMATION_DURATION_MS = isRunningAcceptanceTest() ? 0 : 300;
 
-const useStyles = createUseStyles(({colors, mq}) => ({
-    outerBorder: {
-        borderBottom: `1px solid ${colors.divider}`,
-    },
-    outer: {
-        height: TAB_HEIGHT,
-        position: 'relative',
-        overflow: 'hidden',
-        [mq.tabletOrSmaller]: {
-            display: 'flex',
-        },
-    },
-    inner: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        // if tabs don't fit horizontally they can be scrolled
-        overflowX: 'scroll',
-        // this height is to hide the scrollbar
-        height: 80,
-        overflowY: 'hidden',
-    },
-    tabsContainer: {
-        height: TAB_HEIGHT,
-        display: 'flex',
-    },
-    tab: {
-        flex: '1 0 80px',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingLeft: 16,
-        paddingRight: 16,
-        verticalAlign: 'baseline',
-        height: TAB_HEIGHT,
-        textAlign: 'center',
-        color: colors.textSecondary,
-        borderBottom: '2px solid transparent',
-        maxWidth: ({numTabs}) => {
-            if (numTabs === 2) {
-                return `max(50%, ${TAB_MAX_WIDTH}px)`;
-            } else if (numTabs === 3) {
-                return `max(33.33%, ${TAB_MAX_WIDTH}px)`;
-            }
-            return TAB_MAX_WIDTH;
-        },
-        [mq.supportsHover]: {
-            '&:hover': {
-                color: colors.textPrimary,
-            },
-        },
-        fallbacks: {
-            maxWidth: TAB_MAX_WIDTH, // max() is not supported by all browsers
-        },
-        [mq.desktopOrBigger]: {
-            flex: '0 1 208px',
-            padding: `16px 32px`,
-            maxWidth: TAB_MAX_WIDTH,
-        },
-    },
-    tabWithIcon: {
-        flexBasis: 112,
-        [mq.desktopOrBigger]: {
-            flexBasis: 208,
-        },
-    },
-    tabSelected: {
-        color: colors.textPrimary,
-        borderBottom: ({isAnimating}) =>
-            isAnimating ? '2px solid transparent' : `2px solid ${colors.controlActivated}`,
-    },
-    icon: {
-        marginRight: 8,
-        height: pxToRem(24),
-        width: pxToRem(24),
-    },
-    animatedLine: {
-        display: 'none', // will be overriden by inline styles in animateLine function
-        position: 'absolute',
-        left: 0,
-        bottom: 0,
-        height: 2,
-        background: colors.controlActivated,
-    },
-}));
+const getTabVariant = (numberOfTabs: number): keyof typeof styles.tabVariants => {
+    switch (numberOfTabs) {
+        case 2:
+            return 'tabs2';
+        case 3:
+            return 'tabs3';
+        default:
+            return 'default';
+    }
+};
 
 export type TabsProps = {
     selectedIndex: number;
@@ -116,11 +38,10 @@ export type TabsProps = {
 
 const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttributes}: TabsProps) => {
     const id = useAriaId();
-    const {width, ref} = useElementDimensions();
+    const {ref} = useElementDimensions();
     const animatedLineRef = React.useRef<HTMLDivElement>(null);
     const scrollableContainerRef = React.useRef<HTMLDivElement>(null);
     const [isAnimating, setIsAnimating] = React.useState(false);
-    const classes = useStyles({width, numTabs: tabs.length, isAnimating});
 
     const animateLine = (fromIndex: number, toIndex: number) => {
         const tabFrom = document.querySelector<HTMLElement>(`#${id} [data-tabindex="${fromIndex}"]`);
@@ -153,23 +74,27 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
             id={id}
             role="tablist"
             ref={ref}
-            className={classes.outerBorder}
+            className={styles.outerBorder}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
             <ResponsiveLayout fullWidth>
-                <div className={classes.outer}>
-                    <div ref={scrollableContainerRef} className={classes.inner}>
-                        <div className={classes.tabsContainer}>
+                <div className={styles.outer}>
+                    <div ref={scrollableContainerRef} className={styles.inner}>
+                        <div className={styles.tabsContainer}>
                             {tabs.map(({text, trackingEvent, icon, 'aria-controls': ariaControls}, index) => {
                                 const isSelected = index === selectedIndex;
                                 return (
-                                    <Touchable
+                                    <BaseTouchable
                                         dataAttributes={{tabindex: index}}
                                         key={index}
                                         className={classnames(
-                                            classes.tab,
-                                            isSelected && classes.tabSelected,
-                                            icon && classes.tabWithIcon
+                                            styles.tabVariants[getTabVariant(tabs.length)],
+                                            isSelected
+                                                ? isAnimating
+                                                    ? styles.tabSelectionVariants.selectedAnimating
+                                                    : styles.tabSelectionVariants.selected
+                                                : styles.tabSelectionVariants.noSelected,
+                                            icon && styles.tabWithIcon
                                         )}
                                         disabled={isSelected}
                                         onPress={() => {
@@ -183,16 +108,16 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
                                         aria-controls={ariaControls}
                                         aria-selected={isSelected ? 'true' : 'false'}
                                     >
-                                        {icon && <div className={classes.icon}>{icon}</div>}
+                                        {icon && <div className={styles.icon}>{icon}</div>}
                                         <Text3 medium color="inherit" wordBreak={false}>
                                             {text}
                                         </Text3>
-                                    </Touchable>
+                                    </BaseTouchable>
                                 );
                             })}
                         </div>
                     </div>
-                    <div ref={animatedLineRef} className={classes.animatedLine} />
+                    <div ref={animatedLineRef} className={styles.animatedLine} />
                 </div>
             </ResponsiveLayout>
         </div>

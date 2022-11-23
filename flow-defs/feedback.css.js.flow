@@ -1,0 +1,9 @@
+// @flow
+
+declare export var desktopContainer: string;
+declare export var desktopContent: string;
+declare export var container: string;
+declare export var innerContainer: string;
+declare export var feedbackDataAppear: string;
+declare export var feedbackDataAppearActive: string;
+declare export var feedbackData: string;

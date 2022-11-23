@@ -1,0 +1,6 @@
+// @flow
+
+declare export var spinnerDefault: string;
+declare export var spinnerDefaultPath: string;
+declare export var spinnerIos: string;
+declare export var spinnerIosSvgPath: string;
