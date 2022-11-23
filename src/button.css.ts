@@ -194,12 +194,14 @@ const lightSecondary: ComplexStyleRule = [
         selectors: {
             '&:enabled:active': {
                 color: vars.colors.textButtonSecondarySelected,
-                borderColor: vars.colors.buttonSecondaryBackgroundSelected,
+                borderColor: vars.colors.buttonSecondaryBorderSelected,
+                backgroundColor: vars.colors.buttonSecondaryBackgroundSelected,
             },
 
             '&:hover:not([disabled])': {
                 color: vars.colors.textButtonSecondarySelected,
-                borderColor: vars.colors.buttonSecondaryBackgroundSelected,
+                borderColor: vars.colors.buttonSecondaryBorderSelected,
+                backgroundColor: vars.colors.buttonSecondaryBackgroundSelected,
 
                 '@media': {
                     [mq.touchableOnly]: {
@@ -226,11 +228,13 @@ const lightSecondaryInverse: ComplexStyleRule = [
             '&:enabled:active': {
                 borderColor: vars.colors.buttonSecondaryBorderSelectedInverse,
                 color: vars.colors.textButtonSecondaryInverseSelected,
+                backgroundColor: vars.colors.buttonSecondaryBackgroundSelectedInverse,
             },
 
             '&:hover:not([disabled])': {
                 borderColor: vars.colors.buttonSecondaryBorderSelectedInverse,
                 color: vars.colors.textButtonSecondaryInverseSelected,
+                backgroundColor: vars.colors.buttonSecondaryBackgroundHoverInverse,
 
                 '@media': {
                     [mq.touchableOnly]: {

@@ -108,7 +108,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             buttonSecondaryBackgroundHover: palette.movistarBlue10, // web only
             buttonSecondaryBackgroundSelected: palette.movistarBlue10,     
             buttonSecondaryBorderInverse: palette.white,
-            buttonSecondaryBorderSelectedInverse: palette.movistarBlue30, 
+            buttonSecondaryBorderSelectedInverse: palette.white, 
             buttonSecondaryBackgroundHoverInverse: applyAlpha(palette.movistarBlue, 0.2), // web only
             buttonSecondaryBackgroundSelectedInverse: applyAlpha(palette.movistarBlue, 0.2),
 
@@ -222,7 +222,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             buttonSecondaryBackgroundHover: palette.movistarBlue10,
             buttonSecondaryBackgroundSelected: applyAlpha(palette.movistarBlue, 0.2),
             buttonSecondaryBorder:palette.white,
-            buttonSecondaryBorderSelected:palette.movistarBlue30,
+            buttonSecondaryBorderSelected:palette.white,
             
 
 
