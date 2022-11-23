@@ -45,7 +45,12 @@ export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages,
         <Inline space={isDesktopOrBigger ? 16 : 8} alignItems="center">
             {Array.from({length: numPages}, (_, i: number) => (
                 <BaseTouchable
-                    className={sprinkles({padding: 0, border: 'none', background: 'transparent'})}
+                    className={sprinkles({
+                        display: 'block',
+                        padding: 0,
+                        border: 'none',
+                        background: 'transparent',
+                    })}
                     key={i}
                     maybe
                     onPress={isDesktopOrBigger && onPress ? () => onPress(i) : undefined}
