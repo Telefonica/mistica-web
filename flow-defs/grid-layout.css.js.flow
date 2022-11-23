@@ -1,5 +1,8 @@
 // @flow
 
+declare export var desktopSmallColumn: string;
+declare export var desktopMediumColumn: string;
+declare export var desktopLargeColumn: string;
 declare export var grid: string;
 declare export var span: string;
 declare export var vars: {

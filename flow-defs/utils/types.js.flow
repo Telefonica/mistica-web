@@ -11,11 +11,5 @@ export type IconProps = {
   className?: string,
   style?: CssStyle,
 };
-export type ContainerType =
-  | "desktop-small-column"
-  | "desktop-medium-column"
-  | "desktop-wide-column"
-  | "tablet-column"
-  | "mobile-column";
 
 import { type CssStyle } from "../__css_types__.js.flow";

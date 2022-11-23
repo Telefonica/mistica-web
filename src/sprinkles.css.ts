@@ -36,7 +36,7 @@ const commonProperties = defineProperties({
         paddingRight: sizes,
         width: ['100%', 'auto', ...sizes],
         height: ['100%', ...sizes],
-        minWidth: sizes,
+        minWidth: ['100%', ...sizes],
         minHeight: sizes,
         maxWidth: ['100%'],
         maxHeight: ['100%'],
