@@ -18,12 +18,6 @@ const mapToWeight = {
     bold: 700,
 };
 
-const inverseColorsMap = {
-    [vars.colors.textPrimary]: vars.colors.textPrimaryInverse,
-    [vars.colors.textSecondary]: vars.colors.textSecondaryInverse,
-    [vars.colors.textLink]: vars.colors.textLinkInverse,
-};
-
 const lineClamp = (truncate?: boolean | number) => {
     if (truncate === true) {
         return 1;
@@ -42,6 +36,7 @@ export interface TextPresetProps {
     truncate?: boolean | number;
     wordBreak?: boolean;
     hyphens?: 'auto' | 'manual' | 'none';
+    textAlign?: 'center';
     id?: string;
     as?: React.ComponentType<any> | string;
     role?: string;
@@ -83,6 +78,7 @@ export const Text: React.FC<TextProps> = ({
     mobileLineHeight = lineHeight,
     desktopLineHeight = lineHeight,
     letterSpacing,
+    textAlign,
     id,
     role,
     'aria-level': ariaLevel,
@@ -90,6 +86,18 @@ export const Text: React.FC<TextProps> = ({
 }) => {
     const isInverse = useIsInverseVariant();
     const lineClampValue = lineClamp(truncate);
+    const {colors} = useTheme();
+
+    const inverseColorsMap = {
+        [vars.colors.textPrimary]: vars.colors.textPrimaryInverse,
+        [vars.colors.textSecondary]: vars.colors.textSecondaryInverse,
+        [vars.colors.textLink]: vars.colors.textLinkInverse,
+
+        // we still need to support colors injected in useTheme, which are not css vars
+        [colors.textPrimary]: colors.textPrimaryInverse,
+        [colors.textSecondary]: colors.textSecondaryInverse,
+        [colors.textLink]: colors.textLinkInverse,
+    };
 
     if (!children && children !== 0) {
         return null;
@@ -122,7 +130,6 @@ export const Text: React.FC<TextProps> = ({
             style: {
                 ...sizeVars,
                 ...textVars,
-                margin: 0, // Needed to reset the default browser margin that adds to p, h1, h2... elements.
                 hyphens,
                 letterSpacing,
                 fontWeight: weight ? mapToWeight[weight] : 'inherit',
@@ -130,6 +137,7 @@ export const Text: React.FC<TextProps> = ({
                 textDecoration: decoration ?? 'inherit',
                 overflowWrap: wordBreak ? 'anywhere' : 'inherit',
                 color: isInverse ? inverseColorsMap[color] ?? color : color,
+                textAlign,
             },
         },
         children
