@@ -175,15 +175,16 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
      */
 
     import * as React from 'react';
-    import {useTheme} from '../../hooks';
+    ${hasVariants ? "import {useTheme} from '../../hooks';" : ''}
     import {useIsInverseVariant} from '../../theme-variant-context';
+    import {vars} from '../../skins/skin-contract.css';
 
     import type {IconProps} from '../../utils/types';
 
     const ${componentName}: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
-        const {${hasVariants ? 'skinName, ' : ''}colors} = useTheme();
         const isInverse = useIsInverseVariant();
-        const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
+        const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+        ${hasVariants ? 'const {skinName} = useTheme();' : ''}
         ${getVariants()}
     };
 

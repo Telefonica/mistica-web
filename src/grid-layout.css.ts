@@ -1,6 +1,10 @@
 import {createVar, fallbackVar, style} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 
+export const desktopSmallColumn = style({});
+export const desktopMediumColumn = style({});
+export const desktopLargeColumn = style({});
+
 const verticalSpace = createVar();
 export const grid = style({
     display: 'grid',

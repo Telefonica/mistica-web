@@ -6,7 +6,6 @@
  */
 import * as React from 'react';
 import classNames from 'classnames';
-import {createUseStyles} from './jss';
 import Touchable from './touchable';
 import {Text3, Text2, Text1} from './text';
 import Box from './box';
@@ -21,93 +20,11 @@ import Checkbox from './checkbox';
 import {Boxed} from './boxed';
 import Divider from './divider';
 import {getPrefixedDataAttributes} from './utils/dom';
+import * as styles from './list.css';
 
 import type {TouchableElement} from './touchable';
 import type {DataAttributes, TrackingEvent} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
-
-const useStyles = createUseStyles(({colors, mq}) => ({
-    disabled: {
-        opacity: 0.5,
-    },
-    hover: {
-        [mq.supportsHover]: {
-            '&:hover': {
-                background: ({isInverse, disabled}) =>
-                    isInverse || disabled ? 'initial' : colors.backgroundAlternative,
-            },
-        },
-    },
-    rowContent: {
-        width: '100%',
-        cursor: ({disabled}) => (disabled ? 'default' : 'pointer'),
-    },
-    hoverDisabled: {
-        cursor: () => 'initial',
-        '&:hover': {
-            background: () => 'none',
-        },
-    },
-    content: {
-        display: 'flex',
-        width: '100%',
-        minHeight: 72,
-    },
-    asset: {
-        display: 'flex',
-        flexShrink: 0,
-        flexGrow: 0,
-    },
-    rowBody: {
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-    },
-    center: {
-        display: 'flex',
-        alignItems: 'center',
-    },
-    badge: {
-        justifyContent: 'center',
-        minWidth: 16,
-        height: '100%',
-        flexShrink: 0,
-    },
-    control: {
-        marginLeft: 16,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        flexGrow: 0,
-        flexShrink: 0,
-    },
-    right: {
-        marginLeft: 16,
-    },
-    centeredControl: {
-        display: 'flex',
-        alignItems: 'center',
-        height: '100%',
-    },
-    dualActionContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-    },
-    dualActionLeft: {
-        flexGrow: 1,
-        padding: '0 16px',
-    },
-    dualActionRight: {
-        padding: '0 16px',
-        margin: '16px 0',
-        borderLeft: `1px solid ${colors.divider}`,
-        display: 'flex',
-        alignItems: 'center',
-        flexGrow: 0,
-        width: 'auto',
-        lineHeight: 0,
-    },
-}));
 
 interface CommonProps {
     children?: void; // no children allowed
@@ -165,7 +82,6 @@ const Content: React.FC<ContentProps> = ({
     disabled,
 }) => {
     const isInverse = useIsInverseVariant();
-    const classes = useStyles({isInverse});
     const {colors} = useTheme();
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
     const centerY = numTextLines === 1;
@@ -176,24 +92,24 @@ const Content: React.FC<ContentProps> = ({
         }
         return (
             <Box paddingLeft={16}>
-                <div className={classNames(classes.center, classes.badge, {[classes.disabled]: disabled})}>
+                <div className={classNames(styles.center, styles.badge, {[styles.disabled]: disabled})}>
                     {badge === true ? <Badge /> : <Badge value={badge} />}
                 </div>
             </Box>
         );
     };
     return (
-        <Box paddingY={16} className={classes.content}>
+        <Box paddingY={16} className={styles.content}>
             {asset && (
                 <Box
                     paddingRight={16}
-                    className={classNames({[classes.center]: centerY, [classes.disabled]: disabled})}
+                    className={classNames({[styles.center]: centerY, [styles.disabled]: disabled})}
                 >
-                    <div className={classes.asset}>{asset}</div>
+                    <div className={styles.asset}>{asset}</div>
                 </Box>
             )}
             <div
-                className={classNames(classes.rowBody, {[classes.disabled]: disabled})}
+                className={classNames(styles.rowBody, {[styles.disabled]: disabled})}
                 style={{justifyContent: centerY ? 'center' : 'flex-start'}}
             >
                 <Stack space={4}>
@@ -222,23 +138,23 @@ const Content: React.FC<ContentProps> = ({
             </div>
             {renderBadge()}
             {type === 'chevron' && (
-                <Box paddingLeft={16} className={classNames(classes.center, {[classes.disabled]: disabled})}>
+                <Box paddingLeft={16} className={classNames(styles.center, {[styles.disabled]: disabled})}>
                     <IconChevron
                         color={isInverse ? colors.inverse : colors.neutralMedium}
                         direction="right"
                     />
                 </Box>
             )}
-            {type === 'control' && <div className={classes.right}>{renderRight(right, centerY)}</div>}
+            {type === 'control' && <div className={styles.right}>{renderRight(right, centerY)}</div>}
             {type === 'custom' && (
                 <>
-                    <div className={classNames(classes.right, {[classes.disabled]: disabled})}>
+                    <div className={classNames(styles.right, {[styles.disabled]: disabled})}>
                         {renderRight(right, centerY)}
                     </div>
                     {withChevron && (
                         <Box
                             paddingLeft={4}
-                            className={classNames(classes.center, {[classes.disabled]: disabled})}
+                            className={classNames(styles.center, {[styles.disabled]: disabled})}
                         >
                             <IconChevron
                                 color={isInverse ? colors.inverse : colors.neutralMedium}
@@ -371,10 +287,6 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const radioContext = useRadioContext();
     const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
 
-    const classes = useStyles({
-        isInverse,
-        disabled,
-    });
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
     const renderContent = ({
@@ -434,7 +346,10 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         return (
             <Touchable
                 ref={ref}
-                className={classNames(classes.rowContent, classes.hover)}
+                className={classNames(styles.rowContent, {
+                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.pointer]: !disabled,
+                })}
                 trackingEvent={props.trackingEvent}
                 onPress={props.onPress}
                 role={role}
@@ -449,7 +364,10 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     if (props.to) {
         return (
             <Touchable
-                className={classNames(classes.rowContent, classes.hover)}
+                className={classNames(styles.rowContent, {
+                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.pointer]: !disabled,
+                })}
                 trackingEvent={props.trackingEvent}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
@@ -465,7 +383,10 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     if (props.href) {
         return (
             <Touchable
-                className={classNames(classes.rowContent, classes.hover)}
+                className={classNames(styles.rowContent, {
+                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.pointer]: !disabled,
+                })}
                 trackingEvent={props.trackingEvent}
                 href={props.href}
                 newTab={props.newTab}
@@ -482,18 +403,20 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
 
         return props.onPress ? (
-            <div className={classes.dualActionContainer}>
+            <div className={styles.dualActionContainer}>
                 <Touchable
                     disabled={disabled}
                     onPress={props.onPress}
                     role={role}
-                    className={classNames(classes.dualActionLeft, classes.hover)}
+                    className={classNames(styles.dualActionLeft, {
+                        [styles.hoverBackground]: !(disabled || isInverse),
+                    })}
                 >
                     {renderContent({type: 'basic', labelId: titleId})}
                 </Touchable>
                 <Touchable
                     disabled={disabled}
-                    className={classes.dualActionRight}
+                    className={styles.dualActionRight}
                     onPress={toggle}
                     dataAttributes={dataAttributes}
                 >
@@ -507,7 +430,12 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 </Touchable>
             </div>
         ) : (
-            <div className={classNames(classes.rowContent, classes.hover)}>
+            <div
+                className={classNames(styles.rowContent, {
+                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.pointer]: !disabled,
+                })}
+            >
                 <Control
                     disabled={disabled}
                     dataAttributes={dataAttributes}
@@ -539,7 +467,10 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     if (props.radioValue) {
         return (
             <div
-                className={classNames(classes.rowContent, classes.hover)}
+                className={classNames(styles.rowContent, {
+                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.pointer]: !disabled,
+                })}
                 role={role}
                 ref={ref as React.Ref<HTMLDivElement>}
             >
@@ -564,7 +495,10 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     return (
         <Box
             paddingX={16}
-            className={classNames(classes.rowContent, classes.hover, classes.hoverDisabled)}
+            className={classNames(styles.rowContent, {
+                [styles.hoverBackground]: !(disabled || isInverse),
+                [styles.pointer]: !disabled,
+            })}
             role={role}
         >
             {props.right

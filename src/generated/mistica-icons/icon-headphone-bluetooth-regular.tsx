@@ -5,15 +5,15 @@
  */
 
 import * as React from 'react';
-import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
+import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
 const IconHeadphoneBluetoothRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
-    const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
-    const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
+    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path d="M12.767 11.674l-.54.568.003-1.136.537.568z" fill={fillColor} />
