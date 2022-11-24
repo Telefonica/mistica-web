@@ -41,12 +41,10 @@ export const container = style([
     },
 ]);
 
-export const fullWidth = style([
-    sprinkles({
-        width: '100%',
-        display: 'inline-flex',
-    }),
-]);
+export const fullWidth = sprinkles({
+    width: '100%',
+    display: 'inline-flex',
+});
 
 globalStyle(`${fullWidth} > div`, {
     width: '100%',
@@ -164,7 +162,7 @@ export const inputWithLabel = style({
     paddingBottom: 8,
 });
 
-export const inputWithoutLabel = style({
+export const inputWithoutLabel = sprinkles({
     paddingTop: 16,
     paddingBottom: 16,
 });
@@ -183,8 +181,7 @@ export const endIcon = style([
 
 export const startIcon = style([
     sprinkles({
-        paddingLeft: 12,
-        paddingRight: 12,
+        paddingX: 12,
         display: 'flex',
         alignItems: 'center',
         height: '100%',
@@ -220,8 +217,7 @@ export const prefixWithLabel = style([
 ]);
 
 export const prefixWithoutLabel = sprinkles({
-    paddingTop: 16,
-    paddingBottom: 16,
+    paddingY: 16,
 });
 
 export const menuItem = style([
@@ -242,8 +238,8 @@ export const menuItem = style([
     },
 ]);
 
-export const menuItemSelected = style({
-    background: 'rgba(0, 0, 0, 0.14)',
+export const menuItemSelected = sprinkles({
+    background: vars.colors.backgroundAlternative,
 });
 
 export const suggestionsContainer = style([

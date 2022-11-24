@@ -30,7 +30,6 @@ export const Label: React.FC<LabelProps> = ({
     optional,
 }) => {
     const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
-    // const classes = useLabelStyles({inputState, error});
     const [transitionStyle, setTransitionStyle] = React.useState('');
     const {texts} = useTheme();
 
@@ -150,9 +149,9 @@ export const FieldContainer: React.FC<FieldContainerProps> = ({
                 className={classnames(
                     styles.field,
                     multiline ? styles.fieldMulti : styles.fieldSingle,
-                    readOnly
-                        ? sprinkles({background: vars.colors.neutralLow})
-                        : sprinkles({background: vars.colors.backgroundContainer}),
+                    sprinkles({
+                        background: readOnly ? vars.colors.neutralLow : vars.colors.backgroundContainer,
+                    }),
                     className
                 )}
                 ref={fieldRef}
