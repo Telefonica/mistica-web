@@ -18,17 +18,6 @@ type Props = {
     dataAttributes?: DataAttributes;
 };
 
-const getJustifyContent = (space: Props['space']) => {
-    switch (space) {
-        case 'between':
-        case 'around':
-        case 'evenly':
-            return `space-${space}`;
-        default:
-            return 'initial';
-    }
-};
-
 const Inline: React.FC<Props> = ({
     space,
     className,
@@ -46,13 +35,13 @@ const Inline: React.FC<Props> = ({
             className={classnames(
                 className,
                 sprinkles({alignItems}),
-                isFullWith ? styles.fullWidth : styles.noFullWidth
+                isFullWith ? styles.fullWidth : styles.noFullWidth,
+                typeof space !== 'number' && styles.justifyVariants[space]
             )}
             style={{
                 ...assignInlineVars({
                     [styles.vars.space]: typeof space === 'number' ? `${space}px` : '',
                 }),
-                justifyContent: getJustifyContent(space),
             }}
             role={role}
             aria-labelledby={ariaLabelledBy}

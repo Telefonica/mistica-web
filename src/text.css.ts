@@ -37,6 +37,7 @@ export const withoutWordBreak = style({
 });
 
 export const text = style({
+    margin: 0, // Needed to reset the default browser margin that adds to p, h1, h2... elements.
     fontSize: desktopSize,
     lineHeight: desktopLineHeight,
 

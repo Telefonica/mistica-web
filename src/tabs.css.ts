@@ -57,7 +57,6 @@ const baseTab = style([
     {
         flex: '1 0 80px',
         verticalAlign: 'baseline',
-        textAlign: 'center',
         borderBottom: '2px solid transparent',
         borderTop: 'initial',
         borderRight: 'initial',
