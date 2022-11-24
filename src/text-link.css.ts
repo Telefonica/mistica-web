@@ -73,7 +73,3 @@ export const variants = styleVariants({
         },
     ],
 });
-
-export const small = style({
-    fontSize: 14,
-});
