@@ -18,6 +18,7 @@ declare type Props = {
   providerId?: string,
   as?: string,
   children?: React.Node,
+  experimental_disableCssInJs?: boolean,
 };
 declare var ThemeContextProvider: React.ComponentType<Props>;
 declare export default typeof ThemeContextProvider;
