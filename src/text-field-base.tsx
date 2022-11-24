@@ -265,10 +265,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                         </Text3>
                     </div>
                 )}
-                <div
-                    className={classNames(styles.fullWidth)}
-                    style={{alignSelf: prefix ? 'baseline' : 'initial'}}
-                >
+                <div className={styles.fullWidth} style={{alignSelf: prefix ? 'baseline' : 'initial'}}>
                     <Text3 as="div" regular>
                         {React.createElement(inputComponent || defaultInputElement, {
                             ...inputRefProps,
