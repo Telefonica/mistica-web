@@ -43,19 +43,25 @@ const Box = React.forwardRef<HTMLDivElement, Props>(
         },
         ref
     ) => {
+        const paddingStyles = {paddingTop, paddingBottom, paddingLeft, paddingRight};
+        let paddingClasses = '';
+        try {
+            paddingClasses = sprinkles(paddingStyles);
+        } catch (e) {
+            // if this fails, it's because the consumer passed in a value that is not a valid padding size
+            // fallback to inline styles in that case.
+        }
+
         return (
             <div
                 {...getPrefixedDataAttributes(dataAttributes)}
                 role={role}
                 aria-label={ariaLabel}
                 ref={ref}
-                className={classnames(
-                    className,
-                    sprinkles({paddingTop, paddingBottom, paddingLeft, paddingRight})
-                )}
+                className={classnames(className, paddingClasses)}
                 style={{
-                    width,
-                    boxSizing: 'border-box',
+                    ...(width !== undefined ? {width, boxSizing: 'border-box'} : {}),
+                    ...(!paddingClasses ? paddingStyles : {}),
                 }}
             >
                 {children}

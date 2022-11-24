@@ -33,6 +33,22 @@ import type {Theme, ThemeConfig} from './theme';
  */
 const misticaCss = '<MISTICA_CSS>';
 
+const MisticaCss = () => {
+    useIsomorphicLayoutEffect(() => {
+        if (document.getElementById('mistica-css')) {
+            return;
+        }
+        const style = document.createElement('style');
+        style.id = 'mistica-css';
+        style.innerHTML = misticaCss;
+        document.head.prepend(style);
+        return () => {
+            document.head.removeChild(style);
+        };
+    }, []);
+    return null;
+};
+
 const darkModeMedia = '(prefers-color-scheme: dark)';
 export const useIsOsDarkModeEnabled = (): boolean => {
     const [isDarkMode, setIsDarkMode] = React.useState(false);
@@ -76,6 +92,7 @@ type Props = {
     providerId?: string;
     as?: string;
     children?: React.ReactNode;
+    experimental_disableCssInJs?: boolean;
 };
 
 const generateId = (() => {
@@ -113,7 +130,13 @@ const sanitizeDimensions = (dimensions: ThemeConfig['dimensions']): Partial<Them
     };
 };
 
-const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId, as}) => {
+const ThemeContextProvider: React.FC<Props> = ({
+    theme,
+    children,
+    providerId,
+    as,
+    experimental_disableCssInJs,
+}) => {
     const [instanceId] = React.useState(() => {
         if (providerId) {
             return providerId;
@@ -207,9 +230,8 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId, as}
                                     <AriaIdGetterContext.Provider value={getAriaId}>
                                         <ScreenSizeContextProvider>
                                             <DialogRoot>
-                                                {process.env.NODE_ENV !== 'test' && (
-                                                    <style>{misticaCss}</style>
-                                                )}
+                                                {process.env.NODE_ENV !== 'test' &&
+                                                    !experimental_disableCssInJs && <MisticaCss />}
                                                 {as ? (
                                                     React.createElement(as, {style: themeVars}, children)
                                                 ) : (

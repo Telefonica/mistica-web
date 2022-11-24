@@ -493,14 +493,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     }
 
     return (
-        <Box
-            paddingX={16}
-            className={classNames(styles.rowContent, {
-                [styles.hoverBackground]: !(disabled || isInverse),
-                [styles.pointer]: !disabled,
-            })}
-            role={role}
-        >
+        <Box paddingX={16} className={styles.rowContent} role={role}>
             {props.right
                 ? renderContent({type: 'custom', right: props.right})
                 : renderContent({type: 'basic'})}

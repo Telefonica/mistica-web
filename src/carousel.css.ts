@@ -1,4 +1,4 @@
-import {createVar, globalStyle, style} from '@vanilla-extract/css';
+import {createVar, fallbackVar, globalStyle, style} from '@vanilla-extract/css';
 import {vars as skinVars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
 import {applyAlpha} from './utils/color';
@@ -137,8 +137,10 @@ export const carousel = style([
     },
 ]);
 
+const responsiveLayoutSideMargin = fallbackVar(responsiveLayoutVars.sideMargin, '0px');
+
 export const carouselWithScroll = style({
-    margin: `0 calc(${responsiveLayoutVars.sideMargin} * -1)`,
+    margin: `0 calc(${responsiveLayoutSideMargin} * -1)`,
 });
 
 export const centeredCarousel = style({
@@ -185,12 +187,12 @@ export const carouselItem = style({
                     width: `calc(1 / ${itemsPerPageMobile} * 100% - (${mobilePageOffsetNext} + ${mobilePageOffsetPrev} + ${gap}) / ${itemsPerPageMobile} * 1px)`,
                 },
                 [`${carouselWithScroll}:not(${centeredCarousel}) &:first-child`]: {
-                    paddingLeft: responsiveLayoutVars.sideMargin,
-                    width: `calc(1 / ${itemsPerPageMobile} * 100% - (${mobilePageOffsetNext} + ${mobilePageOffsetPrev} + ${gap}) / ${itemsPerPageMobile} * 1px - ${gap} * 1px + ${responsiveLayoutVars.sideMargin})`,
+                    paddingLeft: responsiveLayoutSideMargin,
+                    width: `calc(1 / ${itemsPerPageMobile} * 100% - (${mobilePageOffsetNext} + ${mobilePageOffsetPrev} + ${gap}) / ${itemsPerPageMobile} * 1px - ${gap} * 1px + ${responsiveLayoutSideMargin})`,
                 },
                 [`${carouselWithScroll}:not(${centeredCarousel}) &:last-child`]: {
-                    paddingRight: responsiveLayoutVars.sideMargin,
-                    width: `calc(1 / ${itemsPerPageMobile} * 100% - (${mobilePageOffsetNext} + ${mobilePageOffsetPrev} + ${gap}) / ${itemsPerPageMobile} * 1px + ${responsiveLayoutVars.sideMargin})`,
+                    paddingRight: responsiveLayoutSideMargin,
+                    width: `calc(1 / ${itemsPerPageMobile} * 100% - (${mobilePageOffsetNext} + ${mobilePageOffsetPrev} + ${gap}) / ${itemsPerPageMobile} * 1px + ${responsiveLayoutSideMargin})`,
                 },
                 [`${centeredCarousel} &`]: {
                     width: '50%',
@@ -227,7 +229,7 @@ export const carouselPrevArrowButton = style([
         left: -arrowButtonSize / 2,
         '@media': {
             [mq.tabletOrSmaller]: {
-                left: `calc(${responsiveLayoutVars.sideMargin} * -1)`,
+                left: `calc(${responsiveLayoutSideMargin} * -1)`,
             },
             [mq.largeDesktop]: {
                 left: -(24 + arrowButtonSize),
@@ -250,7 +252,7 @@ export const carouselNextArrowButton = style([
         right: -arrowButtonSize / 2,
         '@media': {
             [mq.tabletOrSmaller]: {
-                right: `calc(${responsiveLayoutVars.sideMargin} * -1)`,
+                right: `calc(${responsiveLayoutSideMargin} * -1)`,
             },
             [mq.largeDesktop]: {
                 right: -(24 + arrowButtonSize),
@@ -283,7 +285,7 @@ export const slideshow = style([
         scrollSnapType: 'x mandatory',
         '@media': {
             [mq.tabletOrSmaller]: {
-                margin: `0 calc(${responsiveLayoutVars.sideMargin} * -1)`,
+                margin: `0 calc(${responsiveLayoutSideMargin} * -1)`,
             },
         },
     },

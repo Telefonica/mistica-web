@@ -623,7 +623,7 @@ const tabsSnippets: Array<Snippet> = [
         group: 'Tabs',
         name: 'Tabs (without icons)',
         code: `
-        <Tabs selectedIndex={0}
+        <Tabs
             selectedIndex={getState('tabIndex', 0)}
             onChange={setState('tabIndex')}
             tabs={[
