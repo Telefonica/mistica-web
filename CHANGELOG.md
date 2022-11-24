@@ -1,3 +1,22 @@
+# [12.11.0](https://github.com/Telefonica/mistica-web/compare/v12.10.0...v12.11.0) (2022-11-24)
+
+
+### Bug Fixes
+
+* **styles:** some fixes in components migrated to VE ([#602](https://github.com/Telefonica/mistica-web/issues/602)) ([f907063](https://github.com/Telefonica/mistica-web/commit/f9070635b7b9a022fd781f7ccb5191dceb7d97f4))
+
+
+### Features
+
+* **vanilla-extract:** migrate carousel ([#589](https://github.com/Telefonica/mistica-web/issues/589)) ([c4a02fa](https://github.com/Telefonica/mistica-web/commit/c4a02fac08fe80a0ecbfea115c6e21e9ee6c0cae))
+* **vanilla-extract:** Migrate FadeIn, Feedbacks, Form, HighlightedCard, LoadingBar ([#592](https://github.com/Telefonica/mistica-web/issues/592)) ([f2c069f](https://github.com/Telefonica/mistica-web/commit/f2c069f976a554df2ed399e71d712e2533de9098))
+* **vanilla-extract:** migrate icons to use colors from skin vars ([#591](https://github.com/Telefonica/mistica-web/issues/591)) ([b6acdb7](https://github.com/Telefonica/mistica-web/commit/b6acdb74ef469a261da908c4fa905d4839885d2d))
+* **vanilla-extract:** migrate list and rows ([#595](https://github.com/Telefonica/mistica-web/issues/595)) ([9bd94eb](https://github.com/Telefonica/mistica-web/commit/9bd94ebb5de855a2d34c38d50654f84d7aba2f66))
+* **vanilla-extract:** Migrate ProgressBar, Skeletons, Spinner, Stepper, Tooltip, NegativeBox ([#594](https://github.com/Telefonica/mistica-web/issues/594)) ([b22662b](https://github.com/Telefonica/mistica-web/commit/b22662beb98be73ee5af991c173a9583a8290019))
+* **vanilla-extract:** Migrate ScreenReaderOnly ([#596](https://github.com/Telefonica/mistica-web/issues/596)) ([bceed72](https://github.com/Telefonica/mistica-web/commit/bceed72ecb23b4a99d8068fbde1ea749d324e2c8))
+* **vanilla-extract:** Migrate Tabs ([#597](https://github.com/Telefonica/mistica-web/issues/597)) ([4d1e4a6](https://github.com/Telefonica/mistica-web/commit/4d1e4a6ef3ea0dc32317ea9b7b7aedc79a28613e))
+* **vanilla-extract:** Migrate TextLink ([#593](https://github.com/Telefonica/mistica-web/issues/593)) ([11a2e9f](https://github.com/Telefonica/mistica-web/commit/11a2e9f03d046da7539b0dcf37a93dc98841b09d))
+
 # [12.10.0](https://github.com/Telefonica/mistica-web/compare/v12.9.1...v12.10.0) (2022-11-22)
 
 

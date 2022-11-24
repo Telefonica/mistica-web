@@ -24,6 +24,7 @@ export const touchableContainer = sprinkles({
     border: 'none',
     padding: 0,
     width: '100%',
+    background: 'transparent',
 });
 
 export const imageContent = style([
