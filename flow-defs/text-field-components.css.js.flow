@@ -2,8 +2,8 @@
 
 declare export var LABEL_LEFT_POSITION: 12;
 declare export var DEFAULT_WIDTH: 328;
-declare export var LABEL_SCALE_DESKTOP: number;
-declare export var LABEL_SCALE_MOBILE: number;
+declare export var LABEL_SCALE_DESKTOP: 0.78;
+declare export var LABEL_SCALE_MOBILE: 0.75;
 declare export var labelContainer: string;
 declare export var labelText: string;
 declare export var shrinked: string;
