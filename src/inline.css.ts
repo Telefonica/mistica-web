@@ -1,4 +1,4 @@
-import {style, createVar, globalStyle} from '@vanilla-extract/css';
+import {style, createVar, globalStyle, styleVariants} from '@vanilla-extract/css';
 
 const space = createVar();
 
@@ -29,4 +29,16 @@ globalStyle(`${inline} > div:not(:empty) ~ div:not(:empty)`, {
 
 globalStyle(`${inline} > div:empty`, {
     display: 'none',
+});
+
+export const justifyVariants = styleVariants({
+    between: {
+        justifyContent: 'space-between',
+    },
+    around: {
+        justifyContent: 'space-around',
+    },
+    evenly: {
+        justifyContent: 'space-evenly',
+    },
 });
