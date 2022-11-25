@@ -5,6 +5,7 @@ import {ESC, TAB} from './utils/key-codes';
 import {cancelEvent} from './utils/dom';
 import Overlay from './overlay';
 import * as styles from './menu.css';
+import {sprinkles} from './sprinkles.css';
 
 const MAX_HEIGHT_DEFAULT = 416;
 
@@ -145,6 +146,7 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
 
     return (
         <div
+            className={sprinkles({position: 'relative'})}
             style={{
                 ...assignInlineVars({
                     [styles.vars.width]: width ? `${width}px` : '100%',
@@ -156,7 +158,6 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
                         ? `${itemsComputedProps.maxHeight}px`
                         : '',
                 }),
-                position: 'relative',
             }}
         >
             {isMenuOpen ? (
