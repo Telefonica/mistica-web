@@ -36,7 +36,7 @@ export const touchable = style([
         border: 'none',
         width: '100%',
         color: 'inherit',
-        backgroundColor: 'transparent',
+        background: 'transparent',
         padding: 0,
         overflow: 'visible',
     }),

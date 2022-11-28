@@ -38,18 +38,15 @@ const bulletActiveBase = style([
     },
 ]);
 
-export const bullet = style([bulletBase, sprinkles({backgroundColor: skinVars.colors.control})]);
-export const bulletInverse = style([
-    bulletBase,
-    {backgroundColor: applyAlpha(skinVars.rawColors.inverse, 0.5)},
-]);
+export const bullet = style([bulletBase, sprinkles({background: skinVars.colors.control})]);
+export const bulletInverse = style([bulletBase, {background: applyAlpha(skinVars.rawColors.inverse, 0.5)}]);
 export const bulletActive = style([
     bulletActiveBase,
-    sprinkles({backgroundColor: skinVars.colors.controlActivated}),
+    sprinkles({background: skinVars.colors.controlActivated}),
 ]);
 export const bulletActiveInverse = style([
     bulletActiveBase,
-    sprinkles({backgroundColor: skinVars.colors.inverse}),
+    sprinkles({background: skinVars.colors.inverse}),
 ]);
 
 const arrowButtonSize = 40;
@@ -70,7 +67,7 @@ const arrowButtonBase = style([
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: '50%',
-        backgroundColor: skinVars.colors.backgroundContainer,
+        background: skinVars.colors.backgroundContainer,
         width: arrowButtonSize,
         height: arrowButtonSize,
     }),

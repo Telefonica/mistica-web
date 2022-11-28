@@ -63,7 +63,7 @@ export const arrow = style([
         width: arrowSize,
         height: arrowSize,
         borderRadius: 2,
-        backgroundColor: skinVars.colors.backgroundContainer,
+        background: skinVars.colors.backgroundContainer,
         border: 'regular',
     }),
     {

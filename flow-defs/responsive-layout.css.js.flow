@@ -7,5 +7,6 @@ declare export var vars: {
   >,
 };
 declare export var container: string;
+declare export var inverseBackground: string;
 declare export var responsiveLayout: string;
 declare export var fullWidth: string;

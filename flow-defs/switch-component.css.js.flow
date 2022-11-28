@@ -1,0 +1,43 @@
+// @flow
+
+declare export var vars: {
+  top: $PropertyType<$Exports<"@vanilla-extract/private">, "CSSVarFunction">,
+  left: $PropertyType<$Exports<"@vanilla-extract/private">, "CSSVarFunction">,
+  transformOrigin: $PropertyType<
+    $Exports<"@vanilla-extract/private">,
+    "CSSVarFunction"
+  >,
+  minWidth: $PropertyType<
+    $Exports<"@vanilla-extract/private">,
+    "CSSVarFunction"
+  >,
+  maxHeight: $PropertyType<
+    $Exports<"@vanilla-extract/private">,
+    "CSSVarFunction"
+  >,
+};
+declare export var checkboxVariants: {
+  default: string,
+  disabled: string,
+  ios: string,
+  disabledIos: string,
+};
+declare export var switchCheckboxContainerVariants: {
+  default: string,
+  ios: string,
+};
+declare export var switchCheckboxLabel: string;
+declare export var barVariants: {
+  default: string,
+  ios: string,
+  checked: string,
+  checkedIos: string,
+};
+declare export var container: string;
+declare export var disabled: string;
+declare export var ballVariants: {
+  default: string,
+  ios: string,
+  checked: string,
+  checkedIos: string,
+};

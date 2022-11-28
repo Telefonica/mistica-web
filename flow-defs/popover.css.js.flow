@@ -1,0 +1,14 @@
+// @flow
+
+declare export var defaultPositionDesktop: "bottom";
+declare export var defaultPositionMobile: "top";
+declare export var arrowSize: 12;
+declare export var distanceToTarget: number;
+declare export var marginLeftRightMobile: 16;
+declare export var maxWidthDesktop: 488;
+declare export var arrow: string;
+declare export var arrowWrapper: string;
+declare export var container: string;
+declare export var textAlign: string;
+declare export var textContent: string;
+declare export var closeButtonIcon: string;

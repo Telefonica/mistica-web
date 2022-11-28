@@ -25,7 +25,7 @@ export const chipVariants = styleVariants({
     default: [
         containerBase,
         sprinkles({
-            backgroundColor: vars.colors.backgroundContainer,
+            background: vars.colors.backgroundContainer,
             color: vars.colors.textPrimary,
         }),
     ],
@@ -34,7 +34,7 @@ export const chipVariants = styleVariants({
         containerBase,
         sprinkles({
             color: vars.colors.controlActivated,
-            backgroundColor: vars.colors.brandLow,
+            background: vars.colors.brandLow,
         }),
         {
             borderColor: vars.colors.controlActivated,

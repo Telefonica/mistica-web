@@ -44,9 +44,11 @@ const Callout: React.FC<Props> = ({
         <section
             className={classNames(
                 styles.container,
-                isInverse
-                    ? sprinkles({backgroundColor: vars.colors.backgroundContainer})
-                    : sprinkles({backgroundColor: vars.colors.backgroundAlternative})
+                sprinkles({
+                    background: isInverse
+                        ? vars.colors.backgroundContainer
+                        : vars.colors.backgroundAlternative,
+                })
             )}
             aria-label={ariaLabel ?? title}
         >

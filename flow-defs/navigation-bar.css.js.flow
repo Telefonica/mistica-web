@@ -1,0 +1,26 @@
+// @flow
+
+declare export var burgerIconContainer: string;
+declare export var iconCloseHidden: string;
+declare export var iconMenuHidden: string;
+declare export var topFixed: string;
+declare export var navbarBorderColorVariants: {
+  inverse: string,
+  default: string,
+  menuOpen: string,
+};
+declare export var section: string;
+declare export var selectedSectionVariantes: {
+  inverse: string,
+  default: string,
+};
+declare export var textWrapperVariants: { inverse: string, default: string };
+declare export var spacer: string;
+declare export var burgerMenuEnter: string;
+declare export var burgerMenuEnterActive: string;
+declare export var burgerMenuExit: string;
+declare export var burgerMenuExitActive: string;
+declare export var logoContainer: string;
+declare export var burgerMenu: string;
+declare export var iconButtonVariants: { inverse: string, default: string };
+declare export var lineHeightFix: string;

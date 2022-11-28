@@ -1,6 +1,7 @@
 import {createVar, style} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {sprinkles} from './sprinkles.css';
+import {vars as skinVars} from './skins/skin-contract.css';
 
 const MOBILE_SIDE_MARGIN = 16;
 const TABLET_SIDE_MARGIN = 32;
@@ -11,6 +12,8 @@ const sideMargin = createVar();
 export const vars = {sideMargin};
 
 export const container = sprinkles({width: '100%'});
+
+export const inverseBackground = sprinkles({background: skinVars.colors.backgroundBrand});
 
 export const responsiveLayout = style({
     margin: 'auto',
