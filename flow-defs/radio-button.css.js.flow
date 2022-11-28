@@ -1,0 +1,8 @@
+// @flow
+
+declare export var outerCircleVariants: { default: string, ios: string };
+declare export var innerCircle: string;
+declare export var innerCircleChecked: string;
+declare export var radioButton: string;
+declare export var outerCircleCheckedVariants: { default: string, ios: string };
+declare export var disabled: string;
