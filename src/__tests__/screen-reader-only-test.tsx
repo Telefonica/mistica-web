@@ -11,7 +11,7 @@ test('Renders no wrapper if it has one single child', () => {
     expect(asFragment()).toMatchInlineSnapshot(`
         <DocumentFragment>
           <span
-            class="screen-reader-only_screenReaderOnly__gwdgwo1 screen-reader-only__gwdgwo0 sprinkles_paddingTop_0__1y2v1nf5k sprinkles_paddingBottom_0__1y2v1nf5y sprinkles_paddingLeft_0__1y2v1nf6c sprinkles_paddingRight_0__1y2v1nf6q sprinkles_position_absolute__1y2v1nf4t sprinkles_overflow_hidden__1y2v1nf93 sprinkles_border_none__1y2v1nf8v"
+            class="screen-reader-only_screenReaderOnly__gwdgwo1 screen-reader-only__gwdgwo0 sprinkles_paddingTop_0__1y2v1nf5l sprinkles_paddingBottom_0__1y2v1nf5z sprinkles_paddingLeft_0__1y2v1nf6d sprinkles_paddingRight_0__1y2v1nf6r sprinkles_position_absolute__1y2v1nf4u sprinkles_overflow_hidden__1y2v1nf94 sprinkles_border_none__1y2v1nf8w"
           >
             Some text
           </span>
@@ -29,7 +29,7 @@ test('Renders a wrapper if it has several children', () => {
     expect(asFragment()).toMatchInlineSnapshot(`
         <DocumentFragment>
           <div
-            class="screen-reader-only_screenReaderOnly__gwdgwo1 screen-reader-only__gwdgwo0 sprinkles_paddingTop_0__1y2v1nf5k sprinkles_paddingBottom_0__1y2v1nf5y sprinkles_paddingLeft_0__1y2v1nf6c sprinkles_paddingRight_0__1y2v1nf6q sprinkles_position_absolute__1y2v1nf4t sprinkles_overflow_hidden__1y2v1nf93 sprinkles_border_none__1y2v1nf8v"
+            class="screen-reader-only_screenReaderOnly__gwdgwo1 screen-reader-only__gwdgwo0 sprinkles_paddingTop_0__1y2v1nf5l sprinkles_paddingBottom_0__1y2v1nf5z sprinkles_paddingLeft_0__1y2v1nf6d sprinkles_paddingRight_0__1y2v1nf6r sprinkles_position_absolute__1y2v1nf4u sprinkles_overflow_hidden__1y2v1nf94 sprinkles_border_none__1y2v1nf8w"
           >
             <span>
               Some text
