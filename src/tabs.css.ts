@@ -52,7 +52,7 @@ const baseTab = style([
         paddingLeft: 16,
         paddingRight: 16,
         height: TAB_HEIGHT,
-        backgroundColor: 'transparent',
+        background: 'transparent',
     }),
     {
         flex: '1 0 80px',
