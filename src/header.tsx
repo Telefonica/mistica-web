@@ -1,8 +1,7 @@
 import * as React from 'react';
 import Box from './box';
 import Stack from './stack';
-import {createUseStyles} from './jss';
-import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import {useIsInverseVariant} from './theme-variant-context';
 import ResponsiveLayout from './responsive-layout';
 import GridLayout from './grid-layout';
 import {useScreenSize} from './hooks';
@@ -128,15 +127,6 @@ export const MainSectionHeader: React.FC<MainSectionHeaderProps> = ({title, desc
     );
 };
 
-const useHeaderLayoutStyles = createUseStyles((theme) => ({
-    background: {
-        background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : 'initial'),
-    },
-    gridItem: {
-        gridColumn: 'span 6',
-    },
-}));
-
 type HeaderLayoutProps = {
     isInverse?: boolean;
     breadcrumbs?: RendersNullableElement<typeof NavigationBreadcrumbs>;
@@ -155,48 +145,48 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
     sideBySideExtraOnDesktop = false,
     dataAttributes,
 }) => {
-    const classes = useHeaderLayoutStyles({isInverse});
     const {isTabletOrSmaller} = useScreenSize();
 
     return (
-        <ResponsiveLayout className={classes.background} dataAttributes={dataAttributes}>
-            <ThemeVariant isInverse={isInverse}>
-                <OverscrollColor />
-                {isTabletOrSmaller ? (
-                    <Box paddingTop={32} paddingBottom={24}>
-                        <Stack space={24}>
-                            {header}
-                            {extra}
-                        </Stack>
-                    </Box>
-                ) : sideBySideExtraOnDesktop ? (
-                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
-                        <GridLayout>
-                            <div className={classes.gridItem}>
+        <ResponsiveLayout isInverse={isInverse} dataAttributes={dataAttributes}>
+            <OverscrollColor />
+            {isTabletOrSmaller ? (
+                <Box paddingTop={32} paddingBottom={24}>
+                    <Stack space={24}>
+                        {header}
+                        {extra}
+                    </Stack>
+                </Box>
+            ) : sideBySideExtraOnDesktop ? (
+                <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
+                    <GridLayout
+                        template="6+6"
+                        left={
+                            <Stack space={32}>
+                                {breadcrumbs}
+                                {header}
+                            </Stack>
+                        }
+                        right={extra}
+                    />
+                </Box>
+            ) : (
+                <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
+                    <GridLayout
+                        template="6+6"
+                        left={
+                            <Stack space={24}>
                                 <Stack space={32}>
                                     {breadcrumbs}
                                     {header}
                                 </Stack>
-                            </div>
-                            {extra && <div className={classes.gridItem}>{extra}</div>}
-                        </GridLayout>
-                    </Box>
-                ) : (
-                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
-                        <GridLayout>
-                            <div className={classes.gridItem}>
-                                <Stack space={24}>
-                                    <Stack space={32}>
-                                        {breadcrumbs}
-                                        {header}
-                                    </Stack>
-                                    {extra}
-                                </Stack>
-                            </div>
-                        </GridLayout>
-                    </Box>
-                )}
-            </ThemeVariant>
+                                {extra}
+                            </Stack>
+                        }
+                        right={null}
+                    />
+                </Box>
+            )}
         </ResponsiveLayout>
     );
 };
@@ -210,25 +200,18 @@ export const MainSectionHeaderLayout: React.FC<MainSectionHeaderLayoutProps> = (
     isInverse = true,
     children,
 }) => {
-    const classes = useHeaderLayoutStyles({isInverse});
     const {isTabletOrSmaller} = useScreenSize();
 
     return (
-        <ResponsiveLayout className={classes.background}>
-            <ThemeVariant isInverse={isInverse}>
-                <OverscrollColor />
-                {isTabletOrSmaller ? (
-                    <Box paddingTop={12} paddingBottom={24}>
-                        {children}
-                    </Box>
-                ) : (
-                    <GridLayout>
-                        <div className={classes.gridItem}>
-                            <Box paddingY={48}>{children}</Box>
-                        </div>
-                    </GridLayout>
-                )}
-            </ThemeVariant>
+        <ResponsiveLayout isInverse={isInverse}>
+            <OverscrollColor />
+            {isTabletOrSmaller ? (
+                <Box paddingTop={12} paddingBottom={24}>
+                    {children}
+                </Box>
+            ) : (
+                <GridLayout template="6+6" left={<Box paddingY={48}>{children}</Box>} right={null} />
+            )}
         </ResponsiveLayout>
     );
 };

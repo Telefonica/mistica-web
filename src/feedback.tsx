@@ -23,7 +23,6 @@ import classnames from 'classnames';
 import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './feedback.css';
-import {sprinkles} from './sprinkles.css';
 
 import type {DataAttributes} from './utils/types';
 import type {ButtonGroupProps} from './button-group';
@@ -371,24 +370,20 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
         link,
     });
 
-    return (
-        <ThemeVariant isInverse>
-            {isTabletOrSmaller ? (
-                <ResponsiveLayout className={sprinkles({background: vars.colors.backgroundBrand})}>
-                    <OverscrollColor />
-                    <Box paddingBottom={32}>
-                        <div className={styles.innerContainer}>{inlineFeedbackBody}</div>
-                    </Box>
-                </ResponsiveLayout>
-            ) : (
-                renderFeedbackInDesktop({
-                    isInverse: true,
-                    inlineFeedbackBody,
-                    imageFit,
-                    imageUrl,
-                    dataAttributes,
-                })
-            )}
-        </ThemeVariant>
+    return isTabletOrSmaller ? (
+        <ResponsiveLayout isInverse>
+            <OverscrollColor />
+            <Box paddingBottom={32}>
+                <div className={styles.innerContainer}>{inlineFeedbackBody}</div>
+            </Box>
+        </ResponsiveLayout>
+    ) : (
+        renderFeedbackInDesktop({
+            isInverse: true,
+            inlineFeedbackBody,
+            imageFit,
+            imageUrl,
+            dataAttributes,
+        })
     );
 };
