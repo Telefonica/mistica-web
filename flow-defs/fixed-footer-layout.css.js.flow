@@ -1,0 +1,17 @@
+// @flow
+
+declare export var vars: {
+  footerHeight: $PropertyType<
+    $Exports<"@vanilla-extract/private">,
+    "CSSVarFunction"
+  >,
+  backgroundColor: $PropertyType<
+    $Exports<"@vanilla-extract/private">,
+    "CSSVarFunction"
+  >,
+};
+declare export var footer: string;
+declare export var fixedFooter: string;
+declare export var elevated: string;
+declare export var withoutFooter: string;
+declare export var container: string;
