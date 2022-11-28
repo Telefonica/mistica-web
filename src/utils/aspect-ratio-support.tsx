@@ -1,6 +1,8 @@
+import {assignInlineVars} from '@vanilla-extract/dynamic';
+import classNames from 'classnames';
 import * as React from 'react';
 import {useIsomorphicLayoutEffect} from '../hooks';
-import {createUseStyles} from '../jss';
+import * as styles from './aspect-ratio-support.css';
 
 const AspectRatioSupport = React.createContext<boolean>(true);
 
@@ -28,37 +30,6 @@ export const AspectRatioSupportProvider: React.FC<Props> = ({children}) => {
 
 export const useSupportsAspectRatio = (): boolean => React.useContext(AspectRatioSupport);
 
-const useAspectRatioStyles = createUseStyles(() => ({
-    container: {
-        '@supports (aspect-ratio: 1 / 1)': {
-            aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
-        },
-        '$wrapper &': {
-            position: ({aspectRatio}) => (aspectRatio ? 'absolute' : 'static'),
-            width: '100%',
-            height: '100%',
-            top: 0,
-            left: 0,
-        },
-    },
-
-    wrapper: {
-        overflow: 'hidden',
-        maxWidth: '100%',
-        maxHeight: '100%',
-        position: 'relative',
-        paddingTop: ({aspectRatio, width}) => {
-            if (!aspectRatio) {
-                return 0;
-            }
-            if (width && typeof width === 'string' && width.endsWith('%')) {
-                return `${Number(width.replace('%', '')) / aspectRatio}%`;
-            }
-            return `${100 / aspectRatio}%`;
-        },
-    },
-}));
-
 type AspectRatioElementProps = {
     width?: number | string;
     height?: number | string;
@@ -76,10 +47,7 @@ export const AspectRatioElement = (props: AspectRatioElementProps): JSX.Element 
     const withCssAspectRatio =
         typeof props.width !== 'number' && typeof props.height !== 'number' && props.aspectRatio !== 0;
 
-    const classes = useAspectRatioStyles({
-        aspectRatio: withCssAspectRatio ? props.aspectRatio : undefined,
-        width: props.width,
-    });
+    const aspectRatio = withCssAspectRatio ? props.aspectRatio : undefined;
 
     let width: number | string | undefined = props.width;
     let height = props.height;
@@ -100,23 +68,42 @@ export const AspectRatioElement = (props: AspectRatioElementProps): JSX.Element 
     const container = React.createElement(
         props.as ?? 'div',
         {
-            className: props.className ? `${props.className} ${classes.container}` : classes.container,
+            className: classNames(props.className, styles.container, {
+                [styles.containerWithWrapper]: needsWrapper,
+            }),
             style: {
                 ...(needsWrapper
-                    ? {...props.style, width: '100%'}
+                    ? {
+                          position: aspectRatio ? 'absolute' : 'static',
+                          ...props.style,
+                          width: '100%',
+                      }
                     : {
                           ...props.style,
                           width: !isNaN(Number(width)) ? Number(width) : width,
                           height: !isNaN(Number(height)) ? Number(height) : height,
                       }),
+                ...assignInlineVars({
+                    [styles.vars.aspectRatio]: aspectRatio ? String(aspectRatio) : 'unset',
+                }),
             },
         },
         props.children
     );
 
     if (needsWrapper) {
+        const paddingTop = (() => {
+            if (!aspectRatio) {
+                return 0;
+            }
+            if (props.width && typeof props.width === 'string' && props.width.endsWith('%')) {
+                return `${Number(props.width.replace('%', '')) / aspectRatio}%`;
+            }
+            return `${100 / aspectRatio}%`;
+        })();
+
         return (
-            <div style={{width, height}} className={classes.wrapper}>
+            <div style={{width, height, paddingTop}} className={styles.wrapper}>
                 {container}
             </div>
         );

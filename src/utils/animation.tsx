@@ -8,38 +8,6 @@ const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =
     !isRunningAcceptanceTest(platformOverrides) &&
     typeof window !== 'undefined';
 
-type ShakeStyles = {outerAnimation: any; innerAnimation: any; '@keyframes shake'?: any};
-
-export const animateShakeStyles = (platformOverrides: Theme['platformOverrides']): ShakeStyles =>
-    areAnimationsSupported(platformOverrides)
-        ? {
-              '@keyframes shake': {
-                  '10%, 90%': {
-                      transform: 'translate(3px, 0)',
-                  },
-                  '20%, 80%': {
-                      transform: 'translate(6px, 0)',
-                  },
-
-                  '30%, 50%, 70%': {
-                      transform: 'translate(0px, 0)',
-                  },
-
-                  '40%, 60%': {
-                      transform: 'translate(8px, 0)',
-                  },
-              },
-              outerAnimation: {
-                  animation: '$shake 0.82s cubic-bezier(.36,.07,.19,.97) both',
-                  animationDelay: ({delay}: {delay: number}) => `${delay + 0.04}s`,
-              },
-              innerAnimation: {
-                  animation: '$shake 0.82s cubic-bezier(.36,.07,.19,.97) both',
-                  animationDelay: ({delay}: {delay: number}) => `${delay}s`,
-              },
-          }
-        : {innerAnimation: {}, outerAnimation: {}};
-
 type AnimationProps = {
     children?: React.ReactNode;
     strokeDasharray?: string;

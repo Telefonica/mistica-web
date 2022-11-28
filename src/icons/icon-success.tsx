@@ -1,5 +1,4 @@
 import * as React from 'react';
-import classnames from 'classnames';
 import {O2_SKIN, O2_CLASSIC_SKIN} from '../skins/constants';
 import {
     getAnimateDrawLineProps,
@@ -7,16 +6,9 @@ import {
     getAnimateHopInProps,
     mergeProperties,
 } from '../utils/animation';
-import {createUseStyles} from '../jss';
 import {useTheme} from '../hooks';
 import {useIsInverseVariant} from '../theme-variant-context';
-
-const useStyles = createUseStyles((theme) => ({
-    iconContainer: {
-        stroke: (isInverse) => (isInverse ? theme.colors.inverse : theme.colors.brand),
-        fill: (isInverse) => (isInverse ? theme.colors.inverse : theme.colors.brand),
-    },
-}));
+import {vars} from '../skins/skin-contract.css';
 
 type Props = {
     size?: number | string;
@@ -26,13 +18,13 @@ type Props = {
 
 const IconSuccessO2: React.FC<Props> = ({size = 64, color, skipAnimation = false}) => {
     const isInverse = useIsInverseVariant();
-    const classes = useStyles(isInverse);
     const {platformOverrides} = useTheme();
 
     return (
         <svg role="presentation" width={size} height={size} viewBox="0 0 64 64">
             <g
-                className={classnames({[classes.iconContainer]: !color})}
+                stroke={color ? undefined : isInverse ? vars.colors.inverse : vars.colors.brand}
+                fill={color ? undefined : isInverse ? vars.colors.inverse : vars.colors.brand}
                 strokeLinecap="round"
                 strokeLinejoin="round"
             >
@@ -68,12 +60,11 @@ const IconSuccessO2: React.FC<Props> = ({size = 64, color, skipAnimation = false
 
 const IconSuccessDefault: React.FC<Props> = ({size = 64, color, skipAnimation = false}) => {
     const isInverse = useIsInverseVariant();
-    const classes = useStyles(isInverse);
     const {platformOverrides} = useTheme();
 
     return (
         <svg role="presentation" width={size} height={size} viewBox="0 0 64 64">
-            <g className={classnames({[classes.iconContainer]: !color})}>
+            <g stroke={color ? undefined : isInverse ? vars.colors.inverse : vars.colors.brand}>
                 <path
                     vectorEffect="non-scaling-stroke"
                     fill="none"
