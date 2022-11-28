@@ -23,7 +23,7 @@ const commonInputStyles = style([
                 opacity: 0,
                 transition: 'opacity 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms',
             },
-            '&:focus::placeholder ': {
+            '&:focus::placeholder': {
                 opacity: 0.5,
             },
         },
