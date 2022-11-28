@@ -2,14 +2,6 @@
 
 import * as React from "react";
 import type { Theme } from "../theme";
-declare type ShakeStyles = {
-  outerAnimation: any,
-  innerAnimation: any,
-  "@keyframes shake"?: any,
-};
-declare export var animateShakeStyles: (
-  platformOverrides: $PropertyType<Theme, "platformOverrides">
-) => ShakeStyles;
 declare type AnimationProps = {
   children?: React.Node,
   strokeDasharray?: string,
