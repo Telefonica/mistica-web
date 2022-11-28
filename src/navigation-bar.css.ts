@@ -105,7 +105,7 @@ export const section = style([
         alignItems: 'center',
         paddingX: 8,
         border: 'none',
-        backgroundColor: 'transparent',
+        background: 'transparent',
     }),
     {
         borderBottom: `2px solid transparent`,

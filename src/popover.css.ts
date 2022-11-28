@@ -17,7 +17,7 @@ export const arrow = style([
         top: 0,
         border: 'regular',
         borderRadius: 2,
-        backgroundColor: vars.colors.backgroundContainer,
+        background: vars.colors.backgroundContainer,
     }),
     {
         left: '50%',
@@ -41,7 +41,7 @@ export const container = style([
     sprinkles({
         position: 'absolute',
         width: 'auto',
-        backgroundColor: vars.colors.backgroundContainer,
+        background: vars.colors.backgroundContainer,
         border: 'regular',
         borderRadius: 8,
     }),

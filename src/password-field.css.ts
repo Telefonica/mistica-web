@@ -7,7 +7,7 @@ export const shadow = style([
     sprinkles({
         padding: 8,
         borderRadius: '50%',
-        backgroundColor: 'transparent',
+        background: 'transparent',
     }),
     {
         backgroundSize: '200%',
@@ -17,7 +17,7 @@ export const shadow = style([
         '@media': {
             [mq.supportsHover]: {
                 ':hover': {
-                    backgroundColor: vars.colors.backgroundAlternative,
+                    background: vars.colors.backgroundAlternative,
                 },
             },
         },

@@ -93,7 +93,7 @@ const selectBase = style([
     sprinkles({
         border: 'none',
         color: colorsVars.colors.textPrimary,
-        backgroundColor: 'transparent', // FieldContainer gives the correct background color
+        background: 'transparent', // FieldContainer gives the correct background color
         width: '100%',
         height: '100%',
     }),
@@ -181,5 +181,5 @@ export const menuItem = style([
 ]);
 
 export const menuItemSelected = sprinkles({
-    backgroundColor: colorsVars.colors.backgroundAlternative,
+    background: colorsVars.colors.backgroundAlternative,
 });

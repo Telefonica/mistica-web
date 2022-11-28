@@ -488,7 +488,7 @@ export const NavigationBarAction: React.FC<NavigationBarActionProps> = ({childre
             className={classnames(
                 sprinkles({
                     border: 'none',
-                    backgroundColor: 'transparent',
+                    background: 'transparent',
                     padding: 0,
                 }),
                 styles.lineHeightFix,
