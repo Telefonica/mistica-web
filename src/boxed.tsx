@@ -60,7 +60,7 @@ export const Boxed = React.forwardRef<HTMLDivElement, Props>(
                     sprinkles({
                         borderRadius: 8,
                         overflow: 'hidden',
-                        backgroundColor:
+                        background:
                             isInverseInside && !isDarkMode
                                 ? vars.colors.backgroundBrand
                                 : vars.colors.backgroundContainer,
