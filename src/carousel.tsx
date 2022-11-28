@@ -4,7 +4,7 @@ import IconChevronRightRegular from './generated/mistica-icons/icon-chevron-righ
 import {useIsInViewport, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
 import Inline from './inline';
 import Stack from './stack';
-import Touchable, {BaseTouchable} from './touchable';
+import {BaseTouchable} from './touchable';
 import classNames from 'classnames';
 import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
 import {DisableBorderRadiusProvider} from './image';
@@ -13,6 +13,7 @@ import {isAndroid} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
 import * as styles from './carousel.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
+import {sprinkles} from './sprinkles.css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -43,13 +44,19 @@ export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages,
     return (
         <Inline space={isDesktopOrBigger ? 16 : 8} alignItems="center">
             {Array.from({length: numPages}, (_, i: number) => (
-                <Touchable
+                <BaseTouchable
+                    className={sprinkles({
+                        display: 'block',
+                        padding: 0,
+                        border: 'none',
+                        background: 'transparent',
+                    })}
                     key={i}
                     maybe
                     onPress={isDesktopOrBigger && onPress ? () => onPress(i) : undefined}
                 >
                     <div className={getClassName(i)} />
-                </Touchable>
+                </BaseTouchable>
             ))}
         </Inline>
     );

@@ -11,6 +11,7 @@ export type TextPresetProps = {
   truncate?: boolean | number,
   wordBreak?: boolean,
   hyphens?: "auto" | "manual" | "none",
+  textAlign?: "center",
   id?: string,
   as?: React.ComponentType<any> | string,
   role?: string,

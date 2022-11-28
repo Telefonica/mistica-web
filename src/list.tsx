@@ -6,7 +6,7 @@
  */
 import * as React from 'react';
 import classNames from 'classnames';
-import Touchable from './touchable';
+import {BaseTouchable} from './touchable';
 import {Text3, Text2, Text1} from './text';
 import Box from './box';
 import Stack from './stack';
@@ -317,7 +317,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         />
     );
 
-    const renderTouchableContent = (
+    const renderBaseTouchableContent = (
         props: HrefRowContentProps | ToRowContentProps | OnPressRowContentProps
     ) => {
         let type: ContentProps['type'] = 'chevron';
@@ -344,7 +344,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         !areRadioRowContentProps(props)
     ) {
         return (
-            <Touchable
+            <BaseTouchable
                 ref={ref}
                 className={classNames(styles.rowContent, {
                     [styles.hoverBackground]: !(disabled || isInverse),
@@ -356,14 +356,14 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 dataAttributes={dataAttributes}
                 disabled={disabled}
             >
-                {renderTouchableContent(props)}
-            </Touchable>
+                {renderBaseTouchableContent(props)}
+            </BaseTouchable>
         );
     }
 
     if (props.to) {
         return (
-            <Touchable
+            <BaseTouchable
                 className={classNames(styles.rowContent, {
                     [styles.hoverBackground]: !(disabled || isInverse),
                     [styles.pointer]: !disabled,
@@ -375,14 +375,14 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 dataAttributes={dataAttributes}
                 disabled={disabled}
             >
-                {renderTouchableContent(props)}
-            </Touchable>
+                {renderBaseTouchableContent(props)}
+            </BaseTouchable>
         );
     }
 
     if (props.href) {
         return (
-            <Touchable
+            <BaseTouchable
                 className={classNames(styles.rowContent, {
                     [styles.hoverBackground]: !(disabled || isInverse),
                     [styles.pointer]: !disabled,
@@ -394,8 +394,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 dataAttributes={dataAttributes}
                 disabled={disabled}
             >
-                {renderTouchableContent(props)}
-            </Touchable>
+                {renderBaseTouchableContent(props)}
+            </BaseTouchable>
         );
     }
 
@@ -404,7 +404,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
         return props.onPress ? (
             <div className={styles.dualActionContainer}>
-                <Touchable
+                <BaseTouchable
                     disabled={disabled}
                     onPress={props.onPress}
                     role={role}
@@ -413,8 +413,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                     })}
                 >
                     {renderContent({type: 'basic', labelId: titleId})}
-                </Touchable>
-                <Touchable
+                </BaseTouchable>
+                <BaseTouchable
                     disabled={disabled}
                     className={styles.dualActionRight}
                     onPress={toggle}
@@ -427,7 +427,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                         aria-labelledby={titleId}
                         render={({controlElement}) => controlElement}
                     />
-                </Touchable>
+                </BaseTouchable>
             </div>
         ) : (
             <div
@@ -493,14 +493,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     }
 
     return (
-        <Box
-            paddingX={16}
-            className={classNames(styles.rowContent, {
-                [styles.hoverBackground]: !(disabled || isInverse),
-                [styles.pointer]: !disabled,
-            })}
-            role={role}
-        >
+        <Box paddingX={16} className={styles.rowContent} role={role}>
             {props.right
                 ? renderContent({type: 'custom', right: props.right})
                 : renderContent({type: 'basic'})}

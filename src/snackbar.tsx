@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Touchable from './touchable';
+import {BaseTouchable} from './touchable';
 import classNames from 'classnames';
 import {isWebViewBridgeAvailable, nativeMessage} from '@tef-novum/webview-bridge';
 import {useElementDimensions, useScreenSize} from './hooks';
@@ -82,13 +82,19 @@ const SnackbarComponent: React.FC<Props> = ({
                                 {[styles.longButton]: hasLongButton}
                             )}
                         >
-                            <Touchable
+                            <BaseTouchable
+                                className={sprinkles({
+                                    border: 'none',
+                                    padding: 0,
+                                    background: 'transparent',
+                                    color: 'inherit',
+                                })}
                                 style={{lineHeight: 'inherit', fontWeight: 'inherit'}}
                                 ref={buttonRef}
                                 onPress={close}
                             >
                                 {buttonText}
-                            </Touchable>
+                            </BaseTouchable>
                         </div>
                     )}
                 </div>
