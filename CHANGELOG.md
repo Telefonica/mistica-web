@@ -1,3 +1,10 @@
+## [12.11.1](https://github.com/Telefonica/mistica-web/compare/v12.11.0...v12.11.1) (2022-11-25)
+
+
+### Bug Fixes
+
+* **ButtonLayout:** unstability in screenshot tests ([#604](https://github.com/Telefonica/mistica-web/issues/604)) ([34e196d](https://github.com/Telefonica/mistica-web/commit/34e196d7c18de11fabe7eb0e6409711f08519a7c))
+
 # [12.11.0](https://github.com/Telefonica/mistica-web/compare/v12.10.0...v12.11.0) (2022-11-24)
 
 
