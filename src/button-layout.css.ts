@@ -37,7 +37,7 @@ export const linkAlignment = style({
     },
 });
 
-export const container = style([
+export const baseContainer = style([
     sprinkles({display: 'flex'}),
     {
         flexWrap: 'wrap-reverse',
@@ -49,18 +49,8 @@ export const container = style([
     },
 ]);
 
-export const fullWidthContainer = style([
-    sprinkles({display: 'flex'}),
-    {
-        flexWrap: 'wrap-reverse',
-        margin: -buttonLayoutSpacing / 2,
-
-        ':empty': {
-            margin: 0,
-        },
-    },
-]);
-
+export const container = style({});
+export const fullWidthContainer = style({});
 export const noButtonWidth = style({});
 
 globalStyle(`${container} > *:not(${link})`, {
