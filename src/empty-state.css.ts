@@ -10,7 +10,7 @@ export const vars = {backgroundColor};
 export const container = style([
     sprinkles({
         display: 'flex',
-        backgroundColor: 'transparent',
+        background: 'transparent',
     }),
     {
         flexDirection: 'column-reverse',

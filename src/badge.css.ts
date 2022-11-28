@@ -11,7 +11,7 @@ export const badge = style([
     sprinkles({
         width: 8,
         height: 8,
-        backgroundColor: vars.colors.badge,
+        background: vars.colors.badge,
     }),
     {
         top: -2,
