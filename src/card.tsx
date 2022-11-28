@@ -9,7 +9,7 @@ import ButtonGroup from './button-group';
 import Video from './video';
 import Image, {DisableBorderRadiusProvider} from './image';
 import MaybeDismissable, {useIsDismissable} from './maybe-dismissable';
-import Touchable from './touchable';
+import {BaseTouchable} from './touchable';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './card.css';
 import {useTheme} from './hooks';
@@ -354,7 +354,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                 width="100%"
                 height="100%"
             >
-                <Touchable
+                <BaseTouchable
                     maybe
                     {...touchableProps}
                     className={
@@ -388,7 +388,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                         </div>
                         {extra && <Box paddingTop={16}>{extra}</Box>}
                     </section>
-                </Touchable>
+                </BaseTouchable>
             </Boxed>
         );
     }
