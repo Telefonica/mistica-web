@@ -19,7 +19,7 @@ const commonInputStyles = style([
         // Seems like 'display: flex' is causing issues on firefox and the input takes over the whole space https://stackoverflow.com/questions/43314921/strange-input-widths-in-firefox-vs-chrome
         textOverflow: 'ellipsis',
         selectors: {
-            '&::placeholder ': {
+            '&::placeholder': {
                 opacity: 0,
                 transition: 'opacity 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms',
             },
