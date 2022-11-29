@@ -1,0 +1,16 @@
+// @flow
+
+declare export var LABEL_LEFT_POSITION: 12;
+declare export var DEFAULT_WIDTH: 328;
+declare export var LABEL_SCALE_DESKTOP: 0.78;
+declare export var LABEL_SCALE_MOBILE: 0.75;
+declare export var labelContainer: string;
+declare export var labelText: string;
+declare export var shrinked: string;
+declare export var fieldContainer: string;
+declare export var disabled: string;
+declare export var normalWidth: string;
+declare export var fullWidth: string;
+declare export var field: string;
+declare export var fieldSingle: string;
+declare export var fieldMulti: string;
