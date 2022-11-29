@@ -112,11 +112,7 @@ const FixedFooterLayout: React.FC<Props> = ({
                 className={styles.container}
                 style={assignInlineVars({
                     [styles.vars.backgroundColor]: containerBgColor ?? '',
-                    [styles.vars.footerHeight]: isFixedFooter
-                        ? typeof footerHeight === 'string'
-                            ? footerHeight
-                            : `${footerHeight}px`
-                        : '0px',
+                    [styles.vars.footerHeight]: isFixedFooter ? `${realFooterHeight}px` : '0px',
                 })}
             >
                 {children}
