@@ -42,12 +42,10 @@ export const container = style([
 ]);
 
 // creating a style because a globalStyle uses the generated className
-export const fullWidth = style([
-    sprinkles({
-        width: '100%',
-        display: 'inline-flex',
-    }),
-]);
+export const fullWidth = style({
+    width: '100%',
+    display: 'inline-flex',
+});
 
 globalStyle(`${fullWidth} > div`, {
     width: '100%',
