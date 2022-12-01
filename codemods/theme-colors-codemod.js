@@ -140,7 +140,6 @@ export default function transformer(file, api) {
                 name: 'colors',
             },
         }).forEach((path) => {
-            console.log('path', path);
             path.value.object = j.identifier('skinVars');
             needsSkinVarsImport = true;
         });
