@@ -141,6 +141,8 @@ export type {ThemeConfig, ColorScheme, EventFormat} from './theme';
 
 export {pxToRem} from './utils/css';
 
+export {applyAlpha} from './utils/color';
+
 export {TrackingConfig, useTrackingConfig} from './utils/analytics';
 
 export {useDocumentVisibility} from './utils/document-visibility';

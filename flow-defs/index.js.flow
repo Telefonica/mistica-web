@@ -157,6 +157,7 @@ declare export {
 } from "./hooks";
 export type { ThemeConfig, ColorScheme, EventFormat } from "./theme";
 declare export { pxToRem } from "./utils/css";
+declare export { applyAlpha } from "./utils/color";
 declare export { TrackingConfig, useTrackingConfig } from "./utils/analytics";
 declare export { useDocumentVisibility } from "./utils/document-visibility";
 declare export {
