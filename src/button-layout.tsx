@@ -139,6 +139,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         <div
             ref={wrapperElRef}
             className={classnames(
+                styles.baseContainer,
                 styles.alignVariant[align],
                 buttonStatus.buttonWidth
                     ? align === 'full-width'

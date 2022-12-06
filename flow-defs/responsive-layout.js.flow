@@ -6,6 +6,8 @@ declare type Props = {
   children: React.Node,
   fullWidth?: boolean,
   className?: string,
+  isInverse?: boolean,
+  backgroundColor?: string,
   dataAttributes?: DataAttributes,
 };
 declare var ResponsiveLayout: React.ComponentType<Props>;

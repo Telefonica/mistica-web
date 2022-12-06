@@ -1,5 +1,7 @@
 import * as React from 'react';
-import Touchable from './touchable';
+import classnames from 'classnames';
+import {BaseTouchable} from './touchable';
+import * as styles from './icon-button.css';
 
 import type {DataAttributes, TrackingEvent} from './utils/types';
 
@@ -14,15 +16,10 @@ const getButtonStyle = (
 ): React.CSSProperties => {
     const normalizedIconSize = iconSize ? `${iconSize}px ${iconSize}px` : '100% 100%';
     return {
-        display: 'inline-block',
-        verticalAlign: 'middle',
-        textAlign: 'center',
+        padding: 0,
         backgroundColor,
         backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : '',
-        backgroundPosition: '50% 50%',
         backgroundSize: normalizedIconSize,
-        backgroundRepeat: 'no-repeat',
-        border: 0,
         cursor: disabled ? 'default' : 'pointer',
         height: size,
         width: size,
@@ -88,15 +85,12 @@ type Props = HrefProps | ToProps | OnPressProps | MaybeProps;
  *     </IconButton />
  *
  */
-const IconButton: React.FC<Props> = (props) => {
-    const {icon, children, backgroundColor = 'transparent', iconSize, size = ICON_SIZE_1} = props;
+const RawIconButton: React.FC<Props> = (props) => {
+    const {icon, children} = props;
     const commonProps = {
         className: props.className || '',
         disabled: props.disabled,
-        style: {
-            ...getButtonStyle(icon, size, backgroundColor, iconSize, props.disabled),
-            ...props.style,
-        },
+        style: props.style,
         trackingEvent: props.trackingEvent,
         'aria-live': props['aria-live'],
         dataAttributes: props.dataAttributes,
@@ -104,19 +98,19 @@ const IconButton: React.FC<Props> = (props) => {
 
     if (props.href) {
         return (
-            <Touchable
+            <BaseTouchable
                 {...commonProps}
                 href={props.href}
                 newTab={props.newTab}
                 aria-label={props['aria-label']}
             >
                 {!icon && React.Children.only(children)}
-            </Touchable>
+            </BaseTouchable>
         );
     }
     if (props.to) {
         return (
-            <Touchable
+            <BaseTouchable
                 {...commonProps}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
@@ -124,22 +118,45 @@ const IconButton: React.FC<Props> = (props) => {
                 aria-label={props['aria-label']}
             >
                 {!icon && React.Children.only(children)}
-            </Touchable>
+            </BaseTouchable>
         );
     }
 
     if (props.onPress) {
         return (
-            <Touchable {...commonProps} onPress={props.onPress} aria-label={props['aria-label']}>
+            <BaseTouchable {...commonProps} onPress={props.onPress} aria-label={props['aria-label']}>
                 {!icon && React.Children.only(children)}
-            </Touchable>
+            </BaseTouchable>
         );
     }
 
     return (
-        <Touchable {...commonProps} maybe>
+        <BaseTouchable {...commonProps} maybe>
             {!icon && React.Children.only(children)}
-        </Touchable>
+        </BaseTouchable>
+    );
+};
+
+const IconButton = (props: Props): JSX.Element => {
+    const {icon, backgroundColor = 'transparent', iconSize, size = ICON_SIZE_1} = props;
+    return (
+        <RawIconButton
+            {...props}
+            className={classnames(styles.base, props.className)}
+            style={{...getButtonStyle(icon, size, backgroundColor, iconSize, props.disabled), ...props.style}}
+        />
+    );
+};
+
+// Used internally by Mistica's components to avoid styles collisions
+export const BaseIconButton = (props: Props): JSX.Element => {
+    const {size = ICON_SIZE_1, disabled} = props;
+    return (
+        <RawIconButton
+            {...props}
+            className={classnames(styles.base, props.className)}
+            style={{height: size, width: size, cursor: disabled ? 'default' : 'pointer'}}
+        />
     );
 };
 

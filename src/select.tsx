@@ -1,4 +1,5 @@
 import * as React from 'react';
+import classnames from 'classnames';
 import {useForm} from './form-context';
 import {useAriaId, useTheme} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/key-codes';
@@ -6,100 +7,11 @@ import {FieldContainer, HelperText, Label} from './text-field-components';
 import ChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import Overlay from './overlay';
-import classNames from 'classnames';
 import {isAndroid, isIos} from './utils/platform';
-import {createUseStyles} from './jss';
 import {cancelEvent} from './utils/dom';
 import {Text3} from './text';
-
-const useStyles = createUseStyles((theme) => ({
-    selectContainer: {
-        position: 'relative',
-        outline: 0,
-        [theme.mq.tabletOrSmaller]: {
-            width: '100%',
-        },
-        [theme.mq.desktopOrBigger]: {
-            width: ({fullWidth}) => (fullWidth ? '100%' : 'fit-content'),
-        },
-    },
-    select: {
-        fontFamily: 'inherit',
-        backgroundColor: 'transparent', // FieldContainer gives the correct background color
-        paddingTop: ({label}) => (label ? 24 : 16),
-        paddingBottom: ({label}) => (label ? 8 : 16),
-        paddingRight: 0,
-        paddingLeft: 12,
-        border: 0,
-        outline: 0,
-        fontSize: 16,
-        color: theme.colors.textPrimary,
-        width: '100%',
-        height: '100%',
-        textOverflow: 'ellipsis',
-        appearance: 'none',
-        cursor: ({disabled}) => (disabled ? 'default' : 'pointer'),
-    },
-    arrowDown: {
-        position: 'absolute',
-        right: 16,
-        top: 'calc(50% - 10px)',
-        pointerEvents: 'none',
-    },
-    selectText: {
-        position: 'absolute',
-        pointerEvents: 'none',
-        left: 12 + 1, // 12 for select paddingLeft and +1 for border
-        right: 48 + 1, // 48 for icon and +1 for border
-        overflow: 'hidden',
-        top: ({label}) => (label ? 27 : 17),
-        lineHeight: '20px',
-        fontSize: 16,
-        color: theme.colors.textPrimary,
-        opacity: ({disabled}) => (disabled ? 0.5 : 1),
-        maxWidth: '100%',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-    },
-    optionsContainer: {
-        margin: 0,
-        padding: 0,
-        listStyleType: 'none',
-        position: 'absolute',
-        top: ({optionsComputedProps}) => optionsComputedProps.top,
-        left: ({optionsComputedProps}) => optionsComputedProps.left,
-        minWidth: ({optionsComputedProps}) => optionsComputedProps.width,
-        borderRadius: 8,
-        boxShadow:
-            '0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)',
-        backgroundColor: theme.colors.backgroundContainer,
-        paddingTop: 8,
-        paddingBottom: 8,
-        transformOrigin: ({optionsComputedProps}) => optionsComputedProps.transformOrigin,
-        transition: 'opacity .03s linear,transform .12s cubic-bezier(0,0,.2,1) .15s',
-        opacity: ({animateShowOptions}) => (animateShowOptions ? 1 : 0),
-        transform: ({animateShowOptions}) => (animateShowOptions ? 'scale(1)' : 'scale(0)'),
-        maxHeight: ({optionsComputedProps}) => optionsComputedProps.maxHeight ?? '416px',
-        overflowY: 'auto',
-    },
-    menuItemSelected: {
-        backgroundColor: 'rgba(0, 0, 0, 0.14)',
-    },
-    menuItem: {
-        color: theme.colors.textPrimary,
-        padding: '8px 16px',
-        height: 48,
-        transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-        [theme.mq.supportsHover]: {
-            '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, 0.08)',
-            },
-        },
-        display: 'flex',
-        alignItems: 'center',
-        cursor: 'pointer',
-    },
-}));
+import * as styles from './select.css';
+import {assignInlineVars} from '@vanilla-extract/dynamic';
 
 export type SelectProps = {
     disabled?: boolean;
@@ -148,7 +60,13 @@ const Select: React.FC<SelectProps> = ({
     const [optionsShown, setOptionsShown] = React.useState(false);
     const [animateShowOptions, setAnimateShowOptions] = React.useState(false);
     const [isFocused, setIsFocused] = React.useState(false);
-    const [optionsComputedProps, setOptionsComputedProps] = React.useState({});
+    const [optionsComputedProps, setOptionsComputedProps] = React.useState<{
+        top?: number;
+        left?: number;
+        maxHeight?: number;
+        minWidth?: number;
+        transformOrigin?: string;
+    }>({});
     const [tentativeValueState, setTentativeValueState] = React.useState<string>();
     const lastElementSelectionScrollTop = React.useRef<number>(null);
     const inputId = useAriaId(id);
@@ -194,7 +112,7 @@ const Select: React.FC<SelectProps> = ({
                     if (selectTop /* this is the available space on top */ > availableSpaceBottom) {
                         const newTop = selectTop - spaceTaken;
                         setOptionsComputedProps({
-                            width,
+                            minWidth: width,
                             left,
                             top: Math.max(newTop, MARGIN_TOP_SIZE),
                             maxHeight: selectTop - MARGIN_TOP_SIZE,
@@ -202,7 +120,7 @@ const Select: React.FC<SelectProps> = ({
                         });
                     } else {
                         setOptionsComputedProps({
-                            width,
+                            minWidth: width,
                             top,
                             left,
                             maxHeight: window.innerHeight - top - MARGIN_TOP_SIZE,
@@ -212,7 +130,7 @@ const Select: React.FC<SelectProps> = ({
                 } else {
                     // if it fits on bottom
                     setOptionsComputedProps({
-                        width,
+                        minWidth: width,
                         top,
                         left,
                         maxHeight: undefined,
@@ -336,15 +254,6 @@ const Select: React.FC<SelectProps> = ({
         }
     }, [autoFocus]);
 
-    const classes = useStyles({
-        label: label || (optional && !shouldUseNative),
-        optionsComputedProps,
-        animateShowOptions,
-        helperText,
-        disabled,
-        fullWidth,
-    });
-
     // When the value is null/undefined/'' we assume it's the default empty option and we don't show any label
     const getOptionText = (val?: string) => (val ? options.find(({value}) => value === val)?.text : '');
 
@@ -388,7 +297,7 @@ const Select: React.FC<SelectProps> = ({
                 </Label>
             )}
             <select
-                className={classes.select}
+                className={styles.selectVariants[disabled ? 'disabled' : 'default']}
                 id={inputId}
                 aria-invalid={!!error}
                 value={value}
@@ -411,6 +320,8 @@ const Select: React.FC<SelectProps> = ({
                     });
                 }}
                 style={{
+                    paddingTop: label ? 24 : 16,
+                    paddingBottom: label ? 8 : 16,
                     // Override default browser opacity when disabled. This opacity also affects the label.
                     // Without this fix, the label is invisible when disabled
                     opacity: 1,
@@ -427,14 +338,14 @@ const Select: React.FC<SelectProps> = ({
                     </option>
                 ))}
             </select>
-            <div className={classes.arrowDown} aria-hidden>
+            <div className={styles.arrowDown} aria-hidden>
                 <ChevronDownRegular size={20} />
             </div>
         </FieldContainer>
     ) : (
         <>
             <div
-                className={classes.selectContainer}
+                className={styles.selectContainerVariants[fullWidth ? 'fullWidth' : 'default']}
                 role="button"
                 aria-haspopup="listbox"
                 ref={focusableRef as React.Ref<HTMLDivElement>}
@@ -457,7 +368,13 @@ const Select: React.FC<SelectProps> = ({
                     inputRef={inputRef}
                     fieldRef={fieldRef}
                 />
-                <div className={classes.selectText}>{getOptionText(value ?? valueState)}</div>
+
+                <div
+                    className={styles.selectTextVariants[disabled ? 'disabled' : 'default']}
+                    style={{top: label ? 27 : 17}}
+                >
+                    {getOptionText(value ?? valueState)}
+                </div>
             </div>
             {optionsShown && (
                 <Overlay
@@ -468,8 +385,28 @@ const Select: React.FC<SelectProps> = ({
                     disableScroll
                 >
                     <ul
+                        style={assignInlineVars({
+                            [styles.vars.top]: optionsComputedProps.top
+                                ? `${optionsComputedProps.top}px`
+                                : '',
+                            [styles.vars.left]: optionsComputedProps.left
+                                ? `${optionsComputedProps.left}px`
+                                : '',
+                            [styles.vars.maxHeight]: optionsComputedProps.maxHeight
+                                ? `${optionsComputedProps.maxHeight}px`
+                                : '',
+                            [styles.vars.minWidth]: optionsComputedProps.minWidth
+                                ? `${optionsComputedProps.minWidth}px`
+                                : '',
+                            [styles.vars.transformOrigin]: optionsComputedProps.transformOrigin ?? '',
+                        })}
                         onPointerDown={cancelEvent}
-                        className={classes.optionsContainer}
+                        className={classnames(
+                            styles.optionsContainer,
+                            animateShowOptions
+                                ? styles.optionsAnimationsVariants.show
+                                : styles.optionsAnimationsVariants.hide
+                        )}
                         role="listbox"
                         ref={optionsMenuRef}
                     >
@@ -479,8 +416,8 @@ const Select: React.FC<SelectProps> = ({
                                 aria-selected={val === (valueState ?? value)}
                                 key={val}
                                 data-value={val}
-                                className={classNames(classes.menuItem, {
-                                    [classes.menuItemSelected]:
+                                className={classnames(styles.menuItem, {
+                                    [styles.menuItemSelected]:
                                         val === tentativeValueState || val === (valueState ?? value),
                                 })}
                                 onPointerDown={cancelEvent}

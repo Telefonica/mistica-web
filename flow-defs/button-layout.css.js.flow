@@ -9,6 +9,7 @@ declare export var vars: {
 declare export var margins: string;
 declare export var link: string;
 declare export var linkAlignment: string;
+declare export var baseContainer: string;
 declare export var container: string;
 declare export var fullWidthContainer: string;
 declare export var noButtonWidth: string;

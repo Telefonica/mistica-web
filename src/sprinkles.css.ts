@@ -13,8 +13,7 @@ const colors: Array<ColorValues | 'transparent' | 'inherit'> = [
 const colorProperties = defineProperties({
     properties: {
         color: colors,
-        background: colors,
-        backgroundColor: colors,
+        background: [...colors, 'transparent'],
     },
 });
 

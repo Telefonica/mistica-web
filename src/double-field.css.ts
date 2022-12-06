@@ -1,7 +1,7 @@
 import {styleVariants} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {sprinkles} from './sprinkles.css';
-import {DEFAULT_WIDTH} from './text-field-components';
+import {DEFAULT_WIDTH} from './text-field-components.css';
 
 const container = sprinkles({
     display: 'flex',

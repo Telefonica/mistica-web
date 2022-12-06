@@ -44,7 +44,7 @@ export const progressContainer = sprinkles({
     width: '100%',
     overflow: 'hidden',
     position: 'relative',
-    backgroundColor: vars.colors.loadingBarBackground,
+    background: vars.colors.loadingBarBackground,
     height: 4,
 });
 
