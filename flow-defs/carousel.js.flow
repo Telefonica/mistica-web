@@ -15,6 +15,7 @@ declare type ItemsPerPageProp =
     }
   | number;
 declare type MobilePageOffset =
+  | void
   | number
   | {
       prev: number,
