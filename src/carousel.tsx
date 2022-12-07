@@ -81,10 +81,15 @@ const normalizeItemsPerPage = (itemsPerPage?: ItemsPerPageProp): {mobile: number
     };
 };
 
-type MobilePageOffset = number | {prev: number; next: number};
+type MobilePageOffset = undefined | number | {prev: number; next: number};
 
-const normalizeMobilePageOffset = (mobilePageOffset: MobilePageOffset): {next: number; prev: number} => {
-    if (typeof mobilePageOffset === 'number') {
+const normalizeMobilePageOffset = (
+    mobilePageOffset: MobilePageOffset
+): {
+    next: number | undefined;
+    prev: number | undefined;
+} => {
+    if (typeof mobilePageOffset === 'number' || mobilePageOffset === undefined) {
         return {
             next: mobilePageOffset,
             prev: mobilePageOffset,
@@ -138,7 +143,7 @@ type BaseCarouselProps = {
     itemsPerPage?: ItemsPerPageProp;
     /** scrolls one page by default */
     itemsToScroll?: number;
-    /** number of pixels to show for the next/prev page in mobile */
+    /** @deprecated number of pixels to show for the next/prev page in mobile */
     mobilePageOffset?: MobilePageOffset;
     /** If true, scroll snap doesn't apply and the user has a free scroll */
     free?: boolean;
@@ -160,7 +165,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     initialActiveItem,
     itemsPerPage,
     itemsToScroll,
-    mobilePageOffset = 16,
+    mobilePageOffset,
     gap,
     free,
     centered,
@@ -207,26 +212,13 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
             const calcItemScrollPositions = () => {
                 const maxScroll = carouselEl.scrollWidth - carouselEl.clientWidth;
 
-                const getItemScrollMargin = (itemIndex: number) => {
-                    if (centered) {
-                        return 0;
-                    }
-                    if (itemIndex === 0) {
-                        return 0;
-                    }
-                    if (isDesktopOrBigger) {
-                        return -(gap ?? styles.DEFAULT_DESKTOP_GAP);
-                    }
-                    return mobilePageOffsetConfig.prev;
-                };
-
                 setItemScrollPositions(
                     Array.from(carouselEl.querySelectorAll('[data-item]')).map((itemEl, idx) => {
                         if (idx === items.length - 1) {
                             return maxScroll;
                         }
                         const offsetLeft = (itemEl as HTMLElement).offsetLeft;
-                        const scrollMargin = getItemScrollMargin(idx);
+                        const scrollMargin = parseInt(getComputedStyle(itemEl).scrollMargin);
                         const scrollPosition =
                             centered && !isDesktopOrBigger ? offsetLeft - itemEl.clientWidth / 2 : offsetLeft;
                         return Math.min(scrollPosition - scrollMargin - carouselEl.offsetLeft, maxScroll);
@@ -366,8 +358,12 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                         ...assignInlineVars({
                             [styles.vars.itemsPerPageDesktop]: String(itemsPerPageConfig.desktop),
                             [styles.vars.itemsPerPageMobile]: String(itemsPerPageConfig.mobile),
-                            [styles.vars.mobilePageOffsetNext]: String(mobilePageOffsetConfig.next),
-                            [styles.vars.mobilePageOffsetPrev]: String(mobilePageOffsetConfig.prev),
+                            [styles.vars.mobilePageOffsetNext]: mobilePageOffsetConfig.next
+                                ? `${mobilePageOffsetConfig.next}px`
+                                : '',
+                            [styles.vars.mobilePageOffsetPrev]: mobilePageOffsetConfig.prev
+                                ? `${mobilePageOffsetConfig.prev}px`
+                                : '',
                             ...(gap !== undefined ? {[styles.vars.gap]: String(gap)} : {}),
                         }),
                         scrollSnapType: free ? 'initial' : 'x mandatory',
