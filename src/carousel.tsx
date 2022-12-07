@@ -81,10 +81,10 @@ const normalizeItemsPerPage = (itemsPerPage?: ItemsPerPageProp): {mobile: number
     };
 };
 
-type MobilePageOffset = undefined | number | {prev: number; next: number};
+type MobilePageOffset = number | {prev: number; next: number};
 
 const normalizeMobilePageOffset = (
-    mobilePageOffset: MobilePageOffset
+    mobilePageOffset?: MobilePageOffset
 ): {
     next: number | undefined;
     prev: number | undefined;
