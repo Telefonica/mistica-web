@@ -95,6 +95,7 @@ export const carouselContainer = sprinkles({
 });
 
 const itemsPerPageMobile = createVar();
+const itemsPerPageTablet = createVar();
 const itemsPerPageDesktop = createVar();
 const mobilePageOffsetPrev = createVar();
 const mobilePageOffsetNext = createVar();
@@ -102,6 +103,7 @@ const gap = createVar();
 
 export const vars = {
     itemsPerPageMobile,
+    itemsPerPageTablet,
     itemsPerPageDesktop,
     mobilePageOffsetPrev,
     mobilePageOffsetNext,
@@ -170,10 +172,10 @@ export const carouselItem = style({
     },
     '@media': {
         [mq.tabletOrSmaller]: {
-            width: `calc(1 / ${itemsPerPageMobile} * 100% + ${gap} / ${itemsPerPageMobile} * 1px)`,
+            width: `calc(1 / ${itemsPerPageTablet} * 100% + ${gap} / ${itemsPerPageTablet} * 1px)`,
 
             ':first-child': {
-                width: `calc(1 / ${itemsPerPageMobile} * 100% - ${gap} * (${itemsPerPageMobile} - 1) / ${itemsPerPageMobile} * 1px)`,
+                width: `calc(1 / ${itemsPerPageTablet} * 100% - ${gap} * (${itemsPerPageTablet} - 1) / ${itemsPerPageTablet} * 1px)`,
             },
 
             scrollSnapAlign: 'start',
@@ -181,20 +183,39 @@ export const carouselItem = style({
 
             selectors: {
                 [`${carouselWithScroll}:not(${centeredCarousel}) &`]: {
-                    width: `calc(1 / ${itemsPerPageMobile} * 100% - (${mobilePageOffsetNext} + ${mobilePageOffsetPrev} + ${gap}) / ${itemsPerPageMobile} * 1px)`,
+                    width: `calc(1 / ${itemsPerPageTablet} * 100% - (${mobilePageOffsetNext} + ${mobilePageOffsetPrev} + ${gap}) / ${itemsPerPageTablet} * 1px)`,
                 },
                 [`${carouselWithScroll}:not(${centeredCarousel}) &:first-child`]: {
                     paddingLeft: responsiveLayoutSideMargin,
-                    width: `calc(1 / ${itemsPerPageMobile} * 100% - (${mobilePageOffsetNext} + ${mobilePageOffsetPrev} + ${gap}) / ${itemsPerPageMobile} * 1px - ${gap} * 1px + ${responsiveLayoutSideMargin})`,
+                    width: `calc(1 / ${itemsPerPageTablet} * 100% - (${mobilePageOffsetNext} + ${mobilePageOffsetPrev} + ${gap}) / ${itemsPerPageTablet} * 1px - ${gap} * 1px + ${responsiveLayoutSideMargin})`,
                 },
                 [`${carouselWithScroll}:not(${centeredCarousel}) &:last-child`]: {
                     paddingRight: responsiveLayoutSideMargin,
-                    width: `calc(1 / ${itemsPerPageMobile} * 100% - (${mobilePageOffsetNext} + ${mobilePageOffsetPrev} + ${gap}) / ${itemsPerPageMobile} * 1px + ${responsiveLayoutSideMargin})`,
+                    width: `calc(1 / ${itemsPerPageTablet} * 100% - (${mobilePageOffsetNext} + ${mobilePageOffsetPrev} + ${gap}) / ${itemsPerPageTablet} * 1px + ${responsiveLayoutSideMargin})`,
                 },
                 [`${centeredCarousel} &`]: {
                     width: '50%',
                     scrollSnapAlign: 'center',
                     scrollMargin: 0,
+                },
+            },
+        },
+        [mq.mobile]: {
+            width: `calc(1 / ${itemsPerPageMobile} * 100% + ${gap} / ${itemsPerPageMobile} * 1px)`,
+
+            ':first-child': {
+                width: `calc(1 / ${itemsPerPageMobile} * 100% - ${gap} * (${itemsPerPageMobile} - 1) / ${itemsPerPageMobile} * 1px)`,
+            },
+
+            selectors: {
+                [`${carouselWithScroll}:not(${centeredCarousel}) &`]: {
+                    width: `calc(1 / ${itemsPerPageMobile} * 100% - (${mobilePageOffsetNext} + ${mobilePageOffsetPrev} + ${gap}) / ${itemsPerPageMobile} * 1px)`,
+                },
+                [`${carouselWithScroll}:not(${centeredCarousel}) &:first-child`]: {
+                    width: `calc(1 / ${itemsPerPageMobile} * 100% - (${mobilePageOffsetNext} + ${mobilePageOffsetPrev} + ${gap}) / ${itemsPerPageMobile} * 1px - ${gap} * 1px + ${responsiveLayoutSideMargin})`,
+                },
+                [`${carouselWithScroll}:not(${centeredCarousel}) &:last-child`]: {
+                    width: `calc(1 / ${itemsPerPageMobile} * 100% - (${mobilePageOffsetNext} + ${mobilePageOffsetPrev} + ${gap}) / ${itemsPerPageMobile} * 1px + ${responsiveLayoutSideMargin})`,
                 },
             },
         },
