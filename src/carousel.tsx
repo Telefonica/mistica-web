@@ -63,55 +63,46 @@ export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages,
     );
 };
 
-type DesktopItemsPerPage = {small?: number; medium?: number; large?: number};
-type ItemsPerPageProp = {mobile?: number; tablet?: number; desktop?: DesktopItemsPerPage | number} | number;
+type DesktopItemsPerPage = {small?: number; medium?: number; large?: number} | number;
+type ItemsPerPageProp = {mobile?: number; tablet?: number; desktop?: DesktopItemsPerPage} | number;
 
-type NormalizedDesktopItemsPerPage = {small: number; medium: number; large: number};
-type NormalizedItemsPerPage = {
-    mobile: number;
-    tablet: number;
-    desktop: NormalizedDesktopItemsPerPage;
-};
-
-const normalizeDesktopItemsPerPage = (
-    defaultItemsPerPage: NormalizedDesktopItemsPerPage,
-    itemsPerPage?: DesktopItemsPerPage | number
-): NormalizedDesktopItemsPerPage => {
+const selectDesktopItemsPerPage = (
+    containerType: DesktopContainerType,
+    defaultItemsPerPage: {small: number; medium: number; large: number},
+    itemsPerPage?: DesktopItemsPerPage
+): number => {
     if (!itemsPerPage) {
-        return defaultItemsPerPage;
+        return defaultItemsPerPage[containerType];
     }
     if (typeof itemsPerPage === 'number') {
-        return {
-            small: itemsPerPage,
-            medium: itemsPerPage,
-            large: itemsPerPage,
-        };
+        return itemsPerPage;
     }
-    return {
-        ...defaultItemsPerPage,
-        ...itemsPerPage,
-    };
+    return itemsPerPage[containerType] || defaultItemsPerPage[containerType];
 };
 
-const normalizeItemsPerPage = (itemsPerPage?: ItemsPerPageProp): NormalizedItemsPerPage => {
+const normalizeItemsPerPage = (
+    desktopContainerType: DesktopContainerType,
+    itemsPerPage?: ItemsPerPageProp
+): {
+    mobile: number;
+    tablet: number;
+    desktop: number;
+} => {
     const defaultItemsPerPage = {mobile: 1, tablet: 1, desktop: {small: 1, medium: 2, large: 3}};
     if (!itemsPerPage) {
-        return defaultItemsPerPage;
+        return {...defaultItemsPerPage, desktop: defaultItemsPerPage.desktop.large};
     }
 
     if (typeof itemsPerPage === 'number') {
         return {
             mobile: itemsPerPage,
             tablet: itemsPerPage,
-            desktop: {
-                small: itemsPerPage,
-                medium: itemsPerPage,
-                large: itemsPerPage,
-            },
+            desktop: itemsPerPage,
         };
     }
 
-    const itemsPerPageDesktop = normalizeDesktopItemsPerPage(
+    const itemsPerPageDesktop = selectDesktopItemsPerPage(
+        desktopContainerType,
         defaultItemsPerPage.desktop,
         itemsPerPage.desktop
     );
@@ -119,7 +110,7 @@ const normalizeItemsPerPage = (itemsPerPage?: ItemsPerPageProp): NormalizedItems
     return {
         ...defaultItemsPerPage,
         ...itemsPerPage,
-        desktop: {...itemsPerPageDesktop},
+        desktop: itemsPerPageDesktop,
     };
 };
 
@@ -170,24 +161,6 @@ const calcCurrentPageIndex = (scrollPosition: number, pagesScrollPositions: Read
 
 const DEFAULT_AUTOPLAY_TIME = 5000;
 
-const selectItemsPerPage = ({
-    itemsPerPageConfig,
-    isMobile,
-    isDesktop,
-    desktopContainerType,
-}: {
-    itemsPerPageConfig: NormalizedItemsPerPage;
-    isMobile: boolean;
-    isDesktop: boolean;
-    desktopContainerType: DesktopContainerType;
-}): number => {
-    if (isDesktop) {
-        return itemsPerPageConfig.desktop[desktopContainerType];
-    } else {
-        return isMobile ? itemsPerPageConfig.mobile : itemsPerPageConfig.tablet;
-    }
-};
-
 type BaseCarouselProps = {
     items: ReadonlyArray<React.ReactNode>;
     itemStyle?: React.CSSProperties;
@@ -229,18 +202,20 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     dataAttributes,
 }) => {
     const {texts, platformOverrides} = useTheme();
-    const itemsPerPageConfig = normalizeItemsPerPage(itemsPerPage);
-    const mobilePageOffsetConfig = normalizeMobilePageOffset(mobilePageOffset);
-    const {isDesktopOrBigger, isMobile} = useScreenSize();
-    const carouselRef = React.useRef<HTMLDivElement>(null);
 
     const desktopContainerType = useDesktopContainerType();
-    const itemsPerPageFloor = selectItemsPerPage({
-        itemsPerPageConfig,
-        isMobile,
-        isDesktop: isDesktopOrBigger,
-        desktopContainerType: desktopContainerType || 'large',
-    });
+    const itemsPerPageConfig = normalizeItemsPerPage(desktopContainerType || 'large', itemsPerPage);
+
+    const {isDesktopOrBigger, isMobile} = useScreenSize();
+    const mobileOrTabletItemsPerPage = isMobile ? itemsPerPageConfig.mobile : itemsPerPageConfig.tablet;
+    const itemsPerPageFloor = Math.max(
+        Math.floor(isDesktopOrBigger ? itemsPerPageConfig.desktop : mobileOrTabletItemsPerPage),
+        1
+    );
+
+    const mobilePageOffsetConfig = normalizeMobilePageOffset(mobilePageOffset);
+
+    const carouselRef = React.useRef<HTMLDivElement>(null);
 
     const pagesCount = Math.ceil(items.length / itemsPerPageFloor);
     const [{scrollLeft, scrollRight}, setScroll] = React.useState({scrollLeft: 0, scrollRight: 0});
