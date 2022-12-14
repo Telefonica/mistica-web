@@ -8,6 +8,7 @@ import Inline from './inline';
 import {Text3, Text2} from './text';
 import * as styles from './popover.css';
 import {sprinkles} from './sprinkles.css';
+import {vars} from './skins/skin-contract.css';
 
 import type {TrackingEvent} from './utils/types';
 
@@ -153,7 +154,7 @@ const Popover: React.FC<Props> = ({
     isVisible = true,
     extra,
 }) => {
-    const {texts, colors, isIos, isDarkMode} = useTheme();
+    const {texts, isIos, isDarkMode} = useTheme();
     const {isTabletOrSmaller} = useScreenSize();
     const [targetPosition, setTargetPosition] = React.useState<TargetPosition | null>(null);
 
@@ -219,7 +220,7 @@ const Popover: React.FC<Props> = ({
                             <Box className={styles.textAlign}>
                                 <Stack space={4} className={styles.textContent}>
                                     {title && <Text3 regular>{title}</Text3>}
-                                    <Text2 regular color={colors.textSecondary}>
+                                    <Text2 regular color={vars.colors.textSecondary}>
                                         {description}
                                     </Text2>
                                 </Stack>
@@ -235,7 +236,7 @@ const Popover: React.FC<Props> = ({
                         trackingEvent={trackingEvent}
                         aria-label={texts.modalClose}
                     >
-                        <IconCloseRegular color={colors.neutralHigh} />
+                        <IconCloseRegular color={vars.colors.neutralHigh} />
                     </IconButton>
                     {extra}
                 </Box>

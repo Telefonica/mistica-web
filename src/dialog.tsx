@@ -16,6 +16,7 @@ import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
 import {useSetModalState} from './modal-context-provider';
 import Stack from './stack';
 import * as styles from './dialog.css';
+import {vars} from './skins/skin-contract.css';
 
 import type {Theme} from './theme';
 import type {RendersNullableElement} from './utils/types';
@@ -68,7 +69,7 @@ interface ExtendedDialogProps extends BaseDialogProps {
 type DialogProps = AlertProps | ConfirmProps | ExtendedDialogProps;
 
 const Dialog: React.FC<DialogProps> = (props) => {
-    const {texts, colors} = useTheme();
+    const {texts} = useTheme();
     const {
         className,
         title,
@@ -121,7 +122,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
             )}
             <div className={styles.dialogContent}>
                 <Stack space={16}>
-                    <Text3 color={colors.textSecondary} regular>
+                    <Text3 color={vars.colors.textSecondary} regular>
                         {message}
                     </Text3>
                     {extra}
@@ -358,7 +359,7 @@ const ModalDialog = (props: ModalDialogProps) => {
                                                 context.texts.modalClose ?? context.texts.closeButtonLabel
                                             }
                                         >
-                                            <IcnCloseRegular color={context.colors.neutralHigh} />
+                                            <IcnCloseRegular color={vars.colors.neutralHigh} />
                                         </IconButton>
                                     </div>
                                 )}

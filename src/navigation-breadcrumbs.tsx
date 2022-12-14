@@ -4,11 +4,11 @@
  */
 import * as React from 'react';
 import {Text1} from './text';
-import {useTheme} from './hooks';
 import {getPrefixedDataAttributes} from './utils/dom';
 import TextLink from './text-link';
 import {useIsInverseVariant} from './theme-variant-context';
 import * as styles from './navigation-breadcrumbs.css';
+import {vars} from './skins/skin-contract.css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -31,7 +31,6 @@ const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({
     dataAttributes,
     'aria-label': ariaLabel = 'Breadcrumb',
 }) => {
-    const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
     return (
         <nav aria-label={ariaLabel} {...getPrefixedDataAttributes(dataAttributes)}>
@@ -41,7 +40,11 @@ const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({
                         <Text1 regular>
                             <TextLink
                                 to={url}
-                                style={{color: isInverse ? colors.textPrimaryInverse : colors.textPrimary}}
+                                style={{
+                                    color: isInverse
+                                        ? vars.colors.textPrimaryInverse
+                                        : vars.colors.textPrimary,
+                                }}
                                 className={styles.link}
                             >
                                 {title}
@@ -62,7 +65,10 @@ const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({
                             e.preventDefault();
                         }}
                     >
-                        <Text1 regular color={isInverse ? colors.textSecondaryInverse : colors.textSecondary}>
+                        <Text1
+                            regular
+                            color={isInverse ? vars.colors.textSecondaryInverse : vars.colors.textSecondary}
+                        >
                             {title}
                         </Text1>
                     </a>

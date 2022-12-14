@@ -73,9 +73,12 @@ type HelperTextProps = {
 
 export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, error}) => {
     const isInverse = useIsInverseVariant();
-    const {colors} = useTheme();
-    const leftColor = isInverse ? colors.textPrimaryInverse : error ? colors.error : colors.textSecondary;
-    const rightColor = isInverse ? colors.textPrimaryInverse : colors.textSecondary;
+    const leftColor = isInverse
+        ? vars.colors.textPrimaryInverse
+        : error
+        ? vars.colors.error
+        : vars.colors.textSecondary;
+    const rightColor = isInverse ? vars.colors.textPrimaryInverse : vars.colors.textSecondary;
 
     return (
         <div className={styles.helperContainer}>

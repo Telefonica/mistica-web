@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import {combineRefs} from './utils/common';
 import * as styles from './text-field-base.css';
 import {sprinkles} from './sprinkles.css';
+import {vars} from './skins/skin-contract.css';
 
 import type {InputState} from './text-field-components';
 import type {FieldValidator} from './form-context';
@@ -141,7 +142,6 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
         );
-        const {colors} = useTheme();
         const {isTabletOrSmaller} = useScreenSize();
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
         const hasLabel = !!label || !rest.required;
@@ -260,7 +260,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                             alignSelf: prefixAlignSelf,
                         }}
                     >
-                        <Text3 color={colors.textSecondary} regular wordBreak={false}>
+                        <Text3 color={vars.colors.textSecondary} regular wordBreak={false}>
                             {prefix}
                         </Text3>
                     </div>

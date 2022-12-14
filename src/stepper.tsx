@@ -1,11 +1,12 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {Text2, Text1} from './text';
-import {useTheme, useScreenSize, useElementDimensions} from './hooks';
+import {useScreenSize, useElementDimensions} from './hooks';
 import IconSuccess from './icons/icon-success';
 import * as styles from './stepper.css';
 import {pxToRem} from './utils/css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
+import {vars} from './skins/skin-contract.css';
 
 type StepperProps = {
     steps: ReadonlyArray<string>;
@@ -15,23 +16,23 @@ type StepperProps = {
 };
 
 const Stepper: React.FC<StepperProps> = ({steps, currentIndex, 'aria-label': ariaLabel}: StepperProps) => {
-    const {colors} = useTheme();
     const {isDesktopOrBigger} = useScreenSize();
     const {height, ref} = useElementDimensions();
     const textContainerHeight = height;
     const previousIndexRef = React.useRef(currentIndex);
     const isBack = previousIndexRef.current > currentIndex;
 
-    const vars = assignInlineVars({
-        [styles.vars.stepperMinHeight]: pxToRem(40 + textContainerHeight),
-    });
-
     if (currentIndex !== previousIndexRef.current) {
         previousIndexRef.current = currentIndex;
     }
 
     return (
-        <div className={styles.stepper} style={vars}>
+        <div
+            className={styles.stepper}
+            style={assignInlineVars({
+                [styles.vars.stepperMinHeight]: pxToRem(40 + textContainerHeight),
+            })}
+        >
             {steps.map((text, index) => {
                 const isCurrent = index === currentIndex;
                 const isLastStep = index === steps.length - 1;
@@ -57,7 +58,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex, 'aria-label': ari
                                     aria-hidden="true"
                                 >
                                     <IconSuccess
-                                        color={colors.controlActivated}
+                                        color={vars.colors.controlActivated}
                                         size="100%"
                                         skipAnimation={!hasAnimation || isBack}
                                     />
@@ -71,7 +72,11 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex, 'aria-label': ari
                                     <Text1
                                         as="span"
                                         medium
-                                        color={isCurrent ? colors.textPrimaryInverse : colors.textSecondary}
+                                        color={
+                                            isCurrent
+                                                ? vars.colors.textPrimaryInverse
+                                                : vars.colors.textSecondary
+                                        }
                                         aria-hidden="true"
                                     >
                                         {index + 1}
@@ -85,8 +90,8 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex, 'aria-label': ari
                                         regular
                                         color={
                                             isCompleted || isCurrent
-                                                ? colors.textPrimary
-                                                : colors.textSecondary
+                                                ? vars.colors.textPrimary
+                                                : vars.colors.textSecondary
                                         }
                                     >
                                         {text}

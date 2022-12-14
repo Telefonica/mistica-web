@@ -11,7 +11,7 @@ import {Text3, Text2, Text1} from './text';
 import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
-import {useAriaId, useTheme} from './hooks';
+import {useAriaId} from './hooks';
 import {useIsInverseVariant} from './theme-variant-context';
 import IconChevron from './icons/icon-chevron';
 import Switch from './switch-component';
@@ -21,6 +21,7 @@ import {Boxed} from './boxed';
 import Divider from './divider';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './list.css';
+import {vars} from './skins/skin-contract.css';
 
 import type {TouchableElement} from './touchable';
 import type {DataAttributes, TrackingEvent} from './utils/types';
@@ -82,7 +83,6 @@ const Content: React.FC<ContentProps> = ({
     disabled,
 }) => {
     const isInverse = useIsInverseVariant();
-    const {colors} = useTheme();
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
     const centerY = numTextLines === 1;
 
@@ -114,21 +114,21 @@ const Content: React.FC<ContentProps> = ({
             >
                 <Stack space={4}>
                     {headline && (
-                        <Text1 regular color={colors.textPrimary}>
+                        <Text1 regular color={vars.colors.textPrimary}>
                             {headline}
                         </Text1>
                     )}
                     <Stack space={2}>
-                        <Text3 regular color={colors.textPrimary} truncate={titleLinesMax} id={labelId}>
+                        <Text3 regular color={vars.colors.textPrimary} truncate={titleLinesMax} id={labelId}>
                             {title}
                         </Text3>
                         {subtitle && (
-                            <Text2 regular color={colors.textSecondary} truncate={subtitleLinesMax}>
+                            <Text2 regular color={vars.colors.textSecondary} truncate={subtitleLinesMax}>
                                 {subtitle}
                             </Text2>
                         )}
                         {description && (
-                            <Text2 regular color={colors.textSecondary} truncate={descriptionLinesMax}>
+                            <Text2 regular color={vars.colors.textSecondary} truncate={descriptionLinesMax}>
                                 {description}
                             </Text2>
                         )}
@@ -140,7 +140,7 @@ const Content: React.FC<ContentProps> = ({
             {type === 'chevron' && (
                 <Box paddingLeft={16} className={classNames(styles.center, {[styles.disabled]: disabled})}>
                     <IconChevron
-                        color={isInverse ? colors.inverse : colors.neutralMedium}
+                        color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
                         direction="right"
                     />
                 </Box>
@@ -157,7 +157,7 @@ const Content: React.FC<ContentProps> = ({
                             className={classNames(styles.center, {[styles.disabled]: disabled})}
                         >
                             <IconChevron
-                                color={isInverse ? colors.inverse : colors.neutralMedium}
+                                color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
                                 direction="right"
                             />
                         </Box>

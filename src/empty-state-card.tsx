@@ -2,11 +2,12 @@ import * as React from 'react';
 import Box from './box';
 import {Boxed} from './boxed';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
-import {useScreenSize, useTheme} from './hooks';
+import {useScreenSize} from './hooks';
 import Stack from './stack';
 import {Text2, Text4} from './text';
 import ButtonGroup from './button-group';
 import * as styles from './empty-state-card.css';
+import {vars} from './skins/skin-contract.css';
 
 import type {DataAttributes, RendersNullableElement} from './utils/types';
 
@@ -45,7 +46,6 @@ const EmptyStateCard: React.FC<Props> = ({
     'aria-label': ariaLabel,
     dataAttributes,
 }) => {
-    const {colors} = useTheme();
     const {isTabletOrSmaller} = useScreenSize();
 
     let image;
@@ -64,7 +64,7 @@ const EmptyStateCard: React.FC<Props> = ({
                         <Box>
                             <Stack space={8}>
                                 <Text4 regular>{title}</Text4>
-                                <Text2 regular color={colors.textSecondary}>
+                                <Text2 regular color={vars.colors.textSecondary}>
                                     {description}
                                 </Text2>
                             </Stack>

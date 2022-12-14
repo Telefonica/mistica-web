@@ -1,7 +1,7 @@
 import '../css/roboto.css';
 import '../css/reset.css';
 import * as React from 'react';
-import {ThemeContextProvider, useTheme, useModalState, OverscrollColorProvider} from '../src';
+import {ThemeContextProvider, useModalState, OverscrollColorProvider, skinVars} from '../src';
 
 import type {ThemeConfig} from '../src';
 
@@ -25,9 +25,8 @@ export const useOverrideTheme = (): OverrideTheme => React.useContext(ThemeOverr
 
 const App: React.FC = ({children}) => {
     const {isModalOpen} = useModalState();
-    const {colors} = useTheme();
     const styles = `
-        body {background: ${colors.background}}
+        body {background: ${skinVars.colors.background}}
 
         ${isModalOpen ? 'body {overflow-y: hidden}' : ''}
 

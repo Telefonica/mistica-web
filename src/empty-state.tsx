@@ -61,7 +61,7 @@ const EmptyState: React.FC<Props> = ({
     'aria-label': ariaLabel,
     dataAttributes,
 }) => {
-    const {colors, isDarkMode} = useTheme();
+    const {isDarkMode} = useTheme();
     const isInverse = useIsInverseVariant();
 
     const image = imageUrl ? <img className={styles.smallImage} alt="" src={imageUrl} /> : undefined;
@@ -95,7 +95,11 @@ const EmptyState: React.FC<Props> = ({
                     {image ?? (icon && <div className={styles.iconContainer}>{icon}</div>)}
                     <Stack space={16}>
                         <Text6 as="h1">{title}</Text6>
-                        <Text3 regular as="p" color={isInverse ? colors.inverse : colors.textSecondary}>
+                        <Text3
+                            regular
+                            as="p"
+                            color={isInverse ? vars.colors.inverse : vars.colors.textSecondary}
+                        >
                             {description}
                         </Text3>
                     </Stack>

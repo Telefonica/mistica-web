@@ -35,12 +35,10 @@ const ComponentUsesStylesWithClassB: React.FC = () => {
 };
 
 const useStylesWithTheme = createUseStyles((theme) => ({
-    a: {
-        // OK
-        backgroundColor: theme.colors.background,
-        // @ts-expect-error - unknown property does not exist
-        borderColor: theme.colors.unknown,
-    },
+    // OK
+    [theme.mq.desktop]: {},
+    // @ts-expect-error - unknown property does not exist
+    [theme.mq.unknown]: {},
 }));
 
 const ComponentUsesStylesWithTeme: React.FC = () => {

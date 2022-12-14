@@ -7,6 +7,7 @@ import IconButton from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {pxToRem} from './utils/css';
 import * as styles from './chip.css';
+import {vars} from './skins/skin-contract.css';
 
 import type {IconProps} from './utils/types';
 
@@ -36,7 +37,7 @@ interface ToggleChipProps extends ChipBaseProps {
 type ChipProps = SimpleChipProps | ClosableChipProps | ToggleChipProps;
 
 const Chip: React.FC<ChipProps> = (props) => {
-    const {texts, isDarkMode, colors} = useTheme();
+    const {texts, isDarkMode} = useTheme();
 
     const {Icon, children, id} = props;
 
@@ -70,7 +71,7 @@ const Chip: React.FC<ChipProps> = (props) => {
                         aria-label={texts.closeButtonLabel}
                         onPress={() => props.onClose()}
                     >
-                        <IconCloseRegular size={16} color={colors.neutralMedium} />
+                        <IconCloseRegular size={16} color={vars.colors.neutralMedium} />
                     </IconButton>
                 </Box>
             </Box>

@@ -86,17 +86,11 @@ export const Text: React.FC<TextProps> = ({
 }) => {
     const isInverse = useIsInverseVariant();
     const lineClampValue = lineClamp(truncate);
-    const {colors} = useTheme();
 
     const inverseColorsMap = {
         [vars.colors.textPrimary]: vars.colors.textPrimaryInverse,
         [vars.colors.textSecondary]: vars.colors.textSecondaryInverse,
         [vars.colors.textLink]: vars.colors.textLinkInverse,
-
-        // we still need to support colors injected in useTheme, which are not css vars
-        [colors.textPrimary]: colors.textPrimaryInverse,
-        [colors.textSecondary]: colors.textSecondaryInverse,
-        [colors.textLink]: colors.textLinkInverse,
     };
 
     if (!children && children !== 0) {
