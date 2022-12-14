@@ -117,3 +117,23 @@ export const fieldSingle = style([
 export const fieldMulti = style({
     height: 152,
 });
+
+export const helperContainer = sprinkles({
+    paddingLeft: 12,
+    paddingRight: 16,
+    display: 'flex',
+});
+
+export const helperText = style({
+    margin: 0,
+    marginTop: 4,
+    flexGrow: 1,
+});
+
+export const leftText = style({
+    textAlign: 'left',
+});
+
+export const rightText = style({
+    textAlign: 'right',
+});
