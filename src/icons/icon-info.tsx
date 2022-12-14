@@ -1,14 +1,7 @@
 import * as React from 'react';
-import {createUseStyles} from '../jss';
 import {useTheme} from '../hooks';
 import {O2_SKIN, O2_CLASSIC_SKIN} from '../skins/constants';
-
-const useStyles = createUseStyles((theme) => ({
-    iconContainer: {
-        stroke: (isInverse) => (isInverse ? theme.colors.inverse : theme.colors.brand),
-        fill: (isInverse) => (isInverse ? theme.colors.inverse : theme.colors.brand),
-    },
-}));
+import {vars} from '../skins/skin-contract.css';
 
 type Props = {
     size?: number | string;
@@ -16,11 +9,14 @@ type Props = {
 };
 
 const IconInfoO2: React.FC<Props> = ({size = 64, color}) => {
-    const classes = useStyles();
-
     return (
         <svg width={size} height={size} viewBox="0 0 64 64">
-            <g className={classes.iconContainer} strokeLinecap="round" strokeLinejoin="round">
+            <g
+                stroke={vars.colors.brand}
+                fill={vars.colors.brand}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            >
                 <path
                     fill="none"
                     strokeWidth="2"
@@ -44,11 +40,9 @@ const IconInfoO2: React.FC<Props> = ({size = 64, color}) => {
 };
 
 const IconInfoDefault: React.FC = () => {
-    const classes = useStyles();
-
     return (
         <svg width="64" height="64" viewBox="0 0 64 64">
-            <g className={classes.iconContainer}>
+            <g fill={vars.colors.brand}>
                 <path
                     fillRule="nonzero"
                     strokeWidth="0"
