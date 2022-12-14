@@ -6,8 +6,10 @@ export default {
     component: Video,
 };
 
-const VIDEO_SRC = 'https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw';
-const POSTER_SRC = 'https://i.imgur.com/Fu7RiuY.jpg';
+const VIDEO_SRC =
+    'https://assets.mixkit.co/videos/preview/mixkit-aerial-shot-of-a-beach-with-sea-waves-1087-large.mp4';
+const POSTER_SRC =
+    'https://mixkit.imgix.net/videos/preview/mixkit-aerial-shot-of-a-beach-with-sea-waves-1087-0.jpg?q=80&auto=format%2Ccompress';
 
 export const Default: StoryComponent = () => {
     const videoRef = React.useRef<HTMLVideoElement | null>(null);
