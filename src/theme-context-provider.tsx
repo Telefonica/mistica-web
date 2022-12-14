@@ -5,11 +5,10 @@ import {createGenerateId} from 'jss';
 import {getJss} from './jss';
 import DialogRoot from './dialog';
 import ScreenSizeContextProvider from './screen-size-context-provider';
-import {createMediaQueries} from './utils/media-queries';
 import {PACKAGE_VERSION} from './package-version';
 import AriaIdGetterContext from './aria-id-getter-context';
 import {isServerSide} from './utils/environment';
-import {AnchorLink, mediaQueriesConfig, dimensions, getTexts, NAVBAR_HEIGHT_MOBILE} from './theme';
+import {AnchorLink, dimensions, getTexts, NAVBAR_HEIGHT_MOBILE} from './theme';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
@@ -189,7 +188,6 @@ const ThemeContextProvider: React.FC<Props> = ({
                 ...dimensions,
                 ...sanitizeDimensions(theme.dimensions),
             },
-            mq: createMediaQueries(theme.mediaQueries ?? mediaQueriesConfig),
             colors,
             textPresets: {
                 text5: {...defaultTextPresetsConfig.text5, ...theme.skin.textPresets?.text5},
