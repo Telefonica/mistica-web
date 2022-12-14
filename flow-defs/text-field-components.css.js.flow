@@ -14,3 +14,7 @@ declare export var fullWidth: string;
 declare export var field: string;
 declare export var fieldSingle: string;
 declare export var fieldMulti: string;
+declare export var helperContainer: string;
+declare export var helperText: string;
+declare export var leftText: string;
+declare export var rightText: string;
