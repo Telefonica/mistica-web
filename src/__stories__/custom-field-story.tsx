@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import {StorySection} from './helpers';
 import {
-    useTheme,
+    skinVars,
     Text2,
     Text3,
     TextField,
@@ -81,7 +81,6 @@ const Options = ({
     closeMenu,
     elementRef,
 }: OptionsProps) => {
-    const {colors} = useTheme();
     const scrollRef = React.useRef<HTMLDivElement>();
     const optionRefs = React.useRef(new Map<string, HTMLDivElement>());
     const [tentativeValueState, setTentativeValueState] = React.useState('');
@@ -185,7 +184,7 @@ const Options = ({
                         <Text1 as="p" regular>
                             {option.text}
                         </Text1>
-                        <Text1 regular color={colors.textSecondary}>
+                        <Text1 regular color={skinVars.colors.textSecondary}>
                             {option.value}
                         </Text1>
                     </Touchable>
@@ -193,7 +192,7 @@ const Options = ({
             ))}
             {options.length === 0 ? (
                 <Box paddingX={16} paddingY={8}>
-                    <Text3 regular color={colors.textSecondary}>
+                    <Text3 regular color={skinVars.colors.textSecondary}>
                         No option
                     </Text3>
                 </Box>

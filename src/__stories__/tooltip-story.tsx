@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Tooltip, Text2, Text1, Stack, useTheme, Placeholder} from '..';
+import {Tooltip, Text2, Text1, Stack, skinVars, Placeholder} from '..';
 import {StorySection} from './helpers';
 import IconCloseRegular from '../generated/mistica-icons/icon-close-regular';
 import IcnInfo from '../icons/icon-info-cvv';
@@ -11,7 +11,6 @@ export default {
 };
 
 export const Default: StoryComponent = () => {
-    const {colors} = useTheme();
     const description =
         'When working on a project and the customer has not yet delivered the copy, something is missing...';
     return (
@@ -66,7 +65,7 @@ export const Default: StoryComponent = () => {
                         <div style={{textAlign: 'center'}}>
                             <Stack space={0}>
                                 <Text2 regular>Tooltip with custom elements</Text2>
-                                <Text1 regular color={colors.textSecondary}>
+                                <Text1 regular color={skinVars.colors.textSecondary}>
                                     (do not use interactive elements inside)
                                 </Text1>
                             </Stack>
@@ -91,7 +90,7 @@ export const Default: StoryComponent = () => {
                         display: 'flex',
                         justifyContent: 'space-around',
                         paddingTop: 20,
-                        borderTop: `1px solid ${colors.border}`,
+                        borderTop: `1px solid ${skinVars.colors.border}`,
                     }}
                 >
                     <Tooltip

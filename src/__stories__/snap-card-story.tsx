@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
     IconMobileDeviceRegular,
-    useTheme,
+    skinVars,
     Circle,
     SnapCard,
     ResponsiveLayout,
@@ -27,16 +27,19 @@ type Args = {
 };
 
 export const Default: StoryComponent<Args> = ({asset, title, subtitle, touchable, isInverse, withExtra}) => {
-    const {colors} = useTheme();
-
     const assetToIcon: {
         [asset in Args['asset']]: React.ReactElement | undefined;
     } = {
         icon: <IconMobileDeviceRegular />,
         image: <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />,
         'icon in circle': (
-            <Circle size={40} backgroundColor={isInverse ? colors.brandHigh : colors.brandLow}>
-                <IconMobileDeviceRegular color={isInverse ? colors.inverse : colors.brand} />
+            <Circle
+                size={40}
+                backgroundColor={isInverse ? skinVars.colors.brandHigh : skinVars.colors.brandLow}
+            >
+                <IconMobileDeviceRegular
+                    color={isInverse ? skinVars.colors.inverse : skinVars.colors.brand}
+                />
             </Circle>
         ),
         none: undefined,
@@ -79,7 +82,6 @@ Default.argTypes = {
 };
 
 export const Group: StoryComponent = () => {
-    const {colors} = useTheme();
     return (
         <Box paddingY={24}>
             <ResponsiveLayout>
@@ -90,16 +92,16 @@ export const Group: StoryComponent = () => {
                             title="Title 1"
                             subtitle="Subtitle"
                             icon={
-                                <Circle size={40} backgroundColor={colors.brandLow}>
-                                    <IconMobileDeviceRegular color={colors.brand} />
+                                <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                                    <IconMobileDeviceRegular color={skinVars.colors.brand} />
                                 </Circle>
                             }
                         />
                         <SnapCard
                             title="Title 2"
                             icon={
-                                <Circle size={40} backgroundColor={colors.brandLow}>
-                                    <IconMobileDeviceRegular color={colors.brand} />
+                                <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                                    <IconMobileDeviceRegular color={skinVars.colors.brand} />
                                 </Circle>
                             }
                         />

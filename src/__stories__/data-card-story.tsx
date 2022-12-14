@@ -8,7 +8,7 @@ import {
     Text2,
     ResponsiveLayout,
     IconMobileDeviceRegular,
-    useTheme,
+    skinVars,
     Circle,
     Tag,
     TagType,
@@ -44,13 +44,11 @@ export const Default: StoryComponent<DataCardArgs> = ({
     actions = 'button',
     closable,
 }) => {
-    const {colors} = useTheme();
-
     let icon;
     if (asset === 'icon') {
         icon = (
-            <Circle size={40} backgroundColor={colors.brandLow}>
-                <IconMobileDeviceRegular color={colors.brand} />
+            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                <IconMobileDeviceRegular color={skinVars.colors.brand} />
             </Circle>
         );
     } else if (asset === 'image') {
@@ -112,7 +110,6 @@ Default.argTypes = {
 };
 
 export const Group: StoryComponent = () => {
-    const {colors} = useTheme();
     return (
         <ResponsiveLayout>
             <Stack space={16}>
@@ -129,8 +126,8 @@ export const Group: StoryComponent = () => {
                         subtitle="Subtitle"
                         description="Description"
                         icon={
-                            <Circle size={40} backgroundColor={colors.brandLow}>
-                                <IconMobileDeviceRegular color={colors.brand} />
+                            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                                <IconMobileDeviceRegular color={skinVars.colors.brand} />
                             </Circle>
                         }
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
@@ -139,8 +136,8 @@ export const Group: StoryComponent = () => {
                         title="Title"
                         description="Description"
                         icon={
-                            <Circle size={40} backgroundColor={colors.brandLow}>
-                                <IconMobileDeviceRegular color={colors.brand} />
+                            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                                <IconMobileDeviceRegular color={skinVars.colors.brand} />
                             </Circle>
                         }
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}

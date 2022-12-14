@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ThemeVariant, useTheme, Text2, useIsInverseVariant, Stack} from '..';
+import {ThemeVariant, skinVars, Text2, useIsInverseVariant, Stack} from '..';
 import {useCheckbox} from './helpers';
 import {ButtonPrimary} from '../button';
 
@@ -8,17 +8,16 @@ export default {
 };
 
 const OtherComponent: React.FC = () => {
-    const theme = useTheme();
     const isInverse = useIsInverseVariant();
     return (
         <Stack space={16}>
-            <Text2 regular color={theme.colors.textPrimary}>
+            <Text2 regular color={skinVars.colors.textPrimary}>
                 Some components, like Text, or Button, automatically react to theme variant changes
             </Text2>
             <ButtonPrimary onPress={() => alert('pressed')}>Button</ButtonPrimary>
             <pre
                 style={{
-                    color: isInverse ? theme.colors.textPrimaryInverse : theme.colors.textPrimary,
+                    color: isInverse ? skinVars.colors.textPrimaryInverse : skinVars.colors.textPrimary,
                     fontFamily: 'monospace',
                 }}
             >
@@ -29,12 +28,11 @@ const OtherComponent: React.FC = () => {
 };
 
 export const Default: StoryComponent = () => {
-    const theme = useTheme();
     const [isInverse, inverseCheckbox] = useCheckbox('is inverse', false);
     return (
         <Stack space={16}>
             {inverseCheckbox}
-            <div style={{background: isInverse ? theme.colors.backgroundBrand : 'transparent'}}>
+            <div style={{background: isInverse ? skinVars.colors.backgroundBrand : 'transparent'}}>
                 <ThemeVariant isInverse={isInverse}>
                     <OtherComponent />
                 </ThemeVariant>

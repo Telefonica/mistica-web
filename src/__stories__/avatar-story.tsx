@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Avatar, IconBrainRegular, IconFireRegular, IconStarFilled, ThemeVariant, useTheme} from '..';
+import {Avatar, IconBrainRegular, IconFireRegular, IconStarFilled, ThemeVariant, skinVars} from '..';
 
 const badgeOptions = ['true', 'false', 'undefined', '0', '1', '5', '10'];
 
@@ -46,7 +46,6 @@ export const Default: StoryComponent<Args> = ({
     hideInitials,
     ariaLabel,
 }) => {
-    const {colors} = useTheme();
     // eslint-disable-next-line no-eval
     const badgeValue = badgeOptions.includes(badge) ? eval(badge) : undefined;
     const Icon = {IconStarFilled, IconFireRegular, IconBrainRegular}[icon];
@@ -57,7 +56,7 @@ export const Default: StoryComponent<Args> = ({
                 style={{
                     padding: 16,
                     width: 'fit-content',
-                    background: inverse ? colors.backgroundBrand : colors.background,
+                    background: inverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
                     // prevent line-height from affecting the height of the container;
                     // happens when changing the base font size
                     lineHeight: 0,

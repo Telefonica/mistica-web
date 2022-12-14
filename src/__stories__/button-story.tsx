@@ -10,7 +10,7 @@ import {
     TextField,
     Stack,
     ThemeVariant,
-    useTheme,
+    skinVars,
     Checkbox,
     Text2,
     IconPhotoCameraRegular,
@@ -23,12 +23,15 @@ export default {
 };
 
 const BackgroundTheme: StoryComponent = ({children}) => {
-    const {colors} = useTheme();
     const [isInverse, setIsInverse] = React.useState(false);
     return (
         <ThemeVariant isInverse={isInverse}>
             <>
-                <div style={{background: isInverse ? colors.backgroundBrand : colors.background}}>
+                <div
+                    style={{
+                        background: isInverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
+                    }}
+                >
                     <Box padding={8}>
                         <Checkbox name="inverse" checked={isInverse} onChange={setIsInverse}>
                             Inverse variant
@@ -186,10 +189,9 @@ export const TypeOfButtons: StoryComponent = () => {
 export const EllipsisInButtons: StoryComponent = () => {
     const text = 'Ellipsis text example example';
     const href = 'https://example.com';
-    const {colors} = useTheme();
 
     return (
-        <div data-testid="content" style={{width: 160, border: `1px solid ${colors.border}`}}>
+        <div data-testid="content" style={{width: 160, border: `1px solid ${skinVars.colors.border}`}}>
             <Stack space={8}>
                 <Title1>ButtonPrimary</Title1>
                 <ButtonPrimary onPress={handleOnPress}>{text}</ButtonPrimary>

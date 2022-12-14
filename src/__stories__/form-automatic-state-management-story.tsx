@@ -19,7 +19,7 @@ import {
     RadioGroup,
     RadioButton,
     Text3,
-    useTheme,
+    skinVars,
     Inline,
 } from '..';
 
@@ -39,7 +39,6 @@ const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
 const countryOptions = countriesList.map((text, i) => ({text, value: '' + i}));
 
 export const Default: StoryComponent = () => {
-    const {colors} = useTheme();
     return (
         <Form
             initialValues={{
@@ -70,7 +69,7 @@ export const Default: StoryComponent = () => {
                         <TextLink onPress={() => alert({message: 'TOS'})}>Terms and Conditions</TextLink>
                     </Text3>
                 </Inline>
-                <Text3 regular color={colors.textSecondary} id="fruit-label">
+                <Text3 regular color={skinVars.colors.textSecondary} id="fruit-label">
                     ¿What is your favourite fruit?
                 </Text3>
                 <RadioGroup name="juicy-fruit" aria-labelledby="fruit-label" defaultValue="banana">

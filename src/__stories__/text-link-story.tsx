@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {TextLink, Stack, Text3, Title1, Divider, useTheme, Text1, Text5, alert} from '..';
+import {TextLink, Stack, Text3, Title1, Divider, skinVars, Text1, Text5, alert} from '..';
 import {ThemeVariant} from '../theme-variant-context';
 
 export default {
@@ -27,14 +27,13 @@ const Section = ({title, children}: {title: string; children: React.ReactNode}):
 
 export const Default: StoryComponent<textLinkArgs> = ({text, inverse}) => {
     const [count, setCount] = React.useState(0);
-    const {colors} = useTheme();
 
     return (
         <div
             data-testid="text-link"
             style={{
                 padding: 16,
-                background: inverse ? colors.backgroundBrand : colors.background,
+                background: inverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
             }}
         >
             <ThemeVariant isInverse={inverse}>

@@ -1,13 +1,12 @@
 import * as React from 'react';
 import {StorySection} from './helpers';
-import {Badge, IconButton, useTheme, IconBellFilled, IconShoppingCartFilled, IconStarFilled} from '..';
+import {Badge, IconButton, skinVars, IconBellFilled, IconShoppingCartFilled, IconStarFilled} from '..';
 
 export default {
     title: 'Components/Badge',
 };
 
 export const Default: StoryComponent = () => {
-    const {colors} = useTheme();
     return (
         <>
             <StorySection title="Badge (non numeric)">
@@ -17,7 +16,6 @@ export const Default: StoryComponent = () => {
                     </IconButton>
                 </Badge>
             </StorySection>
-
             <StorySection title="Badge (numeric, value 0)">
                 <Badge value={0}>
                     <IconButton onPress={() => {}} aria-label="No notifications">
@@ -25,7 +23,6 @@ export const Default: StoryComponent = () => {
                     </IconButton>
                 </Badge>
             </StorySection>
-
             <StorySection title="Badge (numeric, value 2)">
                 <Badge value={2}>
                     <IconButton onPress={() => {}} aria-label="Shopping Cart with 2 items">
@@ -33,7 +30,6 @@ export const Default: StoryComponent = () => {
                     </IconButton>
                 </Badge>
             </StorySection>
-
             <StorySection title="Badge (numeric, value 2)">
                 <Badge value={2}>
                     <IconButton onPress={() => {}} aria-label="Shopping Cart with 2 items">
@@ -41,7 +37,6 @@ export const Default: StoryComponent = () => {
                     </IconButton>
                 </Badge>
             </StorySection>
-
             <StorySection title="Badge (numeric, value 14)">
                 <Badge value={14}>
                     <IconButton onPress={() => {}} aria-label="Starred 14 times">
@@ -49,9 +44,8 @@ export const Default: StoryComponent = () => {
                     </IconButton>
                 </Badge>
             </StorySection>
-
             <StorySection title="Badge (numeric, value 3) (Over inverse)">
-                <div style={{padding: 20, background: colors.backgroundBrand}}>
+                <div style={{padding: 20, background: skinVars.colors.backgroundBrand}}>
                     <Badge value={3}>
                         <IconButton onPress={() => {}} aria-label="3 notifications">
                             <IconBellFilled color="#fff" />

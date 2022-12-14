@@ -1,16 +1,15 @@
 import * as React from 'react';
-import {useScreenSize, useTheme, Stack, Text2} from '..';
+import {useScreenSize, skinVars, Stack, Text2} from '..';
 
 export default {
     title: 'Hooks/useScreenSize',
 };
 
 export const UseScreenSize: StoryComponent = () => {
-    const theme = useTheme();
     const screenSize = useScreenSize();
     return (
         <Stack space={16}>
-            <Text2 regular color={theme.colors.textSecondary}>
+            <Text2 regular color={skinVars.colors.textSecondary}>
                 Resize the window
             </Text2>
             <Text2 regular as="pre">

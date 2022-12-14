@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Image, Stack, Text3, Title1, useTheme} from '..';
+import {Image, Stack, Text3, Title1, skinVars} from '..';
 import {isRunningAcceptanceTest} from '../utils/platform';
 
 export default {
@@ -7,7 +7,6 @@ export default {
 };
 
 export const Default: StoryComponent = () => {
-    const {colors} = useTheme();
     return (
         <Stack space={16} dataAttributes={{testid: 'image-story'}}>
             <Title1>aspectRatio: 1:1</Title1>
@@ -25,7 +24,7 @@ export const Default: StoryComponent = () => {
                     resize: 'both',
                     overflow: 'auto',
                     width: 320,
-                    border: `1px solid ${colors.border}`,
+                    border: `1px solid ${skinVars.colors.border}`,
                     padding: 16,
                 }}
             >
@@ -53,7 +52,7 @@ export const Default: StoryComponent = () => {
                     resize: 'both',
                     overflow: 'auto',
                     width: 320,
-                    border: `1px solid ${colors.border}`,
+                    border: `1px solid ${skinVars.colors.border}`,
                     padding: 16,
                 }}
             >

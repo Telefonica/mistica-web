@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {EmptyStateCard, ButtonPrimary, ButtonLink, IconBoxLight, useTheme, Image, ButtonSecondary} from '..';
+import {EmptyStateCard, ButtonPrimary, ButtonLink, IconBoxLight, skinVars, Image, ButtonSecondary} from '..';
 
 export default {
     title: 'Patterns/Empty states/EmptyStateCard',
@@ -23,13 +23,11 @@ type Args = {
 };
 
 export const Default: StoryComponent<Args> = ({actions, title, description, asset}) => {
-    const {colors} = useTheme();
-
     let assetProps;
 
     if (asset === 'Icon') {
         assetProps = {
-            icon: <IconBoxLight size="100%" color={colors.brand} />,
+            icon: <IconBoxLight size="100%" color={skinVars.colors.brand} />,
         };
     } else if (asset === 'icon as Image') {
         assetProps = {
