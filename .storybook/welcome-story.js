@@ -1,4 +1,4 @@
-import {Text2, Text6, Stack, Box, ResponsiveLayout, useTheme, ButtonLink, TextLink, Inline} from '../src';
+import {Text2, Text6, Stack, Box, ResponsiveLayout, skinVars, ButtonLink, TextLink, Inline} from '../src';
 import logo from '../img/mistica-react-logo.svg';
 
 export default {
@@ -6,9 +6,8 @@ export default {
 };
 
 const Paragraph = ({children}) => {
-    const {colors} = useTheme();
     return (
-        <Text2 as="p" color={colors.textSecondary}>
+        <Text2 as="p" color={skinVars.textSecondary}>
             {children}
         </Text2>
     );
