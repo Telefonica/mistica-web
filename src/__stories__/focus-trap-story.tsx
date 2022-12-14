@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {FocusTrap, ButtonPrimary, ButtonSecondary, ButtonLayout, Stack, Text6, Text2, skinVars} from '..';
-import {useTheme} from '../hooks';
 
 export default {
     title: 'Utilities/Accesibility/FocusTrap',

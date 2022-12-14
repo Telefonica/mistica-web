@@ -3,7 +3,6 @@ import {FeedbackScreen} from '../feedback';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from '../button';
 import Stack from '../stack';
 import {ThemeVariant, useIsInverseVariant} from '../theme-variant-context';
-import {useTheme} from '../hooks';
 import {Box, FixedToTop, Text3, Text2, skinVars} from '..';
 
 export default {
