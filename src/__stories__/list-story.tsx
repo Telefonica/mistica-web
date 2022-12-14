@@ -249,7 +249,12 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={<Avatar size={40} src="https://i.imgur.com/nRBEMMV.png" />}
+                asset={
+                    <Avatar
+                        size={40}
+                        src="https://images.unsplash.com/photo-1640951613773-54706e06851d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
+                    />
+                }
                 headline={headline}
                 title={title}
                 subtitle={subtitle}
