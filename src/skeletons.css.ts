@@ -18,12 +18,11 @@ const pulseKeyframes = keyframes({
 });
 
 export const animation = style([
-    sprinkles({
-        width: '100%',
-        height: '100%',
-    }),
+    sprinkles({}),
     {
+        display: 'inline-block',
         animation: `${pulseKeyframes} ${transition} infinite`,
+        verticalAlign: 'middle',
     },
 ]);
 

@@ -11,9 +11,11 @@ type SkeletonAnimationProps = {
     children: React.ReactNode;
     ariaLabel?: string;
     dataAttributes?: DataAttributes;
+    width?: number | string;
+    height?: number | string;
 };
 
-const SkeletonAnimation = ({children, ariaLabel, dataAttributes}: SkeletonAnimationProps) => {
+const SkeletonAnimation = ({children, ariaLabel, dataAttributes, width, height}: SkeletonAnimationProps) => {
     return (
         <div
             className={styles.animation}
@@ -22,6 +24,7 @@ const SkeletonAnimation = ({children, ariaLabel, dataAttributes}: SkeletonAnimat
             aria-hidden={ariaLabel === undefined}
             aria-label={ariaLabel}
             {...getPrefixedDataAttributes(dataAttributes)}
+            style={{width, height}}
         >
             {children}
         </div>
@@ -36,7 +39,7 @@ type SkeletonLineProps = {
 
 export const SkeletonLine = ({width = '100%', ariaLabel, dataAttributes}: SkeletonLineProps): JSX.Element => {
     return (
-        <SkeletonAnimation ariaLabel={ariaLabel} {...getPrefixedDataAttributes(dataAttributes)}>
+        <SkeletonAnimation width={width} ariaLabel={ariaLabel} {...getPrefixedDataAttributes(dataAttributes)}>
             <SkeletonBase width={width} />
         </SkeletonAnimation>
     );
@@ -46,7 +49,7 @@ type SkeletonTextProps = Omit<SkeletonLineProps, 'width'>;
 
 export const SkeletonText = ({ariaLabel, dataAttributes}: SkeletonTextProps): JSX.Element => {
     return (
-        <SkeletonAnimation ariaLabel={ariaLabel} {...getPrefixedDataAttributes(dataAttributes)}>
+        <SkeletonAnimation width="100%" ariaLabel={ariaLabel} {...getPrefixedDataAttributes(dataAttributes)}>
             <Stack space={16}>
                 <SkeletonBase />
                 <SkeletonBase />
@@ -60,7 +63,12 @@ type SkeletonCircleProps = Omit<SkeletonLineProps, 'width'> & {size?: number | s
 
 export const SkeletonCircle = ({ariaLabel, size = 40, dataAttributes}: SkeletonCircleProps): JSX.Element => {
     return (
-        <SkeletonAnimation ariaLabel={ariaLabel} {...getPrefixedDataAttributes(dataAttributes)}>
+        <SkeletonAnimation
+            ariaLabel={ariaLabel}
+            {...getPrefixedDataAttributes(dataAttributes)}
+            width={size}
+            height={size}
+        >
             <SkeletonBase height={size} width={size} radius="50%" />
         </SkeletonAnimation>
     );
@@ -70,7 +78,7 @@ type SkeletonRowProps = SkeletonLineProps;
 
 export const SkeletonRow = ({width = '100%', ariaLabel, dataAttributes}: SkeletonRowProps): JSX.Element => {
     return (
-        <SkeletonAnimation ariaLabel={ariaLabel} {...getPrefixedDataAttributes(dataAttributes)}>
+        <SkeletonAnimation width={width} ariaLabel={ariaLabel} {...getPrefixedDataAttributes(dataAttributes)}>
             <div className={styles.row}>
                 <SkeletonBase height={40} width={40} radius="50%" className={styles.circle} />
                 <SkeletonBase width={width} className={styles.line} />
@@ -93,7 +101,12 @@ export const SkeletonRectangle = ({
     dataAttributes,
 }: SkeletonRectangleProps): JSX.Element => {
     return (
-        <SkeletonAnimation ariaLabel={ariaLabel} {...getPrefixedDataAttributes(dataAttributes)}>
+        <SkeletonAnimation
+            height={height}
+            width={width}
+            ariaLabel={ariaLabel}
+            {...getPrefixedDataAttributes(dataAttributes)}
+        >
             <SkeletonBase height={height} width={width} />
         </SkeletonAnimation>
     );

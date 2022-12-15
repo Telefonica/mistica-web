@@ -18,14 +18,7 @@ export const Default: StoryComponent<Args> = ({height, width, inverse, ariaLabel
     return (
         <ThemeVariant isInverse={inverse}>
             <div
-                style={{
-                    padding: 16,
-                    width: '50%',
-                    background: inverse ? colors.backgroundBrand : colors.background,
-                    // prevent line-height from affecting the height of the container;
-                    // happens when changing the base font size
-                    lineHeight: 0,
-                }}
+                style={{background: inverse ? colors.backgroundBrand : colors.background}}
                 data-testid="skeleton-rectangle"
             >
                 <SkeletonRectangle height={height} width={width} ariaLabel={ariaLabel} />
