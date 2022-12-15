@@ -4,6 +4,9 @@ import {SkeletonCircle} from '../skeletons';
 
 export default {
     title: 'Components/Skeletons/Skeleton Circle',
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 type Args = {
@@ -18,10 +21,17 @@ export const Default: StoryComponent<Args> = ({size, inverse, ariaValueText}) =>
     return (
         <ThemeVariant isInverse={inverse}>
             <div
-                style={{background: inverse ? colors.backgroundBrand : colors.background}}
-                data-testid="skeleton-circle"
+                style={{
+                    background: inverse ? colors.backgroundBrand : colors.background,
+                    display: 'flex',
+                    padding: 16,
+                }}
             >
-                <SkeletonCircle size={size} ariaLabel={ariaValueText} />
+                <SkeletonCircle
+                    dataAttributes={{testid: 'skeleton-circle'}}
+                    size={size}
+                    ariaLabel={ariaValueText}
+                />
             </div>
         </ThemeVariant>
     );

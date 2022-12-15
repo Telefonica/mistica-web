@@ -20,6 +20,7 @@ const pulseKeyframes = keyframes({
 export const animation = style({
     display: 'inline-block',
     animation: `${pulseKeyframes} ${transition} infinite`,
+    lineHeight: 0,
 });
 
 export const row = sprinkles({

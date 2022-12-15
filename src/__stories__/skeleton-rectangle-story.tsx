@@ -4,6 +4,9 @@ import {ThemeVariant, useTheme} from '..';
 
 export default {
     title: 'Components/Skeletons/Skeleton Rectangle',
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 type Args = {
@@ -18,10 +21,18 @@ export const Default: StoryComponent<Args> = ({height, width, inverse, ariaLabel
     return (
         <ThemeVariant isInverse={inverse}>
             <div
-                style={{background: inverse ? colors.backgroundBrand : colors.background}}
-                data-testid="skeleton-rectangle"
+                style={{
+                    background: inverse ? colors.backgroundBrand : colors.background,
+                    display: 'flex',
+                    padding: 16,
+                }}
             >
-                <SkeletonRectangle height={height} width={width} ariaLabel={ariaLabel} />
+                <SkeletonRectangle
+                    height={height}
+                    width={width}
+                    ariaLabel={ariaLabel}
+                    dataAttributes={{testid: 'skeleton-rectangle'}}
+                />
             </div>
         </ThemeVariant>
     );

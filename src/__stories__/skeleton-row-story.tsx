@@ -4,6 +4,9 @@ import {SkeletonRow} from '../skeletons';
 
 export default {
     title: 'Components/Skeletons/Skeleton Row',
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 type Args = {
@@ -16,11 +19,8 @@ export const Default: StoryComponent<Args> = ({inverse, ariaLabel}) => {
 
     return (
         <ThemeVariant isInverse={inverse}>
-            <div
-                style={{background: inverse ? colors.backgroundBrand : colors.background}}
-                data-testid="skeleton-row"
-            >
-                <SkeletonRow ariaLabel={ariaLabel} />
+            <div style={{background: inverse ? colors.backgroundBrand : colors.background, display: 'flex'}}>
+                <SkeletonRow ariaLabel={ariaLabel} dataAttributes={{testid: 'skeleton-row'}} />
             </div>
         </ThemeVariant>
     );
