@@ -5,6 +5,7 @@
  */
 
 import * as React from 'react';
+
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -17,8 +18,8 @@ const IconDeskRegular: React.FC<IconProps> = ({color, size = 24, children, ...re
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
-                d="M8.543 10.072V8.918h3.847V1.995H3.159v6.923h3.846v1.154H4.313a2.315 2.315 0 00-2.308 2.308v8.846c0 .423.346.769.77.769a.771.771 0 00.768-.77V12.38c0-.424.347-.77.77-.77h10v5.385h6.153v4.23c0 .424.347.77.77.77a.771.771 0 00.769-.77V10.073H8.543zM4.697 3.533h6.154V7.38H4.697V3.533zm15.77 8.077v1.154H15.85V11.61h4.615zm-4.616 3.847v-1.154h4.615v1.153h-4.615z"
                 fill={fillColor}
+                d="M8.543 10.072V8.918h3.847V1.995H3.159v6.923h3.846v1.154H4.313a2.315 2.315 0 00-2.308 2.308v8.846c0 .423.346.769.77.769a.771.771 0 00.768-.77V12.38c0-.424.347-.77.77-.77h10v5.385h6.153v4.23c0 .424.347.77.77.77a.771.771 0 00.769-.77V10.073H8.543zM4.697 3.533h6.154V7.38H4.697V3.533zm15.77 8.077v1.154H15.85V11.61h4.615zm-4.616 3.847v-1.154h4.615v1.153h-4.615z"
             />
         </svg>
     );

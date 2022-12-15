@@ -5,6 +5,7 @@
  */
 
 import * as React from 'react';
+
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -17,8 +18,8 @@ const IconFlagFilled: React.FC<IconProps> = ({color, size = 24, children, ...res
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
-                d="M17.178 7.655a.16.16 0 01-.006-.227l3.14-3.134c.306-.392.356-.927.135-1.373a1.305 1.305 0 00-1.177-.728H4.727a1.31 1.31 0 00-1.314 1.305v17.745a.576.576 0 001.154 0V12.9h14.7c.505 0 .956-.28 1.177-.729.224-.45.17-.974-.182-1.425.003 0-3.084-3.09-3.084-3.09z"
                 fill={fillColor}
+                d="M17.178 7.655a.16.16 0 01-.006-.227l3.14-3.134c.306-.392.356-.927.135-1.373a1.305 1.305 0 00-1.177-.728H4.727a1.31 1.31 0 00-1.314 1.305v17.745a.576.576 0 001.154 0V12.9h14.7c.505 0 .956-.28 1.177-.729.224-.45.17-.974-.182-1.425.003 0-3.084-3.09-3.084-3.09z"
             />
         </svg>
     );
