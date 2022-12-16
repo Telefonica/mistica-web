@@ -15,14 +15,6 @@ declare export var vars: {
     $Exports<"@vanilla-extract/private">,
     "CSSVarFunction"
   >,
-  mobilePageOffsetPrev: $PropertyType<
-    $Exports<"@vanilla-extract/private">,
-    "CSSVarFunction"
-  >,
-  mobilePageOffsetNext: $PropertyType<
-    $Exports<"@vanilla-extract/private">,
-    "CSSVarFunction"
-  >,
   gap: $PropertyType<$Exports<"@vanilla-extract/private">, "CSSVarFunction">,
 };
 declare export var DEFAULT_DESKTOP_GAP: 16;
