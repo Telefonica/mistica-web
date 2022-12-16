@@ -7,6 +7,9 @@ import {Text2} from './text';
 import * as styles from './snackbar.css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 type SnackbarType = 'INFORMATIVE' | 'CRITICAL';
 
@@ -17,6 +20,7 @@ type Props = {
     onClose?: () => unknown;
     type?: SnackbarType;
     children?: void;
+    dataAttributes?: DataAttributes;
 };
 
 const SnackbarComponent: React.FC<Props> = ({
@@ -25,6 +29,7 @@ const SnackbarComponent: React.FC<Props> = ({
     duration = buttonText ? 10000 : 5000,
     onClose = () => {},
     type = 'INFORMATIVE',
+    dataAttributes,
 }) => {
     const [isOpen, setIsOpen] = React.useState(false);
     const {width: buttonWidth, ref: buttonRef} = useElementDimensions();
@@ -61,6 +66,7 @@ const SnackbarComponent: React.FC<Props> = ({
                     type === 'CRITICAL' ? styles.wrapperCritical : styles.wrapperInfo,
                     {[styles.wrapperOpen]: isOpen}
                 )}
+                {...getPrefixedDataAttributes(dataAttributes, 'SnackBar')}
             >
                 <div
                     className={classNames(

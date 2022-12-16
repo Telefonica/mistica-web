@@ -20,7 +20,7 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({primaryButton, secondaryButton
     return anyAction ? (
         <div
             className={classNames(styles.inline, styles.container)}
-            {...getPrefixedDataAttributes(dataAttributes)}
+            {...getPrefixedDataAttributes(dataAttributes, 'ButtonGroup')}
         >
             {(primaryButton || secondaryButton) && (
                 <div className={classNames(styles.inline, styles.buttons)}>

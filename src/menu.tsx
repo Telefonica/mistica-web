@@ -2,10 +2,12 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {ESC, TAB} from './utils/key-codes';
-import {cancelEvent} from './utils/dom';
+import {cancelEvent, getPrefixedDataAttributes} from './utils/dom';
 import Overlay from './overlay';
 import * as styles from './menu.css';
 import {sprinkles} from './sprinkles.css';
+
+import type {DataAttributes} from './utils/types';
 
 const MAX_HEIGHT_DEFAULT = 416;
 
@@ -27,9 +29,10 @@ export type MenuProps = {
     renderMenu: (props: MenuRenderProps) => React.ReactNode;
     children?: void;
     position?: 'left' | 'right';
+    dataAttributes: DataAttributes;
 };
 
-const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 'left'}) => {
+const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 'left', dataAttributes}) => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [target, setTarget] = React.useState<HTMLElement | null>(null);
     const [menu, setMenu] = React.useState<HTMLElement | null>(null);
@@ -159,6 +162,7 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
                         : '',
                 }),
             }}
+            {...getPrefixedDataAttributes(dataAttributes, 'Menu')}
         >
             {isMenuOpen ? (
                 <Overlay
