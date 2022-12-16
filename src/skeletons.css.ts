@@ -17,10 +17,14 @@ const pulseKeyframes = keyframes({
     },
 });
 
-export const animation = style({
-    display: 'block',
-    animation: `${pulseKeyframes} ${transition} infinite`,
-});
+export const animation = style([
+    sprinkles({
+        display: 'block',
+    }),
+    {
+        animation: `${pulseKeyframes} ${transition} infinite`,
+    },
+]);
 
 export const row = sprinkles({
     display: 'flex',
