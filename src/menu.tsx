@@ -29,7 +29,7 @@ export type MenuProps = {
     renderMenu: (props: MenuRenderProps) => React.ReactNode;
     children?: void;
     position?: 'left' | 'right';
-    dataAttributes: DataAttributes;
+    dataAttributes?: DataAttributes;
 };
 
 const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 'left', dataAttributes}) => {
