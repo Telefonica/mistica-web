@@ -72,14 +72,3 @@ test('MediaCard with body closeable', async () => {
 
     expect(image).toMatchImageSnapshot();
 });
-
-test('MediaCard carousel ', async () => {
-    const page = await openStoryPage({
-        id: 'components-cards-media-card--carousel',
-        device: 'DESKTOP',
-    });
-
-    const image = await page.screenshot({fullPage: true});
-
-    expect(image).toMatchImageSnapshot();
-});

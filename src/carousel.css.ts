@@ -139,6 +139,14 @@ export const carousel = style([
 ]);
 
 const responsiveLayoutSideMargin = fallbackVar(responsiveLayoutVars.sideMargin, '0px');
+const offsetNext = fallbackVar(
+    vars.mobilePageOffsetNext,
+    fallbackVar(responsiveLayoutVars.sideMargin, '16px')
+);
+const offsetPrev = fallbackVar(
+    vars.mobilePageOffsetPrev,
+    fallbackVar(responsiveLayoutVars.sideMargin, '16px')
+);
 
 export const carouselWithScroll = style({
     margin: `0 calc(${responsiveLayoutSideMargin} * -1)`,
@@ -191,19 +199,19 @@ export const carouselItem = style({
             },
 
             scrollSnapAlign: 'start',
-            scrollMargin: `calc(${mobilePageOffsetPrev} * 1px)`,
+            scrollMargin: offsetPrev,
 
             selectors: {
                 [`${carouselWithScroll}:not(${centeredCarousel}) &`]: {
-                    width: `calc(1 / ${itemsPerPage} * 100% - (${mobilePageOffsetNext} + ${mobilePageOffsetPrev} + ${gap}) / ${itemsPerPage} * 1px)`,
+                    width: `calc(1 / ${itemsPerPage} * 100% - (${offsetNext} + ${offsetPrev} + ${gap} * 1px) / ${itemsPerPage})`,
                 },
                 [`${carouselWithScroll}:not(${centeredCarousel}) &:first-child`]: {
                     paddingLeft: responsiveLayoutSideMargin,
-                    width: `calc(1 / ${itemsPerPage} * 100% - (${mobilePageOffsetNext} + ${mobilePageOffsetPrev} + ${gap}) / ${itemsPerPage} * 1px - ${gap} * 1px + ${responsiveLayoutSideMargin})`,
+                    width: `calc(1 / ${itemsPerPage} * 100% - (${offsetNext} + ${offsetPrev} + ${gap} * 1px) / ${itemsPerPage} - ${gap} * 1px + ${responsiveLayoutSideMargin})`,
                 },
                 [`${carouselWithScroll}:not(${centeredCarousel}) &:last-child`]: {
                     paddingRight: responsiveLayoutSideMargin,
-                    width: `calc(1 / ${itemsPerPage} * 100% - (${mobilePageOffsetNext} + ${mobilePageOffsetPrev} + ${gap}) / ${itemsPerPage} * 1px + ${responsiveLayoutSideMargin})`,
+                    width: `calc(1 / ${itemsPerPage} * 100% - (${offsetNext} + ${offsetPrev} + ${gap} * 1px) / ${itemsPerPage} + ${responsiveLayoutSideMargin})`,
                 },
                 [`${centeredCarousel} &`]: {
                     width: '50%',

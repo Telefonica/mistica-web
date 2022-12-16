@@ -1,24 +1,8 @@
 import {useIsInverseVariant} from './theme-variant-context';
 import * as React from 'react';
-import {createUseStyles} from './jss';
 import classnames from 'classnames';
-
-type SkeletonBaseStylesProps = {
-    width: string | number;
-    height: string | number;
-    isInverse: boolean;
-    radius: string | number;
-};
-
-const useSkeletonBaseStyles = createUseStyles(({colors}) => ({
-    skeletonBase: {
-        borderRadius: ({radius}: SkeletonBaseStylesProps) => radius,
-        height: ({height}: SkeletonBaseStylesProps) => height,
-        width: ({width}: SkeletonBaseStylesProps) => width,
-        background: ({isInverse}: SkeletonBaseStylesProps) =>
-            isInverse ? colors.backgroundSkeletonInverse : colors.backgroundSkeleton,
-    },
-}));
+import {sprinkles} from './sprinkles.css';
+import {vars} from './skins/skin-contract.css';
 
 type SkeletonBaseProps = {
     width?: string | number;
@@ -34,9 +18,25 @@ const SkeletonBase = ({
     className,
 }: SkeletonBaseProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
-    const classes = useSkeletonBaseStyles({isInverse, width, height, radius});
 
-    return <div className={classnames(classes.skeletonBase, className)} aria-hidden />;
+    return (
+        <div
+            className={classnames(
+                className,
+                sprinkles({
+                    background: isInverse
+                        ? vars.colors.backgroundSkeletonInverse
+                        : vars.colors.backgroundSkeleton,
+                })
+            )}
+            style={{
+                borderRadius: radius,
+                width,
+                height,
+            }}
+            aria-hidden
+        />
+    );
 };
 
 export default SkeletonBase;

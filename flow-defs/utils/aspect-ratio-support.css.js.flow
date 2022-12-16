@@ -1,0 +1,11 @@
+// @flow
+
+declare export var vars: {
+  aspectRatio: $PropertyType<
+    $Exports<"@vanilla-extract/private">,
+    "CSSVarFunction"
+  >,
+};
+declare export var wrapper: string;
+declare export var container: string;
+declare export var containerWithWrapper: string;

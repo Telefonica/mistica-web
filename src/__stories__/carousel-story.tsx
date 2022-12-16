@@ -23,8 +23,6 @@ type Args = {
     itemsPerPageTablet: number;
     itemsPerPageDesktop: number;
     withBullets: boolean;
-    nextPageOffset: number;
-    prevPageOffset: number;
     free: boolean;
     itemsToScroll: number;
     autoplay: boolean;
@@ -38,8 +36,6 @@ export const Default: StoryComponent<Args> = ({
     itemsPerPageMobile,
     itemsPerPageTablet,
     itemsPerPageDesktop,
-    nextPageOffset,
-    prevPageOffset,
     free,
     itemsToScroll,
     autoplay,
@@ -69,7 +65,6 @@ export const Default: StoryComponent<Args> = ({
                         }}
                         itemsToScroll={itemsToScroll}
                         autoplay={autoplay ? {time: 5000, loop} : false}
-                        mobilePageOffset={{next: nextPageOffset, prev: prevPageOffset}}
                         onPageChange={setPageInfo}
                         items={Array.from({length: numItems}, (_, idx) => (
                             <MediaCard
@@ -105,8 +100,6 @@ Default.args = {
     itemsPerPageDesktop: 3,
     itemsPerPageTablet: 1,
     itemsPerPageMobile: 1,
-    nextPageOffset: 16,
-    prevPageOffset: 16,
     free: false,
     autoplay: false,
     loop: false,

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
 import {useTheme} from './hooks';
 import {Text1} from './text';
@@ -65,25 +64,6 @@ export const Label: React.FC<LabelProps> = ({
     );
 };
 
-const useHelperTextStyles = createUseStyles(() => ({
-    helperContainer: {
-        paddingLeft: 12,
-        paddingRight: 16,
-        '& div': {
-            margin: 0,
-            marginTop: 4,
-            flexGrow: 1,
-        },
-        display: 'flex',
-    },
-    leftText: {
-        textAlign: 'left',
-    },
-    rightText: {
-        textAlign: 'right',
-    },
-}));
-
 type HelperTextProps = {
     leftText?: string;
     rightText?: string;
@@ -94,21 +74,20 @@ type HelperTextProps = {
 export const HelperText: React.FC<HelperTextProps> = ({leftText, rightText, error}) => {
     const isInverse = useIsInverseVariant();
     const {colors} = useTheme();
-    const classes = useHelperTextStyles();
     const leftColor = isInverse ? colors.textPrimaryInverse : error ? colors.error : colors.textSecondary;
     const rightColor = isInverse ? colors.textPrimaryInverse : colors.textSecondary;
 
     return (
-        <div className={classes.helperContainer}>
+        <div className={styles.helperContainer}>
             {leftText && (
-                <div className={classes.leftText}>
+                <div className={classnames(styles.helperText, styles.leftText)}>
                     <Text1 color={leftColor} regular as="p">
                         {leftText}
                     </Text1>
                 </div>
             )}
             {rightText && (
-                <div className={classes.rightText}>
+                <div className={classnames(styles.helperText, styles.rightText)}>
                     <Text1 color={rightColor} regular as="p">
                         {rightText}
                     </Text1>

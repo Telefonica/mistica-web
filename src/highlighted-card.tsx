@@ -62,7 +62,7 @@ interface OnPressProps extends CommonProps {
 
 type Props = BasicProps | ButtonProps | HrefProps | ToProps | OnPressProps;
 
-const Content: React.FC<Props> = (props) => {
+const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     const {title, description, imageUrl, imageFit} = props;
     const isInverseOutside = useIsInverseVariant();
     const isInverse = props.isInverse ?? isInverseOutside;
@@ -70,6 +70,7 @@ const Content: React.FC<Props> = (props) => {
 
     const content = (
         <Boxed
+            ref={ref}
             isInverse={isInverse}
             className={styles.container}
             dataAttributes={props.dataAttributes}
@@ -158,15 +159,17 @@ const Content: React.FC<Props> = (props) => {
     }
 
     return content;
-};
+});
 
-const HighlightedCard: React.FC<Props> = ({'aria-label': ariaLabel, ...props}) => {
-    const label = ariaLabel ?? props.title;
-    return (
-        <MaybeDismissable onClose={props.onClose} aria-label={label} width={props.width}>
-            <Content {...props} aria-label={label} />
-        </MaybeDismissable>
-    );
-};
+const HighlightedCard = React.forwardRef<HTMLDivElement, Props>(
+    ({'aria-label': ariaLabel, ...props}, ref) => {
+        const label = ariaLabel ?? props.title;
+        return (
+            <MaybeDismissable onClose={props.onClose} aria-label={label} width={props.width}>
+                <Content {...props} aria-label={label} ref={ref} />
+            </MaybeDismissable>
+        );
+    }
+);
 
 export default HighlightedCard;

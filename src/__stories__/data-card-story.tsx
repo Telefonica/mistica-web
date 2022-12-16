@@ -6,7 +6,6 @@ import {
     ButtonLink,
     Inline,
     Text2,
-    createUseStyles,
     ResponsiveLayout,
     IconMobileDeviceRegular,
     useTheme,
@@ -112,16 +111,7 @@ Default.argTypes = {
     },
 };
 
-const useCardGroupStyles = createUseStyles(() => ({
-    group: {
-        '& > *': {
-            width: 300,
-        },
-    },
-}));
-
 export const Group: StoryComponent = () => {
-    const classes = useCardGroupStyles();
     const {colors} = useTheme();
     return (
         <ResponsiveLayout>
@@ -130,7 +120,8 @@ export const Group: StoryComponent = () => {
                     We can group multiple cards and they adjust to the same height. The card actions are
                     always fixed on bottom:
                 </Text2>
-                <Inline space={16} className={classes.group}>
+                <style>{`.group > * {width: 300px}`}</style>
+                <Inline space={16} className="group">
                     <DataCard
                         headline={<Tag type="promo">Headline</Tag>}
                         pretitle="Pretitle"
