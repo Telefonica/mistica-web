@@ -7,7 +7,15 @@ declare export var bulletActiveInverse: string;
 declare export var slideshowContainer: string;
 declare export var carouselContainer: string;
 declare export var vars: {
+  itemsPerPage: $PropertyType<
+    $Exports<"@vanilla-extract/private">,
+    "CSSVarFunction"
+  >,
   itemsPerPageMobile: $PropertyType<
+    $Exports<"@vanilla-extract/private">,
+    "CSSVarFunction"
+  >,
+  itemsPerPageTablet: $PropertyType<
     $Exports<"@vanilla-extract/private">,
     "CSSVarFunction"
   >,
