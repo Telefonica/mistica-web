@@ -12,11 +12,16 @@ const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
 const {uploadFile} = require('../utils/azure-storage');
 const core = require('@actions/core');
+/** @type any */
+const PromisePool = require('es6-promise-pool');
 
 const PATH_REPO_ROOT = path.join(__dirname, '../../..');
 const PATH_REPORTS = path.join(PATH_REPO_ROOT, 'reports/accessibility');
 
-const STORIES_BLACKLIST = new Set(['welcome-welcome--mistica', 'icons-mistica-icons--catalog']);
+const STORIES_BLACKLIST = new Set([
+    'welcome-welcome--mistica',
+    'icons-catalog--catalog', // takes a lot of time to parse and it is not very relevant for a11y
+]);
 
 process.on('unhandledRejection', (error) => {
     console.error(error);
@@ -123,8 +128,8 @@ const generateReportForConsole = async (results) => {
         if (result.violations.length) {
             lines.push(
                 `${name} (${result.violations.length} violations)`,
-                `    - HTML: ${files.get(name).html}`,
-                `    - JSON: ${files.get(name).json}`
+                `    - HTML: ${files.get(name)?.html}`,
+                `    - JSON: ${files.get(name)?.json}`
             );
         }
     }
@@ -149,8 +154,8 @@ const generateReportForGithub = async (results) => {
 
         for (const [name, result] of results) {
             const [jsonUrl, htmlUrl] = await Promise.all([
-                uploadFile(files.get(name).json, 'application/json'),
-                uploadFile(files.get(name).html, 'text/html'),
+                uploadFile(files.get(name)?.json ?? '', 'application/json'),
+                uploadFile(files.get(name)?.html ?? '', 'text/html'),
             ]);
 
             if (result.violations.length) {
@@ -201,17 +206,24 @@ const main = async () => {
     const results = [];
 
     const t = Date.now();
-    const chunkSize = Math.max(os.cpus().length - 1, 2);
-    const chunks = _.chunk(stories, chunkSize);
-    for (const stories of chunks) {
-        await Promise.all(
-            stories.map(async (story) => {
-                console.log(story);
-                const result = await audit(browser, getStoryUrl(story), disabledRules[story]);
+
+    /** @returns {null | Promise<void>} */
+    const job = () => {
+        const story = stories.shift();
+        if (!story) {
+            return null;
+        }
+        return new Promise((resolve) => {
+            console.log(story);
+            audit(browser, getStoryUrl(story), disabledRules[story]).then((result) => {
                 results.push([story, result]);
-            })
-        );
-    }
+                resolve();
+            });
+        });
+    };
+
+    const pool = new PromisePool(job, os.cpus().length - 1);
+    await pool.start();
 
     console.log('total time:', Date.now() - t, 'ms');
 
