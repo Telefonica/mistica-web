@@ -17,7 +17,7 @@ export type MenuProps = {
   renderTarget: (props: TargetRenderProps) => React.Node,
   renderMenu: (props: MenuRenderProps) => React.Node,
   position?: "left" | "right",
-  dataAttributes: DataAttributes,
+  dataAttributes?: DataAttributes,
 };
 declare var Menu: React.ComponentType<MenuProps>;
 declare export default typeof Menu;
