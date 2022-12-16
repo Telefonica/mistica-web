@@ -5,7 +5,6 @@
  */
 
 import * as React from 'react';
-
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
