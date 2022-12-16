@@ -81,23 +81,6 @@ const normalizeItemsPerPage = (itemsPerPage?: ItemsPerPageProp): {mobile: number
     };
 };
 
-type MobilePageOffset = number | {prev: number; next: number};
-
-const normalizeMobilePageOffset = (
-    mobilePageOffset?: MobilePageOffset
-): {
-    next: number | undefined;
-    prev: number | undefined;
-} => {
-    if (typeof mobilePageOffset === 'number' || mobilePageOffset === undefined) {
-        return {
-            next: mobilePageOffset,
-            prev: mobilePageOffset,
-        };
-    }
-    return mobilePageOffset;
-};
-
 const calcPagesScrollPositions = (itemsScrollPosition: ReadonlyArray<number>, numPages: number) => {
     if (itemsScrollPosition.length === 0) {
         return [];
@@ -143,8 +126,6 @@ type BaseCarouselProps = {
     itemsPerPage?: ItemsPerPageProp;
     /** scrolls one page by default */
     itemsToScroll?: number;
-    /** @deprecated number of pixels to show for the next/prev page in mobile */
-    mobilePageOffset?: MobilePageOffset;
     /** If true, scroll snap doesn't apply and the user has a free scroll */
     free?: boolean;
     gap?: number;
@@ -165,7 +146,6 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     initialActiveItem,
     itemsPerPage,
     itemsToScroll,
-    mobilePageOffset,
     gap,
     free,
     centered,
@@ -175,7 +155,6 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
 }) => {
     const {texts, platformOverrides} = useTheme();
     const itemsPerPageConfig = normalizeItemsPerPage(itemsPerPage);
-    const mobilePageOffsetConfig = normalizeMobilePageOffset(mobilePageOffset);
     const {isDesktopOrBigger} = useScreenSize();
     const carouselRef = React.useRef<HTMLDivElement>(null);
     const itemsPerPageFloor = isDesktopOrBigger
@@ -244,8 +223,6 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     }, [
         itemsPerPageConfig.desktop,
         itemsPerPageConfig.mobile,
-        mobilePageOffsetConfig.next,
-        mobilePageOffsetConfig.prev,
         pagesCount,
         gap,
         centered,
@@ -358,12 +335,6 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                         ...assignInlineVars({
                             [styles.vars.itemsPerPageDesktop]: String(itemsPerPageConfig.desktop),
                             [styles.vars.itemsPerPageMobile]: String(itemsPerPageConfig.mobile),
-                            [styles.vars.mobilePageOffsetNext]: mobilePageOffsetConfig.next
-                                ? `${mobilePageOffsetConfig.next}px`
-                                : '',
-                            [styles.vars.mobilePageOffsetPrev]: mobilePageOffsetConfig.prev
-                                ? `${mobilePageOffsetConfig.prev}px`
-                                : '',
                             ...(gap !== undefined ? {[styles.vars.gap]: String(gap)} : {}),
                         }),
                         scrollSnapType: free ? 'initial' : 'x mandatory',
@@ -410,8 +381,6 @@ type CarouselProps = {
     itemsPerPage?: ItemsPerPageProp;
     /** scrolls one page by default */
     itemsToScroll?: number;
-    /** number of pixels to show for the next/prev page in mobile */
-    mobilePageOffset?: MobilePageOffset;
     /** If true, scroll snap doesn't apply and the user has a free scroll */
     free?: boolean;
     autoplay?: boolean | {time: number; loop?: boolean};
@@ -453,7 +422,6 @@ export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({
         itemsPerPage={{mobile: 1, desktop: 3}}
         centered
         itemsToScroll={1}
-        mobilePageOffset={0}
         gap={0}
         withBullets={withBullets}
         renderBullets={renderBullets}
