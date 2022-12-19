@@ -10,7 +10,11 @@ export default {
 export const Default: StoryComponent = () => (
     <>
         <StorySection title="Icon Button Image URL">
-            <IconButton onPress={() => {}} icon="https://i.imgur.com/5Sh9ocq.png" aria-label="Icon" />
+            <IconButton
+                onPress={() => {}}
+                icon="https://cdns.iconmonstr.com/wp-content/releases/preview/2019/240/iconmonstr-cat-3.png"
+                aria-label="Icon"
+            />
         </StorySection>
 
         <StorySection title="Icon Button SVG component">
