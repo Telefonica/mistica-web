@@ -73,7 +73,7 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
             ref={ref}
             isInverse={isInverse}
             className={styles.container}
-            dataAttributes={props.dataAttributes}
+            dataAttributes={{'component-name': 'HighlightedCard', ...props.dataAttributes}}
             width={props.width ? `${props.width}px` : '100%'}
         >
             <div

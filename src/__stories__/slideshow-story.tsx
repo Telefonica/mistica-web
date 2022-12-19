@@ -25,8 +25,8 @@ export const Default: StoryComponent<Args> = ({numItems, autoplay, loop, withBul
                             <Image
                                 src={
                                     idx % 2 === 0
-                                        ? 'https://i.imgur.com/HRvhZ6F.jpeg'
-                                        : 'https://i.imgur.com/flZfkiX.png'
+                                        ? 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80'
+                                        : 'https://images.unsplash.com/photo-1573152958734-1922c188fba3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80'
                                 }
                                 aspectRatio="16:9"
                             />

@@ -93,7 +93,7 @@ const RawIconButton: React.FC<Props> = (props) => {
         style: props.style,
         trackingEvent: props.trackingEvent,
         'aria-live': props['aria-live'],
-        dataAttributes: props.dataAttributes,
+        dataAttributes: {'component-name': 'IconButton', ...props.dataAttributes},
     };
 
     if (props.href) {

@@ -8,7 +8,8 @@ export default {
 };
 
 const VIDEO_SRC = 'https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw';
-const IMAGE_SRC = 'https://i.imgur.com/aEVtKsE.jpg';
+const IMAGE_SRC =
+    'https://images.unsplash.com/photo-1575903013621-1387ce8caa74?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80';
 
 type Args = {
     media: 'image' | 'video';
