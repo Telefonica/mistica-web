@@ -1,6 +1,7 @@
 // @flow
 
 import * as React from "react";
+import type { DataAttributes } from "./utils/types";
 declare type Position = "top" | "bottom" | "left" | "right";
 declare type Props = {
   children?: React.Node,
@@ -12,6 +13,7 @@ declare type Props = {
   width?: number,
   targetLabel: string,
   delay?: boolean,
+  dataAttributes?: DataAttributes,
 };
 declare var Tooltip: React.ComponentType<Props>;
 declare export default typeof Tooltip;

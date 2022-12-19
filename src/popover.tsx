@@ -8,8 +8,9 @@ import Inline from './inline';
 import {Text3, Text2} from './text';
 import * as styles from './popover.css';
 import {sprinkles} from './sprinkles.css';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {TrackingEvent} from './utils/types';
+import type {TrackingEvent, DataAttributes} from './utils/types';
 
 // Zeplin definition:
 // https://app.zeplin.io/project/5c9b6f097168bc065782b5c3/screen/5d15d87e46571573089f2863
@@ -139,6 +140,7 @@ type Props = {
     isVisible?: boolean;
     children?: void;
     extra?: React.ReactNode;
+    dataAttributes?: DataAttributes;
 };
 
 const Popover: React.FC<Props> = ({
@@ -152,6 +154,7 @@ const Popover: React.FC<Props> = ({
     asset,
     isVisible = true,
     extra,
+    dataAttributes,
 }) => {
     const {texts, colors, isIos, isDarkMode} = useTheme();
     const {isTabletOrSmaller} = useScreenSize();
@@ -199,6 +202,7 @@ const Popover: React.FC<Props> = ({
                     boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
                     ...containerStyles,
                 }}
+                {...getPrefixedDataAttributes(dataAttributes, 'Popover')}
             >
                 <div className={styles.arrowWrapper} style={arrowStyles}>
                     <div
