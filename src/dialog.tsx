@@ -19,6 +19,7 @@ import * as styles from './dialog.css';
 
 import type {Theme} from './theme';
 import type {RendersNullableElement} from './utils/types';
+import type {ExclusifyUnion} from './utils/utility-types';
 
 const animationsSupported = (platformOverrides: Theme['platformOverrides']) =>
     !isOldChrome(platformOverrides) &&
@@ -36,19 +37,10 @@ interface BaseDialogProps {
 }
 
 interface AlertProps extends BaseDialogProps {
-    subtitle?: undefined;
-    extra?: undefined;
-    forceWeb?: undefined;
     showClose?: boolean;
-    showCancel?: never;
-    cancelText?: never;
-    onCancel?: never;
 }
 
 interface ConfirmProps extends BaseDialogProps {
-    subtitle?: undefined;
-    extra?: undefined;
-    forceWeb?: undefined;
     showClose?: boolean;
     showCancel?: boolean;
     cancelText?: string;
@@ -65,7 +57,7 @@ interface ExtendedDialogProps extends BaseDialogProps {
     link?: RendersNullableElement<typeof ButtonLink>;
 }
 
-type DialogProps = AlertProps | ConfirmProps | ExtendedDialogProps;
+type DialogProps = ExclusifyUnion<AlertProps | ConfirmProps | ExtendedDialogProps>;
 
 const Dialog: React.FC<DialogProps> = (props) => {
     const {texts, colors} = useTheme();
@@ -336,6 +328,7 @@ const ModalDialog = (props: ModalDialogProps) => {
                             [styles.closedOpactityLayer]: isClosing,
                         })}
                         role="dialog"
+                        data-component-name="Dialog"
                     >
                         <div onClick={(e) => e.stopPropagation()}>
                             <div

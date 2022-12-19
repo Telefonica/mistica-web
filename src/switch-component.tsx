@@ -129,7 +129,7 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
             className={styles.container}
             aria-disabled={disabled}
             aria-labelledby={labelId}
-            {...getPrefixedDataAttributes(props.dataAttributes)}
+            {...getPrefixedDataAttributes(props.dataAttributes, 'Switch')}
         >
             {props.render ? (
                 <>
