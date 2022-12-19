@@ -126,7 +126,7 @@ export const Text: React.FC<TextProps> = ({
             id,
             role,
             'aria-level': ariaLevel,
-            ...getPrefixedDataAttributes(dataAttributes, 'Text'),
+            ...getPrefixedDataAttributes(dataAttributes),
             style: {
                 ...sizeVars,
                 ...textVars,
