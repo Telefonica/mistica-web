@@ -188,9 +188,13 @@ if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
 }
 
 // Exported this way to facilitate tree-shaking
+export {default as Icon2GFilled} from './generated/mistica-icons/icon-2-g-filled';
+export {default as Icon2GRegular} from './generated/mistica-icons/icon-2-g-regular';
 export {default as Icon3DViewFilled} from './generated/mistica-icons/icon-3-d-view-filled';
 export {default as Icon3DViewLight} from './generated/mistica-icons/icon-3-d-view-light';
 export {default as Icon3DViewRegular} from './generated/mistica-icons/icon-3-d-view-regular';
+export {default as Icon3GFilled} from './generated/mistica-icons/icon-3-g-filled';
+export {default as Icon3GRegular} from './generated/mistica-icons/icon-3-g-regular';
 export {default as Icon4GFilled} from './generated/mistica-icons/icon-4-g-filled';
 export {default as Icon4GLight} from './generated/mistica-icons/icon-4-g-light';
 export {default as Icon4GRegular} from './generated/mistica-icons/icon-4-g-regular';
@@ -500,7 +504,6 @@ export {default as IconChevronLeftLight} from './generated/mistica-icons/icon-ch
 export {default as IconChevronLeftRegular} from './generated/mistica-icons/icon-chevron-left-regular';
 export {default as IconChevronRightLight} from './generated/mistica-icons/icon-chevron-right-light';
 export {default as IconChevronRightRegular} from './generated/mistica-icons/icon-chevron-right-regular';
-export {default as IconChevronTopRegular} from './generated/mistica-icons/icon-chevron-top-regular';
 export {default as IconChevronUpLight} from './generated/mistica-icons/icon-chevron-up-light';
 export {default as IconChevronUpRegular} from './generated/mistica-icons/icon-chevron-up-regular';
 export {default as IconChildFilled} from './generated/mistica-icons/icon-child-filled';

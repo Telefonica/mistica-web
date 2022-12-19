@@ -5,6 +5,7 @@
  */
 
 import * as React from 'react';
+
 import {useIsInverseVariant} from '../../theme-variant-context';
 import {vars} from '../../skins/skin-contract.css';
 
@@ -17,8 +18,8 @@ const IconNonBinaryToiletFilled: React.FC<IconProps> = ({color, size = 24, child
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
-                d="M12.6 10.005H5.402c-.44 0-.8-.36-.8-.8 0-.44.36-.8.8-.8H12.6c.44 0 .8.36.8.8 0 .44-.36.8-.8.8zm5.998-7.997H15c-.44 0-.8.36-.8.8v7.997H4.604v.8c0 3.918 3.319 5.318 5.598 5.558V22h9.197V2.807c0-.44-.36-.8-.8-.8z"
                 fill={fillColor}
+                d="M12.6 10.005H5.402c-.44 0-.8-.36-.8-.8 0-.44.36-.8.8-.8H12.6c.44 0 .8.36.8.8 0 .44-.36.8-.8.8zm5.998-7.997H15c-.44 0-.8.36-.8.8v7.997H4.604v.8c0 3.918 3.319 5.318 5.598 5.558V22h9.197V2.807c0-.44-.36-.8-.8-.8z"
             />
         </svg>
     );
