@@ -6,15 +6,24 @@ import IconSuccess from './icons/icon-success';
 import * as styles from './stepper.css';
 import {pxToRem} from './utils/css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 type StepperProps = {
     steps: ReadonlyArray<string>;
     currentIndex: number;
     'aria-label'?: string;
     children?: void;
+    dataAttributes?: DataAttributes;
 };
 
-const Stepper: React.FC<StepperProps> = ({steps, currentIndex, 'aria-label': ariaLabel}: StepperProps) => {
+const Stepper: React.FC<StepperProps> = ({
+    steps,
+    currentIndex,
+    'aria-label': ariaLabel,
+    dataAttributes,
+}: StepperProps) => {
     const {colors} = useTheme();
     const {isDesktopOrBigger} = useScreenSize();
     const {height, ref} = useElementDimensions();
@@ -31,7 +40,11 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex, 'aria-label': ari
     }
 
     return (
-        <div className={styles.stepper} style={vars}>
+        <div
+            className={styles.stepper}
+            style={vars}
+            {...getPrefixedDataAttributes(dataAttributes, 'Stepper')}
+        >
             {steps.map((text, index) => {
                 const isCurrent = index === currentIndex;
                 const isLastStep = index === steps.length - 1;

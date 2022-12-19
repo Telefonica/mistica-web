@@ -21,8 +21,10 @@ import {useSetModalState} from './modal-context-provider';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './navigation-bar.css';
 import {sprinkles} from './sprinkles.css';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {Props as TouchableProps} from './touchable';
+import type {DataAttributes} from './utils/types';
 
 type LogoProps = {size: number};
 
@@ -134,7 +136,7 @@ export const NavigationBarLogo: React.FC<NavigationBarLogoProps> = ({size}) => {
 
 const BurgerMenuIcon = ({isOpen}: {isOpen: boolean}) => {
     return (
-        <div className={styles.burgerIconContainer} role="presentation">
+        <div className={styles.burgerIconContainer} role="presentation" data-component-name="BurgerMenuIcon">
             <div className={isOpen ? '' : styles.iconCloseHidden}>
                 <IconCloseRegular />
             </div>
@@ -153,9 +155,10 @@ type HeaderProps = {
     isInverse?: boolean;
     withBorder?: boolean;
     isMenuOpen?: boolean;
+    dataAttributes?: DataAttributes;
 };
 
-const Header = ({children, topFixed, withBorder, isMenuOpen, isInverse}: HeaderProps) => {
+const Header = ({children, topFixed, withBorder, isMenuOpen, isInverse, dataAttributes}: HeaderProps) => {
     const {isDarkMode} = useTheme();
 
     const getBorderClass = () => {
@@ -175,6 +178,7 @@ const Header = ({children, topFixed, withBorder, isMenuOpen, isInverse}: HeaderP
                 borderBottomWidth: withBorder ? 1 : 0,
                 background: isInverse ? vars.colors.navigationBarBackground : vars.colors.background,
             }}
+            {...getPrefixedDataAttributes(dataAttributes)}
         >
             {children}
         </header>
@@ -233,7 +237,13 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
             <>
                 <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
                     <ThemeVariant isInverse={isInverse}>
-                        <Header topFixed={topFixed} withBorder isMenuOpen={isMenuOpen} isInverse={isInverse}>
+                        <Header
+                            topFixed={topFixed}
+                            withBorder
+                            isMenuOpen={isMenuOpen}
+                            isInverse={isInverse}
+                            dataAttributes={{'component-name': 'MainNavigationBar'}}
+                        >
                             <ResponsiveLayout>
                                 <Inline space="between" alignItems="center">
                                     <Inline space={24} alignItems="center">
@@ -318,7 +328,13 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
 
     return (
         <ThemeVariant isInverse={isInverse}>
-            <Header topFixed={topFixed} withBorder isMenuOpen={isMenuOpen} isInverse={isInverse}>
+            <Header
+                topFixed={topFixed}
+                withBorder
+                isMenuOpen={isMenuOpen}
+                isInverse={isInverse}
+                dataAttributes={{'component-name': 'MainNavigationBar'}}
+            >
                 <ResponsiveLayout>
                     <Inline space="between" alignItems="center">
                         <Inline space={48} alignItems="center">
@@ -412,7 +428,12 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     );
     return (
         <ThemeVariant isInverse={isInverse}>
-            <Header topFixed={topFixed} withBorder={withBorder} isInverse={isInverse}>
+            <Header
+                topFixed={topFixed}
+                withBorder={withBorder}
+                isInverse={isInverse}
+                dataAttributes={{'component-name': 'NavigationBar'}}
+            >
                 {topFixed ? (
                     <ResponsiveLayout>{content}</ResponsiveLayout>
                 ) : (
@@ -449,7 +470,12 @@ export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
 }) => {
     return (
         <ThemeVariant isInverse={isInverse}>
-            <Header topFixed={topFixed} withBorder isInverse={isInverse}>
+            <Header
+                topFixed={topFixed}
+                withBorder
+                isInverse={isInverse}
+                dataAttributes={{'component-name': 'FunnelNavigationBar'}}
+            >
                 <ResponsiveLayout>
                     <GridLayout template="10">
                         <Inline space="between" alignItems="center">
@@ -470,7 +496,7 @@ type NavigationBarActionGroupProps = {
 
 export const NavigationBarActionGroup: React.FC<NavigationBarActionGroupProps> = ({children}) => {
     return (
-        <div className={styles.lineHeightFix}>
+        <div className={styles.lineHeightFix} data-component-name="NavigationBarActionGroup">
             <Inline space={24} alignItems="center">
                 {children}
             </Inline>
@@ -494,6 +520,7 @@ export const NavigationBarAction: React.FC<NavigationBarActionProps> = ({childre
                 styles.lineHeightFix,
                 styles.textWrapperVariants[isInverse ? 'inverse' : 'default']
             )}
+            dataAttributes={{'component-name': 'NavigationBarAction'}}
         >
             <Inline space={16} alignItems="center">
                 {React.Children.map(children, (child) =>

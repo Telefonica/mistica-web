@@ -11,15 +11,36 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={16} dataAttributes={{testid: 'image-story'}}>
             <Title1>aspectRatio: 1:1</Title1>
-            <Image src="https://i.imgur.com/G8aJDhB.jpeg" noBorderRadius aspectRatio="1:1" width={200} />
+            <Image
+                src="https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+                noBorderRadius
+                aspectRatio="1:1"
+                width={200}
+            />
             <Title1>aspectRatio: 4:3</Title1>
-            <Image src="https://i.imgur.com/G8aJDhB.jpeg" aspectRatio="4:3" width={200} />
+            <Image
+                src="https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+                aspectRatio="4:3"
+                width={200}
+            />
             <Title1>aspectRatio: 7:10</Title1>
-            <Image src="https://i.imgur.com/G8aJDhB.jpeg" aspectRatio="7:10" width={200} />
+            <Image
+                src="https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+                aspectRatio="7:10"
+                width={200}
+            />
             <Title1>aspectRatio: 16:9</Title1>
-            <Image src="https://i.imgur.com/G8aJDhB.jpeg" aspectRatio="16:9" width={200} />
+            <Image
+                src="https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+                aspectRatio="16:9"
+                width={200}
+            />
             <Title1>width: 230; height: 100</Title1>
-            <Image src="https://i.imgur.com/G8aJDhB.jpeg" width={230} height={100} />
+            <Image
+                src="https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+                width={230}
+                height={100}
+            />
             <div
                 style={{
                     resize: 'both',
@@ -31,21 +52,35 @@ export const Default: StoryComponent = () => {
             >
                 <Stack space={16}>
                     <Title1>width: 50%; aspectRatio: 4:3</Title1>
-                    <Image src="https://i.imgur.com/G8aJDhB.jpeg" width="50%" aspectRatio={4 / 3} />
+                    <Image
+                        src="https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+                        width="50%"
+                        aspectRatio={4 / 3}
+                    />
 
                     {!isRunningAcceptanceTest() && (
                         // for some reason, adding this image to the screenshot test makes it unstable
                         <Stack space={16}>
                             <Title1>width: 50%; aspectRatio: 0</Title1>
-                            <Image src="https://i.imgur.com/G8aJDhB.jpeg" width="50%" aspectRatio={0} />
+                            <Image
+                                src="https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+                                width="50%"
+                                aspectRatio={0}
+                            />
                         </Stack>
                     )}
 
                     <Title1>width: 100%; aspectRatio: 4:3</Title1>
-                    <Image src="https://i.imgur.com/G8aJDhB.jpeg" aspectRatio={4 / 3} />
+                    <Image
+                        src="https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+                        aspectRatio={4 / 3}
+                    />
 
                     <Title1>width: 100%; aspectRatio: 0</Title1>
-                    <Image src="https://i.imgur.com/G8aJDhB.jpeg" aspectRatio={0} />
+                    <Image
+                        src="https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+                        aspectRatio={0}
+                    />
                 </Stack>
             </div>
             <div

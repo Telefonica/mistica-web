@@ -181,7 +181,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             <MaybeDismissable onClose={onClose} aria-label={ariaLabel}>
                 <Boxed
                     className={styles.boxed}
-                    dataAttributes={dataAttributes}
+                    dataAttributes={{'component-name': 'MediaCard', ...dataAttributes}}
                     ref={ref}
                     width="100%"
                     height="100%"
@@ -261,7 +261,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
             <MaybeDismissable aria-label={ariaLabel} onClose={onClose}>
                 <Boxed
                     className={styles.boxed}
-                    dataAttributes={dataAttributes}
+                    dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
                     ref={ref}
                     width="100%"
                     height="100%"
@@ -348,7 +348,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
         return (
             <Boxed
                 className={styles.boxed}
-                dataAttributes={dataAttributes}
+                dataAttributes={{'component-name': 'SnapCard', ...dataAttributes}}
                 ref={ref}
                 isInverse={isInverse}
                 width="100%"
