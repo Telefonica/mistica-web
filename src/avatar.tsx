@@ -5,8 +5,9 @@ import IconUserAccountRegular from './generated/mistica-icons/icon-user-account-
 import {useIsInverseVariant} from './theme-variant-context';
 import * as classes from './avatar.css';
 import {vars} from './skins/skin-contract.css';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {IconProps} from './utils/types';
+import type {DataAttributes, IconProps} from './utils/types';
 
 /**
  * Returns a right/top distance for the badge.
@@ -32,6 +33,7 @@ type AvatarProps = {
     Icon?: React.FC<IconProps>;
     badge?: boolean | number;
     'aria-label'?: string;
+    dataAttributes?: DataAttributes;
 };
 
 /**
@@ -59,6 +61,7 @@ const Avatar = ({
     badge,
     initials = '',
     'aria-label': ariaLabel,
+    dataAttributes,
     ...props
 }: AvatarProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
@@ -84,6 +87,7 @@ const Avatar = ({
                 role="img"
                 aria-label={ariaLabel ?? initials}
                 style={{width: size, height: size, color: textColor, background: backgroundColor}}
+                {...getPrefixedDataAttributes(dataAttributes, 'Avatar')}
             >
                 {shouldRenderImage ? (
                     <img

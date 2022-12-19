@@ -42,7 +42,11 @@ export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages,
     };
 
     return (
-        <Inline space={isDesktopOrBigger ? 16 : 8} alignItems="center">
+        <Inline
+            space={isDesktopOrBigger ? 16 : 8}
+            alignItems="center"
+            dataAttributes={{'component-name': 'PageBullets'}}
+        >
             {Array.from({length: numPages}, (_, i: number) => (
                 <BaseTouchable
                     className={sprinkles({
@@ -314,7 +318,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     }
 
     return (
-        <Stack space={24} dataAttributes={dataAttributes}>
+        <Stack space={24} dataAttributes={{'component-name': 'Carousel', ...dataAttributes}}>
             <div className={styles.carouselContainer}>
                 <ThemeVariant isInverse={false}>
                     <BaseTouchable
@@ -520,7 +524,10 @@ export const Slideshow: React.FC<SlideshowProps> = ({
     }, [currentIndex, onPageChange]);
 
     return (
-        <div className={styles.slideshowContainer} {...getPrefixedDataAttributes(dataAttributes)}>
+        <div
+            className={styles.slideshowContainer}
+            {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
+        >
             <ThemeVariant isInverse={false}>
                 <BaseTouchable
                     className={styles.slideshowPrevArrowButton}

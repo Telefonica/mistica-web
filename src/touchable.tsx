@@ -123,7 +123,7 @@ const RawTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
         'aria-selected': props['aria-selected'],
         'aria-live': props['aria-live'],
         tabIndex: props.tabIndex,
-        ...getPrefixedDataAttributes(props.dataAttributes),
+        ...getPrefixedDataAttributes(props.dataAttributes, 'Touchable'),
     };
 
     const type = props.type ? props.type : 'button';
