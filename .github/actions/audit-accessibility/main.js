@@ -222,7 +222,7 @@ const main = async () => {
         });
     };
 
-    const pool = new PromisePool(job, os.cpus().length - 1);
+    const pool = new PromisePool(job, os.cpus().length);
     await pool.start();
 
     console.log('total time:', Date.now() - t, 'ms');
