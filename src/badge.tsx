@@ -1,12 +1,16 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import * as classes from './badge.css';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 type Props = {
     children?: React.ReactNode;
     value?: number;
     right?: number;
     top?: number;
+    dataAttributes?: DataAttributes;
 };
 
 /**
@@ -19,7 +23,7 @@ type Props = {
  *   </IconButton>
  * </Badge>
  */
-const Badge: React.FC<Props> = ({children, value, right, top}) => {
+const Badge: React.FC<Props> = ({children, value, right, top, dataAttributes}) => {
     if (children && value === 0) {
         return <>{children}</>;
     }
@@ -31,7 +35,7 @@ const Badge: React.FC<Props> = ({children, value, right, top}) => {
     const isBigNumber = value && value > 9;
 
     return (
-        <div className={classes.container}>
+        <div className={classes.container} {...getPrefixedDataAttributes(dataAttributes, 'Badge')}>
             {value ? (
                 <div
                     role="presentation"

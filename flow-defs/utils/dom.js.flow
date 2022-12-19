@@ -27,7 +27,8 @@ declare export var removePassiveEventListener: (
  * For example: `{foo: 'bar'}` => `{data-foo: 'bar'}`
  */
 declare export var getPrefixedDataAttributes: (
-  attrs?: DataAttributes | void
+  attrs?: DataAttributes | void,
+  componentName?: string | void
 ) => DataAttributes;
 declare type ScrollAxis = "X" | "Y";
 declare export var getScrollableParentElement: (
