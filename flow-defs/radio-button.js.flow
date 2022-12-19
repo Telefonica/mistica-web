@@ -39,6 +39,7 @@ declare type RadioGroupProps = {
   value?: string,
   defaultValue?: string,
   onChange?: (value: string) => void,
+  dataAttributes?: DataAttributes,
 };
 declare export var RadioGroup: React.ComponentType<RadioGroupProps>;
 declare export default typeof RadioButton;

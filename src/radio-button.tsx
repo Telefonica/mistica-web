@@ -120,7 +120,7 @@ const RadioButton: React.FC<PropsRender | PropsChildren> = ({
             onClick={disabled ? undefined : () => select(value)}
             onKeyDown={disabled ? undefined : handleKeyDown}
             className={styles.radioButton}
-            {...getPrefixedDataAttributes(dataAttributes)}
+            {...getPrefixedDataAttributes(dataAttributes, 'RadioButton')}
         >
             {rest.render ? (
                 rest.render({controlElement: radio, disabled: !!disabled, checked, labelId})
@@ -147,6 +147,7 @@ type RadioGroupProps = {
     value?: string;
     defaultValue?: string;
     onChange?: (value: string) => void;
+    dataAttributes?: DataAttributes;
 };
 
 export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
@@ -242,6 +243,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = (props) => {
             ref={combineRefs(ref, focusableRef)}
             role="radiogroup"
             aria-labelledby={props['aria-labelledby']}
+            {...getPrefixedDataAttributes(props.dataAttributes, 'RadioGroup')}
         >
             <RadioContext.Provider
                 value={{

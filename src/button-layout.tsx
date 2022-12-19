@@ -155,7 +155,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
                     ? `${buttonStatus.buttonWidth}px`
                     : 'auto',
             })}
-            {...getPrefixedDataAttributes(dataAttributes)}
+            {...getPrefixedDataAttributes(dataAttributes, 'ButtonLayout')}
         >
             {link ? (
                 <div

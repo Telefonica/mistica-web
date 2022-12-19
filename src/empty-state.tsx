@@ -83,7 +83,7 @@ const EmptyState: React.FC<Props> = ({
             })}
             aria-label={ariaLabel}
             role="region"
-            {...getPrefixedDataAttributes(dataAttributes)}
+            {...getPrefixedDataAttributes(dataAttributes, 'EmptyState')}
         >
             <div style={{flex: 1}}>
                 <Stack

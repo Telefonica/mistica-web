@@ -379,7 +379,7 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
             [styles.alignedLink]: props.aligned,
         }),
         trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
-        dataAttributes: props.dataAttributes,
+        dataAttributes: {'component-name': 'ButtonLink', ...props.dataAttributes},
         children: (
             <div className={styles.textContentLink}>
                 {renderButtonContent({
@@ -425,17 +425,44 @@ export const ButtonLink = React.forwardRef<TouchableElement, ButtonLinkProps>((p
     return null;
 });
 
-export const ButtonPrimary = React.forwardRef<TouchableElement, ButtonProps>((props, ref) => {
-    return <Button {...props} ref={ref} type="primary" />;
-});
+export const ButtonPrimary = React.forwardRef<TouchableElement, ButtonProps>(
+    ({dataAttributes, ...props}, ref) => {
+        return (
+            <Button
+                dataAttributes={{'component-name': 'ButtonPrimary', ...dataAttributes}}
+                {...props}
+                ref={ref}
+                type="primary"
+            />
+        );
+    }
+);
 
-export const ButtonSecondary = React.forwardRef<TouchableElement, ButtonProps>((props, ref) => {
-    return <Button {...props} ref={ref} type="secondary" />;
-});
+export const ButtonSecondary = React.forwardRef<TouchableElement, ButtonProps>(
+    ({dataAttributes, ...props}, ref) => {
+        return (
+            <Button
+                dataAttributes={{'component-name': 'ButtonSecondary', ...dataAttributes}}
+                {...props}
+                ref={ref}
+                type="secondary"
+            />
+        );
+    }
+);
 
-export const ButtonDanger = React.forwardRef<TouchableElement, ButtonProps>((props, ref) => {
-    return <Button {...props} ref={ref} type="danger" />;
-});
+export const ButtonDanger = React.forwardRef<TouchableElement, ButtonProps>(
+    ({dataAttributes, ...props}, ref) => {
+        return (
+            <Button
+                dataAttributes={{'component-name': 'ButtonDanger', ...dataAttributes}}
+                {...props}
+                ref={ref}
+                type="danger"
+            />
+        );
+    }
+);
 
 export type ButtonElement =
     | RendersElement<typeof ButtonPrimary>

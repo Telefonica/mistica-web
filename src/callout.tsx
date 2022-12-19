@@ -13,8 +13,9 @@ import ButtonGroup from './button-group';
 import * as styles from './callout.css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {RendersNullableElement} from './utils/types';
+import type {DataAttributes, RendersNullableElement} from './utils/types';
 
 type Props = {
     title?: string;
@@ -26,6 +27,7 @@ type Props = {
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
     children?: void;
     'aria-label'?: string;
+    dataAttributes?: DataAttributes;
 };
 
 const Callout: React.FC<Props> = ({
@@ -37,6 +39,7 @@ const Callout: React.FC<Props> = ({
     secondaryButton,
     buttonLink,
     'aria-label': ariaLabel,
+    dataAttributes,
 }) => {
     const isInverse = useIsInverseVariant();
     const {colors, texts} = useTheme();
@@ -51,6 +54,7 @@ const Callout: React.FC<Props> = ({
                 })
             )}
             aria-label={ariaLabel ?? title}
+            {...getPrefixedDataAttributes(dataAttributes, 'Callout')}
         >
             <ThemeVariant isInverse={false}>
                 {icon && <Box paddingRight={16}>{icon}</Box>}
