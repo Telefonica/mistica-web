@@ -172,7 +172,7 @@ const getWeight = (props: LightRegularMediumProps) => {
     return undefined;
 };
 
-export const Text10: React.FC<TextPresetProps> = (props) => {
+export const Text10: React.FC<TextPresetProps> = ({dataAttributes, ...props}) => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -181,14 +181,13 @@ export const Text10: React.FC<TextPresetProps> = (props) => {
             desktopSize={64}
             desktopLineHeight="72px"
             weight={textPresets.text10.weight}
+            dataAttributes={{'component-name': 'Text10', ...dataAttributes}}
             {...props}
-        >
-            {props.children}
-        </Text>
+        />
     );
 };
 
-export const Text9: React.FC<TextPresetProps> = (props) => {
+export const Text9: React.FC<TextPresetProps> = ({dataAttributes, ...props}) => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -197,14 +196,13 @@ export const Text9: React.FC<TextPresetProps> = (props) => {
             desktopSize={56}
             desktopLineHeight="64px"
             weight={textPresets.text9.weight}
+            dataAttributes={{'component-name': 'Text9', ...dataAttributes}}
             {...props}
-        >
-            {props.children}
-        </Text>
+        />
     );
 };
 
-export const Text8: React.FC<TextPresetProps> = (props) => {
+export const Text8: React.FC<TextPresetProps> = ({dataAttributes, ...props}) => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -213,14 +211,13 @@ export const Text8: React.FC<TextPresetProps> = (props) => {
             desktopSize={48}
             desktopLineHeight="56px"
             weight={textPresets.text8.weight}
+            dataAttributes={{'component-name': 'Text8', ...dataAttributes}}
             {...props}
-        >
-            {props.children}
-        </Text>
+        />
     );
 };
 
-export const Text7: React.FC<TextPresetProps> = (props) => {
+export const Text7: React.FC<TextPresetProps> = ({dataAttributes, ...props}) => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -229,14 +226,13 @@ export const Text7: React.FC<TextPresetProps> = (props) => {
             desktopSize={40}
             desktopLineHeight="48px"
             weight={textPresets.text7.weight}
+            dataAttributes={{'component-name': 'Text7', ...dataAttributes}}
             {...props}
-        >
-            {props.children}
-        </Text>
+        />
     );
 };
 
-export const Text6: React.FC<TextPresetProps> = (props) => {
+export const Text6: React.FC<TextPresetProps> = ({dataAttributes, ...props}) => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -245,14 +241,13 @@ export const Text6: React.FC<TextPresetProps> = (props) => {
             desktopSize={32}
             desktopLineHeight="40px"
             weight={textPresets.text6.weight}
+            dataAttributes={{'component-name': 'Text6', ...dataAttributes}}
             {...props}
-        >
-            {props.children}
-        </Text>
+        />
     );
 };
 
-export const Text5: React.FC<TextPresetProps> = (props) => {
+export const Text5: React.FC<TextPresetProps> = ({dataAttributes, ...props}) => {
     const {textPresets} = useTheme();
     return (
         <Text
@@ -261,56 +256,57 @@ export const Text5: React.FC<TextPresetProps> = (props) => {
             desktopSize={28}
             desktopLineHeight="32px"
             weight={textPresets.text5.weight}
+            dataAttributes={{'component-name': 'Text5', ...dataAttributes}}
             {...props}
-        >
-            {props.children}
-        </Text>
+        />
     );
 };
 
-export const Text4: React.FC<LightRegularMediumProps> = (props) => (
+export const Text4: React.FC<LightRegularMediumProps> = ({dataAttributes, ...props}) => (
     <Text
         mobileSize={18}
         mobileLineHeight="24px"
         desktopSize={20}
         desktopLineHeight="28px"
         weight={getWeight(props)}
+        dataAttributes={{'component-name': 'Text4', ...dataAttributes}}
         {...props}
-    >
-        {props.children}
-    </Text>
+    />
 );
 
-export const Text3: React.FC<LightRegularMediumProps> = (props) => (
-    <Text mobileSize={16} desktopSize={18} lineHeight="24px" weight={getWeight(props)} {...props}>
-        {props.children}
-    </Text>
+export const Text3: React.FC<LightRegularMediumProps> = ({dataAttributes, ...props}) => (
+    <Text
+        mobileSize={16}
+        desktopSize={18}
+        lineHeight="24px"
+        weight={getWeight(props)}
+        dataAttributes={{'component-name': 'Text3', ...dataAttributes}}
+        {...props}
+    />
 );
 
-export const Text2: React.FC<RegularMediumProps> = (props) => (
+export const Text2: React.FC<RegularMediumProps> = ({dataAttributes, ...props}) => (
     <Text
         mobileSize={14}
         mobileLineHeight="20px"
         desktopSize={16}
         desktopLineHeight="24px"
         weight={getWeight(props)}
+        dataAttributes={{'component-name': 'Text2', ...dataAttributes}}
         {...props}
-    >
-        {props.children}
-    </Text>
+    />
 );
 
-export const Text1: React.FC<RegularMediumProps> = (props) => (
+export const Text1: React.FC<RegularMediumProps> = ({dataAttributes, ...props}) => (
     <Text
         mobileSize={12}
         mobileLineHeight="16px"
         desktopSize={14}
         desktopLineHeight="20px"
         weight={getWeight(props)}
+        dataAttributes={{'component-name': 'Text1', ...dataAttributes}}
         {...props}
-    >
-        {props.children}
-    </Text>
+    />
 );
 
 export default Text;

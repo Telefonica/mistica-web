@@ -81,7 +81,7 @@ Default.storyName = 'Avatar';
 Default.args = {
     size: 64,
     hideImage: false,
-    src: 'https://i.imgur.com/nRBEMMV.png',
+    src: 'https://images.unsplash.com/photo-1640951613773-54706e06851d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80',
     hideInitials: false,
     initials: 'PL',
     icon: 'undefined',

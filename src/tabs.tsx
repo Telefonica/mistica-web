@@ -75,7 +75,7 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
             role="tablist"
             ref={ref}
             className={styles.outerBorder}
-            {...getPrefixedDataAttributes(dataAttributes)}
+            {...getPrefixedDataAttributes(dataAttributes, 'Tabs')}
         >
             <ResponsiveLayout fullWidth>
                 <div className={styles.outer}>
@@ -85,7 +85,7 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
                                 const isSelected = index === selectedIndex;
                                 return (
                                     <BaseTouchable
-                                        dataAttributes={{tabindex: index}}
+                                        dataAttributes={{'component-name': 'Tab', tabindex: index}}
                                         key={index}
                                         className={classnames(
                                             styles.tabVariants[getTabVariant(tabs.length)],

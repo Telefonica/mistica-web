@@ -7,15 +7,24 @@ import * as styles from './stepper.css';
 import {pxToRem} from './utils/css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {vars} from './skins/skin-contract.css';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 type StepperProps = {
     steps: ReadonlyArray<string>;
     currentIndex: number;
     'aria-label'?: string;
     children?: void;
+    dataAttributes?: DataAttributes;
 };
 
-const Stepper: React.FC<StepperProps> = ({steps, currentIndex, 'aria-label': ariaLabel}: StepperProps) => {
+const Stepper: React.FC<StepperProps> = ({
+    steps,
+    currentIndex,
+    'aria-label': ariaLabel,
+    dataAttributes,
+}: StepperProps) => {
     const {isDesktopOrBigger} = useScreenSize();
     const {height, ref} = useElementDimensions();
     const textContainerHeight = height;
@@ -32,6 +41,7 @@ const Stepper: React.FC<StepperProps> = ({steps, currentIndex, 'aria-label': ari
             style={assignInlineVars({
                 [styles.vars.stepperMinHeight]: pxToRem(40 + textContainerHeight),
             })}
+            {...getPrefixedDataAttributes(dataAttributes, 'Stepper')}
         >
             {steps.map((text, index) => {
                 const isCurrent = index === currentIndex;

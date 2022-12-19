@@ -8,43 +8,35 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {pxToRem} from './utils/css';
 import * as styles from './chip.css';
 import {vars} from './skins/skin-contract.css';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {IconProps} from './utils/types';
+import type {ExclusifyUnion} from './utils/utility-types';
+import type {DataAttributes, IconProps} from './utils/types';
 
-interface ChipBaseProps {
+interface SimpleChipProps {
     children: string;
     Icon?: React.FC<IconProps>;
     id?: string;
+    dataAttributes?: DataAttributes;
 }
 
-interface SimpleChipProps extends ChipBaseProps {
-    onClose?: undefined;
-    active?: undefined;
-}
-
-interface ClosableChipProps extends ChipBaseProps {
+interface ClosableChipProps extends SimpleChipProps {
     onClose: () => void;
-
-    active?: undefined;
 }
 
-interface ToggleChipProps extends ChipBaseProps {
+interface ToggleChipProps extends SimpleChipProps {
     active: boolean;
-
-    onClose?: undefined;
 }
 
-type ChipProps = SimpleChipProps | ClosableChipProps | ToggleChipProps;
+type ChipProps = ExclusifyUnion<SimpleChipProps | ClosableChipProps | ToggleChipProps>;
 
-const Chip: React.FC<ChipProps> = (props) => {
+const Chip: React.FC<ChipProps> = ({Icon, children, id, dataAttributes, active, onClose}: ChipProps) => {
     const {texts, isDarkMode} = useTheme();
-
-    const {Icon, children, id} = props;
 
     const body = (
         <>
             {Icon && (
-                <Box paddingRight={4} className={props.active ? styles.iconActive : styles.icon}>
+                <Box paddingRight={4} className={active ? styles.iconActive : styles.icon}>
                     <Icon color="currentColor" size={pxToRem(16)} />
                 </Box>
             )}
@@ -56,9 +48,13 @@ const Chip: React.FC<ChipProps> = (props) => {
 
     const paddingLeft = Icon ? 8 : 12;
 
-    if (props.onClose) {
+    if (onClose) {
         return (
-            <Box className={styles.chipVariants.default} paddingLeft={paddingLeft}>
+            <Box
+                className={styles.chipVariants.default}
+                paddingLeft={paddingLeft}
+                {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
+            >
                 {body}
                 <Box paddingLeft={4}>
                     <IconButton
@@ -69,7 +65,7 @@ const Chip: React.FC<ChipProps> = (props) => {
                             alignItems: 'center',
                         }}
                         aria-label={texts.closeButtonLabel}
-                        onPress={() => props.onClose()}
+                        onPress={() => onClose()}
                     >
                         <IconCloseRegular size={16} color={vars.colors.neutralMedium} />
                     </IconButton>
@@ -77,14 +73,15 @@ const Chip: React.FC<ChipProps> = (props) => {
             </Box>
         );
     } else {
-        const isInteractive = props.active !== undefined;
+        const isInteractive = active !== undefined;
         return (
             <Box
-                className={classnames(styles.chipVariants[props.active ? 'active' : 'default'], {
+                className={classnames(styles.chipVariants[active ? 'active' : 'default'], {
                     [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,
                 })}
                 paddingLeft={paddingLeft}
                 paddingRight={12}
+                {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
             >
                 {body}
             </Box>

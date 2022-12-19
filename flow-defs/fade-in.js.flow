@@ -1,11 +1,13 @@
 // @flow
 
 import * as React from "react";
+import type { DataAttributes } from "./utils/types";
 declare type Props = {
   children?: React.Node,
   className?: string,
   delay?: string,
   duration?: string,
+  dataAttributes?: DataAttributes,
 };
 declare var FadeIn: React.ComponentType<Props>;
 declare export default typeof FadeIn;

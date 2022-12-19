@@ -501,8 +501,8 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     );
 });
 
-export const Row = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => (
-    <RowContent {...props} ref={ref} />
+export const Row = React.forwardRef<TouchableElement, RowContentProps>(({dataAttributes, ...props}, ref) => (
+    <RowContent {...props} ref={ref} dataAttributes={{'component-name': 'Row', ...dataAttributes}} />
 ));
 
 type RowListProps = {
@@ -523,7 +523,11 @@ export const RowList: React.FC<RowListProps> = ({
     const lastIndex = React.Children.count(children) - 1;
     const showLastDivider = !noLastDivider;
     return (
-        <div role={role} aria-labelledby={ariaLabelledby} {...getPrefixedDataAttributes(dataAttributes)}>
+        <div
+            role={role}
+            aria-labelledby={ariaLabelledby}
+            {...getPrefixedDataAttributes(dataAttributes, 'RowList')}
+        >
             {React.Children.toArray(children)
                 .filter(Boolean)
                 .map((child, index) => (
@@ -561,8 +565,12 @@ type BoxedRowProps = ExclusifyUnion<
     | OnPressBoxedRowProps
 >;
 
-export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>((props, ref) => (
-    <Boxed isInverse={props.isInverse} ref={ref}>
+export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAttributes, ...props}, ref) => (
+    <Boxed
+        isInverse={props.isInverse}
+        ref={ref}
+        dataAttributes={{'component-nane': 'BoxedRow', ...dataAttributes}}
+    >
         <RowContent {...props} />
     </Boxed>
 ));
@@ -580,7 +588,12 @@ export const BoxedRowList: React.FC<BoxedRowListProps> = ({
     role,
     dataAttributes,
 }) => (
-    <Stack space={16} role={role} aria-labelledby={ariaLabelledby} dataAttributes={dataAttributes}>
+    <Stack
+        space={16}
+        role={role}
+        aria-labelledby={ariaLabelledby}
+        dataAttributes={{'component-name': 'BoxedRowList', ...dataAttributes}}
+    >
         {children}
     </Stack>
 );

@@ -130,7 +130,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
             aria-label={ariaLabel}
             aria-labelledby={ariaLabel ? undefined : labelId}
             aria-disabled={disabled}
-            {...getPrefixedDataAttributes(props.dataAttributes)}
+            {...getPrefixedDataAttributes(props.dataAttributes, 'Checkbox')}
         >
             {props.render ? (
                 props.render({

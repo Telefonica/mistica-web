@@ -33,7 +33,7 @@ const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({
 }) => {
     const isInverse = useIsInverseVariant();
     return (
-        <nav aria-label={ariaLabel} {...getPrefixedDataAttributes(dataAttributes)}>
+        <nav aria-label={ariaLabel} {...getPrefixedDataAttributes(dataAttributes, 'NavigationBreadcrumbs')}>
             <ol className={styles.list}>
                 {breadcrumbs.map(({title, url}, index) => (
                     <li key={index} className={styles.listItem}>

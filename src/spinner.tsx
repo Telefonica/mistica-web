@@ -121,7 +121,11 @@ const Spinner: React.FC<Props> = ({color, delay = '500ms', size = 24, style, rol
     if (delay === '0' || delay === '0s' || delay === '0ms') {
         return content;
     }
-    return <FadeIn delay={delay}>{content}</FadeIn>;
+    return (
+        <FadeIn delay={delay} dataAttributes={{'component-name': 'Spinner'}}>
+            {content}
+        </FadeIn>
+    );
 };
 
 export default Spinner;

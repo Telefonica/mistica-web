@@ -296,7 +296,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     );
 };
 
-export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = (props) => {
+export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = ({dataAttributes, ...props}) => {
     const {isTabletOrSmaller} = useScreenSize();
     const {skinName} = useTheme();
 
@@ -309,6 +309,7 @@ export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = (props) => {
                 animateText
                 imageUrl={props.imageUrl}
                 imageFit={props.imageFit}
+                dataAttributes={{'component-name': 'SuccessFeedbackScreen', ...dataAttributes}}
             />
         </ThemeVariant>
     );
@@ -321,10 +322,17 @@ interface ErrorFeedbackScreenProps extends FeedbackProps {
 export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
     children,
     errorReference,
+    dataAttributes,
     ...otherProps
 }) => {
     return (
-        <FeedbackScreen {...otherProps} hapticFeedback="error" icon={<IcnError />} animateText>
+        <FeedbackScreen
+            {...otherProps}
+            hapticFeedback="error"
+            icon={<IcnError />}
+            animateText
+            dataAttributes={{'component-name': 'ErrorFeedbackScreen', ...dataAttributes}}
+        >
             {children}
             {errorReference && (
                 <Text2 color={vars.colors.textSecondary} regular>
@@ -335,8 +343,14 @@ export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
     );
 };
 
-export const InfoFeedbackScreen: React.FC<FeedbackProps> = (props) => {
-    return <FeedbackScreen {...props} icon={<IcnInfo />} />;
+export const InfoFeedbackScreen: React.FC<FeedbackProps> = ({dataAttributes, ...props}) => {
+    return (
+        <FeedbackScreen
+            dataAttributes={{'component-name': 'InfoFeedbackScreen', ...dataAttributes}}
+            icon={<IcnInfo />}
+            {...props}
+        />
+    );
 };
 
 export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
@@ -371,7 +385,7 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
     return isTabletOrSmaller ? (
         <ResponsiveLayout isInverse>
             <OverscrollColor />
-            <Box paddingBottom={32}>
+            <Box paddingBottom={32} dataAttributes={{'component-name': 'SuccessFeedback', ...dataAttributes}}>
                 <div className={styles.innerContainer}>{inlineFeedbackBody}</div>
             </Box>
         </ResponsiveLayout>
@@ -381,7 +395,7 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
             inlineFeedbackBody,
             imageFit,
             imageUrl,
-            dataAttributes,
+            dataAttributes: {'component-name': 'SuccessFeedback', ...dataAttributes},
         })
     );
 };
