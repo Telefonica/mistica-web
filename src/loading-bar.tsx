@@ -2,10 +2,13 @@ import * as React from 'react';
 import {CSSTransition} from 'react-transition-group';
 import {Portal} from './portal';
 import * as styles from './loading-bar.css';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-type Props = {visible: boolean; children?: void};
+import type {DataAttributes} from './utils/types';
 
-const LoadingBar: React.FC<Props> = ({visible}) => {
+type Props = {visible: boolean; children?: void; dataAttributes?: DataAttributes};
+
+const LoadingBar: React.FC<Props> = ({visible, dataAttributes}) => {
     return (
         <CSSTransition
             in={visible}
@@ -19,7 +22,10 @@ const LoadingBar: React.FC<Props> = ({visible}) => {
             unmountOnExit
         >
             <Portal className={styles.portal}>
-                <div className={styles.progressContainer}>
+                <div
+                    className={styles.progressContainer}
+                    {...getPrefixedDataAttributes(dataAttributes, 'LoadingBar')}
+                >
                     <div className={styles.progress}>
                         <div className={styles.innerProgress} />
                     </div>

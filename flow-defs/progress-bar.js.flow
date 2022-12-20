@@ -1,11 +1,13 @@
 // @flow
 
 import * as React from "react";
+import type { DataAttributes } from "./utils/types";
 declare type Props = {
   progressPercent: number,
   color?: string,
   "aria-label"?: string,
   "aria-labelledby"?: string,
+  dataAttributes?: DataAttributes,
 };
 declare var ProgressBar: React.ComponentType<Props>;
 declare export default typeof ProgressBar;

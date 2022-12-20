@@ -1,6 +1,10 @@
 // @flow
 
 import * as React from "react";
-declare type Props = { visible: boolean };
+import type { DataAttributes } from "./utils/types";
+declare type Props = {
+  visible: boolean,
+  dataAttributes?: DataAttributes,
+};
 declare var LoadingBar: React.ComponentType<Props>;
 declare export default typeof LoadingBar;

@@ -67,8 +67,8 @@ export const Boxed = React.forwardRef<HTMLDivElement, Props>(
                     })
                 )}
                 role={role}
-                {...getPrefixedDataAttributes(dataAttributes)}
                 aria-label={ariaLabel}
+                {...getPrefixedDataAttributes(dataAttributes)}
             >
                 <ThemeVariant isInverse={isInverseInside}>{children}</ThemeVariant>
             </div>
