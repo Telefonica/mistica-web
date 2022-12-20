@@ -19,7 +19,12 @@ export const Default: StoryComponent<Args> = ({inverse, ariaLabel}) => {
 
     return (
         <ThemeVariant isInverse={inverse}>
-            <div style={{background: inverse ? colors.backgroundBrand : colors.background, display: 'flex'}}>
+            <div
+                style={{
+                    background: inverse ? colors.backgroundBrand : colors.background,
+                    padding: 16,
+                }}
+            >
                 <SkeletonRow ariaLabel={ariaLabel} dataAttributes={{testid: 'skeleton-row'}} />
             </div>
         </ThemeVariant>

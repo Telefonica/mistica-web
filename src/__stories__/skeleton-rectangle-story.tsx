@@ -23,7 +23,6 @@ export const Default: StoryComponent<Args> = ({height, width, inverse, ariaLabel
             <div
                 style={{
                     background: inverse ? colors.backgroundBrand : colors.background,
-                    display: 'flex',
                     padding: 16,
                 }}
             >
