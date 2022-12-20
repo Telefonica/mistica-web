@@ -45,7 +45,7 @@ export const Title1 = ({children, as = 'h3', id, right, dataAttributes}: TitlePr
                     medium
                     as={as}
                     id={id}
-                    dataAttributes={dataAttributes}
+                    dataAttributes={{'component-name': 'Title1', ...dataAttributes}}
                     wordBreak={false}
                 >
                     {children}
@@ -60,7 +60,7 @@ export const Title2 = ({children, as = 'h3', id, right, dataAttributes}: TitlePr
     return (
         <TitleLayout
             title={
-                <Text5 as={as} id={id} dataAttributes={dataAttributes}>
+                <Text5 as={as} id={id} dataAttributes={{'component-name': 'Title2', ...dataAttributes}}>
                     {children}
                 </Text5>
             }

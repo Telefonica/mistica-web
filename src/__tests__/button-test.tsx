@@ -47,6 +47,7 @@ test('<a> is rendered when using "to" prop', () => {
         <DocumentFragment>
           <a
             class="touchable_base__mhti6u1 touchable__mhti6u0 sprinkles_cursor_pointer__1y2v1nf93 button_variants_primary__rrbrpnl button_button__rrbrpn2 button__rrbrpn1 sprinkles_paddingTop_0__1y2v1nf5l sprinkles_paddingBottom_0__1y2v1nf5z sprinkles_paddingLeft_0__1y2v1nf6d sprinkles_paddingRight_0__1y2v1nf6r sprinkles_display_inline-block__1y2v1nf52 sprinkles_position_relative__1y2v1nf4t sprinkles_width_auto__1y2v1nf76 sprinkles_borderRadius_4__1y2v1nf8z sprinkles_overflow_hidden__1y2v1nf94 button__rrbrpna sprinkles_color_var(--colors-textButtonPrimary__1vqcj1i1m)__1y2v1nf1m sprinkles_background_var(--colors-buttonPrimaryBackground__1vqcj1ik)__1y2v1nf2y"
+            data-component-name="ButtonPrimary"
             href="/test"
             role="button"
           >
@@ -55,6 +56,7 @@ test('<a> is rendered when using "to" prop', () => {
             >
               <div
                 class="text_text__splu5g7 text_withWordBreak__splu5g5 text_truncateToOneLine__splu5g9 text_truncate__splu5g8"
+                data-component-name="Text3"
                 style="--mobileSize__splu5g0: 1.000rem; --mobileLineHeight__splu5g2: 1.500rem; --desktopSize__splu5g1: 1.125rem; --desktopLineHeight__splu5g3: 1.500rem; --lineClamp__splu5g4: 1; font-weight: 500; text-transform: inherit; text-decoration: inherit; overflow-wrap: anywhere;"
               >
                 test

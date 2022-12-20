@@ -39,7 +39,11 @@ type SkeletonLineProps = {
 
 export const SkeletonLine = ({width = '100%', ariaLabel, dataAttributes}: SkeletonLineProps): JSX.Element => {
     return (
-        <SkeletonAnimation width={width} ariaLabel={ariaLabel} dataAttributes={dataAttributes}>
+        <SkeletonAnimation
+            width={width}
+            ariaLabel={ariaLabel}
+            dataAttributes={{'component-name': 'SkeletonLine', ...dataAttributes}}
+        >
             <SkeletonBase width={width} />
         </SkeletonAnimation>
     );
@@ -49,7 +53,11 @@ type SkeletonTextProps = Omit<SkeletonLineProps, 'width'>;
 
 export const SkeletonText = ({ariaLabel, dataAttributes}: SkeletonTextProps): JSX.Element => {
     return (
-        <SkeletonAnimation width="100%" ariaLabel={ariaLabel} dataAttributes={dataAttributes}>
+        <SkeletonAnimation
+            width="100%"
+            ariaLabel={ariaLabel}
+            dataAttributes={{'component-name': 'SkeletonText', ...dataAttributes}}
+        >
             <Stack space={16}>
                 <SkeletonBase />
                 <SkeletonBase />
@@ -63,7 +71,12 @@ type SkeletonCircleProps = Omit<SkeletonLineProps, 'width'> & {size?: number | s
 
 export const SkeletonCircle = ({ariaLabel, size = 40, dataAttributes}: SkeletonCircleProps): JSX.Element => {
     return (
-        <SkeletonAnimation ariaLabel={ariaLabel} dataAttributes={dataAttributes} width={size} height={size}>
+        <SkeletonAnimation
+            width={size}
+            height={size}
+            ariaLabel={ariaLabel}
+            dataAttributes={{'component-name': 'SkeletonCircle', ...dataAttributes}}
+        >
             <SkeletonBase height={size} width={size} radius="50%" />
         </SkeletonAnimation>
     );
@@ -73,7 +86,11 @@ type SkeletonRowProps = SkeletonLineProps;
 
 export const SkeletonRow = ({width = '100%', ariaLabel, dataAttributes}: SkeletonRowProps): JSX.Element => {
     return (
-        <SkeletonAnimation width={width} ariaLabel={ariaLabel} dataAttributes={dataAttributes}>
+        <SkeletonAnimation
+            width={width}
+            ariaLabel={ariaLabel}
+            dataAttributes={{'component-name': 'SkeletonRow', ...dataAttributes}}
+        >
             <div className={styles.row}>
                 <SkeletonBase height={40} width={40} radius="50%" className={styles.circle} />
                 <SkeletonBase width={width} className={styles.line} />
@@ -100,7 +117,7 @@ export const SkeletonRectangle = ({
             height={height}
             width={width}
             ariaLabel={ariaLabel}
-            dataAttributes={dataAttributes}
+            dataAttributes={{'component-name': 'SkeletonRectangle', ...dataAttributes}}
         >
             <SkeletonBase height={height} width={width} />
         </SkeletonAnimation>

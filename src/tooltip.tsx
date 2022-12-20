@@ -9,6 +9,9 @@ import * as key from './utils/key-codes';
 import Stack from './stack';
 import * as styles from './tooltip.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 const defaultPositionDesktop = 'bottom';
 const defaultPositionMobile = 'top';
@@ -100,6 +103,7 @@ type Props = {
     width?: number;
     targetLabel: string;
     delay?: boolean;
+    dataAttributes?: DataAttributes;
 };
 
 const Tooltip: React.FC<Props> = ({
@@ -110,6 +114,7 @@ const Tooltip: React.FC<Props> = ({
     title,
     targetLabel,
     delay = true,
+    dataAttributes,
     ...rest
 }) => {
     const {isDarkMode} = useTheme();
@@ -316,6 +321,7 @@ const Tooltip: React.FC<Props> = ({
                     unmountOnExit
                 >
                     <div
+                        {...getPrefixedDataAttributes(dataAttributes, 'Tooltip')}
                         role="tooltip"
                         id={ariaId}
                         className={styles.container}
