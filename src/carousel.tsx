@@ -92,7 +92,7 @@ const normalizeItemsPerPage = (
     tablet: number;
     desktop: number;
 } => {
-    const defaultItemsPerPage = {mobile: 1, tablet: 1, desktop: {small: 1, medium: 2, large: 3}};
+    const defaultItemsPerPage = {mobile: 1, tablet: 2, desktop: {small: 1, medium: 2, large: 3}};
     if (!itemsPerPage) {
         return {...defaultItemsPerPage, desktop: defaultItemsPerPage.desktop.large};
     }
