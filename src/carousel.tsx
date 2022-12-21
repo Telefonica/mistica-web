@@ -94,7 +94,10 @@ const normalizeItemsPerPage = (
 } => {
     const defaultItemsPerPage = {mobile: 1, tablet: 2, desktop: {small: 1, medium: 2, large: 3}};
     if (!itemsPerPage) {
-        return {...defaultItemsPerPage, desktop: defaultItemsPerPage.desktop.large};
+        return {
+            ...defaultItemsPerPage,
+            desktop: selectDesktopItemsPerPage(desktopContainerType, defaultItemsPerPage.desktop),
+        };
     }
 
     if (typeof itemsPerPage === 'number') {

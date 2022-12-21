@@ -103,7 +103,7 @@ Default.args = {
     withBullets: true,
     numItems: 6,
     itemsPerPageDesktop: 3,
-    itemsPerPageTablet: 1,
+    itemsPerPageTablet: 2,
     itemsPerPageMobile: 1,
     free: false,
     autoplay: false,
