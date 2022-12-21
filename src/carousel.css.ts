@@ -103,7 +103,6 @@ const mobilePageOffsetNext = createVar();
 const gap = createVar();
 
 export const vars = {
-    itemsPerPage,
     itemsPerPageMobile,
     itemsPerPageTablet,
     itemsPerPageDesktop,
