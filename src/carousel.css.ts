@@ -94,7 +94,9 @@ export const carouselContainer = sprinkles({
     position: 'relative',
 });
 
+const itemsPerPage = createVar();
 const itemsPerPageMobile = createVar();
+const itemsPerPageTablet = createVar();
 const itemsPerPageDesktop = createVar();
 const mobilePageOffsetPrev = createVar();
 const mobilePageOffsetNext = createVar();
@@ -102,6 +104,7 @@ const gap = createVar();
 
 export const vars = {
     itemsPerPageMobile,
+    itemsPerPageTablet,
     itemsPerPageDesktop,
     mobilePageOffsetPrev,
     mobilePageOffsetNext,
@@ -177,11 +180,21 @@ export const carouselItem = style({
         scrollMargin: 0,
     },
     '@media': {
+        [mq.mobile]: {
+            vars: {
+                [itemsPerPage]: itemsPerPageMobile,
+            },
+        },
+        [mq.tablet]: {
+            vars: {
+                [itemsPerPage]: itemsPerPageTablet,
+            },
+        },
         [mq.tabletOrSmaller]: {
-            width: `calc(1 / ${itemsPerPageMobile} * 100% + ${gap} / ${itemsPerPageMobile} * 1px)`,
+            width: `calc(1 / ${itemsPerPage} * 100% + ${gap} / ${itemsPerPage} * 1px)`,
 
             ':first-child': {
-                width: `calc(1 / ${itemsPerPageMobile} * 100% - ${gap} * (${itemsPerPageMobile} - 1) / ${itemsPerPageMobile} * 1px)`,
+                width: `calc(1 / ${itemsPerPage} * 100% - ${gap} * (${itemsPerPage} - 1) / ${itemsPerPage} * 1px)`,
             },
 
             scrollSnapAlign: 'start',
@@ -189,15 +202,15 @@ export const carouselItem = style({
 
             selectors: {
                 [`${carouselWithScroll}:not(${centeredCarousel}) &`]: {
-                    width: `calc(1 / ${itemsPerPageMobile} * 100% - (${offsetNext} + ${offsetPrev} + ${gap} * 1px) / ${itemsPerPageMobile})`,
+                    width: `calc(1 / ${itemsPerPage} * 100% - (${offsetNext} + ${offsetPrev} + ${gap} * 1px) / ${itemsPerPage})`,
                 },
                 [`${carouselWithScroll}:not(${centeredCarousel}) &:first-child`]: {
                     paddingLeft: responsiveLayoutSideMargin,
-                    width: `calc(1 / ${itemsPerPageMobile} * 100% - (${offsetNext} + ${offsetPrev} + ${gap} * 1px) / ${itemsPerPageMobile} - ${gap} * 1px + ${responsiveLayoutSideMargin})`,
+                    width: `calc(1 / ${itemsPerPage} * 100% - (${offsetNext} + ${offsetPrev} + ${gap} * 1px) / ${itemsPerPage} - ${gap} * 1px + ${responsiveLayoutSideMargin})`,
                 },
                 [`${carouselWithScroll}:not(${centeredCarousel}) &:last-child`]: {
                     paddingRight: responsiveLayoutSideMargin,
-                    width: `calc(1 / ${itemsPerPageMobile} * 100% - (${offsetNext} + ${offsetPrev} + ${gap} * 1px) / ${itemsPerPageMobile} + ${responsiveLayoutSideMargin})`,
+                    width: `calc(1 / ${itemsPerPage} * 100% - (${offsetNext} + ${offsetPrev} + ${gap} * 1px) / ${itemsPerPage} + ${responsiveLayoutSideMargin})`,
                 },
                 [`${centeredCarousel} &`]: {
                     width: '50%',

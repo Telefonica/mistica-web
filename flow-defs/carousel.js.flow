@@ -8,10 +8,18 @@ declare type PageBulletsProps = {
   onPress?: (index: number) => void,
 };
 declare export var PageBullets: React.ComponentType<PageBulletsProps>;
+declare type DesktopItemsPerPage =
+  | {
+      small?: number,
+      medium?: number,
+      large?: number,
+    }
+  | number;
 declare type ItemsPerPageProp =
   | {
       mobile?: number,
-      desktop?: number,
+      tablet?: number,
+      desktop?: DesktopItemsPerPage,
     }
   | number;
 declare type MobilePageOffset =
