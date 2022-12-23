@@ -1308,6 +1308,9 @@ export {default as IconPackageTrolleyRegular} from './generated/mistica-icons/ic
 export {default as IconParkingFilled} from './generated/mistica-icons/icon-parking-filled';
 export {default as IconParkingLight} from './generated/mistica-icons/icon-parking-light';
 export {default as IconParkingRegular} from './generated/mistica-icons/icon-parking-regular';
+export {default as IconPauseCircleFilled} from './generated/mistica-icons/icon-pause-circle-filled';
+export {default as IconPauseCircleLight} from './generated/mistica-icons/icon-pause-circle-light';
+export {default as IconPauseCircleRegular} from './generated/mistica-icons/icon-pause-circle-regular';
 export {default as IconPauseFilled} from './generated/mistica-icons/icon-pause-filled';
 export {default as IconPauseLight} from './generated/mistica-icons/icon-pause-light';
 export {default as IconPauseRegular} from './generated/mistica-icons/icon-pause-regular';
@@ -1362,6 +1365,9 @@ export {default as IconPlaneRegular} from './generated/mistica-icons/icon-plane-
 export {default as IconPlantFilled} from './generated/mistica-icons/icon-plant-filled';
 export {default as IconPlantLight} from './generated/mistica-icons/icon-plant-light';
 export {default as IconPlantRegular} from './generated/mistica-icons/icon-plant-regular';
+export {default as IconPlayCircleFilled} from './generated/mistica-icons/icon-play-circle-filled';
+export {default as IconPlayCircleLight} from './generated/mistica-icons/icon-play-circle-light';
+export {default as IconPlayCircleRegular} from './generated/mistica-icons/icon-play-circle-regular';
 export {default as IconPlayFilled} from './generated/mistica-icons/icon-play-filled';
 export {default as IconPlayLight} from './generated/mistica-icons/icon-play-light';
 export {default as IconPlayRegular} from './generated/mistica-icons/icon-play-regular';
