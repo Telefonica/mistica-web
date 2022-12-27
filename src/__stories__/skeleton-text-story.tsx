@@ -4,6 +4,9 @@ import {SkeletonText} from '../skeletons';
 
 export default {
     title: 'Components/Skeletons/Skeleton Text',
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 type Args = {
@@ -18,16 +21,11 @@ export const Default: StoryComponent<Args> = ({inverse, ariaLabel}) => {
         <ThemeVariant isInverse={inverse}>
             <div
                 style={{
-                    padding: 16,
-                    width: '50%',
                     background: inverse ? colors.backgroundBrand : colors.background,
-                    // prevent line-height from affecting the height of the container;
-                    // happens when changing the base font size
-                    lineHeight: 0,
+                    padding: 16,
                 }}
-                data-testid="skeleton-text"
             >
-                <SkeletonText ariaLabel={ariaLabel} />
+                <SkeletonText ariaLabel={ariaLabel} dataAttributes={{testid: 'skeleton-text'}} />
             </div>
         </ThemeVariant>
     );
