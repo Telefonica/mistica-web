@@ -98,18 +98,7 @@ test('Multiline text field', async () => {
     const emptyScreenshot = await fieldWrapper.screenshot();
     expect(emptyScreenshot).toMatchImageSnapshot();
 
-    const lines = [
-        '1111111111',
-        '2222222222',
-        '3333333333',
-        '4444444444',
-        '5555555555',
-        '6666666666',
-        '7777777777',
-        '8888888888',
-        '9999999999',
-        '0000000000',
-    ].join('\n');
+    const lines = ['1111111111', '2222222222', '3333333333', '4444444444', '5555555555'].join('\n');
 
     await page.type(field, lines);
 

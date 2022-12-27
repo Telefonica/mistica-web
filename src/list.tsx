@@ -569,7 +569,7 @@ export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAt
     <Boxed
         isInverse={props.isInverse}
         ref={ref}
-        dataAttributes={{'component-nane': 'BoxedRow', ...dataAttributes}}
+        dataAttributes={{'component-name': 'BoxedRow', ...dataAttributes}}
     >
         <RowContent {...props} />
     </Boxed>
