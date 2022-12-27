@@ -386,7 +386,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                 )}
                             </Stack>
                         </div>
-                        {extra && <Box paddingTop={16}>{extra}</Box>}
+                        {extra && <div>{extra}</div>}
                     </section>
                 </BaseTouchable>
             </Boxed>
