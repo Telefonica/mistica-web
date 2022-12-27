@@ -19,8 +19,7 @@ const pulseKeyframes = keyframes({
 
 export const animation = style([
     sprinkles({
-        width: '100%',
-        height: '100%',
+        display: 'block',
     }),
     {
         animation: `${pulseKeyframes} ${transition} infinite`,
