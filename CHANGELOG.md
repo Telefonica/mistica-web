@@ -1,3 +1,16 @@
+# [12.13.0](https://github.com/Telefonica/mistica-web/compare/v12.12.0...v12.13.0) (2022-12-23)
+
+
+### Bug Fixes
+
+* **Typo:** typo in attribute name ([#625](https://github.com/Telefonica/mistica-web/issues/625)) ([8c2d712](https://github.com/Telefonica/mistica-web/commit/8c2d7128a6c9b56fbd3108b3b6d062a2d2044faa))
+
+
+### Features
+
+* **Carousel:** extend items per page for tablet and desktop container types ([#610](https://github.com/Telefonica/mistica-web/issues/610)) ([e4c569f](https://github.com/Telefonica/mistica-web/commit/e4c569feb248969008425e731a7c63bc70e87423))
+* **Skeletons:** Improve skeleton container size ([#619](https://github.com/Telefonica/mistica-web/issues/619)) ([d5d628d](https://github.com/Telefonica/mistica-web/commit/d5d628dba3ced805e0ac7d03eb2a56b73175f703))
+
 # [12.12.0](https://github.com/Telefonica/mistica-web/compare/v12.11.1...v12.12.0) (2022-12-19)
 
 

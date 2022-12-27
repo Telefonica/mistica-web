@@ -11,9 +11,11 @@ type SkeletonAnimationProps = {
     children: React.ReactNode;
     ariaLabel?: string;
     dataAttributes?: DataAttributes;
+    width?: number | string;
+    height?: number | string;
 };
 
-const SkeletonAnimation = ({children, ariaLabel, dataAttributes}: SkeletonAnimationProps) => {
+const SkeletonAnimation = ({children, ariaLabel, dataAttributes, width, height}: SkeletonAnimationProps) => {
     return (
         <div
             className={styles.animation}
@@ -21,6 +23,7 @@ const SkeletonAnimation = ({children, ariaLabel, dataAttributes}: SkeletonAnimat
             aria-busy
             aria-hidden={ariaLabel === undefined}
             aria-label={ariaLabel}
+            style={{width, height}}
             {...getPrefixedDataAttributes(dataAttributes)}
         >
             {children}
@@ -37,6 +40,7 @@ type SkeletonLineProps = {
 export const SkeletonLine = ({width = '100%', ariaLabel, dataAttributes}: SkeletonLineProps): JSX.Element => {
     return (
         <SkeletonAnimation
+            width={width}
             ariaLabel={ariaLabel}
             dataAttributes={{'component-name': 'SkeletonLine', ...dataAttributes}}
         >
@@ -50,6 +54,7 @@ type SkeletonTextProps = Omit<SkeletonLineProps, 'width'>;
 export const SkeletonText = ({ariaLabel, dataAttributes}: SkeletonTextProps): JSX.Element => {
     return (
         <SkeletonAnimation
+            width="100%"
             ariaLabel={ariaLabel}
             dataAttributes={{'component-name': 'SkeletonText', ...dataAttributes}}
         >
@@ -67,6 +72,8 @@ type SkeletonCircleProps = Omit<SkeletonLineProps, 'width'> & {size?: number | s
 export const SkeletonCircle = ({ariaLabel, size = 40, dataAttributes}: SkeletonCircleProps): JSX.Element => {
     return (
         <SkeletonAnimation
+            width={size}
+            height={size}
             ariaLabel={ariaLabel}
             dataAttributes={{'component-name': 'SkeletonCircle', ...dataAttributes}}
         >
@@ -80,6 +87,7 @@ type SkeletonRowProps = SkeletonLineProps;
 export const SkeletonRow = ({width = '100%', ariaLabel, dataAttributes}: SkeletonRowProps): JSX.Element => {
     return (
         <SkeletonAnimation
+            width={width}
             ariaLabel={ariaLabel}
             dataAttributes={{'component-name': 'SkeletonRow', ...dataAttributes}}
         >
@@ -106,6 +114,8 @@ export const SkeletonRectangle = ({
 }: SkeletonRectangleProps): JSX.Element => {
     return (
         <SkeletonAnimation
+            height={height}
+            width={width}
             ariaLabel={ariaLabel}
             dataAttributes={{'component-name': 'SkeletonRectangle', ...dataAttributes}}
         >
