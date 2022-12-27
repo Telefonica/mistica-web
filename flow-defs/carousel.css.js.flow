@@ -11,6 +11,10 @@ declare export var vars: {
     $Exports<"@vanilla-extract/private">,
     "CSSVarFunction"
   >,
+  itemsPerPageTablet: $PropertyType<
+    $Exports<"@vanilla-extract/private">,
+    "CSSVarFunction"
+  >,
   itemsPerPageDesktop: $PropertyType<
     $Exports<"@vanilla-extract/private">,
     "CSSVarFunction"
