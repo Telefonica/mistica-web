@@ -20,6 +20,7 @@ export default {
 type Args = {
     numItems: number;
     itemsPerPageMobile: number;
+    itemsPerPageTablet: number;
     itemsPerPageDesktop: number;
     withBullets: boolean;
     free: boolean;
@@ -33,6 +34,7 @@ export const Default: StoryComponent<Args> = ({
     numItems,
     withBullets,
     itemsPerPageMobile,
+    itemsPerPageTablet,
     itemsPerPageDesktop,
     free,
     itemsToScroll,
@@ -56,7 +58,11 @@ export const Default: StoryComponent<Args> = ({
                         dataAttributes={{testid: 'carousel-story'}}
                         withBullets={withBullets}
                         free={free}
-                        itemsPerPage={{mobile: itemsPerPageMobile, desktop: itemsPerPageDesktop}}
+                        itemsPerPage={{
+                            mobile: itemsPerPageMobile,
+                            tablet: itemsPerPageTablet,
+                            desktop: itemsPerPageDesktop,
+                        }}
                         itemsToScroll={itemsToScroll}
                         autoplay={autoplay ? {time: 5000, loop} : false}
                         onPageChange={setPageInfo}
@@ -97,6 +103,7 @@ Default.args = {
     withBullets: true,
     numItems: 6,
     itemsPerPageDesktop: 3,
+    itemsPerPageTablet: 2,
     itemsPerPageMobile: 1,
     free: false,
     autoplay: false,

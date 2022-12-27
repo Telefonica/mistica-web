@@ -1,3 +1,37 @@
+# [12.13.0](https://github.com/Telefonica/mistica-web/compare/v12.12.0...v12.13.0) (2022-12-23)
+
+
+### Bug Fixes
+
+* **Typo:** typo in attribute name ([#625](https://github.com/Telefonica/mistica-web/issues/625)) ([8c2d712](https://github.com/Telefonica/mistica-web/commit/8c2d7128a6c9b56fbd3108b3b6d062a2d2044faa))
+
+
+### Features
+
+* **Carousel:** extend items per page for tablet and desktop container types ([#610](https://github.com/Telefonica/mistica-web/issues/610)) ([e4c569f](https://github.com/Telefonica/mistica-web/commit/e4c569feb248969008425e731a7c63bc70e87423))
+* **Skeletons:** Improve skeleton container size ([#619](https://github.com/Telefonica/mistica-web/issues/619)) ([d5d628d](https://github.com/Telefonica/mistica-web/commit/d5d628dba3ced805e0ac7d03eb2a56b73175f703))
+
+# [12.12.0](https://github.com/Telefonica/mistica-web/compare/v12.11.1...v12.12.0) (2022-12-19)
+
+
+### Bug Fixes
+
+* **Touchable:** use BaseTouchable in some components ([#601](https://github.com/Telefonica/mistica-web/issues/601)) ([3cd8f44](https://github.com/Telefonica/mistica-web/commit/3cd8f44e7a52888040b5b1c732b9bcc732db1c27))
+* **vanilla-extract:** remove backgroundColor from sprinkles ([#599](https://github.com/Telefonica/mistica-web/issues/599)) ([7981028](https://github.com/Telefonica/mistica-web/commit/7981028296e82900cf23bb20d308aa3751f17e66))
+
+
+### Features
+
+* **Carousel:** deprecate mobilePageOffset prop ([#609](https://github.com/Telefonica/mistica-web/issues/609)) ([6bca5bf](https://github.com/Telefonica/mistica-web/commit/6bca5bf6b30adbccd54fbeae8d3a3fc24982b3fb))
+* **colors:** added codemod to migrate from theme.colors to skinVars.colors ([#608](https://github.com/Telefonica/mistica-web/issues/608)) ([2caece1](https://github.com/Telefonica/mistica-web/commit/2caece140f3cdd6a0231efcdc76ab8d2c56f802d))
+* **DataAttributes:** expose component name as data attribute ([#622](https://github.com/Telefonica/mistica-web/issues/622)) ([6fd7049](https://github.com/Telefonica/mistica-web/commit/6fd70493826a6ea19aca9139e34f3d1901a84797))
+* **HighlightedCard:** use forwardRef ([#607](https://github.com/Telefonica/mistica-web/issues/607)) ([0bc6227](https://github.com/Telefonica/mistica-web/commit/0bc622743c873c6880ab46b3b6718e81a70ff617))
+* **ResponsiveLayout:** allow background color ([#600](https://github.com/Telefonica/mistica-web/issues/600)) ([069e4d1](https://github.com/Telefonica/mistica-web/commit/069e4d13b24fbe8af60b51fa8abfb8f1dd903132))
+* **vanilla-extract:** migrate FixedFooterLayout and other internal components ([#606](https://github.com/Telefonica/mistica-web/issues/606)) ([2d8d082](https://github.com/Telefonica/mistica-web/commit/2d8d082ed357f84f6432443650b03be7246fa70b))
+* **vanilla-extract:** migrate HelperText ([#611](https://github.com/Telefonica/mistica-web/issues/611)) ([a4fb684](https://github.com/Telefonica/mistica-web/commit/a4fb68458ca43c91684d328ff58010ab4c1a9091))
+* **vanilla-extract:** Migrate MaybeDismisseable, Menu, NavigationBar, Breadcrumbs, PasswordInput, Popover, RadioButton, Select, Switch ([#598](https://github.com/Telefonica/mistica-web/issues/598)) ([0c61e5d](https://github.com/Telefonica/mistica-web/commit/0c61e5d200db0f25a36b601581322e73669995d2))
+* **vanilla-extract:** Migrate TextField Components, TextFieldBase ([#603](https://github.com/Telefonica/mistica-web/issues/603)) ([b2d7df8](https://github.com/Telefonica/mistica-web/commit/b2d7df81bb8cd6a966dafaf83914dddda2d4d8ee))
+
 ## [12.11.1](https://github.com/Telefonica/mistica-web/compare/v12.11.0...v12.11.1) (2022-11-25)
 
 
