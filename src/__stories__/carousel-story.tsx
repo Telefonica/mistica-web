@@ -20,6 +20,7 @@ export default {
 type Args = {
     numItems: number;
     itemsPerPageMobile: number;
+    itemsPerPageTablet: number;
     itemsPerPageDesktop: number;
     withBullets: boolean;
     free: boolean;
@@ -33,6 +34,7 @@ export const Default: StoryComponent<Args> = ({
     numItems,
     withBullets,
     itemsPerPageMobile,
+    itemsPerPageTablet,
     itemsPerPageDesktop,
     free,
     itemsToScroll,
@@ -56,7 +58,11 @@ export const Default: StoryComponent<Args> = ({
                         dataAttributes={{testid: 'carousel-story'}}
                         withBullets={withBullets}
                         free={free}
-                        itemsPerPage={{mobile: itemsPerPageMobile, desktop: itemsPerPageDesktop}}
+                        itemsPerPage={{
+                            mobile: itemsPerPageMobile,
+                            tablet: itemsPerPageTablet,
+                            desktop: itemsPerPageDesktop,
+                        }}
                         itemsToScroll={itemsToScroll}
                         autoplay={autoplay ? {time: 5000, loop} : false}
                         onPageChange={setPageInfo}
@@ -66,7 +72,12 @@ export const Default: StoryComponent<Args> = ({
                                 key={idx}
                                 title={`Title ${idx}`}
                                 description="Some description"
-                                media={<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />}
+                                media={
+                                    <Image
+                                        src="https://images.unsplash.com/photo-1575903013621-1387ce8caa74?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+                                        aspectRatio="16:9"
+                                    />
+                                }
                                 buttonLink={<ButtonLink href="https://google.com">Link {idx}</ButtonLink>}
                             />
                         ))}
@@ -92,6 +103,7 @@ Default.args = {
     withBullets: true,
     numItems: 6,
     itemsPerPageDesktop: 3,
+    itemsPerPageTablet: 2,
     itemsPerPageMobile: 1,
     free: false,
     autoplay: false,

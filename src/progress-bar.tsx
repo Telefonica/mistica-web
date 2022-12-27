@@ -2,6 +2,9 @@ import * as React from 'react';
 import {useTheme} from './hooks';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './progress-bar.css';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 type Props = {
     progressPercent: number;
@@ -9,6 +12,7 @@ type Props = {
     children?: void;
     'aria-label'?: string;
     'aria-labelledby'?: string;
+    dataAttributes?: DataAttributes;
 };
 
 const ProgressBar: React.FC<Props> = ({
@@ -16,12 +20,14 @@ const ProgressBar: React.FC<Props> = ({
     color,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
+    dataAttributes,
 }) => {
     const {texts} = useTheme();
     const defaultLabel = texts.loading;
     const label = ariaLabelledBy ? undefined : ariaLabel || defaultLabel;
     return (
         <div
+            {...getPrefixedDataAttributes(dataAttributes, 'ProgressBar')}
             className={styles.barBackground}
             role="progressbar"
             aria-valuenow={progressPercent}

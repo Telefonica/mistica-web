@@ -1,11 +1,13 @@
 // @flow
 
 import * as React from "react";
+import type { DataAttributes } from "./utils/types";
 declare type Props = {
   children?: React.Node,
   value?: number,
   right?: number,
   top?: number,
+  dataAttributes?: DataAttributes,
 };
 /**
  * This Component is decorative and won't be read by screenreaders, to make it accessible,

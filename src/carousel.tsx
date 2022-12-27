@@ -14,6 +14,7 @@ import {useDocumentVisibility} from './utils/document-visibility';
 import * as styles from './carousel.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {sprinkles} from './sprinkles.css';
+import {DesktopContainerType, useDesktopContainerType} from './desktop-container-type-context';
 
 import type {DataAttributes} from './utils/types';
 
@@ -42,7 +43,11 @@ export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages,
     };
 
     return (
-        <Inline space={isDesktopOrBigger ? 16 : 8} alignItems="center">
+        <Inline
+            space={isDesktopOrBigger ? 16 : 8}
+            alignItems="center"
+            dataAttributes={{'component-name': 'PageBullets'}}
+        >
             {Array.from({length: numPages}, (_, i: number) => (
                 <BaseTouchable
                     className={sprinkles({
@@ -62,22 +67,57 @@ export const PageBullets: React.FC<PageBulletsProps> = ({currentIndex, numPages,
     );
 };
 
-type ItemsPerPageProp = {mobile?: number; desktop?: number} | number;
+type DesktopItemsPerPage = {small?: number; medium?: number; large?: number} | number;
+type ItemsPerPageProp = {mobile?: number; tablet?: number; desktop?: DesktopItemsPerPage} | number;
 
-const normalizeItemsPerPage = (itemsPerPage?: ItemsPerPageProp): {mobile: number; desktop: number} => {
-    const defaultItemsPerPage = {mobile: 1, desktop: 3};
+const selectDesktopItemsPerPage = (
+    containerType: DesktopContainerType,
+    defaultItemsPerPage: {small: number; medium: number; large: number},
+    itemsPerPage?: DesktopItemsPerPage
+): number => {
     if (!itemsPerPage) {
-        return defaultItemsPerPage;
+        return defaultItemsPerPage[containerType];
     }
+    if (typeof itemsPerPage === 'number') {
+        return itemsPerPage;
+    }
+    return itemsPerPage[containerType] || defaultItemsPerPage[containerType];
+};
+
+const normalizeItemsPerPage = (
+    desktopContainerType: DesktopContainerType,
+    itemsPerPage?: ItemsPerPageProp
+): {
+    mobile: number;
+    tablet: number;
+    desktop: number;
+} => {
+    const defaultItemsPerPage = {mobile: 1, tablet: 2, desktop: {small: 1, medium: 2, large: 3}};
+    if (!itemsPerPage) {
+        return {
+            ...defaultItemsPerPage,
+            desktop: selectDesktopItemsPerPage(desktopContainerType, defaultItemsPerPage.desktop),
+        };
+    }
+
     if (typeof itemsPerPage === 'number') {
         return {
             mobile: itemsPerPage,
+            tablet: itemsPerPage,
             desktop: itemsPerPage,
         };
     }
+
+    const itemsPerPageDesktop = selectDesktopItemsPerPage(
+        desktopContainerType,
+        defaultItemsPerPage.desktop,
+        itemsPerPage.desktop
+    );
+
     return {
         ...defaultItemsPerPage,
         ...itemsPerPage,
+        desktop: itemsPerPageDesktop,
     };
 };
 
@@ -154,12 +194,19 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     dataAttributes,
 }) => {
     const {texts, platformOverrides} = useTheme();
-    const itemsPerPageConfig = normalizeItemsPerPage(itemsPerPage);
-    const {isDesktopOrBigger} = useScreenSize();
+
+    const desktopContainerType = useDesktopContainerType();
+    const itemsPerPageConfig = normalizeItemsPerPage(desktopContainerType || 'large', itemsPerPage);
+
+    const {isDesktopOrBigger, isMobile} = useScreenSize();
+    const mobileOrTabletItemsPerPage = isMobile ? itemsPerPageConfig.mobile : itemsPerPageConfig.tablet;
+    const itemsPerPageFloor = Math.max(
+        Math.floor(isDesktopOrBigger ? itemsPerPageConfig.desktop : mobileOrTabletItemsPerPage),
+        1
+    );
+
     const carouselRef = React.useRef<HTMLDivElement>(null);
-    const itemsPerPageFloor = isDesktopOrBigger
-        ? Math.floor(itemsPerPageConfig.desktop)
-        : Math.floor(itemsPerPageConfig.mobile);
+
     const pagesCount = Math.ceil(items.length / itemsPerPageFloor);
     const [{scrollLeft, scrollRight}, setScroll] = React.useState({scrollLeft: 0, scrollRight: 0});
     const [itemScrollPositions, setItemScrollPositions] = React.useState<Array<number>>([]);
@@ -222,6 +269,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
         return () => {};
     }, [
         itemsPerPageConfig.desktop,
+        itemsPerPageConfig.tablet,
         itemsPerPageConfig.mobile,
         pagesCount,
         gap,
@@ -314,7 +362,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     }
 
     return (
-        <Stack space={24} dataAttributes={dataAttributes}>
+        <Stack space={24} dataAttributes={{'component-name': 'Carousel', ...dataAttributes}}>
             <div className={styles.carouselContainer}>
                 <ThemeVariant isInverse={false}>
                     <BaseTouchable
@@ -334,6 +382,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                     style={{
                         ...assignInlineVars({
                             [styles.vars.itemsPerPageDesktop]: String(itemsPerPageConfig.desktop),
+                            [styles.vars.itemsPerPageTablet]: String(itemsPerPageConfig.tablet),
                             [styles.vars.itemsPerPageMobile]: String(itemsPerPageConfig.mobile),
                             ...(gap !== undefined ? {[styles.vars.gap]: String(gap)} : {}),
                         }),
@@ -419,7 +468,7 @@ export const CenteredCarousel: React.FC<CenteredCarouselProps> = ({
         items={items}
         itemStyle={itemStyle}
         itemClassName={itemClassName}
-        itemsPerPage={{mobile: 1, desktop: 3}}
+        itemsPerPage={{mobile: 1, tablet: 1, desktop: 3}}
         centered
         itemsToScroll={1}
         gap={0}
@@ -520,7 +569,10 @@ export const Slideshow: React.FC<SlideshowProps> = ({
     }, [currentIndex, onPageChange]);
 
     return (
-        <div className={styles.slideshowContainer} {...getPrefixedDataAttributes(dataAttributes)}>
+        <div
+            className={styles.slideshowContainer}
+            {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
+        >
             <ThemeVariant isInverse={false}>
                 <BaseTouchable
                     className={styles.slideshowPrevArrowButton}

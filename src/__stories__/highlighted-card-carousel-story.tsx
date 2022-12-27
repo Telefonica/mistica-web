@@ -18,12 +18,12 @@ export const Default: StoryComponent<Args> = () => {
                         <HighlightedCard
                             title="Title1"
                             description="This is the best offer for you. Please check it out!"
-                            imageUrl="https://i.imgur.com/4mwxBL4.jpg"
+                            imageUrl="https://images.unsplash.com/photo-1557180295-76eee20ae8aa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
                         />,
                         <HighlightedCard
                             title="Title2"
                             description="This is the best offer for you. Please check it out!"
-                            imageUrl="https://i.imgur.com/4mwxBL4.jpg"
+                            imageUrl="https://images.unsplash.com/photo-1557180295-76eee20ae8aa?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
                             button={<ButtonPrimary onPress={() => {}}>Action</ButtonPrimary>}
                             onClose={() => {}}
                         />,

@@ -47,7 +47,7 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
 
     return (
         <span
-            {...getPrefixedDataAttributes(dataAttributes)}
+            {...getPrefixedDataAttributes(dataAttributes, 'Tag')}
             className={classNames(
                 classes.tag,
                 sprinkles({

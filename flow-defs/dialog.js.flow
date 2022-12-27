@@ -3,6 +3,7 @@
 import * as React from "react";
 import { ButtonLink } from "./button";
 import type { RendersNullableElement } from "./utils/types";
+import type { ExclusifyUnion } from "./utils/utility-types";
 declare type BaseDialogProps = {
   className?: string,
   title?: string,
@@ -14,13 +15,12 @@ declare type BaseDialogProps = {
 };
 declare type AlertProps = {
   ...$Exact<BaseDialogProps>,
+
   showClose?: boolean,
-  showCancel?: empty,
-  cancelText?: empty,
-  onCancel?: empty,
 };
 declare type ConfirmProps = {
   ...$Exact<BaseDialogProps>,
+
   showClose?: boolean,
   showCancel?: boolean,
   cancelText?: string,
@@ -38,7 +38,9 @@ declare type ExtendedDialogProps = {
   onCancel?: () => void,
   link?: RendersNullableElement<typeof ButtonLink>,
 };
-declare type DialogProps = AlertProps | ConfirmProps | ExtendedDialogProps;
+declare type DialogProps = ExclusifyUnion<
+  AlertProps | ConfirmProps | ExtendedDialogProps
+>;
 declare type DialogRootProps = {
   children?: React.Node,
 };
