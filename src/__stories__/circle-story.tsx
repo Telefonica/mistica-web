@@ -9,7 +9,7 @@ export const Default: StoryComponent = () => {
     return (
         <Stack space={16}>
             <div data-testid="circle">
-                <Circle size={40} backgroundColor={colors.brand} />
+                <Circle size={40} backgroundColor={skinVars.colors.brand} />
             </div>
             <div data-testid="circle-with-icon">
                 <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
