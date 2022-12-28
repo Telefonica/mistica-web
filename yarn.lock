@@ -5364,12 +5364,6 @@ __metadata:
     jest-environment-jsdom: ^29.2.2
     jest-environment-puppeteer: ^6.1.1
     jimp: ^0.16.1
-    jss: ^10.9.0
-    jss-plugin-camel-case: ^10.9.0
-    jss-plugin-default-unit: ^10.9.0
-    jss-plugin-nested: ^10.9.0
-    jss-plugin-rule-value-function: ^10.9.0
-    jss-plugin-vendor-prefixer: ^10.9.0
     lint-staged: ^12.3.7
     lodash: ^4.17.21
     mini-css-extract-plugin: ^1.6.2
@@ -16242,7 +16236,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jss-plugin-camel-case@npm:10.9.0, jss-plugin-camel-case@npm:^10.9.0":
+"jss-plugin-camel-case@npm:10.9.0":
   version: 10.9.0
   resolution: "jss-plugin-camel-case@npm:10.9.0"
   dependencies:
@@ -16264,7 +16258,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jss-plugin-default-unit@npm:10.9.0, jss-plugin-default-unit@npm:^10.9.0":
+"jss-plugin-default-unit@npm:10.9.0":
   version: 10.9.0
   resolution: "jss-plugin-default-unit@npm:10.9.0"
   dependencies:
@@ -16305,7 +16299,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jss-plugin-nested@npm:10.9.0, jss-plugin-nested@npm:^10.9.0":
+"jss-plugin-nested@npm:10.9.0":
   version: 10.9.0
   resolution: "jss-plugin-nested@npm:10.9.0"
   dependencies:
@@ -16326,7 +16320,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jss-plugin-rule-value-function@npm:10.9.0, jss-plugin-rule-value-function@npm:^10.9.0":
+"jss-plugin-rule-value-function@npm:10.9.0":
   version: 10.9.0
   resolution: "jss-plugin-rule-value-function@npm:10.9.0"
   dependencies:
@@ -16359,7 +16353,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jss-plugin-vendor-prefixer@npm:10.9.0, jss-plugin-vendor-prefixer@npm:^10.9.0":
+"jss-plugin-vendor-prefixer@npm:10.9.0":
   version: 10.9.0
   resolution: "jss-plugin-vendor-prefixer@npm:10.9.0"
   dependencies:
@@ -16392,7 +16386,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jss@npm:10.9.0, jss@npm:^10.9.0":
+"jss@npm:10.9.0":
   version: 10.9.0
   resolution: "jss@npm:10.9.0"
   dependencies:
