@@ -40,6 +40,9 @@ import {
   getMovistarSkin,
 } from '@telefonica/mistica';
 
+// Import Mistica styles. Depending on the bundler you use, you may need to import it in a different way.
+import '@telefonica/mistica/css/mistica.css';
+
 const App = () => (
   <Form
     onSubmit={(formData) =>
