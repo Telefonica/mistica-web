@@ -147,34 +147,40 @@ export default function transformer(file, api) {
 
     // Adds the skinVars import if needed and removes the useTheme import if no longer needed
     const handleImports = (path) => {
-        path.find(j.ImportDeclaration, {source: {value: '..'}, importKind: 'value'}).forEach((path) => {
-            const addSkinVarsImport = () => {
-                if (!path.value.specifiers.map((s) => s.local.name).includes('skinVars')) {
-                    path.value.specifiers.push(
-                        j.importSpecifier(j.identifier('skinVars'), j.identifier('skinVars'))
-                    );
-                }
-            };
-
-            if (!needsUseThemeImport) {
-                // You may think these conditions are convoluted and we could simply remove the useTheme
-                // import when not needed and add the skinVars import when needed, but I found that changing
-                // the useThemeSpecifier.local.name to skinVars when possible is more safe, because for some
-                // reason when I push a new specifier to the array, the type import specifiers break.
-                if (needsSkinVarsImport) {
-                    const useThemeSpecifier = path.value.specifiers.find((s) => s.local.name === 'useTheme');
-                    if (useThemeSpecifier) {
-                        useThemeSpecifier.local.name = 'skinVars';
-                    } else {
-                        addSkinVarsImport();
+        path.find(j.ImportDeclaration, {source: {value: '@telefonica/mistica'}, importKind: 'value'}).forEach(
+            (path) => {
+                const addSkinVarsImport = () => {
+                    if (!path.value.specifiers.map((s) => s.local.name).includes('skinVars')) {
+                        path.value.specifiers.push(
+                            j.importSpecifier(j.identifier('skinVars'), j.identifier('skinVars'))
+                        );
                     }
-                } else {
-                    path.value.specifiers = path.value.specifiers.filter((s) => s.local.name !== 'useTheme');
+                };
+
+                if (!needsUseThemeImport) {
+                    // You may think these conditions are convoluted and we could simply remove the useTheme
+                    // import when not needed and add the skinVars import when needed, but I found that changing
+                    // the useThemeSpecifier.local.name to skinVars when possible is more safe, because for some
+                    // reason when I push a new specifier to the array, the type import specifiers break.
+                    if (needsSkinVarsImport) {
+                        const useThemeSpecifier = path.value.specifiers.find(
+                            (s) => s.local.name === 'useTheme'
+                        );
+                        if (useThemeSpecifier) {
+                            useThemeSpecifier.local.name = 'skinVars';
+                        } else {
+                            addSkinVarsImport();
+                        }
+                    } else {
+                        path.value.specifiers = path.value.specifiers.filter(
+                            (s) => s.local.name !== 'useTheme'
+                        );
+                    }
+                } else if (needsSkinVarsImport) {
+                    addSkinVarsImport();
                 }
-            } else if (needsSkinVarsImport) {
-                addSkinVarsImport();
             }
-        });
+        );
     };
 
     const path = j(file.source);
