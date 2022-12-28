@@ -1,20 +1,5 @@
 import {PACKAGE_VERSION} from './package-version';
 
-export {
-    /**
-     * @deprecated JSS will be removed from mistica in future versions. Use JSS or other styling solution as a direct dependency of your project
-     */
-    createUseStyles,
-    /**
-     * @deprecated JSS will be removed from mistica in future versions. Use JSS or other styling solution as a direct dependency of your project
-     */
-    getJss,
-    /**
-     * @deprecated JSS will be removed from mistica in future versions. Use JSS or other styling solution as a direct dependency of your project
-     */
-    ServerSideStyles,
-} from './jss';
-
 export {vars as skinVars} from './skins/skin-contract.css';
 export * as mq from './media-queries.css';
 export {default as ThemeContext} from './theme-context';
