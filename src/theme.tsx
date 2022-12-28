@@ -4,7 +4,6 @@ import type {RegionCode} from './utils/region-code';
 import type {Locale} from './utils/locale';
 import type {Skin, SkinName, TextPresetsConfig} from './skins/types';
 import type {TrackingEvent} from './utils/types';
-import type {MediaQueries} from './utils/media-queries';
 
 export type ThemeTexts = Readonly<typeof TEXTS_ES>;
 
@@ -168,8 +167,6 @@ export const dimensions = {
     headerDesktopHeight: NAVBAR_HEIGHT_DESKTOP,
 };
 
-export {mediaQueriesConfig} from './media-queries.css';
-
 type LinkComponent = React.ComponentType<{
     style?: React.CSSProperties;
     className?: string;
@@ -228,16 +225,6 @@ export type ThemeConfig = Readonly<{
         eventFormat?: EventFormat;
     }>;
     dimensions?: Readonly<{headerMobileHeight: number | 'mistica'}>;
-
-    /**
-     * @deprecated in future versions, mistica won't allow to configure media query breakpoints.
-     */
-    mediaQueries?: Readonly<{
-        tabletMinWidth: number;
-        desktopMinWidth: number;
-        largeDesktopMinWidth: number;
-        desktopOrTabletMinHeight: number;
-    }>;
     Link?: LinkComponent;
     useHrefDecorator?: () => (href: string) => string;
     enableTabFocus?: boolean;
@@ -262,7 +249,6 @@ export type Theme = {
     };
     // TODO: rename this props to navigationBarHeight (or something similar) in next major
     dimensions: {headerMobileHeight: number; headerDesktopHeight: number};
-    mq: MediaQueries;
     textPresets: TextPresetsConfig;
     Link: LinkComponent;
     isDarkMode: boolean;

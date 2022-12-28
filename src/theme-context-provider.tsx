@@ -2,9 +2,8 @@ import * as React from 'react';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import DialogRoot from './dialog';
 import ScreenSizeContextProvider from './screen-size-context-provider';
-import {createMediaQueries} from './utils/media-queries';
 import AriaIdGetterContext from './aria-id-getter-context';
-import {AnchorLink, mediaQueriesConfig, dimensions, getTexts, NAVBAR_HEIGHT_MOBILE} from './theme';
+import {AnchorLink, dimensions, getTexts, NAVBAR_HEIGHT_MOBILE} from './theme';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
 import {useIsomorphicLayoutEffect} from './hooks';
@@ -107,7 +106,6 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
                 ...dimensions,
                 ...sanitizeDimensions(theme.dimensions),
             },
-            mq: createMediaQueries(theme.mediaQueries ?? mediaQueriesConfig),
             textPresets: {
                 text5: {...defaultTextPresetsConfig.text5, ...theme.skin.textPresets?.text5},
                 text6: {...defaultTextPresetsConfig.text6, ...theme.skin.textPresets?.text6},
