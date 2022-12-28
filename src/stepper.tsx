@@ -1,11 +1,12 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {Text2, Text1} from './text';
-import {useTheme, useScreenSize, useElementDimensions} from './hooks';
+import {useScreenSize, useElementDimensions} from './hooks';
 import IconSuccess from './icons/icon-success';
 import * as styles from './stepper.css';
 import {pxToRem} from './utils/css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
+import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes} from './utils/types';
@@ -24,16 +25,11 @@ const Stepper: React.FC<StepperProps> = ({
     'aria-label': ariaLabel,
     dataAttributes,
 }: StepperProps) => {
-    const {colors} = useTheme();
     const {isDesktopOrBigger} = useScreenSize();
     const {height, ref} = useElementDimensions();
     const textContainerHeight = height;
     const previousIndexRef = React.useRef(currentIndex);
     const isBack = previousIndexRef.current > currentIndex;
-
-    const vars = assignInlineVars({
-        [styles.vars.stepperMinHeight]: pxToRem(40 + textContainerHeight),
-    });
 
     if (currentIndex !== previousIndexRef.current) {
         previousIndexRef.current = currentIndex;
@@ -42,7 +38,9 @@ const Stepper: React.FC<StepperProps> = ({
     return (
         <div
             className={styles.stepper}
-            style={vars}
+            style={assignInlineVars({
+                [styles.vars.stepperMinHeight]: pxToRem(40 + textContainerHeight),
+            })}
             {...getPrefixedDataAttributes(dataAttributes, 'Stepper')}
         >
             {steps.map((text, index) => {
@@ -70,7 +68,7 @@ const Stepper: React.FC<StepperProps> = ({
                                     aria-hidden="true"
                                 >
                                     <IconSuccess
-                                        color={colors.controlActivated}
+                                        color={vars.colors.controlActivated}
                                         size="100%"
                                         skipAnimation={!hasAnimation || isBack}
                                     />
@@ -84,7 +82,11 @@ const Stepper: React.FC<StepperProps> = ({
                                     <Text1
                                         as="span"
                                         medium
-                                        color={isCurrent ? colors.textPrimaryInverse : colors.textSecondary}
+                                        color={
+                                            isCurrent
+                                                ? vars.colors.textPrimaryInverse
+                                                : vars.colors.textSecondary
+                                        }
                                         aria-hidden="true"
                                     >
                                         {index + 1}
@@ -98,8 +100,8 @@ const Stepper: React.FC<StepperProps> = ({
                                         regular
                                         color={
                                             isCompleted || isCurrent
-                                                ? colors.textPrimary
-                                                : colors.textSecondary
+                                                ? vars.colors.textPrimary
+                                                : vars.colors.textSecondary
                                         }
                                     >
                                         {text}

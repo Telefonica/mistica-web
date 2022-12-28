@@ -10,7 +10,7 @@ import {
     ButtonLink,
     Title1,
     Stack,
-    useTheme,
+    skinVars,
 } from '..';
 
 export default {
@@ -18,7 +18,6 @@ export default {
 };
 
 export const Default: StoryComponent = () => {
-    const {colors} = useTheme();
     return (
         <>
             <Stack space={32}>
@@ -83,7 +82,7 @@ export const Default: StoryComponent = () => {
                                     forceWeb: true,
                                     showCancel: true,
                                     link: <ButtonLink href="https://google.com">Link</ButtonLink>,
-                                    icon: <IconInformationUserLight color={colors.brand} />,
+                                    icon: <IconInformationUserLight color={skinVars.colors.brand} />,
                                 })
                             }
                         >

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {NavigationBreadcrumbs, ThemeVariant, useTheme} from '..';
+import {NavigationBreadcrumbs, ThemeVariant, skinVars} from '..';
 
 export default {
     title: 'Components/Breadcrumbs',
@@ -10,10 +10,9 @@ type Args = {
 };
 
 export const Default: StoryComponent<Args> = ({inverse}) => {
-    const {colors} = useTheme();
     return (
         <ThemeVariant isInverse={inverse}>
-            <div style={{background: inverse ? colors.backgroundBrand : colors.background}}>
+            <div style={{background: inverse ? skinVars.colors.backgroundBrand : skinVars.colors.background}}>
                 <NavigationBreadcrumbs
                     dataAttributes={{testid: 'story'}}
                     title="Subsection"

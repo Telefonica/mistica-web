@@ -6,7 +6,7 @@ import {
     Box,
     Circle,
     ResponsiveLayout,
-    useTheme,
+    skinVars,
     Text2,
     Callout,
     IconInformationRegular,
@@ -28,7 +28,6 @@ export const Default: StoryComponent<Args> = ({numItems, initialActiveItem}) => 
         pageIndex: number;
         shownItemIndexes: Array<number>;
     } | null>(null);
-    const {colors} = useTheme();
     return (
         <Box paddingY={24}>
             <ResponsiveLayout>
@@ -54,12 +53,12 @@ export const Default: StoryComponent<Args> = ({numItems, initialActiveItem}) => 
                                 aria-label={`Carousel item ${idx}`}
                                 key={idx}
                                 style={{
-                                    border: `1px solid ${colors.border}`,
+                                    border: `1px solid ${skinVars.colors.border}`,
                                     ...centerStyle,
                                 }}
                             >
                                 <div style={{flexShrink: 0}}>
-                                    <Circle backgroundColor={colors.brand} size={160}>
+                                    <Circle backgroundColor={skinVars.colors.brand} size={160}>
                                         <ThemeVariant isInverse>
                                             <Text10>{idx}</Text10>
                                         </ThemeVariant>

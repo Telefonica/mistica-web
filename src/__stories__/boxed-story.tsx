@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {Box, Boxed, Stack, Text8} from '..';
-import {useTheme} from '../hooks';
+import {Box, Boxed, Stack, Text8, skinVars} from '..';
 import {ThemeVariant} from '../theme-variant-context';
 import {useCheckbox} from './helpers';
 
@@ -12,8 +11,6 @@ export const Default: StoryComponent = () => {
     const [isInverseOutside, inverseOutsideCheckbox] = useCheckbox('Inverse outside', false);
     const [isInverseInside, inverseInsideCheckbox] = useCheckbox('Inverse inside', false);
 
-    const {colors} = useTheme();
-
     return (
         <>
             <Stack space={16}>
@@ -23,7 +20,11 @@ export const Default: StoryComponent = () => {
             <ThemeVariant isInverse={isInverseOutside}>
                 <div
                     data-testid="boxed"
-                    style={{backgroundColor: isInverseOutside ? colors.backgroundBrand : colors.background}}
+                    style={{
+                        backgroundColor: isInverseOutside
+                            ? skinVars.colors.backgroundBrand
+                            : skinVars.colors.background,
+                    }}
                 >
                     <Box padding={16}>
                         <Boxed isInverse={isInverseInside}>

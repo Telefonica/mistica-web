@@ -7,6 +7,7 @@ import IconButton from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {pxToRem} from './utils/css';
 import * as styles from './chip.css';
+import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -30,7 +31,7 @@ interface ToggleChipProps extends SimpleChipProps {
 type ChipProps = ExclusifyUnion<SimpleChipProps | ClosableChipProps | ToggleChipProps>;
 
 const Chip: React.FC<ChipProps> = ({Icon, children, id, dataAttributes, active, onClose}: ChipProps) => {
-    const {texts, isDarkMode, colors} = useTheme();
+    const {texts, isDarkMode} = useTheme();
 
     const body = (
         <>
@@ -66,7 +67,7 @@ const Chip: React.FC<ChipProps> = ({Icon, children, id, dataAttributes, active, 
                         aria-label={texts.closeButtonLabel}
                         onPress={() => onClose()}
                     >
-                        <IconCloseRegular size={16} color={colors.neutralMedium} />
+                        <IconCloseRegular size={16} color={vars.colors.neutralMedium} />
                     </IconButton>
                 </Box>
             </Box>

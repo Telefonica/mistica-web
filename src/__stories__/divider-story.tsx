@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Divider, ThemeVariant, useIsInverseVariant, useTheme} from '..';
+import {Divider, ThemeVariant, useIsInverseVariant, skinVars} from '..';
 import {StorySection} from './helpers';
 
 export default {
@@ -7,19 +7,18 @@ export default {
 };
 
 const Container: React.FC = ({children}) => {
-    const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
 
     return (
         <div
             style={{
-                background: isInverse ? colors.backgroundBrand : colors.background,
+                background: isInverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
                 padding: 16,
                 height: 96,
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                border: `1px solid ${colors.border}`,
+                border: `1px solid ${skinVars.colors.border}`,
             }}
         >
             {children}

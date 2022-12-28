@@ -76,14 +76,13 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
 
     const isOsDarkModeEnabled = useIsOsDarkModeEnabled();
 
-    const contextTheme = React.useMemo<Theme>(() => {
-        // TODO: In next major version we could change this to "auto" by default
-        const colorScheme = theme.colorScheme ?? 'light';
-        const lightColors: Colors = theme.skin.colors;
-        const darkColors: Colors = {...theme.skin.colors, ...theme.skin.darkModeColors};
-        const isDarkModeEnabled = (colorScheme === 'auto' && isOsDarkModeEnabled) || colorScheme === 'dark';
-        const colors: Colors = isDarkModeEnabled ? darkColors : lightColors;
+    const colorScheme = theme.colorScheme ?? 'auto';
+    const lightColors: Colors = theme.skin.colors;
+    const darkColors: Colors = {...theme.skin.colors, ...theme.skin.darkModeColors};
+    const isDarkModeEnabled = (colorScheme === 'auto' && isOsDarkModeEnabled) || colorScheme === 'dark';
+    const colors: Colors = isDarkModeEnabled ? darkColors : lightColors;
 
+    const contextTheme = React.useMemo<Theme>(() => {
         const platformOverrides = {
             platform: getPlatform(),
             insideNovumNativeApp: isInsideNovumNativeApp(),
@@ -107,7 +106,6 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
                 ...dimensions,
                 ...sanitizeDimensions(theme.dimensions),
             },
-            colors,
             textPresets: {
                 text5: {...defaultTextPresetsConfig.text5, ...theme.skin.textPresets?.text5},
                 text6: {...defaultTextPresetsConfig.text6, ...theme.skin.textPresets?.text6},
@@ -121,11 +119,11 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
             isIos: getPlatform(platformOverrides) === 'ios',
             useHrefDecorator: theme.useHrefDecorator ?? useDefaultHrefDecorator,
         };
-    }, [theme, isOsDarkModeEnabled]);
+    }, [theme, isDarkModeEnabled]);
 
     // Define the same colors in css variables as rgb components, to allow applying alpha aftherwards. See utils/color.tsx
     const rawColors = Object.fromEntries(
-        Object.entries(contextTheme.colors).map(([colorName, colorValue]) => {
+        Object.entries(colors).map(([colorName, colorValue]) => {
             let rawColorValue = '';
             if (colorValue.startsWith('#')) {
                 const [r, g, b] = fromHexToRgb(colorValue);
@@ -134,7 +132,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
             return [colorName, rawColorValue];
         })
     ) as Colors;
-    const themeVars = assignInlineVars(vars, {colors: contextTheme.colors, rawColors});
+    const themeVars = assignInlineVars(vars, {colors, rawColors});
 
     return (
         <TabFocus disabled={!theme.enableTabFocus}>

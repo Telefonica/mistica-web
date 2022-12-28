@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Touchable, Stack, Text2, useTheme} from '..';
+import {Touchable, Stack, Text2, skinVars} from '..';
 import {StorySection} from './helpers';
 
 export default {
@@ -9,14 +9,13 @@ export default {
 
 export const Default: StoryComponent = () => {
     const [count, setCount] = React.useState(0);
-    const {colors} = useTheme();
 
     const styles = {
-        border: `1px solid ${colors.border}`,
+        border: `1px solid ${skinVars.colors.border}`,
         display: 'flex',
         padding: 16,
         justifyContent: 'center',
-        color: colors.textPrimary,
+        color: skinVars.colors.textPrimary,
     };
 
     return (

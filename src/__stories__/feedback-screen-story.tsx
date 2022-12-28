@@ -3,8 +3,7 @@ import {FeedbackScreen} from '../feedback';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from '../button';
 import Stack from '../stack';
 import {ThemeVariant, useIsInverseVariant} from '../theme-variant-context';
-import {useTheme} from '../hooks';
-import {Box, FixedToTop, Text3, Text2} from '..';
+import {Box, FixedToTop, Text3, Text2, skinVars} from '..';
 
 export default {
     title: 'Patterns/Feedback/FeedbackScreen',
@@ -20,7 +19,7 @@ export default {
 };
 
 const IconOrders: React.FC = () => {
-    const {inverse, brand} = useTheme().colors;
+    const {inverse, brand} = skinVars.colors;
     return (
         <svg role="presentation" width="64" height="64" viewBox="0 0 64 64">
             <path
@@ -33,12 +32,11 @@ const IconOrders: React.FC = () => {
 };
 
 const Navbar = ({top}: {top: number}) => {
-    const {colors} = useTheme();
     return (
         <div
             style={{
                 top,
-                background: colors.backgroundBrand,
+                background: skinVars.colors.backgroundBrand,
                 position: 'fixed',
                 display: 'flex',
                 alignItems: 'center',
@@ -49,7 +47,7 @@ const Navbar = ({top}: {top: number}) => {
                 paddingLeft: 16,
             }}
         >
-            <Text3 medium color={colors.textPrimaryInverse}>
+            <Text3 medium color={skinVars.colors.textPrimaryInverse}>
                 Navbar
             </Text3>
         </div>

@@ -3,6 +3,7 @@ import {getPlatform} from './utils/platform';
 import FadeIn from './fade-in';
 import {useAriaId, useTheme} from './hooks';
 import * as styles from './spinner.css';
+import {vars} from './skins/skin-contract.css';
 
 type Props = {
     color?: string;
@@ -14,8 +15,8 @@ type Props = {
 };
 
 const Spinner: React.FC<Props> = ({color, delay = '500ms', size = 24, style, rolePresentation}) => {
-    const {texts, platformOverrides, colors} = useTheme();
-    color = color || colors.controlActivated;
+    const {texts, platformOverrides} = useTheme();
+    color = color || vars.colors.controlActivated;
     const spinnerId = useAriaId();
     const withTitle = !rolePresentation;
     const title = texts.loading;

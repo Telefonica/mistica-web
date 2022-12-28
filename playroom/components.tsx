@@ -10,6 +10,7 @@ import {
     Tabs,
     Checkbox,
     ThemeContextProvider,
+    skinVars,
 } from '../src';
 import {Movistar, Vivo, O2, Telefonica, Blau} from './themes';
 import {useOverrideTheme} from './frame-component';
@@ -68,7 +69,6 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
     onColorSchemeChange,
     onEditStoryPress,
 }) => {
-    const {colors} = useTheme();
     const {isMobile} = useScreenSize();
     const systemColorScheme = 'light';
     const alternativeColorScheme = 'dark';
@@ -104,7 +104,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                     />
                 )}
                 <IconButton aria-label="Edit in Playroom" size={32} onPress={onEditStoryPress}>
-                    <IconCodeFilled size={32} color={colors.neutralHigh} />
+                    <IconCodeFilled size={32} color={skinVars.colors.neutralHigh} />
                 </IconButton>
             </div>
         );
@@ -147,7 +147,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                 )}
                 <div className={styles.desktopControlItem}>
                     <IconButton aria-label="Edit in Playroom" size={32} onPress={onEditStoryPress}>
-                        <IconCodeFilled size={32} color={colors.neutralHigh} />
+                        <IconCodeFilled size={32} color={skinVars.colors.neutralHigh} />
                     </IconButton>
                 </div>
             </div>
@@ -182,7 +182,6 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     const [skinName, setSkinName] = React.useState<SkinName>(initialSkinName);
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
     const [colorScheme, setColorScheme] = React.useState<ColorScheme>('light');
-    const {colors} = useTheme();
     const overrideTheme = useOverrideTheme();
 
     React.useEffect(() => {
@@ -263,7 +262,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                     >
                         <IconButton size={56} aria-label="settings" onPress={() => setShowOverlay(true)}>
                             <div className={styles.floattingButtonBackground}>
-                                <IconSettingsRegular size={24} color={colors.neutralHigh} />
+                                <IconSettingsRegular size={24} color={skinVars.colors.neutralHigh} />
                             </div>
                         </IconButton>
                     </div>

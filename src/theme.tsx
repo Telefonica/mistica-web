@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import type {RegionCode} from './utils/region-code';
 import type {Locale} from './utils/locale';
-import type {Skin, Colors, SkinName, TextPresetsConfig} from './skins/types';
+import type {Skin, SkinName, TextPresetsConfig} from './skins/types';
 import type {TrackingEvent} from './utils/types';
 
 export type ThemeTexts = Readonly<typeof TEXTS_ES>;
@@ -249,7 +249,6 @@ export type Theme = {
     };
     // TODO: rename this props to navigationBarHeight (or something similar) in next major
     dimensions: {headerMobileHeight: number; headerDesktopHeight: number};
-    colors: Colors;
     textPresets: TextPresetsConfig;
     Link: LinkComponent;
     isDarkMode: boolean;

@@ -3,6 +3,7 @@ import {useIsInverseVariant} from './theme-variant-context';
 import {useTheme, useScreenSize} from './hooks';
 import createNestableContext from './nestable-context';
 import {isInsideNovumNativeApp, getPlatform} from './utils/platform';
+import {vars} from './skins/skin-contract.css';
 
 import type {Theme} from './theme';
 
@@ -32,7 +33,7 @@ export const OverscrollColorProvider = ({children}: ProviderProps): JSX.Element 
                                 style={{
                                     position: 'absolute',
                                     zIndex: 1,
-                                    background: color || theme.colors.background,
+                                    background: color || vars.colors.background,
                                     width: '100%',
                                     height:
                                         500 +
@@ -55,8 +56,7 @@ export const OverscrollColorProvider = ({children}: ProviderProps): JSX.Element 
 
 const OverscrollColorComponent = () => {
     const isInverseVariant = useIsInverseVariant();
-    const theme = useTheme();
-    useSetValue(isInverseVariant ? theme.colors.navigationBarBackground : theme.colors.background);
+    useSetValue(isInverseVariant ? vars.colors.navigationBarBackground : vars.colors.background);
 
     return null;
 };

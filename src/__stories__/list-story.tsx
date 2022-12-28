@@ -6,7 +6,7 @@ import {
     RowList,
     BoxedRowList,
     RadioGroup,
-    useTheme,
+    skinVars,
     Placeholder,
     Tag,
     IconLikeFilled,
@@ -67,7 +67,6 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
     extraContent,
     disabled,
 }) => {
-    const {colors} = useTheme();
     const extra = extraContent ? <Placeholder height={56} /> : undefined;
 
     const getControlProps = (index: number) => {
@@ -113,7 +112,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                     right: ({centerY}: {centerY: boolean}) => (
                         <div style={centerY ? {display: 'flex', alignItems: 'center', height: '100%'} : {}}>
                             <Inline space={0}>
-                                <Text3 color={colors.error} medium as="p">
+                                <Text3 color={skinVars.colors.error} medium as="p">
                                     12,00 €
                                 </Text3>
                             </Inline>
@@ -176,8 +175,8 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
             />
             <RowComponent
                 asset={
-                    <Circle backgroundColor={colors.brandLow} size={40}>
-                        <IconMobileDeviceRegular color={colors.brand} />
+                    <Circle backgroundColor={skinVars.colors.brandLow} size={40}>
+                        <IconMobileDeviceRegular color={skinVars.colors.brand} />
                     </Circle>
                 }
                 headline={headline}

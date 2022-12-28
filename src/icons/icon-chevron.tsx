@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useTheme} from '../hooks';
+import {vars} from '../skins/skin-contract.css';
 
 type IcnChevronRightSvgProps = {
     size: number;
@@ -52,8 +52,7 @@ type Props = {
 };
 
 const IconChevron: React.FC<Props> = ({size = 24, color, className, style, direction = 'right'}) => {
-    const {colors} = useTheme();
-    const fillColor = color || colors.neutralHigh;
+    const fillColor = color || vars.colors.neutralHigh;
     const props = {
         size,
         color: fillColor,

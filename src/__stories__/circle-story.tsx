@@ -1,21 +1,19 @@
 import * as React from 'react';
-import {Circle, useTheme, Stack, IconShopRegular} from '..';
+import {Circle, skinVars, Stack, IconShopRegular} from '..';
 
 export default {
     title: 'Components/Primitives/Circle',
 };
 
 export const Default: StoryComponent = () => {
-    const {colors} = useTheme();
-
     return (
         <Stack space={16}>
             <div data-testid="circle">
-                <Circle size={40} backgroundColor={colors.brand} />
+                <Circle size={40} backgroundColor={skinVars.colors.brand} />
             </div>
             <div data-testid="circle-with-icon">
-                <Circle size={40} backgroundColor={colors.brandLow}>
-                    <IconShopRegular color={colors.brand} />
+                <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                    <IconShopRegular color={skinVars.colors.brand} />
                 </Circle>
             </div>
             <div data-testid="circle-with-image">

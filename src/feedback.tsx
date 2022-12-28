@@ -34,10 +34,9 @@ const checkHasButtons = ({primaryButton, secondaryButton}: FeedbackButtonsProps)
     !!primaryButton || !!secondaryButton;
 
 const BackgroundColor: React.FC = () => {
-    const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
 
-    const css = `body {background:${isInverse ? colors.backgroundBrand : colors.background}}`;
+    const css = `body {background:${isInverse ? vars.colors.backgroundBrand : vars.colors.background}}`;
     return <style>{css}</style>;
 };
 
@@ -326,7 +325,6 @@ export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
     dataAttributes,
     ...otherProps
 }) => {
-    const {colors} = useTheme();
     return (
         <FeedbackScreen
             {...otherProps}
@@ -337,7 +335,7 @@ export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
         >
             {children}
             {errorReference && (
-                <Text2 color={colors.textSecondary} regular>
+                <Text2 color={vars.colors.textSecondary} regular>
                     {errorReference}
                 </Text2>
             )}

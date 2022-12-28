@@ -42,7 +42,7 @@ const Callout: React.FC<Props> = ({
     dataAttributes,
 }) => {
     const isInverse = useIsInverseVariant();
-    const {colors, texts} = useTheme();
+    const {texts} = useTheme();
     return (
         <section
             className={classNames(
@@ -65,7 +65,7 @@ const Callout: React.FC<Props> = ({
                                 <Text3 as="h2" regular>
                                     {title}
                                 </Text3>
-                                <Text2 as="p" regular color={colors.textSecondary}>
+                                <Text2 as="p" regular color={vars.colors.textSecondary}>
                                     {description}
                                 </Text2>
                             </Stack>
@@ -81,7 +81,7 @@ const Callout: React.FC<Props> = ({
                                     onPress={onClose}
                                     aria-label={texts.closeButtonLabel}
                                 >
-                                    <IconCloseRegular size={24} color={colors.neutralHigh} />
+                                    <IconCloseRegular size={24} color={vars.colors.neutralHigh} />
                                 </IconButton>
                             )}
                         </Inline>

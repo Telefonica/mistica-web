@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ThemeVariant, useTheme} from '..';
+import {ThemeVariant, skinVars} from '..';
 import {SkeletonCircle} from '../skeletons';
 
 export default {
@@ -16,13 +16,11 @@ type Args = {
 };
 
 export const Default: StoryComponent<Args> = ({size, inverse, ariaValueText}) => {
-    const {colors} = useTheme();
-
     return (
         <ThemeVariant isInverse={inverse}>
             <div
                 style={{
-                    background: inverse ? colors.backgroundBrand : colors.background,
+                    background: inverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
                     padding: 16,
                 }}
             >

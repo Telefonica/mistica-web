@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
     Stack,
     Tag,
-    useTheme,
+    skinVars,
     Text3,
     IconStarFilled,
     IconTimeFilled,
@@ -23,14 +23,13 @@ export default {
 };
 
 const Container: React.FC<{inverse?: boolean}> = ({children, inverse = false}) => {
-    const {colors} = useTheme();
     return (
         <ThemeVariant isInverse={inverse}>
             <div
                 style={{
                     padding: 16,
                     width: 175,
-                    background: inverse ? colors.backgroundBrand : colors.background,
+                    background: inverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
                 }}
             >
                 <Stack space={16}>{children}</Stack>
