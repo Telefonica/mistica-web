@@ -64,7 +64,7 @@ const CardContent: React.FC<CardContentProps> = ({
                 flexDirection: 'column',
             })}
         >
-            <Stack space={16}>
+            <div>
                 <Stack space={8}>
                     {(headline || pretitle || title || subtitle) && (
                         <header>
@@ -105,7 +105,7 @@ const CardContent: React.FC<CardContentProps> = ({
                 </Stack>
 
                 {extra && <div>{extra}</div>}
-            </Stack>
+            </div>
 
             {(button || buttonLink) && (
                 <div className={styles.actions}>
@@ -386,7 +386,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                 )}
                             </Stack>
                         </div>
-                        {extra && <Box paddingTop={16}>{extra}</Box>}
+                        {extra && <div>{extra}</div>}
                     </section>
                 </BaseTouchable>
             </Boxed>
