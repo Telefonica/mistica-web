@@ -69,9 +69,9 @@ export const getVivoSkin: GetKnownSkin = () => {
             skeletonWave: palette.grey2,
 
             // BORDERS
-            borderLight: palette.grey1,
+            borderLow: palette.grey1,
             border: palette.grey3,
-            borderDark: palette.grey5,
+            borderHigh: palette.grey5,
             borderSelected: palette.vivoPurple,
 
             // BUTTONS
@@ -175,9 +175,9 @@ export const getVivoSkin: GetKnownSkin = () => {
             backgroundAlternative: palette.darkModeGrey,
             backgroundFeedbackBottom: palette.darkModeBlack,
             skeletonWave: palette.grey5,
-            borderLight: palette.darkModeBlack,
+            borderLow: palette.darkModeBlack,
             border: palette.darkModeGrey,
-            borderDark: palette.grey5,
+            borderHigh: palette.grey5,
             borderSelected: palette.vivoPurpleLight80,
             buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.05),
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.05),

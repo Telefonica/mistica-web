@@ -46,9 +46,7 @@ const ColorsTable = () => {
                                 title={`${name}: ${value}`}
                                 style={{
                                     backgroundColor: value,
-                                    border: `1px dashed ${
-                                        isInverse ? colors.borderLight : colors.borderDark
-                                    }`,
+                                    border: `1px dashed ${isInverse ? colors.borderLow : colors.borderHigh}`,
                                 }}
                             ></td>
                         </tr>
