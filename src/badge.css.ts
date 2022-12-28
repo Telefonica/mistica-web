@@ -17,7 +17,7 @@ export const badge = style([
         top: -2,
         right: -6,
         borderRadius: '50%',
-        boxShadow: `0px 0px 0px 1.5px ${vars.colors.borderLight}`,
+        boxShadow: `0px 0px 0px 1.5px ${vars.colors.borderLow}`,
     },
 ]);
 

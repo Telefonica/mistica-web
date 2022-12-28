@@ -73,9 +73,9 @@ export const getBlauSkin: GetKnownSkin = () => {
             skeletonWave: palette.grey2,
 
             // BORDERS
-            borderLight: palette.grey1,
+            borderLow: palette.grey1,
             border: palette.grey2,
-            borderDark: palette.grey5,
+            borderHigh: palette.grey5,
             borderSelected: palette.blauBlueSecondary60,
 
             // BUTTONS
@@ -188,7 +188,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             skeletonWave: palette.grey5,
 
             // BORDERS
-            borderLight: palette.darkModeBlack,
+            borderLow: palette.darkModeBlack,
             border: palette.darkModeGrey,
 
             // BUTTONS
