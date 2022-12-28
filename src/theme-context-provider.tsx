@@ -1,14 +1,9 @@
 import * as React from 'react';
-import {JssProvider} from 'react-jss';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
-import {createGenerateId} from 'jss';
-import {getJss} from './jss';
 import DialogRoot from './dialog';
 import ScreenSizeContextProvider from './screen-size-context-provider';
 import {createMediaQueries} from './utils/media-queries';
-import {PACKAGE_VERSION} from './package-version';
 import AriaIdGetterContext from './aria-id-getter-context';
-import {isServerSide} from './utils/environment';
 import {AnchorLink, mediaQueriesConfig, dimensions, getTexts, NAVBAR_HEIGHT_MOBILE} from './theme';
 import {getPlatform, isInsideNovumNativeApp} from './utils/platform';
 import ThemeContext from './theme-context';
@@ -48,39 +43,11 @@ export const useIsOsDarkModeEnabled = (): boolean => {
     return isDarkMode;
 };
 
-// This counter will increment with every new instance of ThemeContextProvider in the app. In a typical app we don't need more than
-// one instance of ThemeContextProvider. But some apps may depend on libs that use Mistica too, so there may be more than one instance
-// in those cases. We use this counter to avoid class name collisions in those cases.
-let nextJssInstanceId = 0;
-
 type Props = {
     theme: ThemeConfig;
-    /**
-     * You should use this prop if you use Strict Mode and Server Side Rendering together.
-     * This identifier will be used to generate unique class names for each instance of ThemeContextProvider.
-     * If no identifier is provided, this will fallback to an auto-incremented id, which will cause
-     * problems in SSR + Strict Mode because the class names from client and server won't match.
-     * More info: https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects
-     *
-     * Once we migrate to React18, we could remove this prop and use the useId hook instead.
-     */
-    providerId?: string;
     as?: string;
     children?: React.ReactNode;
 };
-
-const generateId = (() => {
-    if (process.env.NODE_ENV === 'test') {
-        // in tests classnames are just the classame, whithout ids
-        return (r: any) => r.key;
-    }
-    if (isServerSide()) {
-        // this makes jss to create a new generator in each jss instance
-        return undefined;
-    }
-    // in frontend, use the same generator for all JssProvider renders, this way we avoid classname collisions
-    return createGenerateId();
-})();
 
 const useDefaultHrefDecorator = () => {
     return (href: string) => href;
@@ -104,23 +71,7 @@ const sanitizeDimensions = (dimensions: ThemeConfig['dimensions']): Partial<Them
     };
 };
 
-const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId, as}) => {
-    const [instanceId] = React.useState(() => {
-        if (providerId) {
-            return providerId;
-        } else {
-            return isServerSide() ? 0 : nextJssInstanceId++;
-        }
-    });
-
-    const classNamePrefix = React.useMemo(
-        () =>
-            process.env.NODE_ENV === 'test'
-                ? ''
-                : `mistica-${PACKAGE_VERSION.replace(/\./g, '-')}_${instanceId}_`,
-        [instanceId]
-    );
-
+const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
     const nextAriaId = React.useRef(1);
     const getAriaId = React.useCallback((): string => `aria-id-hook-${nextAriaId.current++}`, []);
 
@@ -188,37 +139,35 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, providerId, as}
     const themeVars = assignInlineVars(vars, {colors: contextTheme.colors, rawColors});
 
     return (
-        <JssProvider jss={getJss()} classNamePrefix={classNamePrefix} generateId={generateId}>
-            <TabFocus disabled={!theme.enableTabFocus}>
-                <ModalContextProvider>
-                    <ThemeContext.Provider value={contextTheme}>
-                        <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
-                            <AspectRatioSupportProvider>
-                                <DocumentVisibilityProvider>
-                                    <AriaIdGetterContext.Provider value={getAriaId}>
-                                        <ScreenSizeContextProvider>
-                                            <DialogRoot>
-                                                {as ? (
-                                                    React.createElement(as, {style: themeVars}, children)
-                                                ) : (
-                                                    <>
-                                                        {(process.env.NODE_ENV !== 'test' ||
-                                                            process.env.SSR_TEST) && (
-                                                            <style>{`:root {${themeVars}}`}</style>
-                                                        )}
-                                                        {children}
-                                                    </>
-                                                )}
-                                            </DialogRoot>
-                                        </ScreenSizeContextProvider>
-                                    </AriaIdGetterContext.Provider>
-                                </DocumentVisibilityProvider>
-                            </AspectRatioSupportProvider>
-                        </TrackingConfig>
-                    </ThemeContext.Provider>
-                </ModalContextProvider>
-            </TabFocus>
-        </JssProvider>
+        <TabFocus disabled={!theme.enableTabFocus}>
+            <ModalContextProvider>
+                <ThemeContext.Provider value={contextTheme}>
+                    <TrackingConfig eventFormat={contextTheme.analytics.eventFormat}>
+                        <AspectRatioSupportProvider>
+                            <DocumentVisibilityProvider>
+                                <AriaIdGetterContext.Provider value={getAriaId}>
+                                    <ScreenSizeContextProvider>
+                                        <DialogRoot>
+                                            {as ? (
+                                                React.createElement(as, {style: themeVars}, children)
+                                            ) : (
+                                                <>
+                                                    {(process.env.NODE_ENV !== 'test' ||
+                                                        process.env.SSR_TEST) && (
+                                                        <style>{`:root {${themeVars}}`}</style>
+                                                    )}
+                                                    {children}
+                                                </>
+                                            )}
+                                        </DialogRoot>
+                                    </ScreenSizeContextProvider>
+                                </AriaIdGetterContext.Provider>
+                            </DocumentVisibilityProvider>
+                        </AspectRatioSupportProvider>
+                    </TrackingConfig>
+                </ThemeContext.Provider>
+            </ModalContextProvider>
+        </TabFocus>
     );
 };
 
