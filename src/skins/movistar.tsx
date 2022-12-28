@@ -78,9 +78,9 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             skeletonWave: palette.grey2,
 
             // BORDERS
-            borderLight: palette.grey1,
+            borderLow: palette.grey1,
             border: palette.grey3,
-            borderDark: palette.grey5,
+            borderHigh: palette.grey5,
             borderSelected: palette.movistarBlue,
 
             // BUTTONS
@@ -190,7 +190,7 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             backgroundAlternative: palette.darkModeGrey,
             backgroundFeedbackBottom: palette.darkModeBlack,
             skeletonWave: palette.grey5,
-            borderLight: palette.darkModeBlack,
+            borderLow: palette.darkModeBlack,
             border: palette.darkModeGrey,
             buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.05),
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.05),

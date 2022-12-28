@@ -33,7 +33,7 @@ const reverseFilledBarKeyframes = keyframes({
 
 const currentNumberKeyframes = keyframes({
     '0%': {
-        borderColor: skinVars.colors.borderDark,
+        borderColor: skinVars.colors.borderHigh,
         backgroundColor: 'transparent',
     },
     '100%': {
@@ -139,7 +139,7 @@ export const number = style([
         borderRadius: '50%',
     }),
     {
-        border: `2px solid ${skinVars.colors.borderDark}`,
+        border: `2px solid ${skinVars.colors.borderHigh}`,
     },
 ]);
 
