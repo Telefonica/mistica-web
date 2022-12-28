@@ -173,9 +173,13 @@ if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
 }
 
 // Exported this way to facilitate tree-shaking
+export {default as Icon2GFilled} from './generated/mistica-icons/icon-2-g-filled';
+export {default as Icon2GRegular} from './generated/mistica-icons/icon-2-g-regular';
 export {default as Icon3DViewFilled} from './generated/mistica-icons/icon-3-d-view-filled';
 export {default as Icon3DViewLight} from './generated/mistica-icons/icon-3-d-view-light';
 export {default as Icon3DViewRegular} from './generated/mistica-icons/icon-3-d-view-regular';
+export {default as Icon3GFilled} from './generated/mistica-icons/icon-3-g-filled';
+export {default as Icon3GRegular} from './generated/mistica-icons/icon-3-g-regular';
 export {default as Icon4GFilled} from './generated/mistica-icons/icon-4-g-filled';
 export {default as Icon4GLight} from './generated/mistica-icons/icon-4-g-light';
 export {default as Icon4GRegular} from './generated/mistica-icons/icon-4-g-regular';
@@ -485,7 +489,6 @@ export {default as IconChevronLeftLight} from './generated/mistica-icons/icon-ch
 export {default as IconChevronLeftRegular} from './generated/mistica-icons/icon-chevron-left-regular';
 export {default as IconChevronRightLight} from './generated/mistica-icons/icon-chevron-right-light';
 export {default as IconChevronRightRegular} from './generated/mistica-icons/icon-chevron-right-regular';
-export {default as IconChevronTopRegular} from './generated/mistica-icons/icon-chevron-top-regular';
 export {default as IconChevronUpLight} from './generated/mistica-icons/icon-chevron-up-light';
 export {default as IconChevronUpRegular} from './generated/mistica-icons/icon-chevron-up-regular';
 export {default as IconChildFilled} from './generated/mistica-icons/icon-child-filled';
@@ -1290,6 +1293,9 @@ export {default as IconPackageTrolleyRegular} from './generated/mistica-icons/ic
 export {default as IconParkingFilled} from './generated/mistica-icons/icon-parking-filled';
 export {default as IconParkingLight} from './generated/mistica-icons/icon-parking-light';
 export {default as IconParkingRegular} from './generated/mistica-icons/icon-parking-regular';
+export {default as IconPauseCircleFilled} from './generated/mistica-icons/icon-pause-circle-filled';
+export {default as IconPauseCircleLight} from './generated/mistica-icons/icon-pause-circle-light';
+export {default as IconPauseCircleRegular} from './generated/mistica-icons/icon-pause-circle-regular';
 export {default as IconPauseFilled} from './generated/mistica-icons/icon-pause-filled';
 export {default as IconPauseLight} from './generated/mistica-icons/icon-pause-light';
 export {default as IconPauseRegular} from './generated/mistica-icons/icon-pause-regular';
@@ -1344,6 +1350,9 @@ export {default as IconPlaneRegular} from './generated/mistica-icons/icon-plane-
 export {default as IconPlantFilled} from './generated/mistica-icons/icon-plant-filled';
 export {default as IconPlantLight} from './generated/mistica-icons/icon-plant-light';
 export {default as IconPlantRegular} from './generated/mistica-icons/icon-plant-regular';
+export {default as IconPlayCircleFilled} from './generated/mistica-icons/icon-play-circle-filled';
+export {default as IconPlayCircleLight} from './generated/mistica-icons/icon-play-circle-light';
+export {default as IconPlayCircleRegular} from './generated/mistica-icons/icon-play-circle-regular';
 export {default as IconPlayFilled} from './generated/mistica-icons/icon-play-filled';
 export {default as IconPlayLight} from './generated/mistica-icons/icon-play-light';
 export {default as IconPlayRegular} from './generated/mistica-icons/icon-play-regular';
