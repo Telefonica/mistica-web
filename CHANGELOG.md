@@ -1,3 +1,32 @@
+# [13.0.0](https://github.com/Telefonica/mistica-web/compare/v12.13.0...v13.0.0) (2022-12-28)
+
+
+### Features
+
+* **Carousel:** remove mobilePageOffset prop ([#620](https://github.com/Telefonica/mistica-web/issues/620)) ([52a2cce](https://github.com/Telefonica/mistica-web/commit/52a2cce2450e2dcc082d5ea36e487147ec0ed746))
+* **colors:** borderLight and borderDark renamed to borderLow and borderHight ([#624](https://github.com/Telefonica/mistica-web/issues/624)) ([34399dc](https://github.com/Telefonica/mistica-web/commit/34399dca85630c0136ab92aebc02d3a5cebedcda))
+* **colors:** remove colors from Theme. Use skinVars instead ([#612](https://github.com/Telefonica/mistica-web/issues/612)) ([ebc07d8](https://github.com/Telefonica/mistica-web/commit/ebc07d8d55c18f7126e16466383a7056d8285022))
+* **css:** don't inline mistica css in js ([#614](https://github.com/Telefonica/mistica-web/issues/614)) ([84f210c](https://github.com/Telefonica/mistica-web/commit/84f210c47264a85e00becc62c5b47c2835ded4bf))
+* **DataCard, MediaCard, SnapCard:** remove extra top padding ([#621](https://github.com/Telefonica/mistica-web/issues/621)) ([44d0b0e](https://github.com/Telefonica/mistica-web/commit/44d0b0e1b2ed544f711e021284ea12c08ef84c7b))
+* **icons:** new 2g/3g icons and updated some others ([#618](https://github.com/Telefonica/mistica-web/issues/618)) ([66fab57](https://github.com/Telefonica/mistica-web/commit/66fab5745eb34a77e8670de2a54a67aed8aac83d))
+* **styles:** remove jss from mistica ([#615](https://github.com/Telefonica/mistica-web/issues/615)) ([ffe577b](https://github.com/Telefonica/mistica-web/commit/ffe577be47d298714f7fd858d71414bb1b5ed7f8))
+* **TextLink:** remove small prop ([#616](https://github.com/Telefonica/mistica-web/issues/616)) ([2196f96](https://github.com/Telefonica/mistica-web/commit/2196f96794b5e94473e527c82f9720f8df590c3d))
+* **ThemeConfig:** remove mediaQueries config ([#613](https://github.com/Telefonica/mistica-web/issues/613)) ([b6128f8](https://github.com/Telefonica/mistica-web/commit/b6128f81cd721278f9013d3a5de94246e962c3b6))
+
+
+### BREAKING CHANGES
+
+* **colors:** removed Theme.colors (see codemod)
+* **colors:** colorScheme is now 'auto' by default
+* **ThemeConfig:** removed ThemeConfig.mediaQueries and Theme.mq
+* **css:** mistica no longer inlines css in js, you must import the css/mistica.css in your app
+* **DataCard, MediaCard, SnapCard:** removed extra top padding in DataCard, MediaCard and SnapCard
+* **icons:** Removed chevron-top-regular (use chevron-up-regular instead). Updated play and pause icons to remove circle. Added new play-circle and pause-circle icons to replace the old ones.
+* **TextLink:** removed TextLink small prop
+* **styles:** removed createUseStyles and other jss related apis
+* **Carousel:** remove Carousel mobilePageOffset prop
+* **colors:** borderLight and borderDark colors renamed
+
 # [12.13.0](https://github.com/Telefonica/mistica-web/compare/v12.12.0...v12.13.0) (2022-12-23)
 
 
