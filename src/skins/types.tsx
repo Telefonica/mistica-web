@@ -51,8 +51,8 @@ export type Colors = {
 
     // BORDERS
     border: string;
-    borderLight: string;
-    borderDark: string;
+    borderLow: string;
+    borderHigh: string;
     borderSelected: string;
 
     // BUTTONS

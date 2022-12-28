@@ -16,8 +16,8 @@ const colors = {
 
     // BORDERS
     border: '',
-    borderLight: '',
-    borderDark: '',
+    borderLow: '',
+    borderHigh: '',
     borderSelected: '',
 
     // BUTTONS
