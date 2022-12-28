@@ -8,7 +8,6 @@ import {useIsInverseVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {getTextFromChildren} from './utils/common';
 import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
-import {pxToRem} from './utils/css';
 
 import type {TrackingEvent, DataAttributes} from './utils/types';
 
@@ -17,8 +16,6 @@ interface CommonProps {
     className?: string;
     style?: React.CSSProperties;
     classes?: {[className: string]: string};
-    // @deprecated - Use a Text component to wrap the TextLink
-    small?: boolean;
     disabled?: boolean;
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     trackEvent?: boolean;
@@ -47,7 +44,7 @@ export interface OnPressProps extends CommonProps {
 
 export type TextLinkProps = HrefProps | ToProps | OnPressProps;
 
-const TextLink: React.FC<TextLinkProps> = ({children, className = '', small, disabled, style, ...props}) => {
+const TextLink: React.FC<TextLinkProps> = ({children, className = '', disabled, style, ...props}) => {
     const isInverse = useIsInverseVariant();
     const {isDarkMode} = useTheme();
     const {formStatus} = useForm();
@@ -85,7 +82,7 @@ const TextLink: React.FC<TextLinkProps> = ({children, className = '', small, dis
                     : styles.variants.default,
                 className
             )}
-            style={small ? {...style, fontSize: pxToRem(14)} : style}
+            style={style}
         >
             {children}
         </BaseTouchable>

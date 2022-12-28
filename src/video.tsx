@@ -99,7 +99,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 poster={poster || TRANSPARENT_PIXEL}
                 {...getPrefixedDataAttributes(dataAttributes)}
                 style={{
-                    // For some reason adding this style with JSS doesn't add the border radius in safari
+                    // For some reason adding this style with classnames doesn't add the border radius in safari
                     borderRadius: noBorderRadius ? 0 : 8,
                 }}
             >

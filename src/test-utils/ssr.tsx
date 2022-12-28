@@ -5,13 +5,7 @@ import path from 'path';
 import webpack from 'webpack';
 import http from 'http';
 import fs from 'fs';
-import {
-    ThemeContextProvider,
-    ServerSideStyles,
-    MOVISTAR_SKIN,
-    getSkinByName,
-    type KnownSkinName,
-} from '../..';
+import {ThemeContextProvider, MOVISTAR_SKIN, getSkinByName, type KnownSkinName} from '../..';
 import {execSync} from 'child_process';
 
 const createWebpackEntries = (): {[entryName: string]: string} => {
@@ -152,27 +146,22 @@ export const createServer = (): http.Server => {
             return;
         }
 
-        const serverSideStyles = new ServerSideStyles();
-
         const userAgent = req.headers['user-agent'];
 
         const renderedComponent = ReactDomServer.renderToString(
-            serverSideStyles.render(
-                <ThemeContextProvider
-                    theme={{
-                        skin: getSkinByName(String(parsedUrl.query.skin || MOVISTAR_SKIN) as KnownSkinName),
-                        i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
-                        platformOverrides: {
-                            userAgent,
-                        },
-                    }}
-                >
-                    <Component />
-                </ThemeContextProvider>
-            )
+            <ThemeContextProvider
+                theme={{
+                    skin: getSkinByName(String(parsedUrl.query.skin || MOVISTAR_SKIN) as KnownSkinName),
+                    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+                    platformOverrides: {
+                        userAgent,
+                    },
+                }}
+            >
+                <Component />
+            </ThemeContextProvider>
         );
 
-        const css = serverSideStyles.getStylesString();
         const clientCode = fs.readFileSync(
             path.join(__dirname, '..', '..', 'public', 'ssr', `${moduleName}.js`)
         );
@@ -188,7 +177,6 @@ export const createServer = (): http.Server => {
                     <link rel="stylesheet" href="reset.css">
                     <link rel="stylesheet" href="roboto.css">
                     <link rel="stylesheet" href="mistica.css">
-                    <style id="server-side-styles">${css}</style>
                 </head>
                 <body>
                     <div id="root">${renderedComponent}</div>

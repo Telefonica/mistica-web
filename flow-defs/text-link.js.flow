@@ -9,7 +9,6 @@ declare type CommonProps = {
   classes?: {
     [className: string]: string,
   },
-  small?: boolean,
   disabled?: boolean,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   trackEvent?: boolean,
