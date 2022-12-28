@@ -48,7 +48,7 @@ const ColorsTable = () => {
                                 style={{
                                     backgroundColor: value,
                                     border: `1px dashed ${
-                                        isInverse ? skinVars.colors.borderLight : skinVars.colors.borderDark
+                                        isInverse ? skinVars.colors.borderLow : skinVars.colors.borderHigh
                                     }`,
                                 }}
                             ></td>
