@@ -374,7 +374,7 @@ const Select: React.FC<SelectProps> = ({
 
                 <div
                     className={styles.selectTextVariants[disabled ? 'disabled' : 'default']}
-                    style={{top: isDesktopOrBigger ? (label ? 31 : 17) : label ? 27 : 17}}
+                    style={{top: isDesktopOrBigger ? (label ? 29 : 17) : label ? 25 : 17}}
                 >
                     {getOptionText(value ?? valueState)}
                 </div>
