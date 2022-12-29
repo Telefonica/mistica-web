@@ -1,3 +1,11 @@
+## [13.0.1](https://github.com/Telefonica/mistica-web/compare/v13.0.0...v13.0.1) (2022-12-29)
+
+
+### Bug Fixes
+
+* **jss:** removed unused jss dependency ([#628](https://github.com/Telefonica/mistica-web/issues/628)) ([82dbcb5](https://github.com/Telefonica/mistica-web/commit/82dbcb5a2bc1c1bab337100c86a1753af396ca3f))
+* **theme-colors-codemod:** mistica import name ([#627](https://github.com/Telefonica/mistica-web/issues/627)) ([da1e8af](https://github.com/Telefonica/mistica-web/commit/da1e8afc782d8b69bb6e55bdbd2c5cc530df48f9))
+
 # [13.0.0](https://github.com/Telefonica/mistica-web/compare/v12.13.0...v13.0.0) (2022-12-28)
 
 
