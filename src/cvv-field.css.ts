@@ -8,10 +8,4 @@ export const cvvText = style([
     sprinkles({
         color: vars.colors.textPrimary,
     }),
-    {
-        margin: 0,
-        marginLeft: 16,
-        lineHeight: 1.42857142,
-        fontSize: 14,
-    },
 ]);

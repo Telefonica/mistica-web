@@ -9,7 +9,7 @@ import {
     isValidCreditCardNumber,
 } from './utils/credit-card';
 import {TextFieldBaseAutosuggest} from './text-field-base';
-import IconCreditcard from './icons/icon-creditcard';
+import IconCreditCardVisaRegular from './generated/mistica-icons/icon-credit-card-visa-regular';
 import IconVisa from './icons/icon-visa';
 import IconMastercard from './icons/icon-mastercard';
 import IconAmex from './icons/icon-amex';
@@ -87,7 +87,7 @@ const getAnimationTarget = (value?: string) => {
 
 const initialState = {
     showBackface: false,
-    animationTarget: <IconCreditcard />,
+    animationTarget: <IconCreditCardVisaRegular />,
     isAnimating: false,
 };
 
@@ -135,7 +135,7 @@ const CreditcardAdornment = ({value}: {value?: string}) => {
                 onTransitionEnd={() => isAnimating && dispatch({type: 'TRANSITION_END'})}
             >
                 <div className={styles.flipFront}>
-                    <IconCreditcard />
+                    <IconCreditCardVisaRegular />
                 </div>
                 <div className={styles.flipBack}>{animationTarget}</div>
             </div>

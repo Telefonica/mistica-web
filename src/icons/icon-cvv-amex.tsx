@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useTheme} from '../hooks';
+import {vars} from '../skins/skin-contract.css';
 
 type Props = {
     role?: string;
@@ -8,11 +8,9 @@ type Props = {
 };
 
 const IconCvvAmex: React.FC<Props> = ({role = 'presentation', size = 48, color}) => {
-    const {colors} = useTheme();
-
     return (
         <svg width={size} height={size} viewBox="0 0 48 48" role={role} style={{flexShrink: 0}}>
-            <g fill={color || colors.brand}>
+            <g fill={color || vars.colors.brand}>
                 <path
                     d="M2.571 0H45.43C46.849 0 48 1.075 48 2.4v27.2c0 1.325-1.151 2.4-2.571 2.4H2.57C1.151 32 0 30.925 0 29.6V2.4C0 1.075 1.151 0 2.571 0zm0 1.2c-.71 0-1.285.537-1.285 1.2v27.2c0 .663.575 1.2 1.285 1.2H45.43c.71 0 1.285-.537 1.285-1.2V2.4c0-.663-.575-1.2-1.285-1.2H2.57z"
                     transform="translate(0 8)"
