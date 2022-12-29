@@ -12,6 +12,7 @@ import {cancelEvent} from './utils/dom';
 import {Text3} from './text';
 import * as styles from './select.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
+import {useScreenSize} from './hooks';
 
 export type SelectProps = {
     disabled?: boolean;
@@ -273,6 +274,8 @@ const Select: React.FC<SelectProps> = ({
         },
     };
 
+    const {isDesktopOrBigger} = useScreenSize();
+
     return shouldUseNative ? (
         <FieldContainer
             disabled={disabled}
@@ -371,7 +374,7 @@ const Select: React.FC<SelectProps> = ({
 
                 <div
                     className={styles.selectTextVariants[disabled ? 'disabled' : 'default']}
-                    style={{top: label ? 27 : 17}}
+                    style={{top: isDesktopOrBigger ? (label ? 31 : 17) : label ? 27 : 17}}
                 >
                     {getOptionText(value ?? valueState)}
                 </div>

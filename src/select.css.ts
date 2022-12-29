@@ -136,6 +136,11 @@ const selectTextBase = style([
         right: 48 + 1, // 48 for icon and +1 for border
         lineHeight: '20px',
         fontSize: 16,
+        '@media': {
+            [mq.desktopOrBigger]: {
+                    fontSize: 18,
+            },
+        },
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
     },
