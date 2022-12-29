@@ -43,7 +43,7 @@ const usePlayroomState = () => {
     };
 };
 
-const useScope = (): {theme: Theme; colors: Colors} => {
+const useScope = (): {theme: Theme; colors: Colors; rawColors: Colors} => {
     const theme = useTheme();
     const screenSize = useScreenSize();
     const playroomState = usePlayroomState();
@@ -51,6 +51,7 @@ const useScope = (): {theme: Theme; colors: Colors} => {
     return {
         theme,
         colors: skinVars.colors,
+        rawColors: skinVars.rawColors,
         ...playroomState,
         ...screenSize,
     };
