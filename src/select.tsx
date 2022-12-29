@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {useForm} from './form-context';
-import {useAriaId, useTheme} from './hooks';
+import {useAriaId, useTheme, useScreenSize} from './hooks';
 import {DOWN, ENTER, ESC, SPACE, TAB, UP} from './utils/key-codes';
 import {FieldContainer, HelperText, Label} from './text-field-components';
 import ChevronDownRegular from './generated/mistica-icons/icon-chevron-down-regular';
@@ -12,7 +12,6 @@ import {cancelEvent} from './utils/dom';
 import {Text3} from './text';
 import * as styles from './select.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
-import {useScreenSize} from './hooks';
 
 export type SelectProps = {
     disabled?: boolean;
