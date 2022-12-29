@@ -1,9 +1,15 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import debounce from 'lodash/debounce';
-import {createUseStyles} from './jss';
 import {isRunningAcceptanceTest} from './utils/platform';
-import {useElementDimensions, useIsomorphicLayoutEffect, useScreenSize, useTheme} from './hooks';
+import {
+    useElementDimensions,
+    useIsomorphicLayoutEffect,
+    useScreenHeight,
+    useScreenSize,
+    useTheme,
+    useWindowHeight,
+} from './hooks';
 import {
     addPassiveEventListener,
     getScrollableParentElement,
@@ -11,7 +17,10 @@ import {
     hasScroll,
     removePassiveEventListener,
 } from './utils/dom';
+import * as styles from './fixed-footer-layout.css';
+import {assignInlineVars} from '@vanilla-extract/dynamic';
 
+const FOOTER_CANVAS_RATIO = 2;
 const getScrollEventTarget = (el: HTMLElement) => (el === document.documentElement ? window : el);
 
 const waitForSwitchTransitionToStart = (fn: () => void) => {
@@ -20,39 +29,6 @@ const waitForSwitchTransitionToStart = (fn: () => void) => {
         cancel: () => clearTimeout(timeoutId),
     };
 };
-
-const useStyles = createUseStyles((theme) => ({
-    footer: {
-        width: '100%',
-        backgroundColor: theme.colors.background,
-        transition: 'background 0.2s linear, box-shadow 0.2s linear',
-    },
-
-    elevated: {
-        backgroundColor: theme.colors.backgroundContainer,
-    },
-
-    withoutFooter: {
-        display: 'none',
-    },
-
-    containerSmall: {
-        paddingBottom: ({height}) => height,
-        backgroundColor: ({containerBgColor}) => containerBgColor || theme.colors.background,
-    },
-
-    [theme.mq.tabletOrSmaller]: {
-        footer: {
-            position: 'fixed',
-            left: 0,
-            bottom: 0,
-            zIndex: 1,
-        },
-        elevated: {
-            boxShadow: '0 -2px 8px 0 rgba(0, 0, 0, 0.10)',
-        },
-    },
-}));
 
 type Props = {
     isFooterVisible?: boolean;
@@ -77,11 +53,15 @@ const FixedFooterLayout: React.FC<Props> = ({
     const containerRef = React.useRef<HTMLDivElement>(null);
     const {isTabletOrSmaller} = useScreenSize();
     const {platformOverrides} = useTheme();
-    const {height: realHeight, ref} = useElementDimensions();
+    const {height: realFooterHeight, ref} = useElementDimensions();
+    const windowHeight = useWindowHeight();
+    const screenHeight = useScreenHeight();
+
+    const hasContentEnoughVSpace = windowHeight - realFooterHeight > screenHeight / FOOTER_CANVAS_RATIO;
 
     useIsomorphicLayoutEffect(() => {
-        onChangeFooterHeight?.(realHeight);
-    }, [onChangeFooterHeight, realHeight]);
+        onChangeFooterHeight?.(realFooterHeight);
+    }, [onChangeFooterHeight, realFooterHeight]);
 
     React.useEffect(() => {
         const scrollable = getScrollableParentElement(containerRef.current);
@@ -90,9 +70,15 @@ const FixedFooterLayout: React.FC<Props> = ({
             if (isRunningAcceptanceTest(platformOverrides)) {
                 return false;
             }
+
+            if (!hasContentEnoughVSpace) {
+                return false;
+            }
+
             if (hasScroll(scrollable)) {
                 return getScrollDistanceToBottom(scrollable) > 1; // This is 1 and not 0 because a weird bug with Safari
             }
+
             return false;
         };
 
@@ -114,20 +100,29 @@ const FixedFooterLayout: React.FC<Props> = ({
             removePassiveEventListener(scrollEventTarget, 'resize', checkDisplayElevation);
             transitionAwaiter.cancel();
         };
-    }, [children, containerRef, platformOverrides]);
+    }, [hasContentEnoughVSpace, platformOverrides]);
 
-    const classes = useStyles({footerBgColor, containerBgColor, height: realHeight});
+    const isContentWithScroll = hasScroll(getScrollableParentElement(containerRef.current));
+    const isFixedFooter = hasContentEnoughVSpace || !isContentWithScroll;
 
     return (
         <>
-            <div ref={containerRef} className={classnames({[classes.containerSmall]: isTabletOrSmaller})}>
+            <div
+                ref={containerRef}
+                className={styles.container}
+                style={assignInlineVars({
+                    [styles.vars.backgroundColor]: containerBgColor ?? '',
+                    [styles.vars.footerHeight]: isFixedFooter ? `${realFooterHeight}px` : '0px',
+                })}
+            >
                 {children}
             </div>
             <div
                 ref={ref}
-                className={classnames(classes.footer, {
-                    [classes.withoutFooter]: !isFooterVisible,
-                    [classes.elevated]: displayElevation,
+                className={classnames(styles.footer, {
+                    [styles.withoutFooter]: !isFooterVisible,
+                    [styles.elevated]: displayElevation,
+                    [styles.fixedFooter]: isFixedFooter,
                 })}
                 /**
                  * This style is inline to avoid creating a class that may collide with
@@ -145,7 +140,13 @@ const FixedFooterLayout: React.FC<Props> = ({
                 data-position-fixed="bottom"
             >
                 {isFooterVisible && (
-                    <aside style={{height: footerHeight, marginBottom: 'env(safe-area-inset-bottom)'}}>
+                    <aside
+                        data-component-name="FixedFooter"
+                        style={{
+                            height: footerHeight,
+                            marginBottom: 'env(safe-area-inset-bottom)',
+                        }}
+                    >
                         {footer}
                     </aside>
                 )}

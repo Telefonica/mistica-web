@@ -2,10 +2,10 @@ import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import {useTheme} from './hooks';
-import IconButton from './icon-button';
+import {BaseIconButton} from './icon-button';
 import IconEyeOffRegular from './generated/mistica-icons/icon-eye-off-regular';
 import IconEyeRegular from './generated/mistica-icons/icon-eye-regular';
-import {createUseStyles} from './jss';
+import * as styles from './password-field.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -13,44 +13,24 @@ export interface PasswordFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
 }
 
-const usePasswordAdornmentStyles = createUseStyles((theme) => ({
-    shadow: {
-        [theme.mq.supportsHover]: {
-            '&:hover': {
-                backgroundColor: theme.colors.backgroundAlternative,
-            },
-        },
-    },
-}));
-
 const PasswordAdornment: React.FC<{
     isVisible: boolean;
     setVisibility: (isVisible: boolean) => void;
     focus: () => void;
 }> = ({isVisible, setVisibility, focus}) => {
     const {texts} = useTheme();
-    const classes = usePasswordAdornmentStyles();
-    const style = {
-        backgroundSize: '200%',
-        padding: 8,
-        margin: -8,
-        borderRadius: '50%',
-        backgroundColor: undefined,
-        transition: 'background-color 0.2s ease-in-out',
-    };
     return (
-        <IconButton
+        <BaseIconButton
             aria-label={texts.togglePasswordVisibilityLabel}
             onPress={() => {
                 setVisibility(!isVisible);
                 focus();
             }}
             size={40}
-            className={classes.shadow}
-            style={style}
+            className={styles.shadow}
         >
             {isVisible ? <IconEyeOffRegular /> : <IconEyeRegular />}
-        </IconButton>
+        </BaseIconButton>
     );
 };
 

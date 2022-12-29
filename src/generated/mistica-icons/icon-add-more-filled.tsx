@@ -5,20 +5,20 @@
  */
 
 import * as React from 'react';
-import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
+import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
 const IconAddMoreFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
-    const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
-    const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
+    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
-                d="M12 4a1 1 0 00-1 1v5.498H6.002a1.002 1.002 0 100 2.004H11V18a1 1 0 102 0v-5.498h4.998a1.002 1.002 0 100-2.004H13V5a1 1 0 00-1-1z"
                 fill={fillColor}
+                d="M12 4a1 1 0 00-1 1v5.498H6.002a1.002 1.002 0 100 2.004H11V18a1 1 0 102 0v-5.498h4.998a1.002 1.002 0 100-2.004H13V5a1 1 0 00-1-1z"
             />
         </svg>
     );

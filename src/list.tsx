@@ -6,13 +6,12 @@
  */
 import * as React from 'react';
 import classNames from 'classnames';
-import {createUseStyles} from './jss';
-import Touchable from './touchable';
+import {BaseTouchable} from './touchable';
 import {Text3, Text2, Text1} from './text';
 import Box from './box';
 import Stack from './stack';
 import Badge from './badge';
-import {useAriaId, useTheme} from './hooks';
+import {useAriaId} from './hooks';
 import {useIsInverseVariant} from './theme-variant-context';
 import IconChevron from './icons/icon-chevron';
 import Switch from './switch-component';
@@ -21,92 +20,12 @@ import Checkbox from './checkbox';
 import {Boxed} from './boxed';
 import Divider from './divider';
 import {getPrefixedDataAttributes} from './utils/dom';
+import * as styles from './list.css';
+import {vars} from './skins/skin-contract.css';
 
 import type {TouchableElement} from './touchable';
 import type {DataAttributes, TrackingEvent} from './utils/types';
-
-const useStyles = createUseStyles(({colors, mq}) => ({
-    disabled: {
-        opacity: 0.5,
-    },
-    hover: {
-        [mq.supportsHover]: {
-            '&:hover': {
-                background: ({isInverse, disabled}) =>
-                    isInverse || disabled ? 'initial' : colors.backgroundAlternative,
-            },
-        },
-    },
-    rowContent: {
-        width: '100%',
-        cursor: ({disabled}) => (disabled ? 'default' : 'pointer'),
-    },
-    hoverDisabled: {
-        cursor: () => 'initial',
-        '&:hover': {
-            background: () => 'none',
-        },
-    },
-    content: {
-        display: 'flex',
-        width: '100%',
-        minHeight: 72,
-    },
-    asset: {
-        display: 'flex',
-        flexShrink: 0,
-        flexGrow: 0,
-    },
-    rowBody: {
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-    },
-    center: {
-        display: 'flex',
-        alignItems: 'center',
-    },
-    badge: {
-        justifyContent: 'center',
-        minWidth: 16,
-        height: '100%',
-        flexShrink: 0,
-    },
-    control: {
-        marginLeft: 16,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        flexGrow: 0,
-        flexShrink: 0,
-    },
-    right: {
-        marginLeft: 16,
-    },
-    centeredControl: {
-        display: 'flex',
-        alignItems: 'center',
-        height: '100%',
-    },
-    dualActionContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-    },
-    dualActionLeft: {
-        flexGrow: 1,
-        padding: '0 16px',
-    },
-    dualActionRight: {
-        padding: '0 16px',
-        margin: '16px 0',
-        borderLeft: `1px solid ${colors.divider}`,
-        display: 'flex',
-        alignItems: 'center',
-        flexGrow: 0,
-        width: 'auto',
-        lineHeight: 0,
-    },
-}));
+import type {ExclusifyUnion} from './utils/utility-types';
 
 interface CommonProps {
     children?: void; // no children allowed
@@ -164,8 +83,6 @@ const Content: React.FC<ContentProps> = ({
     disabled,
 }) => {
     const isInverse = useIsInverseVariant();
-    const classes = useStyles({isInverse});
-    const {colors} = useTheme();
     const numTextLines = [headline, title, subtitle, description, extra].filter(Boolean).length;
     const centerY = numTextLines === 1;
 
@@ -175,43 +92,43 @@ const Content: React.FC<ContentProps> = ({
         }
         return (
             <Box paddingLeft={16}>
-                <div className={classNames(classes.center, classes.badge, {[classes.disabled]: disabled})}>
+                <div className={classNames(styles.center, styles.badge, {[styles.disabled]: disabled})}>
                     {badge === true ? <Badge /> : <Badge value={badge} />}
                 </div>
             </Box>
         );
     };
     return (
-        <Box paddingY={16} className={classes.content}>
+        <Box paddingY={16} className={styles.content}>
             {asset && (
                 <Box
                     paddingRight={16}
-                    className={classNames({[classes.center]: centerY, [classes.disabled]: disabled})}
+                    className={classNames({[styles.center]: centerY, [styles.disabled]: disabled})}
                 >
-                    <div className={classes.asset}>{asset}</div>
+                    <div className={styles.asset}>{asset}</div>
                 </Box>
             )}
             <div
-                className={classNames(classes.rowBody, {[classes.disabled]: disabled})}
+                className={classNames(styles.rowBody, {[styles.disabled]: disabled})}
                 style={{justifyContent: centerY ? 'center' : 'flex-start'}}
             >
                 <Stack space={4}>
                     {headline && (
-                        <Text1 regular color={colors.textPrimary}>
+                        <Text1 regular color={vars.colors.textPrimary}>
                             {headline}
                         </Text1>
                     )}
                     <Stack space={2}>
-                        <Text3 regular color={colors.textPrimary} truncate={titleLinesMax} id={labelId}>
+                        <Text3 regular color={vars.colors.textPrimary} truncate={titleLinesMax} id={labelId}>
                             {title}
                         </Text3>
                         {subtitle && (
-                            <Text2 regular color={colors.textSecondary} truncate={subtitleLinesMax}>
+                            <Text2 regular color={vars.colors.textSecondary} truncate={subtitleLinesMax}>
                                 {subtitle}
                             </Text2>
                         )}
                         {description && (
-                            <Text2 regular color={colors.textSecondary} truncate={descriptionLinesMax}>
+                            <Text2 regular color={vars.colors.textSecondary} truncate={descriptionLinesMax}>
                                 {description}
                             </Text2>
                         )}
@@ -221,26 +138,26 @@ const Content: React.FC<ContentProps> = ({
             </div>
             {renderBadge()}
             {type === 'chevron' && (
-                <Box paddingLeft={16} className={classNames(classes.center, {[classes.disabled]: disabled})}>
+                <Box paddingLeft={16} className={classNames(styles.center, {[styles.disabled]: disabled})}>
                     <IconChevron
-                        color={isInverse ? colors.inverse : colors.neutralMedium}
+                        color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
                         direction="right"
                     />
                 </Box>
             )}
-            {type === 'control' && <div className={classes.right}>{renderRight(right, centerY)}</div>}
+            {type === 'control' && <div className={styles.right}>{renderRight(right, centerY)}</div>}
             {type === 'custom' && (
                 <>
-                    <div className={classNames(classes.right, {[classes.disabled]: disabled})}>
+                    <div className={classNames(styles.right, {[styles.disabled]: disabled})}>
                         {renderRight(right, centerY)}
                     </div>
                     {withChevron && (
                         <Box
                             paddingLeft={4}
-                            className={classNames(classes.center, {[classes.disabled]: disabled})}
+                            className={classNames(styles.center, {[styles.disabled]: disabled})}
                         >
                             <IconChevron
-                                color={isInverse ? colors.inverse : colors.neutralMedium}
+                                color={isInverse ? vars.colors.inverse : vars.colors.neutralMedium}
                                 direction="right"
                             />
                         </Box>
@@ -259,106 +176,55 @@ type ControlProps = {
 };
 
 interface BasicRowContentProps extends CommonProps {
-    href?: undefined;
-    onPress?: undefined;
-    to?: undefined;
-    checkbox?: undefined;
-    switch?: undefined;
-    radioValue?: undefined;
-    newTab?: undefined;
-    fullPageOnWebView?: undefined;
     right?: Right;
 }
 
 interface SwitchRowContentProps extends CommonProps {
-    href?: undefined;
     onPress?: () => void;
-    to?: undefined;
-    right?: undefined;
-    checkbox?: undefined;
-    radioValue?: undefined;
-    newTab?: undefined;
-    fullPageOnWebView?: undefined;
 
-    switch: ControlProps;
+    switch: ControlProps | undefined;
 }
 
 interface CheckboxRowContentProps extends CommonProps {
-    href?: undefined;
     onPress?: () => void;
-    to?: undefined;
-    right?: undefined;
-    switch?: undefined;
-    radioValue?: undefined;
-    newTab?: undefined;
-    fullPageOnWebView?: undefined;
 
-    checkbox: ControlProps;
+    checkbox: ControlProps | undefined;
 }
 
 interface RadioRowContentProps extends CommonProps {
-    href?: undefined;
-    onPress?: undefined;
-    to?: undefined;
-    right?: undefined;
-    switch?: undefined;
-    checkbox?: undefined;
-    newTab?: undefined;
-    fullPageOnWebView?: undefined;
-
     radioValue: string;
 }
 
 interface HrefRowContentProps extends CommonProps {
-    checkbox?: undefined;
-    switch?: undefined;
-    radioValue?: undefined;
-    fullPageOnWebView?: undefined;
-
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     href: string;
     newTab?: boolean;
-    onPress?: undefined;
-    to?: undefined;
     right?: Right;
 }
 
 interface ToRowContentProps extends CommonProps {
-    checkbox?: undefined;
-    switch?: undefined;
-    radioValue?: undefined;
-    newTab?: undefined;
-
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     to: string;
     fullPageOnWebView?: boolean;
     replace?: boolean;
-    href?: undefined;
-    onPress?: undefined;
     right?: Right;
 }
 
 interface OnPressRowContentProps extends CommonProps {
-    checkbox?: undefined;
-    switch?: undefined;
-    radioValue?: undefined;
-    fullPageOnWebView?: undefined;
-
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     onPress: () => void;
-    href?: undefined;
-    to?: undefined;
     right?: Right;
 }
 
-type RowContentProps =
+type RowContentProps = ExclusifyUnion<
     | BasicRowContentProps
     | SwitchRowContentProps
     | RadioRowContentProps
     | CheckboxRowContentProps
     | HrefRowContentProps
     | ToRowContentProps
-    | OnPressRowContentProps;
+    | OnPressRowContentProps
+>;
 
 const useControlState = ({
     value,
@@ -388,6 +254,18 @@ const useControlState = ({
     return [isChecked, toggle];
 };
 
+const areSwitchRowContentProps = (obj: any): obj is SwitchRowContentProps => {
+    return 'switch' in obj;
+};
+
+const areCheckboxRowContentProps = (obj: any): obj is CheckboxRowContentProps => {
+    return 'checkbox' in obj;
+};
+
+const areRadioRowContentProps = (obj: any): obj is RadioRowContentProps => {
+    return 'radioValue' in obj;
+};
+
 const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => {
     const titleId = useAriaId();
     const isInverse = useIsInverseVariant();
@@ -409,10 +287,6 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     const radioContext = useRadioContext();
     const disabled = props.disabled || (props.radioValue !== undefined && radioContext.disabled);
 
-    const classes = useStyles({
-        isInverse,
-        disabled,
-    });
     const [isChecked, toggle] = useControlState(props.switch || props.checkbox || {});
 
     const renderContent = ({
@@ -443,7 +317,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
         />
     );
 
-    const renderTouchableContent = (
+    const renderBaseTouchableContent = (
         props: HrefRowContentProps | ToRowContentProps | OnPressRowContentProps
     ) => {
         let type: ContentProps['type'] = 'chevron';
@@ -465,29 +339,35 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
 
     if (
         props.onPress &&
-        props.switch === undefined &&
-        props.radioValue === undefined &&
-        props.checkbox === undefined
+        !areSwitchRowContentProps(props) &&
+        !areCheckboxRowContentProps(props) &&
+        !areRadioRowContentProps(props)
     ) {
         return (
-            <Touchable
+            <BaseTouchable
                 ref={ref}
-                className={classNames(classes.rowContent, classes.hover)}
+                className={classNames(styles.rowContent, {
+                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.pointer]: !disabled,
+                })}
                 trackingEvent={props.trackingEvent}
                 onPress={props.onPress}
                 role={role}
                 dataAttributes={dataAttributes}
                 disabled={disabled}
             >
-                {renderTouchableContent(props)}
-            </Touchable>
+                {renderBaseTouchableContent(props)}
+            </BaseTouchable>
         );
     }
 
     if (props.to) {
         return (
-            <Touchable
-                className={classNames(classes.rowContent, classes.hover)}
+            <BaseTouchable
+                className={classNames(styles.rowContent, {
+                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.pointer]: !disabled,
+                })}
                 trackingEvent={props.trackingEvent}
                 to={props.to}
                 fullPageOnWebView={props.fullPageOnWebView}
@@ -495,15 +375,18 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 dataAttributes={dataAttributes}
                 disabled={disabled}
             >
-                {renderTouchableContent(props)}
-            </Touchable>
+                {renderBaseTouchableContent(props)}
+            </BaseTouchable>
         );
     }
 
     if (props.href) {
         return (
-            <Touchable
-                className={classNames(classes.rowContent, classes.hover)}
+            <BaseTouchable
+                className={classNames(styles.rowContent, {
+                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.pointer]: !disabled,
+                })}
                 trackingEvent={props.trackingEvent}
                 href={props.href}
                 newTab={props.newTab}
@@ -511,26 +394,29 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 dataAttributes={dataAttributes}
                 disabled={disabled}
             >
-                {renderTouchableContent(props)}
-            </Touchable>
+                {renderBaseTouchableContent(props)}
+            </BaseTouchable>
         );
     }
 
     const renderRowWithControl = (Control: typeof Switch | typeof Checkbox) => {
         const name = props.switch?.name ?? props.checkbox?.name ?? titleId;
+
         return props.onPress ? (
-            <div className={classes.dualActionContainer}>
-                <Touchable
+            <div className={styles.dualActionContainer}>
+                <BaseTouchable
                     disabled={disabled}
                     onPress={props.onPress}
                     role={role}
-                    className={classNames(classes.dualActionLeft, classes.hover)}
+                    className={classNames(styles.dualActionLeft, {
+                        [styles.hoverBackground]: !(disabled || isInverse),
+                    })}
                 >
                     {renderContent({type: 'basic', labelId: titleId})}
-                </Touchable>
-                <Touchable
+                </BaseTouchable>
+                <BaseTouchable
                     disabled={disabled}
-                    className={classes.dualActionRight}
+                    className={styles.dualActionRight}
                     onPress={toggle}
                     dataAttributes={dataAttributes}
                 >
@@ -541,10 +427,15 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                         aria-labelledby={titleId}
                         render={({controlElement}) => controlElement}
                     />
-                </Touchable>
+                </BaseTouchable>
             </div>
         ) : (
-            <div className={classNames(classes.rowContent, classes.hover)}>
+            <div
+                className={classNames(styles.rowContent, {
+                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.pointer]: !disabled,
+                })}
+            >
                 <Control
                     disabled={disabled}
                     dataAttributes={dataAttributes}
@@ -576,7 +467,10 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     if (props.radioValue) {
         return (
             <div
-                className={classNames(classes.rowContent, classes.hover)}
+                className={classNames(styles.rowContent, {
+                    [styles.hoverBackground]: !(disabled || isInverse),
+                    [styles.pointer]: !disabled,
+                })}
                 role={role}
                 ref={ref as React.Ref<HTMLDivElement>}
             >
@@ -599,11 +493,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     }
 
     return (
-        <Box
-            paddingX={16}
-            className={classNames(classes.rowContent, classes.hover, classes.hoverDisabled)}
-            role={role}
-        >
+        <Box paddingX={16} className={styles.rowContent} role={role}>
             {props.right
                 ? renderContent({type: 'custom', right: props.right})
                 : renderContent({type: 'basic'})}
@@ -611,31 +501,48 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     );
 });
 
-export const Row = React.forwardRef<TouchableElement, RowContentProps>((props, ref) => (
-    <RowContent {...props} ref={ref} />
+export const Row = React.forwardRef<TouchableElement, RowContentProps>(({dataAttributes, ...props}, ref) => (
+    <RowContent {...props} ref={ref} dataAttributes={{'component-name': 'Row', ...dataAttributes}} />
 ));
 
 type RowListProps = {
     children: React.ReactNode;
     ariaLabelledby?: string;
     role?: string;
+    noLastDivider?: boolean;
     dataAttributes?: DataAttributes;
 };
 
-export const RowList: React.FC<RowListProps> = ({children, ariaLabelledby, role, dataAttributes}) => (
-    <div role={role} aria-labelledby={ariaLabelledby} {...getPrefixedDataAttributes(dataAttributes)}>
-        {React.Children.toArray(children)
-            .filter(Boolean)
-            .map((child, index) => (
-                <React.Fragment key={index}>
-                    {child}
-                    <Box paddingX={16}>
-                        <Divider />
-                    </Box>
-                </React.Fragment>
-            ))}
-    </div>
-);
+export const RowList: React.FC<RowListProps> = ({
+    children,
+    ariaLabelledby,
+    role,
+    dataAttributes,
+    noLastDivider,
+}) => {
+    const lastIndex = React.Children.count(children) - 1;
+    const showLastDivider = !noLastDivider;
+    return (
+        <div
+            role={role}
+            aria-labelledby={ariaLabelledby}
+            {...getPrefixedDataAttributes(dataAttributes, 'RowList')}
+        >
+            {React.Children.toArray(children)
+                .filter(Boolean)
+                .map((child, index) => (
+                    <React.Fragment key={index}>
+                        {child}
+                        {(index < lastIndex || showLastDivider) && (
+                            <Box paddingX={16}>
+                                <Divider />
+                            </Box>
+                        )}
+                    </React.Fragment>
+                ))}
+        </div>
+    );
+};
 
 interface CommonBoxedRowProps {
     isInverse?: boolean;
@@ -648,17 +555,22 @@ interface HrefBoxedRowProps extends HrefRowContentProps, CommonBoxedRowProps {}
 interface ToBoxedRowProps extends ToRowContentProps, CommonBoxedRowProps {}
 interface OnPressBoxedRowProps extends OnPressRowContentProps, CommonBoxedRowProps {}
 
-type BoxedRowProps =
+type BoxedRowProps = ExclusifyUnion<
     | BasicBoxedRowProps
     | SwitchBoxedRowProps
     | RadioBoxedRowProps
     | CheckboxBoxedRowProps
     | HrefBoxedRowProps
     | ToBoxedRowProps
-    | OnPressBoxedRowProps;
+    | OnPressBoxedRowProps
+>;
 
-export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>((props, ref) => (
-    <Boxed isInverse={props.isInverse} ref={ref}>
+export const BoxedRow = React.forwardRef<HTMLDivElement, BoxedRowProps>(({dataAttributes, ...props}, ref) => (
+    <Boxed
+        isInverse={props.isInverse}
+        ref={ref}
+        dataAttributes={{'component-name': 'BoxedRow', ...dataAttributes}}
+    >
         <RowContent {...props} />
     </Boxed>
 ));
@@ -676,7 +588,12 @@ export const BoxedRowList: React.FC<BoxedRowListProps> = ({
     role,
     dataAttributes,
 }) => (
-    <Stack space={16} role={role} aria-labelledby={ariaLabelledby} dataAttributes={dataAttributes}>
+    <Stack
+        space={16}
+        role={role}
+        aria-labelledby={ariaLabelledby}
+        dataAttributes={{'component-name': 'BoxedRowList', ...dataAttributes}}
+    >
         {children}
     </Stack>
 );

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useCheckbox} from '../../__stories__/helpers';
-import {ThemeVariant, useTheme, Box, Stack, SearchField, Inline, DoubleField, Text} from '../..';
+import {ThemeVariant, Box, Stack, SearchField, Inline, DoubleField, Text, skinVars} from '../..';
 import IntegerField from '../../integer-field';
 import {kebabCase, camelCase, upperFirst} from 'lodash';
 
@@ -34,7 +34,6 @@ export const Catalog: React.FC = () => {
     const [showIConBackground, showIConBackgroundCheckbox] = useCheckbox('Show background', false);
     const [filter, setFilter] = React.useState('');
     const [size, setSize] = React.useState(64);
-    const {colors} = useTheme();
 
     const getRealName = (name: string) => name.replace(/^Icon/, '').replace(/(Regular|Filled|Light)$/, '');
     const getTypeSortValue = (name: string) => {
@@ -88,7 +87,7 @@ export const Catalog: React.FC = () => {
                 </span>
             ));
 
-    const backgroundColor = isInverse ? colors.backgroundBrand : colors.background;
+    const backgroundColor = isInverse ? skinVars.colors.backgroundBrand : skinVars.colors.background;
     const iconBackgroundColor = showIConBackground ? '#aaa' : 'none';
 
     return (

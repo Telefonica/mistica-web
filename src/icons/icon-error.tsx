@@ -1,29 +1,22 @@
 import * as React from 'react';
-import {getAnimateDrawLineProps, getAnimateFadeInProps, animateShakeStyles} from '../utils/animation';
-import {createUseStyles} from '../jss';
+import {getAnimateDrawLineProps, getAnimateFadeInProps} from '../utils/animation';
 import {useTheme} from '../hooks';
 import {O2_SKIN, O2_CLASSIC_SKIN} from '../skins/constants';
-
-const useStyles = createUseStyles((theme) => ({
-    iconContainerFill: {
-        stroke: theme.colors.error,
-        fill: theme.colors.error,
-    },
-    iconContainer: {
-        stroke: theme.colors.error,
-        fill: 'none',
-    },
-    ...animateShakeStyles(theme.platformOverrides),
-}));
+import {vars} from '../skins/skin-contract.css';
+import * as styles from './icon-error.css';
 
 const IconErrorO2: React.FC = () => {
-    const classes = useStyles({delay: 0.8});
     const {platformOverrides} = useTheme();
 
     return (
         <svg width="72" height="64" viewBox="0 0 72 64">
-            <g className={classes.iconContainerFill} strokeLinecap="round" strokeLinejoin="round">
-                <g className={classes.outerAnimation}>
+            <g
+                stroke={vars.colors.error}
+                fill={vars.colors.error}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            >
+                <g className={styles.outerAnimation}>
                     <path
                         strokeWidth="2"
                         fill="none"
@@ -37,7 +30,7 @@ const IconErrorO2: React.FC = () => {
                         {...getAnimateFadeInProps('0.2s', platformOverrides)}
                     />
                 </g>
-                <g className={classes.innerAnimation}>
+                <g className={styles.innerAnimation}>
                     <line
                         strokeWidth="2"
                         fill="none"
@@ -52,7 +45,7 @@ const IconErrorO2: React.FC = () => {
                         cx="32"
                         cy="46.25"
                         r="1.72"
-                        {...getAnimateFadeInProps('0.8', platformOverrides)}
+                        {...getAnimateFadeInProps('0.8s', platformOverrides)}
                     />
                 </g>
             </g>
@@ -61,19 +54,19 @@ const IconErrorO2: React.FC = () => {
 };
 
 const IconErrorDefault: React.FC = () => {
-    const classes = useStyles({delay: 0.8});
     const {platformOverrides} = useTheme();
 
     return (
         <svg width="72" height="64" viewBox="0 0 72 64">
             <g
-                className={classes.iconContainer}
+                stroke={vars.colors.error}
+                fill="none"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeMiterlimit="10"
             >
-                <g className={classes.outerAnimation}>
+                <g className={styles.outerAnimation}>
                     <path
                         fill="none"
                         strokeWidth="2"
@@ -83,7 +76,7 @@ const IconErrorDefault: React.FC = () => {
                         {...getAnimateDrawLineProps('202', '0.3s', platformOverrides)}
                     />
                 </g>
-                <g className={classes.innerAnimation}>
+                <g className={styles.innerAnimation}>
                     <line
                         x1="31.9"
                         y1="20.9"
@@ -92,12 +85,13 @@ const IconErrorDefault: React.FC = () => {
                         {...getAnimateDrawLineProps('17', '0.7s', platformOverrides)}
                     />
                     <circle
-                        className={classes.iconContainerFill}
+                        stroke={vars.colors.error}
+                        fill={vars.colors.error}
                         strokeWidth="1"
                         cx="31.9"
                         cy="43.9"
                         r="1.5"
-                        {...getAnimateFadeInProps('1', platformOverrides)}
+                        {...getAnimateFadeInProps('1s', platformOverrides)}
                     />
                 </g>
             </g>

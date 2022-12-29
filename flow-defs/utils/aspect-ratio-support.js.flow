@@ -6,4 +6,18 @@ declare type Props = {
 };
 declare export var AspectRatioSupportProvider: React.ComponentType<Props>;
 declare export var useSupportsAspectRatio: () => boolean;
+declare type AspectRatioElementProps = {
+  width?: number | string,
+  height?: number | string,
+  aspectRatio: number,
+  children: React.Node,
+  as?: React.ComponentType<any> | string,
+  style?: CssStyle,
+  className?: string,
+};
+declare export var AspectRatioElement: (
+  props: AspectRatioElementProps
+) => React.Node;
 declare export {};
+
+import { type CssStyle } from "../__css_types__.js.flow";

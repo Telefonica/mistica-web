@@ -1,0 +1,38 @@
+// @flow
+
+declare export var bullet: string;
+declare export var bulletInverse: string;
+declare export var bulletActive: string;
+declare export var bulletActiveInverse: string;
+declare export var slideshowContainer: string;
+declare export var carouselContainer: string;
+declare export var vars: {
+  itemsPerPageMobile: $PropertyType<
+    $Exports<"@vanilla-extract/private">,
+    "CSSVarFunction"
+  >,
+  itemsPerPageTablet: $PropertyType<
+    $Exports<"@vanilla-extract/private">,
+    "CSSVarFunction"
+  >,
+  itemsPerPageDesktop: $PropertyType<
+    $Exports<"@vanilla-extract/private">,
+    "CSSVarFunction"
+  >,
+  gap: $PropertyType<$Exports<"@vanilla-extract/private">, "CSSVarFunction">,
+};
+declare export var DEFAULT_DESKTOP_GAP: 16;
+declare export var carousel: string;
+declare export var carouselWithScroll: string;
+declare export var centeredCarousel: string;
+declare export var carouselItem: string;
+declare export var carouselArrowButton: string;
+declare export var carouselPrevArrowButton: string;
+declare export var carouselNextArrowButton: string;
+declare export var carouselBullets: string;
+declare export var slideshow: string;
+declare export var slideshowItem: string;
+declare export var slideshowArrowButton: string;
+declare export var slideshowPrevArrowButton: string;
+declare export var slideshowNextArrowButton: string;
+declare export var slideshowBullets: string;

@@ -7,19 +7,20 @@
 import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
+import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
 const IconArrowDownRightFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
-    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
-    const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
+    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+    const {skinName} = useTheme();
     if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M20.712 6.672c-.808-.332-1.652-.3-2.284.332l-2.86 2.86L7.708 2 2 7.708s6.144 6.072 7.856 7.864l-2.672 2.68c-.632.632-.792 1.612-.444 2.444.332.8 1.068 1.304 1.928 1.304H22V8.608c0-.868-.492-1.612-1.288-1.936z"
                     fill={fillColor}
+                    d="M20.712 6.672c-.808-.332-1.652-.3-2.284.332l-2.86 2.86L7.708 2 2 7.708s6.144 6.072 7.856 7.864l-2.672 2.68c-.632.632-.792 1.612-.444 2.444.332.8 1.068 1.304 1.928 1.304H22V8.608c0-.868-.492-1.612-1.288-1.936z"
                 />
             </svg>
         );
@@ -27,8 +28,8 @@ const IconArrowDownRightFilled: React.FC<IconProps> = ({color, size = 24, childr
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M3.535 10.133v-.022c.006-.395.193-.779.56-1.143l5.026-5.047.016-.017c.348-.32.71-.44 1.079-.362.336.073.605.303.823.521l.014.014 4.813 5.115 2.588-2.588c.33-.316.893-.409 1.339-.218.414.176.66.565.66 1.039v12.09c.02.28-.07.532-.254.717a.894.894 0 01-.717.252l-12.146-.006a1.009 1.009 0 01-.955-.613c-.204-.457-.112-1.05.216-1.407l.014-.016 2.378-2.378-4.905-4.79-.005-.006c-.362-.353-.544-.737-.544-1.135z"
                     fill={fillColor}
+                    d="M3.535 10.133v-.022c.006-.395.193-.779.56-1.143l5.026-5.047.016-.017c.348-.32.71-.44 1.079-.362.336.073.605.303.823.521l.014.014 4.813 5.115 2.588-2.588c.33-.316.893-.409 1.339-.218.414.176.66.565.66 1.039v12.09c.02.28-.07.532-.254.717a.894.894 0 01-.717.252l-12.146-.006a1.009 1.009 0 01-.955-.613c-.204-.457-.112-1.05.216-1.407l.014-.016 2.378-2.378-4.905-4.79-.005-.006c-.362-.353-.544-.737-.544-1.135z"
                 />
             </svg>
         );

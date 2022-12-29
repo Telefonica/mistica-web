@@ -1,0 +1,22 @@
+// @flow
+
+declare export var vars: {
+  buttonWidth: $PropertyType<
+    $Exports<"@vanilla-extract/private">,
+    "CSSVarFunction"
+  >,
+};
+declare export var margins: string;
+declare export var link: string;
+declare export var linkAlignment: string;
+declare export var baseContainer: string;
+declare export var container: string;
+declare export var fullWidthContainer: string;
+declare export var noButtonWidth: string;
+declare export var alignVariant: {
+  left: string,
+  right: string,
+  center: string,
+  "full-width": string,
+};
+declare export var alignMoreThanOneChildred: string;

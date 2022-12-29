@@ -40,6 +40,9 @@ import {
   getMovistarSkin,
 } from '@telefonica/mistica';
 
+// Import Mistica styles. Depending on the bundler you use, you may need to import it in a different way.
+import '@telefonica/mistica/css/mistica.css';
+
 const App = () => (
   <Form
     onSubmit={(formData) =>
@@ -95,7 +98,6 @@ Start prototyping interfaces with Mistica components in the
 - [Understanding Mistica's layout components](https://github.com/Telefonica/mistica-web/blob/master/doc/layout.md)
 - [Working with forms](https://github.com/Telefonica/mistica-web/blob/master/doc/forms.md)
 - [Theme config options](https://github.com/Telefonica/mistica-web/blob/master/doc/theme-config.md)
-- [Customize media query break points](https://github.com/Telefonica/mistica-web/blob/master/doc/media-queries.md)
 - [Customize default texts](https://github.com/Telefonica/mistica-web/blob/master/doc/texts.md)
 - [Analytics](https://github.com/Telefonica/mistica-web/blob/master/doc/analytics.md)
 - [Style your components](https://github.com/Telefonica/mistica-web/blob/master/doc/styles.md)

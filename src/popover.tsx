@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {createUseStyles} from './jss';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconButton from './icon-button';
 import {useTheme, useScreenSize} from './hooks';
@@ -7,80 +6,24 @@ import Stack from './stack';
 import Box from './box';
 import Inline from './inline';
 import {Text3, Text2} from './text';
+import * as styles from './popover.css';
+import {sprinkles} from './sprinkles.css';
+import {vars} from './skins/skin-contract.css';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {TrackingEvent} from './utils/types';
+import type {TrackingEvent, DataAttributes} from './utils/types';
 
 // Zeplin definition:
 // https://app.zeplin.io/project/5c9b6f097168bc065782b5c3/screen/5d15d87e46571573089f2863
 
-const defaultPositionDesktop = 'bottom';
-const defaultPositionMobile = 'top';
-const arrowSize = 12;
-const distanceToTarget = 8 + arrowSize;
-const marginLeftRightMobile = 16;
-const maxWidthDesktop = 488;
-const arrowWrapperWidth = arrowSize * 2;
-const arrowWrapperHeight = arrowSize;
-
-const useStyles = createUseStyles((theme) => {
-    const shadowAlpha = theme.isDarkMode ? 1 : 0.2;
-    return {
-        arrow: {
-            position: 'absolute',
-            backgroundColor: theme.colors.backgroundContainer,
-            width: arrowSize,
-            height: arrowSize,
-            top: 0,
-            left: '50%',
-            transform: 'translate(-50%, -50%) rotate(45deg)',
-            border: `1px solid ${theme.colors.border}`,
-            borderRadius: 2,
-            boxShadow: ({position}) =>
-                position === 'bottom' ? 'initial' : `0 0 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
-        },
-
-        arrowWrapper: {
-            position: 'absolute',
-            color: theme.colors.backgroundContainer,
-            width: arrowWrapperWidth,
-            height: arrowWrapperHeight,
-            overflow: 'hidden',
-        },
-
-        wrapper: {
-            position: 'relative',
-        },
-
-        container: {
-            position: 'absolute',
-            width: 'auto',
-            zIndex: 9,
-            boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
-            backgroundColor: theme.colors.backgroundContainer,
-            border: `1px solid ${theme.colors.border}`,
-            borderRadius: 8,
-        },
-        textAlign: {
-            display: 'flex',
-            alignItems: 'center',
-            height: '100%',
-        },
-        boxContent: {
-            display: 'flex',
-        },
-        textContent: {
-            textAlign: 'left',
-            width: '100%',
-            wordBreak: 'break-word',
-        },
-        closeButtonIcon: {
-            position: 'absolute',
-            top: 8,
-            right: 8,
-            zIndex: 1,
-        },
-    };
-});
+const {
+    defaultPositionDesktop,
+    defaultPositionMobile,
+    distanceToTarget,
+    marginLeftRightMobile,
+    maxWidthDesktop,
+    arrowSize,
+} = styles;
 
 type Position = 'top' | 'bottom' | 'left' | 'right';
 
@@ -198,6 +141,7 @@ type Props = {
     isVisible?: boolean;
     children?: void;
     extra?: React.ReactNode;
+    dataAttributes?: DataAttributes;
 };
 
 const Popover: React.FC<Props> = ({
@@ -211,8 +155,9 @@ const Popover: React.FC<Props> = ({
     asset,
     isVisible = true,
     extra,
+    dataAttributes,
 }) => {
-    const {texts, colors, isIos} = useTheme();
+    const {texts, isIos, isDarkMode} = useTheme();
     const {isTabletOrSmaller} = useScreenSize();
     const [targetPosition, setTargetPosition] = React.useState<TargetPosition | null>(null);
 
@@ -220,7 +165,7 @@ const Popover: React.FC<Props> = ({
 
     position = getPosition(position, isTabletOrSmaller);
     const innerWidth = getWidth(isTabletOrSmaller, isIos, width);
-    const classes = useStyles({position});
+    const shadowAlpha = isDarkMode ? 1 : 0.2;
 
     React.useEffect(() => {
         const handleResize = () => {
@@ -252,23 +197,34 @@ const Popover: React.FC<Props> = ({
 
         popoverContainer = (
             <div
-                className={classes.container}
+                className={styles.container}
                 style={{
                     width: innerWidth,
+                    boxShadow: `0 2px 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
                     ...containerStyles,
                 }}
+                {...getPrefixedDataAttributes(dataAttributes, 'Popover')}
             >
-                <div className={classes.arrowWrapper} style={arrowStyles}>
-                    <div className={classes.arrow} />
+                <div className={styles.arrowWrapper} style={arrowStyles}>
+                    <div
+                        className={styles.arrow}
+                        style={{
+                            width: arrowSize,
+                            height: arrowSize,
+                            boxSizing: 'border-box',
+                            boxShadow:
+                                position === 'bottom' ? 'initial' : `0 0 4px 0 rgba(0, 0, 0, ${shadowAlpha})`,
+                        }}
+                    />
                 </div>
                 <Box padding={16}>
-                    <Box paddingRight={24} className={classes.boxContent}>
+                    <Box paddingRight={24} className={sprinkles({display: 'flex'})}>
                         <Inline space={16}>
                             {asset}
-                            <Box className={classes.textAlign}>
-                                <Stack space={4} className={classes.textContent}>
+                            <Box className={styles.textAlign}>
+                                <Stack space={4} className={styles.textContent}>
                                     {title && <Text3 regular>{title}</Text3>}
-                                    <Text2 regular color={colors.textSecondary}>
+                                    <Text2 regular color={vars.colors.textSecondary}>
                                         {description}
                                     </Text2>
                                 </Stack>
@@ -276,7 +232,7 @@ const Popover: React.FC<Props> = ({
                         </Inline>
                     </Box>
                     <IconButton
-                        className={classes.closeButtonIcon}
+                        className={styles.closeButtonIcon}
                         onPress={(e) => {
                             onClose?.();
                             e.stopPropagation();
@@ -284,7 +240,7 @@ const Popover: React.FC<Props> = ({
                         trackingEvent={trackingEvent}
                         aria-label={texts.modalClose}
                     >
-                        <IconCloseRegular color={colors.neutralHigh} />
+                        <IconCloseRegular color={vars.colors.neutralHigh} />
                     </IconButton>
                     {extra}
                 </Box>
@@ -293,7 +249,7 @@ const Popover: React.FC<Props> = ({
     }
 
     return (
-        <div className={classes.wrapper}>
+        <div className={sprinkles({position: 'relative'})}>
             <div ref={targetWrapperRef}>{target}</div>
             {popoverContainer}
         </div>

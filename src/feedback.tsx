@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {createUseStyles} from './jss';
 import {useTheme, useScreenSize, useWindowHeight, useIsomorphicLayoutEffect} from './hooks';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
@@ -20,9 +19,10 @@ import Box from './box';
 import {Boxed} from './boxed';
 import ResponsiveLayout from './responsive-layout';
 import Stack from './stack';
-import {Colors} from './skins/types';
 import classnames from 'classnames';
 import ButtonGroup from './button-group';
+import {vars} from './skins/skin-contract.css';
+import * as styles from './feedback.css';
 
 import type {DataAttributes} from './utils/types';
 import type {ButtonGroupProps} from './button-group';
@@ -33,81 +33,10 @@ const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =
 const checkHasButtons = ({primaryButton, secondaryButton}: FeedbackButtonsProps) =>
     !!primaryButton || !!secondaryButton;
 
-const useStyles = createUseStyles((theme) => ({
-    background: {
-        background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : 'initial'),
-    },
-    desktopBoxed: {
-        borderRadius: 16,
-    },
-    desktopContainer: {
-        display: 'flex',
-        justifyContent: 'space-between',
-    },
-    desktopContent: {
-        [theme.mq.desktopOrBigger]: {
-            width: '50%',
-        },
-    },
-    desktopImage: {
-        backgroundImage: ({imageUrl}) => `url(${imageUrl})`,
-        backgroundPosition: ({imageFit}) => (imageFit === 'fit' ? 'bottom right' : 'center right'),
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: ({imageFit}) => (imageFit === 'fit' ? 'contain' : 'cover'),
-        flex: 1,
-        maxWidth: 600,
-    },
-    container: {
-        display: 'flex',
-        height: '100%',
-        width: '100%',
-        margin: 'auto',
-        '& *': {
-            zIndex: 1,
-        },
-    },
-
-    backgroundDiv: {
-        position: 'absolute',
-        bottom: ({footerHeight}) => footerHeight,
-        top: 0,
-        left: 0,
-        right: 0,
-        // This extra height is a workaround to make sure the background div is displayed *under* the fixed footer.
-        // Otherwise in some devices (Galaxy S20+) the background and the fixed footer are rendered with some distance between them
-        height: ({contentHeight, hasButtons}) =>
-            hasButtons ? `calc(${contentHeight} + 1px)` : `calc(${contentHeight})`,
-        background: ({isInverse}) => (isInverse ? theme.colors.backgroundBrand : theme.colors.background),
-    },
-
-    innerContainer: {
-        textAlign: 'left',
-        padding: '64px 8px 16px',
-    },
-
-    feedbackData: {
-        '& p:not(:first-child)': {
-            marginTop: 16,
-        },
-        maxWidth: 496,
-        overflowWrap: 'break-word',
-    },
-    feedbackDataAppear: {opacity: 0, transform: 'translate(0, 20px)'},
-    feedbackDataAppearActive: {
-        transitionProperty: 'opacity, transform',
-        transitionDuration: '0.8s',
-        transitionTimingFunction: 'cubic-bezier(0.215, 0.61, 0.355, 1)',
-        transitionDelay: '0.6s',
-        opacity: 1,
-        transform: 'translate(0, 0)',
-    },
-}));
-
 const BackgroundColor: React.FC = () => {
-    const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
 
-    const css = `body {background:${isInverse ? colors.backgroundBrand : colors.background}}`;
+    const css = `body {background:${isInverse ? vars.colors.backgroundBrand : vars.colors.background}}`;
     return <style>{css}</style>;
 };
 
@@ -164,28 +93,32 @@ const renderFeedbackBody = (
         children,
     }: Pick<FeedbackScreenProps, 'icon' | 'title' | 'description' | 'children'>,
     animateText: boolean,
-    appear: boolean,
-    classes: any,
-    colors: Colors
+    appear: boolean
 ) => {
     const normalizedDescription =
-        description && Array.isArray(description)
-            ? description.map((paragraph, i) => <p key={i}>{paragraph}</p>)
-            : description;
+        description && Array.isArray(description) ? (
+            <Stack space={16}>
+                {description.map((paragraph, i) => (
+                    <p key={i}>{paragraph}</p>
+                ))}
+            </Stack>
+        ) : (
+            description
+        );
     return (
         <Stack space={24}>
             {icon}
             <Stack
                 space={16}
                 className={classnames(
-                    classes.feedbackData,
-                    animateText && classes.feedbackDataAppear,
-                    animateText && appear && classes.feedbackDataAppearActive
+                    styles.feedbackData,
+                    animateText && styles.feedbackDataAppear,
+                    animateText && appear && styles.feedbackDataAppearActive
                 )}
             >
                 <Text6 as="h1">{title}</Text6>
                 {normalizedDescription && (
-                    <Text3 regular color={colors.textSecondary}>
+                    <Text3 regular color={vars.colors.textSecondary}>
                         {normalizedDescription}
                     </Text3>
                 )}
@@ -208,23 +141,32 @@ const renderInlineFeedbackBody = (feedbackBody: React.ReactNode, buttons: Button
 const renderFeedbackInDesktop = ({
     isInverse,
     inlineFeedbackBody,
-    classes,
+    imageFit,
     imageUrl,
     dataAttributes,
 }: {
     isInverse: boolean;
     inlineFeedbackBody: React.ReactNode;
-    classes: any;
+    imageFit?: 'fit' | 'fill';
     imageUrl?: string;
     dataAttributes?: DataAttributes;
 }) => (
-    <Boxed className={classes.desktopBoxed} isInverse={isInverse} dataAttributes={dataAttributes}>
-        <div className={classes.desktopContainer}>
-            <div className={classes.desktopContent}>
-                <Box padding={64}>{inlineFeedbackBody}</Box>
-            </div>
-            {imageUrl && <div className={classes.desktopImage} />}
+    <Boxed className={styles.desktopContainer} isInverse={isInverse} dataAttributes={dataAttributes}>
+        <div className={styles.desktopContent}>
+            <Box padding={64}>{inlineFeedbackBody}</Box>
         </div>
+        {imageUrl && (
+            <div
+                style={{
+                    backgroundImage: `url(${imageUrl})`,
+                    backgroundPosition: imageFit === 'fit' ? 'bottom right' : 'center right',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: imageFit === 'fit' ? 'contain' : 'cover',
+                    flex: 1,
+                    maxWidth: 600,
+                }}
+            />
+        )}
     </Boxed>
 );
 
@@ -266,25 +208,14 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
 }) => {
     useHapticFeedback(hapticFeedback);
     const isInverse = useIsInverseVariant();
-    const {colors, platformOverrides, isDarkMode, skinName} = useTheme();
+    const {platformOverrides, isDarkMode, skinName} = useTheme();
     const windowHeight = useWindowHeight();
     const {isTabletOrSmaller} = useScreenSize();
     const [isServerSide, setIsServerSide] = React.useState(typeof self !== 'undefined');
     const [footerHeight, setFooterHeight] = React.useState(0);
 
-    const contentHeightPx = `${windowHeight - footerHeight}px`;
+    const contentHeight = isServerSide ? '100vh' : `${windowHeight - footerHeight}px`;
     const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
-
-    const classes = useStyles({
-        isInverse,
-        contentHeight: isServerSide ? '100vh' : contentHeightPx,
-        footerHeight,
-        animateText,
-        primaryButton,
-        imageUrl,
-        imageFit,
-        hasButtons,
-    });
 
     const appear = useAppearStatus();
 
@@ -298,9 +229,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     const feedbackBody = renderFeedbackBody(
         {icon, title, description, children},
         animateText && areAnimationsSupported(platformOverrides),
-        appear,
-        classes,
-        colors
+        appear
     );
     const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
         primaryButton,
@@ -313,9 +242,9 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     }
 
     const feedbackContent = (
-        <div className={classes.container}>
+        <div className={styles.container}>
             <ResponsiveLayout>
-                <div className={classes.innerContainer}>{feedbackBody}</div>
+                <div className={styles.innerContainer}>{feedbackBody}</div>
             </ResponsiveLayout>
         </div>
     );
@@ -329,27 +258,45 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
                     button={primaryButton}
                     secondaryButton={secondaryButton}
                     link={link}
-                    footerBgColor={isInverse && !isDarkMode ? colors.backgroundFeedbackBottom : undefined}
-                    containerBgColor={isInverse && !isDarkMode ? colors.backgroundFeedbackBottom : undefined}
+                    footerBgColor={
+                        isInverse && !isDarkMode ? vars.colors.backgroundFeedbackBottom : undefined
+                    }
+                    containerBgColor={
+                        isInverse && !isDarkMode ? vars.colors.backgroundFeedbackBottom : undefined
+                    }
                     onChangeFooterHeight={setFooterHeight}
                 >
                     {feedbackContent}
                 </ButtonFixedFooterLayout>
             </div>
-            {skinName === O2_CLASSIC_SKIN && <div className={classes.backgroundDiv} />}
+            {skinName === O2_CLASSIC_SKIN && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        bottom: footerHeight,
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        // This extra height is a workaround to make sure the background div is displayed *under* the fixed footer.
+                        // Otherwise in some devices (Galaxy S20+) the background and the fixed footer are rendered with some distance between them
+                        height: hasButtons ? `calc(${contentHeight} + 1px)` : `calc(${contentHeight})`,
+                        background: isInverse ? vars.colors.backgroundBrand : vars.colors.background,
+                    }}
+                />
+            )}
             {/* Bug: https://jira.tid.es/browse/CHECKOUT-3340. Solution for all brands but o2-classic (gradient background) is setting body color. */}
             {skinName !== O2_CLASSIC_SKIN && <BackgroundColor />}
         </>
     ) : (
         <ResponsiveLayout>
             <Box paddingTop={64}>
-                {renderFeedbackInDesktop({isInverse, inlineFeedbackBody, classes, imageUrl, dataAttributes})}
+                {renderFeedbackInDesktop({isInverse, inlineFeedbackBody, imageFit, imageUrl, dataAttributes})}
             </Box>
         </ResponsiveLayout>
     );
 };
 
-export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = (props) => {
+export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = ({dataAttributes, ...props}) => {
     const {isTabletOrSmaller} = useScreenSize();
     const {skinName} = useTheme();
 
@@ -362,6 +309,7 @@ export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = (props) => {
                 animateText
                 imageUrl={props.imageUrl}
                 imageFit={props.imageFit}
+                dataAttributes={{'component-name': 'SuccessFeedbackScreen', ...dataAttributes}}
             />
         </ThemeVariant>
     );
@@ -374,14 +322,20 @@ interface ErrorFeedbackScreenProps extends FeedbackProps {
 export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
     children,
     errorReference,
+    dataAttributes,
     ...otherProps
 }) => {
-    const {colors} = useTheme();
     return (
-        <FeedbackScreen {...otherProps} hapticFeedback="error" icon={<IcnError />} animateText>
+        <FeedbackScreen
+            {...otherProps}
+            hapticFeedback="error"
+            icon={<IcnError />}
+            animateText
+            dataAttributes={{'component-name': 'ErrorFeedbackScreen', ...dataAttributes}}
+        >
             {children}
             {errorReference && (
-                <Text2 color={colors.textSecondary} regular>
+                <Text2 color={vars.colors.textSecondary} regular>
                     {errorReference}
                 </Text2>
             )}
@@ -389,8 +343,14 @@ export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
     );
 };
 
-export const InfoFeedbackScreen: React.FC<FeedbackProps> = (props) => {
-    return <FeedbackScreen {...props} icon={<IcnInfo />} />;
+export const InfoFeedbackScreen: React.FC<FeedbackProps> = ({dataAttributes, ...props}) => {
+    return (
+        <FeedbackScreen
+            dataAttributes={{'component-name': 'InfoFeedbackScreen', ...dataAttributes}}
+            icon={<IcnInfo />}
+            {...props}
+        />
+    );
 };
 
 export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
@@ -406,17 +366,7 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
 }) => {
     useHapticFeedback('success');
     const {isTabletOrSmaller} = useScreenSize();
-    const {skinName, platformOverrides, colors} = useTheme();
-    const hasButtons = checkHasButtons({primaryButton, secondaryButton, link});
-
-    const classes = useStyles({
-        isInverse: true,
-        animateText: true,
-        primaryButton,
-        imageUrl,
-        imageFit,
-        hasButtons,
-    });
+    const {skinName, platformOverrides} = useTheme();
 
     const appear = useAppearStatus();
 
@@ -424,9 +374,7 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
     const feedbackBody = renderFeedbackBody(
         {icon, title, description, children},
         areAnimationsSupported(platformOverrides),
-        appear,
-        classes,
-        colors
+        appear
     );
     const inlineFeedbackBody = renderInlineFeedbackBody(feedbackBody, {
         primaryButton,
@@ -434,24 +382,20 @@ export const SuccessFeedback: React.FC<AssetFeedbackProps> = ({
         link,
     });
 
-    return (
-        <ThemeVariant isInverse>
-            {isTabletOrSmaller ? (
-                <ResponsiveLayout className={classes.background}>
-                    <OverscrollColor />
-                    <Box paddingBottom={32}>
-                        <div className={classes.innerContainer}>{inlineFeedbackBody}</div>
-                    </Box>
-                </ResponsiveLayout>
-            ) : (
-                renderFeedbackInDesktop({
-                    isInverse: true,
-                    inlineFeedbackBody,
-                    classes,
-                    imageUrl,
-                    dataAttributes,
-                })
-            )}
-        </ThemeVariant>
+    return isTabletOrSmaller ? (
+        <ResponsiveLayout isInverse>
+            <OverscrollColor />
+            <Box paddingBottom={32} dataAttributes={{'component-name': 'SuccessFeedback', ...dataAttributes}}>
+                <div className={styles.innerContainer}>{inlineFeedbackBody}</div>
+            </Box>
+        </ResponsiveLayout>
+    ) : (
+        renderFeedbackInDesktop({
+            isInverse: true,
+            inlineFeedbackBody,
+            imageFit,
+            imageUrl,
+            dataAttributes: {'component-name': 'SuccessFeedback', ...dataAttributes},
+        })
     );
 };

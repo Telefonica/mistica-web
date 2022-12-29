@@ -5,20 +5,20 @@
  */
 
 import * as React from 'react';
-import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
+import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
 const IconCopyFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
-    const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
-    const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
+    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
-                d="M16.244 7.757h4.143c.803 0 1.459.656 1.456 1.46v11.165c0 .804-.655 1.46-1.46 1.46H9.222a1.462 1.462 0 01-1.459-1.46v-4.143h-4.09c-.832 0-1.51-.678-1.51-1.51V3.665c0-.832.678-1.51 1.51-1.51h11.062c.832 0 1.51.678 1.51 1.51v4.092zM3.434 3.662v11.064c0 .132.104.236.236.236h11.06a.237.237 0 00.236-.236V3.662a.237.237 0 00-.236-.235H3.67a.237.237 0 00-.236.235z"
                 fill={fillColor}
+                d="M16.244 7.757h4.143c.803 0 1.459.656 1.456 1.46v11.165c0 .804-.655 1.46-1.46 1.46H9.222a1.462 1.462 0 01-1.459-1.46v-4.143h-4.09c-.832 0-1.51-.678-1.51-1.51V3.665c0-.832.678-1.51 1.51-1.51h11.062c.832 0 1.51.678 1.51 1.51v4.092zM3.434 3.662v11.064c0 .132.104.236.236.236h11.06a.237.237 0 00.236-.236V3.662a.237.237 0 00-.236-.235H3.67a.237.237 0 00-.236.235z"
             />
         </svg>
     );

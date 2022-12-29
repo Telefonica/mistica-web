@@ -1,9 +1,12 @@
 import * as React from 'react';
-import {ThemeVariant, useTheme} from '..';
 import {SkeletonRectangle} from '../skeletons';
+import {ThemeVariant, skinVars} from '..';
 
 export default {
     title: 'Components/Skeletons/Skeleton Rectangle',
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 type Args = {
@@ -14,22 +17,20 @@ type Args = {
 };
 
 export const Default: StoryComponent<Args> = ({height, width, inverse, ariaLabel}) => {
-    const {colors} = useTheme();
-
     return (
         <ThemeVariant isInverse={inverse}>
             <div
                 style={{
+                    background: inverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
                     padding: 16,
-                    width: '50%',
-                    background: inverse ? colors.backgroundBrand : colors.background,
-                    // prevent line-height from affecting the height of the container;
-                    // happens when changing the base font size
-                    lineHeight: 0,
                 }}
-                data-testid="skeleton-rectangle"
             >
-                <SkeletonRectangle height={height} width={width} ariaLabel={ariaLabel} />
+                <SkeletonRectangle
+                    height={height}
+                    width={width}
+                    ariaLabel={ariaLabel}
+                    dataAttributes={{testid: 'skeleton-rectangle'}}
+                />
             </div>
         </ThemeVariant>
     );

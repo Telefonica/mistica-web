@@ -9,7 +9,7 @@ import {
     O2_CLASSIC_SKIN,
     TELEFONICA_SKIN,
     BLAU_SKIN,
-    useTheme,
+    skinVars,
 } from '../src';
 import {AVAILABLE_THEMES, Movistar} from './themes';
 import {addons} from '@storybook/addons';
@@ -78,7 +78,6 @@ const withMisticaThemeProvider = (Story, context) => <MisticaThemeProvider Story
 
 const Styles = () => {
     const [fontSize, setFontSize] = React.useState(16);
-    const {colors} = useTheme();
     React.useEffect(() => {
         const channel = addons.getChannel();
         channel.on('font-size-selected', setFontSize);
@@ -88,7 +87,7 @@ const Styles = () => {
         };
     }, []);
     const fontSizeStyle = `html {font-size: ${fontSize}px}`;
-    const bodyBackground = `body {background: ${colors.background}}`;
+    const bodyBackground = `body {background: ${skinVars.colors.background}}`;
     return (
         <style>
             {fontSizeStyle} {bodyBackground}

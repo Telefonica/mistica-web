@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { ButtonLink, ButtonPrimary, ButtonSecondary } from "./button";
-import type { RendersNullableElement } from "./utils/types";
+import type { DataAttributes, RendersNullableElement } from "./utils/types";
 declare type Props = {
   title?: string,
   description: string,
@@ -12,6 +12,7 @@ declare type Props = {
   secondaryButton?: RendersNullableElement<typeof ButtonSecondary>,
   buttonLink?: RendersNullableElement<typeof ButtonLink>,
   "aria-label"?: string,
+  dataAttributes?: DataAttributes,
 };
 declare var Callout: React.ComponentType<Props>;
 declare export default typeof Callout;

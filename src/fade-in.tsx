@@ -1,34 +1,30 @@
 import * as React from 'react';
-import {createUseStyles} from './jss';
+import * as styles from './fade-in.css';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 const defaultDuration = '0.3s';
-
-const useStyles = createUseStyles(() => ({
-    wrapper: {
-        animationName: '$fadeIn',
-        animationTimingFunction: 'ease',
-        animationFillMode: 'both',
-    },
-
-    '@keyframes fadeIn': {
-        from: {opacity: 0},
-        to: {opacity: 1},
-    },
-}));
 
 type Props = {
     children?: React.ReactNode;
     className?: string;
     delay?: string;
     duration?: string;
+    dataAttributes?: DataAttributes;
 };
 
-const FadeIn: React.FC<Props> = ({children, className = '', duration = defaultDuration, delay = '0'}) => {
-    const classes = useStyles();
-
+const FadeIn: React.FC<Props> = ({
+    children,
+    className = '',
+    duration = defaultDuration,
+    delay = '0',
+    dataAttributes,
+}) => {
     return (
         <div
-            className={`${classes.wrapper} ${className}`}
+            {...getPrefixedDataAttributes(dataAttributes, 'FadeIn')}
+            className={`${styles.wrapper} ${className}`}
             style={{
                 animationDelay: delay,
                 WebkitAnimationDelay: delay,

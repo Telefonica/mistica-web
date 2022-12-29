@@ -22,7 +22,7 @@ outputs:
         description: 'List of uploaded images: Array<{filename: string, url: string}>'
 
 runs:
-    using: 'node12'
+    using: 'node16'
     main: 'main.js'
 
 branding:

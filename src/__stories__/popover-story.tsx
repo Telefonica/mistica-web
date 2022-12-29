@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
     Popover,
-    useTheme,
+    skinVars,
     IconMobileDeviceRegular,
     IconShopRegular,
     Circle,
@@ -31,13 +31,11 @@ export const Default: StoryComponent<PopoverArgs> = ({
     description,
     withExtra,
 }) => {
-    const {colors} = useTheme();
-
     let icon;
     if (asset === 'icon') {
         icon = (
-            <Circle size={40} backgroundColor={colors.brandLow}>
-                <IconMobileDeviceRegular color={colors.brand} />
+            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+                <IconMobileDeviceRegular color={skinVars.colors.brand} />
             </Circle>
         );
     } else if (asset === 'image') {

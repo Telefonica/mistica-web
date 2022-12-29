@@ -52,7 +52,11 @@ export const Default: StoryComponent<Args> = ({
         <HighlightedCard
             title={title}
             description={description}
-            imageUrl={image !== 'none' ? 'https://i.imgur.com/jeDSXBU.jpg' : undefined}
+            imageUrl={
+                image !== 'none'
+                    ? 'https://images.unsplash.com/photo-1587302186428-d3753405ffed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80'
+                    : undefined
+            }
             imageFit={image !== 'none' ? image : undefined}
             dataAttributes={{testid: 'highlighted-card'}}
             button={getButton(action) as any}
@@ -94,7 +98,7 @@ export const CustomCardSize: StoryComponent = () => {
                 width={250}
                 title="Title 1"
                 description="Some description here"
-                imageUrl="https://i.imgur.com/jeDSXBU.jpg"
+                imageUrl="https://images.unsplash.com/photo-1587302186428-d3753405ffed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
                 imageFit="fit"
                 onClose={() => {}}
             />
@@ -105,7 +109,7 @@ export const CustomCardSize: StoryComponent = () => {
                 width={250}
                 title="Title 2"
                 description="Some description here"
-                imageUrl="https://i.imgur.com/jeDSXBU.jpg"
+                imageUrl="https://images.unsplash.com/photo-1587302186428-d3753405ffed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
                 imageFit="fit"
                 button={
                     <ButtonPrimary small href="https://google.com">
@@ -120,7 +124,7 @@ export const CustomCardSize: StoryComponent = () => {
                 width={250}
                 title="Title 3"
                 description="Some description here. Some description here."
-                imageUrl="https://i.imgur.com/jeDSXBU.jpg"
+                imageUrl="https://images.unsplash.com/photo-1587302186428-d3753405ffed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
                 imageFit="fit"
                 button={
                     <ButtonPrimary small href="https://google.com">
@@ -137,7 +141,7 @@ export const CustomCardSize: StoryComponent = () => {
                 onPress={() => {}}
                 title="Title 4"
                 description="Some description here. Some description here. Some description here. "
-                imageUrl="https://i.imgur.com/jeDSXBU.jpg"
+                imageUrl="https://images.unsplash.com/photo-1587302186428-d3753405ffed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
                 imageFit="fit"
             />
         </div>

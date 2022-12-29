@@ -1,0 +1,4 @@
+// @flow
+
+declare export var avatar: string;
+declare export var image: string;

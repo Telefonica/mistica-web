@@ -7,19 +7,20 @@
 import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
+import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
 const IconSendFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
-    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
-    const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
+    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+    const {skinName} = useTheme();
     if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M20.328 2.217a.682.682 0 01.998 0 .76.76 0 01.194.62c-.005.025-4.945 18.893-4.945 18.893a.363.363 0 01-.311.27h-.027a.352.352 0 01-.321-.213l-3.866-8.79-.962 1.01a.67.67 0 01-.496.218.67.67 0 01-.497-.218.767.767 0 010-1.048L20.328 2.217zM2.685 7.892l7.378 3.574 8.264-8.675L2.743 7.195a.37.37 0 00-.262.327.374.374 0 00.204.37z"
                     fill={fillColor}
+                    d="M20.328 2.217a.682.682 0 01.998 0 .76.76 0 01.194.62c-.005.025-4.945 18.893-4.945 18.893a.363.363 0 01-.311.27h-.027a.352.352 0 01-.321-.213l-3.866-8.79-.962 1.01a.67.67 0 01-.496.218.67.67 0 01-.497-.218.767.767 0 010-1.048L20.328 2.217zM2.685 7.892l7.378 3.574 8.264-8.675L2.743 7.195a.37.37 0 00-.262.327.374.374 0 00.204.37z"
                 />
             </svg>
         );
@@ -27,8 +28,8 @@ const IconSendFilled: React.FC<IconProps> = ({color, size = 24, children, ...res
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M21.383 11.215L3.34 2.245a.82.82 0 00-1.168.908l1.866 8.782-1.835 8.924a.823.823 0 001.177.9l18.008-9.074a.82.82 0 00-.006-1.47z"
                     fill={fillColor}
+                    d="M21.383 11.215L3.34 2.245a.82.82 0 00-1.168.908l1.866 8.782-1.835 8.924a.823.823 0 001.177.9l18.008-9.074a.82.82 0 00-.006-1.47z"
                 />
             </svg>
         );

@@ -12,11 +12,16 @@ const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
 const {uploadFile} = require('../utils/azure-storage');
 const core = require('@actions/core');
+/** @type any */
+const PromisePool = require('es6-promise-pool');
 
 const PATH_REPO_ROOT = path.join(__dirname, '../../..');
 const PATH_REPORTS = path.join(PATH_REPO_ROOT, 'reports/accessibility');
 
-const STORIES_BLACKLIST = new Set(['welcome-welcome--mistica', 'icons-mistica-icons--catalog']);
+const STORIES_BLACKLIST = new Set([
+    'welcome-welcome--mistica',
+    'icons-catalog--catalog', // takes a lot of time to parse and it is not very relevant for a11y
+]);
 
 process.on('unhandledRejection', (error) => {
     console.error(error);
@@ -38,30 +43,20 @@ const getStories = () => {
  * >}
  */
 const startStorybook = () => {
-    if (process.env.CI) {
-        const baseUrl = require('@actions/core').getInput('storybook-url');
-        return Promise.resolve({
-            getStoryUrl: (id) => {
-                return `${baseUrl}/iframe.html?viewMode=story&id=${id}`;
-            },
-            closeStorybook: () => {},
-        });
-    } else {
-        return new Promise((resolve) => {
-            const port = 6006;
-            const storybookServer = new StaticServer({rootPath: 'public', port: port});
-            storybookServer.start(() => {
-                console.log(`Serving static storybook at: http://localhost:${port}`);
-                resolve({
-                    getStoryUrl: (id) => `http://localhost:${port}/iframe.html?viewMode=story&id=${id}`,
-                    closeStorybook: () => {
-                        console.log('Stopping static storybook server');
-                        storybookServer.stop();
-                    },
-                });
+    return new Promise((resolve) => {
+        const port = 6006;
+        const storybookServer = new StaticServer({rootPath: 'public', port: port});
+        storybookServer.start(() => {
+            console.log(`Serving static storybook at: http://localhost:${port}`);
+            resolve({
+                getStoryUrl: (id) => `http://localhost:${port}/iframe.html?viewMode=story&id=${id}`,
+                closeStorybook: () => {
+                    console.log('Stopping static storybook server');
+                    storybookServer.stop();
+                },
             });
         });
-    }
+    });
 };
 
 /**
@@ -133,8 +128,8 @@ const generateReportForConsole = async (results) => {
         if (result.violations.length) {
             lines.push(
                 `${name} (${result.violations.length} violations)`,
-                `    - HTML: ${files.get(name).html}`,
-                `    - JSON: ${files.get(name).json}`
+                `    - HTML: ${files.get(name)?.html}`,
+                `    - JSON: ${files.get(name)?.json}`
             );
         }
     }
@@ -159,8 +154,8 @@ const generateReportForGithub = async (results) => {
 
         for (const [name, result] of results) {
             const [jsonUrl, htmlUrl] = await Promise.all([
-                uploadFile(files.get(name).json, 'application/json'),
-                uploadFile(files.get(name).html, 'text/html'),
+                uploadFile(files.get(name)?.json ?? '', 'application/json'),
+                uploadFile(files.get(name)?.html ?? '', 'text/html'),
             ]);
 
             if (result.violations.length) {
@@ -190,6 +185,7 @@ const disabledRules = {
 };
 
 const main = async () => {
+    const isCi = process.env.CI;
     process.chdir(PATH_REPO_ROOT);
 
     if (!process.env.CI) {
@@ -200,23 +196,34 @@ const main = async () => {
     const stories = getStories().filter((story) => !STORIES_BLACKLIST.has(story));
     const {closeStorybook, getStoryUrl} = await startStorybook();
 
-    const browser = await puppeteer.launch({args: ['--incognito', '--no-sandbox']});
+    const browser = await puppeteer.launch({
+        // Launch chromium installed in docker in CI
+        ...(isCi ? {executablePath: '/usr/bin/chromium'} : {}),
+        args: ['--incognito', '--no-sandbox'],
+    });
 
     /** @type Array<[name: string, results: import('axe-core').AxeResults]> */
     const results = [];
 
     const t = Date.now();
-    const chunkSize = Math.max(os.cpus().length - 1, 2);
-    const chunks = _.chunk(stories, chunkSize);
-    for (const stories of chunks) {
-        await Promise.all(
-            stories.map(async (story) => {
-                console.log(story);
-                const result = await audit(browser, getStoryUrl(story), disabledRules[story]);
+
+    /** @returns {null | Promise<void>} */
+    const job = () => {
+        const story = stories.shift();
+        if (!story) {
+            return null;
+        }
+        return new Promise((resolve) => {
+            console.log(story);
+            audit(browser, getStoryUrl(story), disabledRules[story]).then((result) => {
                 results.push([story, result]);
-            })
-        );
-    }
+                resolve();
+            });
+        });
+    };
+
+    const pool = new PromisePool(job, os.cpus().length);
+    await pool.start();
 
     console.log('total time:', Date.now() - t, 'ms');
 

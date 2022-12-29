@@ -3,10 +3,14 @@ import {useIsInverseVariant} from './theme-variant-context';
 import {useTheme, useScreenSize} from './hooks';
 import createNestableContext from './nestable-context';
 import {isInsideNovumNativeApp, getPlatform} from './utils/platform';
+import {vars} from './skins/skin-contract.css';
+
+import type {Theme} from './theme';
 
 const {Provider, Getter, useSetValue} = createNestableContext('');
 
-const shouldRender = () => getPlatform() === 'ios';
+const shouldRender = (platformOverrides: Theme['platformOverrides']) =>
+    getPlatform(platformOverrides) === 'ios';
 
 type ProviderProps = {children: React.ReactNode};
 
@@ -15,7 +19,7 @@ export const OverscrollColorProvider = ({children}: ProviderProps): JSX.Element 
     const {isTabletOrSmaller} = useScreenSize();
     const theme = useTheme();
 
-    if (!shouldRender()) {
+    if (!shouldRender(platformOverrides)) {
         return <>{children}</>;
     }
 
@@ -29,7 +33,7 @@ export const OverscrollColorProvider = ({children}: ProviderProps): JSX.Element 
                                 style={{
                                     position: 'absolute',
                                     zIndex: 1,
-                                    background: color || theme.colors.background,
+                                    background: color || vars.colors.background,
                                     width: '100%',
                                     height:
                                         500 +
@@ -52,14 +56,12 @@ export const OverscrollColorProvider = ({children}: ProviderProps): JSX.Element 
 
 const OverscrollColorComponent = () => {
     const isInverseVariant = useIsInverseVariant();
-    const theme = useTheme();
-    useSetValue(isInverseVariant ? theme.colors.navigationBarBackground : theme.colors.background);
+    useSetValue(isInverseVariant ? vars.colors.navigationBarBackground : vars.colors.background);
 
     return null;
 };
 
-const OverscrollColorNoOp = () => null;
-
-const OverscrollColor = shouldRender() ? OverscrollColorComponent : OverscrollColorNoOp;
+const OverscrollColor = (): JSX.Element =>
+    shouldRender(useTheme().platformOverrides) ? <OverscrollColorComponent /> : <></>;
 
 export default OverscrollColor;

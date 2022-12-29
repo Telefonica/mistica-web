@@ -1,27 +1,21 @@
 import * as React from 'react';
 import Tag from './tag';
 import Stack from './stack';
-import {useTheme} from './hooks';
 import Box from './box';
 import {Text1, Text2, Text4} from './text';
-import {createUseStyles} from './jss';
 import {ButtonLink, ButtonPrimary} from './button';
 import {Boxed} from './boxed';
 import ButtonGroup from './button-group';
 import Video from './video';
 import Image, {DisableBorderRadiusProvider} from './image';
 import MaybeDismissable, {useIsDismissable} from './maybe-dismissable';
-import Touchable from './touchable';
+import {BaseTouchable} from './touchable';
+import {vars} from './skins/skin-contract.css';
+import * as styles from './card.css';
+import {useTheme} from './hooks';
+import {sprinkles} from './sprinkles.css';
 
 import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEvent} from './utils/types';
-
-const useCardContentStyles = createUseStyles(() => ({
-    actions: {
-        flex: 1,
-        display: 'flex',
-        alignItems: 'flex-end',
-    },
-}));
 
 type CardContentProps = {
     headline?: string | RendersNullableElement<typeof Tag>;
@@ -52,8 +46,6 @@ const CardContent: React.FC<CardContentProps> = ({
     button,
     buttonLink,
 }) => {
-    const theme = useTheme();
-    const classes = useCardContentStyles();
     const renderHeadline = () => {
         if (!headline) {
             return null;
@@ -64,44 +56,63 @@ const CardContent: React.FC<CardContentProps> = ({
         return headline;
     };
     return (
-        <Stack space={16}>
-            <Stack space={8}>
-                {(headline || pretitle || title || subtitle) && (
-                    <header>
-                        <Stack space={8}>
-                            {renderHeadline()}
-                            <Stack space={4}>
-                                {pretitle && (
-                                    <Text1 truncate={pretitleLinesMax} as="div" regular transform="uppercase">
-                                        {pretitle}
-                                    </Text1>
-                                )}
-                                <Text4 truncate={titleLinesMax} as="h1" regular>
-                                    {title}
-                                </Text4>
-                                <Text2 truncate={subtitleLinesMax} as="div" regular>
-                                    {subtitle}
-                                </Text2>
+        <div
+            className={sprinkles({
+                display: 'flex',
+                flex: 1,
+                justifyContent: 'space-between',
+                flexDirection: 'column',
+            })}
+        >
+            <div>
+                <Stack space={8}>
+                    {(headline || pretitle || title || subtitle) && (
+                        <header>
+                            <Stack space={8}>
+                                {renderHeadline()}
+                                <Stack space={4}>
+                                    {pretitle && (
+                                        <Text1
+                                            truncate={pretitleLinesMax}
+                                            as="div"
+                                            regular
+                                            transform="uppercase"
+                                        >
+                                            {pretitle}
+                                        </Text1>
+                                    )}
+                                    <Text4 truncate={titleLinesMax} as="h1" regular>
+                                        {title}
+                                    </Text4>
+                                    <Text2 truncate={subtitleLinesMax} as="div" regular>
+                                        {subtitle}
+                                    </Text2>
+                                </Stack>
                             </Stack>
-                        </Stack>
-                    </header>
-                )}
+                        </header>
+                    )}
 
-                {description && (
-                    <Text2 truncate={descriptionLinesMax} as="p" regular color={theme.colors.textSecondary}>
-                        {description}
-                    </Text2>
-                )}
-            </Stack>
+                    {description && (
+                        <Text2
+                            truncate={descriptionLinesMax}
+                            as="p"
+                            regular
+                            color={vars.colors.textSecondary}
+                        >
+                            {description}
+                        </Text2>
+                    )}
+                </Stack>
 
-            {extra && <div>{extra}</div>}
+                {extra && <div>{extra}</div>}
+            </div>
 
             {(button || buttonLink) && (
-                <div className={classes.actions}>
+                <div className={styles.actions}>
                     <ButtonGroup primaryButton={button} link={buttonLink} />
                 </div>
             )}
-        </Stack>
+        </div>
     );
 };
 
@@ -123,29 +134,6 @@ const MaybeSection = ({'aria-label': ariaLabel, className, children}: MaybeSecti
         );
     }
 };
-
-const useMediaCardStyles = createUseStyles(({mq}) => ({
-    boxed: {
-        height: '100%',
-        width: '100%',
-    },
-    mediaCard: {
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-    },
-    content: {
-        flex: 1,
-        padding: 16,
-        paddingBottom: 24,
-        display: 'flex',
-        flexDirection: 'column',
-        [mq.desktopOrBigger]: {
-            padding: 24,
-            paddingBottom: 32,
-        },
-    },
-}));
 
 type MediaCardProps = {
     media: RendersElement<typeof Image> | RendersElement<typeof Video>;
@@ -189,14 +177,18 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         },
         ref
     ) => {
-        const classes = useMediaCardStyles({media});
-
         return (
             <MaybeDismissable onClose={onClose} aria-label={ariaLabel}>
-                <Boxed className={classes.boxed} dataAttributes={dataAttributes} ref={ref}>
-                    <MaybeSection className={classes.mediaCard} aria-label={ariaLabel}>
+                <Boxed
+                    className={styles.boxed}
+                    dataAttributes={{'component-name': 'MediaCard', ...dataAttributes}}
+                    ref={ref}
+                    width="100%"
+                    height="100%"
+                >
+                    <MaybeSection className={styles.mediaCard} aria-label={ariaLabel}>
                         <DisableBorderRadiusProvider>{media}</DisableBorderRadiusProvider>
-                        <div className={classes.content}>
+                        <div className={styles.mediaCardContent}>
                             <CardContent
                                 headline={headline}
                                 pretitle={pretitle}
@@ -218,22 +210,6 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         );
     }
 );
-
-const useDataCardStyles = createUseStyles(({mq}) => ({
-    boxed: {
-        height: '100%',
-        width: '100%',
-    },
-    dataCard: {
-        display: 'flex',
-        flexDirection: 'column',
-        padding: '24px 16px',
-        height: '100%',
-        [mq.desktopOrBigger]: {
-            padding: '32px 24px',
-        },
-    },
-}));
 
 interface DataCardProps {
     /**
@@ -281,12 +257,16 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
         },
         ref
     ) => {
-        const classes = useDataCardStyles();
-
         return (
             <MaybeDismissable aria-label={ariaLabel} onClose={onClose}>
-                <Boxed className={classes.boxed} dataAttributes={dataAttributes} ref={ref}>
-                    <MaybeSection className={classes.dataCard} aria-label={ariaLabel}>
+                <Boxed
+                    className={styles.boxed}
+                    dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
+                    ref={ref}
+                    width="100%"
+                    height="100%"
+                >
+                    <MaybeSection className={styles.dataCard} aria-label={ariaLabel}>
                         {icon && <Box paddingBottom={16}>{icon}</Box>}
                         <CardContent
                             headline={headline}
@@ -308,38 +288,6 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
         );
     }
 );
-
-const useSnapCardStyles = createUseStyles((theme) => ({
-    boxed: {
-        height: '100%',
-    },
-    touchable: {
-        display: 'flex',
-        height: '100%',
-        [theme.mq.supportsHover]: {
-            '&:hover': {
-                backgroundColor: ({isTouchable, isInverse}) =>
-                    // @todo: define hover background color for inverse and for dark mode
-                    isTouchable && !isInverse && !theme.isDarkMode
-                        ? theme.colors.backgroundAlternative
-                        : 'transparent',
-            },
-        },
-    },
-    snapCard: {
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        padding: 16,
-        minHeight: 80,
-        flex: 1,
-        minWidth: 104,
-        [theme.mq.desktopOrBigger]: {
-            padding: 24,
-        },
-    },
-}));
 
 interface SnapCardBaseProps {
     icon?: React.ReactElement;
@@ -394,14 +342,30 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
         },
         ref
     ) => {
+        const {isDarkMode} = useTheme();
         const isTouchable = Boolean(touchableProps.to || touchableProps.href || touchableProps.onPress);
-        const classes = useSnapCardStyles({isTouchable, isInverse, hasIcon: !!icon});
-        const {colors} = useTheme();
 
         return (
-            <Boxed className={classes.boxed} dataAttributes={dataAttributes} ref={ref} isInverse={isInverse}>
-                <Touchable maybe {...touchableProps} className={classes.touchable} aria-label={ariaLabel}>
-                    <section className={classes.snapCard}>
+            <Boxed
+                className={styles.boxed}
+                dataAttributes={{'component-name': 'SnapCard', ...dataAttributes}}
+                ref={ref}
+                isInverse={isInverse}
+                width="100%"
+                height="100%"
+            >
+                <BaseTouchable
+                    maybe
+                    {...touchableProps}
+                    className={
+                        // @todo: define hover background color for inverse and for dark mode
+                        isTouchable && !isInverse && !isDarkMode
+                            ? styles.snapCardTouchableHover
+                            : styles.snapCardTouchableHoverTransparent
+                    }
+                    aria-label={ariaLabel}
+                >
+                    <section className={styles.snapCard}>
                         <div>
                             {icon && <Box paddingBottom={16}>{icon}</Box>}
                             <Stack space={4}>
@@ -414,7 +378,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                     <Text2
                                         truncate={subtitleLinesMax}
                                         regular
-                                        color={colors.textSecondary}
+                                        color={vars.colors.textSecondary}
                                         as="p"
                                     >
                                         {subtitle}
@@ -422,9 +386,9 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                 )}
                             </Stack>
                         </div>
-                        {extra && <Box paddingTop={16}>{extra}</Box>}
+                        {extra && <div>{extra}</div>}
                     </section>
-                </Touchable>
+                </BaseTouchable>
             </Boxed>
         );
     }

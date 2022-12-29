@@ -79,16 +79,16 @@ export const getO2Skin: GetKnownSkin = () => {
             skeletonWave: palette.grey2,
 
             // BORDERS
-            borderLight: palette.grey1,
+            borderLow: palette.grey1,
             border: palette.grey3,
-            borderDark: palette.grey5,
+            borderHigh: palette.grey5,
             borderSelected: palette.o2BluePrimary,
 
             // BUTTONS
             buttonDangerBackground: palette.pepper,
             buttonDangerBackgroundSelected: palette.pepper60,
             buttonDangerBackgroundHover: palette.pepper60,
-            buttonLinkBackgroundSelected: palette.o2BluePrimary15,
+            buttonLinkBackgroundSelected: palette.o2BluePrimary10,
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
 
             buttonPrimaryBackground: palette.o2BluePrimary,
@@ -186,9 +186,9 @@ export const getO2Skin: GetKnownSkin = () => {
             backgroundAlternative: palette.darkModeGrey,
             backgroundFeedbackBottom: palette.darkModeBlack,
             skeletonWave: palette.grey5,
-            borderLight: palette.darkModeBlack,
+            borderLow: palette.darkModeBlack,
             border: palette.darkModeGrey,
-            borderDark: palette.grey5,
+            borderHigh: palette.grey5,
             borderSelected: palette.darkModeO2BluePrimary,
             buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.05),
             buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.05),

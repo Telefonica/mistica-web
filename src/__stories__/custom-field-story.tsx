@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import {StorySection} from './helpers';
 import {
-    useTheme,
+    skinVars,
     Text2,
     Text3,
     TextField,
@@ -10,7 +10,6 @@ import {
     Touchable,
     Box,
     Text1,
-    createUseStyles,
     Form,
     Stack,
     useFieldProps,
@@ -63,17 +62,6 @@ const OPTIONS = [
     },
 ];
 
-const useStyles = createUseStyles(({mq}) => ({
-    hover: {
-        [mq.supportsHover]: {
-            '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, 0.08)',
-            },
-        },
-    },
-    selected: {backgroundColor: 'rgba(0, 0, 0, 0.08)'},
-}));
-
 type OptionsProps = {
     options: ReadonlyArray<{text: string; value: string}>;
     selectedValue: string;
@@ -93,8 +81,6 @@ const Options = ({
     closeMenu,
     elementRef,
 }: OptionsProps) => {
-    const classes = useStyles();
-    const {colors} = useTheme();
     const scrollRef = React.useRef<HTMLDivElement>();
     const optionRefs = React.useRef(new Map<string, HTMLDivElement>());
     const [tentativeValueState, setTentativeValueState] = React.useState('');
@@ -160,13 +146,23 @@ const Options = ({
                 event.preventDefault();
             }}
         >
+            <style>{`
+                @media (pointer: fine), (pointer: none) {
+                    .option:hover {
+                        background-color: rgba(0, 0, 0, 0.08);
+                    }
+                }
+                .option.selected {
+                    background-color: rgba(0, 0, 0, 0.08);
+                }
+            `}</style>
             {options.map((option) => (
                 <Box
                     paddingX={16}
                     paddingY={8}
                     key={option.value}
-                    className={classNames(classes.hover, {
-                        [classes.selected]: option.value === tentativeValueState,
+                    className={classNames('option', {
+                        selected: option.value === tentativeValueState,
                     })}
                     ref={(liRef) => {
                         if (liRef) {
@@ -188,7 +184,7 @@ const Options = ({
                         <Text1 as="p" regular>
                             {option.text}
                         </Text1>
-                        <Text1 regular color={colors.textSecondary}>
+                        <Text1 regular color={skinVars.colors.textSecondary}>
                             {option.value}
                         </Text1>
                     </Touchable>
@@ -196,7 +192,7 @@ const Options = ({
             ))}
             {options.length === 0 ? (
                 <Box paddingX={16} paddingY={8}>
-                    <Text3 regular color={colors.textSecondary}>
+                    <Text3 regular color={skinVars.colors.textSecondary}>
                         No option
                     </Text3>
                 </Box>

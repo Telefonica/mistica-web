@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {createUseStyles} from './jss';
 import {useTheme} from './hooks';
 import IconCvvVisaMc from './icons/icon-cvv-visa-mc';
 import IconCvvAmex from './icons/icon-cvv-amex';
@@ -9,42 +8,26 @@ import IcnInfo from './icons/icon-info-cvv';
 import {useFieldProps, useForm} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import {IntegerInput} from './integer-field';
-import Inline from './inline';
-import Stack from './stack';
-import Divider from './divider';
-import Text2 from './text';
+import * as styles from './cvv-field.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type {CardOptions} from './utils/credit-card';
 
-const useStyles = createUseStyles((theme) => ({
-    cvvText: {
-        lineHeight: '24px',
-        [theme.mq.tabletOrSmaller]: {
-            lineHeight: '20px',
-        },
-    },
-}));
-
 const TooltipContent = ({acceptedCards}: {acceptedCards: CardOptions}) => {
-    const classes = useStyles();
-    const {texts, colors} = useTheme();
+    const {texts} = useTheme();
 
     return (
         <>
-            <Stack space={8} className={classes.cvvText}>
-                <Inline space={16} alignItems="center">
-                    <IconCvvVisaMc size={48} role="img" />
-                    <Text2 color={colors.textPrimary}>{texts.formCreditCardCvvTooltipVisaMc}</Text2>
-                </Inline>
-                <Divider />
-                {acceptedCards?.americanExpress && (
-                    <Inline space={16} alignItems="center">
-                        <IconCvvAmex size={48} role="img" />
-                        <Text2 color={colors.textPrimary}>{texts.formCreditCardCvvTooltipAmex}</Text2>
-                    </Inline>
-                )}
-            </Stack>
+            <div className={styles.tooltipContainer}>
+                <IconCvvVisaMc size={48} role="img" />
+                <p className={styles.cvvText}>{texts.formCreditCardCvvTooltipVisaMc}</p>
+            </div>
+            {acceptedCards?.americanExpress && (
+                <div className={styles.tooltipContainer}>
+                    <IconCvvAmex size={48} role="img" />
+                    <p className={styles.cvvText}>{texts.formCreditCardCvvTooltipAmex}</p>
+                </div>
+            )}
         </>
     );
 };

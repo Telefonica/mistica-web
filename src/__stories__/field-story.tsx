@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
     ThemeVariant,
-    useTheme,
+    skinVars,
     EmailField,
     IntegerField,
     DecimalField,
@@ -122,7 +122,6 @@ const getPhoneNumberSuggestions = (value: string) =>
         .slice(0, 5);
 
 export const Variants: StoryComponent = () => {
-    const {colors} = useTheme();
     return (
         <>
             <StorySection title="Default">
@@ -130,11 +129,9 @@ export const Variants: StoryComponent = () => {
                     <TextField optional name="text" label="Normal field" autoComplete="off" />
                 </div>
             </StorySection>
-
             <StorySection title="Multiline">
                 <TextField optional name="text" label="Multiline" multiline />
             </StorySection>
-
             <StorySection title="Multiline with maxLength">
                 <div data-testid="multiline-max-length">
                     <TextField
@@ -146,11 +143,9 @@ export const Variants: StoryComponent = () => {
                     />
                 </div>
             </StorySection>
-
             <StorySection title="With label">
                 <TextField name="text" label="Label" />
             </StorySection>
-
             <StorySection title="With long label">
                 <div data-testid="long-label">
                     <TextField
@@ -160,19 +155,15 @@ export const Variants: StoryComponent = () => {
                     />
                 </div>
             </StorySection>
-
             <StorySection title="With label and placeholder">
                 <TextField name="text" label="Label" placeholder="Placeholder" />
             </StorySection>
-
             <StorySection title="With label and default value">
                 <TextField name="text" label="Label" defaultValue="Default value" />
             </StorySection>
-
             <StorySection title="With helper text">
                 <TextField name="text" label="Label" defaultValue="Default value" helperText="Helper Text" />
             </StorySection>
-
             <StorySection title="With Error">
                 <TextField
                     name="text"
@@ -182,11 +173,9 @@ export const Variants: StoryComponent = () => {
                     helperText="I'm a descriptive error"
                 />
             </StorySection>
-
             <StorySection title="With prefix">
                 <TextField name="text" label="Label" defaultValue="Default value" prefix="$" />
             </StorySection>
-
             <StorySection title="With icon at the end">
                 <TextField
                     name="text"
@@ -195,7 +184,6 @@ export const Variants: StoryComponent = () => {
                     endIcon={<IconMusicRegular />}
                 />
             </StorySection>
-
             <StorySection title="Disabled">
                 <Stack space={16}>
                     <TextField name="text" disabled label="Disabled" defaultValue="Default value" />
@@ -217,8 +205,28 @@ export const Variants: StoryComponent = () => {
                     />
                 </Stack>
             </StorySection>
-
-            <div style={{backgroundColor: colors.backgroundBrand}}>
+            <StorySection title="Read only">
+                <Stack space={16}>
+                    <TextField name="text" readOnly label="Read only" defaultValue="Default value" />
+                    <TextField
+                        name="text"
+                        readOnly
+                        label="Read only"
+                        defaultValue="Default value"
+                        endIcon={<IconMusicRegular />}
+                    />
+                    <SearchField name="search" readOnly label="Search" />
+                    <PhoneNumberField
+                        e164
+                        name="phone"
+                        label="Phone with prefix"
+                        prefix="+34"
+                        defaultValue="654834455"
+                        readOnly
+                    />
+                </Stack>
+            </StorySection>
+            <div style={{backgroundColor: skinVars.colors.backgroundBrand}}>
                 <ThemeVariant isInverse>
                     <Box padding={16}>
                         <StorySection title="Inverse with helper text">

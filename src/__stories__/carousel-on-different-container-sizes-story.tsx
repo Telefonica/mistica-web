@@ -20,42 +20,64 @@ export default {
 type Args = {
     numItems: number;
     itemsPerPageMobile: number;
-    itemsPerPageDesktop: number;
+    itemsPerPageTablet: number;
+    itemsPerPageDesktopSmall: number;
+    itemsPerPageDesktopMedium: number;
+    itemsPerPageDesktopLarge: number;
     withBullets: boolean;
-    nextPageOffset: number;
-    prevPageOffset: number;
-    free: boolean;
-    itemsToScroll: number;
-    autoplay: boolean;
-    loop: boolean;
 };
 
 const ExampleCarousel = ({
+    numItems,
+    withBullets,
     cardsTitlePrefix,
-    intemsPerPage,
+    itemsPerPage,
 }: {
+    numItems: number;
+    withBullets: boolean;
     cardsTitlePrefix: number;
-    intemsPerPage: number;
+    itemsPerPage: {mobile: number; tablet: number; desktop: {small: number; medium: number; large: number}};
 }) => (
     <Carousel
         dataAttributes={{testid: 'carousel-story'}}
-        withBullets
-        itemsPerPage={intemsPerPage}
-        itemsToScroll={1}
-        items={Array.from({length: 6}, (_, idx) => (
+        withBullets={withBullets}
+        itemsPerPage={itemsPerPage}
+        items={Array.from({length: numItems}, (_, idx) => (
             <MediaCard
                 aria-label={`Carousel ${cardsTitlePrefix} item ${idx}`}
                 key={idx}
                 title={`Title ${idx} carousel ${cardsTitlePrefix}`}
                 description="Some description"
-                media={<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />}
+                media={
+                    <Image
+                        src="https://images.unsplash.com/photo-1575903013621-1387ce8caa74?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+                        aspectRatio="16:9"
+                    />
+                }
                 buttonLink={<ButtonLink href="https://google.com">Link {idx}</ButtonLink>}
             />
         ))}
     />
 );
 
-export const Default: StoryComponent<Args> = () => {
+export const Default: StoryComponent<Args> = ({
+    numItems,
+    itemsPerPageMobile,
+    itemsPerPageTablet,
+    itemsPerPageDesktopSmall,
+    itemsPerPageDesktopMedium,
+    itemsPerPageDesktopLarge,
+    withBullets,
+}) => {
+    const itemsPerPage = {
+        mobile: itemsPerPageMobile,
+        tablet: itemsPerPageTablet,
+        desktop: {
+            small: itemsPerPageDesktopSmall,
+            medium: itemsPerPageDesktopMedium,
+            large: itemsPerPageDesktopLarge,
+        },
+    };
     return (
         <Box paddingY={24}>
             <ResponsiveLayout>
@@ -66,15 +88,34 @@ export const Default: StoryComponent<Args> = () => {
                     />
                     <GridLayout
                         template="8+4"
-                        left={<ExampleCarousel intemsPerPage={3} cardsTitlePrefix={1} />}
+                        left={
+                            <ExampleCarousel
+                                numItems={numItems}
+                                withBullets={withBullets}
+                                itemsPerPage={itemsPerPage}
+                                cardsTitlePrefix={1}
+                            />
+                        }
                         right={<Placeholder height={240} />}
                     ></GridLayout>
                     <GridLayout
                         template="8+4"
                         left={<Placeholder height={240} />}
-                        right={<ExampleCarousel intemsPerPage={1.3} cardsTitlePrefix={2} />}
+                        right={
+                            <ExampleCarousel
+                                numItems={numItems}
+                                withBullets={withBullets}
+                                itemsPerPage={itemsPerPage}
+                                cardsTitlePrefix={2}
+                            />
+                        }
                     ></GridLayout>
-                    <ExampleCarousel intemsPerPage={4} cardsTitlePrefix={3} />
+                    <ExampleCarousel
+                        numItems={numItems}
+                        withBullets={withBullets}
+                        itemsPerPage={itemsPerPage}
+                        cardsTitlePrefix={3}
+                    />
                 </Stack>
             </ResponsiveLayout>
         </Box>
@@ -83,3 +124,12 @@ export const Default: StoryComponent<Args> = () => {
 
 Default.storyName = 'Carousel on different container types';
 Default.parameters = {fullScreen: true};
+Default.args = {
+    numItems: 6,
+    itemsPerPageMobile: 1,
+    itemsPerPageTablet: 2,
+    itemsPerPageDesktopSmall: 1,
+    itemsPerPageDesktopMedium: 2,
+    itemsPerPageDesktopLarge: 3,
+    withBullets: true,
+};

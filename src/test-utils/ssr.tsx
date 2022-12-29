@@ -5,10 +5,8 @@ import path from 'path';
 import webpack from 'webpack';
 import http from 'http';
 import fs from 'fs';
-import {ThemeContextProvider, ServerSideStyles} from '..';
-import {MOVISTAR_SKIN} from '../skins/constants';
-import {getSkinByName} from '../skins/utils';
-import {KnownSkinName} from '../skins/types';
+import {ThemeContextProvider, MOVISTAR_SKIN, getSkinByName, type KnownSkinName} from '../..';
+import {execSync} from 'child_process';
 
 const createWebpackEntries = (): {[entryName: string]: string} => {
     const entries: {[entryName: string]: string} = {};
@@ -29,7 +27,7 @@ const createWebpackEntries = (): {[entryName: string]: string} => {
             import * as React from 'react';
             import ReactDOM from 'react-dom';
             import Component from '../__acceptance_tests__/__ssr_pages__/${moduleName}';
-            import {ThemeContextProvider, getSkinByName} from '..';
+            import {ThemeContextProvider, getSkinByName} from '../..';
 
             const skin = new URL(location).searchParams.get('skin');
 
@@ -52,7 +50,10 @@ const createWebpackEntries = (): {[entryName: string]: string} => {
     return entries;
 };
 
-export const compileSsrClient = (): Promise<webpack.Stats> => {
+export const compileSsrClient = ({build = true}: {build: boolean}): Promise<webpack.Stats> => {
+    if (build) {
+        execSync('yarn compile', {stdio: 'inherit'});
+    }
     const entries = createWebpackEntries();
     const webpackConfig: webpack.Configuration = {
         mode: 'development',
@@ -68,7 +69,7 @@ export const compileSsrClient = (): Promise<webpack.Stats> => {
         module: {
             rules: [
                 {
-                    test: /\.tsx$/,
+                    test: /\.tsx?$/,
                     use: {
                         loader: 'swc-loader',
                     },
@@ -77,8 +78,13 @@ export const compileSsrClient = (): Promise<webpack.Stats> => {
             ],
         },
         resolve: {
-            extensions: ['.tsx', '.js', '.json', '.wasm', '.mjs', '*'],
+            extensions: ['.tsx', '.ts', '.js', '.json', '.wasm', '.mjs', '*'],
         },
+        plugins: [
+            new webpack.DefinePlugin({
+                'process.env.SSR_TEST': JSON.stringify(true),
+            }),
+        ],
     };
 
     const stats = new Promise<webpack.Stats>((resolve, reject) => {
@@ -110,17 +116,23 @@ export const createServer = (): http.Server => {
             return;
         }
 
-        if (moduleName.endsWith('.css') || moduleName.endsWith('.woff2')) {
-            fs.readFile(
-                path.join(__dirname, '..', '..', '.storybook', 'css', parsedUrl.path as string),
-                (err, data) => {
-                    if (err) {
-                        throw err;
-                    }
-                    res.writeHead(200);
-                    res.end(data);
+        const serveFileInPath = (path: string) => {
+            fs.readFile(path, (err, data) => {
+                if (err) {
+                    throw err;
                 }
-            );
+                res.writeHead(200);
+                res.end(data);
+            });
+        };
+
+        if (moduleName.endsWith('.woff2')) {
+            serveFileInPath(path.join(__dirname, '..', '..', '.storybook', 'css', parsedUrl.path as string));
+            return;
+        }
+
+        if (moduleName.endsWith('.css')) {
+            serveFileInPath(path.join(__dirname, '..', '..', 'css', parsedUrl.path as string));
             return;
         }
 
@@ -134,27 +146,22 @@ export const createServer = (): http.Server => {
             return;
         }
 
-        const serverSideStyles = new ServerSideStyles();
-
         const userAgent = req.headers['user-agent'];
 
         const renderedComponent = ReactDomServer.renderToString(
-            serverSideStyles.render(
-                <ThemeContextProvider
-                    theme={{
-                        skin: getSkinByName(String(parsedUrl.query.skin || MOVISTAR_SKIN) as KnownSkinName),
-                        i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
-                        platformOverrides: {
-                            userAgent,
-                        },
-                    }}
-                >
-                    <Component />
-                </ThemeContextProvider>
-            )
+            <ThemeContextProvider
+                theme={{
+                    skin: getSkinByName(String(parsedUrl.query.skin || MOVISTAR_SKIN) as KnownSkinName),
+                    i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
+                    platformOverrides: {
+                        userAgent,
+                    },
+                }}
+            >
+                <Component />
+            </ThemeContextProvider>
         );
 
-        const css = serverSideStyles.getStylesString();
         const clientCode = fs.readFileSync(
             path.join(__dirname, '..', '..', 'public', 'ssr', `${moduleName}.js`)
         );
@@ -167,9 +174,9 @@ export const createServer = (): http.Server => {
                 <head>
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,viewport-fit=cover">
-                    <link rel="stylesheet" href="main.css">
+                    <link rel="stylesheet" href="reset.css">
                     <link rel="stylesheet" href="roboto.css">
-                    <style id="server-side-styles">${css}</style>
+                    <link rel="stylesheet" href="mistica.css">
                 </head>
                 <body>
                     <div id="root">${renderedComponent}</div>

@@ -15,9 +15,12 @@ declare export var useAriaId: (id?: string | void) => string;
 declare export var useWindowSize: () => {
   height: number,
   width: number,
+  screenHeight: number,
+  screenWidth: number,
 };
 declare export var useWindowHeight: () => number;
 declare export var useWindowWidth: () => number;
+declare export var useScreenHeight: () => number;
 declare export var useIsomorphicLayoutEffect: typeof React.useLayoutEffect;
 declare type IntersectionObserverOptions = {
   root?: Element | Document | null,

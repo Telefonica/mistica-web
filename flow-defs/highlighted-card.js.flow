@@ -14,7 +14,7 @@ declare type CommonProps = {
   description: string,
   descriptionLinesMax?: number,
   imageUrl?: string,
-  imageFit?: "fit" | "fill",
+  imageFit?: "fit" | "fill" | "fill-center",
   onClose?: () => void,
   trackingEvent?: TrackingEvent | $ReadOnlyArray<TrackingEvent>,
   isInverse?: boolean,
@@ -47,5 +47,5 @@ declare type Props =
   | HrefProps
   | ToProps
   | OnPressProps;
-declare var HighlightedCard: React.ComponentType<Props>;
+declare var HighlightedCard: React.AbstractComponent<Props, HTMLDivElement>;
 declare export default typeof HighlightedCard;

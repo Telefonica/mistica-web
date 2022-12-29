@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Inline, Text2, useTheme} from '..';
+import {Inline, Text2, skinVars} from '..';
 import {Placeholder} from '../placeholder';
 import {StorySection, useSelect} from './helpers';
 
@@ -16,13 +16,11 @@ const Row = ({
     padding?: number;
     align?: string;
 }) => {
-    const {colors} = useTheme();
-
     return children ? (
         <div
             style={{
                 boxSizing: 'border-box',
-                border: `1px solid ${colors.error}`,
+                border: `1px solid ${skinVars.colors.error}`,
                 padding,
                 height: align === 'stretch' ? '100%' : 'auto',
                 display: 'flex',

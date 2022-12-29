@@ -11,9 +11,6 @@ inputs:
     azure-account-key:
         description: 'Azure Account Key'
         required: true
-    storybook-url:
-        description: 'URL to storybook'
-        required: true
 runs:
-    using: 'node12'
+    using: 'node16'
     main: 'main.js'

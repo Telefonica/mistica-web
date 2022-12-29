@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Avatar, IconBrainRegular, IconFireRegular, IconStarFilled, ThemeVariant, useTheme} from '..';
+import {Avatar, IconBrainRegular, IconFireRegular, IconStarFilled, ThemeVariant, skinVars} from '..';
 
 const badgeOptions = ['true', 'false', 'undefined', '0', '1', '5', '10'];
 
@@ -46,7 +46,6 @@ export const Default: StoryComponent<Args> = ({
     hideInitials,
     ariaLabel,
 }) => {
-    const {colors} = useTheme();
     // eslint-disable-next-line no-eval
     const badgeValue = badgeOptions.includes(badge) ? eval(badge) : undefined;
     const Icon = {IconStarFilled, IconFireRegular, IconBrainRegular}[icon];
@@ -57,7 +56,7 @@ export const Default: StoryComponent<Args> = ({
                 style={{
                     padding: 16,
                     width: 'fit-content',
-                    background: inverse ? colors.backgroundBrand : colors.background,
+                    background: inverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
                     // prevent line-height from affecting the height of the container;
                     // happens when changing the base font size
                     lineHeight: 0,
@@ -82,7 +81,7 @@ Default.storyName = 'Avatar';
 Default.args = {
     size: 64,
     hideImage: false,
-    src: 'https://i.imgur.com/nRBEMMV.png',
+    src: 'https://images.unsplash.com/photo-1640951613773-54706e06851d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80',
     hideInitials: false,
     initials: 'PL',
     icon: 'undefined',

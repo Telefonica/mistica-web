@@ -7,19 +7,20 @@
 import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
+import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
 const IconPauseFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
-    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
-    const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
+    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+    const {skinName} = useTheme();
     if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M12 2C6.488 2 2 6.488 2 12s4.488 10 10 10 10-4.488 10-10S17.512 2 12 2zm-1.965 14.465A.532.532 0 019.5 17a.533.533 0 01-.535-.535v-8.93c0-.297.238-.535.535-.535.297 0 .535.238.535.535v8.93zM14.5 17a.532.532 0 01-.535-.535v-8.93c0-.297.238-.535.535-.535.297 0 .535.238.535.535v8.93A.532.532 0 0114.5 17z"
                     fill={fillColor}
+                    d="M9.72 6.13c0-.891-.714-1.63-1.61-1.63A1.62 1.62 0 006.5 6.13v11.74c0 .891.713 1.63 1.61 1.63.892 0 1.61-.728 1.61-1.622V6.129zm7.78 0a1.62 1.62 0 00-1.61-1.63c-.896 0-1.61.739-1.61 1.63v11.74c0 .891.714 1.63 1.61 1.63.892 0 1.61-.728 1.61-1.622V6.129z"
                 />
             </svg>
         );
@@ -27,8 +28,8 @@ const IconPauseFilled: React.FC<IconProps> = ({color, size = 24, children, ...re
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M19.218 4.593c-1.67-1.608-4.098-2.423-7.222-2.423-3.123 0-5.552.815-7.218 2.426-1.731 1.67-2.608 4.162-2.608 7.409 0 3.246.877 5.736 2.608 7.406 1.666 1.608 4.095 2.423 7.218 2.423s5.552-.815 7.222-2.423c1.73-1.67 2.61-4.16 2.61-7.406 0-3.247-.88-5.743-2.61-7.412zM9.792 15.814c0 .308-.238.56-.532.56a.547.547 0 01-.533-.56V8.167c0-.308.238-.56.533-.56.294 0 .532.252.532.56v7.647zm4.96.569c-.29 0-.529-.252-.529-.56V8.176c0-.309.238-.56.53-.56.29 0 .529.251.529.56v7.647c0 .308-.238.56-.53.56z"
                     fill={fillColor}
+                    d="M6.75 3C5.784 3 5 3.806 5 4.8v14.4c0 .994.784 1.8 1.75 1.8s1.75-.806 1.75-1.8V4.8c0-.994-.784-1.8-1.75-1.8zm10.5 0c-.966 0-1.75.806-1.75 1.8v14.4c0 .994.784 1.8 1.75 1.8S19 20.194 19 19.2V4.8c0-.994-.784-1.8-1.75-1.8z"
                 />
             </svg>
         );

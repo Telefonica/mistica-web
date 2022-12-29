@@ -1,19 +1,5 @@
 import * as React from 'react';
-import {
-    Stack,
-    MediaCard,
-    ButtonPrimary,
-    ButtonLink,
-    Inline,
-    Text2,
-    useScreenSize,
-    Box,
-    createUseStyles,
-    Video,
-    Image,
-    Tag,
-    TagType,
-} from '..';
+import {Stack, MediaCard, ButtonPrimary, ButtonLink, Inline, Text2, Video, Image, Tag, TagType} from '..';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
 
@@ -22,8 +8,8 @@ export default {
 };
 
 const VIDEO_SRC = 'https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw';
-const POSTER_SRC = 'https://i.imgur.com/aEVtKsE.jpg';
-const IMAGE_SRC = 'https://i.imgur.com/aEVtKsE.jpg';
+const IMAGE_SRC =
+    'https://images.unsplash.com/photo-1575903013621-1387ce8caa74?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80';
 
 type Args = {
     media: 'image' | 'video';
@@ -111,16 +97,7 @@ Default.argTypes = {
     },
 };
 
-const useCardGroupStyles = createUseStyles(() => ({
-    group: {
-        '& > *': {
-            width: 300,
-        },
-    },
-}));
-
 export const Group: StoryComponent = () => {
-    const classes = useCardGroupStyles();
     return (
         <ResponsiveLayout>
             <Stack space={16}>
@@ -128,7 +105,8 @@ export const Group: StoryComponent = () => {
                     We can group multiple cards and they adjust to the same height. The card actions are
                     always fixed on bottom:
                 </Text2>
-                <Inline space={16} className={classes.group}>
+                <style>{`.group > * {width: 300px}`}</style>
+                <Inline space={16} className="group">
                     <MediaCard
                         headline={<Tag type="promo">Headline</Tag>}
                         pretitle="Pretitle"
@@ -151,92 +129,3 @@ export const Group: StoryComponent = () => {
 };
 
 Group.storyName = 'Media card group';
-
-const useCarouselStyles = createUseStyles((theme) => ({
-    carousel: {
-        overflowY: 'auto',
-        width: '100%',
-        scrollSnapType: 'x mandatory',
-        scrollbarWidth: 'none',
-        [theme.mq.tabletOrSmaller]: {
-            padding: '0 16px',
-        },
-        '&::-webkit-scrollbar': {
-            display: 'none',
-        },
-        '& > *': {
-            width: 300,
-            flexShrink: 0,
-            scrollSnapAlign: 'center',
-        },
-    },
-}));
-
-export const Carousel: StoryComponent = () => {
-    const {isTabletOrSmaller} = useScreenSize();
-    const classes = useCarouselStyles();
-    const videoRef = React.useRef<HTMLVideoElement>(null);
-    return (
-        <Box paddingY={16}>
-            <Stack space={16}>
-                <ResponsiveLayout>
-                    <Text2 regular>This is a naive carousel implementation using MediaCards:</Text2>
-                </ResponsiveLayout>
-                <ResponsiveLayout fullWidth={isTabletOrSmaller}>
-                    <Inline space={16} className={classes.carousel}>
-                        <MediaCard
-                            title="Video"
-                            description="Example media card with <Video> element"
-                            media={
-                                <Video
-                                    ref={videoRef}
-                                    src={VIDEO_SRC}
-                                    poster={POSTER_SRC}
-                                    autoPlay={false}
-                                    aspectRatio="16:9"
-                                />
-                            }
-                            buttonLink={
-                                <ButtonLink
-                                    onPress={() => {
-                                        videoRef.current?.play();
-                                    }}
-                                >
-                                    Play Video
-                                </ButtonLink>
-                            }
-                        />
-                        <MediaCard
-                            title="Image"
-                            description="Example media card with <Image> element"
-                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
-                            buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
-                        />
-                        <MediaCard
-                            headline={<Tag type="promo">Headline</Tag>}
-                            pretitle="Pretitle"
-                            title="Title"
-                            description="Description"
-                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
-                            buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
-                        />
-                        <MediaCard
-                            title="Title"
-                            description="Description"
-                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
-                            buttonLink={<ButtonLink href="https://example.com">Link</ButtonLink>}
-                        />
-                        <MediaCard
-                            title="Title"
-                            description="Description"
-                            media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
-                        />
-                    </Inline>
-                </ResponsiveLayout>
-            </Stack>
-        </Box>
-    );
-};
-
-Carousel.storyName = 'Media cards carousel';
-Carousel.parameters = {fullScreen: true};

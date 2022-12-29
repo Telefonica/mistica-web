@@ -106,7 +106,12 @@ export const useAriaId = (id?: string): string => {
     return React.useRef(id || getAriaId()).current;
 };
 
-export const useWindowSize = (): {height: number; width: number} => {
+export const useWindowSize = (): {
+    height: number;
+    width: number;
+    screenHeight: number;
+    screenWidth: number;
+} => {
     const [windowHeight, setWindowHeight] = React.useState<number>(
         typeof window !== 'undefined' ? window.innerHeight : 1200 // Best guess
     );
@@ -114,10 +119,19 @@ export const useWindowSize = (): {height: number; width: number} => {
         typeof window !== 'undefined' ? window.innerWidth : 800 // Best guess
     );
 
+    const [screenHeight, setScreenHeight] = React.useState<number>(
+        typeof window !== 'undefined' ? window.screen.availHeight : 1200
+    );
+    const [screenWidth, setScreenWidth] = React.useState<number>(
+        typeof window !== 'undefined' ? window.screen.availWidth : 800
+    );
+
     React.useEffect(() => {
         const handleResize = () => {
             setWindowHeight(window.innerHeight);
             setWindowWidth(window.innerWidth);
+            setScreenHeight(window.screen.availHeight);
+            setScreenWidth(window.screen.availWidth);
         };
 
         window.addEventListener('resize', handleResize);
@@ -128,7 +142,10 @@ export const useWindowSize = (): {height: number; width: number} => {
     }, []);
 
     // do not create new result instances if values don't change
-    return React.useMemo(() => ({height: windowHeight, width: windowWidth}), [windowHeight, windowWidth]);
+    return React.useMemo(
+        () => ({height: windowHeight, width: windowWidth, screenHeight, screenWidth}),
+        [windowHeight, windowWidth, screenHeight, screenWidth]
+    );
 };
 
 export const useWindowHeight = (): number => {
@@ -139,6 +156,11 @@ export const useWindowHeight = (): number => {
 export const useWindowWidth = (): number => {
     const {width} = useWindowSize();
     return width;
+};
+
+export const useScreenHeight = (): number => {
+    const {screenHeight} = useWindowSize();
+    return screenHeight;
 };
 
 // React currently throws a warning when using useLayoutEffect on the server.

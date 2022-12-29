@@ -4,83 +4,16 @@ this storybook bug:
 https://github.com/storybookjs/storybook/issues/11980
 */
 import * as React from 'react';
-import {createUseStyles} from './jss';
 import debounce from 'lodash/debounce';
 import {SPACE} from './utils/key-codes';
 import {useControlProps} from './form-context';
-import classNames from 'classnames';
 import {Text3} from './text';
 import Inline from './inline';
-import {useAriaId} from './hooks';
+import {useAriaId, useTheme} from './hooks';
 import {getPrefixedDataAttributes} from './utils/dom';
+import * as styles from './switch-component.css';
 
 import type {DataAttributes} from './utils/types';
-
-const SWITCH_ANIMATION = '0.2s ease-in 0s';
-
-const useStyles = createUseStyles(({colors, isIos}) => {
-    return {
-        checkbox: {
-            display: 'inline-block',
-            padding: isIos ? 0 : 4,
-            cursor: 'pointer',
-        },
-        switchCheckboxContainer: {
-            position: 'relative',
-            width: isIos ? 51 : 34,
-            userSelect: 'none',
-        },
-        switchCheckboxLabel: {
-            display: 'block',
-            overflow: 'hidden',
-            borderRadius: 40,
-            '& > *': {pointerEvents: 'none'},
-        },
-        bar: {
-            display: 'block',
-            background: ({isChecked}) =>
-                isChecked
-                    ? isIos
-                        ? colors.controlActivated
-                        : colors.toggleAndroidBackgroundActive
-                    : colors.control,
-            transition: `background ${SWITCH_ANIMATION}`,
-            height: isIos ? 31 : 14,
-        },
-        ball: {
-            position: 'absolute',
-            top: isIos ? 6 : 1,
-            bottom: 0,
-            right: ({isChecked}) => {
-                if (isChecked) {
-                    return isIos ? 6 : 1;
-                }
-                return isIos ? 26 : 21;
-            },
-            display: 'block',
-            width: isIos ? 27 : 20,
-            height: isIos ? 27 : 20,
-            margin: -4,
-            backgroundColor: ({isChecked}) => {
-                if (isIos) {
-                    return colors.iosControlKnob;
-                } else {
-                    return isChecked ? colors.controlActivated : colors.toggleAndroidInactive;
-                }
-            },
-            borderRadius: '50%',
-            transition: `all ${SWITCH_ANIMATION}`,
-            boxShadow: isIos ? '1px 2px 4px rgba(0, 0, 0, 0.3)' : '1px 1px 2px rgba(0, 0, 0, 0.3)',
-        },
-        container: {
-            cursor: 'default',
-        },
-        disabled: {
-            cursor: 'default',
-            opacity: 0.5,
-        },
-    };
-});
 
 type RenderSwitch = (renderProps: {
     controlElement: React.ReactElement;
@@ -114,6 +47,7 @@ type PropsChildren = {
 };
 
 const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
+    const {isIos} = useTheme();
     const labelId = useAriaId(props['aria-labelledby']);
     const {defaultValue, value, onChange, focusableRef, disabled} = useControlProps({
         name: props.name,
@@ -124,8 +58,7 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
     });
 
     const [checkedState, setCheckedState] = React.useState(!!defaultValue);
-
-    const classes = useStyles({isChecked: value ?? checkedState});
+    const isChecked = value ?? checkedState;
 
     const notifyChange = React.useMemo(() => {
         if (process.env.NODE_ENV === 'test') {
@@ -155,11 +88,29 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
     };
 
     const switchEl = (
-        <div className={classNames(classes.checkbox, {[classes.disabled]: disabled})}>
-            <div className={classes.switchCheckboxContainer}>
-                <div className={classes.switchCheckboxLabel}>
-                    <span className={classes.bar} />
-                    <span className={classes.ball} />
+        <div
+            className={
+                styles.checkboxVariants[
+                    isIos ? (disabled ? 'disabledIos' : 'ios') : disabled ? 'disabled' : 'default'
+                ]
+            }
+        >
+            <div className={styles.switchCheckboxContainerVariants[isIos ? 'ios' : 'default']}>
+                <div className={styles.switchCheckboxLabel}>
+                    <span
+                        className={
+                            styles.barVariants[
+                                isIos ? (isChecked ? 'checkedIos' : 'ios') : isChecked ? 'checked' : 'default'
+                            ]
+                        }
+                    />
+                    <span
+                        className={
+                            styles.ballVariants[
+                                isIos ? (isChecked ? 'checkedIos' : 'ios') : isChecked ? 'checked' : 'default'
+                            ]
+                        }
+                    />
                 </div>
             </div>
         </div>
@@ -175,10 +126,10 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
             onKeyDown={disabled ? undefined : handleKeyDown}
             tabIndex={disabled ? undefined : 0}
             ref={focusableRef}
-            className={classes.container}
+            className={styles.container}
             aria-disabled={disabled}
             aria-labelledby={labelId}
-            {...getPrefixedDataAttributes(props.dataAttributes)}
+            {...getPrefixedDataAttributes(props.dataAttributes, 'Switch')}
         >
             {props.render ? (
                 <>
@@ -194,7 +145,7 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
                     {switchEl}
                     {props.children && (
                         <Text3 regular as="div" id={labelId}>
-                            <span className={disabled ? classes.disabled : ''}>{props.children}</span>
+                            <span className={disabled ? styles.disabled : ''}>{props.children}</span>
                         </Text3>
                     )}
                 </Inline>

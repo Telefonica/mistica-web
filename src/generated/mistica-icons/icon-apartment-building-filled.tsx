@@ -7,19 +7,20 @@
 import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
+import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
 const IconApartmentBuildingFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
-    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
-    const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
+    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+    const {skinName} = useTheme();
     if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M5 2h13.623c.203 0 .368.169.377.377v19.618h-7.735v-6.414H6.843V22H5V2zm1.838 10.94h4.422V9.92H6.838v3.02zm4.422-5.284V4.642H6.838v3.014h4.422zM12.73 18.6h4.422v-3.02h-4.421v3.02zm4.422-5.66V9.92h-4.421v3.02h4.421zm-4.421-5.284h4.421V4.642h-4.421v3.014z"
                     fill={fillColor}
+                    d="M5 2h13.623c.203 0 .368.169.377.377v19.618h-7.735v-6.414H6.843V22H5V2zm1.838 10.94h4.422V9.92H6.838v3.02zm4.422-5.284V4.642H6.838v3.014h4.422zM12.73 18.6h4.422v-3.02h-4.421v3.02zm4.422-5.66V9.92h-4.421v3.02h4.421zm-4.421-5.284h4.421V4.642h-4.421v3.014z"
                 />
             </svg>
         );
@@ -27,8 +28,8 @@ const IconApartmentBuildingFilled: React.FC<IconProps> = ({color, size = 24, chi
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M5.83 2.155h12.331c.636 0 1.216.574 1.219 1.202V20.64c0 .638-.569 1.201-1.216 1.201h-4.05v-5.507a.407.407 0 00-.406-.409h-3.42a.407.407 0 00-.407.41v5.506h-4.05c-.647 0-1.216-.56-1.216-1.201V3.357c0-.628.58-1.202 1.216-1.202zm4.88 6.034a.407.407 0 00.407-.41V5.164a.407.407 0 00-.407-.409H8.122a.407.407 0 00-.406.41V7.78c0 .224.182.409.406.409h2.588zm5.524-.41V5.164a.407.407 0 00-.406-.409H13.24a.407.407 0 00-.406.41V7.78c0 .224.182.409.406.409h2.588a.407.407 0 00.406-.41zm0 5.138v-2.62a.409.409 0 00-.406-.408H13.24a.407.407 0 00-.406.409v2.619c0 .224.182.409.406.409h2.588a.407.407 0 00.406-.41zm-5.117 0v-2.62a.409.409 0 00-.407-.408H8.122a.407.407 0 00-.406.409v2.619c0 .224.182.409.406.409h2.588a.407.407 0 00.407-.41z"
                     fill={fillColor}
+                    d="M5.83 2.155h12.331c.636 0 1.216.574 1.219 1.202V20.64c0 .638-.569 1.201-1.216 1.201h-4.05v-5.507a.407.407 0 00-.406-.409h-3.42a.407.407 0 00-.407.41v5.506h-4.05c-.647 0-1.216-.56-1.216-1.201V3.357c0-.628.58-1.202 1.216-1.202zm4.88 6.034a.407.407 0 00.407-.41V5.164a.407.407 0 00-.407-.409H8.122a.407.407 0 00-.406.41V7.78c0 .224.182.409.406.409h2.588zm5.524-.41V5.164a.407.407 0 00-.406-.409H13.24a.407.407 0 00-.406.41V7.78c0 .224.182.409.406.409h2.588a.407.407 0 00.406-.41zm0 5.138v-2.62a.409.409 0 00-.406-.408H13.24a.407.407 0 00-.406.409v2.619c0 .224.182.409.406.409h2.588a.407.407 0 00.406-.41zm-5.117 0v-2.62a.409.409 0 00-.407-.408H8.122a.407.407 0 00-.406.409v2.619c0 .224.182.409.406.409h2.588a.407.407 0 00.407-.41z"
                 />
             </svg>
         );

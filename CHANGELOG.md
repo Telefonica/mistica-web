@@ -1,3 +1,172 @@
+# [13.0.0](https://github.com/Telefonica/mistica-web/compare/v12.13.0...v13.0.0) (2022-12-28)
+
+
+### Features
+
+* **Carousel:** remove mobilePageOffset prop ([#620](https://github.com/Telefonica/mistica-web/issues/620)) ([52a2cce](https://github.com/Telefonica/mistica-web/commit/52a2cce2450e2dcc082d5ea36e487147ec0ed746))
+* **colors:** borderLight and borderDark renamed to borderLow and borderHight ([#624](https://github.com/Telefonica/mistica-web/issues/624)) ([34399dc](https://github.com/Telefonica/mistica-web/commit/34399dca85630c0136ab92aebc02d3a5cebedcda))
+* **colors:** remove colors from Theme. Use skinVars instead ([#612](https://github.com/Telefonica/mistica-web/issues/612)) ([ebc07d8](https://github.com/Telefonica/mistica-web/commit/ebc07d8d55c18f7126e16466383a7056d8285022))
+* **css:** don't inline mistica css in js ([#614](https://github.com/Telefonica/mistica-web/issues/614)) ([84f210c](https://github.com/Telefonica/mistica-web/commit/84f210c47264a85e00becc62c5b47c2835ded4bf))
+* **DataCard, MediaCard, SnapCard:** remove extra top padding ([#621](https://github.com/Telefonica/mistica-web/issues/621)) ([44d0b0e](https://github.com/Telefonica/mistica-web/commit/44d0b0e1b2ed544f711e021284ea12c08ef84c7b))
+* **icons:** new 2g/3g icons and updated some others ([#618](https://github.com/Telefonica/mistica-web/issues/618)) ([66fab57](https://github.com/Telefonica/mistica-web/commit/66fab5745eb34a77e8670de2a54a67aed8aac83d))
+* **styles:** remove jss from mistica ([#615](https://github.com/Telefonica/mistica-web/issues/615)) ([ffe577b](https://github.com/Telefonica/mistica-web/commit/ffe577be47d298714f7fd858d71414bb1b5ed7f8))
+* **TextLink:** remove small prop ([#616](https://github.com/Telefonica/mistica-web/issues/616)) ([2196f96](https://github.com/Telefonica/mistica-web/commit/2196f96794b5e94473e527c82f9720f8df590c3d))
+* **ThemeConfig:** remove mediaQueries config ([#613](https://github.com/Telefonica/mistica-web/issues/613)) ([b6128f8](https://github.com/Telefonica/mistica-web/commit/b6128f81cd721278f9013d3a5de94246e962c3b6))
+
+
+### BREAKING CHANGES
+
+* **colors:** removed Theme.colors (see codemod)
+* **colors:** colorScheme is now 'auto' by default
+* **ThemeConfig:** removed ThemeConfig.mediaQueries and Theme.mq
+* **css:** mistica no longer inlines css in js, you must import the css/mistica.css in your app
+* **DataCard, MediaCard, SnapCard:** removed extra top padding in DataCard, MediaCard and SnapCard
+* **icons:** Removed chevron-top-regular (use chevron-up-regular instead). Updated play and pause icons to remove circle. Added new play-circle and pause-circle icons to replace the old ones.
+* **TextLink:** removed TextLink small prop
+* **styles:** removed createUseStyles and other jss related apis
+* **Carousel:** remove Carousel mobilePageOffset prop
+* **colors:** borderLight and borderDark colors renamed
+
+# [12.13.0](https://github.com/Telefonica/mistica-web/compare/v12.12.0...v12.13.0) (2022-12-23)
+
+
+### Bug Fixes
+
+* **Typo:** typo in attribute name ([#625](https://github.com/Telefonica/mistica-web/issues/625)) ([8c2d712](https://github.com/Telefonica/mistica-web/commit/8c2d7128a6c9b56fbd3108b3b6d062a2d2044faa))
+
+
+### Features
+
+* **Carousel:** extend items per page for tablet and desktop container types ([#610](https://github.com/Telefonica/mistica-web/issues/610)) ([e4c569f](https://github.com/Telefonica/mistica-web/commit/e4c569feb248969008425e731a7c63bc70e87423))
+* **Skeletons:** Improve skeleton container size ([#619](https://github.com/Telefonica/mistica-web/issues/619)) ([d5d628d](https://github.com/Telefonica/mistica-web/commit/d5d628dba3ced805e0ac7d03eb2a56b73175f703))
+
+# [12.12.0](https://github.com/Telefonica/mistica-web/compare/v12.11.1...v12.12.0) (2022-12-19)
+
+
+### Bug Fixes
+
+* **Touchable:** use BaseTouchable in some components ([#601](https://github.com/Telefonica/mistica-web/issues/601)) ([3cd8f44](https://github.com/Telefonica/mistica-web/commit/3cd8f44e7a52888040b5b1c732b9bcc732db1c27))
+* **vanilla-extract:** remove backgroundColor from sprinkles ([#599](https://github.com/Telefonica/mistica-web/issues/599)) ([7981028](https://github.com/Telefonica/mistica-web/commit/7981028296e82900cf23bb20d308aa3751f17e66))
+
+
+### Features
+
+* **Carousel:** deprecate mobilePageOffset prop ([#609](https://github.com/Telefonica/mistica-web/issues/609)) ([6bca5bf](https://github.com/Telefonica/mistica-web/commit/6bca5bf6b30adbccd54fbeae8d3a3fc24982b3fb))
+* **colors:** added codemod to migrate from theme.colors to skinVars.colors ([#608](https://github.com/Telefonica/mistica-web/issues/608)) ([2caece1](https://github.com/Telefonica/mistica-web/commit/2caece140f3cdd6a0231efcdc76ab8d2c56f802d))
+* **DataAttributes:** expose component name as data attribute ([#622](https://github.com/Telefonica/mistica-web/issues/622)) ([6fd7049](https://github.com/Telefonica/mistica-web/commit/6fd70493826a6ea19aca9139e34f3d1901a84797))
+* **HighlightedCard:** use forwardRef ([#607](https://github.com/Telefonica/mistica-web/issues/607)) ([0bc6227](https://github.com/Telefonica/mistica-web/commit/0bc622743c873c6880ab46b3b6718e81a70ff617))
+* **ResponsiveLayout:** allow background color ([#600](https://github.com/Telefonica/mistica-web/issues/600)) ([069e4d1](https://github.com/Telefonica/mistica-web/commit/069e4d13b24fbe8af60b51fa8abfb8f1dd903132))
+* **vanilla-extract:** migrate FixedFooterLayout and other internal components ([#606](https://github.com/Telefonica/mistica-web/issues/606)) ([2d8d082](https://github.com/Telefonica/mistica-web/commit/2d8d082ed357f84f6432443650b03be7246fa70b))
+* **vanilla-extract:** migrate HelperText ([#611](https://github.com/Telefonica/mistica-web/issues/611)) ([a4fb684](https://github.com/Telefonica/mistica-web/commit/a4fb68458ca43c91684d328ff58010ab4c1a9091))
+* **vanilla-extract:** Migrate MaybeDismisseable, Menu, NavigationBar, Breadcrumbs, PasswordInput, Popover, RadioButton, Select, Switch ([#598](https://github.com/Telefonica/mistica-web/issues/598)) ([0c61e5d](https://github.com/Telefonica/mistica-web/commit/0c61e5d200db0f25a36b601581322e73669995d2))
+* **vanilla-extract:** Migrate TextField Components, TextFieldBase ([#603](https://github.com/Telefonica/mistica-web/issues/603)) ([b2d7df8](https://github.com/Telefonica/mistica-web/commit/b2d7df81bb8cd6a966dafaf83914dddda2d4d8ee))
+
+## [12.11.1](https://github.com/Telefonica/mistica-web/compare/v12.11.0...v12.11.1) (2022-11-25)
+
+
+### Bug Fixes
+
+* **ButtonLayout:** unstability in screenshot tests ([#604](https://github.com/Telefonica/mistica-web/issues/604)) ([34e196d](https://github.com/Telefonica/mistica-web/commit/34e196d7c18de11fabe7eb0e6409711f08519a7c))
+
+# [12.11.0](https://github.com/Telefonica/mistica-web/compare/v12.10.0...v12.11.0) (2022-11-24)
+
+
+### Bug Fixes
+
+* **styles:** some fixes in components migrated to VE ([#602](https://github.com/Telefonica/mistica-web/issues/602)) ([f907063](https://github.com/Telefonica/mistica-web/commit/f9070635b7b9a022fd781f7ccb5191dceb7d97f4))
+
+
+### Features
+
+* **vanilla-extract:** migrate carousel ([#589](https://github.com/Telefonica/mistica-web/issues/589)) ([c4a02fa](https://github.com/Telefonica/mistica-web/commit/c4a02fac08fe80a0ecbfea115c6e21e9ee6c0cae))
+* **vanilla-extract:** Migrate FadeIn, Feedbacks, Form, HighlightedCard, LoadingBar ([#592](https://github.com/Telefonica/mistica-web/issues/592)) ([f2c069f](https://github.com/Telefonica/mistica-web/commit/f2c069f976a554df2ed399e71d712e2533de9098))
+* **vanilla-extract:** migrate icons to use colors from skin vars ([#591](https://github.com/Telefonica/mistica-web/issues/591)) ([b6acdb7](https://github.com/Telefonica/mistica-web/commit/b6acdb74ef469a261da908c4fa905d4839885d2d))
+* **vanilla-extract:** migrate list and rows ([#595](https://github.com/Telefonica/mistica-web/issues/595)) ([9bd94eb](https://github.com/Telefonica/mistica-web/commit/9bd94ebb5de855a2d34c38d50654f84d7aba2f66))
+* **vanilla-extract:** Migrate ProgressBar, Skeletons, Spinner, Stepper, Tooltip, NegativeBox ([#594](https://github.com/Telefonica/mistica-web/issues/594)) ([b22662b](https://github.com/Telefonica/mistica-web/commit/b22662beb98be73ee5af991c173a9583a8290019))
+* **vanilla-extract:** Migrate ScreenReaderOnly ([#596](https://github.com/Telefonica/mistica-web/issues/596)) ([bceed72](https://github.com/Telefonica/mistica-web/commit/bceed72ecb23b4a99d8068fbde1ea749d324e2c8))
+* **vanilla-extract:** Migrate Tabs ([#597](https://github.com/Telefonica/mistica-web/issues/597)) ([4d1e4a6](https://github.com/Telefonica/mistica-web/commit/4d1e4a6ef3ea0dc32317ea9b7b7aedc79a28613e))
+* **vanilla-extract:** Migrate TextLink ([#593](https://github.com/Telefonica/mistica-web/issues/593)) ([11a2e9f](https://github.com/Telefonica/mistica-web/commit/11a2e9f03d046da7539b0dcf37a93dc98841b09d))
+
+# [12.10.0](https://github.com/Telefonica/mistica-web/compare/v12.9.1...v12.10.0) (2022-11-22)
+
+
+### Bug Fixes
+
+* **FixedFooterLayout:** mediaquery to not be fixed when viewport isn't tall enough ([#588](https://github.com/Telefonica/mistica-web/issues/588)) ([cf183ec](https://github.com/Telefonica/mistica-web/commit/cf183eca04b13147a6f9fc527234117283363606))
+* **Inputs:** Review readonly input props ([#577](https://github.com/Telefonica/mistica-web/issues/577)) ([c2349bd](https://github.com/Telefonica/mistica-web/commit/c2349bdb991a8b8417f14a84030c409c2959f2df))
+* **RadioButton:** controlled by parent ([#586](https://github.com/Telefonica/mistica-web/issues/586)) ([38b1f47](https://github.com/Telefonica/mistica-web/commit/38b1f478b6dbb7ad1839c88c953747ab12f16eab))
+* **Row:** types for runtime conditional values ([#570](https://github.com/Telefonica/mistica-web/issues/570)) ([566d1bb](https://github.com/Telefonica/mistica-web/commit/566d1bbc98c5429bcc0ac29bc813a84aaa5daf36))
+
+
+### Features
+
+* **FormFields:** restore readonly type ([#584](https://github.com/Telefonica/mistica-web/issues/584)) ([94549f1](https://github.com/Telefonica/mistica-web/commit/94549f1153e88d393e3b3ce671a7798bb4ee357b))
+* **vanilla-extract:** Dialog, Divider, DoubleField, EmptyState, EmptyStateCard ([#590](https://github.com/Telefonica/mistica-web/issues/590)) ([73f62d6](https://github.com/Telefonica/mistica-web/commit/73f62d676ab3a658407070f46767d9b01579c47f))
+* **vanilla-extract:** migrate ButtonGroup, ButtonLayout, Button, Touchable, Image and Video ([#581](https://github.com/Telefonica/mistica-web/issues/581)) ([2e699ff](https://github.com/Telefonica/mistica-web/commit/2e699fff504047b164020198e13b131f8eef546d))
+* **vanilla-extract:** migrate Callouts, Cards, Checkbox, Chip, Circle, CreditCard, CVV and DateTimePicker ([#587](https://github.com/Telefonica/mistica-web/issues/587)) ([3aadcdb](https://github.com/Telefonica/mistica-web/commit/3aadcdbe0aecfebdd25105c73569b251f42427c6))
+* **vanilla-extract:** migrate ResponsiveLayout and GridLayout ([#580](https://github.com/Telefonica/mistica-web/issues/580)) ([e97f801](https://github.com/Telefonica/mistica-web/commit/e97f801435207ef688d6202717a00b2687867c2f))
+* **VE:** migrate to Vanilla Extract: box, stack, inline, touchable and text ([#575](https://github.com/Telefonica/mistica-web/issues/575)) ([9c3cd72](https://github.com/Telefonica/mistica-web/commit/9c3cd72b4abb09d3bdf2f40c5a898d69cc1e1e40))
+
+## [12.9.1](https://github.com/Telefonica/mistica-web/compare/v12.9.0...v12.9.1) (2022-11-10)
+
+
+### Bug Fixes
+
+* **build:** use browserslist as compilation target ([#578](https://github.com/Telefonica/mistica-web/issues/578)) ([c81fe5d](https://github.com/Telefonica/mistica-web/commit/c81fe5d9de29ded2a54f7657717abf8620bebada))
+
+# [12.9.0](https://github.com/Telefonica/mistica-web/compare/v12.8.0...v12.9.0) (2022-11-10)
+
+
+### Bug Fixes
+
+* **Cards:** close button ([#576](https://github.com/Telefonica/mistica-web/issues/576)) ([4c27059](https://github.com/Telefonica/mistica-web/commit/4c27059fbe702c47d4e85813e659ac577896f954))
+* **playroom:** PreviewTools tabs in desktop ([#574](https://github.com/Telefonica/mistica-web/issues/574)) ([76f39cc](https://github.com/Telefonica/mistica-web/commit/76f39cce00bbaf15ee7b7ac44004f6c92e6dcbe6))
+
+
+### Features
+
+* **Vanilla Extract:** as a future replacement of jss ([#561](https://github.com/Telefonica/mistica-web/issues/561)) ([8e54a95](https://github.com/Telefonica/mistica-web/commit/8e54a95ed2b9f24499ab7dcca196ed4c3953d6fe))
+
+# [12.8.0](https://github.com/Telefonica/mistica-web/compare/v12.7.0...v12.8.0) (2022-11-07)
+
+
+### Features
+
+* **Carousel:** initialActiveItem prop ([#560](https://github.com/Telefonica/mistica-web/issues/560)) ([262f833](https://github.com/Telefonica/mistica-web/commit/262f833d8a1f49e3837fdb69ff22f9543f9a7e71))
+* **RowList:** noLastDivider prop ([#535](https://github.com/Telefonica/mistica-web/issues/535)) ([5a0999f](https://github.com/Telefonica/mistica-web/commit/5a0999f2f3ea6afde2616f9a2a96c4247859130b))
+
+# [12.7.0](https://github.com/Telefonica/mistica-web/compare/v12.6.0...v12.7.0) (2022-11-03)
+
+
+### Bug Fixes
+
+* **colors O2:** buttonLinkBackgroundSelected ([#543](https://github.com/Telefonica/mistica-web/issues/543)) ([80ae976](https://github.com/Telefonica/mistica-web/commit/80ae9761f48d265f70a835b9ed49e0e95df60b86))
+* **FixedFooter:** fixed footer layout as fixed only when enough height available ([#557](https://github.com/Telefonica/mistica-web/issues/557)) ([1f8d0da](https://github.com/Telefonica/mistica-web/commit/1f8d0da69cad3ddad2bc2facbcfe86597a1b7f82))
+* **TextField:** improve styles for readOnly state ([#528](https://github.com/Telefonica/mistica-web/issues/528)) ([624e55e](https://github.com/Telefonica/mistica-web/commit/624e55e4477a23e78e67a5039ec6455f6b261a21))
+
+
+### Features
+
+* **icons:** new tokens icon and fixes for buy-data, eco, and justice ([#559](https://github.com/Telefonica/mistica-web/issues/559)) ([e957475](https://github.com/Telefonica/mistica-web/commit/e95747566cda33e4ee87a8427ceb6ab729b91353))
+* **Image:** add loading/error experience ([#562](https://github.com/Telefonica/mistica-web/issues/562)) ([08b0a73](https://github.com/Telefonica/mistica-web/commit/08b0a7388dcc3604fbf7af6823d6614df9ff0c88))
+
+# [12.6.0](https://github.com/Telefonica/mistica-web/compare/v12.5.0...v12.6.0) (2022-10-24)
+
+
+### Bug Fixes
+
+* **NavigationBar:** Add nabvarHeight to playroom ([#558](https://github.com/Telefonica/mistica-web/issues/558)) ([dc6ea00](https://github.com/Telefonica/mistica-web/commit/dc6ea00adf1a17a5169010a2b5ba2d2de67d6158))
+* **PhoneNumberField:** Safari workaround for prefix alignment ([#555](https://github.com/Telefonica/mistica-web/issues/555)) ([db28ec4](https://github.com/Telefonica/mistica-web/commit/db28ec443f3a91fd6f890e17e102df7be9a5449b))
+* **TextLink:** always use inline anchors for TextLink ([#553](https://github.com/Telefonica/mistica-web/issues/553)) ([1d3cc49](https://github.com/Telefonica/mistica-web/commit/1d3cc496be0a05f2b9b230bb1621e6750a43b4c3))
+* **Tooltip:** increase tooltip z-index ([#544](https://github.com/Telefonica/mistica-web/issues/544)) ([39ee208](https://github.com/Telefonica/mistica-web/commit/39ee2085522835ee8f09f4f5fde5582549dcc24c))
+
+
+### Features
+
+* **Dialog:** design improvements ([#554](https://github.com/Telefonica/mistica-web/issues/554)) ([ca98c50](https://github.com/Telefonica/mistica-web/commit/ca98c50a0b0b33b9a7484d0f1cb95d09900fd0ba))
+* **NavigationBar:** Move navigation bar height to context ([#548](https://github.com/Telefonica/mistica-web/issues/548)) ([bb3e2c1](https://github.com/Telefonica/mistica-web/commit/bb3e2c1a46881dc63813768db475ca14d2465062))
+* **Tooltip:** open on hover in desktop ([#550](https://github.com/Telefonica/mistica-web/issues/550)) ([c9f8c88](https://github.com/Telefonica/mistica-web/commit/c9f8c8827e32150b093e76bea72cbfc513230504))
+
 # [12.5.0](https://github.com/Telefonica/mistica-web/compare/v12.4.0...v12.5.0) (2022-10-11)
 
 

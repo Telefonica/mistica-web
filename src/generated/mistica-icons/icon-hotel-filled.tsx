@@ -5,20 +5,20 @@
  */
 
 import * as React from 'react';
-import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
+import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
 const IconHotelFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
-    const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
-    const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
+    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
-                d="M21.841 12.023c0-9.053-7.504-9.815-9.431-9.86a49.975 49.975 0 00-.933-.008c-1.975.02-9.322.695-9.322 9.812 0 9.13 7.415 9.843 9.392 9.871.254.005.528.002.768 0l.134-.002c1.88-.037 9.392-.743 9.392-9.813zm-8.179-5.165h2.16c.227 0 .409.182.409.41v9.467a.41.41 0 01-.41.409h-2.159a.41.41 0 01-.409-.41v-3.576h-2.515v3.577a.41.41 0 01-.41.409H8.17a.41.41 0 01-.409-.41V7.268a.41.41 0 01.409-.409h2.16a.41.41 0 01.409.41v3.45h2.515v-3.45a.41.41 0 01.409-.41z"
                 fill={fillColor}
+                d="M21.841 12.023c0-9.053-7.504-9.815-9.431-9.86a49.975 49.975 0 00-.933-.008c-1.975.02-9.322.695-9.322 9.812 0 9.13 7.415 9.843 9.392 9.871.254.005.528.002.768 0l.134-.002c1.88-.037 9.392-.743 9.392-9.813zm-8.179-5.165h2.16c.227 0 .409.182.409.41v9.467a.41.41 0 01-.41.409h-2.159a.41.41 0 01-.409-.41v-3.576h-2.515v3.577a.41.41 0 01-.41.409H8.17a.41.41 0 01-.409-.41V7.268a.41.41 0 01.409-.409h2.16a.41.41 0 01.409.41v3.45h2.515v-3.45a.41.41 0 01.409-.41z"
             />
         </svg>
     );

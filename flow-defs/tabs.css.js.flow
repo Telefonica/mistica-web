@@ -1,0 +1,19 @@
+// @flow
+
+declare export var outerBorder: string;
+declare export var outer: string;
+declare export var inner: string;
+declare export var tabsContainer: string;
+declare export var tabVariants: {
+  default: string,
+  tabs2: string,
+  tabs3: string,
+};
+declare export var tabWithIcon: string;
+declare export var tabSelectionVariants: {
+  noSelected: string,
+  selected: string,
+  selectedAnimating: string,
+};
+declare export var icon: string;
+declare export var animatedLine: string;

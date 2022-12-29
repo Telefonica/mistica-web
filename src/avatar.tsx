@@ -2,30 +2,12 @@
 import * as React from 'react';
 import Badge from './badge';
 import IconUserAccountRegular from './generated/mistica-icons/icon-user-account-regular';
-import {useTheme} from './hooks';
-import {createUseStyles} from './jss';
 import {useIsInverseVariant} from './theme-variant-context';
+import * as classes from './avatar.css';
+import {vars} from './skins/skin-contract.css';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {IconProps} from './utils/types';
-
-const useStyles = createUseStyles(() => ({
-    avatar: {
-        borderRadius: '50%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: ({textColor}) => textColor,
-        background: ({backgroundColor}) => backgroundColor,
-        width: ({size}) => size,
-        height: ({size}) => size,
-        overflow: 'hidden',
-    },
-    image: {
-        width: ({size}) => size,
-        height: ({size}) => size,
-        objectFit: 'cover',
-    },
-}));
+import type {DataAttributes, IconProps} from './utils/types';
 
 /**
  * Returns a right/top distance for the badge.
@@ -51,6 +33,7 @@ type AvatarProps = {
     Icon?: React.FC<IconProps>;
     badge?: boolean | number;
     'aria-label'?: string;
+    dataAttributes?: DataAttributes;
 };
 
 /**
@@ -78,14 +61,14 @@ const Avatar = ({
     badge,
     initials = '',
     'aria-label': ariaLabel,
+    dataAttributes,
     ...props
 }: AvatarProps): JSX.Element => {
-    const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
-    const backgroundColor = props.backgroundColor ?? (isInverse ? colors.brandHigh : colors.brandLow);
-    const textColor = props.textColor ?? (isInverse ? colors.textPrimaryInverse : colors.brand);
+    const backgroundColor =
+        props.backgroundColor ?? (isInverse ? vars.colors.brandHigh : vars.colors.brandLow);
+    const textColor = props.textColor ?? (isInverse ? vars.colors.textPrimaryInverse : vars.colors.brand);
     const [imgLoadError, setImgLoadError] = React.useState(false);
-    const classes = useStyles({textColor, backgroundColor, size});
 
     React.useEffect(() => {
         setImgLoadError(false); // reset error state when url changes
@@ -99,13 +82,21 @@ const Avatar = ({
 
     return (
         <Badge value={badgeValue} top={badgePosition} right={badgePosition}>
-            <div className={classes.avatar} role="img" aria-label={ariaLabel ?? initials}>
+            <div
+                className={classes.avatar}
+                role="img"
+                aria-label={ariaLabel ?? initials}
+                style={{width: size, height: size, color: textColor, background: backgroundColor}}
+                {...getPrefixedDataAttributes(dataAttributes, 'Avatar')}
+            >
                 {shouldRenderImage ? (
                     <img
                         src={src}
                         className={classes.image}
                         onError={() => setImgLoadError(true)}
                         role="none"
+                        width={size}
+                        height={size}
                     />
                 ) : (
                     renderText(size, letters) || <Icon size={iconSize} color="currentColor" />

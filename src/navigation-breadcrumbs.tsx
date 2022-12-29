@@ -4,35 +4,15 @@
  */
 import * as React from 'react';
 import {Text1} from './text';
-import {useTheme} from './hooks';
-import {createUseStyles} from './jss';
 import {getPrefixedDataAttributes} from './utils/dom';
 import TextLink from './text-link';
 import {useIsInverseVariant} from './theme-variant-context';
+import * as styles from './navigation-breadcrumbs.css';
+import {vars} from './skins/skin-contract.css';
 
 import type {DataAttributes} from './utils/types';
 
 const BREADCRUMB_SEPARATOR = ' / ';
-
-const useStyles = createUseStyles(() => ({
-    link: {
-        '&:hover': {
-            textDecoration: 'underline',
-        },
-    },
-    current: {
-        textDecoration: 'none',
-        pointerEvents: 'none',
-    },
-    list: {
-        padding: 0,
-        margin: 0,
-        listStyleType: 'none',
-        '& > li': {
-            display: 'inline',
-        },
-    },
-}));
 
 export type NavigationBreadcrumbsProps = {
     title: string;
@@ -51,19 +31,21 @@ const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({
     dataAttributes,
     'aria-label': ariaLabel = 'Breadcrumb',
 }) => {
-    const {colors} = useTheme();
-    const classes = useStyles();
     const isInverse = useIsInverseVariant();
     return (
-        <nav aria-label={ariaLabel} {...getPrefixedDataAttributes(dataAttributes)}>
-            <ol className={classes.list}>
+        <nav aria-label={ariaLabel} {...getPrefixedDataAttributes(dataAttributes, 'NavigationBreadcrumbs')}>
+            <ol className={styles.list}>
                 {breadcrumbs.map(({title, url}, index) => (
-                    <li key={index}>
+                    <li key={index} className={styles.listItem}>
                         <Text1 regular>
                             <TextLink
                                 to={url}
-                                style={{color: isInverse ? colors.textPrimaryInverse : colors.textPrimary}}
-                                className={classes.link}
+                                style={{
+                                    color: isInverse
+                                        ? vars.colors.textPrimaryInverse
+                                        : vars.colors.textPrimary,
+                                }}
+                                className={styles.link}
                             >
                                 {title}
                             </TextLink>
@@ -73,17 +55,20 @@ const NavigationBreadcrumbs: React.FC<NavigationBreadcrumbsProps> = ({
                         </span>
                     </li>
                 ))}
-                <li>
+                <li className={styles.listItem}>
                     {/* this anchor is added for accessibility, it is disabled */}
                     <a
                         aria-current="page"
                         href="#"
-                        className={classes.current}
+                        className={styles.current}
                         onClick={(e) => {
                             e.preventDefault();
                         }}
                     >
-                        <Text1 regular color={isInverse ? colors.textSecondaryInverse : colors.textSecondary}>
+                        <Text1
+                            regular
+                            color={isInverse ? vars.colors.textSecondaryInverse : vars.colors.textSecondary}
+                        >
                             {title}
                         </Text1>
                     </a>

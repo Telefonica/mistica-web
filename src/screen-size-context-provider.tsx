@@ -1,12 +1,11 @@
 import * as React from 'react';
 import ScreenSizeContext from './screen-size-context';
-import {useTheme, useIsomorphicLayoutEffect} from './hooks';
+import {useIsomorphicLayoutEffect} from './hooks';
+import * as mq from './media-queries.css';
 
 type Props = {
     children: React.ReactNode;
 };
-
-const stripMedia = (s: string) => s.replace(/^@media /, '');
 
 const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
     /**
@@ -20,39 +19,21 @@ const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
         setIsServerSide(false);
     }, []);
 
-    const theme = useTheme();
-    const mediaQueries = React.useMemo(
-        () => ({
-            mobile: stripMedia(theme.mq.mobile),
-            tablet: stripMedia(theme.mq.tablet),
-            tabletOrBigger: stripMedia(theme.mq.tabletOrBigger),
-            tabletOrSmaller: stripMedia(theme.mq.tabletOrSmaller),
-            largueDesktop: stripMedia(theme.mq.largeDesktop),
-        }),
-        [
-            theme.mq.mobile,
-            theme.mq.tablet,
-            theme.mq.tabletOrBigger,
-            theme.mq.tabletOrSmaller,
-            theme.mq.largeDesktop,
-        ]
-    );
-
     const [isMobile, setIsMobile] = React.useState(
-        () => !isServerSide && window.matchMedia(mediaQueries.mobile).matches
+        () => !isServerSide && window.matchMedia(mq.mobile).matches
     );
     const [isTablet, setIsTablet] = React.useState(
-        () => !isServerSide && window.matchMedia(mediaQueries.tablet).matches
+        () => !isServerSide && window.matchMedia(mq.tablet).matches
     );
     const [isTabletOrBigger, setIsTabletOrBigger] = React.useState(
-        () => !isServerSide && window.matchMedia(mediaQueries.tabletOrBigger).matches
+        () => !isServerSide && window.matchMedia(mq.tabletOrBigger).matches
     );
     const [isTabletOrSmaller, setIsTabletOrSmaller] = React.useState(
-        () => !isServerSide && window.matchMedia(mediaQueries.tabletOrSmaller).matches
+        () => !isServerSide && window.matchMedia(mq.tabletOrSmaller).matches
     );
 
     const [isLargeDesktop, setIsLargeDesktop] = React.useState(
-        () => !isServerSide && window.matchMedia(mediaQueries.largueDesktop).matches
+        () => !isServerSide && window.matchMedia(mq.largeDesktop).matches
     );
 
     useIsomorphicLayoutEffect(() => {
@@ -61,11 +42,11 @@ const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
         }
 
         const entries: Array<[string, (flag: boolean) => void]> = [
-            [mediaQueries.mobile, setIsMobile],
-            [mediaQueries.tablet, setIsTablet],
-            [mediaQueries.tabletOrBigger, setIsTabletOrBigger],
-            [mediaQueries.tabletOrSmaller, setIsTabletOrSmaller],
-            [mediaQueries.largueDesktop, setIsLargeDesktop],
+            [mq.mobile, setIsMobile],
+            [mq.tablet, setIsTablet],
+            [mq.tabletOrBigger, setIsTabletOrBigger],
+            [mq.tabletOrSmaller, setIsTabletOrSmaller],
+            [mq.largeDesktop, setIsLargeDesktop],
         ];
 
         const cleanupFunctions = entries.map(([query, setState]) => {
@@ -79,13 +60,7 @@ const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
         });
 
         return () => cleanupFunctions.forEach((fn) => fn());
-    }, [
-        mediaQueries.mobile,
-        mediaQueries.tablet,
-        mediaQueries.tabletOrBigger,
-        mediaQueries.tabletOrSmaller,
-        mediaQueries.largueDesktop,
-    ]);
+    }, []);
 
     const value = React.useMemo(
         () => ({
@@ -93,10 +68,10 @@ const ScreenSizeContextProvider: React.FC<Props> = ({children}) => {
             isTablet,
             isTabletOrBigger,
             isTabletOrSmaller,
-            isDesktopOrBigger: !isTabletOrSmaller,
+            isDesktopOrBigger: isServerSide ? false : !isTabletOrSmaller,
             isLargeDesktop,
         }),
-        [isMobile, isTablet, isTabletOrBigger, isTabletOrSmaller, isLargeDesktop]
+        [isMobile, isTablet, isTabletOrBigger, isTabletOrSmaller, isLargeDesktop, isServerSide]
     );
 
     return <ScreenSizeContext.Provider value={value}>{children}</ScreenSizeContext.Provider>;

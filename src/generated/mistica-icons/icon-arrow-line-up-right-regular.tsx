@@ -5,20 +5,20 @@
  */
 
 import * as React from 'react';
-import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
+import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
 const IconArrowLineUpRightRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
-    const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
-    const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
+    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
-                d="M16.53 8.465l-.063 8.569c.021.378.342.67.722.65a.684.684 0 00.65-.689l.017-10.16c-.002-.043-.02-.083-.028-.126-.008-.04-.011-.082-.027-.121a.709.709 0 00-.147-.218.751.751 0 00-.219-.144c-.04-.018-.082-.021-.124-.028-.04-.008-.079-.027-.122-.029l-9.974-.045a.684.684 0 00-.705.663s-.002.001 0 .003a.687.687 0 00.667.705h8.383l-9.22 9.22a.687.687 0 00.97.97l9.22-9.22z"
                 fill={fillColor}
+                d="M16.53 8.465l-.063 8.569c.021.378.342.67.722.65a.684.684 0 00.65-.689l.017-10.16c-.002-.043-.02-.083-.028-.126-.008-.04-.011-.082-.027-.121a.709.709 0 00-.147-.218.751.751 0 00-.219-.144c-.04-.018-.082-.021-.124-.028-.04-.008-.079-.027-.122-.029l-9.974-.045a.684.684 0 00-.705.663s-.002.001 0 .003a.687.687 0 00.667.705h8.383l-9.22 9.22a.687.687 0 00.97.97l9.22-9.22z"
             />
         </svg>
     );

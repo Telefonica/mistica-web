@@ -6,7 +6,7 @@ import {
     RowList,
     BoxedRowList,
     RadioGroup,
-    useTheme,
+    skinVars,
     Placeholder,
     Tag,
     IconLikeFilled,
@@ -67,7 +67,6 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
     extraContent,
     disabled,
 }) => {
-    const {colors} = useTheme();
     const extra = extraContent ? <Placeholder height={56} /> : undefined;
 
     const getControlProps = (index: number) => {
@@ -113,7 +112,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                     right: ({centerY}: {centerY: boolean}) => (
                         <div style={centerY ? {display: 'flex', alignItems: 'center', height: '100%'} : {}}>
                             <Inline space={0}>
-                                <Text3 color={colors.error} medium as="p">
+                                <Text3 color={skinVars.colors.error} medium as="p">
                                     12,00 €
                                 </Text3>
                             </Inline>
@@ -176,8 +175,8 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
             />
             <RowComponent
                 asset={
-                    <Circle backgroundColor={colors.brandLow} size={40}>
-                        <IconMobileDeviceRegular color={colors.brand} />
+                    <Circle backgroundColor={skinVars.colors.brandLow} size={40}>
+                        <IconMobileDeviceRegular color={skinVars.colors.brand} />
                     </Circle>
                 }
                 headline={headline}
@@ -207,7 +206,13 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={<Image src="https://i.imgur.com/HRvhZ6F.jpeg" height={80} aspectRatio="16:9" />}
+                asset={
+                    <Image
+                        src="https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
+                        height={80}
+                        aspectRatio="16:9"
+                    />
+                }
                 headline={headline}
                 title={title}
                 subtitle={subtitle}
@@ -221,7 +226,13 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={<Image src="https://i.imgur.com/G8aJDhB.jpeg" width={80} aspectRatio="7:10" />}
+                asset={
+                    <Image
+                        src="https://images.unsplash.com/photo-1570158268183-d296b2892211?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+                        width={80}
+                        aspectRatio="7:10"
+                    />
+                }
                 headline={headline}
                 title={title}
                 subtitle={subtitle}
@@ -235,7 +246,12 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={<Image src="https://i.imgur.com/0T2IYB2.jpeg" width={80} />}
+                asset={
+                    <Image
+                        src="https://images.unsplash.com/photo-1548446388-f35145b5a0c1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
+                        width={80}
+                    />
+                }
                 headline={headline}
                 title={title}
                 subtitle={subtitle}
@@ -249,7 +265,12 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={<Avatar size={40} src="https://i.imgur.com/nRBEMMV.png" />}
+                asset={
+                    <Avatar
+                        size={40}
+                        src="https://images.unsplash.com/photo-1640951613773-54706e06851d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
+                    />
+                }
                 headline={headline}
                 title={title}
                 subtitle={subtitle}

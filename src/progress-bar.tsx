@@ -1,30 +1,10 @@
 import * as React from 'react';
 import {useTheme} from './hooks';
-import {createUseStyles} from './jss';
+import {vars} from './skins/skin-contract.css';
+import * as styles from './progress-bar.css';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-const transition = '1s cubic-bezier(0.75, 0, 0.27, 1)';
-
-const useStyles = createUseStyles(({colors}) => ({
-    barBackground: {
-        height: 4,
-        backgroundColor: colors.control,
-        borderRadius: 2,
-    },
-    bar: {
-        height: '100%',
-        backgroundColor: ({color}) => color ?? colors.controlActivated,
-        transition: `max-width ${transition}`,
-        animation: `$bar ${transition}`,
-        borderRadius: 2,
-        maxWidth: ({progressPercent}) => `${progressPercent}%`,
-    },
-
-    '@keyframes bar': {
-        '0%': {
-            maxWidth: '0',
-        },
-    },
-}));
+import type {DataAttributes} from './utils/types';
 
 type Props = {
     progressPercent: number;
@@ -32,6 +12,7 @@ type Props = {
     children?: void;
     'aria-label'?: string;
     'aria-labelledby'?: string;
+    dataAttributes?: DataAttributes;
 };
 
 const ProgressBar: React.FC<Props> = ({
@@ -39,14 +20,15 @@ const ProgressBar: React.FC<Props> = ({
     color,
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
+    dataAttributes,
 }) => {
-    const classes = useStyles({progressPercent, color});
     const {texts} = useTheme();
     const defaultLabel = texts.loading;
     const label = ariaLabelledBy ? undefined : ariaLabel || defaultLabel;
     return (
         <div
-            className={classes.barBackground}
+            {...getPrefixedDataAttributes(dataAttributes, 'ProgressBar')}
+            className={styles.barBackground}
             role="progressbar"
             aria-valuenow={progressPercent}
             aria-valuemin={0}
@@ -54,7 +36,13 @@ const ProgressBar: React.FC<Props> = ({
             aria-label={label}
             aria-labelledby={ariaLabelledBy}
         >
-            <div className={classes.bar} />
+            <div
+                className={styles.bar}
+                style={{
+                    maxWidth: `${progressPercent}%`,
+                    backgroundColor: color ?? vars.colors.controlActivated,
+                }}
+            />
         </div>
     );
 };

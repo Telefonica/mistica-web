@@ -1,6 +1,9 @@
 import * as React from 'react';
 import {isAndroid, isChrome} from './utils/platform';
 import {useDisableBodyScroll, useTheme} from './hooks';
+import {getPrefixedDataAttributes} from './utils/dom';
+
+import type {DataAttributes} from './utils/types';
 
 const defaultStyle: React.CSSProperties = {
     position: 'fixed',
@@ -19,9 +22,17 @@ type Props = {
     style?: React.CSSProperties;
     className?: string;
     disableScroll?: boolean;
+    dataAttributes?: DataAttributes;
 };
 
-const Overlay: React.FC<Props> = ({onPress, children, className, style, disableScroll = false}) => {
+const Overlay: React.FC<Props> = ({
+    onPress,
+    children,
+    className,
+    style,
+    disableScroll = false,
+    dataAttributes,
+}) => {
     const [showChildren, setChildrenVisibility] = React.useState(true);
     useDisableBodyScroll(disableScroll);
     const {platformOverrides} = useTheme();
@@ -36,6 +47,7 @@ const Overlay: React.FC<Props> = ({onPress, children, className, style, disableS
     return (
         <div
             data-overlay="true"
+            {...getPrefixedDataAttributes(dataAttributes, 'Overlay')}
             style={{...defaultStyle, ...style}}
             className={className}
             onPointerDown={(e) => {

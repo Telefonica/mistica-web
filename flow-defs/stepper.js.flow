@@ -1,10 +1,12 @@
 // @flow
 
 import * as React from "react";
+import type { DataAttributes } from "./utils/types";
 declare type StepperProps = {
-  steps: Array<string>,
+  steps: $ReadOnlyArray<string>,
   currentIndex: number,
   "aria-label"?: string,
+  dataAttributes?: DataAttributes,
 };
 declare var Stepper: React.ComponentType<StepperProps>;
 declare export default typeof Stepper;

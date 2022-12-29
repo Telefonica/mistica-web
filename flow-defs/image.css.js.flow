@@ -1,0 +1,5 @@
+// @flow
+
+declare export var FADE_IN_DURATION_MS: 300;
+declare export var image: string;
+declare export var noBorder: string;

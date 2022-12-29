@@ -2,11 +2,10 @@ import * as React from 'react';
 
 import type {RegionCode} from './utils/region-code';
 import type {Locale} from './utils/locale';
-import type {Skin, Colors, SkinName, TextPresetsConfig} from './skins/types';
+import type {Skin, SkinName, TextPresetsConfig} from './skins/types';
 import type {TrackingEvent} from './utils/types';
-import type {MediaQueries} from './utils/media-queries';
 
-export type ThemeTexts = typeof TEXTS_ES;
+export type ThemeTexts = Readonly<typeof TEXTS_ES>;
 
 const TEXTS_ES = {
     expirationDatePlaceholder: 'MM/AA',
@@ -160,16 +159,12 @@ export const getTexts = (locale: Locale): typeof TEXTS_ES => {
     }
 };
 
-export const dimensions = {
-    headerMobileHeight: 56,
-    headerDesktopHeight: 80,
-};
+export const NAVBAR_HEIGHT_MOBILE = 56;
+export const NAVBAR_HEIGHT_DESKTOP = 80;
 
-export const mediaQueriesConfig = {
-    tabletMinWidth: 768,
-    desktopMinWidth: 1024,
-    largeDesktopMinWidth: 1368,
-    desktopOrTabletMinHeight: 550,
+export const dimensions = {
+    headerMobileHeight: NAVBAR_HEIGHT_MOBILE,
+    headerDesktopHeight: NAVBAR_HEIGHT_DESKTOP,
 };
 
 type LinkComponent = React.ComponentType<{
@@ -212,34 +207,28 @@ export type EventFormat = 'universal-analytics' | 'google-analytics-4';
 
 // This is the type expected by ThemeContextProvider theme prop.
 // This config is provided by the user of the lib
-export type ThemeConfig = {
+export type ThemeConfig = Readonly<{
     skin: Readonly<Skin>;
     colorScheme?: ColorScheme; // light by default. TODO: Change to auto by default in next major version
-    i18n: {
+    i18n: Readonly<{
         locale: Locale;
         phoneNumberFormattingRegionCode: RegionCode;
-    };
-    platformOverrides?: {
+    }>;
+    platformOverrides?: Readonly<{
         platform?: 'ios' | 'android' | 'desktop';
         insideNovumNativeApp?: boolean;
         userAgent?: string;
-    };
+    }>;
     texts?: Partial<ThemeTexts>;
-    analytics?: {
+    analytics?: Readonly<{
         logEvent: (trackingEvent: TrackingEvent) => Promise<void>;
         eventFormat?: EventFormat;
-    };
-    dimensions?: {headerMobileHeight: number};
-    mediaQueries?: {
-        tabletMinWidth: number;
-        desktopMinWidth: number;
-        largeDesktopMinWidth: number;
-        desktopOrTabletMinHeight: number;
-    };
+    }>;
+    dimensions?: Readonly<{headerMobileHeight: number | 'mistica'}>;
     Link?: LinkComponent;
     useHrefDecorator?: () => (href: string) => string;
     enableTabFocus?: boolean;
-};
+}>;
 
 // This is the lib INTERNAL context
 export type Theme = {
@@ -260,8 +249,6 @@ export type Theme = {
     };
     // TODO: rename this props to navigationBarHeight (or something similar) in next major
     dimensions: {headerMobileHeight: number; headerDesktopHeight: number};
-    mq: MediaQueries;
-    colors: Colors;
     textPresets: TextPresetsConfig;
     Link: LinkComponent;
     isDarkMode: boolean;

@@ -1,92 +1,42 @@
 import * as React from 'react';
-import {createUseStyles} from './jss';
+import classnames from 'classnames';
 import {useTheme} from './hooks';
 import Box from './box';
 import {Text2} from './text';
 import IconButton from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import {pxToRem} from './utils/css';
-import classNames from 'classnames';
+import * as styles from './chip.css';
+import {vars} from './skins/skin-contract.css';
+import {getPrefixedDataAttributes} from './utils/dom';
 
-import type {IconProps} from './utils/types';
+import type {ExclusifyUnion} from './utils/utility-types';
+import type {DataAttributes, IconProps} from './utils/types';
 
-const useStyles = createUseStyles(({colors, mq}) => ({
-    container: {
-        display: 'inline-flex',
-        verticalAlign: 'middle',
-        justifyContent: 'center',
-        alignItems: 'center',
-        border: `1px solid ${colors.border}`,
-        borderRadius: 20,
-        backgroundColor: colors.backgroundContainer,
-        minHeight: 32,
-        minWidth: 56,
-        cursor: 'default',
-
-        color: colors.neutralMedium, // Giving color to icons
-
-        '& > span': {
-            color: colors.textPrimary, // Giving color to text
-        },
-    },
-    interactive: {
-        userSelect: 'none',
-        [mq.supportsHover]: {
-            '&:hover:not($active)': {
-                borderColor: ({isDarkMode}) => (isDarkMode ? colors.background : colors.brandLow),
-                color: colors.controlActivated, // Giving color to icons on hover
-                backgroundColor: colors.brandLow,
-            },
-            '&:hover > span': {
-                color: colors.controlActivated, // Giving color to text on hover
-            },
-        },
-    },
-    active: {
-        borderColor: colors.controlActivated,
-        color: colors.controlActivated,
-        backgroundColor: colors.brandLow,
-        '& > span': {
-            color: colors.controlActivated,
-        },
-    },
-}));
-
-interface ChipBaseProps {
+interface SimpleChipProps {
     children: string;
     Icon?: React.FC<IconProps>;
     id?: string;
+    dataAttributes?: DataAttributes;
 }
 
-interface SimpleChipProps extends ChipBaseProps {
-    onClose?: undefined;
-    active?: undefined;
-}
-
-interface ClosableChipProps extends ChipBaseProps {
+interface ClosableChipProps extends SimpleChipProps {
     onClose: () => void;
-
-    active?: undefined;
 }
 
-interface ToggleChipProps extends ChipBaseProps {
+interface ToggleChipProps extends SimpleChipProps {
     active: boolean;
-
-    onClose?: undefined;
 }
 
-type ChipProps = SimpleChipProps | ClosableChipProps | ToggleChipProps;
+type ChipProps = ExclusifyUnion<SimpleChipProps | ClosableChipProps | ToggleChipProps>;
 
-const Chip: React.FC<ChipProps> = (props) => {
+const Chip: React.FC<ChipProps> = ({Icon, children, id, dataAttributes, active, onClose}: ChipProps) => {
     const {texts, isDarkMode} = useTheme();
-    const classes = useStyles({isDarkMode});
-
-    const {Icon, children, id} = props;
 
     const body = (
         <>
             {Icon && (
-                <Box paddingRight={4}>
+                <Box paddingRight={4} className={active ? styles.iconActive : styles.icon}>
                     <Icon color="currentColor" size={pxToRem(16)} />
                 </Box>
             )}
@@ -98,9 +48,13 @@ const Chip: React.FC<ChipProps> = (props) => {
 
     const paddingLeft = Icon ? 8 : 12;
 
-    if (props.onClose) {
+    if (onClose) {
         return (
-            <Box className={classes.container} paddingLeft={paddingLeft}>
+            <Box
+                className={styles.chipVariants.default}
+                paddingLeft={paddingLeft}
+                {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
+            >
                 {body}
                 <Box paddingLeft={4}>
                     <IconButton
@@ -111,23 +65,23 @@ const Chip: React.FC<ChipProps> = (props) => {
                             alignItems: 'center',
                         }}
                         aria-label={texts.closeButtonLabel}
-                        onPress={() => props.onClose()}
+                        onPress={() => onClose()}
                     >
-                        <IconCloseRegular size={16} color="currentColor" />
+                        <IconCloseRegular size={16} color={vars.colors.neutralMedium} />
                     </IconButton>
                 </Box>
             </Box>
         );
     } else {
-        const isInteractive = props.active !== undefined;
+        const isInteractive = active !== undefined;
         return (
             <Box
-                className={classNames(classes.container, {
-                    [classes.interactive]: isInteractive,
-                    [classes.active]: props.active,
+                className={classnames(styles.chipVariants[active ? 'active' : 'default'], {
+                    [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,
                 })}
                 paddingLeft={paddingLeft}
                 paddingRight={12}
+                {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
             >
                 {body}
             </Box>

@@ -34,12 +34,12 @@ export const Portal: React.FC<Props> = ({children, className}) => {
 
     React.useEffect(() => {
         if (container && className) {
-            container.classList.add(className);
+            container.classList.add(...className.split(' '));
         }
 
         return () => {
             if (container && className) {
-                container.classList.remove(className);
+                container.classList.remove(...className.split(' '));
             }
         };
     }, [className, container]);

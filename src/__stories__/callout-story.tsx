@@ -4,7 +4,7 @@ import {
     ButtonPrimary,
     ButtonLink,
     IconBoxLight,
-    useTheme,
+    skinVars,
     ThemeVariant,
     ResponsiveLayout,
     Box,
@@ -38,8 +38,6 @@ export const Default: StoryComponent<Args> = ({
     isClosable,
     isOverInverse,
 }) => {
-    const {colors} = useTheme();
-
     const button = actions.includes('button') ? (
         <ButtonPrimary small onPress={() => {}}>
             Action
@@ -58,7 +56,11 @@ export const Default: StoryComponent<Args> = ({
 
     return (
         <ThemeVariant isInverse={isOverInverse}>
-            <div style={{background: isOverInverse ? colors.backgroundBrand : colors.background}}>
+            <div
+                style={{
+                    background: isOverInverse ? skinVars.colors.backgroundBrand : skinVars.colors.background,
+                }}
+            >
                 <ResponsiveLayout>
                     <Box paddingY={24}>
                         <Callout

@@ -1,0 +1,7 @@
+// @flow
+
+declare export var variants: {
+  default: string,
+  inverseLight: string,
+  inverseDark: string,
+};

@@ -5,20 +5,20 @@
  */
 
 import * as React from 'react';
-import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
+import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
 const IconOfficeFilled: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
-    const {colors} = useTheme();
     const isInverse = useIsInverseVariant();
-    const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
+    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+
     return (
         <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
             <path
-                d="M3.757 2h16.466a.48.48 0 01.468.464V22h-9.609v-7.907H5.59V22H3.3V2.464c0-.256.205-.464.457-.464zm1.827 6.978h5.492V5.257H5.584v3.721zm12.812 8.836v-3.721h-5.493v3.721h5.493zm-5.493-8.836h5.493V5.257h-5.493v3.721z"
                 fill={fillColor}
+                d="M3.757 2h16.466a.48.48 0 01.468.464V22h-9.609v-7.907H5.59V22H3.3V2.464c0-.256.205-.464.457-.464zm1.827 6.978h5.492V5.257H5.584v3.721zm12.812 8.836v-3.721h-5.493v3.721h5.493zm-5.493-8.836h5.493V5.257h-5.493v3.721z"
             />
         </svg>
     );

@@ -20,27 +20,27 @@ export default {
 type Args = {
     numItems: number;
     itemsPerPageMobile: number;
+    itemsPerPageTablet: number;
     itemsPerPageDesktop: number;
     withBullets: boolean;
-    nextPageOffset: number;
-    prevPageOffset: number;
     free: boolean;
     itemsToScroll: number;
     autoplay: boolean;
     loop: boolean;
+    initialActiveItem: number;
 };
 
 export const Default: StoryComponent<Args> = ({
     numItems,
     withBullets,
     itemsPerPageMobile,
+    itemsPerPageTablet,
     itemsPerPageDesktop,
-    nextPageOffset,
-    prevPageOffset,
     free,
     itemsToScroll,
     autoplay,
     loop,
+    initialActiveItem,
 }) => {
     const [pageInfo, setPageInfo] = React.useState<{
         pageIndex: number;
@@ -58,10 +58,13 @@ export const Default: StoryComponent<Args> = ({
                         dataAttributes={{testid: 'carousel-story'}}
                         withBullets={withBullets}
                         free={free}
-                        itemsPerPage={{mobile: itemsPerPageMobile, desktop: itemsPerPageDesktop}}
+                        itemsPerPage={{
+                            mobile: itemsPerPageMobile,
+                            tablet: itemsPerPageTablet,
+                            desktop: itemsPerPageDesktop,
+                        }}
                         itemsToScroll={itemsToScroll}
                         autoplay={autoplay ? {time: 5000, loop} : false}
-                        mobilePageOffset={{next: nextPageOffset, prev: prevPageOffset}}
                         onPageChange={setPageInfo}
                         items={Array.from({length: numItems}, (_, idx) => (
                             <MediaCard
@@ -69,10 +72,16 @@ export const Default: StoryComponent<Args> = ({
                                 key={idx}
                                 title={`Title ${idx}`}
                                 description="Some description"
-                                media={<Image src="https://i.imgur.com/flZfkiX.png" aspectRatio="16:9" />}
+                                media={
+                                    <Image
+                                        src="https://images.unsplash.com/photo-1575903013621-1387ce8caa74?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+                                        aspectRatio="16:9"
+                                    />
+                                }
                                 buttonLink={<ButtonLink href="https://google.com">Link {idx}</ButtonLink>}
                             />
                         ))}
+                        initialActiveItem={initialActiveItem}
                     />
                     <Stack space={8}>
                         <Title1 as="h2">Current page info</Title1>
@@ -94,11 +103,11 @@ Default.args = {
     withBullets: true,
     numItems: 6,
     itemsPerPageDesktop: 3,
+    itemsPerPageTablet: 2,
     itemsPerPageMobile: 1,
-    nextPageOffset: 16,
-    prevPageOffset: 16,
     free: false,
     autoplay: false,
     loop: false,
     itemsToScroll: 0,
+    initialActiveItem: 0,
 };

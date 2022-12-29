@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
     Select,
-    createUseStyles,
     IconButton,
     IconSettingsRegular,
     IconCodeFilled,
@@ -11,6 +10,7 @@ import {
     Tabs,
     Checkbox,
     ThemeContextProvider,
+    skinVars,
 } from '../src';
 import {Movistar, Vivo, O2, Telefonica, Blau} from './themes';
 import {useOverrideTheme} from './frame-component';
@@ -18,78 +18,12 @@ import IconSun from './icons/icon-sun';
 import IconMoon from './icons/icon-moon';
 import IconAppleOn from './icons/icon-apple-on';
 import IconAppleOff from './icons/icon-apple-off';
+import * as styles from './preview-tools.css';
 
 import type {ThemeConfig, ColorScheme, SkinName} from '../src';
 
 export * from '../src';
 export {default as ButtonGroup} from '../src/button-group';
-
-const useControlsStyles = createUseStyles((theme) => ({
-    controls: {
-        background: 'white',
-        position: 'fixed',
-        top: 0,
-        width: '100%',
-        zIndex: 2,
-        display: 'flex',
-        '& *': {outline: 'none'},
-    },
-    flexSpacer: {
-        flex: 1,
-    },
-    mobileControls: {
-        alignItems: 'center',
-        paddingRight: 16,
-        gap: '16px',
-        '& > :last-child': {flexShrink: 0},
-    },
-    desktopControls: {
-        borderBottom: `1px solid ${theme.colors.divider}`,
-        height: 57,
-    },
-    tabs: {
-        flexBasis: '100%',
-        marginRight: 150,
-        whiteSpace: 'nowrap',
-    },
-    desktopControlItem: {
-        padding: '0 16px 2px',
-        flexShrink: 0,
-        display: 'flex',
-        alignItems: 'center',
-    },
-    checkbox: {
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px',
-    },
-}));
-
-const useStyles = createUseStyles((theme) => ({
-    floattingButton: {
-        position: 'fixed',
-        zIndex: 1,
-        top: ({position}) => (position.startsWith('top') ? 0 : 'initial'),
-        bottom: ({position}) => (position.startsWith('bottom') ? 0 : 'initial'),
-        right: ({position}) => (position.endsWith('right') ? 0 : 'initial'),
-        left: ({position}) => (position.endsWith('left') ? 0 : 'initial'),
-        opacity: 0.3,
-        '& *': {outline: 'none'},
-        [theme.mq.supportsHover]: {
-            '&:hover': {
-                opacity: 1,
-                transform: 'rotateZ(45deg)',
-            },
-        },
-        transition: 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out',
-    },
-    floattingButtonBackground: {
-        borderRadius: '50%',
-        display: 'inline-block',
-        width: 32,
-        height: 32,
-    },
-}));
 
 const themesMap: {[skinName: string]: {themeConfig: ThemeConfig; text: string}} = {
     Movistar: {
@@ -135,15 +69,13 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
     onColorSchemeChange,
     onEditStoryPress,
 }) => {
-    const classes = useControlsStyles();
-    const {colors} = useTheme();
     const {isMobile} = useScreenSize();
     const systemColorScheme = 'light';
     const alternativeColorScheme = 'dark';
 
     if (isMobile) {
         return (
-            <div className={`${classes.controls} ${classes.mobileControls}`}>
+            <div className={`${styles.controls} ${styles.mobileControls}`}>
                 <Select
                     label="Select brand"
                     name="theme"
@@ -172,14 +104,14 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                     />
                 )}
                 <IconButton aria-label="Edit in Playroom" size={32} onPress={onEditStoryPress}>
-                    <IconCodeFilled size={32} color={colors.neutralHigh} />
+                    <IconCodeFilled size={32} color={skinVars.colors.neutralHigh} />
                 </IconButton>
             </div>
         );
     } else {
         return (
-            <div className={`${classes.controls} ${classes.desktopControls}`}>
-                <div className={classes.tabs}>
+            <div className={`${styles.controls} ${styles.desktopControls}`}>
+                <div className={styles.tabs}>
                     <Tabs
                         tabs={Object.values(themesMap).map(({text}) => ({text}))}
                         selectedIndex={Object.keys(themesMap).indexOf(skinName)}
@@ -188,8 +120,8 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                         }}
                     />
                 </div>
-                <div className={classes.flexSpacer} />
-                <div className={classes.desktopControlItem}>
+                <div className={styles.flexSpacer} />
+                <div className={styles.desktopControlItem}>
                     <Checkbox
                         name="colorScheme"
                         checked={colorScheme === alternativeColorScheme}
@@ -204,7 +136,7 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                     />
                 </div>
                 {showPlatformSelector && (
-                    <div className={classes.desktopControlItem}>
+                    <div className={styles.desktopControlItem}>
                         <Checkbox
                             name="iOS"
                             checked={os === 'ios'}
@@ -213,9 +145,9 @@ const PreviewToolsControls: React.FC<PreviewToolsControlsProps> = ({
                         />
                     </div>
                 )}
-                <div className={classes.desktopControlItem}>
+                <div className={styles.desktopControlItem}>
                     <IconButton aria-label="Edit in Playroom" size={32} onPress={onEditStoryPress}>
-                        <IconCodeFilled size={32} color={colors.neutralHigh} />
+                        <IconCodeFilled size={32} color={skinVars.colors.neutralHigh} />
                     </IconButton>
                 </div>
             </div>
@@ -250,34 +182,32 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     const [skinName, setSkinName] = React.useState<SkinName>(initialSkinName);
     const [os, setOs] = React.useState<'android' | 'ios' | 'desktop'>(initialOs);
     const [colorScheme, setColorScheme] = React.useState<ColorScheme>('light');
-    const classes = useStyles({position});
-    const {colors} = useTheme();
     const overrideTheme = useOverrideTheme();
 
     React.useEffect(() => {
-        const impossibleSize = 999999;
         const selectedThemeConfig = themesMap[skinName].themeConfig;
-        let mediaQueries;
         if (forceMobile) {
-            mediaQueries = {
-                tabletMinWidth: impossibleSize,
-                desktopMinWidth: impossibleSize,
-                largeDesktopMinWidth: impossibleSize,
-                desktopOrTabletMinHeight: impossibleSize,
-            };
-        } else if (forceDesktop) {
-            mediaQueries = {
-                tabletMinWidth: 0,
-                desktopMinWidth: 0,
-                largeDesktopMinWidth: impossibleSize,
-                desktopOrTabletMinHeight: 0,
-            };
+            document.location.pathname = document.location.pathname.replace(
+                /playroom(-mobile|-desktop)?/,
+                'playroom-mobile'
+            );
+        }
+        if (forceDesktop) {
+            document.location.pathname = document.location.pathname.replace(
+                /playroom(-mobile|-desktop)?/,
+                'playroom-desktop'
+            );
+        }
+        if (!forceMobile && !forceDesktop) {
+            document.location.pathname = document.location.pathname.replace(
+                /playroom(-mobile|-desktop)?/,
+                'playroom'
+            );
         }
         overrideTheme({
             ...selectedThemeConfig,
             colorScheme,
             platformOverrides: {platform: os},
-            mediaQueries,
         });
     }, [overrideTheme, os, skinName, forceMobile, colorScheme, forceDesktop]);
 
@@ -298,7 +228,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     }, [os, skinName]);
 
     const controls = (
-        <ThemeContextProvider theme={theme}>
+        <ThemeContextProvider theme={theme} as="div">
             <PreviewToolsControls
                 skinName={skinName}
                 onSkinNameChange={setSkinName}
@@ -321,10 +251,18 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
                 {showOverlay ? (
                     <Overlay onPress={() => setShowOverlay(false)}>{controls}</Overlay>
                 ) : (
-                    <div className={classes.floattingButton}>
+                    <div
+                        className={styles.floattingButton}
+                        style={{
+                            top: position.startsWith('top') ? 0 : undefined,
+                            bottom: position.startsWith('bottom') ? 0 : undefined,
+                            right: position.endsWith('right') ? 0 : undefined,
+                            left: position.endsWith('left') ? 0 : undefined,
+                        }}
+                    >
                         <IconButton size={56} aria-label="settings" onPress={() => setShowOverlay(true)}>
-                            <div className={classes.floattingButtonBackground}>
-                                <IconSettingsRegular size={32} color={colors.neutralHigh} />
+                            <div className={styles.floattingButtonBackground}>
+                                <IconSettingsRegular size={24} color={skinVars.colors.neutralHigh} />
                             </div>
                         </IconButton>
                     </div>

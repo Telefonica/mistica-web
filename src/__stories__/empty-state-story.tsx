@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {EmptyState, ButtonPrimary, IconBoxLight, useTheme, ButtonLink, Image} from '..';
+import {EmptyState, ButtonPrimary, IconBoxLight, skinVars, ButtonLink, Image} from '..';
 
 export default {
     title: 'Patterns/Empty states/EmptyState',
@@ -30,12 +30,10 @@ export const WithImage: StoryComponent = () => (
 WithImage.storyName = 'With image';
 
 export const WithIcon: StoryComponent<Args> = ({asset}) => {
-    const {colors} = useTheme();
-
     let assetProps;
     if (asset === 'Icon') {
         assetProps = {
-            icon: <IconBoxLight size="100%" color={colors.brand} />,
+            icon: <IconBoxLight size="100%" color={skinVars.colors.brand} />,
         };
     } else if (asset === 'Image') {
         assetProps = {

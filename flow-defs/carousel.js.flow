@@ -8,33 +8,32 @@ declare type PageBulletsProps = {
   onPress?: (index: number) => void,
 };
 declare export var PageBullets: React.ComponentType<PageBulletsProps>;
+declare type DesktopItemsPerPage =
+  | {
+      small?: number,
+      medium?: number,
+      large?: number,
+    }
+  | number;
 declare type ItemsPerPageProp =
   | {
       mobile?: number,
-      desktop?: number,
+      tablet?: number,
+      desktop?: DesktopItemsPerPage,
     }
   | number;
-declare type MobilePageOffset =
-  | number
-  | {
-      prev: number,
-      next: number,
-    };
 declare type CarouselProps = {
   items: $ReadOnlyArray<React.Node>,
   itemStyle?: CssStyle,
   itemClassName?: string,
   withBullets?: boolean,
   renderBullets?: (bulletsProps: PageBulletsProps) => React.Node,
+  initialActiveItem?: number,
   itemsPerPage?: ItemsPerPageProp,
   /**
    * scrolls one page by default
    */
   itemsToScroll?: number,
-  /**
-   * number of pixels to show for the next/prev page in mobile
-   */
-  mobilePageOffset?: MobilePageOffset,
   /**
    * If true, scroll snap doesn't apply and the user has a free scroll
    */
@@ -58,6 +57,7 @@ declare type CenteredCarouselProps = {
   itemClassName?: string,
   withBullets?: boolean,
   renderBullets?: (bulletsProps: PageBulletsProps) => React.Node,
+  initialActiveItem?: number,
   onPageChange?: (newPageInfo: {
     pageIndex: number,
     shownItemIndexes: Array<number>,

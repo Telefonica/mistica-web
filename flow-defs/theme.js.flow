@@ -3,10 +3,9 @@
 import * as React from "react";
 import type { RegionCode } from "./utils/region-code";
 import type { Locale } from "./utils/locale";
-import type { Skin, Colors, SkinName, TextPresetsConfig } from "./skins/types";
+import type { Skin, SkinName, TextPresetsConfig } from "./skins/types";
 import type { TrackingEvent } from "./utils/types";
-import type { MediaQueries } from "./utils/media-queries";
-export type ThemeTexts = typeof TEXTS_ES;
+export type ThemeTexts = $ReadOnly<typeof TEXTS_ES>;
 declare var TEXTS_ES: {
   expirationDatePlaceholder: string,
   togglePasswordVisibilityLabel: string,
@@ -40,15 +39,11 @@ declare var TEXTS_ES: {
   carouselPrevButton: string,
 };
 declare export var getTexts: (locale: Locale) => typeof TEXTS_ES;
+declare export var NAVBAR_HEIGHT_MOBILE: 56;
+declare export var NAVBAR_HEIGHT_DESKTOP: 80;
 declare export var dimensions: {
   headerMobileHeight: number,
   headerDesktopHeight: number,
-};
-declare export var mediaQueriesConfig: {
-  tabletMinWidth: number,
-  desktopMinWidth: number,
-  largeDesktopMinWidth: number,
-  desktopOrTabletMinHeight: number,
 };
 declare type LinkComponent = React.ComponentType<{
   style?: CssStyle,
@@ -81,36 +76,30 @@ declare type LinkComponent = React.ComponentType<{
 declare export var AnchorLink: LinkComponent;
 export type ColorScheme = "dark" | "light" | "auto";
 export type EventFormat = "universal-analytics" | "google-analytics-4";
-export type ThemeConfig = {
+export type ThemeConfig = $ReadOnly<{
   skin: $ReadOnly<Skin>,
   colorScheme?: ColorScheme,
-  i18n: {
+  i18n: $ReadOnly<{
     locale: Locale,
     phoneNumberFormattingRegionCode: RegionCode,
-  },
-  platformOverrides?: {
+  }>,
+  platformOverrides?: $ReadOnly<{
     platform?: "ios" | "android" | "desktop",
     insideNovumNativeApp?: boolean,
     userAgent?: string,
-  },
+  }>,
   texts?: $Shape<ThemeTexts>,
-  analytics?: {
+  analytics?: $ReadOnly<{
     logEvent: (trackingEvent: TrackingEvent) => Promise<void>,
     eventFormat?: EventFormat,
-  },
-  dimensions?: {
-    headerMobileHeight: number,
-  },
-  mediaQueries?: {
-    tabletMinWidth: number,
-    desktopMinWidth: number,
-    largeDesktopMinWidth: number,
-    desktopOrTabletMinHeight: number,
-  },
+  }>,
+  dimensions?: $ReadOnly<{
+    headerMobileHeight: number | "mistica",
+  }>,
   Link?: LinkComponent,
   useHrefDecorator?: () => (href: string) => string,
   enableTabFocus?: boolean,
-};
+}>;
 export type Theme = {
   skinName: SkinName,
   i18n: {
@@ -131,8 +120,6 @@ export type Theme = {
     headerMobileHeight: number,
     headerDesktopHeight: number,
   },
-  mq: MediaQueries,
-  colors: Colors,
   textPresets: TextPresetsConfig,
   Link: LinkComponent,
   isDarkMode: boolean,

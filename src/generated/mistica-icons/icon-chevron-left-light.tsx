@@ -7,19 +7,20 @@
 import * as React from 'react';
 import {useTheme} from '../../hooks';
 import {useIsInverseVariant} from '../../theme-variant-context';
+import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
 const IconChevronLeftLight: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
-    const {skinName, colors} = useTheme();
     const isInverse = useIsInverseVariant();
-    const fillColor = color ?? (isInverse ? colors.inverse : colors.neutralHigh);
+    const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
+    const {skinName} = useTheme();
     if (skinName.match(/^o2/i)) {
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M15.889 4.117a.368.368 0 00-.538 0l-7.24 7.585a.413.413 0 00-.071.46c.019.05.048.099.088.14l6.008 6.296a.377.377 0 00.55 0 .422.422 0 000-.577l-5.765-6.04 6.968-7.3a.412.412 0 000-.564zM14.866 19.41c0-.326.252-.59.563-.59.312 0 .564.264.564.59 0 .326-.252.59-.564.59a.577.577 0 01-.563-.59z"
                     fill={fillColor}
+                    d="M15.889 4.117a.368.368 0 00-.538 0l-7.24 7.585a.413.413 0 00-.071.46c.019.05.048.099.088.14l6.008 6.296a.377.377 0 00.55 0 .422.422 0 000-.577l-5.765-6.04 6.968-7.3a.412.412 0 000-.564zM14.866 19.41c0-.326.252-.59.563-.59.312 0 .564.264.564.59 0 .326-.252.59-.564.59a.577.577 0 01-.563-.59z"
                 />
             </svg>
         );
@@ -27,8 +28,8 @@ const IconChevronLeftLight: React.FC<IconProps> = ({color, size = 24, children, 
         return (
             <svg width={size} height={size} viewBox="0 0 24 24" role="presentation" {...rest}>
                 <path
-                    d="M16.32 20a.7.7 0 01-.45-.16l-8.658-7.314a.577.577 0 010-.897l8.659-7.451a.71.71 0 01.939 0 .595.595 0 010 .872l-8.171 7.02 8.132 6.862a.584.584 0 01.005.868l-.005.004a.727.727 0 01-.451.196z"
                     fill={fillColor}
+                    d="M16.32 20a.7.7 0 01-.45-.16l-8.658-7.314a.577.577 0 010-.897l8.659-7.451a.71.71 0 01.939 0 .595.595 0 010 .872l-8.171 7.02 8.132 6.862a.584.584 0 01.005.868l-.005.004a.727.727 0 01-.451.196z"
                 />
             </svg>
         );

@@ -1,20 +1,15 @@
 import * as React from 'react';
-import {createUseStyles} from './jss';
-import {
-    Label,
-    HelperText,
-    FieldContainer,
-    LABEL_LEFT_POSITION,
-    LABEL_SCALE_MOBILE,
-    LABEL_SCALE_DESKTOP,
-} from './text-field-components';
+import {Label, HelperText, FieldContainer} from './text-field-components';
+import {LABEL_LEFT_POSITION, LABEL_SCALE_MOBILE, LABEL_SCALE_DESKTOP} from './text-field-components.css';
 import {Text3} from './text';
 import {isIos, isRunningAcceptanceTest, isFirefox, isSafari} from './utils/platform';
 import {useAriaId, useTheme, useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 import classNames from 'classnames';
 import {combineRefs} from './utils/common';
+import * as styles from './text-field-base.css';
+import {sprinkles} from './sprinkles.css';
+import {vars} from './skins/skin-contract.css';
 
-import type {Theme} from './theme';
 import type {InputState} from './text-field-components';
 import type {FieldValidator} from './form-context';
 
@@ -63,7 +58,7 @@ export interface CommonFormFieldProps {
     onFocus?: (event: React.FocusEvent) => void;
     onBlur?: (event: React.FocusEvent) => void;
     fullWidth?: boolean;
-    getSuggestions?: (text: string) => Array<string>;
+    getSuggestions?: (text: string) => ReadonlyArray<string>;
     placeholder?: string;
     value?: string;
     defaultValue?: string;
@@ -95,7 +90,7 @@ interface TextFieldBaseProps {
     style?: React.CSSProperties;
     value?: string;
     inputRef?: React.Ref<HTMLInputElement | HTMLSelectElement>;
-    getSuggestions?: (value: string) => Array<string>;
+    getSuggestions?: (value: string) => ReadonlyArray<string>;
     onClick?: (event: React.MouseEvent) => void;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (event: React.FocusEvent) => void;
@@ -113,163 +108,6 @@ interface TextFieldBaseProps {
     min?: string;
     max?: string;
 }
-
-const commonInputStyles = (theme: Theme) => ({
-    background: 'none',
-    border: 0,
-    outline: 0,
-    fontSize: 'inherit',
-    lineHeight: 'inherit',
-    paddingRight: ({endIcon}: {endIcon: boolean}) => (endIcon ? 0 : 16),
-    paddingLeft: ({prefix, startIcon}: {prefix: boolean; startIcon: boolean}) => {
-        if (prefix) {
-            return 0;
-        }
-        if (startIcon) {
-            return 48;
-        }
-        return 12;
-    },
-    /* Workaround to avoid huge bullets on ios devices (-apple-system font related) */
-    fontFamily: ({type}: {type: string}) =>
-        type === 'password' &&
-        isIos(theme.platformOverrides) &&
-        !isRunningAcceptanceTest(theme.platformOverrides)
-            ? 'arial'
-            : 'inherit',
-    color: theme.colors.textPrimary,
-    caretColor: theme.colors.controlActivated,
-    width: '100%',
-    // Seems like 'display: flex' is causing issues on firefox and the input takes over the whole space https://stackoverflow.com/questions/43314921/strange-input-widths-in-firefox-vs-chrome
-    minWidth: 0,
-    textOverflow: 'ellipsis',
-    '&::placeholder ': {
-        opacity: 0,
-        transition: 'opacity 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms',
-    },
-    '&:focus': {
-        '&::placeholder ': {
-            opacity: 0.5,
-        },
-    },
-    boxShadow: 'none', // reset FF red shadow styles for required inputs
-});
-
-const useStyles = createUseStyles((theme) => ({
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        minWidth: 96,
-    },
-    fullWidth: {
-        width: '100%',
-        display: 'inline-flex',
-        alignSelf: ({prefix}) => (prefix ? 'baseline' : 'initial'),
-        '& > div': {
-            width: '100%',
-            display: 'inline-flex',
-        },
-    },
-    textArea: {
-        resize: 'none',
-        marginTop: ({hasLabel}) => (hasLabel ? 28 : 16),
-        [theme.mq.tabletOrSmaller]: {
-            marginTop: ({hasLabel}) => (hasLabel ? 24 : 16),
-        },
-        paddingBottom: '8px',
-        ...commonInputStyles(theme),
-    },
-    input: {
-        position: 'relative',
-        paddingTop: ({hasLabel}) => (hasLabel ? 28 : 16),
-        [theme.mq.tabletOrSmaller]: {
-            paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
-        },
-        paddingBottom: ({hasLabel}) => (hasLabel ? 8 : 16),
-        height: '100%',
-        ...commonInputStyles(theme),
-        WebkitAppearance: 'none',
-        '&::-webkit-search-cancel-button': {
-            WebkitAppearance: 'none',
-        },
-        '&::-webkit-search-decoration': {
-            WebkitAppearance: 'none',
-        },
-
-        // Chrome: make the native icon invisible and stretch it over the whole field so you can click
-        // anywhere in the input field to trigger the native datepicker
-        '&::-webkit-calendar-picker-indicator': {
-            position: 'absolute',
-            top: 0,
-            left: -24, // to fully cover input area
-            right: 0,
-            bottom: 0,
-            width: 'auto',
-            height: 'auto',
-            opacity: 0,
-            color: 'transparent',
-            background: 'transparent',
-        },
-
-        // Chrome: hide value if not valid or focused
-        // `opacity: 0` is needed when min/max is set and some parts of the date are disabled
-        // be sure to check that case when updating these styles
-        '&[type="month"]:not(:valid):not(:focus)::-webkit-datetime-edit': {
-            color: 'transparent',
-            opacity: 0,
-        },
-        '&[type="date"]:not(:valid):not(:focus)::-webkit-datetime-edit': {
-            color: 'transparent',
-            opacity: 0,
-        },
-        '&[type="datetime-local"]:not(:valid):not(:focus)::-webkit-datetime-edit': {
-            color: 'transparent',
-            opacity: 0,
-        },
-
-        // Firefox: hide value if not valid or focused
-        // Only apply when Firefox, otherwise it breaks styles in safari mobile
-        '&[type="month"]:not(:valid):not(:focus)': isFirefox() ? {color: 'transparent'} : {},
-        '&[type="date"]:not(:valid):not(:focus)': isFirefox() ? {color: 'transparent'} : {},
-        '&[type="datetime-local"]:not(:valid):not(:focus)': isFirefox() ? {color: 'transparent'} : {},
-
-        // Override Chrome input autocomplete styles:
-        '&:-webkit-autofill': {
-            textFillColor: theme.colors.textPrimary,
-            // The background can not be overriden, but we can delay the background color transition to avoid the change
-            transitionProperty: 'background-color',
-            transitionDelay: '99999s',
-        },
-    },
-    endIcon: {
-        paddingLeft: 8,
-        paddingRight: 16,
-        display: 'flex',
-        alignItems: 'center',
-        alignSelf: 'center',
-    },
-    startIcon: {
-        pointerEvents: 'none', // passthrough click events to the input
-        paddingLeft: 12,
-        paddingRight: 12,
-        display: 'flex',
-        alignItems: 'center',
-        height: '100%',
-        position: 'absolute',
-    },
-    prefix: {
-        alignSelf: ({prefixAlignSelf}) => prefixAlignSelf,
-        paddingTop: ({hasLabel}) => (hasLabel ? 28 : 16),
-        [theme.mq.tabletOrSmaller]: {
-            paddingTop: ({hasLabel}) => (hasLabel ? 24 : 16),
-        },
-        paddingBottom: ({hasLabel}) => (hasLabel ? 8 : 16),
-        paddingLeft: 12,
-        paddingRight: 16,
-        opacity: ({inputState}) => (inputState === 'default' ? 0 : 1),
-        transition: 'opacity 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms',
-    },
-}));
 
 export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
     (
@@ -304,10 +142,10 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
         const [inputState, setInputState] = React.useState<InputState>(
             defaultValue?.length || value?.length ? 'filled' : 'default'
         );
-        const {colors} = useTheme();
         const {isTabletOrSmaller} = useScreenSize();
         const [characterCount, setCharacterCount] = React.useState(defaultValue?.length ?? 0);
         const hasLabel = !!label || !rest.required;
+        const theme = useTheme();
 
         // this shrinkLabel override is a workaround because I was unable to find a way to hide date
         // and date-time native placeholders when the input is not required
@@ -329,20 +167,6 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                 setPrefixAlignSelf('initial');
             }
         }, []);
-
-        const classes = useStyles({
-            inputState,
-            error,
-            endIcon,
-            startIcon,
-            shrinkLabel,
-            hasLabel,
-            prefix,
-            multiline,
-            type: rest.type,
-            disabled: rest.disabled,
-            prefixAlignSelf,
-        });
 
         React.useEffect(() => {
             if (inputState !== 'focused' && value?.length) {
@@ -395,6 +219,19 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
             paddingRight: endIcon && !isShrinked ? 36 : 0,
         };
 
+        const commonStyles = sprinkles({
+            paddingRight: endIcon ? 0 : 16,
+            paddingLeft: prefix ? 0 : startIcon ? 48 : 12,
+        });
+
+        /* Workaround to avoid huge bullets on ios devices (-apple-system font related) */
+        const fontFamily =
+            rest.type === 'password' &&
+            isIos(theme.platformOverrides) &&
+            !isRunningAcceptanceTest(theme.platformOverrides)
+                ? 'arial'
+                : 'inherit';
+
         return (
             <FieldContainer
                 disabled={rest.disabled}
@@ -408,23 +245,45 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                 multiline={multiline}
                 fullWidth={fullWidth}
                 fieldRef={fieldRef}
+                readOnly={rest.readOnly}
             >
-                {startIcon && <div className={classes.startIcon}>{startIcon}</div>}
+                {startIcon && <div className={styles.startIcon}>{startIcon}</div>}
 
                 {prefix && (
-                    <div className={classes.prefix}>
-                        <Text3 color={colors.textSecondary} regular wordBreak={false}>
+                    <div
+                        className={classNames(
+                            styles.prefix,
+                            hasLabel ? styles.prefixWithLabel : styles.prefixWithoutLabel
+                        )}
+                        style={{
+                            opacity: inputState === 'default' ? 0 : 1,
+                            alignSelf: prefixAlignSelf,
+                        }}
+                    >
+                        <Text3 color={vars.colors.textSecondary} regular wordBreak={false}>
                             {prefix}
                         </Text3>
                     </div>
                 )}
-                <div className={classes.fullWidth}>
+                <div className={styles.fullWidth} style={{alignSelf: prefix ? 'baseline' : 'initial'}}>
                     <Text3 as="div" regular>
                         {React.createElement(inputComponent || defaultInputElement, {
                             ...inputRefProps,
                             ...props,
                             id,
-                            className: multiline ? classes.textArea : classes.input,
+                            style: {...props.style, fontFamily},
+                            className: multiline
+                                ? classNames(
+                                      styles.textArea,
+                                      hasLabel ? styles.textAreaWithLabel : styles.textAreaWithoutLabel,
+                                      commonStyles
+                                  )
+                                : classNames(
+                                      styles.input,
+                                      hasLabel ? styles.inputWithLabel : styles.inputWithoutLabel,
+                                      commonStyles,
+                                      {[styles.inputFirefoxStyles]: isFirefox()}
+                                  ),
                             onFocus: (event: React.FocusEvent<HTMLInputElement>) => {
                                 setInputState('focused');
                                 onFocus?.(event);
@@ -465,49 +324,19 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                         {label}
                     </Label>
                 )}
-                {endIcon && <div className={classes.endIcon}>{endIcon}</div>}
+                {endIcon && <div className={styles.endIcon}>{endIcon}</div>}
                 {endIconOverlay}
             </FieldContainer>
         );
     }
 );
 
-const useSuggestionsStyles = createUseStyles(() => ({
-    menuItem: {
-        padding: '6px 16px',
-        height: 48,
-        transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-        '& hover': {
-            backgroundColor: 'rgba(0, 0, 0, 0.08)',
-        },
-        display: 'flex',
-        alignItems: 'center',
-        cursor: 'pointer',
-    },
-    menuItemSelected: {
-        backgroundColor: 'rgba(0, 0, 0, 0.14)',
-    },
-    suggestionsContainer: {
-        boxShadow:
-            '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
-        backgroundColor: 'white',
-        position: 'absolute',
-        zIndex: 2, // one more than TextField label
-        '& > ul': {
-            listStyleType: 'none',
-            padding: 0,
-            margin: 0,
-        },
-    },
-}));
-
 const Autosuggest = React.lazy(() => import(/* webpackChunkName: "react-autosuggest" */ 'react-autosuggest'));
 
 export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps>(
     ({getSuggestions, id: idProp, ...props}, ref) => {
-        const [suggestions, setSuggestions] = React.useState<Array<string>>([]);
+        const [suggestions, setSuggestions] = React.useState<ReadonlyArray<string>>([]);
         const inputRef = React.useRef<HTMLInputElement>(null);
-        const classes = useSuggestionsStyles();
         const {platformOverrides, texts} = useTheme();
         const id = useAriaId(idProp);
         const autoSuggestId = useAriaId();
@@ -558,8 +387,8 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                     renderSuggestion={(suggestion: any, {isHighlighted}) => (
                         <div
                             role="menuitem"
-                            className={classNames(classes.menuItem, {
-                                [classes.menuItemSelected]: isHighlighted,
+                            className={classNames(styles.menuItem, {
+                                [styles.menuItemSelected]: isHighlighted,
                             })}
                         >
                             <Text3 regular>{suggestion}</Text3>
@@ -571,7 +400,7 @@ export const TextFieldBaseAutosuggest = React.forwardRef<any, TextFieldBaseProps
                             style={{
                                 width: inputRef.current ? inputRef.current.clientWidth + 2 : 0, // +2 due to borders (input)
                             }}
-                            className={classes.suggestionsContainer}
+                            className={styles.suggestionsContainer}
                             aria-label={`${props.label} ${texts.menuLabelSuffix}`}
                         >
                             {options.children}

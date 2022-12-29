@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {useDisableBorderRadius} from './image';
-import {createUseStyles} from './jss';
-import {useSupportsAspectRatio} from './utils/aspect-ratio-support';
+import {AspectRatioElement} from './utils/aspect-ratio-support';
 import {combineRefs} from './utils/common';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isRunningAcceptanceTest, isSafari} from './utils/platform';
+import * as styles from './video.css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -16,44 +16,6 @@ export const RATIO = {
     '12:5': 12 / 5,
     '4:3': 4 / 3,
 };
-
-const useStyles = createUseStyles(() => ({
-    video: {
-        background: 'transparent',
-        display: 'block',
-        objectFit: 'cover',
-        maxWidth: '100%',
-        maxHeight: '100%',
-        '@supports (aspect-ratio: 1 / 1)': {
-            aspectRatio: ({aspectRatio}) => aspectRatio ?? 'unset',
-        },
-        '$wrapper &': {
-            borderRadius: 0, // the wrapper sets the border radius
-            position: ({aspectRatio}) =>
-                // when aspectRatio is 0, we want the video to use the original aspect ratio
-                aspectRatio ? 'absolute' : 'static',
-            width: '100%',
-            height: '100%',
-            top: 0,
-            left: 0,
-        },
-    },
-    wrapper: {
-        overflow: 'hidden',
-        maxWidth: '100%',
-        maxHeight: '100%',
-        position: 'relative',
-        paddingTop: ({aspectRatio, width}) => {
-            if (!aspectRatio) {
-                return 0;
-            }
-            if (width && typeof width === 'string' && width.endsWith('%')) {
-                return `${Number(width.replace('%', '')) / aspectRatio}%`;
-            }
-            return `${100 / aspectRatio}%`;
-        },
-    },
-}));
 
 type VideoSource = {
     src: string;
@@ -71,7 +33,7 @@ export type VideoProps = {
     /** defaults to 1:1, if both width and height are given, aspectRatio is ignored. To use original video proportions, set aspectRatio to 0 */
     aspectRatio?: AspectRatio | number;
     /** accepts multiple sources */
-    src: string | Array<string> | VideoSource | Array<VideoSource>;
+    src: string | ReadonlyArray<string> | VideoSource | ReadonlyArray<VideoSource>;
     /** defaults to true */
     loop?: boolean;
     /** defaults to true */
@@ -100,19 +62,10 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         },
         ref
     ) => {
-        const supportsAspectRatio = useSupportsAspectRatio();
         const noBorderRadius = useDisableBorderRadius();
 
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
-        // if width or height are numeric, we can calculate the other with the ratio without css
-        // if aspect ratio is 0, we use the original video proportions
-        const withCssAspectRatio =
-            typeof props.width !== 'number' && typeof props.height !== 'number' && ratio !== 0;
 
-        const classes = useStyles({
-            aspectRatio: withCssAspectRatio ? ratio : undefined,
-            width: props.width,
-        });
         const videoRef = React.useRef<HTMLVideoElement | null>(null);
 
         React.useEffect(() => {
@@ -131,27 +84,6 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             }
         });
 
-        let width: number | string | undefined = props.width;
-        let height = props.height;
-
-        if (props.width !== undefined && props.height !== undefined) {
-            width = props.width;
-            height = props.height;
-        } else if (typeof props.width === 'number') {
-            height = ratio ? props.width / ratio : undefined;
-        } else if (typeof props.height === 'number') {
-            width = ratio ? props.height * ratio : undefined;
-        } else {
-            width = props.width || '100%';
-        }
-
-        /**
-         * In safari, when using a video with poster, the transition from pause to play does a flicker,
-         * To avoid this, in Safari browsers, instead of using the poster attribute, we use a
-         * wrapper with the poster as background image
-         */
-        const needsWrapper = isSafari() || (withCssAspectRatio && !supportsAspectRatio);
-
         const video = (
             <video
                 ref={combineRefs(ref, videoRef)}
@@ -161,14 +93,13 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 autoPlay={autoPlay}
                 muted={muted}
                 loop={loop}
-                {...(needsWrapper ? {width: '100%'} : {width, height})}
-                className={classes.video}
+                className={styles.video}
                 preload={preload}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
                 poster={poster || TRANSPARENT_PIXEL}
                 {...getPrefixedDataAttributes(dataAttributes)}
                 style={{
-                    // For some reason adding this style with JSS doesn't add the border radius in safari
+                    // For some reason adding this style with classnames doesn't add the border radius in safari
                     borderRadius: noBorderRadius ? 0 : 8,
                 }}
             >
@@ -177,26 +108,31 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 ))}
             </video>
         );
-        if (needsWrapper) {
-            return (
-                <div
-                    style={{
-                        width,
-                        height,
-                        // adding the poster as background image avoids the flicker in Safari
-                        backgroundImage: poster ? `url("${poster}")` : undefined,
-                        backgroundSize: 'cover',
-                        backgroundPosition: '50% 50%',
-                        borderRadius: noBorderRadius ? 0 : 8,
-                    }}
-                    className={classes.wrapper}
-                >
-                    {video}
-                </div>
-            );
-        } else {
-            return video;
-        }
+
+        return (
+            <AspectRatioElement aspectRatio={ratio} width={props.width} height={props.height}>
+                {isSafari() ? (
+                    <div
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            /**
+                             * In safari, when using a video with poster, the transition from pause to play does a flicker,
+                             * To avoid this, in Safari browsers, instead of using the poster attribute, we use a
+                             * wrapper with the poster as background image
+                             */
+                            backgroundImage: poster ? `url("${poster}")` : undefined,
+                            backgroundSize: 'cover',
+                            backgroundPosition: '50% 50%',
+                        }}
+                    >
+                        {video}
+                    </div>
+                ) : (
+                    video
+                )}
+            </AspectRatioElement>
+        );
     }
 );
 
