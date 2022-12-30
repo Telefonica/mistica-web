@@ -1,6 +1,6 @@
 {
     "env": {
-        "debug": true,
+        "coreJs": 3,
         // Copy/paste from package.json "browserslist" as SWC has a bug and cannot read that config
         // https://github.com/swc-project/swc/issues/3365
         // "ios_saf" is "ios" only for SWC
