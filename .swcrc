@@ -2,10 +2,10 @@
     "env": {
         "coreJs": 3,
         "targets": {
-            "chrome": "36",
-            "firefox": "67",
+            "chrome": "51",
+            "firefox": "78",
             "safari": "13",
-            "edge": "17",
+            "edge": "18",
             "ios": "13"
         }
     },
