@@ -1,3 +1,10 @@
+## [13.0.2](https://github.com/Telefonica/mistica-web/compare/v13.0.1...v13.0.2) (2023-01-03)
+
+
+### Bug Fixes
+
+* **Skeletons:** fix skeleton sizes ([#631](https://github.com/Telefonica/mistica-web/issues/631)) ([fce23ed](https://github.com/Telefonica/mistica-web/commit/fce23ed584746d349cd566c6dabd856a72242796))
+
 ## [13.0.1](https://github.com/Telefonica/mistica-web/compare/v13.0.0...v13.0.1) (2022-12-29)
 
 

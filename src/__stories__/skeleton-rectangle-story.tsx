@@ -10,11 +10,13 @@ export default {
 };
 
 type Args = {
-    height: number;
-    width: number;
+    height: string;
+    width: string;
     inverse: boolean;
     ariaLabel: string;
 };
+
+const getSize = (n: number | string) => (Number.isNaN(+n) ? n : +n);
 
 export const Default: StoryComponent<Args> = ({height, width, inverse, ariaLabel}) => {
     return (
@@ -26,8 +28,8 @@ export const Default: StoryComponent<Args> = ({height, width, inverse, ariaLabel
                 }}
             >
                 <SkeletonRectangle
-                    height={height}
-                    width={width}
+                    height={getSize(height)}
+                    width={getSize(width)}
                     ariaLabel={ariaLabel}
                     dataAttributes={{testid: 'skeleton-rectangle'}}
                 />
@@ -39,8 +41,8 @@ export const Default: StoryComponent<Args> = ({height, width, inverse, ariaLabel
 Default.storyName = 'Skeleton Rectangle';
 
 Default.args = {
-    height: 100,
-    width: 100,
+    height: '100',
+    width: '100',
     inverse: false,
     ariaLabel: '',
 };

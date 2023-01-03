@@ -12,9 +12,12 @@ export default {
 type Args = {
     inverse: boolean;
     ariaLabel: string;
+    width: string;
 };
 
-export const Default: StoryComponent<Args> = ({inverse, ariaLabel}) => {
+const getSize = (n: number | string) => (Number.isNaN(+n) ? n : +n);
+
+export const Default: StoryComponent<Args> = ({inverse, ariaLabel, width}) => {
     return (
         <ThemeVariant isInverse={inverse}>
             <div
@@ -23,7 +26,11 @@ export const Default: StoryComponent<Args> = ({inverse, ariaLabel}) => {
                     padding: 16,
                 }}
             >
-                <SkeletonRow ariaLabel={ariaLabel} dataAttributes={{testid: 'skeleton-row'}} />
+                <SkeletonRow
+                    ariaLabel={ariaLabel}
+                    width={getSize(width)}
+                    dataAttributes={{testid: 'skeleton-row'}}
+                />
             </div>
         </ThemeVariant>
     );
@@ -32,6 +39,7 @@ export const Default: StoryComponent<Args> = ({inverse, ariaLabel}) => {
 Default.storyName = 'Skeleton Row';
 
 Default.args = {
+    width: '100%',
     inverse: false,
     ariaLabel: '',
 };
