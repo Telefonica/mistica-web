@@ -40,10 +40,10 @@
         "prepare": "husky install"
     },
     "browserslist": [
-        "chrome >= 36",
-        "firefox >= 67",
+        "chrome >= 51",
+        "firefox >= 78",
         "safari >= 13",
-        "edge >= 17",
+        "edge >= 18",
         "ios_saf >= 13"
     ],
     "prettier": "@telefonica/prettier-config",
