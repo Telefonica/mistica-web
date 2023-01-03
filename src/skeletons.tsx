@@ -44,7 +44,7 @@ export const SkeletonLine = ({width = '100%', ariaLabel, dataAttributes}: Skelet
             ariaLabel={ariaLabel}
             dataAttributes={{'component-name': 'SkeletonLine', ...dataAttributes}}
         >
-            <SkeletonBase width={width} />
+            <SkeletonBase width="100%" />
         </SkeletonAnimation>
     );
 };
@@ -77,7 +77,7 @@ export const SkeletonCircle = ({ariaLabel, size = 40, dataAttributes}: SkeletonC
             ariaLabel={ariaLabel}
             dataAttributes={{'component-name': 'SkeletonCircle', ...dataAttributes}}
         >
-            <SkeletonBase height={size} width={size} radius="50%" />
+            <SkeletonBase height="100%" width="100%" radius="50%" />
         </SkeletonAnimation>
     );
 };
@@ -93,7 +93,7 @@ export const SkeletonRow = ({width = '100%', ariaLabel, dataAttributes}: Skeleto
         >
             <div className={styles.row}>
                 <SkeletonBase height={40} width={40} radius="50%" className={styles.circle} />
-                <SkeletonBase width={width} className={styles.line} />
+                <SkeletonBase width="100%" className={styles.line} />
             </div>
         </SkeletonAnimation>
     );
@@ -119,7 +119,7 @@ export const SkeletonRectangle = ({
             ariaLabel={ariaLabel}
             dataAttributes={{'component-name': 'SkeletonRectangle', ...dataAttributes}}
         >
-            <SkeletonBase height={height} width={width} />
+            <SkeletonBase height="100%" width="100%" />
         </SkeletonAnimation>
     );
 };

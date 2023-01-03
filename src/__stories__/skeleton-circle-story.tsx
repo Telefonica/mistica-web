@@ -10,7 +10,7 @@ export default {
 };
 
 type Args = {
-    size?: number;
+    size: number;
     inverse: boolean;
     ariaValueText: string;
 };
