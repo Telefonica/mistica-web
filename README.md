@@ -27,6 +27,10 @@ Here is a complete example of a form with two text fields and a submit button:
 ```javascript
 import ReactDOM from 'react-dom';
 import React from 'react';
+// Import Mistica styles. Depending on the bundler you use, you may need to import it in a different way.
+import '@telefonica/mistica/css/mistica.css';
+
+// Use mistica components
 import {
   ThemeContextProvider,
   Form,
@@ -39,9 +43,6 @@ import {
   alert,
   getMovistarSkin,
 } from '@telefonica/mistica';
-
-// Import Mistica styles. Depending on the bundler you use, you may need to import it in a different way.
-import '@telefonica/mistica/css/mistica.css';
 
 const App = () => (
   <Form
