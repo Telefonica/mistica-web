@@ -15,6 +15,7 @@
 
 # [13.0.0](https://github.com/Telefonica/mistica-web/compare/v12.13.0...v13.0.0) (2022-12-28)
 
+### [Migration guide from 2.x to 3.x](doc/migration-guide.md#migration-guide-from-mistica-2x-to-mistica-3x)
 
 ### Features
 
