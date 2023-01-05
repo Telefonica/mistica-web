@@ -3,6 +3,12 @@
 - First of all, we recommend to run the [`theme-colors-codemod.js`](../codemods/theme-colors-codemod.js). This
   codemod will replace all the usages of mistica colors from `Theme` (`useTheme`) with the css variables
   defined in `skinVars.colors`.
+  - If you aren't familiar with codemods, take a look at
+    [jscodeshift doc](https://github.com/facebook/jscodeshift)
+  - To run the codemod execute:
+    ```sh
+    npx jscodeshift -t codemods/theme-colors-codemod.js <path-to-your-code>
+    ```
 - `ThemeConfig.colorScheme` is now `'auto'` by default, this means that mistica will automatically detect the
   user's preferred color scheme and apply it. If you want to force a color scheme in your app, you can set it
   to `'light'` or `'dark'` instead.
