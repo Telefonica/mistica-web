@@ -16,7 +16,7 @@ import {
     alert,
 } from '@telefonica/mistica';
 
-const Home = () => {
+const Home = (): JSX.Element => {
     const [userName, setUserName] = React.useState('');
     const handleSubmit = async (formData) => {
         // see /pages/api/hello.js
@@ -60,9 +60,7 @@ const Home = () => {
                                 client side (no full page load)
                             </Text>
                             <Text>Next link:</Text>
-                            <Link href="/other-page">
-                                <a>Go to other page</a>
-                            </Link>
+                            <Link href="/other-page">Go to other page</Link>
                             <Text>Mistica TextLink:</Text>
                             <TextLink to="/other-page">Go to other page</TextLink>
                         </Stack>
@@ -80,7 +78,7 @@ const Home = () => {
                             />
                             {userName && (
                                 <Link href="/user/[name]" as={`/user/${userName}`}>
-                                    <a>Go to user page (Next link)</a>
+                                    Go to user page (Next link)
                                 </Link>
                             )}
                             {userName && (

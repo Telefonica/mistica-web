@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@telefonica/mistica": "^11.3.0",
+        "@telefonica/mistica": "^13.0.2",
         "@types/node": "^16.7.13",
         "@types/react": "^17.0.20",
         "@types/react-dom": "^17.0.9",

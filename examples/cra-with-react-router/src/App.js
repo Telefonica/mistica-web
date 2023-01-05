@@ -12,7 +12,7 @@ import {
     Box,
     NegativeBox,
 } from '@telefonica/mistica';
-import {BrowserRouter as Router, Routes, Route, useMatch, useParams, useNavigate} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route, useParams, useNavigate} from 'react-router-dom';
 
 const Section = ({title, button, children}) => (
     <>
