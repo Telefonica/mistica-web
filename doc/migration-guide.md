@@ -1,4 +1,4 @@
-## Migration Guide from mistica 2.x to mistica 3.x
+## Migration Guide from mistica 12.x to mistica 13.x
 
 - First of all, we recommend to run the [`theme-colors-codemod.js`](../codemods/theme-colors-codemod.js). This
   codemod will replace all the usages of mistica colors from `Theme` (`useTheme`) with the css variables
