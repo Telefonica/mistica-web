@@ -1,5 +1,0 @@
-// @flow
-
-declare export var base: string;
-declare export var touchable: string;
-declare export var notTouchable: string;

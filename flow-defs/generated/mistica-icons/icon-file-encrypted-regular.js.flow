@@ -1,6 +1,0 @@
-// @flow
-
-import * as React from "react";
-import type { IconProps } from "../../utils/types";
-declare var IconFileEncryptedRegular: React.ComponentType<IconProps>;
-declare export default typeof IconFileEncryptedRegular;

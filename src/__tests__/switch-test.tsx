@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {render, waitFor, fireEvent, screen} from '@testing-library/react';
 import {ButtonPrimary, Form, ThemeContextProvider, Switch} from '..';

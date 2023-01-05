@@ -1,6 +1,0 @@
-// @flow
-
-import * as React from "react";
-import type { IconProps } from "../../utils/types";
-declare var IconRulerLight: React.ComponentType<IconProps>;
-declare export default typeof IconRulerLight;

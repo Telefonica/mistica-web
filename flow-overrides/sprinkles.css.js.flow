@@ -1,4 +1,0 @@
-// @flow
-
-declare export var sprinkles: any; // TODO: improve this
-export type Sprinkles = any; // TODO: improve this

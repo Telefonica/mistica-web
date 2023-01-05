@@ -1,4 +1,0 @@
-// @flow
-
-declare export var outerAnimation: string;
-declare export var innerAnimation: string;
