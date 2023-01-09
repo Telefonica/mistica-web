@@ -12,13 +12,12 @@ import {
     Text3,
     TextField,
     PasswordField,
-    useTheme,
+    skinVars,
     TextLink,
 } from '@telefonica/mistica';
 
 const App = () => {
     const [tabIndex, setTabIndex] = React.useState(0);
-    const {colors} = useTheme();
     return (
         <Form
             onSubmit={(formData) => {
@@ -42,7 +41,7 @@ const App = () => {
                         {tabIndex === 0 ? (
                             <Stack space={16}>
                                 <Text6>This is a title</Text6>
-                                <Text3 regular color={colors.textSecondary}>
+                                <Text3 regular color={skinVars.colors.textSecondary}>
                                     Subtitle text, write here an explanation of what the user has to do.
                                 </Text3>
                                 <TextField name="user" label="User" />
@@ -52,7 +51,7 @@ const App = () => {
                         ) : (
                             <Stack space={16}>
                                 <Text6>This is a title</Text6>
-                                <Text3 regular color={colors.textSecondary}>
+                                <Text3 regular color={skinVars.colors.textSecondary}>
                                     Introduce your phone number below.
                                 </Text3>
                                 <TextField name="phone" label="Phone number" prefix="+34" />

@@ -1,5 +1,6 @@
 import '@telefonica/mistica/css/roboto.css';
 import '@telefonica/mistica/css/reset.css';
+import '@telefonica/mistica/css/mistica.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
