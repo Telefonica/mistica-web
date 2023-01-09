@@ -1,23 +1,18 @@
 /* eslint-disable filenames/match-regex */
 import '@telefonica/mistica/css/reset.css';
 import '@telefonica/mistica/css/roboto.css';
+import '@telefonica/mistica/css/mistica.css';
 import NextLink from 'next/link';
 import * as React from 'react';
-import {ThemeContextProvider, ServerSideStyles, getMovistarSkin} from '@telefonica/mistica';
+import {ThemeContextProvider, getMovistarSkin, type ThemeConfig} from '@telefonica/mistica';
 
-const Link = ({innerRef, children, to, ...props}) => (
-    <NextLink href={to}>
-        <a ref={innerRef} {...props}>
-            {children}
-        </a>
+const Link: ThemeConfig['Link'] = ({innerRef, children, to, ...props}) => (
+    <NextLink href={to} ref={innerRef} {...props}>
+        {children}
     </NextLink>
 );
 
 const App = ({Component, pageProps}) => {
-    React.useEffect(() => {
-        ServerSideStyles.removeServerSideStyles();
-    }, []);
-
     return (
         <ThemeContextProvider
             theme={{
