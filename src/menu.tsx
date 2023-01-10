@@ -39,12 +39,12 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
 
     const [animateShowItems, setAnimateShowItems] = React.useState(false);
     const [itemsComputedProps, setItemsComputedProps] = React.useState<{
-        right?: string;
-        bottom?: string;
-        top?: string;
-        maxHeight?: number;
-        transformOrigin?: string;
-    }>({});
+        right: string;
+        bottom: string;
+        top: string;
+        maxHeight: number;
+        transformOrigin: string;
+    } | null>(null);
 
     React.useEffect(() => {
         const targetRect = target?.getBoundingClientRect();
@@ -153,13 +153,15 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
             style={{
                 ...assignInlineVars({
                     [styles.vars.width]: width ? `${width}px` : '100%',
-                    [styles.vars.top]: itemsComputedProps.top ?? '',
-                    [styles.vars.bottom]: itemsComputedProps.bottom ?? '',
-                    [styles.vars.right]: itemsComputedProps.right ?? '',
-                    [styles.vars.transformOrigin]: itemsComputedProps.transformOrigin ?? '',
-                    [styles.vars.maxHeight]: itemsComputedProps.maxHeight
-                        ? `${itemsComputedProps.maxHeight}px`
-                        : '',
+                    ...(itemsComputedProps
+                        ? {
+                              [styles.vars.top]: itemsComputedProps.top,
+                              [styles.vars.bottom]: itemsComputedProps.bottom,
+                              [styles.vars.right]: itemsComputedProps.right,
+                              [styles.vars.transformOrigin]: itemsComputedProps.transformOrigin,
+                              [styles.vars.maxHeight]: `${itemsComputedProps.maxHeight}px`,
+                          }
+                        : {}),
                 }),
             }}
             {...getPrefixedDataAttributes(dataAttributes, 'Menu')}

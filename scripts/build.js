@@ -12,10 +12,4 @@ const run = (command) => {
 
     console.log('Generating TS defs...');
     run('yarn gen-ts-defs');
-
-    console.log('Generating Flow defs...');
-    run('yarn ts-to-flow "dist" "flow-defs" "flow-overrides"');
-
-    console.log('Flow check...');
-    run('yarn flow check');
 })();

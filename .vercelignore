@@ -1,9 +1,6 @@
 dist
 dist-es
 reports
-flow-defs
-flow-typed
-flow-overrides
 doc
 scripts
 examples

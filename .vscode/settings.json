@@ -6,8 +6,6 @@
     "typescript.tsdk": "node_modules/typescript/lib",
     "search.exclude": {
         "**/node_modules": true,
-        "**/flow-defs": true,
-        "**/flow-typed": true,
         "**/.yarn": true
     },
     // required by Markdown TOC extension

@@ -1,5 +1,0 @@
-// @flow
-
-declare export var dismissableContainer: string;
-declare export var dismissableButton: string;
-declare export var dismissableCircleContainer: string;

@@ -1,7 +1,0 @@
-// @flow
-
-import * as React from "react";
-declare export var combineRefs: <T>(
-  ...refs: Array<React.Ref<T> | void>
-) => (refValue: T | null) => void;
-declare export var getTextFromChildren: (children: React.Node) => string;

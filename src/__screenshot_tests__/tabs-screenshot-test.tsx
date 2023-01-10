@@ -1,4 +1,3 @@
-// @flow
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 test.each`

@@ -1,7 +1,0 @@
-// @flow
-
-declare export var vars: {
-  space: $PropertyType<$Exports<"@vanilla-extract/private">, "CSSVarFunction">,
-};
-declare export var marginStack: string;
-declare export var flexStack: string;

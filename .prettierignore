@@ -1,5 +1,3 @@
-flow-typed/npm/
-flow-defs/
 generated/
 coverage/
 node_modules/
