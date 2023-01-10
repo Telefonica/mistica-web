@@ -23,7 +23,7 @@ const ThemeOverriderContextProvider = ({children}: ThemeOverriderContextProvider
 
 export const useOverrideTheme = (): OverrideTheme => React.useContext(ThemeOverriderContext);
 
-const App: React.FC = ({children}) => {
+const App = ({children}: {children: React.ReactNode}) => {
     const {isModalOpen} = useModalState();
     const styles = `
         body {background: ${skinVars.colors.background}}

@@ -150,7 +150,7 @@ export const CustomCardSize: StoryComponent = () => {
 
 CustomCardSize.storyName = ' Custom card size';
 
-const CardWrapper: React.FC = ({children}) => (
+const CardWrapper = ({children}: {children: React.ReactNode}) => (
     <div style={{display: 'flex', width: '18%', marginRight: 8}}>{children}</div>
 );
 

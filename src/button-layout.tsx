@@ -129,7 +129,7 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
         };
     }, [calcLayout]);
 
-    const sortedButtons = React.Children.toArray(children).sort((b1: any, b2: any) => {
+    const sortedButtons = React.Children.toArray(children as any).sort((b1: any, b2: any) => {
         const range1 = buttonsRange.indexOf(b1.type);
         const range2 = buttonsRange.indexOf(b2.type);
         return range1 - range2;

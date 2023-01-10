@@ -18,7 +18,7 @@ export default {
     },
 };
 
-const FieldWithCheckbox: React.FC = ({children}) => (
+const FieldWithCheckbox = ({children}: {children: React.ReactNode}) => (
     <div style={{display: 'flex', alignItems: 'center'}}>{children}</div>
 );
 

@@ -11,7 +11,7 @@ import {vars} from '../../skins/skin-contract.css';
 
 import type {IconProps} from '../../utils/types';
 
-const IconPauseRegular: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+const IconPauseRegular = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
     const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
     const {skinName} = useTheme();

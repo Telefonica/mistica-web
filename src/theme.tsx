@@ -174,11 +174,11 @@ type LinkComponent = React.ComponentType<{
     disabled?: boolean;
     role?: string;
     'data-testid'?: string;
-    'aria-checked'?: 'true' | 'false' | boolean;
+    'aria-checked'?: React.AnchorHTMLAttributes<HTMLAnchorElement>['aria-checked'];
     'aria-controls'?: string;
-    'aria-expanded'?: 'true' | 'false' | boolean;
-    'aria-hidden'?: 'true' | 'false' | boolean;
-    'aria-selected'?: 'true' | 'false' | boolean;
+    'aria-expanded'?: React.AnchorHTMLAttributes<HTMLAnchorElement>['aria-expanded'];
+    'aria-hidden'?: React.AnchorHTMLAttributes<HTMLAnchorElement>['aria-hidden'];
+    'aria-selected'?: React.AnchorHTMLAttributes<HTMLAnchorElement>['aria-selected'];
     tabIndex?: number;
     innerRef?: React.RefObject<HTMLAnchorElement>;
     to:
@@ -191,8 +191,8 @@ type LinkComponent = React.ComponentType<{
               key?: string;
           };
     replace?: boolean;
-    onClick?: (event: React.MouseEvent<HTMLElement>) => any;
-    onKeyDown?: (event: React.KeyboardEvent<HTMLElement>) => any;
+    onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+    onKeyDown?: React.KeyboardEventHandler<HTMLAnchorElement>;
     children: React.ReactNode;
 }>;
 

@@ -7,7 +7,7 @@ type ModalState = {
 const ModalStateContext = React.createContext<ModalState>({isModalOpen: false});
 const ModalStateSetterContext = React.createContext<(newState: Partial<ModalState>) => void>(() => {});
 
-const ModalContextProvider: React.FC = ({children}) => {
+const ModalContextProvider = ({children}: {children: React.ReactNode}): JSX.Element => {
     const [modalState, setModalState] = React.useState<ModalState>({isModalOpen: false});
 
     const updateModalState = React.useCallback((newState: Partial<ModalState>) => {

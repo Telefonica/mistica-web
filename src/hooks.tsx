@@ -72,7 +72,7 @@ export const useElementDimensions = (): {
     const [height, setHeight] = React.useState(0);
     const [element, setElement] = React.useState<HTMLElement | null>(null);
 
-    const updateSize = React.useCallback((entries) => {
+    const updateSize = React.useCallback((entries: Array<ResizeObserverEntry>) => {
         if (!entries) {
             setWidth(0);
             setHeight(0);

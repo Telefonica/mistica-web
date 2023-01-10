@@ -181,7 +181,7 @@ const createIconComponentSource = async (name, componentName, svgIconsInfo) => {
 
     import type {IconProps} from '../../utils/types';
 
-    const ${componentName}: React.FC<IconProps> = ({color, size = 24, children, ...rest}) => {
+    const ${componentName} = ({color, size = 24, ...rest}: IconProps): JSX.Element => {
         const isInverse = useIsInverseVariant();
         const fillColor = color ?? (isInverse ? vars.colors.inverse : vars.colors.neutralHigh);
         ${hasVariants ? 'const {skinName} = useTheme();' : ''}
