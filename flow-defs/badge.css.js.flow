@@ -1,7 +1,0 @@
-// @flow
-
-declare export var container: string;
-declare export var badge: string;
-declare export var badgeNumber: string;
-declare export var badgeWithChildren: string;
-declare export var badgeBigNumber: string;

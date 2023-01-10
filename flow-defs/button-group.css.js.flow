@@ -1,6 +1,0 @@
-// @flow
-
-declare export var inline: string;
-declare export var container: string;
-declare export var buttons: string;
-declare export var buttonChild: string;

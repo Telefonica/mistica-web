@@ -1,6 +1,0 @@
-// @flow
-
-declare export var flip: string;
-declare export var flipFront: string;
-declare export var flipBack: string;
-declare export var variants: { default: string, backface: string };

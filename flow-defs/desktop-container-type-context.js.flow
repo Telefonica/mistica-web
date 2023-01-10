@@ -1,7 +1,0 @@
-// @flow
-
-import * as React from "react";
-export type DesktopContainerType = "small" | "medium" | "large";
-declare var DesktopContainerTypeContext: React.Context<DesktopContainerType | null>;
-declare export var useDesktopContainerType: () => DesktopContainerType | null;
-declare export default typeof DesktopContainerTypeContext;

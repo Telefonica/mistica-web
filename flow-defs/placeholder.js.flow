@@ -1,9 +1,0 @@
-// @flow
-
-import * as React from "react";
-declare type PlaceholderProps = {
-  width?: string | number,
-  height?: string | number,
-};
-declare export var Placeholder: React.ComponentType<PlaceholderProps>;
-declare export {};

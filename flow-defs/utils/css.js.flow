@@ -1,3 +1,0 @@
-// @flow
-
-declare export var pxToRem: (px: number | string) => string;
