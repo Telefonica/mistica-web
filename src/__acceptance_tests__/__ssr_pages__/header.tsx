@@ -8,7 +8,7 @@ import {
     Stack,
 } from '../../..';
 
-const HeaderTest: React.FC = () => (
+const HeaderTest = (): JSX.Element => (
     <Stack space={8}>
         <HeaderLayout
             header={

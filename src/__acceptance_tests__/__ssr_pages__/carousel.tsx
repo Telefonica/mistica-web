@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ButtonPrimary, Carousel, MediaCard, Image, Tag, ButtonLink, ResponsiveLayout} from '../../..';
 
-const CarouselTest: React.FC = () => (
+const CarouselTest = (): JSX.Element => (
     <ResponsiveLayout>
         <Carousel
             withBullets

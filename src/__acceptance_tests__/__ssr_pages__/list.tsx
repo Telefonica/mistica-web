@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ResponsiveLayout, Title1, NegativeBox, RowList, Row, Avatar, BoxedRowList, BoxedRow} from '../../..';
 
-const ListTest: React.FC = () => (
+const ListTest = (): JSX.Element => (
     <ResponsiveLayout>
         <Title1>Simple list</Title1>
         <NegativeBox>

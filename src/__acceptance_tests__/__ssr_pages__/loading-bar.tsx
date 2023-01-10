@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {LoadingBar} from '../../..';
 
-const LoadingBarTest: React.FC = () => <LoadingBar visible />;
+const LoadingBarTest = (): JSX.Element => <LoadingBar visible />;
 
 export default LoadingBarTest;

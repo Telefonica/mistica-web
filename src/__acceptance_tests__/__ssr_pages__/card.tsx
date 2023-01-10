@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {MediaCard, DataCard, Inline, Image, ButtonPrimary, ButtonLink, IconAcademicLight} from '../../..';
 
-const CardsTest: React.FC = () => (
+const CardsTest = (): JSX.Element => (
     <Inline space={16}>
         <MediaCard
             media={<Image aspectRatio="16:9" src="https://i.imgur.com/flZfkiX.png" />}
