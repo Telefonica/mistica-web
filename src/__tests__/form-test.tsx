@@ -18,7 +18,7 @@ test('happy case', async () => {
     );
 
     await userEvent.type(screen.getByLabelText('Username'), 'pepito');
-    userEvent.click(screen.getByText('Submit'));
+    await userEvent.click(screen.getByText('Submit'));
 
     await waitFor(() =>
         expect(handleSubmitSpy).toHaveBeenCalledWith({username: 'pepito'}, {username: 'pepito'})
@@ -39,7 +39,7 @@ test('not submitting if required field is empty', async () => {
 
     expect(screen.queryByText('Este campo es obligatorio')).toBeNull();
 
-    userEvent.click(screen.getByText('Submit'));
+    await userEvent.click(screen.getByText('Submit'));
 
     expect(screen.getByText('Este campo es obligatorio')).toBeInTheDocument();
     expect(handleSubmitSpy).not.toHaveBeenCalled();
@@ -63,15 +63,15 @@ test('custom validator', async () => {
 
     // validation fail
     await userEvent.type(screen.getByLabelText('Password'), '1234');
-    userEvent.click(screen.getByText('Submit'));
+    await userEvent.click(screen.getByText('Submit'));
 
     expect(await screen.findByText('wrong password')).toBeInTheDocument();
     expect(handleSubmitSpy).not.toHaveBeenCalled();
 
     // validation success
-    userEvent.clear(screen.getByLabelText('Password'));
+    await userEvent.clear(screen.getByLabelText('Password'));
     await userEvent.type(screen.getByLabelText('Password'), 'letmein');
-    userEvent.click(screen.getByText('Submit'));
+    await userEvent.click(screen.getByText('Submit'));
 
     await waitFor(() =>
         expect(handleSubmitSpy).toHaveBeenCalledWith({password: 'letmein'}, {password: 'letmein'})
@@ -96,7 +96,7 @@ test('fields are disabled during submit', async () => {
     );
 
     await userEvent.type(screen.getByLabelText('Username'), 'pepito');
-    userEvent.click(screen.getByText('Submit'));
+    await userEvent.click(screen.getByText('Submit'));
 
     expect(screen.getByLabelText('Username')).toBeDisabled();
     expect(screen.getByRole('button')).toBeDisabled();
@@ -122,7 +122,7 @@ test('form with defaultValue in field', async () => {
         </ThemeContextProvider>
     );
 
-    userEvent.click(screen.getByText('Send'));
+    await userEvent.click(screen.getByText('Send'));
 
     await waitFor(() => {
         expect(handleSubmit).toHaveBeenCalledWith({email: 'foo@bar.com'}, {email: 'foo@bar.com'});
@@ -148,7 +148,7 @@ test('form with controlled field', async () => {
     render(<MyForm onSubmit={handleSubmit} />);
 
     await userEvent.type(screen.getByLabelText('email1'), '@bar.com');
-    userEvent.click(screen.getByText('Send'));
+    await userEvent.click(screen.getByText('Send'));
 
     await waitFor(() => {
         expect(handleSubmit).toHaveBeenCalledWith(
@@ -171,7 +171,7 @@ test('defaultValue in Field takes precedence over Form initialValues', async () 
         </ThemeContextProvider>
     );
 
-    userEvent.click(screen.getByText('Send'));
+    await userEvent.click(screen.getByText('Send'));
 
     await waitFor(() => {
         expect(handleSubmit).toHaveBeenCalledWith(
@@ -195,8 +195,8 @@ test("if a Field is disabled we skip its validation and don't submit its value",
         </ThemeContextProvider>
     );
 
-    userEvent.type(screen.getByLabelText('password'), '123456');
-    userEvent.click(screen.getByText('Send'));
+    await userEvent.type(screen.getByLabelText('password'), '123456');
+    await userEvent.click(screen.getByText('Send'));
 
     await waitFor(() => {
         expect(handleSubmit).toHaveBeenCalledWith({password: '123456'}, {password: '123456'});
@@ -218,9 +218,9 @@ test('can listen to form validation errors', async () => {
         </ThemeContextProvider>
     );
 
-    userEvent.type(screen.getByLabelText('Name'), 'Pepe');
-    userEvent.type(screen.getByLabelText('Email'), 'invalidemail');
-    userEvent.click(screen.getByText('Submit'));
+    await userEvent.type(screen.getByLabelText('Name'), 'Pepe');
+    await userEvent.type(screen.getByLabelText('Email'), 'invalidemail');
+    await userEvent.click(screen.getByText('Submit'));
 
     expect(onValidationErrorsSpy).toHaveBeenCalledWith({
         email: 'Email incorrecto',

@@ -106,15 +106,15 @@ test('buttons can track events', async () => {
     const toButton = await screen.findByRole('button', {name: 'button with to'});
     const onPressButton = await screen.findByRole('button', {name: 'button with onPress'});
 
-    userEvent.click(hrefButton);
+    await userEvent.click(hrefButton);
     expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
     expect(logEventSpy).toHaveBeenCalledTimes(1);
 
-    userEvent.click(toButton);
+    await userEvent.click(toButton);
     expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
     expect(logEventSpy).toHaveBeenCalledTimes(2);
 
-    userEvent.click(onPressButton);
+    await userEvent.click(onPressButton);
     expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
     expect(logEventSpy).toHaveBeenCalledTimes(3);
 });
@@ -153,11 +153,11 @@ test('buttons track default events', async () => {
     const noTrackLink = await screen.findByRole('link', {name: 'no track link'});
     const link = await screen.findByRole('link', {name: 'link'});
 
-    userEvent.click(noTrackButton);
-    userEvent.click(noTrackLink);
+    await userEvent.click(noTrackButton);
+    await userEvent.click(noTrackLink);
     expect(logEventSpy).not.toHaveBeenCalled();
 
-    userEvent.click(primaryButton);
+    await userEvent.click(primaryButton);
     expect(logEventSpy).toHaveBeenCalledWith({
         category: 'user_interaction',
         action: 'primary_button_tapped',
@@ -165,7 +165,7 @@ test('buttons track default events', async () => {
     });
     expect(logEventSpy).toHaveBeenCalledTimes(1);
 
-    userEvent.click(secondaryButton);
+    await userEvent.click(secondaryButton);
     expect(logEventSpy).toHaveBeenCalledWith({
         category: 'user_interaction',
         action: 'secondary_button_tapped',
@@ -173,7 +173,7 @@ test('buttons track default events', async () => {
     });
     expect(logEventSpy).toHaveBeenCalledTimes(2);
 
-    userEvent.click(dangerButton);
+    await userEvent.click(dangerButton);
     expect(logEventSpy).toHaveBeenCalledWith({
         category: 'user_interaction',
         action: 'danger_button_tapped',
@@ -181,7 +181,7 @@ test('buttons track default events', async () => {
     });
     expect(logEventSpy).toHaveBeenCalledTimes(3);
 
-    userEvent.click(buttonWithIcon);
+    await userEvent.click(buttonWithIcon);
     expect(logEventSpy).toHaveBeenCalledWith({
         category: 'user_interaction',
         action: 'primary_button_tapped',
@@ -189,7 +189,7 @@ test('buttons track default events', async () => {
     });
     expect(logEventSpy).toHaveBeenCalledTimes(4);
 
-    userEvent.click(link);
+    await userEvent.click(link);
     expect(logEventSpy).toHaveBeenCalledWith({
         category: 'user_interaction',
         action: 'link_tapped',

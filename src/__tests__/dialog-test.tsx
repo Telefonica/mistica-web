@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {render, fireEvent, waitFor, screen} from '@testing-library/react';
+import {render, waitFor, screen, act} from '@testing-library/react';
 import {alert, confirm, dialog} from '../dialog';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import * as webviewBridge from '@tef-novum/webview-bridge';
+import userEvent from '@testing-library/user-event';
 
 const alertProps = {message: 'Message'};
 const confirmProps = {message: 'Confirm', onAccept: () => {}};
@@ -15,10 +16,10 @@ test('does not render anything initially', () => {
 
 test('throws when we try to stack dialogs', async () => {
     render(<ThemeContextProvider theme={makeTheme()} />);
-    alert(alertProps);
-    await waitFor(() => {
-        expect(screen.getByText(alertProps.message)).toBeInTheDocument();
+    act(() => {
+        alert(alertProps);
     });
+    expect(await screen.findByText(alertProps.message)).toBeInTheDocument();
     expect(() => confirm(confirmProps)).toThrow('not currently supported');
 });
 
@@ -31,36 +32,37 @@ test('throws when we dont instantiate theme', async () => {
 
 test('renders alert dialog correctly when alert function called', async () => {
     render(<ThemeContextProvider theme={makeTheme()} />);
-    alert(alertProps);
-
-    await waitFor(() => {
-        expect(screen.getByText(alertProps.message)).toBeInTheDocument();
-        expect(screen.getByText('Aceptar')).toBeInTheDocument();
+    act(() => {
+        alert(alertProps);
     });
+
+    expect(await screen.findByText(alertProps.message)).toBeInTheDocument();
+    expect(await screen.findByRole('button', {name: 'Aceptar'})).toBeInTheDocument();
 });
 
 test('closes alert dialog when clicking on button', async () => {
     render(<ThemeContextProvider theme={makeTheme()} />);
     const onAcceptSpy = jest.fn();
-    alert({...alertProps, onAccept: onAcceptSpy});
-
-    await waitFor(() => {
-        expect(screen.getByText('Aceptar')).toBeInTheDocument();
+    act(() => {
+        alert({...alertProps, onAccept: onAcceptSpy});
     });
 
-    fireEvent.click(screen.getByText('Aceptar'));
+    const acceptButton = await screen.findByRole('button', {name: 'Aceptar'});
+    expect(acceptButton).toBeInTheDocument();
+
+    await userEvent.click(acceptButton);
     await waitFor(() => expect(onAcceptSpy).toHaveBeenCalled());
 });
 
 test('renders confirm dialog correctly when confirm function called', async () => {
     render(<ThemeContextProvider theme={makeTheme()} />);
-    confirm(confirmProps);
-
-    await waitFor(() => {
-        expect(screen.getByText(confirmProps.message)).toBeInTheDocument();
+    act(() => {
+        confirm(confirmProps);
     });
-    expect(screen.getByText('Cancelar')).toBeInTheDocument();
-    expect(screen.getByText('Aceptar')).toBeInTheDocument();
+
+    expect(screen.getByText(confirmProps.message)).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'Cancelar'})).toBeInTheDocument();
+    expect(screen.getByRole('button', {name: 'Aceptar'})).toBeInTheDocument();
 });
 
 test('Closes a dialog on click outside', async () => {
@@ -70,18 +72,18 @@ test('Closes a dialog on click outside', async () => {
     render(<ThemeContextProvider theme={makeTheme()} />);
 
     const onCancelSpy = jest.fn();
-    dialog({...confirmProps, onCancel: onCancelSpy, showCancel: true});
-
-    await waitFor(() => {
-        expect(screen.getByText('Cancelar')).toBeInTheDocument();
+    act(() => {
+        dialog({...confirmProps, onCancel: onCancelSpy, showCancel: true});
     });
 
-    fireEvent.click(screen.getByRole('dialog')); // This is the opacity layer that appears over the underlying page.
+    expect(await screen.findByRole('button', {name: 'Cancelar'})).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole('dialog')); // This is the opacity layer that appears over the underlying page.
 
     await waitFor(() => {
         expect(onCancelSpy).toHaveBeenCalled();
+        expect(screen.queryByRole('button', {name: 'Cancelar'})).not.toBeInTheDocument();
     });
-    expect(screen.queryByText('Cancelar')).not.toBeInTheDocument();
 });
 
 test('closes confirm dialog when clicking on any button', async () => {
@@ -91,25 +93,27 @@ test('closes confirm dialog when clicking on any button', async () => {
     render(<ThemeContextProvider theme={makeTheme()} />);
 
     const onCancelSpy = jest.fn();
-    confirm({...confirmProps, onCancel: onCancelSpy});
-
-    await waitFor(() => {
-        expect(screen.getByText('Cancelar')).toBeInTheDocument();
+    act(() => {
+        confirm({...confirmProps, onCancel: onCancelSpy});
     });
 
-    fireEvent.click(screen.getByText('Cancelar'));
+    const cancelButton = await screen.findByRole('button', {name: 'Cancelar'});
+    expect(cancelButton).toBeInTheDocument();
+
+    await userEvent.click(cancelButton);
 
     await waitFor(() => {
         expect(onCancelSpy).toHaveBeenCalled();
+        expect(screen.queryByRole('button', {name: 'Cancelar'})).not.toBeInTheDocument();
     });
-    expect(screen.queryByText('Cancelar')).not.toBeInTheDocument();
 
     const onAcceptSpy = jest.fn();
-    confirm({...confirmProps, onAccept: onAcceptSpy});
-    await waitFor(() => {
-        expect(screen.getByText('Aceptar')).toBeInTheDocument();
+    act(() => {
+        confirm({...confirmProps, onAccept: onAcceptSpy});
     });
-    fireEvent.click(screen.getByText('Aceptar'));
+    const acceptButton = await screen.findByRole('button', {name: 'Aceptar'});
+    expect(acceptButton).toBeInTheDocument();
+    await userEvent.click(acceptButton);
     await waitFor(() => {
         expect(onAcceptSpy).toHaveBeenCalled();
     });
@@ -122,25 +126,29 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     render(<ThemeContextProvider theme={makeTheme()} />);
 
     const onAcceptSpy = jest.fn();
-    confirm({...confirmProps, onAccept: onAcceptSpy, onCancel: undefined});
+    act(() => {
+        confirm({...confirmProps, onAccept: onAcceptSpy, onCancel: undefined});
+    });
 
-    const acceptButton = await screen.findByText('Aceptar');
-    fireEvent.click(acceptButton);
+    const acceptButton = await screen.findByRole('button', {name: 'Aceptar'});
+    await userEvent.click(acceptButton);
 
     await waitFor(() => {
         expect(onAcceptSpy).toHaveBeenCalled();
+        expect(screen.queryByRole('button', {name: 'Aceptar'})).not.toBeInTheDocument();
     });
-    expect(screen.queryByText('Aceptar')).not.toBeInTheDocument();
 
     onAcceptSpy.mockClear();
 
-    confirm({...confirmProps, onAccept: onAcceptSpy, onCancel: undefined});
+    act(() => {
+        confirm({...confirmProps, onAccept: onAcceptSpy, onCancel: undefined});
+    });
 
-    const cancelButton = await screen.findByText('Cancelar');
-    fireEvent.click(cancelButton);
+    const cancelButton = await screen.findByRole('button', {name: 'Cancelar'});
+    await userEvent.click(cancelButton);
 
     await waitFor(() => {
-        expect(screen.queryByText('Cancelar')).not.toBeInTheDocument();
+        expect(screen.queryByRole('button', {name: 'Cancelar'})).not.toBeInTheDocument();
     });
     expect(onAcceptSpy).not.toHaveBeenCalled();
 });
@@ -150,7 +158,9 @@ test('when webview bridge is available nativeAlert is shown', async () => {
     const nativeAlertSpy = jest.spyOn(webviewBridge, 'nativeAlert').mockResolvedValue();
 
     render(<ThemeContextProvider theme={makeTheme()} />);
-    alert({...confirmProps, title: 'lolo'});
+    act(() => {
+        alert({...confirmProps, title: 'lolo'});
+    });
 
     await waitFor(() => {
         expect(nativeAlertSpy).toHaveBeenCalledWith({
@@ -166,7 +176,9 @@ test('when webview bridge is available nativeConfirm is shown', async () => {
     const nativeAlertSpy = jest.spyOn(webviewBridge, 'nativeConfirm').mockResolvedValue(true);
 
     render(<ThemeContextProvider theme={makeTheme()} />);
-    confirm({...confirmProps, title: 'lolo', acceptText: 'Cuco peludo'});
+    act(() => {
+        confirm({...confirmProps, title: 'lolo', acceptText: 'Cuco peludo'});
+    });
 
     await waitFor(() => {
         expect(nativeAlertSpy).toHaveBeenCalledWith({

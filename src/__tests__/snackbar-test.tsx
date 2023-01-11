@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Snackbar from '../snackbar';
 import {render, screen, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 import * as bridge from '@tef-novum/webview-bridge';
@@ -47,9 +48,7 @@ test('nativeMessage should be called once, even if the component re-renders', as
     await waitFor(() => {
         expect(onCloseMock).toHaveBeenCalledTimes(1);
     });
-
-    screen.getByRole('button').click();
-
+    await userEvent.click(screen.getByRole('button'));
     expect(await screen.findByText('count: 1')).toBeInTheDocument();
 
     await waitFor(() => {

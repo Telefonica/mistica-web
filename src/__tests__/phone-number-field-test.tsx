@@ -42,7 +42,7 @@ test.each`
             </ThemeContextProvider>
         );
 
-        userEvent.type(screen.getByLabelText('Enter Phone'), typed);
+        await userEvent.type(screen.getByLabelText('Enter Phone'), typed);
 
         expect(onChangeValueSpy).toHaveBeenLastCalledWith(expectedValue, expectedValueRaw);
     }

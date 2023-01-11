@@ -1,15 +1,18 @@
 import * as React from 'react';
-import {MemoryRouter, Route, Routes, Link} from 'react-router-dom';
+import {MemoryRouter, Route, Routes, Link as ReactRouterLink} from 'react-router-dom';
 import Touchable from '../touchable';
 import {waitFor, fireEvent, render, screen} from '@testing-library/react';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
+import {type ThemeConfig} from '../theme';
 
 const trackingEvent = {
     category: 'test',
     action: 'test',
     label: 'test',
 };
+
+const Link: ThemeConfig['Link'] = ({innerRef, ...props}) => <ReactRouterLink {...props} ref={innerRef} />;
 
 test('<Link> element is rendered when "to" prop is passed', async () => {
     const to = '/to';
@@ -58,14 +61,15 @@ test('<Link> element is rendered when "to" prop is passed with tracking', async 
         <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}, Link})}>
             <MemoryRouter initialEntries={['/']} initialIndex={0}>
                 <Routes>
-                    <Route path="/">
-                        <Touchable to={to} trackingEvent={trackingEvent}>
-                            Test
-                        </Touchable>
-                    </Route>
-                    <Route path={to}>
-                        <div>Target route</div>
-                    </Route>
+                    <Route
+                        path="/"
+                        element={
+                            <Touchable to={to} trackingEvent={trackingEvent}>
+                                Test
+                            </Touchable>
+                        }
+                    />
+                    <Route path={to} element={<div>Target route</div>} />
                 </Routes>
             </MemoryRouter>
         </ThemeContextProvider>
@@ -91,14 +95,15 @@ test('<Link> element is rendered when "to" prop is passed with multiple tracking
         <ThemeContextProvider theme={makeTheme({analytics: {logEvent: logEventSpy}, Link})}>
             <MemoryRouter initialEntries={['/']} initialIndex={0}>
                 <Routes>
-                    <Route path="/">
-                        <Touchable to={to} trackingEvent={[trackingEvent, trackingEvent]}>
-                            Test
-                        </Touchable>
-                    </Route>
-                    <Route path={to}>
-                        <div>Target route</div>
-                    </Route>
+                    <Route
+                        path="/"
+                        element={
+                            <Touchable to={to} trackingEvent={[trackingEvent, trackingEvent]}>
+                                Test
+                            </Touchable>
+                        }
+                    />
+                    <Route path={to} element={<div>Target route</div>} />
                 </Routes>
             </MemoryRouter>
         </ThemeContextProvider>
@@ -137,11 +142,14 @@ test('<Link> element is rendered when "fullPageOnWebView" and "to" props are pas
         <ThemeContextProvider theme={makeTheme({platformOverrides: {insideNovumNativeApp: false}, Link})}>
             <MemoryRouter initialEntries={['/']} initialIndex={0}>
                 <Routes>
-                    <Route path="/">
-                        <Touchable to={href} fullPageOnWebView>
-                            Test
-                        </Touchable>
-                    </Route>
+                    <Route
+                        path="/"
+                        element={
+                            <Touchable to={href} fullPageOnWebView>
+                                Test
+                            </Touchable>
+                        }
+                    />
                 </Routes>
             </MemoryRouter>
         </ThemeContextProvider>
@@ -338,12 +346,8 @@ test('<Link> component has click-like behaviour on "space" key press', async () 
         <ThemeContextProvider theme={makeTheme({Link})}>
             <MemoryRouter initialEntries={['/']} initialIndex={0}>
                 <Routes>
-                    <Route path="/">
-                        <Touchable to={to}>Test</Touchable>
-                    </Route>
-                    <Route path={to}>
-                        <div>test click</div>
-                    </Route>
+                    <Route path="/" element={<Touchable to={to}>Test</Touchable>} />
+                    <Route path={to} element={<div>test click</div>} />
                 </Routes>
             </MemoryRouter>
         </ThemeContextProvider>
