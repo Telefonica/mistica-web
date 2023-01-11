@@ -101,10 +101,19 @@ export const useElementDimensions = (): {
     return {width, height, ref};
 };
 
-export const useAriaId = (id?: string): string => {
-    const getAriaId = React.useContext(AriaIdGetterContext);
-    return React.useRef(id || getAriaId()).current;
+const useAriaIdReact18 = (id?: string): string => {
+    const reactId = React.useId();
+    return id || reactId;
 };
+
+const isUseIdAvailable = React.useId !== undefined;
+
+export const useAriaId = isUseIdAvailable
+    ? useAriaIdReact18
+    : (id?: string): string => {
+          const getAriaId = React.useContext(AriaIdGetterContext);
+          return React.useRef(id || getAriaId()).current;
+      };
 
 export const useWindowSize = (): {
     height: number;
