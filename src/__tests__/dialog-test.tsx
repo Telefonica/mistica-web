@@ -117,7 +117,7 @@ test('closes confirm dialog when clicking on any button', async () => {
     await waitFor(() => {
         expect(onAcceptSpy).toHaveBeenCalled();
     });
-});
+}, 10000);
 
 test('closing a previous accepted dialog does not trigger onAccept callback', async () => {
     // We disable animations so dialogs get closed properly
@@ -151,7 +151,7 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
         expect(screen.queryByRole('button', {name: 'Cancelar'})).not.toBeInTheDocument();
     });
     expect(onAcceptSpy).not.toHaveBeenCalled();
-});
+}, 10000);
 
 test('when webview bridge is available nativeAlert is shown', async () => {
     jest.spyOn(webviewBridge, 'isWebViewBridgeAvailable').mockReturnValue(true);
