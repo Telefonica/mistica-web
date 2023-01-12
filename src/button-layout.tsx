@@ -70,28 +70,20 @@ const ButtonLayout: React.FC<ButtonLayoutProps> = ({
 
     const wrapperElRef = React.useRef<HTMLDivElement | null>(null);
     useIsomorphicLayoutEffect(() => {
-        if (buttonStatus.isMeasuring) {
-            const req = window.requestAnimationFrame(() => {
-                if (wrapperElRef.current) {
-                    const childrenWidths = Array.from(wrapperElRef.current.children).map((el) => {
-                        /*
-                        We are using offsetWidth instead of getBoundingClientRect().width because
-                        getBoundingClientRect returns the scaled size when the element has some CSS transform applied.
+        if (buttonStatus.isMeasuring && wrapperElRef.current) {
+            const childrenWidths = Array.from(wrapperElRef.current.children).map((el) => {
+                /*
+                We are using offsetWidth instead of getBoundingClientRect().width because
+                getBoundingClientRect returns the scaled size when the element has some CSS transform applied.
 
-                        getBoundingClientRect returns a float (eg: 268.65625) and offsetWidth an integer (eg: 268)
-                        The `+1` is important, it rounds up the size to avoid unwanted text truncation with ellipsis.
-                        */
-                        return (el as HTMLElement).dataset.link ? 0 : (el as HTMLElement).offsetWidth + 1;
-                    });
-                    const maxChildWidth = Math.ceil(Math.max(...childrenWidths, BUTTON_MIN_WIDTH));
-                    updateButtonStatus({isMeasuring: false, buttonWidth: maxChildWidth});
-                }
+                getBoundingClientRect returns a float (eg: 268.65625) and offsetWidth an integer (eg: 268)
+                The `+1` is important, it rounds up the size to avoid unwanted text truncation with ellipsis.
+                */
+                return (el as HTMLElement).dataset.link ? 0 : (el as HTMLElement).offsetWidth + 1;
             });
-            return () => {
-                window.cancelAnimationFrame(req);
-            };
+            const maxChildWidth = Math.ceil(Math.max(...childrenWidths, BUTTON_MIN_WIDTH));
+            updateButtonStatus({isMeasuring: false, buttonWidth: maxChildWidth});
         }
-        return () => {};
     }, [buttonStatus.isMeasuring]);
 
     /**
