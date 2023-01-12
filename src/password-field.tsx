@@ -51,7 +51,7 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
 }) => {
     const [isVisible, setIsVisible] = React.useState(false);
     const caretPositionRef = React.useRef<number>(0);
-    const inputRef = React.useRef<HTMLInputElement>(null);
+    const inputRef = React.useRef<HTMLInputElement | null>(null);
 
     const processValue = (value: string) => value;
 
@@ -68,8 +68,10 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
     React.useEffect(() => {
         const input = inputRef.current;
         if (input) {
-            input.selectionStart = caretPositionRef.current;
-            input.selectionEnd = caretPositionRef.current;
+            requestAnimationFrame(() => {
+                input.selectionStart = caretPositionRef.current;
+                input.selectionEnd = caretPositionRef.current;
+            });
         }
     }, [isVisible, caretPositionRef, inputRef]);
 
@@ -93,9 +95,8 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
             {...rest}
             {...fieldProps}
             type={isVisible ? 'text' : 'password'}
-            inputRef={(field) => {
-                fieldProps.inputRef(field as HTMLInputElement);
-                // @ts-expect-error - current is typed as read-only
+            inputRef={(field: HTMLInputElement | null) => {
+                fieldProps.inputRef(field);
                 inputRef.current = field;
             }}
             autoComplete={autoComplete}

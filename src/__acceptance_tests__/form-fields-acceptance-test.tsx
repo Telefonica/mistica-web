@@ -1,4 +1,4 @@
-import {openStoryPage, screen, PageApi} from '../test-utils';
+import {openStoryPage, screen, PageApi, waitFor} from '../test-utils';
 
 import type {ElementHandle} from '../test-utils';
 
@@ -46,7 +46,7 @@ test.each(STORY_TYPES)('IntegerField (%s)', async (storyType) => {
     const field = await screen.findByLabelText('Integer');
 
     await clearAndType(page, field, '+-1,2.3e4$5i%');
-    await expect(getValue(field)).resolves.toBe('12345');
+    expect(await getValue(field)).toBe('12345');
 });
 
 test.each(STORY_TYPES)('DecimalField (%s)', async (storyType) => {
@@ -55,33 +55,33 @@ test.each(STORY_TYPES)('DecimalField (%s)', async (storyType) => {
     const field = await screen.findByLabelText('Decimal');
 
     await clearAndType(page, field, '123,456');
-    await expect(getValue(field)).resolves.toBe('123,456');
+    expect(await getValue(field)).toBe('123,456');
 
     await clearAndType(page, field, '123.456');
-    await expect(getValue(field)).resolves.toBe('123,456');
+    expect(await getValue(field)).toBe('123,456');
 
     await clearAndType(page, field, '+-123e.4,5.6i');
-    await expect(getValue(field)).resolves.toBe('123,456');
+    expect(await getValue(field)).toBe('123,456');
 
     // test editing the number to set the decimal char in a previous pos
     await clearAndType(page, field, '124,5');
-    await expect(getValue(field)).resolves.toBe('124,5');
+    expect(await getValue(field)).toBe('124,5');
     await field.evaluate((el) => {
         // set the caret position on a digit before the ,
         (el as HTMLInputElement).setSelectionRange(2, 2);
     });
     await field.type('.3');
-    await expect(getValue(field)).resolves.toBe('12,345');
+    expect(await getValue(field)).toBe('12,345');
 
     // test editing the number to set the decimal char in a later pos
     await clearAndType(page, field, '1,24');
-    await expect(getValue(field)).resolves.toBe('1,24');
+    expect(await getValue(field)).toBe('1,24');
     await field.evaluate((el) => {
         // set the caret position on a digit after the ,
         (el as HTMLInputElement).setSelectionRange(3, 3);
     });
     await field.type('.3');
-    await expect(getValue(field)).resolves.toBe('1,234'); // only the first , should be considered.
+    expect(await getValue(field)).toBe('1,234'); // only the first , should be considered.
 });
 
 test.each(STORY_TYPES)('CreditCardNumberField (%s)', async (storyType) => {
@@ -90,19 +90,19 @@ test.each(STORY_TYPES)('CreditCardNumberField (%s)', async (storyType) => {
     const field = await screen.findByLabelText('Credit card');
 
     await clearAndType(page, field, '1234567890123456');
-    await expect(getValue(field)).resolves.toBe('1234 5678 9012 3456');
+    expect(await getValue(field)).toBe('1234 5678 9012 3456');
 
     await clearAndType(page, field, '1234-567.8 9012/34abc567 890');
-    await expect(getValue(field)).resolves.toBe('1234 5678 9012 3456');
+    expect(await getValue(field)).toBe('1234 5678 9012 3456');
 
     await clearAndType(page, field, '123456789012');
-    await expect(getValue(field)).resolves.toBe('1234 5678 9012');
+    expect(await getValue(field)).toBe('1234 5678 9012');
     await field.evaluate((el) => {
         // set the caret position after the first block
         (el as HTMLInputElement).setSelectionRange(4, 4);
     });
     await field.type('1234');
-    await expect(getValue(field)).resolves.toBe('1234 1234 5678 9012');
+    expect(await getValue(field)).toBe('1234 1234 5678 9012');
 });
 
 test.each(STORY_TYPES)('CreditCardExpirationField (%s)', async (storyType) => {
@@ -111,16 +111,16 @@ test.each(STORY_TYPES)('CreditCardExpirationField (%s)', async (storyType) => {
     const field = await screen.findByLabelText('Expiration');
 
     await clearAndType(page, field, '1234');
-    await expect(getValue(field)).resolves.toBe('12/34');
+    expect(await getValue(field)).toBe('12/34');
 
     await clearAndType(page, field, ' ');
-    await expect(getValue(field)).resolves.toBe('');
+    expect(await getValue(field)).toBe('');
 
     await clearAndType(page, field, '934');
-    await expect(getValue(field)).resolves.toBe('09/34');
+    expect(await getValue(field)).toBe('09/34');
 
     await clearAndType(page, field, '12///34/56');
-    await expect(getValue(field)).resolves.toBe('12/34');
+    expect(await getValue(field)).toBe('12/34');
 });
 
 test.each(STORY_TYPES)('PasswordField (%s)', async (storyType) => {
@@ -129,7 +129,7 @@ test.each(STORY_TYPES)('PasswordField (%s)', async (storyType) => {
     const field = await screen.findByLabelText('Password');
 
     await clearAndType(page, field, 'patata123');
-    await expect(getValue(field)).resolves.toBe('patata123');
+    expect(await getValue(field)).toBe('patata123');
 
     await field.evaluate((el) => {
         // move the caret
@@ -137,7 +137,9 @@ test.each(STORY_TYPES)('PasswordField (%s)', async (storyType) => {
     });
     await page.click(await screen.findByLabelText('Mostrar u ocultar contraseña'));
 
-    await expect(field.getProperty('selectionStart').then((t) => t?.jsonValue())).resolves.toBe(6);
+    await waitFor(async () => {
+        expect(await field.getProperty('selectionStart').then((t) => t?.jsonValue())).toBe(6);
+    });
 
     await field.evaluate((el) => {
         // move the caret
@@ -146,7 +148,7 @@ test.each(STORY_TYPES)('PasswordField (%s)', async (storyType) => {
 
     await page.click(await screen.findByLabelText('Mostrar u ocultar contraseña'));
 
-    await expect(field.getProperty('selectionStart').then((t) => t?.jsonValue())).resolves.toBe(0);
+    expect(await field.getProperty('selectionStart').then((t) => t?.jsonValue())).toBe(0);
 });
 
 test('DateField (controlled)', async () => {
@@ -154,7 +156,7 @@ test('DateField (controlled)', async () => {
     const field = await screen.findByLabelText('Date');
     await field.focus();
     await field.type('06101980');
-    await expect(getValue(field)).resolves.toBe('1980-10-06');
+    expect(await getValue(field)).toBe('1980-10-06');
 });
 
 test('DateField (uncontrolled)', async () => {
@@ -162,7 +164,7 @@ test('DateField (uncontrolled)', async () => {
     const field = await screen.findByLabelText('Date (opcional)');
     await field.focus();
     await field.type('06101980');
-    await expect(getValue(field)).resolves.toBe('1980-10-06');
+    expect(await getValue(field)).toBe('1980-10-06');
 });
 
 test.each(STORY_TYPES)('PhoneNumberField (%s)', async (storyType) => {
@@ -171,22 +173,22 @@ test.each(STORY_TYPES)('PhoneNumberField (%s)', async (storyType) => {
     const field = await screen.findByLabelText('Phone');
 
     await clearAndType(page, field, '654834455');
-    await expect(getValue(field)).resolves.toBe('654 83 44 55');
+    expect(await getValue(field)).toBe('654 83 44 55');
 
     await clearAndType(page, field, '+34 (654) 83-44 / 55');
-    await expect(getValue(field)).resolves.toBe('+34 654 83 44 55');
+    expect(await getValue(field)).toBe('+34 654 83 44 55');
 
     await clearAndType(page, field, '#1 *2');
-    await expect(getValue(field)).resolves.toBe('#1*2');
+    expect(await getValue(field)).toBe('#1*2');
 
     await clearAndType(page, field, '6542211');
-    await expect(getValue(field)).resolves.toBe('654 22 11');
+    expect(await getValue(field)).toBe('654 22 11');
     await field.evaluate((el) => {
         // set the caret position after the 654 prefix
         (el as HTMLInputElement).setSelectionRange(3, 3);
     });
     await field.type('39');
-    await expect(getValue(field)).resolves.toBe('654 39 22 11');
+    expect(await getValue(field)).toBe('654 39 22 11');
 });
 
 test.each(STORY_TYPES)('SearchField (%s)', async (storyType) => {
@@ -195,7 +197,7 @@ test.each(STORY_TYPES)('SearchField (%s)', async (storyType) => {
     const field = await screen.findByLabelText('Search');
 
     await clearAndType(page, field, 'something');
-    await expect(getValue(field)).resolves.toBe('something');
+    expect(await getValue(field)).toBe('something');
     await page.click(await screen.findByLabelText('Borrar búsqueda'));
-    await expect(getValue(field)).resolves.toBe('');
+    expect(await getValue(field)).toBe('');
 });
