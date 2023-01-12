@@ -25,13 +25,14 @@ const createWebpackEntries = (): {[entryName: string]: string} => {
             clientSideEntryFile,
             `
             import * as React from 'react';
-            import ReactDOM from 'react-dom';
+            import { hydrateRoot } from 'react-dom/client';
             import Component from '../__acceptance_tests__/__ssr_pages__/${moduleName}';
             import {ThemeContextProvider, getSkinByName} from '../..';
 
             const skin = new URL(location).searchParams.get('skin');
 
-            ReactDOM.hydrate(
+            hydrateRoot(
+                document.getElementById('root'),
                 <ThemeContextProvider
                     theme={{
                         skin: getSkinByName(skin || 'Movistar'),
@@ -39,8 +40,7 @@ const createWebpackEntries = (): {[entryName: string]: string} => {
                     }}
                 >
                     <Component />
-                </ThemeContextProvider>,
-                document.getElementById('root')
+                </ThemeContextProvider>
             );`
         );
 
@@ -65,6 +65,7 @@ export const compileSsrClient = ({build = true}: {build: boolean}): Promise<webp
         output: {
             path: path.resolve(__dirname, '..', '..', 'public', 'ssr'),
             filename: '[name].js',
+            publicPath: '',
         },
         module: {
             rules: [

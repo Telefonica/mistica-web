@@ -18,7 +18,7 @@ const getButtonStyle = (
     return {
         padding: 0,
         backgroundColor,
-        backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : '',
+        backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : 'initial',
         backgroundSize: normalizedIconSize,
         cursor: disabled ? 'default' : 'pointer',
         height: size,

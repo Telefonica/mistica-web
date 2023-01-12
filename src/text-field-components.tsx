@@ -29,7 +29,7 @@ export const Label: React.FC<LabelProps> = ({
     optional,
 }) => {
     const isShrinked = shrinkLabel || inputState === 'focused' || inputState === 'filled';
-    const [transitionStyle, setTransitionStyle] = React.useState('');
+    const [transitionStyle, setTransitionStyle] = React.useState('initial');
     const {texts} = useTheme();
 
     // This way we prevent animation when field is filled as initial state
