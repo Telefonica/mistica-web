@@ -1,6 +1,0 @@
-// @flow
-
-import * as React from "react";
-import type { IconProps } from "../../utils/types";
-declare var IconEmergencyCrossFilled: React.ComponentType<IconProps>;
-declare export default typeof IconEmergencyCrossFilled;

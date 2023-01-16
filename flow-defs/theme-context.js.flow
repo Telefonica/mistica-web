@@ -1,6 +1,0 @@
-// @flow
-
-import * as React from "react";
-import type { Theme } from "./theme";
-declare var ThemeContext: React.Context<Theme | null>;
-declare export default typeof ThemeContext;

@@ -1,7 +1,0 @@
-// @flow
-
-declare export var actions: string;
-declare export var link: string;
-declare export var current: string;
-declare export var list: string;
-declare export var listItem: string;

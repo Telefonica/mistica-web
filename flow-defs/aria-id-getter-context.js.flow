@@ -1,6 +1,0 @@
-// @flow
-
-import * as React from "react";
-export type AriaIdGetter = () => string;
-declare var AriaIdGetterContext: React.Context<AriaIdGetter>;
-declare export default typeof AriaIdGetterContext;

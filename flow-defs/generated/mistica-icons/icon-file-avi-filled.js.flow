@@ -1,6 +1,0 @@
-// @flow
-
-import * as React from "react";
-import type { IconProps } from "../../utils/types";
-declare var IconFileAviFilled: React.ComponentType<IconProps>;
-declare export default typeof IconFileAviFilled;
