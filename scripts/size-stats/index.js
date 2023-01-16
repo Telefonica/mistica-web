@@ -31,7 +31,7 @@ const buildApp = () => {
 
 const calcStats = () => {
     buildApp();
-    const appInitial = 131684; // precalculated - see webpack.config.js
+    const appInitial = 146383; // precalculated - see webpack.config.js
     const appInitialGzip = 42497;
     const appWithMistica = getTotalSize(glob.sync(join(PATH_APP_BUILD, '**/*.js')));
     const appWithMisticaGzip = getTotalSize(glob.sync(join(PATH_APP_BUILD, '**/*.js')), {gzip: true});

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ReactDOM from 'react-dom';
+import {createRoot} from 'react-dom/client';
 
 /*
 Using React.createElement so we don't need to compile JSX
@@ -9,7 +9,5 @@ Using React.createElement so we don't need to compile JSX
 </React.StrictMode>,
 */
 
-ReactDOM.render(
-    React.createElement(React.StrictMode, {}, React.createElement('div', {}, 'Hello')),
-    document.getElementById('root')
-);
+const root = createRoot(document.getElementById('root'));
+root.render(React.createElement(React.StrictMode, {}, React.createElement('div', {}, 'Hello')));
