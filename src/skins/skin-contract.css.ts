@@ -40,7 +40,6 @@ const colors = {
     buttonSecondaryBackgroundHoverInverse: '',
     buttonSecondaryBackgroundSelectedInverse: '',
 
-
     // CONTROLS
     control: '',
     controlActivated: '',
