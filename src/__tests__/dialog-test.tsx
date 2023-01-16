@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {render, waitFor, screen, act} from '@testing-library/react';
+import {render, waitFor, screen, act, waitForElementToBeRemoved} from '@testing-library/react';
 import {alert, confirm, dialog} from '../dialog';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
@@ -80,10 +80,8 @@ test('Closes a dialog on click outside', async () => {
 
     await userEvent.click(screen.getByRole('dialog')); // This is the opacity layer that appears over the underlying page.
 
-    await waitFor(() => {
-        expect(onCancelSpy).toHaveBeenCalled();
-        expect(screen.queryByRole('button', {name: 'Cancelar'})).not.toBeInTheDocument();
-    });
+    await waitForElementToBeRemoved(() => screen.queryByRole('dialog'));
+    expect(onCancelSpy).toHaveBeenCalled();
 });
 
 test('closes confirm dialog when clicking on any button', async () => {
@@ -102,10 +100,8 @@ test('closes confirm dialog when clicking on any button', async () => {
 
     await userEvent.click(cancelButton);
 
-    await waitFor(() => {
-        expect(onCancelSpy).toHaveBeenCalled();
-        expect(screen.queryByRole('button', {name: 'Cancelar'})).not.toBeInTheDocument();
-    });
+    await waitForElementToBeRemoved(() => screen.queryByRole('dialog'));
+    expect(onCancelSpy).toHaveBeenCalled();
 
     const onAcceptSpy = jest.fn();
     act(() => {
@@ -133,10 +129,8 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     const acceptButton = await screen.findByRole('button', {name: 'Aceptar'});
     await userEvent.click(acceptButton);
 
-    await waitFor(() => {
-        expect(onAcceptSpy).toHaveBeenCalled();
-        expect(screen.queryByRole('button', {name: 'Aceptar'})).not.toBeInTheDocument();
-    });
+    await waitForElementToBeRemoved(() => screen.queryByRole('dialog'));
+    expect(onAcceptSpy).toHaveBeenCalled();
 
     onAcceptSpy.mockClear();
 
@@ -147,9 +141,7 @@ test('closing a previous accepted dialog does not trigger onAccept callback', as
     const cancelButton = await screen.findByRole('button', {name: 'Cancelar'});
     await userEvent.click(cancelButton);
 
-    await waitFor(() => {
-        expect(screen.queryByRole('button', {name: 'Cancelar'})).not.toBeInTheDocument();
-    });
+    await waitForElementToBeRemoved(() => screen.queryByRole('dialog'));
     expect(onAcceptSpy).not.toHaveBeenCalled();
 }, 10000);
 
