@@ -39,7 +39,7 @@ test('<a> element is rendered when "to" prop is used and no Link component injec
     expect(container).toMatchInlineSnapshot(`
         <div>
           <a
-            class="touchable_touchable__mhti6u3 touchable_base__mhti6u1 touchable__mhti6u0 sprinkles_cursor_pointer__1y2v1nf93 touchable__mhti6u2 sprinkles_paddingTop_0__1y2v1nf5l sprinkles_paddingBottom_0__1y2v1nf5z sprinkles_paddingLeft_0__1y2v1nf6d sprinkles_paddingRight_0__1y2v1nf6r sprinkles_display_block__1y2v1nf50 sprinkles_border_none__1y2v1nf8w sprinkles_width_100%__1y2v1nf75 sprinkles_color_inherit__1y2v1nf2d sprinkles_background_transparent__1y2v1nf4s sprinkles_overflow_visible__1y2v1nf95"
+            class="touchable_touchable__mhti6u3 touchable_base__mhti6u1 touchable__mhti6u0 sprinkles_cursor_pointer__1y2v1nf9b touchable__mhti6u2 sprinkles_paddingTop_0__1y2v1nf5t sprinkles_paddingBottom_0__1y2v1nf67 sprinkles_paddingLeft_0__1y2v1nf6l sprinkles_paddingRight_0__1y2v1nf6z sprinkles_display_block__1y2v1nf58 sprinkles_border_none__1y2v1nf94 sprinkles_width_100%__1y2v1nf7d sprinkles_color_inherit__1y2v1nf2h sprinkles_background_transparent__1y2v1nf50 sprinkles_overflow_visible__1y2v1nf9d"
             data-component-name="Touchable"
             href="/to"
           >
