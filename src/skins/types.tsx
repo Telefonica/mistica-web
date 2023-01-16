@@ -66,10 +66,14 @@ export type Colors = {
     buttonPrimaryBackgroundSelected: string;
     buttonPrimaryBackgroundSelectedInverse: string;
     buttonPrimaryBackgroundHover: string;
-    buttonSecondaryBackground: string;
-    buttonSecondaryBackgroundSelected: string;
+    buttonSecondaryBorder: string;
+    buttonSecondaryBorderSelected: string;
     buttonSecondaryBorderInverse: string;
     buttonSecondaryBorderSelectedInverse: string;
+    buttonSecondaryBackgroundHover: string;
+    buttonSecondaryBackgroundSelected: string;
+    buttonSecondaryBackgroundHoverInverse: string;
+    buttonSecondaryBackgroundSelectedInverse: string;
 
     // CONTROLS
     control: string;

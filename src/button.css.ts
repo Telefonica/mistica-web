@@ -189,23 +189,25 @@ const lightSecondary: ComplexStyleRule = [
         background: 'transparent',
     }),
     {
-        borderColor: vars.colors.buttonSecondaryBackground,
+        borderColor: vars.colors.buttonSecondaryBorder,
 
         selectors: {
             '&:enabled:active': {
                 color: vars.colors.textButtonSecondarySelected,
-                borderColor: vars.colors.buttonSecondaryBackgroundSelected,
+                borderColor: vars.colors.buttonSecondaryBorderSelected,
+                backgroundColor: vars.colors.buttonSecondaryBackgroundSelected,
             },
 
             '&:hover:not([disabled])': {
                 color: vars.colors.textButtonSecondarySelected,
-                borderColor: vars.colors.buttonSecondaryBackgroundSelected,
+                borderColor: vars.colors.buttonSecondaryBorderSelected,
+                backgroundColor: vars.colors.buttonSecondaryBackgroundSelected,
 
                 '@media': {
                     [mq.touchableOnly]: {
                         color: vars.colors.textButtonSecondary,
                         backgroundColor: 'transparent',
-                        borderColor: vars.colors.buttonSecondaryBackground,
+                        borderColor: vars.colors.buttonSecondaryBorder,
                     },
                 },
             },
@@ -226,11 +228,13 @@ const lightSecondaryInverse: ComplexStyleRule = [
             '&:enabled:active': {
                 borderColor: vars.colors.buttonSecondaryBorderSelectedInverse,
                 color: vars.colors.textButtonSecondaryInverseSelected,
+                backgroundColor: vars.colors.buttonSecondaryBackgroundSelected,
             },
 
             '&:hover:not([disabled])': {
                 borderColor: vars.colors.buttonSecondaryBorderSelectedInverse,
                 color: vars.colors.textButtonSecondaryInverseSelected,
+                backgroundColor: vars.colors.buttonSecondaryBackgroundSelectedInverse,
 
                 '@media': {
                     [mq.touchableOnly]: {

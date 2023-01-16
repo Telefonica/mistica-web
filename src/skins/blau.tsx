@@ -92,10 +92,14 @@ export const getBlauSkin: GetKnownSkin = () => {
             buttonPrimaryBackgroundHover: palette.blauBlueSecondary60,
             buttonPrimaryBackgroundSelectedInverse: palette.blauBluePrimary30,
 
-            buttonSecondaryBackground: palette.blauBlueSecondary,
-            buttonSecondaryBackgroundSelected: palette.blauBlueSecondary60,
+            buttonSecondaryBorder: palette.blauBlueSecondary,
+            buttonSecondaryBorderSelected: palette.blauBlueSecondary60,
             buttonSecondaryBorderInverse: palette.white,
             buttonSecondaryBorderSelectedInverse: palette.blauBluePrimary30,
+            buttonSecondaryBackgroundHover: palette.blauBlueSecondary10,
+            buttonSecondaryBackgroundSelected: palette.blauBlueSecondary10,
+            buttonSecondaryBackgroundHoverInverse: applyAlpha(palette.white, 0.2),
+            buttonSecondaryBackgroundSelectedInverse: applyAlpha(palette.white, 0.2),
 
             textButtonPrimary: palette.white,
             textButtonPrimaryInverse: palette.blauBlueSecondary,
@@ -199,8 +203,14 @@ export const getBlauSkin: GetKnownSkin = () => {
             buttonPrimaryBackgroundInverse: palette.blauBlueSecondary,
             buttonPrimaryBackgroundSelected: palette.blauBlueSecondary60,
 
-            buttonSecondaryBorderInverse: palette.blauBluePrimary,
-            buttonSecondaryBorderSelectedInverse: palette.blauBlueSecondary60,
+            buttonSecondaryBorder: palette.white,
+            buttonSecondaryBorderSelected: palette.blauBlueSecondary,
+            buttonSecondaryBorderInverse: palette.white,
+            buttonSecondaryBorderSelectedInverse: palette.blauBluePrimary30,
+            buttonSecondaryBackgroundHover: applyAlpha(palette.white, 0.15),
+            buttonSecondaryBackgroundSelected: applyAlpha(palette.white, 0.15),
+            buttonSecondaryBackgroundHoverInverse: applyAlpha(palette.white, 0.15),
+            buttonSecondaryBackgroundSelectedInverse: applyAlpha(palette.white, 0.15),
 
             textButtonPrimary: palette.grey2,
             textButtonPrimaryInverse: palette.grey2,

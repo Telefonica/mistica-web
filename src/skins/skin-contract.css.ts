@@ -31,10 +31,15 @@ const colors = {
     buttonPrimaryBackgroundSelected: '',
     buttonPrimaryBackgroundSelectedInverse: '',
     buttonPrimaryBackgroundHover: '',
-    buttonSecondaryBackground: '',
-    buttonSecondaryBackgroundSelected: '',
+    buttonSecondaryBorder: '',
+    buttonSecondaryBorderSelected: '',
     buttonSecondaryBorderInverse: '',
     buttonSecondaryBorderSelectedInverse: '',
+    buttonSecondaryBackgroundHover: '',
+    buttonSecondaryBackgroundSelected: '',
+    buttonSecondaryBackgroundHoverInverse: '',
+    buttonSecondaryBackgroundSelectedInverse: '',
+
 
     // CONTROLS
     control: '',
