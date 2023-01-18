@@ -228,7 +228,7 @@ const lightSecondaryInverse: ComplexStyleRule = [
             '&:enabled:active': {
                 borderColor: vars.colors.buttonSecondaryBorderInverseSelected,
                 color: vars.colors.textButtonSecondaryInverseSelected,
-                backgroundColor: vars.colors.buttonSecondaryBackgroundSelected,
+                backgroundColor: vars.colors.buttonSecondaryBackgroundInverseSelected,
             },
 
             '&:hover:not([disabled])': {
