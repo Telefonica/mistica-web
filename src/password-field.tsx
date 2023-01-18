@@ -68,10 +68,14 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
     React.useEffect(() => {
         const input = inputRef.current;
         if (input) {
-            requestAnimationFrame(() => {
+            const rafId = requestAnimationFrame(() => {
                 input.selectionStart = caretPositionRef.current;
                 input.selectionEnd = caretPositionRef.current;
             });
+
+            return () => {
+                cancelAnimationFrame(rafId);
+            };
         }
     }, [isVisible, caretPositionRef, inputRef]);
 
