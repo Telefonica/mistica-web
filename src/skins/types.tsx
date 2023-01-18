@@ -60,20 +60,20 @@ export type Colors = {
     buttonDangerBackgroundSelected: string;
     buttonDangerBackgroundHover: string;
     buttonLinkBackgroundSelected: string;
-    buttonLinkBackgroundSelectedInverse: string;
+    buttonLinkBackgroundInverseSelected: string;
     buttonPrimaryBackground: string;
     buttonPrimaryBackgroundInverse: string;
     buttonPrimaryBackgroundSelected: string;
-    buttonPrimaryBackgroundSelectedInverse: string;
+    buttonPrimaryBackgroundInverseSelected: string;
     buttonPrimaryBackgroundHover: string;
     buttonSecondaryBorder: string;
     buttonSecondaryBorderSelected: string;
     buttonSecondaryBorderInverse: string;
-    buttonSecondaryBorderSelectedInverse: string;
+    buttonSecondaryBorderInverseSelected: string;
     buttonSecondaryBackgroundHover: string;
     buttonSecondaryBackgroundSelected: string;
-    buttonSecondaryBackgroundHoverInverse: string;
-    buttonSecondaryBackgroundSelectedInverse: string;
+    buttonSecondaryBackgroundInverseHover: string;
+    buttonSecondaryBackgroundInverseSelected: string;
 
     // CONTROLS
     control: string;

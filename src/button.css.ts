@@ -163,13 +163,13 @@ const lightPrimaryInverse: ComplexStyleRule = [
     {
         selectors: {
             '&:enabled:active': {
-                backgroundColor: vars.colors.buttonPrimaryBackgroundSelectedInverse,
+                backgroundColor: vars.colors.buttonPrimaryBackgroundInverseSelected,
                 color: vars.colors.textButtonPrimaryInverseSelected,
             },
 
             '&:hover:not([disabled])': {
                 color: vars.colors.textButtonPrimaryInverseSelected,
-                backgroundColor: vars.colors.buttonPrimaryBackgroundSelectedInverse,
+                backgroundColor: vars.colors.buttonPrimaryBackgroundInverseSelected,
 
                 '@media': {
                     [mq.touchableOnly]: {
@@ -226,15 +226,15 @@ const lightSecondaryInverse: ComplexStyleRule = [
 
         selectors: {
             '&:enabled:active': {
-                borderColor: vars.colors.buttonSecondaryBorderSelectedInverse,
+                borderColor: vars.colors.buttonSecondaryBorderInverseSelected,
                 color: vars.colors.textButtonSecondaryInverseSelected,
                 backgroundColor: vars.colors.buttonSecondaryBackgroundSelected,
             },
 
             '&:hover:not([disabled])': {
-                borderColor: vars.colors.buttonSecondaryBorderSelectedInverse,
+                borderColor: vars.colors.buttonSecondaryBorderInverseSelected,
                 color: vars.colors.textButtonSecondaryInverseSelected,
-                backgroundColor: vars.colors.buttonSecondaryBackgroundHoverInverse,
+                backgroundColor: vars.colors.buttonSecondaryBackgroundInverseHover,
 
                 '@media': {
                     [mq.touchableOnly]: {
@@ -316,11 +316,11 @@ export const inverseLink = style([
     {
         selectors: {
             '&:enabled:active': {
-                backgroundColor: vars.colors.buttonLinkBackgroundSelectedInverse,
+                backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
             },
 
             '&:hover:not([disabled])': {
-                backgroundColor: vars.colors.buttonLinkBackgroundSelectedInverse,
+                backgroundColor: vars.colors.buttonLinkBackgroundInverseSelected,
 
                 '@media': {
                     [mq.touchableOnly]: {
