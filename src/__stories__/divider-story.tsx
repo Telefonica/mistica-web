@@ -6,7 +6,7 @@ export default {
     title: 'Components/Divider',
 };
 
-const Container: React.FC = ({children}) => {
+const Container = ({children}: {children: React.ReactNode}) => {
     const isInverse = useIsInverseVariant();
 
     return (

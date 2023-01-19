@@ -72,7 +72,7 @@ export const useElementDimensions = (): {
     const [height, setHeight] = React.useState(0);
     const [element, setElement] = React.useState<HTMLElement | null>(null);
 
-    const updateSize = React.useCallback((entries) => {
+    const updateSize = React.useCallback((entries: Array<ResizeObserverEntry>) => {
         if (!entries) {
             setWidth(0);
             setHeight(0);
@@ -101,10 +101,19 @@ export const useElementDimensions = (): {
     return {width, height, ref};
 };
 
-export const useAriaId = (id?: string): string => {
-    const getAriaId = React.useContext(AriaIdGetterContext);
-    return React.useRef(id || getAriaId()).current;
+const useAriaIdReact18 = (id?: string): string => {
+    const reactId = React.useId();
+    return id || reactId;
 };
+
+const isUseIdAvailable = React.useId !== undefined;
+
+export const useAriaId = isUseIdAvailable
+    ? useAriaIdReact18
+    : (id?: string): string => {
+          const getAriaId = React.useContext(AriaIdGetterContext);
+          return React.useRef(id || getAriaId()).current;
+      };
 
 export const useWindowSize = (): {
     height: number;

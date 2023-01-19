@@ -5,7 +5,7 @@ import {O2_SKIN, O2_CLASSIC_SKIN} from '../skins/constants';
 import {vars} from '../skins/skin-contract.css';
 import * as styles from './icon-error.css';
 
-const IconErrorO2: React.FC = () => {
+const IconErrorO2 = (): JSX.Element => {
     const {platformOverrides} = useTheme();
 
     return (
@@ -53,7 +53,7 @@ const IconErrorO2: React.FC = () => {
     );
 };
 
-const IconErrorDefault: React.FC = () => {
+const IconErrorDefault = (): JSX.Element => {
     const {platformOverrides} = useTheme();
 
     return (
@@ -99,7 +99,7 @@ const IconErrorDefault: React.FC = () => {
     );
 };
 
-const IconError: React.FC = () => {
+const IconError = (): JSX.Element => {
     const {skinName} = useTheme();
     return skinName === O2_SKIN || skinName === O2_CLASSIC_SKIN ? <IconErrorO2 /> : <IconErrorDefault />;
 };

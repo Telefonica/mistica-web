@@ -5,7 +5,7 @@ export default {
     title: 'Hooks/useTheme',
 };
 
-const CodeText: React.FC = ({children}) => <Text2 medium>{children}</Text2>;
+const CodeText = ({children}: {children: React.ReactNode}) => <Text2 medium>{children}</Text2>;
 
 export const UseTheme: StoryComponent = () => {
     const theme = useTheme();

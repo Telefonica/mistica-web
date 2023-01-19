@@ -29,14 +29,14 @@ test('TextLink can track events', async () => {
     const linkWithCustomEvent = await screen.findByRole('link', {name: 'link with custom event'});
     const linkWithDefaultEvent = await screen.findByRole('link', {name: 'link with default event'});
 
-    userEvent.click(linkWithoutEvent);
+    await userEvent.click(linkWithoutEvent);
     expect(logEventSpy).not.toHaveBeenCalled();
 
-    userEvent.click(linkWithCustomEvent);
+    await userEvent.click(linkWithCustomEvent);
     expect(logEventSpy).toHaveBeenCalledWith(customTrackingEvent);
     expect(logEventSpy).toHaveBeenCalledTimes(1);
 
-    userEvent.click(linkWithDefaultEvent);
+    await userEvent.click(linkWithDefaultEvent);
     expect(logEventSpy).toHaveBeenCalledWith({
         category: 'user_interaction',
         action: 'link_tapped',

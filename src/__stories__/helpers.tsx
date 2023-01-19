@@ -26,7 +26,7 @@ export const StorySection: React.FC<Props> = ({title, children}) => {
     );
 };
 
-export const DeprecationWarning: React.FC = () => (
+export const DeprecationWarning = (): JSX.Element => (
     <div
         style={{
             padding: 12,

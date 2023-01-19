@@ -233,7 +233,7 @@ test('form controlled mode', async () => {
     expect(screen.getByText('banana').parentElement).toBeChecked();
     expect(screen.getByText('apple').parentElement).not.toBeChecked();
 
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
 
     await waitFor(() =>
         expect(handleSubmitSpy).toHaveBeenCalledWith({'radio-group': 'banana'}, {'radio-group': 'banana'})
@@ -278,7 +278,7 @@ test('form uncontrolled mode', async () => {
     expect(screen.getByText('banana').parentElement).not.toBeChecked();
     expect(screen.getByText('apple').parentElement).toBeChecked();
 
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
 
     await waitFor(() =>
         expect(handleSubmitSpy).toHaveBeenCalledWith({'radio-group': 'apple'}, {'radio-group': 'apple'})

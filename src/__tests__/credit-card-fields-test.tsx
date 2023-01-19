@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import {ButtonPrimary, Form, CreditCardFields} from '..';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
+import {act} from 'react-dom/test-utils';
 
 test('Credit card fields validation, all fields empty', async () => {
     const onValidationErrorsSpy = jest.fn();
@@ -17,7 +18,7 @@ test('Credit card fields validation, all fields empty', async () => {
         </ThemeContextProvider>
     );
 
-    userEvent.click(screen.getByRole('button', {name: 'Submit'}));
+    await userEvent.click(screen.getByRole('button', {name: 'Submit'}));
 
     expect(onValidationErrorsSpy).toHaveBeenCalledWith({
         ccCvv: 'Este campo es obligatorio',
@@ -49,10 +50,10 @@ test.each`
             </ThemeContextProvider>
         );
 
-        userEvent.type(screen.getByLabelText('Número de tarjeta'), creditCardNumber);
-        userEvent.type(screen.getByLabelText('Caducidad'), '11/50');
-        userEvent.type(screen.getByLabelText('CVV'), cvv);
-        userEvent.click(screen.getByRole('button', {name: 'Submit'}));
+        await userEvent.type(screen.getByLabelText('Número de tarjeta'), creditCardNumber);
+        await userEvent.type(screen.getByLabelText('Caducidad'), '11/50');
+        await userEvent.type(screen.getByLabelText('CVV'), cvv);
+        await userEvent.click(screen.getByRole('button', {name: 'Submit'}));
 
         if (isValid) {
             await waitFor(() => {
@@ -102,10 +103,10 @@ test.each`
             </ThemeContextProvider>
         );
 
-        userEvent.type(screen.getByLabelText('Número de tarjeta'), '4321432143214321');
-        userEvent.type(screen.getByLabelText('Caducidad'), expirationDate);
-        userEvent.type(screen.getByLabelText('CVV'), '123');
-        userEvent.click(screen.getByRole('button', {name: 'Submit'}));
+        await userEvent.type(screen.getByLabelText('Número de tarjeta'), '4321432143214321');
+        await userEvent.type(screen.getByLabelText('Caducidad'), expirationDate);
+        await userEvent.type(screen.getByLabelText('CVV'), '123');
+        await userEvent.click(screen.getByRole('button', {name: 'Submit'}));
 
         if (isValid) {
             const [month, year] = expirationDate.split('/');
@@ -147,14 +148,16 @@ test('Credit card fields validation, clear expiration date', async () => {
 
     const expirationDateField = screen.getByLabelText('Caducidad');
 
-    userEvent.type(screen.getByLabelText('Número de tarjeta'), '4321432143214321');
-    userEvent.type(expirationDateField, '11');
-    userEvent.type(screen.getByLabelText('CVV'), '123');
+    await userEvent.type(screen.getByLabelText('Número de tarjeta'), '4321432143214321');
+    await userEvent.type(expirationDateField, '11');
+    await userEvent.type(screen.getByLabelText('CVV'), '123');
 
     expect(screen.getByText('Fecha no válida')).toBeInTheDocument();
 
-    userEvent.clear(expirationDateField);
-    expirationDateField.blur();
+    await userEvent.clear(expirationDateField);
+    act(() => {
+        expirationDateField.blur();
+    });
     expect(screen.queryByText('Fecha no válida')).toBeNull();
     expect(screen.getByText('Este campo es obligatorio')).toBeInTheDocument();
 });
@@ -180,10 +183,10 @@ test.each`
         </ThemeContextProvider>
     );
 
-    userEvent.type(screen.getByLabelText('Número de tarjeta'), creditCardNumber);
-    userEvent.type(screen.getByLabelText('Caducidad'), '11/50');
-    userEvent.type(screen.getByLabelText('CVV'), cvv);
-    userEvent.click(screen.getByRole('button', {name: 'Submit'}));
+    await userEvent.type(screen.getByLabelText('Número de tarjeta'), creditCardNumber);
+    await userEvent.type(screen.getByLabelText('Caducidad'), '11/50');
+    await userEvent.type(screen.getByLabelText('CVV'), cvv);
+    await userEvent.click(screen.getByRole('button', {name: 'Submit'}));
 
     if (isValid) {
         await waitFor(() => {

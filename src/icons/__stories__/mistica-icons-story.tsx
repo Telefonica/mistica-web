@@ -25,7 +25,7 @@ export default {
     title: 'Icons/Catalog',
 };
 
-export const Catalog: React.FC = () => {
+export const Catalog = (): JSX.Element => {
     const [showRegular, regularCheckbox] = useCheckbox('Regular', true);
     const [showLight, lightCheckbox] = useCheckbox('Light', true);
     const [showFilled, filledCheckbox] = useCheckbox('Filled', true);

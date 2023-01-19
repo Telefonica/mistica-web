@@ -189,3 +189,31 @@ export const openSSRPage = ({
 
 export const setRootFontSize = (px: number): Promise<void> =>
     page.$eval('html', (e, px) => e.setAttribute('style', `font-size: ${px}px;`), px);
+
+export const waitFor = <T,>(
+    expectation: () => Promise<T> | T,
+    timeout = 10000,
+    interval = 50
+): Promise<T> => {
+    const startTime = Date.now();
+    return new Promise((resolve, reject) => {
+        const rejectOrRerun = (error: unknown) => {
+            if (Date.now() - startTime >= timeout) {
+                reject(error);
+                return;
+            }
+            // eslint-disable-next-line @typescript-eslint/no-use-before-define
+            setTimeout(runExpectation, interval);
+        };
+        const runExpectation = () => {
+            try {
+                Promise.resolve(expectation())
+                    .then((r) => resolve(r))
+                    .catch(rejectOrRerun);
+            } catch (error: any) {
+                rejectOrRerun(error);
+            }
+        };
+        setTimeout(runExpectation, 0);
+    });
+};
