@@ -41,7 +41,7 @@ const CreditCardInput: React.FC<Props> = ({inputRef, value, defaultValue, onChan
     const controlledValue = (isControlledByParent ? value : selfValue) as string;
 
     const handleChangeValue = React.useCallback(
-        (newFormattedValue) => {
+        (newFormattedValue: string) => {
             if (!isControlledByParent) {
                 setSelfValue(newFormattedValue);
             }

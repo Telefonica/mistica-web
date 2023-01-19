@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ButtonPrimary, HighlightedCard} from '../../..';
 
-const HighlightedCardTest: React.FC = () => (
+const HighlightedCardTest = (): JSX.Element => (
     <HighlightedCard
         title="Resolver problema técnico"
         description="Usa nuestra herramienta para resolver tus problemas técnicos"

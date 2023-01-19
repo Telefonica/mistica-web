@@ -33,7 +33,7 @@ const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =
 const checkHasButtons = ({primaryButton, secondaryButton}: FeedbackButtonsProps) =>
     !!primaryButton || !!secondaryButton;
 
-const BackgroundColor: React.FC = () => {
+const BackgroundColor = (): JSX.Element => {
     const isInverse = useIsInverseVariant();
 
     const css = `body {background:${isInverse ? vars.colors.backgroundBrand : vars.colors.background}}`;

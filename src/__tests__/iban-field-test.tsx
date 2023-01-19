@@ -27,8 +27,8 @@ test('IbanField', async () => {
     const ibanField = screen.getByLabelText('IBAN');
     const submitButton = screen.getByRole('button', {name: 'Submit'});
 
-    userEvent.type(ibanField, wrongLengthIban);
-    userEvent.click(submitButton);
+    await userEvent.type(ibanField, wrongLengthIban);
+    await userEvent.click(submitButton);
 
     await waitFor(() => {
         expect(onValidationErrorsSpy).toHaveBeenCalledWith({
@@ -37,9 +37,9 @@ test('IbanField', async () => {
     });
 
     onValidationErrorsSpy.mockClear();
-    userEvent.clear(ibanField);
-    userEvent.type(ibanField, wrongChecksumIban);
-    userEvent.click(submitButton);
+    await userEvent.clear(ibanField);
+    await userEvent.type(ibanField, wrongChecksumIban);
+    await userEvent.click(submitButton);
 
     await waitFor(() => {
         expect(onValidationErrorsSpy).toHaveBeenCalledWith({
@@ -48,9 +48,9 @@ test('IbanField', async () => {
     });
 
     onValidationErrorsSpy.mockClear();
-    userEvent.clear(ibanField);
-    userEvent.type(ibanField, validIban);
-    userEvent.click(submitButton);
+    await userEvent.clear(ibanField);
+    await userEvent.type(ibanField, validIban);
+    await userEvent.click(submitButton);
 
     await waitFor(() => {
         expect(onValidationErrorsSpy).not.toHaveBeenCalled();

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ButtonPrimary, ButtonSecondary, ButtonLink, ButtonDanger, ButtonLayout, Stack} from '../../..';
 
-const ButtonTest: React.FC = () => (
+const ButtonTest = (): JSX.Element => (
     <Stack space={8}>
         <ButtonLayout>
             <ButtonPrimary href="https://google.com">Primary</ButtonPrimary>

@@ -21,7 +21,7 @@ const DisableBorderRadiusContext = React.createContext(false);
 
 export const useDisableBorderRadius = (): boolean => React.useContext(DisableBorderRadiusContext);
 
-export const DisableBorderRadiusProvider: React.FC = ({children}) => (
+export const DisableBorderRadiusProvider = ({children}: {children: React.ReactNode}): JSX.Element => (
     <DisableBorderRadiusContext.Provider value>{children}</DisableBorderRadiusContext.Provider>
 );
 

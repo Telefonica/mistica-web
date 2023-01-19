@@ -25,8 +25,8 @@ test.each`
     const decimalField = screen.getByLabelText('Decimal');
     const submitButton = screen.getByRole('button', {name: 'Submit'});
 
-    userEvent.type(decimalField, input);
-    userEvent.click(submitButton);
+    await userEvent.type(decimalField, input);
+    await userEvent.click(submitButton);
 
     await waitFor(() => {
         expect(onSubmitSpy).toHaveBeenCalledWith({decimal: expected}, {decimal: expected});

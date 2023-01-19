@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {InfoFeedbackScreen, ButtonPrimary} from '../../..';
 
-const InfoFeedbackScreenTest: React.FC = () => (
+const InfoFeedbackScreenTest = (): JSX.Element => (
     <InfoFeedbackScreen
         title="Some title"
         description="Some description text"

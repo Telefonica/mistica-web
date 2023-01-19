@@ -20,7 +20,7 @@ const options = [
     },
 ];
 
-test('close option', () => {
+test('close option', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <Menu
@@ -52,21 +52,21 @@ test('close option', () => {
 
     expect(screen.getByText('menu is close')).toBeInTheDocument();
 
-    userEvent.click(screen.getByText('menu is close'));
+    await userEvent.click(screen.getByText('menu is close'));
 
     expect(screen.getByText('menu is open')).toBeInTheDocument();
     expect(screen.getByText('Option 1')).toBeInTheDocument();
     expect(screen.getByText('Option 2')).toBeInTheDocument();
     expect(screen.getByText('Option 3')).toBeInTheDocument();
 
-    userEvent.click(screen.getByText('Option 1'));
+    await userEvent.click(screen.getByText('Option 1'));
 
     expect(screen.getByText('menu is open')).toBeInTheDocument();
     expect(screen.getByText('Option 1')).toBeInTheDocument();
     expect(screen.getByText('Option 2')).toBeInTheDocument();
     expect(screen.getByText('Option 3')).toBeInTheDocument();
 
-    userEvent.click(screen.getByText('Option 3'));
+    await userEvent.click(screen.getByText('Option 3'));
 
     expect(screen.getByText('menu is close')).toBeInTheDocument();
     expect(screen.queryByText('Option 1')).not.toBeInTheDocument();

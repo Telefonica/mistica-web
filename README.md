@@ -25,8 +25,7 @@ Before using any of our components you have to add `<ThemeContextProvider>` in t
 Here is a complete example of a form with two text fields and a submit button:
 
 ```javascript
-import ReactDOM from 'react-dom';
-import React from 'react';
+import {createRoot} from 'react-dom/client';
 // Import Mistica styles. Depending on the bundler you use, you may need to import it in a different way.
 import '@telefonica/mistica/css/mistica.css';
 
@@ -70,11 +69,12 @@ const misticaTheme = {
   i18n: {locale: 'es-ES', phoneNumberFormattingRegionCode: 'ES'},
 };
 
-ReactDOM.render(
+const container = document.getElementById('app');
+const root = createRoot(container);
+root.render(
   <ThemeContextProvider theme={misticaTheme}>
     <App />
-  </ThemeContextProvider>,
-  document.getElementById('app')
+  </ThemeContextProvider>
 );
 ```
 

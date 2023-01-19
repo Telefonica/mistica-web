@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Tooltip} from '../../..';
 
-const TooltipTest: React.FC = () => (
+const TooltipTest = (): JSX.Element => (
     <Tooltip
         targetLabel="some label"
         target="some target, this can be any component"

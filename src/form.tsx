@@ -54,17 +54,20 @@ const Form: React.FC<FormProps> = ({
         []
     );
 
-    const register = React.useCallback((name, {input, validator, focusableElement}: FieldRegistration) => {
-        if (input || focusableElement) {
-            fieldRegistrations.current.set(name, {
-                input,
-                validator,
-                focusableElement,
-            });
-        } else {
-            fieldRegistrations.current.delete(name);
-        }
-    }, []);
+    const register = React.useCallback(
+        (name: string, {input, validator, focusableElement}: FieldRegistration) => {
+            if (input || focusableElement) {
+                fieldRegistrations.current.set(name, {
+                    input,
+                    validator,
+                    focusableElement,
+                });
+            } else {
+                fieldRegistrations.current.delete(name);
+            }
+        },
+        []
+    );
 
     const setFormError = ({name, error}: {name: string; error?: string}) =>
         setFormErrors((formErrors) => ({...formErrors, [name]: error}));
@@ -171,11 +174,11 @@ const Form: React.FC<FormProps> = ({
         [onSubmit, rawValues, validateFields, values]
     );
 
-    const setValue = React.useCallback(({name, value}) => {
+    const setValue = React.useCallback(({name, value}: {name: string; value: any}) => {
         setValues((values) => ({...values, [name]: value}));
     }, []);
 
-    const setRawValue = React.useCallback(({name, value}) => {
+    const setRawValue = React.useCallback(({name, value}: {name: string; value: any}) => {
         setRawValues((rawValues) => ({...rawValues, [name]: value}));
     }, []);
 

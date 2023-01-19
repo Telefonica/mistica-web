@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {SuccessFeedbackScreen, ButtonPrimary} from '../../..';
 
-const SuccessFeedbackScreenTest: React.FC = () => (
+const SuccessFeedbackScreenTest = (): JSX.Element => (
     <SuccessFeedbackScreen
         title="Some title"
         description="Some description text"

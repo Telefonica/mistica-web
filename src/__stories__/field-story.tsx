@@ -102,7 +102,7 @@ const Controlled: React.FC<ControlledProps> = ({title, initialValue, children}) 
     );
 };
 
-const DatePickerWarning: React.FC = () => (
+const DatePickerWarning = (): JSX.Element => (
     <Box paddingBottom={8}>
         <Text1 regular>
             ⚠️ Uses browser's native date picker when available. Otherwise renders a React datepicker (eg.

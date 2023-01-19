@@ -6,7 +6,7 @@ export default {
     title: 'Utilities/skinVars',
 };
 
-const CodeText: React.FC = ({children}) => <Text2 medium>{children}</Text2>;
+const CodeText = ({children}: {children: React.ReactNode}) => <Text2 medium>{children}</Text2>;
 
 const ColorsTable = () => {
     const isInverse = useIsInverseVariant();

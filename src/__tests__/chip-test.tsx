@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 
-test('Chip can be closed', () => {
+test('Chip can be closed', async () => {
     const closeSpy = jest.fn();
     render(
         <ThemeContextProvider theme={makeTheme()}>
@@ -15,7 +15,7 @@ test('Chip can be closed', () => {
 
     const closeButton = screen.getByRole('button', {name: 'Cerrar'});
 
-    userEvent.click(closeButton);
+    await userEvent.click(closeButton);
 
     expect(closeSpy).toHaveBeenCalledTimes(1);
 });
