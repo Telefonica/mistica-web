@@ -96,6 +96,7 @@ Start prototyping interfaces with Mistica components in the
 
 ## More docs
 
+- [Examples](https://github.com/Telefonica/mistica-web/tree/master/examples)
 - [Understanding Mistica's layout components](https://github.com/Telefonica/mistica-web/blob/master/doc/layout.md)
 - [Working with forms](https://github.com/Telefonica/mistica-web/blob/master/doc/forms.md)
 - [Theme config options](https://github.com/Telefonica/mistica-web/blob/master/doc/theme-config.md)
