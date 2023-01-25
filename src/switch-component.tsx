@@ -141,11 +141,11 @@ const Switch: React.FC<PropsRender | PropsChildren> = (props) => {
                     })}
                 </>
             ) : (
-                <Inline space={16} alignItems="center" className={disabled ? styles.disabled : ''}>
+                <Inline space={16} alignItems="center" className={disabled ? styles.containerDisabled : ''}>
                     {switchEl}
                     {props.children && (
                         <Text3 regular as="div" id={labelId}>
-                            {props.children}
+                            <span className={disabled ? styles.disabled : ''}>{props.children}</span>
                         </Text3>
                     )}
                 </Inline>

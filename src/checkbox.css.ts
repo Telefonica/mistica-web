@@ -10,6 +10,7 @@ export const checkboxContainer = style([
         cursor: 'pointer',
     },
 ]);
+export const checkboxContainerDisabled = style({cursor: 'default'});
 
 const boxBase = style([
     sprinkles({

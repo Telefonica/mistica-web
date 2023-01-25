@@ -1,3 +1,4 @@
+import {labelContainer} from './text-field-components.css';
 import {style, styleVariants} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
@@ -50,6 +51,7 @@ export const innerCircleChecked = style([
 ]);
 
 export const radioButton = style({cursor: 'pointer'});
+export const radioButtonContainerDisabled = style({cursor: 'default'});
 
 export const outerCircleCheckedVariants = styleVariants({
     default: {
