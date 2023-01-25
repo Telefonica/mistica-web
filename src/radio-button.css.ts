@@ -1,4 +1,3 @@
-import {labelContainer} from './text-field-components.css';
 import {style, styleVariants} from '@vanilla-extract/css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
