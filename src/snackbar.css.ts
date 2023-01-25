@@ -74,6 +74,7 @@ export const button = style({
     padding: '4px 8px',
     whiteSpace: 'nowrap',
     width: 'auto',
+    cursor: 'pointer',
 
     '@media': {
         [mq.desktopOrBigger]: {

@@ -140,7 +140,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
                     disabled: !!disabled,
                 })
             ) : (
-                <Inline space={16}>
+                <Inline space={16} className={disabled ? styles.disabled : ''}>
                     {/* Text3 wrapper added to have the same line-height and center checkbox with text and -2px to perfect pixel center icon */}
                     <Text3 regular as="div">
                         <div style={{position: 'relative', top: -2}}>{iconCheckbox}</div>
@@ -152,7 +152,7 @@ const Checkbox: React.FC<RenderProps | ChildrenProps> = (props) => {
                             id={labelId}
                             role={hasExternalLabel ? 'presentation' : undefined}
                         >
-                            <span className={disabled ? styles.disabled : ''}>{props.children}</span>
+                            {props.children}
                         </Text3>
                     )}
                 </Inline>

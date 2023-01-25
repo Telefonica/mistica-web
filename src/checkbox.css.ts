@@ -7,7 +7,7 @@ export const checkboxContainer = style([
         display: 'inline',
     }),
     {
-        cursor: 'default',
+        cursor: 'pointer',
     },
 ]);
 
@@ -53,4 +53,5 @@ export const checkChecked = style({
 
 export const disabled = style({
     opacity: 0.5,
+    cursor: 'default',
 });

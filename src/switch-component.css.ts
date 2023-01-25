@@ -67,7 +67,7 @@ export const barVariants = styleVariants({
 });
 
 export const container = style({
-    cursor: 'default',
+    cursor: 'pointer',
 });
 
 export const disabled = style({

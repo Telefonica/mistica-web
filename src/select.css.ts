@@ -54,6 +54,7 @@ export const actions = style([
 const selectContainerBase = style([
     sprinkles({
         position: 'relative',
+        cursor: 'pointer',
     }),
     {
         outline: 0,
