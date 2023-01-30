@@ -1,3 +1,20 @@
+# [13.1.0](https://github.com/Telefonica/mistica-web/compare/v13.0.2...v13.1.0) (2023-01-30)
+
+
+### Bug Fixes
+
+* **menu:** ssr hydration missmatch ([#638](https://github.com/Telefonica/mistica-web/issues/638)) ([8853d25](https://github.com/Telefonica/mistica-web/commit/8853d25aaa66b37736a8a205291d170e545f9231))
+
+
+### Features
+
+* **browserlist:** update supported browsers ([#630](https://github.com/Telefonica/mistica-web/issues/630)) ([763550b](https://github.com/Telefonica/mistica-web/commit/763550b284654c1787732f307ec5effdc200f771))
+* **browserslist:** drop support edge no chromium ([#636](https://github.com/Telefonica/mistica-web/issues/636)) ([ec25b57](https://github.com/Telefonica/mistica-web/commit/ec25b5786457de7949d96b25be3646c94ee4c7bb))
+* **ButtonSecondary:** improve hover state ([#643](https://github.com/Telefonica/mistica-web/issues/643)) ([8961658](https://github.com/Telefonica/mistica-web/commit/896165804607aa153505a9662ffc8000e49b164d))
+* **flow:** remove flow types generation ([#637](https://github.com/Telefonica/mistica-web/issues/637)) ([20ae57c](https://github.com/Telefonica/mistica-web/commit/20ae57c56e7f2f26859aa63ba241ac27bf00e0e4))
+* **icons:** new single-parent-family icon and fix pause-regular ([#644](https://github.com/Telefonica/mistica-web/issues/644)) ([86800ae](https://github.com/Telefonica/mistica-web/commit/86800aecf6abaf515272f1b12fbf206b9f407539))
+* **React:** support for react 18 ([#641](https://github.com/Telefonica/mistica-web/issues/641)) ([8b7c44a](https://github.com/Telefonica/mistica-web/commit/8b7c44a2ad8ba9b4c0565a0eddabc42c046113b7))
+
 ## [13.0.2](https://github.com/Telefonica/mistica-web/compare/v13.0.1...v13.0.2) (2023-01-03)
 
 
