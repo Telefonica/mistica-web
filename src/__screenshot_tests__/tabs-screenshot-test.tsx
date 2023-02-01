@@ -1,6 +1,6 @@
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
-// TODO: #649 Restore tests withIcon after bug was fixed
+// TODO: #649 Restore tests withIcon after bug will be fixed
 test.each`
     device          | withIcon
     ${'MOBILE_IOS'} | ${false}
