@@ -1,3 +1,11 @@
+## [13.1.1](https://github.com/Telefonica/mistica-web/compare/v13.1.0...v13.1.1) (2023-02-01)
+
+
+### Bug Fixes
+
+* **DataCard:** set children width to 100% ([#648](https://github.com/Telefonica/mistica-web/issues/648)) ([6ccbd6b](https://github.com/Telefonica/mistica-web/commit/6ccbd6b49ba8282f7b1e5dd2167434cc5914c44c))
+* **Tabs:** selected tab animation in React 18 ([df97fa7](https://github.com/Telefonica/mistica-web/commit/df97fa71f60fa47ab4b98f38eb65716bd792933f))
+
 # [13.1.0](https://github.com/Telefonica/mistica-web/compare/v13.0.2...v13.1.0) (2023-01-30)
 
 
