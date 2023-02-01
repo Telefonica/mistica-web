@@ -1,16 +1,17 @@
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
-// TODO: #649 Restore tests withIcon after bug will be fixed
 test.each`
     device          | withIcon
+    ${'MOBILE_IOS'} | ${true}
     ${'MOBILE_IOS'} | ${false}
+    ${'TABLET'}     | ${true}
     ${'TABLET'}     | ${false}
+    ${'DESKTOP'}    | ${true}
     ${'DESKTOP'}    | ${false}
 `('Tabs in $device withIcon ($withIcon)', async ({device, withIcon}) => {
     await openStoryPage({
-        id: 'components-tabs--default',
+        id: withIcon ? 'components-tabs--with-icon' : 'components-tabs--default',
         device,
-        args: {withIcon},
     });
     const image = await (await screen.findByRole('tablist')).screenshot();
     expect(image).toMatchImageSnapshot();
