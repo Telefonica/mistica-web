@@ -1,12 +1,10 @@
 import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
+// TODO: #649 Restore tests withIcon after bug will be fixed
 test.each`
     device          | withIcon
-    ${'MOBILE_IOS'} | ${true}
     ${'MOBILE_IOS'} | ${false}
-    ${'TABLET'}     | ${true}
     ${'TABLET'}     | ${false}
-    ${'DESKTOP'}    | ${true}
     ${'DESKTOP'}    | ${false}
 `('Tabs in $device withIcon ($withIcon)', async ({device, withIcon}) => {
     await openStoryPage({

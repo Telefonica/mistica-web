@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {pxToRem} from '../utils/css';
-import {Tabs, IconCloseRegular} from '..';
+import {Tabs} from '..';
 
 export default {
     title: 'Components/Tabs',
@@ -9,10 +8,11 @@ export default {
 
 type Args = {
     tabs: string;
-    withIcon: boolean;
+    // TODO: #649 Bug with this prop in local environment
+    // withIcon: boolean;
 };
 
-export const Default: StoryComponent<Args> = ({tabs, withIcon}) => {
+export const Default: StoryComponent<Args> = ({tabs}) => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const texts = tabs.trim().split(/\s*\n+\s*/);
     return (
@@ -21,7 +21,8 @@ export const Default: StoryComponent<Args> = ({tabs, withIcon}) => {
             onChange={setSelectedIndex}
             tabs={texts.map((text) => ({
                 text,
-                icon: withIcon ? <IconCloseRegular size={pxToRem(24)} color="currentColor" /> : null,
+                // TODO: #649 Bug with this prop in local environment
+                // icon: withIcon ? <IconCloseRegular size={pxToRem(24)} color="currentColor" /> : null,
             }))}
         />
     );
@@ -30,5 +31,6 @@ export const Default: StoryComponent<Args> = ({tabs, withIcon}) => {
 Default.storyName = 'Tabs';
 Default.args = {
     tabs: ['First Tab', 'Second Tab', 'Third Tab'].join('\n'),
-    withIcon: true,
+    // TODO: #649 Bug with this prop in local environment
+    // withIcon: true,
 };

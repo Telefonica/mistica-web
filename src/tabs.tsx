@@ -44,8 +44,8 @@ const Tabs: React.FC<TabsProps> = ({selectedIndex, onChange, tabs, dataAttribute
     const [isAnimating, setIsAnimating] = React.useState(false);
 
     const animateLine = (fromIndex: number, toIndex: number) => {
-        const tabFrom = document.querySelector<HTMLElement>(`#${id} [data-tabindex="${fromIndex}"]`);
-        const tabTo = document.querySelector<HTMLElement>(`#${id} [data-tabindex="${toIndex}"]`);
+        const tabFrom = document.querySelector<HTMLElement>(`[id='${id}'] [data-tabindex="${fromIndex}"]`);
+        const tabTo = document.querySelector<HTMLElement>(`[id='${id}'] [data-tabindex="${toIndex}"]`);
         const line = animatedLineRef.current;
         const scrollable = scrollableContainerRef.current;
         if (tabFrom && tabTo && line && scrollable) {
