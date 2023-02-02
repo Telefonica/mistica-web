@@ -491,7 +491,7 @@ interface DisplayCardProps {
     icon?: React.ReactElement;
     actions?: Array<CardAction>;
     onClose?: () => void;
-    background?: string;
+    backgroundImage?: string;
     isInverse?: boolean;
     dataAttributes?: DataAttributes;
     headline?: React.ReactComponentElement<typeof Tag>;
@@ -512,7 +512,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, DisplayCardProps>(
     (
         {
             isInverse,
-            background,
+            backgroundImage,
             icon,
             headline,
             pretitle,
@@ -548,7 +548,15 @@ const DisplayCard = React.forwardRef<HTMLDivElement, DisplayCardProps>(
                     height="100%"
                     isInverse={isInverse}
                 >
-                    <MaybeSection className={styles.displayCard} style={{background}} aria-label={ariaLabel}>
+                    <MaybeSection
+                        className={styles.displayCard}
+                        style={{
+                            backgroundImage: backgroundImage
+                                ? `url("${CSS.escape(backgroundImage)}")`
+                                : undefined,
+                        }}
+                        aria-label={ariaLabel}
+                    >
                         {icon ? (
                             <Box paddingBottom={40} paddingX={24}>
                                 {icon}
@@ -559,7 +567,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, DisplayCardProps>(
                         <Box
                             paddingX={24}
                             paddingBottom={24}
-                            className={background ? styles.displayCardGradient : undefined}
+                            className={backgroundImage ? styles.displayCardGradient : undefined}
                         >
                             <Stack space={24}>
                                 <Stack space={0}>
@@ -619,6 +627,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, DisplayCardProps>(
 interface DisplayMediaCardProps extends DisplayCardProps {
     extra?: never;
     isInverse?: never;
+    backgroundImage: string;
 }
 
 export const DisplayMediaCard = React.forwardRef<HTMLDivElement, DisplayMediaCardProps>((props, ref) => (

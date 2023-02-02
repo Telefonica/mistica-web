@@ -126,6 +126,10 @@ export const displayCard = style([
         flexDirection: 'column',
         justifyContent: 'space-between',
     }),
+    {
+        backgroundPosition: 'center center',
+        backgroundSize: 'cover',
+    },
 ]);
 
 export const displayCardGradient = style({
