@@ -3,8 +3,8 @@ import Tag from './tag';
 import Stack from './stack';
 import Box from './box';
 import {Text1, Text2, Text4} from './text';
-import {ButtonLink, ButtonPrimary} from './button';
-import {Boxed} from './boxed';
+import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
+import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
 import Video from './video';
 import Image, {DisableBorderRadiusProvider} from './image';
@@ -14,8 +14,17 @@ import {vars} from './skins/skin-contract.css';
 import * as styles from './card.css';
 import {useTheme} from './hooks';
 import {sprinkles} from './sprinkles.css';
+import Inline from './inline';
+import IconButton from './icon-button';
+import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 
-import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEvent} from './utils/types';
+import type {
+    DataAttributes,
+    IconProps,
+    RendersElement,
+    RendersNullableElement,
+    TrackingEvent,
+} from './utils/types';
 
 type CardContentProps = {
     headline?: string | RendersNullableElement<typeof Tag>;
@@ -116,19 +125,27 @@ const CardContent: React.FC<CardContentProps> = ({
     );
 };
 
+const HasActionsContext = React.createContext<boolean>(false);
+
 type MaybeSectionProps = {
     children: React.ReactNode;
     'aria-label'?: string;
     className?: string;
+    style?: React.CSSProperties;
 };
 
-const MaybeSection = ({'aria-label': ariaLabel, className, children}: MaybeSectionProps) => {
+const MaybeSection = ({'aria-label': ariaLabel, className, style, children}: MaybeSectionProps) => {
     const isDismissable = useIsDismissable();
-    if (isDismissable) {
-        return <div className={className}>{children}</div>;
+    const hasActions = React.useContext(HasActionsContext);
+    if (isDismissable || hasActions) {
+        return (
+            <div className={className} style={style}>
+                {children}
+            </div>
+        );
     } else {
         return (
-            <section className={className} aria-label={ariaLabel}>
+            <section className={className} style={style} aria-label={ariaLabel}>
                 {children}
             </section>
         );
@@ -393,3 +410,225 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
         );
     }
 );
+
+type CardAction = {
+    label: string;
+    onPress: () => void;
+    Icon: React.FC<IconProps>;
+};
+
+type CardActionsGroupProps = {
+    actions: Array<CardAction>;
+    isInverse?: boolean;
+};
+
+const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Element => {
+    return (
+        <Inline space={0}>
+            {actions.map(({onPress, label, Icon}, index) => (
+                <IconButton
+                    size={48}
+                    key={index}
+                    onPress={onPress}
+                    aria-label={label}
+                    className={styles.cardActionIconButton}
+                    style={{display: 'flex'}}
+                >
+                    <div className={isInverse ? styles.cardActionInverse : styles.cardAction}>
+                        <Icon color={vars.colors.neutralHigh} />
+                    </div>
+                </IconButton>
+            ))}
+        </Inline>
+    );
+};
+
+type MaybeWithActionsProps = {
+    children: React.ReactNode;
+    width?: string;
+    actions?: Array<CardAction>;
+    onClose?: () => void;
+    isInverse?: boolean;
+    'aria-label'?: string;
+};
+
+const MaybeWithActions = ({
+    children,
+    width,
+    actions,
+    onClose,
+    isInverse,
+    'aria-label': ariaLabel,
+}: MaybeWithActionsProps): JSX.Element => {
+    const {texts} = useTheme();
+    const finalActions = actions ? [...actions] : [];
+    if (onClose) {
+        finalActions.push({
+            label: texts.closeButtonLabel,
+            onPress: onClose,
+            Icon: IconCloseRegular,
+        });
+    }
+
+    if (!finalActions.length) {
+        return <>{children}</>;
+    }
+
+    return (
+        <section aria-label={ariaLabel} style={{width: width || '100%', position: 'relative'}}>
+            <HasActionsContext.Provider value>{children}</HasActionsContext.Provider>
+            <div style={{position: 'absolute', right: 8, top: 8}}>
+                <CardActionsGroup actions={finalActions} isInverse={isInverse} />
+            </div>
+        </section>
+    );
+};
+
+interface DisplayCardProps {
+    /**
+     * Typically a mistica-icons component element
+     */
+    icon?: React.ReactElement;
+    actions?: Array<CardAction>;
+    onClose?: () => void;
+    background?: string;
+    isInverse?: boolean;
+    dataAttributes?: DataAttributes;
+    headline?: React.ReactComponentElement<typeof Tag>;
+    pretitle?: string;
+    pretitleLinesMax?: number;
+    title: string;
+    titleLinesMax?: number;
+    description?: string;
+    descriptionLinesMax?: number;
+    extra?: React.ReactNode;
+    button?: React.ReactComponentElement<typeof ButtonPrimary>;
+    secondaryButton?: React.ReactComponentElement<typeof ButtonSecondary>;
+    buttonLink?: React.ReactComponentElement<typeof ButtonLink>;
+    'aria-label'?: string;
+}
+
+const DisplayCard = React.forwardRef<HTMLDivElement, DisplayCardProps>(
+    (
+        {
+            isInverse,
+            background,
+            icon,
+            headline,
+            pretitle,
+            pretitleLinesMax,
+            title,
+            titleLinesMax,
+            description,
+            descriptionLinesMax,
+            extra,
+            button,
+            secondaryButton,
+            onClose,
+            actions,
+            buttonLink,
+            dataAttributes,
+            'aria-label': ariaLabel,
+        },
+        ref
+    ) => {
+        return (
+            <MaybeWithActions
+                onClose={onClose}
+                actions={actions}
+                aria-label={ariaLabel}
+                isInverse={isInverse}
+            >
+                <InternalBoxed
+                    borderRadius={16}
+                    className={styles.boxed}
+                    dataAttributes={{'component-name': 'DisplayMediaCard', ...dataAttributes}}
+                    ref={ref}
+                    width="100%"
+                    height="100%"
+                    isInverse={isInverse}
+                >
+                    <MaybeSection className={styles.displayCard} style={{background}} aria-label={ariaLabel}>
+                        {icon ? (
+                            <Box paddingBottom={40} paddingX={24}>
+                                {icon}
+                            </Box>
+                        ) : (
+                            <Box paddingBottom={actions?.length || onClose ? 64 : 0} />
+                        )}
+                        <Box
+                            paddingX={24}
+                            paddingBottom={24}
+                            className={background ? styles.displayCardGradient : undefined}
+                        >
+                            <Stack space={24}>
+                                <Stack space={0}>
+                                    <Stack space={8}>
+                                        {(headline || pretitle || title) && (
+                                            <header>
+                                                <Stack space={16}>
+                                                    {headline}
+                                                    <Stack space={4}>
+                                                        {pretitle && (
+                                                            <Text1
+                                                                truncate={pretitleLinesMax}
+                                                                as="div"
+                                                                regular
+                                                                transform="uppercase"
+                                                            >
+                                                                {pretitle}
+                                                            </Text1>
+                                                        )}
+                                                        <Text4 truncate={titleLinesMax} as="h1" regular>
+                                                            {title}
+                                                        </Text4>
+                                                    </Stack>
+                                                </Stack>
+                                            </header>
+                                        )}
+
+                                        {description && (
+                                            <Text2
+                                                truncate={descriptionLinesMax}
+                                                as="p"
+                                                regular
+                                                color={vars.colors.textSecondary}
+                                            >
+                                                {description}
+                                            </Text2>
+                                        )}
+                                    </Stack>
+                                    {extra}
+                                </Stack>
+                                {(button || secondaryButton || buttonLink) && (
+                                    <ButtonGroup
+                                        primaryButton={button}
+                                        secondaryButton={secondaryButton}
+                                        link={buttonLink}
+                                    />
+                                )}
+                            </Stack>
+                        </Box>
+                    </MaybeSection>
+                </InternalBoxed>
+            </MaybeWithActions>
+        );
+    }
+);
+
+interface DisplayMediaCardProps extends DisplayCardProps {
+    extra?: never;
+    isInverse?: never;
+}
+
+export const DisplayMediaCard = React.forwardRef<HTMLDivElement, DisplayMediaCardProps>((props, ref) => (
+    <DisplayCard {...props} ref={ref} isInverse />
+));
+
+interface DisplayDataCardProps extends DisplayCardProps {
+    background?: never;
+}
+
+export const DisplayDataCard = React.forwardRef<HTMLDivElement, DisplayDataCardProps>((props, ref) => (
+    <DisplayCard {...props} ref={ref} />
+));

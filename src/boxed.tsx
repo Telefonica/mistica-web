@@ -37,7 +37,7 @@ const getBorderStyle = (isInverseOutside: boolean, isInverseInside: boolean) => 
     return sprinkles({border: 'regular'});
 };
 
-const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalProps>(
+export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalProps>(
     (
         {
             children,
