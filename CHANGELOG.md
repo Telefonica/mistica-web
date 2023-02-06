@@ -1,3 +1,10 @@
+## [13.1.2](https://github.com/Telefonica/mistica-web/compare/v13.1.1...v13.1.2) (2023-02-03)
+
+
+### Bug Fixes
+
+* **Callout:** SSR hydration issue ([#652](https://github.com/Telefonica/mistica-web/issues/652)) ([9c3365d](https://github.com/Telefonica/mistica-web/commit/9c3365ddec3c6719bc0a40119cb6aa7d69cdd4a3))
+
 ## [13.1.1](https://github.com/Telefonica/mistica-web/compare/v13.1.0...v13.1.1) (2023-02-01)
 
 
