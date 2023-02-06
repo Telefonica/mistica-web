@@ -1,3 +1,10 @@
+## [13.1.3](https://github.com/Telefonica/mistica-web/compare/v13.1.2...v13.1.3) (2023-02-06)
+
+
+### Bug Fixes
+
+* **useId:** support React 17 ([#654](https://github.com/Telefonica/mistica-web/issues/654)) ([cef5e53](https://github.com/Telefonica/mistica-web/commit/cef5e535e6ffa537ba1861ca2c5915e36f93506a))
+
 ## [13.1.2](https://github.com/Telefonica/mistica-web/compare/v13.1.1...v13.1.2) (2023-02-03)
 
 
