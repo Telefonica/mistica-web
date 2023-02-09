@@ -5,6 +5,7 @@ const colors = {
     background: '',
     backgroundContainer: '',
     backgroundBrand: '',
+    backgroundBrandSecondary: '',
     backgroundOverlay: '',
     backgroundSkeleton: '',
     backgroundSkeletonInverse: '',
