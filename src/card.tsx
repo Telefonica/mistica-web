@@ -2,7 +2,7 @@ import * as React from 'react';
 import Tag from './tag';
 import Stack from './stack';
 import Box from './box';
-import {Text1, Text2, Text4} from './text';
+import {Text1, Text2, Text3, Text4, Text6} from './text';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
@@ -18,6 +18,7 @@ import Inline from './inline';
 import IconButton from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 
+import type {ExclusifyUnion} from './utils/utility-types';
 import type {
     DataAttributes,
     IconProps,
@@ -90,7 +91,7 @@ const CardContent: React.FC<CardContentProps> = ({
                                             {pretitle}
                                         </Text1>
                                     )}
-                                    <Text4 truncate={titleLinesMax} as="h1" regular>
+                                    <Text4 truncate={titleLinesMax} as="h3" regular>
                                         {title}
                                     </Text4>
                                     <Text2 truncate={subtitleLinesMax} as="div" regular>
@@ -387,7 +388,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                             {icon && <Box paddingBottom={16}>{icon}</Box>}
                             <Stack space={4}>
                                 {title && (
-                                    <Text2 truncate={titleLinesMax} as="h1" regular>
+                                    <Text2 truncate={titleLinesMax} as="h3" regular>
                                         {title}
                                     </Text2>
                                 )}
@@ -484,15 +485,13 @@ const MaybeWithActions = ({
     );
 };
 
-interface DisplayCardProps {
+interface CommonDisplayCardProps {
     /**
      * Typically a mistica-icons component element
      */
     icon?: React.ReactElement;
     actions?: Array<CardAction>;
     onClose?: () => void;
-    backgroundImage?: string;
-    isInverse?: boolean;
     dataAttributes?: DataAttributes;
     headline?: React.ReactComponentElement<typeof Tag>;
     pretitle?: string;
@@ -501,14 +500,26 @@ interface DisplayCardProps {
     titleLinesMax?: number;
     description?: string;
     descriptionLinesMax?: number;
-    extra?: React.ReactNode;
     button?: React.ReactComponentElement<typeof ButtonPrimary>;
     secondaryButton?: React.ReactComponentElement<typeof ButtonSecondary>;
     buttonLink?: React.ReactComponentElement<typeof ButtonLink>;
     'aria-label'?: string;
 }
 
-const DisplayCard = React.forwardRef<HTMLDivElement, DisplayCardProps>(
+interface DisplayMediaCardProps extends CommonDisplayCardProps {
+    backgroundImage?: string;
+}
+
+interface DisplayDataCardProps extends CommonDisplayCardProps {
+    extra?: React.ReactNode;
+    isInverse?: boolean;
+}
+
+type GenericDisplayCardProps = ExclusifyUnion<
+    (DisplayMediaCardProps & {isInverse: true}) | DisplayDataCardProps
+>;
+
+const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
     (
         {
             isInverse,
@@ -542,7 +553,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, DisplayCardProps>(
                 <InternalBoxed
                     borderRadius={16}
                     className={styles.boxed}
-                    dataAttributes={{'component-name': 'DisplayMediaCard', ...dataAttributes}}
+                    dataAttributes={dataAttributes}
                     ref={ref}
                     width="100%"
                     height="100%"
@@ -579,6 +590,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, DisplayCardProps>(
                                                     <Stack space={4}>
                                                         {pretitle && (
                                                             <Text1
+                                                                forceMobileSizes
                                                                 truncate={pretitleLinesMax}
                                                                 as="div"
                                                                 regular
@@ -587,23 +599,28 @@ const DisplayCard = React.forwardRef<HTMLDivElement, DisplayCardProps>(
                                                                 {pretitle}
                                                             </Text1>
                                                         )}
-                                                        <Text4 truncate={titleLinesMax} as="h1" regular>
+                                                        <Text6
+                                                            forceMobileSizes
+                                                            truncate={titleLinesMax}
+                                                            as="h3"
+                                                        >
                                                             {title}
-                                                        </Text4>
+                                                        </Text6>
                                                     </Stack>
                                                 </Stack>
                                             </header>
                                         )}
 
                                         {description && (
-                                            <Text2
+                                            <Text3
+                                                forceMobileSizes
                                                 truncate={descriptionLinesMax}
                                                 as="p"
                                                 regular
                                                 color={vars.colors.textSecondary}
                                             >
                                                 {description}
-                                            </Text2>
+                                            </Text3>
                                         )}
                                     </Stack>
                                     {extra}
@@ -624,20 +641,23 @@ const DisplayCard = React.forwardRef<HTMLDivElement, DisplayCardProps>(
     }
 );
 
-interface DisplayMediaCardProps extends DisplayCardProps {
-    extra?: never;
-    isInverse?: never;
-    backgroundImage: string;
-}
+export const DisplayMediaCard = React.forwardRef<HTMLDivElement, DisplayMediaCardProps>(
+    ({dataAttributes, ...props}, ref) => (
+        <DisplayCard
+            {...props}
+            ref={ref}
+            isInverse
+            dataAttributes={{...dataAttributes, 'component-name': 'DisplayMediaCard'}}
+        />
+    )
+);
 
-export const DisplayMediaCard = React.forwardRef<HTMLDivElement, DisplayMediaCardProps>((props, ref) => (
-    <DisplayCard {...props} ref={ref} isInverse />
-));
-
-interface DisplayDataCardProps extends DisplayCardProps {
-    background?: never;
-}
-
-export const DisplayDataCard = React.forwardRef<HTMLDivElement, DisplayDataCardProps>((props, ref) => (
-    <DisplayCard {...props} ref={ref} />
-));
+export const DisplayDataCard = React.forwardRef<HTMLDivElement, DisplayDataCardProps>(
+    ({dataAttributes, ...props}, ref) => (
+        <DisplayCard
+            {...props}
+            ref={ref}
+            dataAttributes={{...dataAttributes, 'component-name': 'DisplayDataCard'}}
+        />
+    )
+);

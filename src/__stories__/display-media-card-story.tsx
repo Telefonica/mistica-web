@@ -8,7 +8,6 @@ import {
     Circle,
     Tag,
     TagType,
-    Image,
     ButtonSecondary,
     IconLightningRegular,
     ResponsiveLayout,
@@ -26,6 +25,7 @@ const BACKGROUND_SRC =
 
 type DisplayMediaCardArgs = {
     asset: 'icon' | 'circle + icon' | 'image' | 'circle + image';
+    background: 'image' | 'none';
     headlineType: TagType;
     headline: string;
     pretitle: string;
@@ -38,6 +38,7 @@ type DisplayMediaCardArgs = {
 
 export const Default: StoryComponent<DisplayMediaCardArgs> = ({
     asset = 'icon',
+    background,
     headline,
     headlineType,
     pretitle,
@@ -56,10 +57,6 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
         );
     } else if (asset === 'circle + image') {
         icon = <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />;
-    } else if (asset === 'icon') {
-        icon = <IconInvoicePlanFileRegular size={40} />;
-    } else if (asset === 'image') {
-        icon = <Image src="https://i.imgur.com/QwNlo5s.png" width={40} height={40} />;
     }
 
     const button = actions.includes('button') ? (
@@ -89,7 +86,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                       ]
                     : undefined
             }
-            backgroundImage={BACKGROUND_SRC}
+            backgroundImage={background === 'image' ? BACKGROUND_SRC : undefined}
             icon={icon}
             headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
             pretitle={pretitle}
@@ -107,6 +104,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
 Default.storyName = 'Display Media card';
 Default.args = {
     asset: 'icon',
+    background: 'image',
     headlineType: 'promo',
     headline: 'Priority',
     pretitle: 'Pretitle',
@@ -118,7 +116,11 @@ Default.args = {
 };
 Default.argTypes = {
     asset: {
-        options: ['icon', 'circle + icon', 'image', 'circle + image', 'none'],
+        options: ['circle + icon', 'circle + image', 'none'],
+        control: {type: 'select'},
+    },
+    background: {
+        options: ['image', 'none'],
         control: {type: 'select'},
     },
     headlineType: {
@@ -147,14 +149,13 @@ export const Group: StoryComponent = () => {
                         title="Title"
                         description="Description"
                         backgroundImage={BACKGROUND_SRC}
-                        buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
+                        button={
+                            <ButtonPrimary small href="https://google.com">
+                                Action
+                            </ButtonPrimary>
+                        }
                     />
-                    <DisplayMediaCard
-                        title="Title"
-                        description="Description"
-                        backgroundImage={BACKGROUND_SRC}
-                        buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
-                    />
+                    <DisplayMediaCard title="Title" backgroundImage={BACKGROUND_SRC} />
                 </Inline>
             </Stack>
         </ResponsiveLayout>
