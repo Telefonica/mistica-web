@@ -175,6 +175,13 @@ export const getBlauSkin: GetKnownSkin = () => {
             warningHigh: palette.blauYellow70,
             errorHigh: palette.blauRed70,
             promoHigh: palette.blauPurple,
+
+            successHighInverse: palette.blauGreen70,
+            warningHighInverse: palette.blauYellow70,
+            errorHighInverse: palette.blauRed70,
+            promoHighInverse: palette.blauPurple,
+            neutralMediumInverse: palette.grey5,
+            brandHighInverse: palette.blauBlueSecondary,
         },
         darkModeColors: {
             // BACKGROUNDS
@@ -269,6 +276,13 @@ export const getBlauSkin: GetKnownSkin = () => {
             warningHigh: palette.blauYellow40,
             errorHigh: palette.blauRed40,
             promoHigh: palette.blauPurple30,
+
+            successHighInverse: palette.blauGreen70,
+            warningHighInverse: palette.blauYellow70,
+            errorHighInverse: palette.blauRed70,
+            promoHighInverse: palette.blauPurple,
+            neutralMediumInverse: palette.grey5,
+            brandHighInverse: palette.blauBlueSecondary,
         },
     };
 };

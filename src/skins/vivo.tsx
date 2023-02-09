@@ -167,6 +167,13 @@ export const getVivoSkin: GetKnownSkin = () => {
             warningHigh: palette.orangeDark,
             errorHigh: palette.pepperDark80,
             promoHigh: palette.vivoPurple,
+
+            successHighInverse: palette.vivoGreenDark,
+            warningHighInverse: palette.orangeDark,
+            errorHighInverse: palette.pepperDark80,
+            promoHighInverse: palette.vivoPurple,
+            neutralMediumInverse: palette.grey5,
+            brandHighInverse: palette.vivoPurpleDark,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
@@ -248,6 +255,13 @@ export const getVivoSkin: GetKnownSkin = () => {
             warningHigh: palette.orangeLight40,
             errorHigh: palette.pepperLight40,
             promoHigh: palette.vivoPurpleLight50,
+
+            successHighInverse: palette.vivoGreenDark,
+            warningHighInverse: palette.orangeDark,
+            errorHighInverse: palette.pepperDark80,
+            promoHighInverse: palette.vivoPurple,
+            neutralMediumInverse: palette.grey5,
+            brandHighInverse: palette.vivoPurpleDark,
         },
     };
 };

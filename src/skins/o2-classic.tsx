@@ -188,6 +188,13 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             warningHigh: palette.orange80,
             errorHigh: palette.pepper70,
             promoHigh: palette.pink60,
+
+            successHighInverse: palette.o2Green75,
+            warningHighInverse: palette.orange80,
+            errorHighInverse: palette.pepper70,
+            promoHighInverse: palette.pink60,
+            neutralMediumInverse: palette.grey5,
+            brandHighInverse: palette.o2Blue55,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
@@ -266,6 +273,13 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             warningHigh: palette.orange40,
             errorHigh: palette.pepper40,
             promoHigh: palette.pink40,
+
+            successHighInverse: palette.o2Green75,
+            warningHighInverse: palette.orange80,
+            errorHighInverse: palette.pepper70,
+            promoHighInverse: palette.pink60,
+            neutralMediumInverse: palette.grey5,
+            brandHighInverse: palette.o2Blue55,
         },
     };
 };

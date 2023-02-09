@@ -170,6 +170,13 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             warningHigh: palette.ambar70,
             errorHigh: palette.coral70,
             promoHigh: palette.orchid70,
+
+            successHighInverse: palette.turquoise70,
+            warningHighInverse: palette.ambar70,
+            errorHighInverse: palette.coral70,
+            promoHighInverse: palette.orchid70,
+            neutralMediumInverse: palette.grey5,
+            brandHighInverse: palette.telefonicaBlue70,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
@@ -249,6 +256,13 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             warningHigh: palette.ambar40,
             errorHigh: palette.coral40,
             promoHigh: palette.orchid40,
+
+            successHighInverse: palette.turquoise70,
+            warningHighInverse: palette.ambar70,
+            errorHighInverse: palette.coral70,
+            promoHighInverse: palette.orchid70,
+            neutralMediumInverse: palette.grey5,
+            brandHighInverse: palette.telefonicaBlue70,
         },
     };
 };
