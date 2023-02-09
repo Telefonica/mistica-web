@@ -202,7 +202,7 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             navigationBarBackground: palette.darkModeBlack,
             backgroundAlternative: palette.darkModeGrey,
             backgroundFeedbackBottom: palette.darkModeBlack,
-            skeletonWave: palette.grey5,
+            skeletonWave: palette.darkModeGrey5,
             borderHigh: palette.darkModeGrey4,
             borderLow: palette.darkModeBlack,
             border: palette.darkModeGrey,
