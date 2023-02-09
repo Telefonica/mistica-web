@@ -106,8 +106,12 @@ const Select: React.FC<SelectProps> = ({
                 const top = selectTop + height;
                 const visibleOptions = Math.min(options.length, MAX_OPTIONS);
                 const spaceTaken = visibleOptions * 48 + PADDING_SIZE;
+                const fullOptionsSpace = options.length * 48 * PADDING_SIZE;
                 // if it doesn't fit on bottom
-                if (top + spaceTaken + MARGIN_TOP_SIZE > window.innerHeight) {
+                if (
+                    top + spaceTaken + MARGIN_TOP_SIZE > window.innerHeight ||
+                    top + fullOptionsSpace + MARGIN_TOP_SIZE > window.innerHeight
+                ) {
                     const availableSpaceBottom = window.innerHeight - top;
                     if (selectTop /* this is the available space on top */ > availableSpaceBottom) {
                         const newTop = selectTop - spaceTaken;
