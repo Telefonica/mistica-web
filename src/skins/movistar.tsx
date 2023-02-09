@@ -58,6 +58,12 @@ export const palette = {
     // specific for dark mode:
     darkModeBlack: '#061824',
     darkModeGrey: '#092130',
+
+    darkModeGrey2: '#EAEBEE',
+    darkModeGrey3: '#CED4D7',
+    darkModeGrey4: '#85939C',
+    darkModeGrey5: '#6D7D88',
+    darkModeGrey6: '#3C5261',
 } as const;
 
 export const getMovistarSkin: GetKnownSkin = (variant) => {
@@ -191,12 +197,13 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             backgroundBrand: palette.darkModeBlack,
             backgroundBrandSecondary: palette.darkModeBlack,
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
-            backgroundSkeleton: palette.grey6,
-            backgroundSkeletonInverse: palette.grey6,
+            backgroundSkeleton: palette.darkModeGrey6,
+            backgroundSkeletonInverse: palette.darkModeGrey6,
             navigationBarBackground: palette.darkModeBlack,
             backgroundAlternative: palette.darkModeGrey,
             backgroundFeedbackBottom: palette.darkModeBlack,
             skeletonWave: palette.grey5,
+            borderHigh: palette.darkModeGrey4,
             borderLow: palette.darkModeBlack,
             border: palette.darkModeGrey,
             buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.05),
@@ -214,40 +221,40 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             buttonSecondaryBackgroundSelected: applyAlpha(palette.white, 0.15),
             buttonSecondaryBackgroundInverseHover: applyAlpha(palette.white, 0.15),
             buttonSecondaryBackgroundInverseSelected: applyAlpha(palette.white, 0.15),
-            textButtonPrimary: palette.grey2,
-            textButtonPrimaryInverse: palette.grey2,
-            textButtonPrimaryInverseSelected: palette.grey2,
-            textButtonSecondary: palette.grey2,
-            textButtonSecondarySelected: palette.grey2,
-            textButtonSecondaryInverse: palette.grey2,
-            textButtonSecondaryInverseSelected: palette.grey2,
+            textButtonPrimary: palette.darkModeGrey2,
+            textButtonPrimaryInverse: palette.darkModeGrey2,
+            textButtonPrimaryInverseSelected: palette.darkModeGrey2,
+            textButtonSecondary: palette.darkModeGrey2,
+            textButtonSecondarySelected: palette.darkModeGrey2,
+            textButtonSecondaryInverse: palette.darkModeGrey2,
+            textButtonSecondaryInverseSelected: palette.darkModeGrey2,
             textLink: palette.movistarBlue,
             textLinkInverse: palette.movistarBlue,
-            control: palette.grey6,
+            control: palette.darkModeGrey6,
             controlActivated: palette.movistarBlue,
             loadingBar: palette.movistarBlue,
             loadingBarBackground: applyAlpha(palette.white, 0.05),
-            toggleAndroidInactive: palette.grey4, // web only
+            toggleAndroidInactive: palette.darkModeGrey4, // web only
             toggleAndroidBackgroundActive: palette.movistarBlue20, // web only
-            iosControlKnob: palette.grey2, // web only
+            iosControlKnob: palette.darkModeGrey2, // web only
             divider: applyAlpha(palette.white, 0.05),
             dividerInverse: applyAlpha(palette.white, 0.05),
             navigationBarDivider: palette.darkModeBlack,
-            brandHigh: palette.grey6,
-            inverse: palette.grey2,
-            neutralHigh: palette.grey2,
-            neutralMedium: palette.grey5,
-            neutralLow: palette.grey6,
-            textPrimary: palette.grey2,
-            textPrimaryInverse: palette.grey2,
-            textSecondary: palette.grey4,
-            textSecondaryInverse: palette.grey4,
-            textNavigationBarPrimary: palette.grey2,
-            textNavigationBarSecondary: palette.grey4,
-            textNavigationSearchBarHint: palette.grey4, // iOS
-            textNavigationSearchBarText: palette.grey2, // iOS
-            textAppBar: palette.grey5,
-            textAppBarSelected: palette.grey2,
+            brandHigh: palette.darkModeGrey6,
+            inverse: palette.darkModeGrey2,
+            neutralHigh: palette.darkModeGrey2,
+            neutralMedium: palette.darkModeGrey5,
+            neutralLow: palette.darkModeGrey6,
+            textPrimary: palette.darkModeGrey2,
+            textPrimaryInverse: palette.darkModeGrey2,
+            textSecondary: palette.darkModeGrey4,
+            textSecondaryInverse: palette.darkModeGrey4,
+            textNavigationBarPrimary: palette.darkModeGrey2,
+            textNavigationBarSecondary: palette.darkModeGrey4,
+            textNavigationSearchBarHint: palette.darkModeGrey4, // iOS
+            textNavigationSearchBarText: palette.darkModeGrey2, // iOS
+            textAppBar: palette.darkModeGrey5,
+            textAppBarSelected: palette.darkModeGrey2,
 
             // TAGS
             successLow: applyAlpha(palette.white, 0.05),
