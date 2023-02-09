@@ -33,17 +33,15 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
     }
 
     const tagTypeToColors = {
-        promo: [colors.promoHigh, colors.promoLow],
-        active: [colors.brand, colors.brandLow],
-        inactive: [colors.neutralMedium, colors.neutralLow],
-        success: [colors.successHigh, colors.successLow],
-        warning: [colors.warningHigh, colors.warningLow],
-        error: [colors.errorHigh, colors.errorLow],
+        promo: [colors.promoHigh, colors.promoHighInverse, colors.promoLow],
+        active: [colors.brand, colors.brandHighInverse, colors.brandLow],
+        inactive: [colors.neutralMedium, colors.neutralMediumInverse, colors.neutralLow],
+        success: [colors.successHigh, colors.successHighInverse, colors.successLow],
+        warning: [colors.warningHigh, colors.warningHighInverse, colors.warningLow],
+        error: [colors.errorHigh, colors.errorHighInverse, colors.errorLow],
     } as const;
 
-    const [textColor, backgroundColor] = tagTypeToColors[type];
-
-    const shouldUseInverseBackground = isInverse && !isDarkMode;
+    const [textColor, inverseTextColor, backgroundColor] = tagTypeToColors[type];
 
     return (
         <span
@@ -52,17 +50,27 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
                 classes.tag,
                 sprinkles({
                     paddingLeft: Icon ? 8 : 12,
-                    background: shouldUseInverseBackground ? colors.inverse : backgroundColor,
+                    background: isInverse ? colors.inverse : backgroundColor,
                 })
             )}
         >
             {Icon && (
                 <Box paddingRight={4}>
-                    <Icon color={textColor} size={pxToRem(16)} className={sprinkles({display: 'block'})} />
+                    <Icon
+                        color={isInverse ? inverseTextColor : textColor}
+                        size={pxToRem(16)}
+                        className={sprinkles({display: 'block'})}
+                    />
                 </Box>
             )}
             <ThemeVariant isInverse={false}>
-                <Text color={textColor} size={14} lineHeight={20} weight="medium" truncate>
+                <Text
+                    color={isInverse ? inverseTextColor : textColor}
+                    size={14}
+                    lineHeight={20}
+                    weight="medium"
+                    truncate
+                >
                     {children}
                 </Text>
             </ThemeVariant>

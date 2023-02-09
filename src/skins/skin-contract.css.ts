@@ -64,10 +64,12 @@ const colors = {
     // GLOBAL
     brand: '',
     brandHigh: '',
+    brandHighInverse: '',
     inverse: '',
     neutralHigh: '',
     neutralLow: '',
     neutralMedium: '',
+    neutralMediumInverse: '',
     promo: '',
 
     // STATES
@@ -115,6 +117,10 @@ const colors = {
     warningHigh: '',
     errorHigh: '',
     promoHigh: '',
+    successHighInverse: '',
+    warningHighInverse: '',
+    errorHighInverse: '',
+    promoHighInverse: '',
 };
 
 export const vars = createThemeContract({
