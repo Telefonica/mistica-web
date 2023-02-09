@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ReactDOM from 'react-dom';
+import {createRoot} from 'react-dom/client';
 import {ThemeContextProvider, IconTruckFilled, getMovistarSkin} from '@telefonica/mistica';
 
 /*
@@ -14,7 +14,8 @@ Using React.createElement so we don't need to compile JSX
 </React.StrictMode>,
 */
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root'));
+root.render(
     React.createElement(
         React.StrictMode,
         {},
@@ -28,6 +29,5 @@ ReactDOM.render(
             },
             React.createElement(IconTruckFilled, {})
         )
-    ),
-    document.getElementById('root')
+    )
 );

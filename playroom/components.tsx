@@ -163,9 +163,10 @@ type PreviewToolsProps = {
     forceMobile?: boolean;
     forceDesktop?: boolean;
     hide?: boolean;
+    children: React.ReactNode;
 };
 
-export const PreviewTools: React.FC<PreviewToolsProps> = ({
+export const PreviewTools = ({
     children,
     floating,
     position = 'top-right',
@@ -173,7 +174,7 @@ export const PreviewTools: React.FC<PreviewToolsProps> = ({
     forceMobile = false,
     forceDesktop = false,
     hide,
-}) => {
+}: PreviewToolsProps): JSX.Element => {
     const {
         skinName: initialSkinName,
         platformOverrides: {platform: initialOs = 'android'},

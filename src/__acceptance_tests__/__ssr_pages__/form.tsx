@@ -20,7 +20,7 @@ import {
     Select,
 } from '../../..';
 
-const FormTest: React.FC = () => (
+const FormTest = (): JSX.Element => (
     <Form onSubmit={() => {}}>
         <Box padding={16}>
             <Stack space={16}>

@@ -42,7 +42,7 @@ const PhoneInput: React.FC<InputProps> = ({
     const controlledValue = (isControlledByParent ? value : selfValue) as string;
 
     const handleChangeValue = React.useCallback(
-        (newFormattedValue) => {
+        (newFormattedValue: string) => {
             if (!isControlledByParent) {
                 setSelfValue(newFormattedValue);
             }

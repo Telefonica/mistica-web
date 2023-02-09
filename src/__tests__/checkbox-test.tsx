@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {render, waitFor, fireEvent, screen} from '@testing-library/react';
+import {render, waitFor, screen} from '@testing-library/react';
 import {ButtonPrimary, Form, Checkbox, ThemeContextProvider} from '..';
 import userEvent from '@testing-library/user-event';
 import {makeTheme} from './test-utils';
@@ -17,7 +17,7 @@ test('renders accesible checkbox', () => {
     expect(checkBoxElement.getAttribute('aria-checked')).toBe('false');
 });
 
-test('controlled mode', () => {
+test('controlled mode', async () => {
     const Component = () => {
         const [checked, setChecked] = React.useState(false);
         return (
@@ -32,11 +32,11 @@ test('controlled mode', () => {
     const checkBoxElement = screen.getByRole('checkbox');
 
     expect(checkBoxElement.getAttribute('aria-checked')).toBe('false');
-    fireEvent.click(checkBoxElement);
+    await userEvent.click(checkBoxElement);
     expect(checkBoxElement.getAttribute('aria-checked')).toBe('true');
 });
 
-test('uncontrolled mode', () => {
+test('uncontrolled mode', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <Checkbox name="checkbox" defaultChecked />
@@ -46,7 +46,7 @@ test('uncontrolled mode', () => {
     const checkBoxElement = screen.getByRole('checkbox');
 
     expect(checkBoxElement.getAttribute('aria-checked')).toBe('true');
-    fireEvent.click(checkBoxElement);
+    await userEvent.click(checkBoxElement);
     expect(checkBoxElement.getAttribute('aria-checked')).toBe('false');
 });
 
@@ -62,7 +62,7 @@ test('uncontrolled mode with onChange handler', async () => {
     const checkBoxElement = screen.getByRole('checkbox');
 
     expect(checkBoxElement.getAttribute('aria-checked')).toBe('true');
-    fireEvent.click(checkBoxElement);
+    await userEvent.click(checkBoxElement);
     expect(checkBoxElement.getAttribute('aria-checked')).toBe('false');
 
     await waitFor(() => expect(onChangeSpy).toHaveBeenCalledWith(false));
@@ -83,9 +83,9 @@ test('form controlled mode', async () => {
     const checkBoxElement = screen.getByRole('checkbox');
 
     expect(checkBoxElement.getAttribute('aria-checked')).toBe('true');
-    fireEvent.click(checkBoxElement);
+    await userEvent.click(checkBoxElement);
     expect(checkBoxElement.getAttribute('aria-checked')).toBe('false');
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     await waitFor(() => expect(handleSubmitSpy).toHaveBeenCalledWith({checkbox: false}, {checkbox: false}));
 });
 
@@ -109,8 +109,8 @@ test('form uncontrolled mode', async () => {
     const checkBoxElement = screen.getByRole('checkbox');
 
     expect(checkBoxElement.getAttribute('aria-checked')).toBe('false');
-    fireEvent.click(checkBoxElement);
+    await userEvent.click(checkBoxElement);
     expect(checkBoxElement.getAttribute('aria-checked')).toBe('true');
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     await waitFor(() => expect(handleSubmitSpy).toHaveBeenCalledWith({checkbox: true}, {checkbox: true}));
 });

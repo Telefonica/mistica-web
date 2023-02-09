@@ -18,7 +18,7 @@ export default {
     },
 };
 
-const IconOrders: React.FC = () => {
+const IconOrders = (): JSX.Element => {
     const {inverse, brand} = skinVars.colors;
     return (
         <svg role="presentation" width="64" height="64" viewBox="0 0 64 64">

@@ -37,7 +37,7 @@ const SearchField: React.FC<SearchFieldProps> = ({
     const controlledValue = isControlledByParent ? value : searchValue;
 
     const handleChangeValue = React.useCallback(
-        (newValue, newRawValue) => {
+        (newValue: string, newRawValue: string) => {
             if (!isControlledByParent) {
                 setSearchValue(newValue);
             }

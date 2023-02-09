@@ -1524,6 +1524,9 @@ export {default as IconShopRegular} from './generated/mistica-icons/icon-shop-re
 export {default as IconShowerFilled} from './generated/mistica-icons/icon-shower-filled';
 export {default as IconShowerLight} from './generated/mistica-icons/icon-shower-light';
 export {default as IconShowerRegular} from './generated/mistica-icons/icon-shower-regular';
+export {default as IconSingleparentFamilyFilled} from './generated/mistica-icons/icon-singleparent-family-filled';
+export {default as IconSingleparentFamilyLight} from './generated/mistica-icons/icon-singleparent-family-light';
+export {default as IconSingleparentFamilyRegular} from './generated/mistica-icons/icon-singleparent-family-regular';
 export {default as IconSkullFilled} from './generated/mistica-icons/icon-skull-filled';
 export {default as IconSkullLight} from './generated/mistica-icons/icon-skull-light';
 export {default as IconSkullRegular} from './generated/mistica-icons/icon-skull-regular';

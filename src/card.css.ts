@@ -46,6 +46,7 @@ export const dataCard = style([
         paddingY: 24,
         paddingX: 16,
         flexDirection: 'column',
+        width: '100%',
     }),
     {
         '@media': {

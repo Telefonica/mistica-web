@@ -10,9 +10,8 @@ test.each`
     ${'DESKTOP'}    | ${false}
 `('Tabs in $device withIcon ($withIcon)', async ({device, withIcon}) => {
     await openStoryPage({
-        id: 'components-tabs--default',
+        id: withIcon ? 'components-tabs--with-icon' : 'components-tabs--default',
         device,
-        args: {withIcon},
     });
     const image = await (await screen.findByRole('tablist')).screenshot();
     expect(image).toMatchImageSnapshot();

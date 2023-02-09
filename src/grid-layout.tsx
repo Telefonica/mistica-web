@@ -91,9 +91,11 @@ const GridLayout: React.FC<Props> = (props) => {
 
     const gridStyles = {
         className: styles.grid,
-        style: assignInlineVars({
-            [styles.vars.verticalSpace]: props.verticalSpace ? `${props.verticalSpace}px` : '',
-        }),
+        style: props.verticalSpace
+            ? assignInlineVars({
+                  [styles.vars.verticalSpace]: `${props.verticalSpace}px`,
+              })
+            : undefined,
     };
 
     if (props.template === '6+6') {

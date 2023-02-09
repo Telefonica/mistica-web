@@ -84,18 +84,22 @@ export const getBlauSkin: GetKnownSkin = () => {
             buttonDangerBackgroundHover: palette.blauRed70,
 
             buttonLinkBackgroundSelected: palette.blauPurple10,
-            buttonLinkBackgroundSelectedInverse: applyAlpha(palette.white, 0.3),
+            buttonLinkBackgroundInverseSelected: applyAlpha(palette.white, 0.3),
 
             buttonPrimaryBackground: palette.blauBlueSecondary,
             buttonPrimaryBackgroundInverse: palette.white,
             buttonPrimaryBackgroundSelected: palette.blauBlueSecondary60,
             buttonPrimaryBackgroundHover: palette.blauBlueSecondary60,
-            buttonPrimaryBackgroundSelectedInverse: palette.blauBluePrimary30,
+            buttonPrimaryBackgroundInverseSelected: palette.blauBluePrimary30,
 
-            buttonSecondaryBackground: palette.blauBlueSecondary,
-            buttonSecondaryBackgroundSelected: palette.blauBlueSecondary60,
+            buttonSecondaryBorder: palette.blauBlueSecondary,
+            buttonSecondaryBorderSelected: palette.blauBlueSecondary60,
             buttonSecondaryBorderInverse: palette.white,
-            buttonSecondaryBorderSelectedInverse: palette.blauBluePrimary30,
+            buttonSecondaryBorderInverseSelected: palette.white,
+            buttonSecondaryBackgroundHover: palette.blauBlueSecondary10,
+            buttonSecondaryBackgroundSelected: palette.blauBlueSecondary10,
+            buttonSecondaryBackgroundInverseHover: applyAlpha(palette.white, 0.2),
+            buttonSecondaryBackgroundInverseSelected: applyAlpha(palette.white, 0.2),
 
             textButtonPrimary: palette.white,
             textButtonPrimaryInverse: palette.blauBlueSecondary,
@@ -194,22 +198,28 @@ export const getBlauSkin: GetKnownSkin = () => {
             // BUTTONS
 
             buttonLinkBackgroundSelected: applyAlpha(palette.blauPurple, 0.3),
-            buttonLinkBackgroundSelectedInverse: applyAlpha(palette.blauPurple, 0.3),
+            buttonLinkBackgroundInverseSelected: applyAlpha(palette.blauPurple, 0.3),
 
             buttonPrimaryBackgroundInverse: palette.blauBlueSecondary,
             buttonPrimaryBackgroundSelected: palette.blauBlueSecondary60,
 
-            buttonSecondaryBorderInverse: palette.blauBluePrimary,
-            buttonSecondaryBorderSelectedInverse: palette.blauBlueSecondary60,
+            buttonSecondaryBorder: palette.white,
+            buttonSecondaryBorderSelected: palette.white,
+            buttonSecondaryBorderInverse: palette.white,
+            buttonSecondaryBorderInverseSelected: palette.white,
+            buttonSecondaryBackgroundHover: applyAlpha(palette.white, 0.15),
+            buttonSecondaryBackgroundSelected: applyAlpha(palette.white, 0.15),
+            buttonSecondaryBackgroundInverseHover: applyAlpha(palette.white, 0.15),
+            buttonSecondaryBackgroundInverseSelected: applyAlpha(palette.white, 0.15),
 
             textButtonPrimary: palette.grey2,
             textButtonPrimaryInverse: palette.grey2,
             textButtonPrimaryInverseSelected: palette.grey2,
 
             textButtonSecondary: palette.grey2,
-            textButtonSecondarySelected: palette.blauBlueSecondary60,
+            textButtonSecondarySelected: palette.grey2,
             textButtonSecondaryInverse: palette.grey2,
-            textButtonSecondaryInverseSelected: palette.blauBlueSecondary60,
+            textButtonSecondaryInverseSelected: palette.grey2,
 
             textLink: palette.blauPurple30,
             textLinkInverse: palette.blauPurple30,

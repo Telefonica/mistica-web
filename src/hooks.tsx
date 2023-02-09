@@ -72,7 +72,7 @@ export const useElementDimensions = (): {
     const [height, setHeight] = React.useState(0);
     const [element, setElement] = React.useState<HTMLElement | null>(null);
 
-    const updateSize = React.useCallback((entries) => {
+    const updateSize = React.useCallback((entries: Array<ResizeObserverEntry>) => {
         if (!entries) {
             setWidth(0);
             setHeight(0);
@@ -102,8 +102,18 @@ export const useElementDimensions = (): {
 };
 
 export const useAriaId = (id?: string): string => {
-    const getAriaId = React.useContext(AriaIdGetterContext);
-    return React.useRef(id || getAriaId()).current;
+    const {useId} = useTheme();
+    // This useId should be stable, so the rules-of-hooks still apply
+    if (useId) {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const generatedId = useId();
+        return id || generatedId;
+    } else {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const getAriaId = React.useContext(AriaIdGetterContext);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        return React.useRef(id || getAriaId()).current;
+    }
 };
 
 export const useWindowSize = (): {

@@ -68,7 +68,7 @@ export const DecimalInput: React.FC<DecimalInputProps> = ({
     const controlledValue = (isControlledByParent ? value : selfValue) as string;
 
     const handleChangeValue = React.useCallback(
-        (newFormattedValue) => {
+        (newFormattedValue: string) => {
             if (!isControlledByParent) {
                 setSelfValue(newFormattedValue);
             }

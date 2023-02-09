@@ -7,7 +7,7 @@ export default {
     title: 'Utilities/ThemeVariant',
 };
 
-const OtherComponent: React.FC = () => {
+const OtherComponent = (): JSX.Element => {
     const isInverse = useIsInverseVariant();
     return (
         <Stack space={16}>

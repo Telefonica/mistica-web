@@ -46,13 +46,13 @@ test('<a> is rendered when using "to" prop', () => {
     expect(asFragment()).toMatchInlineSnapshot(`
         <DocumentFragment>
           <a
-            class="touchable_base__mhti6u1 touchable__mhti6u0 sprinkles_cursor_pointer__1y2v1nf93 button_variants_primary__rrbrpnl button_button__rrbrpn2 button__rrbrpn1 sprinkles_paddingTop_0__1y2v1nf5l sprinkles_paddingBottom_0__1y2v1nf5z sprinkles_paddingLeft_0__1y2v1nf6d sprinkles_paddingRight_0__1y2v1nf6r sprinkles_display_inline-block__1y2v1nf52 sprinkles_position_relative__1y2v1nf4t sprinkles_width_auto__1y2v1nf76 sprinkles_borderRadius_4__1y2v1nf8z sprinkles_overflow_hidden__1y2v1nf94 button__rrbrpna sprinkles_color_var(--colors-textButtonPrimary__1vqcj1i1m)__1y2v1nf1m sprinkles_background_var(--colors-buttonPrimaryBackground__1vqcj1ik)__1y2v1nf2y"
+            class="touchable_base__mhti6u1 touchable__mhti6u0 sprinkles_cursor_pointer__1y2v1nf9b button_variants_primary__rrbrpnl button_button__rrbrpn2 button__rrbrpn1 sprinkles_paddingTop_0__1y2v1nf5t sprinkles_paddingBottom_0__1y2v1nf67 sprinkles_paddingLeft_0__1y2v1nf6l sprinkles_paddingRight_0__1y2v1nf6z sprinkles_display_inline-block__1y2v1nf5a sprinkles_position_relative__1y2v1nf51 sprinkles_width_auto__1y2v1nf7e sprinkles_borderRadius_4__1y2v1nf97 sprinkles_overflow_hidden__1y2v1nf9c button__rrbrpna sprinkles_color_var(--colors-textButtonPrimary__1vqcj1i1q)__1y2v1nf1q sprinkles_background_var(--colors-buttonPrimaryBackground__1vqcj1ik)__1y2v1nf32"
             data-component-name="ButtonPrimary"
             href="/test"
             role="button"
           >
             <div
-              class="button_textContent__rrbrpn9 button__rrbrpn8 sprinkles_display_flex__1y2v1nf4y sprinkles_alignItems_center__1y2v1nf5d sprinkles_justifyContent_center__1y2v1nf57"
+              class="button_textContent__rrbrpn9 button__rrbrpn8 sprinkles_display_flex__1y2v1nf56 sprinkles_alignItems_center__1y2v1nf5l sprinkles_justifyContent_center__1y2v1nf5f"
             >
               <div
                 class="text_text__splu5g7 text_withWordBreak__splu5g5 text_truncateToOneLine__splu5g9 text_truncate__splu5g8"
@@ -64,12 +64,12 @@ test('<a> is rendered when using "to" prop', () => {
             </div>
             <div
               aria-hidden="true"
-              class="button_loadingFiller__rrbrpn4 button__rrbrpn3 sprinkles_display_block__1y2v1nf50 sprinkles_height_0__1y2v1nf7m sprinkles_overflow_hidden__1y2v1nf94"
+              class="button_loadingFiller__rrbrpn4 button__rrbrpn3 sprinkles_display_block__1y2v1nf58 sprinkles_height_0__1y2v1nf7u sprinkles_overflow_hidden__1y2v1nf9c"
               style="padding-left: 1.250rem; padding-right: 37px;"
             />
             <div
               aria-hidden="true"
-              class="button_loadingContent__rrbrpn7 button__rrbrpn6 sprinkles_display_inline-flex__1y2v1nf4z sprinkles_position_absolute__1y2v1nf4u sprinkles_top_0__1y2v1nf96 sprinkles_bottom_0__1y2v1nfac sprinkles_justifyContent_center__1y2v1nf57 sprinkles_alignItems_center__1y2v1nf5d"
+              class="button_loadingContent__rrbrpn7 button__rrbrpn6 sprinkles_display_inline-flex__1y2v1nf57 sprinkles_position_absolute__1y2v1nf52 sprinkles_top_0__1y2v1nf9e sprinkles_bottom_0__1y2v1nfak sprinkles_justifyContent_center__1y2v1nf5f sprinkles_alignItems_center__1y2v1nf5l"
             >
               <div
                 style="display: inline-block; width: 1.250rem; height: 1.250rem;"
@@ -106,15 +106,15 @@ test('buttons can track events', async () => {
     const toButton = await screen.findByRole('button', {name: 'button with to'});
     const onPressButton = await screen.findByRole('button', {name: 'button with onPress'});
 
-    userEvent.click(hrefButton);
+    await userEvent.click(hrefButton);
     expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
     expect(logEventSpy).toHaveBeenCalledTimes(1);
 
-    userEvent.click(toButton);
+    await userEvent.click(toButton);
     expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
     expect(logEventSpy).toHaveBeenCalledTimes(2);
 
-    userEvent.click(onPressButton);
+    await userEvent.click(onPressButton);
     expect(logEventSpy).toHaveBeenCalledWith(trackingEvent);
     expect(logEventSpy).toHaveBeenCalledTimes(3);
 });
@@ -153,11 +153,11 @@ test('buttons track default events', async () => {
     const noTrackLink = await screen.findByRole('link', {name: 'no track link'});
     const link = await screen.findByRole('link', {name: 'link'});
 
-    userEvent.click(noTrackButton);
-    userEvent.click(noTrackLink);
+    await userEvent.click(noTrackButton);
+    await userEvent.click(noTrackLink);
     expect(logEventSpy).not.toHaveBeenCalled();
 
-    userEvent.click(primaryButton);
+    await userEvent.click(primaryButton);
     expect(logEventSpy).toHaveBeenCalledWith({
         category: 'user_interaction',
         action: 'primary_button_tapped',
@@ -165,7 +165,7 @@ test('buttons track default events', async () => {
     });
     expect(logEventSpy).toHaveBeenCalledTimes(1);
 
-    userEvent.click(secondaryButton);
+    await userEvent.click(secondaryButton);
     expect(logEventSpy).toHaveBeenCalledWith({
         category: 'user_interaction',
         action: 'secondary_button_tapped',
@@ -173,7 +173,7 @@ test('buttons track default events', async () => {
     });
     expect(logEventSpy).toHaveBeenCalledTimes(2);
 
-    userEvent.click(dangerButton);
+    await userEvent.click(dangerButton);
     expect(logEventSpy).toHaveBeenCalledWith({
         category: 'user_interaction',
         action: 'danger_button_tapped',
@@ -181,7 +181,7 @@ test('buttons track default events', async () => {
     });
     expect(logEventSpy).toHaveBeenCalledTimes(3);
 
-    userEvent.click(buttonWithIcon);
+    await userEvent.click(buttonWithIcon);
     expect(logEventSpy).toHaveBeenCalledWith({
         category: 'user_interaction',
         action: 'primary_button_tapped',
@@ -189,7 +189,7 @@ test('buttons track default events', async () => {
     });
     expect(logEventSpy).toHaveBeenCalledTimes(4);
 
-    userEvent.click(link);
+    await userEvent.click(link);
     expect(logEventSpy).toHaveBeenCalledWith({
         category: 'user_interaction',
         action: 'link_tapped',

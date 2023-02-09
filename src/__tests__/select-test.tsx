@@ -5,7 +5,7 @@ import Select from '../select';
 import ThemeContextProvider from '../theme-context-provider';
 import {makeTheme} from './test-utils';
 
-test('select happy case', () => {
+test('select happy case', async () => {
     render(
         <ThemeContextProvider theme={makeTheme()}>
             <Select
@@ -20,7 +20,7 @@ test('select happy case', () => {
         </ThemeContextProvider>
     );
 
-    userEvent.selectOptions(screen.getByLabelText('selectLabel'), 'value2');
+    await userEvent.selectOptions(screen.getByLabelText('selectLabel'), 'value2');
 
     expect((screen.getByRole('option', {name: 'text1'}) as HTMLOptionElement).selected).toBe(false);
     expect((screen.getByRole('option', {name: 'text2'}) as HTMLOptionElement).selected).toBe(true);

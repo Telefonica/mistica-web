@@ -38,11 +38,9 @@ const Inline: React.FC<Props> = ({
                 isFullWith ? styles.fullWidth : styles.noFullWidth,
                 typeof space !== 'number' && styles.justifyVariants[space]
             )}
-            style={{
-                ...assignInlineVars({
-                    [styles.vars.space]: typeof space === 'number' ? `${space}px` : '',
-                }),
-            }}
+            style={
+                typeof space === 'number' ? assignInlineVars({[styles.vars.space]: `${space}px`}) : undefined
+            }
             role={role}
             aria-labelledby={ariaLabelledBy}
             {...getPrefixedDataAttributes(dataAttributes)}

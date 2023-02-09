@@ -39,7 +39,7 @@ const IconInfoO2: React.FC<Props> = ({size = 64, color}) => {
     );
 };
 
-const IconInfoDefault: React.FC = () => {
+const IconInfoDefault = (): JSX.Element => {
     return (
         <svg width="64" height="64" viewBox="0 0 64 64">
             <g fill={vars.colors.brand}>
@@ -53,7 +53,7 @@ const IconInfoDefault: React.FC = () => {
     );
 };
 
-const IconInfo: React.FC = () => {
+const IconInfo = (): JSX.Element => {
     const {skinName} = useTheme();
     return skinName === O2_CLASSIC_SKIN || skinName === O2_SKIN ? <IconInfoO2 /> : <IconInfoDefault />;
 };

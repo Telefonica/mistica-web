@@ -85,7 +85,7 @@ test('form controlled mode', async () => {
     expect(switchElement.getAttribute('aria-checked')).toBe('true');
     fireEvent.click(switchElement);
     expect(switchElement.getAttribute('aria-checked')).toBe('false');
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     await waitFor(() => expect(handleSubmitSpy).toHaveBeenCalledWith({switch: false}, {switch: false}));
 });
 
@@ -111,6 +111,6 @@ test('form uncontrolled mode', async () => {
     expect(switchElement.getAttribute('aria-checked')).toBe('false');
     fireEvent.click(switchElement);
     expect(switchElement.getAttribute('aria-checked')).toBe('true');
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
     await waitFor(() => expect(handleSubmitSpy).toHaveBeenCalledWith({switch: true}, {switch: true}));
 });

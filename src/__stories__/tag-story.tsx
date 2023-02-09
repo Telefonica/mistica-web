@@ -22,7 +22,7 @@ export default {
     title: 'Components/Tag',
 };
 
-const Container: React.FC<{inverse?: boolean}> = ({children, inverse = false}) => {
+const Container = ({children, inverse = false}: {inverse?: boolean; children: React.ReactNode}) => {
     return (
         <ThemeVariant isInverse={inverse}>
             <div
