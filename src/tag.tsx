@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from './box';
-import {useTheme} from './hooks';
 import {Text} from './text';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import {pxToRem} from './utils/css';
@@ -25,7 +24,6 @@ export type TagProps = {
 const {colors} = vars;
 
 const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'}) => {
-    const {isDarkMode} = useTheme();
     const isInverse = useIsInverseVariant();
 
     if (!children) {
