@@ -7,7 +7,7 @@ import {
     Stack,
     NavigationBreadcrumbs,
     ResponsiveLayout,
-    Text3,
+    Placeholder,
 } from '..';
 import {useTextField, useCheckbox} from './helpers';
 
@@ -25,6 +25,7 @@ const FieldWithCheckbox = ({children}: {children: React.ReactNode}) => (
 export const Default: StoryComponent = () => {
     const [pretitle, pretitleTextField] = useTextField('Pretitle', 'Your last bill');
     const [title, titleTextField] = useTextField('Title', 'December bill is now available');
+    const [description, descriptionTextField] = useTextField('Description', 'This is a description');
     const [preamount, preamountTextField] = useTextField('Preamount', 'Monthly fee (IVA included)');
     const [amount, amountTextField] = useTextField('Amount', '60,44 €');
     const [buttonLabel, buttonLabelTextField] = useTextField('Button', 'Download bill');
@@ -56,6 +57,7 @@ export const Default: StoryComponent = () => {
                         <Header
                             pretitle={pretitle}
                             title={title}
+                            description={description}
                             preamount={preamount}
                             amount={amount}
                             button={
@@ -72,11 +74,7 @@ export const Default: StoryComponent = () => {
                             isErrorAmount={isErrorAmount}
                         />
                     }
-                    extra={
-                        withExtraContent ? (
-                            <Text3 regular>some account chart here, for example</Text3>
-                        ) : undefined
-                    }
+                    extra={withExtraContent ? <Placeholder /> : undefined}
                 />
             </div>
             <ResponsiveLayout>
@@ -84,6 +82,7 @@ export const Default: StoryComponent = () => {
                     {breadcrumbsCheckbox}
                     {pretitleTextField}
                     {titleTextField}
+                    {descriptionTextField}
                     {preamountTextField}
                     <FieldWithCheckbox>
                         {amountTextField}

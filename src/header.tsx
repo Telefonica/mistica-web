@@ -26,6 +26,7 @@ type RichText = string | ({text: string} & OverridableTextProps);
 type HeaderProps = {
     pretitle?: RichText;
     title?: string;
+    description?: string;
     preamount?: RichText;
     amount?: string;
     button?: RendersNullableElement<typeof ButtonPrimary>;
@@ -38,6 +39,7 @@ type HeaderProps = {
 export const Header: React.FC<HeaderProps> = ({
     pretitle,
     title,
+    description,
     preamount,
     amount,
     button,
@@ -74,6 +76,11 @@ export const Header: React.FC<HeaderProps> = ({
                         <Text6 role="heading" aria-level={2}>
                             {title}
                         </Text6>
+                        {description && (
+                            <Text3 regular color={vars.colors.textSecondary}>
+                                {description}
+                            </Text3>
+                        )}
                     </Stack>
                 </Box>
             )}
@@ -175,19 +182,13 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                 </Box>
             ) : (
                 <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
-                    <GridLayout
-                        template="6+6"
-                        left={
-                            <Stack space={24}>
-                                <Stack space={32}>
-                                    {breadcrumbs}
-                                    {header}
-                                </Stack>
-                                {extra}
-                            </Stack>
-                        }
-                        right={null}
-                    />
+                    <Stack space={isTabletOrSmaller ? 24 : 32}>
+                        <Stack space={32}>
+                            {breadcrumbs}
+                            {header}
+                        </Stack>
+                        {extra}
+                    </Stack>
                 </Box>
             )}
         </ResponsiveLayout>
