@@ -672,7 +672,7 @@ const cardSnippets: Array<Snippet> = [
         name: 'MediaCard with Image',
         code: `
         <MediaCard
-            media={<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" noBorderRadius/>}
+            media={<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9"/>}
             headline={<Tag type="promo">Headline</Tag>}
             pretitle="Pretitle"
             title="Title"

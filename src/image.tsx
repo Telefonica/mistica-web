@@ -169,7 +169,11 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
             >
                 {withLoadingFallback && !hideLoadingFallback && (
                     <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-                        <SkeletonRectangle width={props.width} height={props.height} />
+                        <SkeletonRectangle
+                            width={props.width}
+                            height={props.height}
+                            noBorderRadius={noBorderSetting}
+                        />
                     </div>
                 )}
                 {isError && withErrorFallback && (

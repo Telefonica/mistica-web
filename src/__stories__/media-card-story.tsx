@@ -113,7 +113,7 @@ export const Group: StoryComponent = () => {
                         title="Title"
                         subtitle="Subtitle"
                         description="Description"
-                        media={<Image aspectRatio="16:9" src={IMAGE_SRC} noBorderRadius />}
+                        media={<Image aspectRatio="16:9" src={IMAGE_SRC} />}
                         buttonLink={<ButtonLink href="https://google.com">Link</ButtonLink>}
                     />
                     <MediaCard
