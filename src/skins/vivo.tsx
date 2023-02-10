@@ -173,7 +173,6 @@ export const getVivoSkin: GetKnownSkin = () => {
             errorHighInverse: palette.pepperDark80,
             promoHighInverse: palette.vivoPurple,
             neutralMediumInverse: palette.grey5,
-            brandHighInverse: palette.vivoPurpleDark,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
@@ -245,11 +244,11 @@ export const getVivoSkin: GetKnownSkin = () => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            successLow: applyAlpha(palette.white, 0.05),
-            warningLow: applyAlpha(palette.white, 0.05),
-            errorLow: applyAlpha(palette.white, 0.05),
-            promoLow: applyAlpha(palette.white, 0.05),
-            brandLow: applyAlpha(palette.white, 0.05),
+            successLow: palette.darkModeGrey6,
+            warningLow: palette.darkModeGrey6,
+            errorLow: palette.darkModeGrey6,
+            promoLow: palette.darkModeGrey6,
+            brandLow: palette.darkModeGrey6,
 
             successHigh: palette.vivoGreenLight30,
             warningHigh: palette.orangeLight40,
@@ -261,7 +260,6 @@ export const getVivoSkin: GetKnownSkin = () => {
             errorHighInverse: palette.pepperDark80,
             promoHighInverse: palette.vivoPurple,
             neutralMediumInverse: palette.grey5,
-            brandHighInverse: palette.vivoPurpleDark,
         },
     };
 };

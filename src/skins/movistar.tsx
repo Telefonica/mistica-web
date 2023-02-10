@@ -186,7 +186,6 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             errorHighInverse: palette.pepper70,
             promoHighInverse: palette.purple70,
             neutralMediumInverse: palette.grey5,
-            brandHighInverse: palette.movistarBlue,
         },
         darkModeColors: {
             brand: palette.movistarBlue, // this color needs to be in darkModeColors to revert the promient variant
@@ -254,11 +253,11 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            successLow: applyAlpha(palette.white, 0.05),
-            warningLow: applyAlpha(palette.white, 0.05),
-            errorLow: applyAlpha(palette.white, 0.05),
-            promoLow: applyAlpha(palette.white, 0.05),
-            brandLow: applyAlpha(palette.white, 0.05),
+            successLow: palette.grey6,
+            warningLow: palette.grey6,
+            errorLow: palette.grey6,
+            promoLow: palette.grey6,
+            brandLow: palette.grey6,
 
             successHigh: palette.movistarGreen40,
             warningHigh: palette.egg40,
@@ -270,7 +269,6 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             errorHighInverse: palette.pepper70,
             promoHighInverse: palette.purple70,
             neutralMediumInverse: palette.grey5,
-            brandHighInverse: palette.movistarBlue,
         },
         textPresets: {
             text5: {weight: 'bold'},

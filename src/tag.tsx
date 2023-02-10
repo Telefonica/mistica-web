@@ -32,7 +32,7 @@ const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'
 
     const tagTypeToColors = {
         promo: [colors.promoHigh, colors.promoHighInverse, colors.promoLow],
-        active: [colors.brand, colors.brandHighInverse, colors.brandLow],
+        active: [colors.brand, colors.brand, colors.brandLow],
         inactive: [colors.neutralMedium, colors.neutralMediumInverse, colors.neutralLow],
         success: [colors.successHigh, colors.successHighInverse, colors.successLow],
         warning: [colors.warningHigh, colors.warningHighInverse, colors.warningLow],

@@ -181,7 +181,6 @@ export const getBlauSkin: GetKnownSkin = () => {
             errorHighInverse: palette.blauRed70,
             promoHighInverse: palette.blauPurple,
             neutralMediumInverse: palette.grey5,
-            brandHighInverse: palette.blauBlueSecondary,
         },
         darkModeColors: {
             // BACKGROUNDS
@@ -266,11 +265,11 @@ export const getBlauSkin: GetKnownSkin = () => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            successLow: applyAlpha(palette.white, 0.05),
-            warningLow: applyAlpha(palette.white, 0.05),
-            errorLow: applyAlpha(palette.white, 0.05),
-            promoLow: applyAlpha(palette.white, 0.05),
-            brandLow: applyAlpha(palette.white, 0.05),
+            successLow: palette.darkModeGrey6,
+            warningLow: palette.darkModeGrey6,
+            errorLow: palette.darkModeGrey6,
+            promoLow: palette.darkModeGrey6,
+            brandLow: palette.darkModeGrey6,
 
             successHigh: palette.blauGreen30,
             warningHigh: palette.blauYellow40,
@@ -282,7 +281,6 @@ export const getBlauSkin: GetKnownSkin = () => {
             errorHighInverse: palette.blauRed70,
             promoHighInverse: palette.blauPurple,
             neutralMediumInverse: palette.grey5,
-            brandHighInverse: palette.blauBlueSecondary,
         },
     };
 };

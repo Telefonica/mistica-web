@@ -64,7 +64,6 @@ const colors = {
     // GLOBAL
     brand: '',
     brandHigh: '',
-    brandHighInverse: '',
     inverse: '',
     neutralHigh: '',
     neutralLow: '',

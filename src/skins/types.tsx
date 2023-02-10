@@ -99,7 +99,6 @@ export type Colors = {
     // GLOBAL
     brand: string;
     brandHigh: string;
-    brandHighInverse: string;
     inverse: string;
     neutralHigh: string;
     neutralLow: string;
