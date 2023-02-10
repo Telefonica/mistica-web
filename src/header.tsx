@@ -69,7 +69,7 @@ export const Header: React.FC<HeaderProps> = ({
 
     return (
         <Stack space={isTabletOrSmaller ? 24 : 32} dataAttributes={dataAttributes}>
-            {(title || pretitle) && (
+            {(title || pretitle || description) && (
                 <Box paddingRight={16}>
                     <Stack space={8}>
                         {pretitle && renderRichText(pretitle, {color: vars.colors.textPrimary})}
