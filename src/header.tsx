@@ -27,26 +27,44 @@ type HeaderProps = {
     pretitle?: RichText;
     title?: string;
     description?: string;
-    preamount?: RichText;
-    amount?: string;
-    button?: RendersNullableElement<typeof ButtonPrimary>;
-    secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
-    subtitle?: RichText;
-    isErrorAmount?: boolean;
     dataAttributes?: DataAttributes;
+    /**
+     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
+     */
+    preamount?: RichText;
+    /**
+     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
+     */
+    amount?: string;
+    /**
+     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
+     */
+    button?: RendersNullableElement<typeof ButtonPrimary>;
+    /**
+     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
+     */
+    secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
+    /**
+     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
+     */
+    subtitle?: RichText;
+    /**
+     * @deprecated This field is deprecated, please use the extra slot in the HeaderLayout component instead.
+     */
+    isErrorAmount?: boolean;
 };
 
 export const Header: React.FC<HeaderProps> = ({
     pretitle,
     title,
     description,
+    dataAttributes,
     preamount,
     amount,
     button,
     subtitle,
     isErrorAmount,
     secondaryButton,
-    dataAttributes,
 }) => {
     const {isTabletOrSmaller} = useScreenSize();
     const isInverse = useIsInverseVariant();
