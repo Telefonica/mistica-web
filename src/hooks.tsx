@@ -101,19 +101,20 @@ export const useElementDimensions = (): {
     return {width, height, ref};
 };
 
-const useAriaIdReact18 = (id?: string): string => {
-    const reactId = React.useId();
-    return id || reactId;
+export const useAriaId = (id?: string): string => {
+    const {useId} = useTheme();
+    // This useId should be stable, so the rules-of-hooks still apply
+    if (useId) {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const generatedId = useId();
+        return id || generatedId;
+    } else {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const getAriaId = React.useContext(AriaIdGetterContext);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        return React.useRef(id || getAriaId()).current;
+    }
 };
-
-const isUseIdAvailable = React.useId !== undefined;
-
-export const useAriaId = isUseIdAvailable
-    ? useAriaIdReact18
-    : (id?: string): string => {
-          const getAriaId = React.useContext(AriaIdGetterContext);
-          return React.useRef(id || getAriaId()).current;
-      };
 
 export const useWindowSize = (): {
     height: number;
