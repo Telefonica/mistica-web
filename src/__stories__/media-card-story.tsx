@@ -58,7 +58,7 @@ export const Default: StoryComponent<Args> = ({
                 media === 'video' ? (
                     <Video src={VIDEO_SRC} aspectRatio="12:5" dataAttributes={{qsysid: 'video'}} />
                 ) : (
-                    <Image aspectRatio="16:9" src={IMAGE_SRC} noBorderRadius />
+                    <Image aspectRatio="16:9" src={IMAGE_SRC} />
                 )
             }
             button={button}
