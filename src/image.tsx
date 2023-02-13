@@ -97,8 +97,8 @@ export type ImageProps = {
     children?: void;
     dataAttributes?: DataAttributes;
     noBorderRadius?: boolean;
-    onError?: (event: React.SyntheticEvent) => void;
-    onLoad?: (event?: React.SyntheticEvent) => void;
+    onError?: () => void;
+    onLoad?: () => void;
     loadingFallback?: boolean;
     errorFallback?: boolean;
 };
@@ -131,19 +131,15 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
         const withLoadingFallback = loadingFallback && !!(ratio !== 0 || (props.width && props.height));
         const withErrorFallback = errorFallback && !!(ratio !== 0 || (props.width && props.height));
 
-        const onLoadHandler = React.useCallback(
-            (event?: React.SyntheticEvent<HTMLImageElement>) => {
-                console.log('ON LOAD');
-                setIsError(false);
-                setIsLoading(false);
-                setTimeout(() => {
-                    setHideLoadingFallback(true);
-                }, styles.FADE_IN_DURATION_MS);
+        const onLoadHandler = React.useCallback(() => {
+            setIsError(false);
+            setIsLoading(false);
+            setTimeout(() => {
+                setHideLoadingFallback(true);
+            }, styles.FADE_IN_DURATION_MS);
 
-                onLoad?.(event);
-            },
-            [onLoad]
-        );
+            onLoad?.();
+        }, [onLoad]);
 
         const img = (
             // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/309
@@ -163,11 +159,11 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
                     })
                 )}
                 alt={alt}
-                onError={(event) => {
+                onError={() => {
                     setIsError(true);
                     setIsLoading(false);
                     setHideLoadingFallback(true);
-                    onError?.(event);
+                    onError?.();
                 }}
                 onLoad={onLoadHandler}
             />
