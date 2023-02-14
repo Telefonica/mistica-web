@@ -170,6 +170,12 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             warningHigh: palette.ambar70,
             errorHigh: palette.coral70,
             promoHigh: palette.orchid70,
+
+            successHighInverse: palette.turquoise70,
+            warningHighInverse: palette.ambar70,
+            errorHighInverse: palette.coral70,
+            promoHighInverse: palette.orchid70,
+            neutralMediumInverse: palette.grey5,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
@@ -239,16 +245,22 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            successLow: applyAlpha(palette.white, 0.05),
-            warningLow: applyAlpha(palette.white, 0.05),
-            errorLow: applyAlpha(palette.white, 0.05),
-            promoLow: applyAlpha(palette.white, 0.05),
-            brandLow: applyAlpha(palette.white, 0.05),
+            successLow: palette.darkModeGrey6,
+            warningLow: palette.darkModeGrey6,
+            errorLow: palette.darkModeGrey6,
+            promoLow: palette.darkModeGrey6,
+            brandLow: palette.darkModeGrey6,
 
             successHigh: palette.turquoise40,
             warningHigh: palette.ambar40,
             errorHigh: palette.coral40,
             promoHigh: palette.orchid40,
+
+            successHighInverse: palette.turquoise70,
+            warningHighInverse: palette.ambar70,
+            errorHighInverse: palette.coral70,
+            promoHighInverse: palette.orchid70,
+            neutralMediumInverse: palette.grey5,
         },
     };
 };
