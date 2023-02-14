@@ -27,7 +27,7 @@ export const palette = {
     orchid: '#C466EF',
     orchid10: '#F9F0FD',
     orchid40: '#D694F4',
-    orchid70: '#8947A7',
+    orchid70: '#8A1A93',
 
     turquoise: '#59C2C9',
     turquoise10: '#EEF9FA',
