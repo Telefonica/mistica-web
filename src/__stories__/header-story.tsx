@@ -67,10 +67,6 @@ export const RichTexts: StoryComponent = () => {
                             truncate: true,
                         }}
                         title="Title is always a plain string"
-                        subtitle={{
-                            text: `Subtitle (truncated to two lines) ${filler}}`,
-                            truncate: 2,
-                        }}
                     />
                 }
             />
