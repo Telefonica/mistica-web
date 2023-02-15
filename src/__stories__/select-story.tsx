@@ -29,7 +29,7 @@ export const Default: StoryComponent = () => {
                     onChangeValue={setValue}
                     helperText="Normal select"
                     options={fruitOptions}
-                    label="Select a fruit to test it"
+                    label="Select a fruit"
                     optional
                 />
 
