@@ -9,6 +9,7 @@ type SkeletonBaseProps = {
     height?: string | number;
     radius?: string | number;
     className?: string;
+    noBorderRadius?: boolean;
 };
 
 const SkeletonBase = ({
@@ -16,6 +17,7 @@ const SkeletonBase = ({
     height = 8,
     radius = 8,
     className,
+    noBorderRadius = false,
 }: SkeletonBaseProps): JSX.Element => {
     const isInverse = useIsInverseVariant();
 
@@ -30,7 +32,7 @@ const SkeletonBase = ({
                 })
             )}
             style={{
-                borderRadius: radius,
+                borderRadius: noBorderRadius ? 0 : radius,
                 width,
                 height,
             }}

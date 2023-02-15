@@ -103,6 +103,7 @@ export type Colors = {
     neutralHigh: string;
     neutralLow: string;
     neutralMedium: string;
+    neutralMediumInverse: string;
     promo: string;
 
     // STATES
@@ -150,4 +151,8 @@ export type Colors = {
     warningHigh: string;
     errorHigh: string;
     promoHigh: string;
+    successHighInverse: string;
+    warningHighInverse: string;
+    errorHighInverse: string;
+    promoHighInverse: string;
 };
