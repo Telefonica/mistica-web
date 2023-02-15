@@ -162,7 +162,7 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             textPrimary: palette.movistarBlueDark,
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
-            textSecondaryInverse: palette.white,
+            textSecondaryInverse: palette.movistarBlue10,
 
             // STATES
             error: palette.pepper,
