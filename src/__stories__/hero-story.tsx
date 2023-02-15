@@ -4,7 +4,7 @@ import {Hero, ButtonPrimary, ButtonLink, Tag, TagType, Image, Placeholder} from 
 import type {AspectRatio} from '../image';
 
 export default {
-    title: 'Components/Hero',
+    title: 'Components/Hero/Component',
 };
 
 type HeroArgs = {
@@ -70,7 +70,7 @@ export const Default: StoryComponent<HeroArgs> = ({
     );
 };
 
-Default.storyName = 'Hero';
+Default.storyName = 'Component';
 
 Default.args = {
     media: 'image',

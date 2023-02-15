@@ -1502,6 +1502,68 @@ const skeletonSnippets = [
     },
 ];
 
+const heroSnippets = [
+    {
+        group: 'Hero',
+        name: 'Component',
+        code: `
+          <Hero
+            background="default"
+            media={
+                <Image
+                    src="https://api.lorem.space/image/furniture?w=1500&h=1500&hash=8B7BCDC2"
+                    aspectRatio="16:9"
+                    noBorderRadius
+                    height="100%"
+                />
+            }
+            headline={<Tag type="active">Headline</Tag>}
+            pretitle="Pretitle"
+            title="Title"
+            description="This is a long description with a long text to see how this works"
+            extra={<Placeholder />}
+            button={<ButtonPrimary fake>Action</ButtonPrimary>}
+            buttonLink={<ButtonLink href="#">Link</ButtonLink>}
+            dataAttributes={{testid: 'hero'}}
+            desktopMediaPosition="right"
+        />
+      `,
+    },
+    {
+        group: 'Hero',
+        name: 'Slideshow',
+        code: `
+         <Slideshow
+          withBullets
+          items={Array.from({length: 3}).map(() => (
+              <Box paddingBottom={32}>
+                <Hero
+                  background="default"
+                  media={
+                      <Image
+                          src="https://api.lorem.space/image/furniture?w=1500&h=1500&hash=8B7BCDC2"
+                          aspectRatio="16:9"
+                          noBorderRadius
+                          height="100%"
+                      />
+                  }
+                  headline={<Tag type="active">Headline</Tag>}
+                  pretitle="Pretitle"
+                  title="Title"
+                  description="This is a long description with a long text to see how this works"
+                  extra={<Placeholder />}
+                  button={<ButtonPrimary fake>Action</ButtonPrimary>}
+                  buttonLink={<ButtonLink href="#">Link</ButtonLink>}
+                  dataAttributes={{testid: 'hero'}}
+                  desktopMediaPosition="right"
+                />
+              </Box>
+          ))}
+      />
+      `,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -1633,4 +1695,5 @@ export default [
     ...alertSnippets,
     ...tooltipSnippets,
     ...popoverSnippets,
+    ...heroSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;

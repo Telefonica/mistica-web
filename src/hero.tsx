@@ -14,6 +14,7 @@ import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './hero.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
+import {useIsInsideSlideshowContext} from './carousel';
 
 import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
 
@@ -100,6 +101,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
         ref
     ) => {
         const {isTabletOrSmaller} = useScreenSize();
+        const isInsideSlideShow = useIsInsideSlideshowContext();
         const isInverse = background === 'brand' || background === 'brand-secondary';
 
         if (isTabletOrSmaller) {
@@ -119,7 +121,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         isInverse={isInverse}
                         dataAttributes={{'component-name': 'Hero', ...dataAttributes}}
                     >
-                        <Box paddingY={24}>
+                        <Box paddingTop={24} paddingBottom={isInsideSlideShow ? 48 : 24}>
                             <HeroContent {...rest} />
                         </Box>
                     </ResponsiveLayout>
@@ -163,7 +165,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         template="6+6"
                         left={
                             <Box
-                                paddingY={56}
+                                paddingY={isInsideSlideShow ? 80 : 56}
                                 className={classnames(styles.container, styles.containerDesktop)}
                             >
                                 {left}
@@ -171,7 +173,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                         }
                         right={
                             <Box
-                                paddingY={56}
+                                paddingY={isInsideSlideShow ? 80 : 56}
                                 className={classnames(styles.container, styles.containerDesktop)}
                             >
                                 {right}

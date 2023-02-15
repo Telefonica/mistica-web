@@ -486,9 +486,22 @@ type SlideshowProps = {
     autoplay?: boolean | {time: number; loop?: boolean};
     onPageChange?: (newPageIndex: number) => void;
     dataAttributes?: DataAttributes;
+    inverseBullets?: boolean;
 
     children?: void;
 };
+
+/**
+ * This context is used internally to let other components (Hero) now if they are rendered inside a Slideshow
+ * to make some tweaks in the UI
+ */
+const IsInsideSlideshowContext = React.createContext(false);
+
+export const useIsInsideSlideshowContext = (): boolean => React.useContext(IsInsideSlideshowContext);
+
+export const IsInsideSlideshowProvider = ({children}: {children: React.ReactNode}): JSX.Element => (
+    <IsInsideSlideshowContext.Provider value>{children}</IsInsideSlideshowContext.Provider>
+);
 
 export const Slideshow: React.FC<SlideshowProps> = ({
     items,
@@ -496,6 +509,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
     autoplay,
     onPageChange,
     dataAttributes,
+    inverseBullets = true,
 }) => {
     const {texts, platformOverrides} = useTheme();
 
@@ -569,52 +583,54 @@ export const Slideshow: React.FC<SlideshowProps> = ({
     }, [currentIndex, onPageChange]);
 
     return (
-        <div
-            className={styles.slideshowContainer}
-            {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
-        >
-            <ThemeVariant isInverse={false}>
-                <BaseTouchable
-                    className={styles.slideshowPrevArrowButton}
-                    aria-label={texts.carouselPrevButton}
-                    onPress={goPrev}
-                    disabled={!showPrevArrow}
-                >
-                    <IconChevronLeftRegular />
-                </BaseTouchable>
-            </ThemeVariant>
-            <DisableBorderRadiusProvider>
-                <div className={styles.slideshow} ref={carouselRef}>
-                    {items.map((item, index) => (
-                        <div
-                            key={index}
-                            className={styles.slideshowItem}
-                            style={{
-                                scrollSnapStop: isAndroid(platformOverrides) ? 'always' : 'normal',
-                            }}
-                        >
-                            {item}
-                        </div>
-                    ))}
-                </div>
-            </DisableBorderRadiusProvider>
-            <ThemeVariant isInverse={false}>
-                <BaseTouchable
-                    className={styles.slideshowNextArrowButton}
-                    aria-label={texts.carouselNextButton}
-                    onPress={goNext}
-                    disabled={!showNextArrow}
-                >
-                    <IconChevronRightRegular />
-                </BaseTouchable>
-            </ThemeVariant>
-            {withBullets && items.length > 1 && (
-                <ThemeVariant isInverse>
-                    <div className={styles.slideshowBullets}>
-                        <PageBullets numPages={items.length} currentIndex={currentIndex} />
-                    </div>
+        <IsInsideSlideshowProvider>
+            <div
+                className={styles.slideshowContainer}
+                {...getPrefixedDataAttributes(dataAttributes, 'SlideShow')}
+            >
+                <ThemeVariant isInverse={false}>
+                    <BaseTouchable
+                        className={styles.slideshowPrevArrowButton}
+                        aria-label={texts.carouselPrevButton}
+                        onPress={goPrev}
+                        disabled={!showPrevArrow}
+                    >
+                        <IconChevronLeftRegular />
+                    </BaseTouchable>
                 </ThemeVariant>
-            )}
-        </div>
+                <DisableBorderRadiusProvider>
+                    <div className={styles.slideshow} ref={carouselRef}>
+                        {items.map((item, index) => (
+                            <div
+                                key={index}
+                                className={styles.slideshowItem}
+                                style={{
+                                    scrollSnapStop: isAndroid(platformOverrides) ? 'always' : 'normal',
+                                }}
+                            >
+                                {item}
+                            </div>
+                        ))}
+                    </div>
+                </DisableBorderRadiusProvider>
+                <ThemeVariant isInverse={false}>
+                    <BaseTouchable
+                        className={styles.slideshowNextArrowButton}
+                        aria-label={texts.carouselNextButton}
+                        onPress={goNext}
+                        disabled={!showNextArrow}
+                    >
+                        <IconChevronRightRegular />
+                    </BaseTouchable>
+                </ThemeVariant>
+                {withBullets && items.length > 1 && (
+                    <ThemeVariant isInverse={inverseBullets}>
+                        <div className={styles.slideshowBullets}>
+                            <PageBullets numPages={items.length} currentIndex={currentIndex} />
+                        </div>
+                    </ThemeVariant>
+                )}
+            </div>
+        </IsInsideSlideshowProvider>
     );
 };
