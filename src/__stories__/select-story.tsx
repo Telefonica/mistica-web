@@ -7,14 +7,21 @@ export default {
     component: Select,
 };
 
-const fruitOptions = fruitEntries.map(([text, value]) => ({text, value}));
+const fruitOptions = [
+    ...fruitEntries,
+    ...fruitEntries.map(([text, value]) => [text + 1, value + 1]),
+    ...fruitEntries.map(([text, value]) => [text + 2, value + 2]),
+    ...fruitEntries.map(([text, value]) => [text + 3, value + 3]),
+    ...fruitEntries.map(([text, value]) => [text + 4, value + 4]),
+    ...fruitEntries.map(([text, value]) => [text + 5, value + 5]),
+].map(([text, value]) => ({text, value}));
 
 export const Default: StoryComponent = () => {
     const [value, setValue] = React.useState('');
 
     return (
         <>
-            <Stack space={16}>
+            <Stack space={16} dataAttributes={{testid: 'select-story'}}>
                 <Title1>Select</Title1>
                 <Select
                     name="normal"
@@ -22,7 +29,7 @@ export const Default: StoryComponent = () => {
                     onChangeValue={setValue}
                     helperText="Normal select"
                     options={fruitOptions}
-                    label="Select a fruit"
+                    label="Select a fruit to test it"
                     optional
                 />
 
