@@ -15,6 +15,7 @@ import {vars} from './skins/skin-contract.css';
 import * as styles from './hero.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {useIsInsideSlideshowContext} from './carousel';
+import {getPrefixedDataAttributes} from './utils/dom';
 
 import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
 
@@ -107,6 +108,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
         if (isTabletOrSmaller) {
             return (
                 <div
+                    {...getPrefixedDataAttributes(dataAttributes)}
                     ref={ref}
                     style={{
                         backgroundColor: BACKGROUND_COLOR[background],
@@ -117,10 +119,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                     className={classnames(styles.container, styles.containerMobile)}
                 >
                     {media}
-                    <ResponsiveLayout
-                        isInverse={isInverse}
-                        dataAttributes={{'component-name': 'Hero', ...dataAttributes}}
-                    >
+                    <ResponsiveLayout isInverse={isInverse}>
                         <Box paddingTop={24} paddingBottom={isInsideSlideShow ? 48 : 24}>
                             <HeroContent {...rest} />
                         </Box>

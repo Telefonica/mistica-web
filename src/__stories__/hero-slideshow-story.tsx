@@ -24,7 +24,6 @@ const HeroComponent = () => {
             extra={<Placeholder />}
             button={<ButtonPrimary fake>Action</ButtonPrimary>}
             buttonLink={<ButtonLink href="#">Link</ButtonLink>}
-            dataAttributes={{testid: 'hero'}}
             desktopMediaPosition="right"
         />
     );
@@ -34,6 +33,7 @@ export const Default: StoryComponent = () => (
     <Slideshow
         withBullets
         inverseBullets={false}
+        dataAttributes={{testid: 'hero'}}
         items={Array.from({length: 3}).map(() => (
             <HeroComponent />
         ))}

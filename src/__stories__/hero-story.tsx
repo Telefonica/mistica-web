@@ -42,7 +42,7 @@ export const Default: StoryComponent<HeroArgs> = ({
             <Placeholder />
         ) : (
             <Image
-                src="https://api.lorem.space/image/furniture?w=1500&h=1500&hash=8B7BCDC2"
+                src="https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
                 aspectRatio={aspectRatio}
                 noBorderRadius
                 height="100%"
