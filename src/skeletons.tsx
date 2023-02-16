@@ -104,6 +104,7 @@ type SkeletonRectangleProps = {
     dataAttributes?: DataAttributes;
     width?: number | string;
     height?: number | string;
+    noBorderRadius?: boolean;
 };
 
 export const SkeletonRectangle = ({
@@ -111,6 +112,7 @@ export const SkeletonRectangle = ({
     height = '100%',
     ariaLabel,
     dataAttributes,
+    noBorderRadius = false,
 }: SkeletonRectangleProps): JSX.Element => {
     return (
         <SkeletonAnimation
@@ -119,7 +121,7 @@ export const SkeletonRectangle = ({
             ariaLabel={ariaLabel}
             dataAttributes={{'component-name': 'SkeletonRectangle', ...dataAttributes}}
         >
-            <SkeletonBase height="100%" width="100%" />
+            <SkeletonBase height="100%" width="100%" noBorderRadius={noBorderRadius} />
         </SkeletonAnimation>
     );
 };

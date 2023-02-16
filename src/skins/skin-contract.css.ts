@@ -68,6 +68,7 @@ const colors = {
     neutralHigh: '',
     neutralLow: '',
     neutralMedium: '',
+    neutralMediumInverse: '',
     promo: '',
 
     // STATES
@@ -115,6 +116,10 @@ const colors = {
     warningHigh: '',
     errorHigh: '',
     promoHigh: '',
+    successHighInverse: '',
+    warningHighInverse: '',
+    errorHighInverse: '',
+    promoHighInverse: '',
 };
 
 export const vars = createThemeContract({
