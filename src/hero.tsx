@@ -112,6 +112,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                     ref={ref}
                     style={{
                         backgroundColor: BACKGROUND_COLOR[background],
+                        ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
                         ...assignInlineVars({
                             [styles.vars.height]: height ?? '',
                         }),
@@ -151,6 +152,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                 ref={ref}
                 style={{
                     backgroundColor: BACKGROUND_COLOR[background],
+                    ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
                     ...assignInlineVars({
                         [styles.vars.height]: height ?? '',
                     }),

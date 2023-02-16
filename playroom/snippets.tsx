@@ -1513,7 +1513,6 @@ const heroSnippets = [
                 <Image
                     src="https://api.lorem.space/image/furniture?w=1500&h=1500&hash=8B7BCDC2"
                     aspectRatio="16:9"
-                    noBorderRadius
                     height="100%"
                 />
             }
@@ -1536,14 +1535,12 @@ const heroSnippets = [
          <Slideshow
           withBullets
           items={Array.from({length: 3}).map(() => (
-              <Box paddingBottom={32}>
                 <Hero
                   background="default"
                   media={
                       <Image
                           src="https://api.lorem.space/image/furniture?w=1500&h=1500&hash=8B7BCDC2"
                           aspectRatio="16:9"
-                          noBorderRadius
                           height="100%"
                       />
                   }
@@ -1557,7 +1554,6 @@ const heroSnippets = [
                   dataAttributes={{testid: 'hero'}}
                   desktopMediaPosition="right"
                 />
-              </Box>
           ))}
       />
       `,
