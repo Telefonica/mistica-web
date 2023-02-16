@@ -4,7 +4,7 @@ import Tag from './tag';
 import {ButtonLink, ButtonPrimary} from './button';
 import {useScreenSize} from './hooks';
 import Video from './video';
-import Image from './image';
+import Image, {DisableBorderRadiusProvider} from './image';
 import {Text3, Text8} from './text';
 import GridLayout from './grid-layout';
 import ResponsiveLayout from './responsive-layout';
@@ -107,25 +107,27 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
 
         if (isTabletOrSmaller) {
             return (
-                <div
-                    {...getPrefixedDataAttributes(dataAttributes)}
-                    ref={ref}
-                    style={{
-                        backgroundColor: BACKGROUND_COLOR[background],
-                        ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
-                        ...assignInlineVars({
-                            [styles.vars.height]: height ?? '',
-                        }),
-                    }}
-                    className={classnames(styles.container, styles.containerMobile)}
-                >
-                    {media}
-                    <ResponsiveLayout isInverse={isInverse}>
-                        <Box paddingTop={24} paddingBottom={isInsideSlideShow ? 48 : 24}>
-                            <HeroContent {...rest} />
-                        </Box>
-                    </ResponsiveLayout>
-                </div>
+                <DisableBorderRadiusProvider>
+                    <div
+                        {...getPrefixedDataAttributes(dataAttributes)}
+                        ref={ref}
+                        style={{
+                            backgroundColor: BACKGROUND_COLOR[background],
+                            ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
+                            ...assignInlineVars({
+                                [styles.vars.height]: height ?? '',
+                            }),
+                        }}
+                        className={classnames(styles.container, styles.containerMobile)}
+                    >
+                        {media}
+                        <ResponsiveLayout isInverse={isInverse}>
+                            <Box paddingTop={24} paddingBottom={isInsideSlideShow ? 48 : 24}>
+                                <HeroContent {...rest} />
+                            </Box>
+                        </ResponsiveLayout>
+                    </div>
+                </DisableBorderRadiusProvider>
             );
         }
 
