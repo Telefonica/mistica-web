@@ -5,15 +5,14 @@ export default {
     title: 'Components/Hero/Slideshow',
 };
 
-const HeroComponent = () => {
+const HeroComponent = ({idx}: {idx: number}) => {
     return (
         <Hero
             background="default"
             media={
                 <Image
                     src="https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
-                    aspectRatio="16:9"
-                    height="100%"
+                    aspectRatio={idx === 0 ? '16:9' : '1:1'}
                 />
             }
             headline={<Tag type="active">Headline</Tag>}
@@ -33,8 +32,8 @@ export const Default: StoryComponent = () => (
         withBullets
         inverseBullets={false}
         dataAttributes={{testid: 'hero'}}
-        items={Array.from({length: 3}).map(() => (
-            <HeroComponent />
+        items={Array.from({length: 3}).map((_, idx) => (
+            <HeroComponent idx={idx} />
         ))}
     />
 );

@@ -7,7 +7,6 @@ import Video from './video';
 import Image, {DisableBorderRadiusProvider} from './image';
 import {Text3, Text8} from './text';
 import GridLayout from './grid-layout';
-import ResponsiveLayout from './responsive-layout';
 import Box from './box';
 import Stack from './stack';
 import ButtonGroup from './button-group';
@@ -16,8 +15,20 @@ import * as styles from './hero.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {useIsInsideSlideshowContext} from './carousel';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {sprinkles} from './sprinkles.css';
+import {ThemeVariant} from './theme-variant-context';
 
 import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
+
+type LayoutProps = {children: React.ReactNode; isInverse: boolean};
+
+const Layout = ({children, isInverse}: LayoutProps) => {
+    return (
+        <ThemeVariant isInverse={isInverse}>
+            <div className={styles.layout}>{children}</div>
+        </ThemeVariant>
+    );
+};
 
 type HeroContentProps = {
     headline?: RendersNullableElement<typeof Tag>;
@@ -41,34 +52,43 @@ const HeroContent = ({
     buttonLink,
 }: HeroContentProps) => {
     return (
-        <section>
-            <Stack space={24}>
-                <div>
-                    <Stack space={16}>
-                        {headline && headline}
-                        <Stack space={8}>
-                            {pretitle && (
-                                <Text3 as="p" regular>
-                                    {pretitle}
-                                </Text3>
-                            )}
-                            {title && <Text8 as="h1">{title}</Text8>}
-                        </Stack>
-                        {description && (
-                            <Text3
-                                as="p"
-                                regular
-                                color={vars.colors.textSecondary}
-                                truncate={descriptionLinesMax}
-                            >
-                                {description}
+        <section
+            className={sprinkles({
+                height: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexDirection: 'column',
+            })}
+        >
+            <div>
+                <Stack space={16}>
+                    {headline && headline}
+                    <Stack space={8}>
+                        {pretitle && (
+                            <Text3 as="p" regular>
+                                {pretitle}
                             </Text3>
                         )}
+                        {title && <Text8 as="h1">{title}</Text8>}
                     </Stack>
-                    {extra && <div>{extra}</div>}
+                    {description && (
+                        <Text3
+                            as="p"
+                            regular
+                            color={vars.colors.textSecondary}
+                            truncate={descriptionLinesMax}
+                        >
+                            {description}
+                        </Text3>
+                    )}
+                </Stack>
+                {extra && <div>{extra}</div>}
+            </div>
+            {(button || buttonLink) && (
+                <div className={styles.actions}>
+                    <ButtonGroup primaryButton={button} link={buttonLink} />
                 </div>
-                {(button || buttonLink) && <ButtonGroup primaryButton={button} link={buttonLink} />}
-            </Stack>
+            )}
         </section>
     );
 };
@@ -109,23 +129,23 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
             return (
                 <DisableBorderRadiusProvider>
                     <div
-                        {...getPrefixedDataAttributes(dataAttributes)}
+                        {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
                         ref={ref}
                         style={{
                             backgroundColor: BACKGROUND_COLOR[background],
                             ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
                             ...assignInlineVars({
-                                [styles.vars.height]: height ?? '',
+                                [styles.vars.height]: height ?? '100%',
                             }),
                         }}
                         className={classnames(styles.container, styles.containerMobile)}
                     >
                         {media}
-                        <ResponsiveLayout isInverse={isInverse}>
+                        <Layout isInverse={isInverse}>
                             <Box paddingTop={24} paddingBottom={isInsideSlideShow ? 48 : 24}>
                                 <HeroContent {...rest} />
                             </Box>
-                        </ResponsiveLayout>
+                        </Layout>
                     </div>
                 </DisableBorderRadiusProvider>
             );
@@ -151,19 +171,18 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
 
         return (
             <div
+                {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
                 ref={ref}
                 style={{
                     backgroundColor: BACKGROUND_COLOR[background],
                     ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
                     ...assignInlineVars({
-                        [styles.vars.height]: height ?? '',
+                        [styles.vars.height]: height ?? '100%',
                     }),
                 }}
+                className={sprinkles({height: '100%', display: 'flex', alignItems: 'center'})}
             >
-                <ResponsiveLayout
-                    isInverse={isInverse}
-                    dataAttributes={{'component-name': 'Hero', ...dataAttributes}}
-                >
+                <Layout isInverse={isInverse}>
                     <GridLayout
                         template="6+6"
                         left={
@@ -183,7 +202,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                             </Box>
                         }
                     />
-                </ResponsiveLayout>
+                </Layout>
             </div>
         );
     }
