@@ -135,7 +135,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
             desktopMediaPosition === 'left' ? (
                 media
             ) : (
-                <Box paddingX={24}>
+                <Box paddingRight={24}>
                     <HeroContent {...rest} />
                 </Box>
             );
@@ -144,7 +144,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
             desktopMediaPosition === 'right' ? (
                 media
             ) : (
-                <Box paddingX={24}>
+                <Box paddingLeft={24}>
                     <HeroContent {...rest} />
                 </Box>
             );
