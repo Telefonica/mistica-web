@@ -1,14 +1,5 @@
 import * as React from 'react';
-import {
-    Header,
-    HeaderLayout,
-    ButtonPrimary,
-    ButtonSecondary,
-    Stack,
-    NavigationBreadcrumbs,
-    ResponsiveLayout,
-    Text3,
-} from '..';
+import {Header, HeaderLayout, Stack, NavigationBreadcrumbs, ResponsiveLayout, Placeholder} from '..';
 import {useTextField, useCheckbox} from './helpers';
 
 export default {
@@ -18,20 +9,11 @@ export default {
     },
 };
 
-const FieldWithCheckbox = ({children}: {children: React.ReactNode}) => (
-    <div style={{display: 'flex', alignItems: 'center'}}>{children}</div>
-);
-
 export const Default: StoryComponent = () => {
     const [pretitle, pretitleTextField] = useTextField('Pretitle', 'Your last bill');
     const [title, titleTextField] = useTextField('Title', 'December bill is now available');
-    const [preamount, preamountTextField] = useTextField('Preamount', 'Monthly fee (IVA included)');
-    const [amount, amountTextField] = useTextField('Amount', '60,44 €');
-    const [buttonLabel, buttonLabelTextField] = useTextField('Button', 'Download bill');
-    const [secondaryButtonLabel, secondaryButtonLabelTextField] = useTextField('SecondaryButton', 'Pay bill');
-    const [subtitle, subtitleTextField] = useTextField('Subtitle', 'This is a subtitle');
+    const [description, descriptionTextField] = useTextField('Description', 'This is a description');
     const [isInverse, inverseCheckbox] = useCheckbox('Inverse', true);
-    const [isErrorAmount, errorAmountCheckbox] = useCheckbox('Error amount', false);
     const [withExtraContent, extraContentCheckbox] = useCheckbox('With extra content', true);
     const [extraSideBySide, extraSideBySideCheckbox] = useCheckbox(
         'Extra content placed on the right in desktop',
@@ -52,31 +34,8 @@ export const Default: StoryComponent = () => {
                             />
                         ) : undefined
                     }
-                    header={
-                        <Header
-                            pretitle={pretitle}
-                            title={title}
-                            preamount={preamount}
-                            amount={amount}
-                            button={
-                                buttonLabel ? (
-                                    <ButtonPrimary href="asdf">{buttonLabel}</ButtonPrimary>
-                                ) : undefined
-                            }
-                            secondaryButton={
-                                secondaryButtonLabel ? (
-                                    <ButtonSecondary href="asdf">{secondaryButtonLabel}</ButtonSecondary>
-                                ) : undefined
-                            }
-                            subtitle={subtitle}
-                            isErrorAmount={isErrorAmount}
-                        />
-                    }
-                    extra={
-                        withExtraContent ? (
-                            <Text3 regular>some account chart here, for example</Text3>
-                        ) : undefined
-                    }
+                    header={<Header pretitle={pretitle} title={title} description={description} />}
+                    extra={withExtraContent ? <Placeholder /> : undefined}
                 />
             </div>
             <ResponsiveLayout>
@@ -84,14 +43,7 @@ export const Default: StoryComponent = () => {
                     {breadcrumbsCheckbox}
                     {pretitleTextField}
                     {titleTextField}
-                    {preamountTextField}
-                    <FieldWithCheckbox>
-                        {amountTextField}
-                        {errorAmountCheckbox}
-                    </FieldWithCheckbox>
-                    {buttonLabelTextField}
-                    {secondaryButtonLabelTextField}
-                    {subtitleTextField}
+                    {descriptionTextField}
                     {inverseCheckbox}
                     {extraContentCheckbox}
                     {extraSideBySideCheckbox}
@@ -115,10 +67,6 @@ export const RichTexts: StoryComponent = () => {
                             truncate: true,
                         }}
                         title="Title is always a plain string"
-                        subtitle={{
-                            text: `Subtitle (truncated to two lines) ${filler}}`,
-                            truncate: 2,
-                        }}
                     />
                 }
             />
