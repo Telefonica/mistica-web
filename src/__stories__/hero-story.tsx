@@ -8,7 +8,7 @@ export default {
 };
 
 type HeroArgs = {
-    media: 'video' | 'image' | 'none';
+    media: 'video' | 'image';
     headlineType: TagType;
     headline: string;
     pretitle: string;
@@ -89,7 +89,7 @@ Default.args = {
 
 Default.argTypes = {
     media: {
-        options: ['video', 'image', 'none'],
+        options: ['video', 'image'],
         control: {type: 'select'},
     },
     headlineType: {
