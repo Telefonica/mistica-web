@@ -14,7 +14,7 @@ export const Default: StoryComponent = () => {
 
     return (
         <>
-            <Stack space={16}>
+            <Stack space={16} dataAttributes={{testid: 'select-story'}}>
                 <Title1>Select</Title1>
                 <Select
                     name="normal"
