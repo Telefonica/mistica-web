@@ -1590,8 +1590,6 @@ const heroSnippets = [
                       ][idx]
                     }
                     aspectRatio="16:9"
-                    noBorderRadius
-                    height="100%"
                   />
                 }
                 headline={<Tag type="active">Headline</Tag>}
