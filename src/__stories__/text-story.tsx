@@ -9,9 +9,9 @@ export default {
 
 export const TextComponents: StoryComponent = () => (
     <Stack space={16} dataAttributes={{testid: 'text'}}>
-        <Text10 dataAttributes={{qsysid: 'text10'}}>Text10 32/40 (Mobile) | 64/72 (Desktop)</Text10>
+        <Text10 dataAttributes={{qsysid: 'text10'}}>Text10 48/56 (Mobile) | 64/72 (Desktop)</Text10>
 
-        <Text9>Text9 32/40 (Mobile) | 56/64 (Desktop)</Text9>
+        <Text9>Text9 40/48 (Mobile) | 56/64 (Desktop)</Text9>
 
         <Text8>Text8 32/40 (Mobile) | 48/56 (Desktop)</Text8>
 
@@ -19,7 +19,7 @@ export const TextComponents: StoryComponent = () => (
 
         <Text6>Text6 24/32 (Mobile) | 32/40 (Desktop)</Text6>
 
-        <Text5>Text5 22/24 (Mobile) | 28/32 (Desktop)</Text5>
+        <Text5>Text5 20/24 (Mobile) | 28/32 (Desktop)</Text5>
 
         <Text4 medium>Text4 Medium 18/24 (Mobile) | 20/28 (Desktop)</Text4>
 
