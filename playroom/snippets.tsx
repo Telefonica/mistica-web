@@ -1505,27 +1505,70 @@ const skeletonSnippets = [
 const heroSnippets = [
     {
         group: 'Hero',
-        name: 'Component',
+        name: 'White background',
         code: `
           <Hero
             background="default"
             media={
-                <Image
-                    src="https://api.lorem.space/image/furniture?w=1500&h=1500&hash=8B7BCDC2"
-                    aspectRatio="16:9"
-                    height="100%"
-                />
+              <Image
+                src="https://images.unsplash.com/photo-1604869515882-4d10fa4b0492?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+                aspectRatio="1:1"
+              />
             }
-            headline={<Tag type="active">Headline</Tag>}
-            pretitle="Pretitle"
-            title="Title"
-            description="This is a long description with a long text to see how this works"
-            extra={<Placeholder />}
-            button={<ButtonPrimary fake>Action</ButtonPrimary>}
-            buttonLink={<ButtonLink href="#">Link</ButtonLink>}
-            dataAttributes={{testid: 'hero'}}
+            headline={<Tag type="active">Novedad</Tag>}
+            pretitle="Brand Conecta Max"
+            title="Vuela con la Fibra 1Gb"
+            description="Para teletrabajar, ver series y películas y además, tener varios dispositivos conectados."
+            button={<ButtonPrimary fake>Lo quiero</ButtonPrimary>}
+            dataAttributes={{ testid: "hero" }}
             desktopMediaPosition="right"
-        />
+          />
+      `,
+    },
+    {
+        group: 'Hero',
+        name: 'Color background',
+        code: `
+          <Hero
+            background="brand"
+            media={
+              <Image
+                src="https://images.unsplash.com/photo-1604869515882-4d10fa4b0492?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+                aspectRatio="16:9"
+              />
+            }
+            headline={<Tag type="active">Novedad</Tag>}
+            pretitle="Brand Conecta Max"
+            title="Vuela con la Fibra 1Gb"
+            description="Para teletrabajar, ver series y películas y además, tener varios dispositivos conectados."
+            button={<ButtonPrimary fake>Lo quiero</ButtonPrimary>}
+            dataAttributes={{ testid: "hero" }}
+            desktopMediaPosition="left"
+          />
+      `,
+    },
+    {
+        group: 'Hero',
+        name: 'Full height',
+        code: `
+          <Hero
+            background="default"
+            height="100vh"
+            media={
+              <Image
+                src="https://images.unsplash.com/photo-1604869515882-4d10fa4b0492?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+                aspectRatio="1:1"
+                height={isDesktopOrBigger ? undefined : "100%"}
+              />
+            }
+            headline={<Tag type="active">Novedad</Tag>}
+            pretitle="Brand Conecta Max"
+            title="Vuela con la Fibra 1Gb"
+            description="Para teletrabajar, ver series y películas y además, tener varios dispositivos conectados."
+            button={<ButtonPrimary fake>Lo quiero</ButtonPrimary>}
+            dataAttributes={{ testid: "hero" }}
+            desktopMediaPosition="left"
+          />
       `,
     },
     {
@@ -1533,29 +1576,37 @@ const heroSnippets = [
         name: 'Slideshow',
         code: `
          <Slideshow
-          withBullets
-          items={Array.from({length: 3}).map(() => (
-                <Hero
-                  background="default"
-                  media={
-                      <Image
-                          src="https://api.lorem.space/image/furniture?w=1500&h=1500&hash=8B7BCDC2"
-                          aspectRatio="16:9"
-                          height="100%"
-                      />
-                  }
-                  headline={<Tag type="active">Headline</Tag>}
-                  pretitle="Pretitle"
-                  title="Title"
-                  description="This is a long description with a long text to see how this works"
-                  extra={<Placeholder />}
-                  button={<ButtonPrimary fake>Action</ButtonPrimary>}
-                  buttonLink={<ButtonLink href="#">Link</ButtonLink>}
-                  dataAttributes={{testid: 'hero'}}
-                  desktopMediaPosition="right"
-                />
-          ))}
-      />
+            withBullets
+            inverseBullets={false}
+            items={Array.from({ length: 3 }, (_, idx) => (
+              <Hero
+                background="default"
+                media={
+                  <Image
+                    src={
+                      [
+                        "https://api.lorem.space/image/furniture?w=1500&h=1500&hash=8B7BCDC2",
+                        "https://api.lorem.space/image/furniture?w=1500&h=1500&hash=8B7BCDC4",
+                      ][idx]
+                    }
+                    aspectRatio="16:9"
+                    noBorderRadius
+                    height="100%"
+                  />
+                }
+                headline={<Tag type="active">Headline</Tag>}
+                pretitle="Pretitle"
+                title={["Title", "Title2"][idx]}
+                description="This is a long description with a long text to see how this works"
+                extra={<Placeholder />}
+                button={<ButtonPrimary fake>Action</ButtonPrimary>}
+                buttonLink={<ButtonLink href="#">Link</ButtonLink>}
+                dataAttributes={{ testid: "hero" }}
+                desktopMediaPosition="right"
+              />
+            ))}
+          />
+
       `,
     },
 ];
