@@ -41,7 +41,11 @@ const VivoLogo = ({style}: VivoLogoProps) => {
     );
 };
 
-const ImageError = () => {
+type ImageErrorProps = {
+    noBorderRadius?: boolean;
+};
+
+const ImageError = ({noBorderRadius}: ImageErrorProps) => {
     const isInverse = useIsInverseVariant();
     const {skinName} = useTheme();
     return (
@@ -55,7 +59,7 @@ const ImageError = () => {
                 backgroundColor: isInverse
                     ? vars.colors.backgroundSkeletonInverse
                     : vars.colors.backgroundSkeleton,
-                borderRadius: 8,
+                borderRadius: noBorderRadius ? undefined : 8,
             }}
         >
             {skinName === VIVO_SKIN ? (
@@ -187,12 +191,16 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
             >
                 {withLoadingFallback && !hideLoadingFallback && (
                     <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-                        <SkeletonRectangle width={props.width} height={props.height} />
+                        <SkeletonRectangle
+                            width={props.width}
+                            height={props.height}
+                            noBorderRadius={noBorderSetting}
+                        />
                     </div>
                 )}
                 {isError && withErrorFallback && (
                     <div style={{position: 'absolute', width: '100%', height: '100%'}}>
-                        <ImageError />
+                        <ImageError noBorderRadius={noBorderSetting} />
                     </div>
                 )}
                 {!isError && img}

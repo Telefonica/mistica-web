@@ -178,6 +178,12 @@ export const getO2Skin: GetKnownSkin = () => {
             warningHigh: palette.o2Orange75,
             errorHigh: palette.pepper60,
             promoHigh: palette.o2Purple,
+
+            successHighInverse: palette.o2Green80,
+            warningHighInverse: palette.o2Orange75,
+            errorHighInverse: palette.pepper60,
+            promoHighInverse: palette.o2Purple,
+            neutralMediumInverse: palette.grey5,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
@@ -248,16 +254,22 @@ export const getO2Skin: GetKnownSkin = () => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            successLow: applyAlpha(palette.white, 0.05),
-            warningLow: applyAlpha(palette.white, 0.05),
-            errorLow: applyAlpha(palette.white, 0.05),
-            promoLow: applyAlpha(palette.white, 0.05),
-            brandLow: applyAlpha(palette.white, 0.05),
+            successLow: palette.darkModeGrey6,
+            warningLow: palette.darkModeGrey6,
+            errorLow: palette.darkModeGrey6,
+            promoLow: palette.darkModeGrey6,
+            brandLow: palette.darkModeGrey6,
 
             successHigh: palette.o2Green40,
             warningHigh: palette.o2Orange40,
             errorHigh: palette.pepper40,
             promoHigh: palette.o2Purple30,
+
+            successHighInverse: palette.o2Green80,
+            warningHighInverse: palette.o2Orange75,
+            errorHighInverse: palette.pepper60,
+            promoHighInverse: palette.o2Purple,
+            neutralMediumInverse: palette.grey5,
         },
     };
 };
