@@ -7,7 +7,7 @@ import Stack from './stack';
 import {BaseTouchable} from './touchable';
 import classNames from 'classnames';
 import {useIsInverseVariant, ThemeVariant} from './theme-variant-context';
-import {DisableBorderRadiusProvider} from './image';
+import {MediaBorderRadiusProvider} from './image';
 import {getPrefixedDataAttributes, listenResize} from './utils/dom';
 import {isAndroid} from './utils/platform';
 import {useDocumentVisibility} from './utils/document-visibility';
@@ -598,7 +598,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
                         <IconChevronLeftRegular />
                     </BaseTouchable>
                 </ThemeVariant>
-                <DisableBorderRadiusProvider>
+                <MediaBorderRadiusProvider value={false}>
                     <div className={styles.slideshow} ref={carouselRef}>
                         {items.map((item, index) => (
                             <div
@@ -612,7 +612,7 @@ export const Slideshow: React.FC<SlideshowProps> = ({
                             </div>
                         ))}
                     </div>
-                </DisableBorderRadiusProvider>
+                </MediaBorderRadiusProvider>
                 <ThemeVariant isInverse={false}>
                     <BaseTouchable
                         className={styles.slideshowNextArrowButton}

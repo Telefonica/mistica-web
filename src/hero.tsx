@@ -4,7 +4,7 @@ import Tag from './tag';
 import {ButtonLink, ButtonPrimary} from './button';
 import {useScreenSize} from './hooks';
 import Video from './video';
-import Image, {DisableBorderRadiusProvider} from './image';
+import Image, {MediaBorderRadiusProvider} from './image';
 import {Text3, Text8} from './text';
 import GridLayout from './grid-layout';
 import Box from './box';
@@ -127,7 +127,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
 
         if (isTabletOrSmaller) {
             return (
-                <DisableBorderRadiusProvider>
+                <MediaBorderRadiusProvider value={false}>
                     <div
                         {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
                         ref={ref}
@@ -147,7 +147,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                             </Box>
                         </Layout>
                     </div>
-                </DisableBorderRadiusProvider>
+                </MediaBorderRadiusProvider>
             );
         }
 
@@ -170,40 +170,42 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
             );
 
         return (
-            <div
-                {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
-                ref={ref}
-                style={{
-                    backgroundColor: BACKGROUND_COLOR[background],
-                    ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
-                    ...assignInlineVars({
-                        [styles.vars.height]: height ?? '100%',
-                    }),
-                }}
-                className={sprinkles({height: '100%', display: 'flex', alignItems: 'center'})}
-            >
-                <Layout isInverse={isInverse}>
-                    <GridLayout
-                        template="6+6"
-                        left={
-                            <Box
-                                paddingY={isInsideSlideShow ? 80 : 56}
-                                className={classnames(styles.container, styles.containerDesktop)}
-                            >
-                                {left}
-                            </Box>
-                        }
-                        right={
-                            <Box
-                                paddingY={isInsideSlideShow ? 80 : 56}
-                                className={classnames(styles.container, styles.containerDesktop)}
-                            >
-                                {right}
-                            </Box>
-                        }
-                    />
-                </Layout>
-            </div>
+            <MediaBorderRadiusProvider value>
+                <div
+                    {...getPrefixedDataAttributes({'component-name': 'Hero', ...dataAttributes})}
+                    ref={ref}
+                    style={{
+                        backgroundColor: BACKGROUND_COLOR[background],
+                        ...(height === '100vh' ? {maxHeight: '-webkit-fill-available'} : {}), // Hack to avoid issues in Safari with 100vh
+                        ...assignInlineVars({
+                            [styles.vars.height]: height ?? '100%',
+                        }),
+                    }}
+                    className={sprinkles({height: '100%', display: 'flex', alignItems: 'center'})}
+                >
+                    <Layout isInverse={isInverse}>
+                        <GridLayout
+                            template="6+6"
+                            left={
+                                <Box
+                                    paddingY={isInsideSlideShow ? 80 : 56}
+                                    className={classnames(styles.container, styles.containerDesktop)}
+                                >
+                                    {left}
+                                </Box>
+                            }
+                            right={
+                                <Box
+                                    paddingY={isInsideSlideShow ? 80 : 56}
+                                    className={classnames(styles.container, styles.containerDesktop)}
+                                >
+                                    {right}
+                                </Box>
+                            }
+                        />
+                    </Layout>
+                </div>
+            </MediaBorderRadiusProvider>
         );
     }
 );
