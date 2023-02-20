@@ -1,7 +1,7 @@
 import {style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 
-export const base = style([
+export const baseTouchable = style([
     sprinkles({
         cursor: 'pointer',
     }),
@@ -30,7 +30,7 @@ export const base = style([
 ]);
 
 export const touchable = style([
-    base,
+    baseTouchable,
     sprinkles({
         display: 'block',
         border: 'none',
