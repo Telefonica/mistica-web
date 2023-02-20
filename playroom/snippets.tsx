@@ -464,10 +464,6 @@ const headerSnippets: Array<Snippet> = [
             header={
                 <Header
                     title="The last invoice is available"
-                    preamount="Some text (text)"
-                    amount="60,44 €"
-                    button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
-                    subtitle="Subtitle"
                 />
             }
             extra={<Placeholder />}
@@ -483,10 +479,6 @@ const headerSnippets: Array<Snippet> = [
             header={
                 <Header
                     title="The last invoice is available"
-                    preamount="Some text (text)"
-                    amount="60,44 €"
-                    button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
-                    subtitle="Subtitle"
                 />
             }
             extra={<Placeholder />}
@@ -507,10 +499,6 @@ const headerSnippets: Array<Snippet> = [
             header={
                 <Header
                     title="The last invoice is available"
-                    preamount="Cuota mensual (IVA incluido)"
-                    amount="60,44 €"
-                    button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
-                    subtitle="Y esto es un subtitulo"
                 />
             }
             extra={<Placeholder />}
@@ -532,60 +520,9 @@ const headerSnippets: Array<Snippet> = [
             header={
                 <Header
                     title="The last invoice is available"
-                    preamount="Cuota mensual (IVA incluido)"
-                    amount="60,44 €"
-                    button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
-                    subtitle="Y esto es un subtitulo"
                 />
             }
             extra={<Placeholder />}
-        />
-        `,
-    },
-    {
-        group: 'Headers',
-        name: 'Header layout (rich text)',
-        code: `
-        <HeaderLayout
-            header={
-                <Header
-                    title="The last invoice is available"
-                    preamount={{
-                        text: "Example of line-through text",
-                        decoration: "line-through"
-                    }}
-                    amount="60,44 €"
-                    button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
-                    subtitle={{
-                        text: "Subtitle with secondary color",
-                        color: theme.colors.textSecondary
-                    }}
-                />
-            }
-        />
-        `,
-    },
-    {
-        group: 'Headers',
-        name: 'Header layout (rich text)(white)',
-        code: `
-        <HeaderLayout
-            isInverse={false}
-            header={
-                <Header
-                    title="The last invoice is available"
-                    preamount={{
-                        text: "Example of line-through text",
-                        decoration: "line-through"
-                    }}
-                    amount="60,44 €"
-                    button={<ButtonPrimary href="asdf">Action</ButtonPrimary>}
-                    subtitle={{
-                        text: "Subtitle with secondary color",
-                        color: theme.colors.textSecondary
-                    }}
-                />
-            }
         />
         `,
     },
@@ -672,7 +609,7 @@ const cardSnippets: Array<Snippet> = [
         name: 'MediaCard with Image',
         code: `
         <MediaCard
-            media={<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9" />}
+            media={<Image src="https://picsum.photos/1200/1200" aspectRatio="16:9"/>}
             headline={<Tag type="promo">Headline</Tag>}
             pretitle="Pretitle"
             title="Title"

@@ -209,8 +209,8 @@ export const Text10: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSi
         <Text
             {...getTextSizes({
                 forceMobileSizes,
-                mobileSize: 32,
-                mobileLineHeight: '40px',
+                mobileSize: 48,
+                mobileLineHeight: '56px',
                 desktopSize: 64,
                 desktopLineHeight: '72px',
             })}
@@ -227,8 +227,8 @@ export const Text9: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
         <Text
             {...getTextSizes({
                 forceMobileSizes,
-                mobileSize: 32,
-                mobileLineHeight: '40px',
+                mobileSize: 40,
+                mobileLineHeight: '48px',
                 desktopSize: 56,
                 desktopLineHeight: '64px',
             })}
@@ -299,7 +299,7 @@ export const Text5: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSiz
         <Text
             {...getTextSizes({
                 forceMobileSizes,
-                mobileSize: 22,
+                mobileSize: 20,
                 mobileLineHeight: '24px',
                 desktopSize: 28,
                 desktopLineHeight: '32px',

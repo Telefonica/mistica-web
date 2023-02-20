@@ -102,20 +102,25 @@ const Select: React.FC<SelectProps> = ({
                 const MAX_OPTIONS = 8;
                 const MARGIN_TOP_SIZE = 12;
                 const PADDING_SIZE = 16;
-                const {top: selectTop, width, left, height} = fieldRef.current.getBoundingClientRect();
-                const top = selectTop + height;
+                const {
+                    top: availableSpaceTop,
+                    width,
+                    left,
+                    height,
+                } = fieldRef.current.getBoundingClientRect();
+                const top = availableSpaceTop + height;
                 const visibleOptions = Math.min(options.length, MAX_OPTIONS);
                 const spaceTaken = visibleOptions * 48 + PADDING_SIZE;
                 // if it doesn't fit on bottom
                 if (top + spaceTaken + MARGIN_TOP_SIZE > window.innerHeight) {
                     const availableSpaceBottom = window.innerHeight - top;
-                    if (selectTop /* this is the available space on top */ > availableSpaceBottom) {
-                        const newTop = selectTop - spaceTaken;
+                    if (availableSpaceTop > availableSpaceBottom) {
+                        const newTop = availableSpaceTop - spaceTaken;
                         setOptionsComputedProps({
                             minWidth: width,
                             left,
                             top: Math.max(newTop, MARGIN_TOP_SIZE),
-                            maxHeight: selectTop - MARGIN_TOP_SIZE,
+                            maxHeight: Math.min(availableSpaceTop - MARGIN_TOP_SIZE, spaceTaken),
                             transformOrigin: 'center bottom',
                         });
                     } else {
@@ -133,7 +138,7 @@ const Select: React.FC<SelectProps> = ({
                         minWidth: width,
                         top,
                         left,
-                        maxHeight: undefined,
+                        maxHeight: spaceTaken,
                         transformOrigin: 'center top',
                     });
                 }

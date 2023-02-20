@@ -33,3 +33,13 @@ test.each(devices)('Select elements on a selected state appear properly on %s', 
     const image = await page.screenshot({fullPage: true});
     expect(image).toMatchImageSnapshot();
 });
+
+test('Display all options', async () => {
+    const page = await openStoryPage({id: 'components-select--default'});
+
+    const story = await screen.findByTestId('select-story');
+
+    await page.click(await screen.findByLabelText('Select a fruit (opcional)'));
+
+    expect(await story.screenshot()).toMatchImageSnapshot();
+});
