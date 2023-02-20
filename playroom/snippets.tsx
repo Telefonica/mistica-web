@@ -681,6 +681,60 @@ const cardSnippets: Array<Snippet> = [
             subtitle="Subtitle"
         />`,
     },
+    {
+        group: 'Cards',
+        name: 'DisplayDataCard',
+        code: `
+        <DisplayDataCard
+          icon={
+            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
+              <IconInvoicePlanFileRegular color={skinVars.colors.brand} />
+            </Circle>
+          }
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          description="Description"
+          button={
+            <ButtonPrimary small href="https://google.com">
+              Action
+            </ButtonPrimary>
+          }
+          onClose={() => {}}
+          actions={[
+            {
+              Icon: IconLightningRegular,
+              onPress: () => {},
+              label: "Lightning",
+            },
+          ]}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'DisplayMediaCard',
+        code: `
+        <DisplayMediaCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          description="Description"
+          backgroundImage="https://api.lorem.space/image/watch?w=700&h=700"
+          button={
+            <ButtonPrimary small href="https://google.com">
+              Action
+            </ButtonPrimary>
+          }
+          onClose={() => {}}
+          actions={[
+            {
+              Icon: IconLightningRegular,
+              onPress: () => {},
+              label: "Lightning",
+            },
+          ]}
+        />`,
+    },
 ];
 
 const titlesSnippets: Array<Snippet> = [
