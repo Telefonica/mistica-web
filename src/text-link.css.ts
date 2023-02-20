@@ -2,6 +2,7 @@ import {style, styleVariants} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
+import {baseTouchable} from './touchable.css';
 
 const base = style([
     sprinkles({
@@ -15,7 +16,8 @@ const base = style([
         '@media': {
             [mq.supportsHover]: {
                 selectors: {
-                    '&:hover:not([disabled])': {
+                    // baseTouchable class is needed to win specificity over just a baseTouchable, which has textDecoration: 'none'
+                    [`${baseTouchable}&:hover:not([disabled])`]: {
                         textDecoration: 'underline',
                     },
                 },
@@ -43,11 +45,15 @@ export const variants = styleVariants({
             color: vars.colors.textLinkInverse,
         }),
         {
-            textDecoration: 'underline',
+            selectors: {
+                [`${baseTouchable}&`]: {
+                    textDecoration: 'underline',
+                },
+            },
             '@media': {
                 [mq.supportsHover]: {
                     selectors: {
-                        '&:hover:not([disabled])': {
+                        [`${baseTouchable}&:hover:not([disabled])`]: {
                             textDecorationThickness: 2,
                         },
                     },
