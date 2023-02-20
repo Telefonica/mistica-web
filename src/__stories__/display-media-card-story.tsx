@@ -95,7 +95,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
             button={button}
             buttonLink={buttonLink}
             secondaryButton={secondaryButton}
-            dataAttributes={{testid: 'display-data-card'}}
+            dataAttributes={{testid: 'display-media-card'}}
             aria-label="Display data card label"
         />
     );
