@@ -82,12 +82,7 @@ const CardContent: React.FC<CardContentProps> = ({
                                 {renderHeadline()}
                                 <Stack space={4}>
                                     {pretitle && (
-                                        <Text1
-                                            truncate={pretitleLinesMax}
-                                            as="div"
-                                            regular
-                                            transform="uppercase"
-                                        >
+                                        <Text1 truncate={pretitleLinesMax} as="div" regular>
                                             {pretitle}
                                         </Text1>
                                     )}
@@ -594,7 +589,6 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                                 truncate={pretitleLinesMax}
                                                                 as="div"
                                                                 regular
-                                                                transform="uppercase"
                                                             >
                                                                 {pretitle}
                                                             </Text1>
