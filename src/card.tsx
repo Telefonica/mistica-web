@@ -540,7 +540,8 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         },
         ref
     ) => {
-        const textShadow = backgroundImage ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
+        const withGradient = !!backgroundImage;
+        const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         return (
             <MaybeWithActions
                 onClose={onClose}
@@ -563,23 +564,25 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                             backgroundImage: backgroundImage
                                 ? `url("${CSS.escape(backgroundImage)}")`
                                 : undefined,
+                            paddingTop: withGradient && !icon && !(actions?.length || onClose) ? 0 : 24,
                         }}
                         aria-label={ariaLabel}
                     >
                         {icon ? (
-                            <Box paddingBottom={40} paddingX={24}>
+                            <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
                                 {icon}
                             </Box>
                         ) : (
-                            <Box paddingBottom={actions?.length || onClose ? 64 : 0} />
+                            <Box paddingBottom={actions?.length || onClose ? (withGradient ? 24 : 64) : 0} />
                         )}
                         <Box
                             paddingX={24}
+                            paddingTop={withGradient ? 40 : 0}
                             paddingBottom={24}
-                            className={backgroundImage ? styles.displayCardGradient : undefined}
+                            className={withGradient ? styles.displayCardGradient : undefined}
                         >
                             <Stack space={24}>
-                                <Stack space={0}>
+                                <div>
                                     <Stack space={8}>
                                         {(headline || pretitle || title) && (
                                             <header>
@@ -624,7 +627,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                         )}
                                     </Stack>
                                     {extra}
-                                </Stack>
+                                </div>
                                 {(button || secondaryButton || buttonLink) && (
                                     <ButtonGroup
                                         primaryButton={button}

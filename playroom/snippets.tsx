@@ -687,8 +687,8 @@ const cardSnippets: Array<Snippet> = [
         code: `
         <DisplayDataCard
           icon={
-            <Circle size={40} backgroundColor={skinVars.colors.brandLow}>
-              <IconInvoicePlanFileRegular color={skinVars.colors.brand} />
+            <Circle size={40} backgroundColor={colors.brandLow}>
+              <IconInvoicePlanFileRegular color={colors.brand} />
             </Circle>
           }
           headline={<Tag type="promo">Headline</Tag>}

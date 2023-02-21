@@ -123,7 +123,6 @@ export const displayCard = style([
     sprinkles({
         display: 'flex',
         flex: 1,
-        paddingTop: 24,
         flexDirection: 'column',
         justifyContent: 'space-between',
     }),
