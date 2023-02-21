@@ -16,7 +16,7 @@ const base = style([
             [mq.supportsHover]: {
                 selectors: {
                     '&:hover:not([disabled])': {
-                        textDecoration: 'underline !important',
+                        textDecoration: 'underline',
                     },
                 },
             },
@@ -24,7 +24,7 @@ const base = style([
         selectors: {
             '&[disabled]': {
                 opacity: 0.5,
-                textDecoration: 'none !important',
+                textDecoration: 'none',
             },
         },
     },
@@ -43,12 +43,12 @@ export const variants = styleVariants({
             color: vars.colors.textLinkInverse,
         }),
         {
-            textDecoration: 'underline !important',
+            textDecoration: 'underline',
             '@media': {
                 [mq.supportsHover]: {
                     selectors: {
                         '&:hover:not([disabled])': {
-                            textDecorationThickness: '2px !important',
+                            textDecorationThickness: 2,
                         },
                     },
                 },
