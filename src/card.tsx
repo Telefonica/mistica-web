@@ -2,7 +2,7 @@ import * as React from 'react';
 import Tag from './tag';
 import Stack from './stack';
 import Box from './box';
-import {Text1, Text2, Text3, Text4, Text6} from './text';
+import {Text2, Text3, Text4, Text6} from './text';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
@@ -82,9 +82,9 @@ const CardContent: React.FC<CardContentProps> = ({
                                 {renderHeadline()}
                                 <Stack space={4}>
                                     {pretitle && (
-                                        <Text1 truncate={pretitleLinesMax} as="div" regular>
+                                        <Text2 truncate={pretitleLinesMax} as="div" regular>
                                             {pretitle}
-                                        </Text1>
+                                        </Text2>
                                     )}
                                     <Text4 truncate={titleLinesMax} as="h3" regular>
                                         {title}
@@ -584,14 +584,14 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                     {headline}
                                                     <Stack space={4}>
                                                         {pretitle && (
-                                                            <Text1
+                                                            <Text2
                                                                 forceMobileSizes
                                                                 truncate={pretitleLinesMax}
                                                                 as="div"
                                                                 regular
                                                             >
                                                                 {pretitle}
-                                                            </Text1>
+                                                            </Text2>
                                                         )}
                                                         <Text6
                                                             forceMobileSizes
