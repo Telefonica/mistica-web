@@ -1,3 +1,10 @@
+## [13.2.2](https://github.com/Telefonica/mistica-web/compare/v13.2.1...v13.2.2) (2023-02-21)
+
+
+### Bug Fixes
+
+* **TextLink:** underline style in inverse ([#672](https://github.com/Telefonica/mistica-web/issues/672)) ([1b6bdb0](https://github.com/Telefonica/mistica-web/commit/1b6bdb00fa5898dd3c441ffce7e625f8d5ef34ff))
+
 ## [13.2.1](https://github.com/Telefonica/mistica-web/compare/v13.2.0...v13.2.1) (2023-02-20)
 
 
