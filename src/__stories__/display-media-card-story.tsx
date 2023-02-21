@@ -25,7 +25,6 @@ const BACKGROUND_SRC =
 
 type DisplayMediaCardArgs = {
     asset: 'icon' | 'circle + icon' | 'image' | 'circle + image';
-    background: 'image' | 'none';
     headlineType: TagType;
     headline: string;
     pretitle: string;
@@ -38,7 +37,6 @@ type DisplayMediaCardArgs = {
 
 export const Default: StoryComponent<DisplayMediaCardArgs> = ({
     asset = 'icon',
-    background,
     headline,
     headlineType,
     pretitle,
@@ -86,7 +84,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                       ]
                     : undefined
             }
-            backgroundImage={background === 'image' ? BACKGROUND_SRC : undefined}
+            backgroundImage={BACKGROUND_SRC}
             icon={icon}
             headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
             pretitle={pretitle}
@@ -104,7 +102,6 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
 Default.storyName = 'Display Media card';
 Default.args = {
     asset: 'icon',
-    background: 'image',
     headlineType: 'promo',
     headline: 'Priority',
     pretitle: 'Pretitle',
@@ -117,10 +114,6 @@ Default.args = {
 Default.argTypes = {
     asset: {
         options: ['circle + icon', 'circle + image', 'none'],
-        control: {type: 'select'},
-    },
-    background: {
-        options: ['image', 'none'],
         control: {type: 'select'},
     },
     headlineType: {
@@ -156,6 +149,7 @@ export const Group: StoryComponent = () => {
                         }
                     />
                     <DisplayMediaCard title="Title" backgroundImage={BACKGROUND_SRC} />
+                    <DisplayMediaCard title="Title" backgroundImage={BACKGROUND_SRC} onClose={() => {}} />
                 </Inline>
             </Stack>
         </ResponsiveLayout>

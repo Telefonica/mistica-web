@@ -12,12 +12,14 @@ type MaybeDismissableProps = {
     children: React.ReactNode;
     onClose?: () => void;
     width?: string | number;
+    height?: string | number;
     'aria-label'?: string;
 };
 
 const MaybeDismissable = ({
     children,
     width,
+    height,
     onClose,
     'aria-label': ariaLabel,
 }: MaybeDismissableProps): JSX.Element => {
@@ -31,7 +33,7 @@ const MaybeDismissable = ({
         <section
             className={styles.dismissableContainer}
             aria-label={ariaLabel}
-            style={{width: width || '100%'}}
+            style={{width: width || '100%', height: height || '100%'}}
         >
             <DismissableContext.Provider value>{children}</DismissableContext.Provider>
             <IconButton

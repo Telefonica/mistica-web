@@ -442,6 +442,7 @@ const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Elem
 type MaybeWithActionsProps = {
     children: React.ReactNode;
     width?: string;
+    height?: string;
     actions?: Array<CardAction>;
     onClose?: () => void;
     isInverse?: boolean;
@@ -450,7 +451,8 @@ type MaybeWithActionsProps = {
 
 const MaybeWithActions = ({
     children,
-    width,
+    width = '100%',
+    height = '100%',
     actions,
     onClose,
     isInverse,
@@ -471,7 +473,7 @@ const MaybeWithActions = ({
     }
 
     return (
-        <section aria-label={ariaLabel} style={{width: width || '100%', position: 'relative'}}>
+        <section aria-label={ariaLabel} style={{width, height, position: 'relative'}}>
             <HasActionsContext.Provider value>{children}</HasActionsContext.Provider>
             <div style={{position: 'absolute', right: 8, top: 8}}>
                 <CardActionsGroup actions={finalActions} isInverse={isInverse} />
@@ -502,7 +504,7 @@ interface CommonDisplayCardProps {
 }
 
 interface DisplayMediaCardProps extends CommonDisplayCardProps {
-    backgroundImage?: string;
+    backgroundImage: string;
 }
 
 interface DisplayDataCardProps extends CommonDisplayCardProps {

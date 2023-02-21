@@ -12,19 +12,6 @@ test('DisplayMediaCard', async () => {
     expect(image).toMatchImageSnapshot();
 });
 
-test('DisplayMediaCard without background image', async () => {
-    await openStoryPage({
-        id: 'components-cards-display-media-card--default',
-        args: {background: 'none'},
-    });
-
-    const displayMediaCard = await screen.findByTestId('display-media-card');
-
-    const image = await displayMediaCard.screenshot();
-
-    expect(image).toMatchImageSnapshot();
-});
-
 test('DisplayMediaCard with top actions', async () => {
     await openStoryPage({
         id: 'components-cards-display-media-card--default',
