@@ -538,6 +538,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         },
         ref
     ) => {
+        const textShadow = backgroundImage ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         return (
             <MaybeWithActions
                 onClose={onClose}
@@ -589,6 +590,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                                 truncate={pretitleLinesMax}
                                                                 as="div"
                                                                 regular
+                                                                textShadow={textShadow}
                                                             >
                                                                 {pretitle}
                                                             </Text2>
@@ -597,6 +599,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                             forceMobileSizes
                                                             truncate={titleLinesMax}
                                                             as="h3"
+                                                            textShadow={textShadow}
                                                         >
                                                             {title}
                                                         </Text6>
@@ -612,6 +615,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                 as="p"
                                                 regular
                                                 color={vars.colors.textSecondary}
+                                                textShadow={textShadow}
                                             >
                                                 {description}
                                             </Text3>

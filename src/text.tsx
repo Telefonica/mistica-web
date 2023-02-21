@@ -43,6 +43,7 @@ export interface TextPresetProps {
     'aria-level'?: number;
     dataAttributes?: DataAttributes;
     forceMobileSizes?: boolean;
+    textShadow?: string;
 }
 
 interface TextProps extends TextPresetProps {
@@ -82,6 +83,7 @@ export const Text: React.FC<TextProps> = ({
     desktopLineHeight = lineHeight,
     letterSpacing,
     textAlign,
+    textShadow,
     id,
     role,
     'aria-level': ariaLevel,
@@ -135,6 +137,7 @@ export const Text: React.FC<TextProps> = ({
                 overflowWrap: wordBreak ? 'anywhere' : 'inherit',
                 color: isInverse ? inverseColorsMap[color] ?? color : color,
                 textAlign,
+                textShadow,
             },
         },
         children
