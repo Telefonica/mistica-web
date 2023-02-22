@@ -188,7 +188,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                             template="6+6"
                             left={
                                 <Box
-                                    paddingY={isInsideSlideShow ? 80 : 56}
+                                    paddingY={56}
                                     className={classnames(styles.container, styles.containerDesktop)}
                                 >
                                     {left}
@@ -196,7 +196,7 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
                             }
                             right={
                                 <Box
-                                    paddingY={isInsideSlideShow ? 80 : 56}
+                                    paddingY={56}
                                     className={classnames(styles.container, styles.containerDesktop)}
                                 >
                                     {right}
