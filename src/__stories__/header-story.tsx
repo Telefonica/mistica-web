@@ -84,6 +84,10 @@ export const NoHeader: StoryComponent = () => {
 
 NoHeader.storyName = 'Header layout with no header';
 
+/**
+ * The header is optional in order to allow webviews to delegate the header visualization to the surrounding native app.
+ * For example, in Novum App, the Start tab's greeting is rendered nativelly in the apps and via web in desktop.
+ */
 export const RichTexts: StoryComponent = () => {
     const filler = ' - more text'.repeat(20);
     return (
