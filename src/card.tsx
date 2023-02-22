@@ -431,7 +431,7 @@ const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Elem
                     style={{display: 'flex'}}
                 >
                     <div className={isInverse ? styles.cardActionInverse : styles.cardAction}>
-                        <Icon color={vars.colors.neutralHigh} />
+                        <Icon color={vars.colors.neutralHigh} size={20} />
                     </div>
                 </IconButton>
             ))}
