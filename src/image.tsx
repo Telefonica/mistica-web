@@ -14,15 +14,21 @@ import {combineRefs} from './utils/common';
 import type {DataAttributes} from './utils/types';
 
 /**
- * This context is used internally to disable the border radius. This is useful for example
- * when using the Image component inside a Card
+ * This context is used internally to disable/enable the border radius. This is useful for example
+ * when using the Image component inside a Card or Hero inside a Slideshow
  */
-const DisableBorderRadiusContext = React.createContext(false);
+const MediaBorderRadiusContext = React.createContext(true);
 
-export const useDisableBorderRadius = (): boolean => React.useContext(DisableBorderRadiusContext);
+export const useMediaBorderRadius = (): boolean => React.useContext(MediaBorderRadiusContext);
 
-export const DisableBorderRadiusProvider = ({children}: {children: React.ReactNode}): JSX.Element => (
-    <DisableBorderRadiusContext.Provider value>{children}</DisableBorderRadiusContext.Provider>
+export const MediaBorderRadiusProvider = ({
+    children,
+    value,
+}: {
+    children: React.ReactNode;
+    value: boolean;
+}): JSX.Element => (
+    <MediaBorderRadiusContext.Provider value={value}>{children}</MediaBorderRadiusContext.Provider>
 );
 
 type VivoLogoProps = {
@@ -125,8 +131,8 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
         ref
     ) => {
         const imageRef = React.useRef<HTMLImageElement>();
-        const noBorderRadiusContext = useDisableBorderRadius();
-        const noBorderSetting = noBorderRadius ?? noBorderRadiusContext;
+        const borderRadiusContext = useMediaBorderRadius();
+        const noBorderSetting = noBorderRadius ?? !borderRadiusContext;
         const [isError, setIsError] = React.useState(false);
         const [isLoading, setIsLoading] = React.useState(true);
         const [hideLoadingFallback, setHideLoadingFallback] = React.useState(false);

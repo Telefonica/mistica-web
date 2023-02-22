@@ -3,10 +3,10 @@ import * as mq from './media-queries.css';
 import {sprinkles} from './sprinkles.css';
 import {vars as skinVars} from './skins/skin-contract.css';
 
-const MOBILE_SIDE_MARGIN = 16;
-const TABLET_SIDE_MARGIN = 32;
-const SMALL_DESKTOP_SIDE_MARGIN = 40;
-const LARGE_DESKTOP_MAX_WIDTH = 1224;
+export const MOBILE_SIDE_MARGIN = 16;
+export const TABLET_SIDE_MARGIN = 32;
+export const SMALL_DESKTOP_SIDE_MARGIN = 40;
+export const LARGE_DESKTOP_MAX_WIDTH = 1224;
 
 const sideMargin = createVar();
 export const vars = {sideMargin};

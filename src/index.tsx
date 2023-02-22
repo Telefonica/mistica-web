@@ -59,6 +59,7 @@ export {default as HighlightedCard} from './highlighted-card';
 export {default as Stepper} from './stepper';
 export {default as ProgressBar} from './progress-bar';
 export {MediaCard, DataCard, SnapCard} from './card';
+export {default as Hero} from './hero';
 export {default as Divider} from './divider';
 export {default as Menu} from './menu';
 export {default as EmptyState} from './empty-state';
