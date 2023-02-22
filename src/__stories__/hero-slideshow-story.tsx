@@ -36,7 +36,7 @@ export const Default: StoryComponent = () => (
         inverseBullets={false}
         dataAttributes={{testid: 'hero'}}
         items={Array.from({length: 3}).map((_, idx) => (
-            <HeroComponent idx={idx} />
+            <HeroComponent idx={idx} key={idx} />
         ))}
     />
 );
