@@ -7,7 +7,7 @@ import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
 import Video from './video';
-import Image, {DisableBorderRadiusProvider} from './image';
+import Image, {MediaBorderRadiusProvider} from './image';
 import MaybeDismissable, {useIsDismissable} from './maybe-dismissable';
 import {BaseTouchable} from './touchable';
 import {vars} from './skins/skin-contract.css';
@@ -200,7 +200,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                     height="100%"
                 >
                     <MaybeSection className={styles.mediaCard} aria-label={ariaLabel}>
-                        <DisableBorderRadiusProvider>{media}</DisableBorderRadiusProvider>
+                        <MediaBorderRadiusProvider value={false}>{media}</MediaBorderRadiusProvider>
                         <div className={styles.mediaCardContent}>
                             <CardContent
                                 headline={headline}
