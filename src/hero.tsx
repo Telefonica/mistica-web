@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import Tag from './tag';
-import {ButtonLink, ButtonPrimary} from './button';
+import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import {useScreenSize} from './hooks';
 import Video from './video';
 import Image, {MediaBorderRadiusProvider} from './image';
@@ -22,6 +22,8 @@ import type {DataAttributes, RendersElement, RendersNullableElement} from './uti
 
 type LayoutProps = {children: React.ReactNode; isInverse: boolean};
 
+// This is a duplication of the ResponsiveLayout, needed because original ResponsiveLayout has a inner div that we cannot control and the height is missing there.
+// We need to control this height to fix the actions at the bottom of the Hero component when we are inside a Slidehow with differents Hero heights.
 const Layout = ({children, isInverse}: LayoutProps) => {
     return (
         <ThemeVariant isInverse={isInverse}>
@@ -38,6 +40,7 @@ type HeroContentProps = {
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
     button?: RendersNullableElement<typeof ButtonPrimary>;
+    secondaryButton?: RendersNullableElement<typeof ButtonSecondary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
 };
 
@@ -49,6 +52,7 @@ const HeroContent = ({
     descriptionLinesMax,
     extra,
     button,
+    secondaryButton,
     buttonLink,
 }: HeroContentProps) => {
     return (
@@ -86,7 +90,7 @@ const HeroContent = ({
             </div>
             {(button || buttonLink) && (
                 <div className={styles.actions}>
-                    <ButtonGroup primaryButton={button} link={buttonLink} />
+                    <ButtonGroup primaryButton={button} secondaryButton={secondaryButton} link={buttonLink} />
                 </div>
             )}
         </section>

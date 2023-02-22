@@ -5,6 +5,9 @@ import type {AspectRatio} from '../image';
 
 export default {
     title: 'Components/Hero/Component',
+    parameters: {
+        fullScreen: true,
+    },
 };
 
 type HeroArgs = {
@@ -13,7 +16,6 @@ type HeroArgs = {
     headline: string;
     pretitle: string;
     title: string;
-    subtitle: string;
     description: string;
     withExtra: boolean;
     actions: 'button' | 'link' | 'button and link';
@@ -77,7 +79,6 @@ Default.args = {
     headline: 'Hero',
     pretitle: 'Pretitle',
     title: 'Title',
-    subtitle: 'Subtitle',
     description: 'This is a long description with a long text to see how this works',
     withExtra: false,
     actions: 'button and link',

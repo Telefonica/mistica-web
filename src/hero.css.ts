@@ -1,4 +1,4 @@
-import {createVar, style, fallbackVar} from '@vanilla-extract/css';
+import {createVar, style} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {sprinkles} from './sprinkles.css';
 import {
@@ -16,11 +16,11 @@ export const container = style([
     sprinkles({display: 'flex'}),
     {
         minHeight: 400,
-        height: fallbackVar(height, '100%'),
+        height,
         '@media': {
             [mq.desktopOrBigger]: {
                 minHeight: 460,
-                height: fallbackVar(height, '100%'),
+                height,
             },
         },
     },

@@ -3,9 +3,12 @@ import {Hero, ButtonPrimary, ButtonLink, Tag, Image, Placeholder, Slideshow} fro
 
 export default {
     title: 'Components/Hero/Slideshow',
+    parameters: {
+        fullScreen: true,
+    },
 };
 
-const HeroComponent = () => {
+const HeroComponent = ({idx}: {idx: number}) => {
     return (
         <Hero
             background="default"
@@ -19,7 +22,7 @@ const HeroComponent = () => {
             pretitle="Pretitle"
             title="Title"
             description="This is a long description with a long text to see how this works"
-            extra={<Placeholder />}
+            extra={idx === 1 ? <Placeholder /> : undefined}
             button={<ButtonPrimary fake>Action</ButtonPrimary>}
             buttonLink={<ButtonLink href="#">Link</ButtonLink>}
             desktopMediaPosition="right"
@@ -32,8 +35,8 @@ export const Default: StoryComponent = () => (
         withBullets
         inverseBullets={false}
         dataAttributes={{testid: 'hero'}}
-        items={Array.from({length: 3}).map(() => (
-            <HeroComponent />
+        items={Array.from({length: 3}).map((_, idx) => (
+            <HeroComponent idx={idx} />
         ))}
     />
 );

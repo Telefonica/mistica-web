@@ -1520,12 +1520,7 @@ const heroSnippets = [
                 background="default"
                 media={
                   <Image
-                    src={
-                      [
-                        "https://api.lorem.space/image/furniture?w=1500&h=1500&hash=8B7BCDC2",
-                        "https://api.lorem.space/image/furniture?w=1500&h=1500&hash=8B7BCDC4",
-                      ][idx]
-                    }
+                    src="https://api.lorem.space/image/furniture?w=1500&h=1500&hash=8B7BCDC2"
                     aspectRatio="16:9"
                   />
                 }
