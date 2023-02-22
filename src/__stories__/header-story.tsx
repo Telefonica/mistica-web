@@ -55,6 +55,35 @@ export const Default: StoryComponent = () => {
 
 Default.storyName = 'Header';
 
+export const NoHeader: StoryComponent = () => {
+    const [extraSideBySide, extraSideBySideCheckbox] = useCheckbox(
+        'Extra content placed on the right in desktop',
+        true
+    );
+    return (
+        <Stack space={16}>
+            <div data-testid="header-layout">
+                <HeaderLayout
+                    isInverse
+                    sideBySideExtraOnDesktop={extraSideBySide}
+                    breadcrumbs={
+                        <NavigationBreadcrumbs
+                            title="Bills"
+                            breadcrumbs={[{title: 'Account', url: '/consumptions'}]}
+                        />
+                    }
+                    extra={<Placeholder />}
+                />
+            </div>
+            <ResponsiveLayout>
+                <Stack space={16}>{extraSideBySideCheckbox}</Stack>
+            </ResponsiveLayout>
+        </Stack>
+    );
+};
+
+NoHeader.storyName = 'Header layout with no header';
+
 export const RichTexts: StoryComponent = () => {
     const filler = ' - more text'.repeat(20);
     return (
