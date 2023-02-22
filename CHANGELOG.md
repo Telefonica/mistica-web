@@ -1,3 +1,11 @@
+# [13.3.0](https://github.com/Telefonica/mistica-web/compare/v13.2.3...v13.3.0) (2023-02-22)
+
+
+### Features
+
+* **Hero:** new component ([#665](https://github.com/Telefonica/mistica-web/issues/665)) ([fbb7430](https://github.com/Telefonica/mistica-web/commit/fbb7430ea75faf7936f511e2bb5ba498030dbcad))
+* **SearchField:** forward ref support ([#673](https://github.com/Telefonica/mistica-web/issues/673)) ([2a62882](https://github.com/Telefonica/mistica-web/commit/2a62882cf28ea228d43eb13ff268cda7f3408f9d))
+
 ## [13.2.3](https://github.com/Telefonica/mistica-web/compare/v13.2.2...v13.2.3) (2023-02-21)
 
 
