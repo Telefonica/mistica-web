@@ -40,6 +40,7 @@ export type Colors = {
     background: string;
     backgroundContainer: string;
     backgroundBrand: string;
+    backgroundBrandSecondary: string;
     backgroundOverlay: string;
     backgroundSkeleton: string;
     backgroundSkeletonInverse: string;

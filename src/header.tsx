@@ -155,7 +155,11 @@ export const MainSectionHeader: React.FC<MainSectionHeaderProps> = ({title, desc
 type HeaderLayoutProps = {
     isInverse?: boolean;
     breadcrumbs?: RendersNullableElement<typeof NavigationBreadcrumbs>;
-    header: React.ReactNode; // intentionally not forced to RendersElement<typeof Header> to allow skeletons for example
+    /**
+     * Intentionally not forced to RendersElement<typeof Header> to allow skeletons for example
+     * The header is optional in order to allow webviews to delegate the header visualization to the surrounding native app.
+     */
+    header?: React.ReactNode;
     extra?: React.ReactNode;
     sideBySideExtraOnDesktop?: boolean;
     children?: void;
@@ -179,7 +183,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
         >
             <OverscrollColor />
             {isTabletOrSmaller ? (
-                <Box paddingTop={32} paddingBottom={24}>
+                <Box paddingTop={header ? 32 : 0} paddingBottom={24}>
                     <Stack space={24}>
                         {header}
                         {extra}
