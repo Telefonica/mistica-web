@@ -1,3 +1,10 @@
+# [13.4.0](https://github.com/Telefonica/mistica-web/compare/v13.3.0...v13.4.0) (2023-02-23)
+
+
+### Features
+
+* **HeaderLayout:** make header prop optional for the cases where a native app renders that part ([#675](https://github.com/Telefonica/mistica-web/issues/675)) ([14791ea](https://github.com/Telefonica/mistica-web/commit/14791ea8e1d7893f674b9a6228eaa5394ad5d3b0))
+
 # [13.3.0](https://github.com/Telefonica/mistica-web/compare/v13.2.3...v13.3.0) (2023-02-22)
 
 
