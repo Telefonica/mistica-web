@@ -1,10 +1,13 @@
 import {createThemeContract} from '@vanilla-extract/css';
 
-const colors = {
+import type {Colors} from './types';
+
+const colors: Colors = {
     appBarBackground: '',
     background: '',
     backgroundContainer: '',
     backgroundBrand: '',
+    backgroundBrandSecondary: '',
     backgroundOverlay: '',
     backgroundSkeleton: '',
     backgroundSkeletonInverse: '',
