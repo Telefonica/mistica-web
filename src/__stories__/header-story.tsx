@@ -1,5 +1,14 @@
 import * as React from 'react';
-import {Header, HeaderLayout, Stack, NavigationBreadcrumbs, ResponsiveLayout, Placeholder} from '..';
+import {
+    Header,
+    HeaderLayout,
+    Stack,
+    NavigationBreadcrumbs,
+    ResponsiveLayout,
+    Placeholder,
+    Text1,
+    Text2,
+} from '..';
 import {useTextField, useCheckbox} from './helpers';
 
 export default {
@@ -55,6 +64,10 @@ export const Default: StoryComponent = () => {
 
 Default.storyName = 'Header';
 
+/**
+ * The header is optional in order to allow webviews to delegate the header visualization to the surrounding native app.
+ * For example, in Novum App, the Start tab's greeting is rendered nativelly in the apps and via web in desktop.
+ */
 export const NoHeader: StoryComponent = () => {
     const [extraSideBySide, extraSideBySideCheckbox] = useCheckbox(
         'Extra content placed on the right in desktop',
@@ -76,7 +89,15 @@ export const NoHeader: StoryComponent = () => {
                 />
             </div>
             <ResponsiveLayout>
-                <Stack space={16}>{extraSideBySideCheckbox}</Stack>
+                <Stack space={16}>
+                    <Text2 medium>Documentation:</Text2>
+                    <Text1 medium={false}>
+                        The header is optional in order to allow webviews to delegate the header visualization
+                        to the surrounding native app. For example, in Novum App, the Start tab's greeting is
+                        rendered nativelly in the apps and via web in desktop.
+                    </Text1>
+                    {extraSideBySideCheckbox}
+                </Stack>
             </ResponsiveLayout>
         </Stack>
     );
@@ -84,10 +105,6 @@ export const NoHeader: StoryComponent = () => {
 
 NoHeader.storyName = 'Header layout with no header';
 
-/**
- * The header is optional in order to allow webviews to delegate the header visualization to the surrounding native app.
- * For example, in Novum App, the Start tab's greeting is rendered nativelly in the apps and via web in desktop.
- */
 export const RichTexts: StoryComponent = () => {
     const filler = ' - more text'.repeat(20);
     return (
