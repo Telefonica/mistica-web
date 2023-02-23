@@ -1,3 +1,10 @@
+# [13.5.0](https://github.com/Telefonica/mistica-web/compare/v13.4.0...v13.5.0) (2023-02-23)
+
+
+### Features
+
+* **colors:** new backgroundBrandSecondary ([#676](https://github.com/Telefonica/mistica-web/issues/676)) ([4f12baf](https://github.com/Telefonica/mistica-web/commit/4f12baf85265cfe6f3433876fe06cac852830733))
+
 # [13.4.0](https://github.com/Telefonica/mistica-web/compare/v13.3.0...v13.4.0) (2023-02-23)
 
 
