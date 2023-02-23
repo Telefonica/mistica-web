@@ -19,6 +19,7 @@ type Props = {
     'aria-label'?: string;
     width?: number | string;
     height?: number | string;
+    minHeight?: number | string;
 };
 
 type InternalProps = {
@@ -48,6 +49,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
             'aria-label': ariaLabel,
             width,
             height,
+            minHeight,
             borderRadius,
         },
         ref
@@ -58,7 +60,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
         return (
             <div
                 ref={ref}
-                style={{width, height, boxSizing: 'border-box'}}
+                style={{width, height, minHeight, boxSizing: 'border-box'}}
                 className={classnames(
                     className,
                     getBorderStyle(isInverseOutside, isInverseInside),

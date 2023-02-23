@@ -121,8 +121,6 @@ const CardContent: React.FC<CardContentProps> = ({
     );
 };
 
-const HasActionsContext = React.createContext<boolean>(false);
-
 type MaybeSectionProps = {
     children: React.ReactNode;
     'aria-label'?: string;
@@ -132,8 +130,7 @@ type MaybeSectionProps = {
 
 const MaybeSection = ({'aria-label': ariaLabel, className, style, children}: MaybeSectionProps) => {
     const isDismissable = useIsDismissable();
-    const hasActions = React.useContext(HasActionsContext);
-    if (isDismissable || hasActions) {
+    if (isDismissable) {
         return (
             <div className={className} style={style}>
                 {children}
@@ -439,10 +436,21 @@ const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Elem
     );
 };
 
+type AspectRatio = '1:1' | '16:9' | '7:10' | '4:3' | 'auto';
+
+const CSS_ASPECT_RATIO = {
+    '1:1': '1',
+    '16:9': '16 / 9',
+    '7:10': '7 / 10',
+    '4:3': '4 / 3',
+    auto: 'auto',
+} as const;
+
 type MaybeWithActionsProps = {
     children: React.ReactNode;
-    width?: string;
-    height?: string;
+    width?: string | number;
+    height?: string | number;
+    aspectRatio?: AspectRatio | number;
     actions?: Array<CardAction>;
     onClose?: () => void;
     isInverse?: boolean;
@@ -453,6 +461,7 @@ const MaybeWithActions = ({
     children,
     width = '100%',
     height = '100%',
+    aspectRatio,
     actions,
     onClose,
     isInverse,
@@ -468,16 +477,30 @@ const MaybeWithActions = ({
         });
     }
 
-    if (!finalActions.length) {
-        return <>{children}</>;
-    }
+    const hasActions = finalActions.length > 0;
+
+    const cssAspectRatio: React.CSSProperties['aspectRatio'] = aspectRatio
+        ? typeof aspectRatio === 'number'
+            ? String(aspectRatio)
+            : CSS_ASPECT_RATIO[aspectRatio]
+        : undefined;
 
     return (
-        <section aria-label={ariaLabel} style={{width, height, position: 'relative'}}>
-            <HasActionsContext.Provider value>{children}</HasActionsContext.Provider>
-            <div style={{position: 'absolute', right: 8, top: 8}}>
-                <CardActionsGroup actions={finalActions} isInverse={isInverse} />
-            </div>
+        <section
+            aria-label={ariaLabel}
+            style={{
+                width,
+                height,
+                aspectRatio: cssAspectRatio,
+                position: 'relative',
+            }}
+        >
+            {children}
+            {hasActions && (
+                <div style={{position: 'absolute', right: 8, top: 8}}>
+                    <CardActionsGroup actions={finalActions} isInverse={isInverse} />
+                </div>
+            )}
         </section>
     );
 };
@@ -505,6 +528,9 @@ interface CommonDisplayCardProps {
 
 interface DisplayMediaCardProps extends CommonDisplayCardProps {
     backgroundImage: string;
+    aspectRatio?: AspectRatio | number;
+    width?: number | string;
+    height?: number | string;
 }
 
 interface DisplayDataCardProps extends CommonDisplayCardProps {
@@ -536,14 +562,21 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             actions,
             buttonLink,
             dataAttributes,
+            width,
+            height,
+            aspectRatio,
             'aria-label': ariaLabel,
         },
         ref
     ) => {
         const withGradient = !!backgroundImage;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
+        const hasTopActions = actions?.length || onClose;
         return (
             <MaybeWithActions
+                width={width}
+                height={height}
+                aspectRatio={aspectRatio}
                 onClose={onClose}
                 actions={actions}
                 aria-label={ariaLabel}
@@ -555,18 +588,17 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     dataAttributes={dataAttributes}
                     ref={ref}
                     width="100%"
-                    height="100%"
+                    minHeight="100%"
                     isInverse={isInverse}
                 >
-                    <MaybeSection
+                    <div
                         className={styles.displayCard}
                         style={{
                             backgroundImage: backgroundImage
                                 ? `url("${CSS.escape(backgroundImage)}")`
                                 : undefined,
-                            paddingTop: withGradient && !icon && !(actions?.length || onClose) ? 0 : 24,
+                            paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
                         }}
-                        aria-label={ariaLabel}
                     >
                         {icon ? (
                             <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
@@ -637,7 +669,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                 )}
                             </Stack>
                         </Box>
-                    </MaybeSection>
+                    </div>
                 </InternalBoxed>
             </MaybeWithActions>
         );

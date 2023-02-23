@@ -33,6 +33,8 @@ type DisplayMediaCardArgs = {
     closable: boolean;
     withTopAction: boolean;
     actions: 'button' | 'link' | 'button and link' | 'button and secondary button';
+    width: string;
+    aspectRatio: '1:1' | '16:9' | '7:10' | '4:3' | 'auto';
 };
 
 export const Default: StoryComponent<DisplayMediaCardArgs> = ({
@@ -45,6 +47,8 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
     actions = 'button',
     closable,
     withTopAction,
+    width,
+    aspectRatio,
 }) => {
     let icon;
     if (asset === 'circle + icon') {
@@ -95,6 +99,8 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
             secondaryButton={secondaryButton}
             dataAttributes={{testid: 'display-media-card'}}
             aria-label="Display data card label"
+            width={width}
+            aspectRatio={aspectRatio}
         />
     );
 };
@@ -110,6 +116,8 @@ Default.args = {
     actions: 'button',
     closable: false,
     withTopAction: false,
+    width: 'auto',
+    aspectRatio: 'auto',
 };
 Default.argTypes = {
     asset: {
@@ -122,6 +130,10 @@ Default.argTypes = {
     },
     actions: {
         options: ['button', 'link', 'button and link', 'button and secondary button'],
+        control: {type: 'select'},
+    },
+    aspectRatio: {
+        options: ['1:1', '16:9', '7:10', '4:3', 'auto'],
         control: {type: 'select'},
     },
 };
