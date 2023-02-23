@@ -1,5 +1,14 @@
 import * as React from 'react';
-import {Header, HeaderLayout, Stack, NavigationBreadcrumbs, ResponsiveLayout, Placeholder} from '..';
+import {
+    Header,
+    HeaderLayout,
+    Stack,
+    NavigationBreadcrumbs,
+    ResponsiveLayout,
+    Placeholder,
+    Text1,
+    Text2,
+} from '..';
 import {useTextField, useCheckbox} from './helpers';
 
 export default {
@@ -54,6 +63,47 @@ export const Default: StoryComponent = () => {
 };
 
 Default.storyName = 'Header';
+
+/**
+ * The header is optional in order to allow webviews to delegate the header visualization to the surrounding native app.
+ * For example, in Novum App, the Start tab's greeting is rendered nativelly in the apps and via web in desktop.
+ */
+export const NoHeader: StoryComponent = () => {
+    const [extraSideBySide, extraSideBySideCheckbox] = useCheckbox(
+        'Extra content placed on the right in desktop',
+        true
+    );
+    return (
+        <Stack space={16}>
+            <div data-testid="header-layout">
+                <HeaderLayout
+                    isInverse
+                    sideBySideExtraOnDesktop={extraSideBySide}
+                    breadcrumbs={
+                        <NavigationBreadcrumbs
+                            title="Bills"
+                            breadcrumbs={[{title: 'Account', url: '/consumptions'}]}
+                        />
+                    }
+                    extra={<Placeholder />}
+                />
+            </div>
+            <ResponsiveLayout>
+                <Stack space={16}>
+                    <Text2 medium>Documentation:</Text2>
+                    <Text1 regular>
+                        The header is optional in order to allow webviews to delegate the header visualization
+                        to the surrounding native app. For example, in Novum App, the Start tab's greeting is
+                        rendered nativelly in the apps and via web in desktop.
+                    </Text1>
+                    {extraSideBySideCheckbox}
+                </Stack>
+            </ResponsiveLayout>
+        </Stack>
+    );
+};
+
+NoHeader.storyName = 'Header layout with no header';
 
 export const RichTexts: StoryComponent = () => {
     const filler = ' - more text'.repeat(20);
