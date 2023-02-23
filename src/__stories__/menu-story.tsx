@@ -1,37 +1,32 @@
 import * as React from 'react';
-import {Touchable, Menu, Stack, Inline, Text3, Box, Checkbox, IconKebabMenuLight, Title1} from '..';
+import {Touchable, Menu, Stack, Inline, Text3, Box, Checkbox, IconKebabMenuLight} from '..';
 
 export default {
     title: 'Components/Menu',
     component: Menu,
     argTypes: {
-        position: {
+        horizontalPosition: {
             options: ['right', 'left'],
+            control: {type: 'select'},
+        },
+        verticalPosition: {
+            options: ['top', 'bottom'],
             control: {type: 'select'},
         },
     },
 };
 
-const options = [
-    {
-        text: 'Option 1',
-        value: 'option1',
-    },
-    {
-        text: 'Option 2',
-        value: 'option2',
-    },
-    {
-        text: 'Option 3 (checking this will close the menu)',
-        value: 'option3',
-    },
-];
-
 type MenuArgs = {
-    position: 'right' | 'left';
+    menuOptionsCount: number;
+    horizontalPosition: 'right' | 'left';
+    verticalPosition: 'top' | 'bottom';
 };
 
-export const Default: StoryComponent<MenuArgs> = ({position}) => {
+export const Default: StoryComponent<MenuArgs> = ({
+    menuOptionsCount,
+    horizontalPosition,
+    verticalPosition,
+}) => {
     const [valuesState, setValuesState] = React.useState<ReadonlyArray<string>>([]);
 
     const setValues = (val: string) => {
@@ -42,46 +37,80 @@ export const Default: StoryComponent<MenuArgs> = ({position}) => {
         }
     };
     return (
-        <Stack space={16}>
-            <Title1>Menu</Title1>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-                <Menu
-                    position={position}
-                    width={400}
-                    renderTarget={({ref, onPress, isMenuOpen}) => (
-                        <Touchable ref={ref} onPress={onPress} style={{width: 100}}>
-                            <Inline space={16}>
-                                <IconKebabMenuLight />
-                                <Text3 regular>{isMenuOpen ? 'Close' : 'Open'}</Text3>
-                            </Inline>
-                        </Touchable>
-                    )}
-                    renderMenu={({ref, className, close}) => (
-                        <div ref={ref} className={className}>
-                            {options.map((option) => (
-                                <Box paddingX={16} paddingY={8} key={option.value}>
+        <div
+            style={{
+                height: 'calc(100vh - 32px)',
+                minHeight: '600px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: verticalPosition === 'top' ? 'initial' : 'end',
+            }}
+        >
+            <Stack space={16}>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: horizontalPosition === 'left' ? 'initial' : 'end',
+                    }}
+                >
+                    <Menu
+                        position={horizontalPosition}
+                        width={320}
+                        renderTarget={({ref, onPress, isMenuOpen}) => (
+                            <Touchable
+                                ref={ref}
+                                onPress={onPress}
+                                style={{width: 100}}
+                                data-testid="menuTarget"
+                            >
+                                <Inline space={16}>
+                                    <IconKebabMenuLight />
+                                    <Text3 regular>{isMenuOpen ? 'Close' : 'Open'}</Text3>
+                                </Inline>
+                            </Touchable>
+                        )}
+                        renderMenu={({ref, className, close}) => (
+                            <div ref={ref} className={className}>
+                                {[...Array(menuOptionsCount).keys()].map((optionIndex) => (
+                                    <Box paddingX={16} paddingY={8} key={optionIndex}>
+                                        <Checkbox
+                                            name={`Option ${optionIndex}`}
+                                            onChange={() => {
+                                                setValues(`value${optionIndex}`);
+                                            }}
+                                            checked={valuesState.includes(`value${optionIndex}`)}
+                                        >
+                                            {`Option ${optionIndex + 1}`}
+                                        </Checkbox>
+                                    </Box>
+                                ))}
+                                <Box paddingX={16} paddingY={8} key="closingOption">
                                     <Checkbox
-                                        name={option.text}
+                                        name="closing"
                                         onChange={() => {
-                                            if (option.value === 'option3') {
-                                                setTimeout(() => {
-                                                    close();
-                                                }, 400);
-                                            }
-                                            setValues(option.value);
+                                            setTimeout(() => {
+                                                close();
+                                            }, 400);
+
+                                            setValues('closing');
                                         }}
-                                        checked={valuesState.includes(option.value)}
+                                        checked={valuesState.includes('closing')}
                                     >
-                                        {option.text}
+                                        Click to close the menu
                                     </Checkbox>
                                 </Box>
-                            ))}
-                        </div>
-                    )}
-                />
-            </div>
-        </Stack>
+                            </div>
+                        )}
+                    />
+                </div>
+            </Stack>
+        </div>
     );
 };
 
 Default.storyName = 'Menu';
+Default.args = {
+    menuOptionsCount: 4,
+    horizontalPosition: 'right',
+    verticalPosition: 'top',
+};

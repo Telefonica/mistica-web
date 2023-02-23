@@ -9,6 +9,7 @@ import {Portal, useWindowSize} from '.';
 import type {DataAttributes} from './utils/types';
 
 const DEFAULT_MENU_WIDTH = 350;
+const MARGIN_THRESHOLD = 12;
 
 type MenuRenderProps = {
     ref: (element: HTMLElement | null) => void;
@@ -61,7 +62,6 @@ const Menu: React.FC<MenuProps> = ({
             return;
         }
 
-        const MARGIN_THRESHOLD = 12;
         const {top: topTarget, width: widthTarget, left: leftTarget, bottom: bottomTarget} = targetRect;
 
         const heightMenu = parseInt(window.getComputedStyle(menu).getPropertyValue('height')) ?? 0;
@@ -165,33 +165,32 @@ const Menu: React.FC<MenuProps> = ({
 
     return (
         <div {...getPrefixedDataAttributes(dataAttributes, 'Menu')}>
-            {isMenuOpen ? (
-                <Overlay
-                    onPress={(e) => {
-                        cancelEvent(e);
-                        setIsMenuOpen(false);
-                    }}
-                    disableScroll
-                />
-            ) : null}
             {renderTarget({...targetProps, isMenuOpen})}
             {isMenuOpen ? (
                 <Portal>
-                    <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            position: 'absolute',
-                            top: itemsComputedProps?.top,
-                            bottom: itemsComputedProps?.bottom,
-                            maxHeight: itemsComputedProps?.maxHeight,
-                            left: itemsComputedProps?.left,
-                            transformOrigin: itemsComputedProps?.transformOrigin,
-                            width: `${width}px`,
+                    <Overlay
+                        onPress={(e) => {
+                            cancelEvent(e);
+                            setIsMenuOpen(false);
                         }}
+                        disableScroll
                     >
-                        {renderMenu(menuProps)}
-                    </div>
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                position: 'absolute',
+                                top: itemsComputedProps?.top,
+                                bottom: itemsComputedProps?.bottom,
+                                maxHeight: itemsComputedProps?.maxHeight,
+                                left: itemsComputedProps?.left,
+                                transformOrigin: itemsComputedProps?.transformOrigin,
+                                width: `${width}px`,
+                            }}
+                        >
+                            {renderMenu(menuProps)}
+                        </div>
+                    </Overlay>
                 </Portal>
             ) : null}
         </div>
