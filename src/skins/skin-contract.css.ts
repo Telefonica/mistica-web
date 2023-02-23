@@ -1,6 +1,8 @@
 import {createThemeContract} from '@vanilla-extract/css';
 
-const colors = {
+import type {Colors} from './types';
+
+const colors: Colors = {
     appBarBackground: '',
     background: '',
     backgroundContainer: '',
@@ -69,6 +71,7 @@ const colors = {
     neutralHigh: '',
     neutralLow: '',
     neutralMedium: '',
+    neutralMediumInverse: '',
     promo: '',
 
     // STATES
@@ -116,6 +119,10 @@ const colors = {
     warningHigh: '',
     errorHigh: '',
     promoHigh: '',
+    successHighInverse: '',
+    warningHighInverse: '',
+    errorHighInverse: '',
+    promoHighInverse: '',
 };
 
 export const vars = createThemeContract({

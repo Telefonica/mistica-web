@@ -227,6 +227,7 @@ export type ThemeConfig = Readonly<{
     dimensions?: Readonly<{headerMobileHeight: number | 'mistica'}>;
     Link?: LinkComponent;
     useHrefDecorator?: () => (href: string) => string;
+    useId?: () => string;
     enableTabFocus?: boolean;
 }>;
 
@@ -254,4 +255,5 @@ export type Theme = {
     isDarkMode: boolean;
     isIos: boolean;
     useHrefDecorator: () => (href: string) => string;
+    useId?: () => string;
 };
