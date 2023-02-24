@@ -12,15 +12,7 @@ test.each`
     ${'DESKTOP'}    | ${true}   | ${true}
 `(
     'Header in $device isInverse=$isInverse isErrorAmount=$isErrorAmount',
-    async ({
-        device,
-        isInverse,
-        isErrorAmount,
-    }: {
-        device: Device;
-        isInverse: boolean;
-        isErrorAmount: boolean;
-    }) => {
+    async ({device, isInverse}: {device: Device; isInverse: boolean}) => {
         const {click} = await openStoryPage({
             id: 'components-headers-header--default',
             device,
@@ -28,10 +20,6 @@ test.each`
 
         if (!isInverse) {
             await click(await screen.findByText('Inverse'));
-        }
-
-        if (isErrorAmount) {
-            await click(await screen.findByText('Error amount'));
         }
 
         const story = await screen.findByTestId('header-layout');

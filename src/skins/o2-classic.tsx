@@ -80,6 +80,7 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             background: palette.white,
             backgroundContainer: palette.white,
             backgroundBrand: `linear-gradient(to bottom, ${palette.o2Blue}, ${palette.o2GradientSecond} 51%, ${palette.o2GradientThird} 72%, ${palette.o2GradientFourth})`,
+            backgroundBrandSecondary: `linear-gradient(to bottom, ${palette.o2Blue}, ${palette.o2GradientSecond} 51%, ${palette.o2GradientThird} 72%, ${palette.o2GradientFourth})`,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
             backgroundSkeleton: palette.grey2,
             backgroundSkeletonInverse: applyAlpha(palette.white, 0.2),
@@ -188,12 +189,19 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             warningHigh: palette.orange80,
             errorHigh: palette.pepper70,
             promoHigh: palette.pink60,
+
+            successHighInverse: palette.o2Green75,
+            warningHighInverse: palette.orange80,
+            errorHighInverse: palette.pepper70,
+            promoHighInverse: palette.pink60,
+            neutralMediumInverse: palette.grey5,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
             background: palette.darkModeBlack,
             backgroundContainer: palette.darkModeGrey,
             backgroundBrand: palette.darkModeBlack,
+            backgroundBrandSecondary: palette.darkModeBlack,
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
             backgroundSkeleton: palette.darkModeGrey6,
             backgroundSkeletonInverse: palette.darkModeGrey6,
@@ -256,16 +264,22 @@ export const getO2ClassicSkin: GetKnownSkin = () => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            successLow: applyAlpha(palette.white, 0.05),
-            warningLow: applyAlpha(palette.white, 0.05),
-            errorLow: applyAlpha(palette.white, 0.05),
-            promoLow: applyAlpha(palette.white, 0.05),
-            brandLow: applyAlpha(palette.white, 0.05),
+            successLow: palette.darkModeGrey6,
+            warningLow: palette.darkModeGrey6,
+            errorLow: palette.darkModeGrey6,
+            promoLow: palette.darkModeGrey6,
+            brandLow: palette.darkModeGrey6,
 
             successHigh: palette.o2Green40,
             warningHigh: palette.orange40,
             errorHigh: palette.pepper40,
             promoHigh: palette.pink40,
+
+            successHighInverse: palette.o2Green75,
+            warningHighInverse: palette.orange80,
+            errorHighInverse: palette.pepper70,
+            promoHighInverse: palette.pink60,
+            neutralMediumInverse: palette.grey5,
         },
     };
 };

@@ -68,6 +68,7 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             background: palette.white,
             backgroundContainer: palette.white,
             backgroundBrand: palette.movistarBlue,
+            backgroundBrandSecondary: palette.movistarBlue,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
             backgroundSkeleton: palette.grey2,
             backgroundSkeletonInverse: palette.movistarBlue55,
@@ -180,6 +181,12 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             warningHigh: palette.egg80,
             errorHigh: palette.pepper70,
             promoHigh: palette.purple70,
+
+            successHighInverse: palette.movistarGreen70,
+            warningHighInverse: palette.egg80,
+            errorHighInverse: palette.pepper70,
+            promoHighInverse: palette.purple70,
+            neutralMediumInverse: palette.grey5,
         },
         darkModeColors: {
             brand: palette.movistarBlue, // this color needs to be in darkModeColors to revert the promient variant
@@ -187,6 +194,7 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             background: palette.darkModeBlack,
             backgroundContainer: palette.darkModeGrey,
             backgroundBrand: palette.darkModeBlack,
+            backgroundBrandSecondary: palette.darkModeBlack,
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
             backgroundSkeleton: palette.grey6,
             backgroundSkeletonInverse: palette.grey6,
@@ -247,16 +255,22 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            successLow: applyAlpha(palette.white, 0.05),
-            warningLow: applyAlpha(palette.white, 0.05),
-            errorLow: applyAlpha(palette.white, 0.05),
-            promoLow: applyAlpha(palette.white, 0.05),
-            brandLow: applyAlpha(palette.white, 0.05),
+            successLow: palette.grey6,
+            warningLow: palette.grey6,
+            errorLow: palette.grey6,
+            promoLow: palette.grey6,
+            brandLow: palette.grey6,
 
             successHigh: palette.movistarGreen40,
             warningHigh: palette.egg40,
             errorHigh: palette.pepper40,
             promoHigh: palette.purple40,
+
+            successHighInverse: palette.movistarGreen70,
+            warningHighInverse: palette.egg80,
+            errorHighInverse: palette.pepper70,
+            promoHighInverse: palette.purple70,
+            neutralMediumInverse: palette.grey5,
         },
         textPresets: {
             text5: {weight: 'bold'},

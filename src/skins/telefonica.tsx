@@ -27,7 +27,7 @@ export const palette = {
     orchid: '#C466EF',
     orchid10: '#F9F0FD',
     orchid40: '#D694F4',
-    orchid70: '#8947A7',
+    orchid70: '#8A1A93',
 
     turquoise: '#59C2C9',
     turquoise10: '#EEF9FA',
@@ -60,6 +60,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             background: palette.white,
             backgroundContainer: palette.white,
             backgroundBrand: palette.telefonicaBlue,
+            backgroundBrandSecondary: palette.telefonicaBlue,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
             backgroundSkeleton: palette.grey2,
             backgroundSkeletonInverse: palette.telefonicaBlue70,
@@ -170,12 +171,19 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             warningHigh: palette.ambar70,
             errorHigh: palette.coral70,
             promoHigh: palette.orchid70,
+
+            successHighInverse: palette.turquoise70,
+            warningHighInverse: palette.ambar70,
+            errorHighInverse: palette.coral70,
+            promoHighInverse: palette.orchid70,
+            neutralMediumInverse: palette.grey5,
         },
         darkModeColors: {
             appBarBackground: palette.darkModeGrey,
             background: palette.darkModeBlack,
             backgroundContainer: palette.darkModeGrey,
             backgroundBrand: palette.darkModeBlack,
+            backgroundBrandSecondary: palette.darkModeBlack,
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
             backgroundSkeleton: palette.grey6,
             backgroundSkeletonInverse: palette.grey6,
@@ -239,16 +247,22 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             textAppBarSelected: palette.grey2,
 
             // TAGS
-            successLow: applyAlpha(palette.white, 0.05),
-            warningLow: applyAlpha(palette.white, 0.05),
-            errorLow: applyAlpha(palette.white, 0.05),
-            promoLow: applyAlpha(palette.white, 0.05),
-            brandLow: applyAlpha(palette.white, 0.05),
+            successLow: palette.darkModeGrey6,
+            warningLow: palette.darkModeGrey6,
+            errorLow: palette.darkModeGrey6,
+            promoLow: palette.darkModeGrey6,
+            brandLow: palette.darkModeGrey6,
 
             successHigh: palette.turquoise40,
             warningHigh: palette.ambar40,
             errorHigh: palette.coral40,
             promoHigh: palette.orchid40,
+
+            successHighInverse: palette.turquoise70,
+            warningHighInverse: palette.ambar70,
+            errorHighInverse: palette.coral70,
+            promoHighInverse: palette.orchid70,
+            neutralMediumInverse: palette.grey5,
         },
     };
 };

@@ -83,7 +83,7 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                 // aria-label is already in Dismisable wrapper
                 aria-label={!isDismissable ? props['aria-label'] : undefined}
             >
-                <Text4 as="h1" regular truncate={props.titleLinesMax}>
+                <Text4 as="h3" regular truncate={props.titleLinesMax}>
                     {title}
                 </Text4>
                 <Box paddingTop={8}>

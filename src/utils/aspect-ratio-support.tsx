@@ -74,8 +74,8 @@ export const AspectRatioElement = (props: AspectRatioElementProps): JSX.Element 
             style: {
                 ...(needsWrapper
                     ? {
-                          position: aspectRatio ? 'absolute' : 'static',
                           ...props.style,
+                          position: aspectRatio ? 'absolute' : 'static',
                           width: '100%',
                       }
                     : {

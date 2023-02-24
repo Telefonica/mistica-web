@@ -308,20 +308,8 @@ export const slideshowItem = style([
     },
 ]);
 
-export const slideshowArrowButton = style([
-    arrowButtonBase,
-    sprinkles({
-        border: 'none',
-        position: 'absolute',
-    }),
-    {
-        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
-        top: `calc(50% - ${arrowButtonSize / 2}px)`,
-    },
-]);
-
 export const slideshowPrevArrowButton = style([
-    slideshowArrowButton,
+    carouselArrowButton,
     sprinkles({left: 24}),
     {
         '@media': {
@@ -333,7 +321,7 @@ export const slideshowPrevArrowButton = style([
 ]);
 
 export const slideshowNextArrowButton = style([
-    slideshowArrowButton,
+    carouselArrowButton,
     sprinkles({right: 24}),
     {
         '@media': {
