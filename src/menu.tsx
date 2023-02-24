@@ -4,7 +4,8 @@ import {ESC, TAB} from './utils/key-codes';
 import {cancelEvent, getPrefixedDataAttributes} from './utils/dom';
 import Overlay from './overlay';
 import * as styles from './menu.css';
-import {Portal, useWindowSize} from '.';
+import {useWindowSize} from './hooks';
+import {Portal} from './portal';
 
 import type {DataAttributes} from './utils/types';
 
