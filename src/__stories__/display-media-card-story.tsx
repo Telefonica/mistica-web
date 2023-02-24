@@ -34,7 +34,7 @@ type DisplayMediaCardArgs = {
     withTopAction: boolean;
     actions: 'button' | 'link' | 'button and link' | 'button and secondary button';
     width: string;
-    aspectRatio: '1:1' | '16:9' | '7:10' | '4:3' | 'auto';
+    aspectRatio: '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
 };
 
 export const Default: StoryComponent<DisplayMediaCardArgs> = ({
@@ -133,7 +133,7 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     aspectRatio: {
-        options: ['1:1', '16:9', '7:10', '4:3', 'auto'],
+        options: ['1:1', '16:9', '7:10', '9:10', 'auto'],
         control: {type: 'select'},
     },
 };

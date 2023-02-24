@@ -436,13 +436,13 @@ const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Elem
     );
 };
 
-type AspectRatio = '1:1' | '16:9' | '7:10' | '4:3' | 'auto';
+type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
 
 const CSS_ASPECT_RATIO = {
     '1:1': '1',
     '16:9': '16 / 9',
     '7:10': '7 / 10',
-    '4:3': '4 / 3',
+    '9:10': '9 / 10',
     auto: 'auto',
 } as const;
 
