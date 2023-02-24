@@ -25,6 +25,14 @@ test.each(testCases)(
         const page = await openStoryPage({
             id: 'components-menu--default',
             device: 'MOBILE_IOS',
+            viewport: {
+                width: 667,
+                height: 375,
+                deviceScaleFactor: 2,
+                isMobile: true,
+                hasTouch: true,
+                isLandscape: true,
+            },
             isDarkMode,
             args: {menuOptionsCount, horizontalPosition, verticalPosition},
         });

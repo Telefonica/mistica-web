@@ -10,6 +10,7 @@ import {Portal} from './portal';
 import type {DataAttributes} from './utils/types';
 
 const DEFAULT_MENU_WIDTH = 350;
+const DEFAULT_MENU_HEIGHT = 400;
 const MARGIN_THRESHOLD = 12;
 
 type MenuRenderProps = {
@@ -46,10 +47,10 @@ const Menu: React.FC<MenuProps> = ({
 
     const [animateShowItems, setAnimateShowItems] = React.useState(false);
     const [itemsComputedProps, setItemsComputedProps] = React.useState<{
-        left: string;
+        left: number;
         top: string;
         bottom: string;
-        maxHeight: string;
+        maxHeight: number;
         transformOrigin: string;
     } | null>(null);
 
@@ -67,8 +68,7 @@ const Menu: React.FC<MenuProps> = ({
 
         const heightMenu = parseInt(window.getComputedStyle(menu).getPropertyValue('height')) ?? 0;
 
-        const leftDirection =
-            position === 'left' ? `${leftTarget}px` : `${leftTarget + widthTarget - width}px`;
+        const leftDirection = position === 'left' ? leftTarget : leftTarget + widthTarget - width;
 
         const availableSpaceOnBottom = windowSize.height - bottomTarget - MARGIN_THRESHOLD;
         const availableSpaceOnTop = topTarget - MARGIN_THRESHOLD;
@@ -80,7 +80,7 @@ const Menu: React.FC<MenuProps> = ({
                 left: leftDirection,
                 top: `${bottomTarget}px`,
                 bottom: 'auto',
-                maxHeight: '100%',
+                maxHeight: DEFAULT_MENU_HEIGHT,
                 transformOrigin: 'center top',
             });
         } else if (menuFitsOnTop) {
@@ -88,7 +88,7 @@ const Menu: React.FC<MenuProps> = ({
                 left: leftDirection,
                 top: `${topTarget - heightMenu}px`,
                 bottom: 'auto',
-                maxHeight: '100%',
+                maxHeight: DEFAULT_MENU_HEIGHT,
                 transformOrigin: 'center bottom',
             });
         } else if (availableSpaceOnBottom > availableSpaceOnTop) {
@@ -96,7 +96,7 @@ const Menu: React.FC<MenuProps> = ({
                 left: leftDirection,
                 top: `${bottomTarget}px`,
                 bottom: 'auto',
-                maxHeight: `${availableSpaceOnBottom}px`,
+                maxHeight: Math.min(availableSpaceOnBottom, DEFAULT_MENU_HEIGHT),
                 transformOrigin: 'center top',
             });
         } else {
@@ -104,7 +104,7 @@ const Menu: React.FC<MenuProps> = ({
                 left: leftDirection,
                 top: 'auto',
                 bottom: `${windowSize.height - topTarget}px`,
-                maxHeight: `${availableSpaceOnTop}px`,
+                maxHeight: Math.min(availableSpaceOnTop, DEFAULT_MENU_HEIGHT),
                 transformOrigin: 'center bottom',
             });
         }
@@ -186,7 +186,7 @@ const Menu: React.FC<MenuProps> = ({
                                 maxHeight: itemsComputedProps?.maxHeight,
                                 left: itemsComputedProps?.left,
                                 transformOrigin: itemsComputedProps?.transformOrigin,
-                                width: `${width}px`,
+                                width,
                             }}
                         >
                             {renderMenu(menuProps)}
