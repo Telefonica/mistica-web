@@ -590,6 +590,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     width="100%"
                     minHeight="100%"
                     isInverse={isInverse}
+                    background={isInverse && backgroundImage ? vars.colors.backgroundContainer : undefined}
                 >
                     <div
                         className={styles.displayCard}

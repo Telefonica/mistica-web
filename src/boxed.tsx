@@ -24,6 +24,7 @@ type Props = {
 
 type InternalProps = {
     borderRadius: 8 | 16;
+    background?: string;
 };
 
 const getBorderStyle = (isInverseOutside: boolean, isInverseInside: boolean) => {
@@ -51,6 +52,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
             height,
             minHeight,
             borderRadius,
+            background,
         },
         ref
     ) => {
@@ -60,17 +62,18 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
         return (
             <div
                 ref={ref}
-                style={{width, height, minHeight, boxSizing: 'border-box'}}
+                style={{width, height, minHeight, boxSizing: 'border-box', background}}
                 className={classnames(
                     className,
                     getBorderStyle(isInverseOutside, isInverseInside),
                     sprinkles({
                         borderRadius,
                         overflow: 'hidden',
-                        background:
-                            isInverseInside && !isDarkMode
+                        background: !background
+                            ? isInverseInside && !isDarkMode
                                 ? vars.colors.backgroundBrand
-                                : vars.colors.backgroundContainer,
+                                : vars.colors.backgroundContainer
+                            : undefined,
                     })
                 )}
                 role={role}
