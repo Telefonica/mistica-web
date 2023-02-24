@@ -19,20 +19,22 @@ const testCases = [
     ['bottom', 'right', 30, true],
 ] as const;
 
+const viewport = {
+    width: 667,
+    height: 375,
+    deviceScaleFactor: 2,
+    isMobile: true,
+    hasTouch: true,
+    isLandscape: true,
+};
+
 test.each(testCases)(
     'Menu positioned at %s,%s',
     async (verticalPosition, horizontalPosition, menuOptionsCount, isDarkMode) => {
         const page = await openStoryPage({
             id: 'components-menu--default',
             device: 'MOBILE_IOS',
-            viewport: {
-                width: 667,
-                height: 375,
-                deviceScaleFactor: 2,
-                isMobile: true,
-                hasTouch: true,
-                isLandscape: true,
-            },
+            viewport,
             isDarkMode,
             args: {menuOptionsCount, horizontalPosition, verticalPosition},
         });
@@ -41,3 +43,34 @@ test.each(testCases)(
         expect(await page.screenshot()).toMatchImageSnapshot();
     }
 );
+
+const maxHeightTestCases = [
+    ['top', 'left'],
+    ['top', 'right'],
+    ['bottom', 'left'],
+    ['bottom', 'right'],
+] as const;
+
+test.each(maxHeightTestCases)(
+    'Menu respect max height when options overflow and positioned at %s,%s',
+    async (verticalPosition, horizontalPosition) => {
+        const page = await openStoryPage({
+            id: 'components-menu--default',
+            device: 'MOBILE_IOS',
+            args: {menuOptionsCount: 30, horizontalPosition, verticalPosition},
+        });
+
+        await (await screen.findByRole('button')).click();
+        expect(await page.screenshot()).toMatchImageSnapshot();
+    }
+);
+
+test('Menu is rendered inside a datacard', async () => {
+    const page = await openStoryPage({
+        id: 'components-menu--inside-card',
+        device: 'MOBILE_IOS',
+    });
+
+    await (await screen.findByRole('button')).click();
+    expect(await page.screenshot()).toMatchImageSnapshot();
+});

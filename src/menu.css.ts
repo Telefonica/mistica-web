@@ -1,6 +1,22 @@
-import {style} from '@vanilla-extract/css';
+import {createVar, style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars as colorsVars} from './skins/skin-contract.css';
+
+const top = createVar();
+const bottom = createVar();
+const left = createVar();
+const width = createVar();
+const maxHeight = createVar();
+const transformOrigin = createVar();
+
+export const vars = {
+    top,
+    bottom,
+    left,
+    width,
+    maxHeight,
+    transformOrigin,
+};
 
 export const menuContainer = style([
     sprinkles({
@@ -9,6 +25,15 @@ export const menuContainer = style([
         borderRadius: 8,
     }),
     {
+        top,
+        bottom,
+        left,
+        width,
+        maxHeight,
+        transformOrigin,
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'absolute',
         listStyleType: 'none',
         margin: 0,
         overflowY: 'auto',

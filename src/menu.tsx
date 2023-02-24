@@ -6,6 +6,7 @@ import Overlay from './overlay';
 import * as styles from './menu.css';
 import {useWindowSize} from './hooks';
 import {Portal} from './portal';
+import {assignInlineVars} from '@vanilla-extract/dynamic';
 
 import type {DataAttributes} from './utils/types';
 
@@ -178,15 +179,19 @@ const Menu: React.FC<MenuProps> = ({
                     >
                         <div
                             style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                position: 'absolute',
-                                top: itemsComputedProps?.top,
-                                bottom: itemsComputedProps?.bottom,
-                                maxHeight: itemsComputedProps?.maxHeight,
-                                left: itemsComputedProps?.left,
-                                transformOrigin: itemsComputedProps?.transformOrigin,
-                                width,
+                                ...assignInlineVars({
+                                    ...(itemsComputedProps
+                                        ? {
+                                              [styles.vars.top]: itemsComputedProps.top,
+                                              [styles.vars.bottom]: itemsComputedProps.bottom,
+                                              [styles.vars.left]: `${itemsComputedProps.left}px`,
+                                              [styles.vars.transformOrigin]:
+                                                  itemsComputedProps.transformOrigin,
+                                              [styles.vars.maxHeight]: `${itemsComputedProps.maxHeight}px`,
+                                              [styles.vars.width]: `${width}px`,
+                                          }
+                                        : {}),
+                                }),
                             }}
                         >
                             {renderMenu(menuProps)}
