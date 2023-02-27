@@ -2,8 +2,22 @@ import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import {combineRefs} from './utils/common';
+import {createChangeEvent} from './utils/dom';
 
 import type {CommonFormFieldProps} from './text-field-base';
+
+const useKeepMaxLength = (
+    input: HTMLInputElement | null,
+    value?: string,
+    maxLength?: number,
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+) => {
+    React.useLayoutEffect(() => {
+        if (input && value && maxLength && value.length > maxLength && onChange) {
+            onChange(createChangeEvent(input, value.slice(0, maxLength)));
+        }
+    }, [onChange, value, maxLength, input]);
+};
 
 export interface TextFieldProps extends CommonFormFieldProps {
     onChangeValue?: (value: string, rawValue: string) => void;
@@ -75,6 +89,8 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             onChange,
             onChangeValue,
         });
+
+        useKeepMaxLength(inputRef.current, fieldProps.value, rest.maxLength, fieldProps.onChange);
 
         return (
             <TextFieldBaseAutosuggest
