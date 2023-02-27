@@ -1,3 +1,10 @@
+## [13.6.1](https://github.com/Telefonica/mistica-web/compare/v13.6.0...v13.6.1) (2023-02-27)
+
+
+### Bug Fixes
+
+* **TextField:** maxLenght in controlled component ([#680](https://github.com/Telefonica/mistica-web/issues/680)) ([3f351fb](https://github.com/Telefonica/mistica-web/commit/3f351fbb9ffc01968627c00e3a8047cb78818adc))
+
 # [13.6.0](https://github.com/Telefonica/mistica-web/compare/v13.5.0...v13.6.0) (2023-02-27)
 
 
