@@ -2,6 +2,7 @@ import {style} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import * as mq from './media-queries.css';
 import {vars} from './skins/skin-contract.css';
+import {applyAlpha} from './utils/color';
 
 export const actions = style([
     sprinkles({display: 'flex', flex: 1, alignItems: 'flex-end'}),
@@ -112,6 +113,70 @@ export const snapCardTouchableHoverTransparent = style([
             [mq.supportsHover]: {
                 ':hover': {
                     backgroundColor: 'transparent',
+                },
+            },
+        },
+    },
+]);
+
+export const displayCard = style([
+    sprinkles({
+        display: 'flex',
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    }),
+    {
+        backgroundPosition: 'center center',
+        backgroundSize: 'cover',
+    },
+]);
+
+export const displayCardGradient = style({
+    background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 29.02%, rgba(0, 0, 0, 0.7) 100%)`,
+});
+
+export const cardActionIconButton = sprinkles({
+    display: 'flex',
+    width: 48,
+    height: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+});
+
+const cardActionBase = sprinkles({
+    width: 32,
+    height: 32,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '50%',
+});
+
+export const cardAction = style([
+    cardActionBase,
+    {
+        background: vars.colors.backgroundContainer,
+        transition: 'background-color 0.2s ease-in-out',
+        '@media': {
+            [mq.supportsHover]: {
+                ':hover': {
+                    background: vars.colors.backgroundAlternative,
+                },
+            },
+        },
+    },
+]);
+
+export const cardActionInverse = style([
+    cardActionBase,
+    {
+        background: applyAlpha(vars.rawColors.backgroundContainer, 0.7),
+        transition: 'background-color 0.2s ease-in-out',
+        '@media': {
+            [mq.supportsHover]: {
+                ':hover': {
+                    background: applyAlpha(vars.rawColors.backgroundContainer, 0.9),
                 },
             },
         },
