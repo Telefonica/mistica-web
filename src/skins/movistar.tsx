@@ -286,6 +286,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             text8: {weight: 'bold'},
             text9: {weight: 'bold'},
             text10: {weight: 'bold'},
+            cardTitle: {weight: 'bold'},
         },
         // @todo: uncomment to apply movistar skin evolution
         // textPresets: {
