@@ -3,6 +3,7 @@ import {useFieldProps} from './form-context';
 import {TextFieldBaseAutosuggest} from './text-field-base';
 import {combineRefs} from './utils/common';
 import {createChangeEvent} from './utils/dom';
+import {useIsomorphicLayoutEffect} from './hooks';
 
 import type {CommonFormFieldProps} from './text-field-base';
 
@@ -12,7 +13,7 @@ const useKeepMaxLength = (
     maxLength?: number,
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 ) => {
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         if (input && value && maxLength && value.length > maxLength && onChange) {
             onChange(createChangeEvent(input, value.slice(0, maxLength)));
         }
