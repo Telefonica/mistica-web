@@ -42,6 +42,8 @@ export interface TextPresetProps {
     role?: string;
     'aria-level'?: number;
     dataAttributes?: DataAttributes;
+    forceMobileSizes?: boolean;
+    textShadow?: string;
 }
 
 interface TextProps extends TextPresetProps {
@@ -59,6 +61,8 @@ interface TextProps extends TextPresetProps {
     /** in pixels, will be converted to rem in runtime */
     desktopLineHeight?: string | number;
     letterSpacing?: number;
+
+    forzeMobileSize?: never;
 }
 
 export const Text: React.FC<TextProps> = ({
@@ -79,6 +83,7 @@ export const Text: React.FC<TextProps> = ({
     desktopLineHeight = lineHeight,
     letterSpacing,
     textAlign,
+    textShadow,
     id,
     role,
     'aria-level': ariaLevel,
@@ -132,6 +137,7 @@ export const Text: React.FC<TextProps> = ({
                 overflowWrap: wordBreak ? 'anywhere' : 'inherit',
                 color: isInverse ? inverseColorsMap[color] ?? color : color,
                 textAlign,
+                textShadow,
             },
         },
         children
@@ -172,14 +178,45 @@ const getWeight = (props: LightRegularMediumProps) => {
     return undefined;
 };
 
-export const Text10: React.FC<TextPresetProps> = ({dataAttributes, ...props}) => {
+const getTextSizes = ({
+    forceMobileSizes,
+    mobileSize,
+    mobileLineHeight,
+    desktopSize,
+    desktopLineHeight,
+}: {
+    forceMobileSizes?: boolean;
+    mobileSize?: number;
+    mobileLineHeight?: string | number;
+    desktopSize?: number;
+    desktopLineHeight?: string | number;
+}) => {
+    if (forceMobileSizes) {
+        return {
+            size: mobileSize,
+            lineHeight: mobileLineHeight,
+        };
+    } else {
+        return {
+            mobileSize,
+            mobileLineHeight,
+            desktopSize,
+            desktopLineHeight,
+        };
+    }
+};
+
+export const Text10: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
     const {textPresets} = useTheme();
     return (
         <Text
-            mobileSize={48}
-            mobileLineHeight="56px"
-            desktopSize={64}
-            desktopLineHeight="72px"
+            {...getTextSizes({
+                forceMobileSizes,
+                mobileSize: 48,
+                mobileLineHeight: '56px',
+                desktopSize: 64,
+                desktopLineHeight: '72px',
+            })}
             weight={textPresets.text10.weight}
             dataAttributes={{'component-name': 'Text10', ...dataAttributes}}
             {...props}
@@ -187,14 +224,17 @@ export const Text10: React.FC<TextPresetProps> = ({dataAttributes, ...props}) =>
     );
 };
 
-export const Text9: React.FC<TextPresetProps> = ({dataAttributes, ...props}) => {
+export const Text9: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
     const {textPresets} = useTheme();
     return (
         <Text
-            mobileSize={40}
-            mobileLineHeight="48px"
-            desktopSize={56}
-            desktopLineHeight="64px"
+            {...getTextSizes({
+                forceMobileSizes,
+                mobileSize: 40,
+                mobileLineHeight: '48px',
+                desktopSize: 56,
+                desktopLineHeight: '64px',
+            })}
             weight={textPresets.text9.weight}
             dataAttributes={{'component-name': 'Text9', ...dataAttributes}}
             {...props}
@@ -202,14 +242,17 @@ export const Text9: React.FC<TextPresetProps> = ({dataAttributes, ...props}) => 
     );
 };
 
-export const Text8: React.FC<TextPresetProps> = ({dataAttributes, ...props}) => {
+export const Text8: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
     const {textPresets} = useTheme();
     return (
         <Text
-            mobileSize={32}
-            mobileLineHeight="40px"
-            desktopSize={48}
-            desktopLineHeight="56px"
+            {...getTextSizes({
+                forceMobileSizes,
+                mobileSize: 32,
+                mobileLineHeight: '40px',
+                desktopSize: 48,
+                desktopLineHeight: '56px',
+            })}
             weight={textPresets.text8.weight}
             dataAttributes={{'component-name': 'Text8', ...dataAttributes}}
             {...props}
@@ -217,14 +260,17 @@ export const Text8: React.FC<TextPresetProps> = ({dataAttributes, ...props}) => 
     );
 };
 
-export const Text7: React.FC<TextPresetProps> = ({dataAttributes, ...props}) => {
+export const Text7: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
     const {textPresets} = useTheme();
     return (
         <Text
-            mobileSize={28}
-            mobileLineHeight="32px"
-            desktopSize={40}
-            desktopLineHeight="48px"
+            {...getTextSizes({
+                forceMobileSizes,
+                mobileSize: 28,
+                mobileLineHeight: '32px',
+                desktopSize: 40,
+                desktopLineHeight: '48px',
+            })}
             weight={textPresets.text7.weight}
             dataAttributes={{'component-name': 'Text7', ...dataAttributes}}
             {...props}
@@ -232,14 +278,17 @@ export const Text7: React.FC<TextPresetProps> = ({dataAttributes, ...props}) => 
     );
 };
 
-export const Text6: React.FC<TextPresetProps> = ({dataAttributes, ...props}) => {
+export const Text6: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
     const {textPresets} = useTheme();
     return (
         <Text
-            mobileSize={24}
-            mobileLineHeight="32px"
-            desktopSize={32}
-            desktopLineHeight="40px"
+            {...getTextSizes({
+                forceMobileSizes,
+                mobileSize: 24,
+                mobileLineHeight: '32px',
+                desktopSize: 32,
+                desktopLineHeight: '40px',
+            })}
             weight={textPresets.text6.weight}
             dataAttributes={{'component-name': 'Text6', ...dataAttributes}}
             {...props}
@@ -247,14 +296,17 @@ export const Text6: React.FC<TextPresetProps> = ({dataAttributes, ...props}) => 
     );
 };
 
-export const Text5: React.FC<TextPresetProps> = ({dataAttributes, ...props}) => {
+export const Text5: React.FC<TextPresetProps> = ({dataAttributes, forceMobileSizes, ...props}) => {
     const {textPresets} = useTheme();
     return (
         <Text
-            mobileSize={20}
-            mobileLineHeight="24px"
-            desktopSize={28}
-            desktopLineHeight="32px"
+            {...getTextSizes({
+                forceMobileSizes,
+                mobileSize: 20,
+                mobileLineHeight: '24px',
+                desktopSize: 28,
+                desktopLineHeight: '32px',
+            })}
             weight={textPresets.text5.weight}
             dataAttributes={{'component-name': 'Text5', ...dataAttributes}}
             {...props}
@@ -262,47 +314,60 @@ export const Text5: React.FC<TextPresetProps> = ({dataAttributes, ...props}) => 
     );
 };
 
-export const Text4: React.FC<LightRegularMediumProps> = ({dataAttributes, ...props}) => (
+export const Text4: React.FC<LightRegularMediumProps> = ({dataAttributes, forceMobileSizes, ...props}) => (
     <Text
-        mobileSize={18}
-        mobileLineHeight="24px"
-        desktopSize={20}
-        desktopLineHeight="28px"
+        {...getTextSizes({
+            forceMobileSizes,
+            mobileSize: 18,
+            mobileLineHeight: '24px',
+            desktopSize: 20,
+            desktopLineHeight: '28px',
+        })}
         weight={getWeight(props)}
         dataAttributes={{'component-name': 'Text4', ...dataAttributes}}
         {...props}
     />
 );
 
-export const Text3: React.FC<LightRegularMediumProps> = ({dataAttributes, ...props}) => (
+export const Text3: React.FC<LightRegularMediumProps> = ({dataAttributes, forceMobileSizes, ...props}) => (
     <Text
-        mobileSize={16}
-        desktopSize={18}
-        lineHeight="24px"
+        {...getTextSizes({
+            forceMobileSizes,
+            mobileSize: 16,
+            mobileLineHeight: '24px',
+            desktopSize: 18,
+            desktopLineHeight: '24px',
+        })}
         weight={getWeight(props)}
         dataAttributes={{'component-name': 'Text3', ...dataAttributes}}
         {...props}
     />
 );
 
-export const Text2: React.FC<RegularMediumProps> = ({dataAttributes, ...props}) => (
+export const Text2: React.FC<RegularMediumProps> = ({dataAttributes, forceMobileSizes, ...props}) => (
     <Text
-        mobileSize={14}
-        mobileLineHeight="20px"
-        desktopSize={16}
-        desktopLineHeight="24px"
+        {...getTextSizes({
+            forceMobileSizes,
+            mobileSize: 14,
+            mobileLineHeight: '20px',
+            desktopSize: 16,
+            desktopLineHeight: '24px',
+        })}
         weight={getWeight(props)}
         dataAttributes={{'component-name': 'Text2', ...dataAttributes}}
         {...props}
     />
 );
 
-export const Text1: React.FC<RegularMediumProps> = ({dataAttributes, ...props}) => (
+export const Text1: React.FC<RegularMediumProps> = ({dataAttributes, forceMobileSizes, ...props}) => (
     <Text
-        mobileSize={12}
-        mobileLineHeight="16px"
-        desktopSize={14}
-        desktopLineHeight="20px"
+        {...getTextSizes({
+            forceMobileSizes,
+            mobileSize: 12,
+            mobileLineHeight: '16px',
+            desktopSize: 14,
+            desktopLineHeight: '20px',
+        })}
         weight={getWeight(props)}
         dataAttributes={{'component-name': 'Text1', ...dataAttributes}}
         {...props}

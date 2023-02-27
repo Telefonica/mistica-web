@@ -19,6 +19,12 @@ type Props = {
     'aria-label'?: string;
     width?: number | string;
     height?: number | string;
+    minHeight?: number | string;
+};
+
+type InternalProps = {
+    borderRadius: 8 | 16;
+    background?: string;
 };
 
 const getBorderStyle = (isInverseOutside: boolean, isInverseInside: boolean) => {
@@ -33,7 +39,7 @@ const getBorderStyle = (isInverseOutside: boolean, isInverseInside: boolean) => 
     return sprinkles({border: 'regular'});
 };
 
-export const Boxed = React.forwardRef<HTMLDivElement, Props>(
+export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalProps>(
     (
         {
             children,
@@ -44,6 +50,9 @@ export const Boxed = React.forwardRef<HTMLDivElement, Props>(
             'aria-label': ariaLabel,
             width,
             height,
+            minHeight,
+            borderRadius,
+            background,
         },
         ref
     ) => {
@@ -53,17 +62,18 @@ export const Boxed = React.forwardRef<HTMLDivElement, Props>(
         return (
             <div
                 ref={ref}
-                style={{width, height, boxSizing: 'border-box'}}
+                style={{width, height, minHeight, boxSizing: 'border-box', background}}
                 className={classnames(
                     className,
                     getBorderStyle(isInverseOutside, isInverseInside),
                     sprinkles({
-                        borderRadius: 8,
+                        borderRadius,
                         overflow: 'hidden',
-                        background:
-                            isInverseInside && !isDarkMode
+                        background: !background
+                            ? isInverseInside && !isDarkMode
                                 ? vars.colors.backgroundBrand
-                                : vars.colors.backgroundContainer,
+                                : vars.colors.backgroundContainer
+                            : undefined,
                     })
                 )}
                 role={role}
@@ -75,3 +85,7 @@ export const Boxed = React.forwardRef<HTMLDivElement, Props>(
         );
     }
 );
+
+export const Boxed = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
+    return <InternalBoxed {...props} ref={ref} borderRadius={8} />;
+});
