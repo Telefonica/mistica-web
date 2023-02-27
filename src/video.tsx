@@ -8,12 +8,11 @@ import * as styles from './video.css';
 
 import type {DataAttributes} from './utils/types';
 
-export type AspectRatio = '1:1' | '16:9' | '12:5' | '4:3';
+export type AspectRatio = '1:1' | '16:9' | '4:3';
 
 export const RATIO = {
     '1:1': 1,
     '16:9': 16 / 9,
-    '12:5': 12 / 5,
     '4:3': 4 / 3,
 };
 
