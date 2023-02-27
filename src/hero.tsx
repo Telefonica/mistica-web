@@ -117,7 +117,7 @@ const BACKGROUND_COLOR = {
     default: vars.colors.background,
     alternative: vars.colors.backgroundAlternative,
     brand: vars.colors.backgroundBrand,
-    'brand-secondary': vars.colors.backgroundBrand, // TODO backgroundBrandAlternative does not exists yet
+    'brand-secondary': vars.colors.backgroundBrandSecondary,
 };
 
 const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
