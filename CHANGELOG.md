@@ -1,3 +1,15 @@
+# [13.6.0](https://github.com/Telefonica/mistica-web/compare/v13.5.0...v13.6.0) (2023-02-27)
+
+
+### Bug Fixes
+
+* **Menu:** use portal to render the dropdown to fix issue when rendering inside "position relative" containers ([#677](https://github.com/Telefonica/mistica-web/issues/677)) ([b1bb86c](https://github.com/Telefonica/mistica-web/commit/b1bb86c5d264c509a5675ed28e420e7abe8c2b35))
+
+
+### Features
+
+* **DisplayDataCard, DisplayMediaCard:** new components ([#671](https://github.com/Telefonica/mistica-web/issues/671)) ([61ed3e7](https://github.com/Telefonica/mistica-web/commit/61ed3e7ae3a236456e85a42c69d7d6e2c304870c))
+
 # [13.5.0](https://github.com/Telefonica/mistica-web/compare/v13.4.0...v13.5.0) (2023-02-23)
 
 
