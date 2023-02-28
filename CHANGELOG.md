@@ -1,3 +1,10 @@
+# [14.1.0](https://github.com/Telefonica/mistica-web/compare/v14.0.0...v14.1.0) (2023-02-28)
+
+
+### Features
+
+* **MainNavigationBar:** don't show burger if there aren't 2 or more sections ([#681](https://github.com/Telefonica/mistica-web/issues/681)) ([7ca1070](https://github.com/Telefonica/mistica-web/commit/7ca1070c9b101604939b75481beffe847c0c55e1))
+
 # [14.0.0](https://github.com/Telefonica/mistica-web/compare/v13.6.1...v14.0.0) (2023-02-28)
 
 
