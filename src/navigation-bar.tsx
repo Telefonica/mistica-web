@@ -233,6 +233,8 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
 
         const disableFocusTrap = menuTransitionState !== 'open';
 
+        const showBurger = sections.length > 1;
+
         return (
             <>
                 <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
@@ -247,19 +249,21 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                             <ResponsiveLayout>
                                 <Inline space="between" alignItems="center">
                                     <Inline space={24} alignItems="center">
-                                        <IconButton
-                                            aria-live="polite"
-                                            aria-label={
-                                                isMenuOpen
-                                                    ? texts.closeNavigationMenu
-                                                    : texts.openNavigationMenu
-                                            }
-                                            aria-expanded={isMenuOpen}
-                                            aria-controls={menuId}
-                                            onPress={isMenuOpen ? closeMenu : openMenu}
-                                        >
-                                            <BurgerMenuIcon isOpen={isMenuOpen} />
-                                        </IconButton>
+                                        {showBurger && (
+                                            <IconButton
+                                                aria-live="polite"
+                                                aria-label={
+                                                    isMenuOpen
+                                                        ? texts.closeNavigationMenu
+                                                        : texts.openNavigationMenu
+                                                }
+                                                aria-expanded={isMenuOpen}
+                                                aria-controls={menuId}
+                                                onPress={isMenuOpen ? closeMenu : openMenu}
+                                            >
+                                                <BurgerMenuIcon isOpen={isMenuOpen} />
+                                            </IconButton>
+                                        )}
                                         <div className={styles.logoContainer}>{logo}</div>
                                     </Inline>
                                     {right}
@@ -269,59 +273,61 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                     </ThemeVariant>
                     {topFixed && <div className={styles.spacer} />}
                 </FocusTrap>
-                <Portal>
-                    <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
-                        <CSSTransition
-                            onEntering={() => {
-                                setMenuTransitionState('opening');
-                            }}
-                            onEntered={() => {
-                                setMenuTransitionState('open');
-                            }}
-                            onExiting={() => {
-                                setMenuTransitionState('closing');
-                            }}
-                            onExited={() => {
-                                setMenuTransitionState('closed');
-                            }}
-                            in={isMenuOpen}
-                            timeout={BURGER_MENU_ANIMATION_DURATION_MS}
-                            classNames={{
-                                enter: styles.burgerMenuEnter,
-                                enterActive: styles.burgerMenuEnterActive,
-                                exit: styles.burgerMenuExit,
-                                exitActive: styles.burgerMenuExitActive,
-                            }}
-                            unmountOnExit
-                        >
-                            {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-                            <nav
-                                className={styles.burgerMenu}
-                                style={{
-                                    boxShadow:
-                                        menuTransitionState !== 'closed'
-                                            ? `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`
-                                            : 'none',
+                {showBurger && (
+                    <Portal>
+                        <FocusTrap disabled={disableFocusTrap} group="burger-menu-lock">
+                            <CSSTransition
+                                onEntering={() => {
+                                    setMenuTransitionState('opening');
                                 }}
-                                id={menuId}
-                                onClick={() => {
-                                    // Capture bubbling click events to close the burger menu when any row is pressed
-                                    closeMenu();
+                                onEntered={() => {
+                                    setMenuTransitionState('open');
                                 }}
+                                onExiting={() => {
+                                    setMenuTransitionState('closing');
+                                }}
+                                onExited={() => {
+                                    setMenuTransitionState('closed');
+                                }}
+                                in={isMenuOpen}
+                                timeout={BURGER_MENU_ANIMATION_DURATION_MS}
+                                classNames={{
+                                    enter: styles.burgerMenuEnter,
+                                    enterActive: styles.burgerMenuEnterActive,
+                                    exit: styles.burgerMenuExit,
+                                    exitActive: styles.burgerMenuExitActive,
+                                }}
+                                unmountOnExit
                             >
-                                <ResponsiveLayout>
-                                    <NegativeBox>
-                                        <RowList>
-                                            {sections.map((section, index) => (
-                                                <Row key={index} {...section} />
-                                            ))}
-                                        </RowList>
-                                    </NegativeBox>
-                                </ResponsiveLayout>
-                            </nav>
-                        </CSSTransition>
-                    </FocusTrap>
-                </Portal>
+                                {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+                                <nav
+                                    className={styles.burgerMenu}
+                                    style={{
+                                        boxShadow:
+                                            menuTransitionState !== 'closed'
+                                                ? `6px 0 4px -4px rgba(0, 0, 0, ${shadowAlpha})`
+                                                : 'none',
+                                    }}
+                                    id={menuId}
+                                    onClick={() => {
+                                        // Capture bubbling click events to close the burger menu when any row is pressed
+                                        closeMenu();
+                                    }}
+                                >
+                                    <ResponsiveLayout>
+                                        <NegativeBox>
+                                            <RowList>
+                                                {sections.map((section, index) => (
+                                                    <Row key={index} {...section} />
+                                                ))}
+                                            </RowList>
+                                        </NegativeBox>
+                                    </ResponsiveLayout>
+                                </nav>
+                            </CSSTransition>
+                        </FocusTrap>
+                    </Portal>
+                )}
             </>
         );
     }
