@@ -66,7 +66,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             backgroundBrandSecondary: palette.blauBluePrimary,
             backgroundOverlay: applyAlpha(palette.blauBlueSecondary, 0.75),
             backgroundSkeleton: palette.grey2,
-            backgroundSkeletonInverse: applyAlpha(palette.white, 0.2),
+            backgroundSkeletonInverse: applyAlpha(palette.white, 0.3),
             navigationBarBackground: palette.blauBluePrimary,
             backgroundAlternative: palette.blauBluePrimary20,
             backgroundFeedbackBottom: palette.blauBluePrimary,
@@ -148,7 +148,7 @@ export const getBlauSkin: GetKnownSkin = () => {
             textPrimary: palette.grey6,
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
-            textSecondaryInverse: palette.white,
+            textSecondaryInverse: palette.blauBluePrimary20,
 
             // STATES
             error: palette.blauRed,

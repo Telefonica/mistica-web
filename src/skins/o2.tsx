@@ -153,7 +153,7 @@ export const getO2Skin: GetKnownSkin = () => {
             textPrimary: palette.grey6,
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
-            textSecondaryInverse: palette.white,
+            textSecondaryInverse: palette.o2BluePrimary15,
 
             // STATES
             error: palette.pepper,

@@ -147,6 +147,7 @@ export {
 export {getSkinByName} from './skins/utils';
 export {getVivoSkin} from './skins/vivo';
 export {getMovistarSkin} from './skins/movistar';
+export {getMovistarLegacySkin} from './skins/movistar-legacy';
 export {getO2Skin} from './skins/o2';
 export {getO2ClassicSkin} from './skins/o2-classic';
 export {getTelefonicaSkin} from './skins/telefonica';
