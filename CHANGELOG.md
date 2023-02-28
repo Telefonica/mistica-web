@@ -1,3 +1,20 @@
+# [14.0.0](https://github.com/Telefonica/mistica-web/compare/v13.6.1...v14.0.0) (2023-02-28)
+
+
+### Bug Fixes
+
+* **Video:** remove 12:5 from list of recommended `aspectRatio`s ([#679](https://github.com/Telefonica/mistica-web/issues/679)) ([3346032](https://github.com/Telefonica/mistica-web/commit/3346032c20fedd8623513f8ecc983d32266c5a3f))
+
+
+### Features
+
+* **Movistar skin:** color changes for Digital Hub project ([fd57bfd](https://github.com/Telefonica/mistica-web/commit/fd57bfd8108f8a62066e010f5ae6bb4763c306a2))
+
+
+### BREAKING CHANGES
+
+* **Movistar skin:** The Movistar skin has enough color changes (mainly in dark mode) to consider this a breaking change. We still ship a "classic" version of the Movistar skin with the old colors with `getMovistarClassicSkin` that should be considered as deprecated and will be removed in future Mistica versions.
+
 ## [13.6.1](https://github.com/Telefonica/mistica-web/compare/v13.6.0...v13.6.1) (2023-02-27)
 
 
