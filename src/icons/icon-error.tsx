@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {getAnimateDrawLineProps, getAnimateFadeInProps} from '../utils/animation';
-import {useTheme} from '../hooks';
+import {useIsFirstRender, useTheme} from '../hooks';
 import {O2_SKIN, O2_CLASSIC_SKIN} from '../skins/constants';
 import {vars} from '../skins/skin-contract.css';
 import * as styles from './icon-error.css';
@@ -103,12 +103,14 @@ const IconErrorDefault = ({skipAnimation}: Props): JSX.Element => {
     );
 };
 
-const IconError = ({skipAnimation}: Props): JSX.Element => {
+const IconError = (): JSX.Element => {
     const {skinName} = useTheme();
+    const isFirstRender = useIsFirstRender();
+
     return skinName === O2_SKIN || skinName === O2_CLASSIC_SKIN ? (
-        <IconErrorO2 skipAnimation={skipAnimation} />
+        <IconErrorO2 skipAnimation={isFirstRender} />
     ) : (
-        <IconErrorDefault skipAnimation={skipAnimation} />
+        <IconErrorDefault skipAnimation={isFirstRender} />
     );
 };
 
