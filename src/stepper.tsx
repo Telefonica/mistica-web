@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import {Text2, Text1} from './text';
-import {useScreenSize, useElementDimensions} from './hooks';
+import {useScreenSize, useElementDimensions, useIsFirstRender} from './hooks';
 import IconSuccess from './icons/icon-success';
 import * as styles from './stepper.css';
 import {pxToRem} from './utils/css';
@@ -26,6 +26,7 @@ const Stepper: React.FC<StepperProps> = ({
     dataAttributes,
 }: StepperProps) => {
     const {isDesktopOrBigger} = useScreenSize();
+    const isFirstRender = useIsFirstRender();
     const {height, ref} = useElementDimensions();
     const textContainerHeight = height;
     const previousIndexRef = React.useRef(currentIndex);
@@ -70,7 +71,7 @@ const Stepper: React.FC<StepperProps> = ({
                                     <IconSuccess
                                         color={vars.colors.controlActivated}
                                         size="100%"
-                                        skipAnimation={!hasAnimation || isBack}
+                                        skipAnimation={isFirstRender || !hasAnimation || isBack}
                                     />
                                 </div>
                             ) : (

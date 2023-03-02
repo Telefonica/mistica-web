@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useTheme, useScreenSize, useWindowHeight, useIsomorphicLayoutEffect} from './hooks';
+import {useTheme, useScreenSize, useWindowHeight, useIsomorphicLayoutEffect, useIsFirstRender} from './hooks';
 import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 import ButtonFixedFooterLayout from './button-fixed-footer-layout';
 import OverscrollColor from './overscroll-color-context';
@@ -299,13 +299,20 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
 export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = ({dataAttributes, ...props}) => {
     const {isTabletOrSmaller} = useScreenSize();
     const {skinName} = useTheme();
+    const isFirstRender = useIsFirstRender();
 
     return (
         <ThemeVariant isInverse={!props.unstable_inlineInDesktop || isTabletOrSmaller}>
             <FeedbackScreen
                 {...props}
                 hapticFeedback="success"
-                icon={skinName === VIVO_SKIN ? <IconSuccessVivo /> : <IcnSuccess />}
+                icon={
+                    skinName === VIVO_SKIN ? (
+                        <IconSuccessVivo skipAnimation={isFirstRender} />
+                    ) : (
+                        <IcnSuccess skipAnimation={isFirstRender} />
+                    )
+                }
                 animateText
                 imageUrl={props.imageUrl}
                 imageFit={props.imageFit}
@@ -325,11 +332,13 @@ export const ErrorFeedbackScreen: React.FC<ErrorFeedbackScreenProps> = ({
     dataAttributes,
     ...otherProps
 }) => {
+    const isFirstRender = useIsFirstRender();
+
     return (
         <FeedbackScreen
             {...otherProps}
             hapticFeedback="error"
-            icon={<IcnError />}
+            icon={<IcnError skipAnimation={isFirstRender} />}
             animateText
             dataAttributes={{'component-name': 'ErrorFeedbackScreen', ...dataAttributes}}
         >
