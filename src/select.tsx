@@ -57,6 +57,7 @@ const Select: React.FC<SelectProps> = ({
     const optionsMenuRef = React.useRef<HTMLUListElement>(null);
     const optionRefs = React.useRef(new Map<string, HTMLLIElement>());
     const isFirstRender = React.useRef(true);
+    const [, setIsServerSide] = React.useState(true);
     const [valueState, setValueState] = React.useState<string>();
     const [optionsShown, setOptionsShown] = React.useState(false);
     const [animateShowOptions, setAnimateShowOptions] = React.useState(false);
@@ -264,8 +265,9 @@ const Select: React.FC<SelectProps> = ({
     }, [autoFocus]);
 
     React.useEffect(() => {
-        // We use this Ref to always use the native variant in the first render, this way we avoid rehydration issues when using SSR
+        // We use this Ref to always use the native variant in the first render, this way we avoid hydration issues when using SSR
         if (isFirstRender.current) {
+            setIsServerSide(false);
             isFirstRender.current = false;
             return;
         }
@@ -290,7 +292,7 @@ const Select: React.FC<SelectProps> = ({
         },
     };
 
-    return shouldUseNative || isFirstRender ? (
+    return shouldUseNative || isFirstRender.current ? (
         <FieldContainer
             disabled={disabled}
             helperText={<HelperText error={error} leftText={helperText} />}
