@@ -56,6 +56,7 @@ const Select: React.FC<SelectProps> = ({
     const fieldRef = React.useRef<HTMLDivElement>(null);
     const optionsMenuRef = React.useRef<HTMLUListElement>(null);
     const optionRefs = React.useRef(new Map<string, HTMLLIElement>());
+    const isFirstRender = React.useRef(true);
     const [valueState, setValueState] = React.useState<string>();
     const [optionsShown, setOptionsShown] = React.useState(false);
     const [animateShowOptions, setAnimateShowOptions] = React.useState(false);
@@ -82,7 +83,10 @@ const Select: React.FC<SelectProps> = ({
     const {platformOverrides} = useTheme();
 
     const shouldUseNative =
-        native || process.env.NODE_ENV === 'test' || isAndroid(platformOverrides) || isIos(platformOverrides);
+        native ||
+        (process.env.NODE_ENV === 'test' && !process.env.SSR_TEST) ||
+        isAndroid(platformOverrides) ||
+        isIos(platformOverrides);
 
     const disabled = disabledProp || formStatus === 'sending';
     const error = errorProp || !!formErrors[name];
@@ -259,6 +263,14 @@ const Select: React.FC<SelectProps> = ({
         }
     }, [autoFocus]);
 
+    React.useEffect(() => {
+        // We use this Ref to always use the native variant in the first render, this way we avoid rehydration issues when using SSR
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+    }, []);
+
     // When the value is null/undefined/'' we assume it's the default empty option and we don't show any label
     const getOptionText = (val?: string) => (val ? options.find(({value}) => value === val)?.text : '');
 
@@ -278,7 +290,7 @@ const Select: React.FC<SelectProps> = ({
         },
     };
 
-    return shouldUseNative ? (
+    return shouldUseNative || isFirstRender ? (
         <FieldContainer
             disabled={disabled}
             helperText={<HelperText error={error} leftText={helperText} />}
