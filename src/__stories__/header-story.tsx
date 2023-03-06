@@ -38,11 +38,13 @@ export const Default: StoryComponent = () => {
         true
     );
     const [withBreadcrumbs, breadcrumbsCheckbox] = useCheckbox('With breadcrumbs (desktop only)', true);
+    const [bleedValue, bleedValueTextField] = useTextField('BleedValue', '0');
     return (
         <Stack space={16}>
             <div data-testid="header-layout">
                 <HeaderLayout
                     isInverse={isInverse}
+                    bleedValue={bleedValue ? +bleedValue : 0}
                     sideBySideExtraOnDesktop={extraSideBySide}
                     breadcrumbs={
                         withBreadcrumbs ? (
@@ -92,6 +94,7 @@ export const Default: StoryComponent = () => {
                     {buttonLabelTextField}
                     {secondaryButtonLabelTextField}
                     {subtitleTextField}
+                    {bleedValueTextField}
                     {inverseCheckbox}
                     {extraContentCheckbox}
                     {extraSideBySideCheckbox}

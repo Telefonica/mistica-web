@@ -135,6 +135,7 @@ type HeaderLayoutProps = {
     sideBySideExtraOnDesktop?: boolean;
     children?: void;
     dataAttributes?: DataAttributes;
+    bleedValue?: number;
 };
 
 export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
@@ -144,6 +145,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
     extra,
     sideBySideExtraOnDesktop = false,
     dataAttributes,
+    bleedValue,
 }) => {
     const {isTabletOrSmaller} = useScreenSize();
 
@@ -152,44 +154,46 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
             isInverse={isInverse}
             dataAttributes={{'component-name': 'HeaderLayout', ...dataAttributes}}
         >
-            <OverscrollColor />
-            {isTabletOrSmaller ? (
-                <Box paddingTop={32} paddingBottom={24}>
-                    <Stack space={24}>
-                        {header}
-                        {extra}
-                    </Stack>
-                </Box>
-            ) : sideBySideExtraOnDesktop ? (
-                <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
-                    <GridLayout
-                        template="6+6"
-                        left={
-                            <Stack space={32}>
-                                {breadcrumbs}
-                                {header}
-                            </Stack>
-                        }
-                        right={extra}
-                    />
-                </Box>
-            ) : (
-                <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
-                    <GridLayout
-                        template="6+6"
-                        left={
-                            <Stack space={24}>
+            <div style={{height: bleedValue ? bleedValue : '100%'}}>
+                <OverscrollColor />
+                {isTabletOrSmaller ? (
+                    <Box paddingTop={32} paddingBottom={24}>
+                        <Stack space={24}>
+                            {header}
+                            {extra}
+                        </Stack>
+                    </Box>
+                ) : sideBySideExtraOnDesktop ? (
+                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
+                        <GridLayout
+                            template="6+6"
+                            left={
                                 <Stack space={32}>
                                     {breadcrumbs}
                                     {header}
                                 </Stack>
-                                {extra}
-                            </Stack>
-                        }
-                        right={null}
-                    />
-                </Box>
-            )}
+                            }
+                            right={extra}
+                        />
+                    </Box>
+                ) : (
+                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
+                        <GridLayout
+                            template="6+6"
+                            left={
+                                <Stack space={24}>
+                                    <Stack space={32}>
+                                        {breadcrumbs}
+                                        {header}
+                                    </Stack>
+                                    {extra}
+                                </Stack>
+                            }
+                            right={null}
+                        />
+                    </Box>
+                )}
+            </div>
         </ResponsiveLayout>
     );
 };
