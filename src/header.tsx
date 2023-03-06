@@ -135,6 +135,7 @@ type HeaderLayoutProps = {
     sideBySideExtraOnDesktop?: boolean;
     children?: void;
     dataAttributes?: DataAttributes;
+    bleed?: boolean;
     bleedValue?: number;
 };
 
@@ -145,6 +146,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
     extra,
     sideBySideExtraOnDesktop = false,
     dataAttributes,
+    bleed,
     bleedValue,
 }) => {
     const {isTabletOrSmaller} = useScreenSize();
@@ -154,13 +156,16 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
             isInverse={isInverse}
             dataAttributes={{'component-name': 'HeaderLayout', ...dataAttributes}}
         >
-            <div style={{height: bleedValue ? bleedValue : '100%'}}>
                 <OverscrollColor />
                 {isTabletOrSmaller ? (
                     <Box paddingTop={32} paddingBottom={24}>
                         <Stack space={24}>
                             {header}
-                            {extra}
+                            <div 
+                                style={{height: bleed ? bleedValue !== undefined ? bleedValue : 40 : '100%'}}
+                            >
+                                {extra}
+                            </div>
                         </Stack>
                     </Box>
                 ) : sideBySideExtraOnDesktop ? (
@@ -193,7 +198,6 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                         />
                     </Box>
                 )}
-            </div>
         </ResponsiveLayout>
     );
 };
