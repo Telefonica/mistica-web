@@ -37,7 +37,7 @@ export const Default: StoryComponent = () => {
                 <HeaderLayout
                     isInverse={isInverse}
                     bleed={bleed}
-                    bleedValue={bleedValue ? +bleedValue : 0}
+                    bleedValue={bleed && bleedValue ? +bleedValue: undefined}
                     sideBySideExtraOnDesktop={extraSideBySide}
                     breadcrumbs={
                         withBreadcrumbs ? (
