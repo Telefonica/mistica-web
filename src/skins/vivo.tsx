@@ -59,6 +59,7 @@ export const getVivoSkin: GetKnownSkin = () => {
             background: palette.white,
             backgroundContainer: palette.white,
             backgroundBrand: palette.vivoPurple,
+            backgroundBrandSecondary: palette.vivoPurple,
             backgroundOverlay: applyAlpha(palette.grey6, 0.6),
             backgroundSkeleton: palette.grey2,
             backgroundSkeletonInverse: applyAlpha(palette.white, 0.2),
@@ -141,7 +142,7 @@ export const getVivoSkin: GetKnownSkin = () => {
             textPrimary: palette.grey6,
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
-            textSecondaryInverse: palette.white,
+            textSecondaryInverse: palette.vivoPurpleLight20,
 
             // STATES
             error: palette.pepper,
@@ -179,6 +180,7 @@ export const getVivoSkin: GetKnownSkin = () => {
             background: palette.darkModeBlack,
             backgroundContainer: palette.darkModeGrey,
             backgroundBrand: palette.darkModeBlack,
+            backgroundBrandSecondary: palette.darkModeBlack,
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
             backgroundSkeleton: palette.darkModeGrey6,
             backgroundSkeletonInverse: palette.darkModeGrey6,

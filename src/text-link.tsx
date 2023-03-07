@@ -1,6 +1,5 @@
 // Specs: https://www.figma.com/file/koROdh3HpEPG2O8jG52Emh/Buttons-Component-Specs?node-id=0%3A1
 import * as React from 'react';
-import * as styles from './text-link.css';
 import {BaseTouchable} from './touchable';
 import classnames from 'classnames';
 import {useTheme} from './hooks';
@@ -8,6 +7,7 @@ import {useIsInverseVariant} from './theme-variant-context';
 import {useForm} from './form-context';
 import {getTextFromChildren} from './utils/common';
 import {eventActions, eventCategories, eventNames, useTrackingConfig} from './utils/analytics';
+import * as styles from './text-link.css';
 
 import type {TrackingEvent, DataAttributes} from './utils/types';
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useDisableBorderRadius} from './image';
+import {useMediaBorderRadius} from './image';
 import {AspectRatioElement} from './utils/aspect-ratio-support';
 import {combineRefs} from './utils/common';
 import {getPrefixedDataAttributes} from './utils/dom';
@@ -8,12 +8,11 @@ import * as styles from './video.css';
 
 import type {DataAttributes} from './utils/types';
 
-export type AspectRatio = '1:1' | '16:9' | '12:5' | '4:3';
+export type AspectRatio = '1:1' | '16:9' | '4:3';
 
 export const RATIO = {
     '1:1': 1,
     '16:9': 16 / 9,
-    '12:5': 12 / 5,
     '4:3': 4 / 3,
 };
 
@@ -62,7 +61,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         },
         ref
     ) => {
-        const noBorderRadius = useDisableBorderRadius();
+        const borderRadiusContext = useMediaBorderRadius();
 
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
 
@@ -100,7 +99,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 {...getPrefixedDataAttributes(dataAttributes)}
                 style={{
                     // For some reason adding this style with classnames doesn't add the border radius in safari
-                    borderRadius: noBorderRadius ? 0 : 8,
+                    borderRadius: !borderRadiusContext ? 0 : 8,
                 }}
             >
                 {sources.map(({src, type}, index) => (

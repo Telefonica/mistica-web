@@ -59,6 +59,7 @@ const defaultTextPresetsConfig: TextPresetsConfig = {
     text8: {weight: 'light'},
     text9: {weight: 'light'},
     text10: {weight: 'light'},
+    cardTitle: {weight: 'regular'},
 };
 
 const sanitizeDimensions = (dimensions: ThemeConfig['dimensions']): Partial<Theme['dimensions']> => {
@@ -113,6 +114,7 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
                 text8: {...defaultTextPresetsConfig.text8, ...theme.skin.textPresets?.text8},
                 text9: {...defaultTextPresetsConfig.text9, ...theme.skin.textPresets?.text9},
                 text10: {...defaultTextPresetsConfig.text10, ...theme.skin.textPresets?.text10},
+                cardTitle: {...defaultTextPresetsConfig.cardTitle, ...theme.skin.textPresets?.cardTitle},
             },
             Link: theme.Link ?? AnchorLink,
             isDarkMode: isDarkModeEnabled,

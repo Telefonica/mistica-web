@@ -2,20 +2,30 @@ import * as React from 'react';
 import Tag from './tag';
 import Stack from './stack';
 import Box from './box';
-import {Text1, Text2, Text4} from './text';
-import {ButtonLink, ButtonPrimary} from './button';
-import {Boxed} from './boxed';
+import {Text2, Text3, Text, Text6} from './text';
+import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
+import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
 import Video from './video';
-import Image, {DisableBorderRadiusProvider} from './image';
+import Image, {MediaBorderRadiusProvider} from './image';
 import MaybeDismissable, {useIsDismissable} from './maybe-dismissable';
 import {BaseTouchable} from './touchable';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './card.css';
 import {useTheme} from './hooks';
 import {sprinkles} from './sprinkles.css';
+import Inline from './inline';
+import IconButton from './icon-button';
+import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 
-import type {DataAttributes, RendersElement, RendersNullableElement, TrackingEvent} from './utils/types';
+import type {ExclusifyUnion} from './utils/utility-types';
+import type {
+    DataAttributes,
+    IconProps,
+    RendersElement,
+    RendersNullableElement,
+    TrackingEvent,
+} from './utils/types';
 
 type CardContentProps = {
     headline?: string | RendersNullableElement<typeof Tag>;
@@ -46,6 +56,7 @@ const CardContent: React.FC<CardContentProps> = ({
     button,
     buttonLink,
 }) => {
+    const {textPresets} = useTheme();
     const renderHeadline = () => {
         if (!headline) {
             return null;
@@ -72,18 +83,21 @@ const CardContent: React.FC<CardContentProps> = ({
                                 {renderHeadline()}
                                 <Stack space={4}>
                                     {pretitle && (
-                                        <Text1
-                                            truncate={pretitleLinesMax}
-                                            as="div"
-                                            regular
-                                            transform="uppercase"
-                                        >
+                                        <Text2 truncate={pretitleLinesMax} as="div" regular>
                                             {pretitle}
-                                        </Text1>
+                                        </Text2>
                                     )}
-                                    <Text4 truncate={titleLinesMax} as="h1" regular>
+                                    <Text
+                                        mobileSize={18}
+                                        mobileLineHeight="24px"
+                                        desktopSize={20}
+                                        desktopLineHeight="28px"
+                                        truncate={titleLinesMax}
+                                        weight={textPresets.cardTitle.weight}
+                                        as="h3"
+                                    >
                                         {title}
-                                    </Text4>
+                                    </Text>
                                     <Text2 truncate={subtitleLinesMax} as="div" regular>
                                         {subtitle}
                                     </Text2>
@@ -120,15 +134,20 @@ type MaybeSectionProps = {
     children: React.ReactNode;
     'aria-label'?: string;
     className?: string;
+    style?: React.CSSProperties;
 };
 
-const MaybeSection = ({'aria-label': ariaLabel, className, children}: MaybeSectionProps) => {
+const MaybeSection = ({'aria-label': ariaLabel, className, style, children}: MaybeSectionProps) => {
     const isDismissable = useIsDismissable();
     if (isDismissable) {
-        return <div className={className}>{children}</div>;
+        return (
+            <div className={className} style={style}>
+                {children}
+            </div>
+        );
     } else {
         return (
-            <section className={className} aria-label={ariaLabel}>
+            <section className={className} style={style} aria-label={ariaLabel}>
                 {children}
             </section>
         );
@@ -187,7 +206,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                     height="100%"
                 >
                     <MaybeSection className={styles.mediaCard} aria-label={ariaLabel}>
-                        <DisableBorderRadiusProvider>{media}</DisableBorderRadiusProvider>
+                        <MediaBorderRadiusProvider value={false}>{media}</MediaBorderRadiusProvider>
                         <div className={styles.mediaCardContent}>
                             <CardContent
                                 headline={headline}
@@ -370,7 +389,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                             {icon && <Box paddingBottom={16}>{icon}</Box>}
                             <Stack space={4}>
                                 {title && (
-                                    <Text2 truncate={titleLinesMax} as="h1" regular>
+                                    <Text2 truncate={titleLinesMax} as="h3" regular>
                                         {title}
                                     </Text2>
                                 )}
@@ -392,4 +411,298 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
             </Boxed>
         );
     }
+);
+
+type CardAction = {
+    label: string;
+    onPress: () => void;
+    Icon: React.FC<IconProps>;
+};
+
+type CardActionsGroupProps = {
+    actions: Array<CardAction>;
+    isInverse?: boolean;
+};
+
+const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Element => {
+    return (
+        <Inline space={0}>
+            {actions.map(({onPress, label, Icon}, index) => (
+                <IconButton
+                    size={48}
+                    key={index}
+                    onPress={onPress}
+                    aria-label={label}
+                    className={styles.cardActionIconButton}
+                    style={{display: 'flex'}}
+                >
+                    <div className={isInverse ? styles.cardActionInverse : styles.cardAction}>
+                        <Icon color={vars.colors.neutralHigh} size={20} />
+                    </div>
+                </IconButton>
+            ))}
+        </Inline>
+    );
+};
+
+type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
+
+const CSS_ASPECT_RATIO = {
+    '1:1': '1',
+    '16:9': '16 / 9',
+    '7:10': '7 / 10',
+    '9:10': '9 / 10',
+    auto: 'auto',
+} as const;
+
+type MaybeWithActionsProps = {
+    children: React.ReactNode;
+    width?: string | number;
+    height?: string | number;
+    aspectRatio?: AspectRatio | number;
+    actions?: Array<CardAction>;
+    onClose?: () => void;
+    isInverse?: boolean;
+    'aria-label'?: string;
+};
+
+const MaybeWithActions = ({
+    children,
+    width = '100%',
+    height = '100%',
+    aspectRatio,
+    actions,
+    onClose,
+    isInverse,
+    'aria-label': ariaLabel,
+}: MaybeWithActionsProps): JSX.Element => {
+    const {texts} = useTheme();
+    const finalActions = actions ? [...actions] : [];
+    if (onClose) {
+        finalActions.push({
+            label: texts.closeButtonLabel,
+            onPress: onClose,
+            Icon: IconCloseRegular,
+        });
+    }
+
+    const hasActions = finalActions.length > 0;
+
+    const cssAspectRatio: React.CSSProperties['aspectRatio'] = aspectRatio
+        ? typeof aspectRatio === 'number'
+            ? String(aspectRatio)
+            : CSS_ASPECT_RATIO[aspectRatio]
+        : undefined;
+
+    return (
+        <section
+            aria-label={ariaLabel}
+            style={{
+                width,
+                height,
+                aspectRatio: cssAspectRatio,
+                position: 'relative',
+            }}
+        >
+            {children}
+            {hasActions && (
+                <div style={{position: 'absolute', right: 8, top: 8}}>
+                    <CardActionsGroup actions={finalActions} isInverse={isInverse} />
+                </div>
+            )}
+        </section>
+    );
+};
+
+interface CommonDisplayCardProps {
+    /**
+     * Typically a mistica-icons component element
+     */
+    icon?: React.ReactElement;
+    actions?: Array<CardAction>;
+    onClose?: () => void;
+    dataAttributes?: DataAttributes;
+    headline?: React.ReactComponentElement<typeof Tag>;
+    pretitle?: string;
+    pretitleLinesMax?: number;
+    title: string;
+    titleLinesMax?: number;
+    description?: string;
+    descriptionLinesMax?: number;
+    button?: React.ReactComponentElement<typeof ButtonPrimary>;
+    secondaryButton?: React.ReactComponentElement<typeof ButtonSecondary>;
+    buttonLink?: React.ReactComponentElement<typeof ButtonLink>;
+    'aria-label'?: string;
+}
+
+interface DisplayMediaCardProps extends CommonDisplayCardProps {
+    backgroundImage: string;
+    aspectRatio?: AspectRatio | number;
+    width?: number | string;
+    height?: number | string;
+}
+
+interface DisplayDataCardProps extends CommonDisplayCardProps {
+    extra?: React.ReactNode;
+    isInverse?: boolean;
+}
+
+type GenericDisplayCardProps = ExclusifyUnion<
+    (DisplayMediaCardProps & {isInverse: true}) | DisplayDataCardProps
+>;
+
+const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
+    (
+        {
+            isInverse,
+            backgroundImage,
+            icon,
+            headline,
+            pretitle,
+            pretitleLinesMax,
+            title,
+            titleLinesMax,
+            description,
+            descriptionLinesMax,
+            extra,
+            button,
+            secondaryButton,
+            onClose,
+            actions,
+            buttonLink,
+            dataAttributes,
+            width,
+            height,
+            aspectRatio,
+            'aria-label': ariaLabel,
+        },
+        ref
+    ) => {
+        const withGradient = !!backgroundImage;
+        const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
+        const hasTopActions = actions?.length || onClose;
+        return (
+            <MaybeWithActions
+                width={width}
+                height={height}
+                aspectRatio={aspectRatio}
+                onClose={onClose}
+                actions={actions}
+                aria-label={ariaLabel}
+                isInverse={isInverse}
+            >
+                <InternalBoxed
+                    borderRadius={16}
+                    className={styles.boxed}
+                    dataAttributes={dataAttributes}
+                    ref={ref}
+                    width="100%"
+                    minHeight="100%"
+                    isInverse={isInverse}
+                    background={isInverse && backgroundImage ? vars.colors.backgroundContainer : undefined}
+                >
+                    <div
+                        className={styles.displayCard}
+                        style={{
+                            backgroundImage: backgroundImage
+                                ? `url("${CSS.escape(backgroundImage)}")`
+                                : undefined,
+                            paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
+                        }}
+                    >
+                        {icon ? (
+                            <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
+                                {icon}
+                            </Box>
+                        ) : (
+                            <Box paddingBottom={actions?.length || onClose ? (withGradient ? 24 : 64) : 0} />
+                        )}
+                        <Box
+                            paddingX={24}
+                            paddingTop={withGradient ? 40 : 0}
+                            paddingBottom={24}
+                            className={withGradient ? styles.displayCardGradient : undefined}
+                        >
+                            <Stack space={24}>
+                                <div>
+                                    <Stack space={8}>
+                                        {(headline || pretitle || title) && (
+                                            <header>
+                                                <Stack space={16}>
+                                                    {headline}
+                                                    <Stack space={4}>
+                                                        {pretitle && (
+                                                            <Text2
+                                                                forceMobileSizes
+                                                                truncate={pretitleLinesMax}
+                                                                as="div"
+                                                                regular
+                                                                textShadow={textShadow}
+                                                            >
+                                                                {pretitle}
+                                                            </Text2>
+                                                        )}
+                                                        <Text6
+                                                            forceMobileSizes
+                                                            truncate={titleLinesMax}
+                                                            as="h3"
+                                                            textShadow={textShadow}
+                                                        >
+                                                            {title}
+                                                        </Text6>
+                                                    </Stack>
+                                                </Stack>
+                                            </header>
+                                        )}
+
+                                        {description && (
+                                            <Text3
+                                                forceMobileSizes
+                                                truncate={descriptionLinesMax}
+                                                as="p"
+                                                regular
+                                                color={vars.colors.textSecondary}
+                                                textShadow={textShadow}
+                                            >
+                                                {description}
+                                            </Text3>
+                                        )}
+                                    </Stack>
+                                    {extra}
+                                </div>
+                                {(button || secondaryButton || buttonLink) && (
+                                    <ButtonGroup
+                                        primaryButton={button}
+                                        secondaryButton={secondaryButton}
+                                        link={buttonLink}
+                                    />
+                                )}
+                            </Stack>
+                        </Box>
+                    </div>
+                </InternalBoxed>
+            </MaybeWithActions>
+        );
+    }
+);
+
+export const DisplayMediaCard = React.forwardRef<HTMLDivElement, DisplayMediaCardProps>(
+    ({dataAttributes, ...props}, ref) => (
+        <DisplayCard
+            {...props}
+            ref={ref}
+            isInverse
+            dataAttributes={{...dataAttributes, 'component-name': 'DisplayMediaCard'}}
+        />
+    )
+);
+
+export const DisplayDataCard = React.forwardRef<HTMLDivElement, DisplayDataCardProps>(
+    ({dataAttributes, ...props}, ref) => (
+        <DisplayCard
+            {...props}
+            ref={ref}
+            dataAttributes={{...dataAttributes, 'component-name': 'DisplayDataCard'}}
+        />
+    )
 );

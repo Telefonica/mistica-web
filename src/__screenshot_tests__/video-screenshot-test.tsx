@@ -5,5 +5,6 @@ test('Video', async () => {
 
     const story = await screen.findByTestId('video');
 
-    expect(await story.screenshot()).toMatchImageSnapshot();
+    // https://jira.tid.es/browse/WEB-680
+    expect(await story.screenshot()).toMatchImageSnapshot({failureThreshold: 0.003});
 });

@@ -132,12 +132,14 @@ const buildStoryPath = (id: string, skin?: string, platform?: string, args?: Sto
 export const openStoryPage = ({
     id,
     device = TABLET_DEVICE,
+    viewport,
     skin = 'Movistar',
     args,
     isDarkMode,
 }: {
     id: string;
     device?: Device;
+    viewport?: Viewport;
     skin?: 'Movistar' | 'Vivo' | 'O2' | 'O2-classic' | 'Blau';
     args?: StoryArgs;
     isDarkMode?: boolean;
@@ -145,7 +147,7 @@ export const openStoryPage = ({
     openPage({
         path: buildStoryPath(id, skin, DEVICES[device].platform, args),
         userAgent: DEVICES[device].userAgent,
-        viewport: DEVICES[device].viewport,
+        viewport: viewport ?? DEVICES[device].viewport,
         isDarkMode,
     });
 

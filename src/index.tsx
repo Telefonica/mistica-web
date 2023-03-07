@@ -58,7 +58,8 @@ export {default as Inline} from './inline';
 export {default as HighlightedCard} from './highlighted-card';
 export {default as Stepper} from './stepper';
 export {default as ProgressBar} from './progress-bar';
-export {MediaCard, DataCard, SnapCard} from './card';
+export {MediaCard, DataCard, SnapCard, DisplayDataCard, DisplayMediaCard} from './card';
+export {default as Hero} from './hero';
 export {default as Divider} from './divider';
 export {default as Menu} from './menu';
 export {default as EmptyState} from './empty-state';
@@ -146,6 +147,7 @@ export {
 export {getSkinByName} from './skins/utils';
 export {getVivoSkin} from './skins/vivo';
 export {getMovistarSkin} from './skins/movistar';
+export {getMovistarLegacySkin} from './skins/movistar-legacy';
 export {getO2Skin} from './skins/o2';
 export {getO2ClassicSkin} from './skins/o2-classic';
 export {getTelefonicaSkin} from './skins/telefonica';
