@@ -190,7 +190,11 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                 <Box paddingTop={header ? 32 : 0} paddingBottom={24}>
                     <Stack space={24}>
                         {header}
-                        {extra}
+                        <div 
+                            style={{height: bleed ? bleedValue !== undefined ? bleedValue : 40 : '100%'}}
+                        >
+                            {extra}
+                        </div>
                     </Stack>
                 </Box>
             ) : sideBySideExtraOnDesktop ? (
@@ -203,7 +207,13 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                                 {header}
                             </Stack>
                         }
-                        right={extra}
+                        right={
+                            <div 
+                                style={{height: bleed ? bleedValue !== undefined ? bleedValue : 40 : '100%'}}
+                            >
+                                {extra}
+                            </div>
+                        }
                     />
                 </Box>
             ) : (
@@ -213,7 +223,11 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                             {breadcrumbs}
                             {header}
                         </Stack>
-                        {extra}
+                        <div 
+                            style={{height: bleed ? bleedValue !== undefined ? bleedValue : 40 : '100%'}}
+                        >
+                            {extra}
+                        </div>
                     </Stack>
                 </Box>
             )}

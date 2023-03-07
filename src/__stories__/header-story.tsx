@@ -57,6 +57,8 @@ export const Default: StoryComponent = () => {
                     {pretitleTextField}
                     {titleTextField}
                     {descriptionTextField}
+                    {bleedCheckbox}
+                    {bleedValueTextField}
                     {inverseCheckbox}
                     {extraContentCheckbox}
                     {extraSideBySideCheckbox}
