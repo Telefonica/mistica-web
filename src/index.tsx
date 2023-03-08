@@ -1147,6 +1147,7 @@ export {default as IconMapRegular} from './generated/mistica-icons/icon-map-regu
 export {default as IconMastFilled} from './generated/mistica-icons/icon-mast-filled';
 export {default as IconMastLight} from './generated/mistica-icons/icon-mast-light';
 export {default as IconMastRegular} from './generated/mistica-icons/icon-mast-regular';
+export {default as IconMeatballFilled} from './generated/mistica-icons/icon-meatball-filled';
 export {default as IconMedicalHistoryFilled} from './generated/mistica-icons/icon-medical-history-filled';
 export {default as IconMedicalHistoryLight} from './generated/mistica-icons/icon-medical-history-light';
 export {default as IconMedicalHistoryRegular} from './generated/mistica-icons/icon-medical-history-regular';
