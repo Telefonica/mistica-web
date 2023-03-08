@@ -1,12 +1,10 @@
 import * as React from 'react';
-import {isOldChrome, isRunningAcceptanceTest} from './platform';
+import {isRunningAcceptanceTest} from './platform';
 
 import type {Theme} from '../theme';
 
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
-    !isOldChrome(platformOverrides) &&
-    !isRunningAcceptanceTest(platformOverrides) &&
-    typeof window !== 'undefined';
+    !isRunningAcceptanceTest(platformOverrides);
 
 type AnimationProps = {
     children?: React.ReactNode;

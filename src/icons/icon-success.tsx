@@ -6,7 +6,7 @@ import {
     getAnimateHopInProps,
     mergeProperties,
 } from '../utils/animation';
-import {useIsFirstRender, useTheme} from '../hooks';
+import {useTheme} from '../hooks';
 import {useIsInverseVariant} from '../theme-variant-context';
 import {vars} from '../skins/skin-contract.css';
 
@@ -97,20 +97,13 @@ const IconSuccessDefault: React.FC<Props> = ({size = 64, color, skipAnimation = 
 
 const IconSuccess: React.FC<Props> = ({size, color, skipAnimation}) => {
     const {skinName} = useTheme();
-    const isFirstRender = useIsFirstRender();
 
     switch (skinName) {
         case O2_CLASSIC_SKIN:
         case O2_SKIN:
-            return <IconSuccessO2 size={size} color={color} skipAnimation={isFirstRender || skipAnimation} />;
+            return <IconSuccessO2 size={size} color={color} skipAnimation={skipAnimation} />;
         default:
-            return (
-                <IconSuccessDefault
-                    size={size}
-                    color={color}
-                    skipAnimation={isFirstRender || skipAnimation}
-                />
-            );
+            return <IconSuccessDefault size={size} color={color} skipAnimation={skipAnimation} />;
     }
 };
 
