@@ -195,7 +195,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                         </Box>
                     </div>
                 ) : sideBySideExtraOnDesktop ? (
-                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
+                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={bleed && isInverse ? 8 : 48}>
                         <GridLayout
                             template="6+6"
                             left={
@@ -204,13 +204,11 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                                     {header}
                                 </Stack>
                             }
-                            right={
-                                extra
-                            }
+                            right={extra}
                         />
                     </Box>
                 ) : (
-                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
+                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={32}>
                         <Stack space={isTabletOrSmaller ? 24 : 32}>
                             <Stack space={32}>
                                 {breadcrumbs}
@@ -221,7 +219,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                 )}
                 </div>
             </ResponsiveLayout>
-            {!sideBySideExtraOnDesktop && extra && (
+            {extra && (isTabletOrSmaller || !sideBySideExtraOnDesktop) && (
                 <ResponsiveLayout 
                     isInverse={!!(isInverse && !bleed)}
                     dataAttributes={{'component-name': 'HeaderLayout', ...dataAttributes}}
@@ -230,7 +228,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                         transform: bleed && isInverse ? `translateY(-40px)` : `translate(0, 0)`,
                         marginBottom: bleed && isInverse ? '-40px' : '0px',
                     }}>
-                        <Box paddingBottom={24}>
+                        <Box paddingBottom={isTabletOrSmaller ? 24 : 48}>
                             <Stack space={24}>
                                 {extra}
                             </Stack>
