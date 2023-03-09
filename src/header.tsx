@@ -184,15 +184,13 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                 isInverse={isInverse}
                 dataAttributes={{'component-name': 'HeaderLayout', ...dataAttributes}}
             >
-                <div style={{paddingBottom: bleed ? 40 : 0}}>
+                <div style={{paddingBottom: bleed && isInverse && extra ? 40 : 0}}>
                 <OverscrollColor />
                 {isTabletOrSmaller ? (
                     <div>
                         <Box paddingTop={header ? 32 : 0} paddingBottom={24}>
                             <Stack space={24}>
-                                <div>
-                                    {header}
-                                </div>
+                                {header}
                             </Stack>
                         </Box>
                     </div>
@@ -223,14 +221,14 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                 )}
                 </div>
             </ResponsiveLayout>
-            {!sideBySideExtraOnDesktop && (
+            {!sideBySideExtraOnDesktop && extra && (
                 <ResponsiveLayout 
-                    isInverse={bleed ? !isInverse : isInverse}
+                    isInverse={!!(isInverse && !bleed)}
                     dataAttributes={{'component-name': 'HeaderLayout', ...dataAttributes}}
                 >
                     <div style={{
-                        transform: bleed ? `translateY(-40px)` : `translate(0, 0)`,
-                        height: bleed ? `calc(100% - 40px)` : '100%'
+                        transform: bleed && isInverse ? `translateY(-40px)` : `translate(0, 0)`,
+                        marginBottom: bleed && isInverse ? '-40px' : '0px',
                     }}>
                         <Box paddingBottom={24}>
                             <Stack space={24}>
