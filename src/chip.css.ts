@@ -13,7 +13,7 @@ const containerBase = style([
     {
         borderRadius: 20,
         verticalAlign: 'middle',
-        minHeight: 32,
+        minHeight: 40,
         minWidth: 56,
         cursor: 'default',
     },
