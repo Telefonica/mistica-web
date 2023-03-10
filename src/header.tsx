@@ -174,7 +174,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
     extra,
     sideBySideExtraOnDesktop = false,
     dataAttributes,
-    bleed,
+    bleed = false,
 }) => {
     const {isTabletOrSmaller} = useScreenSize();
 
@@ -184,18 +184,16 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                 isInverse={isInverse}
                 dataAttributes={{'component-name': 'HeaderLayout', ...dataAttributes}}
             >
-                <div style={{paddingBottom: bleed && isInverse && extra ? 40 : 0}}>
                 <OverscrollColor />
                 {isTabletOrSmaller ? (
-                    <div>
-                        <Box paddingTop={header ? 32 : 0} paddingBottom={24}>
-                            <Stack space={24}>
-                                {header}
-                            </Stack>
-                        </Box>
-                    </div>
+                    <Box paddingTop={header ? 32 : 0} paddingBottom={24}>
+                        <Stack space={24}>
+                            {header}
+                            {!bleed && extra}
+                        </Stack>
+                    </Box>
                 ) : sideBySideExtraOnDesktop ? (
-                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={bleed && isInverse ? 8 : 48}>
+                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
                         <GridLayout
                             template="6+6"
                             left={
@@ -208,32 +206,30 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                         />
                     </Box>
                 ) : (
-                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={32}>
+                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
                         <Stack space={isTabletOrSmaller ? 24 : 32}>
                             <Stack space={32}>
                                 {breadcrumbs}
                                 {header}
                             </Stack>
                         </Stack>
-                    </Box>  
+                        {!bleed && extra}
+                    </Box>
                 )}
-                </div>
             </ResponsiveLayout>
-            {extra && (isTabletOrSmaller || !sideBySideExtraOnDesktop) && (
-                <ResponsiveLayout 
-                    isInverse={!!(isInverse && !bleed)}
-                    dataAttributes={{'component-name': 'HeaderLayout', ...dataAttributes}}
+            {bleed && extra && (isTabletOrSmaller || !sideBySideExtraOnDesktop) && (
+                <ResponsiveLayout
+                    backgroundColor={
+                        isInverse ?
+                        `linear-gradient(to bottom, ${vars.colors.backgroundBrand} 40px, ${vars.colors.background} 0%)`
+                        : vars.colors.background
+                    }
                 >
-                    <div style={{
-                        transform: bleed && isInverse ? `translateY(-40px)` : `translate(0, 0)`,
-                        marginBottom: bleed && isInverse ? '-40px' : '0px',
-                    }}>
-                        <Box paddingBottom={isTabletOrSmaller ? 24 : 48}>
-                            <Stack space={24}>
-                                {extra}
-                            </Stack>
-                        </Box>
-                    </div>
+                    <Box paddingBottom={isTabletOrSmaller ? 24 : 48}>
+                        <Stack space={isTabletOrSmaller ? 24 : 32}>
+                            {extra}
+                        </Stack>
+                    </Box>
                 </ResponsiveLayout>
             )}
         </div>
