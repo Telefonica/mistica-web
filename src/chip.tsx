@@ -46,19 +46,19 @@ const Chip: React.FC<ChipProps> = ({Icon, children, id, dataAttributes, active, 
         </>
     );
 
-    const paddingLeft = Icon ? 8 : 12;
+    const paddingLeft = Icon ? 16 : 20;
 
     if (onClose) {
         return (
             <Box
                 className={styles.chipVariants.default}
-                paddingLeft={paddingLeft}
+                paddingX={paddingLeft}
                 {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
             >
                 {body}
-                <Box paddingLeft={4}>
+                <Box paddingLeft={8}>
                     <IconButton
-                        size={24}
+                        size={16}
                         style={{
                             display: 'flex',
                             justifyContent: 'center',
@@ -80,7 +80,7 @@ const Chip: React.FC<ChipProps> = ({Icon, children, id, dataAttributes, active, 
                     [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,
                 })}
                 paddingLeft={paddingLeft}
-                paddingRight={12}
+                paddingRight={20}
                 {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
             >
                 {body}
