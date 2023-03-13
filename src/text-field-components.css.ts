@@ -99,7 +99,7 @@ export const field = sprinkles({
     overflow: 'hidden',
     border: 'regular',
     display: 'flex',
-    borderRadius: 8,
+    borderRadius: 12,
     position: 'relative',
 });
 

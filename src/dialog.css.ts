@@ -73,7 +73,7 @@ export const modalCloseButtonContainer = style([
 export const modalContent = style([
     sprinkles({
         background: vars.colors.background,
-        borderRadius: 8,
+        borderRadius: 16,
     }),
     {
         animation: `${fadeScale} .2s ease-in-out`,

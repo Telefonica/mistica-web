@@ -7,18 +7,18 @@ import type {ComplexStyleRule} from '@vanilla-extract/css';
 
 const transitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
 
-export const BUTTON_MIN_WIDTH = 136;
+export const BUTTON_MIN_WIDTH = 120;
 const BORDER_PX = 1.5;
 export const ICON_MARGIN_PX = 8;
 export const X_PADDING_PX = 16 - BORDER_PX;
-const Y_PADDING_PX = 12 - BORDER_PX;
+const Y_PADDING_PX = 17.5 - BORDER_PX;
 export const X_SMALL_PADDING_PX = 12 - BORDER_PX;
-const Y_SMALL_PADDING_PX = 6 - BORDER_PX;
+const Y_SMALL_PADDING_PX = 11.5 - BORDER_PX;
 export const ICON_SIZE = 24;
 export const SMALL_ICON_SIZE = 20;
 export const SPINNER_SIZE = 20;
 export const SMALL_SPINNER_SIZE = 16;
-export const PADDING_Y_LINK = 6;
+export const PADDING_Y_LINK = 10;
 const PADDING_X_LINK = 12;
 
 const disabledStyle = {opacity: 0.5};
@@ -30,7 +30,7 @@ const button = style([
         display: 'inline-block',
         position: 'relative',
         width: 'auto',
-        borderRadius: 4,
+        borderRadius: 8,
         overflow: 'hidden',
         padding: 0,
     }),
@@ -60,7 +60,7 @@ export const loadingFiller = style([
 ]);
 
 export const small = style({
-    minWidth: 104,
+    minWidth: 88,
 });
 
 export const loadingContent = style([
@@ -276,7 +276,7 @@ export const link = style([
     sprinkles({
         display: 'inline-block',
         width: 'auto',
-        borderRadius: 4,
+        borderRadius: 8,
         paddingX: PADDING_X_LINK,
         border: 'none',
         color: vars.colors.textLink,

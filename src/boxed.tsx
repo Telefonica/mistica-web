@@ -87,5 +87,5 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
 );
 
 export const Boxed = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-    return <InternalBoxed {...props} ref={ref} borderRadius={8} />;
+    return <InternalBoxed {...props} ref={ref} borderRadius={16} />;
 });

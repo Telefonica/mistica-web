@@ -21,7 +21,7 @@ export const optionsContainer = style([
     sprinkles({
         position: 'absolute',
         padding: 0,
-        borderRadius: 8,
+        borderRadius: 12,
         background: colorsVars.colors.backgroundContainer,
     }),
     {

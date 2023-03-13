@@ -22,7 +22,7 @@ export const menuContainer = style([
     sprinkles({
         padding: 0,
         background: colorsVars.colors.backgroundContainer,
-        borderRadius: 8,
+        borderRadius: 16,
         display: 'flex',
         flexDirection: 'column',
         position: 'absolute',

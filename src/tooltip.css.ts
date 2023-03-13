@@ -117,7 +117,7 @@ export const container = style([
         left: 16,
         width: 'auto',
         padding: 8,
-        borderRadius: 8,
+        borderRadius: 16,
         border: 'regular',
     }),
     {
