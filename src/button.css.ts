@@ -2,6 +2,7 @@ import {style, globalStyle, styleVariants} from '@vanilla-extract/css';
 import {sprinkles} from './sprinkles.css';
 import {vars} from './skins/skin-contract.css';
 import * as mq from './media-queries.css';
+import {useAriaId, useTheme, useScreenSize, useIsomorphicLayoutEffect} from './hooks';
 
 import type {ComplexStyleRule} from '@vanilla-extract/css';
 
@@ -30,9 +31,9 @@ const button = style([
         display: 'inline-block',
         position: 'relative',
         width: 'auto',
-        borderRadius: 8,
         overflow: 'hidden',
         padding: 0,
+        borderRadius: 999,
     }),
     {
         border: `${BORDER_PX}px solid transparent`,
@@ -276,7 +277,7 @@ export const link = style([
     sprinkles({
         display: 'inline-block',
         width: 'auto',
-        borderRadius: 8,
+        borderRadius: 999,
         paddingX: PADDING_X_LINK,
         border: 'none',
         color: vars.colors.textLink,
@@ -284,6 +285,7 @@ export const link = style([
         overflow: 'hidden',
     }),
     {
+        minWidth: 64,
         paddingTop: PADDING_Y_LINK,
         paddingBottom: PADDING_Y_LINK,
         fontWeight: 500,
