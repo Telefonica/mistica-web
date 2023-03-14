@@ -206,22 +206,22 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                         />
                     </Box>
                 ) : (
-                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
+                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={bleed ? 32 : 48}>
                         <Stack space={isTabletOrSmaller ? 24 : 32}>
                             <Stack space={32}>
                                 {breadcrumbs}
                                 {header}
                             </Stack>
+                            {!bleed && extra}
                         </Stack>
-                        {!bleed && extra}
                     </Box>
                 )}
             </ResponsiveLayout>
             {bleed && extra && (isTabletOrSmaller || !sideBySideExtraOnDesktop) && (
                 <ResponsiveLayout
                     backgroundColor={
-                        isInverse ?
-                        `linear-gradient(to bottom, ${vars.colors.backgroundBrand} 40px, ${vars.colors.background} 0%)`
+                        isInverse 
+                        ? `linear-gradient(to bottom, ${vars.colors.backgroundBrand} 40px, ${vars.colors.background} 0%)`
                         : vars.colors.background
                     }
                 >
