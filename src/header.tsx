@@ -179,7 +179,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
     const {isTabletOrSmaller} = useScreenSize();
 
     return (
-        <div>
+        <>
             <ResponsiveLayout
                 isInverse={isInverse}
                 dataAttributes={{'component-name': 'HeaderLayout', ...dataAttributes}}
@@ -225,12 +225,10 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                             : vars.colors.background
                     }
                 >
-                    <Box paddingBottom={isTabletOrSmaller ? 24 : 48}>
-                        <Stack space={isTabletOrSmaller ? 24 : 32}>{extra}</Stack>
-                    </Box>
+                    <Box paddingBottom={isTabletOrSmaller ? 24 : 48}>{extra}</Box>
                 </ResponsiveLayout>
             )}
-        </div>
+        </>
     );
 };
 
