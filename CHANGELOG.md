@@ -1,3 +1,15 @@
+# [14.3.0](https://github.com/Telefonica/mistica-web/compare/v14.2.0...v14.3.0) (2023-03-15)
+
+
+### Bug Fixes
+
+* **HighlightedCard:** image positioning issue when backgroundUrl is changed ([#691](https://github.com/Telefonica/mistica-web/issues/691)) ([44c1a40](https://github.com/Telefonica/mistica-web/commit/44c1a40032d3ec032227ed37dcc95c92bab6a5a9))
+
+
+### Features
+
+* **HeaderLayout:** added bleed prop ([#685](https://github.com/Telefonica/mistica-web/issues/685)) ([bc060d6](https://github.com/Telefonica/mistica-web/commit/bc060d62ae8be1cd063e38429f50a6b2512f4d24))
+
 # [14.2.0](https://github.com/Telefonica/mistica-web/compare/v14.1.0...v14.2.0) (2023-03-08)
 
 
