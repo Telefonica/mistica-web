@@ -1,3 +1,17 @@
+# [14.2.0](https://github.com/Telefonica/mistica-web/compare/v14.1.0...v14.2.0) (2023-03-08)
+
+
+### Bug Fixes
+
+* **Movistar skin:** dark mode fixes [#1080](https://github.com/Telefonica/mistica-web/issues/1080) ([#686](https://github.com/Telefonica/mistica-web/issues/686)) ([d538f35](https://github.com/Telefonica/mistica-web/commit/d538f35ce6be8c8819ffedf575c4fcc695bf3080))
+* **Select:** issue in SSR ([#683](https://github.com/Telefonica/mistica-web/issues/683)) ([6100440](https://github.com/Telefonica/mistica-web/commit/6100440e5e490a166ace84e398e0087f7e1c08ef))
+* **Stepper:**  SSR issues ([#684](https://github.com/Telefonica/mistica-web/issues/684)) ([21414a6](https://github.com/Telefonica/mistica-web/commit/21414a68d8dab23abacabd14565f712cd004fecd))
+
+
+### Features
+
+* **Icons:** new Meatball icon ([#687](https://github.com/Telefonica/mistica-web/issues/687)) ([7faacab](https://github.com/Telefonica/mistica-web/commit/7faacabb0d8ec993339a373e60d4153dc386533e))
+
 # [14.1.0](https://github.com/Telefonica/mistica-web/compare/v14.0.0...v14.1.0) (2023-02-28)
 
 

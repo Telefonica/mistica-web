@@ -12,7 +12,7 @@ import {
     isWebViewBridgeAvailable,
     requestVibration as requestVibrationNative,
 } from '@tef-novum/webview-bridge';
-import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
+import {isRunningAcceptanceTest} from './utils/platform';
 import {Theme} from './theme';
 import {Text6, Text2, Text3} from './text';
 import Box from './box';
@@ -28,7 +28,7 @@ import type {DataAttributes} from './utils/types';
 import type {ButtonGroupProps} from './button-group';
 
 const areAnimationsSupported = (platformOverrides: Theme['platformOverrides']) =>
-    !isOldChrome(platformOverrides) && !isRunningAcceptanceTest(platformOverrides);
+    !isRunningAcceptanceTest(platformOverrides);
 
 const checkHasButtons = ({primaryButton, secondaryButton}: FeedbackButtonsProps) =>
     !!primaryButton || !!secondaryButton;

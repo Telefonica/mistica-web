@@ -57,7 +57,7 @@ export const palette = {
 
     // specific for dark mode:
     darkModeBlack: '#061824',
-    darkModeGrey: '#092130',
+    darkModeGrey: '#081F2E',
 
     darkModeGrey2: '#EAEBEE',
     darkModeGrey3: '#CED4D7',
@@ -202,12 +202,12 @@ export const getMovistarSkin: GetKnownSkin = () => {
             backgroundBrand: palette.darkModeBlack,
             backgroundBrandSecondary: palette.darkModeBlack,
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
-            backgroundSkeleton: palette.darkModeGrey6,
-            backgroundSkeletonInverse: palette.darkModeGrey6,
+            backgroundSkeleton: palette.movistarBlueDark,
+            backgroundSkeletonInverse: palette.movistarBlueDark,
             navigationBarBackground: palette.darkModeBlack,
             backgroundAlternative: palette.darkModeGrey,
             backgroundFeedbackBottom: palette.darkModeBlack,
-            skeletonWave: palette.darkModeGrey5,
+            skeletonWave: palette.darkModeGrey6,
             borderHigh: palette.darkModeGrey4,
             borderLow: palette.darkModeBlack,
             border: palette.darkModeGrey,
@@ -249,7 +249,7 @@ export const getMovistarSkin: GetKnownSkin = () => {
             inverse: palette.darkModeGrey2,
             neutralHigh: palette.darkModeGrey2,
             neutralMedium: palette.darkModeGrey5,
-            neutralLow: palette.darkModeGrey6,
+            neutralLow: palette.movistarBlueDark,
             textPrimary: palette.darkModeGrey2,
             textPrimaryInverse: palette.darkModeGrey2,
             textSecondary: palette.darkModeGrey4,
@@ -262,11 +262,11 @@ export const getMovistarSkin: GetKnownSkin = () => {
             textAppBarSelected: palette.darkModeGrey2,
 
             // TAGS
-            successLow: palette.grey6,
-            warningLow: palette.grey6,
-            errorLow: palette.grey6,
-            promoLow: palette.grey6,
-            brandLow: palette.grey6,
+            successLow: palette.movistarBlueDark,
+            warningLow: palette.movistarBlueDark,
+            errorLow: palette.movistarBlueDark,
+            promoLow: palette.movistarBlueDark,
+            brandLow: palette.movistarBlueDark,
 
             successHigh: palette.movistarGreen40,
             warningHigh: palette.egg40,
