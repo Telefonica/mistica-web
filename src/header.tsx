@@ -177,10 +177,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
     bleed = false,
 }) => {
     const {isTabletOrSmaller} = useScreenSize();
-
-    const isBleedActivated = (): boolean => {
-        return bleed && isInverse;
-    };
+    const isBleedActivated = bleed && isInverse;
 
     return (
         <>
@@ -193,7 +190,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                     <Box paddingTop={header ? 32 : 0} paddingBottom={24}>
                         <Stack space={24}>
                             {header}
-                            {!isBleedActivated() && extra}
+                            {!isBleedActivated && extra}
                         </Stack>
                     </Box>
                 ) : sideBySideExtraOnDesktop ? (
@@ -210,18 +207,18 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                         />
                     </Box>
                 ) : (
-                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={isBleedActivated() ? 32 : 48}>
+                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={isBleedActivated ? 32 : 48}>
                         <Stack space={isTabletOrSmaller ? 24 : 32}>
                             <Stack space={32}>
                                 {breadcrumbs}
                                 {header}
                             </Stack>
-                            {!isBleedActivated() && extra}
+                            {!isBleedActivated && extra}
                         </Stack>
                     </Box>
                 )}
             </ResponsiveLayout>
-            {isBleedActivated() && extra && (isTabletOrSmaller || !sideBySideExtraOnDesktop) && (
+            {isBleedActivated && extra && (isTabletOrSmaller || !sideBySideExtraOnDesktop) && (
                 <ResponsiveLayout
                     backgroundColor={`linear-gradient(to bottom, ${vars.colors.backgroundBrand} 40px, ${vars.colors.background} 0%)`}
                 >
