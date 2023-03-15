@@ -107,7 +107,8 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                 <div
                     className={styles.imageContent}
                     style={{
-                        background: `url(${imageUrl}) no-repeat`,
+                        backgroundImage: `url(${imageUrl})`,
+                        backgroundRepeat: 'no-repeat',
                         backgroundSize: imageFit === 'fit' ? 'contain' : 'cover',
                         backgroundPosition:
                             imageFit === 'fit'
