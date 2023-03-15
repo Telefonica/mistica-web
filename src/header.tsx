@@ -178,6 +178,10 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
 }) => {
     const {isTabletOrSmaller} = useScreenSize();
 
+    const isBleedActivated = (): boolean => {
+        return bleed && isInverse;
+    };
+
     return (
         <>
             <ResponsiveLayout
@@ -189,7 +193,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                     <Box paddingTop={header ? 32 : 0} paddingBottom={24}>
                         <Stack space={24}>
                             {header}
-                            {!bleed && extra}
+                            {!isBleedActivated() && extra}
                         </Stack>
                     </Box>
                 ) : sideBySideExtraOnDesktop ? (
@@ -206,24 +210,20 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                         />
                     </Box>
                 ) : (
-                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={bleed ? 32 : 48}>
+                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={isBleedActivated() ? 32 : 48}>
                         <Stack space={isTabletOrSmaller ? 24 : 32}>
                             <Stack space={32}>
                                 {breadcrumbs}
                                 {header}
                             </Stack>
-                            {!bleed && extra}
+                            {!isBleedActivated() && extra}
                         </Stack>
                     </Box>
                 )}
             </ResponsiveLayout>
-            {bleed && extra && (isTabletOrSmaller || !sideBySideExtraOnDesktop) && (
+            {isBleedActivated() && extra && (isTabletOrSmaller || !sideBySideExtraOnDesktop) && (
                 <ResponsiveLayout
-                    backgroundColor={
-                        isInverse
-                            ? `linear-gradient(to bottom, ${vars.colors.backgroundBrand} 40px, ${vars.colors.background} 0%)`
-                            : vars.colors.background
-                    }
+                    backgroundColor={`linear-gradient(to bottom, ${vars.colors.backgroundBrand} 40px, ${vars.colors.background} 0%)`}
                 >
                     {extra}
                 </ResponsiveLayout>
