@@ -1,5 +1,17 @@
 import * as React from 'react';
-import {Stack, MediaCard, ButtonPrimary, ButtonLink, Inline, Text2, Video, Image, Tag, TagType} from '..';
+import {
+    Stack,
+    MediaCard,
+    ButtonPrimary,
+    ButtonLink,
+    Inline,
+    Text2,
+    Video,
+    Image,
+    Tag,
+    TagType,
+    IconMobileDeviceRegular,
+} from '..';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
 
@@ -22,6 +34,7 @@ type Args = {
     withExtra: boolean;
     actions: 'button' | 'link' | 'button and link' | 'none';
     closable: boolean;
+    withTopAction: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -34,6 +47,7 @@ export const Default: StoryComponent<Args> = ({
     actions = 'button',
     withExtra,
     closable,
+    withTopAction,
     media,
 }) => {
     const button = actions.includes('button') ? (
@@ -65,6 +79,19 @@ export const Default: StoryComponent<Args> = ({
             buttonLink={buttonLink}
             extra={withExtra ? <Placeholder /> : undefined}
             onClose={closable ? () => {} : undefined}
+            actions={
+                withTopAction
+                    ? [
+                          {
+                              Icon: IconMobileDeviceRegular,
+                              onPress: () => {
+                                  alert('icon press');
+                              },
+                              label: 'Device',
+                          },
+                      ]
+                    : undefined
+            }
         />
     );
 };
@@ -81,6 +108,7 @@ Default.args = {
     withExtra: false,
     actions: 'button',
     closable: false,
+    withTopAction: false,
 };
 Default.argTypes = {
     media: {
