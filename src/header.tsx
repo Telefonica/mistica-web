@@ -225,7 +225,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
                             : vars.colors.background
                     }
                 >
-                    <Box paddingBottom={isTabletOrSmaller ? 24 : 48}>{extra}</Box>
+                    {extra}
                 </ResponsiveLayout>
             )}
         </>
