@@ -238,21 +238,6 @@ const CardContent: React.FC<CardContentProps> = ({
     );
 };
 
-type MaybeSectionProps = {
-    children: React.ReactNode;
-    'aria-label'?: string;
-    className?: string;
-    style?: React.CSSProperties;
-};
-
-const MaybeSection = ({'aria-label': ariaLabel, className, style, children}: MaybeSectionProps) => {
-    return (
-        <section className={className} style={style} aria-label={ariaLabel}>
-            {children}
-        </section>
-    );
-};
-
 type MediaCardProps = {
     media: RendersElement<typeof Image> | RendersElement<typeof Video>;
     headline?: string | RendersNullableElement<typeof Tag>;
@@ -306,7 +291,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                     width="100%"
                     height="100%"
                 >
-                    <MaybeSection className={styles.mediaCard} aria-label={ariaLabel}>
+                    <section className={styles.mediaCard}>
                         <MediaBorderRadiusProvider value={false}>{media}</MediaBorderRadiusProvider>
                         <div className={styles.mediaCardContent}>
                             <CardContent
@@ -324,7 +309,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                 buttonLink={buttonLink}
                             />
                         </div>
-                    </MaybeSection>
+                    </section>
                 </Boxed>
             </MaybeWithActions>
         );
@@ -388,7 +373,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                     width="100%"
                     height="100%"
                 >
-                    <MaybeSection className={styles.dataCard} aria-label={ariaLabel}>
+                    <section className={styles.dataCard}>
                         {icon && <Box paddingBottom={16}>{icon}</Box>}
                         <CardContent
                             headline={headline}
@@ -404,7 +389,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                             button={button}
                             buttonLink={buttonLink}
                         />
-                    </MaybeSection>
+                    </section>
                 </Boxed>
             </MaybeWithActions>
         );
