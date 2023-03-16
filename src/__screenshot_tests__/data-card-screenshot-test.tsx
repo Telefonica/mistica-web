@@ -53,3 +53,27 @@ test('DataCard with extra content', async () => {
 
     expect(image).toMatchImageSnapshot();
 });
+
+test('DataCard closable', async () => {
+    const page = await openStoryPage({
+        id: 'components-cards-data-card--default',
+        device: 'MOBILE_IOS',
+        args: {closable: true},
+    });
+
+    const image = await page.screenshot({fullPage: true});
+
+    expect(image).toMatchImageSnapshot();
+});
+
+test('DataCard with top actions', async () => {
+    const page = await openStoryPage({
+        id: 'components-cards-data-card--default',
+        device: 'MOBILE_IOS',
+        args: {withTopAction: true},
+    });
+
+    const image = await page.screenshot({fullPage: true});
+
+    expect(image).toMatchImageSnapshot();
+});

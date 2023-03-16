@@ -50,12 +50,27 @@ const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Elem
                     style={{display: 'flex'}}
                 >
                     <div className={isInverse ? styles.cardActionInverse : styles.cardAction}>
-                        <Icon color={vars.colors.neutralHigh} size={24} />
+                        <Icon color={vars.colors.neutralHigh} size={20} />
                     </div>
                 </IconButton>
             ))}
         </Inline>
     );
+};
+
+const useTopActions = (actions?: Array<CardAction>, onClose?: () => void) => {
+    const {texts} = useTheme();
+    const finalActions = actions ? [...actions] : [];
+
+    if (onClose) {
+        finalActions.push({
+            label: texts.closeButtonLabel,
+            onPress: onClose,
+            Icon: IconCloseRegular,
+        });
+    }
+
+    return finalActions;
 };
 
 type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
@@ -89,17 +104,7 @@ const MaybeWithActions = ({
     isInverse,
     'aria-label': ariaLabel,
 }: MaybeWithActionsProps): JSX.Element => {
-    const {texts} = useTheme();
-    const finalActions = actions ? [...actions] : [];
-    console.log(finalActions);
-    if (onClose) {
-        finalActions.push({
-            label: texts.closeButtonLabel,
-            onPress: onClose,
-            Icon: IconCloseRegular,
-        });
-    }
-
+    const finalActions = useTopActions(actions, onClose);
     const hasActions = finalActions.length > 0;
 
     const cssAspectRatio: React.CSSProperties['aspectRatio'] = aspectRatio
@@ -291,7 +296,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                     width="100%"
                     height="100%"
                 >
-                    <section className={styles.mediaCard}>
+                    <div className={styles.mediaCard}>
                         <MediaBorderRadiusProvider value={false}>{media}</MediaBorderRadiusProvider>
                         <div className={styles.mediaCardContent}>
                             <CardContent
@@ -309,7 +314,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                 buttonLink={buttonLink}
                             />
                         </div>
-                    </section>
+                    </div>
                 </Boxed>
             </MaybeWithActions>
         );
@@ -364,8 +369,11 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
         },
         ref
     ) => {
+        const finalActions = useTopActions(actions, onClose);
+        const hasActions = finalActions.length > 0;
+
         return (
-            <MaybeWithActions onClose={onClose} actions={actions} aria-label={ariaLabel}>
+            <section aria-label={ariaLabel} style={{height: '100%'}}>
                 <Boxed
                     className={styles.boxed}
                     dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
@@ -373,25 +381,50 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                     width="100%"
                     height="100%"
                 >
-                    <section className={styles.dataCard}>
-                        {icon && <Box paddingBottom={16}>{icon}</Box>}
-                        <CardContent
-                            headline={headline}
-                            pretitle={pretitle}
-                            pretitleLinesMax={pretitleLinesMax}
-                            title={title}
-                            titleLinesMax={titleLinesMax}
-                            subtitle={subtitle}
-                            subtitleLinesMax={subtitleLinesMax}
-                            description={description}
-                            descriptionLinesMax={descriptionLinesMax}
-                            extra={extra}
-                            button={button}
-                            buttonLink={buttonLink}
-                        />
-                    </section>
+                    <div className={styles.dataCard}>
+                        <div
+                            className={sprinkles({
+                                display: 'flex',
+                                flex: 1,
+                                justifyContent: 'space-between',
+                                flexDirection: 'row',
+                            })}
+                        >
+                            <Stack space={16} className={sprinkles({flex: 1})}>
+                                {icon ? icon : null}
+                                <CardContent
+                                    headline={headline}
+                                    pretitle={pretitle}
+                                    pretitleLinesMax={pretitleLinesMax}
+                                    title={title}
+                                    titleLinesMax={titleLinesMax}
+                                    subtitle={subtitle}
+                                    subtitleLinesMax={subtitleLinesMax}
+                                    description={description}
+                                    descriptionLinesMax={descriptionLinesMax}
+                                    extra={extra}
+                                />
+                            </Stack>
+                            {hasActions && (
+                                <div
+                                    style={{
+                                        marginRight: -8,
+                                        marginTop: -16,
+                                    }}
+                                >
+                                    <CardActionsGroup actions={finalActions} />
+                                </div>
+                            )}
+                        </div>
+
+                        {(button || buttonLink) && (
+                            <div className={styles.actions}>
+                                <ButtonGroup primaryButton={button} link={buttonLink} />
+                            </div>
+                        )}
+                    </div>
                 </Boxed>
-            </MaybeWithActions>
+            </section>
         );
     }
 );
