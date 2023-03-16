@@ -2,12 +2,13 @@ import * as React from 'react';
 import {useIsInverseVariant} from './theme-variant-context';
 import Box from './box';
 import {BaseTouchable} from './touchable';
-import {Text4, Text2} from './text';
+import {Text, Text2} from './text';
 import {ButtonLink} from './button';
 import {Boxed} from './boxed';
 import MaybeDismissable, {useIsDismissable} from './maybe-dismissable';
 import * as styles from './highlighted-card.css';
 import {vars} from './skins/skin-contract.css';
+import {useTheme} from './hooks';
 
 import type {DataAttributes, RendersNullableElement, TrackingEvent} from './utils/types';
 import type {NullableButtonElement} from './button';
@@ -67,6 +68,7 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
     const isInverseOutside = useIsInverseVariant();
     const isInverse = props.isInverse ?? isInverseOutside;
     const isDismissable = useIsDismissable();
+    const {textPresets} = useTheme();
 
     const content = (
         <Boxed
@@ -83,9 +85,17 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                 // aria-label is already in Dismisable wrapper
                 aria-label={!isDismissable ? props['aria-label'] : undefined}
             >
-                <Text4 as="h3" regular truncate={props.titleLinesMax}>
+                <Text
+                    mobileSize={18}
+                    mobileLineHeight="24px"
+                    desktopSize={20}
+                    desktopLineHeight="28px"
+                    truncate={props.titleLinesMax}
+                    weight={textPresets.cardTitle.weight}
+                    as="h3"
+                >
                     {title}
-                </Text4>
+                </Text>
                 <Box paddingTop={8}>
                     <Text2
                         regular
