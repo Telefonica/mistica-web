@@ -363,7 +363,7 @@ export const Text1: React.FC<RegularMediumProps> = ({dataAttributes, forceMobile
     <Text
         {...getTextSizes({
             forceMobileSizes,
-            mobileSize: 12,
+            mobileSize: 13,
             mobileLineHeight: '16px',
             desktopSize: 14,
             desktopLineHeight: '20px',
