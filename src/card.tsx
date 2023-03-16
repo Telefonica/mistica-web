@@ -2,7 +2,7 @@ import * as React from 'react';
 import Tag from './tag';
 import Stack from './stack';
 import Box from './box';
-import {Text2, Text3, Text4, Text6} from './text';
+import {Text2, Text3, Text, Text6} from './text';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
@@ -56,6 +56,7 @@ const CardContent: React.FC<CardContentProps> = ({
     button,
     buttonLink,
 }) => {
+    const {textPresets} = useTheme();
     const renderHeadline = () => {
         if (!headline) {
             return null;
@@ -86,9 +87,17 @@ const CardContent: React.FC<CardContentProps> = ({
                                             {pretitle}
                                         </Text2>
                                     )}
-                                    <Text4 truncate={titleLinesMax} as="h3" regular>
+                                    <Text
+                                        mobileSize={18}
+                                        mobileLineHeight="24px"
+                                        desktopSize={20}
+                                        desktopLineHeight="28px"
+                                        truncate={titleLinesMax}
+                                        weight={textPresets.cardTitle.weight}
+                                        as="h3"
+                                    >
                                         {title}
-                                    </Text4>
+                                    </Text>
                                     <Text2 truncate={subtitleLinesMax} as="div" regular>
                                         {subtitle}
                                     </Text2>

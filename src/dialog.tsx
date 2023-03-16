@@ -12,7 +12,7 @@ import ButtonLayout from './button-layout';
 import {Text5, Text4, Text3} from './text';
 import {ESC} from './utils/key-codes';
 import Box from './box';
-import {isOldChrome, isRunningAcceptanceTest} from './utils/platform';
+import {isRunningAcceptanceTest} from './utils/platform';
 import {useSetModalState} from './modal-context-provider';
 import Stack from './stack';
 import * as styles from './dialog.css';
@@ -23,9 +23,7 @@ import type {RendersNullableElement} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
 
 const animationsSupported = (platformOverrides: Theme['platformOverrides']) =>
-    !isOldChrome(platformOverrides) &&
-    process.env.NODE_ENV !== 'test' &&
-    !isRunningAcceptanceTest(platformOverrides);
+    process.env.NODE_ENV !== 'test' && !isRunningAcceptanceTest(platformOverrides);
 
 interface BaseDialogProps {
     className?: string;

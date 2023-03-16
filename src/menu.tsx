@@ -1,15 +1,18 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {ESC, TAB} from './utils/key-codes';
 import {cancelEvent, getPrefixedDataAttributes} from './utils/dom';
 import Overlay from './overlay';
 import * as styles from './menu.css';
-import {sprinkles} from './sprinkles.css';
+import {useWindowSize} from './hooks';
+import {Portal} from './portal';
+import {assignInlineVars} from '@vanilla-extract/dynamic';
 
 import type {DataAttributes} from './utils/types';
 
-const MAX_HEIGHT_DEFAULT = 416;
+const DEFAULT_MENU_WIDTH = 350;
+const DEFAULT_MENU_HEIGHT = 400;
+const MARGIN_THRESHOLD = 12;
 
 type MenuRenderProps = {
     ref: (element: HTMLElement | null) => void;
@@ -32,19 +35,27 @@ export type MenuProps = {
     dataAttributes?: DataAttributes;
 };
 
-const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 'left', dataAttributes}) => {
+const Menu: React.FC<MenuProps> = ({
+    renderTarget,
+    renderMenu,
+    width = DEFAULT_MENU_WIDTH,
+    position = 'left',
+    dataAttributes,
+}) => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [target, setTarget] = React.useState<HTMLElement | null>(null);
     const [menu, setMenu] = React.useState<HTMLElement | null>(null);
 
     const [animateShowItems, setAnimateShowItems] = React.useState(false);
     const [itemsComputedProps, setItemsComputedProps] = React.useState<{
-        right: string;
-        bottom: string;
+        left: number;
         top: string;
+        bottom: string;
         maxHeight: number;
         transformOrigin: string;
     } | null>(null);
+
+    const windowSize = useWindowSize();
 
     React.useEffect(() => {
         const targetRect = target?.getBoundingClientRect();
@@ -54,41 +65,48 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
             return;
         }
 
-        const MARGIN_THRESHOLD = 12;
-        const {top: topTarget, width: widthTarget, height} = targetRect;
-        const top = topTarget + height;
-        const spaceTaken = parseInt(window.getComputedStyle(menu).getPropertyValue('height')) ?? 0;
+        const {top: topTarget, width: widthTarget, left: leftTarget, bottom: bottomTarget} = targetRect;
 
-        const rightDirection = position === 'left' ? 'auto' : `calc(100% - ${widthTarget}px)`;
+        const heightMenu = parseInt(window.getComputedStyle(menu).getPropertyValue('height')) ?? 0;
 
-        // if it doesn't fit on bottom
-        if (top + spaceTaken + MARGIN_THRESHOLD > window.innerHeight) {
-            const availableSpaceBottom = window.innerHeight - top;
-            if (topTarget /* this is the available space on top */ > availableSpaceBottom) {
-                setItemsComputedProps({
-                    right: rightDirection,
-                    bottom: '100%',
-                    top: 'auto',
-                    maxHeight: Math.min(topTarget, MAX_HEIGHT_DEFAULT),
-                    transformOrigin: 'center bottom',
-                });
-            } else {
-                setItemsComputedProps({
-                    top: '100%',
-                    bottom: 'auto',
-                    right: rightDirection,
-                    maxHeight: Math.min(window.innerHeight - top - MARGIN_THRESHOLD, MAX_HEIGHT_DEFAULT),
-                    transformOrigin: 'center top',
-                });
-            }
-        } else {
-            // if it fits on bottom
+        const leftDirection = position === 'left' ? leftTarget : leftTarget + widthTarget - width;
+
+        const availableSpaceOnBottom = windowSize.height - bottomTarget - MARGIN_THRESHOLD;
+        const availableSpaceOnTop = topTarget - MARGIN_THRESHOLD;
+        const menuFitsOnBottom = availableSpaceOnBottom > heightMenu;
+        const menuFitsOnTop = availableSpaceOnTop > heightMenu;
+
+        if (menuFitsOnBottom) {
             setItemsComputedProps({
-                top: '100%',
+                left: leftDirection,
+                top: `${bottomTarget}px`,
                 bottom: 'auto',
-                right: rightDirection,
-                maxHeight: Math.min(window.innerHeight - top - MARGIN_THRESHOLD, MAX_HEIGHT_DEFAULT),
+                maxHeight: DEFAULT_MENU_HEIGHT,
                 transformOrigin: 'center top',
+            });
+        } else if (menuFitsOnTop) {
+            setItemsComputedProps({
+                left: leftDirection,
+                top: `${topTarget - heightMenu}px`,
+                bottom: 'auto',
+                maxHeight: DEFAULT_MENU_HEIGHT,
+                transformOrigin: 'center bottom',
+            });
+        } else if (availableSpaceOnBottom > availableSpaceOnTop) {
+            setItemsComputedProps({
+                left: leftDirection,
+                top: `${bottomTarget}px`,
+                bottom: 'auto',
+                maxHeight: Math.min(availableSpaceOnBottom, DEFAULT_MENU_HEIGHT),
+                transformOrigin: 'center top',
+            });
+        } else {
+            setItemsComputedProps({
+                left: leftDirection,
+                top: 'auto',
+                bottom: `${windowSize.height - topTarget}px`,
+                maxHeight: Math.min(availableSpaceOnTop, DEFAULT_MENU_HEIGHT),
+                transformOrigin: 'center bottom',
             });
         }
 
@@ -104,7 +122,7 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
                 cancelAnimationFrame(requestAnimationFrameId);
             }
         };
-    }, [position, isMenuOpen, menu, target, width]);
+    }, [position, isMenuOpen, menu, target, width, windowSize]);
 
     const targetProps = React.useMemo(
         () => ({
@@ -148,35 +166,39 @@ const Menu: React.FC<MenuProps> = ({renderTarget, renderMenu, width, position = 
     });
 
     return (
-        <div
-            className={sprinkles({position: 'relative'})}
-            style={{
-                ...assignInlineVars({
-                    [styles.vars.width]: width ? `${width}px` : '100%',
-                    ...(itemsComputedProps
-                        ? {
-                              [styles.vars.top]: itemsComputedProps.top,
-                              [styles.vars.bottom]: itemsComputedProps.bottom,
-                              [styles.vars.right]: itemsComputedProps.right,
-                              [styles.vars.transformOrigin]: itemsComputedProps.transformOrigin,
-                              [styles.vars.maxHeight]: `${itemsComputedProps.maxHeight}px`,
-                          }
-                        : {}),
-                }),
-            }}
-            {...getPrefixedDataAttributes(dataAttributes, 'Menu')}
-        >
-            {isMenuOpen ? (
-                <Overlay
-                    onPress={(e) => {
-                        cancelEvent(e);
-                        setIsMenuOpen(false);
-                    }}
-                    disableScroll
-                />
-            ) : null}
+        <div {...getPrefixedDataAttributes(dataAttributes, 'Menu')}>
             {renderTarget({...targetProps, isMenuOpen})}
-            {isMenuOpen ? renderMenu(menuProps) : null}
+            {isMenuOpen ? (
+                <Portal>
+                    <Overlay
+                        onPress={(e) => {
+                            cancelEvent(e);
+                            setIsMenuOpen(false);
+                        }}
+                        disableScroll
+                    >
+                        <div
+                            style={{
+                                ...assignInlineVars({
+                                    ...(itemsComputedProps
+                                        ? {
+                                              [styles.vars.top]: itemsComputedProps.top,
+                                              [styles.vars.bottom]: itemsComputedProps.bottom,
+                                              [styles.vars.left]: `${itemsComputedProps.left}px`,
+                                              [styles.vars.transformOrigin]:
+                                                  itemsComputedProps.transformOrigin,
+                                              [styles.vars.maxHeight]: `${itemsComputedProps.maxHeight}px`,
+                                              [styles.vars.width]: `${width}px`,
+                                          }
+                                        : {}),
+                                }),
+                            }}
+                        >
+                            {renderMenu(menuProps)}
+                        </div>
+                    </Overlay>
+                </Portal>
+            ) : null}
         </div>
     );
 };

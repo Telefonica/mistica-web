@@ -1,3 +1,72 @@
+# [14.3.0](https://github.com/Telefonica/mistica-web/compare/v14.2.0...v14.3.0) (2023-03-15)
+
+
+### Bug Fixes
+
+* **HighlightedCard:** image positioning issue when backgroundUrl is changed ([#691](https://github.com/Telefonica/mistica-web/issues/691)) ([44c1a40](https://github.com/Telefonica/mistica-web/commit/44c1a40032d3ec032227ed37dcc95c92bab6a5a9))
+
+
+### Features
+
+* **HeaderLayout:** added bleed prop ([#685](https://github.com/Telefonica/mistica-web/issues/685)) ([bc060d6](https://github.com/Telefonica/mistica-web/commit/bc060d62ae8be1cd063e38429f50a6b2512f4d24))
+
+# [14.2.0](https://github.com/Telefonica/mistica-web/compare/v14.1.0...v14.2.0) (2023-03-08)
+
+
+### Bug Fixes
+
+* **Movistar skin:** dark mode fixes [#1080](https://github.com/Telefonica/mistica-web/issues/1080) ([#686](https://github.com/Telefonica/mistica-web/issues/686)) ([d538f35](https://github.com/Telefonica/mistica-web/commit/d538f35ce6be8c8819ffedf575c4fcc695bf3080))
+* **Select:** issue in SSR ([#683](https://github.com/Telefonica/mistica-web/issues/683)) ([6100440](https://github.com/Telefonica/mistica-web/commit/6100440e5e490a166ace84e398e0087f7e1c08ef))
+* **Stepper:**  SSR issues ([#684](https://github.com/Telefonica/mistica-web/issues/684)) ([21414a6](https://github.com/Telefonica/mistica-web/commit/21414a68d8dab23abacabd14565f712cd004fecd))
+
+
+### Features
+
+* **Icons:** new Meatball icon ([#687](https://github.com/Telefonica/mistica-web/issues/687)) ([7faacab](https://github.com/Telefonica/mistica-web/commit/7faacabb0d8ec993339a373e60d4153dc386533e))
+
+# [14.1.0](https://github.com/Telefonica/mistica-web/compare/v14.0.0...v14.1.0) (2023-02-28)
+
+
+### Features
+
+* **MainNavigationBar:** don't show burger if there aren't 2 or more sections ([#681](https://github.com/Telefonica/mistica-web/issues/681)) ([7ca1070](https://github.com/Telefonica/mistica-web/commit/7ca1070c9b101604939b75481beffe847c0c55e1))
+
+# [14.0.0](https://github.com/Telefonica/mistica-web/compare/v13.6.1...v14.0.0) (2023-02-28)
+
+
+### Bug Fixes
+
+* **Video:** remove 12:5 from list of recommended `aspectRatio`s ([#679](https://github.com/Telefonica/mistica-web/issues/679)) ([3346032](https://github.com/Telefonica/mistica-web/commit/3346032c20fedd8623513f8ecc983d32266c5a3f))
+
+
+### Features
+
+* **Movistar skin:** color changes for Digital Hub project ([fd57bfd](https://github.com/Telefonica/mistica-web/commit/fd57bfd8108f8a62066e010f5ae6bb4763c306a2))
+
+
+### BREAKING CHANGES
+
+* **Movistar skin:** The Movistar skin has enough color changes (mainly in dark mode) to consider this a breaking change. We still ship a "classic" version of the Movistar skin with the old colors with `getMovistarClassicSkin` that should be considered as deprecated and will be removed in future Mistica versions.
+
+## [13.6.1](https://github.com/Telefonica/mistica-web/compare/v13.6.0...v13.6.1) (2023-02-27)
+
+
+### Bug Fixes
+
+* **TextField:** maxLenght in controlled component ([#680](https://github.com/Telefonica/mistica-web/issues/680)) ([3f351fb](https://github.com/Telefonica/mistica-web/commit/3f351fbb9ffc01968627c00e3a8047cb78818adc))
+
+# [13.6.0](https://github.com/Telefonica/mistica-web/compare/v13.5.0...v13.6.0) (2023-02-27)
+
+
+### Bug Fixes
+
+* **Menu:** use portal to render the dropdown to fix issue when rendering inside "position relative" containers ([#677](https://github.com/Telefonica/mistica-web/issues/677)) ([b1bb86c](https://github.com/Telefonica/mistica-web/commit/b1bb86c5d264c509a5675ed28e420e7abe8c2b35))
+
+
+### Features
+
+* **DisplayDataCard, DisplayMediaCard:** new components ([#671](https://github.com/Telefonica/mistica-web/issues/671)) ([61ed3e7](https://github.com/Telefonica/mistica-web/commit/61ed3e7ae3a236456e85a42c69d7d6e2c304870c))
+
 # [13.5.0](https://github.com/Telefonica/mistica-web/compare/v13.4.0...v13.5.0) (2023-02-23)
 
 

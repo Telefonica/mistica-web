@@ -13,6 +13,7 @@ export const palette = {
     movistarBlue30: '#80CEF9',
     movistarBlue40: '#4DBAF7',
     movistarBlue55: '#008EDD',
+    movistarBlueDark: '#0B2739',
 
     movistarGreen: '#5CB615',
     movistarGreen10: '#EFF8E8',
@@ -55,11 +56,17 @@ export const palette = {
     movistarProminentBlueLight70: '#546874',
 
     // specific for dark mode:
-    darkModeBlack: '#191919',
-    darkModeGrey: '#242424',
+    darkModeBlack: '#061824',
+    darkModeGrey: '#081F2E',
+
+    darkModeGrey2: '#EAEBEE',
+    darkModeGrey3: '#CED4D7',
+    darkModeGrey4: '#85939C',
+    darkModeGrey5: '#6D7D88',
+    darkModeGrey6: '#3C5261',
 } as const;
 
-export const getMovistarSkin: GetKnownSkin = (variant) => {
+export const getMovistarSkin: GetKnownSkin = () => {
     const skin: KnownSkin = {
         name: MOVISTAR_SKIN,
         colors: {
@@ -68,10 +75,10 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             background: palette.white,
             backgroundContainer: palette.white,
             backgroundBrand: palette.movistarBlue,
-            backgroundBrandSecondary: palette.movistarBlue,
-            backgroundOverlay: applyAlpha(palette.grey6, 0.6),
+            backgroundBrandSecondary: palette.movistarBlueDark,
+            backgroundOverlay: applyAlpha(palette.movistarBlueDark, 0.6),
             backgroundSkeleton: palette.grey2,
-            backgroundSkeletonInverse: palette.movistarBlue55,
+            backgroundSkeletonInverse: applyAlpha(palette.white, 0.2),
             navigationBarBackground: palette.movistarBlue,
             backgroundAlternative: palette.grey1,
             backgroundFeedbackBottom: palette.movistarBlue,
@@ -140,22 +147,22 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             // FEEDBACKS
             badge: palette.pepper55,
             feedbackErrorBackground: palette.pepper,
-            feedbackInfoBackground: palette.grey6,
+            feedbackInfoBackground: palette.movistarBlueDark,
 
             // GLOBAL
             brand: palette.movistarBlue,
             brandHigh: palette.movistarBlue55,
             inverse: palette.white,
-            neutralHigh: palette.grey6,
+            neutralHigh: palette.movistarBlueDark,
             neutralMedium: palette.grey5,
             neutralLow: palette.grey1,
             promo: palette.purple,
             highlight: palette.pink,
 
-            textPrimary: palette.grey6,
+            textPrimary: palette.movistarBlueDark,
             textPrimaryInverse: palette.white,
             textSecondary: palette.grey5,
-            textSecondaryInverse: palette.white,
+            textSecondaryInverse: palette.movistarBlue10,
 
             // STATES
             error: palette.pepper,
@@ -189,19 +196,19 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             neutralMediumInverse: palette.grey5,
         },
         darkModeColors: {
-            brand: palette.movistarBlue, // this color needs to be in darkModeColors to revert the promient variant
             appBarBackground: palette.darkModeGrey,
             background: palette.darkModeBlack,
             backgroundContainer: palette.darkModeGrey,
             backgroundBrand: palette.darkModeBlack,
             backgroundBrandSecondary: palette.darkModeBlack,
             backgroundOverlay: applyAlpha(palette.darkModeGrey, 0.8),
-            backgroundSkeleton: palette.grey6,
-            backgroundSkeletonInverse: palette.grey6,
+            backgroundSkeleton: palette.movistarBlueDark,
+            backgroundSkeletonInverse: palette.movistarBlueDark,
             navigationBarBackground: palette.darkModeBlack,
             backgroundAlternative: palette.darkModeGrey,
             backgroundFeedbackBottom: palette.darkModeBlack,
-            skeletonWave: palette.grey5,
+            skeletonWave: palette.darkModeGrey6,
+            borderHigh: palette.darkModeGrey4,
             borderLow: palette.darkModeBlack,
             border: palette.darkModeGrey,
             buttonLinkBackgroundSelected: applyAlpha(palette.white, 0.05),
@@ -219,47 +226,47 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             buttonSecondaryBackgroundSelected: applyAlpha(palette.white, 0.15),
             buttonSecondaryBackgroundInverseHover: applyAlpha(palette.white, 0.15),
             buttonSecondaryBackgroundInverseSelected: applyAlpha(palette.white, 0.15),
-            textButtonPrimary: palette.grey2,
-            textButtonPrimaryInverse: palette.grey2,
-            textButtonPrimaryInverseSelected: palette.grey2,
-            textButtonSecondary: palette.grey2,
-            textButtonSecondarySelected: palette.grey2,
-            textButtonSecondaryInverse: palette.grey2,
-            textButtonSecondaryInverseSelected: palette.grey2,
+            textButtonPrimary: palette.darkModeGrey2,
+            textButtonPrimaryInverse: palette.darkModeGrey2,
+            textButtonPrimaryInverseSelected: palette.darkModeGrey2,
+            textButtonSecondary: palette.darkModeGrey2,
+            textButtonSecondarySelected: palette.darkModeGrey2,
+            textButtonSecondaryInverse: palette.darkModeGrey2,
+            textButtonSecondaryInverseSelected: palette.darkModeGrey2,
             textLink: palette.movistarBlue,
             textLinkInverse: palette.movistarBlue,
-            control: palette.grey6,
+            control: palette.darkModeGrey6,
             controlActivated: palette.movistarBlue,
             loadingBar: palette.movistarBlue,
             loadingBarBackground: applyAlpha(palette.white, 0.05),
-            toggleAndroidInactive: palette.grey4, // web only
+            toggleAndroidInactive: palette.darkModeGrey4, // web only
             toggleAndroidBackgroundActive: palette.movistarBlue20, // web only
-            iosControlKnob: palette.grey2, // web only
+            iosControlKnob: palette.darkModeGrey2, // web only
             divider: applyAlpha(palette.white, 0.05),
             dividerInverse: applyAlpha(palette.white, 0.05),
             navigationBarDivider: palette.darkModeBlack,
-            brandHigh: palette.grey6,
-            inverse: palette.grey2,
-            neutralHigh: palette.grey2,
-            neutralMedium: palette.grey5,
-            neutralLow: palette.grey6,
-            textPrimary: palette.grey2,
-            textPrimaryInverse: palette.grey2,
-            textSecondary: palette.grey4,
-            textSecondaryInverse: palette.grey4,
-            textNavigationBarPrimary: palette.grey2,
-            textNavigationBarSecondary: palette.grey4,
-            textNavigationSearchBarHint: palette.grey4, // iOS
-            textNavigationSearchBarText: palette.grey2, // iOS
-            textAppBar: palette.grey5,
-            textAppBarSelected: palette.grey2,
+            brandHigh: palette.darkModeGrey6,
+            inverse: palette.darkModeGrey2,
+            neutralHigh: palette.darkModeGrey2,
+            neutralMedium: palette.darkModeGrey5,
+            neutralLow: palette.movistarBlueDark,
+            textPrimary: palette.darkModeGrey2,
+            textPrimaryInverse: palette.darkModeGrey2,
+            textSecondary: palette.darkModeGrey4,
+            textSecondaryInverse: palette.darkModeGrey4,
+            textNavigationBarPrimary: palette.darkModeGrey2,
+            textNavigationBarSecondary: palette.darkModeGrey4,
+            textNavigationSearchBarHint: palette.darkModeGrey4, // iOS
+            textNavigationSearchBarText: palette.darkModeGrey2, // iOS
+            textAppBar: palette.darkModeGrey5,
+            textAppBarSelected: palette.darkModeGrey2,
 
             // TAGS
-            successLow: palette.grey6,
-            warningLow: palette.grey6,
-            errorLow: palette.grey6,
-            promoLow: palette.grey6,
-            brandLow: palette.grey6,
+            successLow: palette.movistarBlueDark,
+            warningLow: palette.movistarBlueDark,
+            errorLow: palette.movistarBlueDark,
+            promoLow: palette.movistarBlueDark,
+            brandLow: palette.movistarBlueDark,
 
             successHigh: palette.movistarGreen40,
             warningHigh: palette.egg40,
@@ -279,6 +286,7 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
             text8: {weight: 'bold'},
             text9: {weight: 'bold'},
             text10: {weight: 'bold'},
+            cardTitle: {weight: 'bold'},
         },
         // @todo: uncomment to apply movistar skin evolution
         // textPresets: {
@@ -290,16 +298,6 @@ export const getMovistarSkin: GetKnownSkin = (variant) => {
         //     text10: {weight: 'medium'},
         // },
     };
-
-    if (variant === 'prominent') {
-        skin.colors.brand = palette.movistarProminentBlue;
-        skin.colors.brandHigh = palette.movistarProminentBlueDark;
-        skin.colors.backgroundBrand = palette.movistarProminentBlue;
-        skin.colors.navigationBarBackground = palette.movistarProminentBlue;
-        skin.colors.backgroundFeedbackBottom = palette.movistarProminentBlue;
-        skin.colors.controlActivated = palette.movistarProminentBlue;
-        skin.colors.dividerInverse = palette.movistarProminentBlueDark;
-    }
 
     return skin;
 };

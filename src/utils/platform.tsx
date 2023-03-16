@@ -17,7 +17,7 @@ export const isInsideNovumNativeApp = (platformOverrides: Theme['platformOverrid
 };
 
 export const isRunningAcceptanceTest = (platformOverrides: Theme['platformOverrides'] = {}): boolean =>
-    getUserAgent(platformOverrides).includes('acceptance-test');
+    getUserAgent(platformOverrides).includes('acceptance-test') && !process.env.SSR_TEST;
 
 const isEdgeOrIE = Boolean(typeof self !== 'undefined' && (self as any).MSStream);
 
@@ -54,21 +54,6 @@ export const isFirefox = (platformOverrides?: Theme['platformOverrides']): boole
 
 export const isChrome = (platformOverrides: Theme['platformOverrides']): boolean =>
     !!getUserAgent(platformOverrides).match(/Chrom(e|ium)\/([0-9]+)\./);
-
-const MODERN_CHROME_VERSION = 44;
-
-export const isOldChrome = (platformOverrides: Theme['platformOverrides']): boolean => {
-    const matches = getUserAgent(platformOverrides).match(/Chrome\/(\d+)/);
-
-    if (!matches || !matches[1]) {
-        // not Chrome
-        return false;
-    }
-
-    const version = Number(matches[1]);
-
-    return version < MODERN_CHROME_VERSION;
-};
 
 const SEMVER_ZERO = '0.0.0';
 export const getIosVersion = (platformOverrides: Theme['platformOverrides']): string => {
