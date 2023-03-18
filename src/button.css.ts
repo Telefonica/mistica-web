@@ -8,7 +8,7 @@ import type {ComplexStyleRule} from '@vanilla-extract/css';
 const transitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
 
 export const BUTTON_MIN_WIDTH = 120;
-const BORDER_PX = 1.5;
+const BORDER_PX = 1;
 export const ICON_MARGIN_PX = 8;
 export const X_PADDING_PX = 16 - BORDER_PX;
 const Y_PADDING_PX = 17.5 - BORDER_PX;
