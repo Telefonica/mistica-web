@@ -29,7 +29,7 @@ export const Default: StoryComponent = () => {
         true
     );
     const [withBreadcrumbs, breadcrumbsCheckbox] = useCheckbox('With breadcrumbs (desktop only)', true);
-    const [bleed, bleedCheckbox] = useCheckbox('Bleed', false);
+    const [bleed, bleedCheckbox] = useCheckbox('Bleed', true);
     return (
         <Stack space={16}>
             <div data-testid="header-layout">
@@ -81,6 +81,7 @@ export const NoHeader: StoryComponent = () => {
             <div data-testid="header-layout">
                 <HeaderLayout
                     isInverse
+                    bleed
                     sideBySideExtraOnDesktop={extraSideBySide}
                     breadcrumbs={
                         <NavigationBreadcrumbs

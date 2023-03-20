@@ -76,3 +76,14 @@ test('Header with truncation and color overrides', async () => {
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
 });
+
+test.each(DEVICES)('Header with bleed', async (device) => {
+    await openStoryPage({
+        id: 'components-headers-header--default',
+        device,
+    });
+
+    const story = await screen.findByTestId('header-layout');
+    const image = await story.screenshot();
+    expect(image).toMatchImageSnapshot();
+});
