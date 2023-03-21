@@ -81,10 +81,13 @@ test.each(DEVICES)('Header with bleed', async (device) => {
     await openStoryPage({
         id: 'components-headers-header--default',
         device,
-        args: {bleedValue: true},
     });
 
+    const bleedCheckbox = await screen.findByLabelText('Bleed');
+    await bleedCheckbox.click();
+
     const story = await screen.findByTestId('header-layout');
+
     const image = await story.screenshot();
     expect(image).toMatchImageSnapshot();
 });

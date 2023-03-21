@@ -18,11 +18,7 @@ export default {
     },
 };
 
-type Args = {
-    bleedValue: boolean;
-};
-
-export const Default: StoryComponent<Args> = ({bleedValue}) => {
+export const Default: StoryComponent = () => {
     const [pretitle, pretitleTextField] = useTextField('Pretitle', 'Your last bill');
     const [title, titleTextField] = useTextField('Title', 'December bill is now available');
     const [description, descriptionTextField] = useTextField('Description', 'This is a description');
@@ -33,7 +29,7 @@ export const Default: StoryComponent<Args> = ({bleedValue}) => {
         true
     );
     const [withBreadcrumbs, breadcrumbsCheckbox] = useCheckbox('With breadcrumbs (desktop only)', true);
-    const [bleed, bleedCheckbox] = useCheckbox('Bleed', bleedValue || false);
+    const [bleed, bleedCheckbox] = useCheckbox('Bleed', false);
     return (
         <Stack space={16}>
             <div data-testid="header-layout">
