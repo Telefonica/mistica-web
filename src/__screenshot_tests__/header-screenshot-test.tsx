@@ -81,7 +81,7 @@ test.each(DEVICES)('Header with bleed', async (device) => {
     await openStoryPage({
         id: 'components-headers-header--default',
         device,
-        args: {bleedValue: true}
+        args: {bleedValue: true},
     });
 
     const story = await screen.findByTestId('header-layout');
