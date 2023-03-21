@@ -77,3 +77,19 @@ test('DataCard with top actions', async () => {
 
     expect(image).toMatchImageSnapshot();
 });
+
+test('DataCard without icon, with top actions and too long title', async () => {
+    const page = await openStoryPage({
+        id: 'components-cards-data-card--default',
+        device: 'MOBILE_IOS',
+        args: {
+            withTopAction: true,
+            asset: 'none',
+            title: 'Too long title too long title too long titltoo long title too long title',
+        },
+    });
+
+    const image = await page.screenshot({fullPage: true});
+
+    expect(image).toMatchImageSnapshot();
+});

@@ -371,9 +371,13 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
     ) => {
         const finalActions = useTopActions(actions, onClose);
         const hasActions = finalActions.length > 0;
+        const hasIcon = !!icon;
+
+        const topActionsStylesWithIcon = {position: 'absolute', top: 8, right: 8, zIndex: 2} as const;
+        const topActionsStylesWithoutIcon = {marginRight: -8, marginTop: -16} as const;
 
         return (
-            <section aria-label={ariaLabel} style={{height: '100%'}}>
+            <section aria-label={ariaLabel} style={{height: '100%', position: 'relative'}}>
                 <Boxed
                     className={styles.boxed}
                     dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
@@ -391,7 +395,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                             })}
                         >
                             <Stack space={16} className={sprinkles({flex: 1})}>
-                                {icon ? icon : null}
+                                {hasIcon ? icon : null}
                                 <CardContent
                                     headline={headline}
                                     pretitle={pretitle}
@@ -402,20 +406,16 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                                     subtitleLinesMax={subtitleLinesMax}
                                     description={description}
                                     descriptionLinesMax={descriptionLinesMax}
-                                    extra={extra}
                                 />
                             </Stack>
                             {hasActions && (
-                                <div
-                                    style={{
-                                        marginRight: -8,
-                                        marginTop: -16,
-                                    }}
-                                >
+                                <div style={hasIcon ? topActionsStylesWithIcon : topActionsStylesWithoutIcon}>
                                     <CardActionsGroup actions={finalActions} />
                                 </div>
                             )}
                         </div>
+
+                        {extra && <div>{extra}</div>}
 
                         {(button || buttonLink) && (
                             <div className={styles.actions}>
