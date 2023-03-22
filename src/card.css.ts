@@ -31,6 +31,7 @@ export const mediaCardContent = style([
         paddingTop: 16,
         paddingBottom: 24,
         flexDirection: 'column',
+        justifyContent: 'space-between',
     }),
     {
         '@media': {

@@ -72,3 +72,19 @@ test('MediaCard with body closeable', async () => {
 
     expect(image).toMatchImageSnapshot();
 });
+
+test('MediaCard with top actions', async () => {
+    const page = await openStoryPage({
+        id: 'components-cards-media-card--default',
+        device: 'MOBILE_IOS',
+        args: {
+            withExtra: true,
+            actions: 'button and link',
+            withTopAction: true,
+        },
+    });
+
+    const image = await page.screenshot({fullPage: true});
+
+    expect(image).toMatchImageSnapshot();
+});
