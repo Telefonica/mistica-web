@@ -65,7 +65,7 @@ test('<a> is rendered when using "to" prop', () => {
             <div
               aria-hidden="true"
               class="button_loadingFiller__rrbrpn4 button__rrbrpn3 sprinkles_display_block__1y2v1nf5k sprinkles_height_0__1y2v1nf8b sprinkles_overflow_hidden__1y2v1nf9y"
-              style="padding-left: 1.250rem; padding-right: 37px;"
+              style="padding-left: 1.250rem; padding-right: 38px;"
             />
             <div
               aria-hidden="true"
