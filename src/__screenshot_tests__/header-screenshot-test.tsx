@@ -86,6 +86,9 @@ test.each(DEVICES)('Header with bleed', async (device) => {
     const bleedCheckbox = await screen.findByLabelText('Bleed');
     await bleedCheckbox.click();
 
+    const extraSideBySideCheckbox = await screen.findByLabelText('Extra content placed on the right in desktop');
+    await extraSideBySideCheckbox.click();
+
     const story = await screen.findByTestId('header-layout');
 
     const image = await story.screenshot();
