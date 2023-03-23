@@ -735,6 +735,31 @@ const cardSnippets: Array<Snippet> = [
           ]}
         />`,
     },
+    {
+        group: 'Cards',
+        name: 'PosterCard',
+        code: `
+        <PosterCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          description="Description"
+          backgroundImage="https://api.lorem.space/image/watch?w=700&h=700"
+          button={
+            <ButtonPrimary small href="https://google.com">
+              Action
+            </ButtonPrimary>
+          }
+          onClose={() => {}}
+          actions={[
+            {
+              Icon: IconLightningRegular,
+              onPress: () => {},
+              label: "Lightning",
+            },
+          ]}
+        />`,
+    },
 ];
 
 const titlesSnippets: Array<Snippet> = [

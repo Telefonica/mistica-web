@@ -567,6 +567,13 @@ interface DisplayDataCardProps extends CommonDisplayCardProps {
     isInverse?: boolean;
 }
 
+interface PosterCardProps extends CommonDisplayCardProps {
+    backgroundImage: string;
+    aspectRatio?: AspectRatio | number;
+    width?: number | string;
+    height?: number | string;
+}
+
 type GenericDisplayCardProps = ExclusifyUnion<
     (DisplayMediaCardProps & {isInverse: true}) | DisplayDataCardProps
 >;
@@ -723,6 +730,17 @@ export const DisplayDataCard = React.forwardRef<HTMLDivElement, DisplayDataCardP
             {...props}
             ref={ref}
             dataAttributes={{...dataAttributes, 'component-name': 'DisplayDataCard'}}
+        />
+    )
+);
+
+export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
+    ({dataAttributes, ...props}, ref) => (
+        <DisplayCard
+            {...props}
+            ref={ref}
+            isInverse
+            dataAttributes={{...dataAttributes, 'component-name': 'PosterCard'}}
         />
     )
 );
