@@ -125,11 +125,11 @@ const Hero = React.forwardRef<HTMLDivElement, HeroProps>(
         {height, background = 'default', media, desktopMediaPosition = 'left', dataAttributes, ...rest},
         ref
     ) => {
-        const {isTabletOrBigger} = useScreenSize();
+        const {isDesktopOrBigger} = useScreenSize();
         const isInsideSlideShow = useIsInsideSlideshowContext();
         const isInverse = background === 'brand' || background === 'brand-secondary';
 
-        if (!isTabletOrBigger) {
+        if (!isDesktopOrBigger) {
             return (
                 <MediaBorderRadiusProvider value={false}>
                     <div
