@@ -2,21 +2,13 @@ import * as React from 'react';
 import Tag from './tag';
 import Stack from './stack';
 import Box from './box';
-import {Text2, Text3, Text, Text6} from './text';
+import {Text2, Text3, Text, Text6, Text1} from './text';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
 import Video from './video';
 import Image, {MediaBorderRadiusProvider} from './image';
-import {
-    BaseTouchable,
-    PropsHref,
-    PropsMaybeHref,
-    PropsMaybeOnPress,
-    PropsMaybeTo,
-    PropsOnPress,
-    PropsTo,
-} from './touchable';
+import {BaseTouchable} from './touchable';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './card.css';
 import {useTheme} from './hooks';
@@ -24,6 +16,7 @@ import {sprinkles} from './sprinkles.css';
 import Inline from './inline';
 import IconButton from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import {Touchable} from './index';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {
@@ -33,7 +26,6 @@ import type {
     RendersNullableElement,
     TrackingEvent,
 } from './utils/types';
-import {Touchable} from './index';
 
 type CardAction = {
     label: string;
@@ -96,6 +88,8 @@ type MaybeWithActionsProps = {
     children: React.ReactNode;
     width?: string | number;
     height?: string | number;
+    minWidth?: string | number;
+    minHeight?: string | number;
     aspectRatio?: AspectRatio | number;
     actions?: Array<CardAction>;
     onClose?: () => void;
@@ -107,6 +101,8 @@ const MaybeWithActions = ({
     children,
     width = '100%',
     height = '100%',
+    minWidth,
+    minHeight,
     aspectRatio,
     actions,
     onClose,
@@ -128,6 +124,8 @@ const MaybeWithActions = ({
             style={{
                 width,
                 height,
+                minWidth,
+                minHeight,
                 aspectRatio: cssAspectRatio,
                 position: 'relative',
             }}
@@ -569,6 +567,8 @@ interface DisplayMediaCardProps extends CommonDisplayCardProps {
     aspectRatio?: AspectRatio | number;
     width?: number | string;
     height?: number | string;
+    minWidth?: number | string;
+    minHeight?: number | string;
 }
 
 interface DisplayDataCardProps extends CommonDisplayCardProps {
@@ -602,11 +602,14 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             dataAttributes,
             width,
             height,
+            minWidth,
+            minHeight,
             aspectRatio,
             'aria-label': ariaLabel,
         },
         ref
     ) => {
+        console.log('button', button);
         const withGradient = !!backgroundImage;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose;
@@ -614,6 +617,8 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             <MaybeWithActions
                 width={width}
                 height={height}
+                minWidth={minWidth}
+                minHeight={minHeight}
                 aspectRatio={aspectRatio}
                 onClose={onClose}
                 actions={actions}
@@ -685,7 +690,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                         )}
 
                                         {description && (
-                                            <Text3
+                                            <Text2
                                                 forceMobileSizes
                                                 truncate={descriptionLinesMax}
                                                 as="p"
@@ -694,7 +699,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                 textShadow={textShadow}
                                             >
                                                 {description}
-                                            </Text3>
+                                            </Text2>
                                         )}
                                     </Stack>
                                     {extra}
@@ -745,23 +750,17 @@ interface PosterCardBaseProps extends CommonDisplayCardProps {
 }
 
 interface PosterCardToProps extends PosterCardBaseProps {
-    to?: string; //
+    to?: string;
     fullPageOnWebView?: boolean;
-    // href?: undefined; //
-    // onPress?: undefined;//
 }
 
 interface PosterCardHrefProps extends PosterCardBaseProps {
-    href?: string; //
+    href?: string;
     newTab?: boolean;
-    // onPress?: undefined; //
-    // to?: undefined; //
 }
 
 interface PosterCardOnPressProps extends PosterCardBaseProps {
-    onPress?: () => void; //
-    // href?: undefined; //
-    // to?: undefined; //
+    onPress?: () => void;
 }
 
 type PosterCardProps = ExclusifyUnion<PosterCardToProps | PosterCardHrefProps | PosterCardOnPressProps>;
@@ -789,10 +788,15 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
               };
 
         return (
-            <Touchable href="http://www.google.com" aria-label={ariaLabel}>
-                <DisplayMediaCard
+            <Touchable maybe {...touchableProps} aria-label={ariaLabel}>
+                <DisplayCard
                     {...props}
+                    minHeight={112}
+                    minWidth={140}
                     ref={ref}
+                    isInverse
+                    button={button}
+                    buttonLink={buttonLink}
                     dataAttributes={{...dataAttributes, 'component-name': 'PosterCard'}}
                 />
             </Touchable>
