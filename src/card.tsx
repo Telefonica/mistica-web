@@ -8,7 +8,15 @@ import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
 import Video from './video';
 import Image, {MediaBorderRadiusProvider} from './image';
-import {BaseTouchable} from './touchable';
+import {
+    BaseTouchable,
+    PropsHref,
+    PropsMaybeHref,
+    PropsMaybeOnPress,
+    PropsMaybeTo,
+    PropsOnPress,
+    PropsTo,
+} from './touchable';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './card.css';
 import {useTheme} from './hooks';
@@ -25,6 +33,7 @@ import type {
     RendersNullableElement,
     TrackingEvent,
 } from './utils/types';
+import {Touchable} from './index';
 
 type CardAction = {
     label: string;
@@ -567,13 +576,6 @@ interface DisplayDataCardProps extends CommonDisplayCardProps {
     isInverse?: boolean;
 }
 
-interface PosterCardProps extends CommonDisplayCardProps {
-    backgroundImage: string;
-    aspectRatio?: AspectRatio | number;
-    width?: number | string;
-    height?: number | string;
-}
-
 type GenericDisplayCardProps = ExclusifyUnion<
     (DisplayMediaCardProps & {isInverse: true}) | DisplayDataCardProps
 >;
@@ -734,13 +736,66 @@ export const DisplayDataCard = React.forwardRef<HTMLDivElement, DisplayDataCardP
     )
 );
 
+interface PosterCardBaseProps extends CommonDisplayCardProps {
+    backgroundImage: string;
+    ariaLabel?: string;
+    aspectRatio?: AspectRatio | number;
+    width?: number | string;
+    height?: number | string;
+}
+
+interface PosterCardToProps extends PosterCardBaseProps {
+    to?: string; //
+    fullPageOnWebView?: boolean;
+    // href?: undefined; //
+    // onPress?: undefined;//
+}
+
+interface PosterCardHrefProps extends PosterCardBaseProps {
+    href?: string; //
+    newTab?: boolean;
+    // onPress?: undefined; //
+    // to?: undefined; //
+}
+
+interface PosterCardOnPressProps extends PosterCardBaseProps {
+    onPress?: () => void; //
+    // href?: undefined; //
+    // to?: undefined; //
+}
+
+type PosterCardProps = ExclusifyUnion<PosterCardToProps | PosterCardHrefProps | PosterCardOnPressProps>;
+
+const isPosterCardToProps = (el: PosterCardProps): el is PosterCardToProps =>
+    Object.keys(el).includes('fullPageOnWebView');
+const isPosterCardHrefProps = (el: PosterCardProps): el is PosterCardHrefProps =>
+    Object.keys(el).includes('href');
+
+const isPosterCardOnPressProps = (el: PosterCardProps): el is PosterCardOnPressProps =>
+    Object.keys(el).includes('onPress');
+
 export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
-    ({dataAttributes, ...props}, ref) => (
-        <DisplayCard
-            {...props}
-            ref={ref}
-            isInverse
-            dataAttributes={{...dataAttributes, 'component-name': 'PosterCard'}}
-        />
-    )
+    ({dataAttributes, button, buttonLink, ariaLabel, ...props}, ref) => {
+        const fullPageOnWebView = isPosterCardToProps(props) ? props?.fullPageOnWebView : undefined;
+        const {newTab, href} = isPosterCardHrefProps(props)
+            ? {newTab: props?.newTab, href: props?.href}
+            : {newTab: undefined, href: undefined};
+        const touchableProps = isPosterCardOnPressProps(props)
+            ? {onPress: props?.onPress}
+            : {
+                  newTab,
+                  href,
+                  fullPageOnWebView,
+              };
+
+        return (
+            <Touchable href="http://www.google.com" aria-label={ariaLabel}>
+                <DisplayMediaCard
+                    {...props}
+                    ref={ref}
+                    dataAttributes={{...dataAttributes, 'component-name': 'PosterCard'}}
+                />
+            </Touchable>
+        );
+    }
 );
