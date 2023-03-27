@@ -42,61 +42,63 @@ export const Default: StoryComponent<Args> = ({label: labelFromArgs}) => {
     const getLabel = (fallback: string) => labelFromArgs || fallback;
 
     return (
-        <Inline space={48} dataAttributes={{testid: 'tags'}}>
-            <Container>
-                <Text3 medium>Example</Text3>
-                <Tag Icon={IconOfferPercentFilled} type="promo" dataAttributes={{qsysid: 'promo'}}>
-                    {getLabel('Promo')}
-                </Tag>
-                <Tag Icon={IconStarFilled} type="active">
-                    {getLabel('Active')}
-                </Tag>
-                <Tag Icon={IconTimeFilled} type="inactive">
-                    {getLabel('Inactive')}
-                </Tag>
-                <Tag Icon={IconCheckRegular} type="success">
-                    {getLabel('Success')}
-                </Tag>
-                <Tag Icon={IconAlertRegular} type="warning">
-                    {getLabel('Warning')}
-                </Tag>
-                <Tag Icon={IconCloseRegular} type="error">
-                    {getLabel('Error')}
-                </Tag>
-            </Container>
+        <div data-testid="tags" style={{display: 'inline-flex'}}>
+            <Inline space={48}>
+                <Container>
+                    <Text3 medium>Example</Text3>
+                    <Tag Icon={IconOfferPercentFilled} type="promo" dataAttributes={{qsysid: 'promo'}}>
+                        {getLabel('Promo')}
+                    </Tag>
+                    <Tag Icon={IconStarFilled} type="active">
+                        {getLabel('Active')}
+                    </Tag>
+                    <Tag Icon={IconTimeFilled} type="inactive">
+                        {getLabel('Inactive')}
+                    </Tag>
+                    <Tag Icon={IconCheckRegular} type="success">
+                        {getLabel('Success')}
+                    </Tag>
+                    <Tag Icon={IconAlertRegular} type="warning">
+                        {getLabel('Warning')}
+                    </Tag>
+                    <Tag Icon={IconCloseRegular} type="error">
+                        {getLabel('Error')}
+                    </Tag>
+                </Container>
 
-            <Container>
-                <Text3 medium>Without icon</Text3>
-                <Tag type="promo">{getLabel('Promo')}</Tag>
-                <Tag type="active">{getLabel('Active')}</Tag>
-                <Tag type="inactive">{getLabel('Inactive')}</Tag>
-                <Tag type="success">{getLabel('Success')}</Tag>
-                <Tag type="warning">{getLabel('Warning')}</Tag>
-                <Tag type="error">{getLabel('Error')}</Tag>
-            </Container>
+                <Container>
+                    <Text3 medium>Without icon</Text3>
+                    <Tag type="promo">{getLabel('Promo')}</Tag>
+                    <Tag type="active">{getLabel('Active')}</Tag>
+                    <Tag type="inactive">{getLabel('Inactive')}</Tag>
+                    <Tag type="success">{getLabel('Success')}</Tag>
+                    <Tag type="warning">{getLabel('Warning')}</Tag>
+                    <Tag type="error">{getLabel('Error')}</Tag>
+                </Container>
 
-            <Container inverse>
-                <Text3 medium>Inverse</Text3>
-                <Tag Icon={IconOfferPercentFilled} type="promo">
-                    {getLabel('Promo')}
-                </Tag>
-                <Tag Icon={IconStarFilled} type="active">
-                    {getLabel('Active')}
-                </Tag>
-                <Tag Icon={IconTimeFilled} type="inactive">
-                    {getLabel('Inactive')}
-                </Tag>
-                <Tag Icon={IconCheckRegular} type="success">
-                    {getLabel('Success')}
-                </Tag>
-                <Tag Icon={IconAlertRegular} type="warning">
-                    {getLabel('Warning')}
-                </Tag>
-                <Tag Icon={IconCloseRegular} type="error">
-                    {getLabel('Error')}
-                </Tag>
-            </Container>
-        </Inline>
+                <Container inverse>
+                    <Text3 medium>Inverse</Text3>
+                    <Tag Icon={IconOfferPercentFilled} type="promo">
+                        {getLabel('Promo')}
+                    </Tag>
+                    <Tag Icon={IconStarFilled} type="active">
+                        {getLabel('Active')}
+                    </Tag>
+                    <Tag Icon={IconTimeFilled} type="inactive">
+                        {getLabel('Inactive')}
+                    </Tag>
+                    <Tag Icon={IconCheckRegular} type="success">
+                        {getLabel('Success')}
+                    </Tag>
+                    <Tag Icon={IconAlertRegular} type="warning">
+                        {getLabel('Warning')}
+                    </Tag>
+                    <Tag Icon={IconCloseRegular} type="error">
+                        {getLabel('Error')}
+                    </Tag>
+                </Container>
+            </Inline>
+        </div>
     );
 };
 

@@ -8,7 +8,27 @@ import * as styles from './inline.css';
 import type {DataAttributes} from './utils/types';
 
 type Props = {
-    space: 0 | 2 | 4 | 8 | 12 | 16 | 24 | 32 | 40 | 48 | 56 | 64 | 'between' | 'around' | 'evenly';
+    space:
+        | -16
+        | -12
+        | -8
+        | -4
+        | -2
+        | 0
+        | 2
+        | 4
+        | 8
+        | 12
+        | 16
+        | 24
+        | 32
+        | 40
+        | 48
+        | 56
+        | 64
+        | 'between'
+        | 'around'
+        | 'evenly';
     alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
     children: React.ReactNode;
     className?: string;
@@ -16,6 +36,7 @@ type Props = {
     'aria-labelledby'?: string;
     fullWidth?: boolean;
     dataAttributes?: DataAttributes;
+    wrap?: boolean;
 };
 
 const Inline: React.FC<Props> = ({
@@ -26,6 +47,7 @@ const Inline: React.FC<Props> = ({
     alignItems = 'stretch',
     'aria-labelledby': ariaLabelledBy,
     fullWidth,
+    wrap,
     dataAttributes,
 }) => {
     const isFullWith = fullWidth || typeof space === 'string';
@@ -35,7 +57,7 @@ const Inline: React.FC<Props> = ({
             className={classnames(
                 className,
                 sprinkles({alignItems}),
-                isFullWith ? styles.fullWidth : styles.noFullWidth,
+                wrap ? styles.wrap : isFullWith ? styles.fullWidth : styles.noFullWidth,
                 typeof space !== 'number' && styles.justifyVariants[space]
             )}
             style={
