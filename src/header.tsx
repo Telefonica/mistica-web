@@ -164,6 +164,7 @@ type HeaderLayoutProps = {
     sideBySideExtraOnDesktop?: boolean;
     children?: void;
     dataAttributes?: DataAttributes;
+    bleed?: boolean;
 };
 
 export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
@@ -173,47 +174,58 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({
     extra,
     sideBySideExtraOnDesktop = false,
     dataAttributes,
+    bleed = false,
 }) => {
     const {isTabletOrSmaller} = useScreenSize();
+    const isBleedActivated = bleed && isInverse;
 
     return (
-        <ResponsiveLayout
-            isInverse={isInverse}
-            dataAttributes={{'component-name': 'HeaderLayout', ...dataAttributes}}
-        >
-            <OverscrollColor />
-            {isTabletOrSmaller ? (
-                <Box paddingTop={header ? 32 : 0} paddingBottom={24}>
-                    <Stack space={24}>
-                        {header}
-                        {extra}
-                    </Stack>
-                </Box>
-            ) : sideBySideExtraOnDesktop ? (
-                <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
-                    <GridLayout
-                        template="6+6"
-                        left={
+        <>
+            <ResponsiveLayout
+                isInverse={isInverse}
+                dataAttributes={{'component-name': 'HeaderLayout', ...dataAttributes}}
+            >
+                <OverscrollColor />
+                {isTabletOrSmaller ? (
+                    <Box paddingTop={header ? 32 : 0} paddingBottom={24}>
+                        <Stack space={24}>
+                            {header}
+                            {!isBleedActivated && extra}
+                        </Stack>
+                    </Box>
+                ) : sideBySideExtraOnDesktop ? (
+                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
+                        <GridLayout
+                            template="6+6"
+                            left={
+                                <Stack space={32}>
+                                    {breadcrumbs}
+                                    {header}
+                                </Stack>
+                            }
+                            right={extra}
+                        />
+                    </Box>
+                ) : (
+                    <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={isBleedActivated ? 32 : 48}>
+                        <Stack space={isTabletOrSmaller ? 24 : 32}>
                             <Stack space={32}>
                                 {breadcrumbs}
                                 {header}
                             </Stack>
-                        }
-                        right={extra}
-                    />
-                </Box>
-            ) : (
-                <Box paddingTop={breadcrumbs ? 16 : 48} paddingBottom={48}>
-                    <Stack space={isTabletOrSmaller ? 24 : 32}>
-                        <Stack space={32}>
-                            {breadcrumbs}
-                            {header}
+                            {!isBleedActivated && extra}
                         </Stack>
-                        {extra}
-                    </Stack>
-                </Box>
+                    </Box>
+                )}
+            </ResponsiveLayout>
+            {isBleedActivated && extra && (isTabletOrSmaller || !sideBySideExtraOnDesktop) && (
+                <ResponsiveLayout
+                    backgroundColor={`linear-gradient(to bottom, ${vars.colors.backgroundBrand} 40px, ${vars.colors.background} 0%)`}
+                >
+                    {extra}
+                </ResponsiveLayout>
             )}
-        </ResponsiveLayout>
+        </>
     );
 };
 

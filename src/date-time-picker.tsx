@@ -90,8 +90,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidD
                 <IconButton
                     aria-label={texts.clearButton}
                     size={32}
-                    onPress={(event) => {
-                        event.stopPropagation();
+                    onPress={() => {
                         setValue('');
                     }}
                 >

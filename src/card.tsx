@@ -8,7 +8,6 @@ import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
 import Video from './video';
 import Image, {MediaBorderRadiusProvider} from './image';
-import MaybeDismissable, {useIsDismissable} from './maybe-dismissable';
 import {BaseTouchable} from './touchable';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './card.css';
@@ -26,6 +25,120 @@ import type {
     RendersNullableElement,
     TrackingEvent,
 } from './utils/types';
+
+type CardAction = {
+    label: string;
+    onPress: () => void;
+    Icon: React.FC<IconProps>;
+};
+
+type CardActionsGroupProps = {
+    actions: Array<CardAction>;
+    isInverse?: boolean;
+};
+
+const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Element => {
+    return (
+        <Inline space={0}>
+            {actions.map(({onPress, label, Icon}, index) => (
+                <IconButton
+                    size={48}
+                    key={index}
+                    onPress={onPress}
+                    aria-label={label}
+                    className={styles.cardActionIconButton}
+                    style={{display: 'flex'}}
+                >
+                    <div className={isInverse ? styles.cardActionInverse : styles.cardAction}>
+                        <Icon color={vars.colors.neutralHigh} size={20} />
+                    </div>
+                </IconButton>
+            ))}
+        </Inline>
+    );
+};
+
+const useTopActions = (actions?: Array<CardAction>, onClose?: () => void) => {
+    const {texts} = useTheme();
+    const finalActions = actions ? [...actions] : [];
+
+    if (onClose) {
+        finalActions.push({
+            label: texts.closeButtonLabel,
+            onPress: onClose,
+            Icon: IconCloseRegular,
+        });
+    }
+
+    return finalActions;
+};
+
+type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
+
+const CSS_ASPECT_RATIO = {
+    '1:1': '1',
+    '16:9': '16 / 9',
+    '7:10': '7 / 10',
+    '9:10': '9 / 10',
+    auto: 'auto',
+} as const;
+
+type MaybeWithActionsProps = {
+    children: React.ReactNode;
+    width?: string | number;
+    height?: string | number;
+    aspectRatio?: AspectRatio | number;
+    actions?: Array<CardAction>;
+    onClose?: () => void;
+    isInverse?: boolean;
+    'aria-label'?: string;
+};
+
+const MaybeWithActions = ({
+    children,
+    width = '100%',
+    height = '100%',
+    aspectRatio,
+    actions,
+    onClose,
+    isInverse,
+    'aria-label': ariaLabel,
+}: MaybeWithActionsProps): JSX.Element => {
+    const finalActions = useTopActions(actions, onClose);
+    const hasActions = finalActions.length > 0;
+
+    const cssAspectRatio: React.CSSProperties['aspectRatio'] = aspectRatio
+        ? typeof aspectRatio === 'number'
+            ? String(aspectRatio)
+            : CSS_ASPECT_RATIO[aspectRatio]
+        : undefined;
+
+    return (
+        <section
+            aria-label={ariaLabel}
+            style={{
+                width,
+                height,
+                aspectRatio: cssAspectRatio,
+                position: 'relative',
+            }}
+        >
+            {children}
+            {hasActions && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        zIndex: 2, // needed because images has zIndex 1, otherwise this component won't be shown
+                    }}
+                >
+                    <CardActionsGroup actions={finalActions} isInverse={isInverse} />
+                </div>
+            )}
+        </section>
+    );
+};
 
 type CardContentProps = {
     headline?: string | RendersNullableElement<typeof Tag>;
@@ -130,30 +243,6 @@ const CardContent: React.FC<CardContentProps> = ({
     );
 };
 
-type MaybeSectionProps = {
-    children: React.ReactNode;
-    'aria-label'?: string;
-    className?: string;
-    style?: React.CSSProperties;
-};
-
-const MaybeSection = ({'aria-label': ariaLabel, className, style, children}: MaybeSectionProps) => {
-    const isDismissable = useIsDismissable();
-    if (isDismissable) {
-        return (
-            <div className={className} style={style}>
-                {children}
-            </div>
-        );
-    } else {
-        return (
-            <section className={className} style={style} aria-label={ariaLabel}>
-                {children}
-            </section>
-        );
-    }
-};
-
 type MediaCardProps = {
     media: RendersElement<typeof Image> | RendersElement<typeof Video>;
     headline?: string | RendersNullableElement<typeof Tag>;
@@ -166,6 +255,7 @@ type MediaCardProps = {
     description?: string;
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
+    actions?: Array<CardAction>;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
     children?: void;
@@ -188,6 +278,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
             description,
             descriptionLinesMax,
             extra,
+            actions,
             button,
             buttonLink,
             dataAttributes,
@@ -197,7 +288,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
         ref
     ) => {
         return (
-            <MaybeDismissable onClose={onClose} aria-label={ariaLabel}>
+            <MaybeWithActions onClose={onClose} actions={actions} aria-label={ariaLabel} isInverse>
                 <Boxed
                     className={styles.boxed}
                     dataAttributes={{'component-name': 'MediaCard', ...dataAttributes}}
@@ -205,7 +296,7 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                     width="100%"
                     height="100%"
                 >
-                    <MaybeSection className={styles.mediaCard} aria-label={ariaLabel}>
+                    <div className={styles.mediaCard}>
                         <MediaBorderRadiusProvider value={false}>{media}</MediaBorderRadiusProvider>
                         <div className={styles.mediaCardContent}>
                             <CardContent
@@ -223,9 +314,9 @@ export const MediaCard = React.forwardRef<HTMLDivElement, MediaCardProps>(
                                 buttonLink={buttonLink}
                             />
                         </div>
-                    </MaybeSection>
+                    </div>
                 </Boxed>
-            </MaybeDismissable>
+            </MaybeWithActions>
         );
     }
 );
@@ -245,6 +336,7 @@ interface DataCardProps {
     description?: string;
     descriptionLinesMax?: number;
     extra?: React.ReactNode;
+    actions?: Array<CardAction>;
     button?: RendersNullableElement<typeof ButtonPrimary>;
     buttonLink?: RendersNullableElement<typeof ButtonLink>;
     children?: void;
@@ -268,6 +360,7 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
             description,
             descriptionLinesMax,
             extra,
+            actions,
             button,
             buttonLink,
             dataAttributes,
@@ -276,8 +369,15 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
         },
         ref
     ) => {
+        const finalActions = useTopActions(actions, onClose);
+        const hasActions = finalActions.length > 0;
+        const hasIcon = !!icon;
+
+        const topActionsStylesWithIcon = {position: 'absolute', top: 8, right: 8, zIndex: 2} as const;
+        const topActionsStylesWithoutIcon = {marginRight: -8, marginTop: -16} as const;
+
         return (
-            <MaybeDismissable aria-label={ariaLabel} onClose={onClose}>
+            <section aria-label={ariaLabel} style={{height: '100%', position: 'relative'}}>
                 <Boxed
                     className={styles.boxed}
                     dataAttributes={{'component-name': 'DataCard', ...dataAttributes}}
@@ -285,25 +385,46 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                     width="100%"
                     height="100%"
                 >
-                    <MaybeSection className={styles.dataCard} aria-label={ariaLabel}>
-                        {icon && <Box paddingBottom={16}>{icon}</Box>}
-                        <CardContent
-                            headline={headline}
-                            pretitle={pretitle}
-                            pretitleLinesMax={pretitleLinesMax}
-                            title={title}
-                            titleLinesMax={titleLinesMax}
-                            subtitle={subtitle}
-                            subtitleLinesMax={subtitleLinesMax}
-                            description={description}
-                            descriptionLinesMax={descriptionLinesMax}
-                            extra={extra}
-                            button={button}
-                            buttonLink={buttonLink}
-                        />
-                    </MaybeSection>
+                    <div className={styles.dataCard}>
+                        <div
+                            className={sprinkles({
+                                display: 'flex',
+                                flex: 1,
+                                justifyContent: 'space-between',
+                                flexDirection: 'row',
+                            })}
+                        >
+                            <Stack space={16} className={sprinkles({flex: 1})}>
+                                {hasIcon ? icon : null}
+                                <CardContent
+                                    headline={headline}
+                                    pretitle={pretitle}
+                                    pretitleLinesMax={pretitleLinesMax}
+                                    title={title}
+                                    titleLinesMax={titleLinesMax}
+                                    subtitle={subtitle}
+                                    subtitleLinesMax={subtitleLinesMax}
+                                    description={description}
+                                    descriptionLinesMax={descriptionLinesMax}
+                                />
+                            </Stack>
+                            {hasActions && (
+                                <div style={hasIcon ? topActionsStylesWithIcon : topActionsStylesWithoutIcon}>
+                                    <CardActionsGroup actions={finalActions} />
+                                </div>
+                            )}
+                        </div>
+
+                        {extra && <div>{extra}</div>}
+
+                        {(button || buttonLink) && (
+                            <div className={styles.actions}>
+                                <ButtonGroup primaryButton={button} link={buttonLink} />
+                            </div>
+                        )}
+                    </div>
                 </Boxed>
-            </MaybeDismissable>
+            </section>
         );
     }
 );
@@ -412,107 +533,6 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
         );
     }
 );
-
-type CardAction = {
-    label: string;
-    onPress: () => void;
-    Icon: React.FC<IconProps>;
-};
-
-type CardActionsGroupProps = {
-    actions: Array<CardAction>;
-    isInverse?: boolean;
-};
-
-const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Element => {
-    return (
-        <Inline space={0}>
-            {actions.map(({onPress, label, Icon}, index) => (
-                <IconButton
-                    size={48}
-                    key={index}
-                    onPress={onPress}
-                    aria-label={label}
-                    className={styles.cardActionIconButton}
-                    style={{display: 'flex'}}
-                >
-                    <div className={isInverse ? styles.cardActionInverse : styles.cardAction}>
-                        <Icon color={vars.colors.neutralHigh} size={20} />
-                    </div>
-                </IconButton>
-            ))}
-        </Inline>
-    );
-};
-
-type AspectRatio = '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
-
-const CSS_ASPECT_RATIO = {
-    '1:1': '1',
-    '16:9': '16 / 9',
-    '7:10': '7 / 10',
-    '9:10': '9 / 10',
-    auto: 'auto',
-} as const;
-
-type MaybeWithActionsProps = {
-    children: React.ReactNode;
-    width?: string | number;
-    height?: string | number;
-    aspectRatio?: AspectRatio | number;
-    actions?: Array<CardAction>;
-    onClose?: () => void;
-    isInverse?: boolean;
-    'aria-label'?: string;
-};
-
-const MaybeWithActions = ({
-    children,
-    width = '100%',
-    height = '100%',
-    aspectRatio,
-    actions,
-    onClose,
-    isInverse,
-    'aria-label': ariaLabel,
-}: MaybeWithActionsProps): JSX.Element => {
-    const {texts} = useTheme();
-    const finalActions = actions ? [...actions] : [];
-    if (onClose) {
-        finalActions.push({
-            label: texts.closeButtonLabel,
-            onPress: onClose,
-            Icon: IconCloseRegular,
-        });
-    }
-
-    const hasActions = finalActions.length > 0;
-
-    const cssAspectRatio: React.CSSProperties['aspectRatio'] = aspectRatio
-        ? typeof aspectRatio === 'number'
-            ? String(aspectRatio)
-            : CSS_ASPECT_RATIO[aspectRatio]
-        : undefined;
-
-    return (
-        <section
-            aria-label={ariaLabel}
-            style={{
-                width,
-                height,
-                aspectRatio: cssAspectRatio,
-                position: 'relative',
-            }}
-        >
-            {children}
-            {hasActions && (
-                <div style={{position: 'absolute', right: 8, top: 8}}>
-                    <CardActionsGroup actions={finalActions} isInverse={isInverse} />
-                </div>
-            )}
-        </section>
-    );
-};
 
 interface CommonDisplayCardProps {
     /**

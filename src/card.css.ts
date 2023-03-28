@@ -9,7 +9,12 @@ export const actions = style([
     {marginTop: 16},
 ]);
 
-export const boxed = sprinkles({display: 'flex'});
+export const boxed = style([
+    sprinkles({display: 'flex'}),
+    {
+        isolation: 'isolate', // Needed to preserve border-radius with Video component and Safari
+    },
+]);
 
 export const mediaCard = sprinkles({
     display: 'flex',
@@ -26,6 +31,7 @@ export const mediaCardContent = style([
         paddingTop: 16,
         paddingBottom: 24,
         flexDirection: 'column',
+        justifyContent: 'space-between',
     }),
     {
         '@media': {
