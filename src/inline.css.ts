@@ -7,12 +7,22 @@ export const vars = {space};
 export const inline = style({
     flexDirection: 'row',
     gridAutoFlow: 'column',
+    marginTop: `calc(${space} * -1)`,
+    marginLeft: `calc(${space} * -1)`,
 });
 
 export const fullWidth = style([
     inline,
     {
         display: ['flex', 'grid'],
+    },
+]);
+
+export const wrap = style([
+    inline,
+    {
+        display: 'flex',
+        flexWrap: 'wrap',
     },
 ]);
 
@@ -23,8 +33,9 @@ export const noFullWidth = style([
     },
 ]);
 
-globalStyle(`${inline} > div:not(:empty) ~ div:not(:empty)`, {
+globalStyle(`${inline} > div`, {
     marginLeft: space,
+    marginTop: space,
 });
 
 globalStyle(`${inline} > div:empty`, {
