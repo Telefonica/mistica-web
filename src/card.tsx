@@ -2,7 +2,7 @@ import * as React from 'react';
 import Tag from './tag';
 import Stack from './stack';
 import Box from './box';
-import {Text2, Text3, Text, Text6, Text1} from './text';
+import {Text2, Text, Text6, Text3} from './text';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
@@ -567,8 +567,6 @@ interface DisplayMediaCardProps extends CommonDisplayCardProps {
     aspectRatio?: AspectRatio | number;
     width?: number | string;
     height?: number | string;
-    minWidth?: number | string;
-    minHeight?: number | string;
 }
 
 interface DisplayDataCardProps extends CommonDisplayCardProps {
@@ -602,14 +600,11 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             dataAttributes,
             width,
             height,
-            minWidth,
-            minHeight,
             aspectRatio,
             'aria-label': ariaLabel,
         },
         ref
     ) => {
-        console.log('button', button);
         const withGradient = !!backgroundImage;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose;
@@ -617,8 +612,6 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             <MaybeWithActions
                 width={width}
                 height={height}
-                minWidth={minWidth}
-                minHeight={minHeight}
                 aspectRatio={aspectRatio}
                 onClose={onClose}
                 actions={actions}
@@ -690,7 +683,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                         )}
 
                                         {description && (
-                                            <Text2
+                                            <Text3
                                                 forceMobileSizes
                                                 truncate={descriptionLinesMax}
                                                 as="p"
@@ -699,7 +692,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                 textShadow={textShadow}
                                             >
                                                 {description}
-                                            </Text2>
+                                            </Text3>
                                         )}
                                     </Stack>
                                     {extra}
@@ -741,12 +734,26 @@ export const DisplayDataCard = React.forwardRef<HTMLDivElement, DisplayDataCardP
     )
 );
 
-interface PosterCardBaseProps extends CommonDisplayCardProps {
+interface PosterCardBaseProps {
     backgroundImage: string;
     ariaLabel?: string;
     aspectRatio?: AspectRatio | number;
     width?: number | string;
     height?: number | string;
+    minWidth?: number | string;
+    minHeight?: number | string;
+    icon?: React.ReactElement;
+    actions?: Array<CardAction>;
+    onClose?: () => void;
+    dataAttributes?: DataAttributes;
+
+    headline?: string | RendersNullableElement<typeof Tag>;
+    pretitle?: string;
+    pretitleLinesMax?: number;
+    title?: string;
+    titleLinesMax?: number;
+    description?: string;
+    descriptionLinesMax?: number;
 }
 
 interface PosterCardToProps extends PosterCardBaseProps {
@@ -765,16 +772,38 @@ interface PosterCardOnPressProps extends PosterCardBaseProps {
 
 type PosterCardProps = ExclusifyUnion<PosterCardToProps | PosterCardHrefProps | PosterCardOnPressProps>;
 
-const isPosterCardToProps = (el: PosterCardProps): el is PosterCardToProps =>
+const isPosterCardToProps = (el: any): el is PosterCardToProps =>
     Object.keys(el).includes('fullPageOnWebView');
-const isPosterCardHrefProps = (el: PosterCardProps): el is PosterCardHrefProps =>
-    Object.keys(el).includes('href');
+const isPosterCardHrefProps = (el: any): el is PosterCardHrefProps => Object.keys(el).includes('href');
 
-const isPosterCardOnPressProps = (el: PosterCardProps): el is PosterCardOnPressProps =>
+const isPosterCardOnPressProps = (el: any): el is PosterCardOnPressProps =>
     Object.keys(el).includes('onPress');
 
 export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
-    ({dataAttributes, button, buttonLink, ariaLabel, ...props}, ref) => {
+    (
+        {
+            dataAttributes,
+            backgroundImage,
+            width,
+            height,
+            minWidth,
+            minHeight,
+            aspectRatio = '7:10',
+            ariaLabel,
+            actions,
+            onClose,
+            icon,
+            headline,
+            pretitle,
+            pretitleLinesMax,
+            title,
+            titleLinesMax,
+            description,
+            descriptionLinesMax,
+            ...props
+        },
+        ref
+    ) => {
         const fullPageOnWebView = isPosterCardToProps(props) ? props?.fullPageOnWebView : undefined;
         const {newTab, href} = isPosterCardHrefProps(props)
             ? {newTab: props?.newTab, href: props?.href}
@@ -786,19 +815,110 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                   href,
                   fullPageOnWebView,
               };
+        const withGradient = !!backgroundImage;
+        const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
+        const hasTopActions = actions?.length || onClose;
+        const {textPresets} = useTheme();
 
         return (
             <Touchable maybe {...touchableProps} aria-label={ariaLabel}>
-                <DisplayCard
-                    {...props}
-                    minHeight={112}
-                    minWidth={140}
-                    ref={ref}
+                <MaybeWithActions
+                    width={width}
+                    height={height}
+                    minWidth={minWidth}
+                    minHeight={minHeight}
+                    aspectRatio={aspectRatio}
+                    onClose={onClose}
+                    actions={actions}
+                    aria-label={ariaLabel}
                     isInverse
-                    button={button}
-                    buttonLink={buttonLink}
-                    dataAttributes={{...dataAttributes, 'component-name': 'PosterCard'}}
-                />
+                >
+                    <InternalBoxed
+                        borderRadius={16}
+                        className={styles.boxed}
+                        dataAttributes={dataAttributes}
+                        ref={ref}
+                        width="100%"
+                        minHeight="100%"
+                        isInverse
+                        background={backgroundImage ? vars.colors.backgroundContainer : undefined}
+                    >
+                        <div
+                            className={styles.displayCard}
+                            style={{
+                                backgroundImage: backgroundImage
+                                    ? `url("${CSS.escape(backgroundImage)}")`
+                                    : undefined,
+                                paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
+                            }}
+                        >
+                            {icon ? (
+                                <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
+                                    {icon}
+                                </Box>
+                            ) : (
+                                <Box
+                                    paddingBottom={actions?.length || onClose ? (withGradient ? 24 : 64) : 0}
+                                />
+                            )}
+                            <Box
+                                paddingX={24}
+                                paddingTop={withGradient ? 40 : 0}
+                                paddingBottom={24}
+                                className={withGradient ? styles.displayCardGradient : undefined}
+                            >
+                                <Stack space={24}>
+                                    <div>
+                                        <Stack space={8}>
+                                            {(headline || pretitle || title) && (
+                                                <header>
+                                                    <Stack space={16}>
+                                                        {headline}
+                                                        <Stack space={4}>
+                                                            {pretitle && (
+                                                                <Text2
+                                                                    forceMobileSizes
+                                                                    truncate={pretitleLinesMax}
+                                                                    as="div"
+                                                                    regular
+                                                                    textShadow={textShadow}
+                                                                >
+                                                                    {pretitle}
+                                                                </Text2>
+                                                            )}
+                                                            <Text
+                                                                desktopSize={20}
+                                                                mobileSize={18}
+                                                                mobileLineHeight="24px"
+                                                                desktopLineHeight="28px"
+                                                                truncate={titleLinesMax}
+                                                                weight={textPresets.posterTitle.weight}
+                                                                as="h3"
+                                                            >
+                                                                {title}
+                                                            </Text>
+                                                        </Stack>
+                                                    </Stack>
+                                                </header>
+                                            )}
+                                            {description && (
+                                                <Text2
+                                                    forceMobileSizes
+                                                    truncate={descriptionLinesMax}
+                                                    as="p"
+                                                    regular
+                                                    textShadow={textShadow}
+                                                >
+                                                    {description}
+                                                </Text2>
+                                            )}
+                                        </Stack>
+                                    </div>
+                                </Stack>
+                            </Box>
+                        </div>
+                    </InternalBoxed>
+                </MaybeWithActions>
             </Touchable>
         );
     }
