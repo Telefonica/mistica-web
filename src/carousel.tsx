@@ -334,22 +334,38 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
 
     const currentPageIndex = calcCurrentPageIndex(scrollLeft, pagesScrollPositions);
 
+    const pageChangeControl = React.useRef<{canEmit: boolean; lastPageIndex: number}>({
+        canEmit: false,
+        lastPageIndex: 0,
+    });
+
     React.useEffect(() => {
         if (onPageChange) {
-            const lastShownItemIndex = Math.min(
-                (currentPageIndex + 1) * itemsPerPageFloor - 1,
-                items.length - 1
-            );
-            const shownItemIndexes = [];
-            for (let i = 0; i < itemsPerPageFloor; i++) {
-                const idx = lastShownItemIndex - i;
-                if (idx >= 0) {
-                    shownItemIndexes.unshift(idx);
+            if (
+                pageChangeControl.current.canEmit &&
+                pageChangeControl.current.lastPageIndex !== currentPageIndex
+            ) {
+                const lastShownItemIndex = Math.min(
+                    (currentPageIndex + 1) * itemsPerPageFloor - 1,
+                    items.length - 1
+                );
+                const shownItemIndexes = [];
+                for (let i = 0; i < itemsPerPageFloor; i++) {
+                    const idx = lastShownItemIndex - i;
+                    if (idx >= 0) {
+                        shownItemIndexes.unshift(idx);
+                    }
                 }
+
+                onPageChange({pageIndex: currentPageIndex, shownItemIndexes});
             }
-            onPageChange({pageIndex: currentPageIndex, shownItemIndexes});
+
+            pageChangeControl.current = {
+                canEmit: !initialActiveItem || pageChangeControl.current.lastPageIndex !== currentPageIndex,
+                lastPageIndex: currentPageIndex,
+            };
         }
-    }, [currentPageIndex, items.length, itemsPerPageFloor, onPageChange]);
+    }, [currentPageIndex, items.length, itemsPerPageFloor, initialActiveItem, onPageChange]);
 
     let bullets: React.ReactNode = null;
 
