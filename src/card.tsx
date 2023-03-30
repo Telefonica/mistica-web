@@ -740,8 +740,6 @@ interface PosterCardBaseProps {
     aspectRatio?: AspectRatio | number;
     width?: number | string;
     height?: number | string;
-    minWidth?: number | string;
-    minHeight?: number | string;
     icon?: React.ReactElement;
     actions?: Array<CardAction>;
     onClose?: () => void;
@@ -772,13 +770,33 @@ interface PosterCardOnPressProps extends PosterCardBaseProps {
 
 type PosterCardProps = ExclusifyUnion<PosterCardToProps | PosterCardHrefProps | PosterCardOnPressProps>;
 
-const isPosterCardToProps = (el: any): el is PosterCardToProps =>
-    Object.keys(el).includes('fullPageOnWebView');
-const isPosterCardHrefProps = (el: any): el is PosterCardHrefProps => Object.keys(el).includes('href');
+const getPosterTouchableProps = (props: {
+    onPress?: () => void;
+    href?: string;
+    newTab?: boolean;
+    to?: string;
+    fullPageOnWebView?: boolean;
+}) => {
+    if (props.onPress) return {onPress: props?.onPress};
 
-const isPosterCardOnPressProps = (el: any): el is PosterCardOnPressProps =>
-    Object.keys(el).includes('onPress');
+    if (props.href) {
+        return {
+            newTab: props.newTab,
+            href: props.href,
+        };
+    }
+    if (props.to) {
+        return {
+            to: props.to,
+            fullPageOnWebView: props.fullPageOnWebView,
+        };
+    }
 
+    return undefined;
+};
+
+const POSTER_CARD_MIN_WIDTH = 140;
+const POSTER_CARD_MIN_HEIGHT = 112;
 export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
     (
         {
@@ -786,8 +804,6 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             backgroundImage,
             width,
             height,
-            minWidth,
-            minHeight,
             aspectRatio = '7:10',
             ariaLabel,
             actions,
@@ -804,17 +820,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         },
         ref
     ) => {
-        const fullPageOnWebView = isPosterCardToProps(props) ? props?.fullPageOnWebView : undefined;
-        const {newTab, href} = isPosterCardHrefProps(props)
-            ? {newTab: props?.newTab, href: props?.href}
-            : {newTab: undefined, href: undefined};
-        const touchableProps = isPosterCardOnPressProps(props)
-            ? {onPress: props?.onPress}
-            : {
-                  newTab,
-                  href,
-                  fullPageOnWebView,
-              };
+        const touchableProps = getPosterTouchableProps(props);
         const withGradient = !!backgroundImage;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose;
@@ -825,8 +831,8 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                 <MaybeWithActions
                     width={width}
                     height={height}
-                    minWidth={minWidth}
-                    minHeight={minHeight}
+                    minWidth={POSTER_CARD_MIN_WIDTH}
+                    minHeight={POSTER_CARD_MIN_HEIGHT}
                     aspectRatio={aspectRatio}
                     onClose={onClose}
                     actions={actions}

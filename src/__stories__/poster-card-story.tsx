@@ -1,13 +1,10 @@
 import * as React from 'react';
 import {
-    ButtonPrimary,
-    ButtonLink,
     IconInvoicePlanFileRegular,
     skinVars,
     Circle,
     Tag,
     TagType,
-    ButtonSecondary,
     IconLightningRegular,
     ResponsiveLayout,
     Stack,
@@ -32,9 +29,10 @@ type DisplayMediaCardArgs = {
     description: string;
     closable: boolean;
     withTopAction: boolean;
-    actions: 'button' | 'link' | 'button and link' | 'button and secondary button';
     width: string;
+    height: string;
     aspectRatio: '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
+    touchable: 'none' | 'href' | 'to' | 'onPress';
 };
 
 export const Default: StoryComponent<DisplayMediaCardArgs> = ({
@@ -44,12 +42,14 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
     pretitle,
     title,
     description,
-    actions = 'button',
     closable,
     withTopAction,
     width,
+    height,
     aspectRatio,
+    touchable = 'none',
 }) => {
+    const [pressed, setPressed] = React.useState<number>(0);
     let icon;
     if (asset === 'circle + icon') {
         icon = (
@@ -61,75 +61,84 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
         icon = <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />;
     }
 
-    const button = actions.includes('button') ? (
-        <ButtonPrimary small fake>
-            Action
-        </ButtonPrimary>
-    ) : undefined;
-
-    const buttonLink = actions.includes('link') ? <ButtonLink href="#">Link</ButtonLink> : undefined;
-    const secondaryButton = actions.includes('secondary') ? (
-        <ButtonSecondary small fake>
-            Action 2
-        </ButtonSecondary>
-    ) : undefined;
+    let touchableProps;
+    switch (touchable) {
+        case 'href':
+            touchableProps = {href: window.location.origin, newTab: true};
+            break;
+        case 'to':
+            touchableProps = {to: window.location.origin};
+            break;
+        case 'onPress':
+            touchableProps = {
+                onPress: () => setPressed(pressed + 1),
+            };
+            break;
+        default:
+            touchableProps = {};
+    }
 
     return (
-        <PosterCard
-            onClose={closable ? () => {} : undefined}
-            actions={
-                withTopAction
-                    ? [
-                          {
-                              Icon: IconLightningRegular,
-                              onPress: () => {},
-                              label: 'Lightning',
-                          },
-                      ]
-                    : undefined
-            }
-            backgroundImage={BACKGROUND_SRC}
-            icon={icon}
-            headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
-            pretitle={pretitle}
-            title={title}
-            description={description}
-            button={button}
-            buttonLink={buttonLink}
-            secondaryButton={secondaryButton}
-            dataAttributes={{testid: 'display-media-card'}}
-            aria-label="Display data card label"
-            width={width}
-            aspectRatio={aspectRatio}
-        />
+        <>
+            <PosterCard
+                {...touchableProps}
+                onClose={closable ? () => {} : undefined}
+                actions={
+                    withTopAction
+                        ? [
+                              {
+                                  Icon: IconLightningRegular,
+                                  onPress: () => {},
+                                  label: 'Lightning',
+                              },
+                          ]
+                        : undefined
+                }
+                backgroundImage={BACKGROUND_SRC}
+                icon={icon}
+                headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                pretitle={pretitle}
+                title={title}
+                description={description}
+                dataAttributes={{testid: 'poster-card'}}
+                aria-label="Poster card label"
+                width={width}
+                height={height}
+                aspectRatio={aspectRatio}
+            />
+            <Text2 as="div" regular>
+                Pressed {pressed} times
+            </Text2>
+        </>
     );
 };
 
 Default.storyName = 'Poster card';
 Default.args = {
+    touchable: 'none',
     asset: 'icon',
     headlineType: 'promo',
     headline: 'Priority',
     pretitle: 'Pretitle',
     title: 'Title',
     description: 'This is a description for the card',
-    actions: 'button',
     closable: false,
     withTopAction: false,
     width: 'auto',
+    height: 'auto',
     aspectRatio: 'auto',
 };
 Default.argTypes = {
+    touchable: {
+        options: ['none', 'to', 'href', 'onPress'],
+        control: {type: 'select'},
+    },
     asset: {
         options: ['circle + icon', 'circle + image', 'none'],
         control: {type: 'select'},
     },
     headlineType: {
         options: ['promo', 'active', 'inactive', 'success', 'warning', 'error'],
-        control: {type: 'select'},
-    },
-    actions: {
-        options: ['button', 'link', 'button and link', 'button and secondary button'],
         control: {type: 'select'},
     },
     aspectRatio: {
@@ -154,11 +163,6 @@ export const Group: StoryComponent = () => {
                         title="Title"
                         description="Description"
                         backgroundImage={BACKGROUND_SRC}
-                        button={
-                            <ButtonPrimary small href="https://google.com">
-                                Action
-                            </ButtonPrimary>
-                        }
                     />
                     <PosterCard title="Title" backgroundImage={BACKGROUND_SRC} />
                     <PosterCard title="Title" backgroundImage={BACKGROUND_SRC} onClose={() => {}} />
