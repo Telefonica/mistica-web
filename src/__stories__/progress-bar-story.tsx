@@ -5,19 +5,16 @@ export default {
     title: 'Components/Progress bar',
     argTypes: {
         inverse: false,
-        progressPercent: 30
-    }
+        progressPercent: 30,
+    },
 };
 
 type Args = {
     inverse: boolean;
-    progressPercent: number
-}
+    progressPercent: number;
+};
 
-export const Default: StoryComponent<Args> = ({
-    inverse,
-    progressPercent
-}) => (
+export const Default: StoryComponent<Args> = ({inverse, progressPercent}) => (
     <div data-testid="progress-bar">
         <ProgressBar progressPercent={progressPercent} inverse={inverse} />
     </div>
@@ -26,5 +23,5 @@ export const Default: StoryComponent<Args> = ({
 Default.storyName = 'Progress bar';
 Default.args = {
     inverse: false,
-    progressPercent: 30
-}
+    progressPercent: 30,
+};
