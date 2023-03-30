@@ -2,12 +2,13 @@
 import * as React from 'react';
 import Badge from './badge';
 import IconUserAccountRegular from './generated/mistica-icons/icon-user-account-regular';
-import {useIsInverseVariant} from './theme-variant-context';
+import { useIsInverseVariant } from './theme-variant-context';
 import * as classes from './avatar.css';
-import {vars} from './skins/skin-contract.css';
-import {getPrefixedDataAttributes} from './utils/dom';
+import { vars } from './skins/skin-contract.css';
+import { getPrefixedDataAttributes } from './utils/dom';
 
-import type {DataAttributes, IconProps} from './utils/types';
+
+import type { DataAttributes, IconProps } from './utils/types';
 
 /**
  * Returns a right/top distance for the badge.
@@ -34,6 +35,9 @@ type AvatarProps = {
     badge?: boolean | number;
     'aria-label'?: string;
     dataAttributes?: DataAttributes;
+    borderAvatar?: boolean;
+    borderColor: 'border' | 'borderLow' | 'borderHigh' | 'borderSelected';
+    borderSize?: number;
 };
 
 /**
@@ -51,9 +55,8 @@ const renderText = (size: number, text: string): JSX.Element | null => {
     } else {
         fontSize = 18;
     }
-    return <span style={{fontSize, textTransform: 'uppercase'}}>{text}</span>;
+    return <span style={{ fontSize, textTransform: 'uppercase' }}>{text}</span>;
 };
-
 const Avatar = ({
     size,
     src,
@@ -69,11 +72,10 @@ const Avatar = ({
         props.backgroundColor ?? (isInverse ? vars.colors.brandHigh : vars.colors.brandLow);
     const textColor = props.textColor ?? (isInverse ? vars.colors.textPrimaryInverse : vars.colors.brand);
     const [imgLoadError, setImgLoadError] = React.useState(false);
-
     React.useEffect(() => {
         setImgLoadError(false); // reset error state when url changes
     }, [src]);
-
+    const borderAvatar = props.borderAvatar ? `0px 0px 0px ${props.borderSize}px ${props.borderColor}` : 'none';
     const letters = initials.trim().slice(0, 2);
     const badgePosition = getBadgeDistance(size, badge);
     const badgeValue = badge === true ? undefined : badge || 0;
@@ -81,12 +83,12 @@ const Avatar = ({
     const iconSize = size <= 40 ? 16 : 24;
 
     return (
-        <Badge value={badgeValue} top={badgePosition} right={badgePosition}>
+        <Badge value={badgeValue} top={badgePosition} right={badgePosition}  >
             <div
                 className={classes.avatar}
                 role="img"
                 aria-label={ariaLabel ?? initials}
-                style={{width: size, height: size, color: textColor, background: backgroundColor}}
+                style={{ width: size, height: size, color: textColor, background: backgroundColor, boxShadow: borderAvatar }}
                 {...getPrefixedDataAttributes(dataAttributes, 'Avatar')}
             >
                 {shouldRenderImage ? (
