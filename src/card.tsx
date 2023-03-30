@@ -8,7 +8,7 @@ import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
 import Video from './video';
 import Image, {MediaBorderRadiusProvider} from './image';
-import {BaseTouchable} from './touchable';
+import Touchable, {BaseTouchable} from './touchable';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './card.css';
 import {useTheme} from './hooks';
@@ -16,7 +16,6 @@ import {sprinkles} from './sprinkles.css';
 import Inline from './inline';
 import IconButton from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
-import {Touchable} from './index';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {
