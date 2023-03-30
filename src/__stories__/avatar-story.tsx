@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Avatar, IconBrainRegular, IconFireRegular, IconStarFilled, ThemeVariant, skinVars } from '..';
+import {Avatar, IconBrainRegular, IconFireRegular, IconStarFilled, ThemeVariant, skinVars} from '..';
 
 const badgeOptions = ['true', 'false', 'undefined', '0', '1', '5', '10'];
 
@@ -7,26 +7,24 @@ export default {
     title: 'Components/Avatar',
     argTypes: {
         size: {
-            control: { type: 'range', min: 24, max: 128, step: 4 },
+            control: {type: 'range', min: 24, max: 128, step: 4},
         },
         badge: {
             options: badgeOptions,
-            control: { type: 'select' },
+            control: {type: 'select'},
         },
         icon: {
             options: ['undefined', 'IconStarFilled', 'IconFireRegular', 'IconBrainRegular'],
-            control: { type: 'select' },
+            control: {type: 'select'},
         },
         borderSize: {
-            control: { type: 'range', min: 1, max: 5, step: 0.05 },
+            control: {type: 'range', min: 1, max: 5, step: 0.05},
         },
         borderColor: {
             defaultValue: 'borderLow',
-            options: ['border', 'borderLow', 'borderHigh', 'borderSelected', ''],
-            mapping: skinVars.colors,
-            control: { type: 'select' }
+            options: ['border', 'borderLow', 'borderHigh', 'borderSelected'],
+            control: {type: 'select'},
         },
-
     },
     parameters: {
         fullScreen: true,
@@ -59,12 +57,12 @@ export const Default: StoryComponent<Args> = ({
     hideInitials,
     ariaLabel,
     borderAvatar,
-    borderColor = 'borderLow',
+    borderColor,
     borderSize,
 }) => {
     // eslint-disable-next-line no-eval
     const badgeValue = badgeOptions.includes(badge) ? eval(badge) : undefined;
-    const Icon = { IconStarFilled, IconFireRegular, IconBrainRegular }[icon];
+    const Icon = {IconStarFilled, IconFireRegular, IconBrainRegular}[icon];
 
     return (
         <ThemeVariant isInverse={inverse}>
@@ -87,7 +85,7 @@ export const Default: StoryComponent<Args> = ({
                     Icon={Icon}
                     aria-label={ariaLabel}
                     borderAvatar={borderAvatar}
-                    borderColor={skinVars.colors['borderLow']}
+                    borderColor={borderColor ? borderColor : 'borderLow'}
                     borderSize={borderSize}
                 />
             </div>
