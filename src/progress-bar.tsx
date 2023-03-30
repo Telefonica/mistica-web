@@ -3,6 +3,7 @@ import {useTheme} from './hooks';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './progress-bar.css';
 import {getPrefixedDataAttributes} from './utils/dom';
+import classNames from 'classnames';
 
 import type {DataAttributes} from './utils/types';
 
@@ -13,6 +14,7 @@ type Props = {
     'aria-label'?: string;
     'aria-labelledby'?: string;
     dataAttributes?: DataAttributes;
+    inverse?: boolean;
 };
 
 const ProgressBar: React.FC<Props> = ({
@@ -21,6 +23,7 @@ const ProgressBar: React.FC<Props> = ({
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
     dataAttributes,
+    inverse = false,
 }) => {
     const {texts} = useTheme();
     const defaultLabel = texts.loading;
@@ -37,7 +40,7 @@ const ProgressBar: React.FC<Props> = ({
             aria-labelledby={ariaLabelledBy}
         >
             <div
-                className={styles.bar}
+                className={classNames(styles.bar, inverse ? styles.inverse : styles.normal)}
                 style={{
                     maxWidth: `${progressPercent}%`,
                     backgroundColor: color ?? vars.colors.controlActivated,

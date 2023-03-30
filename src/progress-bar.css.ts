@@ -10,19 +10,33 @@ export const barBackground = sprinkles({
     background: vars.colors.control,
 });
 
+export const bar = sprinkles({
+    height: '100%',
+    borderRadius: 2,
+});
+
 const barKeyFrames = keyframes({
     '0%': {
-        maxWidth: '0',
+        maxWidth: '0%',
     },
 });
 
-export const bar = style([
-    sprinkles({
-        height: '100%',
-        borderRadius: 2,
-    }),
+const barKeyFramesInverte = keyframes({
+    '0%': {
+        maxWidth: '100%',
+    },
+});
+
+export const normal = style([
     {
         transition: `max-width ${transition}`,
         animation: `${barKeyFrames} ${transition}`,
+    },
+]);
+
+export const inverse = style([
+    {
+        transition: `max-width ${transition}`,
+        animation: `${barKeyFramesInverte} ${transition}`,
     },
 ]);
