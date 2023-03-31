@@ -1,3 +1,10 @@
+## [14.4.1](https://github.com/Telefonica/mistica-web/compare/v14.4.0...v14.4.1) (2023-03-30)
+
+
+### Bug Fixes
+
+* **DataCard:** style fixes for extra ([#703](https://github.com/Telefonica/mistica-web/issues/703)) ([9b86407](https://github.com/Telefonica/mistica-web/commit/9b86407a5967f70572d4d251411c9741eb8c55d2))
+
 # [14.4.0](https://github.com/Telefonica/mistica-web/compare/v14.3.0...v14.4.0) (2023-03-28)
 
 
