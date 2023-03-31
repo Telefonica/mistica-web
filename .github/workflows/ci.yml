@@ -77,7 +77,7 @@ jobs:
                   PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
               run: yarn install --immutable --immutable-cache
 
-            - if: needs.build-acceptance.result == 'failure'
+            - if: needs.build.result == 'failure' || needs.build-acceptance.result == 'failure'
               uses: actions/download-artifact@v3
               with:
                   name: failed-screenshots
