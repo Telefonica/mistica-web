@@ -745,11 +745,7 @@ const cardSnippets: Array<Snippet> = [
           title="Title"
           description="Description"
           backgroundImage="https://api.lorem.space/image/watch?w=700&h=700"
-          button={
-            <ButtonPrimary small href="https://google.com">
-              Action
-            </ButtonPrimary>
-          }
+          onPress={() => {alert('tapped');}}
           onClose={() => {}}
           actions={[
             {
