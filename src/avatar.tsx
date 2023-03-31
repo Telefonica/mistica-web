@@ -36,7 +36,6 @@ type AvatarProps = {
     dataAttributes?: DataAttributes;
     borderAvatar?: boolean;
     borderColor: 'border' | 'borderLow' | 'borderHigh' | 'borderSelected';
-    borderSize?: number;
 };
 
 /**
@@ -74,9 +73,7 @@ const Avatar = ({
     React.useEffect(() => {
         setImgLoadError(false); // reset error state when url changes
     }, [src]);
-    const borderAvatar = props.borderAvatar
-        ? `0px 0px 0px ${props.borderSize}px ${vars.colors[props.borderColor]}`
-        : 'none';
+    const borderAvatar = props.borderAvatar ? `0px 0px 0px 1px ${vars.colors[props.borderColor]}` : 'none';
     const letters = initials.trim().slice(0, 2);
     const badgePosition = getBadgeDistance(size, badge);
     const badgeValue = badge === true ? undefined : badge || 0;
