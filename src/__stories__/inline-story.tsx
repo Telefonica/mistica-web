@@ -1,5 +1,6 @@
+import {capitalize} from 'lodash';
 import * as React from 'react';
-import {Inline, Text2, skinVars} from '..';
+import {Inline, Text2, skinVars, Tag, Avatar} from '..';
 import {Placeholder} from '../placeholder';
 import {StorySection, useSelect} from './helpers';
 
@@ -94,3 +95,54 @@ export const Default: StoryComponent = () => {
 };
 
 Default.storyName = 'Inline';
+
+type Args = {
+    space: React.ComponentProps<typeof Inline>['space'];
+    numItems: number;
+};
+
+export const Wrap: StoryComponent<Args> = ({space, numItems}) => {
+    const tagTypes = ['active', 'inactive', 'success', 'warning', 'error', 'promo'] as const;
+    return (
+        <Inline space={space} wrap>
+            {Array.from({length: numItems}, (_, i) => {
+                const type = tagTypes[i % tagTypes.length];
+                return (
+                    <Tag type={type} key={i}>
+                        {capitalize(type)}
+                    </Tag>
+                );
+            })}
+        </Inline>
+    );
+};
+
+Wrap.args = {
+    space: 8,
+    numItems: 50,
+};
+
+Wrap.argTypes = {
+    space: {
+        options: [0, 2, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64],
+        control: {type: 'select'},
+    },
+};
+
+Wrap.storyName = 'Inline wrap';
+
+export const NegativeSpace: StoryComponent = () => {
+    return (
+        <Inline space={-16}>
+            {Array.from({length: 8}, (_, i) => (
+                <Avatar
+                    key={i}
+                    size={64}
+                    src="https://images.unsplash.com/photo-1640951613773-54706e06851d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
+                />
+            ))}
+        </Inline>
+    );
+};
+
+NegativeSpace.storyName = 'Inline with negative space';

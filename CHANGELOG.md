@@ -1,3 +1,25 @@
+## [14.4.1](https://github.com/Telefonica/mistica-web/compare/v14.4.0...v14.4.1) (2023-03-30)
+
+
+### Bug Fixes
+
+* **DataCard:** style fixes for extra ([#703](https://github.com/Telefonica/mistica-web/issues/703)) ([9b86407](https://github.com/Telefonica/mistica-web/commit/9b86407a5967f70572d4d251411c9741eb8c55d2))
+
+# [14.4.0](https://github.com/Telefonica/mistica-web/compare/v14.3.0...v14.4.0) (2023-03-28)
+
+
+### Bug Fixes
+
+* **Hero:** tablet layout ([#697](https://github.com/Telefonica/mistica-web/issues/697)) ([25c19db](https://github.com/Telefonica/mistica-web/commit/25c19db4b7fa232b01c10517072453a8c19f7cd9))
+* **MediaCard:** border radius in safari ([#688](https://github.com/Telefonica/mistica-web/issues/688)) ([93ea34e](https://github.com/Telefonica/mistica-web/commit/93ea34ee5998117f137bf7097caf663675c0e898))
+
+
+### Features
+
+* **EmptyStateCard, HighlightedCard:** update title weight ([#689](https://github.com/Telefonica/mistica-web/issues/689)) ([794c3cc](https://github.com/Telefonica/mistica-web/commit/794c3cce9e83a5f7216edb711a245ae21a41c62d))
+* **Inline:** allow wrap and negative space ([#700](https://github.com/Telefonica/mistica-web/issues/700)) ([f6fbc6c](https://github.com/Telefonica/mistica-web/commit/f6fbc6c032296c480f48039f0239c5ebf9ae5fcb))
+* **MediaCard, DataCard:** support for top actions ([#692](https://github.com/Telefonica/mistica-web/issues/692)) ([45c0277](https://github.com/Telefonica/mistica-web/commit/45c0277452daac45dfcedc8ca06e210e94571ce8))
+
 # [14.3.0](https://github.com/Telefonica/mistica-web/compare/v14.2.0...v14.3.0) (2023-03-15)
 
 

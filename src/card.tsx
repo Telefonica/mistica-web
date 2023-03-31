@@ -395,9 +395,6 @@ export const DataCard = React.forwardRef<HTMLDivElement, DataCardProps>(
                         <div
                             className={sprinkles({
                                 display: 'flex',
-                                flex: 1,
-                                justifyContent: 'space-between',
-                                flexDirection: 'row',
                             })}
                         >
                             <Stack space={16} className={sprinkles({flex: 1})}>
