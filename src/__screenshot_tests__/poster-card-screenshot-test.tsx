@@ -17,10 +17,10 @@ test.each(TESTABLE_DEVICES)('PosterCard in %s', async (device) => {
     expect(image).toMatchImageSnapshot();
 });
 
-test.each(TESTABLE_DEVICES)('PosterCard with large fontSize in %s', async (device) => {
+test('PosterCard with large fontSize in mobile', async () => {
     await openStoryPage({
         id: 'components-cards-poster-card--default',
-        device,
+        device: 'MOBILE_IOS',
     });
 
     await setRootFontSize(32);

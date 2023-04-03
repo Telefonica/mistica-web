@@ -20,7 +20,7 @@ export default {
 const BACKGROUND_SRC =
     'https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80';
 
-type DisplayMediaCardArgs = {
+type PosterCardArgs = {
     asset: 'icon' | 'circle + icon' | 'image' | 'circle + image';
     headlineType: TagType;
     headline: string;
@@ -32,10 +32,9 @@ type DisplayMediaCardArgs = {
     width: string;
     height: string;
     aspectRatio: '1:1' | '16:9' | '7:10' | '9:10' | 'auto';
-    touchable: 'none' | 'href' | 'to' | 'onPress';
 };
 
-export const Default: StoryComponent<DisplayMediaCardArgs> = ({
+export const Default: StoryComponent<PosterCardArgs> = ({
     asset = 'icon',
     headline,
     headlineType,
@@ -47,9 +46,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
     width,
     height,
     aspectRatio,
-    touchable = 'none',
 }) => {
-    const [pressed, setPressed] = React.useState<number>(0);
     let icon;
     if (asset === 'circle + icon') {
         icon = (
@@ -61,27 +58,9 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
         icon = <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />;
     }
 
-    let touchableProps;
-    switch (touchable) {
-        case 'href':
-            touchableProps = {href: window.location.origin, newTab: true};
-            break;
-        case 'to':
-            touchableProps = {to: window.location.origin};
-            break;
-        case 'onPress':
-            touchableProps = {
-                onPress: () => setPressed(pressed + 1),
-            };
-            break;
-        default:
-            touchableProps = {};
-    }
-
     return (
         <>
             <PosterCard
-                {...touchableProps}
                 onClose={closable ? () => {} : undefined}
                 actions={
                     withTopAction
@@ -106,16 +85,12 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                 height={height}
                 aspectRatio={aspectRatio}
             />
-            <Text2 as="div" regular>
-                Pressed {pressed} times
-            </Text2>
         </>
     );
 };
 
 Default.storyName = 'Poster card';
 Default.args = {
-    touchable: 'none',
     asset: 'icon',
     headlineType: 'promo',
     headline: 'Priority',
@@ -129,10 +104,6 @@ Default.args = {
     aspectRatio: 'auto',
 };
 Default.argTypes = {
-    touchable: {
-        options: ['none', 'to', 'href', 'onPress'],
-        control: {type: 'select'},
-    },
     asset: {
         options: ['circle + icon', 'circle + image', 'none'],
         control: {type: 'select'},

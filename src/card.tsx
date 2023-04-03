@@ -730,7 +730,7 @@ export const DisplayDataCard = React.forwardRef<HTMLDivElement, DisplayDataCardP
     )
 );
 
-interface PosterCardBaseProps {
+interface PosterCardProps {
     backgroundImage: string;
     ariaLabel?: string;
     aspectRatio?: AspectRatio | number;
@@ -740,7 +740,6 @@ interface PosterCardBaseProps {
     actions?: Array<CardAction>;
     onClose?: () => void;
     dataAttributes?: DataAttributes;
-
     headline?: string | RendersNullableElement<typeof Tag>;
     pretitle?: string;
     pretitleLinesMax?: number;
@@ -749,47 +748,6 @@ interface PosterCardBaseProps {
     description?: string;
     descriptionLinesMax?: number;
 }
-
-interface PosterCardToProps extends PosterCardBaseProps {
-    to?: string;
-    fullPageOnWebView?: boolean;
-}
-
-interface PosterCardHrefProps extends PosterCardBaseProps {
-    href?: string;
-    newTab?: boolean;
-}
-
-interface PosterCardOnPressProps extends PosterCardBaseProps {
-    onPress?: () => void;
-}
-
-type PosterCardProps = ExclusifyUnion<PosterCardToProps | PosterCardHrefProps | PosterCardOnPressProps>;
-
-const getPosterTouchableProps = (props: {
-    onPress?: () => void;
-    href?: string;
-    newTab?: boolean;
-    to?: string;
-    fullPageOnWebView?: boolean;
-}) => {
-    if (props.onPress) return {onPress: props?.onPress};
-
-    if (props.href) {
-        return {
-            newTab: props.newTab,
-            href: props.href,
-        };
-    }
-    if (props.to) {
-        return {
-            to: props.to,
-            fullPageOnWebView: props.fullPageOnWebView,
-        };
-    }
-
-    return undefined;
-};
 
 const POSTER_CARD_MIN_WIDTH = 140;
 const POSTER_CARD_MIN_HEIGHT = 112;
@@ -812,18 +770,16 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             titleLinesMax,
             description,
             descriptionLinesMax,
-            ...props
         },
         ref
     ) => {
-        const touchableProps = getPosterTouchableProps(props);
         const withGradient = !!backgroundImage;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose;
         const {textPresets} = useTheme();
 
         return (
-            <Touchable maybe {...touchableProps} aria-label={ariaLabel}>
+            <Touchable maybe aria-label={ariaLabel}>
                 <MaybeWithActions
                     width={width}
                     height={height}
