@@ -29,6 +29,7 @@ export default {
                 'checkbox',
                 'checkbox and onPress',
                 'radio',
+                'radio and onPress',
                 'custom element',
                 'custom element with text',
                 'action with custom element',
@@ -132,6 +133,12 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 break;
             case 'radio':
                 controlProps = {radioValue: 'radio-value-' + index};
+                break;
+            case 'radio and onPress':
+                controlProps = {
+                    radioValue: 'radio-value-' + index,
+                    onPress,
+                };
                 break;
             case 'none':
             default:
@@ -300,7 +307,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
         </ListComponent>
     );
 
-    return control === 'radio' ? (
+    return control.includes('radio') ? (
         <RadioGroup disabled={disabled} name="radio-group" defaultValue="apple" data-testid="radio-row-list">
             {list}
         </RadioGroup>

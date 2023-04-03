@@ -87,6 +87,15 @@ export const dualActionLeft = style([
     }),
 ]);
 
+export const dualActionDivider = style([
+    {display: 'flex'},
+    {
+        lineHeight: 0,
+        margin: '16px 0',
+        borderLeft: `1px solid ${vars.colors.divider}`,
+    },
+]);
+
 export const dualActionRight = style([
     dualActionBase,
     sprinkles({
@@ -96,9 +105,4 @@ export const dualActionRight = style([
         flexGrow: 0,
         width: 'auto',
     }),
-    {
-        lineHeight: 0,
-        margin: '16px 0',
-        borderLeft: `1px solid ${vars.colors.divider}`,
-    },
 ]);
