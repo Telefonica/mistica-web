@@ -850,7 +850,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                                 mobileLineHeight="24px"
                                                                 desktopLineHeight="28px"
                                                                 truncate={titleLinesMax}
-                                                                weight={textPresets.posterTitle.weight}
+                                                                weight={textPresets.cardTitle.weight}
                                                                 as="h3"
                                                             >
                                                                 {title}

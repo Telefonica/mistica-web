@@ -7,15 +7,7 @@ export type GetKnownSkin = (variant?: SkinVariant) => KnownSkin;
 
 export type FontWeight = 'light' | 'regular' | 'medium' | 'bold';
 
-type TextPresetName =
-    | 'text5'
-    | 'text6'
-    | 'text7'
-    | 'text8'
-    | 'text9'
-    | 'text10'
-    | 'cardTitle'
-    | 'posterTitle';
+type TextPresetName = 'text5' | 'text6' | 'text7' | 'text8' | 'text9' | 'text10' | 'cardTitle';
 export type TextPresetsConfig = {
     [preset in TextPresetName]: {
         weight: FontWeight;
