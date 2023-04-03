@@ -13,8 +13,8 @@ export const Default: StoryComponent = () => {
             <Image
                 src="https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
                 noBorderRadius
-                aspectRatio="1:1"
-                width={200}
+                aspectRatio="16:9"
+                width={300}
             />
             <Title1>aspectRatio: 4:3</Title1>
             <Image
