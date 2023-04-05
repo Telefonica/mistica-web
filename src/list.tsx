@@ -192,6 +192,8 @@ interface CheckboxRowContentProps extends CommonProps {
 }
 
 interface RadioRowContentProps extends CommonProps {
+    onPress?: () => void;
+
     radioValue: string;
 }
 
@@ -414,6 +416,7 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
                 >
                     {renderContent({type: 'basic', labelId: titleId})}
                 </BaseTouchable>
+                <div className={styles.dualActionDivider} />
                 <BaseTouchable
                     disabled={disabled}
                     className={styles.dualActionRight}
@@ -465,7 +468,31 @@ const RowContent = React.forwardRef<TouchableElement, RowContentProps>((props, r
     }
 
     if (props.radioValue) {
-        return (
+        return props.onPress ? (
+            <div className={styles.dualActionContainer}>
+                <BaseTouchable
+                    disabled={disabled}
+                    onPress={props.onPress}
+                    role={role}
+                    className={classNames(styles.dualActionLeft, {
+                        [styles.hoverBackground]: !(disabled || isInverse),
+                    })}
+                >
+                    {renderContent({type: 'basic', labelId: titleId})}
+                </BaseTouchable>
+                <div className={styles.dualActionDivider} />
+                <RadioButton
+                    dataAttributes={dataAttributes}
+                    value={props.radioValue}
+                    aria-labelledby={titleId}
+                    render={({controlElement}) => (
+                        <Stack space="around">
+                            <Box paddingX={16}>{controlElement}</Box>
+                        </Stack>
+                    )}
+                />
+            </div>
+        ) : (
             <div
                 className={classNames(styles.rowContent, {
                     [styles.hoverBackground]: !(disabled || isInverse),
