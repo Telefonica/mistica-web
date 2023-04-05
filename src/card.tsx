@@ -8,7 +8,7 @@ import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
 import Video from './video';
 import Image, {MediaBorderRadiusProvider} from './image';
-import Touchable, {BaseTouchable} from './touchable';
+import {BaseTouchable} from './touchable';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './card.css';
 import {useTheme} from './hooks';
@@ -779,105 +779,101 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         const {textPresets} = useTheme();
 
         return (
-            <Touchable maybe aria-label={ariaLabel}>
-                <MaybeWithActions
-                    width={width}
-                    height={height}
-                    minWidth={POSTER_CARD_MIN_WIDTH}
-                    minHeight={POSTER_CARD_MIN_HEIGHT}
-                    aspectRatio={aspectRatio}
-                    onClose={onClose}
-                    actions={actions}
-                    aria-label={ariaLabel}
+            <MaybeWithActions
+                width={width}
+                height={height}
+                minWidth={POSTER_CARD_MIN_WIDTH}
+                minHeight={POSTER_CARD_MIN_HEIGHT}
+                aspectRatio={aspectRatio}
+                onClose={onClose}
+                actions={actions}
+                aria-label={ariaLabel}
+                isInverse
+            >
+                <InternalBoxed
+                    borderRadius={16}
+                    className={styles.boxed}
+                    dataAttributes={dataAttributes}
+                    ref={ref}
+                    width="100%"
+                    minHeight="100%"
                     isInverse
+                    background={backgroundImage ? vars.colors.backgroundContainer : undefined}
                 >
-                    <InternalBoxed
-                        borderRadius={16}
-                        className={styles.boxed}
-                        dataAttributes={dataAttributes}
-                        ref={ref}
-                        width="100%"
-                        minHeight="100%"
-                        isInverse
-                        background={backgroundImage ? vars.colors.backgroundContainer : undefined}
+                    <div
+                        className={styles.displayCard}
+                        style={{
+                            backgroundImage: backgroundImage
+                                ? `url("${CSS.escape(backgroundImage)}")`
+                                : undefined,
+                            paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
+                        }}
                     >
-                        <div
-                            className={styles.displayCard}
-                            style={{
-                                backgroundImage: backgroundImage
-                                    ? `url("${CSS.escape(backgroundImage)}")`
-                                    : undefined,
-                                paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
-                            }}
-                        >
-                            {icon ? (
-                                <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
-                                    {icon}
-                                </Box>
-                            ) : (
-                                <Box
-                                    paddingBottom={actions?.length || onClose ? (withGradient ? 24 : 64) : 0}
-                                />
-                            )}
-                            <Box
-                                paddingX={24}
-                                paddingTop={withGradient ? 40 : 0}
-                                paddingBottom={24}
-                                className={withGradient ? styles.displayCardGradient : undefined}
-                            >
-                                <Stack space={24}>
-                                    <div>
-                                        <Stack space={8}>
-                                            {(headline || pretitle || title) && (
-                                                <header>
-                                                    <Stack space={16}>
-                                                        {headline}
-                                                        <Stack space={4}>
-                                                            {pretitle && (
-                                                                <Text2
-                                                                    forceMobileSizes
-                                                                    truncate={pretitleLinesMax}
-                                                                    as="div"
-                                                                    regular
-                                                                    textShadow={textShadow}
-                                                                >
-                                                                    {pretitle}
-                                                                </Text2>
-                                                            )}
-                                                            <Text
-                                                                desktopSize={20}
-                                                                mobileSize={18}
-                                                                mobileLineHeight="24px"
-                                                                desktopLineHeight="28px"
-                                                                truncate={titleLinesMax}
-                                                                weight={textPresets.cardTitle.weight}
-                                                                as="h3"
-                                                            >
-                                                                {title}
-                                                            </Text>
-                                                        </Stack>
-                                                    </Stack>
-                                                </header>
-                                            )}
-                                            {description && (
-                                                <Text2
-                                                    forceMobileSizes
-                                                    truncate={descriptionLinesMax}
-                                                    as="p"
-                                                    regular
-                                                    textShadow={textShadow}
-                                                >
-                                                    {description}
-                                                </Text2>
-                                            )}
-                                        </Stack>
-                                    </div>
-                                </Stack>
+                        {icon ? (
+                            <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
+                                {icon}
                             </Box>
-                        </div>
-                    </InternalBoxed>
-                </MaybeWithActions>
-            </Touchable>
+                        ) : (
+                            <Box paddingBottom={actions?.length || onClose ? (withGradient ? 24 : 64) : 0} />
+                        )}
+                        <Box
+                            paddingX={24}
+                            paddingTop={withGradient ? 40 : 0}
+                            paddingBottom={24}
+                            className={withGradient ? styles.displayCardGradient : undefined}
+                        >
+                            <Stack space={24}>
+                                <div>
+                                    <Stack space={8}>
+                                        {(headline || pretitle || title) && (
+                                            <header>
+                                                <Stack space={16}>
+                                                    {headline}
+                                                    <Stack space={4}>
+                                                        {pretitle && (
+                                                            <Text2
+                                                                forceMobileSizes
+                                                                truncate={pretitleLinesMax}
+                                                                as="div"
+                                                                regular
+                                                                textShadow={textShadow}
+                                                            >
+                                                                {pretitle}
+                                                            </Text2>
+                                                        )}
+                                                        <Text
+                                                            desktopSize={20}
+                                                            mobileSize={18}
+                                                            mobileLineHeight="24px"
+                                                            desktopLineHeight="28px"
+                                                            truncate={titleLinesMax}
+                                                            weight={textPresets.cardTitle.weight}
+                                                            as="h3"
+                                                        >
+                                                            {title}
+                                                        </Text>
+                                                    </Stack>
+                                                </Stack>
+                                            </header>
+                                        )}
+                                        {description && (
+                                            <Text2
+                                                forceMobileSizes
+                                                truncate={descriptionLinesMax}
+                                                as="p"
+                                                regular
+                                                textShadow={textShadow}
+                                            >
+                                                {description}
+                                            </Text2>
+                                        )}
+                                    </Stack>
+                                </div>
+                            </Stack>
+                        </Box>
+                    </div>
+                </InternalBoxed>
+            </MaybeWithActions>
         );
     }
 );
