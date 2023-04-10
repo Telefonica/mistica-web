@@ -34,7 +34,7 @@ type AvatarProps = {
     badge?: boolean | number;
     'aria-label'?: string;
     dataAttributes?: DataAttributes;
-    borderAvatar?: boolean;
+    border?: boolean;
     borderColor?: 'border' | 'borderLow' | 'borderHigh' | 'borderSelected';
 };
 
@@ -74,9 +74,7 @@ const Avatar = ({
         setImgLoadError(false); // reset error state when url changes
     }, [src]);
     const borderAvatar =
-        props.borderAvatar && props.borderColor
-            ? `0px 0px 0px 1px ${vars.colors[props.borderColor]}`
-            : 'none';
+        props.border && props.borderColor ? `0px 0px 0px 1px ${vars.colors[props.borderColor]}` : 'none';
     const letters = initials.trim().slice(0, 2);
     const badgePosition = getBadgeDistance(size, badge);
     const badgeValue = badge === true ? undefined : badge || 0;

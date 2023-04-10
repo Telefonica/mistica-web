@@ -38,7 +38,7 @@ type Args = {
     badge: string;
     inverse: boolean;
     ariaLabel: string;
-    borderAvatar: boolean;
+    border: boolean;
     borderColor: 'border' | 'borderLow' | 'borderHigh' | 'borderSelected';
 };
 
@@ -52,7 +52,7 @@ export const Default: StoryComponent<Args> = ({
     hideImage,
     hideInitials,
     ariaLabel,
-    borderAvatar,
+    border,
     borderColor,
 }) => {
     // eslint-disable-next-line no-eval
@@ -79,7 +79,7 @@ export const Default: StoryComponent<Args> = ({
                     badge={badgeValue}
                     Icon={Icon}
                     aria-label={ariaLabel}
-                    borderAvatar={borderAvatar}
+                    border={border}
                     borderColor={borderColor ? borderColor : 'borderLow'}
                 />
             </div>
@@ -99,6 +99,6 @@ Default.args = {
     badge: '5',
     inverse: false,
     ariaLabel: 'Avatar',
-    borderAvatar: false,
+    border: false,
     borderColor: 'borderLow',
 };
