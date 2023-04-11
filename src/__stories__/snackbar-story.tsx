@@ -39,7 +39,7 @@ Default.args = {
 
 Default.argTypes = {
     duration: {
-        options: ['Default', '5000', '10000'],
+        options: ['Default', '1000', '2000', '5000', '10000', '15000'],
         control: {type: 'select'},
     },
     type: {
