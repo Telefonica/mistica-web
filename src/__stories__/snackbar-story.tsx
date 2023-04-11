@@ -18,12 +18,7 @@ export const Default: StoryComponent<Args> = ({buttonText, message, duration, ty
     const snackbarDuration = duration !== 'Default' ? +duration : undefined;
     return (
         <StorySection title="Snackbar">
-            <Snackbar
-                buttonText={buttonText}
-                type={type as any}
-                message={message}
-                duration={snackbarDuration}
-            />
+            <Snackbar buttonText={buttonText} type={type} message={message} duration={snackbarDuration} />
         </StorySection>
     );
 };
