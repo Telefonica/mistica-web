@@ -1,26 +1,49 @@
 import * as React from 'react';
-import {Snackbar, Stack} from '..';
-import {StorySection, useTextField, useSelect} from './helpers';
+import {Snackbar} from '..';
+import {StorySection} from './helpers';
 
 export default {
     title: 'Components/Snackbar',
     component: Snackbar,
 };
 
-export const Default: StoryComponent = () => {
-    const [buttonText, buttonTextField] = useTextField('buttonText', 'Action');
-    const [message, messageTextField] = useTextField('message', 'Some message', true);
-    const [type, select] = useSelect('type', 'INFORMATIVE', ['INFORMATIVE', 'CRITICAL']);
+type Args = {
+    buttonText: string;
+    message: string;
+    duration: string;
+    type: string;
+};
+
+export const Default: StoryComponent<Args> = ({buttonText, message, duration, type}) => {
+    const snackbarDuration = duration !== 'Default' ? +duration : undefined;
     return (
         <StorySection title="Snackbar">
-            <Stack space={16}>
-                {buttonTextField}
-                {messageTextField}
-                {select}
-                <Snackbar buttonText={buttonText} type={type as any} message={message} />
-            </Stack>
+            <Snackbar
+                buttonText={buttonText}
+                type={type as any}
+                message={message}
+                duration={snackbarDuration}
+            />
         </StorySection>
     );
 };
 
 Default.storyName = 'Snackbar';
+
+Default.args = {
+    buttonText: 'Action',
+    message: 'Some message',
+    type: 'INFORMATIVE',
+    duration: 'Default',
+};
+
+Default.argTypes = {
+    duration: {
+        options: ['Default', '5000', '10000'],
+        control: {type: 'select'},
+    },
+    type: {
+        options: ['INFORMATIVE', 'CRITICAL'],
+        control: {type: 'select'},
+    },
+};
