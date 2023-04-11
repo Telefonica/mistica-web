@@ -817,7 +817,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                             <Box paddingBottom={actions?.length || onClose ? (withGradient ? 24 : 64) : 0} />
                         )}
                         <Box
-                            paddingX={24}
+                            paddingX={16}
                             paddingTop={withGradient ? 40 : 0}
                             paddingBottom={24}
                             className={withGradient ? styles.displayCardGradient : undefined}
