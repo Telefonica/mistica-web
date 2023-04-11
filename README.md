@@ -5,7 +5,7 @@ React components library for Telefonica Design System ([Mistica](https://github.
 
 ![Node.js CI](https://github.com/Telefonica/mistica-web/workflows/Node.js%20CI/badge.svg)
 
-## Getting started
+## Getting started:
 
 ### Install mistica in your project
 
