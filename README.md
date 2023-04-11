@@ -7,7 +7,7 @@ React components library for Telefonica Design System ([Mistica](https://github.
 
 ## Getting started
 
-### Install
+### Install mistica in your project
 
 ```terminal
 yarn add @telefonica/mistica
