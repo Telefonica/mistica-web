@@ -228,7 +228,7 @@ const listSnippetsAvatar: Array<Snippet> = [
                   <Avatar
                     size={40}
                     initials="ML"
-                    src="https://api.lorem.space/image/face?w=200&h=200"
+                    src="https://source.unsplash.com/600x600/?face"
                   />
                 }
                 title="Title"
@@ -290,7 +290,7 @@ const listRowSnippets: Array<Snippet> = ['Row', 'BoxedRow'].flatMap((rowName) =>
         name: `${rowName} (image)`,
         code: `
         <${rowName}
-            asset={<Image src="https://api.lorem.space/image/album?w=300&h=300" height={80} aspectRatio="1:1" />}
+            asset={<Image src="https://source.unsplash.com/900x900/?landscape" height={80} aspectRatio="1:1" />}
             title="Title"
             description="Description"
             onPress={() => {}}
@@ -719,7 +719,7 @@ const cardSnippets: Array<Snippet> = [
           pretitle="Pretitle"
           title="Title"
           description="Description"
-          backgroundImage="https://api.lorem.space/image/watch?w=700&h=700"
+          backgroundImage="https://source.unsplash.com/900x900/?landscape"
           button={
             <ButtonPrimary small href="https://google.com">
               Action
@@ -931,7 +931,7 @@ const exampleScreens: Array<Snippet> = [
               <Avatar
                 size={isDesktopOrBigger ? 32 : 24}
                 initials="ML"
-                src="https://api.lorem.space/image/face?w=200&h=200"
+                src="https://source.unsplash.com/600x600/?face"
               />
               {isDesktopOrBigger && "María López Serrano"}
             </NavigationBarAction>
@@ -1204,7 +1204,7 @@ const navigationBarSnippets = [
         <Avatar
           size={isDesktopOrBigger ? 32 : 24}
           initials="ML"
-          src="https://api.lorem.space/image/face?w=200&h=200"
+          src="https://source.unsplash.com/600x600/?face"
         />
         {isDesktopOrBigger && "María López Serrano"}
       </NavigationBarAction>
@@ -1280,7 +1280,7 @@ const carouselSnippets = [
       headline={<Tag type="promo">Headline</Tag>}
       title={'Card ' + idx}
       description="Description"
-      media={<Image src="https://api.lorem.space/image/watch?w=700&h=700" aspectRatio="16:9" />}
+      media={<Image src="https://source.unsplash.com/1600x900/?watch" aspectRatio="16:9" />}
       button={
         <ButtonPrimary small onPress={() => {}}>
           Action
@@ -1298,8 +1298,8 @@ const carouselSnippets = [
 <Slideshow
   withBullets
   items={[
-    <Image src="https://api.lorem.space/image/furniture?w=1500&h=1500&hash=8B7BCDC2" aspectRatio="16:9" />,
-    <Image src="https://api.lorem.space/image/furniture?w=1500&h=1500&hash=500B67FB" aspectRatio="16:9" />,
+    <Image src="https://source.unsplash.com/1600x900/?furniture" aspectRatio="16:9" />,
+    <Image src="https://source.unsplash.com/1600x900/?furniture" aspectRatio="16:9" />,
   ]}
 />`,
     },
@@ -1336,12 +1336,12 @@ const avatarSnippets = [
     {
         group: 'Avatar',
         name: 'Avatar with badge',
-        code: `<Avatar size={64} src="https://api.lorem.space/image/face?w=200&h=200" badge />`,
+        code: `<Avatar size={64} src="https://source.unsplash.com/600x600/?face" badge />`,
     },
     {
         group: 'Avatar',
         name: 'Avatar with numeric badge',
-        code: `<Avatar size={64} src="https://api.lorem.space/image/face?w=200&h=200" badge={5} />`,
+        code: `<Avatar size={64} src="https://source.unsplash.com/600x600/?face" badge={5} />`,
     },
     {
         group: 'Avatar',
@@ -1574,7 +1574,7 @@ const heroSnippets = [
                 background="default"
                 media={
                   <Image
-                    src="https://api.lorem.space/image/furniture?w=1500&h=1500&hash=8B7BCDC2"
+                    src="https://source.unsplash.com/1600x900/?furniture"
                     aspectRatio="16:9"
                   />
                 }
