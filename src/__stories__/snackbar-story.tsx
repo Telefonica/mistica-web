@@ -11,7 +11,7 @@ type Args = {
     buttonText: string;
     message: string;
     duration: string;
-    type: string;
+    type: React.ComponentProps<typeof Snackbar>['type'];
 };
 
 export const Default: StoryComponent<Args> = ({buttonText, message, duration, type}) => {
