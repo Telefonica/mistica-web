@@ -11,7 +11,7 @@ on:
 
 jobs:
     build:
-        runs-on: macos-latest
+        runs-on: windows-latest
         container: telefonica/web-builder:chromium93.0.4577-1.2.4
 
         steps:
@@ -31,7 +31,7 @@ jobs:
             - run: NO_BUILD=true yarn test-ssr --ci
 
     build-acceptance:
-        runs-on: macos-latest
+        runs-on: windows-latest
         container: telefonica/web-builder:chromium93.0.4577-1.2.4
         strategy:
             matrix:
@@ -56,7 +56,7 @@ jobs:
                   path: src/**/__diff_output__/*-diff.png
 
     build-upload-failed-screenshots:
-        runs-on: macos-latest
+        runs-on: windows-latest
         container: telefonica/web-builder:chromium93.0.4577-1.2.4
         needs: [build-acceptance]
         if: always()
