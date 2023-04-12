@@ -11,19 +11,20 @@ import {
     Checkbox,
     ThemeContextProvider,
     skinVars,
-} from '../src';
-import {Movistar, Vivo, O2, Telefonica, Blau} from './themes';
-import {useOverrideTheme} from './frame-component';
-import IconSun from './icons/icon-sun';
-import IconMoon from './icons/icon-moon';
-import IconAppleOn from './icons/icon-apple-on';
-import IconAppleOff from './icons/icon-apple-off';
-import * as styles from './preview-tools.css';
+} from '../../src';
+import {Movistar, Vivo, O2, Telefonica, Blau} from '../themes';
+import {useOverrideTheme} from '../frame-component';
+import IconSun from '../icons/icon-sun';
+import IconMoon from '../icons/icon-moon';
+import IconAppleOn from '../icons/icon-apple-on';
+import IconAppleOff from '../icons/icon-apple-off';
+import * as styles from '../preview-tools.css';
 
-import type {ThemeConfig, ColorScheme, SkinName} from '../src';
+import type {ThemeConfig, ColorScheme, SkinName} from '../../src';
 
-export * from '../src';
-export {default as ButtonGroup} from '../src/button-group';
+export * from '../../src';
+export * from './loader';
+export {default as ButtonGroup} from '../../src/button-group';
 
 const themesMap: {[skinName: string]: {themeConfig: ThemeConfig; text: string}} = {
     Movistar: {
