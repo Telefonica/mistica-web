@@ -19,7 +19,7 @@ or
 npm install @telefonica/mistica
 ```
 
-### Start using `@telefonica/mistica`
+### Start using `@telefonica/mistica` in your project
 
 Before using any of our components you have to add `<ThemeContextProvider>` in the root of your React app.
 Here is a complete example of a form with two text fields and a submit button:
