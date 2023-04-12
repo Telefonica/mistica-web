@@ -8,12 +8,10 @@ on:
         branches: [master]
     pull_request:
         branches: [master]
-    merge_group:
-        branches: [master]
 
 jobs:
     build:
-        runs-on: [self-hosted, cdorunner-life-novum, Linux]
+        runs-on: ubuntu-20.04
         container: telefonica/web-builder:chromium93.0.4577-1.2.4
 
         steps:
@@ -33,7 +31,7 @@ jobs:
             - run: NO_BUILD=true yarn test-ssr --ci
 
     build-acceptance:
-        runs-on: [self-hosted, cdorunner-life-novum, Linux]
+        runs-on: ubuntu-20.04
         container: telefonica/web-builder:chromium93.0.4577-1.2.4
         strategy:
             matrix:
@@ -58,7 +56,7 @@ jobs:
                   path: src/**/__diff_output__/*-diff.png
 
     build-upload-failed-screenshots:
-        runs-on: [self-hosted, cdorunner-life-novum, Linux]
+        runs-on: ubuntu-20.04
         container: telefonica/web-builder:chromium93.0.4577-1.2.4
         needs: [build-acceptance]
         if: always()
