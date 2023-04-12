@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import ResponsiveLayout from './responsive-layout';
 import Inline from './inline';
 import Box from './box';
-import {BaseTouchable} from './touchable';
+import Touchable, {BaseTouchable} from './touchable';
 import {Text2, Text3} from './text';
 import {useScreenSize, useTheme, useAriaId} from './hooks';
 import IconMenuRegular from './generated/mistica-icons/icon-menu-regular';
@@ -22,6 +22,8 @@ import {vars} from './skins/skin-contract.css';
 import * as styles from './navigation-bar.css';
 import {sprinkles} from './sprinkles.css';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {ExclusifyUnion} from './utils/utility-types';
+import {TrackingEvent} from './utils/types';
 
 import type {Props as TouchableProps} from './touchable';
 import type {DataAttributes} from './utils/types';
@@ -190,7 +192,7 @@ type MainNavigationBarSection =
     | {to: string; href?: undefined; onPress?: undefined; title: string}
     | {onPress: () => void; to?: undefined; href?: undefined; title: string};
 
-type MainNavigationBarProps = {
+type MainNavigationBarPropsBase = {
     sections: ReadonlyArray<MainNavigationBarSection>;
     selectedIndex?: number;
     right?: React.ReactElement;
@@ -200,15 +202,86 @@ type MainNavigationBarProps = {
     topFixed?: boolean;
 };
 
+type MainNavigationBarTo = {
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    to: string;
+    fullPageOnWebView?: boolean;
+    replace?: boolean;
+};
+
+type MainNavigationBarToProps = MainNavigationBarPropsBase & MainNavigationBarTo;
+
+type MainNavigationHref = MainNavigationBarPropsBase & {
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    href: string;
+    newTab?: boolean;
+};
+
+type MainNavigationHrefProps = MainNavigationBarPropsBase & MainNavigationHref;
+
+type MainNavigationOnPress = MainNavigationBarPropsBase & {
+    trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
+    onPress: () => void;
+};
+
+type MainNavigationOnPressProps = MainNavigationBarPropsBase & MainNavigationOnPress;
+// todo WEB-658 improve this
+type MainNavigationBarProps = ExclusifyUnion<
+    | MainNavigationBarPropsBase
+    | MainNavigationBarToProps
+    | MainNavigationHrefProps
+    | MainNavigationOnPressProps
+>;
+
 type MenuTransitionState = 'closed' | 'opening' | 'open' | 'closing';
+
+const getNavigationLogo = (
+    logoTouchableProps: Omit<MainNavigationBarProps, 'sections' | 'selectedIndex' | 'right'>
+): JSX.Element => {
+    if (logoTouchableProps.to) {
+        return (
+            <Touchable
+                trackingEvent={logoTouchableProps.trackingEvent}
+                to={logoTouchableProps.to}
+                fullPageOnWebView={logoTouchableProps.fullPageOnWebView}
+                replace={logoTouchableProps.replace}
+            >
+                {logoTouchableProps.logo ?? <NavigationBarLogo />}
+            </Touchable>
+        );
+    }
+
+    if (logoTouchableProps.href) {
+        return (
+            <Touchable
+                trackingEvent={logoTouchableProps.trackingEvent}
+                href={logoTouchableProps.href}
+                newTab={logoTouchableProps.newTab}
+                replace={logoTouchableProps.replace}
+            >
+                {logoTouchableProps.logo ?? <NavigationBarLogo />}
+            </Touchable>
+        );
+    }
+
+    if (logoTouchableProps.onPress) {
+        return (
+            <Touchable trackingEvent={logoTouchableProps.trackingEvent} onPress={logoTouchableProps.onPress}>
+                {logoTouchableProps.logo ?? <NavigationBarLogo />}
+            </Touchable>
+        );
+    }
+
+    return logoTouchableProps.logo ?? <NavigationBarLogo />;
+};
 
 export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     sections,
     selectedIndex,
     right,
-    logo,
     isInverse = false,
     topFixed = true,
+    ...props
 }) => {
     const {texts, isDarkMode} = useTheme();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -217,8 +290,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     const shadowAlpha = isDarkMode ? 1 : 0.2;
     const {isTabletOrSmaller} = useScreenSize();
     const setModalState = useSetModalState();
-
-    logo = logo ?? <NavigationBarLogo />;
+    const logoElement = getNavigationLogo({...props});
 
     if (isTabletOrSmaller) {
         const openMenu = () => {
@@ -264,7 +336,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                                                 <BurgerMenuIcon isOpen={isMenuOpen} />
                                             </IconButton>
                                         )}
-                                        <div className={styles.logoContainer}>{logo}</div>
+                                        <div className={styles.logoContainer}>{logoElement}</div>
                                     </Inline>
                                     {right}
                                 </Inline>
@@ -344,7 +416,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                 <ResponsiveLayout>
                     <Inline space="between" alignItems="center">
                         <Inline space={48} alignItems="center">
-                            <div className={styles.logoContainer}>{logo}</div>
+                            <div className={styles.logoContainer}>{logoElement}</div>
                             <nav>
                                 <Inline space={32}>
                                     {sections.map(({title, ...touchableProps}, idx) => (
