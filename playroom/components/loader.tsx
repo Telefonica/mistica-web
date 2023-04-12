@@ -30,8 +30,9 @@ export const Loader: React.FC<Props> = ({loader, render, renderLoading, renderEr
                         })
                         .catch(() => setContent(renderError()));
                 } else {
-                    const data = await loader();
-                    setContent(render(data));
+                    loader()
+                        .then((data) => setContent(render(data)))
+                        .catch(() => setContent(renderError()));
                 }
             } catch (e) {
                 setContent(renderError());
