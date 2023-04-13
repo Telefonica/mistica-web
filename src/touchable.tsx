@@ -63,6 +63,7 @@ export interface PropsOnPress extends CommonProps {
     to?: undefined;
     formId?: string;
 }
+
 export interface PropsTo extends CommonProps {
     to: string | Location;
     fullPageOnWebView?: boolean;
@@ -86,6 +87,7 @@ export interface PropsMaybeTo extends CommonProps {
     href?: undefined;
     onPress?: undefined;
 }
+
 export interface PropsMaybeOnPress extends CommonProps {
     maybe: true;
     onPress?: PressHandler;
@@ -281,7 +283,7 @@ const Touchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
     return <RawTouchable {...props} className={classnames(classes.touchable, props.className)} ref={ref} />;
 });
 
-// Used internally by Mistica's components to avoid styles collisions
+// Used internally by Mística's components to avoid styles collisions
 export const BaseTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
     return <RawTouchable {...props} className={classnames(classes.base, props.className)} ref={ref} />;
 });
