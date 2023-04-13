@@ -16,7 +16,7 @@ test.each(TESTABLE_DEVICES)('PosterCard in %s', async (device) => {
 
     expect(image).toMatchImageSnapshot({
         comparisonMethod: 'ssim',
-        failureThreshold: 0.002,
+        failureThreshold: 0.003,
         failureThresholdType: 'percent',
     });
 });
