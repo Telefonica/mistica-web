@@ -12,7 +12,7 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-node18-1.0.0
+        container: telefonica/web-builder:chromium93.0.4577-1.2.4
 
         steps:
             - uses: actions/checkout@v2
@@ -32,7 +32,7 @@ jobs:
 
     build-acceptance:
         runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-node18-1.0.0
+        container: telefonica/web-builder:chromium93.0.4577-1.2.4
         strategy:
             matrix:
                 shard: [1, 2, 3]
@@ -57,7 +57,7 @@ jobs:
 
     build-upload-failed-screenshots:
         runs-on: ubuntu-latest
-        container: telefonica/web-builder:chromium93.0.4577-node18-1.0.0
+        container: telefonica/web-builder:chromium93.0.4577-1.2.4
         needs: [build-acceptance]
         if: always()
 
