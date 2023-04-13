@@ -6,18 +6,18 @@ export default {
 };
 
 type Args = {
-    inverted: boolean;
+    reverse: boolean;
     progressPercent: number;
 };
 
-export const Default: StoryComponent<Args> = ({inverted, progressPercent}) => (
+export const Default: StoryComponent<Args> = ({reverse, progressPercent}) => (
     <div data-testid="progress-bar">
-        <ProgressBar progressPercent={progressPercent} inverted={inverted} />
+        <ProgressBar progressPercent={progressPercent} reverse={reverse} />
     </div>
 );
 
 Default.storyName = 'Progress bar';
 Default.args = {
-    inverted: false,
+    reverse: false,
     progressPercent: 30,
 };

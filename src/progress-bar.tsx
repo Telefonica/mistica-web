@@ -14,7 +14,7 @@ type Props = {
     'aria-label'?: string;
     'aria-labelledby'?: string;
     dataAttributes?: DataAttributes;
-    inverted?: boolean;
+    reverse?: boolean;
 };
 
 const ProgressBar: React.FC<Props> = ({
@@ -23,7 +23,7 @@ const ProgressBar: React.FC<Props> = ({
     'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledBy,
     dataAttributes,
-    inverted = false,
+    reverse = false,
 }) => {
     const {texts} = useTheme();
     const defaultLabel = texts.loading;
@@ -40,7 +40,7 @@ const ProgressBar: React.FC<Props> = ({
             aria-labelledby={ariaLabelledBy}
         >
             <div
-                className={classNames(styles.bar, inverted ? styles.inverse : styles.normal)}
+                className={classNames(styles.bar, reverse ? styles.inverse : styles.normal)}
                 style={{
                     maxWidth: `${progressPercent}%`,
                     backgroundColor: color ?? vars.colors.controlActivated,
