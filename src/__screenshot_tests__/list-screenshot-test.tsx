@@ -10,6 +10,7 @@ const controls = [
     'switch',
     'switch and onPress',
     'radio',
+    'radio and onPress',
     'custom element',
     'custom element with text',
 ];
