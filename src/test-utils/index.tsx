@@ -219,3 +219,11 @@ export const waitFor = <T,>(
         setTimeout(runExpectation, 0);
     });
 };
+
+// about SSIM: https://github.com/americanexpress/jest-image-snapshot#%EF%B8%8F-api
+// We use this config for screenshot tests that tend to be flaky in CI because of subtle differences in the rendering
+export const ssimScreenshotConfig = {
+    comparisonMethod: 'ssim',
+    failureThreshold: 0.0001,
+    failureThresholdType: 'percent',
+} as const;
