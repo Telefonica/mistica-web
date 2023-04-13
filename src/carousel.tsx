@@ -351,8 +351,10 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                 }
             }
 
-            if (!pageInitialized.current && shownItemIndexes.includes(initialActiveItem || 0)) {
-                pageInitialized.current = true;
+            if (!pageInitialized.current) {
+                pageInitialized.current =
+                    lastPageIndex.current !== currentPageIndex &&
+                    shownItemIndexes.includes(initialActiveItem || 0);
             } else if (lastPageIndex.current !== currentPageIndex) {
                 onPageChange({pageIndex: currentPageIndex, shownItemIndexes});
             }
