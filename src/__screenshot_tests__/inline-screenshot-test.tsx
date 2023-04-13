@@ -18,5 +18,5 @@ test('Inline negative space', async () => {
     await openStoryPage({id: 'layout-inline--negative-space'});
 
     const image = await page.screenshot();
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
 });
