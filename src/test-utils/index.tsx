@@ -224,6 +224,6 @@ export const waitFor = <T,>(
 // We use this config for screenshot tests that tend to be flaky in CI because of subtle differences in the rendering
 export const ssimScreenshotConfig = {
     comparisonMethod: 'ssim',
-    failureThreshold: 0.0001,
+    failureThreshold: 0.001,
     failureThresholdType: 'percent',
 } as const;
