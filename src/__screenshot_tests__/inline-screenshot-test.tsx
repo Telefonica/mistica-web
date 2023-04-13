@@ -1,4 +1,4 @@
-import {openStoryPage} from '../test-utils';
+import {openStoryPage, ssimScreenshotConfig} from '../test-utils';
 
 test('Inline ', async () => {
     const page = await openStoryPage({id: 'layout-inline--default'});
