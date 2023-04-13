@@ -2,7 +2,7 @@ import * as React from 'react';
 import Tag from './tag';
 import Stack from './stack';
 import Box from './box';
-import {Text2, Text3, Text, Text6} from './text';
+import {Text2, Text, Text6, Text3} from './text';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
@@ -87,6 +87,8 @@ type MaybeWithActionsProps = {
     children: React.ReactNode;
     width?: string | number;
     height?: string | number;
+    minWidth?: string | number;
+    minHeight?: string | number;
     aspectRatio?: AspectRatio | number;
     actions?: Array<CardAction>;
     onClose?: () => void;
@@ -98,6 +100,8 @@ const MaybeWithActions = ({
     children,
     width = '100%',
     height = '100%',
+    minWidth,
+    minHeight,
     aspectRatio,
     actions,
     onClose,
@@ -119,6 +123,8 @@ const MaybeWithActions = ({
             style={{
                 width,
                 height,
+                minWidth,
+                minHeight,
                 aspectRatio: cssAspectRatio,
                 position: 'relative',
             }}
@@ -722,4 +728,152 @@ export const DisplayDataCard = React.forwardRef<HTMLDivElement, DisplayDataCardP
             dataAttributes={{...dataAttributes, 'component-name': 'DisplayDataCard'}}
         />
     )
+);
+
+interface PosterCardProps {
+    backgroundImage: string;
+    ariaLabel?: string;
+    aspectRatio?: AspectRatio | number;
+    width?: number | string;
+    height?: number | string;
+    icon?: React.ReactElement;
+    actions?: Array<CardAction>;
+    onClose?: () => void;
+    dataAttributes?: DataAttributes;
+    headline?: string | RendersNullableElement<typeof Tag>;
+    pretitle?: string;
+    pretitleLinesMax?: number;
+    title?: string;
+    titleLinesMax?: number;
+    description?: string;
+    descriptionLinesMax?: number;
+}
+
+const POSTER_CARD_MIN_WIDTH = 140;
+const POSTER_CARD_MIN_HEIGHT = 112;
+export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
+    (
+        {
+            dataAttributes,
+            backgroundImage,
+            width,
+            height,
+            aspectRatio = '7:10',
+            ariaLabel,
+            actions,
+            onClose,
+            icon,
+            headline,
+            pretitle,
+            pretitleLinesMax,
+            title,
+            titleLinesMax,
+            description,
+            descriptionLinesMax,
+        },
+        ref
+    ) => {
+        const withGradient = !!backgroundImage;
+        const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
+        const hasTopActions = actions?.length || onClose;
+        const {textPresets} = useTheme();
+
+        return (
+            <MaybeWithActions
+                width={width}
+                height={height}
+                minWidth={POSTER_CARD_MIN_WIDTH}
+                minHeight={POSTER_CARD_MIN_HEIGHT}
+                aspectRatio={aspectRatio}
+                onClose={onClose}
+                actions={actions}
+                aria-label={ariaLabel}
+                isInverse
+            >
+                <InternalBoxed
+                    borderRadius={16}
+                    className={styles.boxed}
+                    dataAttributes={dataAttributes}
+                    ref={ref}
+                    width="100%"
+                    minHeight="100%"
+                    isInverse
+                    background={backgroundImage ? vars.colors.backgroundContainer : undefined}
+                >
+                    <div
+                        className={styles.displayCard}
+                        style={{
+                            backgroundImage: backgroundImage
+                                ? `url("${CSS.escape(backgroundImage)}")`
+                                : undefined,
+                            paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
+                        }}
+                    >
+                        {icon ? (
+                            <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
+                                {icon}
+                            </Box>
+                        ) : (
+                            <Box paddingBottom={actions?.length || onClose ? (withGradient ? 24 : 64) : 0} />
+                        )}
+                        <Box
+                            paddingX={16}
+                            paddingTop={withGradient ? 40 : 0}
+                            paddingBottom={24}
+                            className={withGradient ? styles.displayCardGradient : undefined}
+                        >
+                            <Stack space={24}>
+                                <div>
+                                    <Stack space={8}>
+                                        {(headline || pretitle || title) && (
+                                            <header>
+                                                <Stack space={16}>
+                                                    {headline}
+                                                    <Stack space={4}>
+                                                        {pretitle && (
+                                                            <Text2
+                                                                forceMobileSizes
+                                                                truncate={pretitleLinesMax}
+                                                                as="div"
+                                                                regular
+                                                                textShadow={textShadow}
+                                                            >
+                                                                {pretitle}
+                                                            </Text2>
+                                                        )}
+                                                        <Text
+                                                            desktopSize={20}
+                                                            mobileSize={18}
+                                                            mobileLineHeight="24px"
+                                                            desktopLineHeight="28px"
+                                                            truncate={titleLinesMax}
+                                                            weight={textPresets.cardTitle.weight}
+                                                            as="h3"
+                                                        >
+                                                            {title}
+                                                        </Text>
+                                                    </Stack>
+                                                </Stack>
+                                            </header>
+                                        )}
+                                        {description && (
+                                            <Text2
+                                                forceMobileSizes
+                                                truncate={descriptionLinesMax}
+                                                as="p"
+                                                regular
+                                                textShadow={textShadow}
+                                            >
+                                                {description}
+                                            </Text2>
+                                        )}
+                                    </Stack>
+                                </div>
+                            </Stack>
+                        </Box>
+                    </div>
+                </InternalBoxed>
+            </MaybeWithActions>
+        );
+    }
 );
