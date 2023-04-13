@@ -1,4 +1,4 @@
-import {openStoryPage, screen, setRootFontSize} from '../test-utils';
+import {openStoryPage, screen, setRootFontSize, ssimScreenshotConfig} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
@@ -14,7 +14,7 @@ test.each(TESTABLE_DEVICES)('PosterCard in %s', async (device) => {
 
     const image = await dataCard.screenshot();
 
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
 });
 
 test('PosterCard with large fontSize in mobile', async () => {
@@ -39,7 +39,7 @@ test('PosterCard group', async () => {
 
     const image = await page.screenshot({fullPage: true});
 
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
 });
 
 test('PosterCard closable', async () => {
