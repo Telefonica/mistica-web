@@ -1,4 +1,4 @@
-import {openStoryPage, screen, setRootFontSize} from '../test-utils';
+import {openStoryPage, screen, setRootFontSize, ssimScreenshotConfig} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
@@ -12,7 +12,7 @@ test.each(TESTABLE_DEVICES)('HighlightedCard in %s', async (device) => {
 
     const highlightedCard = await screen.findByTestId('highlighted-card');
     const image = await highlightedCard.screenshot();
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
 });
 
 test.each(TESTABLE_DEVICES)('HighlightedCard with large fontSize in %s', async (device) => {
@@ -25,7 +25,7 @@ test.each(TESTABLE_DEVICES)('HighlightedCard with large fontSize in %s', async (
 
     const highlightedCard = await screen.findByTestId('highlighted-card');
     const image = await highlightedCard.screenshot();
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
 });
 
 test('Custom card size', async () => {
@@ -36,7 +36,7 @@ test('Custom card size', async () => {
 
     const highlightedCard = await screen.findByTestId('highlighted-card');
     const image = await highlightedCard.screenshot();
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
 });
 
 test('Custom card size inside wrapper', async () => {
@@ -47,5 +47,5 @@ test('Custom card size inside wrapper', async () => {
 
     const highlightedCard = await screen.findByTestId('highlighted-card');
     const image = await highlightedCard.screenshot();
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
 });
