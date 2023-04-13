@@ -1595,6 +1595,55 @@ const heroSnippets = [
     },
 ];
 
+const loaderSnippets = [
+    {
+        name: 'Loader with url',
+        code: `
+          <Loader
+          load="https://randomuser.me/api/?results=20&seed=patata&nat=es"
+          render={(data) => (
+            <RowList>
+              {data.results.map((p) => (
+                <Row
+                  asset={<Avatar size={40} src={p.picture.medium} />}
+                  title={p.name.first}
+                  description={p.email}
+                />
+              ))}
+            </RowList>
+          )}
+          renderLoading={() => <Spinner />}
+          renderError={() => <Snackbar message="An error occurred :(" type="CRITICAL" />}
+          />
+        `,
+        group: 'Loader',
+    },
+    {
+        name: 'Loader with function',
+        code: `
+          <Loader
+            load={async () => {
+                return fetch('https://randomuser.me/api/?results=20&seed=patata&nat=es').then((r) => r.json());
+            }}
+            render={(data) => (
+                <RowList>
+                    {data.results.map((p) => (
+                        <Row
+                            asset={<Avatar size={40} src={p.picture.medium} />}
+                            title={p.name.first}
+                            description={p.email}
+                        />
+                    ))}
+                </RowList>
+            )}
+            renderLoading={() => <Spinner />}
+            renderError={() => <Snackbar message="An error occurred :(" type="CRITICAL" />}
+          />
+        `,
+        group: 'Loader',
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -1727,4 +1776,5 @@ export default [
     ...tooltipSnippets,
     ...popoverSnippets,
     ...heroSnippets,
+    ...loaderSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
