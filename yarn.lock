@@ -5000,7 +5000,7 @@ __metadata:
     mini-css-extract-plugin: ^1.6.2
     moment: ^2.29.1
     node-fetch: ^2.6.7
-    playroom: ^0.28.2
+    playroom: ^0.31.0
     postcss: ^8.4.18
     postcss-loader: ^4.2.0
     prettier: ^2.6.1
@@ -18829,9 +18829,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playroom@npm:^0.28.2":
-  version: 0.28.2
-  resolution: "playroom@npm:0.28.2"
+"playroom@npm:^0.31.0":
+  version: 0.31.0
+  resolution: "playroom@npm:0.31.0"
   dependencies:
     "@babel/cli": ^7.19.3
     "@babel/core": ^7.20.5
@@ -18892,7 +18892,7 @@ __metadata:
     react-dom: ^16.8 || ^17 || ^18
   bin:
     playroom: bin/cli.js
-  checksum: d62f3135cf2e5d306751e5e9a82c308872ca392e3247cecbfc4f1a579bff7957e336c042daab6fa1d27a1e9f9e88c6951687c4bafa6e63bf0764a98dfdd1dec6
+  checksum: f5965a0946fc2a30752d40189b6bca5430b54e9f5213be064ca91cd39ac6c8280657bce09383cc626d217f9b1fdd7030ae3c3d5b06069658e8ac0cb00e685a38
   languageName: node
   linkType: hard
 
