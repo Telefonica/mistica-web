@@ -14,7 +14,11 @@ test.each(TESTABLE_DEVICES)('PosterCard in %s', async (device) => {
 
     const image = await dataCard.screenshot();
 
-    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(image).toMatchImageSnapshot({
+        comparisonMethod: 'ssim',
+        failureThreshold: 0.002,
+        failureThresholdType: 'percent',
+    });
 });
 
 test('PosterCard with large fontSize in mobile', async () => {
