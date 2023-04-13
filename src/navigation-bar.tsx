@@ -202,30 +202,24 @@ type MainNavigationBarPropsBase = {
     topFixed?: boolean;
 };
 
-type MainNavigationBarTo = {
+type MainNavigationBarToProps = MainNavigationBarPropsBase & {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     to: string;
     fullPageOnWebView?: boolean;
     replace?: boolean;
 };
 
-type MainNavigationBarToProps = MainNavigationBarPropsBase & MainNavigationBarTo;
-
-type MainNavigationHref = MainNavigationBarPropsBase & {
+type MainNavigationHrefProps = MainNavigationBarPropsBase & {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     href: string;
     newTab?: boolean;
 };
 
-type MainNavigationHrefProps = MainNavigationBarPropsBase & MainNavigationHref;
-
-type MainNavigationOnPress = MainNavigationBarPropsBase & {
+type MainNavigationOnPressProps = MainNavigationBarPropsBase & {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     onPress: () => void;
 };
 
-type MainNavigationOnPressProps = MainNavigationBarPropsBase & MainNavigationOnPress;
-// todo WEB-658 improve this
 type MainNavigationBarProps = ExclusifyUnion<
     | MainNavigationBarPropsBase
     | MainNavigationBarToProps

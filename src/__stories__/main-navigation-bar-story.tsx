@@ -19,7 +19,6 @@ export default {
 
 const sections = ['Start', 'Account', 'Explore', 'Support'];
 
-// todo WEB-658 new props listed here for demonstration purposes?
 type Args = {isInverse: boolean};
 
 export const Default: StoryComponent<Args> = ({isInverse}) => {
