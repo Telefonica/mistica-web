@@ -1,35 +1,10 @@
-import {openStoryPage, screen, PageApi} from '../test-utils';
-
-const updateSnackbar = async ({
-    page,
-    type = 'INFORMATIVE',
-    message = 'This is a message',
-    button = 'Action',
-}: {
-    page: PageApi;
-    type?: string;
-    message?: string;
-    button?: string;
-}) => {
-    await page.select(await screen.findByLabelText('type'), type);
-
-    const buttonHandle = await screen.findByLabelText('buttonText (opcional)');
-    const messageHandle = await screen.findByLabelText('message');
-
-    await page.click(buttonHandle, {clickCount: 3});
-    await page.type(buttonHandle, button, {delay: 0});
-
-    await page.click(messageHandle, {clickCount: 3});
-    await page.type(messageHandle, message, {delay: 0});
-};
+import {openStoryPage, screen} from '../test-utils';
 
 test('informative', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-snackbar--default',
         device: 'MOBILE_ANDROID',
     });
-
-    await updateSnackbar({page});
 
     const snackbar = await screen.findByRole('alert');
     const image = await snackbar.screenshot();
@@ -37,12 +12,11 @@ test('informative', async () => {
 });
 
 test('critical', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-snackbar--default',
         device: 'MOBILE_ANDROID',
+        args: {type: 'CRITICAL'},
     });
-
-    await updateSnackbar({page, type: 'CRITICAL'});
 
     const snackbar = await screen.findByRole('alert');
     const image = await snackbar.screenshot();
@@ -50,14 +24,12 @@ test('critical', async () => {
 });
 
 test('long message', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-snackbar--default',
         device: 'MOBILE_ANDROID',
-    });
-
-    await updateSnackbar({
-        page,
-        message: 'The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs',
+        args: {
+            message: 'The quick brown fox jumps over the lazy dog - Pack my box with five dozen liquor jugs',
+        },
     });
 
     const snackbar = await screen.findByRole('alert');
@@ -66,14 +38,12 @@ test('long message', async () => {
 });
 
 test('long action', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-snackbar--default',
         device: 'MOBILE_ANDROID',
-    });
-
-    await updateSnackbar({
-        page,
-        button: 'Is this action long enough?',
+        args: {
+            buttonText: 'This action is long enough',
+        },
     });
 
     const snackbar = await screen.findByRole('alert');
@@ -82,15 +52,13 @@ test('long action', async () => {
 });
 
 test('long action and message', async () => {
-    const page = await openStoryPage({
+    await openStoryPage({
         id: 'components-snackbar--default',
         device: 'MOBILE_ANDROID',
-    });
-
-    await updateSnackbar({
-        page,
-        message: 'The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs',
-        button: 'Is this action long enough?',
+        args: {
+            message: 'The quick brown fox jumps over the lazy dog - Pack my box with five dozen liquor jugs',
+            buttonText: 'This action is long enough',
+        },
     });
 
     const snackbar = await screen.findByRole('alert');

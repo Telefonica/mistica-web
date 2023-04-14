@@ -334,6 +334,9 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
 
     const currentPageIndex = calcCurrentPageIndex(scrollLeft, pagesScrollPositions);
 
+    const pageInitialized = React.useRef<boolean>(!initialActiveItem);
+    const lastPageIndex = React.useRef<number>(0);
+
     React.useEffect(() => {
         if (onPageChange) {
             const lastShownItemIndex = Math.min(
@@ -347,9 +350,18 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                     shownItemIndexes.unshift(idx);
                 }
             }
-            onPageChange({pageIndex: currentPageIndex, shownItemIndexes});
+
+            if (!pageInitialized.current) {
+                pageInitialized.current =
+                    lastPageIndex.current !== currentPageIndex &&
+                    shownItemIndexes.includes(initialActiveItem || 0);
+            } else if (lastPageIndex.current !== currentPageIndex) {
+                onPageChange({pageIndex: currentPageIndex, shownItemIndexes});
+            }
+
+            lastPageIndex.current = currentPageIndex;
         }
-    }, [currentPageIndex, items.length, itemsPerPageFloor, onPageChange]);
+    }, [currentPageIndex, items.length, itemsPerPageFloor, initialActiveItem, onPageChange]);
 
     let bullets: React.ReactNode = null;
 

@@ -1,4 +1,4 @@
-import {openStoryPage, screen, setRootFontSize} from '../test-utils';
+import {openStoryPage, screen, setRootFontSize, ssimScreenshotConfig} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
@@ -14,7 +14,7 @@ test.each(TESTABLE_DEVICES)('MediaCard in %s', async (device) => {
 
     const image = await mediaCard.screenshot({captureBeyondViewport: true});
 
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
 });
 
 test.each(TESTABLE_DEVICES)('MediaCard with large fontSize in %s', async (device) => {
@@ -29,7 +29,7 @@ test.each(TESTABLE_DEVICES)('MediaCard with large fontSize in %s', async (device
 
     const image = await mediaCard.screenshot({captureBeyondViewport: true});
 
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
 });
 
 test('MediaCard group', async () => {
@@ -39,7 +39,7 @@ test('MediaCard group', async () => {
 
     const image = await page.screenshot({fullPage: true});
 
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
 });
 
 test('MediaCard with body ', async () => {
@@ -54,7 +54,7 @@ test('MediaCard with body ', async () => {
 
     const image = await page.screenshot({fullPage: true});
 
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
 });
 
 test('MediaCard with body closeable', async () => {
@@ -70,5 +70,21 @@ test('MediaCard with body closeable', async () => {
 
     const image = await page.screenshot({fullPage: true});
 
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
+});
+
+test('MediaCard with top actions', async () => {
+    const page = await openStoryPage({
+        id: 'components-cards-media-card--default',
+        device: 'MOBILE_IOS',
+        args: {
+            withExtra: true,
+            actions: 'button and link',
+            withTopAction: true,
+        },
+    });
+
+    const image = await page.screenshot({fullPage: true});
+
+    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
 });

@@ -42,6 +42,7 @@ interface CommonProps {
     type?: 'button' | 'submit';
     tabIndex?: number;
     as?: 'a';
+    stopPropagation?: boolean;
 }
 
 /*
@@ -62,6 +63,7 @@ export interface PropsOnPress extends CommonProps {
     to?: undefined;
     formId?: string;
 }
+
 export interface PropsTo extends CommonProps {
     to: string | Location;
     fullPageOnWebView?: boolean;
@@ -85,6 +87,7 @@ export interface PropsMaybeTo extends CommonProps {
     href?: undefined;
     onPress?: undefined;
 }
+
 export interface PropsMaybeOnPress extends CommonProps {
     maybe: true;
     onPress?: PressHandler;
@@ -131,6 +134,12 @@ const RawTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
     const openNewTab = !!props.href && !!props.newTab;
     const loadOnTop = !openNewTab && !!props.href && !!props.loadOnTop;
 
+    const stopPropagationIfNeeded = (event: React.MouseEvent<HTMLElement>) => {
+        if (props.stopPropagation) {
+            event.stopPropagation();
+        }
+    };
+
     const onPress = (event: React.MouseEvent<HTMLElement>) => {
         if (props.onPress) {
             props.onPress(event);
@@ -163,6 +172,7 @@ const RawTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
     };
 
     const handleButtonClick = (event: React.MouseEvent<HTMLElement>) => {
+        stopPropagationIfNeeded(event);
         // synchronously execute handler when no tracking is needed
         if (!trackingEvents.length) {
             onPress(event);
@@ -173,12 +183,18 @@ const RawTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
     };
 
     const handleHrefClick = (event: React.MouseEvent<HTMLElement>) => {
+        stopPropagationIfNeeded(event);
         if (!trackingEvents.length) {
             return; // leave the browser handle the href
         }
 
         event.preventDefault();
         trackOnce(() => redirect(getHref(), openNewTab, loadOnTop));
+    };
+
+    const handleToClick = (event: React.MouseEvent<HTMLElement>) => {
+        stopPropagationIfNeeded(event);
+        trackEvent();
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
@@ -224,7 +240,7 @@ const RawTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
                 innerRef={ref as React.RefObject<HTMLAnchorElement>}
                 to={props.disabled ? '' : props.to}
                 replace={props.replace}
-                onClick={trackEvent}
+                onClick={handleToClick}
                 onKeyDown={handleKeyDown}
             >
                 {children}
@@ -267,7 +283,7 @@ const Touchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
     return <RawTouchable {...props} className={classnames(classes.touchable, props.className)} ref={ref} />;
 });
 
-// Used internally by Mistica's components to avoid styles collisions
+// Used internally by Mística's components to avoid styles collisions
 export const BaseTouchable = React.forwardRef<TouchableElement, Props>((props, ref) => {
     return <RawTouchable {...props} className={classnames(classes.base, props.className)} ref={ref} />;
 });

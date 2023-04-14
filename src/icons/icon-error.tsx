@@ -101,6 +101,7 @@ const IconErrorDefault = (): JSX.Element => {
 
 const IconError = (): JSX.Element => {
     const {skinName} = useTheme();
+
     return skinName === O2_SKIN || skinName === O2_CLASSIC_SKIN ? <IconErrorO2 /> : <IconErrorDefault />;
 };
 

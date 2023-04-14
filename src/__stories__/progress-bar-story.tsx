@@ -5,10 +5,19 @@ export default {
     title: 'Components/Progress bar',
 };
 
-export const Default: StoryComponent = () => (
+type Args = {
+    reverse: boolean;
+    progressPercent: number;
+};
+
+export const Default: StoryComponent<Args> = ({reverse, progressPercent}) => (
     <div data-testid="progress-bar">
-        <ProgressBar progressPercent={30} />
+        <ProgressBar progressPercent={progressPercent} reverse={reverse} />
     </div>
 );
 
 Default.storyName = 'Progress bar';
+Default.args = {
+    reverse: false,
+    progressPercent: 30,
+};

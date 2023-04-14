@@ -7,7 +7,7 @@ import type {ComplexStyleRule} from '@vanilla-extract/css';
 
 const transitionTiming = '0.3s cubic-bezier(0.77, 0, 0.175, 1)';
 
-export const BUTTON_MIN_WIDTH = 136;
+export const BUTTON_MIN_WIDTH = 104;
 const BORDER_PX = 1.5;
 export const ICON_MARGIN_PX = 8;
 export const X_PADDING_PX = 16 - BORDER_PX;
@@ -60,7 +60,7 @@ export const loadingFiller = style([
 ]);
 
 export const small = style({
-    minWidth: 104,
+    minWidth: 80,
 });
 
 export const loadingContent = style([

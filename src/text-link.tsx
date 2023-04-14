@@ -69,6 +69,7 @@ const TextLink: React.FC<TextLinkProps> = ({children, className = '', disabled, 
     return (
         <BaseTouchable
             {...props}
+            stopPropagation
             as={props.onPress ? 'a' : undefined}
             trackingEvent={
                 props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined)
