@@ -73,7 +73,7 @@ const exampleCode = `
 
 const config = {
     title: 'Mística Design System',
-    components: './playroom/components.tsx',
+    components: './playroom/components/index.tsx',
     outputPath: getOutputPath(),
     baseUrl: getBaseUrl(),
     themes: './playroom/themes.tsx',
