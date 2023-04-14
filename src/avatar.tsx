@@ -35,7 +35,6 @@ type AvatarProps = {
     'aria-label'?: string;
     dataAttributes?: DataAttributes;
     border?: boolean;
-    borderColor?: 'border' | 'borderLow' | 'borderHigh' | 'borderSelected';
 };
 
 /**
@@ -73,11 +72,7 @@ const Avatar = ({
     React.useEffect(() => {
         setImgLoadError(false); // reset error state when url changes
     }, [src]);
-    const border = props.border
-        ? props.borderColor
-            ? `0px 0px 0px 1px ${vars.colors[props.borderColor]}`
-            : `0px 0px 0px 1px ${vars.colors.borderLow}`
-        : 'none';
+    const borderColor = props.border ? `1px solid ${vars.colors.borderLow}` : 'none';
     const letters = initials.trim().slice(0, 2);
     const badgePosition = getBadgeDistance(size, badge);
     const badgeValue = badge === true ? undefined : badge || 0;
@@ -95,7 +90,8 @@ const Avatar = ({
                     height: size,
                     color: textColor,
                     background: backgroundColor,
-                    boxShadow: border,
+                    border: borderColor,
+                    boxSizing: 'border-box',
                 }}
                 {...getPrefixedDataAttributes(dataAttributes, 'Avatar')}
             >

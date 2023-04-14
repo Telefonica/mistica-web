@@ -17,11 +17,6 @@ export default {
             options: ['undefined', 'IconStarFilled', 'IconFireRegular', 'IconBrainRegular'],
             control: {type: 'select'},
         },
-        borderColor: {
-            defaultValue: 'borderLow',
-            options: ['border', 'borderLow', 'borderHigh', 'borderSelected'],
-            control: {type: 'select'},
-        },
     },
     parameters: {
         fullScreen: true,
@@ -39,7 +34,6 @@ type Args = {
     inverse: boolean;
     ariaLabel: string;
     border: boolean;
-    borderColor: 'border' | 'borderLow' | 'borderHigh' | 'borderSelected';
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -53,7 +47,6 @@ export const Default: StoryComponent<Args> = ({
     hideInitials,
     ariaLabel,
     border,
-    borderColor,
 }) => {
     // eslint-disable-next-line no-eval
     const badgeValue = badgeOptions.includes(badge) ? eval(badge) : undefined;
@@ -80,7 +73,6 @@ export const Default: StoryComponent<Args> = ({
                     Icon={Icon}
                     aria-label={ariaLabel}
                     border={border}
-                    borderColor={borderColor ? borderColor : 'borderLow'}
                 />
             </div>
         </ThemeVariant>
@@ -100,5 +92,4 @@ Default.args = {
     inverse: false,
     ariaLabel: 'Avatar',
     border: false,
-    borderColor: 'borderLow',
 };
