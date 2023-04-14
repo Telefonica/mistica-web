@@ -1,4 +1,4 @@
-import {openStoryPage, screen, ssimScreenshotConfig} from '../test-utils';
+import {openStoryPage, screen} from '../test-utils';
 
 test('Hero (default)', async () => {
     await openStoryPage({
@@ -20,7 +20,7 @@ test('Hero (default)', async () => {
     });
 
     const heroDefault = await screen.findByTestId('hero');
-    expect(await heroDefault.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await heroDefault.screenshot()).toMatchImageSnapshot();
 
     await openStoryPage({
         id: 'components-hero-component--default',
@@ -40,7 +40,7 @@ test('Hero (default)', async () => {
     });
 
     const heroBrand = await screen.findByTestId('hero');
-    expect(await heroBrand.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await heroBrand.screenshot()).toMatchImageSnapshot();
 });
 
 test('Hero desktop', async () => {
@@ -64,7 +64,7 @@ test('Hero desktop', async () => {
     });
 
     const heroDefault = await screen.findByTestId('hero');
-    expect(await heroDefault.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await heroDefault.screenshot()).toMatchImageSnapshot();
 
     await openStoryPage({
         id: 'components-hero-component--default',
@@ -85,7 +85,7 @@ test('Hero desktop', async () => {
     });
 
     const heroBrand = await screen.findByTestId('hero');
-    expect(await heroBrand.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await heroBrand.screenshot()).toMatchImageSnapshot();
 });
 
 test('Hero slideshow (mobile)', async () => {
@@ -95,7 +95,7 @@ test('Hero slideshow (mobile)', async () => {
     });
 
     const slideshowMobile = await screen.findByTestId('hero');
-    expect(await slideshowMobile.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await slideshowMobile.screenshot()).toMatchImageSnapshot();
 });
 
 test('Hero slideshow (desktop)', async () => {
@@ -105,5 +105,5 @@ test('Hero slideshow (desktop)', async () => {
     });
 
     const slideshowDesktop = await screen.findByTestId('hero');
-    expect(await slideshowDesktop.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await slideshowDesktop.screenshot()).toMatchImageSnapshot();
 });
