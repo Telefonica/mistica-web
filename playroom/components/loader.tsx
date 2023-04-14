@@ -7,58 +7,62 @@ type Props = {
     renderError?: () => React.ReactElement;
 };
 
-const Loader: React.FC<Props> = ({load, render, renderLoading, renderError}) => {
+type LoaderState = 'loading' | 'error' | 'success';
+
+const Loader: React.FC<Props> = ({load, render, renderLoading = () => null, renderError = () => null}) => {
     const [loaderData, setLoaderData] = React.useState(null);
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [hasError, setHasError] = React.useState(false);
+    const [loaderStatus, setLoaderStatus] = React.useState<LoaderState>('loading');
 
     React.useEffect(() => {
-        const getContent = async () => {
-            try {
-                setIsLoading(true);
-                setLoaderData(null);
-                setHasError(false);
-                if (typeof load === 'string') {
-                    fetch(load)
-                        .then((response) => {
-                            if (!response.ok) {
-                                setHasError(true);
-                            } else {
-                                response
-                                    .json()
-                                    .then((r) => {
-                                        setLoaderData(r);
-                                    })
-                                    .catch(() => setHasError(true));
-                            }
-                        })
-                        .catch(() => setHasError(true))
-                        .finally(() => setIsLoading(false));
-                } else {
-                    load()
-                        .then((data) => setLoaderData(data))
-                        .catch(() => setHasError(true))
-                        .finally(() => setIsLoading(false));
-                }
-            } catch (e) {
-                setHasError(true);
-            }
+        let isRenderActive = true;
+
+        if (isRenderActive) setLoaderStatus('loading');
+
+        if (typeof load === 'string') {
+            fetch(load)
+                .then((response) => {
+                    if (!response.ok) {
+                        if (isRenderActive) setLoaderStatus('error');
+                    } else {
+                        response
+                            .json()
+                            .then((data) => {
+                                if (isRenderActive) {
+                                    setLoaderData(data);
+                                    setLoaderStatus('success');
+                                }
+                            })
+                            .catch(() => {
+                                if (isRenderActive) setLoaderStatus('error');
+                            });
+                    }
+                })
+                .catch(() => {
+                    if (isRenderActive) setLoaderStatus('error');
+                });
+        } else {
+            load()
+                .then((data) => {
+                    if (isRenderActive) {
+                        setLoaderData(data);
+                        setLoaderStatus('success');
+                    }
+                })
+                .catch(() => {
+                    if (isRenderActive) setLoaderStatus('error');
+                });
+        }
+
+        return () => {
+            isRenderActive = false;
         };
+    }, [load]);
 
-        getContent();
-    }, [load, render, renderLoading, renderError]);
+    if (loaderStatus === 'loading') return renderLoading();
 
-    let content;
+    if (loaderStatus === 'error') return renderError();
 
-    if (isLoading) {
-        content = renderLoading ? renderLoading() : null;
-    } else if (hasError) {
-        content = renderError ? renderError() : null;
-    } else {
-        content = loaderData ? render(loaderData) : null;
-    }
-
-    return content;
+    return render(loaderData);
 };
 
 export default Loader;
