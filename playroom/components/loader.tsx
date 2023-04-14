@@ -15,43 +15,27 @@ const Loader: React.FC<Props> = ({load, render, renderLoading = () => null, rend
 
     React.useEffect(() => {
         let isRenderActive = true;
+        setLoaderStatus('loading');
 
-        if (isRenderActive) setLoaderStatus('loading');
+        const loadFn =
+            typeof load === 'function'
+                ? load
+                : () =>
+                      fetch(load).then((response) => {
+                          if (!response.ok) throw new Error('fetch failed');
+                          return response.json();
+                      });
 
-        if (typeof load === 'string') {
-            fetch(load)
-                .then((response) => {
-                    if (!response.ok) {
-                        if (isRenderActive) setLoaderStatus('error');
-                    } else {
-                        response
-                            .json()
-                            .then((data) => {
-                                if (isRenderActive) {
-                                    setLoaderData(data);
-                                    setLoaderStatus('success');
-                                }
-                            })
-                            .catch(() => {
-                                if (isRenderActive) setLoaderStatus('error');
-                            });
-                    }
-                })
-                .catch(() => {
-                    if (isRenderActive) setLoaderStatus('error');
-                });
-        } else {
-            load()
-                .then((data) => {
-                    if (isRenderActive) {
-                        setLoaderData(data);
-                        setLoaderStatus('success');
-                    }
-                })
-                .catch(() => {
-                    if (isRenderActive) setLoaderStatus('error');
-                });
-        }
+        loadFn()
+            .then((data) => {
+                if (isRenderActive) {
+                    setLoaderData(data);
+                    setLoaderStatus('success');
+                }
+            })
+            .catch(() => {
+                if (isRenderActive) setLoaderStatus('error');
+            });
 
         return () => {
             isRenderActive = false;
