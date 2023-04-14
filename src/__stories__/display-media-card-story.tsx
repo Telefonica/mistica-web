@@ -15,13 +15,14 @@ import {
     Text2,
     Inline,
 } from '..';
+import usingVrImg from './images/using-vr.jpg';
+import avatarImg from './images/avatar.jpg';
 
 export default {
     title: 'Components/Cards/Display media card',
 };
 
-const BACKGROUND_SRC =
-    'https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80';
+const BACKGROUND_SRC = usingVrImg;
 
 type DisplayMediaCardArgs = {
     asset: 'icon' | 'circle + icon' | 'image' | 'circle + image';
@@ -58,7 +59,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
             </Circle>
         );
     } else if (asset === 'circle + image') {
-        icon = <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />;
+        icon = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
     const button = actions.includes('button') ? (

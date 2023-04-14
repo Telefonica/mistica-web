@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {HighlightedCard, Box, ButtonPrimary, ButtonSecondary, ButtonLink} from '..';
+import personPortraitImg from './images/person-portrait.jpg';
 
 export default {
     title: 'Components/Cards/Highlighted card',
@@ -52,11 +53,7 @@ export const Default: StoryComponent<Args> = ({
         <HighlightedCard
             title={title}
             description={description}
-            imageUrl={
-                image !== 'none'
-                    ? 'https://images.unsplash.com/photo-1587302186428-d3753405ffed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80'
-                    : undefined
-            }
+            imageUrl={image !== 'none' ? personPortraitImg : undefined}
             imageFit={image !== 'none' ? image : undefined}
             dataAttributes={{testid: 'highlighted-card'}}
             button={getButton(action) as any}
@@ -98,7 +95,7 @@ export const CustomCardSize: StoryComponent = () => {
                 width={250}
                 title="Title 1"
                 description="Some description here"
-                imageUrl="https://images.unsplash.com/photo-1587302186428-d3753405ffed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
+                imageUrl={personPortraitImg}
                 imageFit="fit"
                 onClose={() => {}}
             />
@@ -109,7 +106,7 @@ export const CustomCardSize: StoryComponent = () => {
                 width={250}
                 title="Title 2"
                 description="Some description here"
-                imageUrl="https://images.unsplash.com/photo-1587302186428-d3753405ffed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
+                imageUrl={personPortraitImg}
                 imageFit="fit"
                 button={
                     <ButtonPrimary small href="https://google.com">
@@ -124,7 +121,7 @@ export const CustomCardSize: StoryComponent = () => {
                 width={250}
                 title="Title 3"
                 description="Some description here. Some description here."
-                imageUrl="https://images.unsplash.com/photo-1587302186428-d3753405ffed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
+                imageUrl={personPortraitImg}
                 imageFit="fit"
                 button={
                     <ButtonPrimary small href="https://google.com">
@@ -141,7 +138,7 @@ export const CustomCardSize: StoryComponent = () => {
                 onPress={() => {}}
                 title="Title 4"
                 description="Some description here. Some description here. Some description here. "
-                imageUrl="https://images.unsplash.com/photo-1587302186428-d3753405ffed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
+                imageUrl={personPortraitImg}
                 imageFit="fit"
             />
         </div>

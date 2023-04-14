@@ -5,6 +5,7 @@ import Stack from '../stack';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
 import {useScreenSize} from '../hooks';
+import emptyStateImg from './images/empty-state.png';
 
 export default {
     title: 'Patterns/Feedback/SuccessFeedback',
@@ -52,7 +53,7 @@ export const Success: StoryComponent<SuccessArgs> = ({
 );
 Success.storyName = 'SuccessFeedback';
 Success.args = {
-    imageUrl: 'https://i.imgur.com/k5tDSNx.png',
+    imageUrl: emptyStateImg,
     imageFit: 'fit',
     multipleParagraphs: false,
     withButtons: true,
@@ -91,7 +92,7 @@ export const SuccessAsHeader: StoryComponent<SuccessArgs> = ({
 };
 SuccessAsHeader.storyName = 'SuccessFeedback as Header';
 SuccessAsHeader.args = {
-    imageUrl: 'https://i.imgur.com/k5tDSNx.png',
+    imageUrl: emptyStateImg,
     imageFit: 'fit',
     multipleParagraphs: false,
     withButtons: true,

@@ -8,6 +8,7 @@ import {
     Placeholder,
     IconButton,
 } from '..';
+import avatarImg from './images/avatar.jpg';
 
 export default {
     title: 'Components/Popover',
@@ -39,7 +40,7 @@ export const Default: StoryComponent<PopoverArgs> = ({
             </Circle>
         );
     } else if (asset === 'image') {
-        icon = <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />;
+        icon = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
     const [isClosed, setIsClosed] = React.useState(false);
