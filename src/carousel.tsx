@@ -198,8 +198,8 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const desktopContainerType = useDesktopContainerType();
     const itemsPerPageConfig = normalizeItemsPerPage(desktopContainerType || 'large', itemsPerPage);
 
-    const {isDesktopOrBigger, isMobile} = useScreenSize();
-    const mobileOrTabletItemsPerPage = isMobile ? itemsPerPageConfig.mobile : itemsPerPageConfig.tablet;
+    const {isDesktopOrBigger, isTablet} = useScreenSize();
+    const mobileOrTabletItemsPerPage = isTablet ? itemsPerPageConfig.tablet : itemsPerPageConfig.mobile;
     const itemsPerPageFloor = Math.max(
         Math.floor(isDesktopOrBigger ? itemsPerPageConfig.desktop : mobileOrTabletItemsPerPage),
         1
@@ -352,9 +352,7 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
             }
 
             if (!pageInitialized.current) {
-                pageInitialized.current =
-                    lastPageIndex.current !== currentPageIndex &&
-                    shownItemIndexes.includes(initialActiveItem || 0);
+                pageInitialized.current = shownItemIndexes.includes(initialActiveItem || 0);
             } else if (lastPageIndex.current !== currentPageIndex) {
                 onPageChange({pageIndex: currentPageIndex, shownItemIndexes});
             }
