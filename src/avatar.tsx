@@ -72,7 +72,7 @@ const Avatar = ({
     React.useEffect(() => {
         setImgLoadError(false); // reset error state when url changes
     }, [src]);
-    const borderColor = props.border ? `1px solid ${vars.colors.borderLow}` : 'none';
+    const border = props.border ? `1px solid ${vars.colors.borderLow}` : 'none';
     const letters = initials.trim().slice(0, 2);
     const badgePosition = getBadgeDistance(size, badge);
     const badgeValue = badge === true ? undefined : badge || 0;
@@ -90,7 +90,7 @@ const Avatar = ({
                     height: size,
                     color: textColor,
                     background: backgroundColor,
-                    border: borderColor,
+                    border: border,
                     boxSizing: 'border-box',
                 }}
                 {...getPrefixedDataAttributes(dataAttributes, 'Avatar')}
