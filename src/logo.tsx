@@ -271,8 +271,6 @@ const LogoBase: React.FC<LogoBaseProps> = ({size = 48, skinName, logoType = 'iso
 type LogoPropsBase = {
     size?: number;
     logoType?: LogoType;
-    // todo WEB-761 is it really needed this below?
-    children?: undefined;
 };
 
 type LogoToProps = LogoPropsBase & {
@@ -334,8 +332,12 @@ const MaybeTouchableLogo = (logoTouchableProps: LogoProps, children: React.React
 };
 export const Logo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}) => {
     const {skinName} = useTheme();
-    // todo WEB-761 children as nested?
-    return MaybeTouchableLogo(props, <LogoBase skinName={skinName} logoType={logoType} size={size} />);
+
+    return (
+        <MaybeTouchableLogo {...props}>
+            <LogoBase skinName={skinName} logoType={logoType} size={size} />
+        </MaybeTouchableLogo>
+    );
 };
 
 export const MovistarLogo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}) =>
