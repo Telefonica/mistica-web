@@ -33,6 +33,7 @@ type Args = {
     badge: string;
     inverse: boolean;
     ariaLabel: string;
+    border: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -45,6 +46,7 @@ export const Default: StoryComponent<Args> = ({
     hideImage,
     hideInitials,
     ariaLabel,
+    border,
 }) => {
     // eslint-disable-next-line no-eval
     const badgeValue = badgeOptions.includes(badge) ? eval(badge) : undefined;
@@ -70,6 +72,7 @@ export const Default: StoryComponent<Args> = ({
                     badge={badgeValue}
                     Icon={Icon}
                     aria-label={ariaLabel}
+                    border={border}
                 />
             </div>
         </ThemeVariant>
@@ -88,4 +91,5 @@ Default.args = {
     badge: '5',
     inverse: false,
     ariaLabel: 'Avatar',
+    border: false,
 };
