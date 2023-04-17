@@ -68,26 +68,3 @@ Default.argTypes = {
         control: {type: 'range', min: 6, max: 128, step: 1},
     },
 };
-
-// export const Custom: StoryComponent<Args> = ({isInverse, withBorder}) => {
-//     return (
-//         <NavigationBar
-//             withBorder={withBorder}
-//             isInverse={isInverse}
-//             onBack={() => {}}
-//             title="Settings"
-//             right={
-//                 <NavigationBarActionGroup>
-//                     <Avatar size={32} />
-//                 </NavigationBarActionGroup>
-//             }
-//         />
-//     );
-// };
-//
-// Custom.storyName = 'Logo with href';
-//
-// Custom.args = {
-//     isInverse: false,
-//     withBorder: true,
-// };
