@@ -202,7 +202,7 @@ const CardContent: React.FC<CardContentProps> = ({
                                 {renderHeadline()}
                                 <Stack space={4}>
                                     {pretitle && (
-                                        <Text2 truncate={pretitleLinesMax} as="div" regular>
+                                        <Text2 truncate={pretitleLinesMax} as="div" regular hyphens="auto">
                                             {pretitle}
                                         </Text2>
                                     )}
@@ -214,10 +214,11 @@ const CardContent: React.FC<CardContentProps> = ({
                                         truncate={titleLinesMax}
                                         weight={textPresets.cardTitle.weight}
                                         as="h3"
+                                        hyphens="auto"
                                     >
                                         {title}
                                     </Text>
-                                    <Text2 truncate={subtitleLinesMax} as="div" regular>
+                                    <Text2 truncate={subtitleLinesMax} as="div" regular hyphens="auto">
                                         {subtitle}
                                     </Text2>
                                 </Stack>
@@ -231,6 +232,7 @@ const CardContent: React.FC<CardContentProps> = ({
                             as="p"
                             regular
                             color={vars.colors.textSecondary}
+                            hyphens="auto"
                         >
                             {description}
                         </Text2>
@@ -513,7 +515,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                             {icon && <Box paddingBottom={16}>{icon}</Box>}
                             <Stack space={4}>
                                 {title && (
-                                    <Text2 truncate={titleLinesMax} as="h3" regular>
+                                    <Text2 truncate={titleLinesMax} as="h3" regular hyphens="auto">
                                         {title}
                                     </Text2>
                                 )}
@@ -523,6 +525,7 @@ export const SnapCard = React.forwardRef<HTMLDivElement, SnapCardProps>(
                                         regular
                                         color={vars.colors.textSecondary}
                                         as="p"
+                                        hyphens="auto"
                                     >
                                         {subtitle}
                                     </Text2>
@@ -661,6 +664,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                                 as="div"
                                                                 regular
                                                                 textShadow={textShadow}
+                                                                hyphens="auto"
                                                             >
                                                                 {pretitle}
                                                             </Text2>
@@ -670,6 +674,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                             truncate={titleLinesMax}
                                                             as="h3"
                                                             textShadow={textShadow}
+                                                            hyphens="auto"
                                                         >
                                                             {title}
                                                         </Text6>
@@ -686,6 +691,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                                 regular
                                                 color={vars.colors.textSecondary}
                                                 textShadow={textShadow}
+                                                hyphens="auto"
                                             >
                                                 {description}
                                             </Text3>
@@ -837,6 +843,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                                 as="div"
                                                                 regular
                                                                 textShadow={textShadow}
+                                                                hyphens="auto"
                                                             >
                                                                 {pretitle}
                                                             </Text2>
@@ -849,6 +856,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                             truncate={titleLinesMax}
                                                             weight={textPresets.cardTitle.weight}
                                                             as="h3"
+                                                            hyphens="auto"
                                                         >
                                                             {title}
                                                         </Text>
@@ -863,6 +871,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                                 as="p"
                                                 regular
                                                 textShadow={textShadow}
+                                                hyphens="auto"
                                             >
                                                 {description}
                                             </Text2>
