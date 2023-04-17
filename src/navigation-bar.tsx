@@ -113,6 +113,8 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
     const {isTabletOrSmaller} = useScreenSize();
     const setModalState = useSetModalState();
 
+    logo = logo ?? <Logo size={isTabletOrSmaller ? 40 : 48} />;
+
     if (isTabletOrSmaller) {
         const openMenu = () => {
             setIsMenuOpen(true);
@@ -157,7 +159,7 @@ export const MainNavigationBar: React.FC<MainNavigationBarProps> = ({
                                                 <BurgerMenuIcon isOpen={isMenuOpen} />
                                             </IconButton>
                                         )}
-                                        <div className={styles.logoContainer}>{logo ?? <Logo />}</div>
+                                        <div className={styles.logoContainer}>{logo}</div>
                                     </Inline>
                                     {right}
                                 </Inline>
@@ -367,6 +369,10 @@ export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
     isInverse = false,
     topFixed = true,
 }) => {
+    const {isTabletOrSmaller} = useScreenSize();
+
+    logo = logo ?? <Logo size={isTabletOrSmaller ? 40 : 48} />;
+
     return (
         <ThemeVariant isInverse={isInverse}>
             <Header
@@ -378,7 +384,7 @@ export const FunnelNavigationBar: React.FC<FunnelNavigationBarProps> = ({
                 <ResponsiveLayout>
                     <GridLayout template="10">
                         <Inline space="between" alignItems="center">
-                            {logo ?? <Logo />}
+                            {logo}
                             {right}
                         </Inline>
                     </GridLayout>
