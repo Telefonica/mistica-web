@@ -3,10 +3,12 @@ import {
     Avatar,
     Badge,
     IconShoppingCartRegular,
+    Logo,
     MainNavigationBar,
     NavigationBarAction,
     NavigationBarActionGroup,
     useScreenSize,
+    VivoLogo,
 } from '..';
 
 export default {
@@ -29,6 +31,15 @@ export const Default: StoryComponent<Args> = ({isInverse}) => {
             isInverse={isInverse}
             sections={sections.map((title, idx) => ({title, onPress: () => setSelectedIndex(idx)}))}
             selectedIndex={selectedIndex}
+            // todo WEB-761 more logo controls, like logoType? No explicit logo sample?
+            logo={
+                <Logo
+                    logoType="imagotype"
+                    onPress={() => {
+                        alert('pressed');
+                    }}
+                />
+            }
             right={
                 <NavigationBarActionGroup>
                     <NavigationBarAction onPress={() => {}} aria-label="shopping cart with 2 items">
