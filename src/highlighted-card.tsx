@@ -93,6 +93,7 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                     truncate={props.titleLinesMax}
                     weight={textPresets.cardTitle.weight}
                     as="h3"
+                    hyphens="auto"
                 >
                     {title}
                 </Text>
@@ -102,6 +103,7 @@ const Content = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
                         color={vars.colors.textSecondary}
                         truncate={props.descriptionLinesMax}
                         as="p"
+                        hyphens="auto"
                     >
                         {description}
                     </Text2>

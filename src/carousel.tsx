@@ -198,8 +198,8 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
     const desktopContainerType = useDesktopContainerType();
     const itemsPerPageConfig = normalizeItemsPerPage(desktopContainerType || 'large', itemsPerPage);
 
-    const {isDesktopOrBigger, isMobile} = useScreenSize();
-    const mobileOrTabletItemsPerPage = isMobile ? itemsPerPageConfig.mobile : itemsPerPageConfig.tablet;
+    const {isDesktopOrBigger, isTablet} = useScreenSize();
+    const mobileOrTabletItemsPerPage = isTablet ? itemsPerPageConfig.tablet : itemsPerPageConfig.mobile;
     const itemsPerPageFloor = Math.max(
         Math.floor(isDesktopOrBigger ? itemsPerPageConfig.desktop : mobileOrTabletItemsPerPage),
         1
@@ -334,6 +334,9 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
 
     const currentPageIndex = calcCurrentPageIndex(scrollLeft, pagesScrollPositions);
 
+    const pageInitialized = React.useRef<boolean>(!initialActiveItem);
+    const lastPageIndex = React.useRef<number>(0);
+
     React.useEffect(() => {
         if (onPageChange) {
             const lastShownItemIndex = Math.min(
@@ -347,9 +350,16 @@ const BaseCarousel: React.FC<BaseCarouselProps> = ({
                     shownItemIndexes.unshift(idx);
                 }
             }
-            onPageChange({pageIndex: currentPageIndex, shownItemIndexes});
+
+            if (!pageInitialized.current) {
+                pageInitialized.current = shownItemIndexes.includes(initialActiveItem || 0);
+            } else if (lastPageIndex.current !== currentPageIndex) {
+                onPageChange({pageIndex: currentPageIndex, shownItemIndexes});
+            }
+
+            lastPageIndex.current = currentPageIndex;
         }
-    }, [currentPageIndex, items.length, itemsPerPageFloor, onPageChange]);
+    }, [currentPageIndex, items.length, itemsPerPageFloor, initialActiveItem, onPageChange]);
 
     let bullets: React.ReactNode = null;
 
