@@ -90,8 +90,8 @@ const Avatar = ({
                     height: size,
                     color: textColor,
                     background: backgroundColor,
-                    border: border,
                     boxSizing: 'border-box',
+                    border,
                 }}
                 {...getPrefixedDataAttributes(dataAttributes, 'Avatar')}
             >
