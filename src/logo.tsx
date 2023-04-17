@@ -9,6 +9,7 @@ import Touchable from './touchable';
 
 type LogoType = 'isotipo' | 'imagotype' | 'vertical';
 type LogoImageProps = {size: number; logoType: LogoType};
+
 const MovistarLogoImage = ({size, logoType}: LogoImageProps) => {
     const {isDarkMode} = useTheme();
     const isInverse = useIsInverseVariant();
