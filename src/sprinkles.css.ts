@@ -2,7 +2,7 @@ import {defineProperties, createSprinkles} from '@vanilla-extract/sprinkles';
 import {vars} from './skins/skin-contract.css';
 
 type ColorKeys = keyof typeof vars.colors;
-type ColorValues = (typeof vars.colors)[ColorKeys];
+type ColorValues = typeof vars.colors[ColorKeys];
 
 const colors: Array<ColorValues | 'transparent' | 'inherit'> = [
     ...Object.values(vars.colors),
