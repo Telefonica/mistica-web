@@ -3,7 +3,6 @@ import {
     Avatar,
     Badge,
     IconShoppingCartRegular,
-    Logo,
     MainNavigationBar,
     NavigationBarAction,
     NavigationBarActionGroup,

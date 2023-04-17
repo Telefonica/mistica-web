@@ -271,6 +271,7 @@ const LogoBase: React.FC<LogoBaseProps> = ({size = 48, skinName, logoType = 'iso
 type LogoPropsBase = {
     size?: number;
     logoType?: LogoType;
+    children?: void;
 };
 
 type LogoToProps = LogoPropsBase & {
@@ -293,7 +294,9 @@ type LogoOnPressProps = LogoPropsBase & {
 
 type LogoProps = ExclusifyUnion<LogoPropsBase | LogoToProps | LogoHrefProps | LogoOnPressProps>;
 
-const MaybeTouchableLogo = (logoTouchableProps: LogoProps, children: React.ReactNode): JSX.Element => {
+const MaybeTouchableLogo = (
+    logoTouchableProps: Omit<LogoProps, 'children'> & {children: JSX.Element}
+): JSX.Element => {
     if (logoTouchableProps.to) {
         return (
             <Touchable
@@ -302,7 +305,7 @@ const MaybeTouchableLogo = (logoTouchableProps: LogoProps, children: React.React
                 fullPageOnWebView={logoTouchableProps.fullPageOnWebView}
                 replace={logoTouchableProps.replace}
             >
-                {children}
+                {logoTouchableProps.children}
             </Touchable>
         );
     }
@@ -315,7 +318,7 @@ const MaybeTouchableLogo = (logoTouchableProps: LogoProps, children: React.React
                 newTab={logoTouchableProps.newTab}
                 replace={logoTouchableProps.replace}
             >
-                {children}
+                {logoTouchableProps.children}
             </Touchable>
         );
     }
@@ -323,12 +326,12 @@ const MaybeTouchableLogo = (logoTouchableProps: LogoProps, children: React.React
     if (logoTouchableProps.onPress) {
         return (
             <Touchable trackingEvent={logoTouchableProps.trackingEvent} onPress={logoTouchableProps.onPress}>
-                {children}
+                {logoTouchableProps.children}
             </Touchable>
         );
     }
 
-    return <> {children}</>;
+    return <> {logoTouchableProps.children}</>;
 };
 export const Logo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}) => {
     const {skinName} = useTheme();
@@ -340,14 +343,29 @@ export const Logo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}
     );
 };
 
-export const MovistarLogo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}) =>
-    MaybeTouchableLogo(props, <LogoBase skinName="Movistar" logoType={logoType} size={size} />);
+export const MovistarLogo: React.FC<LogoProps> = ({logoType = 'isotipo', size, ...props}) => (
+    <MaybeTouchableLogo {...props}>
+        <LogoBase skinName="Movistar" logoType={logoType} size={size} />
+    </MaybeTouchableLogo>
+);
 
-export const VivoLogo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}) =>
-    MaybeTouchableLogo(props, <LogoBase skinName="Vivo" logoType={logoType} size={size} />);
-export const O2Logo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}) =>
-    MaybeTouchableLogo(props, <LogoBase skinName="O2" logoType={logoType} size={size} />);
-export const TelefonicaLogo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}) =>
-    MaybeTouchableLogo(props, <LogoBase skinName="Telefonica" logoType={logoType} size={size} />);
-export const BlauLogo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}) =>
-    MaybeTouchableLogo(props, <LogoBase skinName="Blau" logoType={logoType} size={size} />);
+export const VivoLogo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}) => (
+    <MaybeTouchableLogo {...props}>
+        <LogoBase skinName="Vivo" logoType={logoType} size={size} />
+    </MaybeTouchableLogo>
+);
+export const O2Logo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}) => (
+    <MaybeTouchableLogo {...props}>
+        <LogoBase skinName="O2" logoType={logoType} size={size} />
+    </MaybeTouchableLogo>
+);
+export const TelefonicaLogo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}) => (
+    <MaybeTouchableLogo {...props}>
+        <LogoBase skinName="Telefonica" logoType={logoType} size={size} />
+    </MaybeTouchableLogo>
+);
+export const BlauLogo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}) => (
+    <MaybeTouchableLogo {...props}>
+        <LogoBase skinName="Blau" logoType={logoType} size={size} />
+    </MaybeTouchableLogo>
+);
