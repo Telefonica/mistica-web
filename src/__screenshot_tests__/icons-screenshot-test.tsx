@@ -6,7 +6,7 @@ test.each(SKINS)('Icons catalog for %s', async ([skin]) => {
     const page = await openStoryPage({
         id: 'icons-catalog--catalog',
         device: 'DESKTOP',
-        skin: skin as (typeof SKINS)[number],
+        skin: skin as typeof SKINS[number],
     });
 
     const lightCheckbox = await screen.findByLabelText('Light');
