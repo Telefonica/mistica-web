@@ -293,7 +293,6 @@ type LogoOnPressProps = LogoPropsBase & {
     onPress: () => void;
 };
 
-// todo WEB-761 touchable on the logo props, not on the bar
 type LogoProps = ExclusifyUnion<LogoPropsBase | LogoToProps | LogoHrefProps | LogoOnPressProps>;
 
 const MaybeTouchableLogo = (logoTouchableProps: LogoProps, children: React.ReactNode): JSX.Element => {
