@@ -304,6 +304,8 @@ const MaybeTouchableLogo = (
                 to={logoTouchableProps.to}
                 fullPageOnWebView={logoTouchableProps.fullPageOnWebView}
                 replace={logoTouchableProps.replace}
+                // todo WEB-761 how do we want to handle this?
+                aria-label={logoTouchableProps.to}
             >
                 {logoTouchableProps.children}
             </Touchable>
@@ -317,6 +319,7 @@ const MaybeTouchableLogo = (
                 href={logoTouchableProps.href}
                 newTab={logoTouchableProps.newTab}
                 replace={logoTouchableProps.replace}
+                aria-label={logoTouchableProps.href}
             >
                 {logoTouchableProps.children}
             </Touchable>
