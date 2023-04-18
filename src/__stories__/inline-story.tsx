@@ -3,6 +3,7 @@ import * as React from 'react';
 import {Inline, Text2, skinVars, Tag, Avatar} from '..';
 import {Placeholder} from '../placeholder';
 import {StorySection, useSelect} from './helpers';
+import avatarImg from './images/avatar.jpg';
 
 export default {
     title: 'Layout/Inline',
@@ -135,11 +136,7 @@ export const NegativeSpace: StoryComponent = () => {
     return (
         <Inline space={-16}>
             {Array.from({length: 8}, (_, i) => (
-                <Avatar
-                    key={i}
-                    size={64}
-                    src="https://images.unsplash.com/photo-1640951613773-54706e06851d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
-                />
+                <Avatar key={i} size={64} src={avatarImg} />
             ))}
         </Inline>
     );
