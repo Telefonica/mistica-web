@@ -56,7 +56,7 @@ Default.storyName = 'Logo';
 
 Default.args = {
     logoType: 'isotipo',
-    size: 16,
+    size: 48,
 };
 
 Default.argTypes = {
@@ -65,6 +65,6 @@ Default.argTypes = {
         control: {type: 'select'},
     },
     size: {
-        control: {type: 'range', min: 6, max: 128, step: 1},
+        control: {type: 'range', min: 8, max: 480, step: 8},
     },
 };
