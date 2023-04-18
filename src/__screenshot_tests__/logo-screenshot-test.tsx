@@ -36,7 +36,7 @@ test.each(SKINS)('Logo with defaults and skin %s', async (skin) => {
     const page = await openStoryPage({
         id: 'components-logo--default',
         device: 'DESKTOP',
-        skin: skin as typeof SKINS[number],
+        skin: skin as (typeof SKINS)[number],
     });
 
     const image = await page.screenshot();
