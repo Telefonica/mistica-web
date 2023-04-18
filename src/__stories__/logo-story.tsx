@@ -4,7 +4,7 @@ import {StorySection} from './helpers';
 import {Text2} from '../text';
 
 export default {
-    title: 'Components/logo',
+    title: 'Components/Logo',
     component: Logo,
     parameters: {
         fullScreen: true,
