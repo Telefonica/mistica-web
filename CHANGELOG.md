@@ -1,3 +1,11 @@
+# [14.6.0](https://github.com/Telefonica/mistica-web/compare/v14.5.0...v14.6.0) (2023-04-18)
+
+
+### Features
+
+* **Avatar:** optional border ([#705](https://github.com/Telefonica/mistica-web/issues/705)) ([1d4bee1](https://github.com/Telefonica/mistica-web/commit/1d4bee13cef31b92b27ad2dcf92a2e4e10833bd3))
+* **Card:** add hypenation to all cards ([#719](https://github.com/Telefonica/mistica-web/issues/719)) ([15f5909](https://github.com/Telefonica/mistica-web/commit/15f59092a307cc47ae39b4da0dae82ff27b05af6))
+
 # [14.5.0](https://github.com/Telefonica/mistica-web/compare/v14.4.1...v14.5.0) (2023-04-17)
 
 
