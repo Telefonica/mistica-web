@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Avatar, IconBrainRegular, IconFireRegular, IconStarFilled, ThemeVariant, skinVars} from '..';
+import avatarImg from './images/avatar.jpg';
 
 const badgeOptions = ['true', 'false', 'undefined', '0', '1', '5', '10'];
 
@@ -84,7 +85,7 @@ Default.storyName = 'Avatar';
 Default.args = {
     size: 64,
     hideImage: false,
-    src: 'https://images.unsplash.com/photo-1640951613773-54706e06851d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80',
+    src: avatarImg,
     hideInitials: false,
     initials: 'PL',
     icon: 'undefined',

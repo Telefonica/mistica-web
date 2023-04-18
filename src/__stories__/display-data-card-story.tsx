@@ -17,6 +17,7 @@ import {
     Inline,
 } from '..';
 import {Placeholder} from '../placeholder';
+import avatarImg from './images/avatar.jpg';
 
 export default {
     title: 'Components/Cards/Display data card',
@@ -57,11 +58,11 @@ export const Default: StoryComponent<DisplayDataCardArgs> = ({
             </Circle>
         );
     } else if (asset === 'circle + image') {
-        icon = <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />;
+        icon = <Circle size={40} backgroundImage={avatarImg} />;
     } else if (asset === 'icon') {
         icon = <IconInvoicePlanFileRegular size={40} />;
     } else if (asset === 'image') {
-        icon = <Image src="https://i.imgur.com/QwNlo5s.png" width={40} height={40} />;
+        icon = <Image src={avatarImg} width={40} height={40} />;
     }
 
     const button = actions.includes('button') ? (

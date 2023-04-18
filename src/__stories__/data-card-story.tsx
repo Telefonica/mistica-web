@@ -14,6 +14,7 @@ import {
     TagType,
 } from '..';
 import {Placeholder} from '../placeholder';
+import avatarImg from './images/avatar.jpg';
 
 export default {
     title: 'Components/Cards/Data card',
@@ -54,7 +55,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
             </Circle>
         );
     } else if (asset === 'image') {
-        icon = <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />;
+        icon = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
     const button = actions.includes('button') ? (

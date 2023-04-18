@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {EmptyState, ButtonPrimary, IconBoxLight, skinVars, ButtonLink, Image} from '..';
+import avatars4Img from './images/avatars4.png';
+import emptyStateImg from './images/empty-state.png';
 
 export default {
     title: 'Patterns/Empty states/EmptyState',
@@ -19,7 +21,7 @@ type Args = {asset: string};
 export const WithImage: StoryComponent = () => (
     <div data-testid="empty-state-with-image">
         <EmptyState
-            largeImageUrl="https://i.imgur.com/yGFKQOy.png"
+            largeImageUrl={emptyStateImg}
             title="Your cart is empty"
             description="Check our marketplaces and find something for you. Check our marketplaces and find something"
             button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}
@@ -37,11 +39,11 @@ export const WithIcon: StoryComponent<Args> = ({asset}) => {
         };
     } else if (asset === 'Image') {
         assetProps = {
-            icon: <Image src="https://i.imgur.com/o5qympI.png" />,
+            icon: <Image src={avatars4Img} />,
         };
     } else {
         assetProps = {
-            icon: <img src="https://i.imgur.com/o5qympI.png" width="100%" />,
+            icon: <img src={avatars4Img} width="100%" />,
         };
     }
 
@@ -64,7 +66,7 @@ WithIcon.args = {
 export const WithSmallImage: StoryComponent = () => (
     <div data-testid="empty-state-with-small-image">
         <EmptyState
-            imageUrl="https://i.imgur.com/o5qympI.png"
+            imageUrl={avatars4Img}
             title="Your cart is empty"
             description="Check our marketplaces and find something for you. Check our marketplaces and find something"
             button={<ButtonPrimary onPress={() => {}}>Explore marketplace</ButtonPrimary>}

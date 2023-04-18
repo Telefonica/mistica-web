@@ -1,4 +1,4 @@
-import {openStoryPage, screen, ssimScreenshotConfig} from '../test-utils';
+import {openStoryPage, screen} from '../test-utils';
 
 import type {ElementHandle} from 'puppeteer';
 
@@ -10,11 +10,11 @@ const isDisabled = async (element: ElementHandle) => {
 test('Carousel mobile', async () => {
     const page = await openStoryPage({id: 'components-carousels-carousel--default', device: 'MOBILE_IOS'});
 
-    expect(await page.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await page.screenshot()).toMatchImageSnapshot();
 
     await (await screen.findByLabelText('Carousel item 2')).evaluate((el) => el.scrollIntoView());
 
-    expect(await page.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
 test('Carousel mobile with initialActiveItem=1', async () => {
@@ -24,7 +24,7 @@ test('Carousel mobile with initialActiveItem=1', async () => {
         args: {initialActiveItem: 1},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
 test('Carousel mobile with a single page', async () => {
@@ -34,7 +34,7 @@ test('Carousel mobile with a single page', async () => {
         args: {numItems: 1, itemsPerPageMobile: 1},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await page.screenshot()).toMatchImageSnapshot();
 
     const page2 = await openStoryPage({
         id: 'components-carousels-carousel--default',
@@ -42,7 +42,7 @@ test('Carousel mobile with a single page', async () => {
         args: {numItems: 2, itemsPerPageMobile: 2},
     });
 
-    expect(await page2.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await page2.screenshot()).toMatchImageSnapshot();
 
     const page3 = await openStoryPage({
         id: 'components-carousels-carousel--default',
@@ -50,7 +50,7 @@ test('Carousel mobile with a single page', async () => {
         args: {numItems: 1, itemsPerPageMobile: 2},
     });
 
-    expect(await page3.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await page3.screenshot()).toMatchImageSnapshot();
 });
 
 test('Carousel desktop', async () => {
@@ -88,7 +88,7 @@ test('Carousel desktop  with initialActiveItem=3', async () => {
         args: {initialActiveItem: 3},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
 // no screenshot test for desktop because it's like the regular carousel
@@ -98,11 +98,11 @@ test('CenteredCarousel mobile', async () => {
         device: 'MOBILE_IOS',
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await page.screenshot()).toMatchImageSnapshot();
 
     await (await screen.findByLabelText('Carousel item 1')).evaluate((el) => el.scrollIntoView());
 
-    expect(await page.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
 test('CenteredCarousel mobile with initialActiveItem=1', async () => {
@@ -112,7 +112,7 @@ test('CenteredCarousel mobile with initialActiveItem=1', async () => {
         args: {initialActiveItem: 1},
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
 test('Slideshow mobile', async () => {
@@ -121,7 +121,7 @@ test('Slideshow mobile', async () => {
         device: 'MOBILE_IOS',
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await page.screenshot()).toMatchImageSnapshot();
 });
 
 test('Slideshow desktop', async () => {
@@ -134,19 +134,19 @@ test('Slideshow desktop', async () => {
     const prevArrow = await screen.findByRole('button', {name: /anterior/i});
     const nextArrow = await screen.findByRole('button', {name: /siguiente/i});
 
-    expect(await page.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await page.screenshot()).toMatchImageSnapshot();
     expect(await isDisabled(prevArrow)).toBe(true);
     expect(await isDisabled(nextArrow)).toBe(false);
 
     await page.click(nextArrow);
 
-    expect(await page.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await page.screenshot()).toMatchImageSnapshot();
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(false);
 
     await page.click(nextArrow);
 
-    expect(await page.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await page.screenshot()).toMatchImageSnapshot();
     expect(await isDisabled(prevArrow)).toBe(false);
     expect(await isDisabled(nextArrow)).toBe(true);
 });
@@ -157,5 +157,5 @@ test('Highlighted Card Carousel mobile', async () => {
         device: 'MOBILE_IOS',
     });
 
-    expect(await page.screenshot()).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(await page.screenshot()).toMatchImageSnapshot();
 });
