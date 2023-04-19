@@ -1672,8 +1672,8 @@ const logoSnippets = [
     },
     {
         group: 'Logo',
-        name: 'Logo isotipo',
-        code: `<Logo logoType="isotipo" size={48} />`,
+        name: 'Logo isotype',
+        code: `<Logo logoType="isotype" size={48} />`,
     },
     {
         group: 'Logo',
@@ -1698,27 +1698,27 @@ const logoSnippets = [
     {
         group: 'Logo',
         name: 'Blau Logo',
-        code: `<BlauLogo size={48} type="isotipo" />`,
+        code: `<BlauLogo size={48} type="isotype" />`,
     },
     {
         group: 'Logo',
         name: 'Movistar Logo',
-        code: `<MovistarLogo size={48} type="isotipo" />`,
+        code: `<MovistarLogo size={48} type="isotype" />`,
     },
     {
         group: 'Logo',
         name: 'O2 Logo',
-        code: `<O2Logo size={48} type="isotipo" />`,
+        code: `<O2Logo size={48} type="isotype" />`,
     },
     {
         group: 'Logo',
         name: 'Telefónica Logo',
-        code: `<TelefonicaLogo size={48} type="isotipo" />`,
+        code: `<TelefonicaLogo size={48} type="isotype" />`,
     },
     {
         group: 'Logo',
         name: 'Vigo Logo',
-        code: `<VivoLogo size={48} type="isotipo" />`,
+        code: `<VivoLogo size={48} type="isotype" />`,
     },
     {
         group: 'Logo',

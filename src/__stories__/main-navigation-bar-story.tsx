@@ -33,7 +33,7 @@ export const Default: StoryComponent<Args> = ({isInverse}) => {
             // todo WEB-761 more logo controls, like logoType? No explicit logo sample?
             // logo={
             //     <Logo
-            //         logoType="isotipo"
+            //         logoType="isotype"
             //         onPress={() => {
             //             alert('pressed');
             //         }}

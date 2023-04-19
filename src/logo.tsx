@@ -1,21 +1,26 @@
 import * as React from 'react';
 import {useTheme} from './hooks';
 import {useIsInverseVariant} from './theme-variant-context';
-import {vars} from './skins/skin-contract.css';
 import {SkinName} from './skins/types';
 import {TrackingEvent} from './utils/types';
 import {ExclusifyUnion} from './utils/utility-types';
 import Touchable from './touchable';
+import {getMovistarSkin} from './skins/movistar';
+import {getVivoSkin} from './skins/vivo';
+import {getO2Skin} from './skins/o2';
+import {getBlauSkin} from './skins/blau';
 
-type LogoType = 'isotipo' | 'imagotype' | 'vertical';
-type LogoImageProps = {size: number; logoType: LogoType};
+type LogoType = 'isotype' | 'imagotype' | 'vertical';
+type LogoImageProps = {size: number; type: LogoType};
 
-const MovistarLogoImage = ({size, logoType}: LogoImageProps) => {
+const MovistarLogoImage = ({size, type}: LogoImageProps) => {
     const {isDarkMode} = useTheme();
+    // todo WEB-761 getLegacyMovistarSkin?
+    const {colors} = getMovistarSkin();
     const isInverse = useIsInverseVariant();
-    const color = isInverse && !isDarkMode ? vars.colors.inverse : vars.colors.brand;
+    const color = isInverse && !isDarkMode ? colors.inverse : colors.brand;
 
-    if (logoType === 'vertical') {
+    if (type === 'vertical') {
         return (
             <svg height={size} viewBox="0 0 72 72" fill={color}>
                 <path d="M22.1005 12.8312C20.077 12.8698 16.3384 13.8526 14.6232 20.8289C13.8716 23.8738 13.5825 27.0343 14.2378 30.8115C14.8159 34.2804 15.8566 37.2867 16.5696 38.9441C16.8201 39.5222 17.1863 40.1004 17.4754 40.4665C18.304 41.5265 19.6916 41.4494 20.2697 41.1603C20.9057 40.852 21.638 40.1004 21.3682 38.366C21.2333 37.5373 20.8672 36.3232 20.6744 35.6487C20.0385 33.5674 19.1905 31.0621 19.1134 29.2891C19.0171 26.8994 19.9614 26.5911 20.5781 26.4562C21.638 26.2249 22.5052 27.3812 23.3532 28.8266C24.3553 30.561 26.0705 33.6059 27.458 35.9377C28.7107 38.0383 31.0425 40.3124 34.7812 40.1582C38.5969 40.004 41.3913 38.5394 42.8367 33.9721C43.9159 30.5417 44.6482 27.9979 45.843 25.377C47.2113 22.3706 49.0228 20.7518 50.5645 21.2529C51.9906 21.7154 52.3375 23.1029 52.3568 25.1457C52.376 26.9572 52.1641 28.9422 51.9906 30.4068C51.9328 30.9464 51.8172 32.0064 51.875 32.6038C51.9521 33.7793 52.4724 34.9356 53.7829 35.1283C55.1897 35.3211 56.3074 34.2033 56.7507 32.8543C56.9241 32.3147 57.0783 31.5053 57.1554 30.9272C57.5601 27.9979 57.6757 26.0322 57.483 23.0451C57.271 19.557 56.5772 16.3579 55.3824 13.6021C54.2454 10.9619 52.4146 9.266 50.0442 9.11183C47.4425 8.93839 44.4555 10.6728 42.8752 14.0261C41.4298 17.1095 40.2736 20.2893 39.5798 21.9081C38.8667 23.5462 37.8261 24.5676 36.2073 24.741C34.2416 24.953 32.5457 23.5269 31.3123 21.4841C30.2331 19.7112 28.094 16.3386 26.9377 15.2016C25.897 14.1224 24.6636 12.7927 22.1005 12.8312Z" />
@@ -31,7 +36,7 @@ const MovistarLogoImage = ({size, logoType}: LogoImageProps) => {
         );
     }
 
-    if (logoType === 'imagotype') {
+    if (type === 'imagotype') {
         return (
             <svg height={size} viewBox="0 0 195 72" fill={color}>
                 <path d="M17.9412 17.6705C15.0439 17.7257 9.69094 19.1342 7.23519 29.1317C6.15907 33.4952 5.74518 38.0245 6.68333 43.4375C7.51111 48.4086 9.00112 52.7169 10.022 55.092C10.3808 55.9205 10.905 56.7491 11.3189 57.2738C12.5054 58.7927 14.4921 58.6823 15.3198 58.268C16.2304 57.8261 17.2789 56.7491 16.8926 54.2635C16.6995 53.0759 16.1752 51.3361 15.8993 50.3694C14.9887 47.3868 13.7747 43.7965 13.6643 41.2557C13.5263 37.8312 14.8784 37.3893 15.7613 37.196C17.2789 36.8646 18.5206 38.5216 19.7347 40.5929C21.1695 43.0785 23.6253 47.442 25.6119 50.7837C27.4055 53.794 30.7442 57.0528 36.0972 56.8319C41.5605 56.611 45.5615 54.5121 47.6309 47.9667C49.1761 43.0509 50.2246 39.4054 51.9354 35.6494C53.8944 31.3411 56.4882 29.0212 58.6956 29.7393C60.7374 30.4021 61.2341 32.3906 61.2617 35.318C61.2893 37.914 60.9858 40.7586 60.7374 42.8575C60.6547 43.6308 60.4891 45.1498 60.5719 46.0059C60.6823 47.6906 61.4273 49.3476 63.3036 49.6238C65.3178 49.9 66.9182 48.2982 67.5528 46.3649C67.8012 45.5916 68.0219 44.4317 68.1323 43.6032C68.7117 39.4054 68.8773 36.5884 68.6014 32.3077C68.2978 27.309 67.3045 22.7245 65.5938 18.7752C63.9658 14.9916 61.3445 12.5613 57.9506 12.3404C54.2256 12.0918 49.9487 14.5774 47.6861 19.3828C45.6166 23.8016 43.9611 28.3584 42.9677 30.6783C41.9468 33.0258 40.4568 34.4895 38.139 34.738C35.3246 35.0418 32.8964 32.9981 31.1305 30.0707C29.5853 27.5299 26.5225 22.6969 24.8669 21.0674C23.3493 19.5209 21.611 17.6153 17.9412 17.6705Z" />
@@ -54,12 +59,13 @@ const MovistarLogoImage = ({size, logoType}: LogoImageProps) => {
     );
 };
 
-const VivoLogoImage = ({size, logoType}: LogoImageProps) => {
+const VivoLogoImage = ({size, type}: LogoImageProps) => {
     const {isDarkMode} = useTheme();
     const isInverse = useIsInverseVariant();
-    const color = isInverse && !isDarkMode ? vars.colors.inverse : vars.colors.brand;
+    const {colors} = getVivoSkin();
+    const color = isInverse && !isDarkMode ? colors.inverse : colors.brand;
 
-    if (logoType === 'vertical') {
+    if (type === 'vertical') {
         return (
             <svg height={size} viewBox="0 0 72 72" fill={color}>
                 <path d="M24.7302 55.7681V54.5346C24.7302 54.3255 24.6222 53.5308 23.8252 53.0943L14.7817 47.9903C13.8238 47.4665 13.0106 48.0844 12.8085 48.6288L12.1998 49.9864C11.8736 50.7169 12.2181 51.5943 12.9831 51.9228L19.4217 55.1272V55.1754L12.9831 58.3752C12.2204 58.706 11.8736 59.5835 12.1998 60.3117L12.8085 61.6692C13.0106 62.2159 13.8238 62.8315 14.7817 62.3101L23.8252 57.206C24.6222 56.7719 24.7302 55.9771 24.7302 55.7681Z" />
@@ -72,7 +78,7 @@ const VivoLogoImage = ({size, logoType}: LogoImageProps) => {
         );
     }
 
-    if (logoType === 'imagotype') {
+    if (type === 'imagotype') {
         return (
             <svg height={size} viewBox="0 0 195 72" fill={color}>
                 <path d="M23.3761 61.4297H26.5561C27.0861 61.4297 29.1472 61.1549 30.266 59.0938L43.4176 35.7743C44.7721 33.301 43.1821 31.2006 41.7688 30.6903L38.2748 29.1199C36.3904 28.2759 34.133 29.1592 33.2693 31.1417L25.0054 47.7481H24.8876L16.6433 31.1417C15.7992 29.1788 13.5222 28.2759 11.6575 29.1199L8.16346 30.6903C6.75015 31.2006 5.16018 33.301 6.5146 35.7743L19.6858 59.0938C20.8047 61.1549 22.8462 61.4297 23.3761 61.4297Z" />
@@ -92,12 +98,14 @@ const VivoLogoImage = ({size, logoType}: LogoImageProps) => {
     );
 };
 
-const O2LogoImage = ({size, logoType}: LogoImageProps) => {
+const O2LogoImage = ({size, type}: LogoImageProps) => {
     const {isDarkMode} = useTheme();
     const isInverse = useIsInverseVariant();
-    const color = isInverse && !isDarkMode ? vars.colors.inverse : vars.colors.brand;
+    // todo WEB-761 what about classic?
+    const {colors} = getO2Skin();
+    const color = isInverse && !isDarkMode ? colors.inverse : colors.brand;
 
-    if (logoType === 'vertical') {
+    if (type === 'vertical') {
         return (
             <svg height={size} viewBox="0 0 72 72" fill={color}>
                 <path d="M64.6464 48.1005C65.5273 48.3194 66.3797 48.7244 67.0163 49.3673C67.555 49.8826 67.9234 50.5497 68.1381 51.2513C68.3932 52.1193 68.4578 53.0409 68.3406 53.9362C68.2286 54.7438 67.9502 55.5225 67.5851 56.2533C66.899 57.5977 65.9414 58.7894 64.9183 59.9048C63.8168 61.0986 62.6299 62.214 61.4443 63.3281C63.8331 63.3205 66.222 63.3277 68.6108 63.3243C68.7406 63.3231 68.8729 63.3164 69 63.3499V66.1656C68.9276 66.1744 68.8561 66.1841 68.7849 66.187L56.6515 66.1866V63.1532C56.9278 62.8849 57.223 62.6362 57.5061 62.3746C58.7357 61.2826 59.9476 60.1702 61.0896 58.9906C62.1882 57.8312 63.2582 56.619 64.0232 55.2197C64.3697 54.5626 64.6602 53.8473 64.655 53.0979C64.6516 52.5621 64.4529 52.0228 64.0723 51.6312C63.578 51.1099 62.8587 50.8466 62.1481 50.7611C61.1887 50.6609 60.2199 50.855 59.327 51.1913C58.6379 51.4458 57.9983 51.8056 57.3725 52.1792C57.2747 51.1712 57.173 50.1635 57.0791 49.1551C58.6163 48.4104 60.3087 47.9609 62.0261 47.8824C62.9031 47.8313 63.7918 47.895 64.6464 48.1005ZM44.5216 15.9479C46.2174 16.5777 47.8288 17.4272 49.2842 18.4844C51.7084 20.2329 53.6818 22.5547 55.0432 25.1725C56.3106 27.5865 57.064 30.2404 57.3669 32.9308C57.5113 34.2801 57.5716 35.6404 57.4945 36.9961C57.3885 39.1497 56.97 41.2895 56.2443 43.3274C55.1022 46.5373 53.168 49.4901 50.5956 51.7934C48.1348 54.0137 45.0922 55.6109 41.841 56.4164C39.4569 57.011 36.9711 57.1964 34.5189 57.0169C32.0275 56.8353 29.5623 56.2462 27.2864 55.2382C24.6566 54.0787 22.2902 52.3616 20.3927 50.2449C18.0655 47.6619 16.445 44.5002 15.6352 41.1616C15.2392 39.5413 15.0384 37.8792 15 36.2153V35.3469C15.0353 33.9564 15.1603 32.5664 15.4189 31.1973C16.0352 27.8905 17.3992 24.692 19.5312 22.0352C21.1736 19.9734 23.2664 18.2546 25.6285 17.0201C28.6633 15.4237 32.1089 14.6354 35.5471 14.5511C38.5915 14.4593 41.6699 14.8883 44.5216 15.9479ZM35.3058 20.656C34.0556 20.7554 32.817 21.0309 31.6603 21.5068C30.4359 22.0054 29.3042 22.714 28.3199 23.5799C27.0856 24.6597 26.078 25.9726 25.3009 27.397C24.1179 29.5695 23.456 31.9948 23.2715 34.442C23.1655 35.8798 23.2284 37.3286 23.4426 38.7551C23.7215 40.5808 24.2533 42.3768 25.0885 44.0369C25.797 45.4479 26.7296 46.7608 27.8988 47.8476C29.1348 49.0096 30.6453 49.8935 32.2813 50.4072C33.7802 50.8797 35.3705 51.0542 36.9413 50.9883C38.4027 50.9208 39.8611 50.6344 41.2092 50.0734C43.2433 49.2406 44.9767 47.7906 46.2355 46.037C47.8603 43.7815 48.7769 41.0966 49.1372 38.3786C49.613 34.8311 49.0941 31.1331 47.4931 27.8998C46.776 26.4703 45.8494 25.1281 44.6828 24.0085C43.4299 22.7706 41.8862 21.8075 40.1968 21.241C38.632 20.7114 36.9543 20.5386 35.3058 20.656Z" />
@@ -105,7 +113,7 @@ const O2LogoImage = ({size, logoType}: LogoImageProps) => {
         );
     }
 
-    if (logoType === 'imagotype') {
+    if (type === 'imagotype') {
         return (
             <svg height={size} viewBox="0 0 72 72" fill={color}>
                 <path d="M64.6464 48.1005C65.5273 48.3194 66.3797 48.7244 67.0163 49.3673C67.555 49.8826 67.9234 50.5497 68.1381 51.2513C68.3932 52.1193 68.4578 53.0409 68.3406 53.9362C68.2286 54.7438 67.9502 55.5225 67.5851 56.2533C66.899 57.5977 65.9414 58.7894 64.9183 59.9048C63.8168 61.0986 62.6299 62.214 61.4443 63.3281C63.8331 63.3205 66.222 63.3277 68.6108 63.3243C68.7406 63.3231 68.8729 63.3164 69 63.3499V66.1656C68.9276 66.1744 68.8561 66.1841 68.7849 66.187L56.6515 66.1866V63.1532C56.9278 62.8849 57.223 62.6362 57.5061 62.3746C58.7357 61.2826 59.9476 60.1702 61.0896 58.9906C62.1882 57.8312 63.2582 56.619 64.0232 55.2197C64.3697 54.5626 64.6602 53.8473 64.655 53.0979C64.6516 52.5621 64.4529 52.0228 64.0723 51.6312C63.578 51.1099 62.8587 50.8466 62.1481 50.7611C61.1887 50.6609 60.2199 50.855 59.327 51.1913C58.6379 51.4458 57.9983 51.8056 57.3725 52.1792C57.2747 51.1712 57.173 50.1635 57.0791 49.1551C58.6163 48.4104 60.3087 47.9609 62.0261 47.8824C62.9031 47.8313 63.7918 47.895 64.6464 48.1005ZM44.5216 15.9479C46.2174 16.5777 47.8288 17.4272 49.2842 18.4844C51.7084 20.2329 53.6818 22.5547 55.0432 25.1725C56.3106 27.5865 57.064 30.2404 57.3669 32.9308C57.5113 34.2801 57.5716 35.6404 57.4945 36.9961C57.3885 39.1497 56.97 41.2895 56.2443 43.3274C55.1022 46.5373 53.168 49.4901 50.5956 51.7934C48.1348 54.0137 45.0922 55.6109 41.841 56.4164C39.4569 57.011 36.9711 57.1964 34.5189 57.0169C32.0275 56.8353 29.5623 56.2462 27.2864 55.2382C24.6566 54.0787 22.2902 52.3616 20.3927 50.2449C18.0655 47.6619 16.445 44.5002 15.6352 41.1616C15.2392 39.5413 15.0384 37.8792 15 36.2153V35.3469C15.0353 33.9564 15.1603 32.5664 15.4189 31.1973C16.0352 27.8905 17.3992 24.692 19.5312 22.0352C21.1736 19.9734 23.2664 18.2546 25.6285 17.0201C28.6633 15.4237 32.1089 14.6354 35.5471 14.5511C38.5915 14.4593 41.6699 14.8883 44.5216 15.9479ZM35.3058 20.656C34.0556 20.7554 32.817 21.0309 31.6603 21.5068C30.4359 22.0054 29.3042 22.714 28.3199 23.5799C27.0856 24.6597 26.078 25.9726 25.3009 27.397C24.1179 29.5695 23.456 31.9948 23.2715 34.442C23.1655 35.8798 23.2284 37.3286 23.4426 38.7551C23.7215 40.5808 24.2533 42.3768 25.0885 44.0369C25.797 45.4479 26.7296 46.7608 27.8988 47.8476C29.1348 49.0096 30.6453 49.8935 32.2813 50.4072C33.7802 50.8797 35.3705 51.0542 36.9413 50.9883C38.4027 50.9208 39.8611 50.6344 41.2092 50.0734C43.2433 49.2406 44.9767 47.7906 46.2355 46.037C47.8603 43.7815 48.7769 41.0966 49.1372 38.3786C49.613 34.8311 49.0941 31.1331 47.4931 27.8998C46.776 26.4703 45.8494 25.1281 44.6828 24.0085C43.4299 22.7706 41.8862 21.8075 40.1968 21.241C38.632 20.7114 36.9543 20.5386 35.3058 20.656Z" />
@@ -120,12 +128,13 @@ const O2LogoImage = ({size, logoType}: LogoImageProps) => {
     );
 };
 
-const TelefonicaLogoImage = ({size, logoType}: LogoImageProps) => {
+const TelefonicaLogoImage = ({size, type}: LogoImageProps) => {
     const {isDarkMode} = useTheme();
     const isInverse = useIsInverseVariant();
-    const color = isInverse && !isDarkMode ? vars.colors.inverse : vars.colors.brand;
+    const {colors} = getMovistarSkin();
+    const color = isInverse && !isDarkMode ? colors.inverse : colors.brand;
 
-    if (logoType === 'vertical') {
+    if (type === 'vertical') {
         return (
             <svg height={size} viewBox="0 0 73 72" fill={color}>
                 <path d="M20.6921 19.2599C24.3945 19.2599 27.3958 16.2916 27.3958 12.63C27.3958 8.96833 24.3945 6 20.6921 6C16.9898 6 13.9885 8.96833 13.9885 12.63C13.9885 16.2916 16.9898 19.2599 20.6921 19.2599Z" />
@@ -149,7 +158,7 @@ const TelefonicaLogoImage = ({size, logoType}: LogoImageProps) => {
         );
     }
 
-    if (logoType === 'imagotype') {
+    if (type === 'imagotype') {
         return (
             <svg height={size} viewBox="0 0 195 72" fill={color}>
                 <path d="M12.5551 28.1101C16.1753 28.1101 19.1101 25.1753 19.1101 21.555C19.1101 17.9348 16.1753 15 12.5551 15C8.9348 15 6 17.9348 6 21.555C6 25.1753 8.9348 28.1101 12.5551 28.1101Z" />
@@ -196,23 +205,26 @@ const TelefonicaLogoImage = ({size, logoType}: LogoImageProps) => {
     );
 };
 
-const BlauLogoImage = ({size, logoType}: LogoImageProps) => {
+const BlauLogoImage = ({size, type}: LogoImageProps) => {
     const {isDarkMode} = useTheme();
     const isInverse = useIsInverseVariant();
-    const color = isInverse && !isDarkMode ? vars.colors.inverse : vars.colors.brand;
+    const {colors} = getBlauSkin();
+    const color = isInverse && !isDarkMode ? colors.inverse : colors.brand;
+    const colorSecondary = isInverse && !isDarkMode ? colors.inverse : colors.promo;
 
-    if (logoType === 'vertical') {
+    if (type === 'vertical') {
         return (
             <svg height={size} viewBox="0 0 73 72" fill={color}>
-                <path d="M56.42 52.2003H18.2V63.0003H56.42V52.2003Z" fill="#7814B2" />
+                <path d="M56.42 52.2003H18.2V63.0003H56.42V52.2003Z" fill={colorSecondary} />
                 <path d="M38.8069 36.431H35.0651V31.658H38.8069C40.7615 31.658 41.5432 32.865 41.5432 34.0171C41.5432 35.2789 40.7615 36.431 38.8069 36.431ZM35.121 19.0948H37.9132C40.6496 19.0948 40.4821 23.0447 37.9132 23.0447H35.121V19.0948ZM49.6963 26.2267C52.7119 25.1844 54.3312 22.3864 54.3871 19.369C54.5546 13.7182 50.0316 9 44.3355 9H18.2V19.0398H21.8859V36.7602H18.2V46.8H44.2237C50.925 46.8 56.1188 42.3013 56.3981 35.8276C56.6773 30.89 54.2756 27.9275 49.6963 26.2267Z" />
             </svg>
         );
     }
-    if (logoType === 'imagotype') {
+
+    if (type === 'imagotype') {
         return (
             <svg height={size} viewBox="0 0 138 72" fill={color}>
-                <path d="M135.557 54.5729H6.16162V65.184H135.557V54.5729Z" />
+                <path d="M135.557 54.5729H6.16162V65.184H135.557V54.5729Z" fill={colorSecondary} />
                 <path d="M37.7269 25.9921C42.1878 27.7129 44.5575 30.6343 44.2869 35.6127C44.0163 42.0913 38.9696 46.5732 32.3623 46.5732H6.83155V36.5296H10.4229V18.8042H6.83155V8.75793H32.47C38.0579 8.75793 42.5215 13.5131 42.3507 19.1299C42.2929 22.1512 40.6877 24.9701 37.7269 25.9921ZM26.1359 17.9477H22.7942V23.2703H26.1359C29.4277 23.2703 29.6484 17.9477 26.1359 17.9477ZM30.3393 34.0259C30.3393 32.4812 29.3437 30.9443 27.0449 30.9443H22.7915V37.1076H27.0423C29.2806 37.1102 30.3393 35.5917 30.3393 34.0259Z" />
                 <path d="M45.2905 8.75794V18.8042H48.8477V46.5732H61.8442V8.75794H45.2905Z" />
                 <path d="M99.2576 46.5732H87.0676L86.7996 43.7674C84.8108 46.1975 81.8553 47.0592 79.0705 47.117C60.5884 47.3325 60.5884 16.6525 79.0705 16.8627C81.8553 16.8627 84.8108 17.727 86.7996 20.1572L87.0676 17.3435H99.2576V46.5732ZM86.3188 31.9846C86.3188 26.3126 78.3191 26.3704 78.3191 31.9846C78.3191 37.6067 86.3188 37.6619 86.3188 31.9846Z" />
@@ -223,7 +235,7 @@ const BlauLogoImage = ({size, logoType}: LogoImageProps) => {
 
     return (
         <svg height={size} viewBox="0 0 72 72" fill={color}>
-            <path d="M55.8 52.2003H18V63.0003H55.8V52.2003Z" />
+            <path d="M55.8 52.2003H18V63.0003H55.8V52.2003Z" fill={colorSecondary} />
             <path d="M38.3805 36.431H34.6798V31.658H38.3805C40.3136 31.658 41.0868 32.865 41.0868 34.0171C41.0868 35.2789 40.3136 36.431 38.3805 36.431ZM34.7351 19.0948H37.4966C40.2029 19.0948 40.0373 23.0447 37.4966 23.0447H34.7351V19.0948ZM49.1503 26.2267C52.1327 25.1844 53.7342 22.3864 53.7895 19.369C53.9552 13.7182 49.4819 9 43.8483 9H18V19.0398H21.6454V36.7602H18V46.8H43.7377C50.3654 46.8 55.5022 42.3013 55.7784 35.8276C56.0545 30.89 53.6792 27.9275 49.1503 26.2267Z" />
         </svg>
     );
@@ -232,22 +244,22 @@ const BlauLogoImage = ({size, logoType}: LogoImageProps) => {
 type LogoBaseProps = {
     skinName: SkinName;
     size?: number;
-    logoType?: LogoType;
+    type?: LogoType;
 };
 
-const LogoBase: React.FC<LogoBaseProps> = ({size = 48, skinName, logoType = 'isotipo'}) => {
+const LogoBase: React.FC<LogoBaseProps> = ({size = 48, skinName, type = 'isotype'}) => {
     switch (skinName) {
         case 'Movistar':
-            return <MovistarLogoImage size={size} logoType={logoType} />;
+            return <MovistarLogoImage size={size} type={type} />;
         case 'Vivo':
-            return <VivoLogoImage size={size} logoType={logoType} />;
+            return <VivoLogoImage size={size} type={type} />;
         case 'O2':
         case 'O2-classic':
-            return <O2LogoImage size={size} logoType={logoType} />;
+            return <O2LogoImage size={size} type={type} />;
         case 'Telefonica':
-            return <TelefonicaLogoImage size={size} logoType={logoType} />;
+            return <TelefonicaLogoImage size={size} type={type} />;
         case 'Blau':
-            return <BlauLogoImage size={size} logoType={logoType} />;
+            return <BlauLogoImage size={size} type={type} />;
         // todo WEB-761 what to do for unknown skinnames?
         default:
             return null;
@@ -255,7 +267,7 @@ const LogoBase: React.FC<LogoBaseProps> = ({size = 48, skinName, logoType = 'iso
 };
 type LogoPropsBase = {
     size?: number;
-    logoType?: LogoType;
+    type?: LogoType;
     children?: void;
 };
 
@@ -321,39 +333,39 @@ const MaybeTouchableLogo = (
 
     return <> {logoTouchableProps.children}</>;
 };
-export const Logo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}) => {
+export const Logo: React.FC<LogoProps> = ({size, type = 'isotype', ...props}) => {
     const {skinName} = useTheme();
 
     return (
         <MaybeTouchableLogo {...props}>
-            <LogoBase skinName={skinName} logoType={logoType} size={size} />
+            <LogoBase skinName={skinName} type={type} size={size} />
         </MaybeTouchableLogo>
     );
 };
 
-export const MovistarLogo: React.FC<LogoProps> = ({logoType = 'isotipo', size, ...props}) => (
+export const MovistarLogo: React.FC<LogoProps> = ({type = 'isotype', size, ...props}) => (
     <MaybeTouchableLogo {...props}>
-        <LogoBase skinName="Movistar" logoType={logoType} size={size} />
+        <LogoBase skinName="Movistar" type={type} size={size} />
     </MaybeTouchableLogo>
 );
 
-export const VivoLogo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}) => (
+export const VivoLogo: React.FC<LogoProps> = ({size, type = 'isotype', ...props}) => (
     <MaybeTouchableLogo {...props}>
-        <LogoBase skinName="Vivo" logoType={logoType} size={size} />
+        <LogoBase skinName="Vivo" type={type} size={size} />
     </MaybeTouchableLogo>
 );
-export const O2Logo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}) => (
+export const O2Logo: React.FC<LogoProps> = ({size, type = 'isotype', ...props}) => (
     <MaybeTouchableLogo {...props}>
-        <LogoBase skinName="O2" logoType={logoType} size={size} />
+        <LogoBase skinName="O2" type={type} size={size} />
     </MaybeTouchableLogo>
 );
-export const TelefonicaLogo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}) => (
+export const TelefonicaLogo: React.FC<LogoProps> = ({size, type = 'isotype', ...props}) => (
     <MaybeTouchableLogo {...props}>
-        <LogoBase skinName="Telefonica" logoType={logoType} size={size} />
+        <LogoBase skinName="Telefonica" type={type} size={size} />
     </MaybeTouchableLogo>
 );
-export const BlauLogo: React.FC<LogoProps> = ({size, logoType = 'isotipo', ...props}) => (
+export const BlauLogo: React.FC<LogoProps> = ({size, type = 'isotype', ...props}) => (
     <MaybeTouchableLogo {...props}>
-        <LogoBase skinName="Blau" logoType={logoType} size={size} />
+        <LogoBase skinName="Blau" type={type} size={size} />
     </MaybeTouchableLogo>
 );
