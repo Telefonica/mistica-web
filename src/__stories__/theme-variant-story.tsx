@@ -11,10 +11,10 @@ import {
     HighlightedCard,
     Tag,
     Chip,
+    ButtonPrimary,
+    useThemeVariant,
 } from '..';
-import {ButtonPrimary} from '../button';
 import personPortraitImg from './images/person-portrait.jpg';
-import {useThemeVariant} from '../theme-variant-context';
 
 import type {Variant} from '../theme-variant-context';
 
