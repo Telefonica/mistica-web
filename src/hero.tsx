@@ -1,10 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import Tag from './tag';
-import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import {useScreenSize} from './hooks';
-import Video from './video';
-import Image, {MediaBorderRadiusProvider} from './image';
+import {MediaBorderRadiusProvider} from './image';
 import {Text3, Text8} from './text';
 import GridLayout from './grid-layout';
 import Box from './box';
@@ -18,6 +15,10 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {sprinkles} from './sprinkles.css';
 import {ThemeVariant} from './theme-variant-context';
 
+import type Image from './image';
+import type Video from './video';
+import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
+import type Tag from './tag';
 import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
 
 type LayoutProps = {children: React.ReactNode; isInverse: boolean};

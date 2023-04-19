@@ -13,7 +13,6 @@ import {
     requestVibration as requestVibrationNative,
 } from '@tef-novum/webview-bridge';
 import {isRunningAcceptanceTest} from './utils/platform';
-import {Theme} from './theme';
 import {Text6, Text2, Text3} from './text';
 import Box from './box';
 import {Boxed} from './boxed';
@@ -24,6 +23,7 @@ import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './feedback.css';
 
+import type {Theme} from './theme';
 import type {DataAttributes} from './utils/types';
 import type {ButtonGroupProps} from './button-group';
 

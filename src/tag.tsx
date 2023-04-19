@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from './box';
 import {Text} from './text';
-import {ThemeVariant, useIsInverseVariant, useThemeVariant} from './theme-variant-context';
+import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 import {pxToRem} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as classes from './tag.css';
