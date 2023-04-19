@@ -130,12 +130,18 @@ export const displayCard = style([
         display: 'flex',
         flex: 1,
         flexDirection: 'column',
+        position: 'relative',
         justifyContent: 'space-between',
     }),
-    {
-        backgroundPosition: 'center center',
-        backgroundSize: 'cover',
-    },
+]);
+
+export const displayCardBackground = style([
+    sprinkles({
+        position: 'absolute',
+        objectFit: 'cover',
+        width: '100%',
+        height: '100%',
+    })
 ]);
 
 export const displayCardGradient = style({

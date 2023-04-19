@@ -6,7 +6,7 @@ import {Text2, Text, Text6, Text3} from './text';
 import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
-import Video from './video';
+import Video, {VideoProps} from './video';
 import Image, {MediaBorderRadiusProvider} from './image';
 import {BaseTouchable} from './touchable';
 import {vars} from './skins/skin-contract.css';
@@ -16,6 +16,7 @@ import {sprinkles} from './sprinkles.css';
 import Inline from './inline';
 import IconButton from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
+import {IconPauseFilled, IconPlayFilled} from '../playroom/components';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {
@@ -558,12 +559,22 @@ interface CommonDisplayCardProps {
     'aria-label'?: string;
 }
 
-interface DisplayMediaCardProps extends CommonDisplayCardProps {
-    backgroundImage: string;
+type DisplayMediaCardBaseProps = {
     aspectRatio?: AspectRatio | number;
     width?: number | string;
     height?: number | string;
+};
+
+interface DisplayMediaCardWithImageProps extends CommonDisplayCardProps {
+    backgroundImage: string;
 }
+
+type DisplayMediaCardWithVideoProps = Omit<CommonDisplayCardProps, 'actions' | 'onClose'> & {
+    backgroundVideo: string | Omit<VideoProps, 'aspectRatio' | 'width' | 'height'>;
+};
+
+type DisplayMediaCardProps = DisplayMediaCardBaseProps &
+    ExclusifyUnion<DisplayMediaCardWithImageProps | DisplayMediaCardWithVideoProps>;
 
 interface DisplayDataCardProps extends CommonDisplayCardProps {
     extra?: React.ReactNode;
@@ -574,11 +585,97 @@ type GenericDisplayCardProps = ExclusifyUnion<
     (DisplayMediaCardProps & {isInverse: true}) | DisplayDataCardProps
 >;
 
+type VideoState = 'played' | 'paused' | 'error' | 'idle';
+
+const useBackgroundImage = (backgroundImage?: string) => {
+    const image = (
+        <div
+            className={styles.displayCardBackground}
+            style={{
+                backgroundSize: 'cover',
+                backgroundPosition: '50% 50%',
+                backgroundImage: backgroundImage ? `url("${CSS.escape(backgroundImage)}")` : undefined,
+                zIndex: 1,
+            }}
+        />
+    );
+
+    return image;
+};
+
+const getVideoAction = (state: VideoState) => {
+    if (state === 'played') {
+        return IconPauseFilled;
+    }
+    if (state === 'paused' || state === 'idle') {
+        return IconPlayFilled;
+    }
+
+    return undefined;
+};
+
+const useBackgroundVideo = (backgroundVideo?: string | VideoProps) => {
+    const videoRef = React.useRef<HTMLVideoElement>(null);
+    const [videoStatus, setVideoStatus] = React.useState<VideoState>('paused');
+
+    const onVideoError = () => setVideoStatus('error');
+    const onVideoPause = () => setVideoStatus('paused');
+    const onCanPlayThrough = () => videoRef.current?.play();
+    const onVideoPlay = () => {
+        if (videoStatus === 'paused') setVideoStatus('played');
+    };
+
+    let video;
+    if (backgroundVideo) {
+        const videoProps = typeof backgroundVideo === 'string' ? {src: backgroundVideo} : backgroundVideo;
+
+        video = backgroundVideo ? (
+            <div
+                className={styles.displayCardBackground}
+                style={{
+                    zIndex: 1,
+                }}
+            >
+                <Video
+                    ref={videoRef}
+                    {...videoProps}
+                    aspectRatio={0}
+                    onPause={onVideoPause}
+                    onPlay={onVideoPlay}
+                    onError={onVideoError}
+                    onCanPlayThrough={onCanPlayThrough}
+                />
+            </div>
+        ) : undefined;
+    }
+
+    const onVideoButtonPress = () => {
+        if (videoRef.current) {
+            if (videoStatus !== 'error') {
+                if (videoStatus === 'paused' || videoStatus === 'idle') {
+                    videoRef.current.play();
+                } else {
+                    videoRef.current.pause();
+                }
+            }
+        }
+    };
+
+    const videoButtonIcon = getVideoAction(videoStatus);
+
+    return {
+        video,
+        videoButtonIcon,
+        onVideoButtonPress,
+    };
+};
+
 const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
     (
         {
             isInverse,
             backgroundImage,
+            backgroundVideo,
             icon,
             headline,
             pretitle,
@@ -601,9 +698,22 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         },
         ref
     ) => {
-        const withGradient = !!backgroundImage;
+        const image = useBackgroundImage(backgroundImage);
+        const {video, videoButtonIcon, onVideoButtonPress} = useBackgroundVideo(backgroundVideo);
+
+        if (backgroundVideo && videoButtonIcon) {
+            actions = [
+                {
+                    Icon: videoButtonIcon,
+                    onPress: onVideoButtonPress,
+                    label: 'Video controls',
+                },
+            ];
+        }
+
+        const withGradient = !!backgroundImage || !!backgroundVideo;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
-        const hasTopActions = actions?.length || onClose;
+        const hasTopActions = actions?.length || onClose || backgroundVideo;
         return (
             <MaybeWithActions
                 width={width}
@@ -624,84 +734,88 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     isInverse={isInverse}
                     background={isInverse && backgroundImage ? vars.colors.backgroundContainer : undefined}
                 >
-                    <div
-                        className={styles.displayCard}
-                        style={{
-                            backgroundImage: backgroundImage
-                                ? `url("${CSS.escape(backgroundImage)}")`
-                                : undefined,
-                            paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
-                        }}
-                    >
-                        {icon ? (
-                            <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
-                                {icon}
-                            </Box>
-                        ) : (
-                            <Box paddingBottom={actions?.length || onClose ? (withGradient ? 24 : 64) : 0} />
-                        )}
-                        <Box
-                            paddingX={24}
-                            paddingTop={withGradient ? 40 : 0}
-                            paddingBottom={24}
-                            className={withGradient ? styles.displayCardGradient : undefined}
+                    <div className={styles.displayCard}>
+                        {backgroundImage ? image : video}
+
+                        <div
+                            className={styles.displayCard}
+                            style={{
+                                paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
+                                zIndex: 1,
+                            }}
                         >
-                            <Stack space={24}>
-                                <div>
-                                    <Stack space={8}>
-                                        {(headline || pretitle || title) && (
-                                            <header>
-                                                <Stack space={16}>
-                                                    {headline}
-                                                    <Stack space={4}>
-                                                        {pretitle && (
-                                                            <Text2
+                            {icon ? (
+                                <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
+                                    {icon}
+                                </Box>
+                            ) : (
+                                <Box
+                                    paddingBottom={actions?.length || onClose ? (withGradient ? 24 : 64) : 0}
+                                />
+                            )}
+                            <Box
+                                paddingX={24}
+                                paddingTop={withGradient ? 40 : 0}
+                                paddingBottom={24}
+                                className={withGradient ? styles.displayCardGradient : undefined}
+                            >
+                                <Stack space={24}>
+                                    <div>
+                                        <Stack space={8}>
+                                            {(headline || pretitle || title) && (
+                                                <header>
+                                                    <Stack space={16}>
+                                                        {headline}
+                                                        <Stack space={4}>
+                                                            {pretitle && (
+                                                                <Text2
+                                                                    forceMobileSizes
+                                                                    truncate={pretitleLinesMax}
+                                                                    as="div"
+                                                                    regular
+                                                                    textShadow={textShadow}
+                                                                >
+                                                                    {pretitle}
+                                                                </Text2>
+                                                            )}
+                                                            <Text6
                                                                 forceMobileSizes
-                                                                truncate={pretitleLinesMax}
-                                                                as="div"
-                                                                regular
+                                                                truncate={titleLinesMax}
+                                                                as="h3"
                                                                 textShadow={textShadow}
                                                             >
-                                                                {pretitle}
-                                                            </Text2>
-                                                        )}
-                                                        <Text6
-                                                            forceMobileSizes
-                                                            truncate={titleLinesMax}
-                                                            as="h3"
-                                                            textShadow={textShadow}
-                                                        >
-                                                            {title}
-                                                        </Text6>
+                                                                {title}
+                                                            </Text6>
+                                                        </Stack>
                                                     </Stack>
-                                                </Stack>
-                                            </header>
-                                        )}
+                                                </header>
+                                            )}
 
-                                        {description && (
-                                            <Text3
-                                                forceMobileSizes
-                                                truncate={descriptionLinesMax}
-                                                as="p"
-                                                regular
-                                                color={vars.colors.textSecondary}
-                                                textShadow={textShadow}
-                                            >
-                                                {description}
-                                            </Text3>
-                                        )}
-                                    </Stack>
-                                    {extra}
-                                </div>
-                                {(button || secondaryButton || buttonLink) && (
-                                    <ButtonGroup
-                                        primaryButton={button}
-                                        secondaryButton={secondaryButton}
-                                        link={buttonLink}
-                                    />
-                                )}
-                            </Stack>
-                        </Box>
+                                            {description && (
+                                                <Text3
+                                                    forceMobileSizes
+                                                    truncate={descriptionLinesMax}
+                                                    as="p"
+                                                    regular
+                                                    color={vars.colors.textSecondary}
+                                                    textShadow={textShadow}
+                                                >
+                                                    {description}
+                                                </Text3>
+                                            )}
+                                        </Stack>
+                                        {extra}
+                                    </div>
+                                    {(button || secondaryButton || buttonLink) && (
+                                        <ButtonGroup
+                                            primaryButton={button}
+                                            secondaryButton={secondaryButton}
+                                            link={buttonLink}
+                                        />
+                                    )}
+                                </Stack>
+                            </Box>
+                        </div>
                     </div>
                 </InternalBoxed>
             </MaybeWithActions>
@@ -730,8 +844,7 @@ export const DisplayDataCard = React.forwardRef<HTMLDivElement, DisplayDataCardP
     )
 );
 
-interface PosterCardProps {
-    backgroundImage: string;
+interface PosterCardBaseProps {
     ariaLabel?: string;
     aspectRatio?: AspectRatio | number;
     width?: number | string;
@@ -749,6 +862,16 @@ interface PosterCardProps {
     descriptionLinesMax?: number;
 }
 
+interface PosterCardWithImageProps extends PosterCardBaseProps {
+    backgroundImage: string;
+}
+
+type PosterCardWithVideoProps = Omit<PosterCardBaseProps, 'actions' | 'onClose'> & {
+    backgroundVideo: string | Omit<VideoProps, 'aspectRatio' | 'width' | 'height'>;
+};
+
+type PosterCardProps = ExclusifyUnion<PosterCardWithImageProps | PosterCardWithVideoProps>;
+
 const POSTER_CARD_MIN_WIDTH = 140;
 const POSTER_CARD_MIN_HEIGHT = 112;
 export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
@@ -756,6 +879,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         {
             dataAttributes,
             backgroundImage,
+            backgroundVideo,
             width,
             height,
             aspectRatio = '7:10',
@@ -773,9 +897,22 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         },
         ref
     ) => {
-        const withGradient = !!backgroundImage;
+        const image = useBackgroundImage(backgroundImage);
+        const {video, videoButtonIcon, onVideoButtonPress} = useBackgroundVideo(backgroundVideo);
+
+        if (backgroundVideo && videoButtonIcon) {
+            actions = [
+                {
+                    Icon: videoButtonIcon,
+                    onPress: onVideoButtonPress,
+                    label: 'Video controls',
+                },
+            ];
+        }
+
+        const withGradient = !!backgroundImage || !!backgroundVideo;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
-        const hasTopActions = actions?.length || onClose;
+        const hasTopActions = actions?.length || onClose || backgroundVideo;
         const {textPresets} = useTheme();
 
         return (
@@ -800,77 +937,81 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     isInverse
                     background={backgroundImage ? vars.colors.backgroundContainer : undefined}
                 >
-                    <div
-                        className={styles.displayCard}
-                        style={{
-                            backgroundImage: backgroundImage
-                                ? `url("${CSS.escape(backgroundImage)}")`
-                                : undefined,
-                            paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
-                        }}
-                    >
-                        {icon ? (
-                            <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
-                                {icon}
-                            </Box>
-                        ) : (
-                            <Box paddingBottom={actions?.length || onClose ? (withGradient ? 24 : 64) : 0} />
-                        )}
-                        <Box
-                            paddingX={16}
-                            paddingTop={withGradient ? 40 : 0}
-                            paddingBottom={24}
-                            className={withGradient ? styles.displayCardGradient : undefined}
+                    <div className={styles.displayCard}>
+                        {backgroundImage ? image : video}
+
+                        <div
+                            className={styles.displayCard}
+                            style={{
+                                paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
+                                zIndex: 1,
+                            }}
                         >
-                            <Stack space={24}>
-                                <div>
-                                    <Stack space={8}>
-                                        {(headline || pretitle || title) && (
-                                            <header>
-                                                <Stack space={16}>
-                                                    {headline}
-                                                    <Stack space={4}>
-                                                        {pretitle && (
-                                                            <Text2
-                                                                forceMobileSizes
-                                                                truncate={pretitleLinesMax}
-                                                                as="div"
-                                                                regular
-                                                                textShadow={textShadow}
+                            {icon ? (
+                                <Box paddingBottom={withGradient ? 0 : 40} paddingX={24}>
+                                    {icon}
+                                </Box>
+                            ) : (
+                                <Box
+                                    paddingBottom={actions?.length || onClose ? (withGradient ? 24 : 64) : 0}
+                                />
+                            )}
+                            <Box
+                                paddingX={16}
+                                paddingTop={withGradient ? 40 : 0}
+                                paddingBottom={24}
+                                className={withGradient ? styles.displayCardGradient : undefined}
+                            >
+                                <Stack space={24}>
+                                    <div>
+                                        <Stack space={8}>
+                                            {(headline || pretitle || title) && (
+                                                <header>
+                                                    <Stack space={16}>
+                                                        {headline}
+                                                        <Stack space={4}>
+                                                            {pretitle && (
+                                                                <Text2
+                                                                    forceMobileSizes
+                                                                    truncate={pretitleLinesMax}
+                                                                    as="div"
+                                                                    regular
+                                                                    textShadow={textShadow}
+                                                                >
+                                                                    {pretitle}
+                                                                </Text2>
+                                                            )}
+                                                            <Text
+                                                                desktopSize={20}
+                                                                mobileSize={18}
+                                                                mobileLineHeight="24px"
+                                                                desktopLineHeight="28px"
+                                                                truncate={titleLinesMax}
+                                                                weight={textPresets.cardTitle.weight}
+                                                                as="h3"
                                                             >
-                                                                {pretitle}
-                                                            </Text2>
-                                                        )}
-                                                        <Text
-                                                            desktopSize={20}
-                                                            mobileSize={18}
-                                                            mobileLineHeight="24px"
-                                                            desktopLineHeight="28px"
-                                                            truncate={titleLinesMax}
-                                                            weight={textPresets.cardTitle.weight}
-                                                            as="h3"
-                                                        >
-                                                            {title}
-                                                        </Text>
+                                                                {title}
+                                                            </Text>
+                                                        </Stack>
                                                     </Stack>
-                                                </Stack>
-                                            </header>
-                                        )}
-                                        {description && (
-                                            <Text2
-                                                forceMobileSizes
-                                                truncate={descriptionLinesMax}
-                                                as="p"
-                                                regular
-                                                textShadow={textShadow}
-                                            >
-                                                {description}
-                                            </Text2>
-                                        )}
-                                    </Stack>
-                                </div>
-                            </Stack>
-                        </Box>
+                                                </header>
+                                            )}
+                                            {description && (
+                                                <Text2
+                                                    forceMobileSizes
+                                                    truncate={descriptionLinesMax}
+                                                    as="p"
+                                                    regular
+                                                    textShadow={textShadow}
+                                                >
+                                                    {description}
+                                                </Text2>
+                                            )}
+                                        </Stack>
+                                    </div>
+                                </Stack>
+                            </Box>
+                        </div>
                     </div>
                 </InternalBoxed>
             </MaybeWithActions>

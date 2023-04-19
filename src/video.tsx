@@ -39,6 +39,10 @@ export type VideoProps = {
     muted?: boolean;
     /** defaults to true */
     autoPlay?: boolean;
+    onCanPlayThrough?: () => void;
+    onError?: () => void;
+    onPlay?: () => void;
+    onPause?: () => void;
     poster?: string;
     children?: void;
     /** defaults to none */
@@ -55,6 +59,10 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             muted = true,
             loop = true,
             preload = 'none',
+            onCanPlayThrough,
+            onError,
+            onPlay,
+            onPause,
             aspectRatio = '1:1',
             dataAttributes,
             ...props
@@ -94,6 +102,10 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 loop={loop}
                 className={styles.video}
                 preload={preload}
+                onCanPlayThrough={onCanPlayThrough}
+                onError={onError}
+                onPlay={onPlay}
+                onPause={onPause}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
                 poster={poster || TRANSPARENT_PIXEL}
                 {...getPrefixedDataAttributes(dataAttributes)}
@@ -108,29 +120,33 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             </video>
         );
 
-        return (
+        const videoContent = isSafari() ? (
+            <div
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    /**
+                     * In safari, when using a video with poster, the transition from pause to play does a flicker,
+                     * To avoid this, in Safari browsers, instead of using the poster attribute, we use a
+                     * wrapper with the poster as background image
+                     */
+                    backgroundImage: poster ? `url("${poster}")` : undefined,
+                    backgroundSize: 'cover',
+                    backgroundPosition: '50% 50%',
+                }}
+            >
+                {video}
+            </div>
+        ) : (
+            video
+        );
+
+        return ratio ? (
             <AspectRatioElement aspectRatio={ratio} width={props.width} height={props.height}>
-                {isSafari() ? (
-                    <div
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            /**
-                             * In safari, when using a video with poster, the transition from pause to play does a flicker,
-                             * To avoid this, in Safari browsers, instead of using the poster attribute, we use a
-                             * wrapper with the poster as background image
-                             */
-                            backgroundImage: poster ? `url("${poster}")` : undefined,
-                            backgroundSize: 'cover',
-                            backgroundPosition: '50% 50%',
-                        }}
-                    >
-                        {video}
-                    </div>
-                ) : (
-                    video
-                )}
+                {videoContent}
             </AspectRatioElement>
+        ) : (
+            videoContent
         );
     }
 );

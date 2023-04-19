@@ -17,11 +17,15 @@ export default {
     title: 'Components/Cards/Poster card',
 };
 
-const BACKGROUND_SRC =
+const BACKGROUND_IMAGE_SRC =
     'https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80';
+
+const BACKGROUND_VIDEO_SRC =
+    'https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw';
 
 type PosterCardArgs = {
     asset: 'icon' | 'circle + icon' | 'image' | 'circle + image';
+    background: 'image' | 'video';
     headlineType: TagType;
     headline: string;
     pretitle: string;
@@ -36,6 +40,7 @@ type PosterCardArgs = {
 
 export const Default: StoryComponent<PosterCardArgs> = ({
     asset = 'icon',
+    background,
     headline,
     headlineType,
     pretitle,
@@ -58,22 +63,32 @@ export const Default: StoryComponent<PosterCardArgs> = ({
         icon = <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />;
     }
 
+    const backgroundProps =
+        background === 'image'
+            ? {
+                  onClose: closable ? () => {} : undefined,
+                  actions: withTopAction
+                      ? [
+                            {
+                                Icon: IconLightningRegular,
+                                onPress: () => {},
+                                label: 'Lightning',
+                            },
+                        ]
+                      : undefined,
+                  backgroundImage: BACKGROUND_IMAGE_SRC,
+              }
+            : {
+                  backgroundVideo: {
+                      src: BACKGROUND_VIDEO_SRC,
+                      poster: BACKGROUND_IMAGE_SRC,
+                  },
+              };
+
     return (
         <>
             <PosterCard
-                onClose={closable ? () => {} : undefined}
-                actions={
-                    withTopAction
-                        ? [
-                              {
-                                  Icon: IconLightningRegular,
-                                  onPress: () => {},
-                                  label: 'Lightning',
-                              },
-                          ]
-                        : undefined
-                }
-                backgroundImage={BACKGROUND_SRC}
+                {...backgroundProps}
                 icon={icon}
                 headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
                 pretitle={pretitle}
@@ -93,6 +108,7 @@ Default.storyName = 'Poster card';
 Default.args = {
     asset: 'icon',
     headlineType: 'promo',
+    background: 'image',
     headline: 'Priority',
     pretitle: 'Pretitle',
     title: 'Title',
@@ -110,6 +126,10 @@ Default.argTypes = {
     },
     headlineType: {
         options: ['promo', 'active', 'inactive', 'success', 'warning', 'error'],
+        control: {type: 'select'},
+    },
+    background: {
+        options: ['image', 'video'],
         control: {type: 'select'},
     },
     aspectRatio: {
@@ -133,10 +153,10 @@ export const Group: StoryComponent = () => {
                         pretitle="Pretitle"
                         title="Title"
                         description="Description"
-                        backgroundImage={BACKGROUND_SRC}
+                        backgroundImage={BACKGROUND_IMAGE_SRC}
                     />
-                    <PosterCard title="Title" backgroundImage={BACKGROUND_SRC} />
-                    <PosterCard title="Title" backgroundImage={BACKGROUND_SRC} onClose={() => {}} />
+                    <PosterCard title="Title" backgroundImage={BACKGROUND_IMAGE_SRC} />
+                    <PosterCard title="Title" backgroundImage={BACKGROUND_IMAGE_SRC} onClose={() => {}} />
                 </Inline>
             </Stack>
         </ResponsiveLayout>

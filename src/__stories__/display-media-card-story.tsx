@@ -20,12 +20,16 @@ export default {
     title: 'Components/Cards/Display media card',
 };
 
-const BACKGROUND_SRC =
+const BACKGROUND_IMAGE_SRC =
     'https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80';
+
+const BACKGROUND_VIDEO_SRC =
+    'https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw';
 
 type DisplayMediaCardArgs = {
     asset: 'icon' | 'circle + icon' | 'image' | 'circle + image';
     headlineType: TagType;
+    background: 'image' | 'video';
     headline: string;
     pretitle: string;
     title: string;
@@ -41,6 +45,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
     asset = 'icon',
     headline,
     headlineType,
+    background,
     pretitle,
     title,
     description,
@@ -74,21 +79,31 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
         </ButtonSecondary>
     ) : undefined;
 
+    const backgroundProps =
+        background === 'image'
+            ? {
+                  onClose: closable ? () => {} : undefined,
+                  actions: withTopAction
+                      ? [
+                            {
+                                Icon: IconLightningRegular,
+                                onPress: () => {},
+                                label: 'Lightning',
+                            },
+                        ]
+                      : undefined,
+                  backgroundImage: BACKGROUND_IMAGE_SRC,
+              }
+            : {
+                  backgroundVideo: {
+                      src: BACKGROUND_VIDEO_SRC,
+                      poster: BACKGROUND_IMAGE_SRC,
+                  },
+              };
+
     return (
         <DisplayMediaCard
-            onClose={closable ? () => {} : undefined}
-            actions={
-                withTopAction
-                    ? [
-                          {
-                              Icon: IconLightningRegular,
-                              onPress: () => {},
-                              label: 'Lightning',
-                          },
-                      ]
-                    : undefined
-            }
-            backgroundImage={BACKGROUND_SRC}
+            {...backgroundProps}
             icon={icon}
             headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
             pretitle={pretitle}
@@ -109,6 +124,7 @@ Default.storyName = 'Display Media card';
 Default.args = {
     asset: 'icon',
     headlineType: 'promo',
+    background: 'image',
     headline: 'Priority',
     pretitle: 'Pretitle',
     title: 'Title',
@@ -132,6 +148,10 @@ Default.argTypes = {
         options: ['button', 'link', 'button and link', 'button and secondary button'],
         control: {type: 'select'},
     },
+    background: {
+        options: ['image', 'video'],
+        control: {type: 'select'},
+    },
     aspectRatio: {
         options: ['1:1', '16:9', '7:10', '9:10', 'auto'],
         control: {type: 'select'},
@@ -153,15 +173,19 @@ export const Group: StoryComponent = () => {
                         pretitle="Pretitle"
                         title="Title"
                         description="Description"
-                        backgroundImage={BACKGROUND_SRC}
+                        backgroundImage={BACKGROUND_IMAGE_SRC}
                         button={
                             <ButtonPrimary small href="https://google.com">
                                 Action
                             </ButtonPrimary>
                         }
                     />
-                    <DisplayMediaCard title="Title" backgroundImage={BACKGROUND_SRC} />
-                    <DisplayMediaCard title="Title" backgroundImage={BACKGROUND_SRC} onClose={() => {}} />
+                    <DisplayMediaCard title="Title" backgroundImage={BACKGROUND_IMAGE_SRC} />
+                    <DisplayMediaCard
+                        title="Title"
+                        backgroundImage={BACKGROUND_IMAGE_SRC}
+                        onClose={() => {}}
+                    />
                 </Inline>
             </Stack>
         </ResponsiveLayout>
