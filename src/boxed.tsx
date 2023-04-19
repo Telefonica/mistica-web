@@ -71,7 +71,9 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                         overflow: 'hidden',
                         background: !background
                             ? isInverseInside && !isDarkMode
-                                ? vars.colors.backgroundBrand
+                                ? isInverseOutside
+                                    ? vars.colors.brandHigh
+                                    : vars.colors.backgroundContainerBrand
                                 : vars.colors.backgroundContainer
                             : undefined,
                     })

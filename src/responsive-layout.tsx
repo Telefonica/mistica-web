@@ -2,8 +2,9 @@ import * as React from 'react';
 import classnames from 'classnames';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './responsive-layout.css';
-import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 
+import type {Variant} from './theme-variant-context';
 import type {DataAttributes} from './utils/types';
 
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
     fullWidth?: boolean;
     className?: string;
     isInverse?: boolean;
+    variant?: Variant;
     backgroundColor?: string;
     dataAttributes?: DataAttributes;
 };
@@ -18,18 +20,23 @@ type Props = {
 const ResponsiveLayout: React.FC<Props> = ({
     children,
     isInverse = false,
+    variant,
     backgroundColor,
     className,
     fullWidth,
     dataAttributes,
 }) => {
-    const isInverseOutside = useIsInverseVariant();
+    const outsideVariant = useThemeVariant();
+    const themeVariant = variant || (isInverse && 'inverse') || outsideVariant;
+
     return (
-        <ThemeVariant isInverse={isInverse || isInverseOutside}>
+        <ThemeVariant variant={themeVariant}>
             <div
-                className={classnames(styles.container, className, {
-                    [styles.inverseBackground]: isInverse && !backgroundColor,
-                })}
+                className={classnames(
+                    styles.container,
+                    className,
+                    themeVariant !== 'default' && styles.backgroundVariant[themeVariant]
+                )}
                 style={backgroundColor ? {background: backgroundColor} : undefined}
                 {...getPrefixedDataAttributes(dataAttributes)}
             >
