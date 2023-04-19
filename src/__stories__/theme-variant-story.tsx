@@ -79,7 +79,7 @@ export const ComponentsOverDifferentThemeVariants: StoryComponent<Args> = ({them
                 <Stack space={16}>
                     <Callout
                         onClose={() => {}}
-                        title="Title"
+                        title="Callout title"
                         description="Calloout description"
                         button={
                             <ButtonPrimary small onPress={() => {}}>
@@ -90,7 +90,7 @@ export const ComponentsOverDifferentThemeVariants: StoryComponent<Args> = ({them
                     <Inline space={16}>
                         <HighlightedCard
                             isInverse={false}
-                            title="Title"
+                            title="Card title"
                             description="Card description"
                             imageUrl={personPortraitImg}
                             imageFit="fill"
@@ -103,7 +103,7 @@ export const ComponentsOverDifferentThemeVariants: StoryComponent<Args> = ({them
                         />
                         <HighlightedCard
                             isInverse
-                            title="Title"
+                            title="Inverse card title"
                             description="Card description"
                             imageUrl={personPortraitImg}
                             imageFit="fill"
