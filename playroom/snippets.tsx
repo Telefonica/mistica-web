@@ -1668,17 +1668,17 @@ const logoSnippets = [
     {
         group: 'Logo',
         name: 'Logo imagotype',
-        code: `<Logo logoType="imagotype" size={48} />`,
+        code: `<Logo type="imagotype" size={48} />`,
     },
     {
         group: 'Logo',
         name: 'Logo isotype',
-        code: `<Logo logoType="isotype" size={48} />`,
+        code: `<Logo type="isotype" size={48} />`,
     },
     {
         group: 'Logo',
         name: 'Logo vertical',
-        code: `<Logo logoType="vertical" size={48} />`,
+        code: `<Logo type="vertical" size={48} />`,
     },
     {
         group: 'Logo',
