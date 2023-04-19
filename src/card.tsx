@@ -585,8 +585,6 @@ type GenericDisplayCardProps = ExclusifyUnion<
     (DisplayMediaCardProps & {isInverse: true}) | DisplayDataCardProps
 >;
 
-type VideoState = 'played' | 'paused' | 'error' | 'idle';
-
 const useBackgroundImage = (backgroundImage?: string) => {
     const image = (
         <div
@@ -603,11 +601,13 @@ const useBackgroundImage = (backgroundImage?: string) => {
     return image;
 };
 
+type VideoState = 'played' | 'paused' | 'error';
+
 const getVideoAction = (state: VideoState) => {
     if (state === 'played') {
         return IconPauseFilled;
     }
-    if (state === 'paused' || state === 'idle') {
+    if (state === 'paused') {
         return IconPlayFilled;
     }
 
@@ -620,7 +620,6 @@ const useBackgroundVideo = (backgroundVideo?: string | VideoProps) => {
 
     const onVideoError = () => setVideoStatus('error');
     const onVideoPause = () => setVideoStatus('paused');
-    const onCanPlayThrough = () => videoRef.current?.play();
     const onVideoPlay = () => {
         if (videoStatus === 'paused') setVideoStatus('played');
     };
@@ -643,20 +642,17 @@ const useBackgroundVideo = (backgroundVideo?: string | VideoProps) => {
                     onPause={onVideoPause}
                     onPlay={onVideoPlay}
                     onError={onVideoError}
-                    onCanPlayThrough={onCanPlayThrough}
                 />
             </div>
         ) : undefined;
     }
 
     const onVideoButtonPress = () => {
-        if (videoRef.current) {
-            if (videoStatus !== 'error') {
-                if (videoStatus === 'paused' || videoStatus === 'idle') {
-                    videoRef.current.play();
-                } else {
-                    videoRef.current.pause();
-                }
+        if (videoRef.current && videoStatus !== 'error') {
+            if (videoStatus === 'paused') {
+                videoRef.current.play();
+            } else {
+                videoRef.current.pause();
             }
         }
     };
