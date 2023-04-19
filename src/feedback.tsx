@@ -189,6 +189,7 @@ interface FeedbackScreenProps extends AssetFeedbackProps {
     hapticFeedback?: HapticFeedback;
     icon?: React.ReactNode;
     animateText?: boolean;
+    isInverse?: boolean;
 }
 
 export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
@@ -201,13 +202,13 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     hapticFeedback,
     icon,
     animateText = false,
+    isInverse = false,
     unstable_inlineInDesktop,
     imageUrl,
     imageFit,
     dataAttributes,
 }) => {
     useHapticFeedback(hapticFeedback);
-    const isInverse = useIsInverseVariant();
     const {platformOverrides, isDarkMode, skinName} = useTheme();
     const windowHeight = useWindowHeight();
     const {isTabletOrSmaller} = useScreenSize();
@@ -250,7 +251,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
     );
 
     return isTabletOrSmaller ? (
-        <>
+        <ThemeVariant isInverse={isInverse}>
             {isInverse && <OverscrollColor />}
             <div style={{position: 'relative'}}>
                 <ButtonFixedFooterLayout
@@ -286,7 +287,7 @@ export const FeedbackScreen: React.FC<FeedbackScreenProps> = ({
             )}
             {/* Bug: https://jira.tid.es/browse/CHECKOUT-3340. Solution for all brands but o2-classic (gradient background) is setting body color. */}
             {skinName !== O2_CLASSIC_SKIN && <BackgroundColor />}
-        </>
+        </ThemeVariant>
     ) : (
         <ResponsiveLayout>
             <Box paddingTop={64}>
@@ -301,17 +302,16 @@ export const SuccessFeedbackScreen: React.FC<AssetFeedbackProps> = ({dataAttribu
     const {skinName} = useTheme();
 
     return (
-        <ThemeVariant isInverse={!props.unstable_inlineInDesktop || isTabletOrSmaller}>
-            <FeedbackScreen
-                {...props}
-                hapticFeedback="success"
-                icon={skinName === VIVO_SKIN ? <IconSuccessVivo /> : <IcnSuccess />}
-                animateText
-                imageUrl={props.imageUrl}
-                imageFit={props.imageFit}
-                dataAttributes={{'component-name': 'SuccessFeedbackScreen', ...dataAttributes}}
-            />
-        </ThemeVariant>
+        <FeedbackScreen
+            {...props}
+            isInverse={!props.unstable_inlineInDesktop || isTabletOrSmaller}
+            hapticFeedback="success"
+            icon={skinName === VIVO_SKIN ? <IconSuccessVivo /> : <IcnSuccess />}
+            animateText
+            imageUrl={props.imageUrl}
+            imageFit={props.imageFit}
+            dataAttributes={{'component-name': 'SuccessFeedbackScreen', ...dataAttributes}}
+        />
     );
 };
 

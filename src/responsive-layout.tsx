@@ -26,16 +26,18 @@ const ResponsiveLayout: React.FC<Props> = ({
     fullWidth,
     dataAttributes,
 }) => {
-    const outsideVariant = useThemeVariant();
-    const themeVariant = variant || (isInverse && 'inverse') || outsideVariant;
+    const outsideVariant: Variant = useThemeVariant();
+    const internalVariant: Variant | undefined = variant || (isInverse && 'inverse') || undefined;
 
     return (
-        <ThemeVariant variant={themeVariant}>
+        <ThemeVariant variant={internalVariant ?? outsideVariant}>
             <div
                 className={classnames(
                     styles.container,
                     className,
-                    themeVariant !== 'default' && styles.backgroundVariant[themeVariant]
+                    internalVariant &&
+                        internalVariant !== 'default' &&
+                        styles.backgroundVariant[internalVariant]
                 )}
                 style={backgroundColor ? {background: backgroundColor} : undefined}
                 {...getPrefixedDataAttributes(dataAttributes)}
