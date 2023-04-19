@@ -131,7 +131,7 @@ const O2LogoImage = ({size, type}: LogoImageProps) => {
 const TelefonicaLogoImage = ({size, type}: LogoImageProps) => {
     const {isDarkMode} = useTheme();
     const isInverse = useIsInverseVariant();
-    const {colors} = getMovistarSkin();
+    const {colors} = getTelefonicaSkin();
     const color = isInverse && !isDarkMode ? colors.inverse : colors.brand;
 
     if (type === 'vertical') {
