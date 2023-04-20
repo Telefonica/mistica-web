@@ -30,7 +30,7 @@ import type {
 type CardAction = {
     label: string;
     onPress: () => void;
-    Icon: React.FC<IconProps>;
+    Icon?: React.FC<IconProps>;
 };
 
 type CardActionsGroupProps = {
@@ -41,20 +41,24 @@ type CardActionsGroupProps = {
 const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Element => {
     return (
         <Inline space={0}>
-            {actions.map(({onPress, label, Icon}, index) => (
-                <IconButton
-                    size={48}
-                    key={index}
-                    onPress={onPress}
-                    aria-label={label}
-                    className={styles.cardActionIconButton}
-                    style={{display: 'flex'}}
-                >
-                    <div className={isInverse ? styles.cardActionInverse : styles.cardAction}>
-                        <Icon color={vars.colors.neutralHigh} size={20} />
-                    </div>
-                </IconButton>
-            ))}
+            {actions.map(({onPress, label, Icon}, index) =>
+                Icon ? (
+                    <IconButton
+                        size={48}
+                        key={index}
+                        onPress={onPress}
+                        aria-label={label}
+                        className={styles.cardActionIconButton}
+                        style={{display: 'flex'}}
+                    >
+                        <div className={isInverse ? styles.cardActionInverse : styles.cardAction}>
+                            <Icon color={vars.colors.neutralHigh} size={20} />
+                        </div>
+                    </IconButton>
+                ) : (
+                    <div key={index} className={styles.cardActionIconButton} />
+                )
+            )}
         </Inline>
     );
 };
@@ -570,7 +574,7 @@ interface DisplayMediaCardWithImageProps extends CommonDisplayCardProps {
 }
 
 type DisplayMediaCardWithVideoProps = Omit<CommonDisplayCardProps, 'actions' | 'onClose'> & {
-    backgroundVideo: string | Omit<VideoProps, 'aspectRatio' | 'width' | 'height'>;
+    backgroundVideo: string | Omit<VideoProps, 'aspectRatio' | 'width' | 'height' | 'autoPlay'>;
 };
 
 type DisplayMediaCardProps = DisplayMediaCardBaseProps &
@@ -601,9 +605,9 @@ const useBackgroundImage = (backgroundImage?: string) => {
     return image;
 };
 
-type VideoState = 'played' | 'paused' | 'error';
+type VideoState = 'played' | 'paused' | 'error' | 'loading';
 
-const getVideoAction = (state: VideoState) => {
+const getVideoAction = (state?: VideoState) => {
     if (state === 'played') {
         return IconPauseFilled;
     }
@@ -616,13 +620,18 @@ const getVideoAction = (state: VideoState) => {
 
 const useBackgroundVideo = (backgroundVideo?: string | VideoProps) => {
     const videoRef = React.useRef<HTMLVideoElement>(null);
-    const [videoStatus, setVideoStatus] = React.useState<VideoState>('paused');
+    const [videoStatus, setVideoStatus] = React.useState<VideoState>();
 
+    React.useEffect(() => {
+        videoRef.current?.load();
+        return () => setVideoStatus(undefined);
+    }, [backgroundVideo]);
+
+    const onLoadStart = () => setVideoStatus('loading');
     const onVideoError = () => setVideoStatus('error');
     const onVideoPause = () => setVideoStatus('paused');
-    const onVideoPlay = () => {
-        if (videoStatus === 'paused') setVideoStatus('played');
-    };
+    const onVideoPlay = () => setVideoStatus('played');
+    const onCanPlayThrough = () => videoRef.current?.play();
 
     let video;
     if (backgroundVideo) {
@@ -639,9 +648,12 @@ const useBackgroundVideo = (backgroundVideo?: string | VideoProps) => {
                     ref={videoRef}
                     {...videoProps}
                     aspectRatio={0}
+                    autoPlay={false}
+                    onLoadStart={onLoadStart}
+                    onError={onVideoError}
                     onPause={onVideoPause}
                     onPlay={onVideoPlay}
-                    onError={onVideoError}
+                    onCanPlayThrough={onCanPlayThrough}
                 />
             </div>
         ) : undefined;
@@ -697,7 +709,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         const image = useBackgroundImage(backgroundImage);
         const {video, videoButtonIcon, onVideoButtonPress} = useBackgroundVideo(backgroundVideo);
 
-        if (backgroundVideo && videoButtonIcon) {
+        if (backgroundVideo) {
             actions = [
                 {
                     Icon: videoButtonIcon,
@@ -863,7 +875,7 @@ interface PosterCardWithImageProps extends PosterCardBaseProps {
 }
 
 type PosterCardWithVideoProps = Omit<PosterCardBaseProps, 'actions' | 'onClose'> & {
-    backgroundVideo: string | Omit<VideoProps, 'aspectRatio' | 'width' | 'height'>;
+    backgroundVideo: string | Omit<VideoProps, 'aspectRatio' | 'width' | 'height' | 'autoPlay'>;
 };
 
 type PosterCardProps = ExclusifyUnion<PosterCardWithImageProps | PosterCardWithVideoProps>;
@@ -896,7 +908,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         const image = useBackgroundImage(backgroundImage);
         const {video, videoButtonIcon, onVideoButtonPress} = useBackgroundVideo(backgroundVideo);
 
-        if (backgroundVideo && videoButtonIcon) {
+        if (backgroundVideo) {
             actions = [
                 {
                     Icon: videoButtonIcon,

@@ -42,6 +42,8 @@ export type VideoProps = {
     onError?: () => void;
     onPlay?: () => void;
     onPause?: () => void;
+    onLoadStart?: () => void;
+    onCanPlayThrough?: () => void;
     poster?: string;
     children?: void;
     /** defaults to none */
@@ -58,9 +60,11 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             muted = true,
             loop = true,
             preload = 'none',
+            onLoadStart,
             onError,
-            onPlay,
             onPause,
+            onPlay,
+            onCanPlayThrough,
             aspectRatio = '1:1',
             dataAttributes,
             ...props
@@ -100,9 +104,11 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 loop={loop}
                 className={styles.video}
                 preload={preload}
+                onLoadStart={onLoadStart}
                 onError={onError}
-                onPlay={onPlay}
                 onPause={onPause}
+                onPlay={onPlay}
+                onCanPlayThrough={onCanPlayThrough}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
                 poster={poster || TRANSPARENT_PIXEL}
                 {...getPrefixedDataAttributes(dataAttributes)}
