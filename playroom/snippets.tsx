@@ -776,7 +776,7 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'PosterCard',
+        name: 'PosterCard with image',
         code: `
         <PosterCard
           headline={<Tag type="promo">Headline</Tag>}
@@ -792,6 +792,45 @@ const cardSnippets: Array<Snippet> = [
               label: "Lightning",
             },
           ]}
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'PosterCard with video as url',
+        code: `
+        <PosterCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          description="Description"
+          backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
+          button={
+            <ButtonPrimary small href="https://google.com">
+              Action
+            </ButtonPrimary>
+          }
+        />`,
+    },
+    {
+        group: 'Cards',
+        name: 'PosterCard with video as object',
+        code: `
+        <PosterCard
+          headline={<Tag type="promo">Headline</Tag>}
+          pretitle="Pretitle"
+          title="Title"
+          description="Description"
+          backgroundVideo={{
+            src: "https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw",
+            poster: "https://source.unsplash.com/900x900/?landscape",
+            autoPlay: false,
+            loop: false,
+          }}
+          button={
+            <ButtonPrimary small href="https://google.com">
+              Action
+            </ButtonPrimary>
+          }
         />`,
     },
 ];
