@@ -1,9 +1,10 @@
 import {style} from '@vanilla-extract/css';
 import * as mq from './media-queries.css';
 import {sprinkles} from './sprinkles.css';
+import * as skin from './skins/skin-contract.css';
 
 export const desktopContainer = sprinkles({
-    borderRadius: 16,
+    borderRadius: skin.vars.borderRadii.container,
     display: 'flex',
     justifyContent: 'space-between',
 });

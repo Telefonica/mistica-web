@@ -21,7 +21,7 @@ export const container = style([
                 maxWidth: 368,
             },
             [mq.desktopOrBigger]: {
-                borderRadius: 16,
+                borderRadius: skin.vars.borderRadii.container,
                 flexDirection: 'row',
                 overflow: 'hidden',
                 backgroundColor,

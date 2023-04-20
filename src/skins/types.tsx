@@ -20,11 +20,24 @@ type PartialTextPresetsConfig = {
     };
 };
 
+export type BorderRadiiConfig = {
+    button: string;
+    input: string;
+    container: string;
+    popup: string;
+    checkbox: string;
+    indicator: string;
+    sheet: string;
+    bar: string;
+    avatar: string;
+};
+
 export type Skin = {
     name: SkinName;
     colors: Colors;
     darkModeColors?: Partial<Colors>;
     textPresets?: PartialTextPresetsConfig;
+    borderRadii?: BorderRadiiConfig;
 };
 
 export type KnownSkin = {
@@ -32,6 +45,7 @@ export type KnownSkin = {
     colors: Colors;
     darkModeColors?: Partial<Colors>;
     textPresets?: PartialTextPresetsConfig;
+    borderRadii?: BorderRadiiConfig;
 };
 
 export type Colors = {

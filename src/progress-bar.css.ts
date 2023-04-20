@@ -5,14 +5,14 @@ import {style, keyframes} from '@vanilla-extract/css';
 const transition = '1s cubic-bezier(0.75, 0, 0.27, 1)';
 
 export const barBackground = sprinkles({
-    borderRadius: 2,
+    borderRadius: vars.borderRadii.indicator,
     height: 4,
     background: vars.colors.control,
 });
 
 export const bar = sprinkles({
     height: '100%',
-    borderRadius: 2,
+    borderRadius: vars.borderRadii.indicator,
 });
 
 const barKeyFrames = keyframes({
