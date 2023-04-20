@@ -574,7 +574,7 @@ interface DisplayMediaCardWithImageProps extends CommonDisplayCardProps {
 }
 
 type DisplayMediaCardWithVideoProps = Omit<CommonDisplayCardProps, 'actions' | 'onClose'> & {
-    backgroundVideo: string | Omit<VideoProps, 'aspectRatio' | 'width' | 'height' | 'autoPlay'>;
+    backgroundVideo: string | Omit<VideoProps, 'aspectRatio' | 'width' | 'height'>;
 };
 
 type DisplayMediaCardProps = DisplayMediaCardBaseProps &
@@ -607,17 +607,6 @@ const useBackgroundImage = (backgroundImage?: string) => {
 
 type VideoState = 'played' | 'paused' | 'error' | 'loading';
 
-const getVideoAction = (state?: VideoState) => {
-    if (state === 'played') {
-        return IconPauseFilled;
-    }
-    if (state === 'paused') {
-        return IconPlayFilled;
-    }
-
-    return undefined;
-};
-
 const useBackgroundVideo = (backgroundVideo?: string | VideoProps) => {
     const videoRef = React.useRef<HTMLVideoElement>(null);
     const [videoStatus, setVideoStatus] = React.useState<VideoState>();
@@ -631,8 +620,11 @@ const useBackgroundVideo = (backgroundVideo?: string | VideoProps) => {
     const onVideoError = () => setVideoStatus('error');
     const onVideoPause = () => setVideoStatus('paused');
     const onVideoPlay = () => setVideoStatus('played');
-    const onCanPlayThrough = () => videoRef.current?.play();
-
+    const onCanPlayThrough = () => {
+        const shouldAutoPlay = typeof backgroundVideo === 'string' || backgroundVideo?.autoPlay !== false;
+        if (shouldAutoPlay) videoRef.current?.play();
+        else setVideoStatus('paused');
+    };
     let video;
     if (backgroundVideo) {
         const videoProps = typeof backgroundVideo === 'string' ? {src: backgroundVideo} : backgroundVideo;
@@ -669,13 +661,22 @@ const useBackgroundVideo = (backgroundVideo?: string | VideoProps) => {
         }
     };
 
-    const videoButtonIcon = getVideoAction(videoStatus);
-
     return {
         video,
-        videoButtonIcon,
+        videoStatus,
         onVideoButtonPress,
     };
+};
+
+const getVideoActionIcon = (state?: VideoState) => {
+    if (state === 'played') {
+        return IconPauseFilled;
+    }
+    if (state === 'paused') {
+        return IconPlayFilled;
+    }
+
+    return undefined;
 };
 
 const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
@@ -707,12 +708,12 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         ref
     ) => {
         const image = useBackgroundImage(backgroundImage);
-        const {video, videoButtonIcon, onVideoButtonPress} = useBackgroundVideo(backgroundVideo);
+        const {video, videoStatus, onVideoButtonPress} = useBackgroundVideo(backgroundVideo);
 
         if (backgroundVideo) {
             actions = [
                 {
-                    Icon: videoButtonIcon,
+                    Icon: getVideoActionIcon(videoStatus),
                     onPress: onVideoButtonPress,
                     label: 'Video controls',
                 },
@@ -875,7 +876,7 @@ interface PosterCardWithImageProps extends PosterCardBaseProps {
 }
 
 type PosterCardWithVideoProps = Omit<PosterCardBaseProps, 'actions' | 'onClose'> & {
-    backgroundVideo: string | Omit<VideoProps, 'aspectRatio' | 'width' | 'height' | 'autoPlay'>;
+    backgroundVideo: string | Omit<VideoProps, 'aspectRatio' | 'width' | 'height'>;
 };
 
 type PosterCardProps = ExclusifyUnion<PosterCardWithImageProps | PosterCardWithVideoProps>;
@@ -906,12 +907,12 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         ref
     ) => {
         const image = useBackgroundImage(backgroundImage);
-        const {video, videoButtonIcon, onVideoButtonPress} = useBackgroundVideo(backgroundVideo);
+        const {video, videoStatus, onVideoButtonPress} = useBackgroundVideo(backgroundVideo);
 
         if (backgroundVideo) {
             actions = [
                 {
-                    Icon: videoButtonIcon,
+                    Icon: getVideoActionIcon(videoStatus),
                     onPress: onVideoButtonPress,
                     label: 'Video controls',
                 },
