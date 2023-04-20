@@ -9,6 +9,7 @@ import {getMovistarSkin} from './skins/movistar';
 import {getVivoSkin} from './skins/vivo';
 import {getO2Skin} from './skins/o2';
 import {getBlauSkin} from './skins/blau';
+import {getTelefonicaSkin} from './skins/telefonica';
 
 type LogoType = 'isotype' | 'imagotype' | 'vertical';
 type LogoImageProps = {size: number; type: LogoType};
@@ -131,7 +132,7 @@ const O2LogoImage = ({size, type}: LogoImageProps) => {
 const TelefonicaLogoImage = ({size, type}: LogoImageProps) => {
     const {isDarkMode} = useTheme();
     const isInverse = useIsInverseVariant();
-    const {colors} = getMovistarSkin();
+    const {colors} = getTelefonicaSkin();
     const color = isInverse && !isDarkMode ? colors.inverse : colors.brand;
 
     if (type === 'vertical') {
