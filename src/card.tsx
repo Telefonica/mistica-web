@@ -623,7 +623,7 @@ const useBackgroundVideo = (backgroundVideo?: string | VideoProps) => {
     const onCanPlayThrough = () => {
         const shouldAutoPlay = typeof backgroundVideo === 'string' || backgroundVideo?.autoPlay !== false;
         if (shouldAutoPlay) videoRef.current?.play();
-        else setVideoStatus('paused');
+        else if (videoStatus === 'loading') setVideoStatus('paused');
     };
     let video;
     if (backgroundVideo) {
