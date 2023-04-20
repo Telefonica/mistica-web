@@ -29,11 +29,9 @@ export const responsiveLayout = style({
             width: LARGE_DESKTOP_MAX_WIDTH,
         },
         [mq.desktop]: {
-            width: `calc(100% - ${SMALL_DESKTOP_SIDE_MARGIN * 2}px)`,
             margin: `0 ${SMALL_DESKTOP_SIDE_MARGIN}px`,
         },
         [mq.tablet]: {
-            width: `calc(100% - ${TABLET_SIDE_MARGIN * 2}px)`,
             margin: `0 ${TABLET_SIDE_MARGIN}px`,
 
             vars: {
@@ -41,12 +39,18 @@ export const responsiveLayout = style({
             },
         },
         [mq.mobile]: {
-            width: `calc(100% - ${MOBILE_SIDE_MARGIN * 2}px)`,
             margin: `0 ${MOBILE_SIDE_MARGIN}px`,
 
             vars: {
                 [sideMargin]: `${MOBILE_SIDE_MARGIN}px`,
             },
+        },
+    },
+
+    selectors: {
+        '& &': {
+            margin: 0,
+            width: 'auto',
         },
     },
 });

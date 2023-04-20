@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {render, waitFor, screen} from '@testing-library/react';
-import {ButtonPrimary, Form, Checkbox, ThemeContextProvider} from '..';
+import {ButtonPrimary, Form, Checkbox, ThemeContextProvider, TextLink} from '..';
 import userEvent from '@testing-library/user-event';
 import {makeTheme} from './test-utils';
 
@@ -113,4 +113,21 @@ test('form uncontrolled mode', async () => {
     expect(checkBoxElement.getAttribute('aria-checked')).toBe('true');
     await userEvent.click(screen.getByRole('button'));
     await waitFor(() => expect(handleSubmitSpy).toHaveBeenCalledWith({checkbox: true}, {checkbox: true}));
+});
+
+test("with link. Clicking the link doesn't check the checkbox", async () => {
+    render(
+        <ThemeContextProvider theme={makeTheme()}>
+            <Checkbox name="checkbox">
+                Accept <TextLink href="#terms-and-conditions">terms and conditions</TextLink>
+            </Checkbox>
+        </ThemeContextProvider>
+    );
+
+    const checkBoxElement = screen.getByRole('checkbox');
+    const linkElement = screen.getByRole('link');
+
+    expect(checkBoxElement.getAttribute('aria-checked')).toBe('false');
+    await userEvent.click(linkElement);
+    expect(checkBoxElement.getAttribute('aria-checked')).toBe('false');
 });

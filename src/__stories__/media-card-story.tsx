@@ -1,15 +1,28 @@
 import * as React from 'react';
-import {Stack, MediaCard, ButtonPrimary, ButtonLink, Inline, Text2, Video, Image, Tag, TagType} from '..';
+import {
+    Stack,
+    MediaCard,
+    ButtonPrimary,
+    ButtonLink,
+    Inline,
+    Text2,
+    Video,
+    Image,
+    Tag,
+    TagType,
+    IconMobileDeviceRegular,
+} from '..';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
+import tennisImg from './images/tennis.jpg';
+import confettiVideo from './videos/confetti.mp4';
 
 export default {
     title: 'Components/Cards/Media card',
 };
 
-const VIDEO_SRC = 'https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw';
-const IMAGE_SRC =
-    'https://images.unsplash.com/photo-1575903013621-1387ce8caa74?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80';
+const VIDEO_SRC = confettiVideo;
+const IMAGE_SRC = tennisImg;
 
 type Args = {
     media: 'image' | 'video';
@@ -22,6 +35,7 @@ type Args = {
     withExtra: boolean;
     actions: 'button' | 'link' | 'button and link' | 'none';
     closable: boolean;
+    withTopAction: boolean;
 };
 
 export const Default: StoryComponent<Args> = ({
@@ -34,6 +48,7 @@ export const Default: StoryComponent<Args> = ({
     actions = 'button',
     withExtra,
     closable,
+    withTopAction,
     media,
 }) => {
     const button = actions.includes('button') ? (
@@ -65,6 +80,19 @@ export const Default: StoryComponent<Args> = ({
             buttonLink={buttonLink}
             extra={withExtra ? <Placeholder /> : undefined}
             onClose={closable ? () => {} : undefined}
+            actions={
+                withTopAction
+                    ? [
+                          {
+                              Icon: IconMobileDeviceRegular,
+                              onPress: () => {
+                                  alert('icon press');
+                              },
+                              label: 'Device',
+                          },
+                      ]
+                    : undefined
+            }
         />
     );
 };
@@ -81,6 +109,7 @@ Default.args = {
     withExtra: false,
     actions: 'button',
     closable: false,
+    withTopAction: false,
 };
 Default.argTypes = {
     media: {

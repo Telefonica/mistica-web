@@ -1,7 +1,9 @@
+import {capitalize} from 'lodash';
 import * as React from 'react';
-import {Inline, Text2, skinVars} from '..';
+import {Inline, Text2, skinVars, Tag, Avatar} from '..';
 import {Placeholder} from '../placeholder';
 import {StorySection, useSelect} from './helpers';
+import avatarImg from './images/avatar.jpg';
 
 export default {
     title: 'Layout/Inline',
@@ -94,3 +96,50 @@ export const Default: StoryComponent = () => {
 };
 
 Default.storyName = 'Inline';
+
+type Args = {
+    space: React.ComponentProps<typeof Inline>['space'];
+    numItems: number;
+};
+
+export const Wrap: StoryComponent<Args> = ({space, numItems}) => {
+    const tagTypes = ['active', 'inactive', 'success', 'warning', 'error', 'promo'] as const;
+    return (
+        <Inline space={space} wrap>
+            {Array.from({length: numItems}, (_, i) => {
+                const type = tagTypes[i % tagTypes.length];
+                return (
+                    <Tag type={type} key={i}>
+                        {capitalize(type)}
+                    </Tag>
+                );
+            })}
+        </Inline>
+    );
+};
+
+Wrap.args = {
+    space: 8,
+    numItems: 50,
+};
+
+Wrap.argTypes = {
+    space: {
+        options: [0, 2, 4, 8, 12, 16, 24, 32, 40, 48, 56, 64],
+        control: {type: 'select'},
+    },
+};
+
+Wrap.storyName = 'Inline wrap';
+
+export const NegativeSpace: StoryComponent = () => {
+    return (
+        <Inline space={-16}>
+            {Array.from({length: 8}, (_, i) => (
+                <Avatar key={i} size={64} src={avatarImg} />
+            ))}
+        </Inline>
+    );
+};
+
+NegativeSpace.storyName = 'Inline with negative space';

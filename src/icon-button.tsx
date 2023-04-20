@@ -124,7 +124,14 @@ const RawIconButton: React.FC<Props> = (props) => {
 
     if (props.onPress) {
         return (
-            <BaseTouchable {...commonProps} onPress={props.onPress} aria-label={props['aria-label']}>
+            <BaseTouchable
+                {...commonProps}
+                onPress={(event) => {
+                    event.stopPropagation();
+                    props.onPress(event);
+                }}
+                aria-label={props['aria-label']}
+            >
                 {!icon && React.Children.only(children)}
             </BaseTouchable>
         );

@@ -14,6 +14,7 @@ import {
     TagType,
 } from '..';
 import {Placeholder} from '../placeholder';
+import avatarImg from './images/avatar.jpg';
 
 export default {
     title: 'Components/Cards/Data card',
@@ -30,6 +31,7 @@ type DataCardArgs = {
     withExtra: boolean;
     actions: 'button' | 'link' | 'button and link';
     closable: boolean;
+    withTopAction: boolean;
 };
 
 export const Default: StoryComponent<DataCardArgs> = ({
@@ -43,6 +45,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
     withExtra,
     actions = 'button',
     closable,
+    withTopAction,
 }) => {
     let icon;
     if (asset === 'icon') {
@@ -52,7 +55,7 @@ export const Default: StoryComponent<DataCardArgs> = ({
             </Circle>
         );
     } else if (asset === 'image') {
-        icon = <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />;
+        icon = <Circle size={40} backgroundImage={avatarImg} />;
     }
 
     const button = actions.includes('button') ? (
@@ -77,6 +80,19 @@ export const Default: StoryComponent<DataCardArgs> = ({
             buttonLink={buttonLink}
             dataAttributes={{testid: 'data-card'}}
             aria-label="Data card label"
+            actions={
+                withTopAction
+                    ? [
+                          {
+                              Icon: IconMobileDeviceRegular,
+                              onPress: () => {
+                                  alert('icon press');
+                              },
+                              label: 'Device',
+                          },
+                      ]
+                    : undefined
+            }
         />
     );
 };
@@ -93,6 +109,7 @@ Default.args = {
     withExtra: false,
     actions: 'button',
     closable: false,
+    withTopAction: false,
 };
 Default.argTypes = {
     asset: {

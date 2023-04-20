@@ -34,6 +34,7 @@ type AvatarProps = {
     badge?: boolean | number;
     'aria-label'?: string;
     dataAttributes?: DataAttributes;
+    border?: boolean;
 };
 
 /**
@@ -53,7 +54,6 @@ const renderText = (size: number, text: string): JSX.Element | null => {
     }
     return <span style={{fontSize, textTransform: 'uppercase'}}>{text}</span>;
 };
-
 const Avatar = ({
     size,
     src,
@@ -69,11 +69,10 @@ const Avatar = ({
         props.backgroundColor ?? (isInverse ? vars.colors.brandHigh : vars.colors.brandLow);
     const textColor = props.textColor ?? (isInverse ? vars.colors.textPrimaryInverse : vars.colors.brand);
     const [imgLoadError, setImgLoadError] = React.useState(false);
-
     React.useEffect(() => {
         setImgLoadError(false); // reset error state when url changes
     }, [src]);
-
+    const border = props.border ? `1px solid ${vars.colors.borderLow}` : 'none';
     const letters = initials.trim().slice(0, 2);
     const badgePosition = getBadgeDistance(size, badge);
     const badgeValue = badge === true ? undefined : badge || 0;
@@ -86,7 +85,14 @@ const Avatar = ({
                 className={classes.avatar}
                 role="img"
                 aria-label={ariaLabel ?? initials}
-                style={{width: size, height: size, color: textColor, background: backgroundColor}}
+                style={{
+                    width: size,
+                    height: size,
+                    color: textColor,
+                    background: backgroundColor,
+                    boxSizing: 'border-box',
+                    border,
+                }}
                 {...getPrefixedDataAttributes(dataAttributes, 'Avatar')}
             >
                 {shouldRenderImage ? (

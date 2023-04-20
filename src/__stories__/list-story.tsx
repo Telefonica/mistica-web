@@ -16,6 +16,11 @@ import {
     Inline,
     Avatar,
 } from '..';
+import usingVrImg from './images/using-vr.jpg';
+import laptopImg from './images/laptop.jpg';
+import avatarImg from './images/avatar.jpg';
+import touchImg from './images/touch.jpg';
+import personPortraitImg from './images/person-portrait.jpg';
 
 export default {
     title: 'Components/Lists',
@@ -29,6 +34,7 @@ export default {
                 'checkbox',
                 'checkbox and onPress',
                 'radio',
+                'radio and onPress',
                 'custom element',
                 'custom element with text',
                 'action with custom element',
@@ -133,6 +139,12 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
             case 'radio':
                 controlProps = {radioValue: 'radio-value-' + index};
                 break;
+            case 'radio and onPress':
+                controlProps = {
+                    radioValue: 'radio-value-' + index,
+                    onPress,
+                };
+                break;
             case 'none':
             default:
                 controlProps = {};
@@ -192,7 +204,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={<Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />}
+                asset={<Circle size={40} backgroundImage={laptopImg} />}
                 headline={headline}
                 title={title}
                 subtitle={subtitle}
@@ -206,13 +218,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={
-                    <Image
-                        src="https://images.unsplash.com/photo-1622819584099-e04ccb14e8a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1932&q=80"
-                        height={80}
-                        aspectRatio="16:9"
-                    />
-                }
+                asset={<Image src={usingVrImg} height={80} aspectRatio="16:9" />}
                 headline={headline}
                 title={title}
                 subtitle={subtitle}
@@ -226,13 +232,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={
-                    <Image
-                        src="https://images.unsplash.com/photo-1570158268183-d296b2892211?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-                        width={80}
-                        aspectRatio="7:10"
-                    />
-                }
+                asset={<Image src={personPortraitImg} width={80} aspectRatio="7:10" />}
                 headline={headline}
                 title={title}
                 subtitle={subtitle}
@@ -246,12 +246,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={
-                    <Image
-                        src="https://images.unsplash.com/photo-1548446388-f35145b5a0c1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
-                        width={80}
-                    />
-                }
+                asset={<Image src={touchImg} width={80} />}
                 headline={headline}
                 title={title}
                 subtitle={subtitle}
@@ -265,12 +260,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
                 {...getControlProps(row++)}
             />
             <RowComponent
-                asset={
-                    <Avatar
-                        size={40}
-                        src="https://images.unsplash.com/photo-1640951613773-54706e06851d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
-                    />
-                }
+                asset={<Avatar size={40} src={avatarImg} />}
                 headline={headline}
                 title={title}
                 subtitle={subtitle}
@@ -300,7 +290,7 @@ const Template: StoryComponent<Args & {boxed?: boolean}> = ({
         </ListComponent>
     );
 
-    return control === 'radio' ? (
+    return control.includes('radio') ? (
         <RadioGroup disabled={disabled} name="radio-group" defaultValue="apple" data-testid="radio-row-list">
             {list}
         </RadioGroup>

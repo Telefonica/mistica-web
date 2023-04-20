@@ -1,3 +1,50 @@
+# [14.6.0](https://github.com/Telefonica/mistica-web/compare/v14.5.0...v14.6.0) (2023-04-18)
+
+
+### Features
+
+* **Avatar:** optional border ([#705](https://github.com/Telefonica/mistica-web/issues/705)) ([1d4bee1](https://github.com/Telefonica/mistica-web/commit/1d4bee13cef31b92b27ad2dcf92a2e4e10833bd3))
+* **Card:** add hypenation to all cards ([#719](https://github.com/Telefonica/mistica-web/issues/719)) ([15f5909](https://github.com/Telefonica/mistica-web/commit/15f59092a307cc47ae39b4da0dae82ff27b05af6))
+
+# [14.5.0](https://github.com/Telefonica/mistica-web/compare/v14.4.1...v14.5.0) (2023-04-17)
+
+
+### Bug Fixes
+
+* **Button:** change minWidth ([#709](https://github.com/Telefonica/mistica-web/issues/709)) ([423f630](https://github.com/Telefonica/mistica-web/commit/423f6303e20a7c86073d0eec108b4ca43c27dd03))
+* **Carousel:** initial flash rendering as tablet while screenSize provider is not initialized ([#720](https://github.com/Telefonica/mistica-web/issues/720)) ([3d6f7b0](https://github.com/Telefonica/mistica-web/commit/3d6f7b04bddead1ac48e1d0c7ea21500408bcafb))
+* **Carousel:** only call onPageChange when a true page change has heppen ([#708](https://github.com/Telefonica/mistica-web/issues/708)) ([bff2d46](https://github.com/Telefonica/mistica-web/commit/bff2d4647c1a527cdfcc4ee2b024beb359c279b1))
+
+
+### Features
+
+* **PosterCard:** new component ([#699](https://github.com/Telefonica/mistica-web/issues/699)) ([aa96120](https://github.com/Telefonica/mistica-web/commit/aa961209aae1510650b651b4e4439adbac3a70af))
+* **ProgressBar:** allow reverse animation ([#704](https://github.com/Telefonica/mistica-web/issues/704)) ([f938a9c](https://github.com/Telefonica/mistica-web/commit/f938a9ce6337d8ca520c4b92b46ae26c193346b2))
+* **ResponsiveLayout:** nested ResponsiveLayouts won't add extra margins ([#716](https://github.com/Telefonica/mistica-web/issues/716)) ([cd5afae](https://github.com/Telefonica/mistica-web/commit/cd5afaec2572c4f1caef995310371fc138f05d17))
+* **Row, BoxedRow:** support radio button + onPress (two tappeable areas) ([#707](https://github.com/Telefonica/mistica-web/issues/707)) ([4bc6109](https://github.com/Telefonica/mistica-web/commit/4bc610990ed82138d83d0f5b19fe7ab1b0a738f2)), closes [/github.com/Telefonica/mistica-web/pull/317#discussion_r691271670](https://github.com//github.com/Telefonica/mistica-web/pull/317/issues/discussion_r691271670)
+
+## [14.4.1](https://github.com/Telefonica/mistica-web/compare/v14.4.0...v14.4.1) (2023-03-30)
+
+
+### Bug Fixes
+
+* **DataCard:** style fixes for extra ([#703](https://github.com/Telefonica/mistica-web/issues/703)) ([9b86407](https://github.com/Telefonica/mistica-web/commit/9b86407a5967f70572d4d251411c9741eb8c55d2))
+
+# [14.4.0](https://github.com/Telefonica/mistica-web/compare/v14.3.0...v14.4.0) (2023-03-28)
+
+
+### Bug Fixes
+
+* **Hero:** tablet layout ([#697](https://github.com/Telefonica/mistica-web/issues/697)) ([25c19db](https://github.com/Telefonica/mistica-web/commit/25c19db4b7fa232b01c10517072453a8c19f7cd9))
+* **MediaCard:** border radius in safari ([#688](https://github.com/Telefonica/mistica-web/issues/688)) ([93ea34e](https://github.com/Telefonica/mistica-web/commit/93ea34ee5998117f137bf7097caf663675c0e898))
+
+
+### Features
+
+* **EmptyStateCard, HighlightedCard:** update title weight ([#689](https://github.com/Telefonica/mistica-web/issues/689)) ([794c3cc](https://github.com/Telefonica/mistica-web/commit/794c3cce9e83a5f7216edb711a245ae21a41c62d))
+* **Inline:** allow wrap and negative space ([#700](https://github.com/Telefonica/mistica-web/issues/700)) ([f6fbc6c](https://github.com/Telefonica/mistica-web/commit/f6fbc6c032296c480f48039f0239c5ebf9ae5fcb))
+* **MediaCard, DataCard:** support for top actions ([#692](https://github.com/Telefonica/mistica-web/issues/692)) ([45c0277](https://github.com/Telefonica/mistica-web/commit/45c0277452daac45dfcedc8ca06e210e94571ce8))
+
 # [14.3.0](https://github.com/Telefonica/mistica-web/compare/v14.2.0...v14.3.0) (2023-03-15)
 
 

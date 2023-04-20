@@ -233,9 +233,8 @@ const Popover: React.FC<Props> = ({
                     </Box>
                     <IconButton
                         className={styles.closeButtonIcon}
-                        onPress={(e) => {
+                        onPress={() => {
                             onClose?.();
-                            e.stopPropagation();
                         }}
                         trackingEvent={trackingEvent}
                         aria-label={texts.modalClose}

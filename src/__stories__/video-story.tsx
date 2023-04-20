@@ -1,15 +1,15 @@
 import * as React from 'react';
 import {Stack, ButtonPrimary, Inline, Title2, Video, Title1, Text3} from '..';
+import beachVideo from './videos/beach.mp4';
+import beachImg from './images/beach.jpg';
 
 export default {
     title: 'Components/Primitives/Video',
     component: Video,
 };
 
-const VIDEO_SRC =
-    'https://assets.mixkit.co/videos/preview/mixkit-aerial-shot-of-a-beach-with-sea-waves-1087-large.mp4';
-const POSTER_SRC =
-    'https://mixkit.imgix.net/videos/preview/mixkit-aerial-shot-of-a-beach-with-sea-waves-1087-0.jpg?q=80&auto=format%2Ccompress';
+const VIDEO_SRC = beachVideo;
+const POSTER_SRC = beachImg;
 
 export const Default: StoryComponent = () => {
     const videoRef = React.useRef<HTMLVideoElement | null>(null);
