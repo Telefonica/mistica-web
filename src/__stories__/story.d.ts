@@ -5,3 +5,7 @@ declare type StoryComponent<T = {children?: ReactNode}> = React.FC<T> & {
     args?: T;
     argTypes?: {[arg in keyof T]?: mixed};
 };
+
+declare module '*.jpg';
+declare module '*.png';
+declare module '*.mp4';

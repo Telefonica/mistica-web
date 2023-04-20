@@ -1,4 +1,4 @@
-import {openStoryPage, screen, setRootFontSize, ssimScreenshotConfig} from '../test-utils';
+import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
@@ -14,7 +14,7 @@ test.each(TESTABLE_DEVICES)('MediaCard in %s', async (device) => {
 
     const image = await mediaCard.screenshot({captureBeyondViewport: true});
 
-    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(image).toMatchImageSnapshot();
 });
 
 test.each(TESTABLE_DEVICES)('MediaCard with large fontSize in %s', async (device) => {
@@ -29,7 +29,7 @@ test.each(TESTABLE_DEVICES)('MediaCard with large fontSize in %s', async (device
 
     const image = await mediaCard.screenshot({captureBeyondViewport: true});
 
-    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(image).toMatchImageSnapshot();
 });
 
 test('MediaCard group', async () => {
@@ -39,7 +39,7 @@ test('MediaCard group', async () => {
 
     const image = await page.screenshot({fullPage: true});
 
-    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(image).toMatchImageSnapshot();
 });
 
 test('MediaCard with body ', async () => {
@@ -54,7 +54,7 @@ test('MediaCard with body ', async () => {
 
     const image = await page.screenshot({fullPage: true});
 
-    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(image).toMatchImageSnapshot();
 });
 
 test('MediaCard with body closeable', async () => {
@@ -70,7 +70,7 @@ test('MediaCard with body closeable', async () => {
 
     const image = await page.screenshot({fullPage: true});
 
-    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(image).toMatchImageSnapshot();
 });
 
 test('MediaCard with top actions', async () => {
@@ -86,5 +86,5 @@ test('MediaCard with top actions', async () => {
 
     const image = await page.screenshot({fullPage: true});
 
-    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(image).toMatchImageSnapshot();
 });

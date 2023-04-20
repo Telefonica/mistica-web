@@ -12,6 +12,7 @@ import {
     Text2,
     Image,
 } from '..';
+import tennisUrl from './images/tennis.jpg';
 
 export default {
     title: 'Components/Carousels/Carousel',
@@ -72,12 +73,7 @@ export const Default: StoryComponent<Args> = ({
                                 key={idx}
                                 title={`Title ${idx}`}
                                 description="Some description"
-                                media={
-                                    <Image
-                                        src="https://images.unsplash.com/photo-1575903013621-1387ce8caa74?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
-                                        aspectRatio="16:9"
-                                    />
-                                }
+                                media={<Image src={tennisUrl} aspectRatio="16:9" />}
                                 buttonLink={<ButtonLink href="https://google.com">Link {idx}</ButtonLink>}
                             />
                         ))}

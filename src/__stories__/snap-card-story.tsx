@@ -12,6 +12,7 @@ import {
     Text4,
 } from '..';
 import {Placeholder} from '../placeholder';
+import avatarImg from './images/avatar.jpg';
 
 export default {
     title: 'Components/Cards/Snap card',
@@ -31,7 +32,7 @@ export const Default: StoryComponent<Args> = ({asset, title, subtitle, touchable
         [asset in Args['asset']]: React.ReactElement | undefined;
     } = {
         icon: <IconMobileDeviceRegular />,
-        image: <Circle size={40} backgroundImage="https://i.imgur.com/QwNlo5s.png" />,
+        image: <Circle size={40} backgroundImage={avatarImg} />,
         'icon in circle': (
             <Circle
                 size={40}

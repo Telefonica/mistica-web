@@ -1,4 +1,4 @@
-import {openStoryPage, screen, setRootFontSize, ssimScreenshotConfig} from '../test-utils';
+import {openStoryPage, screen, setRootFontSize} from '../test-utils';
 
 import type {Device} from '../test-utils';
 
@@ -14,11 +14,7 @@ test.each(TESTABLE_DEVICES)('PosterCard in %s', async (device) => {
 
     const image = await dataCard.screenshot();
 
-    expect(image).toMatchImageSnapshot({
-        comparisonMethod: 'ssim',
-        failureThreshold: 0.003,
-        failureThresholdType: 'percent',
-    });
+    expect(image).toMatchImageSnapshot();
 });
 
 test('PosterCard with large fontSize in mobile', async () => {
@@ -43,7 +39,7 @@ test('PosterCard group', async () => {
 
     const image = await page.screenshot({fullPage: true});
 
-    expect(image).toMatchImageSnapshot(ssimScreenshotConfig);
+    expect(image).toMatchImageSnapshot();
 });
 
 test('PosterCard closable', async () => {

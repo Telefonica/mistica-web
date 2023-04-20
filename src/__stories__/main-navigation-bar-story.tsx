@@ -8,6 +8,7 @@ import {
     NavigationBarActionGroup,
     useScreenSize,
 } from '..';
+import avatarImg from './images/avatar.jpg';
 
 export default {
     title: 'Components/Navigation bars/Main navigation bar',
@@ -37,11 +38,7 @@ export const Default: StoryComponent<Args> = ({isInverse}) => {
                         </Badge>
                     </NavigationBarAction>
                     <NavigationBarAction onPress={() => {}} aria-label="Open profile">
-                        <Avatar
-                            src="https://images.unsplash.com/photo-1640951613773-54706e06851d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
-                            size={isDesktopOrBigger ? 32 : 24}
-                            initials="ML"
-                        />
+                        <Avatar src={avatarImg} size={isDesktopOrBigger ? 32 : 24} initials="ML" />
                         {isDesktopOrBigger && 'María López Serrano'}
                     </NavigationBarAction>
                 </NavigationBarActionGroup>

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {EmptyStateCard, ButtonPrimary, ButtonLink, IconBoxLight, skinVars, Image, ButtonSecondary} from '..';
+import avatars4Img from './images/avatars4.png';
 
 export default {
     title: 'Patterns/Empty states/EmptyStateCard',
@@ -31,15 +32,15 @@ export const Default: StoryComponent<Args> = ({actions, title, description, asse
         };
     } else if (asset === 'icon as Image') {
         assetProps = {
-            icon: <Image src="https://i.imgur.com/o5qympI.png" />,
+            icon: <Image src={avatars4Img} />,
         };
     } else if (asset === 'icon as img') {
         assetProps = {
-            icon: <img src="https://i.imgur.com/o5qympI.png" width="100%" />,
+            icon: <img src={avatars4Img} width="100%" />,
         };
     } else {
         assetProps = {
-            imageUrl: 'https://i.imgur.com/o5qympI.png',
+            imageUrl: avatars4Img,
         };
     }
 

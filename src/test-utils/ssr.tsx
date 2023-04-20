@@ -132,6 +132,11 @@ export const createServer = (): http.Server => {
             return;
         }
 
+        if (moduleName.endsWith('.jpg') || moduleName.endsWith('.png')) {
+            serveFileInPath(path.join(__dirname, '..', '__stories__', 'images', parsedUrl.path as string));
+            return;
+        }
+
         if (moduleName.endsWith('.css')) {
             serveFileInPath(path.join(__dirname, '..', '..', 'css', parsedUrl.path as string));
             return;

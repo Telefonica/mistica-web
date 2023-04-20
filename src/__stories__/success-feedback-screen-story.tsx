@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {SuccessFeedbackScreen} from '../feedback';
 import {ButtonPrimary, ButtonSecondary} from '../button';
+import emptyStateImg from './images/empty-state.png';
 
 export default {
     title: 'Patterns/Feedback/SuccessFeedbackScreen',
@@ -32,4 +33,4 @@ export const Success: StoryComponent<SuccessArgs> = ({imageUrl, imageFit, multip
     />
 );
 Success.storyName = 'SuccessFeedbackScreen';
-Success.args = {imageUrl: 'https://i.imgur.com/k5tDSNx.png', imageFit: 'fit', multipleParagraphs: false};
+Success.args = {imageUrl: emptyStateImg, imageFit: 'fit', multipleParagraphs: false};
