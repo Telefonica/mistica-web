@@ -144,7 +144,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             video
         );
 
-        return ratio ? (
+        return ratio || props.width || props.height ? (
             <AspectRatioElement aspectRatio={ratio} width={props.width} height={props.height}>
                 {videoContent}
             </AspectRatioElement>
