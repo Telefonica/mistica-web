@@ -178,7 +178,7 @@ export const bar = style([
     sprinkles({
         height: 4,
         width: '100%',
-        borderRadius: skinVars.borderRadii.indicator,
+        borderRadius: skinVars.borderRadii.bar,
         overflow: 'hidden',
     }),
     {
