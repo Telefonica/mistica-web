@@ -4,7 +4,7 @@ import {sprinkles} from './sprinkles.css';
 import * as skin from './skins/skin-contract.css';
 
 export const desktopContainer = sprinkles({
-    borderRadius: skin.vars.borderRadii.container,
+    borderRadius: skin.vars.borderRadii.legacyDisplay,
     display: 'flex',
     justifyContent: 'space-between',
 });
