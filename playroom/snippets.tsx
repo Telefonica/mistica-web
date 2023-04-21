@@ -1693,7 +1693,7 @@ const logoSnippets = [
     {
         group: 'Logo',
         name: 'Logo with onPress prop',
-        code: `<Logo onPress={() => {alert('pressed');}} size={48} />`,
+        code: `<Logo onPress={() => {alert({ title: "pressed" });}} size={48} />`,
     },
     {
         group: 'Logo',
