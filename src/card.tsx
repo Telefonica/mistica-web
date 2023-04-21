@@ -18,6 +18,7 @@ import IconButton from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
 import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
+import {combineRefs} from './utils/common';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {
@@ -579,6 +580,7 @@ interface DisplayMediaCardWithImageProps extends CommonDisplayCardProps {
 
 type DisplayMediaCardWithVideoProps = Omit<CommonDisplayCardProps, 'actions' | 'onClose'> & {
     backgroundVideo: string | Omit<VideoProps, 'aspectRatio' | 'width' | 'height'>;
+    backgroundVideoRef?: React.RefObject<HTMLVideoElement>;
 };
 
 type DisplayMediaCardProps = DisplayMediaCardBaseProps &
@@ -611,7 +613,10 @@ const useBackgroundImage = (backgroundImage?: string) => {
 
 type VideoState = 'played' | 'paused' | 'error' | 'loading';
 
-const useBackgroundVideo = (backgroundVideo?: string | VideoProps) => {
+const useBackgroundVideo = (
+    backgroundVideo?: string | VideoProps,
+    backgroundVideoRef?: React.RefObject<HTMLVideoElement>
+) => {
     const videoRef = React.useRef<HTMLVideoElement>(null);
     const [videoStatus, setVideoStatus] = React.useState<VideoState>();
 
@@ -641,7 +646,7 @@ const useBackgroundVideo = (backgroundVideo?: string | VideoProps) => {
                 }}
             >
                 <Video
-                    ref={videoRef}
+                    ref={combineRefs(videoRef, backgroundVideoRef)}
                     {...videoProps}
                     aspectRatio={0}
                     autoPlay={false}
@@ -689,6 +694,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             isInverse,
             backgroundImage,
             backgroundVideo,
+            backgroundVideoRef,
             icon,
             headline,
             pretitle,
@@ -712,7 +718,10 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         ref
     ) => {
         const image = useBackgroundImage(backgroundImage);
-        const {video, videoStatus, onVideoButtonPress} = useBackgroundVideo(backgroundVideo);
+        const {video, videoStatus, onVideoButtonPress} = useBackgroundVideo(
+            backgroundVideo,
+            backgroundVideoRef
+        );
 
         if (backgroundVideo) {
             actions = [
@@ -883,6 +892,7 @@ interface PosterCardWithImageProps extends PosterCardBaseProps {
 
 type PosterCardWithVideoProps = Omit<PosterCardBaseProps, 'actions' | 'onClose'> & {
     backgroundVideo: string | Omit<VideoProps, 'aspectRatio' | 'width' | 'height'>;
+    backgroundVideoRef?: React.RefObject<HTMLVideoElement>;
 };
 
 type PosterCardProps = ExclusifyUnion<PosterCardWithImageProps | PosterCardWithVideoProps>;
@@ -895,6 +905,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             dataAttributes,
             backgroundImage,
             backgroundVideo,
+            backgroundVideoRef,
             width,
             height,
             aspectRatio = '7:10',
@@ -913,7 +924,10 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         ref
     ) => {
         const image = useBackgroundImage(backgroundImage);
-        const {video, videoStatus, onVideoButtonPress} = useBackgroundVideo(backgroundVideo);
+        const {video, videoStatus, onVideoButtonPress} = useBackgroundVideo(
+            backgroundVideo,
+            backgroundVideoRef
+        );
 
         if (backgroundVideo) {
             actions = [
