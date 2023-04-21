@@ -46,7 +46,7 @@ test('<a> is rendered when using "to" prop', () => {
     expect(asFragment()).toMatchInlineSnapshot(`
         <DocumentFragment>
           <a
-            class="touchable_base__mhti6u1 touchable__mhti6u0 sprinkles_cursor_pointer__1y2v1nf9w button_variants_primary__rrbrpnl button_button__rrbrpn2 button__rrbrpn1 sprinkles_paddingTop_0__1y2v1nf65 sprinkles_paddingBottom_0__1y2v1nf6j sprinkles_paddingLeft_0__1y2v1nf6x sprinkles_paddingRight_0__1y2v1nf7b sprinkles_display_inline-block__1y2v1nf5m sprinkles_position_relative__1y2v1nf5d sprinkles_width_auto__1y2v1nf7q sprinkles_borderRadius_var(--borderRadii-button__1vqcj1i58)__1y2v1nf9n sprinkles_overflow_hidden__1y2v1nf9x button__rrbrpna sprinkles_color_var(--colors-textButtonPrimary__1vqcj1i1s)__1y2v1nf1s sprinkles_background_var(--colors-buttonPrimaryBackground__1vqcj1il)__1y2v1nf39"
+            class="touchable_base__mhti6u1 touchable__mhti6u0 sprinkles_cursor_pointer__1y2v1nf9x button_variants_primary__rrbrpnl button_button__rrbrpn2 button__rrbrpn1 sprinkles_paddingTop_0__1y2v1nf65 sprinkles_paddingBottom_0__1y2v1nf6j sprinkles_paddingLeft_0__1y2v1nf6x sprinkles_paddingRight_0__1y2v1nf7b sprinkles_display_inline-block__1y2v1nf5m sprinkles_position_relative__1y2v1nf5d sprinkles_width_auto__1y2v1nf7q sprinkles_borderRadius_var(--borderRadii-button__1vqcj1i58)__1y2v1nf9n sprinkles_overflow_hidden__1y2v1nf9y button__rrbrpna sprinkles_color_var(--colors-textButtonPrimary__1vqcj1i1s)__1y2v1nf1s sprinkles_background_var(--colors-buttonPrimaryBackground__1vqcj1il)__1y2v1nf39"
             data-component-name="ButtonPrimary"
             href="/test"
             role="button"
@@ -64,12 +64,12 @@ test('<a> is rendered when using "to" prop', () => {
             </div>
             <div
               aria-hidden="true"
-              class="button_loadingFiller__rrbrpn4 button__rrbrpn3 sprinkles_display_block__1y2v1nf5k sprinkles_height_0__1y2v1nf86 sprinkles_overflow_hidden__1y2v1nf9x"
+              class="button_loadingFiller__rrbrpn4 button__rrbrpn3 sprinkles_display_block__1y2v1nf5k sprinkles_height_0__1y2v1nf86 sprinkles_overflow_hidden__1y2v1nf9y"
               style="padding-left: 1.250rem; padding-right: 37px;"
             />
             <div
               aria-hidden="true"
-              class="button_loadingContent__rrbrpn7 button__rrbrpn6 sprinkles_display_inline-flex__1y2v1nf5j sprinkles_position_absolute__1y2v1nf5e sprinkles_top_0__1y2v1nf9z sprinkles_bottom_0__1y2v1nfb5 sprinkles_justifyContent_center__1y2v1nf5r sprinkles_alignItems_center__1y2v1nf5x"
+              class="button_loadingContent__rrbrpn7 button__rrbrpn6 sprinkles_display_inline-flex__1y2v1nf5j sprinkles_position_absolute__1y2v1nf5e sprinkles_top_0__1y2v1nfa0 sprinkles_bottom_0__1y2v1nfb6 sprinkles_justifyContent_center__1y2v1nf5r sprinkles_alignItems_center__1y2v1nf5x"
             >
               <div
                 style="display: inline-block; width: 1.250rem; height: 1.250rem;"
