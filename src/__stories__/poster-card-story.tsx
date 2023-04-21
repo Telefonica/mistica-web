@@ -16,6 +16,7 @@ import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
 import beachVideo from './videos/beach.mp4';
 import beachImg from './images/beach.jpg';
+import {isRunningAcceptanceTest} from '../utils/platform';
 
 export default {
     title: 'Components/Cards/Poster card',
@@ -84,6 +85,7 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                   backgroundVideo: {
                       src: BACKGROUND_VIDEO_SRC,
                       poster: BACKGROUND_VIDEO_POSTER_SRC,
+                      autoPlay: !isRunningAcceptanceTest(),
                   },
               };
 
