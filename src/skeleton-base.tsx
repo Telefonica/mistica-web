@@ -15,7 +15,7 @@ type SkeletonBaseProps = {
 const SkeletonBase = ({
     width = '100%',
     height = 8,
-    radius = 8,
+    radius = vars.borderRadii.container,
     className,
     noBorderRadius = false,
 }: SkeletonBaseProps): JSX.Element => {
