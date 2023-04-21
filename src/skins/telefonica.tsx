@@ -264,5 +264,14 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             promoHighInverse: palette.orchid70,
             neutralMediumInverse: palette.grey5,
         },
+        textPresets: {
+            text5: {weight: 'regular'},
+            text6: {weight: 'regular'},
+            text7: {weight: 'regular'},
+            text8: {weight: 'regular'},
+            text9: {weight: 'regular'},
+            text10: {weight: 'regular'},
+            cardTitle: {weight: 'regular'},
+        },
     };
 };
