@@ -12,7 +12,7 @@ export const barBackground = sprinkles({
 
 export const bar = sprinkles({
     height: '100%',
-    borderRadius: vars.borderRadii.indicator,
+    borderRadius: vars.borderRadii.bar,
 });
 
 const barKeyFrames = keyframes({
