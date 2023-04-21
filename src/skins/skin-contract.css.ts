@@ -129,6 +129,7 @@ const borderRadii: BorderRadiiConfig = {
     button: '',
     input: '',
     container: '',
+    legacyDisplay: '',
     popup: '',
     checkbox: '',
     indicator: '',

@@ -263,16 +263,5 @@ export const getVivoSkin: GetKnownSkin = () => {
             promoHighInverse: palette.vivoPurple,
             neutralMediumInverse: palette.grey5,
         },
-        borderRadii: {
-            button: '4px',
-            input: '8px',
-            container: '8px',
-            popup: '8px',
-            checkbox: '2px',
-            indicator: '999px',
-            sheet: '8px',
-            bar: '999px',
-            avatar: '50%',
-        },
     };
 };

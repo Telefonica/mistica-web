@@ -618,6 +618,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                 isInverse={isInverse}
             >
                 <InternalBoxed
+                    borderRadius={vars.borderRadii.legacyDisplay}
                     className={styles.boxed}
                     dataAttributes={dataAttributes}
                     ref={ref}
@@ -796,6 +797,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                 isInverse
             >
                 <InternalBoxed
+                    borderRadius={vars.borderRadii.legacyDisplay}
                     className={styles.boxed}
                     dataAttributes={dataAttributes}
                     ref={ref}

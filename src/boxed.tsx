@@ -23,6 +23,7 @@ type Props = {
 };
 
 type InternalProps = {
+    borderRadius?: typeof vars.borderRadii.container | typeof vars.borderRadii.legacyDisplay;
     background?: string;
 };
 
@@ -50,6 +51,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
             width,
             height,
             minHeight,
+            borderRadius = vars.borderRadii.container,
             background,
         },
         ref
@@ -65,7 +67,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
                     className,
                     getBorderStyle(isInverseOutside, isInverseInside),
                     sprinkles({
-                        borderRadius: vars.borderRadii.container,
+                        borderRadius,
                         overflow: 'hidden',
                         background: !background
                             ? isInverseInside && !isDarkMode

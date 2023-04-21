@@ -268,6 +268,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             button: '999px',
             input: '0px',
             container: '0px',
+            legacyDisplay: '0px',
             popup: '0px',
             checkbox: '0px',
             indicator: '999px',

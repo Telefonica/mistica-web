@@ -13,11 +13,12 @@ export const defaultTextPresetsConfig: TextPresetsConfig = {
 export const defaultBorderRadiiConfig: BorderRadiiConfig = {
     button: '4px',
     input: '8px',
-    container: '16px',
+    container: '8px',
+    legacyDisplay: '16px',
     popup: '8px',
     checkbox: '2px',
     indicator: '999px',
-    sheet: '16px',
+    sheet: '8px',
     bar: '999px',
     avatar: '50%',
 };

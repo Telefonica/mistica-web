@@ -24,6 +24,11 @@ export type BorderRadiiConfig = {
     button: string;
     input: string;
     container: string;
+    /**
+     * This will be used for DisplayCards and PosterCards only for the moment. One day we'll unify the borderRadius in all the cards to use container.
+     * @deprecated Use `container` instead
+     */
+    legacyDisplay: string;
     popup: string;
     checkbox: string;
     indicator: string;
