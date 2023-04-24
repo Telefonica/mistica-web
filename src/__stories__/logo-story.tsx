@@ -31,15 +31,16 @@ export const Default: StoryComponent<Args> = ({type, size, inverse}) => {
                     <Logo type={type} size={size} />
                 </StorySection>
                 <StorySection title="With to prop">
-                    <Logo type={type} size={size} to="#" replace />
+                    <Logo type={type} size={size} to="#" aria-label="logo link" replace />
                 </StorySection>
                 <StorySection title="With href prop">
-                    <Logo type={type} size={size} href="#" newTab />
+                    <Logo type={type} size={size} href="#" aria-label="logo link" newTab />
                 </StorySection>
                 <StorySection title="With onPress prop">
                     <Logo
                         type={type}
                         size={size}
+                        aria-label="pressable logo"
                         onPress={() => {
                             setCount((prev) => ++prev);
                         }}

@@ -1688,12 +1688,12 @@ const logoSnippets = [
     {
         group: 'Logo',
         name: 'Logo with href prop',
-        code: `<Logo href="#" newTab size={48} />`,
+        code: `<Logo href="#" newTab aria-label="href logo" size={48} />`,
     },
     {
         group: 'Logo',
         name: 'Logo with onPress prop',
-        code: `<Logo onPress={() => {alert({ title: "pressed" });}} size={48} />`,
+        code: `<Logo onPress={() => {alert({ title: "pressed" });}} aria-label="pressed logo" size={48} />`,
     },
     {
         group: 'Logo',
@@ -1723,11 +1723,6 @@ const logoSnippets = [
     {
         group: 'Logo',
         name: ' with to prop',
-        code: `<Logo to="#" size={48} />`,
-    },
-    {
-        group: 'Logo',
-        name: 'Logo with to prop',
         code: `<Logo to="#" size={48} />`,
     },
 ];

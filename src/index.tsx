@@ -74,7 +74,18 @@ export {
     NavigationBarActionGroup,
     NavigationBarAction,
 } from './navigation-bar';
-export {Logo, MovistarLogo, VivoLogo, O2Logo, TelefonicaLogo, BlauLogo} from './logo';
+export {
+    /**
+     * @deprecated This element is deprecated, please use Logo instead
+     */
+    Logo as NavigationBarLogo,
+    Logo,
+    MovistarLogo,
+    VivoLogo,
+    O2Logo,
+    TelefonicaLogo,
+    BlauLogo,
+} from './logo';
 export {default as Image} from './image';
 export {default as Chip} from './chip';
 export {default as Video} from './video';

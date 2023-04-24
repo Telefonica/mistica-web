@@ -16,7 +16,6 @@ type LogoImageProps = {size: number; type: LogoType};
 
 const MovistarLogoImage = ({size, type}: LogoImageProps) => {
     const {isDarkMode} = useTheme();
-    // todo WEB-761 getLegacyMovistarSkin?
     const {colors} = getMovistarSkin();
     const isInverse = useIsInverseVariant();
     const color = isInverse && !isDarkMode ? colors.inverse : colors.brand;
@@ -261,7 +260,6 @@ const LogoBase: React.FC<LogoBaseProps> = ({size = 48, skinName, type = 'isotype
             return <TelefonicaLogoImage size={size} type={type} />;
         case 'Blau':
             return <BlauLogoImage size={size} type={type} />;
-        // todo WEB-761 what to do for unknown skinnames?
         default:
             return null;
     }
@@ -269,7 +267,6 @@ const LogoBase: React.FC<LogoBaseProps> = ({size = 48, skinName, type = 'isotype
 type LogoPropsBase = {
     size?: number;
     type?: LogoType;
-    children?: void;
 };
 
 type LogoToProps = LogoPropsBase & {
@@ -277,17 +274,20 @@ type LogoToProps = LogoPropsBase & {
     to: string;
     fullPageOnWebView?: boolean;
     replace?: boolean;
+    'aria-label': string;
 };
 
 type LogoHrefProps = LogoPropsBase & {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     href: string;
     newTab?: boolean;
+    'aria-label': string;
 };
 
 type LogoOnPressProps = LogoPropsBase & {
     trackingEvent?: TrackingEvent | ReadonlyArray<TrackingEvent>;
     onPress: () => void;
+    'aria-label': string;
 };
 
 type LogoProps = ExclusifyUnion<LogoPropsBase | LogoToProps | LogoHrefProps | LogoOnPressProps>;
@@ -302,8 +302,7 @@ const MaybeTouchableLogo = (
                 to={logoTouchableProps.to}
                 fullPageOnWebView={logoTouchableProps.fullPageOnWebView}
                 replace={logoTouchableProps.replace}
-                // todo WEB-761 how do we want to handle this?
-                aria-label={logoTouchableProps.to}
+                aria-label={logoTouchableProps['aria-label']}
             >
                 {logoTouchableProps.children}
             </Touchable>
@@ -317,7 +316,7 @@ const MaybeTouchableLogo = (
                 href={logoTouchableProps.href}
                 newTab={logoTouchableProps.newTab}
                 replace={logoTouchableProps.replace}
-                aria-label={logoTouchableProps.href}
+                aria-label={logoTouchableProps['aria-label']}
             >
                 {logoTouchableProps.children}
             </Touchable>
@@ -326,7 +325,11 @@ const MaybeTouchableLogo = (
 
     if (logoTouchableProps.onPress) {
         return (
-            <Touchable trackingEvent={logoTouchableProps.trackingEvent} onPress={logoTouchableProps.onPress}>
+            <Touchable
+                trackingEvent={logoTouchableProps.trackingEvent}
+                onPress={logoTouchableProps.onPress}
+                aria-label={logoTouchableProps.href}
+            >
                 {logoTouchableProps.children}
             </Touchable>
         );
