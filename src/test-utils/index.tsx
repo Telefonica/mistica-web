@@ -1,12 +1,7 @@
-import {
-    openPage,
-    serverHostName,
-    screen,
-    getGlobalPage,
-    PageApi,
-    Viewport,
-} from '@telefonica/acceptance-testing';
+import {openPage, serverHostName, screen, getGlobalPage, PageApi} from '@telefonica/acceptance-testing';
 import {MOVISTAR_SKIN} from '../skins/constants';
+
+import type {Viewport} from '@telefonica/acceptance-testing';
 
 export type {ElementHandle} from '@telefonica/acceptance-testing';
 export {screen, PageApi};

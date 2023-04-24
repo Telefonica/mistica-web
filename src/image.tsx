@@ -65,7 +65,7 @@ const ImageError = ({noBorderRadius}: ImageErrorProps) => {
                 backgroundColor: isInverse
                     ? vars.colors.backgroundSkeletonInverse
                     : vars.colors.backgroundSkeleton,
-                borderRadius: noBorderRadius ? undefined : 8,
+                borderRadius: noBorderRadius ? undefined : vars.borderRadii.container,
             }}
         >
             {skinName === VIVO_SKIN ? (
@@ -166,7 +166,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
                     styles.image,
                     sprinkles({
                         position: ratio !== 0 ? 'absolute' : 'static',
-                        borderRadius: noBorderSetting ? undefined : 8,
+                        borderRadius: noBorderSetting ? undefined : vars.borderRadii.container,
                     })
                 )}
                 alt={alt}

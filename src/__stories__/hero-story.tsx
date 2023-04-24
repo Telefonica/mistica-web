@@ -1,7 +1,8 @@
 import * as React from 'react';
-import {Hero, ButtonPrimary, ButtonLink, Tag, TagType, Image, Placeholder} from '..';
+import {Hero, ButtonPrimary, ButtonLink, Tag, Image, Placeholder} from '..';
 import usingVrImg from './images/using-vr.jpg';
 
+import type {TagType} from '..';
 import type {AspectRatio} from '../image';
 
 export default {

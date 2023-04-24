@@ -14,7 +14,7 @@ export const footer = style([
         background: skinVars.colors.background,
     }),
     {
-        transition: 'background 0.2s linear, box-shadow 0.2s linear',
+        transition: 'box-shadow 0.2s linear',
     },
 ]);
 

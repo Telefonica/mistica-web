@@ -46,5 +46,5 @@ export const badgeWithChildren = sprinkles({
 export const badgeBigNumber = style({
     width: 24,
     right: -14,
-    borderRadius: 24,
+    borderRadius: vars.borderRadii.indicator,
 });

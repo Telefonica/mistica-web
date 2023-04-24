@@ -14,8 +14,9 @@ import {AspectRatioSupportProvider} from './utils/aspect-ratio-support';
 import {TrackingConfig} from './utils/analytics';
 import {vars} from './skins/skin-contract.css';
 import {fromHexToRgb} from './utils/color';
+import {defaultBorderRadiiConfig, defaultTextPresetsConfig} from './skins/defaults';
 
-import type {Colors, TextPresetsConfig} from './skins/types';
+import type {Colors} from './skins/types';
 import type {Theme, ThemeConfig} from './theme';
 
 const darkModeMedia = '(prefers-color-scheme: dark)';
@@ -50,16 +51,6 @@ type Props = {
 
 const useDefaultHrefDecorator = () => {
     return (href: string) => href;
-};
-
-const defaultTextPresetsConfig: TextPresetsConfig = {
-    text5: {weight: 'light'},
-    text6: {weight: 'light'},
-    text7: {weight: 'light'},
-    text8: {weight: 'light'},
-    text9: {weight: 'light'},
-    text10: {weight: 'light'},
-    cardTitle: {weight: 'regular'},
 };
 
 const sanitizeDimensions = (dimensions: ThemeConfig['dimensions']): Partial<Theme['dimensions']> => {
@@ -135,7 +126,11 @@ const ThemeContextProvider: React.FC<Props> = ({theme, children, as}) => {
             return [colorName, rawColorValue];
         })
     ) as Colors;
-    const themeVars = assignInlineVars(vars, {colors, rawColors});
+    const themeVars = assignInlineVars(vars, {
+        colors,
+        rawColors,
+        borderRadii: theme.skin.borderRadii ?? defaultBorderRadiiConfig,
+    });
 
     return (
         <TabFocus disabled={!theme.enableTabFocus}>
