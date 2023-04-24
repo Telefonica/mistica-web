@@ -1,14 +1,20 @@
 import * as React from 'react';
 
-const IsInverseThemeVariant = React.createContext<boolean>(false);
+export type Variant = 'default' | 'inverse' | 'alternative';
+
+const ThemeVariantContext = React.createContext<Variant>('default');
 
 type ThemeVariantProps = {
-    isInverse: boolean;
+    isInverse?: boolean;
+    variant?: Variant;
     children: React.ReactNode;
 };
 
-export const ThemeVariant: React.FC<ThemeVariantProps> = ({isInverse, children}) => (
-    <IsInverseThemeVariant.Provider value={!!isInverse}>{children}</IsInverseThemeVariant.Provider>
+export const ThemeVariant: React.FC<ThemeVariantProps> = ({isInverse, variant, children}) => (
+    <ThemeVariantContext.Provider value={variant ?? (isInverse ? 'inverse' : 'default')}>
+        {children}
+    </ThemeVariantContext.Provider>
 );
 
-export const useIsInverseVariant = (): boolean => React.useContext(IsInverseThemeVariant);
+export const useThemeVariant = (): Variant => React.useContext(ThemeVariantContext);
+export const useIsInverseVariant = (): boolean => useThemeVariant() === 'inverse';

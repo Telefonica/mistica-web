@@ -1,6 +1,6 @@
-import {openStoryPage, screen, PageApi, waitFor} from '../test-utils';
+import {openStoryPage, screen, waitFor} from '../test-utils';
 
-import type {ElementHandle} from '../test-utils';
+import type {ElementHandle, PageApi} from '../test-utils';
 
 const clearAndType = async (page: PageApi, element: ElementHandle, text: string) => {
     await page.click(element, {clickCount: 3});

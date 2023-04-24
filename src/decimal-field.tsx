@@ -2,11 +2,11 @@ import * as React from 'react';
 import {useFieldProps} from './form-context';
 import {useTheme} from './hooks';
 import {TextFieldBaseAutosuggest} from './text-field-base';
-import {Locale} from './utils/locale';
 import {createChangeEvent} from './utils/dom';
 import {useRifm} from 'rifm';
 import {combineRefs} from './utils/common';
 
+import type {Locale} from './utils/locale';
 import type {CommonFormFieldProps} from './text-field-base';
 
 const getLocalDecimalChar = (locale: Locale): string => {

@@ -58,6 +58,8 @@ export type Colors = {
     appBarBackground: string;
     background: string;
     backgroundContainer: string;
+    backgroundContainerBrand: string;
+    backgroundContainerAlternative: string;
     backgroundBrand: string;
     backgroundBrandSecondary: string;
     backgroundOverlay: string;
@@ -122,6 +124,7 @@ export type Colors = {
     inverse: string;
     neutralHigh: string;
     neutralLow: string;
+    neutralLowAlternative: string;
     neutralMedium: string;
     neutralMediumInverse: string;
     promo: string;

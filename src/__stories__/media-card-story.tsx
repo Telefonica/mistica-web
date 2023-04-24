@@ -9,13 +9,14 @@ import {
     Video,
     Image,
     Tag,
-    TagType,
     IconMobileDeviceRegular,
 } from '..';
 import ResponsiveLayout from '../responsive-layout';
 import {Placeholder} from '../placeholder';
 import tennisImg from './images/tennis.jpg';
 import confettiVideo from './videos/confetti.mp4';
+
+import type {TagType} from '..';
 
 export default {
     title: 'Components/Cards/Media card',
