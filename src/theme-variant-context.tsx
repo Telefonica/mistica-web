@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export type Variant = 'inverse' | 'default' | 'alternative';
+export type Variant = 'default' | 'inverse' | 'alternative';
 
 const ThemeVariantContext = React.createContext<Variant>('default');
 
