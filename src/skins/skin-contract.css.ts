@@ -1,6 +1,6 @@
 import {createThemeContract} from '@vanilla-extract/css';
 
-import type {Colors} from './types';
+import type {BorderRadiiConfig, Colors} from './types';
 
 const colors: Colors = {
     appBarBackground: '',
@@ -125,6 +125,19 @@ const colors: Colors = {
     promoHighInverse: '',
 };
 
+const borderRadii: BorderRadiiConfig = {
+    button: '',
+    input: '',
+    container: '',
+    legacyDisplay: '',
+    popup: '',
+    checkbox: '',
+    indicator: '',
+    sheet: '',
+    bar: '',
+    avatar: '',
+};
+
 export const vars = createThemeContract({
     colors,
     /**
@@ -133,4 +146,5 @@ export const vars = createThemeContract({
      * See utils/color.tsx applyAlha, where the alpha channel is applied to the css var
      */
     rawColors: colors,
+    borderRadii,
 });

@@ -264,5 +264,17 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             promoHighInverse: palette.orchid70,
             neutralMediumInverse: palette.grey5,
         },
+        borderRadii: {
+            button: '999px',
+            input: '0px',
+            container: '0px',
+            legacyDisplay: '0px',
+            popup: '0px',
+            checkbox: '0px',
+            indicator: '999px',
+            sheet: '8px',
+            bar: '0px',
+            avatar: '50%',
+        },
     };
 };

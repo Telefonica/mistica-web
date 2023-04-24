@@ -43,7 +43,7 @@ export const container = style([
         width: 'auto',
         background: vars.colors.backgroundContainer,
         border: 'regular',
-        borderRadius: 8,
+        borderRadius: vars.borderRadii.popup,
     }),
     {
         zIndex: 9,

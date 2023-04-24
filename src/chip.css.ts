@@ -11,7 +11,7 @@ const containerBase = style([
         border: 'regular',
     }),
     {
-        borderRadius: 20,
+        borderRadius: vars.borderRadii.indicator,
         verticalAlign: 'middle',
         minHeight: 32,
         minWidth: 56,

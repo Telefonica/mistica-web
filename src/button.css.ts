@@ -30,7 +30,7 @@ const button = style([
         display: 'inline-block',
         position: 'relative',
         width: 'auto',
-        borderRadius: 4,
+        borderRadius: vars.borderRadii.button,
         overflow: 'hidden',
         padding: 0,
     }),
@@ -276,7 +276,7 @@ export const link = style([
     sprinkles({
         display: 'inline-block',
         width: 'auto',
-        borderRadius: 4,
+        borderRadius: vars.borderRadii.button,
         paddingX: PADDING_X_LINK,
         border: 'none',
         color: vars.colors.textLink,
