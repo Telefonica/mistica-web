@@ -17,7 +17,7 @@ const boxBase = style([
         justifyContent: 'center',
         alignItems: 'center',
         flexShrink: 0,
-        borderRadius: 2,
+        borderRadius: vars.borderRadii.checkbox,
         background: vars.colors.background,
     }),
     {

@@ -5,6 +5,7 @@ import {combineRefs} from './utils/common';
 import {getPrefixedDataAttributes} from './utils/dom';
 import {isRunningAcceptanceTest, isSafari} from './utils/platform';
 import * as styles from './video.css';
+import {vars} from './skins/skin-contract.css';
 
 import type {DataAttributes} from './utils/types';
 
@@ -99,7 +100,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 {...getPrefixedDataAttributes(dataAttributes)}
                 style={{
                     // For some reason adding this style with classnames doesn't add the border radius in safari
-                    borderRadius: !borderRadiusContext ? 0 : 8,
+                    borderRadius: !borderRadiusContext ? 0 : vars.borderRadii.container,
                 }}
             >
                 {sources.map(({src, type}, index) => (

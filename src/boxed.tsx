@@ -23,7 +23,7 @@ type Props = {
 };
 
 type InternalProps = {
-    borderRadius: 8 | 16;
+    borderRadius?: typeof vars.borderRadii.container | typeof vars.borderRadii.legacyDisplay;
     background?: string;
 };
 
@@ -51,7 +51,7 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
             width,
             height,
             minHeight,
-            borderRadius,
+            borderRadius = vars.borderRadii.container,
             background,
         },
         ref
@@ -89,5 +89,5 @@ export const InternalBoxed = React.forwardRef<HTMLDivElement, Props & InternalPr
 );
 
 export const Boxed = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
-    return <InternalBoxed {...props} ref={ref} borderRadius={8} />;
+    return <InternalBoxed {...props} ref={ref} />;
 });
