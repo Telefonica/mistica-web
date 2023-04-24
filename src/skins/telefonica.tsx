@@ -278,6 +278,7 @@ export const getTelefonicaSkin: GetKnownSkin = () => {
             text9: {weight: 'regular'},
             text10: {weight: 'regular'},
             cardTitle: {weight: 'regular'},
+        },
         borderRadii: {
             button: '999px',
             input: '0px',
