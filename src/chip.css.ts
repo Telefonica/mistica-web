@@ -32,7 +32,7 @@ export const chipVariants = styleVariants({
     overAlternative: [
         containerBase,
         sprinkles({
-            background: vars.colors.backgroundAlternative,
+            background: vars.colors.backgroundContainerAlternative,
             color: vars.colors.textPrimary,
         }),
     ],
