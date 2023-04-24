@@ -4,7 +4,6 @@ import {
     skinVars,
     Circle,
     Tag,
-    TagType,
     IconLightningRegular,
     ResponsiveLayout,
     Stack,
@@ -14,6 +13,8 @@ import {
 import {PosterCard} from '../card';
 import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
+
+import type {TagType} from '..';
 
 export default {
     title: 'Components/Cards/Poster card',

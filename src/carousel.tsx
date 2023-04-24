@@ -14,8 +14,9 @@ import {useDocumentVisibility} from './utils/document-visibility';
 import * as styles from './carousel.css';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {sprinkles} from './sprinkles.css';
-import {DesktopContainerType, useDesktopContainerType} from './desktop-container-type-context';
+import {useDesktopContainerType} from './desktop-container-type-context';
 
+import type {DesktopContainerType} from './desktop-container-type-context';
 import type {DataAttributes} from './utils/types';
 
 const useShouldAutoplay = (autoplay: boolean, ref: React.RefObject<HTMLElement>): boolean => {

@@ -11,10 +11,11 @@ import {
     skinVars,
     Circle,
     Tag,
-    TagType,
 } from '..';
 import {Placeholder} from '../placeholder';
 import avatarImg from './images/avatar.jpg';
+
+import type {TagType} from '..';
 
 export default {
     title: 'Components/Cards/Data card',
