@@ -107,7 +107,7 @@ export interface ToButtonProps extends CommonProps {
     href?: undefined;
 }
 export interface OnPressButtonProps extends CommonProps {
-    onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined;
+    onPress: (event: React.MouseEvent<HTMLElement>) => void | undefined | Promise<void>;
     submit?: undefined;
     fake?: undefined;
     to?: undefined;
@@ -151,8 +151,9 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
     const {loadingText} = props;
     const isSubmitButton = !!props.submit;
     const isFormSending = formStatus === 'sending';
+    const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
 
-    const showSpinner = props.showSpinner || (isFormSending && isSubmitButton);
+    const showSpinner = props.showSpinner || (isFormSending && isSubmitButton) || isOnPressPromiseResolving;
 
     // This state is needed to not render the spinner when hidden (because it causes high CPU usage
     // specially in iPhone). But we want the spinner to be visible during the show/hide animation.
@@ -291,7 +292,18 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
     }
 
     if (props.onPress) {
-        return <BaseTouchable {...commonProps} onPress={props.onPress} />;
+        return (
+            <BaseTouchable
+                {...commonProps}
+                onPress={(e) => {
+                    const result = props.onPress(e);
+                    if (result) {
+                        setIsOnPressPromiseResolving(true);
+                        result.then(() => setIsOnPressPromiseResolving(false));
+                    }
+                }}
+            />
+        );
     }
 
     if (props.to || props.to === '') {

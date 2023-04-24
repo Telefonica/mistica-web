@@ -257,6 +257,11 @@ export const LoadingState: StoryComponent = () => {
             setIsLoading(false);
         }, 2000);
     };
+
+    const handlePressWithPromise = async () => {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+    };
+
     return (
         <BackgroundTheme>
             <Box padding={8}>
@@ -330,6 +335,11 @@ export const LoadingState: StoryComponent = () => {
                         Send
                     </ButtonDanger>
                 </Inline>
+            </StorySection>
+            <StorySection title="onPress returning a promise">
+                <ButtonPrimary loadingText="Sending file" onPress={handlePressWithPromise}>
+                    Send
+                </ButtonPrimary>
             </StorySection>
         </BackgroundTheme>
     );
