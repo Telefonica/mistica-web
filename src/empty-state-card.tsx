@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Box from './box';
 import {Boxed} from './boxed';
-import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import {useScreenSize, useTheme} from './hooks';
 import Stack from './stack';
 import {Text2, Text} from './text';
@@ -9,6 +8,7 @@ import ButtonGroup from './button-group';
 import * as styles from './empty-state-card.css';
 import {vars} from './skins/skin-contract.css';
 
+import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {DataAttributes, RendersNullableElement} from './utils/types';
 
 interface CommonProps {

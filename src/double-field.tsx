@@ -1,17 +1,17 @@
 import * as React from 'react';
 import Box from './box';
-import CreditCardExpirationField from './credit-card-expiration-field';
-import CvvField from './cvv-field';
-import DateField from './date-field';
-import DecimalField from './decimal-field';
-import EmailField from './email-field';
-import IntegerField from './integer-field';
-import PasswordField from './password-field';
-import PhoneNumberField from './phone-number-field';
-import Select from './select';
-import TextField from './text-field';
 import * as styles from './double-field.css';
 
+import type CreditCardExpirationField from './credit-card-expiration-field';
+import type CvvField from './cvv-field';
+import type DateField from './date-field';
+import type DecimalField from './decimal-field';
+import type EmailField from './email-field';
+import type IntegerField from './integer-field';
+import type PasswordField from './password-field';
+import type PhoneNumberField from './phone-number-field';
+import type Select from './select';
+import type TextField from './text-field';
 import type {RendersElement} from './utils/types';
 
 type Field =

@@ -11,7 +11,7 @@ const containerBase = style([
         border: 'regular',
     }),
     {
-        borderRadius: 20,
+        borderRadius: vars.borderRadii.indicator,
         verticalAlign: 'middle',
         minHeight: 32,
         minWidth: 56,
@@ -26,6 +26,13 @@ export const chipVariants = styleVariants({
         containerBase,
         sprinkles({
             background: vars.colors.backgroundContainer,
+            color: vars.colors.textPrimary,
+        }),
+    ],
+    overAlternative: [
+        containerBase,
+        sprinkles({
+            background: vars.colors.backgroundContainerAlternative,
             color: vars.colors.textPrimary,
         }),
     ],

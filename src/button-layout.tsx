@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {assignInlineVars} from '@vanilla-extract/dynamic';
 import {useIsomorphicLayoutEffect} from './hooks';
-import {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
+import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import {BUTTON_MIN_WIDTH} from './button.css';
 import classnames from 'classnames';
 import debounce from 'lodash/debounce';
@@ -9,7 +9,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import * as styles from './button-layout.css';
 
 import type {DataAttributes, RendersNullableElement} from './utils/types';
-import type {NullableButtonElement} from './button';
+import type {NullableButtonElement, ButtonLink} from './button';
 
 type MaybeButtonElement = NullableButtonElement | void | false;
 

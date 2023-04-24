@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import {ButtonPrimary, ButtonSecondary, ButtonDanger, ButtonLink} from './button';
+import {ButtonPrimary, ButtonSecondary, ButtonDanger} from './button';
 import {Portal} from './portal';
 import FocusTrap from './focus-trap';
 import IcnCloseRegular from './generated/mistica-icons/icon-close-regular';
@@ -18,6 +18,7 @@ import Stack from './stack';
 import * as styles from './dialog.css';
 import {vars} from './skins/skin-contract.css';
 
+import type {ButtonLink} from './button';
 import type {Theme} from './theme';
 import type {RendersNullableElement} from './utils/types';
 import type {ExclusifyUnion} from './utils/utility-types';
@@ -389,6 +390,7 @@ export default class DialogRoot extends React.Component<DialogRootProps, DialogR
     componentDidMount(): void {
         dialogRootInstances++;
         if (dialogRootInstances === 1) {
+            // eslint-disable-next-line @typescript-eslint/no-this-alias
             dialogInstance = this;
             window.addEventListener('popstate', this.handleBack);
         }
