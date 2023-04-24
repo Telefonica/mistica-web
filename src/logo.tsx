@@ -1,15 +1,16 @@
 import * as React from 'react';
 import {useTheme} from './hooks';
 import {useIsInverseVariant} from './theme-variant-context';
-import {SkinName} from './skins/types';
-import {TrackingEvent} from './utils/types';
-import {ExclusifyUnion} from './utils/utility-types';
 import Touchable from './touchable';
 import {getMovistarSkin} from './skins/movistar';
 import {getVivoSkin} from './skins/vivo';
 import {getO2Skin} from './skins/o2';
 import {getBlauSkin} from './skins/blau';
 import {getTelefonicaSkin} from './skins/telefonica';
+
+import type {SkinName} from './skins/types';
+import type {TrackingEvent} from './utils/types';
+import type {ExclusifyUnion} from './utils/utility-types';
 
 type LogoType = 'isotype' | 'imagotype' | 'vertical';
 type LogoImageProps = {size: number; type: LogoType};
