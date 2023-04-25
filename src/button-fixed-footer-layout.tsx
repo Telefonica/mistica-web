@@ -2,12 +2,11 @@ import * as React from 'react';
 import FixedFooterLayout from './fixed-footer-layout';
 import ButtonLayout from './button-layout';
 import {useScreenSize} from './hooks';
-import {ButtonLink} from './button';
 import ResponsiveLayout from './responsive-layout';
 import Box from './box';
 
+import type {ButtonLink, NullableButtonElement} from './button';
 import type {RendersNullableElement} from './utils/types';
-import type {NullableButtonElement} from './button';
 
 type Props = {
     isFooterVisible?: boolean;

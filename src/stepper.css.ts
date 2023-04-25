@@ -178,7 +178,7 @@ export const bar = style([
     sprinkles({
         height: 4,
         width: '100%',
-        borderRadius: 4,
+        borderRadius: skinVars.borderRadii.bar,
         overflow: 'hidden',
     }),
     {
@@ -200,7 +200,7 @@ export const barFilled = style([
     sprinkles({
         height: 4,
         width: '100%',
-        borderRadius: 20,
+        borderRadius: skinVars.borderRadii.bar,
         overflow: 'hidden',
     }),
     {

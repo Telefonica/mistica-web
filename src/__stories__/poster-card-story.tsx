@@ -4,7 +4,6 @@ import {
     skinVars,
     Circle,
     Tag,
-    TagType,
     IconLightningRegular,
     ResponsiveLayout,
     Stack,
@@ -17,6 +16,8 @@ import avatarImg from './images/avatar.jpg';
 import beachVideo from './videos/beach.mp4';
 import beachImg from './images/beach.jpg';
 import {isRunningAcceptanceTest} from '../utils/platform';
+
+import type {TagType} from '..';
 
 export default {
     title: 'Components/Cards/Poster card',

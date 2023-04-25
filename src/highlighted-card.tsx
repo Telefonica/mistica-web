@@ -3,15 +3,14 @@ import {useIsInverseVariant} from './theme-variant-context';
 import Box from './box';
 import {BaseTouchable} from './touchable';
 import {Text, Text2} from './text';
-import {ButtonLink} from './button';
 import {Boxed} from './boxed';
 import MaybeDismissable, {useIsDismissable} from './maybe-dismissable';
 import * as styles from './highlighted-card.css';
 import {vars} from './skins/skin-contract.css';
 import {useTheme} from './hooks';
 
+import type {ButtonLink, NullableButtonElement} from './button';
 import type {DataAttributes, RendersNullableElement, TrackingEvent} from './utils/types';
-import type {NullableButtonElement} from './button';
 
 interface CommonProps {
     title: string;

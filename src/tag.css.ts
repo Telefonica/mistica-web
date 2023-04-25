@@ -1,4 +1,5 @@
 import {style} from '@vanilla-extract/css';
+import {vars} from './skins/skin-contract.css';
 import {sprinkles} from './sprinkles.css';
 
 export const tag = style([
@@ -13,6 +14,6 @@ export const tag = style([
     }),
     {
         verticalAlign: 'middle',
-        borderRadius: 50,
+        borderRadius: vars.borderRadii.indicator,
     },
 ]);

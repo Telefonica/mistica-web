@@ -20,11 +20,29 @@ type PartialTextPresetsConfig = {
     };
 };
 
+export type BorderRadiiConfig = {
+    button: string;
+    input: string;
+    container: string;
+    /**
+     * This will be used for DisplayCards and PosterCards only for the moment. One day we'll unify the borderRadius in all the cards to use container.
+     * @deprecated Use `container` instead
+     */
+    legacyDisplay: string;
+    popup: string;
+    checkbox: string;
+    indicator: string;
+    sheet: string;
+    bar: string;
+    avatar: string;
+};
+
 export type Skin = {
     name: SkinName;
     colors: Colors;
     darkModeColors?: Partial<Colors>;
     textPresets?: PartialTextPresetsConfig;
+    borderRadii?: BorderRadiiConfig;
 };
 
 export type KnownSkin = {
@@ -32,6 +50,7 @@ export type KnownSkin = {
     colors: Colors;
     darkModeColors?: Partial<Colors>;
     textPresets?: PartialTextPresetsConfig;
+    borderRadii?: BorderRadiiConfig;
 };
 
 export type Colors = {
@@ -39,6 +58,8 @@ export type Colors = {
     appBarBackground: string;
     background: string;
     backgroundContainer: string;
+    backgroundContainerBrand: string;
+    backgroundContainerAlternative: string;
     backgroundBrand: string;
     backgroundBrandSecondary: string;
     backgroundOverlay: string;
@@ -103,6 +124,7 @@ export type Colors = {
     inverse: string;
     neutralHigh: string;
     neutralLow: string;
+    neutralLowAlternative: string;
     neutralMedium: string;
     neutralMediumInverse: string;
     promo: string;
