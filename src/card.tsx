@@ -732,7 +732,7 @@ const getVideoActionIcon = (state: VideoState) => {
         return Spinner;
     }
 
-    return IconPlayFilled;
+    return undefined;
 };
 
 const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(

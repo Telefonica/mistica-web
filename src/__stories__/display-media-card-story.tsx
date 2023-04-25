@@ -17,7 +17,6 @@ import {
 import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
 import beachVideo from './videos/beach.mp4';
-import beachImg from './images/beach.jpg';
 
 import type {TagType} from '..';
 
@@ -27,7 +26,6 @@ export default {
 
 const BACKGROUND_IMAGE_SRC = usingVrImg;
 const BACKGROUND_VIDEO_SRC = beachVideo;
-const BACKGROUND_VIDEO_POSTER_SRC = beachImg;
 
 type DisplayMediaCardArgs = {
     asset: 'icon' | 'circle + icon' | 'image' | 'circle + image';
@@ -98,10 +96,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                   backgroundImage: BACKGROUND_IMAGE_SRC,
               }
             : {
-                  backgroundVideo: {
-                      src: BACKGROUND_VIDEO_SRC,
-                      poster: BACKGROUND_VIDEO_POSTER_SRC,
-                  },
+                  backgroundVideo: BACKGROUND_VIDEO_SRC,
               };
 
     return (
