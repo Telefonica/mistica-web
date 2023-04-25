@@ -42,7 +42,6 @@ export type VideoProps = {
     onError?: () => void;
     onPlay?: () => void;
     onPause?: () => void;
-    onLoadStart?: () => void;
     onCanPlayThrough?: () => void;
     poster?: string;
     children?: void;
@@ -60,7 +59,6 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             muted = true,
             loop = true,
             preload = 'none',
-            onLoadStart,
             onError,
             onPause,
             onPlay,
@@ -104,7 +102,6 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 loop={loop}
                 className={styles.video}
                 preload={preload}
-                onLoadStart={onLoadStart}
                 onError={onError}
                 onPause={onPause}
                 onPlay={onPlay}

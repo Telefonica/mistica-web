@@ -3,11 +3,10 @@ import Tag from './tag';
 import Stack from './stack';
 import Box from './box';
 import {Text2, Text, Text6, Text3} from './text';
-import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
-import Video, {VideoProps} from './video';
-import Image, {MediaBorderRadiusProvider} from './image';
+import Video from './video';
+import {MediaBorderRadiusProvider} from './image';
 import {BaseTouchable} from './touchable';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './card.css';
@@ -19,7 +18,11 @@ import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
 import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
 import {combineRefs} from './utils/common';
+import Spinner from './spinner';
 
+import type Image from './image';
+import type {VideoProps} from './video';
+import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {
     DataAttributes,
@@ -33,6 +36,7 @@ type CardAction = {
     label: string;
     onPress: () => void;
     Icon?: React.FC<IconProps>;
+    iconSize?: number;
 };
 
 type CardActionsGroupProps = {
@@ -43,7 +47,7 @@ type CardActionsGroupProps = {
 const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Element => {
     return (
         <Inline space={0}>
-            {actions.map(({onPress, label, Icon}, index) =>
+            {actions.map(({onPress, label, Icon, iconSize = 20}, index) =>
                 Icon ? (
                     <IconButton
                         size={48}
@@ -54,7 +58,7 @@ const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Elem
                         style={{display: 'flex'}}
                     >
                         <div className={isInverse ? styles.cardActionInverse : styles.cardAction}>
-                            <Icon color={vars.colors.neutralHigh} size={20} />
+                            <Icon color={vars.colors.neutralHigh} size={iconSize} />
                         </div>
                     </IconButton>
                 ) : (
@@ -579,7 +583,7 @@ interface DisplayMediaCardWithImageProps extends CommonDisplayCardProps {
 }
 
 type DisplayMediaCardWithVideoProps = Omit<CommonDisplayCardProps, 'actions' | 'onClose'> & {
-    backgroundVideo: string | Omit<VideoProps, 'aspectRatio' | 'width' | 'height'>;
+    backgroundVideo: string | {src: string; poster?: string};
     backgroundVideoRef?: React.RefObject<HTMLVideoElement>;
 };
 
@@ -611,29 +615,67 @@ const useBackgroundImage = (backgroundImage?: string) => {
     return image;
 };
 
-type VideoState = 'played' | 'paused' | 'error' | 'loading';
+type VideoState = 'loading' | 'loadingSpinner' | 'played' | 'paused' | 'error';
+
+type VideoAction = 'play' | 'pause' | 'fail' | 'showSpinner' | 'reset';
+
+const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> = {
+    loading: {
+        showSpinner: 'loadingSpinner',
+        play: 'played',
+        pause: 'paused',
+        fail: 'error',
+    },
+
+    loadingSpinner: {
+        play: 'played',
+        pause: 'paused',
+        fail: 'error',
+        reset: 'loading',
+    },
+
+    played: {
+        pause: 'paused',
+        reset: 'loading',
+    },
+
+    paused: {
+        play: 'played',
+        reset: 'loading',
+    },
+
+    error: {
+        reset: 'loading',
+    },
+};
+
+const modalReducer = (state: VideoState, action: VideoAction): VideoState =>
+    transitions[state][action] || state;
 
 const useBackgroundVideo = (
     backgroundVideo?: string | VideoProps,
     backgroundVideoRef?: React.RefObject<HTMLVideoElement>
 ) => {
     const videoRef = React.useRef<HTMLVideoElement>(null);
-    const [videoStatus, setVideoStatus] = React.useState<VideoState>();
+    const [videoStatus, dispatch] = React.useReducer(modalReducer, 'loading');
 
     React.useEffect(() => {
+        const loadingTimeoutId = setTimeout(() => dispatch('showSpinner'), 2000);
+        const spinnerTimeoutId = setTimeout(() => dispatch('fail'), 10000);
         videoRef.current?.load();
-        return () => setVideoStatus(undefined);
+
+        return () => {
+            clearTimeout(loadingTimeoutId);
+            clearTimeout(spinnerTimeoutId);
+            dispatch('reset');
+        };
     }, [backgroundVideo]);
 
-    const onLoadStart = () => setVideoStatus('loading');
-    const onVideoError = () => setVideoStatus('error');
-    const onVideoPause = () => setVideoStatus('paused');
-    const onVideoPlay = () => setVideoStatus('played');
-    const onCanPlayThrough = () => {
-        const shouldAutoPlay = typeof backgroundVideo === 'string' || backgroundVideo?.autoPlay !== false;
-        if (shouldAutoPlay) videoRef.current?.play();
-        else if (videoStatus === 'loading') setVideoStatus('paused');
-    };
+    const onVideoError = () => dispatch('fail');
+    const onVideoPause = () => dispatch('pause');
+    const onVideoPlay = () => dispatch('play');
+    const onCanPlayThrough = () => videoRef.current?.play();
+
     let video;
     if (backgroundVideo) {
         const videoProps = typeof backgroundVideo === 'string' ? {src: backgroundVideo} : backgroundVideo;
@@ -650,7 +692,6 @@ const useBackgroundVideo = (
                     {...videoProps}
                     aspectRatio={0}
                     autoPlay={false}
-                    onLoadStart={onLoadStart}
                     onError={onVideoError}
                     onPause={onVideoPause}
                     onPlay={onVideoPlay}
@@ -661,11 +702,14 @@ const useBackgroundVideo = (
     }
 
     const onVideoButtonPress = () => {
-        if (videoRef.current && videoStatus !== 'error') {
-            if (videoStatus === 'paused') {
-                videoRef.current.play();
-            } else {
-                videoRef.current.pause();
+        const video = videoRef.current;
+        if (video) {
+            if (videoStatus === 'loading') {
+                dispatch('showSpinner');
+            } else if (videoStatus === 'paused') {
+                video.play();
+            } else if (videoStatus === 'played') {
+                video.pause();
             }
         }
     };
@@ -681,8 +725,12 @@ const getVideoActionIcon = (state?: VideoState) => {
     if (state === 'played') {
         return IconPauseFilled;
     }
-    if (state === 'paused') {
+    if (state === 'paused' || state === 'loading') {
         return IconPlayFilled;
+    }
+
+    if (state === 'loadingSpinner') {
+        return Spinner;
     }
 
     return undefined;
@@ -729,6 +777,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     Icon: getVideoActionIcon(videoStatus),
                     onPress: onVideoButtonPress,
                     label: 'Video controls',
+                    iconSize: 12,
                 },
             ];
         }
@@ -935,6 +984,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     Icon: getVideoActionIcon(videoStatus),
                     onPress: onVideoButtonPress,
                     label: 'Video controls',
+                    iconSize: 12,
                 },
             ];
         }

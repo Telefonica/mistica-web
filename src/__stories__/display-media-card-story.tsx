@@ -7,7 +7,6 @@ import {
     skinVars,
     Circle,
     Tag,
-    TagType,
     ButtonSecondary,
     IconLightningRegular,
     ResponsiveLayout,
@@ -19,7 +18,8 @@ import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
 import beachVideo from './videos/beach.mp4';
 import beachImg from './images/beach.jpg';
-import {isRunningAcceptanceTest} from '../utils/platform';
+
+import type {TagType} from '..';
 
 export default {
     title: 'Components/Cards/Display media card',
@@ -101,7 +101,6 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                   backgroundVideo: {
                       src: BACKGROUND_VIDEO_SRC,
                       poster: BACKGROUND_VIDEO_POSTER_SRC,
-                      autoPlay: !isRunningAcceptanceTest(),
                   },
               };
 
