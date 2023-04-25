@@ -258,9 +258,8 @@ export const LoadingState: StoryComponent = () => {
         }, 2000);
     };
 
-    const handlePressWithPromise = async () => {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-    };
+    const handlePressWithPromise = () =>
+        new Promise((resolve) => setTimeout(resolve, 3000));
 
     return (
         <BackgroundTheme>
