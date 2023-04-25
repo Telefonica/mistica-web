@@ -674,7 +674,6 @@ const useBackgroundVideo = (
     const onVideoError = () => dispatch('fail');
     const onVideoPause = () => dispatch('pause');
     const onVideoPlay = () => dispatch('play');
-    const onCanPlayThrough = () => videoRef.current?.play();
 
     let video;
     if (backgroundVideo) {
@@ -692,10 +691,10 @@ const useBackgroundVideo = (
                     {...videoProps}
                     aspectRatio={0}
                     autoPlay={false}
+                    playOnFullLoad
                     onError={onVideoError}
                     onPause={onVideoPause}
                     onPlay={onVideoPlay}
-                    onCanPlayThrough={onCanPlayThrough}
                 />
             </div>
         ) : undefined;
@@ -803,7 +802,11 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     width="100%"
                     minHeight="100%"
                     isInverse={isInverse}
-                    background={isInverse && backgroundImage ? vars.colors.backgroundContainer : undefined}
+                    background={
+                        isInverse && (backgroundImage || backgroundVideo)
+                            ? vars.colors.backgroundContainer
+                            : undefined
+                    }
                 >
                     <div className={styles.displayCard}>
                         {backgroundImage ? image : video}
@@ -1014,7 +1017,9 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     width="100%"
                     minHeight="100%"
                     isInverse
-                    background={backgroundImage ? vars.colors.backgroundContainer : undefined}
+                    background={
+                        backgroundImage || backgroundVideo ? vars.colors.backgroundContainer : undefined
+                    }
                 >
                     <div className={styles.displayCard}>
                         {backgroundImage ? image : video}

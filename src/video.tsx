@@ -39,10 +39,11 @@ export type VideoProps = {
     muted?: boolean;
     /** defaults to true */
     autoPlay?: boolean;
+    /** defaults to false */
+    playOnFullLoad?: boolean;
     onError?: () => void;
     onPlay?: () => void;
     onPause?: () => void;
-    onCanPlayThrough?: () => void;
     poster?: string;
     children?: void;
     /** defaults to none */
@@ -56,13 +57,13 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             src,
             poster,
             autoPlay = !isRunningAcceptanceTest(), // default true, but disable autoPlay in screenshot tests
+            playOnFullLoad = false,
             muted = true,
             loop = true,
             preload = 'none',
             onError,
             onPause,
             onPlay,
-            onCanPlayThrough,
             aspectRatio = '1:1',
             dataAttributes,
             ...props
@@ -70,10 +71,18 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         ref
     ) => {
         const borderRadiusContext = useMediaBorderRadius();
+        const [isLoadComplete, setIsLoadComplete] = React.useState(false);
 
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
 
         const videoRef = React.useRef<HTMLVideoElement | null>(null);
+
+        React.useEffect(() => {
+            const video = videoRef.current;
+            if (video && isLoadComplete && playOnFullLoad && video.paused && !isRunningAcceptanceTest()) {
+                video.play();
+            }
+        }, [isLoadComplete, playOnFullLoad]);
 
         React.useEffect(() => {
             const video = videoRef.current;
@@ -105,7 +114,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 onError={onError}
                 onPause={onPause}
                 onPlay={onPlay}
-                onCanPlayThrough={onCanPlayThrough}
+                onCanPlayThrough={() => setIsLoadComplete(true)}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
                 poster={poster || TRANSPARENT_PIXEL}
                 {...getPrefixedDataAttributes(dataAttributes)}
