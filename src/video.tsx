@@ -112,6 +112,9 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 loop={loop}
                 className={styles.video}
                 preload={preload}
+                onLoadStart={() => {
+                    setIsLoadComplete(false);
+                }}
                 onError={onError}
                 onPause={onPause}
                 onPlay={onPlay}
