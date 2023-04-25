@@ -258,7 +258,7 @@ export const LoadingState: StoryComponent = () => {
         }, 2000);
     };
 
-    const handlePressWithPromise = () =>
+    const handlePressWithPromise: () => Promise<void> = () =>
         new Promise((resolve) => setTimeout(resolve, 3000));
 
     return (
