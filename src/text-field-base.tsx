@@ -300,6 +300,11 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 // Workaround for systems where maxlength prop is applied onBlur (https://caniuse.com/#feat=maxlength)
                                 if (maxLength === undefined || event.target.value.length <= maxLength) {
                                     setCharacterCount(event.target.value.length);
+
+                                    if (event.target.value.length > 0) {
+                                        setInputState('filled');
+                                    }
+
                                     props.onChange?.(event);
                                 } else {
                                     event.stopPropagation();

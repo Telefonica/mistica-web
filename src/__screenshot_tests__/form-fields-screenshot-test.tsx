@@ -27,6 +27,26 @@ test.each(TESTABLE_DEVICES)('Default textfield appears properly on %s', async (d
     expect(image).toMatchImageSnapshot();
 });
 
+test('Textfield collapses its label when autofill fills out the form', async () => {
+    await openStoryPage({
+        id: 'components-input-fields--variants',
+        device: 'DESKTOP',
+    });
+
+    const fieldWrapper = await screen.findByTestId('normal-field');
+    const image = await fieldWrapper.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+
+    // todo WEB-455 execute autofill, better way
+    await page.evaluate(
+        "const input = document.querySelector('input#aria-id-hook-1');\nconst valueSetter = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(input), 'value').set.call(input,'ciao');\ninput.dispatchEvent(new Event('input', { bubbles: true }));\n"
+    );
+
+    const secondImage = await fieldWrapper.screenshot();
+    expect(secondImage).toMatchImageSnapshot();
+});
+
 test.each(TESTABLE_DEVICES)('Default textfield appears properly (focus) on %s', async (device) => {
     const page = await openStoryPage({
         id: 'components-input-fields--variants',
