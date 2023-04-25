@@ -83,7 +83,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             if (video && isLoadComplete && playOnFullLoad && video.paused && !isRunningAcceptanceTest()) {
                 video.play();
             }
-        }, [isLoadComplete, playOnFullLoad]);
+        }, [isLoadComplete, playOnFullLoad, videoRef]);
 
         React.useEffect(() => {
             const video = videoRef.current;
