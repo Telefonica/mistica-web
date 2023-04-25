@@ -607,7 +607,7 @@ const useBackgroundImage = (backgroundImage?: string) => {
                 backgroundSize: 'cover',
                 backgroundPosition: '50% 50%',
                 backgroundImage: backgroundImage ? `url("${CSS.escape(backgroundImage)}")` : undefined,
-                zIndex: 1,
+                zIndex: 0,
             }}
         />
     );
@@ -683,7 +683,7 @@ const useBackgroundVideo = (
             <div
                 className={styles.displayCardBackground}
                 style={{
-                    zIndex: 1,
+                    zIndex: 0,
                 }}
             >
                 <Video
@@ -720,7 +720,7 @@ const useBackgroundVideo = (
     };
 };
 
-const getVideoActionIcon = (state?: VideoState) => {
+const getVideoActionIcon = (state: VideoState) => {
     if (state === 'played') {
         return IconPauseFilled;
     }
