@@ -582,8 +582,15 @@ interface DisplayMediaCardWithImageProps extends CommonDisplayCardProps {
     backgroundImage: string;
 }
 
+type VideoSource = {
+    src: string;
+    type?: string; // video/webm, video/mp4...
+};
+
+type videoProp = string | ReadonlyArray<string> | VideoSource | ReadonlyArray<VideoSource>;
+
 type DisplayMediaCardWithVideoProps = Omit<CommonDisplayCardProps, 'actions' | 'onClose'> & {
-    backgroundVideo: string | {src: string; poster?: string};
+    backgroundVideo: string | {src: videoProp; poster?: string};
     backgroundVideoRef?: React.RefObject<HTMLVideoElement>;
 };
 
@@ -653,7 +660,7 @@ const modalReducer = (state: VideoState, action: VideoAction): VideoState =>
     transitions[state][action] || state;
 
 const useBackgroundVideo = (
-    backgroundVideo?: string | VideoProps,
+    backgroundVideo?: string | {src: videoProp; poster?: string},
     backgroundVideoRef?: React.RefObject<HTMLVideoElement>
 ) => {
     const videoRef = React.useRef<HTMLVideoElement>(null);
