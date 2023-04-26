@@ -36,7 +36,13 @@ export const Default: StoryComponent = () => {
 
             <Stack space={16}>
                 <Title2>Auto Play (default)</Title2>
-                <Video width={480} height={480 / 2.4} src={VIDEO_SRC} poster={POSTER_SRC} forceLoad />
+                <Video
+                    width={480}
+                    height={480 / 2.4}
+                    src="http://techslides.com/demos/sample-videos/small.mp4"
+                    poster={POSTER_SRC}
+                    forceLoad
+                />
             </Stack>
 
             <Stack space={16}>
