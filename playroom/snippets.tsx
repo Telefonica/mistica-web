@@ -737,7 +737,7 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'DisplayMediaCard with video as url',
+        name: 'DisplayMediaCard with video',
         code: `
         <DisplayMediaCard
           headline={<Tag type="promo">Headline</Tag>}
@@ -745,28 +745,7 @@ const cardSnippets: Array<Snippet> = [
           title="Title"
           description="Description"
           backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
-          button={
-            <ButtonPrimary small href="https://google.com">
-              Action
-            </ButtonPrimary>
-          }
-        />`,
-    },
-    {
-        group: 'Cards',
-        name: 'DisplayMediaCard with video as object',
-        code: `
-        <DisplayMediaCard
-          headline={<Tag type="promo">Headline</Tag>}
-          pretitle="Pretitle"
-          title="Title"
-          description="Description"
-          backgroundVideo={{
-            src: "https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw",
-            poster: "https://source.unsplash.com/900x900/?landscape",
-            autoPlay: false,
-            loop: false,
-          }}
+          poster="https://source.unsplash.com/900x900/?landscape"
           button={
             <ButtonPrimary small href="https://google.com">
               Action
@@ -796,7 +775,7 @@ const cardSnippets: Array<Snippet> = [
     },
     {
         group: 'Cards',
-        name: 'PosterCard with video as url',
+        name: 'PosterCard with video',
         code: `
         <PosterCard
           headline={<Tag type="promo">Headline</Tag>}
@@ -804,28 +783,7 @@ const cardSnippets: Array<Snippet> = [
           title="Title"
           description="Description"
           backgroundVideo="https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw"
-          button={
-            <ButtonPrimary small href="https://google.com">
-              Action
-            </ButtonPrimary>
-          }
-        />`,
-    },
-    {
-        group: 'Cards',
-        name: 'PosterCard with video as object',
-        code: `
-        <PosterCard
-          headline={<Tag type="promo">Headline</Tag>}
-          pretitle="Pretitle"
-          title="Title"
-          description="Description"
-          backgroundVideo={{
-            src: "https://fr-cert1-es.mytelco.io/2O4-xBJqiMlAfLkseq8RkXs_mv2ACV7Hnt20HqXxNl-mK7KLI3M2dAw",
-            poster: "https://source.unsplash.com/900x900/?landscape",
-            autoPlay: false,
-            loop: false,
-          }}
+          poster="https://source.unsplash.com/900x900/?landscape"
           button={
             <ButtonPrimary small href="https://google.com">
               Action

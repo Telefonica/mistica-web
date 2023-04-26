@@ -98,10 +98,8 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                   backgroundImage: BACKGROUND_IMAGE_SRC,
               }
             : {
-                  backgroundVideo: {
-                      src: BACKGROUND_VIDEO_SRC,
-                      poster: BACKGROUND_VIDEO_POSTER_SRC,
-                  },
+                  backgroundVideo: BACKGROUND_VIDEO_SRC,
+                  poster: BACKGROUND_VIDEO_POSTER_SRC,
               };
 
     return (

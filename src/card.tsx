@@ -5,7 +5,6 @@ import Box from './box';
 import {Text2, Text, Text6, Text3} from './text';
 import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
-import Video from './video';
 import {MediaBorderRadiusProvider} from './image';
 import {BaseTouchable} from './touchable';
 import {vars} from './skins/skin-contract.css';
@@ -19,9 +18,9 @@ import IconPauseFilled from './generated/mistica-icons/icon-pause-filled';
 import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
 import {combineRefs} from './utils/common';
 import Spinner from './spinner';
+import Video from './video';
 
 import type Image from './image';
-import type {VideoProps} from './video';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {
@@ -155,6 +154,120 @@ const MaybeWithActions = ({
             )}
         </section>
     );
+};
+
+type VideoState = 'loading' | 'loadingSpinner' | 'played' | 'paused' | 'error';
+
+type VideoAction = 'play' | 'pause' | 'fail' | 'showSpinner' | 'reset';
+
+const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> = {
+    loading: {
+        showSpinner: 'loadingSpinner',
+        play: 'played',
+        pause: 'paused',
+        fail: 'error',
+    },
+
+    loadingSpinner: {
+        play: 'played',
+        pause: 'paused',
+        fail: 'error',
+        reset: 'loading',
+    },
+
+    played: {
+        pause: 'paused',
+        reset: 'loading',
+    },
+
+    paused: {
+        play: 'played',
+        reset: 'loading',
+    },
+
+    error: {
+        reset: 'loading',
+    },
+};
+
+const videoReducer = (state: VideoState, action: VideoAction): VideoState =>
+    transitions[state][action] || state;
+
+const getVideoActionIcon = (state: VideoState) => {
+    if (state === 'played') {
+        return IconPauseFilled;
+    }
+    if (state === 'paused' || state === 'loading') {
+        return IconPlayFilled;
+    }
+
+    if (state === 'loadingSpinner') {
+        return Spinner;
+    }
+
+    return undefined;
+};
+
+const useVideoWithControls = (
+    videoSrc?: VideoProp,
+    poster?: string,
+    videoRef?: React.RefObject<HTMLVideoElement>
+) => {
+    const videoController = React.useRef<HTMLVideoElement>(null);
+    const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
+
+    const onVideoError = () => dispatch('fail');
+    const onVideoPause = () => dispatch('pause');
+    const onVideoPlay = () => dispatch('play');
+
+    React.useEffect(() => {
+        const loadingTimeoutId = setTimeout(() => dispatch('showSpinner'), 2000);
+        const spinnerTimeoutId = setTimeout(() => dispatch('fail'), 10000);
+        videoController.current?.load();
+
+        return () => {
+            clearTimeout(loadingTimeoutId);
+            clearTimeout(spinnerTimeoutId);
+            dispatch('reset');
+        };
+    }, [videoSrc, poster]);
+
+    const video = React.useMemo(
+        () =>
+            videoSrc ? (
+                <Video
+                    ref={combineRefs(videoController, videoRef)}
+                    src={videoSrc}
+                    poster={poster}
+                    aspectRatio={0}
+                    autoPlay={false}
+                    playOnFullLoad={videoStatus !== 'error'}
+                    onError={onVideoError}
+                    onPause={onVideoPause}
+                    onPlay={onVideoPlay}
+                />
+            ) : undefined,
+        [videoSrc, poster, videoRef, videoStatus]
+    );
+
+    const onVideoControlPress = () => {
+        const video = videoController.current;
+        if (video) {
+            if (videoStatus === 'loading') {
+                dispatch('showSpinner');
+            } else if (videoStatus === 'paused') {
+                video.play();
+            } else if (videoStatus === 'played') {
+                video.pause();
+            }
+        }
+    };
+
+    return {
+        video,
+        videoStatus,
+        onVideoControlPress,
+    };
 };
 
 type CardContentProps = {
@@ -582,8 +695,16 @@ interface DisplayMediaCardWithImageProps extends CommonDisplayCardProps {
     backgroundImage: string;
 }
 
+type VideoSource = {
+    src: string;
+    type?: string; // video/webm, video/mp4...
+};
+
+type VideoProp = string | ReadonlyArray<string> | VideoSource | ReadonlyArray<VideoSource>;
+
 type DisplayMediaCardWithVideoProps = Omit<CommonDisplayCardProps, 'actions' | 'onClose'> & {
-    backgroundVideo: string | {src: string; poster?: string};
+    backgroundVideo: VideoProp;
+    poster?: string;
     backgroundVideoRef?: React.RefObject<HTMLVideoElement>;
 };
 
@@ -615,126 +736,6 @@ const useBackgroundImage = (backgroundImage?: string) => {
     return image;
 };
 
-type VideoState = 'loading' | 'loadingSpinner' | 'played' | 'paused' | 'error';
-
-type VideoAction = 'play' | 'pause' | 'fail' | 'showSpinner' | 'reset';
-
-const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> = {
-    loading: {
-        showSpinner: 'loadingSpinner',
-        play: 'played',
-        pause: 'paused',
-        fail: 'error',
-    },
-
-    loadingSpinner: {
-        play: 'played',
-        pause: 'paused',
-        fail: 'error',
-        reset: 'loading',
-    },
-
-    played: {
-        pause: 'paused',
-        reset: 'loading',
-    },
-
-    paused: {
-        play: 'played',
-        reset: 'loading',
-    },
-
-    error: {
-        reset: 'loading',
-    },
-};
-
-const modalReducer = (state: VideoState, action: VideoAction): VideoState =>
-    transitions[state][action] || state;
-
-const useBackgroundVideo = (
-    backgroundVideo?: string | VideoProps,
-    backgroundVideoRef?: React.RefObject<HTMLVideoElement>
-) => {
-    const videoRef = React.useRef<HTMLVideoElement>(null);
-    const [videoStatus, dispatch] = React.useReducer(modalReducer, 'loading');
-
-    React.useEffect(() => {
-        const loadingTimeoutId = setTimeout(() => dispatch('showSpinner'), 2000);
-        const spinnerTimeoutId = setTimeout(() => dispatch('fail'), 10000);
-        videoRef.current?.load();
-
-        return () => {
-            clearTimeout(loadingTimeoutId);
-            clearTimeout(spinnerTimeoutId);
-            dispatch('reset');
-        };
-    }, [backgroundVideo]);
-
-    const onVideoError = () => dispatch('fail');
-    const onVideoPause = () => dispatch('pause');
-    const onVideoPlay = () => dispatch('play');
-
-    let video;
-    if (backgroundVideo) {
-        const videoProps = typeof backgroundVideo === 'string' ? {src: backgroundVideo} : backgroundVideo;
-
-        video = backgroundVideo ? (
-            <div
-                className={styles.displayCardBackground}
-                style={{
-                    zIndex: 0,
-                }}
-            >
-                <Video
-                    ref={combineRefs(videoRef, backgroundVideoRef)}
-                    {...videoProps}
-                    aspectRatio={0}
-                    autoPlay={false}
-                    playOnFullLoad
-                    onError={onVideoError}
-                    onPause={onVideoPause}
-                    onPlay={onVideoPlay}
-                />
-            </div>
-        ) : undefined;
-    }
-
-    const onVideoButtonPress = () => {
-        const video = videoRef.current;
-        if (video) {
-            if (videoStatus === 'loading') {
-                dispatch('showSpinner');
-            } else if (videoStatus === 'paused') {
-                video.play();
-            } else if (videoStatus === 'played') {
-                video.pause();
-            }
-        }
-    };
-
-    return {
-        video,
-        videoStatus,
-        onVideoButtonPress,
-    };
-};
-
-const getVideoActionIcon = (state: VideoState) => {
-    if (state === 'played') {
-        return IconPauseFilled;
-    }
-    if (state === 'paused' || state === 'loading') {
-        return IconPlayFilled;
-    }
-
-    if (state === 'loadingSpinner') {
-        return Spinner;
-    }
-
-    return undefined;
-};
-
 const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
     (
         {
@@ -742,6 +743,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             backgroundImage,
             backgroundVideo,
             backgroundVideoRef,
+            poster,
             icon,
             headline,
             pretitle,
@@ -765,8 +767,9 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         ref
     ) => {
         const image = useBackgroundImage(backgroundImage);
-        const {video, videoStatus, onVideoButtonPress} = useBackgroundVideo(
+        const {video, videoStatus, onVideoControlPress} = useVideoWithControls(
             backgroundVideo,
+            poster,
             backgroundVideoRef
         );
 
@@ -774,7 +777,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             actions = [
                 {
                     Icon: getVideoActionIcon(videoStatus),
-                    onPress: onVideoButtonPress,
+                    onPress: onVideoControlPress,
                     label: 'Video controls',
                     iconSize: 12,
                 },
@@ -809,7 +812,17 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     }
                 >
                     <div className={styles.displayCard}>
-                        {backgroundImage ? image : video}
+                        {backgroundVideo ? (
+                            <div
+                                className={styles.displayCardBackground}
+                                style={{
+                                    zIndex: 0,
+                                }}
+                                children={video}
+                            />
+                        ) : (
+                            image
+                        )}
 
                         <div
                             className={styles.displayCard}
@@ -943,7 +956,8 @@ interface PosterCardWithImageProps extends PosterCardBaseProps {
 }
 
 type PosterCardWithVideoProps = Omit<PosterCardBaseProps, 'actions' | 'onClose'> & {
-    backgroundVideo: string | Omit<VideoProps, 'aspectRatio' | 'width' | 'height'>;
+    backgroundVideo: VideoProp;
+    poster?: string;
     backgroundVideoRef?: React.RefObject<HTMLVideoElement>;
 };
 
@@ -957,6 +971,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             dataAttributes,
             backgroundImage,
             backgroundVideo,
+            poster,
             backgroundVideoRef,
             width,
             height,
@@ -976,8 +991,9 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         ref
     ) => {
         const image = useBackgroundImage(backgroundImage);
-        const {video, videoStatus, onVideoButtonPress} = useBackgroundVideo(
+        const {video, videoStatus, onVideoControlPress} = useVideoWithControls(
             backgroundVideo,
+            poster,
             backgroundVideoRef
         );
 
@@ -985,7 +1001,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             actions = [
                 {
                     Icon: getVideoActionIcon(videoStatus),
-                    onPress: onVideoButtonPress,
+                    onPress: onVideoControlPress,
                     label: 'Video controls',
                     iconSize: 12,
                 },
@@ -1022,7 +1038,17 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     }
                 >
                     <div className={styles.displayCard}>
-                        {backgroundImage ? image : video}
+                        {backgroundVideo ? (
+                            <div
+                                className={styles.displayCardBackground}
+                                style={{
+                                    zIndex: 0,
+                                }}
+                                children={video}
+                            />
+                        ) : (
+                            image
+                        )}
 
                         <div
                             className={styles.displayCard}
