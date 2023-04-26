@@ -5,7 +5,7 @@ import Box from './box';
 import {Text2, Text, Text6, Text3} from './text';
 import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
-import {ImageError, MediaBorderRadiusProvider} from './image';
+import Image, {MediaBorderRadiusProvider} from './image';
 import {BaseTouchable} from './touchable';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './card.css';
@@ -20,7 +20,6 @@ import {combineRefs} from './utils/common';
 import Spinner from './spinner';
 import Video from './video';
 
-import type Image from './image';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {
@@ -258,7 +257,7 @@ const useVideoWithControls = (
                     />
                 </div>
             ) : videoStatus === 'error' ? (
-                <ImageError />
+                <Image width="100%" height="100%" src={poster || '//:0'} loadingFallback={false} />
             ) : undefined,
         [videoSrc, poster, videoRef, videoStatus, isInverse]
     );
