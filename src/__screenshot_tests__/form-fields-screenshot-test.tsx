@@ -38,10 +38,11 @@ test('Textfield collapses its label when autofill fills out the form', async () 
 
     expect(image).toMatchImageSnapshot();
 
-    // todo WEB-455 execute autofill, better way
-    await page.evaluate(
-        "const input = document.querySelector('input#aria-id-hook-1');\nconst valueSetter = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(input), 'value').set.call(input,'ciao');\ninput.dispatchEvent(new Event('input', { bubbles: true }));\n"
-    );
+    await page.evaluate(() => {
+        const input = document.querySelector('input#aria-id-hook-1');
+        Object.getOwnPropertyDescriptor(Object.getPrototypeOf(input), 'value')?.set?.call(input, 'ciao');
+        input?.dispatchEvent(new Event('input', {bubbles: true}));
+    });
 
     const secondImage = await fieldWrapper.screenshot();
     expect(secondImage).toMatchImageSnapshot();
