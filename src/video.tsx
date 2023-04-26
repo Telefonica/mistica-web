@@ -6,6 +6,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {isRunningAcceptanceTest, isSafari} from './utils/platform';
 import * as styles from './video.css';
 import {vars} from './skins/skin-contract.css';
+import Text from './text';
 
 import type {DataAttributes} from './utils/types';
 
@@ -42,6 +43,7 @@ export type VideoProps = {
     autoPlay?: boolean;
     /** defaults to false */
     playOnFullLoad?: boolean;
+    loadstart?: boolean;
     onError?: () => void;
     onPlay?: () => void;
     onPause?: () => void;
@@ -65,6 +67,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             onError,
             onPause,
             onPlay,
+            loadstart = false,
             aspectRatio = '1:1',
             dataAttributes,
             ...props
@@ -77,6 +80,10 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
 
         const videoRef = React.useRef<HTMLVideoElement | null>(null);
+
+        React.useEffect(() => {
+            if (loadstart) videoRef.current?.load();
+        }, [loadstart, videoRef]);
 
         React.useEffect(() => {
             const video = videoRef.current;
@@ -101,6 +108,8 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             }
         });
 
+        const [failed, setFailed] = React.useState(false);
+
         const video = (
             <video
                 ref={combineRefs(ref, videoRef)}
@@ -112,7 +121,10 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 loop={loop}
                 className={styles.video}
                 preload={preload}
-                onError={onError}
+                onError={() => {
+                    if (onError) onError();
+                    setFailed(true);
+                }}
                 onPause={onPause}
                 onPlay={onPlay}
                 onLoadStart={() => setIsLoadComplete(false)}
@@ -148,6 +160,8 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             >
                 {video}
             </div>
+        ) : failed ? (
+            <Text color="red">HOLA</Text>
         ) : (
             video
         );
