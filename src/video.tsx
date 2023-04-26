@@ -6,6 +6,7 @@ import {getPrefixedDataAttributes} from './utils/dom';
 import {isRunningAcceptanceTest, isSafari} from './utils/platform';
 import * as styles from './video.css';
 import {vars} from './skins/skin-contract.css';
+import Text from './text';
 
 import type {DataAttributes} from './utils/types';
 
@@ -40,6 +41,7 @@ export type VideoProps = {
     muted?: boolean;
     /** defaults to true */
     autoPlay?: boolean;
+    forceLoad?: boolean;
     poster?: string;
     children?: void;
     /** defaults to none */
@@ -55,6 +57,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             autoPlay = !isRunningAcceptanceTest(), // default true, but disable autoPlay in screenshot tests
             muted = true,
             loop = true,
+            forceLoad = false,
             preload = 'none',
             aspectRatio = '1:1',
             dataAttributes,
@@ -75,6 +78,10 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             }
         }, [autoPlay]);
 
+        React.useEffect(() => {
+            if (forceLoad) videoRef.current?.load();
+        }, [forceLoad]);
+
         // normalize sources
         const sources: Array<VideoSource> = (Array.isArray(src) ? src : [src]).map((source) => {
             if (typeof source === 'string') {
@@ -83,6 +90,8 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 return source;
             }
         });
+
+        const [failed, setFailed] = React.useState(false);
 
         const video = (
             <video
@@ -94,6 +103,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 muted={muted}
                 loop={loop}
                 className={styles.video}
+                onError={() => setFailed(true)}
                 preload={preload}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
                 poster={poster || TRANSPARENT_PIXEL}
@@ -111,6 +121,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
 
         return (
             <AspectRatioElement aspectRatio={ratio} width={props.width} height={props.height}>
+                {failed && <Text color="red">FAILED LOAD</Text>}
                 {isSafari() ? (
                     <div
                         style={{
