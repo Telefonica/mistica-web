@@ -1700,6 +1700,69 @@ const loaderSnippets = [
     },
 ];
 
+const logoSnippets = [
+    {
+        group: 'Logo',
+        name: 'Logo imagotype',
+        code: `<Logo type="imagotype" size={48} />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Logo isotype',
+        code: `<Logo type="isotype" size={48} />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Logo vertical',
+        code: `<Logo type="vertical" size={48} />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Logo with to prop',
+        code: `<Logo to="#" size={48} />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Logo with href prop',
+        code: `<Logo href="#" newTab aria-label="href logo" size={48} />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Logo with onPress prop',
+        code: `<Logo onPress={() => {alert({ title: "pressed" });}} aria-label="pressed logo" size={48} />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Blau Logo',
+        code: `<BlauLogo size={48} type="isotype" />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Movistar Logo',
+        code: `<MovistarLogo size={48} type="isotype" />`,
+    },
+    {
+        group: 'Logo',
+        name: 'O2 Logo',
+        code: `<O2Logo size={48} type="isotype" />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Telefónica Logo',
+        code: `<TelefonicaLogo size={48} type="isotype" />`,
+    },
+    {
+        group: 'Logo',
+        name: 'Vigo Logo',
+        code: `<VivoLogo size={48} type="isotype" />`,
+    },
+    {
+        group: 'Logo',
+        name: ' with to prop',
+        code: `<Logo to="#" size={48} />`,
+    },
+];
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -1833,4 +1896,5 @@ export default [
     ...popoverSnippets,
     ...heroSnippets,
     ...loaderSnippets,
+    ...logoSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
