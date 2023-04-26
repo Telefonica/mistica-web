@@ -290,5 +290,26 @@ export const getBlauSkin: GetKnownSkin = () => {
             promoHighInverse: palette.blauPurple,
             neutralMediumInverse: palette.grey5,
         },
+        textPresets: {
+            text5: {weight: 'bold'},
+            text6: {weight: 'bold'},
+            text7: {weight: 'bold'},
+            text8: {weight: 'bold'},
+            text9: {weight: 'bold'},
+            text10: {weight: 'bold'},
+            cardTitle: {weight: 'bold'},
+        },
+        borderRadii: {
+            button: '2px',
+            input: '2px',
+            container: '0px',
+            legacyDisplay: '2px',
+            popup: '0px',
+            checkbox: '2px',
+            indicator: '999px',
+            sheet: '8px',
+            bar: '2px',
+            avatar: '50%',
+        },
     };
 };
