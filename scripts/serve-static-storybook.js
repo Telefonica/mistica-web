@@ -1,13 +1,16 @@
-const StaticServer = require('static-server');
+const handler = require('serve-handler');
 const path = require('path');
+const http = require('http');
 
 const storybookPort = 6006;
 
-console.log('Starting storybook server');
+const server = http.createServer((request, response) => {
+    return handler(request, response, {
+        public: path.join(__dirname, '..', 'public'),
+        cleanUrls: ['/'],
+    });
+});
 
-new StaticServer({
-    rootPath: path.join(__dirname, '..', 'public'),
-    port: storybookPort,
-}).start(() => {
+server.listen(storybookPort, () => {
     console.log(`Storybook server ready on http://localhost:${storybookPort}`);
 });
