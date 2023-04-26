@@ -301,7 +301,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 if (maxLength === undefined || event.target.value.length <= maxLength) {
                                     setCharacterCount(event.target.value.length);
 
-                                    if (event.target.value.length > 0) {
+                                    if (event.target.value.length > 0 && inputState !== 'focused') {
                                         setInputState('filled');
                                     }
 
