@@ -5,7 +5,7 @@ import Box from './box';
 import {Text2, Text, Text6, Text3} from './text';
 import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
-import {MediaBorderRadiusProvider} from './image';
+import {ImageError, MediaBorderRadiusProvider} from './image';
 import {BaseTouchable} from './touchable';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './card.css';
@@ -211,7 +211,8 @@ const getVideoActionIcon = (state: VideoState) => {
 const useVideoWithControls = (
     videoSrc?: VideoProp,
     poster?: string,
-    videoRef?: React.RefObject<HTMLVideoElement>
+    videoRef?: React.RefObject<HTMLVideoElement>,
+    isInverse = true
 ) => {
     const videoController = React.useRef<HTMLVideoElement>(null);
     const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
@@ -234,20 +235,32 @@ const useVideoWithControls = (
 
     const video = React.useMemo(
         () =>
-            videoSrc ? (
-                <Video
-                    ref={combineRefs(videoController, videoRef)}
-                    src={videoSrc}
-                    poster={poster}
-                    aspectRatio={0}
-                    autoPlay={false}
-                    playOnFullLoad={videoStatus !== 'error'}
-                    onError={onVideoError}
-                    onPause={onVideoPause}
-                    onPlay={onVideoPlay}
-                />
+            videoSrc && videoStatus !== 'error' ? (
+                <div
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: isInverse
+                            ? vars.colors.backgroundSkeletonInverse
+                            : vars.colors.backgroundSkeleton,
+                    }}
+                >
+                    <Video
+                        ref={combineRefs(videoController, videoRef)}
+                        src={videoSrc}
+                        poster={poster}
+                        aspectRatio={0}
+                        autoPlay={false}
+                        playOnFullLoad
+                        onError={onVideoError}
+                        onPause={onVideoPause}
+                        onPlay={onVideoPlay}
+                    />
+                </div>
+            ) : videoStatus === 'error' ? (
+                <ImageError />
             ) : undefined,
-        [videoSrc, poster, videoRef, videoStatus]
+        [videoSrc, poster, videoRef, videoStatus, isInverse]
     );
 
     const onVideoControlPress = () => {

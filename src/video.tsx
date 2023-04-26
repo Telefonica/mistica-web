@@ -112,12 +112,10 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 loop={loop}
                 className={styles.video}
                 preload={preload}
-                onLoadStart={() => {
-                    setIsLoadComplete(false);
-                }}
                 onError={onError}
                 onPause={onPause}
                 onPlay={onPlay}
+                onLoadStart={() => setIsLoadComplete(false)}
                 onCanPlayThrough={() => setIsLoadComplete(true)}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
                 poster={poster || TRANSPARENT_PIXEL}
