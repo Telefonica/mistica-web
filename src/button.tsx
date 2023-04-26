@@ -153,6 +153,19 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
     const isFormSending = formStatus === 'sending';
     const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
 
+    const onPressCallback = React.useCallback(
+        (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+            if (props.onPress) {
+                const result = props.onPress(e);
+                if (result) {
+                    setIsOnPressPromiseResolving(true);
+                    result.finally(() => setIsOnPressPromiseResolving(false));
+                }
+            }
+        },
+        [props]
+    );
+
     const showSpinner = props.showSpinner || (isFormSending && isSubmitButton) || isOnPressPromiseResolving;
 
     // This state is needed to not render the spinner when hidden (because it causes high CPU usage
@@ -292,18 +305,7 @@ const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonTyp
     }
 
     if (props.onPress) {
-        return (
-            <BaseTouchable
-                {...commonProps}
-                onPress={(e) => {
-                    const result = props.onPress(e);
-                    if (result) {
-                        setIsOnPressPromiseResolving(true);
-                        result.then(() => setIsOnPressPromiseResolving(false));
-                    }
-                }}
-            />
-        );
+        return <BaseTouchable {...commonProps} onPress={onPressCallback} />;
     }
 
     if (props.to || props.to === '') {
