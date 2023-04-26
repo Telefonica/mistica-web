@@ -76,7 +76,7 @@ export {
 } from './navigation-bar';
 export {
     /**
-     * @deprecated This element is deprecated, please use Logo instead
+     * @deprecated This component is deprecated, please use Logo instead
      */
     Logo as NavigationBarLogo,
     Logo,
