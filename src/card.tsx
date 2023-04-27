@@ -224,11 +224,14 @@ const getVideoActionIcon = (state: VideoState) => {
     return undefined;
 };
 
+const useBackgroundImage = (backgroundImage?: string) => {
+    return <Image width="100%" height="100%" src={backgroundImage || '//:0'} />;
+};
+
 const useVideoWithControls = (
     videoSrc?: VideoSource,
     poster?: string,
-    videoRef?: React.RefObject<HTMLVideoElement>,
-    isInverse = true
+    videoRef?: React.RefObject<HTMLVideoElement>
 ) => {
     const videoController = React.useRef<HTMLVideoElement>(null);
     const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
@@ -249,19 +252,22 @@ const useVideoWithControls = (
         };
     }, [videoSrc]);
 
+    const isInverse = useIsInverseVariant();
+    const errorFallback = useBackgroundImage(poster);
+
     const video = React.useMemo(
         () =>
             videoSrc ? (
-                <div
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: isInverse
-                            ? vars.colors.backgroundSkeletonInverse
-                            : vars.colors.backgroundSkeleton,
-                    }}
-                >
-                    {videoStatus !== 'error' ? (
+                videoStatus !== 'error' ? (
+                    <div
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: isInverse
+                                ? vars.colors.backgroundSkeletonInverse
+                                : vars.colors.backgroundSkeleton,
+                        }}
+                    >
                         <Video
                             ref={combineRefs(videoController, videoRef)}
                             src={videoSrc}
@@ -274,12 +280,12 @@ const useVideoWithControls = (
                             onPause={onVideoPause}
                             onPlay={onVideoPlay}
                         />
-                    ) : (
-                        <Image width="100%" height="100%" src={poster || '//:0'} loadingFallback={false} />
-                    )}
-                </div>
+                    </div>
+                ) : (
+                    errorFallback
+                )
             ) : undefined,
-        [videoSrc, poster, videoRef, videoStatus, isInverse]
+        [videoSrc, poster, videoRef, videoStatus, isInverse, errorFallback]
     );
 
     const onVideoControlPress = () => {
@@ -745,22 +751,6 @@ type GenericDisplayCardProps = ExclusifyUnion<
     (DisplayMediaCardProps & {isInverse: true}) | DisplayDataCardProps
 >;
 
-const useBackgroundImage = (backgroundImage?: string) => {
-    const image = (
-        <div
-            className={styles.displayCardBackground}
-            style={{
-                backgroundSize: 'cover',
-                backgroundPosition: '50% 50%',
-                backgroundImage: backgroundImage ? `url("${CSS.escape(backgroundImage)}")` : undefined,
-                zIndex: 0,
-            }}
-        />
-    );
-
-    return image;
-};
-
 const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
     (
         {
@@ -816,6 +806,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         const withGradient = !!backgroundImage || !!backgroundVideo;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose || backgroundVideo;
+
         return (
             <MaybeWithActions
                 width={width}
@@ -834,25 +825,16 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     width="100%"
                     minHeight="100%"
                     isInverse={isInverse}
-                    background={
-                        isInverse && (backgroundImage || backgroundVideo)
-                            ? vars.colors.backgroundContainer
-                            : undefined
-                    }
                 >
                     <div className={styles.displayCardContainer}>
                         <ThemeVariant isInverse={isExternalInverse}>
-                            {backgroundVideo ? (
-                                <div
-                                    className={styles.displayCardBackground}
-                                    style={{
-                                        zIndex: 0,
-                                    }}
-                                    children={video}
-                                />
-                            ) : (
-                                image
-                            )}
+                            <div
+                                className={styles.displayCardBackground}
+                                style={{
+                                    zIndex: 0,
+                                }}
+                                children={backgroundVideo ? video : backgroundImage ? image : undefined}
+                            />
                         </ThemeVariant>
 
                         <div
@@ -1042,6 +1024,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
             ];
         }
 
+        const isExternalInverse = useIsInverseVariant();
         const withGradient = !!backgroundImage || !!backgroundVideo;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose || backgroundVideo;
@@ -1067,22 +1050,17 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     width="100%"
                     minHeight="100%"
                     isInverse
-                    background={
-                        backgroundImage || backgroundVideo ? vars.colors.backgroundContainer : undefined
-                    }
                 >
                     <div className={styles.displayCardContainer}>
-                        {backgroundVideo ? (
+                        <ThemeVariant isInverse={isExternalInverse}>
                             <div
                                 className={styles.displayCardBackground}
                                 style={{
                                     zIndex: 0,
                                 }}
-                                children={video}
+                                children={backgroundVideo ? video : backgroundImage ? image : undefined}
                             />
-                        ) : (
-                            image
-                        )}
+                        </ThemeVariant>
 
                         <div
                             className={styles.displayCardContent}
