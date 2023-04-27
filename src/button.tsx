@@ -144,198 +144,190 @@ export type ButtonProps =
     | OnPressButtonProps
     | HrefButtonProps;
 
-const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonType}>(
-    ({onPress, ...props}, ref) => {
-        const {eventFormat} = useTrackingConfig();
-        const {formStatus, formId} = useForm();
-        const isInverse = useIsInverseVariant();
-        const {loadingText} = props;
-        const isSubmitButton = !!props.submit;
-        const isFormSending = formStatus === 'sending';
-        const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
+const Button = React.forwardRef<TouchableElement, ButtonProps & {type: ButtonType}>((props, ref) => {
+    const {eventFormat} = useTrackingConfig();
+    const {formStatus, formId} = useForm();
+    const isInverse = useIsInverseVariant();
+    const {loadingText} = props;
+    const isSubmitButton = !!props.submit;
+    const isFormSending = formStatus === 'sending';
+    const [isOnPressPromiseResolving, setIsOnPressPromiseResolving] = React.useState(false);
 
-        const onPressCallback = React.useCallback(
-            (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-                if (onPress) {
-                    const result = onPress(e);
+    const showSpinner = props.showSpinner || (isFormSending && isSubmitButton) || isOnPressPromiseResolving;
+
+    // This state is needed to not render the spinner when hidden (because it causes high CPU usage
+    // specially in iPhone). But we want the spinner to be visible during the show/hide animation.
+    // * When showSpinner prop is true, state is changed immediately.
+    // * When the transition ends this state is updated again if needed
+    const [shouldRenderSpinner, setShouldRenderSpinner] = React.useState(!!showSpinner);
+
+    React.useEffect(() => {
+        if (showSpinner && !shouldRenderSpinner) {
+            setShouldRenderSpinner(true);
+        }
+    }, [showSpinner, shouldRenderSpinner, formStatus]);
+
+    const createDefaultTrackingEvent = (): TrackingEvent => {
+        if (eventFormat === 'google-analytics-4') {
+            return {
+                name: eventNames.userInteraction,
+                component_type: `${props.type}_button`,
+                component_copy: getTextFromChildren(props.children),
+            };
+        } else {
+            return {
+                category: eventCategories.userInteraction,
+                action: `${props.type}_button_tapped`,
+                label: getTextFromChildren(props.children),
+            };
+        }
+    };
+
+    const defaultIconSize = props.small ? styles.SMALL_ICON_SIZE : styles.ICON_SIZE;
+    const spinnerSizeRem = pxToRem(props.small ? styles.SMALL_SPINNER_SIZE : styles.SPINNER_SIZE);
+
+    const renderText = (element: React.ReactNode) =>
+        props.small ? (
+            <Text size={14} lineHeight={20} weight="medium" truncate={1} color="inherit" as="div">
+                {element}
+            </Text>
+        ) : (
+            <Text3 medium truncate={1} color="inherit" as="div">
+                {element}
+            </Text3>
+        );
+
+    const commonProps = {
+        ref,
+        className: classnames(
+            isInverse ? styles.inverseVariants[props.type] : styles.variants[props.type],
+            props.className,
+            {
+                [styles.small]: props.small,
+                [styles.isLoading]: showSpinner,
+            }
+        ),
+        style: {cursor: props.fake ? 'pointer' : undefined, ...props.style},
+        trackingEvent: props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
+        dataAttributes: props.dataAttributes,
+        'aria-controls': props['aria-controls'],
+        'aria-expanded': props['aria-expanded'],
+        tabIndex: props.tabIndex,
+        children: (
+            <>
+                {/* text content */}
+                <div aria-hidden={showSpinner ? true : undefined} className={styles.textContent}>
+                    {renderButtonContent({
+                        content: props.children,
+                        defaultIconSize,
+                        renderText,
+                    })}
+                </div>
+
+                {/* the following div won't be visible (see loadingFiller class), this is used to force the button width */}
+                <div
+                    className={styles.loadingFiller}
+                    aria-hidden
+                    style={{
+                        paddingLeft: spinnerSizeRem,
+                        paddingRight:
+                            styles.ICON_MARGIN_PX +
+                            2 * (props.small ? styles.X_SMALL_PADDING_PX : styles.X_PADDING_PX),
+                    }}
+                >
+                    {renderButtonContent({content: loadingText, defaultIconSize, renderText})}
+                </div>
+
+                {/* loading content */}
+                <div
+                    aria-hidden={showSpinner ? undefined : true}
+                    className={styles.loadingContent}
+                    onTransitionEnd={() => {
+                        if (showSpinner !== shouldRenderSpinner) {
+                            setShouldRenderSpinner(showSpinner);
+                        }
+                    }}
+                >
+                    {shouldRenderSpinner ? (
+                        <Spinner
+                            rolePresentation={!!loadingText}
+                            color="currentcolor"
+                            delay="0s"
+                            size={spinnerSizeRem}
+                        />
+                    ) : (
+                        <div
+                            style={{
+                                display: 'inline-block',
+                                width: spinnerSizeRem,
+                                height: spinnerSizeRem,
+                            }}
+                        />
+                    )}
+                    {loadingText ? (
+                        <Box paddingLeft={8}>
+                            {renderButtonContent({content: loadingText, defaultIconSize, renderText})}
+                        </Box>
+                    ) : null}
+                </div>
+            </>
+        ),
+        disabled: props.disabled || showSpinner || isFormSending,
+        role: 'button',
+    };
+
+    if (process.env.NODE_ENV !== 'production') {
+        if (props.to === '' || props.href === '') {
+            throw Error('to or href props are empty strings');
+        }
+    }
+
+    if (props.fake) {
+        return <BaseTouchable maybe {...commonProps} role="presentation" aria-hidden="true" />;
+    }
+
+    if (props.submit) {
+        // using empty onPress handler so it gets rendered as a button
+        return <BaseTouchable type="submit" formId={formId} onPress={() => {}} {...commonProps} />;
+    }
+
+    if (props.onPress) {
+        return (
+            <BaseTouchable
+                {...commonProps}
+                onPress={(e) => {
+                    const result = props.onPress(e);
                     if (result) {
                         setIsOnPressPromiseResolving(true);
                         result.finally(() => setIsOnPressPromiseResolving(false));
                     }
-                }
-            },
-            [onPress]
+                }}
+            />
         );
-
-        const showSpinner =
-            props.showSpinner || (isFormSending && isSubmitButton) || isOnPressPromiseResolving;
-
-        // This state is needed to not render the spinner when hidden (because it causes high CPU usage
-        // specially in iPhone). But we want the spinner to be visible during the show/hide animation.
-        // * When showSpinner prop is true, state is changed immediately.
-        // * When the transition ends this state is updated again if needed
-        const [shouldRenderSpinner, setShouldRenderSpinner] = React.useState(!!showSpinner);
-
-        React.useEffect(() => {
-            if (showSpinner && !shouldRenderSpinner) {
-                setShouldRenderSpinner(true);
-            }
-        }, [showSpinner, shouldRenderSpinner, formStatus]);
-
-        const createDefaultTrackingEvent = (): TrackingEvent => {
-            if (eventFormat === 'google-analytics-4') {
-                return {
-                    name: eventNames.userInteraction,
-                    component_type: `${props.type}_button`,
-                    component_copy: getTextFromChildren(props.children),
-                };
-            } else {
-                return {
-                    category: eventCategories.userInteraction,
-                    action: `${props.type}_button_tapped`,
-                    label: getTextFromChildren(props.children),
-                };
-            }
-        };
-
-        const defaultIconSize = props.small ? styles.SMALL_ICON_SIZE : styles.ICON_SIZE;
-        const spinnerSizeRem = pxToRem(props.small ? styles.SMALL_SPINNER_SIZE : styles.SPINNER_SIZE);
-
-        const renderText = (element: React.ReactNode) =>
-            props.small ? (
-                <Text size={14} lineHeight={20} weight="medium" truncate={1} color="inherit" as="div">
-                    {element}
-                </Text>
-            ) : (
-                <Text3 medium truncate={1} color="inherit" as="div">
-                    {element}
-                </Text3>
-            );
-
-        const commonProps = {
-            ref,
-            className: classnames(
-                isInverse ? styles.inverseVariants[props.type] : styles.variants[props.type],
-                props.className,
-                {
-                    [styles.small]: props.small,
-                    [styles.isLoading]: showSpinner,
-                }
-            ),
-            style: {cursor: props.fake ? 'pointer' : undefined, ...props.style},
-            trackingEvent:
-                props.trackingEvent ?? (props.trackEvent ? createDefaultTrackingEvent() : undefined),
-            dataAttributes: props.dataAttributes,
-            'aria-controls': props['aria-controls'],
-            'aria-expanded': props['aria-expanded'],
-            tabIndex: props.tabIndex,
-            children: (
-                <>
-                    {/* text content */}
-                    <div aria-hidden={showSpinner ? true : undefined} className={styles.textContent}>
-                        {renderButtonContent({
-                            content: props.children,
-                            defaultIconSize,
-                            renderText,
-                        })}
-                    </div>
-
-                    {/* the following div won't be visible (see loadingFiller class), this is used to force the button width */}
-                    <div
-                        className={styles.loadingFiller}
-                        aria-hidden
-                        style={{
-                            paddingLeft: spinnerSizeRem,
-                            paddingRight:
-                                styles.ICON_MARGIN_PX +
-                                2 * (props.small ? styles.X_SMALL_PADDING_PX : styles.X_PADDING_PX),
-                        }}
-                    >
-                        {renderButtonContent({content: loadingText, defaultIconSize, renderText})}
-                    </div>
-
-                    {/* loading content */}
-                    <div
-                        aria-hidden={showSpinner ? undefined : true}
-                        className={styles.loadingContent}
-                        onTransitionEnd={() => {
-                            if (showSpinner !== shouldRenderSpinner) {
-                                setShouldRenderSpinner(showSpinner);
-                            }
-                        }}
-                    >
-                        {shouldRenderSpinner ? (
-                            <Spinner
-                                rolePresentation={!!loadingText}
-                                color="currentcolor"
-                                delay="0s"
-                                size={spinnerSizeRem}
-                            />
-                        ) : (
-                            <div
-                                style={{
-                                    display: 'inline-block',
-                                    width: spinnerSizeRem,
-                                    height: spinnerSizeRem,
-                                }}
-                            />
-                        )}
-                        {loadingText ? (
-                            <Box paddingLeft={8}>
-                                {renderButtonContent({content: loadingText, defaultIconSize, renderText})}
-                            </Box>
-                        ) : null}
-                    </div>
-                </>
-            ),
-            disabled: props.disabled || showSpinner || isFormSending,
-            role: 'button',
-        };
-
-        if (process.env.NODE_ENV !== 'production') {
-            if (props.to === '' || props.href === '') {
-                throw Error('to or href props are empty strings');
-            }
-        }
-
-        if (props.fake) {
-            return <BaseTouchable maybe {...commonProps} role="presentation" aria-hidden="true" />;
-        }
-
-        if (props.submit) {
-            // using empty onPress handler so it gets rendered as a button
-            return <BaseTouchable type="submit" formId={formId} onPress={() => {}} {...commonProps} />;
-        }
-
-        if (onPress) {
-            return <BaseTouchable {...commonProps} onPress={onPressCallback} />;
-        }
-
-        if (props.to || props.to === '') {
-            return (
-                <BaseTouchable {...commonProps} to={props.to} fullPageOnWebView={props.fullPageOnWebView} />
-            );
-        }
-
-        if (props.href || props.href === '') {
-            return (
-                <BaseTouchable
-                    {...commonProps}
-                    href={props.href}
-                    newTab={props.newTab}
-                    loadOnTop={props.loadOnTop}
-                />
-            );
-        }
-
-        if (process.env.NODE_ENV !== 'production') {
-            // this cannot happen
-            throw Error('Bad button props');
-        }
-
-        return null;
     }
-);
+
+    if (props.to || props.to === '') {
+        return <BaseTouchable {...commonProps} to={props.to} fullPageOnWebView={props.fullPageOnWebView} />;
+    }
+
+    if (props.href || props.href === '') {
+        return (
+            <BaseTouchable
+                {...commonProps}
+                href={props.href}
+                newTab={props.newTab}
+                loadOnTop={props.loadOnTop}
+            />
+        );
+    }
+
+    if (process.env.NODE_ENV !== 'production') {
+        // this cannot happen
+        throw Error('Bad button props');
+    }
+
+    return null;
+});
 
 interface ButtonLinkCommonProps {
     children: React.ReactNode;
