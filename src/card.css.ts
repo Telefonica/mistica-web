@@ -202,3 +202,18 @@ export const cardActionInverse = style([
         },
     },
 ]);
+
+export const videoAction = style([
+    cardActionBase,
+    {
+        background: applyAlpha('#000000', 0.4),
+        transition: 'background-color 0.2s ease-in-out',
+        '@media': {
+            [mq.supportsHover]: {
+                ':hover': {
+                    background: applyAlpha('#000000', 0.6),
+                },
+            },
+        },
+    },
+]);

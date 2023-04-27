@@ -36,6 +36,9 @@ type CardAction = {
     onPress: () => void;
     Icon?: React.FC<IconProps>;
     iconSize?: number;
+    iconColor?: string;
+    iconBackground?: string;
+    iconBackgroundInverse?: string;
 };
 
 type CardActionsGroupProps = {
@@ -46,23 +49,35 @@ type CardActionsGroupProps = {
 const CardActionsGroup = ({actions, isInverse}: CardActionsGroupProps): JSX.Element => {
     return (
         <Inline space={0}>
-            {actions.map(({onPress, label, Icon, iconSize = 20}, index) =>
-                Icon ? (
-                    <IconButton
-                        size={48}
-                        key={index}
-                        onPress={onPress}
-                        aria-label={label}
-                        className={styles.cardActionIconButton}
-                        style={{display: 'flex'}}
-                    >
-                        <div className={isInverse ? styles.cardActionInverse : styles.cardAction}>
-                            <Icon color={vars.colors.neutralHigh} size={iconSize} />
-                        </div>
-                    </IconButton>
-                ) : (
-                    <div key={index} className={styles.cardActionIconButton} />
-                )
+            {actions.map(
+                (
+                    {
+                        onPress,
+                        label,
+                        Icon,
+                        iconSize = 20,
+                        iconColor = vars.colors.neutralHigh,
+                        iconBackground = styles.cardAction,
+                        iconBackgroundInverse = styles.cardActionInverse,
+                    },
+                    index
+                ) =>
+                    Icon ? (
+                        <IconButton
+                            size={48}
+                            key={index}
+                            onPress={onPress}
+                            aria-label={label}
+                            className={styles.cardActionIconButton}
+                            style={{display: 'flex'}}
+                        >
+                            <div className={isInverse ? iconBackgroundInverse : iconBackground}>
+                                <Icon color={iconColor} size={iconSize} />
+                            </div>
+                        </IconButton>
+                    ) : (
+                        <div key={index} className={styles.cardActionIconButton} />
+                    )
             )}
         </Inline>
     );
@@ -789,6 +804,9 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     onPress: onVideoControlPress,
                     label: 'Video controls',
                     iconSize: 12,
+                    iconColor: vars.colors.inverse,
+                    iconBackground: styles.videoAction,
+                    iconBackgroundInverse: styles.videoAction,
                 },
             ];
         }
@@ -1013,6 +1031,9 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     onPress: onVideoControlPress,
                     label: 'Video controls',
                     iconSize: 12,
+                    iconColor: vars.colors.inverse,
+                    iconBackground: styles.videoAction,
+                    iconBackgroundInverse: styles.videoAction,
                 },
             ];
         }
