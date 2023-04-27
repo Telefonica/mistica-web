@@ -19,6 +19,7 @@ import IconPlayFilled from './generated/mistica-icons/icon-play-filled';
 import {combineRefs} from './utils/common';
 import Spinner from './spinner';
 import Video from './video';
+import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
 
 import type {VideoSource} from './video';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
@@ -811,6 +812,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
             ];
         }
 
+        const isExternalInverse = useIsInverseVariant();
         const withGradient = !!backgroundImage || !!backgroundVideo;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose || backgroundVideo;
@@ -839,17 +841,19 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     }
                 >
                     <div className={styles.displayCardContainer}>
-                        {backgroundVideo ? (
-                            <div
-                                className={styles.displayCardBackground}
-                                style={{
-                                    zIndex: 0,
-                                }}
-                                children={video}
-                            />
-                        ) : (
-                            image
-                        )}
+                        <ThemeVariant isInverse={isExternalInverse}>
+                            {backgroundVideo ? (
+                                <div
+                                    className={styles.displayCardBackground}
+                                    style={{
+                                        zIndex: 0,
+                                    }}
+                                    children={video}
+                                />
+                            ) : (
+                                image
+                            )}
+                        </ThemeVariant>
 
                         <div
                             className={styles.displayCardContent}
