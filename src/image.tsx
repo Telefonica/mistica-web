@@ -51,7 +51,7 @@ type ImageErrorProps = {
     noBorderRadius?: boolean;
 };
 
-export const ImageError: React.FC<ImageErrorProps> = ({noBorderRadius}) => {
+const ImageError = ({noBorderRadius}: ImageErrorProps) => {
     const isInverse = useIsInverseVariant();
     const {skinName} = useTheme();
     return (

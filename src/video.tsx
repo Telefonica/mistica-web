@@ -17,10 +17,16 @@ export const RATIO = {
     '4:3': 4 / 3,
 };
 
-type VideoSource = {
+type VideoSourceWithType = {
     src: string;
     type?: string; // video/webm, video/mp4...
 };
+
+export type VideoSource =
+    | string
+    | ReadonlyArray<string>
+    | VideoSourceWithType
+    | ReadonlyArray<VideoSourceWithType>;
 
 /** Transparent 1x1px PNG  */
 const TRANSPARENT_PIXEL =
@@ -33,7 +39,7 @@ export type VideoProps = {
     /** defaults to 1:1, if both width and height are given, aspectRatio is ignored. To use original video proportions, set aspectRatio to 0 */
     aspectRatio?: AspectRatio | number;
     /** accepts multiple sources */
-    src: string | ReadonlyArray<string> | VideoSource | ReadonlyArray<VideoSource>;
+    src: VideoSource;
     /** defaults to true */
     loop?: boolean;
     /** defaults to true */
@@ -93,7 +99,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         }, [autoPlay]);
 
         // normalize sources
-        const sources: Array<VideoSource> = (Array.isArray(src) ? src : [src]).map((source) => {
+        const sources: Array<VideoSourceWithType> = (Array.isArray(src) ? src : [src]).map((source) => {
             if (typeof source === 'string') {
                 return {src: source};
             } else {

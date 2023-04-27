@@ -20,6 +20,7 @@ import {combineRefs} from './utils/common';
 import Spinner from './spinner';
 import Video from './video';
 
+import type {VideoSource} from './video';
 import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {
@@ -208,7 +209,7 @@ const getVideoActionIcon = (state: VideoState) => {
 };
 
 const useVideoWithControls = (
-    videoSrc?: VideoProp,
+    videoSrc?: VideoSource,
     poster?: string,
     videoRef?: React.RefObject<HTMLVideoElement>,
     isInverse = true
@@ -234,7 +235,7 @@ const useVideoWithControls = (
 
     const video = React.useMemo(
         () =>
-            videoSrc && videoStatus !== 'error' ? (
+            videoSrc ? (
                 <div
                     style={{
                         width: '100%',
@@ -244,21 +245,23 @@ const useVideoWithControls = (
                             : vars.colors.backgroundSkeleton,
                     }}
                 >
-                    <Video
-                        ref={combineRefs(videoController, videoRef)}
-                        src={videoSrc}
-                        poster={poster}
-                        aspectRatio={0}
-                        autoPlay={false}
-                        playOnFullLoad
-                        preload="auto"
-                        onError={onVideoError}
-                        onPause={onVideoPause}
-                        onPlay={onVideoPlay}
-                    />
+                    {videoStatus !== 'error' ? (
+                        <Video
+                            ref={combineRefs(videoController, videoRef)}
+                            src={videoSrc}
+                            poster={poster}
+                            aspectRatio={0}
+                            autoPlay={false}
+                            playOnFullLoad
+                            preload="auto"
+                            onError={onVideoError}
+                            onPause={onVideoPause}
+                            onPlay={onVideoPlay}
+                        />
+                    ) : (
+                        <Image width="100%" height="100%" src={poster || '//:0'} loadingFallback={false} />
+                    )}
                 </div>
-            ) : videoStatus === 'error' ? (
-                <Image width="100%" height="100%" src={poster || '//:0'} loadingFallback={false} />
             ) : undefined,
         [videoSrc, poster, videoRef, videoStatus, isInverse]
     );
@@ -708,15 +711,8 @@ interface DisplayMediaCardWithImageProps extends CommonDisplayCardProps {
     backgroundImage: string;
 }
 
-type VideoSource = {
-    src: string;
-    type?: string; // video/webm, video/mp4...
-};
-
-type VideoProp = string | ReadonlyArray<string> | VideoSource | ReadonlyArray<VideoSource>;
-
 type DisplayMediaCardWithVideoProps = Omit<CommonDisplayCardProps, 'actions' | 'onClose'> & {
-    backgroundVideo: VideoProp;
+    backgroundVideo: VideoSource;
     poster?: string;
     backgroundVideoRef?: React.RefObject<HTMLVideoElement>;
 };
@@ -824,7 +820,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                             : undefined
                     }
                 >
-                    <div className={styles.displayCard}>
+                    <div className={styles.displayCardContainer}>
                         {backgroundVideo ? (
                             <div
                                 className={styles.displayCardBackground}
@@ -838,7 +834,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                         )}
 
                         <div
-                            className={styles.displayCard}
+                            className={styles.displayCardContent}
                             style={{
                                 paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
                                 zIndex: 1,
@@ -969,7 +965,7 @@ interface PosterCardWithImageProps extends PosterCardBaseProps {
 }
 
 type PosterCardWithVideoProps = Omit<PosterCardBaseProps, 'actions' | 'onClose'> & {
-    backgroundVideo: VideoProp;
+    backgroundVideo: VideoSource;
     poster?: string;
     backgroundVideoRef?: React.RefObject<HTMLVideoElement>;
 };
@@ -1050,7 +1046,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                         backgroundImage || backgroundVideo ? vars.colors.backgroundContainer : undefined
                     }
                 >
-                    <div className={styles.displayCard}>
+                    <div className={styles.displayCardContainer}>
                         {backgroundVideo ? (
                             <div
                                 className={styles.displayCardBackground}
@@ -1064,7 +1060,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                         )}
 
                         <div
-                            className={styles.displayCard}
+                            className={styles.displayCardContent}
                             style={{
                                 paddingTop: withGradient && !icon && !hasTopActions ? 0 : 24,
                                 zIndex: 1,

@@ -125,7 +125,15 @@ export const snapCardTouchableHoverTransparent = style([
     },
 ]);
 
-export const displayCard = style([
+export const displayCardContainer = style([
+    sprinkles({
+        width: '100%',
+        height: '100%',
+        position: 'relative',
+    }),
+]);
+
+export const displayCardContent = style([
     sprinkles({
         display: 'flex',
         flex: 1,
