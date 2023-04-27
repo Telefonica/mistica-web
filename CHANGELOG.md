@@ -1,3 +1,13 @@
+# [14.7.0](https://github.com/Telefonica/mistica-web/compare/v14.6.0...v14.7.0) (2023-04-27)
+
+
+### Features
+
+* **Button:** show loading state when onPress returns a promise until it resolves ([#726](https://github.com/Telefonica/mistica-web/issues/726)) ([262e17b](https://github.com/Telefonica/mistica-web/commit/262e17b596acb8d1da76fd3d36356018402a385f))
+* **Logo, MovistarLogo, VivoLogo, O2Logo, TelefonicaLogo, BlauLogo:** new components ([#721](https://github.com/Telefonica/mistica-web/issues/721)) ([ff04a85](https://github.com/Telefonica/mistica-web/commit/ff04a85aebe846ed8bc4b63ffbf4bc643389502f))
+* **skin:** make border radius configurable by skin ([#723](https://github.com/Telefonica/mistica-web/issues/723)) ([07cb30d](https://github.com/Telefonica/mistica-web/commit/07cb30dd3166eacb899dea3a4158efe13977baf9))
+* **ThemeVariant:** support alternative theme variant ([#722](https://github.com/Telefonica/mistica-web/issues/722)) ([76128f0](https://github.com/Telefonica/mistica-web/commit/76128f0421062323bc39319389161f0e7c8dd2cc))
+
 # [14.6.0](https://github.com/Telefonica/mistica-web/compare/v14.5.0...v14.6.0) (2023-04-18)
 
 
