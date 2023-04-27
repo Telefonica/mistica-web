@@ -43,7 +43,7 @@ const generateSkinSrc = (skinName) => {
 
     return `
 import {${skinConstantName}} from './constants';
-${needsApplyAlphaImport ? `import {applyAlpha} from '../utils/color'` : ''};
+${needsApplyAlphaImport ? `import {applyAlpha} from '../utils/color';` : ''}
 
 import type {GetKnownSkin} from './types';
 
