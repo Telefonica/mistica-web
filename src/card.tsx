@@ -230,7 +230,7 @@ const useVideoWithControls = (
             clearTimeout(spinnerTimeoutId);
             dispatch('reset');
         };
-    }, [videoSrc, poster]);
+    }, [videoSrc]);
 
     const video = React.useMemo(
         () =>
@@ -251,6 +251,7 @@ const useVideoWithControls = (
                         aspectRatio={0}
                         autoPlay={false}
                         playOnFullLoad
+                        preload="auto"
                         onError={onVideoError}
                         onPause={onVideoPause}
                         onPlay={onVideoPlay}
