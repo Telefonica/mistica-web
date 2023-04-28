@@ -762,7 +762,7 @@ const cardSnippets: Array<Snippet> = [
           pretitle="Pretitle"
           title="Title"
           description="Description"
-          backgroundImage="https://api.lorem.space/image/watch?w=700&h=700"
+          backgroundImage="https://source.unsplash.com/900x900/?landscape"
           onClose={() => {}}
           actions={[
             {
