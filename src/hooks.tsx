@@ -116,7 +116,8 @@ export const useAriaId = (id?: string): string => {
     }
 };
 
-const useSpecificWindowObject = (useInnerFrame: boolean) => (useInnerFrame ? window?.self : window);
+const useSpecificWindowObject = (useInnerFrame: boolean): Window | undefined =>
+    useInnerFrame ? window?.self : window;
 
 export const useWindowSize = (
     useInnerIFrame = false
@@ -142,6 +143,9 @@ export const useWindowSize = (
     );
 
     React.useEffect(() => {
+        if (typeof currentWindow === 'undefined') {
+            return;
+        }
         const handleResize = () => {
             setWindowHeight(currentWindow.innerHeight);
             setWindowWidth(currentWindow.innerWidth);
