@@ -5,6 +5,7 @@ import {isRunningAcceptanceTest} from './utils/platform';
 import {
     useElementDimensions,
     useIsomorphicLayoutEffect,
+    useIsWithinIFrame,
     useScreenHeight,
     useScreenSize,
     useTheme,
@@ -54,10 +55,13 @@ const FixedFooterLayout: React.FC<Props> = ({
     const {isTabletOrSmaller} = useScreenSize();
     const {platformOverrides} = useTheme();
     const {height: realFooterHeight, ref} = useElementDimensions();
-    const windowHeight = useWindowHeight();
+    const isWithinIFrame = useIsWithinIFrame();
+    const windowHeight = useWindowHeight(true);
     const screenHeight = useScreenHeight();
 
-    const hasContentEnoughVSpace = windowHeight - realFooterHeight > screenHeight / FOOTER_CANVAS_RATIO;
+    const hasContentEnoughVSpace =
+        windowHeight - realFooterHeight >
+        (isWithinIFrame ? windowHeight : screenHeight) / FOOTER_CANVAS_RATIO;
 
     useIsomorphicLayoutEffect(() => {
         onChangeFooterHeight?.(realFooterHeight);
@@ -104,6 +108,16 @@ const FixedFooterLayout: React.FC<Props> = ({
 
     const isContentWithScroll = hasScroll(getScrollableParentElement(containerRef.current));
     const isFixedFooter = hasContentEnoughVSpace || !isContentWithScroll;
+    console.log('-----');
+    console.log('isContentWithScroll', isContentWithScroll);
+    console.log('hasContentEnoughVSpace', hasContentEnoughVSpace);
+    console.log('isContentWithScroll', isContentWithScroll);
+
+    console.log('windowHeight', windowHeight);
+    console.log('realFooterHeight', realFooterHeight);
+    console.log('screenHeight', screenHeight);
+    console.log('ownerDocument', window.top !== window.self);
+    // = windowHeight - realFooterHeight > screenHeight / FOOTER_CANVAS_RATIO;
 
     return (
         <>
