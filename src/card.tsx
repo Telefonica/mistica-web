@@ -224,10 +224,6 @@ const getVideoActionIcon = (state: VideoState) => {
     return undefined;
 };
 
-const useBackgroundImage = (backgroundImage?: string) => {
-    return <Image width="100%" height="100%" src={backgroundImage || '//:0'} />;
-};
-
 const useVideoWithControls = (
     videoSrc?: VideoSource,
     poster?: string,
@@ -252,41 +248,35 @@ const useVideoWithControls = (
         };
     }, [videoSrc]);
 
-    const isInverse = useIsInverseVariant();
-    const errorFallback = useBackgroundImage(poster);
+    const video = React.useMemo(() => {
+        const videoContent =
+            videoSrc && videoStatus !== 'error' ? (
+                <Video
+                    ref={combineRefs(videoController, videoRef)}
+                    src={videoSrc}
+                    aspectRatio={0}
+                    autoPlay={false}
+                    playOnFullLoad
+                    preload="auto"
+                    onError={onVideoError}
+                    onPause={onVideoPause}
+                    onPlay={onVideoPlay}
+                />
+            ) : undefined;
 
-    const video = React.useMemo(
-        () =>
-            videoSrc ? (
-                videoStatus !== 'error' ? (
-                    <div
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: isInverse
-                                ? vars.colors.backgroundSkeletonInverse
-                                : vars.colors.backgroundSkeleton,
-                        }}
-                    >
-                        <Video
-                            ref={combineRefs(videoController, videoRef)}
-                            src={videoSrc}
-                            poster={poster}
-                            aspectRatio={0}
-                            autoPlay={false}
-                            playOnFullLoad
-                            preload="auto"
-                            onError={onVideoError}
-                            onPause={onVideoPause}
-                            onPlay={onVideoPlay}
-                        />
-                    </div>
-                ) : (
-                    errorFallback
-                )
-            ) : undefined,
-        [videoSrc, poster, videoRef, videoStatus, isInverse, errorFallback]
-    );
+        const posterImage = <Image width="100%" height="100%" src={poster || '//:0'} />;
+
+        return (
+            <div style={{position: 'relative', width: '100%', height: '100%'}}>
+                <div style={{position: 'absolute', zIndex: 0, width: '100%', height: '100%'}}>
+                    {posterImage}
+                </div>
+                <div style={{position: 'relative', zIndex: 1, width: '100%', height: '100%'}}>
+                    {videoContent}
+                </div>
+            </div>
+        );
+    }, [videoSrc, poster, videoRef, videoStatus]);
 
     const onVideoControlPress = () => {
         const video = videoController.current;
@@ -781,7 +771,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         },
         ref
     ) => {
-        const image = useBackgroundImage(backgroundImage);
+        const image = <Image width="100%" height="100%" src={backgroundImage || '//:0'} />;
         const {video, videoStatus, onVideoControlPress} = useVideoWithControls(
             backgroundVideo,
             poster,
@@ -794,7 +784,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     Icon: getVideoActionIcon(videoStatus),
                     onPress: onVideoControlPress,
                     label: 'Video controls',
-                    iconSize: 12,
+                    iconSize: videoStatus === 'loadingSpinner' ? 16 : 12,
                     iconColor: vars.colors.inverse,
                     iconBackground: styles.videoAction,
                     iconBackgroundInverse: styles.videoAction,
@@ -803,6 +793,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         }
 
         const isExternalInverse = useIsInverseVariant();
+        const {isDarkMode} = useTheme();
         const withGradient = !!backgroundImage || !!backgroundVideo;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose || backgroundVideo;
@@ -825,6 +816,13 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     width="100%"
                     minHeight="100%"
                     isInverse={isInverse}
+                    background={
+                        // Check for dark mode is needed until brandHighOnInverse token is created
+                        // https://github.com/Telefonica/mistica-design/issues/1215
+                        !isDarkMode && isExternalInverse
+                            ? vars.colors.brandHigh
+                            : vars.colors.backgroundContainer
+                    }
                 >
                     <div className={styles.displayCardContainer}>
                         <ThemeVariant isInverse={isExternalInverse}>
@@ -1003,7 +1001,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         },
         ref
     ) => {
-        const image = useBackgroundImage(backgroundImage);
+        const image = <Image width="100%" height="100%" src={backgroundImage || '//:0'} />;
         const {video, videoStatus, onVideoControlPress} = useVideoWithControls(
             backgroundVideo,
             poster,
@@ -1016,7 +1014,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     Icon: getVideoActionIcon(videoStatus),
                     onPress: onVideoControlPress,
                     label: 'Video controls',
-                    iconSize: 12,
+                    iconSize: videoStatus === 'loadingSpinner' ? 16 : 12,
                     iconColor: vars.colors.inverse,
                     iconBackground: styles.videoAction,
                     iconBackgroundInverse: styles.videoAction,
@@ -1025,6 +1023,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         }
 
         const isExternalInverse = useIsInverseVariant();
+        const {isDarkMode} = useTheme();
         const withGradient = !!backgroundImage || !!backgroundVideo;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose || backgroundVideo;
@@ -1050,6 +1049,13 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     width="100%"
                     minHeight="100%"
                     isInverse
+                    background={
+                        // Check for dark mode is needed until brandHighOnInverse token is created
+                        // https://github.com/Telefonica/mistica-design/issues/1215
+                        !isDarkMode && isExternalInverse
+                            ? vars.colors.brandHigh
+                            : vars.colors.backgroundContainer
+                    }
                 >
                     <div className={styles.displayCardContainer}>
                         <ThemeVariant isInverse={isExternalInverse}>
