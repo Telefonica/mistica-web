@@ -117,7 +117,7 @@ export const useAriaId = (id?: string): string => {
 };
 
 const useSpecificWindowObject = (useInnerFrame: boolean): Window | undefined =>
-    useInnerFrame ? window?.self : window;
+    typeof window !== 'undefined' ? (useInnerFrame ? window?.self : window) : undefined;
 
 export const useWindowSize = (
     useInnerIFrame = false
