@@ -108,16 +108,6 @@ const FixedFooterLayout: React.FC<Props> = ({
 
     const isContentWithScroll = hasScroll(getScrollableParentElement(containerRef.current));
     const isFixedFooter = hasContentEnoughVSpace || !isContentWithScroll;
-    console.log('-----');
-    console.log('isContentWithScroll', isContentWithScroll);
-    console.log('hasContentEnoughVSpace', hasContentEnoughVSpace);
-    console.log('isContentWithScroll', isContentWithScroll);
-
-    console.log('windowHeight', windowHeight);
-    console.log('realFooterHeight', realFooterHeight);
-    console.log('screenHeight', screenHeight);
-    console.log('ownerDocument', window.top !== window.self);
-    // = windowHeight - realFooterHeight > screenHeight / FOOTER_CANVAS_RATIO;
 
     return (
         <>
