@@ -116,7 +116,7 @@ export const useAriaId = (id?: string): string => {
     }
 };
 
-const useSpecificWindowObject = (useInnerFrame: boolean) => (useInnerFrame ? window.self : window);
+const useSpecificWindowObject = (useInnerFrame: boolean) => (useInnerFrame ? window?.self : window);
 
 export const useWindowSize = (
     useInnerIFrame = false
