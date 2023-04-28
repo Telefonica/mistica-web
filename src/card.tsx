@@ -819,9 +819,11 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     background={
                         // Check for dark mode is needed until brandHighOnInverse token is created
                         // https://github.com/Telefonica/mistica-design/issues/1215
-                        !isDarkMode && isExternalInverse
-                            ? vars.colors.brandHigh
-                            : vars.colors.backgroundContainer
+                        backgroundImage || backgroundVideo
+                            ? !isDarkMode && isExternalInverse
+                                ? vars.colors.brandHigh
+                                : vars.colors.backgroundContainer
+                            : undefined
                     }
                 >
                     <div className={styles.displayCardContainer}>
