@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const DESIGN_TOKENS_FOLDER = path.join(__dirname, '..', '..', '.github', 'mistica-design', 'tokens');
+const SKINS_FOLDER = path.join(__dirname, '..', '..', 'src', 'skins');
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
@@ -100,7 +101,7 @@ const generateSkinFiles = () => {
         }
 
         const skinSrc = generateSkinSrc(skinName);
-        fs.writeFileSync(path.join(__dirname, '..', '..', 'src', 'skins', `${skinName}.tsx`), skinSrc);
+        fs.writeFileSync(path.join(SKINS_FOLDER, `${skinName}.tsx`), skinSrc);
     });
 };
 
