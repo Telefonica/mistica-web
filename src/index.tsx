@@ -73,8 +73,19 @@ export {
     FunnelNavigationBar,
     NavigationBarActionGroup,
     NavigationBarAction,
-    NavigationBarLogo,
 } from './navigation-bar';
+export {
+    /**
+     * @deprecated This component is deprecated, please use Logo instead
+     */
+    Logo as NavigationBarLogo,
+    Logo,
+    MovistarLogo,
+    VivoLogo,
+    O2Logo,
+    TelefonicaLogo,
+    BlauLogo,
+} from './logo';
 export {default as Image} from './image';
 export {default as Chip} from './chip';
 export {default as Video} from './video';
