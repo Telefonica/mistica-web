@@ -9,6 +9,8 @@ import {
     Stack,
     Text2,
     Inline,
+    Title1,
+    ThemeVariant,
 } from '..';
 import {PosterCard} from '../card';
 import usingVrImg from './images/using-vr.jpg';
@@ -86,8 +88,28 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                   poster: BACKGROUND_VIDEO_POSTER_SRC,
               };
 
+    const wrongBackgroundProps =
+        background === 'image'
+            ? {
+                  onClose: closable ? () => {} : undefined,
+                  actions: withTopAction
+                      ? [
+                            {
+                                Icon: IconLightningRegular,
+                                onPress: () => {},
+                                label: 'Lightning',
+                            },
+                        ]
+                      : undefined,
+                  backgroundImage: 'test',
+              }
+            : {
+                  backgroundVideo: 'test',
+                  poster: 'test',
+              };
+
     return (
-        <>
+        <Stack space={32} dataAttributes={{testid: 'poster-card'}}>
             <PosterCard
                 {...backgroundProps}
                 icon={icon}
@@ -95,13 +117,42 @@ export const Default: StoryComponent<PosterCardArgs> = ({
                 pretitle={pretitle}
                 title={title}
                 description={description}
-                dataAttributes={{testid: 'poster-card'}}
                 aria-label="Poster card label"
                 width={width}
                 height={height}
                 aspectRatio={aspectRatio}
             />
-        </>
+
+            <Title1>Wrong source for media</Title1>
+            <PosterCard
+                {...wrongBackgroundProps}
+                icon={icon}
+                headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                pretitle={pretitle}
+                title={title}
+                description={description}
+                aria-label="Poster card label"
+                width={width}
+                height={height}
+                aspectRatio={aspectRatio}
+            />
+
+            <Title1>Wrong source for media with inverse</Title1>
+            <ThemeVariant isInverse>
+                <PosterCard
+                    {...wrongBackgroundProps}
+                    icon={icon}
+                    headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                    pretitle={pretitle}
+                    title={title}
+                    description={description}
+                    aria-label="Poster card label"
+                    width={width}
+                    height={height}
+                    aspectRatio={aspectRatio}
+                />
+            </ThemeVariant>
+        </Stack>
     );
 };
 

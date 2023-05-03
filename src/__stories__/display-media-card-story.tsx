@@ -13,6 +13,8 @@ import {
     Stack,
     Text2,
     Inline,
+    Title1,
+    ThemeVariant,
 } from '..';
 import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
@@ -102,22 +104,77 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                   poster: BACKGROUND_VIDEO_POSTER_SRC,
               };
 
+    const wrongBackgroundProps =
+        background === 'image'
+            ? {
+                  onClose: closable ? () => {} : undefined,
+                  actions: withTopAction
+                      ? [
+                            {
+                                Icon: IconLightningRegular,
+                                onPress: () => {},
+                                label: 'Lightning',
+                            },
+                        ]
+                      : undefined,
+                  backgroundImage: 'test',
+              }
+            : {
+                  backgroundVideo: 'test',
+                  poster: 'test',
+              };
+
     return (
-        <DisplayMediaCard
-            {...backgroundProps}
-            icon={icon}
-            headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
-            pretitle={pretitle}
-            title={title}
-            description={description}
-            button={button}
-            buttonLink={buttonLink}
-            secondaryButton={secondaryButton}
-            dataAttributes={{testid: 'display-media-card'}}
-            aria-label="Display data card label"
-            width={width}
-            aspectRatio={aspectRatio}
-        />
+        <Stack space={32} dataAttributes={{testid: 'display-media-card'}}>
+            <DisplayMediaCard
+                {...backgroundProps}
+                icon={icon}
+                headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                pretitle={pretitle}
+                title={title}
+                description={description}
+                button={button}
+                buttonLink={buttonLink}
+                secondaryButton={secondaryButton}
+                aria-label="Display data card label"
+                width={width}
+                aspectRatio={aspectRatio}
+            />
+
+            <Title1>Wrong source for media</Title1>
+            <DisplayMediaCard
+                {...wrongBackgroundProps}
+                icon={icon}
+                headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                pretitle={pretitle}
+                title={title}
+                description={description}
+                button={button}
+                buttonLink={buttonLink}
+                secondaryButton={secondaryButton}
+                aria-label="Display data card label"
+                width={width}
+                aspectRatio={aspectRatio}
+            />
+
+            <Title1>Wrong source for media with inverse</Title1>
+            <ThemeVariant isInverse>
+                <DisplayMediaCard
+                    {...wrongBackgroundProps}
+                    icon={icon}
+                    headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                    pretitle={pretitle}
+                    title={title}
+                    description={description}
+                    button={button}
+                    buttonLink={buttonLink}
+                    secondaryButton={secondaryButton}
+                    aria-label="Display data card label"
+                    width={width}
+                    aspectRatio={aspectRatio}
+                />
+            </ThemeVariant>
+        </Stack>
     );
 };
 
