@@ -173,6 +173,8 @@ const MaybeWithActions = ({
 };
 
 const renderBackgroundImage = (src?: string) => {
+    // Adding '//:0' to force an error in case src is undefined
+    // https://stackoverflow.com/a/5775621
     return <Image width="100%" height="100%" src={src || '//:0'} />;
 };
 
