@@ -136,7 +136,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                 button={button}
                 buttonLink={buttonLink}
                 secondaryButton={secondaryButton}
-                aria-label="Display data card label"
+                aria-label="Display media card label"
                 width={width}
                 aspectRatio={aspectRatio}
             />
@@ -152,7 +152,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                 button={button}
                 buttonLink={buttonLink}
                 secondaryButton={secondaryButton}
-                aria-label="Display data card label"
+                aria-label="Display media card fallback label"
                 width={width}
                 aspectRatio={aspectRatio}
             />
@@ -169,7 +169,7 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
                     button={button}
                     buttonLink={buttonLink}
                     secondaryButton={secondaryButton}
-                    aria-label="Display data card label"
+                    aria-label="Display data card fallback inverse label"
                     width={width}
                     aspectRatio={aspectRatio}
                 />
