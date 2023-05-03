@@ -83,7 +83,8 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
 
         React.useEffect(() => {
             const video = videoRef.current;
-            const shouldAutoPlay = autoPlay === 'streaming' || (autoPlay && isLoadComplete);
+            const shouldAutoPlay =
+                (autoPlay === 'streaming' || (autoPlay && isLoadComplete)) && !isRunningAcceptanceTest();
             if (video && shouldAutoPlay && video.paused) {
                 video.play();
             }
