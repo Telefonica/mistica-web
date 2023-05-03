@@ -45,9 +45,7 @@ export type VideoProps = {
     /** defaults to true */
     muted?: boolean;
     /** defaults to true */
-    autoPlay?: boolean;
-    /** defaults to false */
-    playOnFullLoad?: boolean;
+    autoPlay?: boolean | 'streaming' | 'when-loaded';
     onError?: () => void;
     onPlay?: () => void;
     onPause?: () => void;
@@ -64,7 +62,6 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             src,
             poster,
             autoPlay = !isRunningAcceptanceTest(), // default true, but disable autoPlay in screenshot tests
-            playOnFullLoad = false,
             muted = true,
             loop = true,
             preload = 'none',
@@ -86,17 +83,11 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
 
         React.useEffect(() => {
             const video = videoRef.current;
-            if (video && isLoadComplete && playOnFullLoad && video.paused && !isRunningAcceptanceTest()) {
+            const shouldAutoPlay = autoPlay === 'streaming' || (autoPlay && isLoadComplete);
+            if (video && shouldAutoPlay && video.paused) {
                 video.play();
             }
-        }, [isLoadComplete, playOnFullLoad]);
-
-        React.useEffect(() => {
-            const video = videoRef.current;
-            if (video && autoPlay && video.paused) {
-                video.play();
-            }
-        }, [autoPlay]);
+        }, [isLoadComplete, autoPlay]);
 
         // normalize sources
         const sources: Array<VideoSourceWithType> = (Array.isArray(src) ? src : [src]).map((source) => {
@@ -113,7 +104,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 playsInline
                 disablePictureInPicture
                 disableRemotePlayback
-                autoPlay={autoPlay}
+                autoPlay={autoPlay === 'streaming'}
                 muted={muted}
                 loop={loop}
                 className={styles.video}

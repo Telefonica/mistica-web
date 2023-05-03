@@ -261,8 +261,7 @@ const useVideoWithControls = (
                     ref={combineRefs(videoController, videoRef)}
                     src={videoSrc}
                     aspectRatio={0}
-                    autoPlay={false}
-                    playOnFullLoad
+                    autoPlay
                     preload="auto"
                     onError={onVideoError}
                     onPause={onVideoPause}
