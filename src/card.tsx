@@ -172,32 +172,36 @@ const MaybeWithActions = ({
     );
 };
 
-type VideoState = 'loading' | 'loadingSpinner' | 'played' | 'paused' | 'error';
+const renderBackgroundImage = (src?: string) => {
+    return <Image width="100%" height="100%" src={src || '//:0'} />;
+};
+
+type VideoState = 'loading' | 'loadingTimeout' | 'playing' | 'paused' | 'error';
 
 type VideoAction = 'play' | 'pause' | 'fail' | 'showSpinner' | 'reset';
 
 const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> = {
     loading: {
-        showSpinner: 'loadingSpinner',
-        play: 'played',
+        showSpinner: 'loadingTimeout',
+        play: 'playing',
         pause: 'paused',
         fail: 'error',
     },
 
-    loadingSpinner: {
-        play: 'played',
+    loadingTimeout: {
+        play: 'playing',
         pause: 'paused',
         fail: 'error',
         reset: 'loading',
     },
 
-    played: {
+    playing: {
         pause: 'paused',
         reset: 'loading',
     },
 
     paused: {
-        play: 'played',
+        play: 'playing',
         reset: 'loading',
     },
 
@@ -210,14 +214,14 @@ const videoReducer = (state: VideoState, action: VideoAction): VideoState =>
     transitions[state][action] || state;
 
 const getVideoActionIcon = (state: VideoState) => {
-    if (state === 'played') {
+    if (state === 'playing') {
         return IconPauseFilled;
     }
     if (state === 'paused' || state === 'loading') {
         return IconPlayFilled;
     }
 
-    if (state === 'loadingSpinner') {
+    if (state === 'loadingTimeout') {
         return Spinner;
     }
 
@@ -264,14 +268,14 @@ const useVideoWithControls = (
                 />
             ) : undefined;
 
-        const posterImage = <Image width="100%" height="100%" src={poster || '//:0'} />;
+        const posterImage = renderBackgroundImage(poster);
 
         return (
-            <div style={{position: 'relative', width: '100%', height: '100%'}}>
-                <div style={{position: 'absolute', zIndex: 0, width: '100%', height: '100%'}}>
+            <div className={styles.displayCardVideoContainer}>
+                <div className={styles.displayCardVideoPoster} style={{zIndex: 0}}>
                     {posterImage}
                 </div>
-                <div style={{position: 'relative', zIndex: 1, width: '100%', height: '100%'}}>
+                <div className={styles.displayCardVideo} style={{zIndex: 1}}>
                     {videoContent}
                 </div>
             </div>
@@ -285,7 +289,7 @@ const useVideoWithControls = (
                 dispatch('showSpinner');
             } else if (videoStatus === 'paused') {
                 video.play();
-            } else if (videoStatus === 'played') {
+            } else if (videoStatus === 'playing') {
                 video.pause();
             }
         }
@@ -771,7 +775,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         },
         ref
     ) => {
-        const image = <Image width="100%" height="100%" src={backgroundImage || '//:0'} />;
+        const image = renderBackgroundImage(backgroundImage);
         const {video, videoStatus, onVideoControlPress} = useVideoWithControls(
             backgroundVideo,
             poster,
@@ -784,7 +788,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     Icon: getVideoActionIcon(videoStatus),
                     onPress: onVideoControlPress,
                     label: 'Video controls',
-                    iconSize: videoStatus === 'loadingSpinner' ? 16 : 12,
+                    iconSize: videoStatus === 'loadingTimeout' ? 16 : 12,
                     iconColor: vars.colors.inverse,
                     iconBackground: styles.videoAction,
                     iconBackgroundInverse: styles.videoAction,
@@ -796,7 +800,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         const {isDarkMode} = useTheme();
         const withGradient = !!backgroundImage || !!backgroundVideo;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
-        const hasTopActions = actions?.length || onClose || backgroundVideo;
+        const hasTopActions = actions?.length || onClose;
 
         return (
             <MaybeWithActions
@@ -833,8 +837,9 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                                 style={{
                                     zIndex: 0,
                                 }}
-                                children={backgroundVideo ? video : backgroundImage ? image : undefined}
-                            />
+                            >
+                                {backgroundVideo ? video : backgroundImage ? image : undefined}
+                            </div>
                         </ThemeVariant>
 
                         <div
@@ -1003,7 +1008,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         },
         ref
     ) => {
-        const image = <Image width="100%" height="100%" src={backgroundImage || '//:0'} />;
+        const image = renderBackgroundImage(backgroundImage);
         const {video, videoStatus, onVideoControlPress} = useVideoWithControls(
             backgroundVideo,
             poster,
@@ -1016,7 +1021,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     Icon: getVideoActionIcon(videoStatus),
                     onPress: onVideoControlPress,
                     label: 'Video controls',
-                    iconSize: videoStatus === 'loadingSpinner' ? 16 : 12,
+                    iconSize: videoStatus === 'loadingTimeout' ? 16 : 12,
                     iconColor: vars.colors.inverse,
                     iconBackground: styles.videoAction,
                     iconBackgroundInverse: styles.videoAction,
@@ -1028,7 +1033,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         const {isDarkMode} = useTheme();
         const withGradient = !!backgroundImage || !!backgroundVideo;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
-        const hasTopActions = actions?.length || onClose || backgroundVideo;
+        const hasTopActions = actions?.length || onClose;
         const {textPresets} = useTheme();
 
         return (
@@ -1066,8 +1071,9 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                                 style={{
                                     zIndex: 0,
                                 }}
-                                children={backgroundVideo ? video : backgroundImage ? image : undefined}
-                            />
+                            >
+                                {backgroundVideo ? video : backgroundImage ? image : undefined}
+                            </div>
                         </ThemeVariant>
 
                         <div
