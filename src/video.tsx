@@ -19,7 +19,7 @@ export const RATIO = {
 
 type VideoSourceWithType = {
     src: string;
-    type?: string; // video/webm, video/mp4...
+    mimeType?: `video/${string}`; // video/webm, video/mp4...
 };
 
 export type VideoSource =
@@ -51,7 +51,7 @@ export type VideoProps = {
     onPause?: () => void;
     poster?: string;
     children?: void;
-    /** defaults to none */
+    /** defaults to auto */
     preload?: 'none' | 'metadata' | 'auto';
     dataAttributes?: DataAttributes;
 };
@@ -64,7 +64,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             autoPlay = !isRunningAcceptanceTest(), // default true, but disable autoPlay in screenshot tests
             muted = true,
             loop = true,
-            preload = 'none',
+            preload = 'auto',
             onError,
             onPause,
             onPlay,
@@ -123,8 +123,8 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                     borderRadius: !borderRadiusContext ? 0 : vars.borderRadii.container,
                 }}
             >
-                {sources.map(({src, type}, index) => (
-                    <source key={index} src={src} type={type} />
+                {sources.map(({src, mimeType}, index) => (
+                    <source key={index} src={src} type={mimeType} />
                 ))}
             </video>
         );

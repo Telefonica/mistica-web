@@ -46,7 +46,7 @@ export const Default: StoryComponent = () => {
                     height={480 / 2.4}
                     ref={videoRef}
                     autoPlay={false}
-                    src={{src: VIDEO_SRC, type: 'video/mp4'}}
+                    src={{src: VIDEO_SRC, mimeType: 'video/mp4'}}
                 />
                 <Inline space={16}>
                     <ButtonPrimary
@@ -76,7 +76,7 @@ export const Default: StoryComponent = () => {
                     height={480 / 2.4}
                     ref={videoRefWithPoster}
                     autoPlay={false}
-                    src={{src: VIDEO_SRC, type: 'video/mp4'}}
+                    src={{src: VIDEO_SRC, mimeType: 'video/mp4'}}
                 />
                 <Inline space={16}>
                     <ButtonPrimary

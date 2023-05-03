@@ -175,7 +175,7 @@ const MaybeWithActions = ({
 const renderBackgroundImage = (src?: string) => {
     // Adding '//:0' to force an error in case src is undefined
     // https://stackoverflow.com/a/5775621
-    return <Image width="100%" height="100%" src={src || '//:0'} />;
+    return <Image width="100%" height="100%" src={src ?? '//:0'} />;
 };
 
 type VideoState = 'loading' | 'loadingTimeout' | 'playing' | 'paused' | 'error';
@@ -216,18 +216,17 @@ const videoReducer = (state: VideoState, action: VideoAction): VideoState =>
     transitions[state][action] || state;
 
 const getVideoActionIcon = (state: VideoState) => {
-    if (state === 'playing') {
-        return IconPauseFilled;
+    switch (state) {
+        case 'playing':
+            return IconPauseFilled;
+        case 'paused':
+        case 'loading':
+            return IconPlayFilled;
+        case 'loadingTimeout':
+            return Spinner;
+        default:
+            return undefined;
     }
-    if (state === 'paused' || state === 'loading') {
-        return IconPlayFilled;
-    }
-
-    if (state === 'loadingTimeout') {
-        return Spinner;
-    }
-
-    return undefined;
 };
 
 const useVideoWithControls = (
