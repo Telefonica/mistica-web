@@ -1728,9 +1728,9 @@ const logoSnippets = [
 ];
 
 const stackingGroupSnippets = [
-  {
-    name: 'Stacking Group',
-    code: `
+    {
+        name: 'Stacking Group',
+        code: `
         <StackingGroup
           size={64}
           type={'avatar'}
@@ -1763,10 +1763,9 @@ const stackingGroupSnippets = [
           ]}
         />
     `,
-    group: 'StackingGroup'
-
-  },
-]
+        group: 'StackingGroup',
+    },
+];
 
 export default [
     ...buttonSnippets,
