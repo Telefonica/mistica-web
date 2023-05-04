@@ -63,7 +63,7 @@ const StackingGroup: React.FC<StackingGroupProps> = ({size = 24, data, type, sta
                                     src={data[index].src || ''}
                                     height={size}
                                     width={size}
-                                    aspectRatio={'1:1'}
+                                    aspectRatio="1:1"
                                     alt={index.toString()}
                                     border={stacked}
                                     zIndex={1}
@@ -92,10 +92,10 @@ const StackingGroup: React.FC<StackingGroupProps> = ({size = 24, data, type, sta
                             src={data[maxItems].src || ''}
                             height={size}
                             width={size}
-                            aspectRatio={'1:1'}
+                            aspectRatio="1:1"
                             alt={maxItems.toString()}
                             border={stacked}
-                            noOpacityImageError={true}
+                            noOpacityImageError
                         />
                     )}
                 </div>
@@ -115,7 +115,7 @@ const StackingGroup: React.FC<StackingGroupProps> = ({size = 24, data, type, sta
                             border
                         />
                     ) : (
-                        //pseudo component Image
+                        // pseudo component Image
                         <>
                             <div
                                 style={{
@@ -139,7 +139,7 @@ const StackingGroup: React.FC<StackingGroupProps> = ({size = 24, data, type, sta
                                     position: 'relative',
                                     width: size,
                                     height: size,
-                                    backgroundColor: backgroundColor,
+                                    backgroundColor,
                                     borderRadius: 8,
                                     zIndex: 1,
                                 }}

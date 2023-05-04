@@ -167,7 +167,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
                 {...getPrefixedDataAttributes(dataAttributes)}
                 style={{
                     ...(isLoading && withLoadingFallback ? {opacity: 0} : {opacity: 1}),
-                    border: border,
+                    border,
                 }}
                 ref={combineRefs(imageRef, ref)}
                 src={src}
