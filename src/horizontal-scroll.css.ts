@@ -16,6 +16,7 @@ export const scroll = style([
         display: 'flex',
     }),
     {
+        overflowX: 'auto',
         scrollbarWidth: 'none', // Hide scrollbar in FF
         '::-webkit-scrollbar': {
             display: 'none', // Hide scrollbar in Chrome/Safari

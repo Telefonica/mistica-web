@@ -1,0 +1,31 @@
+import * as React from 'react';
+import {Box, HorizontalScroll, Inline, ResponsiveLayout, Stack} from '..';
+import {Placeholder} from '../placeholder';
+
+export default {
+    title: 'Layout/HorizontalScroll',
+    parameters: {fullScreen: true},
+};
+
+export const Default: StoryComponent = () => {
+    return (
+        <ResponsiveLayout>
+            <Box paddingY={24}>
+                <Stack space={16}>
+                    <Placeholder />
+                    <HorizontalScroll>
+                        <Inline space={16}>
+                            <Placeholder width={200} height={200} />
+                            <Placeholder width={200} height={200} />
+                            <Placeholder width={200} height={200} />
+                            <Placeholder width={200} height={200} />
+                        </Inline>
+                    </HorizontalScroll>
+                    <Placeholder />
+                </Stack>
+            </Box>
+        </ResponsiveLayout>
+    );
+};
+
+Default.storyName = 'HorizontalScroll';
