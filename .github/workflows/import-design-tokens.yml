@@ -32,6 +32,7 @@ jobs:
               uses: peter-evans/create-pull-request@v5
               with:
                   token: ${{ secrets.FLOW_GITHUB_TOKEN }}
+                  add-paths: 'src/skins'
                   commit-message: 'feat(skin): update design tokens'
                   title: 'feat(skin): update design tokens'
                   branch: 'import-design-tokens'
