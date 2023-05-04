@@ -63,11 +63,9 @@ const ImageError = ({noBorderRadius}: ImageErrorProps) => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                // Check for dark mode is needed until brandHighOnInverse token is created
-                // https://github.com/Telefonica/mistica-design/issues/1215
                 backgroundColor: !isDarkMode
                     ? isInverse
-                        ? vars.colors.brandHigh
+                        ? vars.colors.backgroundSkeletonInverse
                         : vars.colors.backgroundSkeleton
                     : vars.colors.backgroundContainer,
                 borderRadius: noBorderRadius ? undefined : vars.borderRadii.container,

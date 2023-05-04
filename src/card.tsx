@@ -782,7 +782,6 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
         }
 
         const isExternalInverse = useIsInverseVariant();
-        const {isDarkMode} = useTheme();
         const withGradient = !!backgroundImage || !!backgroundVideo;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose;
@@ -806,11 +805,9 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                     minHeight="100%"
                     isInverse={isInverse}
                     background={
-                        // Check for dark mode is needed until brandHighOnInverse token is created
-                        // https://github.com/Telefonica/mistica-design/issues/1215
                         backgroundImage || backgroundVideo
-                            ? !isDarkMode && isExternalInverse
-                                ? vars.colors.brandHigh
+                            ? isExternalInverse
+                                ? vars.colors.backgroundContainerBrandOverInverse
                                 : vars.colors.backgroundContainer
                             : undefined
                     }
@@ -1015,7 +1012,6 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
         }
 
         const isExternalInverse = useIsInverseVariant();
-        const {isDarkMode} = useTheme();
         const withGradient = !!backgroundImage || !!backgroundVideo;
         const textShadow = withGradient ? '0 0 16px rgba(0,0,0,0.4)' : undefined;
         const hasTopActions = actions?.length || onClose;
@@ -1042,11 +1038,11 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                     minHeight="100%"
                     isInverse
                     background={
-                        // Check for dark mode is needed until brandHighOnInverse token is created
-                        // https://github.com/Telefonica/mistica-design/issues/1215
-                        !isDarkMode && isExternalInverse
-                            ? vars.colors.brandHigh
-                            : vars.colors.backgroundContainer
+                        backgroundImage || backgroundVideo
+                            ? isExternalInverse
+                                ? vars.colors.backgroundContainerBrandOverInverse
+                                : vars.colors.backgroundContainer
+                            : undefined
                     }
                 >
                     <div className={styles.displayCardContainer}>
