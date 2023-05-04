@@ -237,49 +237,35 @@ const useVideoWithControls = (
     const videoController = React.useRef<HTMLVideoElement>(null);
     const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
 
-    const onVideoError = () => dispatch('fail');
-    const onVideoPause = () => dispatch('pause');
-    const onVideoPlay = () => dispatch('play');
+    const onVideoError = React.useCallback(() => dispatch('fail'), []);
+    const onVideoPause = React.useCallback(() => dispatch('pause'), []);
+    const onVideoPlay = React.useCallback(() => dispatch('play'), []);
 
     React.useEffect(() => {
         const loadingTimeoutId = setTimeout(() => dispatch('showSpinner'), 2000);
-        const spinnerTimeoutId = setTimeout(() => dispatch('fail'), 10000);
         videoController.current?.load();
 
         return () => {
             clearTimeout(loadingTimeoutId);
-            clearTimeout(spinnerTimeoutId);
             dispatch('reset');
         };
     }, [videoSrc]);
 
     const video = React.useMemo(() => {
-        const videoContent =
-            videoSrc && videoStatus !== 'error' ? (
-                <Video
-                    ref={combineRefs(videoController, videoRef)}
-                    src={videoSrc}
-                    aspectRatio={0}
-                    preload="auto"
-                    onError={onVideoError}
-                    onPause={onVideoPause}
-                    onPlay={onVideoPlay}
-                />
-            ) : undefined;
-
-        const posterImage = renderBackgroundImage(poster);
-
-        return (
-            <div className={styles.displayCardVideoContainer}>
-                <div className={styles.displayCardVideoPoster} style={{zIndex: 0}}>
-                    {posterImage}
-                </div>
-                <div className={styles.displayCardVideo} style={{zIndex: 1}}>
-                    {videoContent}
-                </div>
-            </div>
-        );
-    }, [videoSrc, poster, videoRef, videoStatus]);
+        return videoSrc ? (
+            <Video
+                ref={combineRefs(videoController, videoRef)}
+                src={videoSrc}
+                width="100%"
+                height="100%"
+                poster={poster}
+                preload="auto"
+                onError={onVideoError}
+                onPause={onVideoPause}
+                onPlay={onVideoPlay}
+            />
+        ) : undefined;
+    }, [videoRef, videoSrc, poster, onVideoError, onVideoPause, onVideoPlay]);
 
     const onVideoControlPress = () => {
         const video = videoController.current;

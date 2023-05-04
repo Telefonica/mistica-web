@@ -193,13 +193,8 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
             }
         }, [onLoadHandler]);
 
-        return (
-            <AspectRatioElement
-                style={{position: 'relative'}}
-                aspectRatio={ratio}
-                width={props.width}
-                height={props.height}
-            >
+        const imageContent = (
+            <>
                 {withLoadingFallback && !hideLoadingFallback && (
                     <div style={{position: 'absolute', width: '100%', height: '100%'}}>
                         <SkeletonRectangle
@@ -215,8 +210,24 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
                     </div>
                 )}
                 {!isError && img}
-            </AspectRatioElement>
+            </>
         );
+
+        const image =
+            ratio || props.width || props.height ? (
+                <AspectRatioElement
+                    style={{position: 'relative'}}
+                    aspectRatio={ratio}
+                    width={props.width}
+                    height={props.height}
+                >
+                    {imageContent}
+                </AspectRatioElement>
+            ) : (
+                imageContent
+            );
+
+        return image;
     }
 );
 

@@ -1,13 +1,49 @@
 import * as React from 'react';
-import {useMediaBorderRadius} from './image';
+import Image, {useMediaBorderRadius} from './image';
 import {AspectRatioElement} from './utils/aspect-ratio-support';
 import {combineRefs} from './utils/common';
 import {getPrefixedDataAttributes} from './utils/dom';
-import {isRunningAcceptanceTest, isSafari} from './utils/platform';
+import {isRunningAcceptanceTest} from './utils/platform';
 import * as styles from './video.css';
 import {vars} from './skins/skin-contract.css';
 
 import type {DataAttributes} from './utils/types';
+
+type VideoState = 'loading' | 'loaded' | 'playing' | 'paused' | 'error';
+
+type VideoAction = 'play' | 'finishLoad' | 'pause' | 'fail' | 'reset';
+
+const transitions: Record<VideoState, Partial<Record<VideoAction, VideoState>>> = {
+    loading: {
+        play: 'playing',
+        pause: 'paused',
+        fail: 'error',
+        finishLoad: 'loaded',
+    },
+
+    loaded: {
+        play: 'playing',
+        pause: 'paused',
+        reset: 'loading',
+    },
+
+    playing: {
+        pause: 'paused',
+        reset: 'loading',
+    },
+
+    paused: {
+        play: 'playing',
+        reset: 'loading',
+    },
+
+    error: {
+        reset: 'loading',
+    },
+};
+
+const videoReducer = (state: VideoState, action: VideoAction): VideoState =>
+    transitions[state][action] || state;
 
 export type AspectRatio = '1:1' | '16:9' | '4:3';
 
@@ -46,6 +82,8 @@ export type VideoProps = {
     muted?: boolean;
     /** defaults to true */
     autoPlay?: boolean | 'streaming' | 'when-loaded';
+    /** defaults to 10s */
+    loadingTimeout?: number;
     onError?: () => void;
     onPlay?: () => void;
     onPause?: () => void;
@@ -65,6 +103,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             muted = true,
             loop = true,
             preload = 'auto',
+            loadingTimeout = 10000,
             onError,
             onPause,
             onPlay,
@@ -77,16 +116,36 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         const borderRadiusContext = useMediaBorderRadius();
         const [isLoadComplete, setIsLoadComplete] = React.useState(false);
 
+        const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
+
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
 
         const videoRef = React.useRef<HTMLVideoElement | null>(null);
 
         React.useEffect(() => {
+            if (videoStatus === 'error' && onError) onError();
+        }, [videoStatus, onError]);
+
+        React.useEffect(() => {
+            const loadingTimeoutId = setTimeout(() => dispatch('fail'), loadingTimeout);
+            setIsLoadComplete(false);
+            dispatch('reset');
+            videoRef.current?.load();
+
+            return () => {
+                clearTimeout(loadingTimeoutId);
+            };
+        }, [src, loadingTimeout]);
+
+        React.useEffect(() => {
             const video = videoRef.current;
-            const shouldAutoPlay =
-                (autoPlay === 'streaming' || (autoPlay && isLoadComplete)) && !isRunningAcceptanceTest();
-            if (video && shouldAutoPlay && video.paused) {
-                video.play();
+            const shouldAutoPlay = autoPlay && !isRunningAcceptanceTest();
+
+            if (isLoadComplete) {
+                dispatch('finishLoad');
+                if (video && shouldAutoPlay && video.paused) {
+                    video.play();
+                }
             }
         }, [isLoadComplete, autoPlay]);
 
@@ -110,13 +169,25 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 loop={loop}
                 className={styles.video}
                 preload={preload}
-                onError={onError}
-                onPause={onPause}
-                onPlay={onPlay}
+                onError={() => {
+                    dispatch('fail');
+                    if (onError) onError();
+                }}
+                onPause={() => {
+                    dispatch('pause');
+                    if (onPause) onPause();
+                }}
+                onPlay={() => {
+                    dispatch('play');
+                    if (onPlay) onPlay();
+                }}
                 onLoadStart={() => setIsLoadComplete(false)}
+                onCanPlay={() => {
+                    if (autoPlay === 'streaming') setIsLoadComplete(true);
+                }}
                 onCanPlayThrough={() => setIsLoadComplete(true)}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
-                poster={poster || TRANSPARENT_PIXEL}
+                poster={TRANSPARENT_PIXEL}
                 {...getPrefixedDataAttributes(dataAttributes)}
                 style={{
                     // For some reason adding this style with classnames doesn't add the border radius in safari
@@ -129,33 +200,35 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             </video>
         );
 
-        const videoContent = isSafari() ? (
-            <div
-                style={{
-                    width: '100%',
-                    height: '100%',
-                    /**
-                     * In safari, when using a video with poster, the transition from pause to play does a flicker,
-                     * To avoid this, in Safari browsers, instead of using the poster attribute, we use a
-                     * wrapper with the poster as background image
-                     */
-                    backgroundImage: poster ? `url("${poster}")` : undefined,
-                    backgroundSize: 'cover',
-                    backgroundPosition: '50% 50%',
-                }}
-            >
-                {video}
-            </div>
-        ) : (
-            video
+        const posterElement = (
+            <Image
+                aspectRatio={aspectRatio}
+                width={props.width}
+                height={props.height}
+                src={poster ?? '//:0'}
+            />
         );
 
-        return ratio || props.width || props.height ? (
-            <AspectRatioElement aspectRatio={ratio} width={props.width} height={props.height}>
-                {videoContent}
-            </AspectRatioElement>
-        ) : (
-            videoContent
+        const videoElement =
+            ratio || props.width || props.height ? (
+                <AspectRatioElement aspectRatio={ratio} width={props.width} height={props.height}>
+                    {video}
+                </AspectRatioElement>
+            ) : (
+                video
+            );
+
+        const showPoster = videoStatus === 'error' || videoStatus === 'loading' || videoStatus === 'loaded';
+
+        return (
+            <>
+                <div className={styles.videoContainer} style={{display: showPoster ? 'block' : 'none'}}>
+                    {posterElement}
+                </div>
+                <div className={styles.videoContainer} style={{display: showPoster ? 'none' : 'block'}}>
+                    {videoElement}
+                </div>
+            </>
         );
     }
 );
