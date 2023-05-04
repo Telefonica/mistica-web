@@ -50,7 +50,7 @@ import type {GetKnownSkin} from './types';
 
 export const palette = {
     ${Object.entries(designTokens.global.palette)
-        .map(([colorName, colorDescription]) => `${colorName}:'${colorDescription.value}'`)
+        .map(([colorName, colorDescription]) => `'${colorName}':'${colorDescription.value}'`)
         .join(',')}
 };
 
@@ -59,18 +59,19 @@ export const get${capitalize(skinName)}Skin: GetKnownSkin = () => {
         name: ${skinConstantName},
         colors: {
             ${Object.entries(designTokens.light)
-                .map(([colorName, colorDescription]) => `${colorName}: ${buildColor(colorDescription)}`)
+                .map(([colorName, colorDescription]) => `'${colorName}': ${buildColor(colorDescription)}`)
                 .join(',')}
         },
         darkModeColors: {
             ${Object.entries(designTokens.dark)
-                .map(([colorName, colorDescription]) => `${colorName}: ${buildColor(colorDescription)}`)
+                .map(([colorName, colorDescription]) => `'${colorName}': ${buildColor(colorDescription)}`)
                 .join(',')}
         },
         borderRadii: {
             ${Object.entries(designTokens.radius)
                 .map(
-                    ([radiusName, radiusDescription]) => `${radiusName}: '${buildRadius(radiusDescription)}'`
+                    ([radiusName, radiusDescription]) =>
+                        `'${radiusName}': '${buildRadius(radiusDescription)}'`
                 )
                 .join(',')}
         },
@@ -78,7 +79,7 @@ export const get${capitalize(skinName)}Skin: GetKnownSkin = () => {
             ${Object.entries(designTokens.text.weight)
                 .map(
                     ([textPresetName, textPresetDescription]) =>
-                        `${textPresetName}: '${textPresetDescription.value}'`
+                        `'${textPresetName}': '${textPresetDescription.value}'`
                 )
                 .join(',')}
         },
