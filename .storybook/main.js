@@ -54,8 +54,7 @@ const addVanillaExtractSupport = (config) => {
 
 const stories = ['./welcome-story.js', '../src/**/__stories__/*-story.tsx'];
 
-const shouldIncludePrivateStories =
-    process.env.NODE_ENV === 'development' || (process.env.CI && !process.env.VERCEL_PROD_BUILD);
+const shouldIncludePrivateStories = !process.env.VERCEL_PROD_BUILD;
 
 if (shouldIncludePrivateStories) {
     stories.push('../src/**/__private_stories__/*-story.tsx');
