@@ -28,6 +28,9 @@ jobs:
             - name: Generate skins from design tokens
               run: cd packages/generate-design-tokens && yarn && node index.js
 
+            - name: Prettier
+              run: yarn prettier src/skins --write
+
             - name: Create Pull Request
               uses: peter-evans/create-pull-request@v5
               with:
