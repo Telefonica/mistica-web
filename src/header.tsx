@@ -7,11 +7,11 @@ import GridLayout from './grid-layout';
 import {useScreenSize} from './hooks';
 import OverscrollColor from './overscroll-color-context';
 import {Text8, Text7, Text6, Text3} from './text';
-import NavigationBreadcrumbs from './navigation-breadcrumbs';
-import {ButtonPrimary, ButtonSecondary} from './button';
 import ButtonGroup from './button-group';
 import {vars} from './skins/skin-contract.css';
 
+import type NavigationBreadcrumbs from './navigation-breadcrumbs';
+import type {ButtonPrimary, ButtonSecondary} from './button';
 import type {DataAttributes, RendersElement, RendersNullableElement} from './utils/types';
 import type {TextPresetProps} from './text';
 

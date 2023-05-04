@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from './box';
 import {Text} from './text';
-import {ThemeVariant, useIsInverseVariant} from './theme-variant-context';
+import {ThemeVariant, useThemeVariant} from './theme-variant-context';
 import {pxToRem} from './utils/css';
 import {getPrefixedDataAttributes} from './utils/dom';
 import * as classes from './tag.css';
@@ -24,16 +24,22 @@ export type TagProps = {
 const {colors} = vars;
 
 const Tag: React.FC<TagProps> = ({Icon, children, dataAttributes, type = 'promo'}) => {
-    const isInverse = useIsInverseVariant();
+    const themeVariant = useThemeVariant();
+    const isInverse = themeVariant === 'inverse';
 
     if (!children) {
         return null;
     }
 
     const tagTypeToColors = {
+        // [textColor, inverseTextColor, backgroundColor]
         promo: [colors.promoHigh, colors.promoHighInverse, colors.promoLow],
         active: [colors.brand, colors.brand, colors.brandLow],
-        inactive: [colors.neutralMedium, colors.neutralMediumInverse, colors.neutralLow],
+        inactive: [
+            colors.neutralMedium,
+            colors.neutralMediumInverse,
+            themeVariant === 'alternative' ? colors.neutralLowAlternative : colors.neutralLow,
+        ],
         success: [colors.successHigh, colors.successHighInverse, colors.successLow],
         warning: [colors.warningHigh, colors.warningHighInverse, colors.warningLow],
         error: [colors.errorHigh, colors.errorHighInverse, colors.errorLow],

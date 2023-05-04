@@ -3,11 +3,9 @@ import Tag from './tag';
 import Stack from './stack';
 import Box from './box';
 import {Text2, Text, Text6, Text3} from './text';
-import {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import {Boxed, InternalBoxed} from './boxed';
 import ButtonGroup from './button-group';
-import Video from './video';
-import Image, {MediaBorderRadiusProvider} from './image';
+import {MediaBorderRadiusProvider} from './image';
 import {BaseTouchable} from './touchable';
 import {vars} from './skins/skin-contract.css';
 import * as styles from './card.css';
@@ -17,6 +15,9 @@ import Inline from './inline';
 import IconButton from './icon-button';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 
+import type Image from './image';
+import type Video from './video';
+import type {ButtonLink, ButtonPrimary, ButtonSecondary} from './button';
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {
     DataAttributes,
@@ -618,7 +619,7 @@ const DisplayCard = React.forwardRef<HTMLDivElement, GenericDisplayCardProps>(
                 isInverse={isInverse}
             >
                 <InternalBoxed
-                    borderRadius={16}
+                    borderRadius={vars.borderRadii.legacyDisplay}
                     className={styles.boxed}
                     dataAttributes={dataAttributes}
                     ref={ref}
@@ -797,7 +798,7 @@ export const PosterCard = React.forwardRef<HTMLDivElement, PosterCardProps>(
                 isInverse
             >
                 <InternalBoxed
-                    borderRadius={16}
+                    borderRadius={vars.borderRadii.legacyDisplay}
                     className={styles.boxed}
                     dataAttributes={dataAttributes}
                     ref={ref}

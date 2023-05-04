@@ -9,6 +9,7 @@ import {pxToRem} from './utils/css';
 import * as styles from './chip.css';
 import {vars} from './skins/skin-contract.css';
 import {getPrefixedDataAttributes} from './utils/dom';
+import {useThemeVariant} from './theme-variant-context';
 
 import type {ExclusifyUnion} from './utils/utility-types';
 import type {DataAttributes, IconProps} from './utils/types';
@@ -32,6 +33,7 @@ type ChipProps = ExclusifyUnion<SimpleChipProps | ClosableChipProps | ToggleChip
 
 const Chip: React.FC<ChipProps> = ({Icon, children, id, dataAttributes, active, onClose}: ChipProps) => {
     const {texts, isDarkMode} = useTheme();
+    const overAlternative = useThemeVariant() === 'alternative';
 
     const body = (
         <>
@@ -51,7 +53,9 @@ const Chip: React.FC<ChipProps> = ({Icon, children, id, dataAttributes, active, 
     if (onClose) {
         return (
             <Box
-                className={styles.chipVariants.default}
+                className={
+                    overAlternative ? styles.chipVariants.overAlternative : styles.chipVariants.default
+                }
                 paddingLeft={paddingLeft}
                 {...getPrefixedDataAttributes(dataAttributes, 'Chip')}
             >
@@ -76,9 +80,12 @@ const Chip: React.FC<ChipProps> = ({Icon, children, id, dataAttributes, active, 
         const isInteractive = active !== undefined;
         return (
             <Box
-                className={classnames(styles.chipVariants[active ? 'active' : 'default'], {
-                    [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,
-                })}
+                className={classnames(
+                    styles.chipVariants[active ? 'active' : overAlternative ? 'overAlternative' : 'default'],
+                    {
+                        [styles.chipInteractiveVariants[isDarkMode ? 'dark' : 'light']]: isInteractive,
+                    }
+                )}
                 paddingLeft={paddingLeft}
                 paddingRight={12}
                 {...getPrefixedDataAttributes(dataAttributes, 'Chip')}

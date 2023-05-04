@@ -46,13 +46,13 @@ test('<a> is rendered when using "to" prop', () => {
     expect(asFragment()).toMatchInlineSnapshot(`
         <DocumentFragment>
           <a
-            class="touchable_base__mhti6u1 touchable__mhti6u0 sprinkles_cursor_pointer__1y2v1nf9n button_variants_primary__rrbrpnl button_button__rrbrpn2 button__rrbrpn1 sprinkles_paddingTop_0__1y2v1nf65 sprinkles_paddingBottom_0__1y2v1nf6j sprinkles_paddingLeft_0__1y2v1nf6x sprinkles_paddingRight_0__1y2v1nf7b sprinkles_display_inline-block__1y2v1nf5m sprinkles_position_relative__1y2v1nf5d sprinkles_width_auto__1y2v1nf7q sprinkles_borderRadius_4__1y2v1nf9j sprinkles_overflow_hidden__1y2v1nf9o button__rrbrpna sprinkles_color_var(--colors-textButtonPrimary__1vqcj1i1s)__1y2v1nf1s sprinkles_background_var(--colors-buttonPrimaryBackground__1vqcj1il)__1y2v1nf39"
+            class="touchable_base__mhti6u1 touchable__mhti6u0 sprinkles_cursor_pointer__1y2v1nfa3 button_variants_primary__rrbrpnl button_button__rrbrpn2 button__rrbrpn1 sprinkles_paddingTop_0__1y2v1nf6b sprinkles_paddingBottom_0__1y2v1nf6p sprinkles_paddingLeft_0__1y2v1nf73 sprinkles_paddingRight_0__1y2v1nf7h sprinkles_display_inline-block__1y2v1nf5s sprinkles_position_relative__1y2v1nf5j sprinkles_width_auto__1y2v1nf7w sprinkles_borderRadius_var(--borderRadii-button__1vqcj1i5e)__1y2v1nf9t sprinkles_overflow_hidden__1y2v1nfa4 button__rrbrpna sprinkles_color_var(--colors-textButtonPrimary__1vqcj1i1v)__1y2v1nf1v sprinkles_background_var(--colors-buttonPrimaryBackground__1vqcj1in)__1y2v1nf3e"
             data-component-name="ButtonPrimary"
             href="/test"
             role="button"
           >
             <div
-              class="button_textContent__rrbrpn9 button__rrbrpn8 sprinkles_display_flex__1y2v1nf5i sprinkles_alignItems_center__1y2v1nf5x sprinkles_justifyContent_center__1y2v1nf5r"
+              class="button_textContent__rrbrpn9 button__rrbrpn8 sprinkles_display_flex__1y2v1nf5o sprinkles_alignItems_center__1y2v1nf63 sprinkles_justifyContent_center__1y2v1nf5x"
             >
               <div
                 class="text_text__splu5g7 text_withWordBreak__splu5g5 text_truncateToOneLine__splu5g9 text_truncate__splu5g8"
@@ -64,12 +64,12 @@ test('<a> is rendered when using "to" prop', () => {
             </div>
             <div
               aria-hidden="true"
-              class="button_loadingFiller__rrbrpn4 button__rrbrpn3 sprinkles_display_block__1y2v1nf5k sprinkles_height_0__1y2v1nf86 sprinkles_overflow_hidden__1y2v1nf9o"
+              class="button_loadingFiller__rrbrpn4 button__rrbrpn3 sprinkles_display_block__1y2v1nf5q sprinkles_height_0__1y2v1nf8c sprinkles_overflow_hidden__1y2v1nfa4"
               style="padding-left: 1.250rem; padding-right: 37px;"
             />
             <div
               aria-hidden="true"
-              class="button_loadingContent__rrbrpn7 button__rrbrpn6 sprinkles_display_inline-flex__1y2v1nf5j sprinkles_position_absolute__1y2v1nf5e sprinkles_top_0__1y2v1nf9q sprinkles_bottom_0__1y2v1nfaw sprinkles_justifyContent_center__1y2v1nf5r sprinkles_alignItems_center__1y2v1nf5x"
+              class="button_loadingContent__rrbrpn7 button__rrbrpn6 sprinkles_display_inline-flex__1y2v1nf5p sprinkles_position_absolute__1y2v1nf5k sprinkles_top_0__1y2v1nfa6 sprinkles_bottom_0__1y2v1nfbc sprinkles_justifyContent_center__1y2v1nf5x sprinkles_alignItems_center__1y2v1nf63"
             >
               <div
                 style="display: inline-block; width: 1.250rem; height: 1.250rem;"

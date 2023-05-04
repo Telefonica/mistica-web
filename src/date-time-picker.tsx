@@ -9,6 +9,7 @@ import {cancelEvent, createChangeEvent} from './utils/dom';
 import {useElementDimensions, useTheme} from './hooks';
 import IconCloseRegular from './generated/mistica-icons/icon-close-regular';
 import * as styles from './date-time-picker.css';
+import {vars} from './skins/skin-contract.css';
 
 import type {CommonFormFieldProps} from './text-field-base';
 import type Moment from 'moment';
@@ -54,7 +55,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({withTime, mode, isValidD
             top: openToBottom ? bottom : top - pickerContainerHeight,
             left,
             position: 'absolute',
-            borderRadius: 8,
+            borderRadius: vars.borderRadii.input,
             overflow: 'hidden',
             boxShadow:
                 '0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)',

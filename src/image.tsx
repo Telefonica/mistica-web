@@ -68,14 +68,14 @@ const ImageError = ({noBorderRadius, border}: ImageErrorProps) => {
                 backgroundColor: isInverse
                     ? vars.colors.backgroundSkeletonInverse
                     : vars.colors.backgroundSkeleton,
-                borderRadius: noBorderRadius ? undefined : 8,
+                borderRadius: noBorderRadius ? undefined : vars.borderRadii.container,
                 border: borderError,
             }}
         >
             {skinName === VIVO_SKIN ? (
                 <VivoLogo style={{width: '10%', minWidth: 24, maxWidth: 48}} />
             ) : (
-                // We cannot use IconImageRegular because we want to avoid the usage of widht and height props to allow this icon to be responsive
+                // We cannot use IconImageRegular because we want to avoid the usage of width and height props to allow this icon to be responsive
                 <svg
                     viewBox="0 0 24 24"
                     role="presentation"
@@ -175,7 +175,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
                     styles.image,
                     sprinkles({
                         position: ratio !== 0 ? 'absolute' : 'static',
-                        borderRadius: noBorderSetting ? undefined : 8,
+                        borderRadius: noBorderSetting ? undefined : vars.borderRadii.container,
                     })
                 )}
                 alt={alt}

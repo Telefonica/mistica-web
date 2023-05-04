@@ -13,7 +13,10 @@ export const vars = {sideMargin};
 
 export const container = sprinkles({width: '100%'});
 
-export const inverseBackground = sprinkles({background: skinVars.colors.backgroundBrand});
+export const backgroundVariant = {
+    inverse: sprinkles({background: skinVars.colors.backgroundBrand}),
+    alternative: sprinkles({background: skinVars.colors.backgroundAlternative}),
+};
 
 export const responsiveLayout = style({
     margin: 'auto',
