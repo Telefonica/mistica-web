@@ -1,5 +1,6 @@
-import {ElementHandle} from 'puppeteer';
 import {openStoryPage, screen} from '../test-utils';
+
+import type {ElementHandle} from 'puppeteer';
 
 test('Circle', async () => {
     await openStoryPage({

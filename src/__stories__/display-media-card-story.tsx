@@ -7,7 +7,6 @@ import {
     skinVars,
     Circle,
     Tag,
-    TagType,
     ButtonSecondary,
     IconLightningRegular,
     ResponsiveLayout,
@@ -17,6 +16,8 @@ import {
 } from '..';
 import usingVrImg from './images/using-vr.jpg';
 import avatarImg from './images/avatar.jpg';
+
+import type {TagType} from '..';
 
 export default {
     title: 'Components/Cards/Display media card',
