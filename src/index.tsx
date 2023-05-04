@@ -79,6 +79,7 @@ export {default as Image} from './image';
 export {default as Chip} from './chip';
 export {default as Video} from './video';
 export {Carousel, CenteredCarousel, Slideshow, PageBullets} from './carousel';
+export {default as StackingGroup} from './stacking-group';
 
 // Forms
 export {default as Form} from './form';

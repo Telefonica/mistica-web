@@ -1664,6 +1664,47 @@ const loaderSnippets = [
     },
 ];
 
+const stackingGroupSnippets = [
+  {
+    name: 'Stacking Group',
+    code: `
+        <StackingGroup
+          size={64}
+          type={'avatar'}
+          stacked={false}
+          data={[
+            {
+              src: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+              initials: 'maria'
+            },
+            {
+              src: '',
+              initials: 'joão'
+            },
+            {
+              src: 'https://images.unsplash.com/photo-1485206412256-701ccc5b93ca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=594&q=80',
+              initials: 'Carlos'
+            },
+            {
+              src: '',
+              initials: ''
+            },
+            {
+              src: '',
+              initials: ''
+            },
+            {
+              src: '',
+              initials: ''
+            },
+          ]}
+        />
+    `,
+    group: 'StackingGroup'
+
+  },
+]
+
 export default [
     ...buttonSnippets,
     ...formSnippets,
@@ -1797,4 +1838,5 @@ export default [
     ...popoverSnippets,
     ...heroSnippets,
     ...loaderSnippets,
+    ...stackingGroupSnippets,
 ].sort((s1, s2) => s1.group.localeCompare(s2.group)) as Array<Snippet>;
