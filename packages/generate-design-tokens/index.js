@@ -79,7 +79,7 @@ export const get${capitalize(skinName)}Skin: GetKnownSkin = () => {
             ${Object.entries(designTokens.text.weight)
                 .map(
                     ([textPresetName, textPresetDescription]) =>
-                        `'${textPresetName}': '${textPresetDescription.value}'`
+                        `'${textPresetName}': {weight: '${textPresetDescription.value}'}`
                 )
                 .join(',')}
         },
