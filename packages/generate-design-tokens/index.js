@@ -90,12 +90,10 @@ export const get${capitalize(skinName)}Skin: GetKnownSkin = () => {
 const generateSkinFiles = () => {
     const KNOWN_SKINS = ['blau', 'movistar', 'o2', 'telefonica', 'vivo'];
 
-    fs.readdirSync(DESIGN_TOKENS_FOLDER).filter((file) => file.endsWith('.json'));
-
     KNOWN_SKINS.forEach((skinName) => {
         console.log('Generating tokens for skin', skinName);
 
-        if (!fs.existsSync(`${skinName}.json`)) {
+        if (!fs.existsSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`))) {
             console.error(`Missing ${skinName}.json file`);
             return;
         }
