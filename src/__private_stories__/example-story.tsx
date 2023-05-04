@@ -20,7 +20,7 @@ export const Default: StoryComponent = () => {
                         </Text2>
                         <Text2 regular as="p">
                             These stories are meant to be used for acceptance/screenshot tests that we don't
-                            want to appear in the production mistica storybook.
+                            want to appear in the production mística storybook.
                         </Text2>
                     </Stack>
                 </Stack>
