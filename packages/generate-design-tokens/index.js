@@ -36,6 +36,15 @@ const buildRadius = (radiusDescription) => {
     throw new Error(`Unknown radius format: ${radiusDescription.value})`);
 };
 
+const buildTextPresetName = (name) => {
+    const presetRegex = /preset-(\d+)/;
+    const presetMatches = name.match(presetRegex);
+    if (presetMatches) {
+        return `text${presetMatches[1]}`;
+    }
+    return name;
+};
+
 const generateSkinSrc = (skinName) => {
     const designTokensFile = fs.readFileSync(path.join(DESIGN_TOKENS_FOLDER, `${skinName}.json`), 'utf8');
     const needsApplyAlphaImport = designTokensFile.includes('rgba');
@@ -46,31 +55,32 @@ const generateSkinSrc = (skinName) => {
 import {${skinConstantName}} from './constants';
 ${needsApplyAlphaImport ? `import {applyAlpha} from '../utils/color';` : ''}
 
-import type {GetKnownSkin} from './types';
+import type {GetKnownSkin, KnownSkin} from './types';
 
 export const palette = {
     ${Object.entries(designTokens.global.palette)
-        .map(([colorName, colorDescription]) => `${colorName}:'${colorDescription.value}'`)
+        .map(([colorName, colorDescription]) => `'${colorName}':'${colorDescription.value}'`)
         .join(',')}
 };
 
 export const get${capitalize(skinName)}Skin: GetKnownSkin = () => {
-    return {
+    const skin: KnownSkin = {
         name: ${skinConstantName},
         colors: {
             ${Object.entries(designTokens.light)
-                .map(([colorName, colorDescription]) => `${colorName}: ${buildColor(colorDescription)}`)
+                .map(([colorName, colorDescription]) => `'${colorName}': ${buildColor(colorDescription)}`)
                 .join(',')}
         },
         darkModeColors: {
             ${Object.entries(designTokens.dark)
-                .map(([colorName, colorDescription]) => `${colorName}: ${buildColor(colorDescription)}`)
+                .map(([colorName, colorDescription]) => `'${colorName}': ${buildColor(colorDescription)}`)
                 .join(',')}
         },
         borderRadii: {
             ${Object.entries(designTokens.radius)
                 .map(
-                    ([radiusName, radiusDescription]) => `${radiusName}: '${buildRadius(radiusDescription)}'`
+                    ([radiusName, radiusDescription]) =>
+                        `'${radiusName}': '${buildRadius(radiusDescription)}'`
                 )
                 .join(',')}
         },
@@ -78,11 +88,12 @@ export const get${capitalize(skinName)}Skin: GetKnownSkin = () => {
             ${Object.entries(designTokens.text.weight)
                 .map(
                     ([textPresetName, textPresetDescription]) =>
-                        `${textPresetName}: '${textPresetDescription.value}'`
+                        `'${buildTextPresetName(textPresetName)}': {weight: '${textPresetDescription.value}'}`
                 )
                 .join(',')}
         },
     };
+    return skin;
 };
 `;
 };
