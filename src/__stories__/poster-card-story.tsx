@@ -11,6 +11,7 @@ import {
     Inline,
     Title1,
     ThemeVariant,
+    Box,
 } from '..';
 import {PosterCard} from '../card';
 import usingVrImg from './images/using-vr.jpg';
@@ -138,20 +139,24 @@ export const Default: StoryComponent<PosterCardArgs> = ({
             />
 
             <Title1>Wrong source for media with inverse</Title1>
-            <ThemeVariant isInverse>
-                <PosterCard
-                    {...wrongBackgroundProps}
-                    icon={icon}
-                    headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
-                    pretitle={pretitle}
-                    title={title}
-                    description={description}
-                    aria-label="Poster card fallback inverse label"
-                    width={width}
-                    height={height}
-                    aspectRatio={aspectRatio}
-                />
-            </ThemeVariant>
+            <ResponsiveLayout backgroundColor={skinVars.colors.backgroundBrand}>
+                <ThemeVariant isInverse>
+                    <Box paddingY={8}>
+                        <PosterCard
+                            {...wrongBackgroundProps}
+                            icon={icon}
+                            headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                            pretitle={pretitle}
+                            title={title}
+                            description={description}
+                            aria-label="Poster card fallback inverse label"
+                            width={width}
+                            height={height}
+                            aspectRatio={aspectRatio}
+                        />
+                    </Box>
+                </ThemeVariant>
+            </ResponsiveLayout>
         </Stack>
     );
 };
