@@ -126,7 +126,13 @@ export const Variants: StoryComponent = () => {
         <>
             <StorySection title="Default">
                 <div data-testid="normal-field">
-                    <TextField optional name="text" label="Normal field" autoComplete="off" />
+                    <TextField
+                        optional
+                        name="text"
+                        label="Normal field"
+                        autoComplete="off"
+                        data-testid="normal-field-text-field"
+                    />
                 </div>
             </StorySection>
             <StorySection title="Multiline">
