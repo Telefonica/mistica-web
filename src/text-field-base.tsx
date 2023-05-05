@@ -301,6 +301,7 @@ export const TextFieldBase = React.forwardRef<any, TextFieldBaseProps>(
                                 if (maxLength === undefined || event.target.value.length <= maxLength) {
                                     setCharacterCount(event.target.value.length);
 
+                                    // Browser's autofill can change the value without focusing
                                     if (event.target.value.length > 0 && inputState !== 'focused') {
                                         setInputState('filled');
                                     }

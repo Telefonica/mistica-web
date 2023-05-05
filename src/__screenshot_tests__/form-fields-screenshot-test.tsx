@@ -38,8 +38,9 @@ test('Textfield collapses its label when autofill fills out the form', async () 
 
     expect(image).toMatchImageSnapshot();
 
+    // it simulates a data autofill
     await page.evaluate(() => {
-        const input = document.querySelector('input#aria-id-hook-1');
+        const input = document.querySelector('input[data-testid="normal-field-text-field"]');
         Object.getOwnPropertyDescriptor(Object.getPrototypeOf(input), 'value')?.set?.call(input, 'ciao');
         input?.dispatchEvent(new Event('input', {bubbles: true}));
     });
