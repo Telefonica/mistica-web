@@ -117,7 +117,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         const [isLoadComplete, setIsLoadComplete] = React.useState(false);
 
         const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
-        const [currentVideoStatus, setCurrentVideoState] = React.useState<VideoState>('loading');
+        const [currentVideoStatus, setCurrentVideoStatus] = React.useState<VideoState>('loading');
 
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
 
@@ -125,7 +125,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
 
         React.useEffect(() => {
             if (videoStatus !== currentVideoStatus) {
-                setCurrentVideoState(videoStatus);
+                setCurrentVideoStatus(videoStatus);
                 if (videoStatus === 'playing' && onPlay) onPlay();
                 if (videoStatus === 'paused' && onPause) onPause();
                 if (videoStatus === 'error' && onError) onError();
