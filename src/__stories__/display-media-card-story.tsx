@@ -14,7 +14,6 @@ import {
     Text2,
     Inline,
     Title1,
-    ThemeVariant,
     Box,
 } from '..';
 import usingVrImg from './images/using-vr.jpg';
@@ -159,25 +158,23 @@ export const Default: StoryComponent<DisplayMediaCardArgs> = ({
             />
 
             <Title1>Wrong source for media with inverse</Title1>
-            <ResponsiveLayout backgroundColor={skinVars.colors.backgroundBrand}>
-                <ThemeVariant isInverse>
-                    <Box paddingY={8}>
-                        <DisplayMediaCard
-                            {...wrongBackgroundProps}
-                            icon={icon}
-                            headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
-                            pretitle={pretitle}
-                            title={title}
-                            description={description}
-                            button={button}
-                            buttonLink={buttonLink}
-                            secondaryButton={secondaryButton}
-                            aria-label="Display data card fallback inverse label"
-                            width={width}
-                            aspectRatio={aspectRatio}
-                        />
-                    </Box>
-                </ThemeVariant>
+            <ResponsiveLayout isInverse>
+                <Box paddingY={8}>
+                    <DisplayMediaCard
+                        {...wrongBackgroundProps}
+                        icon={icon}
+                        headline={headline ? <Tag type={headlineType}>{headline}</Tag> : undefined}
+                        pretitle={pretitle}
+                        title={title}
+                        description={description}
+                        button={button}
+                        buttonLink={buttonLink}
+                        secondaryButton={secondaryButton}
+                        aria-label="Display data card fallback inverse label"
+                        width={width}
+                        aspectRatio={aspectRatio}
+                    />
+                </Box>
             </ResponsiveLayout>
         </Stack>
     );

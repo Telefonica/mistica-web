@@ -125,32 +125,26 @@ export const snapCardTouchableHoverTransparent = style([
     },
 ]);
 
-export const displayCardContainer = style([
-    sprinkles({
-        width: '100%',
-        display: 'flex',
-        position: 'relative',
-    }),
-]);
+export const displayCardContainer = sprinkles({
+    width: '100%',
+    display: 'flex',
+    position: 'relative',
+});
 
-export const displayCardContent = style([
-    sprinkles({
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
-        position: 'relative',
-        justifyContent: 'space-between',
-    }),
-]);
+export const displayCardContent = sprinkles({
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    position: 'relative',
+    justifyContent: 'space-between',
+});
 
-export const displayCardBackground = style([
-    sprinkles({
-        position: 'absolute',
-        objectFit: 'cover',
-        width: '100%',
-        height: '100%',
-    }),
-]);
+export const displayCardBackground = sprinkles({
+    position: 'absolute',
+    objectFit: 'cover',
+    width: '100%',
+    height: '100%',
+});
 
 export const displayCardGradient = style({
     background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 29.02%, rgba(0, 0, 0, 0.7) 100%)`,

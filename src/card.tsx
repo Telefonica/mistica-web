@@ -255,7 +255,6 @@ const useVideoWithControls = (
                 width="100%"
                 height="100%"
                 poster={poster}
-                preload="auto"
                 onError={() => dispatch('fail')}
                 onPause={() => dispatch('pause')}
                 onPlay={() => dispatch('play')}
