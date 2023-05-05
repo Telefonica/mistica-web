@@ -16,6 +16,7 @@ const containerBase = style([
         minHeight: 32,
         minWidth: 56,
         cursor: 'default',
+        borderColor: vars.colors.control,
     },
 ]);
 
