@@ -117,14 +117,20 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         const [isLoadComplete, setIsLoadComplete] = React.useState(false);
 
         const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
+        const [currentVideoStatus, setCurrentVideoState] = React.useState<VideoState>('loading');
 
         const ratio = typeof aspectRatio === 'number' ? aspectRatio : RATIO[aspectRatio];
 
         const videoRef = React.useRef<HTMLVideoElement | null>(null);
 
         React.useEffect(() => {
-            if (videoStatus === 'error' && onError) onError();
-        }, [videoStatus, onError]);
+            if (videoStatus !== currentVideoStatus) {
+                setCurrentVideoState(videoStatus);
+                if (videoStatus === 'playing' && onPlay) onPlay();
+                if (videoStatus === 'paused' && onPause) onPause();
+                if (videoStatus === 'error' && onError) onError();
+            }
+        }, [videoStatus, currentVideoStatus, onPlay, onPause, onError]);
 
         React.useEffect(() => {
             const loadingTimeoutId = setTimeout(() => dispatch('fail'), loadingTimeout);
@@ -169,18 +175,9 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 loop={loop}
                 className={styles.video}
                 preload={preload}
-                onError={() => {
-                    dispatch('fail');
-                    if (onError) onError();
-                }}
-                onPause={() => {
-                    dispatch('pause');
-                    if (onPause) onPause();
-                }}
-                onPlay={() => {
-                    dispatch('play');
-                    if (onPlay) onPlay();
-                }}
+                onError={() => dispatch('fail')}
+                onPause={() => dispatch('pause')}
+                onPlay={() => dispatch('play')}
                 onLoadStart={() => setIsLoadComplete(false)}
                 onCanPlay={() => {
                     if (autoPlay === 'streaming') setIsLoadComplete(true);

@@ -237,10 +237,6 @@ const useVideoWithControls = (
     const videoController = React.useRef<HTMLVideoElement>(null);
     const [videoStatus, dispatch] = React.useReducer(videoReducer, 'loading');
 
-    const onVideoError = React.useCallback(() => dispatch('fail'), []);
-    const onVideoPause = React.useCallback(() => dispatch('pause'), []);
-    const onVideoPlay = React.useCallback(() => dispatch('play'), []);
-
     React.useEffect(() => {
         const loadingTimeoutId = setTimeout(() => dispatch('showSpinner'), 2000);
         videoController.current?.load();
@@ -260,12 +256,12 @@ const useVideoWithControls = (
                 height="100%"
                 poster={poster}
                 preload="auto"
-                onError={onVideoError}
-                onPause={onVideoPause}
-                onPlay={onVideoPlay}
+                onError={() => dispatch('fail')}
+                onPause={() => dispatch('pause')}
+                onPlay={() => dispatch('play')}
             />
         ) : undefined;
-    }, [videoRef, videoSrc, poster, onVideoError, onVideoPause, onVideoPlay]);
+    }, [videoRef, videoSrc, poster]);
 
     const onVideoControlPress = () => {
         const video = videoController.current;
