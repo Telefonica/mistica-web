@@ -126,11 +126,12 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         React.useEffect(() => {
             if (videoStatus !== currentVideoStatus) {
                 setCurrentVideoStatus(videoStatus);
+                if (videoStatus === 'loaded' && !autoPlay && onPause) onPause();
                 if (videoStatus === 'playing' && onPlay) onPlay();
                 if (videoStatus === 'paused' && onPause) onPause();
                 if (videoStatus === 'error' && onError) onError();
             }
-        }, [videoStatus, currentVideoStatus, onPlay, onPause, onError]);
+        }, [videoStatus, currentVideoStatus, onPlay, onPause, onError, autoPlay]);
 
         React.useEffect(() => {
             const loadingTimeoutId = setTimeout(() => dispatch('fail'), loadingTimeout);
