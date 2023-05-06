@@ -56,9 +56,8 @@ const FixedFooterLayout: React.FC<Props> = ({
     const {platformOverrides} = useTheme();
     const {height: realFooterHeight, ref} = useElementDimensions();
     const isWithinIFrame = useIsWithinIFrame();
-    const windowHeight = useWindowHeight(true);
+    const windowHeight = useWindowHeight();
     const screenHeight = useScreenHeight();
-
     const hasContentEnoughVSpace =
         windowHeight - realFooterHeight >
         (isWithinIFrame ? windowHeight : screenHeight) / FOOTER_CANVAS_RATIO;

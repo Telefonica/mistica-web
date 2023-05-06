@@ -116,49 +116,43 @@ export const useAriaId = (id?: string): string => {
     }
 };
 
-const useSpecificWindowObject = (useInnerFrame: boolean): Window | undefined =>
-    typeof window !== 'undefined' ? (useInnerFrame ? window?.self : window) : undefined;
-
-export const useWindowSize = (
-    useInnerIFrame = false
-): {
+export const useWindowSize = (): {
     height: number;
     width: number;
     screenHeight: number;
     screenWidth: number;
 } => {
-    const currentWindow = useSpecificWindowObject(useInnerIFrame);
     const [windowHeight, setWindowHeight] = React.useState<number>(
-        typeof currentWindow !== 'undefined' ? currentWindow.innerHeight : 1200 // Best guess
+        typeof window !== 'undefined' ? window.innerHeight : 1200 // Best guess
     );
     const [windowWidth, setWindowWidth] = React.useState<number>(
-        typeof currentWindow !== 'undefined' ? currentWindow.innerWidth : 800 // Best guess
+        typeof window !== 'undefined' ? window.innerWidth : 800 // Best guess
     );
 
     const [screenHeight, setScreenHeight] = React.useState<number>(
-        typeof currentWindow !== 'undefined' ? currentWindow.screen.availHeight : 1200
+        typeof window !== 'undefined' ? window.screen.availHeight : 1200
     );
     const [screenWidth, setScreenWidth] = React.useState<number>(
-        typeof currentWindow !== 'undefined' ? currentWindow.screen.availWidth : 800
+        typeof window !== 'undefined' ? window.screen.availWidth : 800
     );
 
     React.useEffect(() => {
-        if (typeof currentWindow === 'undefined') {
+        if (typeof window === 'undefined') {
             return;
         }
         const handleResize = () => {
-            setWindowHeight(currentWindow.innerHeight);
-            setWindowWidth(currentWindow.innerWidth);
-            setScreenHeight(currentWindow.screen.availHeight);
-            setScreenWidth(currentWindow.screen.availWidth);
+            setWindowHeight(window.innerHeight);
+            setWindowWidth(window.innerWidth);
+            setScreenHeight(window.screen.availHeight);
+            setScreenWidth(window.screen.availWidth);
         };
 
-        currentWindow.addEventListener('resize', handleResize);
+        window.addEventListener('resize', handleResize);
 
         return () => {
-            currentWindow.removeEventListener('resize', handleResize);
+            window.removeEventListener('resize', handleResize);
         };
-    }, [currentWindow]);
+    }, []);
 
     // do not create new result instances if values don't change
     return React.useMemo(
@@ -167,13 +161,13 @@ export const useWindowSize = (
     );
 };
 
-export const useWindowHeight = (useInnerIFrame = false): number => {
-    const {height} = useWindowSize(useInnerIFrame);
+export const useWindowHeight = (): number => {
+    const {height} = useWindowSize();
     return height;
 };
 
-export const useWindowWidth = (useInnerIFrame = false): number => {
-    const {width} = useWindowSize(useInnerIFrame);
+export const useWindowWidth = (): number => {
+    const {width} = useWindowSize();
     return width;
 };
 
