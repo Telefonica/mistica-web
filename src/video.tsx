@@ -80,7 +80,7 @@ export type VideoProps = {
     loop?: boolean;
     /** defaults to true */
     muted?: boolean;
-    /** defaults to true */
+    /** defaults to when-loaded. If set to true, behaviour is the same as when the value is equal to when-loaded */
     autoPlay?: boolean | 'streaming' | 'when-loaded';
     /** defaults to 10s */
     loadingTimeout?: number;
@@ -100,7 +100,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
         {
             src,
             poster,
-            autoPlay = !isRunningAcceptanceTest(), // default true, but disable autoPlay in screenshot tests
+            autoPlay = 'when-loaded',
             muted = true,
             loop = true,
             preload = 'none',
@@ -142,7 +142,7 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
             }
         }, [src, loadingTimeout, handleError]);
 
-        const onLoadFinish = () => {
+        const handleLoadFinish = () => {
             onLoad?.();
             const video = videoRef.current;
             const shouldAutoPlay = autoPlay && !isRunningAcceptanceTest();
@@ -168,7 +168,6 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                 playsInline
                 disablePictureInPicture
                 disableRemotePlayback
-                autoPlay={autoPlay === 'streaming'}
                 muted={muted}
                 loop={loop}
                 className={styles.video}
@@ -183,10 +182,10 @@ const Video = React.forwardRef<HTMLVideoElement, VideoProps>(
                     dispatch('play');
                 }}
                 onCanPlay={() => {
-                    if (autoPlay === 'streaming') onLoadFinish();
+                    if (autoPlay === 'streaming') handleLoadFinish();
                 }}
                 onCanPlayThrough={() => {
-                    if (autoPlay !== 'streaming') onLoadFinish();
+                    if (autoPlay !== 'streaming') handleLoadFinish();
                 }}
                 // This transparent pixel fallback avoids showing the ugly "play" image in android webviews
                 poster={TRANSPARENT_PIXEL}
